@@ -64,10 +64,10 @@ assert(highlights.some(p=>p.postedAt==='2026-10-28'),'Rolling 28-day highlights 
 assert(highlights.every(p=>p.type==='post'),'Highlights only include verified original-post links, not archived editorial threads');
 ctx.state.socialMode='highlights';
 assert(ctx.renderSocial().includes('Highlights from the previous four weeks'));
-assert(ctx.renderSocial().includes('Champion training update'));
+assert(ctx.renderSocial().includes('data-instgrm-permalink="https://www.instagram.com/p/abc/"'),'Highlights retain the original Instagram embed, not a synthetic quote');
 ctx.state.socialPlatform='Threads';
-assert(!ctx.renderSocial().includes('Champion training update'));
+assert(!ctx.renderSocial().includes('data-instgrm-permalink="https://www.instagram.com/p/abc/"'),'Platform filters hide Instagram embeds when Threads selected');
 ctx.state.socialMode='latest';ctx.state.socialPlatform='X';
-assert(ctx.renderSocial().includes('Media news'));
+assert(ctx.renderSocial().includes('https://twitter.com/i/status/200'),'Live X feed embeds the actual original post');
 assert(!ctx.renderSocial().includes('Archive quote'));
 (async()=>{const {collectPlatforms}=await import('../scripts/fight-talk-platforms.mjs');const old=process.env.X_BEARER_TOKEN;process.env.X_BEARER_TOKEN='fixture';const got=[];const status=await collectPlatforms({platforms:{X:{accounts:[{id:'123',name:'Test fighter',sport:'mma',role:'fighter'}]}}},async()=>({data:[{id:'1',author_id:'123',text:'UFC fight announced',created_at:'2026-11-07T12:00:00Z'},{id:'2',author_id:'456',text:'wrong author'}]}),p=>got.push(p),0);assert.equal(got.length,1);assert.equal(got[0].role,'fighter');assert.equal(status.find(p=>p.platform==='X').state,'connected');assert.equal(status.find(p=>p.platform==='Facebook').state,'not-connected');const priorInstagramToken=process.env.INSTAGRAM_ACCESS_TOKEN;process.env.INSTAGRAM_ACCESS_TOKEN='test-only';const emptySources=await collectPlatforms({platforms:{Instagram:{accounts:[]}}},async()=>{throw Error('Should not call Meta before approved source list')},()=>{},0);assert.equal(emptySources.find(p=>p.platform==='Instagram').state,'needs-approval');if(priorInstagramToken===undefined)delete process.env.INSTAGRAM_ACCESS_TOKEN;else process.env.INSTAGRAM_ACCESS_TOKEN=priorInstagramToken;if(old===undefined)delete process.env.X_BEARER_TOKEN;else process.env.X_BEARER_TOKEN=old;console.log('Fight Talk layout, highlight window, thread provenance, author diversity, identity and disconnected platforms passed');})().catch(e=>{console.error(e);process.exitCode=1});
