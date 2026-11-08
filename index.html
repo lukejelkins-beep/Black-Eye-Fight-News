@@ -211,7 +211,7 @@
 
 <style>.social-card[data-platform="Facebook"]{background:#fff;border:1px solid #d6dfec}.social-card[data-platform="Facebook"] .platform-letter{color:#1877f2}.social-card[data-platform="Bluesky"]{background:#fff;border:1px solid #b8d9f5}.social-card[data-platform="Bluesky"] .platform-letter{color:#1683fe}</style>
 <link rel="stylesheet" href="assets/results.css">
-<link rel="stylesheet" href="assets/upcoming-cards.css?v=20261108-verdict-list-v1">
+<link rel="stylesheet" href="assets/upcoming-cards.css?v=20261108-local1">
 <link rel="stylesheet" href="assets/fight-film.css?v=20261108-ufc-finishes">
 <script src="assets/local-time.js?v=20261108-local1"></script>
 <script src="assets/fight-film.js?v=20261108-ufc-finishes"></script>
@@ -460,7 +460,7 @@ function renderNews(){
  const seen=new Set();items=items.filter(a=>{const key=a.title.toLowerCase().replace(/[^a-z0-9]/g,'');if(seen.has(key))return false;seen.add(key);return true;});
  return renderFrame(viewTitle('THE GLOBAL FIGHT DESK','Latest news','Source-linked boxing and MMA headlines, refreshed throughout the day.')+'<div class="filter-row">'+segments('news',['boxing','mma'],state.news)+segments('newsSort',['latest','significant'],state.newsSort)+'</div>'+sourceHealth()+'<div class="grid news-grid">'+(items.length?items.map(headlineCard).join(''):'<p>No recent stories available in this selection.</p>')+'</div>');
 }
-function eventCard(e){return `<article class="news-card" style="padding:24px"><div class="card-kicker">${esc(e.discipline)} · ${esc(e.status)}</div>${window.EventStatus?.badge(e)||''}<h3>${esc(e.name)}</h3><p><strong>${esc(dayLabel(e.date))}${e.endDate?' – '+esc(dayLabel(e.endDate)):''}</strong> · venue-local date</p><p>${esc(e.location)}</p><p>${esc(e.competitors)}</p><p>${esc(e.why)}</p>${window.FightTime.instant(e.startAt)?'<p>Local start: '+esc(displayDate(e.startAt))+' · <span class="mat-countdown" data-mat-start="'+esc(e.startAt)+'">'+esc(window.FightTime.relative(e.startAt))+'</span></p>':'<p>Start time TBC · date remains venue-local</p>'}<p>${esc(e.watch)}</p><a href="${safeURL(e.source)}" target="_blank" rel="noopener noreferrer">Official event details ↗</a><p class="panel-note">Checked ${esc(e.verifiedAt)}</p></article>`;}
+function eventCard(e){return `<article class="news-card" style="padding:24px"><div class="card-kicker">${esc(e.discipline)} · ${esc(e.status)}</div><span data-mat-status="${esc(e.id)}">${window.EventStatus?.badge(e)||''}</span><h3>${esc(e.name)}</h3><p><strong>${esc(dayLabel(e.date))}${e.endDate?' – '+esc(dayLabel(e.endDate)):''}</strong> · venue-local date</p><p>${esc(e.location)}</p><p>${esc(e.competitors)}</p><p>${esc(e.why)}</p>${window.FightTime.instant(e.startAt)?'<p>Local start: '+esc(displayDate(e.startAt))+' · <span class="mat-countdown" data-mat-start="'+esc(e.startAt)+'">'+esc(window.FightTime.relative(e.startAt))+'</span></p>':'<p>Start time TBC · date remains venue-local</p>'}<p>${esc(e.watch)}</p><a href="${safeURL(e.source)}" target="_blank" rel="noopener noreferrer">Official event details ↗</a><p class="panel-note">Checked ${esc(e.verifiedAt)}</p></article>`;}
 function renderCalendar(){
  if(state.calendar!=='grappling')return renderFrame(viewTitle('THE FIXTURE LIST','Upcoming fight cards','Announced boxing and MMA cards, with expandable bout lists and sourced main-card and prelim assignments.')+segments('calendar',['boxing','mma','grappling'],state.calendar)+window.UpcomingCards.render(state.calendar));
  const today=window.FightTime.dayKey(new Date());const horizon=window.FightTime.dayKey(new Date(Date.now()+42*86400000));
@@ -477,7 +477,7 @@ function renderCalendar(){
 function renderHome(){return hero()+renderFrame(viewTitle('THE LIVE DESK','Across the fight world','Latest source-linked headlines and meaningful updates from across combat sports.')+sourceHealth()+'<div class="grid news-grid">'+desk.articles.slice(0,6).map(headlineCard).join('')+'</div><p><a class="btn" href="#news">All news ↗</a> <a class="btn" href="#social">Fight Talk ↗</a> <button class="btn" data-segment="calendar" data-value="grappling" onclick="location.hash=\'calendar\'">Grappling & RAF calendar ↗</button></p>');}
 document.addEventListener('click',e=>{if(e.target.closest('#desk-updates')&&desk.pending){const {n,e:events}=desk.pending;Object.assign(desk,n,{events:events.events,reviewedAt:events.reviewedAt,pending:null});navigate();}});
 setInterval(()=>loadDesk(true),5*60*1000);
-setInterval(()=>{if(document.hidden)return;document.querySelectorAll('[data-mat-start]').forEach(el=>{const v=window.FightTime.relative(el.dataset.matStart);if(el.textContent!==v)el.textContent=v;});},15000);
+setInterval(()=>{if(document.hidden)return;document.querySelectorAll('[data-mat-start]').forEach(el=>{const v=window.FightTime.relative(el.dataset.matStart);if(el.textContent!==v)el.textContent=v;});document.querySelectorAll('[data-mat-status]').forEach(el=>{const event=desk.events.find(item=>item.id===el.dataset.matStatus);if(!event)return;const html=window.EventStatus?.badge(event)||'';if(el.innerHTML!==html)el.innerHTML=html;});},15000);
 
 function defenceLabel(value){return Number.isInteger(value)&&value>=0?`${value} ${value===1?'Defence':'Defences'}`:'Defences unverified';}
 function previousReignsLine(c){
