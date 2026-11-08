@@ -1,0 +1,16 @@
+.befn-alerts-cover{position:fixed;inset:0;z-index:5200;display:flex;align-items:center;justify-content:center;padding:16px;background:#091a21cf}
+.befn-alerts-panel{position:relative;width:min(460px,100%);max-height:92dvh;overflow:auto;padding:24px;border-radius:13px;background:#f9fcf9;color:#142e35;box-shadow:0 18px 70px #0006;font:14px/1.55 system-ui,-apple-system,sans-serif}
+.befn-alerts-panel h2{margin:0 0 9px;font-size:24px}
+.befn-alerts-panel h3{font-size:14px;margin:19px 0 8px}
+.befn-alerts-panel p{margin:8px 0 13px;color:#435d63}
+.befn-alerts-row{display:flex;align-items:center;gap:12px;border:1px solid #d6e5dd;background:#fff;border-radius:7px;padding:12px;margin:8px 0;font-size:13px;font-weight:700;cursor:pointer}
+.befn-alerts-row input{width:19px;height:19px;accent-color:#166459;flex:0 0 auto}
+.befn-alerts-panel button{padding:10px 13px;border-radius:5px;border:0;background:#12383d;color:#fff;font:800 13px system-ui;cursor:pointer}
+.befn-alerts-close{float:right}
+.befn-alerts-status{padding:12px;border:1px solid #cde1d6;background:#ebf5ee;border-radius:7px;font-size:13px}
+.befn-alerts-history{margin:0;padding:0;list-style:none}
+.befn-alerts-history li{font-size:12px;padding:9px 0;border-top:1px solid #e5eae7}
+.befn-alerts-toast{position:fixed;z-index:5300;bottom:calc(85px + env(safe-area-inset-bottom));right:18px;max-width:min(390px,calc(100vw - 36px));padding:15px 18px;border-left:4px solid #a9eedb;background:#102c36;color:#f0fff9;border-radius:6px;box-shadow:0 12px 30px #0005;font:800 13px/1.4 system-ui,sans-serif;text-decoration:none}
+.befn-alerts-toast small{display:block;font-size:10px;margin-top:7px;opacity:.75}
+.befn-alerts-toast:focus-visible{outline:3px solid #f6c17b}
+@media(min-width:761px){.befn-alerts-toast{bottom:18px}}

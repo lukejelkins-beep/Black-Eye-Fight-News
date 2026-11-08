@@ -1,0 +1,72 @@
+name: Refresh live Fight Talk
+
+on:
+  schedule:
+    # Intraday source checks; preserve 28-day history for editorial highlights.
+    # GitHub may delay scheduled jobs.
+    - cron: '3,13,23,33,43,53 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refresh-fight-talk.mjs'
+      - 'scripts/fight-talk-platforms.mjs'
+      - 'data/fight-talk-sources.json'
+      - 'data/fight-talk-selected.json'
+      - 'tests/test-fight-talk.cjs'
+      - 'index.html'
+      - '.github/workflows/refresh-fight-talk.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-live-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check feed collector syntax
+        run: |
+          node --check scripts/refresh-fight-talk.mjs
+          node --check scripts/fight-talk-platforms.mjs
+          node tests/test-fight-talk.cjs
+      - name: Refresh and commit real source-linked posts safely
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          FACEBOOK_ACCESS_TOKEN: ${{ secrets.FACEBOOK_ACCESS_TOKEN }}
+          META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION }}
+          REDDIT_ACCESS_TOKEN: ${{ secrets.REDDIT_ACCESS_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for attempt in 1 2 3; do
+            # Two scheduled/triggered runs may overlap with other commits.
+            # Regenerate against newest main rather than rebasing JSON changes.
+            git fetch origin main
+            git reset --hard origin/main
+            node scripts/refresh-fight-talk.mjs
+            git add data/fight-talk-live.json
+            if git diff --cached --quiet; then
+              echo "Feed content already current"
+              exit 0
+            fi
+            git commit -m "Refresh verified Fight Talk feed"
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Feed push raced another commit; regenerating from latest main"
+          done
+          exit 1

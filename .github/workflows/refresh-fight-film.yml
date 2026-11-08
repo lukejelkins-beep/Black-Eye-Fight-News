@@ -1,0 +1,60 @@
+name: Refresh fight finish videos
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refresh-fight-film.py'
+      - '.github/workflows/refresh-fight-film.yml'
+      - 'tests/test_fight_film.py'
+permissions:
+  contents: write
+concurrency:
+  group: fight-film-video-updates
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirm YouTube API credential is available
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        shell: bash
+        run: |
+          if [ -n "${YOUTUBE_API_KEY:-}" ]; then
+            echo "YouTube Data API credential is configured and available to this workflow."
+          else
+            echo "::warning::YOUTUBE_API_KEY was not found in Actions repository secrets. AU-video verification cannot complete."
+          fi
+      - name: Verify editorial video matching rules
+        run: python -m unittest discover -s tests -p 'test_fight_film.py'
+      - name: Fetch verified rights-holder clips and publish updates
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'Fight Film updater'
+          git config user.email 'fight-film-bot@users.noreply.github.com'
+          for attempt in 1 2 3; do
+            git fetch -q origin main
+            git reset --hard -q origin/main
+            python scripts/refresh-fight-film.py
+            git add data/fight-film.json data/results.json
+            if git diff --cached --quiet; then
+              echo 'No newly verified clips; no commit needed'
+              exit 0
+            fi
+            git commit -m 'Refresh sourced finish videos and matched result links'
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then exit 1; fi
+          done

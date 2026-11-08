@@ -1,0 +1,40 @@
+name: Audit external fighter image URLs
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '27 19 * * 0'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/audit-image-urls.cjs'
+      - '.github/workflows/audit-image-urls.yml'
+permissions:
+  contents: write
+concurrency:
+  group: image-url-audit
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check endpoint-audit syntax
+        run: node --check scripts/audit-image-urls.cjs
+      - name: Check every indexed external photo URL
+        run: node scripts/audit-image-urls.cjs
+      - name: Commit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add qa/image-url-audit.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record checked fighter image endpoint health"
+            git pull --rebase
+            git push
+          fi

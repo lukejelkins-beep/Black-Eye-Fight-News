@@ -1,0 +1,325 @@
+/* Sourced future boxing/MMA cards; never assign unverified fights to prelims. */
+window.UpcomingCards=(()=>{
+ 'use strict';
+ let feed=null,error='',loading=null,lastCheck=0;
+ const opened=new Set(),active=new Map();
+ const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const href=x=>{try{const u=new URL(x);return u.protocol==='https:'?esc(u.href):'#'}catch{return '#'}};
+ const localDate=()=>new Date().toLocaleDateString('sv-SE',{timeZone:'Australia/Melbourne'});
+ const fmtDate=x=>new Date(x+'T12:00:00Z').toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
+ const fmtTime=x=>{try{return new Date(x).toLocaleString('en-AU',{timeZone:'Australia/Melbourne',weekday:'short',day:'numeric',month:'short',hour:'numeric',minute:'2-digit',timeZoneName:'short'})}catch{return ''}};
+ let catalog=null;
+ function registry(){
+  if(catalog)return catalog;
+  try{
+   const node=document.getElementById('fighter-portrait-registry');
+   catalog=JSON.parse(node.textContent).fighters||{};
+  }catch{catalog={}}
+  return catalog;
+ }
+ function sourcePhoto(name){
+  const fighters=registry();
+  const item=fighters[name]||Object.entries(fighters).find(([k])=>k.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()===name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase())?.[1];
+  const src=item?.photo||'';
+  return /^https:\/\//.test(src)?src:'';
+ }
+ function initials(name){
+  return String(name||'').trim().split(/\s+/).filter(Boolean).slice(0,2).map(part=>part[0].toUpperCase()).join('')||'?';
+ }
+ function photo(name){
+  const src=sourcePhoto(name);
+  return '<span class="result-photo upcoming-photo" data-upcoming-photo-name="'+esc(name)+'" role="img" aria-label="Portrait of '+esc(name)+'">'+
+   (src?'<img src="'+href(src)+'" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">':'')+
+   '<span class="result-photo-missing" '+(src?'hidden':'')+' aria-hidden="true">'+esc(initials(name))+'</span></span>';
+ }
+ function fighterRecord(b,index){
+  const record=Array.isArray(b.records)?b.records[index]:null;
+  // Records are editorially sourced as W-L or W-L-D (optionally with KOs).
+  // Never mistake rankings, rankings placeholders or unverified text for a record.
+  if(typeof record!=='string'||!/^[0-9]{1,3}\s*[-–]\s*[0-9]{1,3}(?:\s*[-–]\s*[0-9]{1,2})?(?:\s*\([0-9]{1,3}\s*KOs?\))?$/.test(record.trim()))return '';
+  return record.replace(/–/g,'-').replace(/\s+/g,' ').trim();
+ }
+ function contender(name,right,record,recordSource){
+  const detail=record?'<span class="upcoming-fighter-record" aria-label="Professional record '+esc(record)+'">'+(typeof recordSource==='string'&&/^https:\/\//i.test(recordSource)?'<a class="upcoming-record-source" href="'+href(recordSource)+'" target="_blank" rel="noopener noreferrer" aria-label="View source for '+esc(name)+' professional record" title="View record source">'+esc(record)+'</a>':esc(record))+'</span>':
+   '<span class="upcoming-fighter-record is-unverified">Record not verified</span>';
+  return '<div class="result-contender result-contender-'+(right?'right':'left')+'">'+(!right?photo(name):'')+
+   '<div class="result-contender-info"><strong>'+esc(name)+'</strong>'+detail+'</div>'+(right?photo(name):'')+'</div>';
+ }
+ function flag(code,side){
+  const c=String(code||'').toLowerCase();
+  if(!/^(?:[a-z]{2}|gb-(?:eng|sct|wls))$/.test(c))return '';
+  return '<img class="result-corner-flag result-corner-flag-'+side+'" src="https://flagcdn.com/'+c+'.svg" alt="" aria-hidden="true" decoding="async" loading="lazy" referrerpolicy="no-referrer">';
+ }
+ function bout(b,event){
+  const countries=Array.isArray(b.countries)?b.countries:[];
+  const f=Array.isArray(b.fighters)?b.fighters:[];
+  const first=f[0]||'Fighter TBC',second=f[1]||'Fighter TBC';
+  const provisional=event.sourceStatus==='reported'||b.status==='reported';
+  const label=provisional?'Reported pairing':'Announced pairing';
+  const link=href(b.source||event.source);
+  return '<article class="result-bout result-bout-compact upcoming-bout" aria-label="'+esc(first+' versus '+second)+'">'+
+   '<div class="result-matchup">'+flag(countries[0],'left')+flag(countries[1],'right')+'<span class="result-matchup-vs-watermark" aria-hidden="true">VS</span>'+
+   '<span class="upcoming-matchup-status">'+esc(provisional?'REPORTED':'SCHEDULED')+'</span>'+
+   contender(first,false,fighterRecord(b,0),Array.isArray(b.recordSources)?b.recordSources[0]:null)+contender(second,true,fighterRecord(b,1),Array.isArray(b.recordSources)?b.recordSources[1]:null)+'</div>'+
+   '<div class="result-bout-detail"><span class="result-bout-division">'+esc(b.division||'Weight class not confirmed')+'</span><span class="upcoming-bout-state">'+esc(label)+'</span></div>'+
+   (b.note?'<p class="upcoming-bout-note">'+esc(b.note)+'</p>':'')+
+   '<div class="result-bout-secondary"><a href="'+link+'" target="_blank" rel="noopener noreferrer">Bout source ↗</a></div></article>';
+ }
+  const groups=[['main','Main Card'],['prelims','Prelims'],['early','Early Prelims'],['undercard','Undercard / order TBC'],['announced','Announced / order TBC']];
+
+ function heroWhen(e){
+  const d=e.startAt?new Date(e.startAt):null,valid=d&&!Number.isNaN(d.getTime());
+  const day=valid?d.toLocaleDateString('en-AU',{timeZone:'Australia/Melbourne',weekday:'short',day:'numeric',month:'short'}):fmtDate(e.date);
+  const clock=valid?d.toLocaleTimeString('en-AU',{timeZone:'Australia/Melbourne',hour:'numeric',minute:'2-digit',timeZoneName:'short'}):'';
+  const label=/main\s*card/i.test(e.startLabel||'')?'Main card':'Start';
+  return '<span class="upcoming-hero-date">'+esc(day)+'</span><span class="upcoming-hero-divider" aria-hidden="true"></span>'+
+   '<span class="upcoming-hero-clock">'+(valid?esc(label+' '+clock):esc(e.startLabel||'Start time TBC'))+'</span>';
+ }
+ function heroFighters(e){
+  const main=e.bouts.find(b=>b.section==='main')||e.bouts[0];
+  return (main?.fighters||[]).slice(0,2).map((name,i)=>{
+   const src=sourcePhoto(name);
+   return '<span class="upcoming-hero-fighter-slot upcoming-hero-fighter-slot-'+(i?'right':'left')+'">'+
+    '<span class="upcoming-hero-fighter-initials" aria-hidden="true">'+esc(initials(name))+'</span>'+
+    (src?'<img class="upcoming-hero-fighter" src="'+href(src)+'" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">':'')+
+    '<span class="upcoming-hero-fighter-name">'+esc(name)+'</span></span>';
+  }).join('');
+ }
+ /* Prefer a full-size original from FIGHTMAG's WordPress feed, retaining the
+    sourced thumbnail as an automatic fallback when the original is unavailable. */
+ function posterUrls(url){
+  if(!/^https:\/\//i.test(url||''))return {primary:'',backup:''};
+  const original=String(url);
+  try{
+   const u=new URL(original);
+   if(u.hostname==='schedule.fightmag.com'&&u.pathname.includes('/wp-content/uploads/')){
+    const path=u.pathname.replace(/-\d{2,4}x\d{2,4}(?=\.(?:jpe?g|png|webp)$)/i,'');
+    if(path!==u.pathname){u.pathname=path;return {primary:u.href,backup:original}}
+   }
+  }catch{}
+  return {primary:original,backup:''};
+ }
+
+ // Group by Australian date when a sourced start is known, not the venue-local day.
+ function auDay(e){
+  if(e.startAt){const d=new Date(e.startAt);if(Number.isFinite(d.getTime()))return d.toLocaleDateString('sv-SE',{timeZone:'Australia/Melbourne'})}
+  const m=(e.startLabel||'').match(/main card\s*(\d{1,2})(?::(\d\d))?\s*pm\s*GST/i);
+  if(m){const d=new Date(e.date+'T'+String(+m[1]%12+12).padStart(2,'0')+':'+(m[2]||'00')+':00+04:00');if(Number.isFinite(d.getTime()))return d.toLocaleDateString('sv-SE',{timeZone:'Australia/Melbourne'})}
+  return e.date;
+ }
+ function auClock(d){return d.toLocaleTimeString('en-AU',{timeZone:'Australia/Melbourne',hour:'numeric',minute:'2-digit',timeZoneName:'short'})}
+ function rowTimes(e){
+  if(e.startAt){const d=new Date(e.startAt);if(Number.isFinite(d.getTime()))return '<span>'+(/main\s*card/i.test(e.startLabel||'')?'Main Card':'Event Start')+' <strong>'+esc(auClock(d))+'</strong></span>'}
+  const str=e.startLabel||'';
+  const prelim=str.match(/prelims(?:\s+from)?\s*(\d{1,2})(?::(\d\d))?\s*pm\s*GST/i);
+  const main=str.match(/main card\s*(\d{1,2})(?::(\d\d))?\s*pm\s*GST/i);
+  if(prelim&&main){
+   const convert=m=>auClock(new Date(e.date+'T'+String(+m[1]%12+12).padStart(2,'0')+':'+(m[2]||'00')+':00+04:00'));
+   return '<span>Prelims <strong>'+esc(convert(prelim))+'</strong></span><span class="upcoming-dot">·</span><span>Main Card <strong>'+esc(convert(main))+'</strong></span>';
+  }
+  return '<span>'+esc(str||'Start time TBC')+'</span>';
+ }
+ function dateLabel(day){
+  const d=new Date(day+'T12:00:00Z');
+  return '<h4 class="upcoming-list-date"><span>'+esc(d.toLocaleDateString('en-AU',{day:'numeric',month:'short',timeZone:'UTC'}).toUpperCase())+'</span> <span>· '+esc(d.toLocaleDateString('en-AU',{weekday:'long',timeZone:'UTC'}))+'</span></h4>';
+ }
+ function eventCard(e){
+  const sections=groups.map(([key,label])=>({key,label,rows:e.bouts.filter(b=>b.section===key)})).filter(g=>g.rows.length);
+  const selected=sections.find(g=>g.key===active.get(e.id))||sections[0];
+  const tabs=sections.length>1?'<div class="result-card-tabs upcoming-tabs" role="group" aria-label="'+esc(e.title)+' sections" style="grid-template-columns:repeat('+sections.length+',minmax(0,1fr))">'+sections.map(g=>
+   '<button type="button" class="result-card-tab'+(g.key===selected.key?' is-active':'')+'" data-upcoming-tab="'+esc(e.id)+'" data-upcoming-section="'+esc(g.key)+'" aria-controls="upcoming-'+esc(e.id)+'-'+g.key+'" aria-pressed="'+String(g.key===selected.key)+'"><span>'+esc(g.label)+'</span><small>'+g.rows.length+' '+(g.rows.length===1?'fight':'fights')+'</small></button>').join('')+'</div>':
+   '<div class="upcoming-single-section">'+esc(selected?.label||'Announced bouts')+'</div>';
+  const panels=sections.map(g=>'<div id="upcoming-'+esc(e.id)+'-'+esc(g.key)+'" class="result-bouts upcoming-fights" data-upcoming-panel="'+esc(g.key)+'" role="list" aria-label="'+esc(g.label)+'" '+(g.key===selected.key?'':'hidden')+'>'+g.rows.map(b=>'<div role="listitem">'+bout(b,e)+'</div>').join('')+'</div>').join('');
+  const posterFiles=posterUrls(e.poster?.url),art=posterFiles.primary?href(posterFiles.primary):'';
+  const media='<span class="upcoming-hero-media" aria-hidden="true"><span class="upcoming-hero-fallback">'+heroFighters(e)+'</span>'+
+   (art?'<img class="upcoming-hero-poster" src="'+art+'" '+(posterFiles.backup?'data-upcoming-poster-backup="'+href(posterFiles.backup)+'" ':'')+'alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">':'')+'</span>';
+  const summary='<summary class="upcoming-event-summary upcoming-hero upcoming-schedule-row'+(art?' has-poster':' is-artwork-missing')+'">'+media+
+   '<span class="upcoming-hero-content"><span class="upcoming-row-kicker">'+esc(e.promotion)+' · '+esc(e.sport==='mma'?'MMA':'BOXING')+'</span>'+
+   '<strong class="upcoming-hero-title">'+esc(e.title)+'</strong>'+
+   '<span class="upcoming-hero-times">'+rowTimes(e)+'</span>'+
+   '<span class="upcoming-hero-location">'+esc(e.location||'Venue TBC')+'</span>'+
+   (e.sourceStatus==='reported'?'<span class="upcoming-row-provisional">Reported · UFC confirmation pending</span>':'')+'</span>'+
+   '<span class="upcoming-row-chevron" aria-hidden="true">⌄</span></summary>';
+  const start=e.startAt?'<span>Melbourne start: '+esc(fmtTime(e.startAt))+'</span>':(e.startLabel?'<span>Published schedule: '+esc(e.startLabel)+'</span>':'<span>Start time awaiting confirmation</span>');
+  const credit=art&&e.poster?.source?'<a href="'+href(e.poster.source)+'" target="_blank" rel="noopener noreferrer">Poster source ↗</a>':'';
+  return '<details class="result-event upcoming-event" data-upcoming-card="'+esc(e.id)+'" '+(opened.has(e.id)?'open':'')+'>'+summary+
+   '<div class="upcoming-expanded"><div class="upcoming-meta">'+start+'<a href="'+href(e.source)+'" target="_blank" rel="noopener noreferrer">Event source ↗</a>'+credit+'</div>'+
+   (e.dateNote?'<p class="upcoming-event-note">'+esc(e.dateNote)+'</p>':'')+
+   '<div class="upcoming-card-bar"><strong>Fight card</strong><span>'+e.bouts.length+' total</span></div>'+tabs+panels+
+   (e.note?'<p class="upcoming-event-note">'+esc(e.note)+'</p>':'')+'</div></details>';
+ }
+ function listing(sport){
+  if(!feed)return '<div class="upcoming-loading" role="status">'+(error?'Upcoming card feed unavailable. Please reload to try again.':'Loading announced fight cards…')+'</div>';
+  const today=localDate();
+  const events=feed.events.filter(e=>e.sport===sport&&auDay(e)>=today&&Array.isArray(e.bouts)&&e.bouts.length)
+   .sort((a,b)=>auDay(a).localeCompare(auDay(b))||a.title.localeCompare(b.title));
+  const cutoff=new Date(today+'T12:00:00Z');cutoff.setUTCDate(cutoff.getUTCDate()+6);
+  const nextWeek=cutoff.toISOString().slice(0,10);
+  function section(label,items){
+   if(!items.length)return '';
+   let prev='',html='';
+   for(const e of items){const date=auDay(e);if(date!==prev){html+=dateLabel(date);prev=date}html+=eventCard(e)}
+   return '<section class="upcoming-list-group"><h3 class="upcoming-list-heading">'+esc(label)+'</h3>'+html+'</section>';
+  }
+  return '<div class="upcoming-schedule"><div class="upcoming-list-overview"><strong>'+events.length+' upcoming '+esc(sport==='mma'?'MMA':'boxing')+' cards</strong><span>Tap an event to expand its fight card</span></div>'+
+   (error?'<p class="upcoming-feed-warning">Latest refresh failed; showing saved listings.</p>':'')+
+   section('This Week',events.filter(e=>auDay(e)<=nextWeek))+
+   section('Upcoming',events.filter(e=>auDay(e)>nextWeek))+
+   (events.length?'':'<p class="upcoming-empty">No upcoming fight cards confirmed in this category.</p>')+
+   '<p class="upcoming-disclaimer">Melbourne dates and times are used when confirmed; otherwise event dates and published local times are shown. Bout order may change. Fighter records are sourced where verified. Reviewed: '+esc(feed.reviewedAt||'not confirmed')+'.</p></div>';
+ }
+ /* Portrait fallback: verify Wikimedia page title before using a thumbnail. */
+ const portraitQueries=new Map(),portraitQueue=[],portraitTried=new Set();
+ let portraitConcurrent=0;
+ const normalName=name=>String(name||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+\([^)]*\)$/,'').trim();
+ function wikiPortrait(name){
+  const key=normalName(name);
+  if(portraitQueries.has(key))return portraitQueries.get(key);
+  const query=(async()=>{
+   try{
+    const url='https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&prop=pageimages&pithumbsize=240&titles='+encodeURIComponent(name);
+    const response=await fetch(url,{mode:'cors'});
+    if(!response.ok)return '';
+    const page=Object.values((await response.json()).query?.pages||{})[0];
+    if(!page||page.missing!==undefined||normalName(page.title)!==key)return '';
+    const photo=page.thumbnail?.source||'';
+    return /^https:\/\//.test(photo)?photo:'';
+   }catch{return ''}
+  })();
+  portraitQueries.set(key,query);
+  return query;
+ }
+ function hydratePortraits(){
+  if(!document.querySelectorAll)return;
+  document.querySelectorAll('.upcoming-event[open] .upcoming-photo[data-upcoming-photo-name]').forEach(el=>{
+   if(el.querySelector('img:not([hidden])'))return;
+   const name=el.dataset.upcomingPhotoName;
+   const key=normalName(name);
+   if(!name||portraitTried.has(key))return;
+   portraitTried.add(key);portraitQueue.push({name,key});
+  });
+  function pump(){
+   while(portraitConcurrent<3&&portraitQueue.length){
+    const item=portraitQueue.shift();portraitConcurrent++;
+    wikiPortrait(item.name).then(src=>{
+     if(!src)return;
+     document.querySelectorAll('.upcoming-photo[data-upcoming-photo-name]').forEach(el=>{
+      if(normalName(el.dataset.upcomingPhotoName)!==item.key||el.querySelector('img:not([hidden])'))return;
+      const img=document.createElement('img');
+      img.alt='Photograph of '+item.name;img.loading='lazy';img.referrerPolicy='no-referrer';img.decoding='async';img.src=src;
+      img.onload=()=>{const label=el.querySelector('.result-photo-missing');if(label)label.hidden=true};
+      img.onerror=()=>{img.remove();const label=el.querySelector('.result-photo-missing');if(label)label.hidden=false};
+      el.prepend(img);
+     });
+    }).catch(()=>{}).finally(()=>{portraitConcurrent--;pump()});
+   }
+  }
+  pump();
+ }
+ function render(sport){const markup='<div id="upcoming-cards-root" data-upcoming-sport="'+esc(sport)+'">'+listing(sport)+'</div>';if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>{hydratePortraits();reconcileHeroImages()});return markup}
+ function update(){
+  const root=document.getElementById('upcoming-cards-root');
+  if(!root)return;
+  root.innerHTML=listing(root.dataset.upcomingSport||'mma');
+  hydratePortraits();reconcileHeroImages();
+ }
+ function valid(d){return d&&Array.isArray(d.events)&&d.events.every(e=>typeof e.id==='string'&&typeof e.date==='string'&&typeof e.title==='string'&&Array.isArray(e.bouts)&&e.bouts.every(b=>Array.isArray(b.fighters)&&b.fighters.length===2));}
+ async function load(){
+  if(loading)return loading;
+  loading=(async()=>{
+   try{
+    const urls=['https://raw.githubusercontent.com/lukejelkins-beep/Black-Eye-Fight-News/main/data/upcoming-cards.json','data/upcoming-cards.json'];
+    const results=await Promise.all(urls.map(async u=>{
+     try{const response=await fetch(u+'?t='+Math.floor(Date.now()/60000),{cache:'no-store',signal:AbortSignal.timeout(14000)});if(!response.ok)return null;const d=await response.json();return valid(d)?d:null;}catch{return null}
+    }));
+    const next=results.filter(Boolean).sort((a,b)=>(Date.parse(b.lastCheckedAt||b.reviewedAt)||0)-(Date.parse(a.lastCheckedAt||a.reviewedAt)||0))[0];
+    if(!next)throw Error('No source available');
+    if(!feed||JSON.stringify(feed)!==JSON.stringify(next)){feed=next;update()}
+    error='';
+   }catch{error='unavailable';if(!feed)update()}
+   finally{lastCheck=Date.now();loading=null}
+  })();
+  return loading;
+ }
+ document.addEventListener('click',event=>{
+  const button=event.target.closest?.('button[data-upcoming-tab]');
+  if(!button)return;
+  const card=button.closest('details[data-upcoming-card]');if(!card)return;
+  const selected=button.dataset.upcomingSection;active.set(card.dataset.upcomingCard,selected);
+  card.querySelectorAll('button[data-upcoming-tab]').forEach(b=>{const on=b.dataset.upcomingSection===selected;b.classList.toggle('is-active',on);b.setAttribute('aria-pressed',on?'true':'false')});
+  card.querySelectorAll('[data-upcoming-panel]').forEach(panel=>{panel.hidden=panel.dataset.upcomingPanel!==selected});
+ },false);
+ document.addEventListener('toggle',event=>{
+  const el=event.target;if(!el.matches?.('details[data-upcoming-card]'))return;
+  if(el.open){opened.add(el.dataset.upcomingCard);hydratePortraits()}else opened.delete(el.dataset.upcomingCard);
+ },true);
+
+ function showPosterFallback(img){
+  const hero=img.closest('.upcoming-hero');if(!hero)return;
+  const backup=img.dataset.upcomingPosterBackup;
+  if(backup&&!img.dataset.upcomingPosterBackupTried){
+   img.dataset.upcomingPosterBackupTried='true';
+   img.src=backup;return;
+  }
+  img.hidden=true;
+  hero.classList.remove('is-poster-ready');
+  hero.classList.add('is-artwork-missing');
+ }
+ function posterReady(img){
+  const hero=img.closest('.upcoming-hero'),media=img.closest('.upcoming-hero-media');
+  if(!hero||!media)return;
+  const w=img.naturalWidth,h=img.naturalHeight;
+  if(!w||!h||Math.min(w,h)<170||Math.max(w,h)<420){showPosterFallback(img);return}
+  // Source dimensions determine the framing: ultra-wide, square and portrait
+  // artwork must all display in full, without enlarging a tiny image.
+  media.style.setProperty('--poster-ratio',w+' / '+h);
+  media.style.setProperty('--poster-native-width',w+'px');
+  hero.classList.remove('is-artwork-missing');
+  hero.classList.add('is-poster-ready');
+ }
+ function fighterHeroReady(img){
+  const slot=img.closest('.upcoming-hero-fighter-slot');if(!slot)return;
+  if(img.naturalWidth<100||img.naturalHeight<100||img.naturalWidth/img.naturalHeight>3.5){
+   img.hidden=true;slot.classList.remove('has-photo');return;
+  }
+  slot.classList.add('has-photo');
+ }
+ function reconcileHeroImages(){
+  document.querySelectorAll?.('.upcoming-hero-poster,.upcoming-hero-fighter').forEach(img=>{
+   if(!img.complete)return;
+   if(img.naturalWidth&&img.naturalHeight){
+    if(img.matches('.upcoming-hero-poster'))posterReady(img);
+    else fighterHeroReady(img);
+   } // A deferred lazy image is not a failed image; wait for its load/error event.
+  });
+ }
+ document.addEventListener('load',event=>{
+  const img=event.target;
+  if(img.matches?.('.upcoming-hero-poster')){posterReady(img);return}
+  if(img.matches?.('.upcoming-hero-fighter')){fighterHeroReady(img);return}
+  if(!img.matches?.('.upcoming-photo img'))return;
+  const box=img.closest('.upcoming-photo');if(!box)return;
+  if(img.naturalWidth<48||img.naturalHeight<48||img.naturalWidth/img.naturalHeight>1.9){
+   img.hidden=true;
+   const fallback=box.querySelector('.result-photo-missing');if(fallback)fallback.hidden=false;
+   return;
+  }
+  img.classList.toggle('upcoming-photo-tall',img.naturalHeight/img.naturalWidth>1.7);
+  const fallback=box.querySelector('.result-photo-missing');if(fallback)fallback.hidden=true;
+ },true);
+ document.addEventListener('error',event=>{
+  const img=event.target;
+  if(img.matches?.('.upcoming-hero-poster')){showPosterFallback(img);return}
+  if(img.matches?.('.upcoming-hero-fighter')){
+   img.hidden=true;img.closest('.upcoming-hero-fighter-slot')?.classList.remove('has-photo');return;
+  }
+  if(!img.matches?.('.upcoming-photo img'))return;
+  img.hidden=true;const missing=img.parentElement.querySelector('.result-photo-missing');if(missing)missing.hidden=false;
+  const el=img.parentElement,name=el?.dataset.upcomingPhotoName;
+  if(name&&!portraitTried.has(normalName(name)))hydratePortraits();
+ },true);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&location.hash.startsWith('#calendar')&&Date.now()-lastCheck>15*60*1000)load()});
+ setInterval(()=>{if(!document.hidden&&location.hash.startsWith('#calendar'))load()},15*60*1000);
+ load();
+ return {render,load,valid};
+})();

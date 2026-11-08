@@ -1,0 +1,25 @@
+name: Verify Threads API connection
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/check-threads-connection.mjs'
+      - '.github/workflows/check-threads-connection.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check Threads probe syntax
+        run: node --check scripts/check-threads-connection.mjs
+      - name: Probe Threads API without exposing credentials
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+        run: node scripts/check-threads-connection.mjs

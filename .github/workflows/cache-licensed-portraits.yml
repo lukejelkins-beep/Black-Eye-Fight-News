@@ -1,0 +1,48 @@
+name: Cache licence-cleared fighter photos
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/portrait-sources.json'
+      - '.github/workflows/cache-licensed-portraits.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Download approved images and verify published SHA-1 checksums
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, urllib.request
+          entries=json.loads(pathlib.Path('assets/portrait-sources.json').read_text())
+          out=pathlib.Path('assets/fighter-portraits')
+          out.mkdir(parents=True,exist_ok=True)
+          for item in entries:
+              assert item['license'] in ('CC BY 3.0','CC BY 2.0','CC0 1.0')
+              assert item['url'].startswith('https://upload.wikimedia.org/wikipedia/commons/')
+              assert item['file'].replace('-','').replace('.','').isalnum()
+              target=out/item['file']
+              if target.exists() and hashlib.sha1(target.read_bytes()).hexdigest()==item['sha1']:
+                  print('Already cached:',item['file']);continue
+              req=urllib.request.Request(item['url'],headers={'User-Agent':'BlackEyeFightNews/1.0 (licensed photo cache)'})
+              with urllib.request.urlopen(req,timeout=45) as f:
+                  data=f.read(8*1024*1024+1)
+              assert data[:3]==bytes.fromhex('ffd8ff') and len(data)<8*1024*1024, 'Not valid JPEG'
+              assert hashlib.sha1(data).hexdigest()==item['sha1'], 'Checksum mismatch; not caching unexpected file'
+              target.write_bytes(data)
+              print('Cached:',item['file'],len(data),'bytes')
+          PY
+      - name: Commit approved cached photographs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fighter-portraits/
+          if ! git diff --cached --quiet; then
+            git commit -m "Cache approved CC-licensed fighter portraits"
+            git push
+          fi

@@ -1,0 +1,46 @@
+name: Discover official Instagram and Threads embeds
+on:
+  schedule:
+    - cron: '22 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refresh-meta-embeds.mjs'
+      - 'tests/test-meta-embeds.mjs'
+      - '.github/workflows/refresh-meta-embeds.yml'
+permissions:
+  contents: write
+concurrency:
+  group: publish-live-data
+  cancel-in-progress: false
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test safe, source-linked public embeds
+        run: |
+          node --check scripts/refresh-meta-embeds.mjs
+          node tests/test-meta-embeds.mjs
+      - name: Verify publisher-linked originals with Meta oEmbed (no access tokens)
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3; do
+            git fetch -q origin main
+            git reset --hard -q origin/main
+            node scripts/refresh-meta-embeds.mjs
+            git add data/fight-talk-embedded.json
+            if git diff --cached --quiet; then
+              echo 'No new sourced public embeds'
+              exit 0
+            fi
+            git commit -m 'Refresh original Instagram and Threads links from fight coverage'
+            if git push origin HEAD:main; then exit 0; fi
+            if [ "$attempt" -eq 3 ]; then exit 1; fi
+          done

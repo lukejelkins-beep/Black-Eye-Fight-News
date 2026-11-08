@@ -1,0 +1,74 @@
+name: Refresh fight card results
+on:
+  schedule:
+    # GitHub's minimum schedule frequency is five minutes. Once a live event
+    # is detected, the runner polls official sources every 30 seconds for
+    # up to four minutes; the next scheduled run resumes the checks.
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refresh-results.py'
+      - 'scripts/enrich-espn-headshots.py'
+      - '.github/workflows/refresh-results.yml'
+permissions:
+  contents: write
+concurrency:
+  group: fight-results-refresh
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -p 'test_results.py'
+      - name: Check sourced results every 30 seconds during live cards
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'Fight results updater'
+          git config user.email 'results-bot@users.noreply.github.com'
+          started=$SECONDS
+          tick=0
+          while true; do
+            for attempt in 1 2 3; do
+              git fetch -q origin main
+              git reset --hard -q origin/main
+              if [ "$tick" -eq 0 ]; then
+                python scripts/enrich-espn-headshots.py
+                python scripts/refresh-results.py
+              else
+                python scripts/refresh-results.py --live-only --no-heartbeat
+              fi
+              git add data/results.json
+              if git diff --cached --quiet; then
+                echo "No newly verified results or portraits at tick $tick"
+                break
+              fi
+              git commit -m 'Refresh sourced fight outcomes and athlete portraits'
+              if git push origin HEAD:main; then
+                echo "Published new verified results or portraits at tick $tick"
+                break
+              fi
+              if [ "$attempt" -eq 3 ]; then
+                echo "Push failed after three retries" >&2
+                exit 1
+              fi
+              echo 'Retrying after another writer updated main'
+            done
+            if ! python scripts/refresh-results.py --is-live; then
+              echo 'No active live event; waiting for next scheduled job'
+              break
+            fi
+            if [ "$SECONDS" -ge "$((started + 240))" ]; then
+              echo 'Live polling slice complete; next scheduled job will resume'
+              break
+            fi
+            sleep 30
+            tick=$((tick + 1))
+          done

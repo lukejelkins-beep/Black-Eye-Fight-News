@@ -1,0 +1,215 @@
+/* Upcoming cards share the app-style result card presentation. */
+#upcoming-cards-root{margin-top:18px}
+.upcoming-intro,.upcoming-disclaimer{color:#465b58;font-size:12px;line-height:1.7;max-width:1000px}
+.upcoming-disclaimer{margin-top:22px}
+.upcoming-loading,.upcoming-feed-warning{padding:22px;background:#fff;border:1px solid #cbd9d0;border-radius:6px;line-height:1.65}
+.upcoming-feed-warning{border-color:#d5b86f;background:#fcf5df}
+.upcoming-event{margin:20px 0 0!important}
+.upcoming-event-summary{display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;background:#e2ebe5;padding:21px 23px;list-style:none}
+.upcoming-event-summary::-webkit-details-marker{display:none}
+.upcoming-event-summary::marker{content:''}
+.upcoming-event-summary:hover{background:#d5e6db}
+.upcoming-event-heading{display:grid;gap:6px;min-width:0}
+.upcoming-event-heading>strong{font:800 clamp(23px,3vw,34px)/1.12 'Barlow Condensed',sans-serif;color:#0b2630}
+.upcoming-location{font-size:12px;color:#39574f}
+.upcoming-summary-meta{font-size:11px;color:#557067}
+.upcoming-summary-right{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex-shrink:0}
+.upcoming-chevron{font-size:24px;line-height:1;color:#1d6555;transition:transform .17s}
+.upcoming-event[open] .upcoming-chevron{transform:rotate(180deg)}
+.upcoming-expand-copy{font-size:10px;font-weight:800;color:#1e6255;text-transform:uppercase;letter-spacing:.04em}
+.upcoming-source-badge{font-size:10px;font-weight:800;padding:6px 9px;border-radius:18px;background:#d7ede2;color:#0e6548;white-space:normal;text-align:right}
+.upcoming-source-badge.is-reported{background:#fff1d8;color:#936117}
+.upcoming-meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:15px 19px;background:#f7faf7;font-size:12px;color:#405e54;border-top:1px solid #cbdacf}
+.upcoming-meta a{color:#0b6558;font-weight:750;text-decoration:underline;text-underline-offset:3px}
+.upcoming-event-note{font-size:11px;color:#50655d;line-height:1.65;padding:12px 18px;margin:0;background:#f6f7f3}
+.upcoming-single-section{text-transform:uppercase;letter-spacing:.08em;padding:16px 18px;color:#f6f8f9;background:#22252b;font-size:12px;font-weight:800}
+.upcoming-tabs .result-card-tab{font-size:clamp(11px,1.35vw,15px);padding-inline:7px}
+.upcoming-fights{background:#161b23!important;padding:16px!important;display:grid;gap:13px}
+.upcoming-fights[hidden]{display:none!important}
+.upcoming-bout .result-matchup{padding-top:18px!important;padding-bottom:14px!important;min-height:126px}
+.upcoming-bout .upcoming-photo{width:clamp(52px,7vw,82px);height:clamp(52px,7vw,82px);flex-basis:clamp(52px,7vw,82px)}
+.upcoming-bout .upcoming-photo img{object-fit:cover!important;object-position:50% 20%!important}
+.upcoming-bout .result-photo-missing{font-size:8px!important;letter-spacing:.01em;text-align:center}
+.upcoming-bout .result-bout-detail{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.upcoming-bout-state{font-size:10px;letter-spacing:.05em;color:#b8c8c8;text-transform:uppercase}
+.upcoming-bout-note{background:#181e27;color:#aebdc1;margin:0;padding:1px 17px 12px;font-size:11px}
+.upcoming-bout .result-bout-secondary{display:flex;justify-content:flex-end;padding:9px 16px 12px;border-top:1px solid #323c46}
+.upcoming-bout .result-bout-secondary a{color:#9fe4d3;font-size:11px;font-weight:700}
+@media(max-width:650px){
+ .upcoming-event-summary{padding:17px 14px;align-items:start}
+ .upcoming-source-badge{max-width:128px;font-size:9px}
+ .upcoming-event-heading>strong{font-size:25px}
+ .upcoming-tabs{display:flex!important;overflow-x:auto;scroll-snap-type:x proximity}
+ .upcoming-tabs .result-card-tab{flex:1 0 120px;font-size:12px;min-width:110px;scroll-snap-align:start}
+ .upcoming-bout .result-contender-info strong{font-size:12px!important}
+ .upcoming-bout .result-contender{gap:7px!important}
+ .upcoming-fights{padding:9px!important}
+}
+@media(prefers-reduced-motion:reduce){.upcoming-chevron{transition:none}}
+
+/* Consistent expanded scorecard presentation for scheduled cards — no result/record UI. */
+.upcoming-card-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 20px;background:#eef3ef;border-top:1px solid #cad7cf;color:#10272e}
+.upcoming-card-bar strong{font-size:14px;font-weight:900;letter-spacing:.01em}
+.upcoming-card-bar span{display:inline-flex;align-items:center;padding:5px 10px;border-radius:20px;background:#18372f;color:#fff;font-size:12px;font-weight:900;white-space:nowrap}
+.upcoming-event[open] .upcoming-expand-copy{color:#164c42}
+.upcoming-fights{gap:14px!important}
+.upcoming-bout.result-bout-compact .result-matchup{min-height:132px;padding-top:32px!important;padding-bottom:16px!important;gap:14px}
+.upcoming-bout .upcoming-matchup-status{position:absolute;z-index:4;top:9px;left:25%;width:50%;text-align:center;pointer-events:none;color:#bfe9d9;font-size:10px;font-weight:900;letter-spacing:.1em}
+.upcoming-bout.result-bout-compact .result-contender{min-width:0;gap:12px}
+.upcoming-bout.result-bout-compact .result-contender-info>strong{font-size:clamp(13px,1.5vw,17px);line-height:1.25}
+.upcoming-bout.result-bout-compact .result-photo.upcoming-photo{position:relative;overflow:hidden;isolation:isolate;width:clamp(56px,6vw,76px);height:clamp(56px,6vw,76px);flex:0 0 clamp(56px,6vw,76px);aspect-ratio:1;border:3px solid #121c24;border-radius:50%;background:radial-gradient(circle at 50% 25%,#47606b,#1c313b);box-shadow:0 0 0 2px rgba(177,205,207,.22)}
+.upcoming-bout.result-bout-compact .result-photo.upcoming-photo img{position:absolute;inset:0;display:block;width:100%;height:100%;border-radius:50%;object-fit:cover!important;object-position:50% 20%!important;max-width:none;max-height:none}
+.upcoming-bout.result-bout-compact .result-photo.upcoming-photo img.upcoming-photo-tall{object-position:50% 10%!important}
+.upcoming-bout.result-bout-compact .result-photo.upcoming-photo img[hidden]{display:none!important}
+.upcoming-bout.result-bout-compact .result-photo.upcoming-photo .result-photo-missing{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#243b44;color:#daeae8;font-size:21px!important;font-weight:900;letter-spacing:0;text-align:center}
+.upcoming-bout.result-bout-compact .result-photo.upcoming-photo .result-photo-missing[hidden]{display:none!important}
+.upcoming-bout .result-bout-detail{min-height:42px}
+.upcoming-bout .result-bout-secondary a{display:inline-flex;padding:4px 0;text-decoration:underline;text-decoration-color:rgba(159,228,211,.48);text-underline-offset:3px}
+.upcoming-tabs .result-card-tab{color:#d0d7dd;background:#22252b}
+.upcoming-tabs .result-card-tab.is-active{color:#fff;background:#303840;border-bottom-color:#c3f2e1}
+.upcoming-tabs .result-card-tab small{color:#b4c3c7}
+@media(max-width:650px){
+ .upcoming-card-bar{padding:13px 14px}
+ .upcoming-fights{gap:10px!important}
+ .upcoming-bout.result-bout-compact .result-matchup{gap:7px;padding:27px 10px 12px!important;min-height:110px}
+ .upcoming-bout .upcoming-matchup-status{font-size:8px;top:7px;letter-spacing:.05em}
+ .upcoming-bout.result-bout-compact .result-contender{gap:7px}
+ .upcoming-bout.result-bout-compact .result-photo.upcoming-photo{width:52px;height:52px;flex-basis:52px}
+ .upcoming-bout.result-bout-compact .result-photo.upcoming-photo .result-photo-missing{font-size:15px!important}
+ .upcoming-bout.result-bout-compact .result-contender-info>strong{font-size:12px}
+}
+@media(max-width:380px){
+ .upcoming-bout.result-bout-compact .result-photo.upcoming-photo{width:43px;height:43px;flex-basis:43px}
+ .upcoming-bout.result-bout-compact .result-contender{gap:5px}
+ .upcoming-bout.result-bout-compact .result-contender-info>strong{font-size:11px}
+}
+
+/* Upcoming matchups: nationality flags sit behind fighter names and headshots. */
+.upcoming-bout.result-bout-compact .result-matchup{position:relative;isolation:isolate;overflow:hidden}
+.upcoming-bout.result-bout-compact .result-corner-flag{
+ position:absolute;z-index:0;top:0;width:clamp(115px,28%,225px);height:100%;
+ object-fit:cover;object-position:center;opacity:.33;pointer-events:none;
+}
+.upcoming-bout.result-bout-compact .result-corner-flag-left{left:0;mask-image:linear-gradient(90deg,#000 0%,transparent 100%);-webkit-mask-image:linear-gradient(90deg,#000 0%,transparent 100%)}
+.upcoming-bout.result-bout-compact .result-corner-flag-right{right:0;mask-image:linear-gradient(270deg,#000 0%,transparent 100%);-webkit-mask-image:linear-gradient(270deg,#000 0%,transparent 100%)}
+.upcoming-bout.result-bout-compact .result-matchup::before{z-index:1;pointer-events:none}
+.upcoming-bout.result-bout-compact .result-contender{position:relative;z-index:3}
+.upcoming-bout.result-bout-compact .result-photo.upcoming-photo{z-index:4;background:#243b44;box-shadow:0 0 0 2px rgba(212,231,234,.3),0 5px 12px rgba(0,0,0,.35)}
+.upcoming-bout.result-bout-compact .result-contender-info{position:relative;z-index:4}
+.upcoming-bout.result-bout-compact .result-matchup-vs-watermark{z-index:1}
+@media(max-width:650px){
+ .upcoming-bout.result-bout-compact .result-corner-flag{width:38%;height:100%;opacity:.26}
+}
+
+/* Boxer/MMA fighter record, placed immediately below each opponent name. */
+.upcoming-bout.result-bout-compact .result-contender-info{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:5px;min-width:0}
+.upcoming-bout.result-bout-compact .result-contender-right .result-contender-info{align-items:flex-end;text-align:right}
+.upcoming-fighter-record{display:block;font-size:clamp(11px,1.15vw,13px);font-weight:800;letter-spacing:.025em;color:#b6edda;line-height:1.35;font-variant-numeric:tabular-nums}
+.upcoming-fighter-record.is-unverified{font-size:10px;font-weight:600;letter-spacing:0;color:#abb8bd}
+.upcoming-bout.result-bout-compact .result-contender-info>strong{overflow-wrap:anywhere}
+.upcoming-poster-wrap{padding:19px 22px;background:linear-gradient(115deg,#e8f1e9,#f6f9f5);border-top:1px solid #cfdfd6}
+.upcoming-poster{display:flex;align-items:center;gap:22px;margin:0;max-width:640px}
+.upcoming-poster-image{position:relative;display:flex;justify-content:center;align-items:center;flex:0 0 clamp(145px,25vw,228px);height:clamp(150px,26vw,242px);padding:7px;border:1px solid #bbd0c5;border-radius:9px;background:#0d1720;overflow:hidden;box-shadow:0 8px 23px rgba(10,39,35,.15)}
+.upcoming-poster-image img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;object-position:center;border-radius:3px}
+.upcoming-poster-image img[hidden]{display:none}
+.upcoming-poster-fallback{padding:12px;color:#ecf7f3;font-size:12px;text-align:center;font-weight:700}
+.upcoming-poster-fallback[hidden]{display:none}
+.upcoming-poster figcaption{display:flex;flex-direction:column;align-items:flex-start;gap:9px;line-height:1.4}
+.upcoming-poster figcaption strong{color:#122b32;font-size:16px;font-weight:900}
+.upcoming-poster figcaption small{color:#4c6461;font-size:12px}
+.upcoming-poster figcaption a{font-size:12px;font-weight:800;color:#075c53;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:650px){
+ .upcoming-poster-wrap{padding:14px}
+ .upcoming-poster{gap:12px;align-items:start}
+ .upcoming-poster-image{flex-basis:134px;height:178px}
+ .upcoming-poster figcaption strong{font-size:14px}
+ .upcoming-bout.result-bout-compact .result-contender-info{gap:4px}
+ .upcoming-fighter-record{font-size:11px}
+ .upcoming-fighter-record.is-unverified{font-size:9px}
+}
+@media(max-width:380px){
+ .upcoming-poster-image{flex-basis:106px;height:142px}
+ .upcoming-bout.result-bout-compact .result-matchup{gap:4px}
+ .upcoming-fighter-record{font-size:10px}
+}
+
+/* The sourced record is directly verifiable without opening the entire bout source. */
+.upcoming-fighter-record .upcoming-record-source{color:inherit;text-decoration:underline dotted;text-underline-offset:3px;text-decoration-thickness:1px}
+.upcoming-fighter-record .upcoming-record-source:hover,.upcoming-fighter-record .upcoming-record-source:focus-visible{color:#fff;text-decoration-style:solid}
+
+
+
+
+
+/* Compact, date-grouped fight fixture list with expandable native details.
+   Poster thumbnails are always contained and never cover-cropped. */
+#upcoming-cards-root{margin-top:18px}
+#upcoming-cards-root .upcoming-schedule{padding:clamp(15px,2.6vw,30px);background:#101318;color:#f3f5f8;border:1px solid #2e3640;border-radius:17px;box-shadow:0 12px 32px #0b1d2826}
+#upcoming-cards-root .upcoming-list-overview{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px 20px;padding-bottom:20px;border-bottom:1px solid #2d3640}
+#upcoming-cards-root .upcoming-list-overview strong{font-size:13px;font-weight:900;color:#e8f2f5}
+#upcoming-cards-root .upcoming-list-overview span{font-size:12px;font-weight:600;color:#98a6af}
+#upcoming-cards-root .upcoming-list-group{padding-top:26px}
+#upcoming-cards-root .upcoming-list-heading{margin:0 0 14px;font:900 clamp(26px,3.3vw,40px)/1 'Barlow Condensed',Impact,sans-serif;letter-spacing:.005em;color:white}
+#upcoming-cards-root .upcoming-list-date{display:flex;gap:9px;align-items:baseline;margin:21px 0 8px;padding:0 2px;font-size:12px;font-weight:900;letter-spacing:.095em;text-transform:uppercase;color:#32c9f4}
+#upcoming-cards-root .upcoming-list-date span+span{color:#9297a2}
+#upcoming-cards-root .upcoming-event{margin:0!important;border:0!important;border-bottom:1px solid #303842!important;border-radius:0!important;box-shadow:none!important;background:transparent!important;overflow:visible!important}
+#upcoming-cards-root .upcoming-event-summary.upcoming-schedule-row{display:grid!important;grid-template-columns:98px minmax(0,1fr) 22px;align-items:center;gap:clamp(12px,2vw,23px);min-height:128px;margin:0;padding:13px 4px!important;background:transparent!important;color:#fafbfc;cursor:pointer;list-style:none}
+#upcoming-cards-root .upcoming-event-summary.upcoming-schedule-row:hover{background:#19212a!important}
+#upcoming-cards-root .upcoming-event-summary.upcoming-schedule-row:focus-visible{outline:2px solid #5adfda;outline-offset:-2px}
+#upcoming-cards-root .upcoming-schedule-row::-webkit-details-marker{display:none}
+#upcoming-cards-root .upcoming-schedule-row::marker{content:''}
+#upcoming-cards-root .upcoming-hero-media{--poster-ratio:3 / 4;position:relative;display:flex;align-items:center;justify-content:center;flex:0 0 auto;width:98px;height:112px;min-height:0;max-height:none;aspect-ratio:auto;overflow:hidden;border:1px solid #3e4c59;border-radius:7px;background:#11202e;box-shadow:0 3px 12px #0006;isolation:isolate}
+#upcoming-cards-root .upcoming-hero-media::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#273f50,#0b1925)}
+#upcoming-cards-root .upcoming-hero-poster{position:absolute;z-index:2;inset:0;display:block;margin:auto;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain!important;object-position:center!important;filter:none!important;transform:none!important}
+#upcoming-cards-root .upcoming-schedule-row.has-poster:not(.is-poster-ready) .upcoming-hero-poster{opacity:0}
+#upcoming-cards-root .upcoming-schedule-row.is-poster-ready:not(.is-artwork-missing) .upcoming-hero-fallback{visibility:hidden}
+#upcoming-cards-root .upcoming-hero-fallback{position:absolute;inset:0;display:flex;align-items:stretch;justify-content:space-between;background:linear-gradient(120deg,#315163,#0b1e2b)}
+#upcoming-cards-root .upcoming-hero-fallback::after{content:"VS";position:absolute;z-index:3;left:50%;top:40%;transform:translate(-50%,-50%);font:900 17px/1 'Barlow Condensed',Impact,sans-serif;color:#d0e6ec;text-shadow:0 2px 7px #07141a}
+#upcoming-cards-root .upcoming-hero-fighter-slot{position:relative;display:flex;align-items:center;justify-content:center;flex:0 0 50%;width:50%;height:100%;overflow:hidden;background:linear-gradient(180deg,transparent 40%,#081622a8)}
+#upcoming-cards-root .upcoming-hero-fighter-slot-right{border-left:1px solid #ffffff2e}
+#upcoming-cards-root .upcoming-hero-fighter{position:absolute;inset:0;margin:auto;display:block;width:100%;height:calc(100% - 20px);max-width:100%;max-height:100%;object-fit:contain!important;object-position:center bottom!important;filter:none!important;opacity:0}
+#upcoming-cards-root .upcoming-hero-fighter-slot.has-photo .upcoming-hero-fighter{opacity:1}
+#upcoming-cards-root .upcoming-hero-fighter-initials{font:900 20px/1 'Barlow Condensed',Impact,sans-serif;color:#a6c5ce}
+#upcoming-cards-root .upcoming-hero-fighter-slot.has-photo .upcoming-hero-fighter-initials{display:none}
+#upcoming-cards-root .upcoming-hero-fighter-name{position:absolute;z-index:4;left:0;right:0;bottom:0;padding:5px 2px;background:#07151fd9;color:#e7f4f6;font:800 8px/1.1 'DM Sans',sans-serif;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#upcoming-cards-root .upcoming-hero-poster[hidden],#upcoming-cards-root .upcoming-hero-fighter[hidden]{display:none!important}
+#upcoming-cards-root .upcoming-hero-content{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;min-width:0;gap:7px;padding:0!important;background:transparent!important}
+#upcoming-cards-root .upcoming-row-kicker{font-size:9px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#88b3c2}
+#upcoming-cards-root .upcoming-hero-title{display:block;width:100%;max-width:100%;font:900 clamp(20px,2.3vw,28px)/1.12 'Barlow Condensed',Impact,sans-serif;letter-spacing:.005em;color:#f4f6fa;overflow-wrap:break-word;text-wrap:pretty}
+#upcoming-cards-root .upcoming-hero-times{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 9px;color:#a4afbb;font:600 clamp(11px,1.15vw,13px)/1.4 'DM Sans',sans-serif}
+#upcoming-cards-root .upcoming-hero-times strong{font-weight:900;color:#f3f6fa}
+#upcoming-cards-root .upcoming-dot{color:#697c87}
+#upcoming-cards-root .upcoming-hero-location{width:100%;color:#98a8b3;font:500 clamp(11px,1.12vw,13px)/1.35 'DM Sans',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#upcoming-cards-root .upcoming-row-provisional{font-size:10px;color:#f2c18e;font-weight:800}
+#upcoming-cards-root .upcoming-row-chevron{display:block;justify-self:center;font-size:24px;line-height:1;color:#99abb6;transition:transform .17s}
+#upcoming-cards-root .upcoming-event[open] .upcoming-row-chevron{transform:rotate(180deg)}
+#upcoming-cards-root .upcoming-expanded{margin:0 0 14px;background:#16202b;border:1px solid #2c3d49;border-radius:9px;overflow:hidden}
+#upcoming-cards-root .upcoming-expanded .upcoming-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px 17px;padding:13px 16px;border-top:0;background:#1a2935;color:#d5e2e8;font-size:12px}
+#upcoming-cards-root .upcoming-expanded .upcoming-meta span{flex-basis:100%}
+#upcoming-cards-root .upcoming-expanded .upcoming-meta a{color:#a4efdf;font-weight:800}
+#upcoming-cards-root .upcoming-expanded .upcoming-card-bar{padding:12px 16px;background:#202f3b;color:#f4f8fa;border-top:1px solid #344653}
+#upcoming-cards-root .upcoming-expanded .upcoming-card-bar span{background:#365051}
+#upcoming-cards-root .upcoming-expanded .upcoming-event-note{background:#192733;color:#d0dde0;line-height:1.55}
+#upcoming-cards-root .upcoming-disclaimer{margin:26px 0 4px;color:#91a2ad;max-width:none;font-size:11px;line-height:1.6}
+#upcoming-cards-root .upcoming-feed-warning{background:#3c2c1f;border-color:#746047;color:#ffe9c8}
+#upcoming-cards-root .upcoming-empty{padding:20px 0;color:#b6c5cd}
+@media(max-width:650px){
+ #upcoming-cards-root .upcoming-schedule{padding:15px 12px;border-radius:12px}
+ #upcoming-cards-root .upcoming-list-group{padding-top:23px}
+ #upcoming-cards-root .upcoming-list-date{margin:18px 0 6px;font-size:11px}
+ #upcoming-cards-root .upcoming-event-summary.upcoming-schedule-row{grid-template-columns:77px minmax(0,1fr) 15px;min-height:108px;gap:11px;padding:12px 1px!important}
+ #upcoming-cards-root .upcoming-hero-media{width:77px;height:105px;border-radius:6px}
+ #upcoming-cards-root .upcoming-hero-title{font-size:clamp(18px,4.8vw,22px)}
+ #upcoming-cards-root .upcoming-row-kicker{font-size:8px}
+ #upcoming-cards-root .upcoming-hero-times{font-size:11px}
+ #upcoming-cards-root .upcoming-hero-location{font-size:10px}
+ #upcoming-cards-root .upcoming-hero-content{gap:6px}
+ #upcoming-cards-root .upcoming-row-chevron{font-size:21px}
+}
+@media(max-width:375px){
+ #upcoming-cards-root .upcoming-schedule{padding:13px 9px}
+ #upcoming-cards-root .upcoming-event-summary.upcoming-schedule-row{grid-template-columns:71px minmax(0,1fr) 12px;gap:9px}
+ #upcoming-cards-root .upcoming-hero-media{width:71px;height:94px}
+ #upcoming-cards-root .upcoming-hero-title{font-size:17px}
+}
+@media(prefers-reduced-motion:reduce){#upcoming-cards-root .upcoming-row-chevron{transition:none}}

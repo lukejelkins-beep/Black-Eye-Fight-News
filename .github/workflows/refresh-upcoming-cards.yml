@@ -1,0 +1,57 @@
+name: Refresh upcoming boxing and MMA fight cards
+on:
+  schedule:
+    # UTC every three hours, :17; independent of visitor browser sessions.
+    - cron: '17 */3 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refresh-upcoming-cards.py'
+      - '.github/workflows/refresh-upcoming-cards.yml'
+      - 'tests/test_upcoming_cards.py'
+      - 'tests/test-upcoming-ui.cjs'
+      - 'assets/upcoming-cards.js'
+      - 'assets/upcoming-cards.css'
+      - 'data/upcoming-cards.json'
+permissions:
+  contents: write
+concurrency:
+  group: upcoming-fight-cards-refresh
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate event merging and publisher checks
+        run: python -m unittest discover -s tests -p 'test_upcoming_cards.py'
+      - name: Validate browser-side upcoming card JavaScript
+        run: |
+          node --check assets/upcoming-cards.js
+          node tests/test-upcoming-ui.cjs
+      - name: Cross-check official sources and publish confirmed fight-card changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'upcoming-card-updater[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3; do
+            git fetch -q origin main
+            git reset --hard -q origin/main
+            python scripts/refresh-upcoming-cards.py
+            git add data/upcoming-cards.json
+            if git diff --cached --quiet; then
+              echo 'Fight-card checks completed; no newly confirmed changes'
+              exit 0
+            fi
+            git commit -m 'Recheck upcoming fight cards and confirmed pairings'
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then exit 1; fi
+          done

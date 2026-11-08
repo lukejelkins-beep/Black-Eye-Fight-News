@@ -1,0 +1,14 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const ctx={window:{},setInterval(){},document:{querySelectorAll(){return []}},Date};vm.createContext(ctx);vm.runInContext(fs.readFileSync('assets/event-status.js','utf8'),ctx);const s=ctx.window.EventStatus;
+const now=Date.parse('2026-11-08T01:40:00Z');
+assert.equal(s.resolve({status:'underway',verifiedAt:'2026-11-08T01:34:00Z',validUntil:'2026-11-08T03:34:00Z'},now),'underway');
+assert.equal(s.resolve({status:'underway',verifiedAt:'2026-11-08T01:34:00Z',validUntil:'2026-11-08T03:34:00Z'},Date.parse('2026-11-09')),'pending');
+assert.equal(s.resolve({date:'2026-10-01'},now),'pending');
+assert.equal(s.resolve({date:'2026-11-14'},now),'scheduled');
+assert.equal(s.resolve({status:'completed'},now),'completed');
+assert.equal(s.resolve({startAt:'2026-11-08T00:00:00Z'},now),'pending');
+assert(s.row(['7 Nov','Joshua Buatsi vs Willy Hutchinson']).includes('Completed'));
+assert(!s.row(['7 Nov','Unrelated fight']).includes('Completed'));
+assert(!s.row(['7 Nov 2027','Joshua Buatsi vs Willy Hutchinson']).includes('Completed'));
+assert.equal(s.dateOf('Sat 7 Nov 2026'),'2026-11-07');
+console.log('Event states, stale-live expiry, date matching and unknown completion checks passed');

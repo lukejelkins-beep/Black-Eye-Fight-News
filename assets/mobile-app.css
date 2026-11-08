@@ -1,0 +1,35 @@
+/* Mobile-first app navigation; preserves the site's desktop navigation. */
+.befn-mobile-topbar,.befn-mobile-tabs{display:none}
+.befn-mobile-overlay{position:fixed;inset:0;z-index:5000;background:rgba(4,17,22,.72);display:flex;align-items:flex-end;justify-content:center}
+.befn-mobile-sheet{width:min(580px,100%);max-height:85dvh;overflow:auto;background:#f8faf8;color:#153238;border-radius:18px 18px 0 0;padding:22px 20px calc(24px + env(safe-area-inset-bottom));box-shadow:0 -15px 40px #0018}
+.befn-mobile-sheet h2{font-size:21px;margin:0 0 16px;font-family:system-ui,sans-serif}
+.befn-mobile-sheet-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.befn-mobile-sheet-grid a,.befn-mobile-sheet-grid button{display:block;text-align:left;background:white;color:#153238;border:1px solid #dce7e0;padding:14px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:800}
+.befn-mobile-sheet-grid a:focus-visible,.befn-mobile-sheet-grid button:focus-visible{outline:3px solid #198b7b}
+.befn-mobile-sheet-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.befn-mobile-sheet-head button{font:800 13px system-ui;border:0;background:#183841;color:#fff;border-radius:6px;padding:9px 13px}
+@media(max-width:760px){
+ body{padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+ .masthead{padding:12px 15px;min-height:65px;gap:5px}
+ .masthead .brand-mark{height:38px;width:38px;font-size:21px}
+ .masthead .brand{gap:8px}
+ .masthead .brand-copy strong{font-size:21px}
+ .masthead .brand-copy small{font-size:8px;letter-spacing:.1em;margin-top:6px}
+ .masthead .header-right{display:none}
+ .navrail{padding:0 12px;min-height:45px}
+ .navrail .mainnav,.navrail .nav-count{display:none}
+ .befn-mobile-topbar{display:flex;align-items:center;justify-content:space-between;gap:7px;min-height:45px;width:100%}
+ .befn-mobile-title{font:900 13px 'Barlow Condensed',Impact,sans-serif;letter-spacing:.06em;white-space:nowrap;color:#effcf7;flex:1;min-width:0}
+ .befn-mobile-actions{display:flex;align-items:center;gap:6px}
+ .befn-mobile-actions button,.befn-mobile-actions .befn-install-button{position:static;min-height:34px;margin:0;z-index:auto;box-shadow:none;border:1px solid #76b7aa;border-radius:5px;background:#183d43;color:#e8fff6;padding:6px 9px;font:800 10px system-ui;white-space:nowrap}
+ .befn-mobile-actions .befn-install-button{background:#a9eedb;color:#12343a}
+ .befn-mobile-tabs{position:fixed;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));left:0;right:0;bottom:0;z-index:1100;min-height:calc(64px + env(safe-area-inset-bottom));padding:5px 5px calc(5px + env(safe-area-inset-bottom));background:#102730;border-top:2px solid #89dfcd;box-shadow:0 -7px 25px #07141c24}
+ .befn-mobile-tabs a{display:flex;min-width:0;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;text-decoration:none;color:#d1e5e0;font:800 10px system-ui;border-radius:6px;padding:6px 1px}
+ .befn-mobile-tabs a svg{height:19px;width:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+ .befn-mobile-tabs a[aria-current="page"]{background:#a9eedb;color:#0d2c32}
+ .befn-mobile-tabs a:focus-visible{outline:2px solid #fff}
+ .befn-mobile-sheet .befn-mobile-sheet-grid{grid-template-columns:1fr 1fr}
+ .befn-install-button:not(.befn-mobile-actions .befn-install-button){bottom:calc(85px + env(safe-area-inset-bottom))}
+}
+@media(display-mode:standalone){body{padding-top:env(safe-area-inset-top)}}
+@media(max-width:370px){.befn-mobile-title{font-size:11px}.befn-mobile-actions button,.befn-mobile-actions .befn-install-button{padding:6px;font-size:9px}.befn-mobile-tabs a{font-size:9px}}

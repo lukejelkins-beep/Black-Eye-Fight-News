@@ -1,0 +1,147 @@
+/* Fight Talk: full-size source embeds, legible conversation cards and two editorial lanes. */
+#talk-results .social-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  align-items:start;
+  gap:18px;
+}
+#talk-results .social-card,
+#talk-results .social-card[data-platform] {
+  min-width:0;
+  min-height:205px;
+  padding:22px;
+  background:#090e13;
+  color:#f4f7f8;
+  border:1px solid #26353d;
+  border-radius:14px;
+  box-shadow:0 8px 25px rgba(8,28,34,.09);
+}
+#talk-results .social-card[data-platform="Instagram"]::before {content:none;}
+#talk-results .social-card[data-platform="Instagram"] .social-author small,
+#talk-results .social-card[data-platform="X"] .social-author small,
+#talk-results .social-card[data-platform="Bluesky"] .social-author small,
+#talk-results .social-card[data-platform="Threads"] .social-author small,
+#talk-results .social-card[data-platform="Reddit"] .social-author small {color:#b9c9d0;opacity:1}
+#talk-results .social-card[data-platform="Instagram"] .social-quote,
+#talk-results .social-card .social-quote {color:#eff7f7;font-size:15px;line-height:1.65;white-space:pre-line}
+#talk-results .social-card .social-head .thumb {width:44px;height:44px;flex-basis:44px}
+#talk-results .social-card .social-author strong {font-size:14px}
+#talk-results .social-card .platform-letter {color:#e9f0f3}
+#talk-results .social-card[data-platform="Instagram"] .platform-letter {color:#f05aad}
+#talk-results .social-card[data-platform="Bluesky"] .platform-letter {color:#7dc7ff}
+#talk-results .social-card[data-platform="Facebook"] .platform-letter {color:#80b2ff}
+#talk-results .social-card[data-platform="Reddit"] .platform-letter {color:#ff986a}
+#talk-results .social-card .social-foot {opacity:1;color:#c4d5dc;border-color:#2e3d45}
+#talk-results .social-card .social-foot a {color:#ebf8fb}
+#talk-results .social-card .social-foot a:hover {color:#8be0d1}
+#talk-results .social-card .talk-engagement {color:#b5cbd0;margin:15px 0;font-size:11px;opacity:1}
+#talk-results .thread-card {grid-column:span 1}
+#talk-results .thread-card .thread-title {color:#8ce7d2;font-size:17px;line-height:1.35}
+#talk-results .thread-card .thread-step {padding:15px 0}
+#talk-results .thread-card .thread-step p {line-height:1.65;font-size:13px;overflow-wrap:anywhere}
+#talk-results .thread-card .thread-step.reply {margin-left:24px}
+#talk-results .talk-original {
+  max-width:100%;
+  width:100%;
+  margin:16px auto;
+  padding:0;
+  background:transparent;
+  overflow:visible;
+  border-radius:5px;
+}
+#talk-results .talk-original iframe {
+  display:block;
+  width:100%!important;
+  max-width:540px!important;
+  height:820px;
+  min-width:0;
+  margin:0 auto;
+  zoom:1!important;
+  border:0;
+  background:#fff;
+}
+#talk-results .talk-original .twitter-tweet {
+  width:100%!important;
+  max-width:550px!important;
+  margin:12px auto!important;
+  zoom:1!important;
+}
+#talk-results .talk-original .talk-embed-note {
+  display:block;
+  margin:8px auto 0;
+  max-width:540px;
+  color:#b8cbd2;
+  padding:7px 0;
+}
+#talk-results .talk-source-note {
+  margin:10px 0;
+  color:#b8cbd2;
+  font-size:12px;
+  line-height:1.5;
+}
+#talk-results .talk-section {margin:0 0 34px}
+#talk-results .talk-section + .talk-section {
+  border-top:1px solid #c8d6d0;
+  padding-top:27px;
+}
+#talk-results .talk-section-head {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:end;
+  gap:12px;
+  margin:0 0 18px;
+}
+#talk-results .talk-section-head h2 {
+  font:900 clamp(28px,3vw,37px)/1.06 'Barlow Condensed',Impact,sans-serif;
+  color:#142c32;
+  text-transform:uppercase;
+  margin:3px 0 8px;
+}
+#talk-results .talk-section-head p {
+  font-size:12px;
+  color:#526963;
+  line-height:1.5;
+  max-width:760px;
+  margin:0;
+}
+#talk-results .talk-section-eyebrow {
+  color:#186e62;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+#talk-results .talk-section-head .btn {white-space:nowrap}
+#talk-results .talk-results-head {margin:0 0 20px}
+#talk-results .talk-count {font-size:12px;font-weight:800}
+#talk-results .talk-coverage {max-width:100%}
+#talk-results .talk-empty {margin-top:10px}
+#talk-results .talk-section .pagination {margin:17px 0 0}
+@media (max-width:800px) {
+  #talk-results .social-grid {grid-template-columns:1fr;gap:14px}
+  #talk-results .social-card, #talk-results .social-card[data-platform] {padding:16px}
+  #talk-results .talk-original iframe {height:760px}
+  #talk-results .thread-card {grid-column:span 1}
+}
+@media (max-width:430px) {
+  #talk-results .social-card, #talk-results .social-card[data-platform] {padding:12px}
+  #talk-results .talk-original iframe {height:690px}
+  #talk-results .thread-card .thread-step.reply {margin-left:13px}
+  #talk-results .talk-section-head .btn {white-space:normal}
+}
+
+
+/* Native Meta Threads post embeds keep their own responsive sizing; never scale/crop them like X. */
+#talk-results .talk-original.talk-threads{background:transparent;overflow:visible;min-width:0}
+#talk-results .talk-threads .text-post-media{
+ display:block;box-sizing:border-box;min-height:120px;
+ max-width:100%;width:100%;margin:0 auto;padding:15px;
+ border-radius:10px;background:#fff;color:#172b37;
+}
+#talk-results .talk-threads .text-post-media a{color:#154f69;text-decoration:underline;overflow-wrap:anywhere}
+#talk-results .talk-original.talk-threads iframe{
+ display:block!important;max-width:100%!important;width:100%!important;
+ border:0!important;zoom:1!important;margin:0 auto!important;
+}
+#talk-results .talk-source-note a{color:#9ce7dc;text-decoration:underline;text-underline-offset:3px}
