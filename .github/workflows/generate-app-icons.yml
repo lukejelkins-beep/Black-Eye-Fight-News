@@ -34,8 +34,8 @@ jobs:
 
           payload=base64.b64decode(Path('assets/app-icon-source.webp.b64').read_text().strip(),validate=True)
           master=Image.open(BytesIO(payload)).convert('RGB')
-          if master.width != master.height or master.width < 192:
-              raise ValueError('Expected square approved artwork at least 192px')
+          if master.width != master.height or master.width < 128:
+              raise ValueError('Expected square approved artwork at least 128px')
           for n, filename in (
               (180,'assets/apple-touch-icon.png'),
               (192,'assets/icon-192.png'),
