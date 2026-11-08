@@ -18,3 +18,7 @@ The tracked fighter roster in data/fight-talk-roster.json contains 215 unique ch
 * Bluesky: public DID-pinned author feeds are the currently confirmed automated source.
 
 Original post permalinks and post dates must be verified before editorial selection; publication dates of reports linking a post must never be used as the post's own date. No third-party login-wall scraping or fabricated posts. The private newsletter is a separate project and is not published on the site.
+
+## Source-register expansion — 9 November 2026
+
+A full internal roster lives at `data/fight-talk-roster.json`; this distinguishes tracked fighters from athletes whose accounts need further evidence. The initial X and Instagram watchlists are not a claim to have authenticated timeline access for every fighter. The linked-account identity remains permission-dependent, and stale handles can be corrected by updating the evidence source. X direct originals found in published fight coverage now use the timestamp encoded in X's snowflake ID when it is valid; coverage publication times do not masquerade as original post dates. Instagram authors are named as tracked fighters only when official oEmbed author URLs match a pinned account.

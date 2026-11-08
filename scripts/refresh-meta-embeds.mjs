@@ -11,6 +11,15 @@ import fs from 'node:fs';
 export const nowISO=()=>new Date().toISOString();
 const xWatchlist=JSON.parse(fs.readFileSync('data/fight-talk-sources.json','utf8')).platforms?.X?.accounts||[];
 const trackedX=new Map(xWatchlist.filter(x=>x.username).map(x=>[x.username.replace(/^@/,'').toLowerCase(),x]));
+const igWatchlist=JSON.parse(fs.readFileSync('data/fight-talk-sources.json','utf8')).platforms?.Instagram?.accounts||[];
+const trackedIG=new Map(igWatchlist.filter(x=>x.username).map(x=>[x.username.replace(/^@/,'').toLowerCase(),x]));
+function xDate(url){
+ const id=String(url||'').match(/\/status\/(\d{10,25})\/?$/)?.[1];
+ if(!id)return null;
+ const ms=Number((BigInt(id)>>22n)+1288834974657n);
+ const now=Date.now();
+ return Number.isFinite(ms)&&ms>1288834974657&&ms<=now+1800000?new Date(ms).toISOString():null;
+}
 const acceptedPublishers=new Map([
  ['www.mmafighting.com','MMA Fighting'],['mmafighting.com','MMA Fighting'],
  ['www.worldboxingnews.com','World Boxing News'],['www.worldboxingnews.net','World Boxing News'],
@@ -86,7 +95,17 @@ async function metaVerify(item){
  const base=item.platform==='Instagram'?'https://graph.facebook.com/v26.0/instagram_oembed':'https://graph.threads.com/oembed';
  const r=await fetch(base+'?url='+encodeURIComponent(item.url),{signal:AbortSignal.timeout(9500)});
  if(!r.ok)throw Error('oEmbed HTTP '+r.status);
- return validMetaEmbed(await r.json(),item.platform);
+ const data=await r.json();
+ if(!validMetaEmbed(data,item.platform))return false;
+ let originalAuthor='';
+ try{originalAuthor=new URL(data.author_url).pathname.split('/').filter(Boolean)[0]?.replace(/^@/,'').toLowerCase()||''}catch{}
+ // Instagram author_name can be a display name; never substitute it for a
+ // confirmed account username. The author_url must be a platform profile.
+ if(item.platform==='Instagram'&&originalAuthor&&trackedIG.has(originalAuthor)){
+   const profile=new URL(data.author_url);
+   if(profile.hostname.replace(/^www\./,'')==='instagram.com')item.authorUsername=originalAuthor;
+ }
+ return true;
 }
 /**
  * Publisher homepages often keep promoting the same original post for weeks.
@@ -100,11 +119,15 @@ export function originalStillRelevant(url, firstSeen, checkedAt, windowDays=28){
 }
 export function mergeSourceLinks(articles, links, prior, checkedAt){
  const recentDays=28*24*60*60*1000;
- const existing=new Map((prior.posts||[]).filter(p=>p.nativeEmbed&&p.evidenceUrl&&Date.parse(p.sourceLinkedAt||'')>=Date.parse(checkedAt)-recentDays).map(p=>[p.url,p]));
+ const existing=new Map((prior.posts||[]).filter(p=>p.nativeEmbed&&p.evidenceUrl&&Date.parse(p.sourceLinkedAt||'')>=Date.parse(checkedAt)-recentDays).map(p=>{
+  if(p.platform==='X'&&xDate(p.url))return [p.url,{...p,postedAt:xDate(p.url),originalDateUnverified:false}];
+  return [p.url,p];
+ }));
  for(const {article,item} of links){
   const name=article.sourceLabel||publisherOf(article.url);
   if(!name)continue;
-  const pinned=item.platform==='X'?trackedX.get(item.username?.toLowerCase()):null;
+  const pinned=item.platform==='X'?trackedX.get(item.username?.toLowerCase()):
+   item.platform==='Instagram'&&item.authorUsername?trackedIG.get(item.authorUsername):null;
   if(item.platform==='X'&&!pinned)continue;
   const when=Date.parse(article.publishedAt||'');
   if(!Number.isFinite(when)||when>Date.parse(checkedAt)+30*60*1000||when<Date.parse(checkedAt)-recentDays)continue;
@@ -116,7 +139,8 @@ export function mergeSourceLinks(articles, links, prior, checkedAt){
    // Only the native Meta embed identifies the original author.
    name:pinned?.name||'Original '+item.platform+' post',role:pinned?.role||'media',
    ...(pinned?{handle:'@'+pinned.username,fighterTier:pinned.fighterTier,sport:pinned.sport}:{}),
-   nativeEmbed:true,originalDateUnverified:true,
+   nativeEmbed:true,originalDateUnverified:item.platform!=='X',
+   ...(item.platform==='X'&&xDate(item.url)?{postedAt:xDate(item.url)}:{}),
    sourceLinkedAt:article.publishedAt,
    discoveredAt:old?.discoveredAt||checkedAt,
    sourcePublisher:name,evidenceUrl:article.url,

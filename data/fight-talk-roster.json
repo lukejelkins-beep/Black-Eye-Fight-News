@@ -1,796 +1,98 @@
 {
-  "edition": "2026-11-09",
-  "description": "Fight Talk monitoring roster built from the website's champions/prospects/contenders; identities are associated only through documented account mappings. An empty profiles object means no identified official account, not an inactive fighter.",
-  "counts": {
-    "tracked": 215,
-    "linkedAccounts": 31,
-    "athletesWithAtLeastOneProfile": 25,
-    "athletesAwaitingProfileIdentification": 190,
-    "xAccountsConfigured": 26,
-    "instagramAccountsConfigured": 63
-  },
+  "revisedAt": "2026-11-09",
+  "purpose": "Full combat-sports site champion, contender and prospect roster; null profiles mean no sufficiently supported account was found, not that an account does not exist.",
   "fighters": [
     {
       "name": "Aaron McKenna",
       "sport": "boxing",
       "tier": "champion",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Abdul Rakhman Yakhyaev",
+      "sport": "mma",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Abdullah Mason",
       "sport": "boxing",
       "tier": "champion",
       "profiles": {
+        "X": null,
         "Instagram": {
           "username": "abdullahmason",
-          "evidence": "Verified direct original post: https://www.instagram.com/abdullahmason/reel/DfTBeeBxQok/"
+          "url": "https://www.instagram.com/abdullahmason/",
+          "identityBasis": "Verified direct original post: https://www.instagram.com/abdullahmason/reel/DfTBeeBxQok/"
         }
-      }
+      },
+      "status": "tracked"
     },
     {
       "name": "Adam Azim",
       "sport": "boxing",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Agit Kabayel",
       "sport": "boxing",
       "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Albert Gonzalez",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Andres Cortes",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Andrew Cain",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Andy Cruz",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Andy Hiraoka",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Angel Barrientes",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Angelo Leo",
-      "sport": "boxing",
-      "tier": "champion",
       "profiles": {
+        "X": null,
         "Instagram": {
-          "username": "angeloxleo",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+          "username": "agitkabayel",
+          "url": "https://www.instagram.com/agitkabayel/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/ja/person/agit-kabayel/"
         }
-      }
-    },
-    {
-      "name": "Anthony Cacace",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Aoi Yokoyama",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Bakary Samake",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Bakhodir Jalolov",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Bek Nurmaganbet",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Ben Whittaker",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Bruce Carrington",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Bryan Mercado",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Callum Simpson",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Callum Walsh",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Canelo Álvarez",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {
-        "Instagram": {
-          "username": "canelo",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
-        }
-      }
-    },
-    {
-      "name": "Carlos Adames",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Charles Conwell",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Charly Suarez",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Chris Billam-Smith",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Christian Medina",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Conah Walker",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Cristóbal Lorente",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Curmel Moton",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Dalton Smith",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Daniel Dubois",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "David Benavidez",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {
-        "X": {
-          "username": "benavidez300",
-          "evidence": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
-        },
-        "Instagram": {
-          "username": "benavidez300",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
-        }
-      }
-    },
-    {
-      "name": "David Morrell Jr.",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "David Nyika",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Devin Haney",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Diego Pacheco",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Dmitry Bivol",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Elijah Garcia",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Emiliano Vargas",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {
-        "Instagram": {
-          "username": "emilianofvargas",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
-        }
-      }
-    },
-    {
-      "name": "Erislandy Lara",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {
-        "Instagram": {
-          "username": "erislandylaraofficial",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
-        }
-      }
-    },
-    {
-      "name": "Ernesto Mercado",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Fabio Wardley",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Filip Hrgović",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Floyd Schofield",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Freudis Rojas",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Gary Antuanne Russell",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {
-        "Instagram": {
-          "username": "twonthedon5",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
-        }
-      }
-    },
-    {
-      "name": "George Liddard",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Giorgio Visioli",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Giovani Santillan",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Hayato Tsutsumi",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Imam Khataev",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Israil Madrimov",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Jacob Bank",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Jadier Herrera",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Jahi Tucker",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Jai Opetaia",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {
-        "Instagram": {
-          "username": "jaiopetaia_",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
-        }
-      }
-    },
-    {
-      "name": "Jaime Munguía",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Jalil Hackett",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Jaron Ennis",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Jason Moloney",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Jesse Rodríguez",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Jhon Orobio",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Jordy Adames",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "José Salas Reyes",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Joseph Parker",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Josh Kelly",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Joshua Buatsi",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Junto Nakatani",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Katsuma Akitsugi",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Kévin Lele Sadjo",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Lamont Roach Jr.",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Lenar Perez",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Liam Paro",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Liam Wilson",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Lindolfo Delgado",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Michał Cieślak",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Mikito Nakano",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Mirco Cuello",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Moses Itauma",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Murat Gassiev",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Najee Lopez",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Naoya Inoue",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {
-        "Instagram": {
-          "username": "naoyainoue_410",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
-        }
-      }
-    },
-    {
-      "name": "O’Shaquie Foster",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Oleksandr Usyk",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {
-        "Instagram": {
-          "username": "usykaa",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
-        }
-      }
-    },
-    {
-      "name": "Omar Trinidad",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Omari Jones",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Osleys Iglesias",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Otabek Kholmatov",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Pat Brown",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Rafael Espinoza",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Ramon Cardenas",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Richard Torrez Jr.",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Robin Sirwan Safar",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Rohan Polanco",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Royston Barney-Smith",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Ryan Garcia",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {
-        "Instagram": {
-          "username": "kingryan",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
-        }
-      }
-    },
-    {
-      "name": "Sam Goodman",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Sam Noakes",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Sebastian Fundora",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Sebastian Hernandez Reyes",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Shakhram Giyasov",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Shakur Stevenson",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {
-        "X": {
-          "username": "shakurstevenson",
-          "evidence": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
-        },
-        "Instagram": {
-          "username": "shakurstevenson",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
-        }
-      }
-    },
-    {
-      "name": "Takuma Inoue",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Tenshin Nasukawa",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Teófimo López",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Teremoana Teremoana",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Tim Tszyu",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Vergil Ortiz Jr.",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Viddal Riley",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Vito Mielnicki Jr.",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Wilkens Mathieu",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "William Zepeda",
-      "sport": "boxing",
-      "tier": "champion",
-      "profiles": {}
-    },
-    {
-      "name": "Willy Hutchinson",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Yoenli Hernandez",
-      "sport": "boxing",
-      "tier": "contender",
-      "profiles": {}
-    },
-    {
-      "name": "Zaquin Moses",
-      "sport": "boxing",
-      "tier": "prospect",
-      "profiles": {}
-    },
-    {
-      "name": "Abdul Rakhman Yakhyaev",
-      "sport": "mma",
-      "tier": "prospect",
-      "profiles": {}
+      },
+      "status": "tracked"
     },
     {
       "name": "Ailín Pérez",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Albert Gonzalez",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "chop_gonzalez1",
+          "url": "https://www.instagram.com/chop_gonzalez1/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/category/combat-sports/instagram/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Alexa Grasso",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Alexander Volkanovski",
@@ -799,67 +101,242 @@
       "profiles": {
         "X": {
           "username": "alexvolkanovski",
-          "evidence": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
+          "url": "https://x.com/alexvolkanovski",
+          "identityBasis": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
         },
         "Instagram": {
           "username": "alexvolkanovski",
-          "evidence": "Verified direct original post: https://www.instagram.com/alexvolkanovski/reel/DfTi2rvyg1d/"
+          "url": "https://www.instagram.com/alexvolkanovski/",
+          "identityBasis": "Verified direct original post: https://www.instagram.com/alexvolkanovski/reel/DfTi2rvyg1d/"
         }
-      }
+      },
+      "status": "tracked"
     },
     {
       "name": "Alexander Volkov",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Alexandre Pantoja",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Alexia Thainara",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Allen Frye Jr.",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Andres Cortes",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Andrew Cain",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Andy Cruz",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Andy Hiraoka",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Angel Barrientes",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Angelo Leo",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "angeloxleo",
+          "url": "https://www.instagram.com/angeloxleo/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Anthony Cacace",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Aoi Yokoyama",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Arman Tsarukyan",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": {
+          "username": "ArmanUfc",
+          "url": "https://x.com/ArmanUfc",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/arman-tsarukyan/"
+        },
+        "Instagram": {
+          "username": "arm_011",
+          "url": "https://www.instagram.com/arm_011/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/arman-tsarukyan/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Ateba Gautier",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Bakary Samake",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Bakhodir Jalolov",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "bakhodirdjalolov",
+          "url": "https://www.instagram.com/bakhodirdjalolov/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/bakhodir-jalolov/"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Bek Nurmaganbet",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Ben Whittaker",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Bia Mesquita",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Bilal Hasan",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Billy Elekana",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Bo Nickal",
@@ -868,265 +345,1052 @@
       "profiles": {
         "X": {
           "username": "nobickal1",
-          "evidence": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
+          "url": "https://x.com/nobickal1",
+          "identityBasis": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
         },
         "Instagram": {
           "username": "nobickal1",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+          "url": "https://www.instagram.com/nobickal1/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
         }
-      }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Bruce Carrington",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "bruce_carrington",
+          "url": "https://www.instagram.com/bruce_carrington/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/bruce-carrington/"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Bryan Mercado",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Callum Simpson",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Callum Walsh",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Cam Rowston",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Canelo Álvarez",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "canelo",
+          "url": "https://www.instagram.com/canelo/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Carli Judice",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "crispycarlij",
+          "url": "https://www.instagram.com/crispycarlij/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/category/combat-sports/instagram/"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Carlos Adames",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Carlos Prates",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Carlos Ulberg",
       "sport": "mma",
       "tier": "champion",
       "profiles": {
+        "X": null,
         "Instagram": {
           "username": "carlosulberg",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+          "url": "https://www.instagram.com/carlosulberg/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
         }
-      }
+      },
+      "status": "tracked"
     },
     {
       "name": "Casey O'Neill",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Charles Conwell",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Charly Suarez",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Chris Billam-Smith",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Christian Medina",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Ciryl Gane",
       "sport": "mma",
       "tier": "champion",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Cody Haddon",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Conah Walker",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Cristóbal Lorente",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Curmel Moton",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Dakota Hope",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Dalton Smith",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Daniel Dubois",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": {
+          "username": "DynamiteDubois",
+          "url": "https://x.com/DynamiteDubois",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/daniel-dubois/"
+        },
+        "Instagram": {
+          "username": "dynamite_daniel_dubois",
+          "url": "https://www.instagram.com/dynamite_daniel_dubois/",
+          "identityBasis": "Public fighter profile reference: https://rebuild-prd.prostatecanceruk.org/about-us/news-and-views/2024/09/daniel-dubois-boosts-awareness"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Daniil Donchenko",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Daria Zhelezniakova",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "David Benavidez",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": {
+          "username": "benavidez300",
+          "url": "https://x.com/benavidez300",
+          "identityBasis": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
+        },
+        "Instagram": {
+          "username": "benavidez300",
+          "url": "https://www.instagram.com/benavidez300/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "David Martínez",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "David Morrell Jr.",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "David Nyika",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Denise Gomes",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Devin Haney",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Diego Lopes",
       "sport": "mma",
       "tier": "contender",
       "profiles": {
+        "X": null,
         "Instagram": {
           "username": "diegolopesmma",
-          "evidence": "Verified direct original post: https://www.instagram.com/diegolopesmma/reel/DfdsDr5RQy9/"
+          "url": "https://www.instagram.com/diegolopesmma/",
+          "identityBasis": "Verified direct original post: https://www.instagram.com/diegolopesmma/reel/DfdsDr5RQy9/"
         }
-      }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Diego Pacheco",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Dmitry Bivol",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": {
+          "username": "bivol_d",
+          "url": "https://x.com/bivol_d",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/dmitry-bivol/"
+        },
+        "Instagram": {
+          "username": "bivol_d",
+          "url": "https://www.instagram.com/bivol_d/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/dmitry-bivol/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Donte Johnson",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Dricus du Plessis",
       "sport": "mma",
       "tier": "contender",
       "profiles": {
+        "X": null,
         "Instagram": {
           "username": "dricusduplessis",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+          "url": "https://www.instagram.com/dricusduplessis/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
         }
-      }
+      },
+      "status": "tracked"
     },
     {
       "name": "Eduarda Moura",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Elijah Garcia",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Emiliano Vargas",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "emilianofvargas",
+          "url": "https://www.instagram.com/emilianofvargas/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Erislandy Lara",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "erislandylaraofficial",
+          "url": "https://www.instagram.com/erislandylaraofficial/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Ernesto Mercado",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Ethyn Ewing",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Fabio Wardley",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": {
+          "username": "fabio_wardley",
+          "url": "https://x.com/fabio_wardley",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/ja/person/fabio-wardley/"
+        },
+        "Instagram": {
+          "username": "fabiowardley",
+          "url": "https://www.instagram.com/fabiowardley/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/ja/person/fabio-wardley/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Fatima Kline",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "fatima_kline",
+          "url": "https://www.instagram.com/fatima_kline/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/category/combat-sports/instagram/"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Filip Hrgović",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Floyd Schofield",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Freudis Rojas",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "freudisrojasjr",
+          "url": "https://www.instagram.com/freudisrojasjr/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/category/combat-sports/instagram/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Gabriel Bonfim",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Gabriel Santos",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Gabriella Fernandes",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Gary Antuanne Russell",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "twonthedon5",
+          "url": "https://www.instagram.com/twonthedon5/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "George Liddard",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Giorgio Visioli",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Giovani Santillan",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Hayato Tsutsumi",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Ian Machado Garry",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "iangarry",
+          "url": "https://www.instagram.com/iangarry/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/category/combat-sports/instagram/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Ikram Aliskerov",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Ilia Topuria",
       "sport": "mma",
       "tier": "contender",
       "profiles": {
+        "X": null,
         "Instagram": {
           "username": "iliatopuria",
-          "evidence": "Verified direct original post: https://www.instagram.com/iliatopuria/p/DfZUL6WMVLu/"
+          "url": "https://www.instagram.com/iliatopuria/",
+          "identityBasis": "Verified direct original post: https://www.instagram.com/iliatopuria/p/DfZUL6WMVLu/"
         }
-      }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Imam Khataev",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Islam Makhachev",
       "sport": "mma",
       "tier": "champion",
       "profiles": {
+        "X": null,
         "Instagram": {
           "username": "islam_makhachev",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+          "url": "https://www.instagram.com/islam_makhachev/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
         }
-      }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Israil Madrimov",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Iwo Baraniewski",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Jacob Bank",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Jacobe Smith",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Jadier Herrera",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Jahi Tucker",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "whois_jahitucker",
+          "url": "https://www.instagram.com/whois_jahitucker/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/category/combat-sports/instagram/"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Jai Opetaia",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "jaiopetaia_",
+          "url": "https://www.instagram.com/jaiopetaia_/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Jaime Munguía",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Jalil Hackett",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Jaqueline Amorim",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Jaron Ennis",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": {
+          "username": "JaronEnnis",
+          "url": "https://x.com/JaronEnnis",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/jaron-ennis/"
+        },
+        "Instagram": {
+          "username": "jaronennis",
+          "url": "https://www.instagram.com/jaronennis/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/jaron-ennis/"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Jason Moloney",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Jean-Paul Lebosnoyani",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Jesse Rodríguez",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": {
+          "username": "210bam",
+          "url": "https://x.com/210bam",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/ja/person/jesse-rodriguez/"
+        },
+        "Instagram": {
+          "username": "210bam",
+          "url": "https://www.instagram.com/210bam/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/ja/person/jesse-rodriguez/"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Jhon Orobio",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Jiří Procházka",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "jirkaprochazka",
+          "url": "https://www.instagram.com/jirkaprochazka/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/jiri-prochazka/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Joe Pyfer",
       "sport": "mma",
       "tier": "contender",
       "profiles": {
+        "X": null,
         "Instagram": {
           "username": "joepyfer",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+          "url": "https://www.instagram.com/joepyfer/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
         }
-      }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Jordy Adames",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Jose Ochoa",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "José Salas Reyes",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Joselyne Edwards",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Joseph Parker",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Josh Hokit",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "theincredible_hok",
+          "url": "https://www.instagram.com/theincredible_hok/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/category/combat-sports/instagram/page/2/"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Josh Kelly",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Joshua Buatsi",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Joshua Van",
       "sport": "mma",
       "tier": "champion",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Jovan Leka",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Junto Nakatani",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": {
+          "username": "BoxerJunto",
+          "url": "https://x.com/BoxerJunto",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/ja/person/junto-nakatani/"
+        },
+        "Instagram": {
+          "username": "junto.n",
+          "url": "https://www.instagram.com/junto.n/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/ja/person/junto-nakatani/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Justin Gaethje",
       "sport": "mma",
       "tier": "champion",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "justin_gaethje",
+          "url": "https://www.instagram.com/justin_gaethje/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/category/combat-sports/instagram/page/2/"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Katsuma Akitsugi",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Kayla Harrison",
@@ -1135,210 +1399,694 @@
       "profiles": {
         "X": {
           "username": "KaylaH",
-          "evidence": "Official athlete linktree https://linktr.ee/KaylaHarrison and https://handledex.com/en/person/kayla-harrison/"
+          "url": "https://x.com/KaylaH",
+          "identityBasis": "Official athlete linktree https://linktr.ee/KaylaHarrison and https://handledex.com/en/person/kayla-harrison/"
         },
         "Instagram": {
           "username": "kaylaharrisonofficial",
-          "evidence": "Verified direct original post: https://www.instagram.com/kaylaharrisonofficial/reel/DfXy01AovMB/"
+          "url": "https://www.instagram.com/kaylaharrisonofficial/",
+          "identityBasis": "Verified direct original post: https://www.instagram.com/kaylaharrisonofficial/reel/DfXy01AovMB/"
         }
-      }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Kévin Lele Sadjo",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Kevin Vallejos",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Khamzat Chimaev",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Klaudia Syguła",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Lamont Roach Jr.",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Lenar Perez",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Liam Paro",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Liam Wilson",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Lindolfo Delgado",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Lone’er Kavanagh",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Luana Santos",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Mackenzie Dern",
       "sport": "mma",
       "tier": "champion",
       "profiles": {
+        "X": null,
         "Instagram": {
           "username": "mackenziedern",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+          "url": "https://www.instagram.com/mackenziedern/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
         }
-      }
+      },
+      "status": "tracked"
     },
     {
       "name": "Magomed Ankalaev",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Manel Kape",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Manon Fiorot",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Marcos Degli",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Mario Pinto",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Mason Jones",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Matheus Camilo",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Mauricio Ruffy",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Melquizael Costa",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Merab Dvalishvili",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": {
+          "username": "MerabDvalishvil",
+          "url": "https://x.com/MerabDvalishvil",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/merab-dvalishvili/"
+        },
+        "Instagram": {
+          "username": "merab.dvalishvili",
+          "url": "https://www.instagram.com/merab.dvalishvili/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/merab-dvalishvili/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Michael Morales",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Michał Cieślak",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Michelle Montague",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "thewildonemma",
+          "url": "https://www.instagram.com/thewildonemma/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/category/combat-sports/instagram/page/2/"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Mikito Nakano",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Mirco Cuello",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Moses Itauma",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "m.itauma",
+          "url": "https://www.instagram.com/m.itauma/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/ja/person/moses-itauma/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Movsar Evloev",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Muhammad Saidov",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Murat Gassiev",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "murat_gassiev",
+          "url": "https://www.instagram.com/murat_gassiev/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/birthday/10-12/"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Najee Lopez",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Naoya Inoue",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "naoyainoue_410",
+          "url": "https://www.instagram.com/naoyainoue_410/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Natália Silva",
       "sport": "mma",
       "tier": "champion",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Navajo Stirling",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "navajostirling",
+          "url": "https://www.instagram.com/navajostirling/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/category/combat-sports/instagram/page/2/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Nazim Sadykhov",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Nina Milošević",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "O’Shaquie Foster",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "shockfoster",
+          "url": "https://www.instagram.com/shockfoster/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/category/combat-sports/instagram/page/2/"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Oleksandr Usyk",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "usykaa",
+          "url": "https://www.instagram.com/usykaa/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Omar Trinidad",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Omari Jones",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Osleys Iglesias",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Otabek Kholmatov",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Pat Brown",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Payton Talbott",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "paytontalbott",
+          "url": "https://www.instagram.com/paytontalbott/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/category/combat-sports/instagram/page/2/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Petr Yan",
       "sport": "mma",
       "tier": "champion",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Quillan Salkilld",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": {
+          "username": "quillansalkilld",
+          "url": "https://x.com/quillansalkilld",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/quillan-salkilld/"
+        },
+        "Instagram": {
+          "username": "quillansalkilld",
+          "url": "https://www.instagram.com/quillansalkilld/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/quillan-salkilld/"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Rafael Espinoza",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Ramazan Temirov",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Ramon Cardenas",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Raul Rosas Jr.",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "raulrosasjr",
+          "url": "https://www.instagram.com/raulrosasjr/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/category/combat-sports/instagram/page/2/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Regina Tarin",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Richard Torrez Jr.",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "theerichardtorrez",
+          "url": "https://www.instagram.com/theerichardtorrez/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/category/combat-sports/instagram/page/2/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Rinya Nakamura",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Robin Sirwan Safar",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Rodrigo Sezinando",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Rohan Polanco",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Royston Barney-Smith",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Ryan Garcia",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "kingryan",
+          "url": "https://www.instagram.com/kingryan/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Sam Goodman",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "samgoodman9",
+          "url": "https://www.instagram.com/samgoodman9/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/sam-goodman/"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Sam Noakes",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Sean Strickland",
@@ -1347,45 +2095,186 @@
       "profiles": {
         "X": {
           "username": "SStricklandMMA",
-          "evidence": "Verified direct original post: https://x.com/SStricklandMMA/status/2118132607548600501"
+          "url": "https://x.com/SStricklandMMA",
+          "identityBasis": "Verified direct original post: https://x.com/SStricklandMMA/status/2118132607548600501"
+        },
+        "Instagram": null
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Sebastian Fundora",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "seb_fundora",
+          "url": "https://www.instagram.com/seb_fundora/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/category/combat-sports/instagram/page/2/"
         }
-      }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Sebastian Hernandez Reyes",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Shakhram Giyasov",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Shakur Stevenson",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": {
+          "username": "shakurstevenson",
+          "url": "https://x.com/shakurstevenson",
+          "identityBasis": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
+        },
+        "Instagram": {
+          "username": "shakurstevenson",
+          "url": "https://www.instagram.com/shakurstevenson/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Shi Ming",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Song Yadong",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Stephanie Luciano",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Takuma Inoue",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Tallison Teixeira",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Tatsuro Taira",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Tenshin Nasukawa",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Teófimo López",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Teremoana Teremoana",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "teremoana_rep",
+          "url": "https://www.instagram.com/teremoana_rep/",
+          "identityBasis": "Public fighter profile reference: https://imginn.com/p/De0SsZgRD2W/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Tereza Bledá",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Tim Tszyu",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": {
+          "username": "Tim_Tszyu",
+          "url": "https://x.com/Tim_Tszyu",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/tim-tszyu/"
+        },
+        "Instagram": {
+          "username": "timtszyu",
+          "url": "https://www.instagram.com/timtszyu/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/tim-tszyu/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Tom Aspinall",
@@ -1394,60 +2283,197 @@
       "profiles": {
         "X": {
           "username": "AspinallMMA",
-          "evidence": "Verified public profile directory https://handledex.com/en/person/tom-aspinall/"
+          "url": "https://x.com/AspinallMMA",
+          "identityBasis": "Verified public profile directory https://handledex.com/en/person/tom-aspinall/"
         },
         "Instagram": {
           "username": "tomaspinallofficial",
-          "evidence": "Verified direct original post: https://www.instagram.com/tomaspinallofficial/p/DfIETrHAP-6/"
+          "url": "https://www.instagram.com/tomaspinallofficial/",
+          "identityBasis": "Verified direct original post: https://www.instagram.com/tomaspinallofficial/p/DfIETrHAP-6/"
         }
-      }
+      },
+      "status": "tracked"
     },
     {
       "name": "Tom Nolan",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": {
+          "username": "bigtrainufc",
+          "url": "https://www.instagram.com/bigtrainufc/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/category/combat-sports/instagram/page/2/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Valentina Shevchenko",
       "sport": "mma",
       "tier": "contender",
       "profiles": {
+        "X": null,
         "Instagram": {
           "username": "bulletvalentina",
-          "evidence": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+          "url": "https://www.instagram.com/bulletvalentina/",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
         }
-      }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Vergil Ortiz Jr.",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": {
+          "username": "VergilOrtiz",
+          "url": "https://x.com/VergilOrtiz",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/vergil-ortiz-jr/"
+        },
+        "Instagram": {
+          "username": "vergilortiz",
+          "url": "https://www.instagram.com/vergilortiz/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/vergil-ortiz-jr/"
+        }
+      },
+      "status": "tracked"
+    },
+    {
+      "name": "Viddal Riley",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Vito Mielnicki Jr.",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": {
+          "username": "VitoMielnickiJr",
+          "url": "https://x.com/VitoMielnickiJr",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/vito-mielnicki-jr/"
+        },
+        "Instagram": {
+          "username": "vitomielnicki",
+          "url": "https://www.instagram.com/vitomielnicki/",
+          "identityBasis": "Public fighter profile reference: https://handledex.com/en/person/vito-mielnicki-jr/"
+        }
+      },
+      "status": "tracked"
     },
     {
       "name": "Vitor Petrino",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Wilkens Mathieu",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "William Zepeda",
+      "sport": "boxing",
+      "tier": "champion",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Willy Hutchinson",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Yadier del Valle",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Yoenli Hernandez",
+      "sport": "boxing",
+      "tier": "contender",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Youssef Zalal",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
+    },
+    {
+      "name": "Zaquin Moses",
+      "sport": "boxing",
+      "tier": "prospect",
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Zhang Mingyang",
       "sport": "mma",
       "tier": "prospect",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     },
     {
       "name": "Zhang Weili",
       "sport": "mma",
       "tier": "contender",
-      "profiles": {}
+      "profiles": {
+        "X": null,
+        "Instagram": null
+      },
+      "status": "identity-research-needed"
     }
-  ]
+  ],
+  "counts": {
+    "total": 215,
+    "tracked": 61,
+    "missingBoth": 154,
+    "withX": 19,
+    "withInstagram": 60
+  }
 }
