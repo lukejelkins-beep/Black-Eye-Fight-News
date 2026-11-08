@@ -1,0 +1,58 @@
+name: Generate approved app icons
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/app-icon-source.webp.b64'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: generate-approved-app-icons
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Convert approved artwork to home-screen PNGs
+        run: |
+          python -m pip install --disable-pip-version-check pillow==11.3.0
+          python - <<'PY'
+          import base64
+          from io import BytesIO
+          from pathlib import Path
+          from PIL import Image
+
+          payload=base64.b64decode(Path('assets/app-icon-source.webp.b64').read_text().strip(),validate=True)
+          master=Image.open(BytesIO(payload)).convert('RGB')
+          if master.width != master.height or master.width < 192:
+              raise ValueError('Expected square approved artwork at least 192px')
+          for n, filename in (
+              (180,'assets/apple-touch-icon.png'),
+              (192,'assets/icon-192.png'),
+              (512,'assets/icon-512.png'),
+          ):
+              master.resize((n,n),Image.Resampling.LANCZOS).save(filename,format='PNG',optimize=True)
+          maskable=Image.new('RGB',(512,512),(0,0,0))
+          centered=master.resize((360,360),Image.Resampling.LANCZOS)
+          maskable.paste(centered,((512-360)//2,(512-360)//2))
+          maskable.save('assets/icon-maskable-512.png',format='PNG',optimize=True)
+          PY
+      - name: Commit generated icon sizes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/apple-touch-icon.png assets/icon-192.png assets/icon-512.png assets/icon-maskable-512.png
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish approved BEFN home-screen app icons"
+            git push origin HEAD:main
+          fi
