@@ -57,6 +57,21 @@ class PosterChecks(unittest.TestCase):
           <body>1 February 2099</body></html>"""
         self.assertEqual(mod.candidates_from_page(e, e["source"], body), [])
 
+    def test_fighter_photo_is_temporary_until_real_poster_arrives(self):
+        e = event()
+        e["fighterFallback"] = {"name": "Fighter One",
+                                "url": "https://example.com/fighter.jpg"}
+        self.assertTrue(mod.future_unresolved(e, "2099-01-01"))
+        approved = {"selected": {"field": "posterPortrait",
+            "url": "https://example.com/real-event-poster.jpg",
+            "source": "https://www.ufc.com/event/example",
+            "credit": "Official promotional artwork",
+            "kind": "Portrait event poster", "width": 650, "height": 900}}
+        self.assertTrue(mod.apply_result(e, approved))
+        self.assertEqual(e["posterPortrait"]["url"],
+                         "https://example.com/real-event-poster.jpg")
+        self.assertEqual(e["fighterFallback"]["name"], "Fighter One")
+
     def test_no_poster_keeps_fallback(self):
         e = event()
         e["posterLandscape"] = {"url": "https://example.com/old-banner.jpg"}
