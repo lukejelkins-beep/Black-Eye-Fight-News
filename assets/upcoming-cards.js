@@ -105,8 +105,10 @@ window.UpcomingCards=(()=>{
    if(typeof url!=='string'||!/^https:\/\//i.test(url)||seen.has(url))return;
    seen.add(url);files.push({url,kind});
   };
-  const preferred=e.posterPortrait?.url||'';
-  add(preferred,'portrait');
+  // Portrait official art first, then verified square artwork suitable for
+  // the compact thumbnail. Both must be genuinely square/vertical after load.
+  add(e.posterPortrait?.url||'','portrait');
+  add(e.posterList?.url||'','portrait');
   const secondary=e.posterLandscape?.url||e.poster?.url||'';
   if(secondary){
    const versions=posterUrls(secondary);
@@ -178,9 +180,10 @@ window.UpcomingCards=(()=>{
    (e.sourceStatus==='reported'?'<span class="upcoming-row-provisional">Reported · UFC confirmation pending</span>':'')+'</span>'+
    '<span class="upcoming-row-chevron" aria-hidden="true">⌄</span></summary>';
   const when=publishedInstant(e),start=when?'<span>Local scheduled start: '+esc(fmtTime(when.toISOString()))+'</span>':'<span>Start time awaiting confirmation · venue date: '+esc(fmtDate(e.date))+'</span>';
-  const portraitCredit=e.posterPortrait?.source&&art?'<a href="'+href(e.posterPortrait.source)+'" target="_blank" rel="noopener noreferrer">Portrait artwork source ↗</a>':'';
+  const sourcePrimary=e.posterPortrait?.source||e.posterList?.source||'';
+  const firstCredit=sourcePrimary&&art?'<a href="'+href(sourcePrimary)+'" target="_blank" rel="noopener noreferrer">Poster source ↗</a>':'';
   const landscapeSource=e.posterLandscape?.source||e.poster?.source;
-  const credit=portraitCredit+(landscapeSource&&landscapeSource!==e.posterPortrait?.source&&art?'<a href="'+href(landscapeSource)+'" target="_blank" rel="noopener noreferrer">Event artwork source ↗</a>':'');
+  const credit=firstCredit+(landscapeSource&&landscapeSource!==sourcePrimary&&art?'<a href="'+href(landscapeSource)+'" target="_blank" rel="noopener noreferrer">Other artwork ↗</a>':'');
   return '<details class="result-event upcoming-event" data-upcoming-card="'+esc(e.id)+'" '+(opened.has(e.id)?'open':'')+'>'+summary+
    '<div class="upcoming-expanded"><div class="upcoming-meta">'+start+'<a href="'+href(e.source)+'" target="_blank" rel="noopener noreferrer">Event source ↗</a>'+credit+'</div>'+
    (e.dateNote?'<p class="upcoming-event-note">'+esc(e.dateNote)+'</p>':'')+
