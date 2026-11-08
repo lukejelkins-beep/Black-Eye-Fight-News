@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict';
+import {PROPERTIES,norm,matchPerson,enroll,counts} from '../scripts/discover-fight-talk-profiles.mjs';
+const claim=(value,rank='normal')=>({rank,mainsnak:{snaktype:'value',datavalue:{value}}});
+const entity={labels:{en:{value:'Fighter Example'}},descriptions:{en:{value:'Australian professional boxer'}},claims:{
+ P2002:[claim('FighterExample')],P2003:[claim('fighter.example')],P11892:[claim('fighter.example')]}};
+const person={name:'Fighter Example',sport:'boxing',tier:'prospect'};
+const search={search:[{id:'Q123',label:'Fighter Example'}]};
+const m=matchPerson(person,search,{Q123:entity});
+assert.equal(m.profiles.X.username,'FighterExample');
+assert.equal(m.profiles.Instagram.username,'fighter.example');
+assert.equal(m.profiles.Threads.url,'https://www.threads.com/@fighter.example');
+assert.equal(matchPerson({...person,sport:'mma'},search,{Q123:entity}),null);
+assert.equal(matchPerson({name:'Other Person',sport:'boxing'},search,{Q123:entity}),null);
+assert.equal(matchPerson(person,{search:[...search.search,{id:'Q124',label:'Fighter Example'}]},{Q123:entity,Q124:entity}),null);
+const cfg={platforms:{X:{accounts:[]},Instagram:{accounts:[]}},threads:{allowlistedUsernames:[]}};
+const roster={fighters:[{name:'Fighter Example',sport:'boxing',tier:'prospect',status:'identity-research-needed',profiles:{X:null,Instagram:null}}]};
+const first=enroll(person,m,cfg,roster);
+assert.equal(first.registered.length,3);
+assert.equal(cfg.threads.allowlistedUsernames[0],'fighter.example');
+assert.equal(enroll(person,m,cfg,roster).registered.length,0);
+assert.equal(counts(roster).withThreads,1);
+assert.equal(norm('O’Shaquie'),norm("O'Shaquie"));
+cfg.platforms.X.accounts[0].username='different_handle';
+assert.equal(enroll(person,m,cfg,roster).conflicts.length,1);
+console.log('Public X Instagram Threads athlete identity discovery tests passed');
