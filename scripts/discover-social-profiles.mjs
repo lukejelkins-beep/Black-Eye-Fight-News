@@ -191,28 +191,39 @@ export async function main(){
  const problems=[],conflicts=[],candidates=[];
  const records=[...roster.fighters];
  let wikiBatches=0,officialChecked=0,searchChecked=0;
- // Bulk lookup of exact Wikipedia titles gives wide coverage with fewer calls.
- for(let i=0;i<records.length;i+=25){
-  try{
-   const data=await wikiBatchByTitle(records.slice(i,i+25).map(f=>f.name));
-   wikiBatches++;
-   for(const entity of Object.values(data)){
-    for(const f of records){
-     if((f.profiles?.X&&f.profiles?.Instagram&&f.profiles?.Threads))continue;
-     const matching=wikidataIdentity(entity,f.name,f.sport);
-     candidates.push(...matching);
+ // Separate broad and targeted requests into different daily runs to honour
+ // Wikimedia's rate limits and spread load through the day.
+ const mode=process.argv.includes('--bulk')?'bulk':process.argv.includes('--search')?'search':
+   new Date().getUTCHours()<12?'bulk':'search';
+ let wikiRateLimited=false;
+ if(mode==='bulk'){
+  for(let i=0;i<records.length;i+=25){
+   if(wikiRateLimited)break;
+   try{
+    const data=await wikiBatchByTitle(records.slice(i,i+25).map(f=>f.name));
+    wikiBatches++;
+    for(const entity of Object.values(data)){
+     for(const f of records){
+      if((f.profiles?.X&&f.profiles?.Instagram&&f.profiles?.Threads))continue;
+      candidates.push(...wikidataIdentity(entity,f.name,f.sport));
+     }
     }
+   }catch(err){
+    if(/HTTP 429/.test(String(err.message||err)))wikiRateLimited=true;
+    if(problems.length<12)problems.push('Wikidata batch '+i+': '+String(err.message||err).slice(0,100));
    }
-  }catch(err){problems.push('Wikidata batch '+i+': '+String(err.message||err).slice(0,100))}
+   if(!wikiRateLimited)await new Promise(resolve=>setTimeout(resolve,1800));
+  }
  }
- // Search Wikidata names with nonstandard Wikipedia titles, rotating every run.
+ // Search Wikidata names with nonstandard Wikipedia titles, rotating on
+ // alternate runs instead of doing both high-volume scans back-to-back.
  const missing=records.filter(f=>Object.values(f.profiles||{}).every(x=>!x));
  const searchStart=previous.nextSearchOffset||0;
- const searchSubset=Array.from({length:Math.min(12,missing.length)},(_,i)=>missing[(searchStart+i)%missing.length]);
+ const searchSubset=mode==='search'?Array.from({length:Math.min(12,missing.length)},(_,i)=>missing[(searchStart+i)%missing.length]):[];
  const ids=new Map();
  // Wikimedia can return HTTP 429 after bulk identity lookup. Do not hammer
  // the endpoint or skip dozens of names when rate limited.
- let rateLimited=false;
+ let rateLimited=wikiRateLimited;
  let attemptedSearch=0;
  for(const f of searchSubset){
   if(rateLimited)break;
@@ -225,7 +236,7 @@ export async function main(){
    if(/HTTP 429/.test(String(e.message||e)))rateLimited=true;
    if(problems.length<12)problems.push('Search '+f.name+': '+String(e.message||e).slice(0,85));
   }
-  if(!rateLimited)await new Promise(resolve=>setTimeout(resolve,1150));
+  if(!rateLimited)await new Promise(resolve=>setTimeout(resolve,1800));
  }
  const idList=[...ids.keys()];
  for(let i=0;i<idList.length;i+=25){
@@ -264,7 +275,7 @@ export async function main(){
  writeJson(sourceFile,config);
  writeJson(rosterFile,roster);
  writeJson(reportFile,{checkedAt:new Date().toISOString(),source:'Wikidata P2002/P2003/P11892 + official athlete structured links',
-  discoveredThisRun:added,candidatesChecked:seen.size,wikiBatches,searchChecked,officialChecked,
+  discoveredThisRun:added,candidatesChecked:seen.size,mode,wikiBatches,searchChecked,officialChecked,
   counts:roster.counts,rateLimited,conflicts:conflicts.slice(0,70),errors:problems.slice(0,20),
   nextSearchOffset:missing.length?(searchStart+searchChecked)%missing.length:0,
   nextOfficialOffset:officialMissing.length?(officialStart+officialSubset.length)%officialMissing.length:0,
