@@ -2,8 +2,7 @@ name: Refresh live Fight Talk
 
 on:
   schedule:
-    # Intraday source checks; preserve 28-day history for editorial highlights.
-    # GitHub may delay scheduled jobs.
+    # Run every ten minutes when GitHub Actions scheduling permits.
     - cron: '3,13,23,33,43,53 * * * *'
   workflow_dispatch:
   push:
@@ -27,7 +26,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
         with:
@@ -40,6 +39,8 @@ jobs:
           node --check scripts/refresh-fight-talk.mjs
           node --check scripts/fight-talk-platforms.mjs
           node tests/test-fight-talk.cjs
+          node --check scripts/refresh-meta-embeds.mjs
+          node tests/test-meta-embeds.mjs
       - name: Refresh and commit real source-linked posts safely
         env:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
@@ -58,7 +59,8 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
             node scripts/refresh-fight-talk.mjs
-            git add data/fight-talk-live.json
+            node scripts/refresh-meta-embeds.mjs
+            git add data/fight-talk-live.json data/fight-talk-embedded.json
             if git diff --cached --quiet; then
               echo "Feed content already current"
               exit 0
