@@ -59,8 +59,8 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
             node scripts/refresh-fight-talk.mjs
-            node scripts/refresh-meta-embeds.mjs
-            git add data/fight-talk-live.json data/fight-talk-embedded.json
+            # Original X/Meta link discovery has its own staggered 10-minute job.
+            git add data/fight-talk-live.json
             if git diff --cached --quiet; then
               echo "Feed content already current"
               exit 0
