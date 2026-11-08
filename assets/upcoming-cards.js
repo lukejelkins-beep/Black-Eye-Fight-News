@@ -5,9 +5,9 @@ window.UpcomingCards=(()=>{
  const opened=new Set(),active=new Map();
  const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const href=x=>{try{const u=new URL(x);return u.protocol==='https:'?esc(u.href):'#'}catch{return '#'}};
- const localDate=()=>new Date().toLocaleDateString('sv-SE',{timeZone:'Australia/Melbourne'});
- const fmtDate=x=>new Date(x+'T12:00:00Z').toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
- const fmtTime=x=>{try{return new Date(x).toLocaleString('en-AU',{timeZone:'Australia/Melbourne',weekday:'short',day:'numeric',month:'short',hour:'numeric',minute:'2-digit',timeZoneName:'short'})}catch{return ''}};
+ const localDate=()=>window.FightTime.dayKey(new Date());
+ const fmtDate=x=>window.FightTime.venueDay(x);
+ const fmtTime=x=>window.FightTime.localDateTime(x);
  let catalog=null;
  function registry(){
   if(catalog)return catalog;
@@ -68,12 +68,9 @@ window.UpcomingCards=(()=>{
   const groups=[['main','Main Card'],['prelims','Prelims'],['early','Early Prelims'],['undercard','Undercard / order TBC'],['announced','Announced / order TBC']];
 
  function heroWhen(e){
-  const d=e.startAt?new Date(e.startAt):null,valid=d&&!Number.isNaN(d.getTime());
-  const day=valid?d.toLocaleDateString('en-AU',{timeZone:'Australia/Melbourne',weekday:'short',day:'numeric',month:'short'}):fmtDate(e.date);
-  const clock=valid?d.toLocaleTimeString('en-AU',{timeZone:'Australia/Melbourne',hour:'numeric',minute:'2-digit',timeZoneName:'short'}):'';
-  const label=/main\s*card/i.test(e.startLabel||'')?'Main card':'Start';
-  return '<span class="upcoming-hero-date">'+esc(day)+'</span><span class="upcoming-hero-divider" aria-hidden="true"></span>'+
-   '<span class="upcoming-hero-clock">'+(valid?esc(label+' '+clock):esc(e.startLabel||'Start time TBC'))+'</span>';
+  const date=window.FightTime.instant(e.startAt);
+  return '<span class="upcoming-hero-date">'+esc(date?window.FightTime.localDate(e.startAt):fmtDate(e.date))+'</span>'+
+   '<span class="upcoming-hero-clock">'+(date?esc(window.FightTime.localClock(e.startAt)):'Start time TBC · venue date')+'</span>';
  }
  function heroFighters(e){
   const main=e.bouts.find(b=>b.section==='main')||e.bouts[0];
@@ -100,24 +97,42 @@ window.UpcomingCards=(()=>{
   return {primary:original,backup:''};
  }
 
- // Group by Australian date when a sourced start is known, not the venue-local day.
- function auDay(e){
-  if(e.startAt){const d=new Date(e.startAt);if(Number.isFinite(d.getTime()))return d.toLocaleDateString('sv-SE',{timeZone:'Australia/Melbourne'})}
-  const m=(e.startLabel||'').match(/main card\s*(\d{1,2})(?::(\d\d))?\s*pm\s*GST/i);
-  if(m){const d=new Date(e.date+'T'+String(+m[1]%12+12).padStart(2,'0')+':'+(m[2]||'00')+':00+04:00');if(Number.isFinite(d.getTime()))return d.toLocaleDateString('sv-SE',{timeZone:'Australia/Melbourne'})}
-  return e.date;
+ // Only convert explicit source times. No guessed ring-walk or unverified start hours.
+ function etInstant(date,hour,minute){
+  const want=Date.UTC(+date.slice(0,4),+date.slice(5,7)-1,+date.slice(8),hour,minute);
+  let current=want;
+  try{
+   for(let tries=0;tries<3;tries++){
+    const parts=Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hourCycle:'h23',
+     year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).formatToParts(new Date(current)).map(x=>[x.type,x.value]));
+    current+=want-Date.UTC(+parts.year,+parts.month-1,+parts.day,+parts.hour,+parts.minute);
+   }
+   return new Date(current);
+  }catch{return null}
  }
- function auClock(d){return d.toLocaleTimeString('en-AU',{timeZone:'Australia/Melbourne',hour:'numeric',minute:'2-digit',timeZoneName:'short'})}
+ function publishedInstant(e,part='main'){
+  const verified=window.FightTime.instant(e.startAt);
+  if(verified&&part!=='prelims')return verified;
+  const text=String(e.startLabel||'');
+  const isPrelim=part==='prelims';
+  const gulf=text.match(isPrelim?/prelims(?:\s+from)?\s*(\d{1,2})(?::(\d\d))?\s*(am|pm)\s*GST/i:/main card\s*(\d{1,2})(?::(\d\d))?\s*(am|pm)\s*GST/i);
+  const hour=m=>(+m[1]%12)+(m[3].toLowerCase()==='pm'?12:0);
+  if(gulf)return new Date(e.date+'T'+String(hour(gulf)).padStart(2,'0')+':'+(gulf[2]||'00')+':00+04:00');
+  if(isPrelim)return null;
+  const et=text.match(/^(?:main card|broadcast|wynn records network broadcast)\s*(?:from\s*)?(\d{1,2})(?::(\d\d))?\s*(am|pm)\s*(?:US\s*)?(?:Eastern|ET)\b/i);
+  return et?etInstant(e.date,hour(et),+(et[2]||0)):null;
+ }
+ function auDay(e){
+  const date=publishedInstant(e);
+  return date?window.FightTime.dayKey(date):e.date;
+ }
  function rowTimes(e){
-  if(e.startAt){const d=new Date(e.startAt);if(Number.isFinite(d.getTime()))return '<span>'+(/main\s*card/i.test(e.startLabel||'')?'Main Card':'Event Start')+' <strong>'+esc(auClock(d))+'</strong></span>'}
-  const str=e.startLabel||'';
-  const prelim=str.match(/prelims(?:\s+from)?\s*(\d{1,2})(?::(\d\d))?\s*pm\s*GST/i);
-  const main=str.match(/main card\s*(\d{1,2})(?::(\d\d))?\s*pm\s*GST/i);
-  if(prelim&&main){
-   const convert=m=>auClock(new Date(e.date+'T'+String(+m[1]%12+12).padStart(2,'0')+':'+(m[2]||'00')+':00+04:00'));
-   return '<span>Prelims <strong>'+esc(convert(prelim))+'</strong></span><span class="upcoming-dot">·</span><span>Main Card <strong>'+esc(convert(main))+'</strong></span>';
-  }
-  return '<span>'+esc(str||'Start time TBC')+'</span>';
+  const main=publishedInstant(e),prelims=publishedInstant(e,'prelims');
+  if(!main)return '<span>Start time TBC · venue date</span>';
+  const label=/main\s*card/i.test(e.startLabel||'')?'Main card':/broadcast/i.test(e.startLabel||'')?'Broadcast':'Event start';
+  return (prelims?'<span>Prelims <strong>'+esc(window.FightTime.localClock(prelims.toISOString()))+'</strong></span><span class="upcoming-dot">·</span>':'')+
+   '<span>'+label+' <strong>'+esc(window.FightTime.localClock(main.toISOString()))+'</strong></span>'+
+   '<span class="upcoming-time-countdown" data-upcoming-start="'+esc(main.toISOString())+'">'+esc(window.FightTime.relative(main.toISOString()))+'</span>';
  }
  function dateLabel(day){
   const d=new Date(day+'T12:00:00Z');
@@ -140,7 +155,7 @@ window.UpcomingCards=(()=>{
    '<span class="upcoming-hero-location">'+esc(e.location||'Venue TBC')+'</span>'+
    (e.sourceStatus==='reported'?'<span class="upcoming-row-provisional">Reported · UFC confirmation pending</span>':'')+'</span>'+
    '<span class="upcoming-row-chevron" aria-hidden="true">⌄</span></summary>';
-  const start=e.startAt?'<span>Melbourne start: '+esc(fmtTime(e.startAt))+'</span>':(e.startLabel?'<span>Published schedule: '+esc(e.startLabel)+'</span>':'<span>Start time awaiting confirmation</span>');
+  const when=publishedInstant(e),start=when?'<span>Local scheduled start: '+esc(fmtTime(when.toISOString()))+'</span>':'<span>Start time awaiting confirmation · venue date: '+esc(fmtDate(e.date))+'</span>';
   const credit=art&&e.poster?.source?'<a href="'+href(e.poster.source)+'" target="_blank" rel="noopener noreferrer">Poster source ↗</a>':'';
   return '<details class="result-event upcoming-event" data-upcoming-card="'+esc(e.id)+'" '+(opened.has(e.id)?'open':'')+'>'+summary+
    '<div class="upcoming-expanded"><div class="upcoming-meta">'+start+'<a href="'+href(e.source)+'" target="_blank" rel="noopener noreferrer">Event source ↗</a>'+credit+'</div>'+
@@ -150,9 +165,12 @@ window.UpcomingCards=(()=>{
  }
  function listing(sport){
   if(!feed)return '<div class="upcoming-loading" role="status">'+(error?'Upcoming card feed unavailable. Please reload to try again.':'Loading announced fight cards…')+'</div>';
-  const today=localDate();
-  const events=feed.events.filter(e=>e.sport===sport&&auDay(e)>=today&&Array.isArray(e.bouts)&&e.bouts.length)
-   .sort((a,b)=>auDay(a).localeCompare(auDay(b))||a.title.localeCompare(b.title));
+  const today=localDate(),recent=window.FightTime.dayKey(new Date(Date.now()-2*86400000));
+  const events=feed.events.filter(e=>{
+   if(e.sport!==sport||!Array.isArray(e.bouts)||!e.bouts.length)return false;
+   const t=publishedInstant(e);
+   return t?t.getTime()>Date.now()-36*3600000:e.date>=recent;
+  }).sort((a,b)=>auDay(a).localeCompare(auDay(b))||a.title.localeCompare(b.title));
   const cutoff=new Date(today+'T12:00:00Z');cutoff.setUTCDate(cutoff.getUTCDate()+6);
   const nextWeek=cutoff.toISOString().slice(0,10);
   function section(label,items){
@@ -161,12 +179,12 @@ window.UpcomingCards=(()=>{
    for(const e of items){const date=auDay(e);if(date!==prev){html+=dateLabel(date);prev=date}html+=eventCard(e)}
    return '<section class="upcoming-list-group"><h3 class="upcoming-list-heading">'+esc(label)+'</h3>'+html+'</section>';
   }
-  return '<div class="upcoming-schedule"><div class="upcoming-list-overview"><strong>'+events.length+' upcoming '+esc(sport==='mma'?'MMA':'boxing')+' cards</strong><span>Tap an event to expand its fight card</span></div>'+
+  return '<div class="upcoming-schedule"><div class="upcoming-list-overview"><strong>'+events.length+' scheduled / recently started '+esc(sport==='mma'?'MMA':'boxing')+' cards</strong><span>'+esc(window.FightTime.zoneNotice())+' · Tap an event to expand its fight card</span></div>'+
    (error?'<p class="upcoming-feed-warning">Latest refresh failed; showing saved listings.</p>':'')+
    section('This Week',events.filter(e=>auDay(e)<=nextWeek))+
    section('Upcoming',events.filter(e=>auDay(e)>nextWeek))+
    (events.length?'':'<p class="upcoming-empty">No upcoming fight cards confirmed in this category.</p>')+
-   '<p class="upcoming-disclaimer">Melbourne dates and times are used when confirmed; otherwise event dates and published local times are shown. Bout order may change. Fighter records are sourced where verified. Reviewed: '+esc(feed.reviewedAt||'not confirmed')+'.</p></div>';
+   '<p class="upcoming-disclaimer">All exact starts and explicitly published ET/GST times display in your device's local time zone (including DST). Date-only listings remain venue dates. Scheduled starts are not proof of a live result. Bout order may change. Fighter records are sourced where verified. Reviewed: '+esc(feed.reviewedAt||'not confirmed')+'.</p></div>';
  }
  /* Portrait fallback: verify Wikimedia page title before using a thumbnail. */
  const portraitQueries=new Map(),portraitQueue=[],portraitTried=new Set();
@@ -216,11 +234,19 @@ window.UpcomingCards=(()=>{
   }
   pump();
  }
- function render(sport){const markup='<div id="upcoming-cards-root" data-upcoming-sport="'+esc(sport)+'">'+listing(sport)+'</div>';if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>{hydratePortraits();reconcileHeroImages()});return markup}
+ function render(sport){const markup='<div id="upcoming-cards-root" data-local-day="'+localDate()+'" data-upcoming-sport="'+esc(sport)+'">'+listing(sport)+'</div>';if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>{hydratePortraits();reconcileHeroImages()});return markup}
+ function refreshCountdowns(){
+  document.querySelectorAll('.upcoming-time-countdown[data-upcoming-start]').forEach(el=>{
+   const next=window.FightTime.relative(el.dataset.upcomingStart);
+   if(el.textContent!==next)el.textContent=next;
+  });
+  const root=document.getElementById('upcoming-cards-root');
+  if(root&&root.dataset.localDay!==localDate()){root.dataset.localDay=localDate();update()}
+ }
  function update(){
   const root=document.getElementById('upcoming-cards-root');
   if(!root)return;
-  root.innerHTML=listing(root.dataset.upcomingSport||'mma');
+  root.innerHTML=listing(root.dataset.upcomingSport||'mma');root.dataset.localDay=localDate();
   hydratePortraits();reconcileHeroImages();
  }
  function valid(d){return d&&Array.isArray(d.events)&&d.events.every(e=>typeof e.id==='string'&&typeof e.date==='string'&&typeof e.title==='string'&&Array.isArray(e.bouts)&&e.bouts.every(b=>Array.isArray(b.fighters)&&b.fighters.length===2));}
@@ -320,6 +346,8 @@ window.UpcomingCards=(()=>{
  },true);
  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&location.hash.startsWith('#calendar')&&Date.now()-lastCheck>15*60*1000)load()});
  setInterval(()=>{if(!document.hidden&&location.hash.startsWith('#calendar'))load()},15*60*1000);
+ setInterval(()=>{if(!document.hidden&&location.hash.startsWith('#calendar'))refreshCountdowns()},15000);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshCountdowns()});
  load();
  return {render,load,valid};
 })();
