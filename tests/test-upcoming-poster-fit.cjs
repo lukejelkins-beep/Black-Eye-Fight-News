@@ -2,10 +2,23 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const source=fs.readFileSync('assets/upcoming-cards.js','utf8');
 const styles=fs.readFileSync('assets/upcoming-cards.css','utf8');
+
+const schedule=JSON.parse(fs.readFileSync('data/upcoming-cards.json','utf8'));
+const scheduleById=new Map(schedule.events.map(e=>[e.id,e]));
+const preferredIds=['ufc-334-2026-11-14','ufc-qatar-2026-11-21','ufc-335-2026-12-12',
+ 'pfl-dubai-2026-11-14','kabayel-hysa-2026-11-28'];
+for(const id of preferredIds){
+ const e=scheduleById.get(id);
+ assert(e&&(e.posterPortrait?.url||e.posterList?.url),'Missing approved event thumbnail '+id);
+}
+assert(!JSON.stringify(schedule).includes('s.yimg.com/lo/mysterio/api/'),
+ 'Rate-limited image transformation URLs must not be preferred poster sources');
+
 const photoNames={'Fighter One':{photo:'https://example.com/one.jpg'},'Fighter Two':{photo:'https://example.com/two.jpg'}};
 const input={reviewedAt:'2026-11-08',events:[
  {id:'wp',sport:'boxing',date:'2026-11-28',title:'Wide poster',promotion:'Test',location:'Test',source:'https://example.com',
-  poster:{url:'https://schedule.fightmag.com/wp-content/uploads/2026/08/show-696x392.jpg',source:'https://example.com'},bouts:[{section:'main',fighters:['Fighter One','Fighter Two']}]},
+  poster:{url:'https://schedule.fightmag.com/wp-content/uploads/2026/08/show-696x392.jpg',source:'https://example.com'},
+  posterList:{url:'https://example.com/square-poster.jpg',source:'https://example.com/source'},bouts:[{section:'main',fighters:['Fighter One','Fighter Two']}]},
  {id:'missing',sport:'boxing',date:'2026-11-29',title:'No poster',promotion:'Test',location:'Test',source:'https://example.com',bouts:[{section:'main',fighters:['Fighter One','Fighter Two']}]}
 ]};
 const handlers={};
@@ -19,7 +32,8 @@ vm.runInNewContext(source,sandbox);
 (async()=>{
  await sandbox.window.UpcomingCards.load();
  const html=sandbox.window.UpcomingCards.render('boxing');
- assert(html.includes('show.jpg'),'WordPress original poster URL preferred');
+ assert(html.includes('src="https://example.com/square-poster.jpg"'),'Verified square poster should take priority');
+ assert(html.includes('show.jpg'),'Original landscape artwork retained as fallback');
  assert(html.includes('data-upcoming-poster-candidates='),'Original and backup image candidates retained');
  assert(html.includes('upcoming-hero-fighter-slot'),'Portrait fallback available');
  assert(html.indexOf('upcoming-hero-poster')<html.indexOf('upcoming-hero-content'),'Artwork above event copy');
