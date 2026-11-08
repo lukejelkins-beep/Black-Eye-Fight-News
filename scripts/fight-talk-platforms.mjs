@@ -17,10 +17,10 @@ export async function collectPlatforms(config,getJSON,insert,since){
   // Resolve the caller's Instagram professional asset only once per run.
   // If the token is Instagram Login-only or lacks Business Discovery permissions,
   // exit this platform cleanly rather than making dozens of failing API calls.
-  if(platform==='Instagram'&&!/^\\d+$/.test(own)){
+  if(platform==='Instagram'&&!/^\d+$/.test(own)){
    try{
     const assigned=await getJSON('https://graph.facebook.com/'+version+'/me/accounts?fields=id,name,instagram_business_account{id,username}&limit=50',headers);
-    const assets=(assigned.data||[]).map(p=>p.instagram_business_account).filter(p=>/^\\d+$/.test(String(p?.id||'')));
+    const assets=(assigned.data||[]).map(p=>p.instagram_business_account).filter(p=>/^\d+$/.test(String(p?.id||'')));
     if(assets.length!==1)throw Error('Set INSTAGRAM_USER_ID to the linked professional account ID for Business Discovery');
     own=String(assets[0].id);
    }catch(e){

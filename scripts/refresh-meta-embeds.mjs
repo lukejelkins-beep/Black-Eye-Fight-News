@@ -1,5 +1,5 @@
 /**
- * Discover only original Instagram/Threads post permalinks explicitly linked by
+ * Discover only original Instagram/Threads/X post permalinks explicitly linked by
  * combat-news publishers; verify public embeddability through Meta oEmbed.
  *
  * Meta oEmbed supplies a VIEW of an original post, not a crawler of user feeds.
@@ -9,6 +9,8 @@
  */
 import fs from 'node:fs';
 export const nowISO=()=>new Date().toISOString();
+const xWatchlist=JSON.parse(fs.readFileSync('data/fight-talk-sources.json','utf8')).platforms?.X?.accounts||[];
+const trackedX=new Map(xWatchlist.filter(x=>x.username).map(x=>[x.username.replace(/^@/,'').toLowerCase(),x]));
 const acceptedPublishers=new Map([
  ['www.mmafighting.com','MMA Fighting'],['mmafighting.com','MMA Fighting'],
  ['www.worldboxingnews.com','World Boxing News'],['www.worldboxingnews.net','World Boxing News'],
@@ -29,6 +31,11 @@ export function normalizePostLink(raw) {
    if(!match)return null;
    return {platform:'Threads',url:'https://www.threads.com/'+match[1]+'/'+match[2]+'/'};
   }
+  if(host==='x.com'||host==='twitter.com'){
+   const match=u.pathname.match(/^\/([A-Za-z0-9_]{1,15})\/status\/(\d{10,25})\/?$/);
+   if(!match)return null;
+   return {platform:'X',username:match[1],url:'https://x.com/'+match[1]+'/status/'+match[2]};
+  }
   return null;
  }catch{return null}
 }
@@ -38,7 +45,7 @@ export function extractPostLinks(html){
   .replace(/\\\//g,'/')
   .replace(/&#(?:x2f|47);/gi,'/')
   .replace(/&amp;/g,'&');
- const matches=content.match(/https?:\/\/(?:www\.)?(?:instagram\.com|threads\.(?:com|net))\/[^\s"'<>\\]+/gi)||[];
+ const matches=content.match(/https?:\/\/(?:www\.)?(?:instagram\.com|threads\.(?:com|net)|x\.com|twitter\.com)\/[^\s"'<>\\]+/gi)||[];
  const results=new Map();
  for(const match of matches.slice(0,500)){
   const item=normalizePostLink(match);
@@ -65,6 +72,17 @@ async function getText(url,timeout=10000,limit=1_800_000){
  return (await r.text()).slice(0,limit);
 }
 async function metaVerify(item){
+ if(item.platform==='X'){
+  // X offers an official, public view of individual posts even without a
+  // timeline-read API token. Verify that the embed's author matches the pinned
+  // account rather than inferring identity from a news article.
+  const r=await fetch('https://publish.twitter.com/oembed?'+new URLSearchParams({url:item.url,omit_script:'true',dnt:'true'}),{signal:AbortSignal.timeout(9500)});
+  if(!r.ok)throw Error('X oEmbed HTTP '+r.status);
+  const p=await r.json();
+  let author='';
+  try{author=new URL(p.author_url).pathname.replace(/^\//,'').replace(/\/$/,'').toLowerCase()}catch{}
+  return p.type==='rich'&&typeof p.html==='string'&&p.html.includes('twitter-tweet')&&author===item.username.toLowerCase();
+ }
  const base=item.platform==='Instagram'?'https://graph.facebook.com/v26.0/instagram_oembed':'https://graph.threads.com/oembed';
  const r=await fetch(base+'?url='+encodeURIComponent(item.url),{signal:AbortSignal.timeout(9500)});
  if(!r.ok)throw Error('oEmbed HTTP '+r.status);
@@ -86,6 +104,8 @@ export function mergeSourceLinks(articles, links, prior, checkedAt){
  for(const {article,item} of links){
   const name=article.sourceLabel||publisherOf(article.url);
   if(!name)continue;
+  const pinned=item.platform==='X'?trackedX.get(item.username?.toLowerCase()):null;
+  if(item.platform==='X'&&!pinned)continue;
   const when=Date.parse(article.publishedAt||'');
   if(!Number.isFinite(when)||when>Date.parse(checkedAt)+30*60*1000||when<Date.parse(checkedAt)-recentDays)continue;
   const old=existing.get(item.url);
@@ -94,7 +114,8 @@ export function mergeSourceLinks(articles, links, prior, checkedAt){
   existing.set(item.url,{
    type:'post',platform:item.platform,sport:article.sport,
    // Only the native Meta embed identifies the original author.
-   name:'Original '+item.platform+' post',role:'media',
+   name:pinned?.name||'Original '+item.platform+' post',role:pinned?.role||'media',
+   ...(pinned?{handle:'@'+pinned.username,fighterTier:pinned.fighterTier,sport:pinned.sport}:{}),
    nativeEmbed:true,originalDateUnverified:true,
    sourceLinkedAt:article.publishedAt,
    discoveredAt:old?.discoveredAt||checkedAt,
@@ -147,7 +168,7 @@ async function main(){
   while(index<candidates.length){
    const article=candidates[index++];
    try{
-    const links=extractPostLinks(await getText(article.url));
+    const links=extractPostLinks(await getText(article.url)).filter(item=>item.platform!=='X'||trackedX.has(item.username?.toLowerCase()));
     articleCount++;
     linkCount+=links.length;
     for(const item of links){
@@ -177,7 +198,7 @@ async function main(){
   curatedVerified,curatedRejected,
   posts,
   seenOriginals:[...firstSeen].slice(-5000).map(([url,firstSeen])=>({url,firstSeen})),
-  note:'Source discovery finds original social links in combat-sports publisher articles. A news article timestamp is NOT the Instagram/Threads post time. Original post text, author and date are rendered by Meta directly. A homepage mention is not the original post publication date. Links stay in Live for at most 7 days after first discovery, in Highlights for at most 28 days, and never refresh their age on rescans. Discovery is not a complete Instagram/Threads feed.'
+  note:'Source discovery finds original Instagram, Threads and pinned-author X links in combat-sports publisher articles. A news article timestamp is NOT the Instagram/Threads post time. Original post text, author and date are rendered by Meta directly. A homepage mention is not the original post publication date. Links stay in Live for at most 7 days after first discovery, in Highlights for at most 28 days, and never refresh their age on rescans. Discovery is not a complete Instagram/Threads feed.'
  },null,2)+'\n');
  console.log('Meta embeds checked '+articleCount+' articles; found '+linkCount+
   ' original publisher links, verified '+verified+' new publisher embeds; curated verified '+curatedVerified+', rejected '+curatedRejected+'; kept '+posts.length+' source-linked entries');

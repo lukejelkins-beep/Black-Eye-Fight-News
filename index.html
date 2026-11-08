@@ -697,7 +697,7 @@ function recentTalkPosts(windowDays=7){
    if(postId){
     const key=p.platform+':'+postId;
     const existing=posts.get(key);
-    if(p.nativeEmbed&&existing&&['Instagram','Threads'].includes(p.platform)&&
+    if(p.nativeEmbed&&existing&&['Instagram','Threads','X'].includes(p.platform)&&
        !/^Original (Instagram|Threads) post$/.test(existing.name||''))continue;
     posts.set(key,p);
    }
