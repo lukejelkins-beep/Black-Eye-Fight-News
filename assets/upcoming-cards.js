@@ -341,7 +341,8 @@ window.UpcomingCards=(()=>{
   media.style.setProperty('--poster-native-width',w+'px');
   hero.classList.remove('is-artwork-missing');
   hero.classList.add('is-poster-ready');
-  hero.classList.toggle('is-portrait-art',w/h<=0.91);
+  if(w/h<=0.91)hero.classList.add('is-portrait-art');
+  else hero.classList.remove('is-portrait-art');
  }
  function fighterHeroReady(img){
   const slot=img.closest('.upcoming-hero-fighter-slot');if(!slot)return;

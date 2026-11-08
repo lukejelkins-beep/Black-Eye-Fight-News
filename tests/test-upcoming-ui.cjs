@@ -24,6 +24,7 @@ const sandbox={
  setInterval:()=>0,
  fetch:async()=>({ok:true,json:async()=>fixture})
 };
+vm.runInNewContext(fs.readFileSync('assets/local-time.js','utf8'),sandbox);
 vm.runInNewContext(source,sandbox,{timeout:5000});
 (async()=>{
  assert(sandbox.window.UpcomingCards);

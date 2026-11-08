@@ -14,6 +14,7 @@ const doc={addEventListener(name,fn){handlers[name]=fn},getElementById(id){
 },querySelectorAll(){return []}};
 const sandbox={window:{},document:doc,URL,Date,console,location:{hash:'#calendar'},setInterval(){},
  AbortSignal:{timeout:()=>undefined},fetch:async()=>({ok:true,json:async()=>input})};
+vm.runInNewContext(fs.readFileSync('assets/local-time.js','utf8'),sandbox);
 vm.runInNewContext(source,sandbox);
 (async()=>{
  await sandbox.window.UpcomingCards.load();
@@ -44,5 +45,16 @@ vm.runInNewContext(source,sandbox);
  img.naturalWidth=180;img.naturalHeight=90;img.dataset={};
  handlers.load({target:img});
  assert(img.hidden,'Undersized images fall back instead of being upscaled');
+ // A supposed portrait that is actually landscape must fall back to real
+ // event art rather than being force-cropped into the narrow thumbnail.
+ img.hidden=false;img.naturalWidth=960;img.naturalHeight=540;
+ img.dataset={upcomingPosterCandidates:JSON.stringify([
+  {url:'https://example.com/claimed-portrait.jpg',kind:'portrait'},
+  {url:'https://example.com/original.jpg',kind:'artwork'}]),upcomingPosterIndex:'0'};
+ handlers.load({target:img});
+ assert.equal(img.src,'https://example.com/original.jpg','Wrong-shape portrait should fall back');
+ assert.equal(img.dataset.upcomingPosterIndex,'1');
+ handlers.load({target:img});
+ assert(classes.has('is-poster-ready'),'The contained landscape artwork remains usable');
  console.log('Poster QA passed: wide/portrait/native-size rendering, unavailable art, image backup and card accordion');
 })().catch(e=>{console.error(e);process.exitCode=1});
