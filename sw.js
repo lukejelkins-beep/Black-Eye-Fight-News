@@ -1,8 +1,8 @@
 /* Offline-ready app shell. Always prioritise network for news and fight data. */
-const CACHE_NAME = 'befn-app-shell-v8-20261108-portrait-art';
+const CACHE_NAME = 'befn-app-shell-v9-20261109-home-icon';
 const SHELL = [
   '/', '/index.html', '/manifest.webmanifest',
-  '/assets/mark.svg', '/assets/icon-192.png', '/assets/icon-512.png',
+  '/assets/mark.svg', '/assets/icon-192.png', '/assets/icon-512.png', '/assets/apple-touch-icon.png', '/assets/icon-maskable-512.png',
   '/assets/app-install.css', '/assets/app-install.js',
   '/assets/mobile-app.css', '/assets/mobile-app.js',
   '/assets/notifications.css', '/assets/notifications.js', '/assets/push-config.js',
