@@ -339,7 +339,7 @@ const D=window.COMBAT_DATA;
 const main=document.querySelector('#main');
 const dialog=document.querySelector('#fighterDialog');
 if(!D||!main){if(main) main.textContent='Fight data unavailable. Please refresh the page.';return;}
-const state={news:'boxing',champions:'boxing',fightersSport:'Boxing',fightersCategory:'All',fightersDivision:'All',fightersQuery:'',social:'all',socialMode:'latest',socialPlatform:'all',socialPage:1,talkRole:'all',talkSort:'balanced',calendar:'boxing',highlights:'boxing'};
+const state={news:'boxing',champions:'boxing',fightersSport:'Boxing',fightersCategory:'All',fightersDivision:'All',fightersQuery:'',social:'all',socialMode:'latest',socialPlatform:'all',socialPage:1,talkRole:'all',talkSort:'latest',calendar:'boxing',highlights:'boxing'};
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeURL=x=>{try{const u=new URL(x);return u.protocol==='https:'?esc(u.href):'#'}catch(_){return '#'}};
 const domain=x=>{try{return new URL(x).hostname.replace(/^www\./,'')}catch{return 'Source'}};
@@ -728,7 +728,7 @@ function diverseTalk(posts,mode='balanced'){
   const quote=String(p.quote||p.summary||'');
   const normalized=p.nativeEmbed?'original:'+String(p.url||''):talkKey(quote.replace(/https?:\/\/\S+/g,''));
   const bucket=byAuthor.get(author)||[];
-  if(bucket.length>=3||(normalized&&seen.has(normalized)))continue;
+  if(bucket.length>=(mode==='latest'?10:3)||(normalized&&seen.has(normalized)))continue;
   if(normalized)seen.add(normalized);
   bucket.push(p);
   byAuthor.set(author,bucket);
@@ -795,15 +795,15 @@ function renderSocial(){
   &&(state.socialPlatform==='all'||p.platform===state.socialPlatform)
   &&(state.talkRole==='all'||(state.talkRole==='fighters'?p.role==='fighter':state.talkRole==='fans'?p.role==='fan':['commentator','media','promoter','trainer','team'].includes(p.role)||p.type==='thread'));
  const filtered=current.filter(visible);
- const list=highlights?filtered:diverseTalk(filtered,state.talkSort);
- const pageSize=12;
+ const list=diverseTalk(filtered,highlights?'latest':state.talkSort);
+ const pageSize=20;
  const total=Math.max(1,Math.ceil(list.length/pageSize));
  state.socialPage=Math.min(total,Math.max(1,state.socialPage));
  const start=(state.socialPage-1)*pageSize;
  const freshness=highlights?'Highlights from the previous four weeks':liveTalk.error||(!liveTalk.lastAttempt||liveTalk.loading?'Checking fresh posts…':liveTalk.checkedAt?'Live feed checked '+humanTalkTime(liveTalk.checkedAt)+' local time':'Checking fresh posts…');
  const mode='<div class="segment" role="group" aria-label="Fight Talk view">'+[['latest','Latest posts'],['highlights','Last 4 weeks']].map(([value,label])=>'<button type="button" id="talk-'+value+'" data-segment="socialMode" data-value="'+value+'" aria-pressed="'+String(value===state.socialMode)+'">'+label+'</button>').join('')+'</div>';
  const filters=talkFilter('social','Sport',sports)+talkFilter('socialPlatform','Platform',options)
-  +talkFilter('talkRole','Posts from',{all:'Everyone',fighters:'Fighters',media:'Media & industry',fans:'Fans'})+talkFilter('talkSort','Order',{balanced:'Fighters & promoters first',latest:'Newest first'});
+  +talkFilter('talkRole','Posts from',{all:'Everyone',fighters:'Fighters',media:'Media & industry',fans:'Fans'})+talkFilter('talkSort','Order',{latest:'Newest first',balanced:'Rotate authors'});
  const toolbar='<div class="talk-toolbar"><div class="talk-toolbar-top">'+mode+'<p class="talk-freshness">'+esc(freshness)+'</p></div><div class="talk-filters">'+filters+'</div></div>';
  const platformNeedsConnection=liveTalk.platformStatus.some(p=>p.platform===state.socialPlatform&&p.state==='not-connected')&&!current.some(p=>p.platform===state.socialPlatform);
  const empty='<div class="talk-empty"><h2>No posts match these filters</h2><p>'+
@@ -811,7 +811,7 @@ function renderSocial(){
  const pages=total>1?'<div class="pagination"><button type="button" data-page="prev" '+(state.socialPage===1?'disabled':'')+'>← Previous</button><span>Page '+state.socialPage+' of '+total+'</span><button type="button" data-page="next" '+(state.socialPage===total?'disabled':'')+'>Next →</button></div>':'';
  const count=total>1?(start+1)+'–'+Math.min(start+pageSize,list.length)+' of '+list.length+' posts':list.length+' post'+(list.length===1?'':'s');
  const title=highlights?'The last four weeks':'Latest fighter & promoter posts';
- const description=highlights?'Memorable reactions, fighter exchanges and conversations in boxing, MMA and grappling from the past 28 days.':'Original-post links across the fight world, with native platform embeds when available. Recent original posts from fighters and promoters, rotated across authors and platforms without engagement thresholds.';
+ const description=highlights?'Memorable reactions, fighter exchanges and conversations in boxing, MMA and grappling from the past 28 days.':'Chronological original posts from fighters, champions, contenders and promoters on X, Instagram and other platforms. No engagement thresholds.';
  const resultHead='<div class="talk-section-head"><div><div class="talk-section-eyebrow">'+(highlights?'THE CONVERSATION':'CURRENT CONVERSATION')+'</div><h2>'+title+'</h2><p>'+description+'</p></div></div>';
  const mainSection='<section class="talk-section" aria-label="'+title+'">'+resultHead+(list.length?'<div class="social-grid">'+list.slice(start,start+pageSize).map(postCard).join('')+'</div>':empty)+pages+'</section>';
  const highlighted=highlights?[]:highlightedTalkPosts().filter(visible);
