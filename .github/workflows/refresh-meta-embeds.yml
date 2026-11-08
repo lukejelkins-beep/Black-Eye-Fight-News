@@ -8,12 +8,13 @@ on:
     branches: [main]
     paths:
       - 'scripts/refresh-meta-embeds.mjs'
+      - 'data/fight-talk-sources.json'
       - 'tests/test-meta-embeds.mjs'
       - '.github/workflows/refresh-meta-embeds.yml'
 permissions:
   contents: write
 concurrency:
-  group: publish-live-data
+  group: discover-fight-talk-posts
   cancel-in-progress: false
 jobs:
   discover:

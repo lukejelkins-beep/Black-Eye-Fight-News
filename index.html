@@ -621,7 +621,7 @@ function postCard(p){
    +'<div class="social-foot"><span>Reported exchange · X</span>'+(p.url?'<a class="social-source" href="'+safeURL(p.url)+'" target="_blank" rel="noopener noreferrer">Read coverage ↗</a>':'')+'</div></article>';
  }
  const direct=talkDirectSource(p);
- const when=p.nativeEmbed?'<time datetime="'+esc(p.sourceLinkedAt)+'">Linked in coverage '+esc(humanTalkTime(p.sourceLinkedAt))+'</time>':p.postedAt?'<time datetime="'+esc(p.postedAt)+'">'+esc(humanTalkTime(p.postedAt))+'</time>':esc(p.date);
+ const when=p.postedAt?'<time datetime="'+esc(p.postedAt)+'">'+esc(humanTalkTime(p.postedAt))+'</time>':p.nativeEmbed?'<time datetime="'+esc(p.sourceLinkedAt)+'">Discovered in coverage '+esc(humanTalkTime(p.sourceLinkedAt))+'</time>':esc(p.date);
  const label=direct?'Open post':'Read coverage';
  return '<article class="social-card" data-platform="'+esc(p.platform)+'">'
   +'<div class="social-head">'+thumb(p.photo||(p.role==='fighter'&&typeof portraitURL==='function'?portraitURL(p.name):''),p.name)+'<div class="social-author"><strong title="'+esc(p.name)+'">'+esc(p.name)+'</strong>'+(p.handle?'<small title="'+esc(p.handle)+'">'+esc(p.handle)+'</small>':'')+'</div><span class="platform-letter" aria-hidden="true">'+esc(talkPlatforms[p.platform]?.mark||'')+'</span></div>'

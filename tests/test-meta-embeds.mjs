@@ -23,6 +23,11 @@ const at='2026-11-08T07:15:00Z',article={url:'https://www.mmafighting.com/ufc/12
 const fakeX={article,item:{...xLinks[0],username:'untracked123',url:'https://x.com/untracked123/status/2119205663394136142'}};
 const notPinned=mergeSourceLinks([article],[fakeX],{posts:[]},at);
 assert.equal(notPinned.length,0,'Reject unpinned X author');
+const pinned=mergeSourceLinks([article],[{article,item:{platform:'X',username:'ufc',url:'https://x.com/ufc/status/2119205663394136142'}}],{posts:[]},at);
+assert.equal(pinned.length,1);
+assert.equal(pinned[0].role,'promoter');
+assert.equal(pinned[0].originalDateUnverified,false);
+assert.match(pinned[0].postedAt,/^2026-11-/);
 const entries=mergeSourceLinks([article],[{article,item:found[0]}],{posts:[]},at);
 assert.equal(entries.length,1);
 assert.equal(entries[0].originalDateUnverified,true);
