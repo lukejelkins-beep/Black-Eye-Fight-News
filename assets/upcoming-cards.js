@@ -132,7 +132,7 @@ window.UpcomingCards=(()=>{
   const label=/main\s*card/i.test(e.startLabel||'')?'Main card':/broadcast/i.test(e.startLabel||'')?'Broadcast':'Event start';
   return (prelims?'<span>Prelims <strong>'+esc(window.FightTime.localClock(prelims.toISOString()))+'</strong></span><span class="upcoming-dot">·</span>':'')+
    '<span>'+label+' <strong>'+esc(window.FightTime.localClock(main.toISOString()))+'</strong></span>'+
-   '<span class="upcoming-time-countdown" data-upcoming-start="'+esc(main.toISOString())+'">'+esc(window.FightTime.relative(main.toISOString()))+'</span>';
+   '<span class="upcoming-time-countdown'+(window.FightTime.startReached(main.toISOString())?' is-reached':'')+'" data-upcoming-start="'+esc(main.toISOString())+'">'+esc(window.FightTime.relative(main.toISOString()))+'</span>';
  }
  function dateLabel(day){
   const d=new Date(day+'T12:00:00Z');
@@ -239,6 +239,12 @@ window.UpcomingCards=(()=>{
   document.querySelectorAll('.upcoming-time-countdown[data-upcoming-start]').forEach(el=>{
    const next=window.FightTime.relative(el.dataset.upcomingStart);
    if(el.textContent!==next)el.textContent=next;
+   const reached=window.FightTime.startReached(el.dataset.upcomingStart);
+   el.classList.toggle('is-reached',reached);
+   if(reached&&!el.dataset.recheckedAtStart){
+    el.dataset.recheckedAtStart='1';
+    if(Date.now()-lastCheck>30000)load();
+   }
   });
   const root=document.getElementById('upcoming-cards-root');
   if(root&&root.dataset.localDay!==localDate()){root.dataset.localDay=localDate();update()}
