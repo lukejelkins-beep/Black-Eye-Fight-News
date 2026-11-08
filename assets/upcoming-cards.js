@@ -74,13 +74,17 @@ window.UpcomingCards=(()=>{
  }
  function heroFighters(e){
   const main=e.bouts.find(b=>b.section==='main')||e.bouts[0];
-  return (main?.fighters||[]).slice(0,2).map((name,i)=>{
-   const src=sourcePhoto(name);
-   return '<span class="upcoming-hero-fighter-slot upcoming-hero-fighter-slot-'+(i?'right':'left')+'">'+
-    '<span class="upcoming-hero-fighter-initials" aria-hidden="true">'+esc(initials(name))+'</span>'+
-    (src?'<img class="upcoming-hero-fighter" src="'+href(src)+'" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">':'')+
-    '<span class="upcoming-hero-fighter-name">'+esc(name)+'</span></span>';
-  }).join('');
+  const names=(main?.fighters||[]).slice(0,2);
+  const options=names.map(name=>{
+   const custom=e.fighterFallback;
+   const fallback=custom?.name===name&&/^https:\/\//i.test(custom.url||'')?custom.url:'';
+   return {name,src:sourcePhoto(name)||fallback};
+  }).filter(f=>f.src);
+  const first=options[0]||{name:names[0]||'Main event',src:''};
+  return '<span class="upcoming-hero-fighter-slot upcoming-hero-fighter-slot-single">'+
+   '<span class="upcoming-hero-fighter-initials" aria-hidden="true">'+esc(initials(first.name))+'</span>'+
+   (first.src?'<img class="upcoming-hero-fighter" src="'+href(first.src)+'" data-upcoming-fighter-options="'+esc(JSON.stringify(options))+'" data-upcoming-fighter-index="0" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">':'')+
+   '<span class="upcoming-hero-fighter-name">'+esc(first.name)+'</span></span>';
  }
  /* Prefer a full-size original from FIGHTMAG's WordPress feed, retaining the
     sourced thumbnail as an automatic fallback when the original is unavailable. */
@@ -100,24 +104,16 @@ window.UpcomingCards=(()=>{
  /* Prefer portrait event art; keep sourced landscape artwork, then fighter photos.
     Validate the candidate's actual dimensions after it loads. */
  function posterCandidates(e){
-  const files=[],seen=new Set();
-  const add=(url,kind)=>{
-   if(typeof url!=='string'||!/^https:\/\//i.test(url)||seen.has(url))return;
-   seen.add(url);files.push({url,kind});
-  };
-  // Portrait official art first, then verified square artwork suitable for
-  // the compact thumbnail. Both must be genuinely square/vertical after load.
-  add(e.posterPortrait?.url||'','portrait');
-  add(e.posterList?.url||'','portrait');
-  const secondary=e.posterLandscape?.url||e.poster?.url||'';
-  if(secondary){
-   const versions=posterUrls(secondary);
-   add(versions.primary,'artwork');
-   add(versions.backup,'artwork');
+  const items=[],seen=new Set();
+  for(const candidate of [e.posterPortrait?.url,e.posterList?.url]){
+   if(typeof candidate==='string'&&/^https:\/\//i.test(candidate)&&!seen.has(candidate)){
+    items.push({url:candidate,kind:'portrait'});seen.add(candidate);
+   }
   }
-  return files;
+  // Landscape banners are not event posters. Use a single main-event fighter
+  // until the two-day poster discovery adds a validated portrait/square asset.
+  return items;
  }
-
  // Only convert explicit source times. No guessed ring-walk or unverified start hours.
  function etInstant(date,hour,minute){
   const want=Date.UTC(+date.slice(0,4),+date.slice(5,7)-1,+date.slice(8),hour,minute);
@@ -170,7 +166,7 @@ window.UpcomingCards=(()=>{
    '<div class="upcoming-single-section">'+esc(selected?.label||'Announced bouts')+'</div>';
   const panels=sections.map(g=>'<div id="upcoming-'+esc(e.id)+'-'+esc(g.key)+'" class="result-bouts upcoming-fights" data-upcoming-panel="'+esc(g.key)+'" role="list" aria-label="'+esc(g.label)+'" '+(g.key===selected.key?'':'hidden')+'>'+g.rows.map(b=>'<div role="listitem">'+bout(b,e)+'</div>').join('')+'</div>').join('');
   const artCandidates=posterCandidates(e),first=artCandidates[0],art=first?href(first.url):'';
-  const media='<span class="upcoming-hero-media" aria-hidden="true"><span class="upcoming-hero-fallback">'+heroFighters(e)+'</span>'+
+  const media='<span class="upcoming-hero-media" aria-hidden="true"><span class="upcoming-hero-fallback is-single-fighter">'+heroFighters(e)+'</span>'+
    (first?'<img class="upcoming-hero-poster" src="'+art+'" data-upcoming-poster-candidates="'+esc(JSON.stringify(artCandidates))+'" data-upcoming-poster-index="0" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">':'')+'</span>';
   const summary='<summary class="upcoming-event-summary upcoming-hero upcoming-schedule-row'+(art?' has-poster':' is-artwork-missing')+'">'+media+
    '<span class="upcoming-hero-content"><span class="upcoming-row-kicker">'+esc(e.promotion)+' · '+esc(e.sport==='mma'?'MMA':'BOXING')+'</span>'+
@@ -347,12 +343,27 @@ window.UpcomingCards=(()=>{
   if(w/h<=0.91)hero.classList.add('is-portrait-art');
   else hero.classList.remove('is-portrait-art');
  }
+ function fighterHeroFailed(img){
+  const slot=img.closest('.upcoming-hero-fighter-slot');if(!slot)return;
+  let options=[];
+  try{options=JSON.parse(img.dataset.upcomingFighterOptions||'[]')}catch{}
+  const next=(Number(img.dataset.upcomingFighterIndex)||0)+1;
+  slot.classList.remove('has-photo');
+  if(next<options.length){
+   img.dataset.upcomingFighterIndex=String(next);
+   const name=slot.querySelector?.('.upcoming-hero-fighter-name');
+   const initialsNode=slot.querySelector?.('.upcoming-hero-fighter-initials');
+   if(name)name.textContent=options[next].name;
+   if(initialsNode)initialsNode.textContent=initials(options[next].name);
+   img.hidden=false;img.src=options[next].src;return;
+  }
+  img.hidden=true;
+ }
  function fighterHeroReady(img){
   const slot=img.closest('.upcoming-hero-fighter-slot');if(!slot)return;
-  if(img.naturalWidth<100||img.naturalHeight<100||img.naturalWidth/img.naturalHeight>3.5){
-   img.hidden=true;slot.classList.remove('has-photo');return;
-  }
-  slot.classList.add('has-photo');
+  const w=img.naturalWidth,h=img.naturalHeight;
+  if(Math.min(w,h)<95||w/h>1.8||w/h<0.34){fighterHeroFailed(img);return}
+  img.hidden=false;slot.classList.add('has-photo');
  }
  function reconcileHeroImages(){
   document.querySelectorAll?.('.upcoming-hero-poster,.upcoming-hero-fighter').forEach(img=>{
@@ -380,9 +391,7 @@ window.UpcomingCards=(()=>{
  document.addEventListener('error',event=>{
   const img=event.target;
   if(img.matches?.('.upcoming-hero-poster')){showPosterFallback(img);return}
-  if(img.matches?.('.upcoming-hero-fighter')){
-   img.hidden=true;img.closest('.upcoming-hero-fighter-slot')?.classList.remove('has-photo');return;
-  }
+  if(img.matches?.('.upcoming-hero-fighter')){fighterHeroFailed(img);return;}
   if(!img.matches?.('.upcoming-photo img'))return;
   img.hidden=true;const missing=img.parentElement.querySelector('.result-photo-missing');if(missing)missing.hidden=false;
   const el=img.parentElement,name=el?.dataset.upcomingPhotoName;
