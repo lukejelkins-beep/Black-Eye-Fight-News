@@ -50,6 +50,46 @@ export function wikidataIdentity(entity,name,sport){
  return found;
 }
 
+export function wikidataPromoterIdentity(entity,name,sport){
+ if(!entity||entity.missing!==undefined||!/^Q\d+$/.test(entity.id||''))return [];
+ const names=[entity.labels?.en?.value,entity.sitelinks?.enwiki?.title,...(entity.aliases?.en||[]).map(a=>a.value)];
+ if(!names.some(s=>normName(s)===normName(name)))return [];
+ const description=String(entity.descriptions?.en?.value||'');
+ if(!/boxing|mixed martial arts|sports promotion|wrestling|combat sports|promoter|broadcaster/i.test(description))return [];
+ const result=[];
+ for(const [platform,prop] of Object.entries(props)){
+  const handles=new Set((entity.claims?.[prop]||[])
+   .filter(st=>st.rank!=='deprecated'&&!st.qualifiers?.P582)
+   .map(st=>st.mainsnak?.datavalue?.value)
+   .filter(h=>typeof h==='string'&&validHandle(platform,h)));
+  if(handles.size!==1)continue;
+  const username=[...handles][0];
+  result.push({platform,name,sport,username,role:'promoter',evidenceUrl:'https://www.wikidata.org/wiki/'+entity.id,
+   identityBasis:'Wikidata '+prop+' for '+name+' ('+description+')'});
+ }
+ return result;
+}
+export function registerPromoter(config,candidate,conflicts){
+ if(!candidate||candidate.role!=='promoter'||!validHandle(candidate.platform,candidate.username))return false;
+ const accounts=candidate.platform==='Threads'?config.threads.accounts:config.platforms?.[candidate.platform]?.accounts;
+ if(!Array.isArray(accounts))return false;
+ const already=accounts.find(p=>normName(p.name)===normName(candidate.name));
+ const collision=accounts.find(p=>p.username?.toLowerCase()===candidate.username.toLowerCase());
+ if((already&&already.username?.toLowerCase()!==candidate.username.toLowerCase())||
+    (collision&&normName(collision.name)!==normName(candidate.name))){
+  conflicts.push({platform:candidate.platform,username:candidate.username,name:candidate.name,
+    evidenceUrl:candidate.evidenceUrl,reason:'Promoter handle conflicts with an existing identity'});
+  return false;
+ }
+ if(already)return false;
+ accounts.push({username:candidate.username,name:candidate.name,sport:candidate.sport,role:'promoter',
+   identityBasis:candidate.identityBasis,evidenceUrl:candidate.evidenceUrl});
+ if(candidate.platform==='Threads'&&!config.threads.allowlistedUsernames.some(h=>h.toLowerCase()===candidate.username.toLowerCase())){
+  config.threads.allowlistedUsernames.push(candidate.username);
+ }
+ return true;
+}
+
 export function socialProfileURL(raw){
  try{
   const url=new URL(raw);
@@ -188,7 +228,7 @@ export async function main(){
  config.threads.allowlistedUsernames??=[];
  for(const f of roster.fighters)f.profiles??={};
  const previous=fs.existsSync(reportFile)?readJson(reportFile):{};
- const problems=[],conflicts=[],candidates=[];
+ const problems=[],conflicts=[],candidates=[],promotionCandidates=[];
  const records=[...roster.fighters];
  let wikiBatches=0,officialChecked=0,searchChecked=0;
  // Separate broad and targeted requests into different daily runs to honour
@@ -213,6 +253,26 @@ export async function main(){
     if(problems.length<12)problems.push('Wikidata batch '+i+': '+String(err.message||err).slice(0,100));
    }
    if(!wikiRateLimited)await new Promise(resolve=>setTimeout(resolve,1800));
+  }
+ }
+ // Research promoter and combat-sports organisation identities through the
+ // same source, including Threads. Do not infer a Threads handle from Instagram.
+ if(mode==='bulk'&&!wikiRateLimited){
+  const promoters=[...new Map([
+   ...(config.platforms?.X?.accounts||[]),
+   ...(config.platforms?.Instagram?.accounts||[])
+  ].filter(p=>p.role==='promoter').map(p=>[normName(p.name),p])).values()];
+  for(let i=0;i<promoters.length;i+=20){
+   if(wikiRateLimited)break;
+   try{
+    const data=await wikiBatchByTitle(promoters.slice(i,i+20).map(p=>p.name));
+    for(const entity of Object.values(data))for(const p of promoters){
+     promotionCandidates.push(...wikidataPromoterIdentity(entity,p.name,p.sport));
+    }
+   }catch(e){
+    if(/HTTP 429/.test(String(e.message||e)))wikiRateLimited=true;
+    if(problems.length<12)problems.push('Promoter metadata: '+String(e.message||e).slice(0,95));
+   }
   }
  }
  // Search Wikidata names with nonstandard Wikipedia titles, rotating on
@@ -262,7 +322,14 @@ export async function main(){
   }
  }
  await Promise.all(Array.from({length:4},officialWorker));
- let added=0;
+ let added=0,promotersAdded=0;
+ const promoterSeen=new Set();
+ for(const c of promotionCandidates){
+  const key=c.platform+':'+normName(c.name)+':'+c.username.toLowerCase();
+  if(promoterSeen.has(key))continue;
+  promoterSeen.add(key);
+  if(registerPromoter(config,c,conflicts))promotersAdded++;
+ }
  const seen=new Set();
  for(const c of candidates){
   const key=c.platform+':'+normName(c.name)+':'+c.username.toLowerCase();
@@ -275,11 +342,11 @@ export async function main(){
  writeJson(sourceFile,config);
  writeJson(rosterFile,roster);
  writeJson(reportFile,{checkedAt:new Date().toISOString(),source:'Wikidata P2002/P2003/P11892 + official athlete structured links',
-  discoveredThisRun:added,candidatesChecked:seen.size,mode,wikiBatches,searchChecked,officialChecked,
+  discoveredThisRun:added,promotersAdded,candidatesChecked:seen.size,mode,wikiBatches,searchChecked,officialChecked,
   counts:roster.counts,rateLimited,conflicts:conflicts.slice(0,70),errors:problems.slice(0,20),
   nextSearchOffset:missing.length?(searchStart+searchChecked)%missing.length:0,
   nextOfficialOffset:officialMissing.length?(officialStart+officialSubset.length)%officialMissing.length:0,
   note:'Profile metadata discovery is not a social timeline feed. Original post collection still depends on public publisher-linked posts or permitted platform APIs. Missing names are not guessed.'});
- console.log(JSON.stringify({added,counts:roster.counts,wikiBatches,searchChecked,officialChecked,errors:problems.slice(0,4)},null,2));
+ console.log(JSON.stringify({added,promotersAdded,counts:roster.counts,wikiBatches,searchChecked,officialChecked,errors:problems.slice(0,4)},null,2));
 }
 if(process.argv[1]&&new URL('file://'+process.argv[1]).href===import.meta.url)await main();
