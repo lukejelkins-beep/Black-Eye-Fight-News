@@ -226,3 +226,17 @@
 @media(max-width:650px){
  #upcoming-cards-root .upcoming-time-countdown{font-size:10px;padding:2px 6px}
 }
+
+
+/* Verdict-style list: a validated, sourced portrait is shown in full.
+   Landscape sources remain letterboxed instead of being cropped into a portrait. */
+#upcoming-cards-root .upcoming-schedule-row.is-portrait-art .upcoming-hero-media{
+ background:linear-gradient(150deg,#121a24,#080e14);
+ border-color:#586876;
+}
+#upcoming-cards-root .upcoming-schedule-row .upcoming-hero-poster{
+ display:block!important;
+ object-fit:contain!important;
+ object-position:center center!important;
+}
+#upcoming-cards-root .upcoming-schedule-row .upcoming-hero-poster[hidden]{display:none!important}

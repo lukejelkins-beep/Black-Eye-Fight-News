@@ -97,6 +97,25 @@ window.UpcomingCards=(()=>{
   return {primary:original,backup:''};
  }
 
+ /* Prefer portrait event art; keep sourced landscape artwork, then fighter photos.
+    Validate the candidate's actual dimensions after it loads. */
+ function posterCandidates(e){
+  const files=[],seen=new Set();
+  const add=(url,kind)=>{
+   if(typeof url!=='string'||!/^https:\/\//i.test(url)||seen.has(url))return;
+   seen.add(url);files.push({url,kind});
+  };
+  const preferred=e.posterPortrait?.url||'';
+  add(preferred,'portrait');
+  const secondary=e.posterLandscape?.url||e.poster?.url||'';
+  if(secondary){
+   const versions=posterUrls(secondary);
+   add(versions.primary,'artwork');
+   add(versions.backup,'artwork');
+  }
+  return files;
+ }
+
  // Only convert explicit source times. No guessed ring-walk or unverified start hours.
  function etInstant(date,hour,minute){
   const want=Date.UTC(+date.slice(0,4),+date.slice(5,7)-1,+date.slice(8),hour,minute);
@@ -148,9 +167,9 @@ window.UpcomingCards=(()=>{
    '<button type="button" class="result-card-tab'+(g.key===selected.key?' is-active':'')+'" data-upcoming-tab="'+esc(e.id)+'" data-upcoming-section="'+esc(g.key)+'" aria-controls="upcoming-'+esc(e.id)+'-'+g.key+'" aria-pressed="'+String(g.key===selected.key)+'"><span>'+esc(g.label)+'</span><small>'+g.rows.length+' '+(g.rows.length===1?'fight':'fights')+'</small></button>').join('')+'</div>':
    '<div class="upcoming-single-section">'+esc(selected?.label||'Announced bouts')+'</div>';
   const panels=sections.map(g=>'<div id="upcoming-'+esc(e.id)+'-'+esc(g.key)+'" class="result-bouts upcoming-fights" data-upcoming-panel="'+esc(g.key)+'" role="list" aria-label="'+esc(g.label)+'" '+(g.key===selected.key?'':'hidden')+'>'+g.rows.map(b=>'<div role="listitem">'+bout(b,e)+'</div>').join('')+'</div>').join('');
-  const posterFiles=posterUrls(e.poster?.url),art=posterFiles.primary?href(posterFiles.primary):'';
+  const artCandidates=posterCandidates(e),first=artCandidates[0],art=first?href(first.url):'';
   const media='<span class="upcoming-hero-media" aria-hidden="true"><span class="upcoming-hero-fallback">'+heroFighters(e)+'</span>'+
-   (art?'<img class="upcoming-hero-poster" src="'+art+'" '+(posterFiles.backup?'data-upcoming-poster-backup="'+href(posterFiles.backup)+'" ':'')+'alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">':'')+'</span>';
+   (first?'<img class="upcoming-hero-poster" src="'+art+'" data-upcoming-poster-candidates="'+esc(JSON.stringify(artCandidates))+'" data-upcoming-poster-index="0" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">':'')+'</span>';
   const summary='<summary class="upcoming-event-summary upcoming-hero upcoming-schedule-row'+(art?' has-poster':' is-artwork-missing')+'">'+media+
    '<span class="upcoming-hero-content"><span class="upcoming-row-kicker">'+esc(e.promotion)+' · '+esc(e.sport==='mma'?'MMA':'BOXING')+'</span>'+
    '<strong class="upcoming-hero-title">'+esc(e.title)+'</strong>'+
@@ -159,7 +178,9 @@ window.UpcomingCards=(()=>{
    (e.sourceStatus==='reported'?'<span class="upcoming-row-provisional">Reported · UFC confirmation pending</span>':'')+'</span>'+
    '<span class="upcoming-row-chevron" aria-hidden="true">⌄</span></summary>';
   const when=publishedInstant(e),start=when?'<span>Local scheduled start: '+esc(fmtTime(when.toISOString()))+'</span>':'<span>Start time awaiting confirmation · venue date: '+esc(fmtDate(e.date))+'</span>';
-  const credit=art&&e.poster?.source?'<a href="'+href(e.poster.source)+'" target="_blank" rel="noopener noreferrer">Poster source ↗</a>':'';
+  const portraitCredit=e.posterPortrait?.source&&art?'<a href="'+href(e.posterPortrait.source)+'" target="_blank" rel="noopener noreferrer">Portrait artwork source ↗</a>':'';
+  const landscapeSource=e.posterLandscape?.source||e.poster?.source;
+  const credit=portraitCredit+(landscapeSource&&landscapeSource!==e.posterPortrait?.source&&art?'<a href="'+href(landscapeSource)+'" target="_blank" rel="noopener noreferrer">Event artwork source ↗</a>':'');
   return '<details class="result-event upcoming-event" data-upcoming-card="'+esc(e.id)+'" '+(opened.has(e.id)?'open':'')+'>'+summary+
    '<div class="upcoming-expanded"><div class="upcoming-meta">'+start+'<a href="'+href(e.source)+'" target="_blank" rel="noopener noreferrer">Event source ↗</a>'+credit+'</div>'+
    (e.dateNote?'<p class="upcoming-event-note">'+esc(e.dateNote)+'</p>':'')+
@@ -289,28 +310,38 @@ window.UpcomingCards=(()=>{
   if(el.open){opened.add(el.dataset.upcomingCard);hydratePortraits()}else opened.delete(el.dataset.upcomingCard);
  },true);
 
+
  function showPosterFallback(img){
   const hero=img.closest('.upcoming-hero');if(!hero)return;
-  const backup=img.dataset.upcomingPosterBackup;
-  if(backup&&!img.dataset.upcomingPosterBackupTried){
-   img.dataset.upcomingPosterBackupTried='true';
-   img.src=backup;return;
+  let candidates=[];
+  try{candidates=JSON.parse(img.dataset.upcomingPosterCandidates||'[]')}catch{}
+  const next=(Number(img.dataset.upcomingPosterIndex)||0)+1;
+  hero.classList.remove('is-poster-ready','is-portrait-art');
+  if(next<candidates.length){
+   img.dataset.upcomingPosterIndex=String(next);
+   img.hidden=false;
+   img.src=candidates[next].url;
+   return;
   }
   img.hidden=true;
-  hero.classList.remove('is-poster-ready');
   hero.classList.add('is-artwork-missing');
  }
  function posterReady(img){
   const hero=img.closest('.upcoming-hero'),media=img.closest('.upcoming-hero-media');
   if(!hero||!media)return;
   const w=img.naturalWidth,h=img.naturalHeight;
-  if(!w||!h||Math.min(w,h)<170||Math.max(w,h)<420){showPosterFallback(img);return}
-  // Source dimensions determine the framing: ultra-wide, square and portrait
-  // artwork must all display in full, without enlarging a tiny image.
+  let candidates=[];
+  try{candidates=JSON.parse(img.dataset.upcomingPosterCandidates||'[]')}catch{}
+  const active=candidates[Number(img.dataset.upcomingPosterIndex)||0];
+  // Do not mislabel a landscape banner as a portrait poster. Move on to the
+  // wider artwork, or the two-fighter fallback if no valid image remains.
+  if(!w||!h||Math.min(w,h)<170||Math.max(w,h)<420||
+     (active?.kind==='portrait'&&w/h>1.07)){showPosterFallback(img);return}
   media.style.setProperty('--poster-ratio',w+' / '+h);
   media.style.setProperty('--poster-native-width',w+'px');
   hero.classList.remove('is-artwork-missing');
   hero.classList.add('is-poster-ready');
+  hero.classList.toggle('is-portrait-art',w/h<=0.91);
  }
  function fighterHeroReady(img){
   const slot=img.closest('.upcoming-hero-fighter-slot');if(!slot)return;

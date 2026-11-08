@@ -1,5 +1,5 @@
 /* Offline-ready app shell. Always prioritise network for news and fight data. */
-const CACHE_NAME = 'befn-app-shell-v7-20261108-compact-list';
+const CACHE_NAME = 'befn-app-shell-v8-20261108-portrait-art';
 const SHELL = [
   '/', '/index.html', '/manifest.webmanifest',
   '/assets/mark.svg', '/assets/icon-192.png', '/assets/icon-512.png',
