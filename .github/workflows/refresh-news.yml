@@ -5,7 +5,13 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['scripts/refresh-news.py', '.github/workflows/refresh-news.yml']
+    paths:
+      - 'scripts/refresh-news.py'
+      - 'tests/test_news.py'
+      - 'tests/test-desk.cjs'
+      - 'assets/local-time.js'
+      - 'assets/live-desk.inc.js'
+      - '.github/workflows/refresh-news.yml'
 permissions:
   contents: write
 concurrency:
