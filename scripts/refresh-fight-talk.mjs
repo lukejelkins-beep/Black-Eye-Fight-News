@@ -1,6 +1,6 @@
 /**
- * Public-source Fight Talk collector, safe to rerun hourly.
- * Only direct author posts from named, DID-pinned Bluesky sources.
+ * Public-source Fight Talk collector, safe to rerun every 10 minutes.
+ * Public author APIs for pinned Bluesky accounts plus verified X/Instagram accounts.
  * Optional Meta Threads keyword search requires explicitly approved API access.
  * No model-generated posts or unattributed invented quotes.
  */
@@ -20,7 +20,7 @@ let checked=0,failed=0,failures=[];
 const keywords=/\b(boxing|boxer|boxingmatch|fight|fighter|fighting|fightnight|ufc|mma|punch|knockout|ko|tko|bellator|pfl|octagon|wba|wbc|wbo|ibf|ring magazine|mixed martial arts|weigh.in|combat sport|undercard|bout|featherweight|heavyweight|lightweight|middleweight|welterweight|title shot|contender|bjj|grappling|wrestling|wrestler|raf|real american freestyle|ncaa|freestyle|greco.roman|judo|kickboxing)\b/i;
 const allowedUrl=url=>{try{const u=new URL(url);return u.protocol==='https:'&&['bsky.app','threads.com','www.threads.com','threads.net','www.threads.net','x.com','www.x.com','instagram.com','www.instagram.com','facebook.com','www.facebook.com','reddit.com','www.reddit.com'].includes(u.hostname)}catch{return false}};
 function insert(p,fresh=false) {
-  if(!p||!allowedUrl(p.url)||typeof p.quote!=='string'||!p.quote.trim()||!['boxing','mma','grappling'].includes(p.sport))return;
+  if(!p||!allowedUrl(p.url)||typeof p.quote!=='string'||(!p.quote.trim()&&!['Instagram','X'].includes(p.platform))||!['boxing','mma','grappling'].includes(p.sport))return;
   const when=Date.parse(p.postedAt||'');
   if(!Number.isFinite(when)||when<since||when>now+30*60*1000)return;
   const key=p.url.split('?')[0];
@@ -93,19 +93,27 @@ if(token&&allow.size){
 }else if(token&&!allow.size){
   threadsStatus='Threads API token supplied, but no authenticated author handles are approved in source configuration.';
 }
-const platformStatus=await collectPlatforms(config,getJSON,p=>{if(typeof p.quote==='string'&&keywords.test(p.quote))insert(p,true)},recentApiSince);
+const platformStatus=await collectPlatforms(config,getJSON,p=>insert(p,true),recentApiSince);
 platformStatus.unshift({platform:'Bluesky',state:checked?'connected':'unavailable',checked,failed,message:checked+' of '+config.sources.length+' sources checked.'});
 platformStatus.push({platform:'Threads',state:threadsState,message:threadsStatus});
 const collected=platformStatus.some(p=>p.state==='connected');
-const meaningful=/\b(title|champion|result|wins|won|defeat|knockout|finish|announce|confirmed|signs|signed|withdraw|cancel|injury|opponent|call.?out|matchup|bout|card|round|decision|scorecard|takedown|submission|technique|analysis|fight|ufc|boxing|wrestling|grappling|raf)\b/i;
-const all=[...posts.values()].filter(p=>meaningful.test(p.quote)&&!/(years ago today|in my #?boxing collection|gold auto card|duratran site poster)/i.test(p.quote)).map(p=>({...p,score:(/title|champion|withdraw|cancel|announce|confirm|result/i.test(p.quote)?3:0)+(['fighter','promoter','trainer'].includes(p.role)?2:1),topic:p.role==='fan'?'Fan discussion':'Source statement · claims may need confirmation'})).sort((a,b)=>Date.parse(b.postedAt)-Date.parse(a.postedAt));
-const counts=new Map();const selected=all.filter(p=>{const key=p.platform+':'+p.handle;const n=counts.get(key)||0;counts.set(key,n+1);return n<(p.role==='fighter'?4:2)}).slice(0,240);
+const meaningful=/\\b(title|champion|result|wins|won|defeat|knockout|finish|announce|confirmed|signs|signed|withdraw|cancel|injury|opponent|call.?out|matchup|bout|card|round|decision|scorecard|takedown|submission|fight|ufc|boxing|wrestling|grappling|raf)\\b/i;
+const all=[...posts.values()]
+ .filter(p=>p.platform!=='Bluesky'||meaningful.test(p.quote))
+ .filter(p=>!/(years ago today|in my #?boxing collection|gold auto card|duratran site poster)/i.test(p.quote))
+ .map(p=>({...p,topic:p.role==='fan'?'Fan discussion':'Original source post · claims may need confirmation'}))
+ .sort((a,b)=>Date.parse(b.postedAt)-Date.parse(a.postedAt));
+const counts=new Map();
+const selected=all.filter(p=>{const key=p.platform+':'+p.handle;const n=counts.get(key)||0;
+ if(n>=10)return false;
+ counts.set(key,n+1);return true;
+}).slice(0,320);
 const output={
   attemptedAt:checkedAt,checkedAt:collected?checkedAt:(previous.checkedAt||null),updatedAt:all[0]?.postedAt||null,windowDays:28,
   sourcesConfigured:config.sources.length,sourcesChecked:checked,sourcesFailed:failed,
   platformStatus,threadsStatus,failures:failures.slice(0,12),
   posts:selected,
-  message:'Source-linked posts retained for rolling 28-day highlights; the Live view shows the latest seven days. Post claims are not independently fact-checked. Feed checks are scheduled every 10 minutes when GitHub Actions runs; source delays may occur.'
+  message:'Source-linked posts retained for rolling 28-day highlights; the Live view shows the latest seven days. Post claims are not independently fact-checked. Newest-first feed; original posts need no minimum engagement. Checks are scheduled every 10 minutes, subject to GitHub Actions timing and platform API availability.'
 };
 fs.writeFileSync(file,JSON.stringify(output,null,2)+'\n');
 console.log('Fight Talk checked',checked,'of',config.sources.length,'sources; published',selected.length,'original posts; failures',failed,'Threads:',threadsStatus);

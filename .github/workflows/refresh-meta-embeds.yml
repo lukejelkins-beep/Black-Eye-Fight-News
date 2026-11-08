@@ -1,7 +1,8 @@
 name: Discover official Instagram and Threads embeds
 on:
   schedule:
-    - cron: '22 * * * *'
+    # Best-effort discovery of public original links every 10 minutes.
+    - cron: '6,16,26,36,46,56 * * * *'
   workflow_dispatch:
   push:
     branches: [main]

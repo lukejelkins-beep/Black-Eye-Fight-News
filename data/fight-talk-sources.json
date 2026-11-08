@@ -1,6 +1,6 @@
 {
-  "edition": "2026-11-08",
-  "description": "Named combat-sports sources pinned to public profile IDs. Extra platform accounts require approved API access and verified account IDs before activation.",
+  "edition": "2026-11-09",
+  "description": "Pinned Bluesky identities and directly sourced X/Instagram watchlists. API account identity is checked at each read. Inactive/missing permissions never generate synthetic posts.",
   "sources": [
     {
       "handle": "danrafael1.bsky.social",
@@ -135,13 +135,639 @@
   },
   "platforms": {
     "X": {
-      "accounts": [],
-      "status": "connection-required"
+      "accounts": [
+        {
+          "username": "Zuffa_Boxing",
+          "name": "Zuffa Boxing",
+          "sport": "boxing",
+          "role": "promoter",
+          "identityBasis": "Verified direct original post: https://x.com/Zuffa_Boxing/status/2119204682165801201"
+        },
+        {
+          "username": "jakepaul",
+          "name": "Jake Paul",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Verified direct original post: https://x.com/jakepaul/status/2118458039632343239"
+        },
+        {
+          "username": "TheNotoriousMMA",
+          "name": "Conor McGregor",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Verified direct original post: https://x.com/TheNotoriousMMA/status/2118454753458114779"
+        },
+        {
+          "username": "genki_sudo",
+          "name": "Genki Sudo",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Verified direct original post: https://x.com/genki_sudo/status/2118330748432482413"
+        },
+        {
+          "username": "a_ok_i",
+          "name": "Shinya Aoki",
+          "sport": "grappling",
+          "role": "fighter",
+          "identityBasis": "Verified direct original post: https://x.com/a_ok_i/status/2118327251507048794"
+        },
+        {
+          "username": "SStricklandMMA",
+          "name": "Sean Strickland",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Verified direct original post: https://x.com/SStricklandMMA/status/2118132607548600501"
+        },
+        {
+          "username": "GeorgesStPierre",
+          "name": "Georges St-Pierre",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Verified direct original post: https://x.com/GeorgesStPierre/status/2118030475541336339"
+        },
+        {
+          "username": "MikeChandlerMMA",
+          "name": "Michael Chandler",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Verified direct original post: https://x.com/MikeChandlerMMA/status/2117958301229178951"
+        },
+        {
+          "username": "blessedmma",
+          "name": "Max Holloway",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
+        },
+        {
+          "username": "tomaspinallofficial",
+          "name": "Tom Aspinall",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
+        },
+        {
+          "username": "alexvolkanovski",
+          "name": "Alexander Volkanovski",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
+        },
+        {
+          "username": "kaylaharrisonofficial",
+          "name": "Kayla Harrison",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
+        },
+        {
+          "username": "funkmastermma",
+          "name": "Aljamain Sterling",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
+        },
+        {
+          "username": "gervontaa",
+          "name": "Gervonta Davis",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
+        },
+        {
+          "username": "rosenamajunas",
+          "name": "Rose Namajunas",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
+        },
+        {
+          "username": "nobickal1",
+          "name": "Bo Nickal",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
+        },
+        {
+          "username": "bullyb170",
+          "name": "Belal Muhammad",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
+        },
+        {
+          "username": "shakurstevenson",
+          "name": "Shakur Stevenson",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
+        },
+        {
+          "username": "sweet_hands",
+          "name": "Caleb Plant",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
+        },
+        {
+          "username": "benavidez300",
+          "name": "David Benavidez",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports public profile directory https://handledex.com/en/category/combat-sports/x/"
+        },
+        {
+          "username": "MatchroomBoxing",
+          "name": "Matchroom Boxing",
+          "sport": "boxing",
+          "role": "promoter",
+          "identityBasis": "Official organisation account: https://x.com/MatchroomBoxing"
+        },
+        {
+          "username": "trboxing",
+          "name": "Top Rank",
+          "sport": "boxing",
+          "role": "promoter",
+          "identityBasis": "Official organisation account: https://x.com/trboxing"
+        },
+        {
+          "username": "GoldenBoyBoxing",
+          "name": "Golden Boy Promotions",
+          "sport": "boxing",
+          "role": "promoter",
+          "identityBasis": "Official organisation account: https://x.com/GoldenBoyBoxing"
+        },
+        {
+          "username": "ufc",
+          "name": "UFC",
+          "sport": "mma",
+          "role": "promoter",
+          "identityBasis": "Official organisation account: https://x.com/ufc"
+        },
+        {
+          "username": "PFLMMA",
+          "name": "PFL",
+          "sport": "mma",
+          "role": "promoter",
+          "identityBasis": "Official organisation account: https://x.com/PFLMMA"
+        },
+        {
+          "username": "premierboxing",
+          "name": "Premier Boxing Champions",
+          "sport": "boxing",
+          "role": "promoter",
+          "identityBasis": "Official organisation account: https://x.com/premierboxing"
+        }
+      ],
+      "status": "requires-approved-X-API-bearer-token"
     },
     "Instagram": {
-      "accounts": [],
-      "status": "public-original-post-embeds-enabled-business-discovery-pending",
-      "note": "14 curated original links have been checked with Meta oEmbed; future links from reputable fight coverage are verified before display. No unrestricted Instagram-account scraping."
+      "accounts": [
+        {
+          "username": "diegolopesmma",
+          "name": "Diego Lopes",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Verified direct original post: https://www.instagram.com/diegolopesmma/reel/DfdsDr5RQy9/"
+        },
+        {
+          "username": "frank_warren_official",
+          "name": "Frank Warren",
+          "sport": "boxing",
+          "role": "promoter",
+          "identityBasis": "Verified direct original post: https://www.instagram.com/frank_warren_official/p/DfdZjeGIliA/"
+        },
+        {
+          "username": "iliatopuria",
+          "name": "Ilia Topuria",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Verified direct original post: https://www.instagram.com/iliatopuria/p/DfZUL6WMVLu/"
+        },
+        {
+          "username": "johnnywalker",
+          "name": "Johnny Walker",
+          "sport": "mma",
+          "role": "fighter",
+          "fighterTier": "contender",
+          "identityBasis": "Verified direct original post: https://www.instagram.com/johnnywalker/p/Dfakkjhjz-3/"
+        },
+        {
+          "username": "rafwrestlingusa",
+          "name": "Real American Freestyle",
+          "sport": "grappling",
+          "role": "promoter",
+          "identityBasis": "Verified direct original post: https://www.instagram.com/rafwrestlingusa/p/DfaelaBRSJs/"
+        },
+        {
+          "username": "claressashields",
+          "name": "Claressa Shields",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Verified direct original post: https://www.instagram.com/claressashields/reel/Dfa1SsVhWqq/"
+        },
+        {
+          "username": "kaylaharrisonofficial",
+          "name": "Kayla Harrison",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Verified direct original post: https://www.instagram.com/kaylaharrisonofficial/reel/DfXy01AovMB/"
+        },
+        {
+          "username": "alexvolkanovski",
+          "name": "Alexander Volkanovski",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Verified direct original post: https://www.instagram.com/alexvolkanovski/reel/DfTi2rvyg1d/"
+        },
+        {
+          "username": "abdullahmason",
+          "name": "Abdullah Mason",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Verified direct original post: https://www.instagram.com/abdullahmason/reel/DfTBeeBxQok/"
+        },
+        {
+          "username": "tomaspinallofficial",
+          "name": "Tom Aspinall",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Verified direct original post: https://www.instagram.com/tomaspinallofficial/p/DfIETrHAP-6/"
+        },
+        {
+          "username": "blessedmma",
+          "name": "Max Holloway",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "rosenamajunas",
+          "name": "Rose Namajunas",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "funkmastermma",
+          "name": "Aljamain Sterling",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "nobickal1",
+          "name": "Bo Nickal",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "bullyb170",
+          "name": "Belal Muhammad",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "broyval",
+          "name": "Brandon Royval",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "corysandhagenmma",
+          "name": "Cory Sandhagen",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "carlosulberg",
+          "name": "Calros Ulberg",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "blanchfield_mma",
+          "name": "Erin Blanchfield",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "ilovebamf",
+          "name": "Anthony Hernandez",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "jasminejasudavicius",
+          "name": "Jasmine Jasudavicius",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "doncaolan135",
+          "name": "Caolan Loughran",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "joepyfer",
+          "name": "Joe Pyfer",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "thugnasty_ufc",
+          "name": "Bryce Mitchell",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "b_allen185",
+          "name": "Brendan Allen",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "danhangman",
+          "name": "Dan Hooker",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "thebeastufc",
+          "name": "Derrick Lewis",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "briantcity",
+          "name": "Brian Ortega",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "sugasean",
+          "name": "Sean O'Malley",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "alexpoatanpereira",
+          "name": "Alex Pereira",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "charlesdobronxs",
+          "name": "Charles Oliveira",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "bulletvalentina",
+          "name": "Valentina Shevchenko",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "islam_makhachev",
+          "name": "Islam Makhachev",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "jonnybones",
+          "name": "Jon Jones",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "mackenziedern",
+          "name": "Mackenzie Dern",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "dricusduplessis",
+          "name": "Dricus du Plessis",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "benavidez300",
+          "name": "David Benavidez",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "calebplant",
+          "name": "Caleb Plant",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "bronzebomber",
+          "name": "Deontay Wilder",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "erislandylaraofficial",
+          "name": "Erislandy Lara",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "errolspencejr",
+          "name": "Errol Spence Jr",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "dannyswiftgarcia",
+          "name": "Danny Garcia",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "chris_mbilli",
+          "name": "Christian Mbilli",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "angeloxleo",
+          "name": "Angelo Leo",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "twonthedon5",
+          "name": "Gary Antuanne Russell",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "officialb.norman",
+          "name": "Brian Norman Jr",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "emilianofvargas",
+          "name": "Emiliano Vargas",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "brandonfigueroa101",
+          "name": "Brandon Figueroa",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "shakurstevenson",
+          "name": "Shakur Stevenson",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "naoyainoue_410",
+          "name": "Naoya Inoue",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "usykaa",
+          "name": "Oleksandr Usyk",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "canelo",
+          "name": "Canelo Alvarez",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "kingryan",
+          "name": "Ryan Garcia",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "jaiopetaia_",
+          "name": "Jai Opetaia",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Combat-sports identity directory https://handledex.com/en/category/combat-sports/instagram/; rechecked on platform at fetch time"
+        },
+        {
+          "username": "matchroomboxing",
+          "name": "Matchroom Boxing",
+          "sport": "boxing",
+          "role": "promoter",
+          "identityBasis": "Official promoter/organisation profile: https://www.instagram.com/matchroomboxing/"
+        },
+        {
+          "username": "queensberrypromotions",
+          "name": "Queensberry Promotions",
+          "sport": "boxing",
+          "role": "promoter",
+          "identityBasis": "Official promoter/organisation profile: https://www.instagram.com/queensberrypromotions/"
+        },
+        {
+          "username": "toprank",
+          "name": "Top Rank",
+          "sport": "boxing",
+          "role": "promoter",
+          "identityBasis": "Official promoter/organisation profile: https://www.instagram.com/toprank/"
+        },
+        {
+          "username": "premierboxing",
+          "name": "Premier Boxing Champions",
+          "sport": "boxing",
+          "role": "promoter",
+          "identityBasis": "Official promoter/organisation profile: https://www.instagram.com/premierboxing/"
+        },
+        {
+          "username": "goldenboy",
+          "name": "Golden Boy Promotions",
+          "sport": "boxing",
+          "role": "promoter",
+          "identityBasis": "Official promoter/organisation profile: https://www.instagram.com/goldenboy/"
+        },
+        {
+          "username": "daznboxing",
+          "name": "DAZN Boxing",
+          "sport": "boxing",
+          "role": "promoter",
+          "identityBasis": "Official promoter/organisation profile: https://www.instagram.com/daznboxing/"
+        },
+        {
+          "username": "ufc",
+          "name": "UFC",
+          "sport": "mma",
+          "role": "promoter",
+          "identityBasis": "Official promoter/organisation profile: https://www.instagram.com/ufc/"
+        },
+        {
+          "username": "pflmma",
+          "name": "PFL",
+          "sport": "mma",
+          "role": "promoter",
+          "identityBasis": "Official promoter/organisation profile: https://www.instagram.com/pflmma/"
+        },
+        {
+          "username": "onechampionship",
+          "name": "ONE Championship",
+          "sport": "mma",
+          "role": "promoter",
+          "identityBasis": "Official promoter/organisation profile: https://www.instagram.com/onechampionship/"
+        }
+      ],
+      "status": "requires-Facebook-Login-Instagram-Business-Discovery",
+      "note": "Instagram API with Instagram Login alone cannot read other people’s profiles. Business Discovery requires Facebook Login, a linked professional account, IG asset ID and approved permissions. Unsupported personal profiles are skipped."
     },
     "Facebook": {
       "accounts": [],

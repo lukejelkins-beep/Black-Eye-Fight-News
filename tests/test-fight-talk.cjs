@@ -49,7 +49,7 @@ ctx.fixture={champion,media,prospect};
 vm.runInContext("liveTalk.selected=[fixture.champion,fixture.prospect,{...fixture.champion,postedAt:'2026-10-28',summary:'Earlier training announcement',url:'https://instagram.com/p/stale/'},{...fixture.champion,url:'https://example.com/p/unsafe/'}]; liveTalk.posts=[fixture.media,{...fixture.prospect,quote:'Original post',summary:undefined,url:'https://x.com/i/status/300'}]",ctx);
 assert.equal(ctx.recentTalkPosts().length,3);
 assert(ctx.recentTalkPosts().some(p=>p.quote==='Original post'));
-assert(ctx.renderSocial().includes('Live &amp; relevant')||ctx.renderSocial().includes('Live & relevant'));
+assert(ctx.renderSocial().includes('Latest fighter &amp; promoter posts')||ctx.renderSocial().includes('Latest fighter & promoter posts'));
 assert(ctx.renderSocial().includes('Last 4 weeks'));
 assert(!ctx.renderSocial().includes('Selected post'));
 assert(!ctx.renderSocial().includes('talk-card-meta'));
