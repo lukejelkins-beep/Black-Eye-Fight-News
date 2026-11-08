@@ -3,7 +3,14 @@ const source=fs.readFileSync('assets/live-desk.inc.js','utf8');
 const state={calendar:'grappling',news:'boxing'};
 class FixedDate extends Date {constructor(...args){super(...(args.length?args:['2026-11-08T00:00:00Z']));}static now(){return new Date('2026-11-08T00:00:00Z').getTime();}}
 const ctx={window:{},state,document:{addEventListener(){},getElementById(){return null}},setInterval(){},Date:FixedDate,AbortSignal,fetch:async()=>{throw Error('offline')},location:{hash:'#none'},navigate(){},esc:s=>String(s).replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;'),safeURL:s=>/^https:\/\//.test(s)?s:'#',renderFrame:s=>s,viewTitle:(...a)=>a.join(' '),segments:()=>'',hero:()=>'',archiveCard:()=>'',D:{news:{}},newsCard:()=>'',renderArchivedCalendar:()=>''};
-vm.createContext(ctx);vm.runInContext(source,ctx);
+ctx.navigator={language:'en-AU'};
+ctx.Intl=Intl;
+vm.createContext(ctx);
+// The news desk runs in the browser after local-time.js; run the real shared
+// date/time helper in this VM too, so the test matches the published site.
+vm.runInContext(fs.readFileSync('assets/local-time.js','utf8'),ctx,{filename:'assets/local-time.js'});
+assert(ctx.window.FightTime.dayKey(new FixedDate()).startsWith('2026-11-08'),'News desk uses visitor-local calendar dates');
+vm.runInContext(source,ctx);
 vm.runInContext('desk.events='+fs.readFileSync('data/grappling-events.json','utf8')+'.events;desk.reviewedAt="2026-11-08";',ctx);
 assert(ctx.renderCalendar().includes('RAF Abu Dhabi'));state.matDiscipline='NCAA';assert(!ctx.renderCalendar().includes('RAF Abu Dhabi'));assert(ctx.renderCalendar().includes('NCAA Division I'));
 assert(ctx.headlineCard({title:'<script>bad</script>',sport:'boxing',source:'test',url:'javascript:alert(1)',publishedAt:'2026-11-08T00:00:00Z'}).includes('href="#"'));
