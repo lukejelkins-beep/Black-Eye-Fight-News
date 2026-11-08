@@ -39,7 +39,7 @@ jobs:
           melbourne_date = datetime.now(ZoneInfo("Australia/Melbourne")).date()
           due = (melbourne_date - date(2026,11,10)).days % 2 == 0
           print("due=" + str(due).lower())
-          print("Melbourne date:", melbourne_date)
+          print("melbourne_date=" + melbourne_date.isoformat())
           PY
       - name: Install image validation and HTML parsing tools
         if: github.event_name != 'schedule' || steps.cadence.outputs.due == 'true'
