@@ -29,7 +29,12 @@ const ctx={
  renderFrame:s=>s,
  viewTitle:(...parts)=>parts.join(' ')
 };
-vm.createContext(ctx);vm.runInContext(fn,ctx);
+ctx.window={};ctx.navigator={language:'en-AU'};ctx.Intl=Intl;
+vm.createContext(ctx);
+// The Fight Talk view uses the same visitor-local clock as the website.
+// Exercise the actual helper in the browser-like VM rather than mocking it.
+vm.runInContext(fs.readFileSync('assets/local-time.js','utf8'),ctx,{filename:'assets/local-time.js'});
+vm.runInContext(fn,ctx);
 const posts=Array.from({length:12},(_,i)=>({name:i<8?'Busy author':'Other '+i,quote:'Distinct post '+i,postedAt:new Date(Date.UTC(2026,10,7,12,i)).toISOString()}));
 const nativeEmbeds=Array.from({length:7},(_,i)=>({name:'Original Threads post',platform:'Threads',sport:'mma',role:'media',nativeEmbed:true,sourceLinkedAt:'2026-11-08T08:28:40Z',summary:'Original social post linked on official UFC homepage.',url:'https://www.threads.com/t/uniqueOriginal'+i+'/'}));
 assert.equal(ctx.diverseTalk(nativeEmbeds).length,7,'Do not collapse independent real Threads posts with the same source-explanation text');
