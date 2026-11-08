@@ -97,7 +97,7 @@ const platformStatus=await collectPlatforms(config,getJSON,p=>insert(p,true),rec
 platformStatus.unshift({platform:'Bluesky',state:checked?'connected':'unavailable',checked,failed,message:checked+' of '+config.sources.length+' sources checked.'});
 platformStatus.push({platform:'Threads',state:threadsState,message:threadsStatus});
 const collected=platformStatus.some(p=>p.state==='connected');
-const meaningful=/\\b(title|champion|result|wins|won|defeat|knockout|finish|announce|confirmed|signs|signed|withdraw|cancel|injury|opponent|call.?out|matchup|bout|card|round|decision|scorecard|takedown|submission|fight|ufc|boxing|wrestling|grappling|raf)\\b/i;
+const meaningful=/\b(title|champion|result|wins|won|defeat|knockout|finish|announce|confirmed|signs|signed|withdraw|cancel|injury|opponent|call.?out|matchup|bout|card|round|decision|scorecard|takedown|submission|fight|ufc|boxing|wrestling|grappling|raf)\b/i;
 const all=[...posts.values()]
  .filter(p=>p.platform!=='Bluesky'||meaningful.test(p.quote))
  .filter(p=>!/(years ago today|in my #?boxing collection|gold auto card|duratran site poster)/i.test(p.quote))

@@ -687,7 +687,7 @@ function recentTalkPosts(windowDays=7){
  // Keep native original-post identities from selected sources, while still preferring fresh direct-source posts where available.
  for(const p of [...liveTalk.selected,...liveTalk.posts]){
   const time=Date.parse(p?.postedAt||(p?.nativeEmbed?p?.sourceLinkedAt:''));
-  if(p?.type!=='post'||!Object.hasOwn(talkPlatforms,p.platform)||!Object.hasOwn(talkSports,p.sport)||p.sport==='all'||typeof p.name!=='string'||!p.name.trim()||typeof (p.quote||p.summary)!=='string'||!(p.quote||p.summary).trim()||!Number.isFinite(time)||time<now-windowDays*24*60*60*1000||time>now+30*60*1000)continue;
+  if(p?.type!=='post'||!Object.hasOwn(talkPlatforms,p.platform)||!Object.hasOwn(talkSports,p.sport)||p.sport==='all'||typeof p.name!=='string'||!p.name.trim()||typeof (p.quote||p.summary)!=='string'||(!(p.quote||p.summary).trim()&&!['Instagram','X'].includes(p.platform))||!Number.isFinite(time)||time<now-windowDays*24*60*60*1000||time>now+30*60*1000)continue;
   try{
    const url=new URL(p.url);
    const {hosts}=talkPlatforms[p.platform];

@@ -14,6 +14,21 @@ export async function collectPlatforms(config,getJSON,insert,since){
   const headers={Authorization:'Bearer '+token};
   const version=/^v\d+\.\d+$/.test(process.env.META_GRAPH_VERSION||'')?process.env.META_GRAPH_VERSION:'v26.0';
   let own=String(process.env.INSTAGRAM_USER_ID||'');
+  // Resolve the caller's Instagram professional asset only once per run.
+  // If the token is Instagram Login-only or lacks Business Discovery permissions,
+  // exit this platform cleanly rather than making dozens of failing API calls.
+  if(platform==='Instagram'&&!/^\\d+$/.test(own)){
+   try{
+    const assigned=await getJSON('https://graph.facebook.com/'+version+'/me/accounts?fields=id,name,instagram_business_account{id,username}&limit=50',headers);
+    const assets=(assigned.data||[]).map(p=>p.instagram_business_account).filter(p=>/^\\d+$/.test(String(p?.id||'')));
+    if(assets.length!==1)throw Error('Set INSTAGRAM_USER_ID to the linked professional account ID for Business Discovery');
+    own=String(assets[0].id);
+   }catch(e){
+    out.push({platform,state:'unavailable',checked:0,failed:0,configured:sources.length,
+     message:'Instagram Business Discovery unavailable: '+String(e.message||e).slice(0,110)});
+    continue;
+   }
+  }
   // Rate-limited platforms are scanned in small bounded concurrent batches.
   let cursor=0;
   async function one(src){
