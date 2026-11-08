@@ -39,6 +39,7 @@ class PosterChecks(unittest.TestCase):
         self.assertEqual(e["posterPortrait"]["url"], "https://example.com/already-approved.jpg")
     def test_event_date_must_match(self):
         e = event()
+        e['date'] = '2099-02-01'
         body = """<html><head><title>Fighter One vs Fighter Two Event</title>
              <meta property="og:image" content="https://cdn.ufc.com/event-poster.jpg"></head>
              <body><h1>Fighter One vs Fighter Two</h1>
@@ -64,6 +65,7 @@ class PosterChecks(unittest.TestCase):
         self.assertEqual(e["posterLandscape"]["url"], "https://example.com/old-banner.jpg")
     def test_official_meta_image_and_bad_source(self):
         e = event()
+        e['date'] = '2099-02-01'
         html = """<html><head><title>Fighter One vs Fighter Two | UFC</title>
           <meta property="og:image" content="https://cdn.ufc.com/fighter-one-vs-fighter-two-poster.jpg"></head>
           <body><p>1 February 2099</p><img src="https://example.com/site-logo.png" alt="logo"></body></html>"""
