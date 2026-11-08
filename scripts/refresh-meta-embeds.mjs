@@ -13,6 +13,8 @@ const xWatchlist=JSON.parse(fs.readFileSync('data/fight-talk-sources.json','utf8
 const trackedX=new Map(xWatchlist.filter(x=>x.username).map(x=>[x.username.replace(/^@/,'').toLowerCase(),x]));
 const igWatchlist=JSON.parse(fs.readFileSync('data/fight-talk-sources.json','utf8')).platforms?.Instagram?.accounts||[];
 const trackedIG=new Map(igWatchlist.filter(x=>x.username).map(x=>[x.username.replace(/^@/,'').toLowerCase(),x]));
+const threadsConfig=JSON.parse(fs.readFileSync('data/fight-talk-sources.json','utf8')).threads||{};
+const trackedThreads=new Map((threadsConfig.accounts||[]).filter(x=>x.username).map(x=>[x.username.replace(/^@/,'').toLowerCase(),x]));
 function xDate(url){
  const id=String(url||'').match(/\/status\/(\d{10,25})\/?$/)?.[1];
  if(!id)return null;
@@ -38,7 +40,8 @@ export function normalizePostLink(raw) {
   if(host==='threads.com'||host==='threads.net'){
    const match=u.pathname.match(/^\/(@[\w.]+\/post|t)\/([\w-]{6,})\/?$/);
    if(!match)return null;
-   return {platform:'Threads',url:'https://www.threads.com/'+match[1]+'/'+match[2]+'/'};
+   return {platform:'Threads',url:'https://www.threads.com/'+match[1]+'/'+match[2]+'/',
+     ...(match[1].startsWith('@')?{username:match[1].slice(1).replace(/\/post$/,'')}:{} )};
   }
   if(host==='x.com'||host==='twitter.com'){
    const match=u.pathname.match(/^\/([A-Za-z0-9_]{1,15})\/status\/(\d{10,25})\/?$/);
@@ -105,6 +108,11 @@ async function metaVerify(item){
    const profile=new URL(data.author_url);
    if(profile.hostname.replace(/^www\./,'')==='instagram.com')item.authorUsername=originalAuthor;
  }
+ if(item.platform==='Threads'&&originalAuthor&&trackedThreads.has(originalAuthor)){
+   const profile=new URL(data.author_url);
+   if(['threads.com','threads.net'].includes(profile.hostname.replace(/^www\./,'')) &&
+      (!item.username||item.username.toLowerCase()===originalAuthor))item.authorUsername=originalAuthor;
+ }
  return true;
 }
 /**
@@ -127,7 +135,8 @@ export function mergeSourceLinks(articles, links, prior, checkedAt){
   const name=article.sourceLabel||publisherOf(article.url);
   if(!name)continue;
   const pinned=item.platform==='X'?trackedX.get(item.username?.toLowerCase()):
-   item.platform==='Instagram'&&item.authorUsername?trackedIG.get(item.authorUsername):null;
+   item.platform==='Instagram'&&item.authorUsername?trackedIG.get(item.authorUsername):
+   item.platform==='Threads'&&item.authorUsername?trackedThreads.get(item.authorUsername):null;
   if(item.platform==='X'&&!pinned)continue;
   const when=Date.parse(article.publishedAt||'');
   if(!Number.isFinite(when)||when>Date.parse(checkedAt)+30*60*1000||when<Date.parse(checkedAt)-recentDays)continue;
@@ -145,7 +154,7 @@ export function mergeSourceLinks(articles, links, prior, checkedAt){
    discoveredAt:old?.discoveredAt||checkedAt,
    sourcePublisher:name,evidenceUrl:article.url,
    summary:'Original social post linked in '+name+' coverage. Its author, caption and publication date appear in the official embed.',
-   source:'Public publisher link + official Meta oEmbed verification',
+   source:item.platform==='X'?'Publisher link + official X oEmbed verification':'Publisher link + official Meta oEmbed verification',
    url:item.url,
   });
  }
