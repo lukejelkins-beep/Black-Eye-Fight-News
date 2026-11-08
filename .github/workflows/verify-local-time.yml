@@ -1,0 +1,32 @@
+name: Validate visitor-local times
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/verify-local-time.yml'
+      - 'tests/test-local-time.cjs'
+      - 'assets/local-time.js'
+      - 'assets/upcoming-cards.js'
+      - 'assets/results.js'
+      - 'assets/fight-film.js'
+      - 'index.html'
+  workflow_dispatch:
+jobs:
+  check-local-time:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: |
+          node --check assets/local-time.js
+          node --check assets/upcoming-cards.js
+          node --check assets/event-status.js
+          node --check assets/results.js
+          node --check assets/fight-film.js
+          node --check assets/live-desk.inc.js
+          node --check tests/test-local-time.cjs
+      - name: Test local time conversions and HTML scripts
+        run: node tests/test-local-time.cjs
