@@ -50,6 +50,9 @@ vm.runInContext("liveTalk.selected=[fixture.champion,fixture.prospect,{...fixtur
 assert.equal(ctx.recentTalkPosts().length,3);
 assert(ctx.recentTalkPosts().some(p=>p.quote==='Original post'));
 assert(ctx.renderSocial().includes('Latest fighter &amp; promoter posts')||ctx.renderSocial().includes('Latest fighter & promoter posts'));
+vm.runInContext("liveTalk.directory=[{name:'Champion Test',sport:'boxing',tier:'champion',profiles:{X:{url:'https://x.com/ChampTest'},Instagram:{url:'https://www.instagram.com/champtest/'},Threads:null}}]",ctx);
+assert(ctx.renderSocial().includes('Fighter social profiles'),'Expose sourced fighter accounts alongside the feed');
+assert(ctx.renderSocial().includes('https://www.instagram.com/champtest/'),'Link the original fighter account');
 assert(ctx.renderSocial().includes('Last 4 weeks'));
 assert(!ctx.renderSocial().includes('Selected post'));
 assert(!ctx.renderSocial().includes('talk-card-meta'));

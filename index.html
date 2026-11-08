@@ -632,7 +632,7 @@ function postCard(p){
 }
 
 
-const liveTalk={posts:[],selected:[],checkedAt:null,platformStatus:[],loading:false,lastAttempt:0,error:''};
+const liveTalk={posts:[],selected:[],checkedAt:null,platformStatus:[],directory:[],directoryCounts:null,loading:false,lastAttempt:0,error:''};
 const talkWindow=7*24*60*60*1000;
 async function loadLiveTalk(){
  if(liveTalk.loading)return;
@@ -647,10 +647,27 @@ async function loadLiveTalk(){
    return Array.isArray(data?.posts)?data:null;
   }catch{return null;}
  };
+ const readRoster=async(path)=>{
+  try{
+   const response=await fetch(path+'?fresh='+liveTalk.lastAttempt,{cache:'no-store',signal:AbortSignal.timeout(8000)});
+   if(!response.ok)return null;
+   const data=await response.json();
+   return Array.isArray(data?.fighters)?data:null;
+  }catch{return null}
+ };
  const feed='data/fight-talk-live.json';
  const picks='data/fight-talk-selected.json';
  const embeds='data/fight-talk-embedded.json';
- const [remote,local,selected,embedRemote,embedLocal]=await Promise.all([read(root+feed),read(feed),read(root+picks).then(data=>data||read(picks)),read(root+embeds),read(embeds)]);
+ const directoryPath='data/fight-talk-roster.json';
+ const [remote,local,selected,embedRemote,embedLocal,directoryRemote,directoryLocal]=await Promise.all([
+  read(root+feed),read(feed),read(root+picks).then(data=>data||read(picks)),read(root+embeds),read(embeds),
+  readRoster(root+directoryPath),readRoster(directoryPath)
+ ]);
+ const directory=directoryRemote||directoryLocal;
+ if(directory){
+  liveTalk.directory=directory.fighters;
+  liveTalk.directoryCounts=directory.counts||null;
+ }
  const originalEmbeds=[embedRemote,embedLocal].filter(Boolean).sort((a,b)=>(Date.parse(b.checkedAt)||0)-(Date.parse(a.checkedAt)||0))[0];
  const checked=data=>Date.parse(data.checkedAt)||0;
  const newest=[remote,local].filter(Boolean).sort((a,b)=>checked(b)-checked(a))[0];
@@ -786,6 +803,26 @@ function talkCoverage(posts){
  ${liveTalk.platformStatus.length?`<ul>${liveTalk.platformStatus.map(p=>`<li><strong>${esc(p.platform)}</strong> · ${automatic.includes(p)?'Automatic collection':p.state==='source-linked'?'Original public posts linked by verified sources':p.state==='unavailable'?'Connection temporarily unavailable':'Account API not approved (direct original posts still supported)'}${picked.has(p.platform)?' · Selected posts available':''}</li>`).join('')}</ul>`:''}</details>`;
 }
 
+function talkAccountDirectory(){
+ if(!liveTalk.directory.length)return '';
+ const filtered=liveTalk.directory.filter(p=>state.social==='all'||p.sport===state.social);
+ const tracked=filtered.filter(p=>Object.values(p.profiles||{}).some(Boolean));
+ const platformName={X:'X',Instagram:'Instagram',Threads:'Threads'};
+ const cards=filtered.map(p=>{
+  const buttons=Object.entries(platformName).map(([id,label])=>{
+   const profile=p.profiles?.[id];
+   return profile?.url?'<a href="'+safeURL(profile.url)+'" target="_blank" rel="noopener noreferrer">'+label+' ↗</a>':'';
+  }).filter(Boolean).join('');
+  return '<div class="talk-account-row"><div><strong>'+esc(p.name)+'</strong><small>'+
+   esc(p.tier||'fighter')+' · '+esc(p.sport||'')+'</small></div><div class="talk-account-links">'+
+   (buttons||'<span>Profile not yet sourced</span>')+'</div></div>';
+ }).join('');
+ return '<details class="talk-account-directory"><summary>Fighter social profiles · '+tracked.length+' of '+
+  filtered.length+' tracked</summary><p>Automatically researched profile references for the website roster. '+
+  'A profile link is not proof of live timeline access. Unidentified accounts are never guessed.</p>'+
+  '<div class="talk-account-list">'+cards+'</div></details>';
+}
+
 function renderSocial(){
  const highlights=state.socialMode==='highlights';
  const current=highlights?highlightedTalkPosts():recentTalkPosts();
@@ -818,7 +855,7 @@ function renderSocial(){
  const featured=highlighted.slice(0,4);
  const preview=featured.length?'<section class="talk-section" aria-label="Four-week Fight Talk highlights"><div class="talk-section-head"><div><div class="talk-section-eyebrow">BOXING · MMA · GRAPPLING</div><h2>Highlights · last 4 weeks</h2><p>Recent fighter-to-fighter exchanges and source-linked posts. The original remarks appear where available; reporting is marked as coverage.</p></div><button type="button" class="btn" data-segment="socialMode" data-value="highlights">All highlights ↗</button></div><div class="social-grid">'+featured.map(postCard).join('')+'</div></section>':'';
  return renderFrame(viewTitle('IN THE CONVERSATION','Fight talk','A chronological feed of original fighter and promoter posts across combat sports.')+toolbar+
-  '<section id="talk-results" aria-label="Fight Talk posts" tabindex="-1"><div class="talk-results-head"><p class="talk-count" aria-live="polite">'+esc(count)+'</p>' +talkCoverage(current)+'</div>'+mainSection+preview+'</section>');
+  '<section id="talk-results" aria-label="Fight Talk posts" tabindex="-1"><div class="talk-results-head"><p class="talk-count" aria-live="polite">'+esc(count)+'</p>' +talkCoverage(current)+talkAccountDirectory()+'</div>'+mainSection+preview+'</section>');
 }
 
 
