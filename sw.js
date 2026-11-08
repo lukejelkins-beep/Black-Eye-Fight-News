@@ -6,7 +6,7 @@ const SHELL = [
   '/assets/app-install.css', '/assets/app-install.js',
   '/assets/mobile-app.css', '/assets/mobile-app.js',
   '/assets/notifications.css', '/assets/notifications.js', '/assets/push-config.js',
-  '/assets/fighter-hover.js', '/assets/upcoming-cards.js',
+  '/assets/fighter-hover.js', '/assets/local-time.js', '/assets/upcoming-cards.js',
   '/assets/upcoming-cards.css', '/assets/fight-talk.css',
   '/assets/fight-film.css', '/assets/fight-film.js',
   '/assets/results.css', '/assets/results.js', '/assets/event-status.js'
