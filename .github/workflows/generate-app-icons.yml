@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'assets/app-icon-source.webp.b64'
+      - 'assets/app-icon-source.webp'
 
 permissions:
   contents: write
@@ -27,13 +27,10 @@ jobs:
         run: |
           python -m pip install --disable-pip-version-check pillow==11.3.0
           python - <<'PY'
-          import base64
-          from io import BytesIO
           from pathlib import Path
           from PIL import Image
 
-          payload=base64.b64decode(Path('assets/app-icon-source.webp.b64').read_text().strip(),validate=True)
-          master=Image.open(BytesIO(payload)).convert('RGB')
+          master=Image.open('assets/app-icon-source.webp').convert('RGB')
           if master.width != master.height or master.width < 128:
               raise ValueError('Expected square approved artwork at least 128px')
           for n, filename in (
