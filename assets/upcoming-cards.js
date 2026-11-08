@@ -184,7 +184,7 @@ window.UpcomingCards=(()=>{
    section('This Week',events.filter(e=>auDay(e)<=nextWeek))+
    section('Upcoming',events.filter(e=>auDay(e)>nextWeek))+
    (events.length?'':'<p class="upcoming-empty">No upcoming fight cards confirmed in this category.</p>')+
-   '<p class="upcoming-disclaimer">All exact starts and explicitly published ET/GST times display in your device's local time zone (including DST). Date-only listings remain venue dates. Scheduled starts are not proof of a live result. Bout order may change. Fighter records are sourced where verified. Reviewed: '+esc(feed.reviewedAt||'not confirmed')+'.</p></div>';
+   '<p class="upcoming-disclaimer">All exact starts and explicitly published ET/GST times display in your device time zone (including DST). Date-only listings remain venue dates. Scheduled starts are not proof of a live result. Bout order may change. Fighter records are sourced where verified. Reviewed: '+esc(feed.reviewedAt||'not confirmed')+'.</p></div>';
  }
  /* Portrait fallback: verify Wikimedia page title before using a thumbnail. */
  const portraitQueries=new Map(),portraitQueue=[],portraitTried=new Set();
