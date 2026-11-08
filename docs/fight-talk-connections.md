@@ -8,7 +8,7 @@ Two GitHub Actions workflows are scheduled at staggered ten-minute intervals. 'R
 
 ## Coverage roster
 
-The tracked fighter roster in data/fight-talk-roster.json contains 215 unique champions, contenders and prospects drawn from the website. It records documented profile mappings, including evidence, without assuming a social handle from a fighter's name. At time of preparation, 25 of the 215 had at least one mapped X or Instagram profile. The automated source configuration contains 26 X and 63 Instagram source accounts, including fighters and promotions. Some directory-linked handles still require live platform authentication to confirm the author. A configured handle is not proof of live API access, and an athlete with an empty profiles map has not yet had their account identified.
+The tracked fighter roster in data/fight-talk-roster.json contains 215 unique champions, contenders and prospects drawn from the website. It records documented profile mappings, including evidence, without assuming a social handle from a fighter's name. At the latest check, 79 of the 215 had at least one mapped X or Instagram profile. The source configuration contains 44 X and 120 Instagram source accounts, including fighters and promotions. Some directory-linked handles still require live platform authentication to confirm the author. A configured handle is not proof of live API access, and an athlete with an empty profiles map has not yet had their account identified.
 
 ## Platform limits
 
@@ -22,3 +22,13 @@ Original post permalinks and post dates must be verified before editorial select
 ## Source-register expansion — 9 November 2026
 
 A full internal roster lives at `data/fight-talk-roster.json`; this distinguishes tracked fighters from athletes whose accounts need further evidence. The initial X and Instagram watchlists are not a claim to have authenticated timeline access for every fighter. The linked-account identity remains permission-dependent, and stale handles can be corrected by updating the evidence source. X direct originals found in published fight coverage now use the timestamp encoded in X's snowflake ID when it is valid; coverage publication times do not masquerade as original post dates. Instagram authors are named as tracked fighters only when official oEmbed author URLs match a pinned account.
+
+### Newly documented official links
+
+- Adam Azim: Instagram adam.azim1 — Official boxer website https://www.adamazimboxing.com/ links to https://www.instagram.com/adam.azim1/
+- Josh Kelly: Instagram joshkelly07 — Josh Kelly LinkedIn https://uk.linkedin.com/in/josh-kelly-boxer links to Instagram @joshkelly07
+- Josh Kelly: X JOSHPBK — Boxer's original X profile https://x.com/JOSHPBK ; profile links to Instagram @joshkelly07
+- BOXXER: Instagram boxxer — Official BOXXER Linktree https://linktr.ee/Boxxer links to https://www.instagram.com/boxxer/
+- Most Valuable Promotions: Instagram mostvaluablepromotions — Official MVP Linkme https://link.me/mostvaluablepromotions and https://linktr.ee/themostvaluable
+- Most Valuable Promotions: X MostVpromotions — Official MVP promotional release https://pwinsiderxtra.com/ViewArticle.php?id=40034&p=1 identifies @MostVpromotions on X
+- Misfits Boxing: Instagram misfitsboxing — Official verified profile https://link.me/misfitsboxing and https://linktr.ee/mf_boxing

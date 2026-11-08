@@ -13,6 +13,8 @@ on:
       - 'data/fight-talk-sources.json'
       - 'data/fight-talk-selected.json'
       - 'tests/test-fight-talk.cjs'
+      - 'tests/test-fight-talk-roster.cjs'
+      - 'data/fight-talk-roster.json'
       - 'index.html'
       - '.github/workflows/refresh-fight-talk.yml'
 
@@ -39,6 +41,7 @@ jobs:
           node --check scripts/refresh-fight-talk.mjs
           node --check scripts/fight-talk-platforms.mjs
           node tests/test-fight-talk.cjs
+          node tests/test-fight-talk-roster.cjs
           node --check scripts/refresh-meta-embeds.mjs
           node tests/test-meta-embeds.mjs
       - name: Refresh and commit real source-linked posts safely
