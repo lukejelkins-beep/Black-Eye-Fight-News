@@ -33,9 +33,12 @@ vm.runInNewContext(source,sandbox);
  await sandbox.window.UpcomingCards.load();
  const html=sandbox.window.UpcomingCards.render('boxing');
  assert(html.includes('src="https://example.com/square-poster.jpg"'),'Verified square poster should take priority');
- assert(html.includes('show.jpg'),'Original landscape artwork retained as fallback');
+ assert(!html.includes('show.jpg'),'Landscape banner should not override the headliner portrait');
+ assert(html.includes('upcoming-hero-fighter-slot-single'),'A missing poster shows a single fighter');
+ assert(html.includes('data-upcoming-fighter-options'),'Can try the other main-event fighter if first image fails');
  assert(html.includes('data-upcoming-poster-candidates='),'Original and backup image candidates retained');
  assert(html.includes('upcoming-hero-fighter-slot'),'Portrait fallback available');
+ assert(html.includes('src="https://example.com/one.jpg"'),'Sourced main-event fighter displayed without poster');
  assert(html.indexOf('upcoming-hero-poster')<html.indexOf('upcoming-hero-content'),'Artwork above event copy');
  assert(html.includes('upcoming-schedule-row')&&html.includes('data-upcoming-panel='),'Expandable event details retained');
  assert(styles.includes('object-fit:contain!important'),'Poster thumbnail must not crop');
@@ -59,16 +62,13 @@ vm.runInNewContext(source,sandbox);
  img.naturalWidth=180;img.naturalHeight=90;img.dataset={};
  handlers.load({target:img});
  assert(img.hidden,'Undersized images fall back instead of being upscaled');
- // A supposed portrait that is actually landscape must fall back to real
- // event art rather than being force-cropped into the narrow thumbnail.
+ // A supposed portrait that is actually landscape must be rejected,
+ // allowing the single-fighter fallback instead of a stretched event banner.
  img.hidden=false;img.naturalWidth=960;img.naturalHeight=540;
  img.dataset={upcomingPosterCandidates:JSON.stringify([
-  {url:'https://example.com/claimed-portrait.jpg',kind:'portrait'},
-  {url:'https://example.com/original.jpg',kind:'artwork'}]),upcomingPosterIndex:'0'};
+  {url:'https://example.com/claimed-portrait.jpg',kind:'portrait'}]),upcomingPosterIndex:'0'};
  handlers.load({target:img});
- assert.equal(img.src,'https://example.com/original.jpg','Wrong-shape portrait should fall back');
- assert.equal(img.dataset.upcomingPosterIndex,'1');
- handlers.load({target:img});
- assert(classes.has('is-poster-ready'),'The contained landscape artwork remains usable');
+ assert(img.hidden,'Wrong-shape event poster should fall back to the headliner');
+ assert(classes.has('is-artwork-missing'),'Fighter fallback activated for a wrong-shape poster');
  console.log('Poster QA passed: wide/portrait/native-size rendering, unavailable art, image backup and card accordion');
 })().catch(e=>{console.error(e);process.exitCode=1});
