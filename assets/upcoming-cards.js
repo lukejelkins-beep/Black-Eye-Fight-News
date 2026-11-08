@@ -118,7 +118,10 @@ window.UpcomingCards=(()=>{
   const gulf=text.match(isPrelim?/prelims(?:\s+from)?\s*(\d{1,2})(?::(\d\d))?\s*(am|pm)\s*GST/i:/main card\s*(\d{1,2})(?::(\d\d))?\s*(am|pm)\s*GST/i);
   const hour=m=>(+m[1]%12)+(m[3].toLowerCase()==='pm'?12:0);
   if(gulf)return new Date(e.date+'T'+String(hour(gulf)).padStart(2,'0')+':'+(gulf[2]||'00')+':00+04:00');
-  if(isPrelim)return null;
+  if(isPrelim){
+    const east=text.match(/prelims(?:\s+from)?\s*(\d{1,2})(?::(\d\d))?\s*(am|pm)\s*(?:US\s*)?(?:Eastern|ET)\b/i);
+    return east?etInstant(e.date,hour(east),+(east[2]||0)):null;
+   }
   const et=text.match(/^(?:main card|broadcast|wynn records network broadcast)\s*(?:from\s*)?(\d{1,2})(?::(\d\d))?\s*(am|pm)\s*(?:US\s*)?(?:Eastern|ET)\b/i);
   return et?etInstant(e.date,hour(et),+(et[2]||0)):null;
  }
