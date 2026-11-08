@@ -37,6 +37,25 @@ class PosterChecks(unittest.TestCase):
         self.assertFalse(mod.apply_result(e, result))
         self.assertNotIn("posterList", e)
         self.assertEqual(e["posterPortrait"]["url"], "https://example.com/already-approved.jpg")
+    def test_event_date_must_match(self):
+        e = event()
+        body = """<html><head><title>Fighter One vs Fighter Two Event</title>
+             <meta property="og:image" content="https://cdn.ufc.com/event-poster.jpg"></head>
+             <body><h1>Fighter One vs Fighter Two</h1>
+             <p>Event: 1 February 2099</p></body></html>"""
+        self.assertTrue(mod.date_matches_event(e, body))
+        self.assertEqual(len(mod.candidates_from_page(e, e["source"], body)), 1)
+        self.assertFalse(mod.date_matches_event(e, body.replace("February", "January")))
+        self.assertEqual(mod.candidates_from_page(e, e["source"],
+                         body.replace("February", "January")), [])
+        self.assertTrue(mod.date_matches_event(e, '<time datetime="2099-02-01T10:00:00Z"></time>'))
+    def test_generic_promoter_og_image_is_not_event_art(self):
+        e = event()
+        body = """<html><head><title>Fighter One vs Fighter Two</title>
+          <meta property="og:image" content="https://cdn.ufc.com/promoter-logo.jpg"></head>
+          <body>1 February 2099</body></html>"""
+        self.assertEqual(mod.candidates_from_page(e, e["source"], body), [])
+
     def test_no_poster_keeps_fallback(self):
         e = event()
         e["posterLandscape"] = {"url": "https://example.com/old-banner.jpg"}
@@ -46,8 +65,8 @@ class PosterChecks(unittest.TestCase):
     def test_official_meta_image_and_bad_source(self):
         e = event()
         html = """<html><head><title>Fighter One vs Fighter Two | UFC</title>
-          <meta property="og:image" content="https://cdn.ufc.com/poster.jpg"></head>
-          <body><img src="https://example.com/site-logo.png" alt="logo"></body></html>"""
+          <meta property="og:image" content="https://cdn.ufc.com/fighter-one-vs-fighter-two-poster.jpg"></head>
+          <body><p>1 February 2099</p><img src="https://example.com/site-logo.png" alt="logo"></body></html>"""
         c = mod.candidates_from_page(e, e["source"], html)
         self.assertTrue(any("poster.jpg" in x[0] for x in c))
         self.assertFalse(any("logo" in x[0] for x in c))

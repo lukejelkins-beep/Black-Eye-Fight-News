@@ -10,6 +10,8 @@ from __future__ import annotations
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
+from calendar import month_name, month_abbr
+from zoneinfo import ZoneInfo
 from io import BytesIO
 import json
 from pathlib import Path
@@ -96,6 +98,33 @@ def matches_event(event: dict, text: str) -> bool:
                 and one in t and two in t)
 
 
+
+def date_matches_event(event: dict, html: str) -> bool:
+    """Reject article images about the wrong event date, including old bouts.
+
+    The date must be visible in the page's text or event metadata. Never
+    infer a date from our own data or assume that matching fighters is enough.
+    """
+    date = event.get("date", "")
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+        return False
+    try:
+        year, month, day = map(int, date.split("-"))
+        full, short = month_name[month], month_abbr[month]
+    except (ValueError, IndexError):
+        return False
+    body = BeautifulSoup(html, "html.parser").get_text(" ", strip=True)
+    body += " " + html[:900_000]
+    month_pattern = "(?:" + re.escape(short) + "|" + re.escape(full) + ")"
+    numeric = f"{year:04d}[-/.]{month:02d}[-/.]{day:02d}"
+    long_md = rf"\b{month_pattern}\.?\s+{day}(?:st|nd|rd|th)?\s*,?\s*{year}\b"
+    long_dm = rf"\b{day}(?:st|nd|rd|th)?\s+{month_pattern}\.?\s*,?\s*{year}\b"
+    other = rf"\b(?:{month:02d}/{day:02d}/{year}|{day:02d}/{month:02d}/{year})\b"
+    return any(re.search(pattern, body, re.I) for pattern in (
+        rf"\b{numeric}(?!\d)", long_md, long_dm, other
+    ))
+
+
 def future_unresolved(event: dict, today: str) -> bool:
     return bool(event.get("date", "") >= today
                 and not event.get("posterPortrait", {}).get("url")
@@ -128,7 +157,7 @@ def candidates_from_page(event: dict, url: str, body: str) -> list[tuple[str, st
     title += " " + (soup.title.get_text(" ", strip=True) if soup.title else "")
     title += " " + " ".join(x.get_text(" ", strip=True) for x in soup.find_all("h1")[:3])
     # A generic site-wide page or image gallery is not sufficient evidence.
-    if not matches_event(event, title):
+    if not matches_event(event, title) or not date_matches_event(event, body):
         return []
     one, two = fighters(event)
     code = re.search(r"\b(?:ufc|one|pfl|rizin)\s*[-:]?\s*\d+\b",
@@ -153,7 +182,7 @@ def candidates_from_page(event: dict, url: str, body: str) -> list[tuple[str, st
         # Images on news pages are commonly irrelevant. Require identifiable
         # event artwork or a precise, event-specific OG image.
         if not (both or specific or (promo and (one in joined or two in joined))
-                or (meta and official(url))):
+                or (meta and official(url) and promo)):
             return
         priority = (80 if official(url) else 40) + (35 if both else 0)
         priority += (24 if specific else 0) + (16 if promo else 0)
@@ -330,7 +359,7 @@ def main() -> None:
     args = parser.parse_args()
     dataset = json.loads(DATA.read_text(encoding="utf-8"))
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    today = datetime.now(timezone.utc).date().isoformat()
+    today = datetime.now(ZoneInfo("Australia/Melbourne")).date().isoformat()
     # Include only current/future events. A venue-local date is deliberately
     # not converted into a fictitious timestamp.
     unresolved = [e for e in dataset["events"] if future_unresolved(e, today)]
