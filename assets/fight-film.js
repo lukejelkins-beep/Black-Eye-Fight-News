@@ -5,7 +5,7 @@ window.FightFilm=(()=>{
  let selectedSection='boxing';
  const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const safe=x=>{try{const u=new URL(x,location.href);return u.protocol==='https:'?esc(u.href):'#'}catch{return '#'}};
- const date=x=>{try{return new Date(x+'T12:00:00Z').toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'})}catch{return ''}};
+ const date=x=>window.FightTime.venueDay(x);
  function isAuYoutube(v){
   return v.auAvailable===true&&['youtube-country-metadata','youtube-api-region-restriction'].includes(v.auVerification)&&
    v.auVerifiedAt&&Date.now()-Date.parse(v.auVerifiedAt)<48*3600000&&
