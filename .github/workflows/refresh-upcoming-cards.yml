@@ -4,6 +4,8 @@ on:
     # UTC every three hours, :17; independent of visitor browser sessions.
     - cron: '17 */3 * * *'
   workflow_dispatch:
+  # Only validate/refetch on code changes; data refreshes are scheduled below.
+  # Avoid retriggering the publisher every time another task updates JSON.
   push:
     branches: [main]
     paths:
@@ -13,7 +15,6 @@ on:
       - 'tests/test-upcoming-ui.cjs'
       - 'assets/upcoming-cards.js'
       - 'assets/upcoming-cards.css'
-      - 'data/upcoming-cards.json'
 permissions:
   contents: write
 concurrency:
