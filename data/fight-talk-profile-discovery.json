@@ -1,8 +1,72 @@
 {
-  "checkedAt": null,
-  "discoveredThisRun": 0,
-  "counts": null,
-  "nextSearchOffset": 0,
-  "nextOfficialOffset": 0,
-  "note": "The scheduled profile discovery workflow will report source-proven X, Instagram and Threads accounts."
+  "checkedAt": "2026-11-08T22:51:24.425Z",
+  "source": "Wikidata P2002/P2003/P11892 + official athlete structured links",
+  "discoveredThisRun": 115,
+  "candidatesChecked": 186,
+  "wikiBatches": 9,
+  "searchChecked": 1,
+  "officialChecked": 50,
+  "counts": {
+    "total": 215,
+    "tracked": 126,
+    "missingBoth": 89,
+    "withX": 55,
+    "withInstagram": 124,
+    "withThreads": 38
+  },
+  "conflicts": [
+    {
+      "name": "Abdullah Mason",
+      "platform": "Instagram",
+      "username": "abdullah_mason",
+      "evidenceUrl": "https://www.wikidata.org/wiki/Q127315638",
+      "reason": "Conflicts with an already linked identity; never overwrite automatically"
+    },
+    {
+      "name": "Gary Antuanne Russell",
+      "platform": "Instagram",
+      "username": "garyarussell",
+      "evidenceUrl": "https://www.wikidata.org/wiki/Q26260350",
+      "reason": "Conflicts with an already linked identity; never overwrite automatically"
+    },
+    {
+      "name": "Jai Opetaia",
+      "platform": "Instagram",
+      "username": "teamopetaia_",
+      "evidenceUrl": "https://www.wikidata.org/wiki/Q2029085",
+      "reason": "Conflicts with an already linked identity; never overwrite automatically"
+    },
+    {
+      "name": "Junto Nakatani",
+      "platform": "X",
+      "username": "BoxerJuntno",
+      "evidenceUrl": "https://www.wikidata.org/wiki/Q97959573",
+      "reason": "Conflicts with an already linked identity; never overwrite automatically"
+    },
+    {
+      "name": "Quillan Salkilld",
+      "platform": "Instagram",
+      "username": "estebanribovicsmma",
+      "evidenceUrl": "https://www.wikidata.org/wiki/Q134467028",
+      "reason": "Conflicts with an already linked identity; never overwrite automatically"
+    }
+  ],
+  "errors": [
+    "Search Abdul Rakhman Yakhyaev: HTTP 429 www.wikidata.org",
+    "Search Ailín Pérez: HTTP 429 www.wikidata.org",
+    "Search Allen Frye Jr.: HTTP 429 www.wikidata.org",
+    "Search Alexia Thainara: HTTP 429 www.wikidata.org",
+    "Search Andres Cortes: HTTP 429 www.wikidata.org",
+    "Search Andrew Cain: HTTP 429 www.wikidata.org",
+    "Search Andy Hiraoka: HTTP 429 www.wikidata.org",
+    "Search Angel Barrientes: HTTP 429 www.wikidata.org",
+    "Search Anthony Cacace: HTTP 429 www.wikidata.org",
+    "Search Andy Cruz: HTTP 429 www.wikidata.org",
+    "Search Aoi Yokoyama: HTTP 429 www.wikidata.org",
+    "Search Ateba Gautier: HTTP 429 www.wikidata.org",
+    "Wikidata ID lookup: HTTP 429 www.wikidata.org"
+  ],
+  "nextSearchOffset": 45,
+  "nextOfficialOffset": 50,
+  "note": "Profile metadata discovery is not a social timeline feed. Original post collection still depends on public publisher-linked posts or permitted platform APIs. Missing names are not guessed."
 }
