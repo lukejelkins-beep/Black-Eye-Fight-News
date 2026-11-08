@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {wikidataIdentity,socialProfileURL,officialProfileIdentities,registerCandidate,rosterCounts,normName} from '../scripts/discover-social-profiles.mjs';
+import {wikidataIdentity,socialProfileURL,officialProfileIdentities,registerCandidate,registerPromoter,wikidataPromoterIdentity,rosterCounts,normName} from '../scripts/discover-social-profiles.mjs';
 assert.equal(normName('Jiří Procházka'),'jiriprochazka');
 const entity={id:'Q12345',labels:{en:{value:'Jane Example'}},descriptions:{en:{value:'American mixed martial artist'}},
  claims:{
@@ -27,4 +27,11 @@ assert.equal(rosterCounts(roster).withThreads,1);
 assert.equal(rosterCounts(roster).tracked,1);
 assert.equal(registerCandidate(cfg,roster,{platform:'X',username:'DifferentX',name:'Jane Example',sport:'mma',evidenceUrl:'test'},conflicts),false);
 assert.equal(conflicts.length,1);
+const promotionEntity={id:'Q45678',labels:{en:{value:'Fight League'}},descriptions:{en:{value:'International mixed martial arts promotion'}},
+ claims:{P11892:[{rank:'normal',mainsnak:{datavalue:{value:'fightleague'}}}]}};
+const promotion=wikidataPromoterIdentity(promotionEntity,'Fight League','mma');
+assert.equal(promotion.length,1);
+assert.equal(registerPromoter(cfg,promotion[0],conflicts),true);
+assert.equal(cfg.threads.accounts.find(a=>a.name==='Fight League').role,'promoter');
+assert.equal(registerPromoter(cfg,promotion[0],conflicts),false);
 console.log('Identity discovery tests passed: exact sports/person links, conflicts, Threads, safe official JSON-LD.');
