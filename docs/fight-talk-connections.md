@@ -32,3 +32,7 @@ A full internal roster lives at `data/fight-talk-roster.json`; this distinguishe
 - Most Valuable Promotions: Instagram mostvaluablepromotions — Official MVP Linkme https://link.me/mostvaluablepromotions and https://linktr.ee/themostvaluable
 - Most Valuable Promotions: X MostVpromotions — Official MVP promotional release https://pwinsiderxtra.com/ViewArticle.php?id=40034&p=1 identifies @MostVpromotions on X
 - Misfits Boxing: Instagram misfitsboxing — Official verified profile https://link.me/misfitsboxing and https://linktr.ee/mf_boxing
+
+## Automatic identity discovery (November 2026)
+
+`discover-fighter-profiles.yml` runs twice daily. It checks the complete site roster against Wikidata's X (P2002), Instagram (P2003) and Threads (P11892) identifiers; rotates requests for fighters with nonstandard article names; and looks for explicit Person `sameAs` identities on official UFC, Matchroom and Top Rank athlete pages. This is **profile lookup**, not a social timeline reader. Conflicting identities are quarantined in `data/fight-talk-profile-discovery.json`. The job is deliberately throttled on Wikimedia HTTP 429 responses. Successful discoveries populate `data/fight-talk-roster.json`, `data/fight-talk-sources.json`, and the Threads author allowlist. Source metadata such as Wikidata handles can be stale; API reads or original post oEmbeds still have to verify author identity.

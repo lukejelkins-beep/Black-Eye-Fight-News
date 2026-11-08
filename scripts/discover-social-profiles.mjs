@@ -208,17 +208,25 @@ export async function main(){
  // Search Wikidata names with nonstandard Wikipedia titles, rotating every run.
  const missing=records.filter(f=>Object.values(f.profiles||{}).every(x=>!x));
  const searchStart=previous.nextSearchOffset||0;
- const searchSubset=Array.from({length:Math.min(45,missing.length)},(_,i)=>missing[(searchStart+i)%missing.length]);
+ const searchSubset=Array.from({length:Math.min(12,missing.length)},(_,i)=>missing[(searchStart+i)%missing.length]);
  const ids=new Map();
- let cursor=0;
- async function searchWorker(){
-  while(cursor<searchSubset.length){
-   const f=searchSubset[cursor++];
-   try{for(const id of await wikiSearch(f.name))ids.set(id,true);searchChecked++}
-   catch(e){if(problems.length<12)problems.push('Search '+f.name+': '+String(e.message||e).slice(0,85))}
+ // Wikimedia can return HTTP 429 after bulk identity lookup. Do not hammer
+ // the endpoint or skip dozens of names when rate limited.
+ let rateLimited=false;
+ let attemptedSearch=0;
+ for(const f of searchSubset){
+  if(rateLimited)break;
+  try{
+   const found=await wikiSearch(f.name);
+   for(const id of found)ids.set(id,true);
+   searchChecked++;
+   attemptedSearch++;
+  }catch(e){
+   if(/HTTP 429/.test(String(e.message||e)))rateLimited=true;
+   if(problems.length<12)problems.push('Search '+f.name+': '+String(e.message||e).slice(0,85));
   }
+  if(!rateLimited)await new Promise(resolve=>setTimeout(resolve,1150));
  }
- await Promise.all(Array.from({length:3},searchWorker));
  const idList=[...ids.keys()];
  for(let i=0;i<idList.length;i+=25){
   try{
@@ -257,8 +265,8 @@ export async function main(){
  writeJson(rosterFile,roster);
  writeJson(reportFile,{checkedAt:new Date().toISOString(),source:'Wikidata P2002/P2003/P11892 + official athlete structured links',
   discoveredThisRun:added,candidatesChecked:seen.size,wikiBatches,searchChecked,officialChecked,
-  counts:roster.counts,conflicts:conflicts.slice(0,70),errors:problems.slice(0,20),
-  nextSearchOffset:missing.length?(searchStart+searchSubset.length)%missing.length:0,
+  counts:roster.counts,rateLimited,conflicts:conflicts.slice(0,70),errors:problems.slice(0,20),
+  nextSearchOffset:missing.length?(searchStart+searchChecked)%missing.length:0,
   nextOfficialOffset:officialMissing.length?(officialStart+officialSubset.length)%officialMissing.length:0,
   note:'Profile metadata discovery is not a social timeline feed. Original post collection still depends on public publisher-linked posts or permitted platform APIs. Missing names are not guessed.'});
  console.log(JSON.stringify({added,counts:roster.counts,wikiBatches,searchChecked,officialChecked,errors:problems.slice(0,4)},null,2));

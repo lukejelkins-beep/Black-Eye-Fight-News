@@ -72,6 +72,7 @@ let threadsStatus='Automatic collection needs an approved Meta Threads API conne
 let threadsState='not-connected';
 const token=process.env.THREADS_ACCESS_TOKEN||'';
 const allow=new Set((config.threads?.allowlistedUsernames||[]).map(x=>x.toLowerCase().replace(/^@/,'')));
+const threadsAuthors=new Map((config.threads?.accounts||[]).map(a=>[String(a.username||'').toLowerCase().replace(/^@/,''),a]));
 if(token&&allow.size){
   let successes=0,errors=0;
   for(const [sport,q] of [['boxing','boxing'],['mma','ufc']]) {
@@ -82,9 +83,12 @@ if(token&&allow.size){
       for(const p of result.data||[]){
         if(!p.username||!allow.has(p.username.toLowerCase().replace(/^@/,''))||!p.permalink||!p.text)continue;
         const url=new URL(p.permalink);if(!['threads.com','www.threads.com','threads.net','www.threads.net'].includes(url.hostname))continue;
-        insert({id:p.id,platform:'Threads',sport,type:'post',name:p.username,handle:'@'+p.username,role:'commentator',
+        const account=threadsAuthors.get(p.username.toLowerCase().replace(/^@/,''));
+        if(!account)continue;
+        insert({id:p.id,platform:'Threads',sport:account.sport||sport,type:'post',name:account.name,
+          handle:'@'+p.username,role:account.role||'fighter',fighterTier:account.fighterTier,
           quote:p.text.slice(0,400),postedAt:p.timestamp,date:new Date(p.timestamp).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric',timeZone:'Australia/Melbourne'}),
-          url:p.permalink,photo:'',source:'Meta Threads keyword-search API'});
+          url:p.permalink,photo:'',source:'Meta Threads keyword-search API; pinned author identity'});
       }
     }catch(err){errors++;failures.push('Threads '+sport+': '+String(err.message||err).slice(0,90))}
   }
