@@ -1,0 +1,48 @@
+name: Discover fighter X, Instagram and Threads profiles
+on:
+  schedule:
+    - cron: '49 0,12 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/discover-social-profiles.mjs'
+      - 'tests/test-social-profile-discovery.mjs'
+      - '.github/workflows/discover-fighter-profiles.yml'
+permissions:
+  contents: write
+concurrency:
+  group: fighter-profile-discovery
+  cancel-in-progress: false
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate identity safeguards
+        run: |
+          node --check scripts/discover-social-profiles.mjs
+          node tests/test-social-profile-discovery.mjs
+      - name: Research profile identifiers without scraping social platforms
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            node scripts/discover-social-profiles.mjs
+            git add data/fight-talk-sources.json data/fight-talk-roster.json data/fight-talk-profile-discovery.json
+            if git diff --cached --quiet; then
+              echo 'No source identity changes'
+              exit 0
+            fi
+            git commit -m 'Discover verified fighter social profile references'
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+          done
+          exit 1
