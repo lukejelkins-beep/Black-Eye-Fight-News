@@ -727,7 +727,7 @@ function headlineCard(a){
  const href=safeURL(a.url),when=a.publishedAt?'<span class="news-strip-time"> · '+(a.timeBasis?'Indexed ':'')+esc(displayDate(a.publishedAt))+'</span>':'';
  const summary=newsPointsHTML(a);
  return '<article class="news-card live-news-card news-strip">'
-  +'<div class="news-strip-top"><div class="news-strip-story"><p class="news-strip-source">'+esc(a.source)+' · '+esc(a.sport.toUpperCase())+when+'</p>'
+  +'<div class="news-strip-top"><div class="news-strip-story"><p class="news-strip-source">'+esc(a.source)+(activeSport()==='all'?' · '+esc(a.sport.toUpperCase()):'')+when+'</p>'
   +'<h3 class="news-strip-headline"><a href="'+href+'" target="_blank" rel="noopener noreferrer">'+esc(a.title)+'</a></h3></div>'
   +'<a class="news-strip-thumbnail" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image'+(!publisher&&!fighter?' news-brand-image':'')+'" src="'+(src==='assets/mark.svg'?src:safeURL(src))+'" alt="'+esc(alt)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-news-fallback="'+(fighter?safeURL(fighter.url):'')+'" data-news-fallback-name="'+(fighter?esc(fighter.name):'')+'"></a></div>'
   +summary+'<a class="news-strip-original" href="'+href+'" target="_blank" rel="noopener noreferrer">Read original ↗</a></article>';
@@ -741,7 +741,7 @@ function newsFeatureCard(a){
  const summary=newsPointsHTML(a);
  return '<article class="live-news-card news-feature-card">'
   +'<a href="'+href+'" class="news-feature-photo" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image'+(!publisher&&!fighter?' news-brand-image':'')+'" src="'+(src==='assets/mark.svg'?src:safeURL(src))+'" alt="'+esc(alt)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-news-fallback="'+(fighter?safeURL(fighter.url):'')+'" data-news-fallback-name="'+(fighter?esc(fighter.name):'')+'"></a>'
-  +'<div class="news-feature-copy"><div class="news-feature-kicker">In focus · '+esc(a.sport)+' · '+esc(a.source)+'</div>'
+  +'<div class="news-feature-copy"><div class="news-feature-kicker">In focus'+(activeSport()==='all'?' · '+esc(a.sport):'')+' · '+esc(a.source)+'</div>'
   +'<h3><a href="'+href+'" target="_blank" rel="noopener noreferrer">'+esc(a.title)+'</a></h3>'
   +summary+'<a class="news-strip-original" href="'+href+'" target="_blank" rel="noopener noreferrer">Read original ↗</a></div></article>';
 }
@@ -833,12 +833,12 @@ function homeLeadCard(a){
  const image=a.image?.url&&/^https:\/\//.test(a.image.url)?a.image.url:newsFighterImage(a)?.url||'assets/mark.svg';
  return '<a class="front-lead-card" href="'+safeURL(a.url)+'" target="_blank" rel="noopener noreferrer">'
   +'<div class="front-lead-image"><img class="live-news-image front-lead-photo" loading="eager" decoding="async" src="'+(image==='assets/mark.svg'?image:safeURL(image))+'" alt="'+esc(a.image?.alt||a.title)+'"></div>'
-  +'<div class="front-lead-copy"><span class="front-story-meta">'+esc(a.sport)+' · '+esc(a.source)+'</span><h2>'+esc(a.title)+'</h2>'
+  +'<div class="front-lead-copy"><span class="front-story-meta">'+(activeSport()==='all'?esc(a.sport)+' · ':'')+esc(a.source)+'</span><h2>'+esc(a.title)+'</h2>'
   +'<time datetime="'+esc(a.publishedAt)+'">'+esc(displayDate(a.publishedAt))+'</time></div></a>';
 }
 function homeBriefCard(a){
  return '<a class="front-brief-card" href="'+safeURL(a.url)+'" target="_blank" rel="noopener noreferrer"><span class="front-story-meta">'
-  +esc(a.sport)+' · '+esc(a.source)+'</span><h3>'+esc(a.title)+'</h3>'
+  +(activeSport()==='all'?esc(a.sport)+' · ':'')+esc(a.source)+'</span><h3>'+esc(a.title)+'</h3>'
   +'<time datetime="'+esc(a.publishedAt)+'">'+esc(displayDate(a.publishedAt))+'</time></a>';
 }
 
@@ -892,12 +892,22 @@ function previousReignsLine(c){
 }
 function champsTable(){if(state.champions==='boxing')return `<div class="champ-table-wrap"><table class="champ-table"><thead><tr><th>Division</th>${['WBA','WBC','IBF','WBO','The Ring'].map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${D.champions.boxing.map(row=>`<tr><td class="division-head">${esc(row.division)}</td>${['WBA','WBC','IBF','WBO','Ring'].map(b=>`<td>${(row.belts[b]||[]).map(c=>`<div class="champ-cell">${c.name.toLowerCase()==='vacant'?'':champThumb(c.name,c.photo)}<div><b>${c.name.toLowerCase()==='vacant'?esc(c.name):champPeek(c.name,c.photo)}</b>${c.days?`<small class="reign-line">Current: ${esc(c.days)} · ${defenceLabel(c.defences)}${c.status?` ${esc(c.status)}`:''}</small>${previousReignsLine(c)}`:(c.status?`<small>${esc(c.status)}</small>`:'')}</div></div>`).join('')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 return `<div class="champ-table-wrap"><table class="champ-table"><thead><tr><th>Division</th><th>Titleholder</th><th>Reign began</th></tr></thead><tbody>${D.champions.mma.map(row=>`<tr><td class="division-head">${esc(row.division)}</td><td><div class="champ-cell">${champThumb(row.name,row.photo)}<div><b>${champPeek(row.name,row.photo)}</b><small class="reign-line">Current: ${esc(row.days)} days · ${defenceLabel(row.defences)}</small>${previousReignsLine(row)}</div></div></td><td>${esc(row.start)}</td></tr>`).join('')}</tbody></table></div>`;}
-function renderChampions(){return renderFrame(`${viewTitle('','Champions')}<div class="filter-row">${segments('champions',['boxing','mma'],state.champions)}<span class="result-count">${state.champions==='boxing'?'13 WEIGHT DIVISIONS · FIVE BELT COLUMNS':'11 UFC DIVISIONS'}</span></div>${champsTable()}<details class="compact-note"><summary>Title statistics</summary><p>Current reign = the displayed title and division. A previous-reign total appears only where a recorded earlier reign was held in the same weight division and for the same boxing title organisation (or in the same UFC weight division). Multiple earlier reigns are combined into a single previous total. interim, regional and other-division titles are excluded. Historical days and successful defences are summed across qualifying earlier reigns, excluding title-winning bouts. Figures are dated archive snapshots, not live totals.</p></details>`)}
+function renderChampions(){
+ const sport=state.champions;let listing='';
+ if(sport==='grappling')listing='<div class="empty">Verified grappling championship standings are not yet available.</div>';
+ else if(sport==='all'){
+  state.champions='boxing';const boxing=champsTable();
+  state.champions='mma';const mma=champsTable();state.champions=sport;
+  listing='<section class="befn-champion-group"><h2>Boxing titleholders</h2>'+boxing+'</section><section class="befn-champion-group"><h2>MMA titleholders</h2>'+mma+'</section>';
+ }else listing=champsTable();
+ const scope=sport==='all'?'BOXING & MMA':sport==='boxing'?'13 WEIGHT DIVISIONS · FIVE BELT COLUMNS':sport==='mma'?'11 UFC DIVISIONS':'GRAPPLING';
+ return renderFrame(viewTitle('','Champions')+'<div class="filter-row"><span class="result-count">'+scope+'</span></div>'+listing+`<details class="compact-note"><summary>Title statistics</summary><p>Current reign = the displayed title and division. A previous-reign total appears only where a recorded earlier reign was held in the same weight division and for the same boxing title organisation (or in the same UFC weight division). Multiple earlier reigns are combined into a single previous total. interim, regional and other-division titles are excluded. Historical days and successful defences are summed across qualifying earlier reigns, excluding title-winning bouts. Figures are dated archive snapshots, not live totals.</p></details>`);
+}
 const fighterCard=f=>`<button type="button" class="fighter-card" data-fighter="${esc(f.id)}" aria-label="View scouting profile for ${esc(f.name)}"><div class="fighter-image">${f.photo?`<img src="${safeURL(f.photo)}" loading="lazy" referrerpolicy="no-referrer" alt="Photograph of ${esc(f.name)}">`:''}<span class="fighter-tag">${esc(f.category)}</span></div><div class="fighter-body"><div class="fighter-metadata">${esc(f.division)} · ${esc(f.sport)}</div><h3>${esc(f.name)}</h3><div class="fighter-metadata">${esc(f.record)}</div><p>${esc(f.analysis[0]||f.meta)}</p><div class="fighter-link">OPEN FULL SCOUTING REPORT ↗</div></div></button>`;
 function filteredFighters(){let result=D.fighters.filter(f=>(state.fightersSport==='All'||f.sport===state.fightersSport) && (state.fightersCategory==='All'||f.category===state.fightersCategory) && (state.fightersDivision==='All'||f.division===state.fightersDivision));const q=state.fightersQuery.trim().toLowerCase();if(q)result=result.filter(f=>[f.name,f.division,f.meta,f.record,f.next,...f.analysis].join(' ').toLowerCase().includes(q));return result;}
 function divisionFilter(){const divs=[...new Set(D.fighters.filter(x=>state.fightersSport==='All'||x.sport===state.fightersSport).map(x=>x.division))];return `<select class="field" id="divisionFilter" aria-label="Choose weight division"><option value="All">All divisions</option>${divs.map(d=>`<option value="${esc(d)}" ${d===state.fightersDivision?'selected':''}>${esc(d)}</option>`).join('')}</select>`}
 function renderFighterCards(){const list=filteredFighters();const grid=document.querySelector('#fighterGrid');const count=document.querySelector('#fighterCount');if(grid)grid.innerHTML=list.length?list.map(fighterCard).join(''):'<div class="empty">No fighters match those filters.</div>';if(count)count.textContent=`${list.length} PROFILES`}
-function renderFighters(){const count=filteredFighters().length;return renderFrame(`${viewTitle('','Fighter profiles')}<div class="filter-row">${segments('fightersCategory',['All','Prospect','Contender'],state.fightersCategory)}${divisionFilter()}<input class="field search" id="fighterSearch" placeholder="Search fighter, promotion, style, form…" aria-label="Search fighter profiles" value="${esc(state.fightersQuery)}"><span class="result-count" id="fighterCount">${count} PROFILES</span></div><details class="compact-note"><summary>About these records</summary><p>Historical roster from 7 November 2026. Some records, fixtures and notes require reconfirmation.</p></details><div class="fighters-grid" id="fighterGrid">${filteredFighters().map(fighterCard).join('')}</div>`)}
+function renderFighters(){const count=filteredFighters().length;return renderFrame(`${viewTitle('','Fighter profiles')}<div class="filter-row">${segments('fightersCategory',['All','Prospect','Contender'],state.fightersCategory)}${divisionFilter()}<input class="field search" id="fighterSearch" placeholder="Search fighter, promotion, style, form…" aria-label="Search fighter profiles" value="${esc(state.fightersQuery)}"><span class="result-count" id="fighterCount">${count} PROFILES</span></div><details class="compact-note"><summary>About these records</summary><p>Historical roster from 7 November 2026. Some records, fixtures and notes require reconfirmation.</p></details><div class="fighters-grid" id="fighterGrid">${filteredFighters().length?filteredFighters().map(fighterCard).join(''):'<p class="empty">No verified scouting profiles are available for this selection.</p>'}</div>`)}
 const talkPlatforms = {
  X: {mark:'𝕏', hosts:['x.com','twitter.com']},
  Instagram: {mark:'◎', hosts:['instagram.com']},
