@@ -1,9 +1,10 @@
 /* Offline-ready app shell. Always prioritise network for news and fight data. */
-const CACHE_NAME = 'befn-app-shell-v11-20261109-single-fighter';
+const CACHE_NAME = 'befn-app-shell-v12-20261109-brand-v101';
 const SHELL = [
   '/', '/index.html', '/manifest.webmanifest',
   '/assets/mark.svg', '/assets/icon-192.png', '/assets/icon-512.png', '/assets/apple-touch-icon.png', '/assets/icon-maskable-512.png',
   '/assets/app-install.css', '/assets/app-install.js',
+  '/assets/brand-theme.css',
   '/assets/mobile-app.css', '/assets/mobile-app.js',
   '/assets/notifications.css', '/assets/notifications.js', '/assets/push-config.js',
   '/assets/fighter-hover.js', '/assets/local-time.js', '/assets/upcoming-cards.js',
