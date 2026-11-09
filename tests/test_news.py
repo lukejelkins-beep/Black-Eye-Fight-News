@@ -102,6 +102,20 @@ class SourceSummaryTests(unittest.TestCase):
   out=m.enrich_summary(a,{},dt.datetime(2026,11,9,6,tzinfo=dt.timezone.utc))
   self.assertEqual(len(out.get('summaryPoints',[])),1)
   self.assertEqual(out['summaryQualityVersion'],m.SUMMARY_QUALITY_VERSION)
+ def test_repeated_financial_claims_are_not_separate_bullets(self):
+  points=[
+   "Dmitriy Salita alleges Jake Paul's MVP demanded a $25k penalty for Claressa Shields' comments as the Chantelle Cameron fight stalled.",
+   "Claressa Shields' promoter Dmitriy Salita accused Jake Paul's promotion of demanding a $25,000 penalty whenever the champion criticized MVP.",
+   "Negotiations over the proposed Claressa Shields vs Chantelle Cameron fight have stalled, with both sides blaming the other."
+  ]
+  self.assertEqual(len(m.distinct_summary_points(points)),2)
+ def test_snippet_fragments_and_publisher_filler_are_rejected(self):
+  self.assertFalse(m.point_is_usable("Gabriel Bonfim, and the Brazilian now volunteers to serve as the backup fighter for Ciryl Gane vs."))
+  self.assertFalse(m.point_is_usable("Vestnik MMA was first to report the booking."))
+  self.assertFalse(m.point_is_usable("In an interview with UFC, Ciryl Gane addressed the chaos."))
+ def test_non_combat_syndicated_news_is_not_included(self):
+  self.assertTrue(m.is_non_combat_url("https://mmajunkie.usatoday.com/story/sports/nfl/lions/2026/11/08/story/123/"))
+  self.assertFalse(m.is_non_combat_url("https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/09/story/123/"))
  def test_content_encoded_is_used_for_summary_text(self):
   xml=b'<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><item><title>Fight announced</title><link>https://example.com/fight</link><pubDate>Mon, 09 Nov 2026 04:10:00 GMT</pubDate><content:encoded><![CDATA[Officials confirmed the bout for the event next month. Both fighters accepted the matchup after negotiations concluded this week. The promoter also confirmed the venue and broadcast plans.]]></content:encoded></item></channel></rss>'
   row=m.parse_feed(xml,'Test','boxing',dt.datetime(2026,11,9,6,tzinfo=dt.timezone.utc))[0]
