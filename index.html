@@ -341,7 +341,7 @@ const D=window.COMBAT_DATA;
 const main=document.querySelector('#main');
 const dialog=document.querySelector('#fighterDialog');
 if(!D||!main){if(main) main.textContent='Fight data unavailable. Please refresh the page.';return;}
-const state={news:'boxing',champions:'boxing',fightersSport:'Boxing',fightersCategory:'All',fightersDivision:'All',fightersQuery:'',social:'all',socialMode:'latest',socialPlatform:'all',socialPage:1,talkRole:'all',talkSort:'latest',calendar:'boxing',highlights:'boxing'};
+const state={news:'boxing',champions:'boxing',fightersSport:'Boxing',fightersCategory:'All',fightersDivision:'All',fightersQuery:'',social:'all',socialMode:'latest',socialPlatform:'all',socialPage:1,talkRole:'all',talkSort:'balanced',calendar:'boxing',highlights:'boxing'};
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeURL=x=>{try{const u=new URL(x);return u.protocol==='https:'?esc(u.href):'#'}catch(_){return '#'}};
 const domain=x=>{try{return new URL(x).hostname.replace(/^www\./,'')}catch{return 'Source'}};
@@ -705,18 +705,27 @@ async function loadLiveTalk(){
  const picks='data/fight-talk-selected.json';
  const embeds='data/fight-talk-embedded.json';
  const directoryPath='data/fight-talk-roster.json';
- const [remote,local,selected,embedRemote,embedLocal,directoryRemote,directoryLocal]=await Promise.all([
-  read(root+feed),read(feed),read(root+picks).then(data=>data||read(picks)),read(root+embeds),read(embeds),
-  readRoster(root+directoryPath),readRoster(directoryPath)
+ // Prefer same-origin JSON on mobile, while allowing GitHub to supply fresh data
+ // without blocking the initial feed if a cross-origin request is slow or blocked.
+ const firstUsable=async(promises)=>{
+  try{return await Promise.any(promises.map(p=>p.then(data=>{
+   if(!data)throw new Error('Feed unavailable');
+   return data;
+  })))}
+  catch{return null}
+ };
+ const remoteFeed=read(root+feed);
+ const [newest,selected,originalEmbeds,directory]=await Promise.all([
+  firstUsable([read(feed),remoteFeed]),
+  firstUsable([read(picks),read(root+picks)]),
+  firstUsable([read(embeds),read(root+embeds)]),
+  firstUsable([readRoster(directoryPath),readRoster(root+directoryPath)])
  ]);
- const directory=directoryRemote||directoryLocal;
  if(directory){
   liveTalk.directory=directory.fighters;
   liveTalk.directoryCounts=directory.counts||null;
  }
- const originalEmbeds=[embedRemote,embedLocal].filter(Boolean).sort((a,b)=>(Date.parse(b.checkedAt)||0)-(Date.parse(a.checkedAt)||0))[0];
- const checked=data=>Date.parse(data.checkedAt)||0;
- const newest=[remote,local].filter(Boolean).sort((a,b)=>checked(b)-checked(a))[0];
+
  if(newest){
   liveTalk.posts=[...newest.posts,...(originalEmbeds?.posts||[])];
   liveTalk.checkedAt=newest.checkedAt;
@@ -731,9 +740,18 @@ async function loadLiveTalk(){
   }
  }
  if(selected)liveTalk.selected=selected.posts;
- liveTalk.error=newest?'':'Automatic feed temporarily unavailable';
+ liveTalk.error=(newest||selected)?'':'Automatic feed temporarily unavailable';
  liveTalk.loading=false;
  if(location.hash.split('/')[0]==='#social'&&state.socialMode!=='archive')refreshTalkView();
+ // An updated GitHub JSON can supersede the fast local copy without holding up
+ // mobile rendering. Re-render only when the remote feed is actually newer.
+ remoteFeed.then(remote=>{
+  if(!remote||!(Date.parse(remote.checkedAt)>Date.parse(liveTalk.checkedAt||'')))return;
+  liveTalk.posts=[...remote.posts,...(originalEmbeds?.posts||[])];
+  liveTalk.checkedAt=remote.checkedAt;
+  liveTalk.platformStatus=Array.isArray(remote.platformStatus)?remote.platformStatus:[];
+  if(location.hash.split('/')[0]==='#social'&&state.socialMode!=='archive')refreshTalkView();
+ }).catch(()=>{});
 }
 
 const humanTalkTime=value=>{
@@ -890,7 +908,7 @@ function renderSocial(){
  const freshness=highlights?'Highlights from the previous four weeks':liveTalk.error||(!liveTalk.lastAttempt||liveTalk.loading?'Checking fresh posts…':liveTalk.checkedAt?'Live feed checked '+humanTalkTime(liveTalk.checkedAt)+' local time':'Checking fresh posts…');
  const mode='<div class="segment" role="group" aria-label="Fight Talk view">'+[['latest','Latest posts'],['highlights','Last 4 weeks']].map(([value,label])=>'<button type="button" id="talk-'+value+'" data-segment="socialMode" data-value="'+value+'" aria-pressed="'+String(value===state.socialMode)+'">'+label+'</button>').join('')+'</div>';
  const filters=talkFilter('social','Sport',sports)+talkFilter('socialPlatform','Platform',options)
-  +talkFilter('talkRole','Posts from',{all:'Everyone',fighters:'Fighters',media:'Media & industry',fans:'Fans'})+talkFilter('talkSort','Order',{latest:'Newest first',balanced:'Rotate authors'});
+  +talkFilter('talkRole','Posts from',{all:'Everyone',fighters:'Fighters',media:'Media & industry',fans:'Fans'})+talkFilter('talkSort','Order',{latest:'Newest first',balanced:'Balanced feed'});
  const toolbar='<div class="talk-toolbar"><div class="talk-toolbar-top">'+mode+'<p class="talk-freshness">'+esc(freshness)+'</p></div><div class="talk-filters">'+filters+'</div></div>';
  const platformNeedsConnection=liveTalk.platformStatus.some(p=>p.platform===state.socialPlatform&&p.state==='not-connected')&&!current.some(p=>p.platform===state.socialPlatform);
  const empty='<div class="talk-empty"><h2>No posts match these filters</h2><p>'+

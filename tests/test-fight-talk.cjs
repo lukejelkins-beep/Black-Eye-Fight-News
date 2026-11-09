@@ -56,6 +56,11 @@ vm.runInContext("liveTalk.directory=[{name:'Champion Test',sport:'boxing',tier:'
 assert(ctx.renderSocial().includes('Fighter social profiles'),'Expose sourced fighter accounts alongside the feed');
 assert(ctx.renderSocial().includes('https://www.instagram.com/champtest/'),'Link the original fighter account');
 assert(ctx.renderSocial().includes('Last 4 weeks'));
+assert(html.includes("talkRole:'all',talkSort:'balanced'"),'Balanced Fight Talk feed is the default instead of Bluesky-heavy chronological sorting');
+assert(!ctx.renderSocial().includes('twitter-timeline'),'Blocked external X timelines must not leave empty panels');
+assert(!ctx.postCard(champion).includes('<iframe'),'Source-linked Instagram posts render readable cards with no blank iframe');
+assert(!ctx.postCard(media).includes('<iframe'),'Source-linked X posts render readable cards with no blank iframe');
+assert(ctx.postCard(media).includes('Open post'),'X cards link directly to original source');
 assert(ctx.renderSocial().includes('href="https://x.com/media/status/200"'),'Display original-source links for X posts');
 assert(!ctx.renderSocial().includes('Selected post'));
 assert(!ctx.renderSocial().includes('talk-card-meta'));

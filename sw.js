@@ -1,5 +1,5 @@
 /* Offline-ready app shell. Always prioritise network for news and fight data. */
-const CACHE_NAME = 'befn-app-shell-v18-20261109-approved-BEFN-app-icon';
+const CACHE_NAME = 'befn-app-shell-v19-20261109-fight-talk-reliable';
 const SHELL = [
   '/', '/index.html', '/manifest.webmanifest',
   '/assets/mark.svg', '/assets/site-favicon-192.png', '/assets/icon-192.png', '/assets/icon-512.png', '/assets/apple-touch-icon.png', '/assets/icon-maskable-512.png',
@@ -33,7 +33,7 @@ self.addEventListener('fetch', event => {
   const shellAsset = SHELL_PATHS.has(url.pathname);
   if(!navigation && !shellAsset) return;
   event.respondWith(
-    fetch(request).then(response => {
+    fetch(request, navigation ? {cache:'no-store'} : undefined).then(response => {
       if(response.ok && (navigation || shellAsset)) {
         const copy = response.clone();
         event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.put(request,copy)));
