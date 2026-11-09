@@ -15,7 +15,7 @@ window.ResultsDesk=(()=>{
  const initials=String(f.name||'?').trim().split(/\s+/).slice(0,2).map(p=>p[0]?.toUpperCase()||'').join('');
  return `<span class="result-photo${winner?' is-winner':''}" data-result-photo-name="${esc(f.name)}">${source?`<img src="${url(source)}" alt="Photograph of ${esc(f.name)}" loading="lazy" referrerpolicy="no-referrer">`:''}<span class="result-photo-missing" ${source?'hidden':''} aria-hidden="true">${esc(initials)}</span>${winner?'<span class="result-win-tick" role="img" aria-label="Confirmed winner">✓</span>':''}</span>`;
 }
- function record(f){if(!f.record)return '<span class="result-record">Record awaiting verification</span>';return `<span class="result-record">${link(f.recordSource,f.record+(f.noContests?` · ${f.noContests} NC`:""))} <small>after this fight</small></span>`}
+ function record(f){if(!f.record)return '<span class="result-record">Record unavailable from verified sources</span>';return `<span class="result-record">${link(f.recordSource,f.record+(f.noContests?` · ${f.noContests} NC`:""))} <small>after this fight</small></span>`}
  function fighter(f,label){return `<div class="result-fighter">${photo(f)}<div><span class="result-outcome ${label==='WIN'?'win':''}">${label}</span><strong>${esc(f.name)}</strong>${record(f)}</div></div>`}
  function clip(r){
   if(!r.highlights?.url||r.highlights.auAvailable!==true||!r.highlights.thumbnail)return '<span class="result-unavailable">AU video not yet verified</span>';
@@ -28,7 +28,7 @@ window.ResultsDesk=(()=>{
  function boutRecord(f, complete){
  if(complete&&f.record)return `<span class="result-bout-record" title="Record after this fight">${esc(f.record)} <small>after fight</small></span>`;
  if(f.preRecord)return `<span class="result-bout-record">${esc(f.preRecord)} <small>before fight</small></span>`;
- return `<span class="result-bout-record is-unverified">Record unverified</span>`;
+ return `<span class="result-bout-record is-unverified">Record unavailable</span>`;
 }
  function boutMethod(method){
  const m=String(method||'').trim();
