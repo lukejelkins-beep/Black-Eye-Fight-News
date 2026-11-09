@@ -63,3 +63,11 @@
 body[data-befn-sport="boxing"] #main .sport-label-when-all,
 body[data-befn-sport="mma"] #main .sport-label-when-all,
 body[data-befn-sport="grappling"] #main .sport-label-when-all{display:none!important}
+
+/* No empty image slots: allow the original headline card to use the full width. */
+#main .news-strip-top:not(:has(.news-strip-thumbnail)) {grid-template-columns:minmax(0,1fr)!important}
+#main .news-image-unavailable{display:none!important}
+#main .befn-champion-group{margin:22px 0 35px}
+#main .befn-champion-group h2{font-size:clamp(19px,2.4vw,30px);margin:0 0 12px}
+#main .befn-grappling-schedule{margin-top:32px}
+#main .befn-grappling-schedule h2{font-size:clamp(22px,2.4vw,32px)}
