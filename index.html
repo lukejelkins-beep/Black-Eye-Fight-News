@@ -626,6 +626,7 @@ function distinctNewsPoints(a){
  const words=point=>new Set((point.toLowerCase().match(/[a-z0-9]+/g)||[]).filter(w=>w.length>2&&!stop.has(w)).map(w=>alias[w]||w));
  const theme=point=>{
   const p=point.toLowerCase();
+  if(/\b(?:penalt(?:y|ies)|fine|demand(?:ed|ing)?)\b/.test(p)&&/(?:\$\s*\d|\b(?:payment|dollars|fine|negotiations|talks)\b)/.test(p))return 'financial-demand';
   if(/\b(?:apolog(?:y|ize|ise|ized|ised)|regrets?|sorry)\b/.test(p))return 'apology';
   if(/\b(?:criticism|criticis|criticiz|backlash|upset fans|off.color joke|controvers(?:y|ial))/.test(p))return 'backlash';
   if(/\b(?:added|booked|announced|confirmed|scheduled|matching up|set to face|collide|agree(?:d)? to fight)\b/.test(p)&&/\b(?:fight|bout|match|prospect|clash|battle|pairing)\b/.test(p))return 'fight-booking';
@@ -634,6 +635,7 @@ function distinctNewsPoints(a){
  };
  const selected=[];
  for(const point of raw){
+  if(/\b(?:first to report|addressed the chaos|met the media)\b/i.test(point)||/\b(?:vs|versus|against)\.?$/i.test(point))continue;
   const current=words(point),kind=theme(point);
   if(!current.size)continue;
   if(selected.some(other=>{
@@ -707,6 +709,7 @@ function renderCalendar(){
 
 function headlineEligible(a){
  if(!a||typeof a.title!=='string'||!/^https:\/\//.test(a.url||'')||!Number.isFinite(Date.parse(a.publishedAt)))return false;
+ if(/\/story\/sports\/(?:nfl|nba|nhl|mlb|football|basketball|baseball|hockey|soccer|golf|college)(?:\/|$)/i.test(a.url))return false;
  // Results, replays and viewing guides belong in their own sections.
  return !/\b(?:main card results|prelim(?:inary)? results|official weigh-in results|post-fight show|post-event facts|bonus coverage|scorecards?|round-by-round|fight by fight preview|how to watch|stream|betting odds|predictions?|live blog|promotional guidelines|video: every|monthly report)\b/i.test(a.title)
   && !/^(?:video:|ufc .{0,35} video:)/i.test(a.title)
