@@ -150,7 +150,15 @@ class ImageTests(unittest.TestCase):
 class ExpandedDisciplineCoverageTests(unittest.TestCase):
  def test_sources_cover_mma_and_grappling(self):
   names={name for name,_,_ in m.SOURCES}
-  self.assertTrue({'UFC','MMA Junkie','ONE MMA','ONE Submission Grappling','Cage Warriors','ADCC','NCAA Division I Wrestling','NCAA Division II Wrestling'}<=names)
+  self.assertTrue({'UFC','MMA Junkie','ONE MMA','ONE Submission Grappling','ONE Live Results','Cage Warriors','RIZIN','KSW','UFC BJJ','IBJJF','ADCC','FloGrappling','Real American Freestyle','United World Wrestling','NCAA Division I Wrestling','NCAA Division II Wrestling'}<=names)
+ def test_indexed_official_sources_reject_untrusted_domains(self):
+  import datetime as dt
+  now=dt.datetime(2026,11,9,11,tzinfo=dt.timezone.utc)
+  rss=b'<rss><channel><item><title>Official KSW announcement</title><link>https://www.bing.com/news/apiclick.aspx?url=https%3A%2F%2Fwww.kswmma.com%2Fen%2Fnews%2Ftest</link><pubDate>Mon, 09 Nov 2026 10:00:00 GMT</pubDate></item><item><title>Counterfeit KSW report</title><link>https://malicious.invalid/ksw</link><pubDate>Mon, 09 Nov 2026 10:00:00 GMT</pubDate></item></channel></rss>'
+  rows=m.indexed_official_source(rss,'KSW','mma',now)
+  self.assertEqual(len(rows),1)
+  self.assertEqual(rows[0]['url'],'https://www.kswmma.com/en/news/test')
+  self.assertEqual(rows[0]['sport'],'mma')
  def test_ufc_bjj_routes_to_grappling_not_mma(self):
   item={'source':'UFC','title':'UFC BJJ 14: Tackett vs Wojcik Fight Card'}
   self.assertEqual(m.sport_for_article(item,'mma'),'grappling')
