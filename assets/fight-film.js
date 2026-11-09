@@ -24,8 +24,8 @@ window.FightFilm=(()=>{
   const title=String(v.title||''),publisher=String(v.publisher||''),discipline=String(v.discipline||'');
   if(/\b(?:ufc[\s-]*bjj|bjj|jiu[\s-]*jitsu|submission grappling|grappling match|adcc|ibjjf|no[\s-]*gi|greco[\s-]*roman|freestyle wrestling|wrestling|raf[\s-]*\d+)\b/i.test(title))return 'grappling';
   if(/BJJ|Wrestling/i.test(discipline)||(publisher!=='ONE Championship'&&/Grappling/.test(discipline)))return 'grappling';
+  if(/\b(?:muay thai|kickboxing)\b/i.test(title)&&!/\b(?:mma|mixed martial arts|bjj|submission grappling)\b/i.test(title))return null;
   if(publisher==='ONE Championship'){
-   if(/\b(?:muay thai|kickboxing)\b/i.test(title)&&!/\b(?:mma|bjj|submission grappling)\b/i.test(title))return null;
    return /\b(?:mma|mixed martial arts)\b/i.test(title)?'mma':null;
   }
   if(v.category==='boxing')return 'boxing';
