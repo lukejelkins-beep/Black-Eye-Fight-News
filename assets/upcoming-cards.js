@@ -39,8 +39,10 @@ window.UpcomingCards=(()=>{
   if(typeof record!=='string'||!/^[0-9]{1,3}\s*[-–]\s*[0-9]{1,3}(?:\s*[-–]\s*[0-9]{1,2})?(?:\s*\([0-9]{1,3}\s*KOs?\))?$/.test(record.trim()))return '';
   return record.replace(/–/g,'-').replace(/\s+/g,' ').trim();
  }
- function contender(name,right,record,recordSource){
-  const detail=record?'<span class="upcoming-fighter-record" aria-label="Professional record '+esc(record)+'">'+(typeof recordSource==='string'&&/^https:\/\//i.test(recordSource)?'<a class="upcoming-record-source" href="'+href(recordSource)+'" target="_blank" rel="noopener noreferrer" aria-label="View source for '+esc(name)+' professional record" title="View record source">'+esc(record)+'</a>':esc(record))+'</span>':
+ function contender(name,right,record){
+  // Records remain visible, but source hyperlinks are kept in event data rather
+  // than cluttering the expanded mobile fight card.
+  const detail=record?'<span class="upcoming-fighter-record" aria-label="Professional record '+esc(record)+'">'+esc(record)+'</span>':
    '<span class="upcoming-fighter-record is-unverified">Record not verified</span>';
   return '<div class="result-contender result-contender-'+(right?'right':'left')+'">'+(!right?photo(name):'')+
    '<div class="result-contender-info"><strong>'+esc(name)+'</strong>'+detail+'</div>'+(right?photo(name):'')+'</div>';
@@ -55,15 +57,13 @@ window.UpcomingCards=(()=>{
   const f=Array.isArray(b.fighters)?b.fighters:[];
   const first=f[0]||'Fighter TBC',second=f[1]||'Fighter TBC';
   const provisional=event.sourceStatus==='reported'||b.status==='reported';
-  const label=provisional?'Reported pairing':'Announced pairing';
-  const link=href(b.source||event.source);
+  // Keep the provisional status above the matchup; omit the repeated
+  // "announced/reported pairing" label and all per-bout source footers.
   return '<article class="result-bout result-bout-compact upcoming-bout" aria-label="'+esc(first+' versus '+second)+'">'+
    '<div class="result-matchup">'+flag(countries[0],'left')+flag(countries[1],'right')+'<span class="result-matchup-vs-watermark" aria-hidden="true">VS</span>'+
    '<span class="upcoming-matchup-status">'+esc(provisional?'REPORTED':'SCHEDULED')+'</span>'+
-   contender(first,false,fighterRecord(b,0),Array.isArray(b.recordSources)?b.recordSources[0]:null)+contender(second,true,fighterRecord(b,1),Array.isArray(b.recordSources)?b.recordSources[1]:null)+'</div>'+
-   '<div class="result-bout-detail"><span class="result-bout-division">'+esc(b.division||'Weight class not confirmed')+'</span><span class="upcoming-bout-state">'+esc(label)+'</span></div>'+
-   (b.note?'<p class="upcoming-bout-note">'+esc(b.note)+'</p>':'')+
-   '<div class="result-bout-secondary"><a href="'+link+'" target="_blank" rel="noopener noreferrer">Bout source ↗</a></div></article>';
+   contender(first,false,fighterRecord(b,0))+contender(second,true,fighterRecord(b,1))+'</div>'+
+   '<div class="result-bout-detail"><span class="result-bout-division">'+esc(b.division||'Weight class not confirmed')+'</span></div></article>';
  }
   const groups=[['main','Main Card'],['prelims','Prelims'],['early','Early Prelims'],['undercard','Undercard / order TBC'],['announced','Announced / order TBC']];
 
@@ -175,16 +175,11 @@ window.UpcomingCards=(()=>{
    '<span class="upcoming-hero-location">'+esc(e.location||'Venue TBC')+'</span>'+
    (e.sourceStatus==='reported'?'<span class="upcoming-row-provisional">Reported · UFC confirmation pending</span>':'')+'</span>'+
    '<span class="upcoming-row-chevron" aria-hidden="true">⌄</span></summary>';
-  const when=publishedInstant(e),start=when?'<span>Local scheduled start: '+esc(fmtTime(when.toISOString()))+'</span>':'<span>Start time awaiting confirmation · venue date: '+esc(fmtDate(e.date))+'</span>';
-  const sourcePrimary=e.posterPortrait?.source||e.posterList?.source||'';
-  const firstCredit=sourcePrimary&&art?'<a href="'+href(sourcePrimary)+'" target="_blank" rel="noopener noreferrer">Poster source ↗</a>':'';
-  const landscapeSource=e.posterLandscape?.source||e.poster?.source;
-  const credit=firstCredit+(landscapeSource&&landscapeSource!==sourcePrimary&&art?'<a href="'+href(landscapeSource)+'" target="_blank" rel="noopener noreferrer">Other artwork ↗</a>':'');
+  // Event time is already presented in the compact header. When expanded,
+  // go straight to the card itself, without duplicate times, source links
+  // or long editorial notes. Source URLs remain in the underlying JSON.
   return '<details class="result-event upcoming-event" data-upcoming-card="'+esc(e.id)+'" '+(opened.has(e.id)?'open':'')+'>'+summary+
-   '<div class="upcoming-expanded"><div class="upcoming-meta">'+start+'<a href="'+href(e.source)+'" target="_blank" rel="noopener noreferrer">Event source ↗</a>'+credit+'</div>'+
-   (e.dateNote?'<p class="upcoming-event-note">'+esc(e.dateNote)+'</p>':'')+
-   '<div class="upcoming-card-bar"><strong>Fight card</strong><span>'+e.bouts.length+' total</span></div>'+tabs+panels+
-   (e.note?'<p class="upcoming-event-note">'+esc(e.note)+'</p>':'')+'</div></details>';
+   '<div class="upcoming-expanded"><div class="upcoming-card-bar"><strong>Fight card</strong><span>'+e.bouts.length+' total</span></div>'+tabs+panels+'</div></details>';
  }
  function listing(sport){
   if(!feed)return '<div class="upcoming-loading" role="status">'+(error?'Upcoming card feed unavailable. Please reload to try again.':'Loading announced fight cards…')+'</div>';
