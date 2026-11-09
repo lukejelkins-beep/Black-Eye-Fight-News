@@ -34,6 +34,11 @@ assert(home.includes('Top stories'),'Home page opens with news');
 assert(home.includes('Important MMA fight announced'),'Significant verified news is prioritised');
 assert(home.indexOf('Important MMA fight announced')<home.indexOf('Regular boxing update'),'Headline ranking puts significant story first');
 assert(!home.includes('THE FIGHT WORLD'),'No promotional hero ahead of news');
+vm.runInContext("desk.articles=[{title:'Prelim Results | UFC Event',url:'https://example.com/results',sport:'mma',source:'UFC',publishedAt:'2026-11-07T23:55:00Z',score:99},{title:'Two contenders booked for title fight',url:'https://example.com/mma',sport:'mma',source:'Fight Source',publishedAt:'2026-11-07T23:00:00Z',score:1},{title:'Major boxing bout confirmed',url:'https://example.com/boxing',sport:'boxing',source:'Boxing Source',publishedAt:'2026-11-07T22:00:00Z',score:1},{title:'MMA fight cancelled',url:'https://example.com/mma2',sport:'mma',source:'Sports Source',publishedAt:'2026-11-07T21:00:00Z',score:1},{title:'MMA fight announced',url:'https://example.com/mma3',sport:'mma',source:'Fight Source',publishedAt:'2026-11-07T20:00:00Z',score:1},{title:'MMA fighter injured',url:'https://example.com/mma4',sport:'mma',source:'Other News',publishedAt:'2026-11-07T19:00:00Z',score:1}]",ctx);
+const selected=ctx.topStories().slice(0,4);
+assert(!ctx.topStories().some(x=>x.title.startsWith('Prelim Results')),'Routine results stay off home headlines');
+assert(selected.some(x=>x.sport==='boxing')&&selected.some(x=>x.sport==='mma'),'Lead headlines include both sports when available');
+
 console.log('Headline-first home, ranking, calendar filtering, unsafe URLs and HTML escaping passed');
 (async()=>{
  const calls=[];

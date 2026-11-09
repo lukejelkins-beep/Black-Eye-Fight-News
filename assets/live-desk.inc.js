@@ -69,40 +69,48 @@ function renderCalendar(){
  return renderFrame(viewTitle('','Grappling & wrestling')+segments('calendar',['boxing','mma','grappling'],state.calendar)+'<div class="filter-row">'+segments('matDiscipline',['all','RAF','BJJ / submission','NCAA','Freestyle','Greco-Roman'],state.matDiscipline)+'</div><p class="panel-note">Official listings last reviewed '+esc(desk.reviewedAt||'not yet loaded')+'. Dates may change. Unverified matchups and viewing details are explicitly marked.</p><h2>Next six weeks</h2><div class="grid news-grid">'+(near.length?near.map(eventCard).join(''):'<p>No confirmed upcoming events loaded for this selection.</p>')+'</div>'+(later.length?'<h2>Looking further ahead</h2><div class="grid news-grid">'+later.map(eventCard).join('')+'</div>':''));
 }
 
+function headlineEligible(a){
+ if(!a||typeof a.title!=='string'||!/^https:\/\//.test(a.url||'')||!Number.isFinite(Date.parse(a.publishedAt)))return false;
+ // Results, replays and viewing guides belong in their own sections.
+ return !/\b(?:main card results|prelim(?:inary)? results|official weigh-in results|post-fight show|post-event facts|bonus coverage|scorecards?|round-by-round|fight by fight preview|how to watch|stream|betting odds|predictions?|live blog|promotional guidelines|video: every|monthly report)\b/i.test(a.title)
+  && !/^(?:video:|ufc .{0,35} video:)/i.test(a.title)
+  && !/\bresults?\b\s*(?:\||:|[-–—]|\b(?:from|for|of)\b)/i.test(a.title);
+}
+function headlineImportance(a,now){
+ const title=a.title;
+ const age=(now-Date.parse(a.publishedAt))/3600000;
+ const fresh=Math.max(0,1-Math.max(0,age)/48)*12;
+ const confirmed=/\b(?:announc\w*|confirm\w*|scheduled|booked|sign(?:s|ed|ing)?|scratched|withdraw\w*|cancell?ed|postpon\w*|set for|to face|to fight|unification|injur\w*|suspend\w*|replacement|added to|fight card)\b/i.test(title);
+ const important=/\b(?:attacked|hospitali[sz]ed|doctor stops|fine|investigation|controversy|brawl|deal|dispute|retir\w*|return\w*|championship)\b/i.test(title);
+ const aftermath=/\b(?:reaction|react|post-fight|highlights|finish|knockout win|knockout in|knockout at|what's next|predictions?|recap)\b/i.test(title);
+ return fresh+(confirmed?16:0)+(important?9:0)+(aftermath?-9:0)+Math.min(3,Math.max(0,Number(a.score)||0));
+}
 function topStories(){
  const now=Date.now();
- const verified=desk.articles.filter(a=>a&&typeof a.title==='string'&&/^https:\/\//.test(a.url||'')&&Number.isFinite(Date.parse(a.publishedAt)));
+ const verified=desk.articles.filter(headlineEligible);
  const recent=verified.filter(a=>Date.parse(a.publishedAt)<=now+30*60*1000&&Date.parse(a.publishedAt)>=now-48*3600*1000);
- // Routine cards, live blogs, scorecards and finish clips have dedicated Results/Film desks.
- const routine=/\b(?:main card|prelim(?:inary)?|full card)\s+results\b|\bpost[- ]fight show\b|^video:\s|\bscorecards?\b|\blive blogs?\b/i;
- const pool=recent.length?recent:verified;
- const candidates=pool.filter(a=>!routine.test(a.title));
+ const candidates=recent.length?recent:verified;
  const unique=new Map();
- for(const a of candidates.length?candidates:pool){
+ for(const a of candidates){
   const key=a.title.toLowerCase().replace(/[^a-z0-9]+/g,'');
   if(!unique.has(key))unique.set(key,a);
  }
- const rank=x=>{
-  const hours=(now-Date.parse(x.publishedAt))/3600000;
-  const development=/\b(?:announces?|announced|confirmed|signs?|signed|booked|scheduled|injur(?:y|ed)|withdraws?|cancelled|title shot|challenge|call.?out|faces?|set for|returns?|suspension|retires?)\b/i.test(x.title);
-  const recap=/\b(?:knockout win|knockout in|post-fight|highlights?|reaction to|pros react to)\b/i.test(x.title);
-  return Math.max(0,Number(x.score)||0)*2.2+Math.max(0,48-hours)*.32+(development?3:0)-(recap?3:0);
- };
- const sorted=[...unique.values()].sort((a,b)=>rank(b)-rank(a)||Date.parse(b.publishedAt)-Date.parse(a.publishedAt));
- if(!sorted.length)return [];
- const lead=[sorted[0]];
- // Give both boxing and MMA a place up front when their coverage is comparably newsworthy.
- const other=sorted.find(a=>a.sport!==lead[0].sport&&rank(a)>=rank(lead[0])-8);
- if(other)lead.push(other);
- for(const article of sorted){
-  if(lead.some(a=>a.url===article.url))continue;
-  const event=(article.title.match(/\b(?:UFC Vegas\s+\d+|UFC Fight Night\s+\d+|Zuffa Boxing\s+\d+)\b/i)||[])[0]?.toLowerCase();
-  const repeats=event&&lead.slice(0,4).some(a=>a.title.toLowerCase().includes(event));
-  if(lead.length<4&&repeats)continue;
-  lead.push(article);
-  if(lead.length===10)break;
+ const ranked=[...unique.values()].sort((a,b)=>headlineImportance(b,now)-headlineImportance(a,now)||Date.parse(b.publishedAt)-Date.parse(a.publishedAt));
+ // Prevent a single publisher or sport from occupying every lead slot.
+ const lead=[];
+ for(const a of ranked){
+  if(lead.length===4)break;
+  if(lead.filter(x=>x.source===a.source).length>=2)continue;
+  lead.push(a);
  }
- return lead.slice(0,10);
+ for(const sport of ['boxing','mma']){
+  if(lead.length===4&&!lead.some(x=>x.sport===sport)){
+   const alt=ranked.find(a=>a.sport===sport&&!lead.some(x=>x.url===a.url));
+   if(alt)lead[3]=alt;
+  }
+ }
+ const seen=new Set(lead.map(x=>x.url));
+ return [...lead,...ranked.filter(a=>!seen.has(a.url))].slice(0,10);
 }
 function homeLeadCard(a){
  const image=a.image?.url&&/^https:\/\//.test(a.image.url)?a.image.url:newsFighterImage(a)?.url||'assets/mark.svg';
