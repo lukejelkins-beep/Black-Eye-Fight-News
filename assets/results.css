@@ -208,3 +208,16 @@
 .result-event-bouts .result-card-tabs .result-card-tab:focus-visible{outline:3px solid #fff!important;outline-offset:-5px}
 .result-bout-compact .result-fighter-rank{display:inline-block;color:#f5d478;font-weight:900;white-space:nowrap}
 .result-bout-compact .result-fighter-rank.is-champion{font-size:10px;letter-spacing:.02em}
+
+/* Results mobile containment: applies to all promotions, not only UFC. */
+.results-page,.result-event,.result-event-feature,.result-feature,.result-feature-body,.result-card-records,.result-card-records>div,.result-bouts,.result-bout,.result-matchup,.result-contender,.result-contender-info{min-width:0;max-width:100%;box-sizing:border-box}
+.result-feature-body,.result-card-records>div,.result-contender-info{overflow-wrap:anywhere;word-break:normal}
+.result-record{white-space:normal;overflow-wrap:anywhere;line-height:1.4}
+.result-feature .result-method{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.result-feature .result-method>span{margin-left:0}
+.result-feature .result-faceoff{overflow:hidden}
+.result-feature .result-faceoff .result-photo{min-width:0;max-width:42%;flex:0 1 42%}
+.result-feature .result-faceoff .result-vs{flex:0 0 auto}
+.result-cover img{max-width:100%}
+@media(max-width:600px){.results-page{width:100%;padding-left:12px;padding-right:12px;overflow-x:clip}.result-event{width:100%;overflow:hidden}.result-feature-body{padding:18px 16px}.result-card-records{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.result-card-records strong{font-size:12px}.result-record{font-size:11px}.result-feature h2{font-size:clamp(26px,8vw,38px)}.result-feature .result-method{font-size:clamp(17px,5vw,22px)}.result-faceoff,.result-cover{height:190px}.result-faceoff .result-photo{height:175px}.result-bout{max-width:100%}.result-contender-info strong{overflow-wrap:anywhere}}
+@media(max-width:360px){.result-card-records{grid-template-columns:minmax(0,1fr)}.result-feature-body{padding:14px 12px}}
