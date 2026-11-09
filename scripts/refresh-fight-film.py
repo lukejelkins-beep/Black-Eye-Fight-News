@@ -24,6 +24,8 @@ CHANNELS=[
  ('DAZN Boxing','UCurvRE5fGcdUgCYWgh-BDsg','boxing','Boxing'),
  ('Top Rank Boxing','UCbzRzJNHx7ZLlJML9BjZQVQ','boxing','Boxing'),
  ('UFC','UCvgfXK4nTYKudb0rFR6noLA','combat','MMA'),
+ ('RIZIN Fighting Federation','UCZZ0UGjWsRdM8_5bsqtxYaQ','combat','MMA'),
+ ('Cage Warriors','c/CageWarriorsTV','combat','MMA'),
  ('PFL','UCPrONRG9hO1f-OrxW-WH-xg','combat','MMA'),
  ('ONE Championship','UCiormkBf3jm6mfb7k0yPbKA','combat','MMA / Grappling'),
  ('Real American Freestyle','UCB0zHtqhvp2fuz0kJJlUpQw','combat','Wrestling / RAF'),
@@ -98,7 +100,7 @@ def parse_feed(xml,publisher,category,discipline,today=None):
  return [dict(video,sport=sport) for video in videos if (sport:=video_sport(video))]
 def fetch_feed(channel_id):
  """Prefer Atom; if unavailable, read the publisher's public videos page."""
- if channel_id.startswith('@'):
+ if channel_id.startswith('@') or channel_id.startswith('c/'):
   # Read the official publisher's current handle video listing; never invent a channel ID.
   url='https://www.youtube.com/'+channel_id+'/videos'
   request=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36','Accept-Language':'en-AU,en;q=0.9'})
