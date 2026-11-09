@@ -550,33 +550,15 @@ function talkEngagement(p){
 }
 
 function originalTalkPost(p){
- let url;
- try{url=new URL(p.url)}catch{}
- const host=url?.hostname.replace(/^www\./,'');
- const path=url?.pathname||'';
- let src='';
- if(url?.protocol==='https:'&&!url.username&&!url.password){
-  if(p.platform==='Instagram'&&host==='instagram.com'){
-   const match=path.match(/\/(p|reel)\/([\w-]+)\/?$/);
-   if(match){
-    const permalink=`https://www.instagram.com/${match[1]}/${match[2]}/`;
-    return `<div class="talk-original talk-instagram"><blockquote class="instagram-media" data-instgrm-permalink="${esc(permalink)}" data-instgrm-captioned data-instgrm-version="14"><a href="${esc(permalink)}" target="_blank" rel="noopener noreferrer">View original Instagram post by ${esc(p.name)} ↗</a></blockquote><p class="talk-embed-note">Post provided directly by Instagram. If unavailable, select Open post below.</p></div>`;
-   }
-  }
-  if(p.platform==='X'&&['x.com','twitter.com'].includes(host)){
-   const id=path.match(/\/status\/(\d+)\/?$/)?.[1];
-   if(id)return `<div class="talk-original"><blockquote class="twitter-tweet" data-dnt="true"><a href="https://twitter.com/i/status/${id}">View original post by ${esc(p.name)} on X ↗</a></blockquote></div>`;
-  }
-  if(p.platform==='Threads'&&['threads.net','threads.com'].includes(host)&&/^\/(?:@[\w.]+\/post|t)\/[\w-]+\/?$/.test(path)){
-   const permalink='https://www.threads.com'+path.replace(/\/$/,'')+'/';
-   const postCode=path.split('/').filter(Boolean).pop();
-   return `<div class="talk-original talk-threads"><blockquote class="text-post-media" id="ig-tp-${esc(postCode)}" data-text-post-permalink="${esc(permalink)}" data-text-post-version="0"><a href="${esc(permalink)}" target="_blank" rel="noopener noreferrer">View the original Threads post ↗</a></blockquote><p class="talk-embed-note">Original post loaded by Threads. If unavailable, use Open post below.</p></div>`;
-  }
-  if(p.platform==='Facebook'&&['facebook.com','m.facebook.com'].includes(host))src='https://www.facebook.com/plugins/post.php?href='+encodeURIComponent(url.href)+'&show_text=true&width=500';
+ // Render source-backed content ourselves. Third-party timeline and post widgets
+ // are commonly blocked on mobile Safari, leaving tall blank panels.
+ if(typeof p.quote==='string'&&p.quote.trim()){
+  return '<blockquote class="social-quote">'+esc(p.quote)+'</blockquote>';
  }
- if(src)return `<div class="talk-original"><iframe src="${esc(src)}" title="Original ${esc(p.platform)} post by ${esc(p.name)}" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe><p class="talk-embed-note">If the post does not load, use Open post below.</p></div>`;
- if(p.quote)return `<blockquote class="social-quote">${esc(p.quote)}</blockquote>`;
- return '<p class="talk-embed-note">View this original post using the link below. An inline preview is unavailable.</p>';
+ if(typeof p.summary==='string'&&p.summary.trim()&&!p.nativeEmbed){
+  return '<div class="talk-post-summary"><span>Source-linked post summary</span><p>'+esc(p.summary)+'</p></div>';
+ }
+ return '<p class="talk-post-unavailable">Post text unavailable here · open the original post below.</p>';
 }
 function hydrateTalkEmbeds(){
  // Instagram's official blockquote embed API, no public-post search permission required.
@@ -704,6 +686,8 @@ function recentTalkPosts(windowDays=7){
  const posts=new Map();
  // Keep native original-post identities from selected sources, while still preferring fresh direct-source posts where available.
  for(const p of [...liveTalk.selected,...liveTalk.posts]){
+  // Generic publisher-linked embeds lack readable on-page text and can render as empty frames.
+  if(p?.nativeEmbed&&!p?.quote)continue;
   const time=Date.parse(p?.postedAt||(p?.nativeEmbed?p?.sourceLinkedAt:''));
   if(p?.type!=='post'||!Object.hasOwn(talkPlatforms,p.platform)||!Object.hasOwn(talkSports,p.sport)||p.sport==='all'||typeof p.name!=='string'||!p.name.trim()||typeof (p.quote||p.summary)!=='string'||(!(p.quote||p.summary).trim()&&!['Instagram','X'].includes(p.platform))||!Number.isFinite(time)||time<now-windowDays*24*60*60*1000||time>now+30*60*1000)continue;
   try{
@@ -825,28 +809,6 @@ function talkAccountDirectory(){
 }
 
 
-/**
- * Official X public timeline embeds supplement, but do not impersonate, the
- * source-linked mixed Fight Talk feed. X controls freshness and availability;
- * no claim that these are API-collected or refreshed by our GitHub job.
- */
-function renderPublicXTimelines(){
-  if(state.socialMode!=='latest'||!['all','X'].includes(state.socialPlatform))return '';
-  const accounts={
-   boxing:[{handle:'Zuffa_Boxing',name:'Zuffa Boxing',kind:'Boxing promoter'},{handle:'jakepaul',name:'Jake Paul',kind:'Boxing fighter'}],
-   mma:[{handle:'UFC',name:'UFC',kind:'MMA promoter'},{handle:'TheNotoriousMMA',name:'Conor McGregor',kind:'MMA fighter'},{handle:'MMAJunkie',name:'MMA Junkie',kind:'MMA news & media'}],
-   grappling:[{handle:'rafwrestlingusa',name:'Real American Freestyle',kind:'Wrestling promoter'},{handle:'a_ok_i',name:'Shinya Aoki',kind:'Grappling fighter'}]
-  };
-  const featured=state.social==='all'?[accounts.boxing[0],accounts.mma[1],accounts.mma[2]]:accounts[state.social]||[];
-  return '<section class="talk-x-stream" aria-label="Public X account timelines">'
-   +'<div class="talk-section-head"><div><div class="talk-section-eyebrow">DIRECT FROM X</div><h2>Live from X</h2>'
-   +'<p>Recent public posts from selected fighter and promoter accounts, loaded directly by X without an API subscription. X controls availability; if a timeline does not load, open the account.</p></div></div>'
-   +'<div class="talk-x-stream-grid">'+featured.map(a=>{
-      const href='https://x.com/'+a.handle;
-      return '<div class="talk-x-stream-card"><div class="talk-x-stream-head"><div><strong>'+esc(a.name)+'</strong><small>'+esc(a.kind)+' · @'+esc(a.handle)+'</small></div><a href="'+esc(href)+'" target="_blank" rel="noopener noreferrer">Open on X ↗</a></div>'
-       +'<a class="twitter-timeline" data-theme="dark" data-height="410" data-chrome="noheader nofooter" data-dnt="true" href="'+esc(href)+'">View latest posts from @'+esc(a.handle)+' on X</a></div>';
-     }).join('')+'</div></section>';
-}
 
 function renderSocial(){
  const highlights=state.socialMode==='highlights';
@@ -873,14 +835,14 @@ function renderSocial(){
  const pages=total>1?'<div class="pagination"><button type="button" data-page="prev" '+(state.socialPage===1?'disabled':'')+'>← Previous</button><span>Page '+state.socialPage+' of '+total+'</span><button type="button" data-page="next" '+(state.socialPage===total?'disabled':'')+'>Next →</button></div>':'';
  const count=total>1?(start+1)+'–'+Math.min(start+pageSize,list.length)+' of '+list.length+' posts':list.length+' post'+(list.length===1?'':'s');
  const title=highlights?'The last four weeks':'Latest fighter & promoter posts';
- const description=highlights?'Memorable reactions, fighter exchanges and conversations in boxing, MMA and grappling from the past 28 days.':'Chronological original posts from fighters, champions, contenders and promoters on X, Instagram and other platforms. No engagement thresholds.';
+ const description=highlights?'Memorable reactions, fighter exchanges and conversations in boxing, MMA and grappling from the past 28 days.':'Source-linked posts and clearly labelled summaries from fighters, champions, contenders, media and promoters. No engagement thresholds.';
  const resultHead='<div class="talk-section-head"><div><div class="talk-section-eyebrow">'+(highlights?'THE CONVERSATION':'CURRENT CONVERSATION')+'</div><h2>'+title+'</h2><p>'+description+'</p></div></div>';
  const mainSection='<section class="talk-section" aria-label="'+title+'">'+resultHead+(list.length?'<div class="social-grid">'+list.slice(start,start+pageSize).map(postCard).join('')+'</div>':empty)+pages+'</section>';
  const highlighted=highlights?[]:highlightedTalkPosts().filter(visible);
  const featured=highlighted.slice(0,4);
  const preview=featured.length?'<section class="talk-section" aria-label="Four-week Fight Talk highlights"><div class="talk-section-head"><div><div class="talk-section-eyebrow">BOXING · MMA · GRAPPLING</div><h2>Highlights · last 4 weeks</h2><p>Recent fighter-to-fighter exchanges and source-linked posts. The original remarks appear where available; reporting is marked as coverage.</p></div><button type="button" class="btn" data-segment="socialMode" data-value="highlights">All highlights ↗</button></div><div class="social-grid">'+featured.map(postCard).join('')+'</div></section>':'';
  return renderFrame(viewTitle('IN THE CONVERSATION','Fight talk','A chronological feed of original fighter and promoter posts across combat sports.')+toolbar+
-  '<section id="talk-results" aria-label="Fight Talk posts" tabindex="-1"><div class="talk-results-head"><p class="talk-count" aria-live="polite">'+esc(count)+'</p>' +talkCoverage(current)+talkAccountDirectory()+'</div>'+renderPublicXTimelines()+mainSection+preview+'</section>');
+  '<section id="talk-results" aria-label="Fight Talk posts" tabindex="-1"><div class="talk-results-head"><p class="talk-count" aria-live="polite">'+esc(count)+'</p>' +talkCoverage(current)+talkAccountDirectory()+'</div>'+mainSection+preview+'</section>');
 }
 
 
