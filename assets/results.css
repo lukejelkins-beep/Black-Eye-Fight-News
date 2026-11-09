@@ -199,3 +199,12 @@
  .result-bout-compact:has(.result-featured-bout-label) .result-matchup-result{top:25px}
  .result-fighter-tier{font-size:8px;padding:2px 4px}
 }
+
+/* v1.0.4 hotfix: accessible contrast for selected fight-card filters. */
+.result-event-bouts .result-card-tabs .result-card-tab{background:#1f1c20!important;color:#f2eff0!important;border-bottom:4px solid transparent!important}
+.result-event-bouts .result-card-tabs .result-card-tab small{color:#c8c5c7!important}
+.result-event-bouts .result-card-tabs .result-card-tab.is-active{background:#f1d58c!important;color:#201915!important;border-bottom-color:#b27d15!important;font-weight:900}
+.result-event-bouts .result-card-tabs .result-card-tab.is-active small{color:#35291b!important;font-weight:850}
+.result-event-bouts .result-card-tabs .result-card-tab:focus-visible{outline:3px solid #fff!important;outline-offset:-5px}
+.result-bout-compact .result-fighter-rank{display:inline-block;color:#f5d478;font-weight:900;white-space:nowrap}
+.result-bout-compact .result-fighter-rank.is-champion{font-size:10px;letter-spacing:.02em}
