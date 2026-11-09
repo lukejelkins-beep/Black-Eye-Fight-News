@@ -114,6 +114,8 @@ class VideoDisciplineScopeTests(unittest.TestCase):
  def test_striking_only_one_uploads_are_excluded(self):
   self.assertIsNone(m.video_sport({'publisher':'ONE Championship','title':'ONE Muay Thai knockouts highlights','category':'combat','discipline':'MMA / Grappling'}))
   self.assertIsNone(m.video_sport({'publisher':'ONE Championship','title':'ONE Fight Night 49 Highlights','category':'combat','discipline':'MMA / Grappling'}))
+ def test_rizin_kickboxing_not_mislabeled_mma(self):
+  self.assertIsNone(m.video_sport({'publisher':'RIZIN Fighting Federation','title':'RIZIN kickboxing fight highlights','category':'combat','discipline':'MMA'}))
  def test_wrestling_rights_holder_and_bjj(self):
   self.assertEqual(m.video_sport({'publisher':'United World Wrestling','title':'Greco-Roman wrestling finals highlights','category':'combat','discipline':'Wrestling / RAF'}),'grappling')
   self.assertEqual(m.video_sport({'publisher':'FloGrappling','title':'ADCC finals submission highlights','category':'combat','discipline':'BJJ / Grappling'}),'grappling')
