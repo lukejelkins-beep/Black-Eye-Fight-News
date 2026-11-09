@@ -598,7 +598,7 @@ function hydrateTalkEmbeds(){
    script.onerror=()=>script.remove();document.head.appendChild(script);
   }
  }
- if(!document.querySelector('.twitter-tweet'))return;
+ if(!document.querySelector('.twitter-tweet, .twitter-timeline'))return;
  if(window.twttr?.widgets){window.twttr.widgets.load();return;}
  if(document.getElementById('talk-x-widgets'))return;
  const script=document.createElement('script');script.id='talk-x-widgets';script.src='https://platform.twitter.com/widgets.js';script.async=true;
@@ -824,6 +824,30 @@ function talkAccountDirectory(){
   '<div class="talk-account-list">'+cards+'</div></details>';
 }
 
+
+/**
+ * Official X public timeline embeds supplement, but do not impersonate, the
+ * source-linked mixed Fight Talk feed. X controls freshness and availability;
+ * no claim that these are API-collected or refreshed by our GitHub job.
+ */
+function renderPublicXTimelines(){
+  if(state.socialMode!=='latest'||!['all','X'].includes(state.socialPlatform))return '';
+  const accounts={
+   boxing:[{handle:'Zuffa_Boxing',name:'Zuffa Boxing',kind:'Boxing promoter'},{handle:'jakepaul',name:'Jake Paul',kind:'Boxing fighter'}],
+   mma:[{handle:'UFC',name:'UFC',kind:'MMA promoter'},{handle:'TheNotoriousMMA',name:'Conor McGregor',kind:'MMA fighter'}],
+   grappling:[{handle:'rafwrestlingusa',name:'Real American Freestyle',kind:'Wrestling promoter'},{handle:'a_ok_i',name:'Shinya Aoki',kind:'Grappling fighter'}]
+  };
+  const featured=state.social==='all'?[accounts.boxing[0],accounts.mma[1]]:accounts[state.social]||[];
+  return '<section class="talk-x-stream" aria-label="Public X account timelines">'
+   +'<div class="talk-section-head"><div><div class="talk-section-eyebrow">DIRECT FROM X</div><h2>Live from X</h2>'
+   +'<p>Recent public posts from selected fighter and promoter accounts, loaded directly by X without an API subscription. X controls availability; if a timeline does not load, open the account.</p></div></div>'
+   +'<div class="talk-x-stream-grid">'+featured.map(a=>{
+      const href='https://x.com/'+a.handle;
+      return '<div class="talk-x-stream-card"><div class="talk-x-stream-head"><div><strong>'+esc(a.name)+'</strong><small>'+esc(a.kind)+' · @'+esc(a.handle)+'</small></div><a href="'+esc(href)+'" target="_blank" rel="noopener noreferrer">Open on X ↗</a></div>'
+       +'<a class="twitter-timeline" data-theme="dark" data-height="410" data-chrome="noheader nofooter" data-dnt="true" href="'+esc(href)+'">View latest posts from @'+esc(a.handle)+' on X</a></div>';
+     }).join('')+'</div></section>';
+}
+
 function renderSocial(){
  const highlights=state.socialMode==='highlights';
  const current=highlights?highlightedTalkPosts():recentTalkPosts();
@@ -856,7 +880,7 @@ function renderSocial(){
  const featured=highlighted.slice(0,4);
  const preview=featured.length?'<section class="talk-section" aria-label="Four-week Fight Talk highlights"><div class="talk-section-head"><div><div class="talk-section-eyebrow">BOXING · MMA · GRAPPLING</div><h2>Highlights · last 4 weeks</h2><p>Recent fighter-to-fighter exchanges and source-linked posts. The original remarks appear where available; reporting is marked as coverage.</p></div><button type="button" class="btn" data-segment="socialMode" data-value="highlights">All highlights ↗</button></div><div class="social-grid">'+featured.map(postCard).join('')+'</div></section>':'';
  return renderFrame(viewTitle('IN THE CONVERSATION','Fight talk','A chronological feed of original fighter and promoter posts across combat sports.')+toolbar+
-  '<section id="talk-results" aria-label="Fight Talk posts" tabindex="-1"><div class="talk-results-head"><p class="talk-count" aria-live="polite">'+esc(count)+'</p>' +talkCoverage(current)+talkAccountDirectory()+'</div>'+mainSection+preview+'</section>');
+  '<section id="talk-results" aria-label="Fight Talk posts" tabindex="-1"><div class="talk-results-head"><p class="talk-count" aria-live="polite">'+esc(count)+'</p>' +talkCoverage(current)+talkAccountDirectory()+'</div>'+renderPublicXTimelines()+mainSection+preview+'</section>');
 }
 
 

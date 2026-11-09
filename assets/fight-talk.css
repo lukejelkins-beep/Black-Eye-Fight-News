@@ -160,3 +160,15 @@
 #talk-results .talk-account-links a:hover{background:#deeee8}
 #talk-results .talk-account-links span{font-size:11px;color:#78837f}
 @media(max-width:600px){#talk-results .talk-account-row{align-items:flex-start;flex-direction:column;gap:7px}}
+
+/* Native public X timelines: a free, supplementary direct-from-X lane. */
+#talk-results .talk-x-stream{margin:0 0 34px}
+#talk-results .talk-x-stream-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+#talk-results .talk-x-stream-card{background:#0b1119;color:#f1f6f8;border-radius:12px;border:1px solid #293b48;min-width:0;overflow:hidden;padding:13px}
+#talk-results .talk-x-stream-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:3px 3px 12px}
+#talk-results .talk-x-stream-head strong{display:block;font-size:14px}
+#talk-results .talk-x-stream-head small{display:block;color:#b8cad1;font-size:11px;margin-top:4px}
+#talk-results .talk-x-stream-head a{color:#b3eadd;font-size:11px;font-weight:800}
+#talk-results .talk-x-stream-card>.twitter-timeline{display:block;min-height:150px;padding:16px;border:1px solid #344753;border-radius:8px;text-align:center;color:#dcf5ed;text-decoration:underline;overflow-wrap:anywhere}
+#talk-results .talk-x-stream-card iframe{max-width:100%!important}
+@media(max-width:800px){#talk-results .talk-x-stream-grid{grid-template-columns:1fr}}
