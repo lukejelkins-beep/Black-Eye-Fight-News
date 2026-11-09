@@ -33,3 +33,36 @@
 }
 @media(display-mode:standalone){body{padding-top:env(safe-area-inset-top)}}
 @media(max-width:370px){.befn-mobile-title{font-size:11px}.befn-mobile-actions button,.befn-mobile-actions .befn-install-button{padding:6px;font-size:9px}.befn-mobile-tabs a{font-size:9px}}
+
+/*
+ * Portrait ticker: keep all six editorial labels visible without clipping.
+ * Landscape and desktop retain the original single-row treatment.
+ */
+@media (max-width:900px) and (orientation:portrait){
+ .ticker{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  align-items:stretch;
+  gap:6px;
+  padding:12px 4vw;
+  overflow:visible;
+ }
+ .ticker > span:not(.ticker-dot){
+  display:flex;
+  min-width:0;
+  min-height:38px;
+  padding:7px 5px;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  white-space:normal;
+  line-height:1.25;
+  overflow-wrap:break-word;
+ }
+ .ticker > .ticker-label{
+  padding:7px 5px;
+  font-size:10px;
+  letter-spacing:.09em;
+ }
+ .ticker > .ticker-dot{display:none}
+}
