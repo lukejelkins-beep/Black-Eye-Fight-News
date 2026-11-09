@@ -145,3 +145,25 @@ class ImageTests(unittest.TestCase):
  def test_atom_copyright(self):
   p=m.ArticleImages();p.feed('<img src="https://platform.mmafighting.com/a.jpg?width=800&amp;quality=80" data-portal-copyright="Getty Images">')
   self.assertEqual(p.images[0]['credit'],'Getty Images');self.assertIn('&quality',p.images[0]['url'])
+
+
+class ExpandedDisciplineCoverageTests(unittest.TestCase):
+ def test_sources_cover_mma_and_grappling(self):
+  names={name for name,_,_ in m.SOURCES}
+  self.assertTrue({'UFC','MMA Junkie','ONE MMA','ONE Submission Grappling','Cage Warriors','ADCC','NCAA Division I Wrestling','NCAA Division II Wrestling'}<=names)
+ def test_ufc_bjj_routes_to_grappling_not_mma(self):
+  item={'source':'UFC','title':'UFC BJJ 14: Tackett vs Wojcik Fight Card'}
+  self.assertEqual(m.sport_for_article(item,'mma'),'grappling')
+ def test_zuffa_boxing_does_not_leak_to_mma(self):
+  item={'source':'UFC','title':'Zuffa Boxing 12 official results and scorecards'}
+  self.assertEqual(m.sport_for_article(item,'mma'),'boxing')
+ def test_one_combat_rules_are_distinct(self):
+  self.assertEqual(m.sport_for_article({'source':'ONE MMA','title':'ONE MMA World Championship main event'},'mma'),'mma')
+  self.assertEqual(m.sport_for_article({'source':'ONE Submission Grappling','title':'Diogo Reis submission grappling title fight'},'grappling'),'grappling')
+  self.assertIsNone(m.sport_for_article({'source':'ONE MMA','title':'ONE Fight Night 49 Muay Thai results'},'mma'))
+ def test_wrestling_freestyle_and_greco(self):
+  for title in ('NCAA Division II Wrestling Championships','United World Wrestling Greco-Roman World Championships','Real American Freestyle RAF 17'):
+   self.assertEqual(m.sport_for_article({'source':'NCAA Division II Wrestling','title':title},'mma'),'grappling')
+ def test_results_retained_as_official_reports(self):
+  self.assertTrue(m.is_routine_result('UFC BJJ 13 results: Tackett vs Rodriguez'))
+  self.assertTrue(m.is_routine_result('ONE Fight Night 49 MMA and submission grappling results'))
