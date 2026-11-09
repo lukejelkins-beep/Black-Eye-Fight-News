@@ -628,8 +628,8 @@ function distinctNewsPoints(a){
   const p=point.toLowerCase();
   if(/\b(?:apolog(?:y|ize|ise|ized|ised)|regrets?|sorry)\b/.test(p))return 'apology';
   if(/\b(?:criticism|criticis|criticiz|backlash|upset fans|off.color joke|controvers(?:y|ial))/.test(p))return 'backlash';
-  if(/\b(?:heavyweights?|division)\b/.test(p)&&/\b(?:best|better|greatest|never been|demise|strongest)\b/.test(p))return 'division-assessment';
   if(/\b(?:added|booked|announced|confirmed|scheduled|matching up|set to face|collide|agree(?:d)? to fight)\b/.test(p)&&/\b(?:fight|bout|match|prospect|clash|battle|pairing)\b/.test(p))return 'fight-booking';
+  if(/\b(?:heavyweights?|division)\b/.test(p)&&/\b(?:best|better|greatest|never been|demise|strongest)\b/.test(p))return 'division-assessment';
   return '';
  };
  const selected=[];
