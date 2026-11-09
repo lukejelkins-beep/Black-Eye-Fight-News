@@ -115,16 +115,41 @@ def mma_junkie_google_feed(raw,now):
         a['timeBasis']='Google News feed timestamp'
     return out
 
+
+def mma_junkie_gdelt(raw,now):
+    """Index MMA Junkie originals without masquerading first-seen dates as publication dates."""
+    data=json.loads(raw)
+    allow={'mmajunkie.usatoday.com','www.mmajunkie.usatoday.com','mmajunkie.com','www.mmajunkie.com'}
+    found=[]
+    for item in data.get('articles',[]):
+        if not isinstance(item,dict):continue
+        url=str(item.get('url',''))
+        parsed=urllib.parse.urlsplit(url)
+        if parsed.scheme!='https' or parsed.hostname not in allow or not parsed.path.startswith('/story/'):continue
+        title=plain(str(item.get('title','')))
+        try:when=dt.datetime.strptime(item['seendate'],'%Y%m%dT%H%M%SZ').replace(tzinfo=UTC)
+        except (ValueError,TypeError,KeyError):continue
+        if not title or not now-dt.timedelta(days=14)<=when<=now+dt.timedelta(minutes=30):continue
+        url=urllib.parse.urlunsplit(parsed._replace(fragment=''))
+        score=sum(weight for pattern,weight in [(r'\b(title|champion|championship)\b',3),(r'\b(result|knockout|wins|defeats|withdraw|cancel|announc|confirm)',4),(r'\b(fight|ufc|boxing|bout)\b',1)] if re.search(pattern,title,re.I))
+        image=str(item.get('socialimage') or '')
+        candidates=[{'url':image,'alt':'','credit':''}] if image.startswith('https://') else []
+        found.append(dict(id=hashlib.sha256(url.encode()).hexdigest()[:20],title=title,url=url,source='MMA Junkie',sport='mma',publishedAt=when.isoformat(),score=score,
+            sourceMethod='GDELT indexed MMA Junkie original',timeBasis='GDELT first-seen timestamp',_imageCandidates=candidates))
+    return found
+
 def source_articles(source,sport,url,now):
     urls=[url]
     if source=='MMA Junkie':
-        urls+=['https://mmajunkie.com/feed/','https://news.google.com/rss/search?q=site%3Ammajunkie.usatoday.com%20when%3A7d&hl=en-AU&gl=AU&ceid=AU%3Aen']
+        urls+=['https://mmajunkie.com/feed/','https://api.gdeltproject.org/api/v2/doc/doc?'+urllib.parse.urlencode({'query':'domain:mmajunkie.usatoday.com','mode':'artlist','maxrecords':'75','format':'json','timespan':'7d','sort':'datedesc'}),'https://news.google.com/rss/search?q=site%3Ammajunkie.usatoday.com%20when%3A7d&hl=en-AU&gl=AU&ceid=AU%3Aen']
     errors=[]
     for candidate in urls:
         try:
             req=urllib.request.Request(candidate,headers={'User-Agent':'Mozilla/5.0 (compatible; BlackEyeFightNews/1.0)'})
             with urllib.request.urlopen(req,timeout=20) as response: raw=response.read(3_000_000)
-            if urllib.parse.urlsplit(candidate).hostname=='news.google.com':
+            if urllib.parse.urlsplit(candidate).hostname=='api.gdeltproject.org':
+                found=mma_junkie_gdelt(raw,now)
+            elif urllib.parse.urlsplit(candidate).hostname=='news.google.com':
                 found=mma_junkie_google_feed(raw,now)
             else:
                 found=parse_feed(raw,source,sport,now)

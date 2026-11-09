@@ -18,6 +18,16 @@ class MMAJunkieTests(unittest.TestCase):
   self.assertEqual(rows[0]['title'],'Verified interview')
   self.assertEqual(rows[0]['timeBasis'],'Google News feed timestamp')
 
+class GdeltFallbackTests(unittest.TestCase):
+ def test_verified_direct_article_links_with_index_time(self):
+  raw=b'{"articles":[{"url":"https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/09/fighter-update/12345/","title":"Fighter confirms next bout","seendate":"20261109T040000Z"},{"url":"https://unrelated.example.com/story/test","title":"Bad source","seendate":"20261109T040000Z"}]}'
+  items=m.mma_junkie_gdelt(raw,dt.datetime(2026,11,9,6,tzinfo=dt.timezone.utc))
+  self.assertEqual(len(items),1)
+  self.assertEqual(items[0]['source'],'MMA Junkie')
+  self.assertEqual(items[0]['sourceMethod'],'GDELT indexed MMA Junkie original')
+  self.assertEqual(items[0]['timeBasis'],'GDELT first-seen timestamp')
+  self.assertTrue(items[0]['url'].startswith('https://mmajunkie.usatoday.com/story/'))
+
 class EditorialRoutingTests(unittest.TestCase):
  def test_routine_results_routed_out_of_news(self):
   headlines=['Chris Billam-Smith vs Cheavon Clarke Scorecard','Denzel Bentley vs Shane Mosley Jr. Scorecard','Da’Mazion Vanhouter vs Ivan Balaz Scorecard','Zuffa Boxing 12 Results from London','Buatsi vs Hutchinson 2 Results and Scorecard','UFC Vegas 124 results: Tatiana Suarez grinds her way to decision win','UFC Vegas 124 live blog: Tatiana Suarez vs Virna Jandiroba','Canelo vs Mbilli Scorecard and Round-by-Round Updates']
