@@ -180,3 +180,17 @@
 .news-publisher-fallback a{display:inline-flex;align-items:center;justify-content:center;background:#a8e5d4;color:#123235;padding:11px 14px;font-size:12px;font-weight:900;border-radius:5px;text-decoration:none}
 .news-publisher-fallback a:hover{background:#d9f6e9}
 @media(max-width:650px){.news-publisher-fallback{padding:14px}.news-publisher-fallback a{width:100%}}
+
+/* Always-readable Fight Talk cards on iPhone, even when X/Meta embeds are blocked. */
+#talk-results .talk-post-summary {margin:18px 0 19px;min-width:0}
+#talk-results .talk-post-summary span {display:block;margin-bottom:9px;color:#96cfc6;font-size:10px;font-weight:850;letter-spacing:.08em;text-transform:uppercase}
+#talk-results .talk-post-summary p {margin:0;color:#f0f5f5;font-size:15px;line-height:1.6;overflow-wrap:anywhere}
+#talk-results .talk-post-unavailable {font-size:13px;line-height:1.5;color:#bdcbd0;overflow-wrap:anywhere}
+#talk-results .social-card {height:auto;overflow-wrap:anywhere}
+#talk-results .social-card .social-foot {display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:9px}
+#talk-results .social-card .social-source {max-width:100%;overflow-wrap:anywhere}
+@media(max-width:600px){
+ #talk-results .talk-post-summary {margin:14px 0}
+ #talk-results .talk-post-summary p {font-size:14px}
+ #talk-results .social-card, #talk-results .social-card[data-platform] {min-height:0}
+}
