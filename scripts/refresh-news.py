@@ -9,6 +9,7 @@ SOURCES=[
  ('World Boxing News','boxing','https://www.worldboxingnews.net/feed/'),
  ('MMA Fighting','mma','https://www.mmafighting.com/rss/index.xml'),
  ('MMA Junkie','mma','https://mmajunkie.usatoday.com/feed/'),
+ ('Sherdog','mma','https://www.sherdog.com/rss/news.xml'),
  ('UFC','mma','https://www.ufc.com/rss/news'),
  ('ONE MMA','mma','https://www.onefc.com/category/mixed-martial-arts/feed/'),
  ('ONE Submission Grappling','grappling','https://www.onefc.com/feed/'),
@@ -68,7 +69,7 @@ def image_candidates(item):
 def valid_image(url):
     # Only publisher image hosts are fetched by the collector. No arbitrary URL fetches.
     host=urllib.parse.urlsplit(url).hostname or ''
-    allowed=('worldboxingnews.com','worldboxingnews.net','mmafighting.com','vox-cdn.com','ufc.com','ufc.tv','cloudfront.net','mmajunkie.usatoday.com','mmajunkie.com','gannett-cdn.com','usatoday.com','onefc.com','cagewarriors.com','adcombat.com','ncaa.com','floassets.com','flosports.tv','flograppling.com','kswmma.com','rizinff.com','ibjjf.com','realamericanfreestyle.com','uww.org')
+    allowed=('worldboxingnews.com','worldboxingnews.net','mmafighting.com','vox-cdn.com','ufc.com','ufc.tv','cloudfront.net','mmajunkie.usatoday.com','mmajunkie.com','sherdog.com','gannett-cdn.com','usatoday.com','onefc.com','cagewarriors.com','adcombat.com','ncaa.com','floassets.com','flosports.tv','flograppling.com','kswmma.com','rizinff.com','ibjjf.com','realamericanfreestyle.com','uww.org')
     if not any(host==d or host.endswith('.'+d) for d in allowed):return False
     try:
         req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Range':'bytes=0-1023'})
@@ -86,7 +87,7 @@ def enrich_image(a,previous,now):
     if not candidates:
         try:
             host=urllib.parse.urlsplit(a['url']).hostname or ''
-            if host in ('www.worldboxingnews.com','www.worldboxingnews.net','www.mmafighting.com','www.ufc.com','mmajunkie.usatoday.com','www.mmajunkie.usatoday.com','www.onefc.com','cagewarriors.com','www.cagewarriors.com','adcombat.com','www.adcombat.com','www.kswmma.com','jp.rizinff.com','www.realamericanfreestyle.com','uww.org','www.flograppling.com','ibjjf.com'):
+            if host in ('www.worldboxingnews.com','www.worldboxingnews.net','www.mmafighting.com','www.ufc.com','mmajunkie.usatoday.com','www.mmajunkie.usatoday.com','www.onefc.com','www.sherdog.com','cagewarriors.com','www.cagewarriors.com','adcombat.com','www.adcombat.com','www.kswmma.com','jp.rizinff.com','www.realamericanfreestyle.com','uww.org','www.flograppling.com','ibjjf.com'):
                 req=urllib.request.Request(a['url'],headers={'User-Agent':'Mozilla/5.0'})
                 with urllib.request.urlopen(req,timeout=10) as r:page=r.read(1_000_000).decode('utf-8','replace')
                 parser=ArticleImages();parser.feed(page);candidates=parser.images[:4]
@@ -222,7 +223,7 @@ def enrich_summary(article,previous,now,force=False):
         article['summaryPoints']=points
         return article
     # Only access the already verified publication URL (same allowed host after redirects).
-    allowed=('mmafighting.com','worldboxingnews.net','worldboxingnews.com','ufc.com','mmajunkie.usatoday.com','mmajunkie.com','onefc.com','cagewarriors.com','adcombat.com','ncaa.com','kswmma.com','rizinff.com','ibjjf.com','realamericanfreestyle.com','uww.org','flograppling.com')
+    allowed=('mmafighting.com','worldboxingnews.net','worldboxingnews.com','ufc.com','mmajunkie.usatoday.com','mmajunkie.com','sherdog.com','onefc.com','cagewarriors.com','adcombat.com','ncaa.com','kswmma.com','rizinff.com','ibjjf.com','realamericanfreestyle.com','uww.org','flograppling.com')
     parsed=urllib.parse.urlsplit(article.get('url',''))
     if parsed.scheme=='https' and any(parsed.hostname==h or parsed.hostname.endswith('.'+h) for h in allowed):
         try:
