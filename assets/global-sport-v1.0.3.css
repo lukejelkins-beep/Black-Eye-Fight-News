@@ -71,3 +71,25 @@ body[data-befn-sport="grappling"] #main .sport-label-when-all{display:none!impor
 #main .befn-champion-group h2{font-size:clamp(19px,2.4vw,30px);margin:0 0 12px}
 #main .befn-grappling-schedule{margin-top:32px}
 #main .befn-grappling-schedule h2{font-size:clamp(22px,2.4vw,32px)}
+
+/* BEFN v1.0.3 fight-card layout refinement: larger source posters beside text on phones. */
+@media(max-width:760px){
+ #upcoming-cards-root .upcoming-schedule{background:#111015;border-color:#3f3439;padding:14px 12px;border-radius:15px}
+ #upcoming-cards-root .upcoming-event.result-event{background:#111115;border:1px solid #45383e;border-left:4px solid #d61a2a;border-radius:11px;overflow:hidden;margin:10px 0}
+ #upcoming-cards-root .upcoming-event-summary.upcoming-schedule-row{
+  grid-template-columns:minmax(102px,38%) minmax(0,1fr) 13px!important;
+  gap:clamp(8px,2vw,12px)!important;min-height:158px!important;padding:8px!important
+ }
+ #upcoming-cards-root .upcoming-hero-media{width:100%!important;height:150px!important;max-height:none!important;border:0;border-radius:7px}
+ #upcoming-cards-root .upcoming-hero-content{gap:5px}
+ #upcoming-cards-root .upcoming-hero-title{font-size:clamp(18px,4.5vw,22px);line-height:1.13;overflow-wrap:anywhere}
+ #upcoming-cards-root .upcoming-hero-times,#upcoming-cards-root .upcoming-hero-location{font-size:clamp(10px,2.8vw,12px);line-height:1.35}
+ #upcoming-cards-root .upcoming-row-kicker{font-size:10px}
+ #upcoming-cards-root .upcoming-list-group{padding-top:16px}
+ #upcoming-cards-root .upcoming-event-summary .upcoming-hero-poster{object-fit:contain!important;object-position:center center!important}
+}
+@media(max-width:380px){
+ #upcoming-cards-root .upcoming-event-summary.upcoming-schedule-row{grid-template-columns:minmax(96px,34%) minmax(0,1fr) 10px!important;gap:7px!important;min-height:142px!important;padding:7px!important}
+ #upcoming-cards-root .upcoming-hero-media{height:138px!important}
+ #upcoming-cards-root .upcoming-hero-title{font-size:18px}
+}
