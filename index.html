@@ -309,7 +309,7 @@
 </style>
 <link rel="stylesheet" href="assets/brand-theme.css?v=20261109-v1.0.1">
 <link rel="stylesheet" href="assets/editorial-compact.css?v=20261109-unified-news-2">
-<link rel="stylesheet" href="assets/news-list.css?v=20261109-news-abc1">
+<link rel="stylesheet" href="assets/news-list.css?v=20261109-separated-news-items-v2">
 <style id="befn-street-fighter-headings-20261109">
 /* Combat-logo heading treatment: open-licensed painted-brush webfont.
    Deliberately static: no entrance motion, shimmer, or animated effects. */
@@ -618,14 +618,45 @@ function newsFighterImage(a){
  const fighter=(D.fighters||[]).filter(f=>f.name&&f.photo&&title.includes(f.name.toLowerCase())).sort((a,b)=>b.name.length-a.name.length)[0];
  return fighter&&/^https:\/\//.test(fighter.photo)?{url:fighter.photo,name:fighter.name}:null;
 }
+// Reject cached repetition while the source-summary collector refreshes old stories.
+function distinctNewsPoints(a){
+ const raw=Array.isArray(a.summaryPoints)?a.summaryPoints.filter(p=>typeof p==='string'&&p.trim()):[];
+ const stop=new Set('the a an and or but that this these those there their them they he she his her who it its is are was were be been being to for from in on at by of with as into about after before while also than then through over under more most very has have had says said saying according today year years two three one all not just do did does will would could should which what when where how up out off best big great new latest'.split(' '));
+ const alias={bouts:'fight',bout:'fight',fights:'fight',matchup:'fight',matchups:'fight',matches:'fight',clash:'fight',clashes:'fight',battle:'fight',prospects:'prospect',comers:'prospect',upcomers:'prospect',rising:'prospect',booked:'scheduled',booking:'scheduled',announced:'scheduled',announcement:'scheduled',added:'scheduled',confirmed:'scheduled',criticized:'criticism',criticised:'criticism',backlash:'criticism'};
+ const words=point=>new Set((point.toLowerCase().match(/[a-z0-9]+/g)||[]).filter(w=>w.length>2&&!stop.has(w)).map(w=>alias[w]||w));
+ const theme=point=>{
+  const p=point.toLowerCase();
+  if(/\b(?:apolog(?:y|ize|ise|ized|ised)|regrets?|sorry)\b/.test(p))return 'apology';
+  if(/\b(?:criticism|criticis|criticiz|backlash|upset fans|off.color joke|controvers(?:y|ial))/.test(p))return 'backlash';
+  if(/\b(?:heavyweight|division)\b/.test(p)&&/\b(?:best|better|greatest|never been|demise|strongest)\b/.test(p))return 'division-assessment';
+  if(/\b(?:added|booked|announced|confirmed|scheduled|matching up|set to face|collide|agree(?:d)? to fight)\b/.test(p)&&/\b(?:fight|bout|match|prospect|clash|battle|pairing)\b/.test(p))return 'fight-booking';
+  return '';
+ };
+ const selected=[];
+ for(const point of raw){
+  const current=words(point),kind=theme(point);
+  if(!current.size)continue;
+  if(selected.some(other=>{
+   const shared=[...current].filter(word=>other.tokens.has(word)).length;
+   return (shared>=3&&(shared/Math.min(current.size,other.tokens.size)>=.57||shared/new Set([...current,...other.tokens]).size>=.45))
+    ||(kind&&kind===other.kind&&shared>=2);
+  }))continue;
+  selected.push({text:point,tokens:current,kind});
+  if(selected.length===3)break;
+ }
+ return selected.map(p=>p.text);
+}
+function newsPointsHTML(a){
+ const points=distinctNewsPoints(a);
+ return points.length?'<ul class="news-strip-points" aria-label="Key facts from original reporting">'+points.map(point=>'<li>'+esc(point)+'</li>').join('')+'</ul>':
+  '<p class="news-strip-pending">Summary pending source verification</p>';
+}
 function headlineCard(a){
  const fighter=newsFighterImage(a),publisher=a.image&&/^https:\/\//.test(a.image.url||'')?a.image:null;
  const src=publisher?publisher.url:fighter?fighter.url:'assets/mark.svg';
  const alt=publisher?(publisher.alt||a.title):fighter?'File photo of '+fighter.name:a.sport+' news';
  const href=safeURL(a.url),when=a.publishedAt?'<span class="news-strip-time"> · '+(a.timeBasis?'Indexed ':'')+esc(displayDate(a.publishedAt))+'</span>':'';
- const points=Array.isArray(a.summaryPoints)?a.summaryPoints.filter(p=>typeof p==='string'&&p.trim()).slice(0,3):[];
- const summary=points.length===3?'<ul class="news-strip-points" aria-label="Three key points from source reporting">'+points.map(point=>'<li>'+esc(point)+'</li>').join('')+'</ul>':
-  '<p class="news-strip-pending">Summary pending source verification</p>';
+ const summary=newsPointsHTML(a);
  return '<article class="news-card live-news-card news-strip">'
   +'<div class="news-strip-top"><div class="news-strip-story"><p class="news-strip-source">'+esc(a.source)+' · '+esc(a.sport.toUpperCase())+when+'</p>'
   +'<h3 class="news-strip-headline"><a href="'+href+'" target="_blank" rel="noopener noreferrer">'+esc(a.title)+'</a></h3></div>'
@@ -638,8 +669,7 @@ function newsFeatureCard(a){
  const src=publisher?publisher.url:fighter?fighter.url:'assets/mark.svg';
  const alt=publisher?(publisher.alt||a.title):fighter?'File photo of '+fighter.name:a.sport+' news';
  const href=safeURL(a.url);
- const points=Array.isArray(a.summaryPoints)?a.summaryPoints.filter(p=>typeof p==='string'&&p.trim()).slice(0,3):[];
- const summary=points.length===3?'<ul class="news-strip-points" aria-label="Three key points from source reporting">'+points.map(p=>'<li>'+esc(p)+'</li>').join('')+'</ul>':'<p class="news-strip-pending">Summary pending source verification</p>';
+ const summary=newsPointsHTML(a);
  return '<article class="live-news-card news-feature-card">'
   +'<a href="'+href+'" class="news-feature-photo" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image'+(!publisher&&!fighter?' news-brand-image':'')+'" src="'+(src==='assets/mark.svg'?src:safeURL(src))+'" alt="'+esc(alt)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-news-fallback="'+(fighter?safeURL(fighter.url):'')+'" data-news-fallback-name="'+(fighter?esc(fighter.name):'')+'"></a>'
   +'<div class="news-feature-copy"><div class="news-feature-kicker">In focus · '+esc(a.sport)+' · '+esc(a.source)+'</div>'
