@@ -1,0 +1,29 @@
+/* BEFN official-source transparency for MMA and grappling coverage. v1.0.3 */
+.befn-coverage-directory,.befn-verified-results{box-sizing:border-box;width:min(100% - 28px,1200px);margin:22px auto 32px;color:#f0ece9;background:#181419;border:1px solid #4e3b43;border-radius:14px;overflow:hidden}
+.befn-coverage-directory>summary{cursor:pointer;list-style:revert;padding:17px 22px;font-size:14px;font-weight:800;color:#f8f4f1}
+.befn-coverage-directory>p{padding:0 22px;margin:0 0 14px;color:#c6bdbf;font-size:12px;line-height:1.5}
+.befn-coverage-group{padding:4px 22px 18px}
+.befn-coverage-group h3{color:#faf6f2;font-size:14px;letter-spacing:.01em;margin:7px 0 10px}
+.befn-coverage-links{display:flex;flex-wrap:wrap;gap:7px}
+.befn-coverage-links a{display:inline-flex;align-items:center;gap:6px;color:#faf5f0;background:#282025;border:1px solid #67464c;border-radius:7px;padding:8px 10px;font-size:12px;line-height:1.3;text-decoration:none;font-weight:700}
+.befn-coverage-links a:hover,.befn-coverage-links a:focus-visible{border-color:#d32135;color:#fff}
+.befn-verified-results{padding:20px}
+.befn-verified-results h2{font-size:clamp(22px,3vw,34px);margin:0 0 7px;color:#fff}
+.befn-verified-results>p{color:#c0b8b9;font-size:12px;line-height:1.5;margin:0 0 17px}
+.befn-result-report-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:11px}
+.befn-result-report{min-width:0;display:flex;align-items:center;gap:11px;padding:10px;border:1px solid #57454b;border-left:3px solid #bd1829;border-radius:9px;text-decoration:none;color:#f7f3f1;background:#211c21}
+.befn-report-image{flex:0 0 100px;display:block;width:100px;height:77px;background:#120e12;overflow:hidden;border-radius:6px}
+.befn-report-image img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
+.befn-report-text{min-width:0;flex:1;display:flex;flex-direction:column;gap:5px}
+.befn-report-text small{font-size:10px;color:#d1bdbe}
+.befn-report-text strong{font-size:14px;line-height:1.28;color:#fff;overflow-wrap:anywhere}
+.befn-result-report:hover,.befn-result-report:focus-visible{border-color:#ed3444}
+@media(max-width:760px){
+ .befn-coverage-directory,.befn-verified-results{width:calc(100% - 24px);margin:15px auto 25px;border-radius:12px}
+ .befn-coverage-directory>summary{padding:13px 14px}
+ .befn-coverage-directory>p{padding:0 14px}
+ .befn-coverage-group{padding:4px 14px 15px}
+ .befn-verified-results{padding:14px}
+ .befn-report-image{flex-basis:86px;width:86px;height:74px}
+ .befn-report-text strong{font-size:13px}
+}
