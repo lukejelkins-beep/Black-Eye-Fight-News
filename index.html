@@ -485,6 +485,7 @@
   .segment.sport-photo-segment button{transition:none}
 }
 </style>
+<link rel="stylesheet" href="/assets/compact-discipline-logos.css?v=20261109-small-logos1">
 </head>
 <body>
 
@@ -574,7 +575,7 @@ const calendarSportIcons=Object.freeze({
 });
 const calendarSportLabels=Object.freeze({boxing:'Boxing',mma:'Mixed martial arts',grappling:'Wrestling and grappling'});
 const calendarHeading=`<header class="section-heading calendar-photo-heading"><h1>Upcoming Fights</h1></header>`;
-const segments=(name,opts,selected)=>`<div class="segment${name==='calendar'?' sport-photo-segment':''}" role="group" aria-label="${name==='calendar'?'Fight discipline':esc(name)}">${opts.map(x=>`<button type="button" data-segment="${esc(name)}" data-value="${esc(x)}"${name==='calendar'?` aria-label="${calendarSportLabels[x]||esc(x)}" title="${calendarSportLabels[x]||esc(x)}"`:''} aria-pressed="${String(x===selected)}">${name==='calendar'?`<span class="sport-photo-visual" aria-hidden="true"></span><span class="sport-photo-label">${esc(x)}</span>`:esc(x)}</button>`).join('')}</div>`;
+const segments=(name,opts,selected)=>`<div class="segment${name==='calendar'?' sport-photo-segment':''}" role="group" aria-label="${name==='calendar'?'Fight discipline':esc(name)}">${opts.map(x=>`<button type="button" data-segment="${esc(name)}" data-value="${esc(x)}"${name==='calendar'?` aria-label="${calendarSportLabels[x]||esc(x)}" title="${calendarSportLabels[x]||esc(x)}"`:''} aria-pressed="${String(x===selected)}">${name==='calendar'?`<span class="sport-photo-visual" aria-hidden="true"></span>`:esc(x)}</button>`).join('')}</div>`;
 const badge=`<details class="archive-caution"><summary>Archive verification note</summary><p>Some historical fighter records and photographs need reconfirmation. Check the linked sources.</p></details>`;
 const renderFrame=(inner)=>`${(['champions','fighters'].includes(location.hash.slice(1)))?badge:''}<div class="shell page">${inner}</div>`;
 const picture=(src,alt)=>`<div class="card-photo">${src?`<img loading="lazy" src="${safeURL(src)}" alt="${esc(alt)}" referrerpolicy="no-referrer">`:''}<div class="photo-fail">PHOTOGRAPH UNAVAILABLE</div></div>`;
