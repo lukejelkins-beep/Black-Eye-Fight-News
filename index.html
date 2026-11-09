@@ -320,7 +320,7 @@
 :is(.front-home-head h1,.front-follow-up-head h2,.section-heading h1,.section-heading h2,.film-section-head h2,#talk-results .talk-section-head h2,#upcoming-cards-root .upcoming-list-heading) {
   position:relative;
   display:inline-block;
-  width:max-content;
+  width:fit-content;
   max-width:100%;
   margin-top:0;
   padding:2px 3px 10px 0;
@@ -378,6 +378,56 @@
 @media(max-width:360px){
   #main .section-heading h1,#main .section-heading h2{font-size:29px !important}
 }
+/* Prevent intrinsically wide arcade lettering from expanding the mobile viewport.
+   In flex headers, min-width:0 is essential for long titles to wrap correctly. */
+#main .section-heading,
+#main .front-home-head,
+#main .front-follow-up-head,
+#main .film-section-head,
+#talk-results,
+#talk-results .talk-section,
+#talk-results .talk-section-head,
+#talk-results .talk-results-head {
+  min-width:0;
+  max-width:100%;
+}
+#talk-results .talk-section-head > div {
+  min-width:0;
+  max-width:100%;
+  flex:1 1 320px;
+}
+#talk-results .talk-section-head h2 {
+  box-sizing:border-box;
+  display:block;
+  width:100%;
+  max-width:100%;
+  white-space:normal !important;
+  overflow-wrap:break-word;
+  padding-right:12px;
+  font-size:clamp(24px,2.6vw,35px) !important;
+  line-height:1.24 !important;
+}
+@media(max-width:760px){
+  #talk-results .talk-section-head > div {flex:1 1 100%;width:100%}
+  #talk-results .talk-section-head h2{
+    font-size:clamp(20px,5.7vw,27px) !important;
+    letter-spacing:-.05em !important;
+    overflow-wrap:anywhere;
+    margin-bottom:6px;
+  }
+  #main .film-section-head h2,
+  #main .section-heading h1,
+  #main .section-heading h2 {
+    box-sizing:border-box;
+    width:fit-content;
+    max-width:100%;
+    overflow-wrap:anywhere;
+    font-size:clamp(24px,6.5vw,41px) !important;
+  }
+}
+/* Keep content inside the mobile page even when third-party embeds misbehave.
+   clip avoids creating the scrolling container that overflow:hidden would. */
+html,body{max-width:100%;overflow-x:clip}
 </style>
 
 <style id="calendar-photo-tabs-and-brush-heading-20261109">
