@@ -10,7 +10,13 @@ window.BEFNCoverage=(()=>{
    ['ONE MMA','https://www.onefc.com/category/mixed-martial-arts/'],
    ['RIZIN','https://jp.rizinff.com/'],
    ['Cage Warriors','https://cagewarriors.com/news/'],
-   ['KSW','https://www.kswmma.com/en/news']
+   ['KSW','https://www.kswmma.com/en/news'],
+   ['UFC fight videos','https://www.ufc.com/watch/library'],
+   ['PFL videos','https://www.youtube.com/channel/UCPrONRG9hO1f-OrxW-WH-xg'],
+   ['ONE Championship videos','https://www.onefc.com/videos/'],
+   ['RIZIN official videos','https://www.youtube.com/channel/UCZZ0UGjWsRdM8_5bsqtxYaQ'],
+   ['Cage Warriors fight highlights','https://cagewarriors.com/videos/'],
+   ['KSW fight videos','https://www.kswmma.com/en/youtube']
   ],
   grappling:[
    ['UFC BJJ','https://www.ufc.com/ufcbjj'],
@@ -21,7 +27,9 @@ window.BEFNCoverage=(()=>{
    ['NCAA Division I','https://www.ncaa.com/sports/wrestling/d1'],
    ['NCAA Division II','https://www.ncaa.com/sports/wrestling/d2'],
    ['International freestyle & Greco-Roman','https://uww.org/'],
-   ['ONE submission grappling','https://www.onefc.com/category/submission-grappling/']
+   ['ONE submission grappling','https://www.onefc.com/category/submission-grappling/'],
+   ['UFC Fight Pass BJJ video library','https://www.ufc.com/fightpass'],
+   ['FloGrappling competition videos','https://www.flograppling.com/watch']
   ],
   boxing:[
    ['World Boxing News','https://www.worldboxingnews.net/'],
