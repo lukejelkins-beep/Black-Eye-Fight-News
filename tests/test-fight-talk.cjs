@@ -43,7 +43,7 @@ assert.equal(ctx.diverseTalk(nativeEmbeds).length,7,'Do not collapse independent
 const out=ctx.diverseTalk(posts);assert.equal(out.filter(p=>p.name==='Busy author').length,3);assert.equal(new Set(out.slice(0,5).map(p=>p.name)).size,5);assert.equal(ctx.diverseTalk([posts[0],{...posts[0],name:'Crosspost'}]).length,1);
 const champion={type:'post',name:'Champion Test',role:'fighter',sport:'boxing',platform:'Instagram',postedAt:'2026-11-06',quote:'Champion training update',summary:'Champion training update',engagement:{likes:7000,comments:230},url:'https://www.instagram.com/champion/p/abc/'};
 const media={type:'post',name:'Media Test',role:'media',sport:'boxing',platform:'X',postedAt:'2026-11-08T01:00:00Z',quote:'Media news',engagement:{likes:200},url:'https://x.com/media/status/200'};
-const prospect={...champion,platform:'X',name:'Prospect Test',fighterTier:'prospect',summary:'Prospect prepares for next bout',engagement:{likes:600},url:'https://x.com/prospect/status/300'};
+const prospect={...champion,platform:'X',name:'Prospect Test',fighterTier:'prospect',quote:'Prospect prepares for next bout',summary:'Prospect prepares for next bout',engagement:{likes:600},url:'https://x.com/prospect/status/300'};
 assert.equal(ctx.diverseTalk([media,prospect,champion]).map(p=>p.name).join(','),'Prospect Test,Champion Test,Media Test');
 assert.equal(ctx.diverseTalk([media,champion],'latest')[0].name,'Media Test');
 assert.equal(ctx.diverseTalk([media,champion],'engagement')[0].name,'Champion Test');
