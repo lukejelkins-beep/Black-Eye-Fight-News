@@ -113,7 +113,14 @@ window.ResultsDesk=(()=>{
  // the currently filtered bouts (search/clips must not alter fight order).
  const sourceMain=all.filter(x=>cardSection(x)==='main').sort((a,b)=>(Number.isFinite(a.order)?a.order:all.indexOf(a))-(Number.isFinite(b.order)?b.order:all.indexOf(b)));
  const headlinerId=[e.mainBoutId,e.featuredId].find(id=>sourceMain.some(x=>x.id===id));
- if(sourceMain.length>1&&sourceMain[sourceMain.length-1].id===headlinerId)main.reverse();
+ // Most source feeds use a single billing direction for the entire event.
+ // Some publish in walkout order (opener first), others in billing order
+ // (headliner first). Per-section editorial overrides are supported when a
+ // provider mixes the two styles.
+ const sectionOrder=e.sectionOrder||{};
+ const openerFirst=sectionOrder.main==='opener-first'||
+  (sectionOrder.main!=='headliner-first'&&sourceMain.length>1&&sourceMain[sourceMain.length-1].id===headlinerId);
+ if(openerFirst)main.reverse();
  // Ensure the verified headline fight is shown first, even with imperfect
  // upstream order metadata. Each section must be checked independently:
  // UFC prelim results may already be headliner-first when the main card isn't.
@@ -123,7 +130,15 @@ window.ResultsDesk=(()=>{
  }
  const sourcePrelims=all.filter(x=>cardSection(x)==='prelims').sort((a,b)=>(Number.isFinite(a.order)?a.order:all.indexOf(a))-(Number.isFinite(b.order)?b.order:all.indexOf(b)));
  const prelimHeadlinerId=[e.prelimHeadlinerId,e.prelimsFeaturedId].find(id=>sourcePrelims.some(x=>x.id===id));
- if(sourcePrelims.length>1&&sourcePrelims[sourcePrelims.length-1].id===prelimHeadlinerId)prelims.reverse();
+ // Unless independently verified otherwise, prelims follow the main card's
+ // source ordering direction. Never rely on a missing prelimHeadlinerId:
+ // that previously left opener-first prelims backwards on the site.
+ const prelimOpenerFirst=sectionOrder.prelims==='opener-first'||
+  (sectionOrder.prelims!=='headliner-first'&&
+   (prelimHeadlinerId
+    ? sourcePrelims.length>1&&sourcePrelims[sourcePrelims.length-1].id===prelimHeadlinerId
+    : openerFirst));
+ if(prelimOpenerFirst)prelims.reverse();
  if(prelimHeadlinerId){
   const prelimHeadlineIndex=prelims.findIndex(x=>x.id===prelimHeadlinerId);
   if(prelimHeadlineIndex>0)prelims.unshift(prelims.splice(prelimHeadlineIndex,1)[0]);
