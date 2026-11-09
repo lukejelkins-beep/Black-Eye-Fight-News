@@ -74,6 +74,34 @@ class SourceSummaryTests(unittest.TestCase):
    'A valid sentence with enough words to pass all of the ordinary length checks.',
    'Another valid sentence with enough words to pass all of the ordinary length checks.'
   ]))
+ def test_repeated_fight_booking_points_are_not_treated_as_three_facts(self):
+  bullets=[
+   'UFC 335 has added a prospect vs. prospect battle between Demian Pinas and Baisangur Susurkayev.',
+   'UFC 335 has added a big fight between two of the promotion’s best up and comers',
+   'The UFC is matching up two of the division’s best prospects in a grudge match that has been building throughout the year.'
+  ]
+  self.assertEqual(len(m.distinct_summary_points(bullets)),1)
+  self.assertFalse(m.valid_summary_points(bullets))
+ def test_rephrased_division_opinion_is_not_three_facts(self):
+  bullets=[
+   'Ciryl Gane believes heavyweights have never been better.',
+   'Ciryl Gane touts the heavyweight division as the best it’s ever been',
+   'Ciryl Gane thinks reports of the heavyweight division’s demise are greatly exaggerated.'
+  ]
+  self.assertEqual(len(m.distinct_summary_points(bullets)),1)
+ def test_separate_facts_about_one_story_are_allowed(self):
+  bullets=[
+   'The promotion confirmed the main event pairing at the weekend press briefing.',
+   'Both fighters will attend the scheduled media conference in London this Thursday.',
+   'Tickets go on sale to the public next week at the event venue.'
+  ]
+  self.assertEqual(len(m.distinct_summary_points(bullets)),3)
+ def test_partial_original_reporting_is_better_than_fabricated_third_point(self):
+  raw='UFC 335 has added a prospect bout between two of the division’s rising contenders. The UFC added a big fight between two highly rated prospects.'
+  a={'url':'https://example.com/post','title':'New pairing','_summaryText':raw}
+  out=m.enrich_summary(a,{},dt.datetime(2026,11,9,6,tzinfo=dt.timezone.utc))
+  self.assertEqual(len(out.get('summaryPoints',[])),1)
+  self.assertEqual(out['summaryQualityVersion'],m.SUMMARY_QUALITY_VERSION)
  def test_content_encoded_is_used_for_summary_text(self):
   xml=b'<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><item><title>Fight announced</title><link>https://example.com/fight</link><pubDate>Mon, 09 Nov 2026 04:10:00 GMT</pubDate><content:encoded><![CDATA[Officials confirmed the bout for the event next month. Both fighters accepted the matchup after negotiations concluded this week. The promoter also confirmed the venue and broadcast plans.]]></content:encoded></item></channel></rss>'
   row=m.parse_feed(xml,'Test','boxing',dt.datetime(2026,11,9,6,tzinfo=dt.timezone.utc))[0]
