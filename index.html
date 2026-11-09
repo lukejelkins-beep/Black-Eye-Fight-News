@@ -313,8 +313,9 @@
 <style id="befn-modern-arcade-headings-option-d">
 /* Design D: sharp metallic-silver arcade headings with crisp dark bevels and red
    racing-stripe underlines. Static live text; cream page stays visible. */
-:where(.front-home-head,.front-follow-up-head,.section-heading,.film-section-head,#talk-results .talk-section-head) {
-  border-bottom-color:#bc1b23;
+/* The slanted red stroke is part of each title; avoid a duplicate full-width rule. */
+:is(#main .front-home-head,#main .front-follow-up-head,#main .section-heading,#main .film-section-head,#talk-results .talk-section-head) {
+  border-bottom:0 !important;
 }
 :is(.front-home-head h1,.front-follow-up-head h2,.section-heading h1,.section-heading h2,.film-section-head h2,#talk-results .talk-section-head h2,#upcoming-cards-root .upcoming-list-heading) {
   position:relative;
