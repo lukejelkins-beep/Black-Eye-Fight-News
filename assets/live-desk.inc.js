@@ -80,10 +80,11 @@ function headlineImportance(a,now){
  const title=a.title;
  const age=(now-Date.parse(a.publishedAt))/3600000;
  const fresh=Math.max(0,1-Math.max(0,age)/48)*12;
- const confirmed=/\b(?:announc\w*|confirm\w*|scheduled|booked|sign(?:s|ed|ing)?|scratched|withdraw\w*|cancell?ed|postpon\w*|set for|to face|to fight|unification|injur\w*|suspend\w*|replacement|added to|fight card)\b/i.test(title);
- const important=/\b(?:attacked|hospitali[sz]ed|doctor stops|fine|investigation|controversy|brawl|deal|dispute|retir\w*|return\w*|championship)\b/i.test(title);
- const aftermath=/\b(?:reaction|react|post-fight|highlights|finish|knockout win|knockout in|knockout at|what's next|predictions?|recap)\b/i.test(title);
- return fresh+(confirmed?16:0)+(important?9:0)+(aftermath?-9:0)+Math.min(3,Math.max(0,Number(a.score)||0));
+ const confirmed=/\b(?:announc\w*|confirm\w*|scheduled|booked|sign(?:s|ed|ing)?|scratched|withdraw\w*|cancell?ed|postpon\w*|set for|to face|to fight|unification|suspend\w*|replacement|added to)\b/i.test(title);
+ const cardUpdate=/\b(?:fight card|title shot|title fight|championship)\b/i.test(title);
+ const important=/\b(?:attacked|hospitali[sz]ed|doctor stops|injur\w*|fine|investigation|controversy|brawl|deal|dispute|retir\w*|return\w*)\b/i.test(title);
+ const commentary=/\b(?:calls? out|wants|believes|reaction|react|post-fight|highlights|finish|knockout win|knockout in|knockout at|what's next|predictions?|recap|ahead of)\b/i.test(title);
+ return fresh+(confirmed?18:0)+(cardUpdate?5:0)+(important?8:0)+(commentary?-7:0)+Math.min(3,Math.max(0,Number(a.score)||0));
 }
 function topStories(){
  const now=Date.now();
