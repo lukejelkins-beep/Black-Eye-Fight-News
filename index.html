@@ -771,7 +771,7 @@ function renderGrapplingEvents(underOtherSports){
  const day=e=>window.FightTime.instant(e.startAt)?window.FightTime.dayKey(new Date(e.startAt)):e.date;
  const recent=window.FightTime.dayKey(new Date(Date.now()-2*86400000));
  const all=desk.events.filter(e=>{
-  if(state.matDiscipline!=='all'&&e.discipline!==state.matDiscipline)return false;
+  if(state.matDiscipline!=='all'&&(state.matDiscipline==='BJJ / submission'? !['BJJ / submission','UFC BJJ','ONE Grappling','ADCC','FloGrappling'].includes(e.discipline):e.discipline!==state.matDiscipline))return false;
   const start=window.FightTime.instant(e.startAt);
   return start?start.getTime()>Date.now()-36*3600000:(e.endDate||e.date)>=recent;
  }).sort((a,b)=>day(a).localeCompare(day(b)));
@@ -866,7 +866,7 @@ function renderNewsFeed(){
 }
 function renderHome(){
  const stories=topStories();
- if(!stories.length)return renderFrame('<header class="front-home-head"><h1>News</h1></header><p role="status" class="front-loading">'+(desk.articles.length?'No verified stories available for this sport yet.':'Checking the latest fight news…')+'</p>');
+ if(!stories.length)return renderFrame('<header class="front-home-head"><h1>News</h1></header><p role="status" class="front-loading">'+(desk.articles.length?'No verified stories available for this sport yet.':'Checking the latest fight news…')+'</p>'+window.BEFNCoverage.panel(activeSport()));
  const top=stories.slice(0,4);
  return renderFrame('<div class="front-home"><header class="front-home-head"><h1>Top stories</h1></header>'
   +'<div class="front-lead-layout">'+homeLeadCard(top[0])+'<div class="front-brief-list">'+top.slice(1).map(homeBriefCard).join('')+'</div></div>'
