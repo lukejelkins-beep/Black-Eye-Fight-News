@@ -1,5 +1,5 @@
 /* Standalone continuously updated public fight desk. */
-state.newsMode='latest';state.newsSort='latest';state.talkRole='all';state.talkSort='balanced';state.social='all';state.matDiscipline='all';
+state.news='all';state.newsPage=1;state.newsMode='latest';state.newsSort='latest';state.talkRole='all';state.talkSort='balanced';state.social='all';state.matDiscipline='all';
 const desk={articles:[],sources:[],lastSuccessfulAt:null,events:[],reviewedAt:null,error:'',pending:null};
 const displayDate=v=>window.FightTime.localDateTime(v);
 const dayLabel=v=>new Date(v+'T12:00:00Z').toLocaleDateString('en-AU',{dateStyle:'medium',timeZone:'UTC'});
@@ -55,11 +55,7 @@ document.addEventListener('error',event=>{
   }else{img.remove();}
  });
 },true);
-function renderNews(){
- let items=desk.articles.filter(a=>a.sport===state.news);if(state.newsSort==='significant')items=[...items].sort((a,b)=>b.score-a.score);
- const seen=new Set();items=items.filter(a=>{const key=a.title.toLowerCase().replace(/[^a-z0-9]/g,'');if(seen.has(key))return false;seen.add(key);return true;});
- return renderFrame(viewTitle('','Latest news')+'<div class="filter-row">'+segments('news',['boxing','mma'],state.news)+segments('newsSort',['latest','significant'],state.newsSort)+'</div>'+sourceHealth()+'<div class="grid news-grid">'+(items.length?items.map(headlineCard).join(''):'<p>No recent stories available in this selection.</p>')+'</div>');
-}
+function renderNews(){return renderHome();} // Legacy News link compatibility.
 function eventCard(e){return `<article class="news-card" style="padding:24px"><div class="card-kicker">${esc(e.discipline)} · ${esc(e.status)}</div>${window.EventStatus?.badge(e)||''}<h3>${esc(e.name)}</h3><p><strong>${esc(dayLabel(e.date))}${e.endDate?' – '+esc(dayLabel(e.endDate)):''}</strong> · venue-local date</p><p>${esc(e.location)}</p><p>${esc(e.competitors)}</p><p>${esc(e.why)}</p>${e.startAt?'<p>Start: '+esc(displayDate(e.startAt))+' local time</p>':''}<p>${esc(e.watch)}</p><a href="${safeURL(e.source)}" target="_blank" rel="noopener noreferrer">Official event details ↗</a><p class="panel-note">Checked ${esc(e.verifiedAt)}</p></article>`;}
 function renderCalendar(){
  if(state.calendar!=='grappling')return renderFrame(viewTitle('','Upcoming fights')+segments('calendar',['boxing','mma','grappling'],state.calendar)+window.UpcomingCards.render(state.calendar));
@@ -125,15 +121,35 @@ function homeBriefCard(a){
   +esc(a.sport)+' · '+esc(a.source)+'</span><h3>'+esc(a.title)+'</h3>'
   +'<time datetime="'+esc(a.publishedAt)+'">'+esc(displayDate(a.publishedAt))+'</time></a>';
 }
+
+function newsFeedItems(){
+ const promoted=new Set(topStories().slice(0,4).map(a=>a.url));
+ const seen=new Set(),now=Date.now();
+ return desk.articles.filter(headlineEligible).filter(a=>{
+  if(promoted.has(a.url)||(state.news!=='all'&&a.sport!==state.news))return false;
+  const key=a.title.toLowerCase().replace(/[^a-z0-9]+/g,'');
+  if(seen.has(key))return false;
+  seen.add(key);return true;
+ }).sort((a,b)=>state.newsSort==='significant'
+  ?headlineImportance(b,now)-headlineImportance(a,now)||Date.parse(b.publishedAt)-Date.parse(a.publishedAt)
+  :Date.parse(b.publishedAt)-Date.parse(a.publishedAt));
+}
+function renderNewsFeed(){
+ const all=newsFeedItems(),shown=all.slice(0,Math.max(1,state.newsPage||1)*12);
+ const controls='<div class="unified-news-filters">'+segments('news',['all','boxing','mma'],state.news)+segments('newsSort',['latest','significant'],state.newsSort)+'</div>';
+ const more=shown.length<all.length?'<button class="news-load-more" type="button" data-news-more>Show more stories ('+(all.length-shown.length)+' remaining)</button>':'';
+ const junkie=state.news==='mma'?'<a class="news-publisher-link" href="https://mmajunkie.usatoday.com/" target="_blank" rel="noopener noreferrer">MMA Junkie ↗</a>':'';
+ return '<div class="front-follow-up"><div class="front-follow-up-head"><h2>Latest news</h2><span class="unified-news-count">'+all.length+' stories</span></div>'
+  +controls+junkie+'<div class="grid news-grid">'+(shown.length?shown.map(headlineCard).join(''):'<p class="front-loading">No other articles match these filters.</p>')+'</div>'
+  +more+sourceHealth()+'</div>';
+}
 function renderHome(){
  const stories=topStories();
- if(!stories.length)return renderFrame('<header class="front-home-head"><h1>Top stories</h1></header><p role="status" class="front-loading">Checking the latest fight news…</p>');
- const featured=stories.slice(0,4);
- const more=stories.slice(4,10);
- return renderFrame('<div class="front-home"><header class="front-home-head"><div><h1>Top stories</h1></div><a href="#news" class="front-all-news">All news ↗</a></header>'
-  +'<div class="front-lead-layout">'+homeLeadCard(featured[0])+'<div class="front-brief-list">'+featured.slice(1).map(homeBriefCard).join('')+'</div></div>'
-  +'<div class="front-follow-up"><div class="front-follow-up-head"><h2>Latest headlines</h2><a href="#news">More headlines ↗</a></div>'
-  +'<div class="grid news-grid">'+more.map(headlineCard).join('')+'</div></div></div>');
+ if(!stories.length)return renderFrame('<header class="front-home-head"><h1>News</h1></header><p role="status" class="front-loading">Checking the latest fight news…</p>');
+ const top=stories.slice(0,4);
+ return renderFrame('<div class="front-home"><header class="front-home-head"><h1>Top stories</h1></header>'
+  +'<div class="front-lead-layout">'+homeLeadCard(top[0])+'<div class="front-brief-list">'+top.slice(1).map(homeBriefCard).join('')+'</div></div>'
+  +'<section id="news-feed" aria-label="Latest boxing and MMA articles">'+renderNewsFeed()+'</section></div>');
 }
 document.addEventListener('click',e=>{if(e.target.closest('#desk-updates')&&desk.pending){const {n,e:events}=desk.pending;Object.assign(desk,n,{events:events.events,reviewedAt:events.reviewedAt,pending:null});navigate();}});
 setInterval(()=>loadDesk(true),5*60*1000);

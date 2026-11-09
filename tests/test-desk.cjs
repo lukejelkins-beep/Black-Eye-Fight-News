@@ -31,6 +31,12 @@ vm.runInContext("desk.articles=[{title:'Important MMA fight announced',url:'http
 assert(!ctx.topStories().some(a=>a.title.includes('Main Card Results')),'Routine results do not displace breaking news');
 const home=ctx.renderHome();
 assert(home.includes('Top stories'),'Home page opens with news');
+assert(home.includes('id="news-feed"'),'Featured stories and full news feed are unified');
+assert(!fullSite.includes('data-nav="news"'),'No duplicate desktop News page');
+assert(fullSite.includes("if(key==='news')key='home'"),'Legacy #news links still resolve');
+const mobileNav=fs.readFileSync('assets/mobile-app.js','utf8');
+assert(mobileNav.includes("['highlights','Film','film']"),'Film replaces duplicate mobile News tab');
+assert(!mobileNav.includes("['news','News','news']"),'Only one News tab on mobile');
 assert(home.includes('Important MMA fight announced'),'Significant verified news is prioritised');
 assert(home.indexOf('Important MMA fight announced')<home.indexOf('Regular boxing update'),'Headline ranking puts significant story first');
 assert(!home.includes('THE FIGHT WORLD'),'No promotional hero ahead of news');

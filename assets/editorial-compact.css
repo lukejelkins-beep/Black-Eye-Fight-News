@@ -106,3 +106,20 @@
  .front-home-head h1{font-size:32px}
  .front-follow-up-head h2{font-size:26px}
 }
+
+/* Consolidated news: four featured stories, then a filterable, nonrepeating stream. */
+#news-feed{margin-top:25px;scroll-margin-top:80px}
+#news-feed .front-follow-up{margin-top:0}
+#news-feed .front-follow-up-head{margin-bottom:12px}
+#news-feed .unified-news-count{font-size:11px;font-weight:800;color:#6c5a54}
+#news-feed .unified-news-filters{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 16px}
+#news-feed .unified-news-filters .segment{margin:0}
+#news-feed .news-load-more{display:block;width:min(420px,100%);margin:22px auto 17px;padding:14px;border:1px solid #9a2830;border-radius:6px;background:#a81924;color:#fff9ef;font-weight:900;cursor:pointer}
+#news-feed .news-load-more:hover{background:#87131e}
+#news-feed .source-health{margin-top:20px}
+@media(max-width:600px){
+ #news-feed{margin-top:19px}
+ #news-feed .unified-news-filters{gap:6px;margin-bottom:13px}
+ #news-feed .unified-news-filters .segment{max-width:100%;flex-wrap:wrap}
+ #news-feed .unified-news-filters .segment button{padding:10px 11px;font-size:11px}
+}
