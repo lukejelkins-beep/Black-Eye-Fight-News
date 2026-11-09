@@ -47,7 +47,8 @@ def apply_records(rows, fixture, checked_at):
                 record = record_of(lookup[photos.normal(fighter['name'])])
                 if not record: continue
                 fighter['record'] = record.replace('-', '–')
-                fighter['recordSource'] = 'https://www.espn.com/mma/'
+                athlete_id = str(lookup[photos.normal(fighter['name'])]['athlete'].get('id') or '')
+                fighter['recordSource'] = ('https://www.espn.com/mma/fighter/_/id/' + athlete_id) if athlete_id.isdigit() else 'https://www.espn.com/mma/'
                 fighter['recordVerifiedAt'] = checked_at
                 fighter['recordNote'] = 'Professional record published by ESPN; includes results available at verification time.'
                 updated += 1
