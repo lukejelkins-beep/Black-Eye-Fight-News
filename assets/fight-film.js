@@ -2,7 +2,7 @@
 window.FightFilm=(()=>{
  'use strict';
  let data=null,pending=null,failed=false,lastAttempt=0;
- let selectedSection='boxing';
+ let selectedSection='boxing'; // legacy state kept for backward compatibility; global selector now drives the view.
  const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const safe=x=>{try{const u=new URL(x,location.href);return u.protocol==='https:'?esc(u.href):'#'}catch{return '#'}};
  const date=x=>window.FightTime.venueDay(x);
@@ -28,8 +28,8 @@ window.FightFilm=(()=>{
     <div class="film-copy"><div class="film-meta"><span>${esc(section)}</span><span>${esc(date(v.date))}</span></div><h3>${esc(v.title)}</h3><div class="film-publisher"><span>${esc(v.publisher||'Original publisher')}${v.sourceType==='publisher-video-page'?'<small class="film-access-note"> · Publisher clip · AU playback not verified</small>':''}</span><strong>${v.sourceType==='publisher-video-page'?'Watch on publisher ↗':'Watch video ↗'}</strong></div></div>
    </a></article>`;
  }
- function section(key,title,desc){
-  const videos=(data?.videos||[]).filter(v=>v.category===key&&v.url&&(isAuYoutube(v)||isPublisherClip(v)))
+ function section(key,title,desc,discipline=null){
+  const videos=(data?.videos||[]).filter(v=>v.category===key&&v.url&&(isAuYoutube(v)||isPublisherClip(v))&&(!discipline||discipline(v)))
    .sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(a.featuredOrder??999)-(b.featuredOrder??999)).slice(0,72);
   const featured=key==='combat'?videos.filter(v=>v.eventId==='ufc-cortes-walker-2026-11-07'):[];
   const other=videos.filter(v=>!featured.includes(v));
@@ -44,7 +44,7 @@ window.FightFilm=(()=>{
  function content(){
   if(!data)return `<div class="film-loading" role="status">${failed?'Film feed temporarily unavailable. The archive remains accessible from Editions.':'Loading publisher videos…'}</div>`;
   return `<p class="film-updated">Curated clips from official promotions and verified publisher highlight pages. YouTube clips have Australian region metadata checks; direct UFC publisher pages may have different playback rights. ${failed?'The last available edition is shown while a source is unavailable.':''}${data.updatedAt?' Feed data last updated: '+esc(new Date(data.updatedAt).toLocaleString('en-AU'))+'.':''}</p>
-   ${selectedSection==='boxing'?section('boxing','Boxing','Knockouts, stoppages and championship-fight highlights available in Australia.'):section('combat','MMA, Wrestling & BJJ','AU-checked YouTube clips and direct UFC finish-video pages (publisher playback may vary by region).')}
+   ${(window.BEFNSport?.get()||'all')==='all'?section('boxing','Boxing','Knockouts, stoppages and championship-fight highlights available in Australia.')+section('combat','MMA, Wrestling & BJJ','AU-checked YouTube clips and direct UFC finish-video pages (publisher playback may vary by region).'):(window.BEFNSport.get()==='boxing'?section('boxing','Fight film','Verified boxing highlights'):window.BEFNSport.get()==='mma'?section('combat','Fight film','Verified MMA highlights',v=>!/^(wrestling|grappling|bjj|jiu-jitsu|submission)(?:\b|\s*\/)/i.test(v.discipline||'')):section('combat','Fight film','Verified grappling, BJJ and wrestling footage',v=>/grappl|bjj|wrestl|jiu.jitsu|submission/i.test([v.discipline,v.title].join(' '))))}
    <p class="film-disclosure">YouTube clips are shown after Australian availability and thumbnail checks. UFC.com and publisher-hosted highlight links are clearly marked as direct pages where Australian playback could not be independently verified. We do not host or re-upload fight footage.</p>`;
  }
  function update(){
@@ -74,7 +74,7 @@ window.FightFilm=(()=>{
  function render(){
   if(!data&&!pending)load();
   else if(Date.now()-lastAttempt>300000&&!pending)load();
-  return `<div class="frame film-page"><div class="section-heading"><div><h1>Fight film</h1></div></div><p class="film-status">Videos checked every 5 minutes · Rights-holder footage</p><div class="film-switch" role="group" aria-label="Fight Film category"><button type="button" data-film-section="boxing" class="film-switch-tab${selectedSection==='boxing'?' is-active':''}" aria-pressed="${selectedSection==='boxing'}">Boxing</button><button type="button" data-film-section="combat" class="film-switch-tab${selectedSection==='combat'?' is-active':''}" aria-pressed="${selectedSection==='combat'}">MMA / Wrestling / BJJ</button></div><div id="fight-film-content">${content()}</div></div>`;
+  return `<div class="frame film-page"><div class="section-heading"><div><h1>Fight film</h1></div></div><p class="film-status">Videos checked every 5 minutes · Rights-holder footage</p><div id="fight-film-content">${content()}</div></div>`;
  }
  document.addEventListener('error',e=>{
   const img=e.target;
@@ -92,19 +92,6 @@ window.FightFilm=(()=>{
   const card=img.closest('.film-card');
   if(card)card.hidden=true;
  },true);
- document.addEventListener('click',e=>{
-  const tab=e.target.closest?.('button[data-film-section]');
-  if(!tab)return;
-  const next=tab.dataset.filmSection;
-  if(next!=='boxing'&&next!=='combat')return;
-  selectedSection=next;
-  document.querySelectorAll('.film-switch-tab').forEach(button=>{
-   const active=button.dataset.filmSection===next;
-   button.classList.toggle('is-active',active);
-   button.setAttribute('aria-pressed',String(active));
-  });
-  update();
- });
  setInterval(()=>{if(!document.hidden&&location.hash.startsWith('#highlights'))load()},300000);
  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&location.hash.startsWith('#highlights')&&Date.now()-lastAttempt>300000)load()});
  return {render,load};
