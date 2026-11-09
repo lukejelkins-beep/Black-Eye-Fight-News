@@ -1,0 +1,31 @@
+name: Publish v1.0.0 stable checkpoint
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/publish-version-1.0.0.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Create GitHub release pinned to verified Render deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish immutable v1.0.0 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if gh release view "v1.0.0" --repo "$GH_REPO" > /dev/null 2>&1; then
+            echo "Release v1.0.0 already exists; no change."
+            exit 0
+          fi
+          gh release create "v1.0.0" --repo "$GH_REPO" \
+            --target "66150b52a5be50f8680a41ccd5d8214078e53738" \
+            --title "Black Eye Fight News v1.0.0" \
+            --notes "First stable public website checkpoint, pinned to the production commit confirmed live on Render on 9 November 2026. Includes mobile portrait navigation correction. Snapshot branch: release/v1.0.0. Live deployment ID: dep-dbojug95efls73e4071g. For restore instructions see docs/version-history.md on main. Scheduled data refreshes continue independently and are not part of this immutable release."
