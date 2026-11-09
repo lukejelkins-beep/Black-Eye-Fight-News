@@ -1,12 +1,12 @@
 {
-  "checkedAt": "2026-11-09T13:59:15.315Z",
+  "checkedAt": "2026-11-09T19:42:49.740Z",
   "source": "Wikidata P2002/P2003/P11892 + official athlete structured links",
   "discoveredThisRun": 0,
   "promotersAdded": 0,
   "candidatesChecked": 0,
   "mode": "search",
   "wikiBatches": 0,
-  "searchChecked": 12,
+  "searchChecked": 10,
   "officialChecked": 50,
   "counts": {
     "total": 215,
@@ -16,10 +16,13 @@
     "withInstagram": 130,
     "withThreads": 38
   },
-  "rateLimited": false,
+  "rateLimited": true,
   "conflicts": [],
-  "errors": [],
-  "nextSearchOffset": 22,
-  "nextOfficialOffset": 45,
+  "errors": [
+    "Search Gabriel Santos: HTTP 429 www.wikidata.org",
+    "Wikidata ID lookup: HTTP 429 www.wikidata.org"
+  ],
+  "nextSearchOffset": 32,
+  "nextOfficialOffset": 12,
   "note": "Profile metadata discovery is not a social timeline feed. Original post collection still depends on public publisher-linked posts or permitted platform APIs. Missing names are not guessed."
 }
