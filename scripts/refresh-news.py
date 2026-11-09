@@ -378,7 +378,11 @@ def indexed_official_source(raw, source, sport, now):
               'IBJJF':('ibjjf.com','www.ibjjf.com'),
               'FloGrappling':('www.flograppling.com','flograppling.com'),
               'Real American Freestyle':('www.realamericanfreestyle.com','realamericanfreestyle.com'),
-              'United World Wrestling':('www.uww.org','uww.org','cms.uww.org')}.get(source,())
+              'United World Wrestling':('www.uww.org','uww.org','cms.uww.org'),
+              'Cage Warriors':('cagewarriors.com','www.cagewarriors.com'),
+              'NCAA Division I Wrestling':('www.ncaa.com','ncaa.com'),
+              'NCAA Division II Wrestling':('www.ncaa.com','ncaa.com'),
+              'ADCC':('adcombat.com','www.adcombat.com')}.get(source,())
     root=ET.fromstring(raw);out=[]
     for item in root.iter():
         if item.tag.split('}')[-1]!='item':continue
@@ -388,6 +392,7 @@ def indexed_official_source(raw, source, sport, now):
             url=urllib.parse.parse_qs(parts.query).get('url',[''])[0];parts=urllib.parse.urlsplit(url)
         if parts.scheme!='https' or parts.hostname not in approved:continue
         if source=='UFC BJJ' and not re.search(r'/news/ufc-bjj|/ufcbjj',parts.path,re.I):continue
+        if source.startswith('NCAA Division') and not re.search(r'/news/wrestling/(?:d1|d2)/',parts.path,re.I):continue
         when=stamp(fields.get('pubDate'));title=plain(fields.get('title'))
         if not when or not title or not now-dt.timedelta(days=14)<=when<=now+dt.timedelta(minutes=30):continue
         if is_non_combat_url(url):continue
@@ -401,6 +406,16 @@ def indexed_official_source(raw, source, sport, now):
 
 def source_articles(source,sport,url,now):
     urls=[url]
+    # When a publisher blocks feed robots, search index only for links back to
+    # its own verified domain. Never link to a Google/Bing summary as the article.
+    fallback_domains={
+      'Cage Warriors':'cagewarriors.com',
+      'NCAA Division I Wrestling':'ncaa.com/news/wrestling/d1',
+      'NCAA Division II Wrestling':'ncaa.com/news/wrestling/d2',
+      'ADCC':'adcombat.com',
+    }
+    if source in fallback_domains:
+        urls.append('https://www.bing.com/news/search?'+urllib.parse.urlencode({'q':'site:'+fallback_domains[source],'format':'rss','setmkt':'en-US'}))
     if source=='MMA Junkie':
         urls+=['https://mmajunkie.com/feed/','https://api.gdeltproject.org/api/v2/doc/doc?'+urllib.parse.urlencode({'query':'domain:mmajunkie.usatoday.com','mode':'artlist','maxrecords':'75','format':'json','timespan':'7d','sort':'datedesc'}),'https://www.bing.com/news/search?'+urllib.parse.urlencode({'q':'site:mmajunkie.usatoday.com','format':'rss','setmkt':'en-US'}),'https://news.google.com/rss/search?q=site%3Ammajunkie.usatoday.com%20when%3A7d&hl=en-AU&gl=AU&ceid=AU%3Aen']
     errors=[]
@@ -416,7 +431,7 @@ def source_articles(source,sport,url,now):
             if urllib.parse.urlsplit(candidate).hostname=='api.gdeltproject.org':
                 found=mma_junkie_gdelt(raw,now)
             elif urllib.parse.urlsplit(candidate).hostname=='www.bing.com':
-                found=indexed_official_source(raw,source,sport,now) if source in ('RIZIN','KSW','UFC BJJ','IBJJF','FloGrappling','Real American Freestyle','United World Wrestling') else mma_junkie_bing(raw,now)
+                found=indexed_official_source(raw,source,sport,now) if source in ('RIZIN','KSW','UFC BJJ','IBJJF','FloGrappling','Real American Freestyle','United World Wrestling','Cage Warriors','NCAA Division I Wrestling','NCAA Division II Wrestling','ADCC') else mma_junkie_bing(raw,now)
             elif urllib.parse.urlsplit(candidate).hostname=='news.google.com':
                 found=mma_junkie_google_feed(raw,now)
             else:
