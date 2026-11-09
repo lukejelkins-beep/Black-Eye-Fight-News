@@ -130,8 +130,8 @@ def summary_theme(part):
     text=plain(part).lower()
     if re.search(r'\b(?:apolog(?:y|ize|ise|ized|ised)|regrets?|sorry)\b',text):return 'apology'
     if re.search(r'\b(?:criticism|criticis|criticiz|backlash|upset fans|off.color joke|controvers(?:y|ial))',text):return 'backlash'
-    if re.search(r'\b(?:heavyweights?|division)\b',text) and re.search(r'\b(?:best|better|greatest|never been|demise|strongest)\b',text):return 'division-assessment'
     if re.search(r'\b(?:added|booked|announced|confirmed|scheduled|matching up|set to face|collide|agree(?:d)? to fight)\b',text) and re.search(r'\b(?:fight|bout|match|prospect|clash|battle|pairing)\b',text):return 'fight-booking'
+    if re.search(r'\b(?:heavyweights?|division)\b',text) and re.search(r'\b(?:best|better|greatest|never been|demise|strongest)\b',text):return 'division-assessment'
     return ''
 
 def summary_repeats(candidate,existing):
