@@ -961,10 +961,15 @@ function originalTalkPost(p){
  if(typeof p.quote==='string'&&p.quote.trim()){
   return '<blockquote class="social-quote">'+esc(p.quote)+'</blockquote>';
  }
- if(typeof p.summary==='string'&&p.summary.trim()&&!p.nativeEmbed){
-  return '<div class="talk-post-summary"><span>Source-linked post summary</span><p>'+esc(p.summary)+'</p></div>';
+ // Never substitute editorial or AI summaries for the author's actual words.
+ // A verified permalink can still be opened if platform embeds are unavailable.
+ if(p.nativeEmbed&&talkDirectSource(p)){
+  const url=safeURL(p.url);
+  if(p.platform==='Instagram')return '<blockquote class="instagram-media" data-instgrm-permalink="'+url+'" data-instgrm-version="14"><a href="'+url+'" target="_blank" rel="noopener noreferrer">View original Instagram post</a></blockquote>';
+  if(p.platform==='X')return '<blockquote class="twitter-tweet"><a href="'+url+'" target="_blank" rel="noopener noreferrer">View original post on X</a></blockquote>';
+  if(p.platform==='Threads')return '<blockquote class="text-post-media" data-text-post-permalink="'+url+'"><a href="'+url+'" target="_blank" rel="noopener noreferrer">View original Threads post</a></blockquote>';
  }
- return '<p class="talk-post-unavailable">Post text unavailable here · open the original post below.</p>';
+ return '<p class="talk-post-unavailable">Original post text is not available here. Open the source post to read it directly.</p>';
 }
 function hydrateTalkEmbeds(){
  // Instagram's official blockquote embed API, no public-post search permission required.
@@ -1000,6 +1005,16 @@ function talkDirectSource(p){
   return u.protocol==='https:' && Boolean(talkPlatforms[p.platform]?.hosts.includes(u.hostname.replace(/^www\./,'')));
  } catch {return false}
 }
+function talkPlatformIcon(platform){
+ const svg=(body)=>'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+body+'</svg>';
+ if(platform==='Instagram')return svg('<rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.6" cy="6.5" r=".9" fill="currentColor" stroke="none"/>');
+ if(platform==='Threads')return svg('<path d="M17.8 8.5C17.1 4.8 14.7 3 11.5 3 6.7 3 4.7 6.9 4.7 12c0 5.7 2.5 9 7 9 3.8 0 6.3-2.4 6.3-5.6 0-3.5-3-5.2-6.2-5.2-2.4 0-3.8 1.2-3.8 3 0 1.7 1.4 2.7 3.3 2.7 3.4 0 5.4-3 5.4-6.6 0-4.6-2.4-7.2-6.5-7.2"/>');
+ if(platform==='Facebook')return '<strong aria-hidden="true" style="font:bold 20px Arial">f</strong>';
+ if(platform==='Bluesky')return '<span aria-hidden="true" style="font-size:19px">🦋</span>';
+ if(platform==='Reddit')return '<span aria-hidden="true" style="font-size:18px">●</span>';
+ if(platform==='X')return '<span aria-hidden="true" style="font-size:19px;font-weight:600">𝕏</span>';
+ return esc(platform);
+}
 function postCard(p){
  if(p.type==='thread'){
   const steps=Array.isArray(p.steps)?p.steps:[];
@@ -1013,7 +1028,7 @@ function postCard(p){
  const when=p.postedAt?'<time datetime="'+esc(p.postedAt)+'">'+esc(humanTalkTime(p.postedAt))+'</time>':p.nativeEmbed?'<time datetime="'+esc(p.sourceLinkedAt)+'">Discovered in coverage '+esc(humanTalkTime(p.sourceLinkedAt))+'</time>':esc(p.date);
  const label=direct?'Open post':'Read coverage';
  return '<article class="social-card" data-platform="'+esc(p.platform)+'">'
-  +'<div class="social-head">'+thumb(p.photo||(p.role==='fighter'&&typeof portraitURL==='function'?portraitURL(p.name):''),p.name)+'<div class="social-author"><strong title="'+esc(p.name)+'">'+esc(p.name)+'</strong>'+(p.handle?'<small title="'+esc(p.handle)+'">'+esc(p.handle)+'</small>':'')+'</div><span class="platform-letter" aria-hidden="true">'+esc(talkPlatforms[p.platform]?.mark||'')+'</span></div>'
+  +'<div class="social-head">'+thumb(p.photo||(p.role==='fighter'&&typeof portraitURL==='function'?portraitURL(p.name):''),p.name)+'<div class="social-author"><strong title="'+esc(p.name)+'">'+esc(p.name)+'</strong>'+(p.handle?'<small title="'+esc(p.handle)+'">'+esc(p.handle)+'</small>':'')+'</div><span class="platform-letter" aria-hidden="true">'+talkPlatformIcon(p.platform)+'</span></div>'
   +originalTalkPost(p)
   +(p.nativeEmbed&&p.evidenceUrl?'<p class="talk-source-note">Original post linked by <a href="'+safeURL(p.evidenceUrl)+'" target="_blank" rel="noopener noreferrer">'+esc(p.sourcePublisher||'combat-sports coverage')+'</a>. The post date is shown by '+esc(p.platform)+'.</p>':'')
   +'<div class="social-foot"><span class="talk-card-time">'+when+' · '+esc(p.platform)+'</span>'+(p.url?'<a class="social-source" href="'+safeURL(p.url)+'" target="_blank" rel="noopener noreferrer" aria-label="'+label+' by '+esc(p.name)+' on '+esc(p.platform)+'">'+label+' ↗</a>':'<span class="social-status">Source link unavailable</span>')+'</div>'
@@ -1111,9 +1126,9 @@ function recentTalkPosts(windowDays=7){
  // Keep native original-post identities from selected sources, while still preferring fresh direct-source posts where available.
  for(const p of [...liveTalk.selected,...liveTalk.posts]){
   // Generic publisher-linked embeds lack readable on-page text and can render as empty frames.
-  if(p?.nativeEmbed&&!p?.quote)continue;
+  // Native embeds may contain the original caption even when the feed lacks text.
   const time=Date.parse(p?.postedAt||(p?.nativeEmbed?p?.sourceLinkedAt:''));
-  if(p?.type!=='post'||!Object.hasOwn(talkPlatforms,p.platform)||!Object.hasOwn(talkSports,p.sport)||p.sport==='all'||typeof p.name!=='string'||!p.name.trim()||typeof (p.quote||p.summary)!=='string'||(!(p.quote||p.summary).trim()&&!['Instagram','X'].includes(p.platform))||!Number.isFinite(time)||time<now-windowDays*24*60*60*1000||time>now+30*60*1000)continue;
+  if(p?.type!=='post'||!Object.hasOwn(talkPlatforms,p.platform)||!Object.hasOwn(talkSports,p.sport)||p.sport==='all'||typeof p.name!=='string'||!p.name.trim()||typeof (p.quote||p.summary)!=='string'||(!(p.quote||'').trim()&&!p.nativeEmbed)||!Number.isFinite(time)||time<now-windowDays*24*60*60*1000||time>now+30*60*1000)continue;
   try{
    const url=new URL(p.url);
    const {hosts}=talkPlatforms[p.platform];
@@ -1258,7 +1273,7 @@ function renderSocial(){
  const pages=total>1?'<div class="pagination"><button type="button" data-page="prev" '+(state.socialPage===1?'disabled':'')+'>← Previous</button><span>Page '+state.socialPage+' of '+total+'</span><button type="button" data-page="next" '+(state.socialPage===total?'disabled':'')+'>Next →</button></div>':'';
  const count=total>1?(start+1)+'–'+Math.min(start+pageSize,list.length)+' of '+list.length+' posts':list.length+' post'+(list.length===1?'':'s');
  const title=highlights?'The last four weeks':'Latest fighter & promoter posts';
- const description=highlights?'Memorable reactions, fighter exchanges and conversations in boxing, MMA and grappling from the past 28 days.':'Source-linked posts and clearly labelled summaries from fighters, champions, contenders, media and promoters. No engagement thresholds.';
+ const description=highlights?'Original fighter reactions and exchanges from the past 28 days.':'Original posts from fighters, champions, contenders, media and promoters.';
  const resultHead='<div class="talk-section-head"><div><h2>'+title+'</h2></div></div>';
  const mainSection='<section class="talk-section" aria-label="'+title+'">'+resultHead+(list.length?'<div class="social-grid">'+list.slice(start,start+pageSize).map(postCard).join('')+'</div>':empty)+pages+'</section>';
  const highlighted=highlights?[]:highlightedTalkPosts().filter(visible);
