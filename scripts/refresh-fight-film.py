@@ -29,9 +29,10 @@ CHANNELS=[
  ('Real American Freestyle','UCB0zHtqhvp2fuz0kJJlUpQw','combat','Wrestling / RAF'),
  ('FloGrappling','UCeOvhU6RbmEj8GKFiIMWxKQ','combat','BJJ / Grappling'),
  ('IBJJF','UCuEclQFX1C12JpywNDNMHIg','combat','BJJ / Grappling'),
+ ('United World Wrestling','@UnitedWorldWrestling','combat','Wrestling / RAF'),
  ('TNT Fight Sports','UC-hWvVvE-crFl5vg5G8QbqA','combat','MMA')
 ]
-KEYWORDS=re.compile(r'\b(highlights?|knockouts?|ko|tko|stoppage|stops|stopped|finish(?:es|ed)?|finishing|submission|submits?|tapout|tap out|pins?|tech fall|technical fall|best moments|fight recap|match recap|final moments|leg locks|chokes?|ground and pound)\b',re.I)
+KEYWORDS=re.compile(r'\b(highlights?|knockouts?|ko|tko|stoppage|stops|stopped|finish(?:es|ed)?|finishing|submission|submits?|tapout|tap out|pins?|tech fall|technical fall|best moments|fight recap|match recap|full fight|full match|full bout|wrestling finals|bjj finals|world championship highlights|final moments|leg locks|chokes?|ground and pound)\b',re.I)
 NEGATIVE=re.compile(r'\b(previews?|predictions?|interviews?|press conference|weigh[- ]?in|face[- ]?off|watchalong|podcast|training|tutorial|how to|explained|reacts?|rumours?|breakdown|breaks down|trailer|teaser|countdown|coming soon|fight week|before the fight|behind the scenes|promo(?:tional)?|presser)\b',re.I)
 SPORT_WORDS={
  'Boxing':re.compile(r'\b(boxing|round|ko|tko|knockout|fight|stoppage|knockdown|highlights?)\b',re.I),
@@ -40,6 +41,26 @@ SPORT_WORDS={
  'BJJ / Grappling':re.compile(r'\b(bjj|jiu.jitsu|ibjjf|adcc|grappling|nogi|no.gi|submission|choke|leg.lock|highlights?|finals|finish)\b',re.I),
  'Wrestling / RAF':re.compile(r'\b(raf|wrestling|freestyle|pin|takedown|tech fall|highlights?|finals|match|finish)\b',re.I)
 }
+# Authoritative scope: classify the ruleset shown in the footage, not the promotion
+# logo. ONE hosts MMA, grappling, kickboxing and Muay Thai; UFC hosts UFC BJJ.
+BJJ_MATCH=re.compile(r'\b(?:ufc[\s-]*bjj|bjj|jiu[\s-]*jitsu|jujitsu|submission grappling|grappling match|adcc|ibjjf|no[\s-]*gi|nogi|greco[\s-]*roman|freestyle wrestling|wrestling|raf[\s-]*\d+)\b',re.I)
+STRIKING_MATCH=re.compile(r'\b(?:muay thai|kickbox(?:ing)?|lumpinee|boxing)\b',re.I)
+MMA_MATCH=re.compile(r'\b(?:mma|mixed martial arts|ufc(?!\s*-?\s*bjj)|pfl|rizin|ksw|cage warriors|octagon|ground and pound)\b',re.I)
+
+def video_sport(video):
+ title=str(video.get('title') or '')
+ publisher=str(video.get('publisher') or '')
+ discipline=str(video.get('discipline') or '')
+ if BJJ_MATCH.search(title):return 'grappling'
+ if ('BJJ' in discipline or 'Wrestling' in discipline or 'Grappling' in discipline and publisher!='ONE Championship'):return 'grappling'
+ if STRIKING_MATCH.search(title) and not MMA_MATCH.search(title):
+  if publisher=='ONE Championship':return None  # Do not mislabel ONE Muay Thai/Kickboxing
+  if re.search(r'\bboxing\b',title,re.I):return 'boxing'
+ if publisher=='ONE Championship':
+  return 'mma' if MMA_MATCH.search(title) else None  # Unknown mixed-rules event
+ if video.get('category')=='boxing':return 'boxing'
+ return 'mma'
+
 def normal(text):
  return re.sub(r'[^a-z0-9]+',' ',unicodedata.normalize('NFKD',str(text or '')).encode('ascii','ignore').decode().lower()).strip()
 def video_kind(title):
@@ -70,9 +91,14 @@ def parse_feed(xml,publisher,category,discipline,today=None):
    'isFinish':bool(re.search(r'\b(ko|tko|knockout|stoppage|submission|submits|tapout|pin|tech fall|technical fall)\b',title,re.I)),
    'source':'Verified publisher YouTube upload feed'
   })
- return videos
+ return [dict(video,sport=sport) for video in videos if (sport:=video_sport(video))]
 def fetch_feed(channel_id):
  """Prefer Atom; if unavailable, read the publisher's public videos page."""
+ if channel_id.startswith('@'):
+  # Read the official publisher's current handle video listing; never invent a channel ID.
+  url='https://www.youtube.com/'+channel_id+'/videos'
+  request=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36','Accept-Language':'en-AU,en;q=0.9'})
+  with urllib.request.urlopen(request,timeout=15) as res:return res.read(4500000).decode('utf-8','replace')
  rss='https://www.youtube.com/feeds/videos.xml?channel_id='+channel_id
  req=urllib.request.Request(rss,headers={'User-Agent':'Mozilla/5.0 (compatible; FightFilmDesk/1.0)',
                                          'Accept':'application/atom+xml, application/xml;q=0.9'})
@@ -153,7 +179,7 @@ def parse_channel_videos(html,publisher,category,discipline,today=None):
    'publisher':publisher,'date':date,'verified':True,'kind':video_kind(title),
    'isFinish':bool(re.search(r'\b(ko|tko|knockout|stoppage|submission|submits|tapout|pin|tech fall)\b',title,re.I)),
    'source':'Public publisher channel videos page'})
- return results
+ return [dict(video,sport=sport) for video in results if (sport:=video_sport(video))]
 
 
 def parse_youtube_data_api(payload,video_id):
@@ -323,10 +349,11 @@ def curated_official_video(video):
  except (TypeError,ValueError,KeyError):return False
 
 def merge_video(film,results,fetched):
- existing={v['url']:v for v in film.get('videos',[]) if v.get('url') and v.get('thumbnail') and ((v.get('auAvailable') is True and v.get('auVerification') in ('youtube-country-metadata','youtube-api-region-restriction')) or curated_official_video(v))}
+ existing={v['url']:dict(v,sport=video_sport(v)) for v in film.get('videos',[]) if video_sport(v) and v.get('url') and v.get('thumbnail') and ((v.get('auAvailable') is True and v.get('auVerification') in ('youtube-country-metadata','youtube-api-region-restriction')) or curated_official_video(v))}
  added=0
  for v in fetched:
-  if v.get('auAvailable') is not True or not v.get('thumbnail'):continue
+  if v.get('auAvailable') is not True or not v.get('thumbnail') or not video_sport(v):continue
+  v['sport']=video_sport(v)
   if v['url'] not in existing:
    added+=1
   existing[v['url']]=v
@@ -351,7 +378,7 @@ def refresh(film,results,fetch=fetch_feed,today=None,verify=verify_au):
   try:
    feed=fetch(channel)
    matches=(parse_feed(feed,publisher,category,discipline,today) if feed.lstrip().startswith('<?xml') or feed.lstrip().startswith('<feed') else parse_channel_videos(feed,publisher,category,discipline,today))
-   candidates.extend(matches[:5])
+   candidates.extend(matches[:6])
   except Exception as exc:
    fail.append(publisher)
    print('Video source delayed:',publisher,type(exc).__name__,getattr(exc,'code',''),str(exc)[:90],file=sys.stderr)
