@@ -60,6 +60,9 @@ class SourceSummaryTests(unittest.TestCase):
   a={'url':'https://example.com/post','title':'Headline only','_summaryText':'A fighter won.'}
   out=m.enrich_summary(a,{},dt.datetime(2026,11,9,6,tzinfo=dt.timezone.utc))
   self.assertNotIn('summaryPoints',out)
+ def test_truncated_syndication_fragments_are_rejected(self):
+  self.assertEqual(m.verified_key_points('The promotion announced the bout and more details will follow […]'),[])
+  self.assertEqual(m.verified_key_points('The replacement accepted the matchup on Nov.'),[])
  def test_publisher_meta_and_body(self):
   p=m.ArticleText()
   p.feed('<html><head><meta name="description" content="The reported contest will be held at the Sydney venue later this month."></head><body><article><p>The promotion released the event listing following the official announcement earlier today.</p><p>Tickets are expected to go on general sale through the venue next week.</p></article></body></html>')

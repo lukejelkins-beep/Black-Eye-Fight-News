@@ -94,7 +94,9 @@ class ArticleText(HTMLParser):
             name=(a.get('name') or a.get('property') or '').lower()
             if name in ('description','og:description','twitter:description'):
                 if a.get('content'):self.meta.append(a['content'])
-        if tag=='p' and self.article_depth and not self.suppressed:
+        # Publisher templates vary: some story text is inside <article>, others inside <main> or content divs.
+        # Capture paragraphs outside explicitly suppressed chrome, then apply strict boilerplate filtering below.
+        if tag=='p' and not self.suppressed:
             self.in_p=True;self.current=[]
 
     def handle_data(self,text):
@@ -120,6 +122,9 @@ def verified_key_points(*texts):
             part=part.strip(' •\n\r\t')
             words=part.split()
             if len(words)<7 or len(words)>31 or len(part)>230 or len(part)<38:continue
+            # Reject syndicated truncation markers and obvious sentence fragments rather than presenting them as summaries.
+            if re.search(r'(?:\[…\]|\.\.\.|…)',part):continue
+            if re.search(r'\b(?:Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\.$',part):continue
             if re.search(r'(?i)\b(?:privacy policy|advertisement|subscribe|newsletter|read more|cookies|all rights reserved|terms of use|follow us|sign up)\b',part):continue
             key=re.sub(r'[^a-z0-9]','',part.lower())[:150]
             if key in seen:continue
@@ -128,7 +133,7 @@ def verified_key_points(*texts):
             if len(points)==3:return points
     return []
 
-def enrich_summary(article,previous,now):
+def enrich_summary(article,previous,now,force=False):
     snippet=article.pop('_summaryText','')
     old=previous or {}
     old_points=old.get('summaryPoints')
@@ -137,7 +142,7 @@ def enrich_summary(article,previous,now):
         article['summaryCheckedAt']=old.get('summaryCheckedAt',now.isoformat())
         return article
     prev_check=stamp(old.get('summaryCheckedAt'))
-    if old.get('title')==article['title'] and prev_check and now-prev_check<dt.timedelta(hours=12):
+    if not force and old.get('title')==article['title'] and prev_check and now-prev_check<dt.timedelta(hours=12):
         article['summaryCheckedAt']=old['summaryCheckedAt']
         return article
     article['summaryCheckedAt']=now.isoformat()
@@ -157,7 +162,7 @@ def enrich_summary(article,previous,now):
             raw=response.read(900_000).decode('utf-8','replace')
         parser=ArticleText()
         parser.feed(raw)
-        points=verified_key_points(snippet,*parser.meta,*parser.paragraphs[:18])
+        points=verified_key_points(snippet,*parser.meta,*parser.paragraphs[:40])
         if len(points)==3:article['summaryPoints']=points
     except Exception:
         pass
@@ -312,6 +317,14 @@ def main():
         except Exception as exc:
             previous=next((s for s in old.get('sources',[]) if s['name']==source),{})
             statuses.append({'name':source,'sport':sport,'ok':False,'lastSuccessfulAt':previous.get('lastSuccessfulAt'),'error':str(exc)[:160]})
+    # Backfill recent carried-forward stories that were not present in the latest RSS page.
+    # Process a bounded number per run so source checks remain polite and the workflow stays predictable.
+    missing=[a for a in sorted(articles.values(),key=lambda a:a['publishedAt'],reverse=True)
+             if not (isinstance(a.get('summaryPoints'),list) and len(a['summaryPoints'])==3)][:24]
+    if missing:
+        with ThreadPoolExecutor(max_workers=5) as pool:
+            refreshed=list(pool.map(lambda a:enrich_summary(dict(a),a,now,force=True),missing))
+        for a in refreshed:articles[a['url']]=a
     payload={'attemptedAt':now.isoformat(),'lastSuccessfulAt':now.isoformat() if success else old.get('lastSuccessfulAt'),'sources':statuses,'articles':sorted(articles.values(),key=lambda a:a['publishedAt'],reverse=True)[:180]}
     path.write_text(json.dumps(payload,indent=2)+'\n')
     print(f'News: {success}/{len(SOURCES)} sources, {len(payload["articles"])} articles')
