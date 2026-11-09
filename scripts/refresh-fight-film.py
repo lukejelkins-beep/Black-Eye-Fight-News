@@ -31,11 +31,12 @@ CHANNELS=[
  ('IBJJF','UCuEclQFX1C12JpywNDNMHIg','combat','BJJ / Grappling'),
  ('United World Wrestling','@unitedworldwrestling','combat','Wrestling / RAF'),
  ('ADCC Official','@adcc-official','combat','BJJ / Grappling'),
+ ('UFC BJJ','@ufcbjjofficial','combat','BJJ / Grappling'),
  ('RIZIN','UCZZ0UGjWsRdM8_5bsqtxYaQ','combat','MMA'),
  ('KSW','UCv_fwQqff6zEFDxfJh_03fg','combat','MMA'),
  ('TNT Fight Sports','UC-hWvVvE-crFl5vg5G8QbqA','combat','MMA')
 ]
-KEYWORDS=re.compile(r'\b(highlights?|knockouts?|ko|tko|stoppage|stops|stopped|finish(?:es|ed)?|finishing|submission|submits?|tapout|tap out|pins?|tech fall|technical fall|best moments|fight recap|match recap|full fight|full match|full bout|wrestling finals|bjj finals|world championship highlights|final moments|leg locks|chokes?|ground and pound|full fight|full match|full bout|najlepsze momenty|nokaut|poddanie|ハイライト|試合|一本)\b',re.I)
+KEYWORDS=re.compile(r'\b(highlights?|knockouts?|ko|tko|stoppage|stops|stopped|finish(?:es|ed)?|finishing|submission|submits?|tapout|tap out|pins?|tech fall|technical fall|best moments|fight recap|match recap|full fight|full match|first [0-9]+ matches|full bout|wrestling finals|bjj finals|world championship highlights|final moments|leg locks|chokes?|ground and pound|full fight|full match|full bout|najlepsze momenty|nokaut|poddanie|ハイライト|試合|一本)\b',re.I)
 NEGATIVE=re.compile(r'\b(previews?|predictions?|interviews?|press conference|weigh[- ]?in|face[- ]?off|watchalong|podcast|training|tutorial|how to|explained|reacts?|rumours?|breakdown|breaks down|trailer|teaser|countdown|coming soon|fight week|before the fight|behind the scenes|promo(?:tional)?|presser)\b',re.I)
 SPORT_WORDS={
  'Boxing':re.compile(r'\b(boxing|round|ko|tko|knockout|fight|stoppage|knockdown|highlights?)\b',re.I),
