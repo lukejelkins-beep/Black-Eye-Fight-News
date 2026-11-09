@@ -217,6 +217,10 @@ def enrich_summary(article,previous,now,force=False):
             points=verified_key_points(snippet,*parser.meta,*parser.paragraphs[:40])
         except Exception:
             pass
+    # If a source temporarily blocks a new read, retain distinct facts that
+    # were previously verified from the same original URL and unchanged title.
+    if old.get('title')==article['title'] and len(points)<3:
+        points=distinct_summary_points(points+distinct_summary_points(old_points))
     if points:article['summaryPoints']=points
     return article
 
