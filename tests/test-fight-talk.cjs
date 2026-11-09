@@ -1,6 +1,6 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert');
 const html=fs.readFileSync('index.html','utf8');
-assert(html.includes('news-publisher-fallback'),'MMA News offers a source-link fallback when publisher feeds block imports');
+assert(html.includes('news-publisher-link'),'MMA News retains a compact direct source link');
 assert(html.includes('https://mmajunkie.usatoday.com/'),'MMA Junkie canonical reporting is directly linked');
 for(const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)){if(m[1].includes('application/json'))JSON.parse(m[2]);else new Function(m[2]);}
 const fn=html.slice(html.indexOf('const talkPlatforms'),html.indexOf('/* Strip illustration initials'));
@@ -56,8 +56,7 @@ vm.runInContext("liveTalk.directory=[{name:'Champion Test',sport:'boxing',tier:'
 assert(ctx.renderSocial().includes('Fighter social profiles'),'Expose sourced fighter accounts alongside the feed');
 assert(ctx.renderSocial().includes('https://www.instagram.com/champtest/'),'Link the original fighter account');
 assert(ctx.renderSocial().includes('Last 4 weeks'));
-assert(ctx.renderSocial().includes('Live from X'),'Offer real public X timelines without an API key');
-assert(ctx.renderSocial().includes('class="twitter-timeline"'),'Use the official X timeline widget');
+assert(ctx.renderSocial().includes('class="twitter-tweet"'),'Display authentic source-linked X posts');
 assert(!ctx.renderSocial().includes('Selected post'));
 assert(!ctx.renderSocial().includes('talk-card-meta'));
 assert(ctx.postCard(champion).includes('instagram.com/'));
@@ -74,7 +73,7 @@ assert(ctx.renderSocial().includes('Highlights from the previous four weeks'));
 assert(ctx.renderSocial().includes('data-instgrm-permalink="https://www.instagram.com/p/abc/"'),'Highlights retain the original Instagram embed, not a synthetic quote');
 ctx.state.socialPlatform='Threads';
 assert(!ctx.renderSocial().includes('data-instgrm-permalink="https://www.instagram.com/p/abc/"'),'Platform filters hide Instagram embeds when Threads selected');
-assert(!ctx.renderSocial().includes('class="twitter-timeline"'),'Hide X timelines when browsing another platform');
+assert(!ctx.renderSocial().includes('class="twitter-tweet"'),'Hide X posts when browsing Threads');
 ctx.state.socialMode='latest';ctx.state.socialPlatform='X';
 assert(ctx.renderSocial().includes('https://twitter.com/i/status/200'),'Live X feed embeds the actual original post');
 assert(!ctx.renderSocial().includes('Archive quote'));
