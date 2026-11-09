@@ -197,12 +197,12 @@ window.UpcomingCards=(()=>{
    for(const e of items){const date=auDay(e);if(date!==prev){html+=dateLabel(date);prev=date}html+=eventCard(e)}
    return '<section class="upcoming-list-group"><h3 class="upcoming-list-heading">'+esc(label)+'</h3>'+html+'</section>';
   }
-  return '<div class="upcoming-schedule"><div class="upcoming-list-overview"><strong>'+events.length+' scheduled / recently started '+esc(sport==='mma'?'MMA':'boxing')+' cards</strong><span>'+esc(window.FightTime.zoneNotice())+' · Tap an event to expand its fight card</span></div>'+
+  return '<div class="upcoming-schedule"><div class="upcoming-list-overview"><strong>'+events.length+' scheduled / recently started '+esc(sport==='mma'?'MMA':'boxing')+' cards</strong><span>'+esc(window.FightTime.zoneNotice())+'</span></div>'+
    (error?'<p class="upcoming-feed-warning">Latest refresh failed; showing saved listings.</p>':'')+
    section('This Week',events.filter(e=>auDay(e)<=nextWeek))+
    section('Upcoming',events.filter(e=>auDay(e)>nextWeek))+
    (events.length?'':'<p class="upcoming-empty">No upcoming fight cards confirmed in this category.</p>')+
-   '<p class="upcoming-disclaimer">All exact starts and explicitly published ET/GST times display in your device time zone (including DST). Date-only listings remain venue dates. Scheduled starts are not proof of a live result. Bout order may change. Fighter records are sourced where verified. Reviewed: '+esc(feed.reviewedAt||'not confirmed')+'.</p></div>';
+   '<details class="compact-note"><summary>Schedule and timing notes</summary><p>Exact published start times display in your local time zone. Date-only events retain venue dates; matchups and bout order can change. Records are shown when verified. Reviewed: '+esc(feed.reviewedAt||'not confirmed')+'.</p></details></div>';
  }
  /* Portrait fallback: verify Wikimedia page title before using a thumbnail. */
  const portraitQueries=new Map(),portraitQueue=[],portraitTried=new Set();

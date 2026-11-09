@@ -308,6 +308,7 @@
 @media(max-width:580px){.masthead{padding:3px 4vw}.masthead .brand-logo{width:min(245px,85vw)}}
 </style>
 <link rel="stylesheet" href="assets/brand-theme.css?v=20261109-v1.0.1">
+<link rel="stylesheet" href="assets/editorial-compact.css?v=20261109-headlines1">
 </head>
 <body>
 
@@ -389,15 +390,11 @@ async function hydrateMissingPortraits(){
 const champThumb=(name,photo)=>{const u=photo||portraitURL(name);return `<button type="button" class="thumb champ-preview-trigger" data-image-for="${esc(name)}" data-initials="${esc(personInitials(name))}" data-hover-fighter="${esc(name)}" data-hover-photo="${u?safeURL(u):''}" aria-label="Preview photograph of ${esc(name)}" aria-describedby="fighter-photo-preview" title="Hover, focus or tap for full photograph">${u?`<img loading="lazy" referrerpolicy="no-referrer" decoding="async" src="${safeURL(u)}" alt="">`:''}</button>`};
 const thumb=(url,alt,cls='thumb')=>`<span class="${cls}" data-image-for="${esc(alt)}" data-initials="${esc(personInitials(alt))}">${(url||portraitURL(alt))?`<img loading="lazy" referrerpolicy="no-referrer" decoding="async" src="${safeURL(url||portraitURL(alt))}" alt="">`:''}</span>`;
 const champPeek=(name,photo)=>`<button type="button" class="fighter-hover-name" data-hover-fighter="${esc(name)}" data-hover-photo="${photo||portraitURL(name)?safeURL(photo||portraitURL(name)):''}" aria-label="Preview photograph of ${esc(name)}" aria-describedby="fighter-photo-preview" title="Hover, focus or tap to see a large photograph">${esc(name)}</button>`;
-const viewTitle=(label,title,intro)=>`<header class="section-heading"><div><div class="eyebrow">${label}</div><h1>${title}</h1></div><p>${intro}</p></header>`;
+const viewTitle=(label,title)=>`<header class="section-heading"><div><h1>${esc(title)}</h1></div></header>`;
 const segments=(name,opts,selected)=>`<div class="segment" role="group" aria-label="${esc(name)}">${opts.map(x=>`<button type="button" data-segment="${esc(name)}" data-value="${esc(x)}" aria-pressed="${String(x===selected)}">${esc(x)}</button>`).join('')}</div>`;
-const badge=`<div class="issue-alert"><strong>DATA VERIFICATION NOTE</strong><span>Some historical fighter records and images are awaiting independent verification. Check linked primary sources before relying on older details.</span></div>`;
+const badge=`<details class="archive-caution"><summary>Archive verification note</summary><p>Some historical fighter records and photographs need reconfirmation. Check the linked sources.</p></details>`;
 const renderFrame=(inner)=>`${(['champions','fighters'].includes(location.hash.slice(1)))?badge:''}<div class="shell page">${inner}</div>`;
 const picture=(src,alt)=>`<div class="card-photo">${src?`<img loading="lazy" src="${safeURL(src)}" alt="${esc(alt)}" referrerpolicy="no-referrer">`:''}<div class="photo-fail">PHOTOGRAPH UNAVAILABLE</div></div>`;
-const hero=()=>{
- const feature=D.news.boxing[0];
- return `<section class="hero"><div class="hero-grid"><div><div class="hero-supra">INDEPENDENT FIGHT INTELLIGENCE</div><h1>THE FIGHT<br>WORLD, <em>IN<br>FOCUS.</em></h1><p>Championship trackers. Deep scouting intelligence. Fight-week context. Global boxing and MMA coverage, organised into one searchable home.</p><div class="hero-links"><a class="btn btn-primary" href="#news">Explore the issue <span>↗</span></a><a class="btn" href="#fighters">Search 166 fighters <span>↗</span></a></div></div><a class="hero-feature" href="${safeURL(feature.source)}" target="_blank" rel="noopener noreferrer">${feature.image?`<img src="${safeURL(feature.image)}" alt="${esc(feature.imageAlt)}" referrerpolicy="no-referrer">`:''}<div class="hero-feature-content"><span class="hero-tag">FEATURED · BOXING ARCHIVE</span><h2>${esc(feature.title)}</h2><p>${esc(short(feature.summary))}</p></div></a></div></section><div class="ticker"><span class="ticker-label">THE FIGHT DESK</span><span>BOXING</span><span class="ticker-dot"></span><span>MMA</span><span class="ticker-dot"></span><span>SCOUTING INTELLIGENCE</span><span class="ticker-dot"></span><span>WORLD CHAMPIONS</span><span class="ticker-dot"></span><span>MELBOURNE TIME</span></div>`;
-};
 const newsCard=x=>headlineCard({title:x.title,summary:x.summary,sport:x.eyebrow||'Archive feature',source:domain(x.source),url:x.source,image:x.image?{url:x.image,alt:x.imageAlt||x.title,credit:x.imageCredit||'',kind:'archive'}:null});
 /* The live public fight desk runs independently. */
 state.newsMode='latest';state.newsSort='latest';state.talkRole='all';state.talkSort='balanced';state.social='all';state.matDiscipline='all';
@@ -425,12 +422,12 @@ async function loadDesk(background=false){
  try{
   const [n,e]=await Promise.all([deskJSON('data/news-live.json'),deskJSON('data/grappling-events.json')]);
   if(!Array.isArray(n.articles)||!Array.isArray(e.events))throw Error('Invalid feed');
-  if(background){if(JSON.stringify(n.articles)===JSON.stringify(desk.articles)&&JSON.stringify(e.events)===JSON.stringify(desk.events)){Object.assign(desk,n,{error:''});return;}desk.pending={n,e};const button=document.getElementById('desk-updates');if(button){button.hidden=false;button.textContent='Fresh feed check available — show updates';}return;}
+  if(background){if(JSON.stringify(n.articles)===JSON.stringify(desk.articles)&&JSON.stringify(e.events)===JSON.stringify(desk.events)){Object.assign(desk,n,{error:''});return;}if(!location.hash||location.hash==='#home'){Object.assign(desk,n,{events:e.events,reviewedAt:e.reviewedAt,error:'',pending:null});const target=document.getElementById('main');if(target)target.innerHTML=renderHome();return;}desk.pending={n,e};const button=document.getElementById('desk-updates');if(button){button.hidden=false;button.textContent='New headlines available — show updates';}return;}
   Object.assign(desk,n,{events:e.events,reviewedAt:e.reviewedAt,error:'',pending:null});
  }catch{desk.error='Current feed unavailable. Previously loaded items remain visible.';}
  if(['','#home','#news','#calendar'].includes(location.hash))navigate();
 }
-const sourceHealth=()=>'<p class="panel-note">'+(desk.lastSuccessfulAt?'Last successful news collection: '+esc(displayDate(desk.lastSuccessfulAt))+' local time.':'No successful news collection yet.')+(desk.lastSuccessfulAt&&Date.now()-Date.parse(desk.lastSuccessfulAt)>3600000?' Collection is delayed; showing retained stories.':'')+' Checks scheduled every 15 minutes; delays may occur. '+esc(desk.error)+(desk.sources.some(s=>!s.ok)?' Some sources are delayed; retained stories keep their original dates.':'')+'</p><button class="btn" id="desk-updates" hidden>Show fresh updates</button>';
+const sourceHealth=()=>'<details class="source-health"><summary>News updated '+(desk.lastSuccessfulAt?esc(displayDate(desk.lastSuccessfulAt)):'pending')+'</summary><p>'+(desk.sources.some(s=>!s.ok)?'Some sources are delayed. ':'')+'Checks run every 15 minutes; publication and indexing can be delayed. '+esc(desk.error)+'</p></details><button class="btn" id="desk-updates" hidden>Show fresh updates</button>';
 function newsFighterImage(a){
  const title=a.title.toLowerCase();
  const fighter=(D.fighters||[]).filter(f=>f.name&&f.photo&&title.includes(f.name.toLowerCase())).sort((a,b)=>b.name.length-a.name.length)[0];
@@ -459,11 +456,11 @@ document.addEventListener('error',event=>{
 function renderNews(){
  let items=desk.articles.filter(a=>a.sport===state.news);if(state.newsSort==='significant')items=[...items].sort((a,b)=>b.score-a.score);
  const seen=new Set();items=items.filter(a=>{const key=a.title.toLowerCase().replace(/[^a-z0-9]/g,'');if(seen.has(key))return false;seen.add(key);return true;});
- return renderFrame(viewTitle('THE GLOBAL FIGHT DESK','Latest news','Source-linked boxing and MMA headlines, refreshed throughout the day.')+'<div class="filter-row">'+segments('news',['boxing','mma'],state.news)+segments('newsSort',['latest','significant'],state.newsSort)+'</div>'+sourceHealth()+(state.news==='mma'?'<aside class="news-publisher-fallback" aria-label="MMA Junkie news source"><div><strong>MMA Junkie</strong><span>Independent MMA reporting and fight updates. Automatic importing is subject to publisher access.</span></div><a href="https://mmajunkie.usatoday.com/" target="_blank" rel="noopener noreferrer">Read MMA Junkie directly ↗</a></aside>':'')+'<div class="grid news-grid">'+(items.length?items.map(headlineCard).join(''):'<p>No recent stories available in this selection.</p>')+'</div>');
+ return renderFrame(viewTitle('','Latest news')+'<div class="filter-row">'+segments('news',['boxing','mma'],state.news)+segments('newsSort',['latest','significant'],state.newsSort)+'</div>'+sourceHealth()+(state.news==='mma'?'<a class="news-publisher-link" href="https://mmajunkie.usatoday.com/" target="_blank" rel="noopener noreferrer">MMA Junkie ↗</a>':'')+'<div class="grid news-grid">'+(items.length?items.map(headlineCard).join(''):'<p>No recent stories available in this selection.</p>')+'</div>');
 }
 function eventCard(e){return `<article class="news-card" style="padding:24px"><div class="card-kicker">${esc(e.discipline)} · ${esc(e.status)}</div><span data-mat-status="${esc(e.id)}">${window.EventStatus?.badge(e)||''}</span><h3>${esc(e.name)}</h3><p><strong>${esc(dayLabel(e.date))}${e.endDate?' – '+esc(dayLabel(e.endDate)):''}</strong> · venue-local date</p><p>${esc(e.location)}</p><p>${esc(e.competitors)}</p><p>${esc(e.why)}</p>${window.FightTime.instant(e.startAt)?'<p>Local start: '+esc(displayDate(e.startAt))+' · <span class="mat-countdown" data-mat-start="'+esc(e.startAt)+'">'+esc(window.FightTime.relative(e.startAt))+'</span></p>':'<p>Start time TBC · date remains venue-local</p>'}<p>${esc(e.watch)}</p><a href="${safeURL(e.source)}" target="_blank" rel="noopener noreferrer">Official event details ↗</a><p class="panel-note">Checked ${esc(e.verifiedAt)}</p></article>`;}
 function renderCalendar(){
- if(state.calendar!=='grappling')return renderFrame(viewTitle('THE FIXTURE LIST','Upcoming fight cards','Announced boxing and MMA cards, with expandable bout lists and sourced main-card and prelim assignments.')+segments('calendar',['boxing','mma','grappling'],state.calendar)+window.UpcomingCards.render(state.calendar));
+ if(state.calendar!=='grappling')return renderFrame(viewTitle('','Upcoming fights')+segments('calendar',['boxing','mma','grappling'],state.calendar)+window.UpcomingCards.render(state.calendar));
  const today=window.FightTime.dayKey(new Date());const horizon=window.FightTime.dayKey(new Date(Date.now()+42*86400000));
  const day=e=>window.FightTime.instant(e.startAt)?window.FightTime.dayKey(new Date(e.startAt)):e.date;
  const recent=window.FightTime.dayKey(new Date(Date.now()-2*86400000));
@@ -473,9 +470,46 @@ function renderCalendar(){
   return start?start.getTime()>Date.now()-36*3600000:(e.endDate||e.date)>=recent;
  }).sort((a,b)=>day(a).localeCompare(day(b)));
  const near=all.filter(e=>day(e)<=horizon),later=all.filter(e=>day(e)>horizon);
- return renderFrame(viewTitle('AROUND THE MATS','Coming up on the mats','Major BJJ, submission grappling and wrestling events, including Real American Freestyle.')+segments('calendar',['boxing','mma','grappling'],state.calendar)+'<div class="filter-row">'+segments('matDiscipline',['all','RAF','BJJ / submission','NCAA','Freestyle','Greco-Roman'],state.matDiscipline)+'</div><p class="panel-note">Official listings last reviewed '+esc(desk.reviewedAt||'not yet loaded')+'. Local starts and countdowns adjust automatically. Date-only listings remain venue dates. Dates may change. Unverified matchups and viewing details are explicitly marked.</p><h2>Next six weeks</h2><div class="grid news-grid">'+(near.length?near.map(eventCard).join(''):'<p>No confirmed upcoming events loaded for this selection.</p>')+'</div>'+(later.length?'<h2>Looking further ahead</h2><div class="grid news-grid">'+later.map(eventCard).join('')+'</div>':''));
+ return renderFrame(viewTitle('','Grappling & wrestling')+segments('calendar',['boxing','mma','grappling'],state.calendar)+'<div class="filter-row">'+segments('matDiscipline',['all','RAF','BJJ / submission','NCAA','Freestyle','Greco-Roman'],state.matDiscipline)+'</div><p class="panel-note">Official listings last reviewed '+esc(desk.reviewedAt||'not yet loaded')+'. Local starts and countdowns adjust automatically. Date-only listings remain venue dates. Dates may change. Unverified matchups and viewing details are explicitly marked.</p><h2>Next six weeks</h2><div class="grid news-grid">'+(near.length?near.map(eventCard).join(''):'<p>No confirmed upcoming events loaded for this selection.</p>')+'</div>'+(later.length?'<h2>Looking further ahead</h2><div class="grid news-grid">'+later.map(eventCard).join('')+'</div>':''));
 }
-function renderHome(){return hero()+renderFrame(viewTitle('THE LIVE DESK','Across the fight world','Latest source-linked headlines and meaningful updates from across combat sports.')+sourceHealth()+'<div class="grid news-grid">'+desk.articles.slice(0,6).map(headlineCard).join('')+'</div><p><a class="btn" href="#news">All news ↗</a> <a class="btn" href="#social">Fight Talk ↗</a> <button class="btn" data-segment="calendar" data-value="grappling" onclick="location.hash=\'calendar\'">Grappling & RAF calendar ↗</button></p>');}
+
+function topStories(){
+ const now=Date.now();
+ const verified=desk.articles.filter(a=>a&&typeof a.title==='string'&&/^https:\/\//.test(a.url||'')&&Number.isFinite(Date.parse(a.publishedAt)));
+ const recent=verified.filter(a=>Date.parse(a.publishedAt)<=now+30*60*1000&&Date.parse(a.publishedAt)>=now-48*3600*1000);
+ const candidates=recent.length?recent:verified;
+ const unique=new Map();
+ for(const a of candidates){
+  const key=a.title.toLowerCase().replace(/[^a-z0-9]+/g,'');
+  if(!unique.has(key))unique.set(key,a);
+ }
+ return [...unique.values()].sort((a,b)=>{
+  const rank=x=>Math.max(0,Number(x.score)||0)*3 + Math.max(0,48-(now-Date.parse(x.publishedAt))/3600000)*.12;
+  return rank(b)-rank(a)||Date.parse(b.publishedAt)-Date.parse(a.publishedAt);
+ }).slice(0,10);
+}
+function homeLeadCard(a){
+ const image=a.image?.url&&/^https:\/\//.test(a.image.url)?a.image.url:newsFighterImage(a)?.url||'assets/mark.svg';
+ return '<a class="front-lead-card" href="'+safeURL(a.url)+'" target="_blank" rel="noopener noreferrer">'
+  +'<div class="front-lead-image"><img loading="eager" decoding="async" src="'+(image==='assets/mark.svg'?image:safeURL(image))+'" alt="'+esc(a.image?.alt||a.title)+'"></div>'
+  +'<div class="front-lead-copy"><span class="front-story-meta">'+esc(a.sport)+' · '+esc(a.source)+'</span><h2>'+esc(a.title)+'</h2>'
+  +'<time datetime="'+esc(a.publishedAt)+'">'+esc(displayDate(a.publishedAt))+'</time></div></a>';
+}
+function homeBriefCard(a){
+ return '<a class="front-brief-card" href="'+safeURL(a.url)+'" target="_blank" rel="noopener noreferrer"><span class="front-story-meta">'
+  +esc(a.sport)+' · '+esc(a.source)+'</span><h3>'+esc(a.title)+'</h3>'
+  +'<time datetime="'+esc(a.publishedAt)+'">'+esc(displayDate(a.publishedAt))+'</time></a>';
+}
+function renderHome(){
+ const stories=topStories();
+ if(!stories.length)return renderFrame('<header class="front-home-head"><h1>Top stories</h1></header><p role="status" class="front-loading">Checking the latest fight news…</p>');
+ const featured=stories.slice(0,4);
+ const more=desk.articles.filter(a=>!featured.some(f=>f.url===a.url)).slice(0,6);
+ return renderFrame('<div class="front-home"><header class="front-home-head"><div><h1>Top stories</h1></div><a href="#news" class="front-all-news">All news ↗</a></header>'
+  +'<div class="front-lead-layout">'+homeLeadCard(featured[0])+'<div class="front-brief-list">'+featured.slice(1).map(homeBriefCard).join('')+'</div></div>'
+  +'<div class="front-follow-up"><div class="front-follow-up-head"><h2>Latest headlines</h2><a href="#news">More headlines ↗</a></div>'
+  +'<div class="grid news-grid">'+more.map(headlineCard).join('')+'</div></div></div>');
+}
 document.addEventListener('click',e=>{if(e.target.closest('#desk-updates')&&desk.pending){const {n,e:events}=desk.pending;Object.assign(desk,n,{events:events.events,reviewedAt:events.reviewedAt,pending:null});navigate();}});
 setInterval(()=>loadDesk(true),5*60*1000);
 setInterval(()=>{if(document.hidden)return;document.querySelectorAll('[data-mat-start]').forEach(el=>{const v=window.FightTime.relative(el.dataset.matStart);if(el.textContent!==v)el.textContent=v;});document.querySelectorAll('[data-mat-status]').forEach(el=>{const event=desk.events.find(item=>item.id===el.dataset.matStatus);if(!event)return;const html=window.EventStatus?.badge(event)||'';if(el.innerHTML!==html)el.innerHTML=html;});},15000);
@@ -497,12 +531,12 @@ function previousReignsLine(c){
 }
 function champsTable(){if(state.champions==='boxing')return `<div class="champ-table-wrap"><table class="champ-table"><thead><tr><th>Division</th>${['WBA','WBC','IBF','WBO','The Ring'].map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${D.champions.boxing.map(row=>`<tr><td class="division-head">${esc(row.division)}</td>${['WBA','WBC','IBF','WBO','Ring'].map(b=>`<td>${(row.belts[b]||[]).map(c=>`<div class="champ-cell">${c.name.toLowerCase()==='vacant'?'':champThumb(c.name,c.photo)}<div><b>${c.name.toLowerCase()==='vacant'?esc(c.name):champPeek(c.name,c.photo)}</b>${c.days?`<small class="reign-line">Current: ${esc(c.days)} · ${defenceLabel(c.defences)}${c.status?` ${esc(c.status)}`:''}</small>${previousReignsLine(c)}`:(c.status?`<small>${esc(c.status)}</small>`:'')}</div></div>`).join('')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 return `<div class="champ-table-wrap"><table class="champ-table"><thead><tr><th>Division</th><th>Titleholder</th><th>Reign began</th></tr></thead><tbody>${D.champions.mma.map(row=>`<tr><td class="division-head">${esc(row.division)}</td><td><div class="champ-cell">${champThumb(row.name,row.photo)}<div><b>${champPeek(row.name,row.photo)}</b><small class="reign-line">Current: ${esc(row.days)} days · ${defenceLabel(row.defences)}</small>${previousReignsLine(row)}</div></div></td><td>${esc(row.start)}</td></tr>`).join('')}</tbody></table></div>`;}
-function renderChampions(){return renderFrame(`${viewTitle('THE TITLE PICTURE','The champions','Archival title snapshots from the 7 November 2026 report. Vacancies, title status and tenure require reconfirmation before public launch.')}<div class="filter-row">${segments('champions',['boxing','mma'],state.champions)}<span class="result-count">${state.champions==='boxing'?'13 WEIGHT DIVISIONS · FIVE BELT COLUMNS':'11 UFC DIVISIONS'}</span></div>${champsTable()}<p class="panel-note">Current reign = the displayed title and division. A previous-reign total appears only where a recorded earlier reign was held in the same weight division and for the same boxing title organisation (or in the same UFC weight division). Multiple earlier reigns are combined into a single previous total. interim, regional and other-division titles are excluded. Historical days and successful defences are summed across qualifying earlier reigns, excluding title-winning bouts. Figures are dated archive snapshots, not live totals.</p>`)}
+function renderChampions(){return renderFrame(`${viewTitle('','Champions')}<div class="filter-row">${segments('champions',['boxing','mma'],state.champions)}<span class="result-count">${state.champions==='boxing'?'13 WEIGHT DIVISIONS · FIVE BELT COLUMNS':'11 UFC DIVISIONS'}</span></div>${champsTable()}<details class="compact-note"><summary>Title statistics</summary><p>Current reign = the displayed title and division. A previous-reign total appears only where a recorded earlier reign was held in the same weight division and for the same boxing title organisation (or in the same UFC weight division). Multiple earlier reigns are combined into a single previous total. interim, regional and other-division titles are excluded. Historical days and successful defences are summed across qualifying earlier reigns, excluding title-winning bouts. Figures are dated archive snapshots, not live totals.</p></details>`)}
 const fighterCard=f=>`<button type="button" class="fighter-card" data-fighter="${esc(f.id)}" aria-label="View scouting profile for ${esc(f.name)}"><div class="fighter-image">${f.photo?`<img src="${safeURL(f.photo)}" loading="lazy" referrerpolicy="no-referrer" alt="Photograph of ${esc(f.name)}">`:''}<span class="fighter-tag">${esc(f.category)}</span></div><div class="fighter-body"><div class="fighter-metadata">${esc(f.division)} · ${esc(f.sport)}</div><h3>${esc(f.name)}</h3><div class="fighter-metadata">${esc(f.record)}</div><p>${esc(f.analysis[0]||f.meta)}</p><div class="fighter-link">OPEN FULL SCOUTING REPORT ↗</div></div></button>`;
 function filteredFighters(){let result=D.fighters.filter(f=>f.sport===state.fightersSport && (state.fightersCategory==='All'||f.category===state.fightersCategory) && (state.fightersDivision==='All'||f.division===state.fightersDivision));const q=state.fightersQuery.trim().toLowerCase();if(q)result=result.filter(f=>[f.name,f.division,f.meta,f.record,f.next,...f.analysis].join(' ').toLowerCase().includes(q));return result;}
 function divisionFilter(){const divs=[...new Set(D.fighters.filter(x=>x.sport===state.fightersSport).map(x=>x.division))];return `<select class="field" id="divisionFilter" aria-label="Choose weight division"><option value="All">All divisions</option>${divs.map(d=>`<option value="${esc(d)}" ${d===state.fightersDivision?'selected':''}>${esc(d)}</option>`).join('')}</select>`}
 function renderFighterCards(){const list=filteredFighters();const grid=document.querySelector('#fighterGrid');const count=document.querySelector('#fighterCount');if(grid)grid.innerHTML=list.length?list.map(fighterCard).join(''):'<div class="empty">No fighters match those filters.</div>';if(count)count.textContent=`${list.length} PROFILES`}
-function renderFighters(){const count=filteredFighters().length;return renderFrame(`${viewTitle('THE SCOUTING DESK','Fighter intelligence','A searchable archive of all 166 existing prospect and contender dossiers, with dates, last-five-fight histories, scouting notes and original source links.')}<div class="filter-row">${segments('fightersSport',['Boxing','MMA'],state.fightersSport)}${segments('fightersCategory',['All','Prospect','Contender'],state.fightersCategory)}${divisionFilter()}<input class="field search" id="fighterSearch" placeholder="Search fighter, promotion, style, form…" aria-label="Search fighter profiles" value="${esc(state.fightersQuery)}"><span class="result-count" id="fighterCount">${count} PROFILES</span></div><p class="panel-note">This is the historical 7 November 2026 scouting roster. Research notes marked provisional in the source should not be treated as fully verified; records and fixtures may have changed since this issue.</p><div class="fighters-grid" id="fighterGrid">${filteredFighters().map(fighterCard).join('')}</div>`)}
+function renderFighters(){const count=filteredFighters().length;return renderFrame(`${viewTitle('','Fighter profiles')}<div class="filter-row">${segments('fightersSport',['Boxing','MMA'],state.fightersSport)}${segments('fightersCategory',['All','Prospect','Contender'],state.fightersCategory)}${divisionFilter()}<input class="field search" id="fighterSearch" placeholder="Search fighter, promotion, style, form…" aria-label="Search fighter profiles" value="${esc(state.fightersQuery)}"><span class="result-count" id="fighterCount">${count} PROFILES</span></div><details class="compact-note"><summary>About these records</summary><p>Historical roster from 7 November 2026. Some records, fixtures and notes require reconfirmation.</p></details><div class="fighters-grid" id="fighterGrid">${filteredFighters().map(fighterCard).join('')}</div>`)}
 const talkPlatforms = {
  X: {mark:'𝕏', hosts:['x.com','twitter.com']},
  Instagram: {mark:'◎', hosts:['instagram.com']},
@@ -836,12 +870,12 @@ function renderSocial(){
  const count=total>1?(start+1)+'–'+Math.min(start+pageSize,list.length)+' of '+list.length+' posts':list.length+' post'+(list.length===1?'':'s');
  const title=highlights?'The last four weeks':'Latest fighter & promoter posts';
  const description=highlights?'Memorable reactions, fighter exchanges and conversations in boxing, MMA and grappling from the past 28 days.':'Source-linked posts and clearly labelled summaries from fighters, champions, contenders, media and promoters. No engagement thresholds.';
- const resultHead='<div class="talk-section-head"><div><div class="talk-section-eyebrow">'+(highlights?'THE CONVERSATION':'CURRENT CONVERSATION')+'</div><h2>'+title+'</h2><p>'+description+'</p></div></div>';
+ const resultHead='<div class="talk-section-head"><div><h2>'+title+'</h2></div></div>';
  const mainSection='<section class="talk-section" aria-label="'+title+'">'+resultHead+(list.length?'<div class="social-grid">'+list.slice(start,start+pageSize).map(postCard).join('')+'</div>':empty)+pages+'</section>';
  const highlighted=highlights?[]:highlightedTalkPosts().filter(visible);
  const featured=highlighted.slice(0,4);
- const preview=featured.length?'<section class="talk-section" aria-label="Four-week Fight Talk highlights"><div class="talk-section-head"><div><div class="talk-section-eyebrow">BOXING · MMA · GRAPPLING</div><h2>Highlights · last 4 weeks</h2><p>Recent fighter-to-fighter exchanges and source-linked posts. The original remarks appear where available; reporting is marked as coverage.</p></div><button type="button" class="btn" data-segment="socialMode" data-value="highlights">All highlights ↗</button></div><div class="social-grid">'+featured.map(postCard).join('')+'</div></section>':'';
- return renderFrame(viewTitle('IN THE CONVERSATION','Fight talk','A chronological feed of original fighter and promoter posts across combat sports.')+toolbar+
+ const preview=featured.length?'<section class="talk-section" aria-label="Four-week Fight Talk highlights"><div class="talk-section-head"><div><div class="talk-section-eyebrow">BOXING · MMA · GRAPPLING</div><h2>Highlights · last 4 weeks</h2></div><button type="button" class="btn" data-segment="socialMode" data-value="highlights">All highlights ↗</button></div><div class="social-grid">'+featured.map(postCard).join('')+'</div></section>':'';
+ return renderFrame(viewTitle('','Fight Talk')+toolbar+
   '<section id="talk-results" aria-label="Fight Talk posts" tabindex="-1"><div class="talk-results-head"><p class="talk-count" aria-live="polite">'+esc(count)+'</p>' +talkCoverage(current)+talkAccountDirectory()+'</div>'+mainSection+preview+'</section>');
 }
 

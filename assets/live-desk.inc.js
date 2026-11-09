@@ -24,12 +24,12 @@ async function loadDesk(background=false){
  try{
   const [n,e]=await Promise.all([deskJSON('data/news-live.json'),deskJSON('data/grappling-events.json')]);
   if(!Array.isArray(n.articles)||!Array.isArray(e.events))throw Error('Invalid feed');
-  if(background){if(JSON.stringify(n.articles)===JSON.stringify(desk.articles)&&JSON.stringify(e.events)===JSON.stringify(desk.events)){Object.assign(desk,n,{error:''});return;}desk.pending={n,e};const button=document.getElementById('desk-updates');if(button){button.hidden=false;button.textContent='Fresh feed check available — show updates';}return;}
+  if(background){if(JSON.stringify(n.articles)===JSON.stringify(desk.articles)&&JSON.stringify(e.events)===JSON.stringify(desk.events)){Object.assign(desk,n,{error:''});return;}if(!location.hash||location.hash==='#home'){Object.assign(desk,n,{events:e.events,reviewedAt:e.reviewedAt,error:'',pending:null});const target=document.getElementById('main');if(target)target.innerHTML=renderHome();return;}desk.pending={n,e};const button=document.getElementById('desk-updates');if(button){button.hidden=false;button.textContent='New headlines available — show updates';}return;}
   Object.assign(desk,n,{events:e.events,reviewedAt:e.reviewedAt,error:'',pending:null});
  }catch{desk.error='Current feed unavailable. Previously loaded items remain visible.';}
  if(['','#home','#news','#calendar'].includes(location.hash))navigate();
 }
-const sourceHealth=()=>'<p class="panel-note">'+(desk.lastSuccessfulAt?'Last successful news collection: '+esc(displayDate(desk.lastSuccessfulAt))+' local time.':'No successful news collection yet.')+(desk.lastSuccessfulAt&&Date.now()-Date.parse(desk.lastSuccessfulAt)>3600000?' Collection is delayed; showing retained stories.':'')+' Checks scheduled every 15 minutes; delays may occur. '+esc(desk.error)+(desk.sources.some(s=>!s.ok)?' Some sources are delayed; retained stories keep their original dates.':'')+'</p><button class="btn" id="desk-updates" hidden>Show fresh updates</button>';
+const sourceHealth=()=>'<details class="source-health"><summary>News updated '+(desk.lastSuccessfulAt?esc(displayDate(desk.lastSuccessfulAt)):'pending')+'</summary><p>'+(desk.sources.some(s=>!s.ok)?'Some sources are delayed. ':'')+'Checks run every 15 minutes; publication and indexing can be delayed. '+esc(desk.error)+'</p></details><button class="btn" id="desk-updates" hidden>Show fresh updates</button>';
 function newsFighterImage(a){
  const title=a.title.toLowerCase();
  const fighter=(D.fighters||[]).filter(f=>f.name&&f.photo&&title.includes(f.name.toLowerCase())).sort((a,b)=>b.name.length-a.name.length)[0];
@@ -58,16 +58,53 @@ document.addEventListener('error',event=>{
 function renderNews(){
  let items=desk.articles.filter(a=>a.sport===state.news);if(state.newsSort==='significant')items=[...items].sort((a,b)=>b.score-a.score);
  const seen=new Set();items=items.filter(a=>{const key=a.title.toLowerCase().replace(/[^a-z0-9]/g,'');if(seen.has(key))return false;seen.add(key);return true;});
- return renderFrame(viewTitle('THE GLOBAL FIGHT DESK','Latest news','Source-linked boxing and MMA headlines, refreshed throughout the day.')+'<div class="filter-row">'+segments('news',['boxing','mma'],state.news)+segments('newsSort',['latest','significant'],state.newsSort)+'</div>'+sourceHealth()+'<div class="grid news-grid">'+(items.length?items.map(headlineCard).join(''):'<p>No recent stories available in this selection.</p>')+'</div>');
+ return renderFrame(viewTitle('','Latest news')+'<div class="filter-row">'+segments('news',['boxing','mma'],state.news)+segments('newsSort',['latest','significant'],state.newsSort)+'</div>'+sourceHealth()+'<div class="grid news-grid">'+(items.length?items.map(headlineCard).join(''):'<p>No recent stories available in this selection.</p>')+'</div>');
 }
 function eventCard(e){return `<article class="news-card" style="padding:24px"><div class="card-kicker">${esc(e.discipline)} · ${esc(e.status)}</div>${window.EventStatus?.badge(e)||''}<h3>${esc(e.name)}</h3><p><strong>${esc(dayLabel(e.date))}${e.endDate?' – '+esc(dayLabel(e.endDate)):''}</strong> · venue-local date</p><p>${esc(e.location)}</p><p>${esc(e.competitors)}</p><p>${esc(e.why)}</p>${e.startAt?'<p>Start: '+esc(displayDate(e.startAt))+' local time</p>':''}<p>${esc(e.watch)}</p><a href="${safeURL(e.source)}" target="_blank" rel="noopener noreferrer">Official event details ↗</a><p class="panel-note">Checked ${esc(e.verifiedAt)}</p></article>`;}
 function renderCalendar(){
- if(state.calendar!=='grappling')return renderFrame(viewTitle('THE FIXTURE LIST','Upcoming fight cards','Announced boxing and MMA cards, with expandable bout lists and sourced main-card and prelim assignments.')+segments('calendar',['boxing','mma','grappling'],state.calendar)+window.UpcomingCards.render(state.calendar));
+ if(state.calendar!=='grappling')return renderFrame(viewTitle('','Upcoming fights')+segments('calendar',['boxing','mma','grappling'],state.calendar)+window.UpcomingCards.render(state.calendar));
  const today=window.FightTime.dayKey(new Date());const horizon=window.FightTime.dayKey(new Date(Date.now()+42*86400000));
  const all=desk.events.filter(e=>(e.endDate||e.date)>=today&&(state.matDiscipline==='all'||e.discipline===state.matDiscipline)).sort((a,b)=>a.date.localeCompare(b.date));
  const near=all.filter(e=>e.date<=horizon),later=all.filter(e=>e.date>horizon);
- return renderFrame(viewTitle('AROUND THE MATS','Coming up on the mats','Major BJJ, submission grappling and wrestling events, including Real American Freestyle.')+segments('calendar',['boxing','mma','grappling'],state.calendar)+'<div class="filter-row">'+segments('matDiscipline',['all','RAF','BJJ / submission','NCAA','Freestyle','Greco-Roman'],state.matDiscipline)+'</div><p class="panel-note">Official listings last reviewed '+esc(desk.reviewedAt||'not yet loaded')+'. Dates may change. Unverified matchups and viewing details are explicitly marked.</p><h2>Next six weeks</h2><div class="grid news-grid">'+(near.length?near.map(eventCard).join(''):'<p>No confirmed upcoming events loaded for this selection.</p>')+'</div>'+(later.length?'<h2>Looking further ahead</h2><div class="grid news-grid">'+later.map(eventCard).join('')+'</div>':''));
+ return renderFrame(viewTitle('','Grappling & wrestling')+segments('calendar',['boxing','mma','grappling'],state.calendar)+'<div class="filter-row">'+segments('matDiscipline',['all','RAF','BJJ / submission','NCAA','Freestyle','Greco-Roman'],state.matDiscipline)+'</div><p class="panel-note">Official listings last reviewed '+esc(desk.reviewedAt||'not yet loaded')+'. Dates may change. Unverified matchups and viewing details are explicitly marked.</p><h2>Next six weeks</h2><div class="grid news-grid">'+(near.length?near.map(eventCard).join(''):'<p>No confirmed upcoming events loaded for this selection.</p>')+'</div>'+(later.length?'<h2>Looking further ahead</h2><div class="grid news-grid">'+later.map(eventCard).join('')+'</div>':''));
 }
-function renderHome(){return hero()+renderFrame(viewTitle('THE LIVE DESK','Across the fight world','Latest source-linked headlines and meaningful updates from across combat sports.')+sourceHealth()+'<div class="grid news-grid">'+desk.articles.slice(0,6).map(headlineCard).join('')+'</div><p><a class="btn" href="#news">All news ↗</a> <a class="btn" href="#social">Fight Talk ↗</a> <button class="btn" data-segment="calendar" data-value="grappling" onclick="location.hash=\'calendar\'">Grappling & RAF calendar ↗</button></p>');}
+
+function topStories(){
+ const now=Date.now();
+ const verified=desk.articles.filter(a=>a&&typeof a.title==='string'&&/^https:\/\//.test(a.url||'')&&Number.isFinite(Date.parse(a.publishedAt)));
+ const recent=verified.filter(a=>Date.parse(a.publishedAt)<=now+30*60*1000&&Date.parse(a.publishedAt)>=now-48*3600*1000);
+ const candidates=recent.length?recent:verified;
+ const unique=new Map();
+ for(const a of candidates){
+  const key=a.title.toLowerCase().replace(/[^a-z0-9]+/g,'');
+  if(!unique.has(key))unique.set(key,a);
+ }
+ return [...unique.values()].sort((a,b)=>{
+  const rank=x=>Math.max(0,Number(x.score)||0)*3 + Math.max(0,48-(now-Date.parse(x.publishedAt))/3600000)*.12;
+  return rank(b)-rank(a)||Date.parse(b.publishedAt)-Date.parse(a.publishedAt);
+ }).slice(0,10);
+}
+function homeLeadCard(a){
+ const image=a.image?.url&&/^https:\/\//.test(a.image.url)?a.image.url:newsFighterImage(a)?.url||'assets/mark.svg';
+ return '<a class="front-lead-card" href="'+safeURL(a.url)+'" target="_blank" rel="noopener noreferrer">'
+  +'<div class="front-lead-image"><img loading="eager" decoding="async" src="'+(image==='assets/mark.svg'?image:safeURL(image))+'" alt="'+esc(a.image?.alt||a.title)+'"></div>'
+  +'<div class="front-lead-copy"><span class="front-story-meta">'+esc(a.sport)+' · '+esc(a.source)+'</span><h2>'+esc(a.title)+'</h2>'
+  +'<time datetime="'+esc(a.publishedAt)+'">'+esc(displayDate(a.publishedAt))+'</time></div></a>';
+}
+function homeBriefCard(a){
+ return '<a class="front-brief-card" href="'+safeURL(a.url)+'" target="_blank" rel="noopener noreferrer"><span class="front-story-meta">'
+  +esc(a.sport)+' · '+esc(a.source)+'</span><h3>'+esc(a.title)+'</h3>'
+  +'<time datetime="'+esc(a.publishedAt)+'">'+esc(displayDate(a.publishedAt))+'</time></a>';
+}
+function renderHome(){
+ const stories=topStories();
+ if(!stories.length)return renderFrame('<header class="front-home-head"><h1>Top stories</h1></header><p role="status" class="front-loading">Checking the latest fight news…</p>');
+ const featured=stories.slice(0,4);
+ const more=desk.articles.filter(a=>!featured.some(f=>f.url===a.url)).slice(0,6);
+ return renderFrame('<div class="front-home"><header class="front-home-head"><div><h1>Top stories</h1></div><a href="#news" class="front-all-news">All news ↗</a></header>'
+  +'<div class="front-lead-layout">'+homeLeadCard(featured[0])+'<div class="front-brief-list">'+featured.slice(1).map(homeBriefCard).join('')+'</div></div>'
+  +'<div class="front-follow-up"><div class="front-follow-up-head"><h2>Latest headlines</h2><a href="#news">More headlines ↗</a></div>'
+  +'<div class="grid news-grid">'+more.map(headlineCard).join('')+'</div></div></div>');
+}
 document.addEventListener('click',e=>{if(e.target.closest('#desk-updates')&&desk.pending){const {n,e:events}=desk.pending;Object.assign(desk,n,{events:events.events,reviewedAt:events.reviewedAt,pending:null});navigate();}});
 setInterval(()=>loadDesk(true),5*60*1000);
