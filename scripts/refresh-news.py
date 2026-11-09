@@ -111,48 +111,91 @@ class ArticleText(HTMLParser):
         if tag in ('script','style','nav','footer','aside'):
             self.suppressed=max(0,self.suppressed-1)
 
+# Quality checks are intentionally rule-based: no text is invented or paraphrased
+# without a source. The UI can show fewer than three points when reporting is thin.
+SUMMARY_QUALITY_VERSION=2
+SUMMARY_STOP_WORDS=set('the a an and or but that this these those there their them they he she his her who whom whose it its is are was were be been being to for from in on at by of with as into about after before while also than then through over under more most very has have had says said saying according today yesterday year years two three one all not just do did does will would could should which what when where how up out off best big great new latest report reports'.split())
+SUMMARY_ALIASES={
+    'bouts':'fight','bout':'fight','fights':'fight','matchup':'fight','matchups':'fight','matches':'fight','clash':'fight','clashes':'fight','battle':'fight',
+    'prospects':'prospect','comers':'prospect','upcomers':'prospect','rising':'prospect',
+    'booked':'scheduled','booking':'scheduled','announced':'scheduled','announcement':'scheduled','added':'scheduled','confirmed':'scheduled',
+    'criticized':'criticism','criticised':'criticism','criticising':'criticism','backlash':'criticism','uproar':'criticism'
+}
+
+def summary_terms(part):
+    words=re.findall(r'[a-z0-9]+',plain(part).lower().replace('’',"'"))
+    return {SUMMARY_ALIASES.get(w,w) for w in words if len(w)>2 and w not in SUMMARY_STOP_WORDS}
+
+def summary_theme(part):
+    text=plain(part).lower()
+    if re.search(r'\b(?:apolog(?:y|ize|ise|ized|ised)|regrets?|sorry)\b',text):return 'apology'
+    if re.search(r'\b(?:criticism|criticis|criticiz|backlash|upset fans|off.color joke|controvers(?:y|ial))',text):return 'backlash'
+    if re.search(r'\b(?:heavyweight|division)\b',text) and re.search(r'\b(?:best|better|greatest|never been|demise|strongest)\b',text):return 'division-assessment'
+    if re.search(r'\b(?:added|booked|announced|confirmed|scheduled|matching up|set to face|collide|agree(?:d)? to fight)\b',text) and re.search(r'\b(?:fight|bout|match|prospect|clash|battle|pairing)\b',text):return 'fight-booking'
+    return ''
+
+def summary_repeats(candidate,existing):
+    a,b=summary_terms(candidate),summary_terms(existing)
+    if not a or not b:return plain(candidate).lower()==plain(existing).lower()
+    shared=len(a & b)
+    if shared>=3 and (shared/min(len(a),len(b))>=.57 or shared/len(a|b)>=.45):return True
+    theme=summary_theme(candidate)
+    if theme and theme==summary_theme(existing) and shared>=2:return True
+    return False
+
 def point_is_usable(part):
     part=plain(part).strip(' •\n\r\t')
     words=part.split()
     if len(words)<7 or len(words)>31 or len(part)>230 or len(part)<38:return False
     if re.search(r'(?:\[…\]|\.\.\.|…)',part):return False
     if re.search(r'\b(?:Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\.$',part):return False
-    if re.search(r'(?i)\b(?:privacy policy|advertisement|subscribe|newsletter|read more|cookies|all rights reserved|terms of use|follow us|sign up|results?\s*\+\s*scorecards?)\b',part):return False
+    if re.search(r'^\d+\s+(?:after|before|from|of|to)\b',part,re.I):return False
+    if re.search(r'(?i)\b(?:privacy policy|advertisement|subscribe|newsletter|read more|cookies|all rights reserved|terms of use|follow us|sign up|results?\s*\+\s*scorecards?|here.s our recap|key talking points|click here|watch and stream|find start times)\b',part):return False
     return True
 
+def distinct_summary_points(points):
+    selected=[]
+    for point in points if isinstance(points,list) else []:
+        if not isinstance(point,str) or not point_is_usable(point):continue
+        if any(summary_repeats(point,earlier) for earlier in selected):continue
+        selected.append(plain(point).strip())
+        if len(selected)==3:break
+    return selected
+
 def valid_summary_points(value):
-    return isinstance(value,list) and len(value)==3 and all(point_is_usable(p) for p in value)
+    return isinstance(value,list) and len(value)==3 and len(distinct_summary_points(value))==3
 
 def verified_key_points(*texts):
-    """Short excerpts from available original-source material, not invented AI summaries."""
-    points=[];seen=set()
+    """Extract up to three different, directly sourced facts; never pad with repetition."""
+    candidates=[]
     for raw in texts:
         if not raw:continue
         clean=plain(raw)
         clean=re.sub(r'(?i)\b(?:the post|read more|originally appeared on|appeared first on)\b.{0,250}$','',clean).strip()
         for part in re.split(r'(?<=[.!?])\s+(?=[A-Z0-9“‘\'"])',clean):
             part=part.strip(' •\n\r\t')
-            if not point_is_usable(part):continue
-            key=re.sub(r'[^a-z0-9]','',part.lower())[:150]
-            if key in seen:continue
-            seen.add(key)
-            points.append(part)
-            if len(points)==3:return points
-    return []
+            if point_is_usable(part):candidates.append(part)
+    return distinct_summary_points(candidates)
 
 def enrich_summary(article,previous,now,force=False):
     snippet=article.pop('_summaryText','')
+    article.pop('summaryPoints',None)
     old=previous or {}
     old_points=old.get('summaryPoints')
     if old.get('title')==article['title'] and valid_summary_points(old_points):
         article['summaryPoints']=old_points
         article['summaryCheckedAt']=old.get('summaryCheckedAt',now.isoformat())
+        article['summaryQualityVersion']=SUMMARY_QUALITY_VERSION
         return article
     prev_check=stamp(old.get('summaryCheckedAt'))
-    if not force and old.get('title')==article['title'] and prev_check and now-prev_check<dt.timedelta(hours=12):
+    if not force and old.get('title')==article['title'] and old.get('summaryQualityVersion')==SUMMARY_QUALITY_VERSION and prev_check and now-prev_check<dt.timedelta(hours=12):
+        cached=distinct_summary_points(old_points)
+        if cached:article['summaryPoints']=cached
         article['summaryCheckedAt']=old['summaryCheckedAt']
+        article['summaryQualityVersion']=SUMMARY_QUALITY_VERSION
         return article
     article['summaryCheckedAt']=now.isoformat()
+    article['summaryQualityVersion']=SUMMARY_QUALITY_VERSION
     points=verified_key_points(snippet)
     if len(points)==3:
         article['summaryPoints']=points
@@ -160,19 +203,19 @@ def enrich_summary(article,previous,now,force=False):
     # Only access the already verified publication URL (same allowed host after redirects).
     allowed=('mmafighting.com','worldboxingnews.net','worldboxingnews.com','ufc.com','mmajunkie.usatoday.com','mmajunkie.com')
     parsed=urllib.parse.urlsplit(article.get('url',''))
-    if parsed.scheme!='https' or not any(parsed.hostname==h or parsed.hostname.endswith('.'+h) for h in allowed):return article
-    try:
-        req=urllib.request.Request(article['url'],headers={'User-Agent':'Mozilla/5.0 (compatible; BlackEyeFightNews/1.0)'})
-        with urllib.request.urlopen(req,timeout=12) as response:
-            dest=urllib.parse.urlsplit(response.geturl())
-            if dest.scheme!='https' or not any(dest.hostname==h or dest.hostname.endswith('.'+h) for h in allowed):return article
-            raw=response.read(900_000).decode('utf-8','replace')
-        parser=ArticleText()
-        parser.feed(raw)
-        points=verified_key_points(snippet,*parser.meta,*parser.paragraphs[:40])
-        if len(points)==3:article['summaryPoints']=points
-    except Exception:
-        pass
+    if parsed.scheme=='https' and any(parsed.hostname==h or parsed.hostname.endswith('.'+h) for h in allowed):
+        try:
+            req=urllib.request.Request(article['url'],headers={'User-Agent':'Mozilla/5.0 (compatible; BlackEyeFightNews/1.0)'})
+            with urllib.request.urlopen(req,timeout=12) as response:
+                dest=urllib.parse.urlsplit(response.geturl())
+                if dest.scheme!='https' or not any(dest.hostname==h or dest.hostname.endswith('.'+h) for h in allowed):raise ValueError('Unverified redirect host')
+                raw=response.read(900_000).decode('utf-8','replace')
+            parser=ArticleText()
+            parser.feed(raw)
+            points=verified_key_points(snippet,*parser.meta,*parser.paragraphs[:40])
+        except Exception:
+            pass
+    if points:article['summaryPoints']=points
     return article
 
 def parse_feed(raw,source,sport,now):
@@ -328,7 +371,7 @@ def main():
     # Backfill recent carried-forward stories that were not present in the latest RSS page.
     # Process a bounded number per run so source checks remain polite and the workflow stays predictable.
     missing=[a for a in sorted(articles.values(),key=lambda a:a['publishedAt'],reverse=True)
-             if not valid_summary_points(a.get('summaryPoints'))][:48]
+             if (a.get('summaryQualityVersion')!=SUMMARY_QUALITY_VERSION or (not valid_summary_points(a.get('summaryPoints')) and (not stamp(a.get('summaryCheckedAt')) or now-stamp(a.get('summaryCheckedAt'))>=dt.timedelta(hours=12)))][:48]
     if missing:
         with ThreadPoolExecutor(max_workers=5) as pool:
             refreshed=list(pool.map(lambda a:enrich_summary(dict(a),a,now,force=True),missing))
