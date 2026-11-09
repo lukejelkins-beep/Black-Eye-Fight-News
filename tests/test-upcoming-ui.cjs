@@ -43,5 +43,11 @@ vm.runInNewContext(source,sandbox,{timeout:5000});
  assert(html.includes('portrait-poster.jpg'),'Sourced portrait poster displayed');
  assert(html.includes('Undercard / order TBC'),'Named undercard has own tab');
  assert(html.includes('Kevin Saszik'),'Named undercard pairing remains visible');
+ assert(html.includes('Heavyweight'),'The weight class remains visible');
+ assert(html.includes('Fight card'),'Expanding a card shows its bouts');
+ for(const removed of ['Announced pairing','Reported pairing','Bout source','Event source','Poster source','Other artwork','Local scheduled start','upcoming-event-note','upcoming-bout-note','upcoming-record-source']){
+  assert(!html.includes(removed),'Upcoming fixture UI must hide verbose metadata: '+removed);
+ }
+ assert(!html.includes('<a href='),'Upcoming card previews should be display-only without source links');
  console.log('Upcoming card UI: sourced records, unknown fallbacks, event poster and verified undercard sections passed');
 })().catch(e=>{console.error(e);process.exitCode=1});
