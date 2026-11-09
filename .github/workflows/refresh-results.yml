@@ -11,6 +11,7 @@ on:
     paths:
       - 'scripts/refresh-results.py'
       - 'scripts/enrich-espn-headshots.py'
+      - 'scripts/enrich-fighter-records.py'
       - '.github/workflows/refresh-results.yml'
 permissions:
   contents: write
@@ -41,6 +42,7 @@ jobs:
               git reset --hard -q origin/main
               if [ "$tick" -eq 0 ]; then
                 python scripts/enrich-espn-headshots.py
+                python scripts/enrich-fighter-records.py
                 python scripts/refresh-results.py
               else
                 python scripts/refresh-results.py --live-only --no-heartbeat
@@ -50,7 +52,7 @@ jobs:
                 echo "No newly verified results or portraits at tick $tick"
                 break
               fi
-              git commit -m 'Refresh sourced fight outcomes and athlete portraits'
+              git commit -m 'Refresh sourced fight outcomes, athlete records and portraits'
               if git push origin HEAD:main; then
                 echo "Published new verified results or portraits at tick $tick"
                 break
