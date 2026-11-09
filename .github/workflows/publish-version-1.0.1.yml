@@ -1,0 +1,31 @@
+name: Publish v1.0.1 brand-theme checkpoint
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/publish-version-1.0.1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Create GitHub release pinned to tested live Render commit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish v1.0.1 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if gh release view "v1.0.1" --repo "$GH_REPO" > /dev/null 2>&1; then
+            echo "Release v1.0.1 already exists; no change."
+            exit 0
+          fi
+          gh release create "v1.0.1" --repo "$GH_REPO" \
+            --target "528ee3504881dceef3e236264e38b958bee1e47e" \
+            --title "Black Eye Fight News v1.0.1 — Logo-aligned colour scheme" \
+            --notes "Stable update to the public website, verified live on Render on 9 November 2026. Swaps teal and mint site accents for the existing Black Eye Fight News logo palette: black, red, gold and warm white. Carries responsive navigation, upcoming fights, results, Fight Talk and Fight Film without changing their underlying content workflows. Updates home-screen PWA and browser theme colours. Versioned source branch: release/v1.0.1. Verified production deployment: dep-dbokj1k9v7es73fidsk0. Previous release v1.0.0 remains available for rollback. See docs/version-history.md."
