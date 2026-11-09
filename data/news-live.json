@@ -1,14 +1,13 @@
 {
-  "attemptedAt": "2026-11-09T06:52:11.631839+00:00",
-  "lastSuccessfulAt": "2026-11-09T06:52:11.631839+00:00",
+  "attemptedAt": "2026-11-09T06:54:38.438866+00:00",
+  "lastSuccessfulAt": "2026-11-09T06:54:38.438866+00:00",
   "sources": [
     {
       "name": "World Boxing News",
       "sport": "boxing",
-      "ok": true,
-      "items": 29,
-      "feedUrl": "https://www.worldboxingnews.net/feed/",
-      "lastSuccessfulAt": "2026-11-09T06:52:11.631839+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-09T06:52:11.631839+00:00",
+      "error": "www.worldboxingnews.net: mismatched tag: line 93, column 2"
     },
     {
       "name": "MMA Fighting",
@@ -16,14 +15,15 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-09T06:52:11.631839+00:00"
+      "lastSuccessfulAt": "2026-11-09T06:54:38.438866+00:00"
     },
     {
       "name": "MMA Junkie",
       "sport": "mma",
-      "ok": false,
-      "lastSuccessfulAt": null,
-      "error": "mmajunkie.usatoday.com: HTTP Error 402: Payment Required | mmajunkie.com: HTTP Error 402: Payment Required | api.gdeltproject.org: HTTP Error 429: Too Many Requ"
+      "ok": true,
+      "items": 11,
+      "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
+      "lastSuccessfulAt": "2026-11-09T06:54:38.438866+00:00"
     },
     {
       "name": "UFC",
@@ -31,7 +31,7 @@
       "ok": true,
       "items": 27,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-09T06:52:11.631839+00:00"
+      "lastSuccessfulAt": "2026-11-09T06:54:38.438866+00:00"
     }
   ],
   "articles": [
@@ -198,6 +198,19 @@
       "firstSeenAt": "2026-11-08T20:11:16.304826+00:00"
     },
     {
+      "id": "50e20cabb182b88a84da",
+      "title": "UFC Fight Night 295: Yaroslav Amosov vs. Ian Machado Garry odds, what to know",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-saudi-arabia-yaroslav-amosov-vs-ian-machado-garry-betting-odds-info-details/92679211007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-08T15:50:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
+    },
+    {
       "id": "4c09d59c5cec5d28781b",
       "title": "Heavyweight Attacked After WBC Win, Mass Brawl Erupts",
       "url": "https://www.worldboxingnews.com/heavyweight-attacked-wbc-win-mass-brawl/",
@@ -232,6 +245,32 @@
         "checkedAt": "2026-11-08T20:11:16.304826+00:00"
       },
       "firstSeenAt": "2026-11-08T20:11:16.304826+00:00"
+    },
+    {
+      "id": "a2a8aa88cfa44ee168d9",
+      "title": "Lucas Fernando calls out Reinier de Ridder after injury-saddled UFC win",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-fight-night-las-vegas-video-lucas-fernando-callout-reinier-de-ridder/92682466007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-08T15:00:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
+    },
+    {
+      "id": "eb19772679f2f5896e71",
+      "title": "Nina Milosevic wants UFC Sydney spot with teammate after latest TKO",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-fight-night-las-vegas-video-nina-milosevic-callout-sydney-card/92681993007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-08T14:10:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
     },
     {
       "id": "430ab470fbfc762eb0e9",
@@ -288,6 +327,45 @@
       "firstSeenAt": "2026-11-08T20:11:16.304826+00:00"
     },
     {
+      "id": "d4c9dc7a145e813c7603",
+      "title": "Johnny Walker: Alexander Volkov deserves UFC heavyweight title shot",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-334-johnny-walker-prediction-alexander-volkov-heavyweight-title-shot/92677771007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-08T11:40:00+00:00",
+      "score": 4,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
+    },
+    {
+      "id": "c392126e3ca7a54676d6",
+      "title": "Mick Maynard's Shoes: What's next for Johnny Walker after UFC Vegas 124 win?",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-vegas-124-matchmaker-johnny-walker-next-fight-win-heavyweight/92674322007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-08T10:50:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
+    },
+    {
+      "id": "d954677797e22d24f776",
+      "title": "Johnny Walker annoyed fans questioned his chin ahead of UFC Vegas 124: 'Stop talking sh*t'",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-vegas-124-video-johnny-walker-annoyed-fans-questioned-chin-before-waldo-cortes-acosta-knockout/92677492007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-08T10:00:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
+    },
+    {
       "id": "3ab14e89ee7e01709b95",
       "title": "Doctor Stops Title Fight as Boxer \u2018Looks Like Elephant Man\u2019",
       "url": "https://www.worldboxingnews.com/zak-miller-elephant-man-injury/",
@@ -304,6 +382,45 @@
         "checkedAt": "2026-11-08T09:25:22.104732+00:00"
       },
       "firstSeenAt": "2026-11-08T09:25:22.104732+00:00"
+    },
+    {
+      "id": "4663932ef0d766955a86",
+      "title": "UFC Fight Night 293 post-event facts: Waldo Cortes Acosta's career takes nosedive",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-fight-night-293-post-event-facts-waldo-cortes-acosta-longest-losing-skid/92633652007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-08T09:10:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
+    },
+    {
+      "id": "7d044bdd7ccb802c5c0d",
+      "title": "Video: Every UFC Fight Night 293 finish, including Walker\u2019s insane ending",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-fight-night-293-video-highlights-knockouts-submissions-las-vegas-johnny-walker-elijah-smith/92677639007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-08T08:28:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
+    },
+    {
+      "id": "f29fd6eb9e763aa0d4e0",
+      "title": "'Gutted' Davey Grant issues statement after first KO loss at UFC Vegas 124",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-vegas-124-davey-grant-issues-statement-first-knockout-loss-elijah-smith/92665299007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-08T06:40:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
     },
     {
       "id": "288d832fc22ab73a5b8a",
@@ -324,6 +441,19 @@
       "firstSeenAt": "2026-11-08T06:40:34.400602+00:00"
     },
     {
+      "id": "7408afda533038f9fce3",
+      "title": "Tatiana Suarez: Mackenzie Dern for the title 'the fight to make' after UFC Vegas 124 win",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-video-tatiana-suarez-prediction-mackenzie-dern-women-strawweight-title-fight-callout/92673660007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-08T05:50:00+00:00",
+      "score": 4,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
+    },
+    {
       "id": "7c2882ce17d329d32674",
       "title": "Bonus Coverage | UFC Fight Night: Cortes Acosta vs Walker",
       "url": "https://www.ufc.com/news/bonus-coverage-ufc-fight-night-cortes-acosta-vs-walker",
@@ -340,6 +470,19 @@
         "checkedAt": "2026-11-09T02:44:09.290214+00:00"
       },
       "firstSeenAt": "2026-11-09T02:44:09.290214+00:00"
+    },
+    {
+      "id": "467aa0f0a030b2e07eb5",
+      "title": "UFC Fight Night 293 Promotional Guidelines Compliance pay: Two get highest payout of $16,000",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-vegas-124-venum-pay-promotional-guidelines-compliance-top-payouts-16k/92633496007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-08T05:01:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
     },
     {
       "id": "547fe02793a0b03dd876",
