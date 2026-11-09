@@ -248,6 +248,7 @@ def sport_for_article(article, default_sport):
     title=plain(article.get('title',''))
     source=plain(article.get('source',''))
     if not title:return None
+    if re.search(r'\bmma\s+(?:and|&)\s+submission grappling\b|\bsubmission grappling\s+(?:and|&)\s+mma\b',title,re.I):return 'mma'
     if GRAPPLING_TERMS.search(title):return 'grappling'
     if BOXING_TERMS.search(title) and (source=='UFC' or 'boxing' in title.lower()):return 'boxing'
     if STRIKING_ONLY.search(title) and not re.search(r'\b(?:mma|mixed martial arts|submission grappling|bjj|jiu[\s-]*jitsu)\b',title,re.I):
@@ -412,6 +413,8 @@ def main():
     for bucket in (articles,reports):
         for a in bucket.values():
             a['sport']=sport_for_article(a,a.get('sport','mma'))
+            if re.search(r'\bmma\s+(?:and|&)\s+submission grappling\b',a['title'],re.I):
+                a['sports']=['mma','grappling']
     statuses=[]; success=0
     for source,sport,url in SOURCES:
         try:
@@ -421,6 +424,8 @@ def main():
             def process(a):
                 previous=articles.get(a['url']) or reports.get(a['url'])
                 a['sport']=sport_for_article(a,sport)
+                if re.search(r'\bmma\s+(?:and|&)\s+submission grappling\b|\bsubmission grappling\s+(?:and|&)\s+mma\b',a['title'],re.I):
+                    a['sports']=['mma','grappling']
                 a=enrich_image(a,previous,now)
                 return a if is_routine_result(a['title']) else enrich_summary(a,previous,now)
             with ThreadPoolExecutor(max_workers=6) as pool:
