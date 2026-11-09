@@ -95,7 +95,7 @@ window.ResultsDesk=(()=>{
    <div class="result-bout-secondary">${r.highlights?clip(r):''}${sourceDetails(r)}</div>
   </article>`;
  }
- function selected(){return (data?.results||[]).filter(r=>(filters.sport==='All'||r.sport===filters.sport)&&(!filters.clips||r.highlights)&&JSON.stringify([r.event,r.division,...r.fighters.map(f=>f.name)]).toLowerCase().includes(filters.query.toLowerCase())).sort((a,b)=>b.date.localeCompare(a.date)||(a.order||0)-(b.order||0))}
+ function selected(){return (data?.results||[]).filter(r=>((window.BEFNSport?.get()||'all')==='all'||r.sport===(window.BEFNSport.get()==='boxing'?'Boxing':window.BEFNSport.get()==='mma'?'MMA':'Grappling'))&&(!filters.clips||r.highlights)&&JSON.stringify([r.event,r.division,...r.fighters.map(f=>f.name)]).toLowerCase().includes(filters.query.toLowerCase())).sort((a,b)=>b.date.localeCompare(a.date)||(a.order||0)-(b.order||0))}
  function groups(rows){const events=new Map();for(const r of rows){const id=r.eventId||r.date+'-'+r.event;if(!events.has(id))events.set(id,[]);events.get(id).push(r)}return [...events.values()]}
  function cardSection(r){
  const section=String(r.section||'').toLowerCase();
@@ -222,9 +222,9 @@ window.ResultsDesk=(()=>{
  setInterval(()=>{if(!document.hidden&&location.hash.startsWith('#results'))load()},30000);
  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&location.hash.startsWith('#results'))load()});
  load();
-  function render(){if((!data||Date.now()-lastPollAt>30000)&&!pending)load();requestAnimationFrame(hydrateResultPhotos);return `<div class="frame results-page"><div class="section-heading"><div><h1>Results & highlights</h1></div></div><div class="results-toolbar"><button id="results-retry" type="button">↻ Refresh results</button><label>Sport<select id="results-sport">${['All','Boxing','MMA'].map(s=>`<option${s===filters.sport?' selected':''}>${s}</option>`).join('')}</select></label><label class="results-search">Find a fight<input id="results-search" type="search" placeholder="Fighter, event or division" value="${esc(filters.query)}"></label><label class="results-check"><input id="results-clips" type="checkbox"${filters.clips?' checked':''}> Highlights available</label></div><p id="results-auto-sync" class="results-sync" role="status" aria-live="polite">Auto-refresh 30s · checking…</p><div id="results-content">${content()}</div><details class="compact-note"><summary>Results and verification</summary><p>Results are sourced from published event listings. Weight classes and fighter records are checked against those sources; discrepancies are noted on individual bouts. Highlight videos may be region-restricted. This feed is not round-by-round scoring.</p></details></div>`}
+  function render(){if((!data||Date.now()-lastPollAt>30000)&&!pending)load();requestAnimationFrame(hydrateResultPhotos);return `<div class="frame results-page"><div class="section-heading"><div><h1>Results & highlights</h1></div></div><div class="results-toolbar"><button id="results-retry" type="button">↻ Refresh results</button><label class="results-search">Find a fight<input id="results-search" type="search" placeholder="Fighter, event or division" value="${esc(filters.query)}"></label><label class="results-check"><input id="results-clips" type="checkbox"${filters.clips?' checked':''}> Highlights available</label></div><p id="results-auto-sync" class="results-sync" role="status" aria-live="polite">Auto-refresh 30s · checking…</p><div id="results-content">${content()}</div><details class="compact-note"><summary>Results and verification</summary><p>Results are sourced from published event listings. Weight classes and fighter records are checked against those sources; discrepancies are noted on individual bouts. Highlight videos may be region-restricted. This feed is not round-by-round scoring.</p></details></div>`}
  document.addEventListener('input',e=>{if(e.target.id==='results-search'){filters.query=e.target.value;update()}});
- document.addEventListener('change',e=>{if(e.target.id==='results-sport')filters.sport=e.target.value;else if(e.target.id==='results-clips')filters.clips=e.target.checked;else return;update()});
+ document.addEventListener('change',e=>{if(e.target.id==='results-clips')filters.clips=e.target.checked;else return;update()});
  document.addEventListener('click',e=>{
   const tab=e.target.closest('[data-result-event-tab]');
   if(tab){
@@ -233,7 +233,7 @@ window.ResultsDesk=(()=>{
    return;
   }
   if(e.target.closest('#results-retry'))load();
-  if(e.target.closest('#results-reset')){filters.sport='All';filters.query='';filters.clips=false;document.getElementById('main').innerHTML=render()}
+  if(e.target.closest('#results-reset')){filters.query='';filters.clips=false;document.getElementById('main').innerHTML=render()}
  });
  document.addEventListener('error',function(e){
  if(!e.target.matches?.('.result-photo img,.result-cover img'))return;
