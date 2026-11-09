@@ -722,25 +722,25 @@ function newsPointsHTML(a){
 }
 function headlineCard(a){
  const fighter=newsFighterImage(a),publisher=a.image&&/^https:\/\//.test(a.image.url||'')?a.image:null;
- const src=publisher?publisher.url:fighter?fighter.url:'assets/mark.svg';
+ const src=publisher?publisher.url:fighter?fighter.url:'';
  const alt=publisher?(publisher.alt||a.title):fighter?'File photo of '+fighter.name:a.sport+' news';
  const href=safeURL(a.url),when=a.publishedAt?'<span class="news-strip-time"> · '+(a.timeBasis?'Indexed ':'')+esc(displayDate(a.publishedAt))+'</span>':'';
  const summary=newsPointsHTML(a);
  return '<article class="news-card live-news-card news-strip">'
   +'<div class="news-strip-top"><div class="news-strip-story"><p class="news-strip-source">'+esc(a.source)+(activeSport()==='all'?' · '+esc(a.sport.toUpperCase()):'')+when+'</p>'
   +'<h3 class="news-strip-headline"><a href="'+href+'" target="_blank" rel="noopener noreferrer">'+esc(a.title)+'</a></h3></div>'
-  +'<a class="news-strip-thumbnail" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image'+(!publisher&&!fighter?' news-brand-image':'')+'" src="'+(src==='assets/mark.svg'?src:safeURL(src))+'" alt="'+esc(alt)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-news-fallback="'+(fighter?safeURL(fighter.url):'')+'" data-news-fallback-name="'+(fighter?esc(fighter.name):'')+'"></a></div>'
+  +(src?'<a class="news-strip-thumbnail" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image" src="'+safeURL(src)+'" alt="'+esc(alt)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-news-fallback="'+(fighter?safeURL(fighter.url):'')+'" data-news-fallback-name="'+(fighter?esc(fighter.name):'')+'"></a>':'')+'</div>'
   +summary+'<a class="news-strip-original" href="'+href+'" target="_blank" rel="noopener noreferrer">Read original ↗</a></article>';
 }
 
 function newsFeatureCard(a){
  const fighter=newsFighterImage(a),publisher=a.image&&/^https:\/\//.test(a.image.url||'')?a.image:null;
- const src=publisher?publisher.url:fighter?fighter.url:'assets/mark.svg';
+ const src=publisher?publisher.url:fighter?fighter.url:'';
  const alt=publisher?(publisher.alt||a.title):fighter?'File photo of '+fighter.name:a.sport+' news';
  const href=safeURL(a.url);
  const summary=newsPointsHTML(a);
  return '<article class="live-news-card news-feature-card">'
-  +'<a href="'+href+'" class="news-feature-photo" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image'+(!publisher&&!fighter?' news-brand-image':'')+'" src="'+(src==='assets/mark.svg'?src:safeURL(src))+'" alt="'+esc(alt)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-news-fallback="'+(fighter?safeURL(fighter.url):'')+'" data-news-fallback-name="'+(fighter?esc(fighter.name):'')+'"></a>'
+  +(src?'<a href="'+href+'" class="news-feature-photo" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image" src="'+safeURL(src)+'" alt="'+esc(alt)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-news-fallback="'+(fighter?safeURL(fighter.url):'')+'" data-news-fallback-name="'+(fighter?esc(fighter.name):'')+'"></a>':'')
   +'<div class="news-feature-copy"><div class="news-feature-kicker">In focus'+(activeSport()==='all'?' · '+esc(a.sport):'')+' · '+esc(a.source)+'</div>'
   +'<h3><a href="'+href+'" target="_blank" rel="noopener noreferrer">'+esc(a.title)+'</a></h3>'
   +summary+'<a class="news-strip-original" href="'+href+'" target="_blank" rel="noopener noreferrer">Read original ↗</a></div></article>';
@@ -753,9 +753,7 @@ document.addEventListener('error',event=>{
   if(!img.dataset.newsAttempt&&img.dataset.newsFallback&&img.src!==img.dataset.newsFallback){
    img.dataset.newsAttempt='fighter';img.src=img.dataset.newsFallback;img.alt='File photo of '+img.dataset.newsFallbackName;
    if(credit)credit.textContent='File photo · '+img.dataset.newsFallbackName;
-  }else if(img.dataset.newsAttempt!=='brand'){
-   img.dataset.newsAttempt='brand';img.classList.add('news-brand-image');img.src='assets/mark.svg';img.alt='Combat sports news';if(credit)credit.textContent='Combat sports news';
-  }else{img.remove();}
+  }else{img.closest('.news-strip-thumbnail,.news-feature-photo,.front-lead-image')?.classList.add('news-image-unavailable');img.remove();}
  });
 },true);
 function renderNews(){return renderHome();} // Legacy News link compatibility.
@@ -830,9 +828,9 @@ function topStories(){
  return [...lead,...ranked.filter(a=>!seen.has(a.url))].slice(0,10);
 }
 function homeLeadCard(a){
- const image=a.image?.url&&/^https:\/\//.test(a.image.url)?a.image.url:newsFighterImage(a)?.url||'assets/mark.svg';
+ const image=a.image?.url&&/^https:\/\//.test(a.image.url)?a.image.url:newsFighterImage(a)?.url||'';
  return '<a class="front-lead-card" href="'+safeURL(a.url)+'" target="_blank" rel="noopener noreferrer">'
-  +'<div class="front-lead-image"><img class="live-news-image front-lead-photo" loading="eager" decoding="async" src="'+(image==='assets/mark.svg'?image:safeURL(image))+'" alt="'+esc(a.image?.alt||a.title)+'"></div>'
+  +(image?'<div class="front-lead-image"><img class="live-news-image front-lead-photo" loading="eager" decoding="async" src="'+safeURL(image)+'" alt="'+esc(a.image?.alt||a.title)+'"></div>':'')
   +'<div class="front-lead-copy"><span class="front-story-meta">'+(activeSport()==='all'?esc(a.sport)+' · ':'')+esc(a.source)+'</span><h2>'+esc(a.title)+'</h2>'
   +'<time datetime="'+esc(a.publishedAt)+'">'+esc(displayDate(a.publishedAt))+'</time></div></a>';
 }
