@@ -680,7 +680,7 @@ async function loadDesk(background=false){
   if(background){if(JSON.stringify(n.articles)===JSON.stringify(desk.articles)&&JSON.stringify(e.events)===JSON.stringify(desk.events)){Object.assign(desk,n,{error:''});return;}if(!location.hash||location.hash==='#home'){Object.assign(desk,n,{events:e.events,reviewedAt:e.reviewedAt,error:'',pending:null});const target=document.getElementById('main');if(target)target.innerHTML=renderHome();return;}desk.pending={n,e};const button=document.getElementById('desk-updates');if(button){button.hidden=false;button.textContent='New headlines available — show updates';}return;}
   Object.assign(desk,n,{events:e.events,reviewedAt:e.reviewedAt,error:'',pending:null});
  }catch{desk.error='Current feed unavailable. Previously loaded items remain visible.';}
- if(['','#home','#news','#calendar'].includes(location.hash))navigate();
+ if(['','#home','#news','#calendar','#results'].includes(location.hash))navigate();
 }
 const sourceHealth=()=>'<details class="source-health"><summary>News updated '+(desk.lastSuccessfulAt?esc(displayDate(desk.lastSuccessfulAt)):'pending')+'</summary><p>'+(desk.sources.some(s=>!s.ok)?'Some sources are delayed. ':'')+'Checks run every 15 minutes; publication and indexing can be delayed. '+esc(desk.error)+'</p></details><button class="btn" id="desk-updates" hidden>Show fresh updates</button>';
 function newsFighterImage(a){
