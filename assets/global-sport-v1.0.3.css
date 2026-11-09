@@ -1,0 +1,65 @@
+/* BEFN 1.0.3 — one consistent sport selector across every view.
+   The visual assets are the exact approved Boxing/MMA/Grappling badge sprite.
+   This layer leaves headline typography, feed refreshes and photo sources untouched. */
+.befn-global-sports{position:relative;z-index:4;background:#141013;border-bottom:3px solid #ba1422}
+.befn-global-sports-inner{display:flex;align-items:center;justify-content:center;gap:clamp(10px,2vw,22px);margin:0 auto;padding:12px 4.2vw;max-width:1420px}
+.befn-global-sports button{cursor:pointer;-webkit-tap-highlight-color:transparent;font:inherit}
+.befn-global-sports .befn-sport-option{display:flex;align-items:center;justify-content:center;flex:0 0 70px;width:70px;height:70px;padding:3px;background:#171316;border:2px solid #6f666a;color:#f6f3f0;border-radius:50%;transition:border-color .15s,box-shadow .15s,background-color .15s}
+.befn-global-sports .befn-sport-option[aria-pressed="true"]{border-color:#f52130;background:#4c0d15;box-shadow:0 0 0 2px #ef2933,0 0 13px rgba(217,18,30,.3)}
+.befn-global-sports .befn-sport-option:hover{border-color:#e12230}
+.befn-global-sports .sport-photo-visual{display:block;flex:none;width:60px;height:60px;max-width:100%;background-image:url("data:image/webp;base64,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");background-position:left center;background-repeat:no-repeat;background-size:300% 100%;border-radius:50%;pointer-events:none}
+.befn-global-sports [data-sport-value="mma"] .sport-photo-visual{background-position:center center}
+.befn-global-sports [data-sport-value="grappling"] .sport-photo-visual{background-position:right center}
+.befn-global-sports .befn-sport-all{display:flex;align-items:center;gap:9px;min-height:48px;padding:0 15px;border:1.5px solid #756f72;border-radius:28px;background:#211d20;color:#faf6f3;font-weight:800;font-size:13px;letter-spacing:.01em;white-space:nowrap}
+.befn-global-sports .befn-sport-all svg{flex:0 0 20px;width:20px;height:20px}
+.befn-global-sports .befn-sport-all[aria-pressed="true"]{background:#b51320;border-color:#ec2935;box-shadow:0 0 0 1px #ef2933}
+.befn-global-sports .befn-sport-all:hover{border-color:#e12230}
+.befn-global-sports button:focus-visible{outline:3px solid #e5b42a;outline-offset:3px}
+.befn-global-sports .befn-sport-context{margin-left:10px;font-size:12px;font-weight:700;letter-spacing:.04em;color:#c8c2c3;white-space:nowrap}
+/* Never repeat an icon-only switcher inside the fights listing. */
+#main .segment.sport-photo-segment{display:none!important}
+@media(max-width:760px){
+  .befn-global-sports{background:#f7f2ec;border-bottom:0}
+  .befn-global-sports-inner{padding:12px clamp(12px,4vw,24px) 7px;justify-content:flex-start;gap:clamp(5px,1.9vw,9px);max-width:100%}
+  .befn-global-sports .befn-sport-all{flex:1 1 98px;min-width:0;max-width:138px;height:50px;min-height:50px;border-radius:24px;background:#1b1619;border-color:#1b1619;color:#fff;padding:0 9px;font-size:clamp(11px,2.9vw,13px);gap:6px;justify-content:center}
+  .befn-global-sports .befn-sport-all[aria-pressed="true"]{background:#bc1422;border-color:#bc1422}
+  .befn-global-sports .befn-sport-all svg{width:16px;height:16px;flex-basis:16px}
+  .befn-global-sports .befn-sport-option{flex:1 1 57px;max-width:76px;min-width:0;height:54px;border-radius:11px;background:#fff;border:1px solid #b8b1ad;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  .befn-global-sports .befn-sport-option[aria-pressed="true"]{background:#b41423;border-color:#9f0f20;box-shadow:0 0 0 2px #ef2633}
+  .befn-global-sports .sport-photo-visual{width:46px;height:46px;max-width:100%;border-radius:50%}
+  .befn-global-sports .befn-sport-context{display:none}
+  .masthead{padding-top:1px!important;padding-bottom:1px!important;min-height:0!important}
+  .masthead .brand-logo{width:min(235px,69vw)!important;height:auto!important}
+  #main .page,#main .film-page,#main .results-page{max-width:100%;min-width:0}
+  #main .upcoming-schedule,#main #upcoming-cards-root{margin-top:2px}
+}
+@media(max-width:360px){
+  .befn-global-sports-inner{gap:5px;padding-inline:9px}
+  .befn-global-sports .befn-sport-all{flex-basis:88px;max-width:106px;font-size:10.5px;padding:0 5px}
+  .befn-global-sports .befn-sport-option{flex-basis:53px;height:51px}
+  .befn-global-sports .sport-photo-visual{width:42px;height:42px}
+}
+@media(prefers-reduced-motion:reduce){.befn-global-sports .befn-sport-option{transition:none}}
+/* Never crop official event poster lettering, fighter faces or original article images. */
+#main .news-strip-thumbnail img,
+#main .news-feature-photo img,
+#main .front-lead-image img{display:block;width:100%;height:100%;max-width:100%;object-fit:contain!important;object-position:center!important;background:#131015}
+#main .news-strip-thumbnail,#main .news-feature-photo,#main .front-lead-image{overflow:hidden;background:#131015}
+#main .upcoming-hero-image img,#main .upcoming-poster img,#main .upcoming-hero .upcoming-hero-poster,
+#main .result-cover img,#main .film-thumbnail img{max-width:100%;object-fit:contain!important;object-position:center!important}
+#main .news-strip-thumbnail:has(img[hidden]),#main .news-feature-photo:has(img[hidden]){display:none}
+@media(max-width:760px){
+ #main .front-lead-layout{grid-template-columns:minmax(0,1fr)!important}
+ #main .front-brief-list{min-width:0!important}
+ #main .news-strip-top{grid-template-columns:minmax(0,1fr) clamp(88px,28vw,134px)!important;gap:12px!important}
+ #main .news-strip-thumbnail{width:100%;height:auto;max-height:142px;aspect-ratio:4/3}
+ #main .news-feature-photo{max-height:330px}
+ #main .upcoming-hero-summary,#main .upcoming-card-summary{max-width:100%;min-width:0}
+}
+@media(max-width:390px){
+ #main .news-strip-top{grid-template-columns:minmax(0,1fr) 98px!important}
+}
+/* Redundant sport labels can be suppressed when the persistent header has scoped the page. */
+body[data-befn-sport="boxing"] #main .sport-label-when-all,
+body[data-befn-sport="mma"] #main .sport-label-when-all,
+body[data-befn-sport="grappling"] #main .sport-label-when-all{display:none!important}
