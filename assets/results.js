@@ -77,9 +77,10 @@ window.ResultsDesk=(()=>{
  }
  function fighterLabels(f){
   const rank=Number(f.rank??f.divisionRank);
-  const rankLabel=Number.isInteger(rank)&&rank>=1&&rank<=50&&(f.rankSource||f.rankingSource)?`<span class="result-fighter-rank" title="Sourced divisional ranking">#${rank}</span>`:'';
+  const rankLabel=(f.champion===true&&f.championSource)?'<span class="result-fighter-rank is-champion">CHAMPION</span>':Number.isInteger(rank)&&rank>=1&&rank<=15&&(f.rankSource||f.rankingSource)?`<span class="result-fighter-rank" title="UFC divisional ranking as of ${esc(f.rankingAsOf||'source date')}">#${rank}</span>`:'';
   const classification=String(f.classification||f.fighterTier||'').toLowerCase();
-  const tier=['prospect','contender'].includes(classification)&&(f.classificationSource||f.fighterTierSource)?`<span class="result-fighter-tier is-${classification}">${classification.toUpperCase()}</span>`:'';
+  const verifiedTier=['prospect','contender'].includes(classification)&&(f.classificationSource||f.fighterTierSource)?classification:(rankLabel&&rankLabel.includes('#')?'contender':'');
+  const tier=verifiedTier?`<span class="result-fighter-tier is-${verifiedTier}">${verifiedTier.toUpperCase()}</span>`:'';
   return {rankLabel,tier};
  }
  function row(r,position={}){
