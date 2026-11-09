@@ -169,7 +169,7 @@ window.UpcomingCards=(()=>{
   const media='<span class="upcoming-hero-media" aria-hidden="true"><span class="upcoming-hero-fallback is-single-fighter">'+heroFighters(e)+'</span>'+
    (first?'<img class="upcoming-hero-poster" src="'+art+'" data-upcoming-poster-candidates="'+esc(JSON.stringify(artCandidates))+'" data-upcoming-poster-index="0" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">':'')+'</span>';
   const summary='<summary class="upcoming-event-summary upcoming-hero upcoming-schedule-row'+(art?' has-poster':' is-artwork-missing')+'">'+media+
-   '<span class="upcoming-hero-content"><span class="upcoming-row-kicker">'+esc(e.promotion)+' · '+esc(e.sport==='mma'?'MMA':'BOXING')+'</span>'+
+   '<span class="upcoming-hero-content"><span class="upcoming-row-kicker">'+esc(e.promotion)+(window.BEFNSport?.get()==='all'?' · '+esc(e.sport==='mma'?'MMA':'BOXING'):'')+'</span>'+
    '<strong class="upcoming-hero-title">'+esc(e.title)+'</strong>'+
    '<span class="upcoming-hero-times">'+rowTimes(e)+'</span>'+
    '<span class="upcoming-hero-location">'+esc(e.location||'Venue TBC')+'</span>'+
@@ -185,7 +185,7 @@ window.UpcomingCards=(()=>{
   if(!feed)return '<div class="upcoming-loading" role="status">'+(error?'Upcoming card feed unavailable. Please reload to try again.':'Loading announced fight cards…')+'</div>';
   const today=localDate(),recent=window.FightTime.dayKey(new Date(Date.now()-2*86400000));
   const events=feed.events.filter(e=>{
-   if(e.sport!==sport||!Array.isArray(e.bouts)||!e.bouts.length)return false;
+   if((sport!=='all'&&e.sport!==sport)||!Array.isArray(e.bouts)||!e.bouts.length)return false;
    const t=publishedInstant(e);
    return t?t.getTime()>Date.now()-36*3600000:e.date>=recent;
   }).sort((a,b)=>auDay(a).localeCompare(auDay(b))||a.title.localeCompare(b.title));
@@ -197,7 +197,7 @@ window.UpcomingCards=(()=>{
    for(const e of items){const date=auDay(e);if(date!==prev){html+=dateLabel(date);prev=date}html+=eventCard(e)}
    return '<section class="upcoming-list-group"><h3 class="upcoming-list-heading">'+esc(label)+'</h3>'+html+'</section>';
   }
-  return '<div class="upcoming-schedule"><div class="upcoming-list-overview"><strong>'+events.length+' scheduled / recently started '+esc(sport==='mma'?'MMA':'boxing')+' cards</strong><span>'+esc(window.FightTime.zoneNotice())+'</span></div>'+
+  return '<div class="upcoming-schedule"><div class="upcoming-list-overview"><strong>'+events.length+' scheduled / recently started '+esc(sport==='all'?'boxing and MMA':sport==='mma'?'':'')+' cards</strong><span>'+esc(window.FightTime.zoneNotice())+'</span></div>'+
    (error?'<p class="upcoming-feed-warning">Latest refresh failed; showing saved listings.</p>':'')+
    section('This Week',events.filter(e=>auDay(e)<=nextWeek))+
    section('Upcoming',events.filter(e=>auDay(e)>nextWeek))+
