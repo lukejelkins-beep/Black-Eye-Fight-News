@@ -347,6 +347,12 @@ def is_routine_result(title):
         r'\bresults\b\s*(?::|[-–—|]|\b(?:and|from|for|of)\b|$)',
     ))
 
+def summary_needs_refresh(article,now):
+    if article.get('summaryQualityVersion')!=SUMMARY_QUALITY_VERSION:return True
+    if valid_summary_points(article.get('summaryPoints')):return False
+    checked=stamp(article.get('summaryCheckedAt'))
+    return not checked or now-checked>=dt.timedelta(hours=12)
+
 def main():
     now=dt.datetime.now(UTC); path=Path('data/news-live.json')
     old=json.loads(path.read_text()) if path.exists() else {'articles':[]}
@@ -371,7 +377,7 @@ def main():
     # Backfill recent carried-forward stories that were not present in the latest RSS page.
     # Process a bounded number per run so source checks remain polite and the workflow stays predictable.
     missing=[a for a in sorted(articles.values(),key=lambda a:a['publishedAt'],reverse=True)
-             if (a.get('summaryQualityVersion')!=SUMMARY_QUALITY_VERSION or (not valid_summary_points(a.get('summaryPoints')) and (not stamp(a.get('summaryCheckedAt')) or now-stamp(a.get('summaryCheckedAt'))>=dt.timedelta(hours=12)))][:48]
+             if summary_needs_refresh(a,now)][:48]
     if missing:
         with ThreadPoolExecutor(max_workers=5) as pool:
             refreshed=list(pool.map(lambda a:enrich_summary(dict(a),a,now,force=True),missing))
