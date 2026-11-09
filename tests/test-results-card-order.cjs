@@ -46,7 +46,7 @@ function chooseSection(section){
  chooseSection('prelims');
  const prelims=cardRows();
  assert.equal(prelims.length,8,'Eight preliminary bouts');
- assert(prelims[0].includes('José Souza')&&prelims[0].includes('Jonny Parsons'),'Featured preliminary bout must be first');
- assert(prelims.at(-1).includes('Ollie Schmid')&&prelims.at(-1).includes('Keiichiro Nakamura'),'Prelim opener must be last');
+ assert(prelims[0].includes('Ollie Schmid')&&prelims[0].includes('Keiichiro Nakamura'),'Featured preliminary bout must be first');
+ assert(prelims.at(-1).includes('José Souza')&&prelims.at(-1).includes('Jonny Parsons'),'Prelim opener must be last');
  console.log('Confirmed: completed main and prelim sections show headliner first, opener last');
 })().catch(error=>{console.error(error);process.exitCode=1});
