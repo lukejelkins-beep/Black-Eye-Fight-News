@@ -1,5 +1,7 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert');
 const html=fs.readFileSync('index.html','utf8');
+assert(html.includes('news-publisher-fallback'),'MMA News offers a source-link fallback when publisher feeds block imports');
+assert(html.includes('https://mmajunkie.usatoday.com/'),'MMA Junkie canonical reporting is directly linked');
 for(const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)){if(m[1].includes('application/json'))JSON.parse(m[2]);else new Function(m[2]);}
 const fn=html.slice(html.indexOf('const talkPlatforms'),html.indexOf('/* Strip illustration initials'));
 

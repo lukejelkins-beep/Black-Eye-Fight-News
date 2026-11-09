@@ -172,3 +172,11 @@
 #talk-results .talk-x-stream-card>.twitter-timeline{display:block;min-height:150px;padding:16px;border:1px solid #344753;border-radius:8px;text-align:center;color:#dcf5ed;text-decoration:underline;overflow-wrap:anywhere}
 #talk-results .talk-x-stream-card iframe{max-width:100%!important}
 @media(max-width:800px){#talk-results .talk-x-stream-grid{grid-template-columns:1fr}}
+
+/* Clear direct-source path when a publisher blocks automated imports. */
+.news-publisher-fallback{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px 22px;background:#10262f;border:1px solid #315760;border-radius:10px;color:#e8f4f0;padding:16px 19px;margin:0 0 22px}
+.news-publisher-fallback strong{display:block;font-size:16px;font-weight:900;letter-spacing:.01em}
+.news-publisher-fallback span{display:block;font-size:12px;color:#bacdcb;margin-top:5px;line-height:1.5}
+.news-publisher-fallback a{display:inline-flex;align-items:center;justify-content:center;background:#a8e5d4;color:#123235;padding:11px 14px;font-size:12px;font-weight:900;border-radius:5px;text-decoration:none}
+.news-publisher-fallback a:hover{background:#d9f6e9}
+@media(max-width:650px){.news-publisher-fallback{padding:14px}.news-publisher-fallback a{width:100%}}
