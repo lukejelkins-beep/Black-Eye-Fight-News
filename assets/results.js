@@ -130,14 +130,13 @@ window.ResultsDesk=(()=>{
  }
  const sourcePrelims=all.filter(x=>cardSection(x)==='prelims').sort((a,b)=>(Number.isFinite(a.order)?a.order:all.indexOf(a))-(Number.isFinite(b.order)?b.order:all.indexOf(b)));
  const prelimHeadlinerId=[e.prelimHeadlinerId,e.prelimsFeaturedId].find(id=>sourcePrelims.some(x=>x.id===id));
- // Unless independently verified otherwise, prelims follow the main card's
- // source ordering direction. Never rely on a missing prelimHeadlinerId:
- // that previously left opener-first prelims backwards on the site.
+ // Main and prelims can use OPPOSITE source orders (as the Nov 7
+ // UFC results do). Never infer the prelim direction from the main card.
+ // Without verified metadata, retain the source's headliner-first order;
+ // reverse only when a confirmed prelim headliner is listed last.
  const prelimOpenerFirst=sectionOrder.prelims==='opener-first'||
-  (sectionOrder.prelims!=='headliner-first'&&
-   (prelimHeadlinerId
-    ? sourcePrelims.length>1&&sourcePrelims[sourcePrelims.length-1].id===prelimHeadlinerId
-    : openerFirst));
+  (sectionOrder.prelims!=='headliner-first'&&Boolean(prelimHeadlinerId)&&
+   sourcePrelims.length>1&&sourcePrelims[sourcePrelims.length-1].id===prelimHeadlinerId);
  if(prelimOpenerFirst)prelims.reverse();
  if(prelimHeadlinerId){
   const prelimHeadlineIndex=prelims.findIndex(x=>x.id===prelimHeadlinerId);
