@@ -5,7 +5,18 @@ from pathlib import Path
 from html.parser import HTMLParser
 from concurrent.futures import ThreadPoolExecutor
 import time
-SOURCES=[('World Boxing News','boxing','https://www.worldboxingnews.net/feed/'),('MMA Fighting','mma','https://www.mmafighting.com/rss/index.xml'),('MMA Junkie','mma','https://mmajunkie.usatoday.com/feed/'),('UFC','mma','https://www.ufc.com/rss/news')]
+SOURCES=[
+ ('World Boxing News','boxing','https://www.worldboxingnews.net/feed/'),
+ ('MMA Fighting','mma','https://www.mmafighting.com/rss/index.xml'),
+ ('MMA Junkie','mma','https://mmajunkie.usatoday.com/feed/'),
+ ('UFC','mma','https://www.ufc.com/rss/news'),
+ ('ONE MMA','mma','https://www.onefc.com/category/mixed-martial-arts/feed/'),
+ ('ONE Submission Grappling','grappling','https://www.onefc.com/category/submission-grappling/feed/'),
+ ('Cage Warriors','mma','https://cagewarriors.com/feed/'),
+ ('ADCC','grappling','https://adcombat.com/feed/'),
+ ('NCAA Division I Wrestling','grappling','https://www.ncaa.com/news/wrestling/d1/rss.xml'),
+ ('NCAA Division II Wrestling','grappling','https://www.ncaa.com/news/wrestling/d2/rss.xml'),
+]
 UTC=dt.timezone.utc
 
 def stamp(value):
@@ -49,7 +60,7 @@ def image_candidates(item):
 def valid_image(url):
     # Only publisher image hosts are fetched by the collector. No arbitrary URL fetches.
     host=urllib.parse.urlsplit(url).hostname or ''
-    allowed=('worldboxingnews.com','worldboxingnews.net','mmafighting.com','vox-cdn.com','ufc.com','ufc.tv','cloudfront.net','mmajunkie.usatoday.com','mmajunkie.com','gannett-cdn.com','usatoday.com')
+    allowed=('worldboxingnews.com','worldboxingnews.net','mmafighting.com','vox-cdn.com','ufc.com','ufc.tv','cloudfront.net','mmajunkie.usatoday.com','mmajunkie.com','gannett-cdn.com','usatoday.com','onefc.com','cagewarriors.com','adcombat.com','ncaa.com','floassets.com','flosports.tv','flograppling.com')
     if not any(host==d or host.endswith('.'+d) for d in allowed):return False
     try:
         req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Range':'bytes=0-1023'})
@@ -67,7 +78,7 @@ def enrich_image(a,previous,now):
     if not candidates:
         try:
             host=urllib.parse.urlsplit(a['url']).hostname or ''
-            if host in ('www.worldboxingnews.com','www.worldboxingnews.net','www.mmafighting.com','www.ufc.com','mmajunkie.usatoday.com','www.mmajunkie.usatoday.com'):
+            if host in ('www.worldboxingnews.com','www.worldboxingnews.net','www.mmafighting.com','www.ufc.com','mmajunkie.usatoday.com','www.mmajunkie.usatoday.com','www.onefc.com','cagewarriors.com','www.cagewarriors.com','adcombat.com','www.adcombat.com'):
                 req=urllib.request.Request(a['url'],headers={'User-Agent':'Mozilla/5.0'})
                 with urllib.request.urlopen(req,timeout=10) as r:page=r.read(1_000_000).decode('utf-8','replace')
                 parser=ArticleImages();parser.feed(page);candidates=parser.images[:4]
@@ -203,7 +214,7 @@ def enrich_summary(article,previous,now,force=False):
         article['summaryPoints']=points
         return article
     # Only access the already verified publication URL (same allowed host after redirects).
-    allowed=('mmafighting.com','worldboxingnews.net','worldboxingnews.com','ufc.com','mmajunkie.usatoday.com','mmajunkie.com')
+    allowed=('mmafighting.com','worldboxingnews.net','worldboxingnews.com','ufc.com','mmajunkie.usatoday.com','mmajunkie.com','onefc.com','cagewarriors.com','adcombat.com','ncaa.com')
     parsed=urllib.parse.urlsplit(article.get('url',''))
     if parsed.scheme=='https' and any(parsed.hostname==h or parsed.hostname.endswith('.'+h) for h in allowed):
         try:
@@ -223,6 +234,33 @@ def enrich_summary(article,previous,now,force=False):
         points=distinct_summary_points(points+distinct_summary_points(old_points))
     if points:article['summaryPoints']=points
     return article
+
+
+GRAPPLING_TERMS=re.compile(r'\b(?:ufc[\s-]*bjj|submission grappling|brazilian jiu[\s-]*jitsu|jiu[\s-]*jitsu|jujitsu|ibjjf|adcc|flograppling|grappling match|grappling championship|bjj|no[\s-]*gi|greco[\s-]*roman|freestyle wrestling|ncaa (?:division\s*)?(?:i|ii|1|2) wrestling|wrestling (?:championship|tournament|nationals|worlds)|real american freestyle|raf[\s-]*\d+)\b',re.I)
+BOXING_TERMS=re.compile(r'\b(?:zuffa boxing|world boxing news|boxing match|boxing title|boxing championship|boxer|boxers|wba|wbc|wbo|ibf)\b',re.I)
+STRIKING_ONLY=re.compile(r'\b(?:muay thai|kickboxing|lumpinee|one friday fights|striking bout)\b',re.I)
+MMA_TERMS=re.compile(r'\b(?:ufc(?!\s*-?\s*bjj)|pfl|mixed martial arts|mma|rizin|ksw|cage warriors|octagon|one championship mma)\b',re.I)
+
+def sport_for_article(article, default_sport):
+    """Tag a bout's *discipline*, not the parent brand (UFC BJJ != UFC MMA).
+    A promotional brand by itself is never enough to relabel an explicit BJJ or boxing story.
+    """
+    title=plain(article.get('title',''))
+    source=plain(article.get('source',''))
+    if not title:return None
+    if GRAPPLING_TERMS.search(title):return 'grappling'
+    if BOXING_TERMS.search(title) and (source=='UFC' or 'boxing' in title.lower()):return 'boxing'
+    if STRIKING_ONLY.search(title) and not re.search(r'\b(?:mma|mixed martial arts|submission grappling|bjj|jiu[\s-]*jitsu)\b',title,re.I):
+        if source.startswith('ONE'):return None
+    if source.startswith('ONE') and re.search(r'\b(?:mma|mixed martial arts|mma title|mma world)\b',title,re.I):
+        return 'mma'
+    if source.startswith('ONE') and default_sport=='grappling':
+        # Category feed is already curated by ONE as a grappling article.
+        return 'grappling'
+    if source.startswith('ONE') and default_sport=='mma':return 'mma'
+    if source=='UFC' and 'ufc bjj' in title.lower():return 'grappling'
+    if source.startswith('NCAA') or source=='ADCC':return 'grappling'
+    return default_sport
 
 def is_non_combat_url(url):
     path=urllib.parse.urlsplit(url).path.lower()
@@ -366,34 +404,50 @@ def summary_needs_refresh(article,now):
 
 def main():
     now=dt.datetime.now(UTC); path=Path('data/news-live.json')
-    old=json.loads(path.read_text()) if path.exists() else {'articles':[]}
-    articles={a['url']:a for a in old['articles'] if stamp(a['publishedAt']) and stamp(a['publishedAt'])>=now-dt.timedelta(days=14) and not is_routine_result(a['title']) and not is_non_combat_url(a['url'])}
+    old=json.loads(path.read_text()) if path.exists() else {'articles':[], 'resultReports':[]}
+    recent=lambda a: stamp(a.get('publishedAt')) and stamp(a['publishedAt'])>=now-dt.timedelta(days=14) and not is_non_combat_url(a.get('url',''))
+    articles={a['url']:a for a in old.get('articles',[]) if recent(a) and not is_routine_result(a['title'])}
+    reports={a['url']:a for a in old.get('resultReports',[]) if recent(a) and is_routine_result(a['title'])}
+    # Reclassify existing cached material as well as new feed entries.
+    for bucket in (articles,reports):
+        for a in bucket.values():
+            a['sport']=sport_for_article(a,a.get('sport','mma'))
     statuses=[]; success=0
     for source,sport,url in SOURCES:
         try:
             found,used_url=source_articles(source,sport,url,now)
             if not found:raise ValueError('No dated recent items; previous content retained')
-            found=[a for a in found if not is_routine_result(a['title']) and not is_non_combat_url(a['url'])]
+            found=[a for a in found if not is_non_combat_url(a['url']) and sport_for_article(a,sport)]
+            def process(a):
+                previous=articles.get(a['url']) or reports.get(a['url'])
+                a['sport']=sport_for_article(a,sport)
+                a=enrich_image(a,previous,now)
+                return a if is_routine_result(a['title']) else enrich_summary(a,previous,now)
             with ThreadPoolExecutor(max_workers=6) as pool:
-                found=list(pool.map(lambda a:enrich_summary(enrich_image(a,articles.get(a['url']),now),articles.get(a['url']),now),found))
+                found=list(pool.map(process,found[:36]))
             for a in found:
-                previous=articles.get(a['url']);a['firstSeenAt']=previous.get('firstSeenAt',now.isoformat()) if previous else now.isoformat()
+                previous=articles.get(a['url']) or reports.get(a['url'])
+                a['firstSeenAt']=previous.get('firstSeenAt',now.isoformat()) if previous else now.isoformat()
                 if previous and previous['title']!=a['title']:a['updatedAt']=now.isoformat()
                 elif previous and previous.get('updatedAt'):a['updatedAt']=previous['updatedAt']
-                articles[a['url']]=a
-            success+=1;statuses.append({'name':source,'sport':sport,'ok':True,'items':len(found),'feedUrl':used_url,'lastSuccessfulAt':now.isoformat()})
+                if is_routine_result(a['title']):
+                    reports[a['url']]=a;articles.pop(a['url'],None)
+                else:
+                    articles[a['url']]=a;reports.pop(a['url'],None)
+            success+=1
+            statuses.append({'name':source,'sport':sport,'ok':True,'items':len(found),'feedUrl':used_url,'lastSuccessfulAt':now.isoformat()})
         except Exception as exc:
             previous=next((s for s in old.get('sources',[]) if s['name']==source),{})
             statuses.append({'name':source,'sport':sport,'ok':False,'lastSuccessfulAt':previous.get('lastSuccessfulAt'),'error':str(exc)[:160]})
-    # Backfill recent carried-forward stories that were not present in the latest RSS page.
-    # Process a bounded number per run so source checks remain polite and the workflow stays predictable.
     missing=[a for a in sorted(articles.values(),key=lambda a:a['publishedAt'],reverse=True)
-             if summary_needs_refresh(a,now)][:48]
+             if summary_needs_refresh(a,now)][:36]
     if missing:
         with ThreadPoolExecutor(max_workers=5) as pool:
             refreshed=list(pool.map(lambda a:enrich_summary(dict(a),a,now,force=True),missing))
         for a in refreshed:articles[a['url']]=a
-    payload={'attemptedAt':now.isoformat(),'lastSuccessfulAt':now.isoformat() if success else old.get('lastSuccessfulAt'),'sources':statuses,'articles':sorted(articles.values(),key=lambda a:a['publishedAt'],reverse=True)[:180]}
-    path.write_text(json.dumps(payload,indent=2)+'\n')
-    print(f'News: {success}/{len(SOURCES)} sources, {len(payload["articles"])} articles')
+    payload={'attemptedAt':now.isoformat(),'lastSuccessfulAt':now.isoformat() if success else old.get('lastSuccessfulAt'),
+             'sources':statuses,'articles':sorted(articles.values(),key=lambda a:a['publishedAt'],reverse=True)[:280],
+             'resultReports':sorted(reports.values(),key=lambda a:a['publishedAt'],reverse=True)[:120]}
+    path.write_text(json.dumps(payload,indent=2,ensure_ascii=False)+'\n')
+    print(f'News: {success}/{len(SOURCES)} sources, {len(payload["articles"])} articles, {len(payload["resultReports"])} official result reports')
 if __name__=='__main__':main()
