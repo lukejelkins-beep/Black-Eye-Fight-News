@@ -28,6 +28,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m unittest discover -s tests -p 'test_results.py'
+      - run: python -m unittest discover -s tests -p 'test_fighter_records.py'
       - name: Check sourced results every 30 seconds during live cards
         shell: bash
         run: |
