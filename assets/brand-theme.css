@@ -1,0 +1,226 @@
+/*
+ * BLACK EYE FIGHT NEWS — VERSION 1.0.1 BRAND THEME
+ * Source: original Black Eye Fight News red/yellow/black logo.
+ * Editorial UI only: keep platform-native social embeds and fighter/event media intact.
+ * Loaded last in index.html so older teal styles cannot override the brand palette.
+ */
+:root {
+  --ink:#111013;
+  --panel:#191719;
+  --panel2:#282124;
+  --line:#5b5051;
+  --text:#fff9f0;
+  --muted:#c1b7b4;
+  --light:#f4f0e8;
+  --paper:#f8f4ed;
+  --deep:#100e10;
+  --aqua:#f3c332;     /* legacy accent variable deliberately re-mapped to logo gold */
+  --lime:#fbe28a;
+  --orange:#cf1926;   /* legacy accent variable deliberately re-mapped to logo red */
+  --card:#fffdfa;
+  --black:#161315;
+  --brand-red:#cf1824;
+  --brand-red-dark:#ab1520;
+  --brand-gold:#f3c332;
+  --brand-gold-soft:#fff0b0;
+  --brand-cream:#f8f4ed;
+  --brand-border:#ded5cb;
+  --shadow:0 12px 34px rgba(22,12,12,.13);
+}
+html {scrollbar-color:#a69c93 #f2eee8}
+body {background:var(--brand-cream);color:#252022}
+::selection {background:var(--brand-gold);color:#1b1314}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,
+summary:focus-visible,[role="button"]:focus-visible {
+  outline:3px solid #d1232d;outline-offset:3px
+}
+/* Header / navigation — bold black field, logo-red underline and gold selection */
+.topline {background:#100d0e;color:#d6c9c3}
+.topline-right {color:#fff8e7}
+.live-point {background:var(--brand-red);box-shadow:0 0 0 3px rgba(207,24,36,.22)}
+.masthead {background:#050505}
+.navrail {background:#171315;border-bottom:3px solid var(--brand-red);color:#fff8ee}
+.mainnav a {color:#f1e9e3}
+.mainnav a:hover {background:#3a1b1d;color:#fff}
+.mainnav a.active {background:var(--brand-gold);color:#181114}
+.nav-count {color:#d9b6b6}
+.befn-mobile-topbar {color:#fff}
+.befn-mobile-title {color:#fff7ec}
+.befn-mobile-actions button,
+.befn-mobile-actions .befn-install-button {
+  background:#20191b;color:#fff6f0;border:1px solid #d55a55
+}
+.befn-mobile-actions button:hover,
+.befn-mobile-actions button:focus-visible {background:#471f22;color:#fff}
+.befn-mobile-actions .befn-install-button,
+.befn-install-button {
+  background:var(--brand-gold);border-color:var(--brand-gold);color:#211417
+}
+.befn-install-button:hover,.befn-install-button:focus-visible {
+  background:#ffe177;color:#211417;outline-color:var(--brand-red)
+}
+.befn-mobile-tabs {
+  background:#171315;border-top:3px solid var(--brand-red);
+  box-shadow:0 -7px 25px rgba(15,8,9,.25)
+}
+.befn-mobile-tabs a {color:#f3e8e2}
+.befn-mobile-tabs a[aria-current="page"] {background:var(--brand-gold);color:#211417}
+.befn-mobile-sheet {background:#f7f2ec;color:#211719}
+.befn-mobile-sheet h2 {color:#24171a}
+.befn-mobile-sheet-grid a,.befn-mobile-sheet-grid button {
+  background:#fffdf8;border-color:#dfd3ca;color:#302124
+}
+.befn-mobile-sheet-grid a:hover,.befn-mobile-sheet-grid button:hover {
+  background:#fff0cf;border-color:var(--brand-red)
+}
+.befn-mobile-sheet-head button {background:#941923;color:#fff}
+.befn-mobile-sheet-grid a:focus-visible,.befn-mobile-sheet-grid button:focus-visible {
+  outline-color:var(--brand-red)
+}
+/* Feature hero — black canvas, controlled red glow, punchy yellow highlights */
+.hero {background:#100e10;color:#fff8f2}
+.hero::before {background:radial-gradient(circle,rgba(199,20,33,.45),transparent 64%);opacity:.8}
+.hero-supra {color:#f9cf47}
+.hero-supra::before {background:var(--brand-red)}
+.hero h1 {color:#fff9ef}
+.hero h1 em {color:var(--brand-gold)}
+.hero p {color:#d9cac5}
+.hero-feature {background:linear-gradient(140deg,#4c2020,#111012);border-color:#685050}
+.hero-feature::after {background:linear-gradient(transparent,rgba(14,9,11,.96))}
+.hero-feature p {color:#f0e7e1}
+.hero-tag {background:var(--brand-gold);color:#2b1712}
+.btn {border-color:#bfa6a0;color:#fff8f0}
+.btn:hover {border-color:var(--brand-gold)}
+.btn-primary {background:var(--brand-gold);border-color:var(--brand-gold);color:#211415}
+.btn-primary:hover {background:#ffdb59;border-color:#ffdb59;color:#211415}
+/* Editorial topic ticker: preserve the existing portrait grid and landscape row. */
+.ticker {background:var(--brand-gold);color:#231818}
+.ticker .ticker-label {background:#ae1620;color:#fffaf1}
+.ticker-dot {background:#9b1d24}
+.issue-alert {background:#fff0d0;color:#5b3024;border-bottom:1px solid #ebcb82}
+.issue-alert strong {background:var(--brand-red-dark);color:#fff}
+/* General cards, headings and filters */
+.eyebrow,.card-kicker,.fighter-body .fighter-link {color:#aa1923}
+.section-heading {border-bottom-color:#292023}
+.section-heading h1,.section-heading h2 {color:#20181b}
+.section-heading p,.panel-note {color:#665b57}
+.stats-grid .stat {background:#fffefa;border-bottom-color:var(--brand-red)}
+.stat strong {color:#25191b}
+.stat span {color:#655b58}
+.news-card,.fighter-card,.video-card,.calendar-block,.champ-table-wrap {
+  background:#fffefa;border-color:var(--brand-border)
+}
+.news-card:hover,.fighter-card:hover,.video-card:hover {border-color:#d17e79}
+.card-photo,.fighter-image {background:linear-gradient(135deg,#4b2426,#312124 65%,#151316)}
+.card-footer a,.fighter-hover-name {color:#9f1820}
+.card-footer a:hover,.fighter-hover-name:hover {color:#d11e2b}
+.card-footer a {border-bottom-color:#d3a9a2}
+.news-card h3,.fighter-card,.fighter-body h3 {color:#251b1c}
+.news-card p,.fighter-body p {color:#675d58}
+.feature-box {background:#241619}
+.feature-box:nth-child(2) {background:#3c2022}
+.feature-box .eyebrow {color:#ffd15b}
+.feature-box p {color:#ebd9d2}
+.feature-box a {color:#ffd15b}
+.segment {background:#eae1d8}
+.segment button {color:#655150}
+.segment button:hover {background:#f5e8d0;color:#5c2022}
+.segment button[aria-pressed="true"] {background:#b71924;color:#fff}
+.field {background:#fffefa;border-color:#cbbdb3;color:#24191b}
+.result-count {color:#675a54}
+.pagination button {background:#b51924;color:#fff}
+.pagination button:hover:not(:disabled) {background:#8d101a}
+/* Champions, schedules and data grids */
+.champ-table th,.calendar-block .subheader {background:#251a1d;color:#fff8f0}
+.champ-table td {border-bottom-color:#eae1da;border-right-color:#f2eae2}
+.champ-table tbody tr:hover td {background:#fff4e0}
+.champ-table .division-head {color:#391f22}
+.champ-cell small,.muted-cell {color:#6c615f}
+.champ-table .reign-source {color:#a51a24}
+.data-table th {background:#f1e2c7;color:#40302c}
+.data-table td {color:#453d39;border-top-color:#e8ddd4}
+.data-table tbody tr:nth-child(even) {background:#fffcf6}
+.fighter-tag {background:var(--brand-gold);color:#2e1816}
+.archive-card {background:#211719;color:#fff8ed}
+.archive-card p {color:#ead9ce}
+.source-list a {background:#fae7c0;color:#802021}
+.archive-gate {background:#fff1d7;border-left-color:var(--brand-red)}
+/* Upcoming fights: expanders, main/prelim tabs and poster overlays */
+.upcoming-event-summary {background:#f0e7df;border-left:4px solid #cf1824}
+.upcoming-event-summary:hover {background:#ffeed7}
+.upcoming-event-heading>strong {color:#2a1a1d}
+.upcoming-location,.upcoming-summary-meta {color:#64544d}
+.upcoming-chevron,.upcoming-expand-copy {color:#a71620}
+.upcoming-loading,.upcoming-feed-warning {border-color:#e4d5c8;background:#fffdf9}
+.upcoming-event-note,.upcoming-disclaimer,.upcoming-intro {color:#675952}
+.upcoming-card-bar {background:#2a1b1e;color:#fff4e8}
+.upcoming-tabs .result-card-tab.is-active,
+.upcoming-event .result-card-tab.is-active {background:#f2c338;color:#241719;border-color:#f2c338}
+.upcoming-hero-media,.upcoming-hero-fallback {background:#241719}
+.upcoming-hero-content {color:#fff7e9}
+/* Completed and live results retain semantic status colours. */
+.results-note,.results-count {color:#665751}
+.results-toolbar {background:#efe4d8}
+.results-toolbar select,.results-toolbar input[type=search] {
+  border-color:#bca99f;background:#fffdf8;color:#21191a
+}
+.results-check input {accent-color:#c71a25}
+.result-feature {background:#211719;color:#fff8ed}
+.result-cover {background:#322224}
+.result-faceoff {background:radial-gradient(ellipse at bottom,#54292b,#211719)}
+.result-feature .result-eyebrow {color:#ffd050}
+.result-card-tab {border-color:#d2b3a4}
+.result-card-tab.is-active {background:var(--brand-gold);color:#24171b;border-color:var(--brand-gold)}
+.result-table-title {background:#211719;color:#fff7ee}
+.result-takeaways {border-color:#e3d1c7}
+.result-bout,.result-event {border-color:#dcd0c8}
+.result-matchup-vs-watermark {color:#e4b54e}
+.result-watch {color:#af1520}
+.event-status-underway {background:#fff1d5;color:#8e3514}
+.event-status-completed {background:#efeae4;color:#4b403c}
+.event-status-cancelled,.event-status-postponed {background:#f9e0df;color:#9d1b23}
+/* Fight Film: warm neutrals + gold active category */
+.film-refresh-note {border-left-color:#ba1a25;background:#fff1d6;color:#61432e}
+.film-refresh-note span {color:#ad2028}
+.film-updated,.film-section-head p {color:#6c605c}
+.film-section-head {border-bottom-color:#e2d5ca}
+.film-section-head .eyebrow {color:#a61720}
+.film-section-head h2 {color:#24191b}
+.film-total {background:#2d1a1d;color:#fff2e6}
+.film-card {border-color:#ded1c8}
+.film-switch-tab.is-active {background:var(--brand-gold);color:#211416;border-color:var(--brand-gold)}
+.film-card-link:hover {color:#a31620}
+/* Fight Talk: neutral dark cards while authentic source embeds remain untouched. */
+#talk-results .social-card,#talk-results .social-card[data-platform] {
+  background:#171416;color:#fff7f2;border-color:#49373a;
+  box-shadow:0 8px 25px rgba(23,10,10,.12)
+}
+#talk-results .social-card .social-quote {color:#f6efe9}
+#talk-results .social-card .social-author small {color:#d8c6c2}
+#talk-results .social-card .platform-letter {color:#fff4ee}
+.thread-card .thread-title {color:var(--brand-gold)}
+.thread-step.reply {border-left-color:#b82a31}
+/* Dialogues, alerts, install prompts and clear focus states */
+.footer {background:#100d0f;color:#d6c3bd}
+.footer-brand strong {color:#fff}
+.fighter-dialog {background:#fcf7f0;color:#291d1d}
+.dialog-top {background:#211719}
+.dialog-bio p,.dialog-content li {color:#594c4a}
+.dialog-top small {color:#ebd5cb}
+.dialog-close {border-color:#c49c93}
+.befn-alerts-cover,.befn-install-backdrop {background:rgba(15,8,9,.79)}
+.befn-alerts-panel,.befn-install-panel {background:#fffaf2;color:#291b1a}
+.befn-alerts-panel p {color:#65524d}
+.befn-alerts-row {border-color:#e1d4cb}
+.befn-alerts-row input {accent-color:#b91924}
+.befn-alerts-panel button,.befn-install-panel button {background:#b71a24;color:#fff}
+.befn-alerts-status {border-color:#e7c9a4;background:#fff2db}
+.befn-alerts-toast,.toast {background:#27181b;color:#fff5e9}
+@media(hover:hover) {
+  .befn-mobile-tabs a:hover:not([aria-current="page"]) {background:#402126;color:#fff}
+}
+@media(max-width:760px) {
+  .befn-mobile-tabs a[aria-current="page"] {background:var(--brand-gold);color:#201416}
+  .ticker {color:#231818}
+  .ticker > .ticker-label {background:#a7151f;color:#fffaf1}
+}
