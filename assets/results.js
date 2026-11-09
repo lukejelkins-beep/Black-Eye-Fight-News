@@ -92,7 +92,7 @@ window.ResultsDesk=(()=>{
     <span class="result-bout-division">${esc(r.division||'Weight class not confirmed')}${extra}</span>
     ${roundText}
    </div>
-   <div class="result-bout-secondary">${r.highlights?clip(r):''}${sourceDetails(r)}</div>
+   <div class="result-bout-secondary">${r.highlights?clip(r):''}</div>
   </article>`;
  }
  function selected(){return (data?.results||[]).filter(r=>((window.BEFNSport?.get()||'all')==='all'||r.sport===(window.BEFNSport.get()==='boxing'?'Boxing':window.BEFNSport.get()==='mma'?'MMA':'Grappling'))&&(!filters.clips||r.highlights)&&JSON.stringify([r.event,r.division,...r.fighters.map(f=>f.name)]).toLowerCase().includes(filters.query.toLowerCase())).sort((a,b)=>b.date.localeCompare(a.date)||(a.order||0)-(b.order||0))}
