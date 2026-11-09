@@ -203,7 +203,7 @@ def is_routine_result(title):
         r'\bround[\s-]*by[\s-]*round\b',
         r'\blive\s+blogs?\b',
         r'\bplay[\s-]*by[\s-]*play\b',
-        r'\bresults\b\s*(?::|[-–—]|\b(?:and|from|for|of)\b|$)',
+        r'\bresults\b\s*(?::|[-–—|]|\b(?:and|from|for|of)\b|$)',
     ))
 
 def main():

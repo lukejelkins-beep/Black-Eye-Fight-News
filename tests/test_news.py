@@ -39,6 +39,7 @@ class BingFallbackTests(unittest.TestCase):
 class EditorialRoutingTests(unittest.TestCase):
  def test_routine_results_routed_out_of_news(self):
   headlines=['Chris Billam-Smith vs Cheavon Clarke Scorecard','Denzel Bentley vs Shane Mosley Jr. Scorecard','Da’Mazion Vanhouter vs Ivan Balaz Scorecard','Zuffa Boxing 12 Results from London','Buatsi vs Hutchinson 2 Results and Scorecard','UFC Vegas 124 results: Tatiana Suarez grinds her way to decision win','UFC Vegas 124 live blog: Tatiana Suarez vs Virna Jandiroba','Canelo vs Mbilli Scorecard and Round-by-Round Updates']
+  headlines += ['Main Card Results | UFC Fight Night: Cortes Acosta vs Walker','Prelim Results | UFC Fight Night: Cortes Acosta vs Walker','Official Weigh-In Results | Zuffa Boxing 12']
   self.assertTrue(all(m.is_routine_result(h) for h in headlines))
  def test_significant_fight_news_is_retained(self):
   headlines=['Heavyweight Hits Downed Opponent, Jumps Into Crowd Swinging','Maycee Barber vs. Carli Judice scratched from UFC 335 lineup','Video: José Souza scores brutal first-round knockout at UFC Vegas 124','Oliver McCall Finally Dropped at 61 After 77 Bouts, Ref Says No','Canelo Fight No-Show Sparks IBF Title Demand']
