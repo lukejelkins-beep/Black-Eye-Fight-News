@@ -224,3 +224,100 @@ summary:focus-visible,[role="button"]:focus-visible {
   .ticker {color:#231818}
   .ticker > .ticker-label {background:#a7151f;color:#fffaf1}
 }
+
+
+/* Page-specific overrides: these original IDs deliberately outrank global component styles. */
+#upcoming-cards-root .upcoming-schedule {
+  background:#151113;color:#fff6ed;border-color:#43292c;
+  box-shadow:0 12px 32px rgba(22,10,11,.2)
+}
+#upcoming-cards-root .upcoming-list-overview {border-bottom-color:#56383b}
+#upcoming-cards-root .upcoming-list-overview span {color:#cbb8b3}
+#upcoming-cards-root .upcoming-list-date {color:var(--brand-gold)}
+#upcoming-cards-root .upcoming-list-date span+span {color:#c2b0ac}
+#upcoming-cards-root .upcoming-event {border-bottom-color:#50393a!important}
+#upcoming-cards-root .upcoming-event-summary.upcoming-schedule-row:hover {
+  background:#302023!important
+}
+#upcoming-cards-root .upcoming-event-summary.upcoming-schedule-row:focus-visible {
+  outline:2px solid var(--brand-gold)
+}
+#upcoming-cards-root .upcoming-row-kicker {color:#f8cd55}
+#upcoming-cards-root .upcoming-row-chevron {color:#f1c14d}
+#upcoming-cards-root .upcoming-dot,#upcoming-cards-root .upcoming-hero-location {color:#d1beb9}
+#upcoming-cards-root .upcoming-hero-media {border-color:#674344}
+#upcoming-cards-root .upcoming-hero-media::before {
+  background:linear-gradient(135deg,#5b292b,#171013)
+}
+#upcoming-cards-root .upcoming-hero-fallback {
+  background:linear-gradient(120deg,#502427,#130e11)
+}
+#upcoming-cards-root .upcoming-expanded {
+  background:#1d1719;border-color:#563d40
+}
+#upcoming-cards-root .upcoming-expanded .upcoming-meta {
+  background:#2b1d20;color:#f1ddd3
+}
+#upcoming-cards-root .upcoming-expanded .upcoming-meta a {color:#ffd158}
+#upcoming-cards-root .upcoming-expanded .upcoming-card-bar {
+  background:#352327;color:#fff2e7;border-top-color:#5d3f42
+}
+#upcoming-cards-root .upcoming-expanded .upcoming-card-bar span {
+  background:#a91c27;color:#fff
+}
+#upcoming-cards-root .upcoming-expanded .upcoming-event-note {
+  background:#2b1e20;color:#eddad2
+}
+#upcoming-cards-root .upcoming-disclaimer {color:#d2bfb9}
+#upcoming-cards-root .upcoming-time-countdown {
+  background:#3b281c;border-color:#ad7b29;color:#ffe4a4
+}
+#upcoming-cards-root .upcoming-tabs .result-card-tab.is-active {
+  background:var(--brand-gold);color:#201618;border-bottom-color:var(--brand-gold)
+}
+.upcoming-tabs .result-card-tab:not(.is-active) {background:#221a1c;color:#e7d4cd}
+.upcoming-source-badge {background:#ffedc5;color:#6f2a1d}
+.upcoming-meta a,.upcoming-bout .result-bout-secondary a {color:#f6c345}
+.upcoming-single-section {background:#2c1a1d}
+.upcoming-fights {background:#151113!important}
+.upcoming-bout-note {background:#1c1719;color:#d8c6c1}
+.upcoming-card-bar span {background:#ad1c26;color:#fff}
+.result-vs {color:var(--brand-gold)}
+.result-feature .result-eyebrow {color:var(--brand-gold)}
+.result-card-records {border-block-color:#664044}
+.results-table caption,.results-table small,.result-event-heading p,.result-event-heading small {
+  color:#665752
+}
+.results-table th {background:#29191c;color:#fff7ee}
+.result-photo-missing,.result-outcome,.result-unavailable {color:#76645e}
+.result-event-bouts>summary span {background:#a81b25;color:#fff}
+.result-watch {background:var(--brand-gold);color:#241516}
+.result-bouts-note {background:#f6ecdf;color:#5e514e}
+.results-sync {background:#fff0d6;border-left-color:#bd242c;color:#5b302a}
+.results-sync::before {background:var(--brand-red);box-shadow:0 0 0 4px rgba(207,24,36,.1)}
+.result-card-tabs {background:#1c1719}
+.result-card-tab:hover {background:#392326}
+.result-card-tab.is-active {border-bottom-color:var(--brand-gold)}
+/* Live and win indicators retain their meaningful green semantics for readability. */
+.result-bout-compact {border-color:#524147!important;background:#171316!important}
+.result-bout-compact .result-matchup {background:#261d21}
+.result-bout-compact .result-bout-detail,
+.result-bout-compact .result-bout-secondary {background:#171316;border-top-color:#453239}
+.result-event-bouts .result-bouts-note {background:#22191c;color:#d9c7c0}
+.film-thumbnail {background:linear-gradient(130deg,#542629,#211719 65%,#100e10)}
+.film-thumbnail-fallback {color:#d9aa6e}
+.film-play {background:#1f1014db;border-color:#f3bf4a}
+.film-kind {background:#9d1a25e5;color:#fff7ea}
+.film-card-link:hover .film-copy h3 {text-decoration-color:var(--brand-red)}
+.film-meta {color:#a91b24}
+.film-copy h3 {color:#24191b}
+.film-publisher {border-top-color:#e6d8cb;color:#675751}
+.film-publisher strong {color:#9d1a23}
+.film-empty,.film-loading {border-color:#e0ccad;color:#63504c}
+.film-switch {background:#21181a;border-color:#5a4446}
+.film-switch-tab:hover {background:#4c292d}
+.film-featured {background:#fff0d9;border-left-color:#c51a26}
+.film-featured-head .eyebrow {color:#a51620}
+.film-featured-head h3 {color:#261719}
+.film-featured-head p {color:#66534e}
+.befn-alerts-toast {border-left-color:var(--brand-red);background:#251719;color:#fff7ef}
