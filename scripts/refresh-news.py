@@ -78,6 +78,91 @@ def enrich_image(a,previous,now):
     a['image']=None
     return a
 
+
+class ArticleText(HTMLParser):
+    """Capture publisher metadata and article paragraphs; never invent key facts."""
+    def __init__(self):
+        super().__init__()
+        self.meta=[]; self.paragraphs=[]; self.article_depth=0
+        self.in_p=False; self.current=[]; self.suppressed=0
+
+    def handle_starttag(self,tag,attrs):
+        a=dict(attrs)
+        if tag in ('script','style','nav','footer','aside'):self.suppressed+=1
+        if tag=='article':self.article_depth+=1
+        if tag=='meta':
+            name=(a.get('name') or a.get('property') or '').lower()
+            if name in ('description','og:description','twitter:description'):
+                if a.get('content'):self.meta.append(a['content'])
+        if tag=='p' and self.article_depth and not self.suppressed:
+            self.in_p=True;self.current=[]
+
+    def handle_data(self,text):
+        if self.in_p and not self.suppressed:self.current.append(text)
+
+    def handle_endtag(self,tag):
+        if tag=='p' and self.in_p:
+            paragraph=plain(' '.join(self.current))
+            if paragraph:self.paragraphs.append(paragraph)
+            self.in_p=False;self.current=[]
+        if tag=='article':self.article_depth=max(0,self.article_depth-1)
+        if tag in ('script','style','nav','footer','aside'):
+            self.suppressed=max(0,self.suppressed-1)
+
+def verified_key_points(*texts):
+    """Short excerpts from available original-source material, not invented AI summaries."""
+    points=[];seen=set()
+    for raw in texts:
+        if not raw:continue
+        clean=plain(raw)
+        clean=re.sub(r'(?i)\b(?:the post|read more|originally appeared on|appeared first on)\b.{0,250}$','',clean).strip()
+        for part in re.split(r'(?<=[.!?])\s+(?=[A-Z0-9“‘\'"])',clean):
+            part=part.strip(' •\n\r\t')
+            words=part.split()
+            if len(words)<7 or len(words)>31 or len(part)>230 or len(part)<38:continue
+            if re.search(r'(?i)\b(?:privacy policy|advertisement|subscribe|newsletter|read more|cookies|all rights reserved|terms of use|follow us|sign up)\b',part):continue
+            key=re.sub(r'[^a-z0-9]','',part.lower())[:150]
+            if key in seen:continue
+            seen.add(key)
+            points.append(part)
+            if len(points)==3:return points
+    return []
+
+def enrich_summary(article,previous,now):
+    snippet=article.pop('_summaryText','')
+    old=previous or {}
+    old_points=old.get('summaryPoints')
+    if old.get('title')==article['title'] and isinstance(old_points,list) and len(old_points)==3:
+        article['summaryPoints']=old_points
+        article['summaryCheckedAt']=old.get('summaryCheckedAt',now.isoformat())
+        return article
+    prev_check=stamp(old.get('summaryCheckedAt'))
+    if old.get('title')==article['title'] and prev_check and now-prev_check<dt.timedelta(hours=12):
+        article['summaryCheckedAt']=old['summaryCheckedAt']
+        return article
+    article['summaryCheckedAt']=now.isoformat()
+    points=verified_key_points(snippet)
+    if len(points)==3:
+        article['summaryPoints']=points
+        return article
+    # Only access the already verified publication URL (same allowed host after redirects).
+    allowed=('mmafighting.com','worldboxingnews.net','worldboxingnews.com','ufc.com','mmajunkie.usatoday.com','mmajunkie.com')
+    parsed=urllib.parse.urlsplit(article.get('url',''))
+    if parsed.scheme!='https' or not any(parsed.hostname==h or parsed.hostname.endswith('.'+h) for h in allowed):return article
+    try:
+        req=urllib.request.Request(article['url'],headers={'User-Agent':'Mozilla/5.0 (compatible; BlackEyeFightNews/1.0)'})
+        with urllib.request.urlopen(req,timeout=12) as response:
+            dest=urllib.parse.urlsplit(response.geturl())
+            if dest.scheme!='https' or not any(dest.hostname==h or dest.hostname.endswith('.'+h) for h in allowed):return article
+            raw=response.read(900_000).decode('utf-8','replace')
+        parser=ArticleText()
+        parser.feed(raw)
+        points=verified_key_points(snippet,*parser.meta,*parser.paragraphs[:18])
+        if len(points)==3:article['summaryPoints']=points
+    except Exception:
+        pass
+    return article
+
 def parse_feed(raw,source,sport,now):
     root=ET.fromstring(raw); out=[]
     for item in root.iter():
@@ -92,7 +177,7 @@ def parse_feed(raw,source,sport,now):
         if not when or not title or not url.startswith('https://') or not now-dt.timedelta(days=14)<=when<=now+dt.timedelta(minutes=30):continue
         url=urllib.parse.urlunsplit(urllib.parse.urlsplit(url)._replace(fragment=''))
         score=sum(weight for pattern,weight in [(r'\b(title|champion|championship)\b',3),(r'\b(result|knockout|wins|defeats|withdraw|cancel|announc|confirm)',4),(r'\b(fight|ufc|boxing|bout)\b',1)] if re.search(pattern,title,re.I))
-        out.append(dict(id=hashlib.sha256(url.encode()).hexdigest()[:20],title=title,url=url,source=source,sport=sport,publishedAt=when.isoformat(),score=score,_imageCandidates=image_candidates(item)))
+        out.append(dict(id=hashlib.sha256(url.encode()).hexdigest()[:20],title=title,url=url,source=source,sport=sport,publishedAt=when.isoformat(),score=score,_imageCandidates=image_candidates(item),_summaryText=fields.get('description') or fields.get('summary') or ''))
     return out
 
 
@@ -161,7 +246,7 @@ def mma_junkie_bing(raw,now):
         url=urllib.parse.urlunsplit(parsed._replace(fragment=''))
         score=sum(weight for pattern,weight in [(r'\b(title|champion|championship)\b',3),(r'\b(result|knockout|wins|defeats|withdraw|cancel|announc|confirm)',4),(r'\b(fight|ufc|boxing|bout)\b',1)] if re.search(pattern,title,re.I))
         output.append(dict(id=hashlib.sha256(url.encode()).hexdigest()[:20],title=title,url=url,source='MMA Junkie',sport='mma',publishedAt=when.isoformat(),score=score,
-          sourceMethod='Bing News indexed MMA Junkie original',timeBasis='Bing News feed timestamp',_imageCandidates=[]))
+          sourceMethod='Bing News indexed MMA Junkie original',timeBasis='Bing News feed timestamp',_imageCandidates=[],_summaryText=fields.get('description','')))
     return output
 
 def source_articles(source,sport,url,now):
@@ -217,7 +302,7 @@ def main():
             if not found:raise ValueError('No dated recent items; previous content retained')
             found=[a for a in found if not is_routine_result(a['title'])]
             with ThreadPoolExecutor(max_workers=6) as pool:
-                found=list(pool.map(lambda a:enrich_image(a,articles.get(a['url']),now),found))
+                found=list(pool.map(lambda a:enrich_summary(enrich_image(a,articles.get(a['url']),now),articles.get(a['url']),now),found))
             for a in found:
                 previous=articles.get(a['url']);a['firstSeenAt']=previous.get('firstSeenAt',now.isoformat()) if previous else now.isoformat()
                 if previous and previous['title']!=a['title']:a['updatedAt']=now.isoformat()

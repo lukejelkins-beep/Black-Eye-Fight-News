@@ -39,8 +39,29 @@ function headlineCard(a){
  const fighter=newsFighterImage(a),publisher=a.image&&/^https:\/\//.test(a.image.url||'')?a.image:null;
  const src=publisher?publisher.url:fighter?fighter.url:'assets/mark.svg';
  const alt=publisher?(publisher.alt||a.title):fighter?'File photo of '+fighter.name:a.sport+' news';
- const caption=publisher?(publisher.credit||a.source)+(publisher.kind==='archive'?' · Archive feature image':' · Article image'):fighter?'File photo · '+fighter.name:'Combat sports news';
- return `<article class="news-card live-news-card"><a class="live-news-visual" href="${safeURL(a.url)}" target="_blank" rel="noopener noreferrer" aria-label="Read ${esc(a.title)}"><img class="live-news-image${!publisher&&!fighter?' news-brand-image':''}" src="${src==='assets/mark.svg'?src:safeURL(src)}" alt="${esc(alt)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-news-fallback="${fighter?safeURL(fighter.url):''}" data-news-fallback-name="${fighter?esc(fighter.name):''}"><span class="live-news-sport">${esc(a.sport)}</span></a><div class="live-news-copy"><p class="live-news-credit">${esc(caption)}</p><div class="card-kicker">${esc(a.sport)} · ${esc(a.source)} ${a.updatedAt?'· UPDATED':''}</div><h3><a href="${safeURL(a.url)}" target="_blank" rel="noopener noreferrer">${esc(a.title)}</a></h3>${a.summary?'<p>'+esc(a.summary)+'</p>':''}${a.publishedAt?'<p>'+esc(displayDate(a.publishedAt))+' local time</p>':''}${a.updatedAt?'<p>Headline updated '+esc(displayDate(a.updatedAt))+'</p>':''}<a href="${safeURL(a.url)}" target="_blank" rel="noopener noreferrer">Read original reporting ↗</a></div></article>`;
+ const href=safeURL(a.url),when=a.publishedAt?'<span class="news-strip-time"> · '+(a.timeBasis?'Indexed ':'')+esc(displayDate(a.publishedAt))+'</span>':'';
+ const points=Array.isArray(a.summaryPoints)?a.summaryPoints.filter(p=>typeof p==='string'&&p.trim()).slice(0,3):[];
+ const summary=points.length===3?'<ul class="news-strip-points" aria-label="Three key points from source reporting">'+points.map(point=>'<li>'+esc(point)+'</li>').join('')+'</ul>':
+  '<p class="news-strip-pending">Summary pending source verification</p>';
+ return '<article class="news-card live-news-card news-strip">'
+  +'<div class="news-strip-top"><div class="news-strip-story"><p class="news-strip-source">'+esc(a.source)+' · '+esc(a.sport.toUpperCase())+when+'</p>'
+  +'<h3 class="news-strip-headline"><a href="'+href+'" target="_blank" rel="noopener noreferrer">'+esc(a.title)+'</a></h3></div>'
+  +'<a class="news-strip-thumbnail" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image'+(!publisher&&!fighter?' news-brand-image':'')+'" src="'+(src==='assets/mark.svg'?src:safeURL(src))+'" alt="'+esc(alt)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-news-fallback="'+(fighter?safeURL(fighter.url):'')+'" data-news-fallback-name="'+(fighter?esc(fighter.name):'')+'"></a></div>'
+  +summary+'<a class="news-strip-original" href="'+href+'" target="_blank" rel="noopener noreferrer">Read original ↗</a></article>';
+}
+
+function newsFeatureCard(a){
+ const fighter=newsFighterImage(a),publisher=a.image&&/^https:\/\//.test(a.image.url||'')?a.image:null;
+ const src=publisher?publisher.url:fighter?fighter.url:'assets/mark.svg';
+ const alt=publisher?(publisher.alt||a.title):fighter?'File photo of '+fighter.name:a.sport+' news';
+ const href=safeURL(a.url);
+ const points=Array.isArray(a.summaryPoints)?a.summaryPoints.filter(p=>typeof p==='string'&&p.trim()).slice(0,3):[];
+ const summary=points.length===3?'<ul class="news-strip-points" aria-label="Three key points from source reporting">'+points.map(p=>'<li>'+esc(p)+'</li>').join('')+'</ul>':'<p class="news-strip-pending">Summary pending source verification</p>';
+ return '<article class="live-news-card news-feature-card">'
+  +'<a href="'+href+'" class="news-feature-photo" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image'+(!publisher&&!fighter?' news-brand-image':'')+'" src="'+(src==='assets/mark.svg'?src:safeURL(src))+'" alt="'+esc(alt)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-news-fallback="'+(fighter?safeURL(fighter.url):'')+'" data-news-fallback-name="'+(fighter?esc(fighter.name):'')+'"></a>'
+  +'<div class="news-feature-copy"><div class="news-feature-kicker">In focus · '+esc(a.sport)+' · '+esc(a.source)+'</div>'
+  +'<h3><a href="'+href+'" target="_blank" rel="noopener noreferrer">'+esc(a.title)+'</a></h3>'
+  +summary+'<a class="news-strip-original" href="'+href+'" target="_blank" rel="noopener noreferrer">Read original ↗</a></div></article>';
 }
 document.addEventListener('error',event=>{
  const img=event.target;if(!img.classList?.contains('live-news-image'))return;
@@ -135,12 +156,12 @@ function newsFeedItems(){
   :Date.parse(b.publishedAt)-Date.parse(a.publishedAt));
 }
 function renderNewsFeed(){
- const all=newsFeedItems(),shown=all.slice(0,Math.max(1,state.newsPage||1)*12);
+ const all=newsFeedItems(),shown=all.slice(0,Math.max(1,state.newsPage||1)*14);
  const controls='<div class="unified-news-filters">'+segments('news',['all','boxing','mma'],state.news)+segments('newsSort',['latest','significant'],state.newsSort)+'</div>';
  const more=shown.length<all.length?'<button class="news-load-more" type="button" data-news-more>Show more stories ('+(all.length-shown.length)+' remaining)</button>':'';
  const junkie=state.news==='mma'?'<a class="news-publisher-link" href="https://mmajunkie.usatoday.com/" target="_blank" rel="noopener noreferrer">MMA Junkie ↗</a>':'';
  return '<div class="front-follow-up"><div class="front-follow-up-head"><h2>Latest news</h2><span class="unified-news-count">'+all.length+' stories</span></div>'
-  +controls+junkie+'<div class="grid news-grid">'+(shown.length?shown.map(headlineCard).join(''):'<p class="front-loading">No other articles match these filters.</p>')+'</div>'
+  +controls+junkie+'<div class="grid news-grid">'+(shown.length?shown.map((a,i)=>i%7===6?newsFeatureCard(a):headlineCard(a)).join(''):'<p class="front-loading">No other articles match these filters.</p>')+'</div>'
   +more+sourceHealth()+'</div>';
 }
 function renderHome(){

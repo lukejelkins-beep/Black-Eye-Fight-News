@@ -45,6 +45,26 @@ class EditorialRoutingTests(unittest.TestCase):
   headlines=['Heavyweight Hits Downed Opponent, Jumps Into Crowd Swinging','Maycee Barber vs. Carli Judice scratched from UFC 335 lineup','Video: José Souza scores brutal first-round knockout at UFC Vegas 124','Oliver McCall Finally Dropped at 61 After 77 Bouts, Ref Says No','Canelo Fight No-Show Sparks IBF Title Demand']
   self.assertFalse(any(m.is_routine_result(h) for h in headlines))
 
+
+class SourceSummaryTests(unittest.TestCase):
+ def test_three_points_extracted_from_actual_feed_description(self):
+  fixture='<rss><channel><item><title>Contender announcement</title><link>https://www.mmafighting.com/verified/story</link><pubDate>Mon, 09 Nov 2026 04:10:00 GMT</pubDate><description>Officials have confirmed the main-event pairing for the upcoming card. Both athletes are scheduled to attend the pre-fight press conference on Thursday. The event promoter has also published the official venue information.</description></item></channel></rss>'
+  rows=m.parse_feed(fixture.encode(),'MMA Fighting','mma',dt.datetime(2026,11,9,6,tzinfo=dt.timezone.utc))
+  self.assertEqual(len(rows),1)
+  a=m.enrich_summary(rows[0],{},dt.datetime(2026,11,9,6,tzinfo=dt.timezone.utc))
+  self.assertEqual(len(a.get('summaryPoints',[])),3)
+  self.assertTrue(a['summaryPoints'][0].startswith('Officials'))
+  self.assertNotIn('_summaryText',a)
+ def test_not_fabricating_when_source_has_insufficient_detail(self):
+  self.assertEqual(m.verified_key_points('Official story published today.'),[])
+  a={'url':'https://example.com/post','title':'Headline only','_summaryText':'A fighter won.'}
+  out=m.enrich_summary(a,{},dt.datetime(2026,11,9,6,tzinfo=dt.timezone.utc))
+  self.assertNotIn('summaryPoints',out)
+ def test_publisher_meta_and_body(self):
+  p=m.ArticleText()
+  p.feed('<html><head><meta name="description" content="The reported contest will be held at the Sydney venue later this month."></head><body><article><p>The promotion released the event listing following the official announcement earlier today.</p><p>Tickets are expected to go on general sale through the venue next week.</p></article></body></html>')
+  self.assertEqual(len(m.verified_key_points(*p.meta,*p.paragraphs)),3)
+
 class ImageTests(unittest.TestCase):
  def test_feed_image_and_credit(self):
   item=m.ET.fromstring('<item><description>&lt;img src="https://www.worldboxingnews.com/photo.jpg" alt="A vs B" /&gt;</description></item>')
