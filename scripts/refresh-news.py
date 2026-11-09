@@ -11,8 +11,10 @@ SOURCES=[
  ('MMA Junkie','mma','https://mmajunkie.usatoday.com/feed/'),
  ('UFC','mma','https://www.ufc.com/rss/news'),
  ('ONE MMA','mma','https://www.onefc.com/category/mixed-martial-arts/feed/'),
- ('ONE Submission Grappling','grappling','https://www.onefc.com/category/submission-grappling/feed/'),
+ ('ONE Submission Grappling','grappling','https://www.onefc.com/feed/'),
  ('Cage Warriors','mma','https://cagewarriors.com/feed/'),
+ ('RIZIN','mma','https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US'),
+ ('KSW','mma','https://www.bing.com/news/search?q=site%3Akswmma.com%2Fen&format=rss&setmkt=en-US'),
  ('ADCC','grappling','https://adcombat.com/feed/'),
  ('NCAA Division I Wrestling','grappling','https://www.ncaa.com/news/wrestling/d1/rss.xml'),
  ('NCAA Division II Wrestling','grappling','https://www.ncaa.com/news/wrestling/d2/rss.xml'),
@@ -60,7 +62,7 @@ def image_candidates(item):
 def valid_image(url):
     # Only publisher image hosts are fetched by the collector. No arbitrary URL fetches.
     host=urllib.parse.urlsplit(url).hostname or ''
-    allowed=('worldboxingnews.com','worldboxingnews.net','mmafighting.com','vox-cdn.com','ufc.com','ufc.tv','cloudfront.net','mmajunkie.usatoday.com','mmajunkie.com','gannett-cdn.com','usatoday.com','onefc.com','cagewarriors.com','adcombat.com','ncaa.com','floassets.com','flosports.tv','flograppling.com')
+    allowed=('worldboxingnews.com','worldboxingnews.net','mmafighting.com','vox-cdn.com','ufc.com','ufc.tv','cloudfront.net','mmajunkie.usatoday.com','mmajunkie.com','gannett-cdn.com','usatoday.com','onefc.com','cagewarriors.com','adcombat.com','ncaa.com','floassets.com','flosports.tv','flograppling.com','kswmma.com','rizinff.com')
     if not any(host==d or host.endswith('.'+d) for d in allowed):return False
     try:
         req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Range':'bytes=0-1023'})
@@ -214,7 +216,7 @@ def enrich_summary(article,previous,now,force=False):
         article['summaryPoints']=points
         return article
     # Only access the already verified publication URL (same allowed host after redirects).
-    allowed=('mmafighting.com','worldboxingnews.net','worldboxingnews.com','ufc.com','mmajunkie.usatoday.com','mmajunkie.com','onefc.com','cagewarriors.com','adcombat.com','ncaa.com')
+    allowed=('mmafighting.com','worldboxingnews.net','worldboxingnews.com','ufc.com','mmajunkie.usatoday.com','mmajunkie.com','onefc.com','cagewarriors.com','adcombat.com','ncaa.com','kswmma.com','rizinff.com')
     parsed=urllib.parse.urlsplit(article.get('url',''))
     if parsed.scheme=='https' and any(parsed.hostname==h or parsed.hostname.endswith('.'+h) for h in allowed):
         try:
@@ -256,8 +258,8 @@ def sport_for_article(article, default_sport):
     if source.startswith('ONE') and re.search(r'\b(?:mma|mixed martial arts|mma title|mma world)\b',title,re.I):
         return 'mma'
     if source.startswith('ONE') and default_sport=='grappling':
-        # Category feed is already curated by ONE as a grappling article.
-        return 'grappling'
+        # ONE's official main feed covers several rulesets: do not guess.
+        return 'grappling' if GRAPPLING_TERMS.search(title) else None
     if source.startswith('ONE') and default_sport=='mma':return 'mma'
     if source=='UFC' and 'ufc bjj' in title.lower():return 'grappling'
     if source.startswith('NCAA') or source=='ADCC':return 'grappling'
@@ -355,6 +357,29 @@ def mma_junkie_bing(raw,now):
           sourceMethod='Bing News indexed MMA Junkie original',timeBasis='Bing News feed timestamp',_imageCandidates=[],_summaryText=fields.get('description','')))
     return output
 
+def indexed_official_source(raw, source, sport, now):
+    """Direct official article links indexed in Bing, not assumed publication timestamps."""
+    approved={'RIZIN':('jp.rizinff.com','rizinff.com','www.rizinff.com'),
+              'KSW':('www.kswmma.com','kswmma.com')}.get(source,())
+    root=ET.fromstring(raw);out=[]
+    for item in root.iter():
+        if item.tag.split('}')[-1]!='item':continue
+        fields={child.tag.split('}')[-1]:''.join(child.itertext()) for child in item}
+        url=fields.get('link','').strip();parts=urllib.parse.urlsplit(url)
+        if parts.hostname in ('www.bing.com','bing.com'):
+            url=urllib.parse.parse_qs(parts.query).get('url',[''])[0];parts=urllib.parse.urlsplit(url)
+        if parts.scheme!='https' or parts.hostname not in approved:continue
+        when=stamp(fields.get('pubDate'));title=plain(fields.get('title'))
+        if not when or not title or not now-dt.timedelta(days=14)<=when<=now+dt.timedelta(minutes=30):continue
+        if is_non_combat_url(url):continue
+        url=urllib.parse.urlunsplit(parts._replace(fragment=''))
+        out.append({'id':hashlib.sha256(url.encode()).hexdigest()[:20],
+          'title':title,'url':url,'source':source,'sport':sport,
+          'publishedAt':when.isoformat(),'timeBasis':'Bing News index timestamp',
+          'sourceMethod':'Original official domain indexed by Bing News',
+          'score':1,'_imageCandidates':[],'_summaryText':fields.get('description','')})
+    return out
+
 def source_articles(source,sport,url,now):
     urls=[url]
     if source=='MMA Junkie':
@@ -364,15 +389,15 @@ def source_articles(source,sport,url,now):
         try:
             req=urllib.request.Request(candidate,headers={'User-Agent':'Mozilla/5.0 (compatible; BlackEyeFightNews/1.0)'})
             try:
-                with urllib.request.urlopen(req,timeout=20) as response: raw=response.read(3_000_000)
+                with urllib.request.urlopen(req,timeout=12) as response: raw=response.read(3_000_000)
             except urllib.error.HTTPError as exc:
                 if exc.code!=429 or urllib.parse.urlsplit(candidate).hostname!='api.gdeltproject.org':raise
                 time.sleep(6)
-                with urllib.request.urlopen(req,timeout=20) as response: raw=response.read(3_000_000)
+                with urllib.request.urlopen(req,timeout=12) as response: raw=response.read(3_000_000)
             if urllib.parse.urlsplit(candidate).hostname=='api.gdeltproject.org':
                 found=mma_junkie_gdelt(raw,now)
             elif urllib.parse.urlsplit(candidate).hostname=='www.bing.com':
-                found=mma_junkie_bing(raw,now)
+                found=indexed_official_source(raw,source,sport,now) if source in ('RIZIN','KSW') else mma_junkie_bing(raw,now)
             elif urllib.parse.urlsplit(candidate).hostname=='news.google.com':
                 found=mma_junkie_google_feed(raw,now)
             else:
@@ -429,7 +454,7 @@ def main():
                 a=enrich_image(a,previous,now)
                 return a if is_routine_result(a['title']) else enrich_summary(a,previous,now)
             with ThreadPoolExecutor(max_workers=6) as pool:
-                found=list(pool.map(process,found[:36]))
+                found=list(pool.map(process,found[:12]))
             for a in found:
                 previous=articles.get(a['url']) or reports.get(a['url'])
                 a['firstSeenAt']=previous.get('firstSeenAt',now.isoformat()) if previous else now.isoformat()
@@ -445,7 +470,7 @@ def main():
             previous=next((s for s in old.get('sources',[]) if s['name']==source),{})
             statuses.append({'name':source,'sport':sport,'ok':False,'lastSuccessfulAt':previous.get('lastSuccessfulAt'),'error':str(exc)[:160]})
     missing=[a for a in sorted(articles.values(),key=lambda a:a['publishedAt'],reverse=True)
-             if summary_needs_refresh(a,now)][:36]
+             if summary_needs_refresh(a,now)][:18]
     if missing:
         with ThreadPoolExecutor(max_workers=5) as pool:
             refreshed=list(pool.map(lambda a:enrich_summary(dict(a),a,now,force=True),missing))
