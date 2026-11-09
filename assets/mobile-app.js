@@ -14,7 +14,8 @@
  const items=[['home','News','news'],['highlights','Film','film'],['calendar','Fights','fights'],['results','Results','results'],['social','Fight Talk','social']];
  let sheet=null, opener=null;
  function active(){
-   const key=location.hash.slice(1).split('/')[0]||'home';
+   const route=location.hash.slice(1).split('/')[0]||'home';
+   const key=route==='news'?'home':route;
    document.querySelectorAll('.befn-mobile-tabs a').forEach(a=>{
      if(a.dataset.key===key)a.setAttribute('aria-current','page');
      else a.removeAttribute('aria-current');

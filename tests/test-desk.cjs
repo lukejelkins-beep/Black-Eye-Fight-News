@@ -4,6 +4,14 @@ const resultsSource=fs.readFileSync('assets/results.js','utf8');
 const filmSource=fs.readFileSync('assets/fight-film.js','utf8');
 assert(fullSite.includes('editorial-compact.css'),'Editorial-first CSS linked');
 assert(fullSite.includes('function topStories()'),'Headline ranking implemented on public home');
+const installedAppSource=fs.readFileSync('assets/mobile-app.js','utf8');
+assert(fullSite.includes('function newsFeedItems()'),'Home and News share the same underlying article feed');
+assert(fullSite.includes('function renderNews(){return renderHome();}'),'Old news links use unified home');
+assert(!fullSite.includes('data-nav="news"'),'Duplicate News section removed');
+assert(!installedAppSource.includes("['news','News','news']"),'Mobile duplicate News tab removed');
+assert(installedAppSource.includes("route==='news'?'home':route"),'Old News deep links highlight the new News tab');
+assert(!installedAppSource.includes('Newsletter editions'),'Private newsletter remains separate from public website');
+
 assert(!fullSite.includes('THE FIGHT<br>WORLD'),'Promotional home hero removed');
 assert(!fullSite.includes('Championship trackers. Deep scouting intelligence.'),'Home marketing copy removed');
 assert(!resultsSource.includes('The outcome. The new records.'),'Results introductory fluff removed');
