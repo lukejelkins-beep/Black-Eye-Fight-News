@@ -2241,7 +2241,7 @@
       "section": "Main card",
       "order": 0,
       "status": "completed",
-      "scheduledRounds": 5
+      "scheduledRounds": 3
     },
     {
       "id": "one-fn49-2026-11-07-2",
@@ -2858,6 +2858,106 @@
       "order": 8,
       "status": "completed",
       "scheduledRounds": 3
+    },
+    {
+      "id": "rizin-55-2026-11-08-1",
+      "eventId": "rizin-55-2026-11-08",
+      "event": "RIZIN 55 — verified main-card results",
+      "sport": "MMA",
+      "date": "2026-11-08",
+      "location": "Chiba, Japan",
+      "division": "Flyweight title",
+      "fighters": [
+        {
+          "name": "Tony Laramie"
+        },
+        {
+          "name": "Makoto Shinryu"
+        }
+      ],
+      "winner": 0,
+      "method": "split decision",
+      "source": "https://jp.rizinff.com/_ct/17874867?ct=rel&fr=wg",
+      "summary": "Tony Laramie defeated Makoto Shinryu by split decision.",
+      "section": "Main card",
+      "order": 0,
+      "status": "completed",
+      "scheduledRounds": 3
+    },
+    {
+      "id": "rizin-55-2026-11-08-2",
+      "eventId": "rizin-55-2026-11-08",
+      "event": "RIZIN 55 — verified main-card results",
+      "sport": "MMA",
+      "date": "2026-11-08",
+      "location": "Chiba, Japan",
+      "division": "Bantamweight",
+      "fighters": [
+        {
+          "name": "Yrysbek Tilenov"
+        },
+        {
+          "name": "Naoki Inoue"
+        }
+      ],
+      "winner": 0,
+      "method": "unanimous decision",
+      "source": "https://jp.rizinff.com/_ct/17874866",
+      "summary": "Yrysbek Tilenov defeated Naoki Inoue by unanimous decision.",
+      "section": "Main card",
+      "order": 1,
+      "status": "completed",
+      "scheduledRounds": 3
+    },
+    {
+      "id": "rizin-55-2026-11-08-3",
+      "eventId": "rizin-55-2026-11-08",
+      "event": "RIZIN 55 — verified main-card results",
+      "sport": "MMA",
+      "date": "2026-11-08",
+      "location": "Chiba, Japan",
+      "division": "Bantamweight",
+      "fighters": [
+        {
+          "name": "Ryuya Fukuda"
+        },
+        {
+          "name": "Soo Chul Kim"
+        }
+      ],
+      "winner": 0,
+      "method": "unanimous decision",
+      "source": "https://jp.rizinff.com/_ct/17874863",
+      "summary": "Ryuya Fukuda defeated Soo Chul Kim by unanimous decision.",
+      "section": "Main card",
+      "order": 2,
+      "status": "completed",
+      "scheduledRounds": 3
+    },
+    {
+      "id": "rizin-55-2026-11-08-4",
+      "eventId": "rizin-55-2026-11-08",
+      "event": "RIZIN 55 — verified main-card results",
+      "sport": "MMA",
+      "date": "2026-11-08",
+      "location": "Chiba, Japan",
+      "division": "Bantamweight",
+      "fighters": [
+        {
+          "name": "Jinnosuke Kashimura"
+        },
+        {
+          "name": "Shinobu Ota"
+        }
+      ],
+      "winner": 0,
+      "method": "submission (Ezekiel choke)",
+      "source": "https://jp.rizinff.com/_ct/17874862?o=0&tg=RIZIN55",
+      "summary": "Jinnosuke Kashimura defeated Shinobu Ota by submission (Ezekiel choke).",
+      "section": "Main card",
+      "order": 3,
+      "status": "completed",
+      "scheduledRounds": 3
     }
   ],
   "events": [
@@ -3035,6 +3135,25 @@
       "mainBoutId": "one-friday177-2026-11-06-1",
       "expectedBouts": 9,
       "checkedAt": "2026-11-09T00:00:00Z",
+      "sectionOrder": {
+        "main": "headliner-first"
+      }
+    },
+    {
+      "id": "rizin-55-2026-11-08",
+      "name": "RIZIN 55 — verified main-card results",
+      "date": "2026-11-08",
+      "status": "completed",
+      "feeds": [],
+      "takeaways": [
+        {
+          "text": "Tony Laramie defeated Makoto Shinryu by split decision for the flyweight title.",
+          "source": "https://jp.rizinff.com/_ct/17874867?ct=rel&fr=wg"
+        }
+      ],
+      "featuredId": "rizin-55-2026-11-08-1",
+      "mainBoutId": "rizin-55-2026-11-08-1",
+      "expectedBouts": 4,
       "sectionOrder": {
         "main": "headliner-first"
       }
