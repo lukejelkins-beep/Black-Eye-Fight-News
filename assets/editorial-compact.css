@@ -73,3 +73,36 @@
  #main .news-grid{gap:12px}
 }
 @media(prefers-reduced-motion:reduce){.front-lead-image img{transition:none}}
+
+/* Short, scannable secondary headlines; avoid tall editorial-summary cards. */
+#main .news-grid{gap:13px}
+#main .news-grid .live-news-card{min-height:0;box-shadow:none}
+#main .news-grid .live-news-card .live-news-visual{max-height:185px}
+#main .news-grid .live-news-card .live-news-copy{padding:15px 16px 18px}
+#main .news-grid .live-news-card .live-news-copy h3{font-size:clamp(22px,2.4vw,28px);line-height:1.08}
+#main .news-grid .live-news-card .live-news-copy>p:not(.live-news-credit){display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#main .news-grid .live-news-card .live-news-credit{font-size:10px;opacity:.75}
+/* The refresh status remains readable but never becomes a giant coloured block. */
+#main .results-page .results-sync{background:transparent;border:0;border-bottom:1px solid #d8cbc3;color:#665652;padding:5px 0 10px;margin:0 0 14px}
+#main .results-page .results-sync::before{box-shadow:none;width:7px;height:7px;flex-basis:7px}
+/* Dense controls are easier to use on narrow phones. */
+#main .results-page .results-toolbar{background:#f1e6da;padding:13px 15px}
+#main .results-page .results-toolbar label{gap:5px}
+#main .results-page .results-toolbar select,#main .results-page .results-toolbar input[type=search]{min-height:40px;padding:9px 11px}
+#main .results-page .results-toolbar button{min-height:40px}
+#talk-results .talk-section-head p,#talk-results .talk-section-head .talk-section-eyebrow{display:none}
+#talk-results .talk-section-head{margin-bottom:13px}
+#main .talk-toolbar{margin-bottom:14px}
+@media(max-width:600px){
+ #main .news-grid .live-news-card .live-news-visual{max-height:188px}
+ #main .results-page .results-toolbar{padding:11px;gap:9px}
+ #main .results-page .results-search{min-width:100%;flex:1 1 100%}
+ #main .results-page .results-toolbar .results-check{min-height:34px}
+}
+@media(max-width:400px){
+ .front-lead-image{height:178px}
+ .front-lead-copy h2{font-size:28px}
+ .front-brief-card h3{font-size:21px}
+ .front-home-head h1{font-size:32px}
+ .front-follow-up-head h2{font-size:26px}
+}
