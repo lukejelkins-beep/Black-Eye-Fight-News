@@ -116,6 +116,16 @@ class SourceSummaryTests(unittest.TestCase):
  def test_non_combat_syndicated_news_is_not_included(self):
   self.assertTrue(m.is_non_combat_url("https://mmajunkie.usatoday.com/story/sports/nfl/lions/2026/11/08/story/123/"))
   self.assertFalse(m.is_non_combat_url("https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/09/story/123/"))
+ def test_retains_distinct_old_source_facts_when_publisher_unavailable(self):
+  old={'title':'Verified fight contract dispute','summaryPoints':[
+   'The promoter alleges that the group demanded a financial penalty during negotiations.',
+   'The promoter accused the other group of demanding the same penalty again during talks.',
+   'The two parties have not agreed on the proposed contest after the dispute became public.'
+  ]}
+  article={'url':'https://example.com/unchanged','title':old['title'],'_summaryText':''}
+  out=m.enrich_summary(article,old,dt.datetime(2026,11,9,6,tzinfo=dt.timezone.utc),force=True)
+  self.assertGreaterEqual(len(out.get('summaryPoints',[])),1)
+  self.assertLessEqual(len(out['summaryPoints']),3)
  def test_content_encoded_is_used_for_summary_text(self):
   xml=b'<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><item><title>Fight announced</title><link>https://example.com/fight</link><pubDate>Mon, 09 Nov 2026 04:10:00 GMT</pubDate><content:encoded><![CDATA[Officials confirmed the bout for the event next month. Both fighters accepted the matchup after negotiations concluded this week. The promoter also confirmed the venue and broadcast plans.]]></content:encoded></item></channel></rss>'
   row=m.parse_feed(xml,'Test','boxing',dt.datetime(2026,11,9,6,tzinfo=dt.timezone.utc))[0]
