@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 photos = SourceFileLoader('espn_portraits', str(ROOT/'scripts/enrich-espn-headshots.py')).load_module()
 SCOREBOARD = photos.SCOREBOARD
 FIGHTCENTER = photos.FIGHTCENTER
-PATTERN = re.compile(r'^\s*(\d+)\s*[-–]\s*(\d+)\s*[-–]\s*(\d+)\s*
+PATTERN = re.compile(r'^\s*(\d+)\s*[-–]\s*(\d+)\s*[-–]\s*(\d+)\s*$')
 
 def record_of(competitor):
     """Only accept an explicitly labelled complete professional W-L-D record."""
