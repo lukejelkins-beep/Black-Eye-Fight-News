@@ -834,10 +834,10 @@ function renderPublicXTimelines(){
   if(state.socialMode!=='latest'||!['all','X'].includes(state.socialPlatform))return '';
   const accounts={
    boxing:[{handle:'Zuffa_Boxing',name:'Zuffa Boxing',kind:'Boxing promoter'},{handle:'jakepaul',name:'Jake Paul',kind:'Boxing fighter'}],
-   mma:[{handle:'UFC',name:'UFC',kind:'MMA promoter'},{handle:'TheNotoriousMMA',name:'Conor McGregor',kind:'MMA fighter'}],
+   mma:[{handle:'UFC',name:'UFC',kind:'MMA promoter'},{handle:'TheNotoriousMMA',name:'Conor McGregor',kind:'MMA fighter'},{handle:'MMAJunkie',name:'MMA Junkie',kind:'MMA news & media'}],
    grappling:[{handle:'rafwrestlingusa',name:'Real American Freestyle',kind:'Wrestling promoter'},{handle:'a_ok_i',name:'Shinya Aoki',kind:'Grappling fighter'}]
   };
-  const featured=state.social==='all'?[accounts.boxing[0],accounts.mma[1]]:accounts[state.social]||[];
+  const featured=state.social==='all'?[accounts.boxing[0],accounts.mma[1],accounts.mma[2]]:accounts[state.social]||[];
   return '<section class="talk-x-stream" aria-label="Public X account timelines">'
    +'<div class="talk-section-head"><div><div class="talk-section-eyebrow">DIRECT FROM X</div><h2>Live from X</h2>'
    +'<p>Recent public posts from selected fighter and promoter accounts, loaded directly by X without an API subscription. X controls availability; if a timeline does not load, open the account.</p></div></div>'

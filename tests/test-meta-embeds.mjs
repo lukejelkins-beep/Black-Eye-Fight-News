@@ -17,6 +17,7 @@ assert.equal(xLinks.length,1);
 assert.equal(xLinks[0].platform,'X');
 assert.equal(publisherOf('https://www.mmafighting.com/ufc/test'),'MMA Fighting');
 assert.equal(publisherOf('https://example.org/article'),'');
+assert.equal(publisherOf('https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/09/test/12345/'),'MMA Junkie');
 assert.equal(validMetaEmbed({type:'rich',provider_name:'Instagram',html:'<blockquote class="instagram-media">verified public post</blockquote>'},'Instagram'),true);
 assert.equal(validMetaEmbed({type:'rich',provider_name:'X',html:'<blockquote>unrelated</blockquote>'},'Threads'),false);
 const at='2026-11-08T07:15:00Z',article={url:'https://www.mmafighting.com/ufc/1234/post',sport:'mma',publishedAt:'2026-11-08T05:10:00Z'};

@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from html.parser import HTMLParser
 from concurrent.futures import ThreadPoolExecutor
-SOURCES=[('World Boxing News','boxing','https://www.worldboxingnews.net/feed/'),('MMA Fighting','mma','https://www.mmafighting.com/rss/index.xml'),('UFC','mma','https://www.ufc.com/rss/news')]
+SOURCES=[('World Boxing News','boxing','https://www.worldboxingnews.net/feed/'),('MMA Fighting','mma','https://www.mmafighting.com/rss/index.xml'),('MMA Junkie','mma','https://mmajunkie.usatoday.com/feed/'),('UFC','mma','https://www.ufc.com/rss/news')]
 UTC=dt.timezone.utc
 
 def stamp(value):
@@ -48,7 +48,7 @@ def image_candidates(item):
 def valid_image(url):
     # Only publisher image hosts are fetched by the collector. No arbitrary URL fetches.
     host=urllib.parse.urlsplit(url).hostname or ''
-    allowed=('worldboxingnews.com','worldboxingnews.net','mmafighting.com','vox-cdn.com','ufc.com','ufc.tv','cloudfront.net')
+    allowed=('worldboxingnews.com','worldboxingnews.net','mmafighting.com','vox-cdn.com','ufc.com','ufc.tv','cloudfront.net','mmajunkie.usatoday.com','mmajunkie.com','gannett-cdn.com','usatoday.com')
     if not any(host==d or host.endswith('.'+d) for d in allowed):return False
     try:
         req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Range':'bytes=0-1023'})
@@ -66,7 +66,7 @@ def enrich_image(a,previous,now):
     if not candidates:
         try:
             host=urllib.parse.urlsplit(a['url']).hostname or ''
-            if host in ('www.worldboxingnews.com','www.worldboxingnews.net','www.mmafighting.com','www.ufc.com'):
+            if host in ('www.worldboxingnews.com','www.worldboxingnews.net','www.mmafighting.com','www.ufc.com','mmajunkie.usatoday.com','www.mmajunkie.usatoday.com'):
                 req=urllib.request.Request(a['url'],headers={'User-Agent':'Mozilla/5.0'})
                 with urllib.request.urlopen(req,timeout=10) as r:page=r.read(1_000_000).decode('utf-8','replace')
                 parser=ArticleImages();parser.feed(page);candidates=parser.images[:4]
@@ -95,6 +95,48 @@ def parse_feed(raw,source,sport,now):
     return out
 
 
+
+def mma_junkie_google_feed(raw,now):
+    """Source-verified syndication fallback, NOT a publisher RSS timestamp."""
+    root=ET.fromstring(raw); trusted={'mmajunkie.usatoday.com','www.mmajunkie.usatoday.com','mmajunkie.com','www.mmajunkie.com'}
+    channel=ET.Element('channel')
+    for item in root.iter():
+        if item.tag.split('}')[-1]!='item':continue
+        src=next((c for c in item if c.tag.split('}')[-1]=='source'),None)
+        host=urllib.parse.urlsplit(src.get('url','')).hostname if src is not None else ''
+        if host not in trusted:continue
+        title=next((c for c in item if c.tag.split('}')[-1]=='title'),None)
+        if title is not None and title.text:title.text=re.sub(r'\s+-\s+MMA\s*Junkie\s*$','',title.text,flags=re.I)
+        channel.append(item)
+    out=parse_feed(ET.tostring(channel,encoding='utf8'),'MMA Junkie','mma',now)
+    out=[a for a in out if urllib.parse.urlsplit(a['url']).hostname=='news.google.com']
+    for a in out:
+        a['sourceMethod']='Google News indexed MMA Junkie original'
+        a['timeBasis']='Google News feed timestamp'
+    return out
+
+def source_articles(source,sport,url,now):
+    urls=[url]
+    if source=='MMA Junkie':
+        urls+=['https://mmajunkie.com/feed/','https://news.google.com/rss/search?q=site%3Ammajunkie.usatoday.com%20when%3A7d&hl=en-AU&gl=AU&ceid=AU%3Aen']
+    errors=[]
+    for candidate in urls:
+        try:
+            req=urllib.request.Request(candidate,headers={'User-Agent':'Mozilla/5.0 (compatible; BlackEyeFightNews/1.0)'})
+            with urllib.request.urlopen(req,timeout=20) as response: raw=response.read(3_000_000)
+            if urllib.parse.urlsplit(candidate).hostname=='news.google.com':
+                found=mma_junkie_google_feed(raw,now)
+            else:
+                found=parse_feed(raw,source,sport,now)
+                if source=='MMA Junkie':
+                    approved={'mmajunkie.usatoday.com','www.mmajunkie.usatoday.com','mmajunkie.com','www.mmajunkie.com'}
+                    found=[a for a in found if urllib.parse.urlsplit(a['url']).hostname in approved]
+            if not found:raise ValueError('No recent, source-verified articles')
+            return found,candidate
+        except Exception as exc:
+            errors.append(urllib.parse.urlsplit(candidate).hostname+': '+str(exc)[:85])
+    raise ValueError(' | '.join(errors)[:450])
+
 def is_routine_result(title):
     """Keep basic scorecards, round-by-round coverage and event results in Fight Results, not News."""
     name=plain(title)
@@ -113,9 +155,7 @@ def main():
     statuses=[]; success=0
     for source,sport,url in SOURCES:
         try:
-            req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 (compatible; BlackEyeFightNews/1.0)'})
-            with urllib.request.urlopen(req,timeout=20) as response: raw=response.read(3_000_000)
-            found=parse_feed(raw,source,sport,now)
+            found,used_url=source_articles(source,sport,url,now)
             if not found:raise ValueError('No dated recent items; previous content retained')
             found=[a for a in found if not is_routine_result(a['title'])]
             with ThreadPoolExecutor(max_workers=6) as pool:
@@ -125,7 +165,7 @@ def main():
                 if previous and previous['title']!=a['title']:a['updatedAt']=now.isoformat()
                 elif previous and previous.get('updatedAt'):a['updatedAt']=previous['updatedAt']
                 articles[a['url']]=a
-            success+=1;statuses.append({'name':source,'sport':sport,'ok':True,'items':len(found),'lastSuccessfulAt':now.isoformat()})
+            success+=1;statuses.append({'name':source,'sport':sport,'ok':True,'items':len(found),'feedUrl':used_url,'lastSuccessfulAt':now.isoformat()})
         except Exception as exc:
             previous=next((s for s in old.get('sources',[]) if s['name']==source),{})
             statuses.append({'name':source,'sport':sport,'ok':False,'lastSuccessfulAt':previous.get('lastSuccessfulAt'),'error':str(exc)[:160]})

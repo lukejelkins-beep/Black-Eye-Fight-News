@@ -26,6 +26,7 @@ const acceptedPublishers=new Map([
  ['www.mmafighting.com','MMA Fighting'],['mmafighting.com','MMA Fighting'],
  ['www.worldboxingnews.com','World Boxing News'],['www.worldboxingnews.net','World Boxing News'],
  ['www.ufc.com','UFC'],['ufc.com','UFC'],
+ ['mmajunkie.usatoday.com','MMA Junkie'],['www.mmajunkie.usatoday.com','MMA Junkie'],
 ]);
 export function normalizePostLink(raw) {
  try {
