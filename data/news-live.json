@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-09T09:40:39.606809+00:00",
-  "lastSuccessfulAt": "2026-11-09T09:40:39.606809+00:00",
+  "attemptedAt": "2026-11-09T10:59:59.594220+00:00",
+  "lastSuccessfulAt": "2026-11-09T10:59:59.594220+00:00",
   "sources": [
     {
       "name": "World Boxing News",
       "sport": "boxing",
       "ok": true,
-      "items": 29,
+      "items": 10,
       "feedUrl": "https://www.worldboxingnews.net/feed/",
-      "lastSuccessfulAt": "2026-11-09T09:40:39.606809+00:00"
+      "lastSuccessfulAt": "2026-11-09T10:59:59.594220+00:00"
     },
     {
       "name": "MMA Fighting",
@@ -16,26 +16,371 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-09T09:40:39.606809+00:00"
+      "lastSuccessfulAt": "2026-11-09T10:59:59.594220+00:00"
     },
     {
       "name": "MMA Junkie",
       "sport": "mma",
       "ok": true,
-      "items": 11,
+      "items": 10,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-09T09:40:39.606809+00:00"
+      "lastSuccessfulAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "name": "Sherdog",
+      "sport": "mma",
+      "ok": true,
+      "items": 10,
+      "feedUrl": "https://www.sherdog.com/rss/news.xml",
+      "lastSuccessfulAt": "2026-11-09T10:59:59.594220+00:00"
     },
     {
       "name": "UFC",
       "sport": "mma",
       "ok": true,
-      "items": 23,
+      "items": 10,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-09T09:40:39.606809+00:00"
+      "lastSuccessfulAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "name": "ONE MMA",
+      "sport": "mma",
+      "ok": false,
+      "lastSuccessfulAt": null,
+      "error": "www.onefc.com: No recent, source-verified articles"
+    },
+    {
+      "name": "ONE Submission Grappling",
+      "sport": "grappling",
+      "ok": true,
+      "items": 2,
+      "feedUrl": "https://www.onefc.com/feed/",
+      "lastSuccessfulAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "name": "Cage Warriors",
+      "sport": "mma",
+      "ok": false,
+      "lastSuccessfulAt": null,
+      "error": "cagewarriors.com: HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "RIZIN",
+      "sport": "mma",
+      "ok": true,
+      "items": 6,
+      "feedUrl": "https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US",
+      "lastSuccessfulAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "name": "KSW",
+      "sport": "mma",
+      "ok": false,
+      "lastSuccessfulAt": null,
+      "error": "www.bing.com: No recent, source-verified articles"
+    },
+    {
+      "name": "ADCC",
+      "sport": "grappling",
+      "ok": false,
+      "lastSuccessfulAt": null,
+      "error": "adcombat.com: No recent, source-verified articles"
+    },
+    {
+      "name": "NCAA Division I Wrestling",
+      "sport": "grappling",
+      "ok": false,
+      "lastSuccessfulAt": null,
+      "error": "www.ncaa.com: HTTP Error 400: Bad Request"
+    },
+    {
+      "name": "NCAA Division II Wrestling",
+      "sport": "grappling",
+      "ok": false,
+      "lastSuccessfulAt": null,
+      "error": "www.ncaa.com: HTTP Error 400: Bad Request"
+    },
+    {
+      "name": "UFC BJJ",
+      "sport": "grappling",
+      "ok": false,
+      "lastSuccessfulAt": null,
+      "error": "www.bing.com: No recent, source-verified articles"
+    },
+    {
+      "name": "IBJJF",
+      "sport": "grappling",
+      "ok": false,
+      "lastSuccessfulAt": null,
+      "error": "www.bing.com: No recent, source-verified articles"
+    },
+    {
+      "name": "FloGrappling",
+      "sport": "grappling",
+      "ok": true,
+      "items": 4,
+      "feedUrl": "https://www.bing.com/news/search?q=site%3Aflograppling.com%2Farticles&format=rss",
+      "lastSuccessfulAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "name": "Real American Freestyle",
+      "sport": "grappling",
+      "ok": false,
+      "lastSuccessfulAt": null,
+      "error": "www.bing.com: No recent, source-verified articles"
+    },
+    {
+      "name": "United World Wrestling",
+      "sport": "grappling",
+      "ok": false,
+      "lastSuccessfulAt": null,
+      "error": "www.bing.com: No recent, source-verified articles"
+    },
+    {
+      "name": "ONE Live Results",
+      "sport": "mma",
+      "ok": true,
+      "items": 1,
+      "feedUrl": "https://www.onefc.com/category/live-results/feed/",
+      "lastSuccessfulAt": "2026-11-09T10:59:59.594220+00:00"
     }
   ],
   "articles": [
+    {
+      "id": "aa99066c166dc8cb3024",
+      "title": "‘I’m Ready’ – Magomed Magomedov Eyes Lightweight MMA Gold After Hard-Fought Win At ONE Fight Night 49",
+      "url": "https://www.onefc.com/news/im-ready-magomed-magomedov-eyes-lightweight-mma-gold-after-hard-fought-win-at-one-fight-night-49/",
+      "source": "ONE Submission Grappling",
+      "sport": "mma",
+      "publishedAt": "2026-11-09T03:54:01+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://cdn.onefc.com/wp-content/uploads/2026/11/Lucas-Gabriel-vs-Magomed-Magomedov-at-ONE-Fight-Night-49-13-1200x800.jpg",
+        "alt": "Magomed Magomedov celebrates his win at ONE Fight Night 49.",
+        "credit": "",
+        "sourceUrl": "https://www.onefc.com/news/im-ready-magomed-magomedov-eyes-lightweight-mma-gold-after-hard-fought-win-at-one-fight-night-49/",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "The undefeated phenom reflects on his victory over Lucas Gabriel and sets his sights on new king Tye Ruotolo.",
+        "Photo Credit: ONE Championship Stepping onto the global stage in front of millions of fans around the world is a moment most athletes only dream about.",
+        "But Magomedov did it in the main event of a stacked U.S. primetime card with an unbeaten record to protect."
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "e5a9722d9392789d2878",
+      "title": "Zabit Magomedsharipov wants to test his grappling against Raul Rosas Jr.",
+      "url": "https://www.sherdog.com/news/news/Zabit-Magomedsharipov-wants-to-test-his-grappling-against-Raul-Rosas-Jr-203555",
+      "source": "Sherdog",
+      "sport": "mma",
+      "publishedAt": "2026-11-09T03:47:45+00:00",
+      "score": 0,
+      "image": {
+        "url": "https://www1-cdn.sherdog.com/_images/headers/20261109034745_zabit_rosas_jr.JPG",
+        "alt": "Article image: Zabit Magomedsharipov wants to test his grappling against Raul Rosas Jr.",
+        "credit": "",
+        "sourceUrl": "https://www.sherdog.com/news/news/Zabit-Magomedsharipov-wants-to-test-his-grappling-against-Raul-Rosas-Jr-203555",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Zabit Magomedsharipov wants to rebook a grappling match against Raul Rosas Jr.",
+        "Rosas went on to defeat Khasan Magomedsharipov in the first round via rear-naked choke.",
+        "“I believe I am stronger in terms of raw power, but in terms of pure skills, it would be an interesting matchup,” Zabit told Red Corner MMA."
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "af0960f5ecd2618fca9d",
+      "title": "Brendan Fitzgerald thanks UFC crew after being forced off UFC Vegas 124",
+      "url": "https://www.sherdog.com/news/news/Brendan-Fitzgerald-thanks-UFC-crew-after-being-forced-off-UFC-Vegas-124-203554",
+      "source": "Sherdog",
+      "sport": "mma",
+      "publishedAt": "2026-11-09T03:30:33+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://www1-cdn.sherdog.com/_images/headers/20261109033033_b_fritz_commentary_ufc.JPG",
+        "alt": "Article image: Brendan Fitzgerald thanks UFC crew after being forced off UFC Vegas 124",
+        "credit": "",
+        "sourceUrl": "https://www.sherdog.com/news/news/Brendan-Fitzgerald-thanks-UFC-crew-after-being-forced-off-UFC-Vegas-124-203554",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Ultimate Fighting Championship play-by-play commentator Brendan Fitzgerald is grateful to his colleagues for having his back."
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "6a92abae8afb12831ccc",
+      "title": "Donald Trump says Dana White ‘loved’ his White House press secretary idea",
+      "url": "https://www.sherdog.com/news/news/Donald-Trump-says-Dana-White-loved-his-White-House-press-secretary-idea-203553",
+      "source": "Sherdog",
+      "sport": "mma",
+      "publishedAt": "2026-11-09T03:20:18+00:00",
+      "score": 0,
+      "image": {
+        "url": "https://www1-cdn.sherdog.com/_images/headers/20261109032018_dana_wh_ps_trump.JPG",
+        "alt": "Article image: Donald Trump says Dana White ‘loved’ his White House press secretary idea",
+        "credit": "",
+        "sourceUrl": "https://www.sherdog.com/news/news/Donald-Trump-says-Dana-White-loved-his-White-House-press-secretary-idea-203553",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Dana White won’t be the next White House press secretary after all."
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "419a664cb0fc674c4324",
+      "title": "Belal Muhammad slams Andrei Arlovski over Anthony Johnson remarks",
+      "url": "https://www.sherdog.com/news/news/Belal-Muhammad-slams-Andrei-Arlovski-over-Anthony-Johnson-remarks-203552",
+      "source": "Sherdog",
+      "sport": "mma",
+      "publishedAt": "2026-11-09T03:02:08+00:00",
+      "score": 0,
+      "image": {
+        "url": "https://www1-cdn.sherdog.com/_images/headers/20261109030209_belal_on_arlovski.JPG",
+        "alt": "Article image: Belal Muhammad slams Andrei Arlovski over Anthony Johnson remarks",
+        "credit": "",
+        "sourceUrl": "https://www.sherdog.com/news/news/Belal-Muhammad-slams-Andrei-Arlovski-over-Anthony-Johnson-remarks-203552",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Belal Muhammad has addressed Andrei Arlovski ’s insensitive comments about the death of Anthony Johnson ."
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "9119096195262f0eb44a",
+      "title": "Joaquin Buckley names two more UFC stars in growing controversy",
+      "url": "https://www.sherdog.com/news/news/Joaquin-Buckley-names-two-more-UFC-stars-in-growing-controversy-203551",
+      "source": "Sherdog",
+      "sport": "mma",
+      "publishedAt": "2026-11-09T02:49:38+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://www1-cdn.sherdog.com/_images/headers/20261109024939_buckley_strickland_holloway_volkov.JPG",
+        "alt": "Article image: Joaquin Buckley names two more UFC stars in growing controversy",
+        "credit": "",
+        "sourceUrl": "https://www.sherdog.com/news/news/Joaquin-Buckley-names-two-more-UFC-stars-in-growing-controversy-203551",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Joaquin Buckley is targeting new fighters in his latest rant.",
+        "A post shared by Joaquin Buckley (@newmansa94)"
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "543ed9663c193f5c980a",
+      "title": "UFC Saudi Arabia odds: Israel Adesanya's odds take a major hit",
+      "url": "https://www.sherdog.com/news/news/UFC-Saudi-Arabia-odds-Israel-Adesanyas-odds-take-a-major-hit-203550",
+      "source": "Sherdog",
+      "sport": "mma",
+      "publishedAt": "2026-11-09T02:34:04+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://www1-cdn.sherdog.com/_images/headers/20261109023405_ufc_saudi_odds.JPG",
+        "alt": "Article image: UFC Saudi Arabia odds: Israel Adesanya's odds take a major hit",
+        "credit": "",
+        "sourceUrl": "https://www.sherdog.com/news/news/UFC-Saudi-Arabia-odds-Israel-Adesanyas-odds-take-a-major-hit-203550",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "The odds for the Ultimate Fighting Championship ’s upcoming trip to Saudi Arabia are out and they’ve already shifted slightly."
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "4bedc649b273dc0a3f06",
+      "title": "Khamzat Chimaev refuses to recognize Sean Strickland as champion",
+      "url": "https://www.sherdog.com/news/news/Khamzat-Chimaev-refuses-to-recognize-Sean-Strickland-as-champion-203549",
+      "source": "Sherdog",
+      "sport": "mma",
+      "publishedAt": "2026-11-09T02:22:04+00:00",
+      "score": 3,
+      "image": {
+        "url": "https://www1-cdn.sherdog.com/_images/headers/20261109022204_strickland_chimaev.JPG",
+        "alt": "Article image: Khamzat Chimaev refuses to recognize Sean Strickland as champion",
+        "credit": "",
+        "sourceUrl": "https://www.sherdog.com/news/news/Khamzat-Chimaev-refuses-to-recognize-Sean-Strickland-as-champion-203549",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Former Ultimate Fighting Championship middleweight titleholder Khamzat Chimaev insists he’s the “real champion.”",
+        "Khamzat Chimaev wants to fight \"very soon\" and is waiting for UFC to give him a fight.",
+        "\"I didn't lose the match (to Strickland)."
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "f98364808654cc6ef596",
+      "title": "Valter Walker's bold prediction after Johnny Walker's heavyweight knockout",
+      "url": "https://www.sherdog.com/news/news/Valter-Walkers-bold-prediction-after-Johnny-Walkers-heavyweight-knockout-203548",
+      "source": "Sherdog",
+      "sport": "mma",
+      "publishedAt": "2026-11-09T02:07:39+00:00",
+      "score": 4,
+      "image": {
+        "url": "https://www1-cdn.sherdog.com/_images/headers/20261109020739_walker_bros_ufc_gold.JPG",
+        "alt": "Article image: Valter Walker's bold prediction after Johnny Walker's heavyweight knockout",
+        "credit": "",
+        "sourceUrl": "https://www.sherdog.com/news/news/Valter-Walkers-bold-prediction-after-Johnny-Walkers-heavyweight-knockout-203548",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Valter Walker predicts his brother, Johnny Walker , will win Ultimate Fighting Championship heavyweight gold in 2027.",
+        "Eu digo e repito O meu irmão vai ser campeão ano que vem e vai defender o título contra qualquer um."
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "030ace2b27ceb75dc8fa",
+      "title": "Andre Galvao says rules changed after he accepted Rousimar Palhares rematch",
+      "url": "https://www.sherdog.com/news/news/Andre-Galvao-says-rules-changed-after-he-accepted-Rousimar-Palhares-rematch-203546",
+      "source": "Sherdog",
+      "sport": "mma",
+      "publishedAt": "2026-11-09T00:09:15+00:00",
+      "score": 0,
+      "image": {
+        "url": "https://www1-cdn.sherdog.com/_images/headers/20261109120915_galvao.JPEG",
+        "alt": "Article image: Andre Galvao says rules changed after he accepted Rousimar Palhares rematch",
+        "credit": "",
+        "sourceUrl": "https://www.sherdog.com/news/news/Andre-Galvao-says-rules-changed-after-he-accepted-Rousimar-Palhares-rematch-203546",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
     {
       "id": "04a19440cdfd880de656",
       "title": "Dana White on Zuffa Boxing 12, Chev Clarke’s win, Da’Mazion Vanhouter, Jai Opetaia + More",
@@ -85,6 +430,29 @@
       "summaryCheckedAt": "2026-11-09T09:17:09.442957+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T02:42:57.090980+00:00"
+    },
+    {
+      "id": "db754052c336cddca13c",
+      "title": "Caio Borralho says he hid broken rib from UFC, beat Reinier de Ridder",
+      "url": "https://www.sherdog.com/news/news/Caio-Borralho-says-he-hid-broken-rib-from-UFC-beat-Reinier-de-Ridder-203545",
+      "source": "Sherdog",
+      "sport": "mma",
+      "publishedAt": "2026-11-08T23:57:27+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://www1-cdn.sherdog.com/_images/headers/20261108115727_borralho.JPG",
+        "alt": "Article image: Caio Borralho says he hid broken rib from UFC, beat Reinier de Ridder",
+        "credit": "",
+        "sourceUrl": "https://www.sherdog.com/news/news/Caio-Borralho-says-he-hid-broken-rib-from-UFC-beat-Reinier-de-Ridder-203545",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Caio Borralho says he fought Reinier de Ridder with a broken rib and did not tell the Ultimate Fighting Championship how serious the injury was before their March bout."
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
     },
     {
       "id": "9ab9b6b491485915f544",
@@ -340,6 +708,33 @@
       "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
     },
     {
+      "id": "267fcb729d4e397260a7",
+      "title": "Mica Galvão's Return Highlights 2026 IBJJF The Crown",
+      "url": "https://www.flograppling.com/articles/16358030-2026-ibjjf-the-crown-live-updates",
+      "source": "FloGrappling",
+      "sport": "grappling",
+      "publishedAt": "2026-11-08T14:48:00+00:00",
+      "timeBasis": "Bing News index timestamp",
+      "sourceMethod": "Original official domain indexed by Bing News",
+      "score": 1,
+      "image": {
+        "url": "https://d2779tscntxxsw.cloudfront.net/6af0fbef67c27.png",
+        "alt": "Article image: Mica Galvão's Return Highlights 2026 IBJJF The Crown",
+        "credit": "",
+        "sourceUrl": "https://www.flograppling.com/articles/16358030-2026-ibjjf-the-crown-live-updates",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "One of the most prestigious events on the jiu-jitsu calendar is back!",
+        "We're bringing you all the action of the the IBJJF Crown live in real time",
+        "PBJJF Patos de Minas Spring Int'l Open"
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
       "id": "eb19772679f2f5896e71",
       "title": "Nina Milosevic wants UFC Sydney spot with teammate after latest TKO",
       "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-fight-night-las-vegas-video-nina-milosevic-callout-sydney-card/92681993007/",
@@ -460,6 +855,24 @@
       "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
     },
     {
+      "id": "4663932ef0d766955a86",
+      "title": "UFC Fight Night 293 post-event facts: Waldo Cortes Acosta's career takes nosedive",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-fight-night-293-post-event-facts-waldo-cortes-acosta-longest-losing-skid/92633652007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-08T11:05:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryPoints": [
+        "Go inside the numbers after UFC Vegas 124, which paint a tough picture for Waldo Cortes Acosta after his main event loss."
+      ],
+      "summaryCheckedAt": "2026-11-09T09:23:40.709898+00:00",
+      "summaryQualityVersion": 3,
+      "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
+    },
+    {
       "id": "c392126e3ca7a54676d6",
       "title": "Mick Maynard's Shoes: What's next for Johnny Walker after UFC Vegas 124 win?",
       "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-vegas-124-matchmaker-johnny-walker-next-fight-win-heavyweight/92674322007/",
@@ -516,24 +929,6 @@
       "summaryCheckedAt": "2026-11-09T09:17:09.442957+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-08T09:25:22.104732+00:00"
-    },
-    {
-      "id": "4663932ef0d766955a86",
-      "title": "UFC Fight Night 293 post-event facts: Waldo Cortes Acosta's career takes nosedive",
-      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-fight-night-293-post-event-facts-waldo-cortes-acosta-longest-losing-skid/92633652007/",
-      "source": "MMA Junkie",
-      "sport": "mma",
-      "publishedAt": "2026-11-08T09:10:00+00:00",
-      "score": 1,
-      "sourceMethod": "Bing News indexed MMA Junkie original",
-      "timeBasis": "Bing News feed timestamp",
-      "image": null,
-      "summaryPoints": [
-        "Go inside the numbers after UFC Vegas 124, which paint a tough picture for Waldo Cortes Acosta after his main event loss."
-      ],
-      "summaryCheckedAt": "2026-11-09T09:23:40.709898+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
     },
     {
       "id": "7d044bdd7ccb802c5c0d",
@@ -694,16 +1089,16 @@
         "credit": "",
         "sourceUrl": "https://www.mmafighting.com/ufc/520002/at-the-apex-is-criminal-pros-react-to-insane-johnny-walker-knockout-win-in-ufc-vegas-124-main-event",
         "kind": "publisher",
-        "checkedAt": "2026-11-08T04:54:26.106783+00:00"
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
       },
-      "firstSeenAt": "2026-11-08T04:54:26.106783+00:00",
-      "summaryCheckedAt": "2026-11-09T08:51:05.004309+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "UFC pros react to Johnny Walker’s comeback knockout victory over Waldo Cortes-Acosta in Saturday’s main event.",
         "Check out pro reactions to UFC Vegas 124’s top fight",
         "Johnny Walker went through the fire, but ultimately got the finish in his fifth UFC main event."
-      ]
+      ],
+      "summaryCheckedAt": "2026-11-09T08:51:05.004309+00:00",
+      "summaryQualityVersion": 3,
+      "firstSeenAt": "2026-11-08T04:54:26.106783+00:00"
     },
     {
       "id": "8a7c45c476193345a7eb",
@@ -1231,6 +1626,33 @@
       "firstSeenAt": "2026-11-09T02:44:09.290214+00:00"
     },
     {
+      "id": "cab6280d6de73a60201f",
+      "title": "今大会も、オークションプラットフォーム『KAKEHASHI』とのコラボオークションの開催が決定！",
+      "url": "https://jp.rizinff.com/_ct/17873011",
+      "source": "RIZIN",
+      "sport": "mma",
+      "publishedAt": "2026-11-06T16:00:00+00:00",
+      "timeBasis": "Bing News index timestamp",
+      "sourceMethod": "Original official domain indexed by Bing News",
+      "score": 1,
+      "image": {
+        "url": "https://d1uzk9o9cg136f.cloudfront.net/f/16782696/rc/2026/11/07/8e770c1110b8d8e51bced51b7c99ff98876e2120_xlarge.jpg",
+        "alt": "Article image: 今大会も、オークションプラットフォーム『KAKEHASHI』とのコラボオークションの開催が決定！",
+        "credit": "",
+        "sourceUrl": "https://jp.rizinff.com/_ct/17873011",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "ラインナップには、選手たちの感謝の想いを込めた、 実使用サイン入りグローブ や入手困難なRIZINファイターによる 直筆サイン入りポスター 、 リングマット など、熱狂の記憶を鮮やかに刻む、唯一無二のアイテムばかり。",
+        "≫ RIZINオフィシャルグッズ ≫ デジタルカード「RIZIN CARD COLLECTION（ライコレ）」サービス開始！ ≫ 業務拡大につき、RIZIN FFスタッフ募集！ ≫【企業様向け】大会、RIZINファイターへのスポンサー / 企業タイアップ募集中！",
+        "This article is a sponsored article by ' '."
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
       "id": "65e5d11b6ebce22a29ca",
       "title": "Heavyweight Champ, 61, Takes Huge Shots 29 Years After Breakdown",
       "url": "https://www.worldboxingnews.com/oliver-mccall-huge-shots-at-61/",
@@ -1279,6 +1701,33 @@
       "summaryCheckedAt": "2026-11-09T09:17:09.442957+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-07T23:16:32.636295+00:00"
+    },
+    {
+      "id": "d0152e1cf1e464f42757",
+      "title": "Mica Galvao Returns To IBJJF The Crown: What To Know",
+      "url": "https://www.flograppling.com/articles/16353679-mica-galvao-returns-to-ibjjf-the-crown-in-2026",
+      "source": "FloGrappling",
+      "sport": "grappling",
+      "publishedAt": "2026-11-06T05:00:00+00:00",
+      "timeBasis": "Bing News index timestamp",
+      "sourceMethod": "Original official domain indexed by Bing News",
+      "score": 1,
+      "image": {
+        "url": "https://d2779tscntxxsw.cloudfront.net/6ab16e1524247.png",
+        "alt": "Article image: Mica Galvao Returns To IBJJF The Crown: What To Know",
+        "credit": "",
+        "sourceUrl": "https://www.flograppling.com/articles/16353679-mica-galvao-returns-to-ibjjf-the-crown-in-2026",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Mica Galvao returns to IBJJF The Crown in 2026, joining a competitive middleweight field featuring Andy Murasaki and more.",
+        "PBJJF Patos de Minas Spring Int'l Open",
+        "Mica Galvao is bringing his star power back to the 2026 IBJJF The Crown , and he'll have a tough road ahead in one of the event's most competitive divisions."
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
     },
     {
       "id": "5d5ade5e52a26607e254",
@@ -1535,7 +1984,14 @@
       "score": 8,
       "id": "official-diogo-reis-defends-gold-against-bebeto-oliveira-selina-flores-faces-kana-morimoto-at-one-fight-night-50",
       "sourceMethod": "Original verified publisher article",
-      "firstSeenAt": "2026-11-09T00:00:00Z"
+      "firstSeenAt": "2026-11-09T00:00:00Z",
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Two exciting bouts featuring Diogo Reis, Bebeto Oliveira, Selina Flores, and Kana Morimoto join ONE Fight Night 50 in Lumpinee Stadium on December 17.",
+        "The final U.S. primetime card of ONE Championship’s 2026 calendar, ONE Fight Night 50 on Prime Video , has been bolstered by two explosive additions.",
+        "The card goes down on Friday, December 18, inside Bangkok’s legendary Lumpinee Stadium."
+      ]
     },
     {
       "id": "fb4a064f1c8bfd5a45fd",
@@ -1561,6 +2017,33 @@
       "summaryCheckedAt": "2026-11-09T09:17:09.442957+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-07T23:16:32.636295+00:00"
+    },
+    {
+      "id": "446121a486b629bb0ad9",
+      "title": "IBJJF The Crown 2026: Full Card and Competitor List",
+      "url": "https://www.flograppling.com/articles/16353621-ibjjf-the-crown-2026-card-full-competitor-lineup",
+      "source": "FloGrappling",
+      "sport": "grappling",
+      "publishedAt": "2026-11-05T09:26:00+00:00",
+      "timeBasis": "Bing News index timestamp",
+      "sourceMethod": "Original official domain indexed by Bing News",
+      "score": 1,
+      "image": {
+        "url": "https://d2779tscntxxsw.cloudfront.net/6aeb8c1d5db70.png",
+        "alt": "Article image: IBJJF The Crown 2026: Full Card and Competitor List",
+        "credit": "",
+        "sourceUrl": "https://www.flograppling.com/articles/16353621-ibjjf-the-crown-2026-card-full-competitor-lineup",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "The 2026 IBJJF The Crown features a 48-athlete lineup across six divisions, bringing together the biggest names in Brazilian jiu-jitsu for a stacked day of competition.",
+        "See the full IBJJF The Crown 2026 card, including all 48 competitors across six men's and women's divisions.",
+        "PBJJF Patos de Minas Spring Int'l Open"
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
     },
     {
       "id": "37da09c7cd3e473ade28",
@@ -1837,6 +2320,32 @@
       "firstSeenAt": "2026-11-09T02:44:09.290214+00:00"
     },
     {
+      "id": "5fa81f7af29b7c101e66",
+      "title": "大晦日大会タイトル＆第1弾対戦カード発表 ｜「グスタボvs.朝倉未来」決定！！伊澤星花が大晦日で電撃復帰！",
+      "url": "https://jp.rizinff.com/_ct/17874147",
+      "source": "RIZIN",
+      "sport": "mma",
+      "publishedAt": "2026-11-03T16:00:00+00:00",
+      "timeBasis": "Bing News index timestamp",
+      "sourceMethod": "Original official domain indexed by Bing News",
+      "score": 1,
+      "image": {
+        "url": "https://d1uzk9o9cg136f.cloudfront.net/f/16782696/rc/2026/11/04/313b24c0b96cbfa10f9a84d525a4b611916ffdd2_xlarge.jpg",
+        "alt": "Article image: 大晦日大会タイトル＆第1弾対戦カード発表 ｜「グスタボvs.朝倉未来」決定！！伊澤星花が大晦日で電撃復帰！",
+        "credit": "",
+        "sourceUrl": "https://jp.rizinff.com/_ct/17874147",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "≫ RIZINオフィシャルグッズ ≫ デジタルカード「RIZIN CARD COLLECTION（ライコレ）」サービス開始！ ≫ 業務拡大につき、RIZIN FFスタッフ募集！ ≫【企業様向け】大会、RIZINファイターへのスポンサー / 企業タイアップ募集中！",
+        "This article is a sponsored article by ' '."
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
       "id": "efd2f033abf7d55163ea",
       "title": "Oliver McCall, 61, Stuns with Lightest Weigh-In in 22 Years",
       "url": "https://www.worldboxingnews.com/oliver-mccall-lightest-weight-22-years/",
@@ -1891,7 +2400,14 @@
       "score": 7,
       "id": "official-ufc-bjj-14-tackett-vs-wojcik-fight-card",
       "sourceMethod": "Original verified publisher article",
-      "firstSeenAt": "2026-11-09T00:00:00Z"
+      "firstSeenAt": "2026-11-09T00:00:00Z",
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "UFC BJJ 14: Tackett vs Wojcik Is Live On Thursday, December 3, Starting At 8pm ET/5pm PT Streaming LIVE On UFC FIGHT PASS!",
+        "Two belts are on the line at UFC BJJ 14!",
+        "In the main event, UFC BJJ welterweight supremacy is up for grabs when dominant reigning champion Andrew Tackett (5-0 UFC BJJ) takes on high-flying contender Chris Wojcik."
+      ]
     },
     {
       "id": "42d17cad5b502f86924f",
@@ -1917,6 +2433,59 @@
       "summaryCheckedAt": "2026-11-09T09:17:09.442957+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-07T23:16:32.636295+00:00"
+    },
+    {
+      "id": "df2d59d6284c811f1455",
+      "title": "『超RIZIN.6 師走の尾張名古屋下剋上祭り』対戦カード／見所解説",
+      "url": "https://jp.rizinff.com/_ct/17874052",
+      "source": "RIZIN",
+      "sport": "mma",
+      "publishedAt": "2026-11-02T16:00:00+00:00",
+      "timeBasis": "Bing News index timestamp",
+      "sourceMethod": "Original official domain indexed by Bing News",
+      "score": 1,
+      "image": {
+        "url": "https://d1uzk9o9cg136f.cloudfront.net/f/16782696/rc/2026/11/03/757644909ccdf8a1fd696f2a5bf3513463ce649f_xlarge.jpg",
+        "alt": "Article image: 『超RIZIN.6 師走の尾張名古屋下剋上祭り』対戦カード／見所解説",
+        "credit": "",
+        "sourceUrl": "https://jp.rizinff.com/_ct/17874052",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "ヘビー級GP JAPANトーナメント決勝 RIZIN MMAルール：5分3R（120.0kg） スダリオ剛 vs. エドポロキング",
+        "≫ RIZINオフィシャルグッズ ≫ デジタルカード「RIZIN CARD COLLECTION（ライコレ）」サービス開始！ ≫ 業務拡大につき、RIZIN FFスタッフ募集！ ≫【企業様向け】大会、RIZINファイターへのスポンサー / 企業タイアップ募集中！",
+        "This article is a sponsored article by ' '."
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "3b56467871c379d08681",
+      "title": "『超RIZIN.6 師走の尾張名古屋下剋上祭り』大会概要／チケット",
+      "url": "https://jp.rizinff.com/_ct/17870447",
+      "source": "RIZIN",
+      "sport": "mma",
+      "publishedAt": "2026-11-02T16:00:00+00:00",
+      "timeBasis": "Bing News index timestamp",
+      "sourceMethod": "Original official domain indexed by Bing News",
+      "score": 1,
+      "image": {
+        "url": "https://d1uzk9o9cg136f.cloudfront.net/f/16782696/rc/2026/10/30/6d5377a2747be0a7aab4043b12fcf770404e9799_xlarge.jpg",
+        "alt": "Article image: 『超RIZIN.6 師走の尾張名古屋下剋上祭り』大会概要／チケット",
+        "credit": "",
+        "sourceUrl": "https://jp.rizinff.com/_ct/17870447",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "≫ RIZINオフィシャルグッズ ≫ デジタルカード「RIZIN CARD COLLECTION（ライコレ）」サービス開始！ ≫ 業務拡大につき、RIZIN FFスタッフ募集！ ≫【企業様向け】大会、RIZINファイターへのスポンサー / 企業タイアップ募集中！",
+        "This article is a sponsored article by ' '."
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
     },
     {
       "id": "a96874c1a0681f81449d",
@@ -2189,6 +2758,33 @@
       ]
     },
     {
+      "id": "44dde2adc09e09d3ded9",
+      "title": "11/4(水)まで先行予約受付中！公式グッズ予約販売｜abc presents RIZIN.55",
+      "url": "https://jp.rizinff.com/_ct/17872534",
+      "source": "RIZIN",
+      "sport": "mma",
+      "publishedAt": "2026-10-29T17:01:00+00:00",
+      "timeBasis": "Bing News index timestamp",
+      "sourceMethod": "Original official domain indexed by Bing News",
+      "score": 1,
+      "image": {
+        "url": "https://d1uzk9o9cg136f.cloudfront.net/f/16782696/rc/2026/10/30/5b43c9276f710b4342eb313d395e97b543a0132d_xlarge.jpg",
+        "alt": "Article image: 11/4(水)まで先行予約受付中！公式グッズ予約販売｜abc presents RIZIN.55",
+        "credit": "",
+        "sourceUrl": "https://jp.rizinff.com/_ct/17872534",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "大会ポスターデザインを落としこんだ『RIZIN.55 Tシャツ』&『RIZIN.55 マフラータオル』をはじめ、 セットアップ商品『RIZIN ナイロン ジャケット』『RIZIN ナイロン パンツ』や『RIZIN フルジップ スウェットパーカー』など新作アイテムも登場！",
+        "≫ RIZINオフィシャルグッズ ≫ デジタルカード「RIZIN CARD COLLECTION（ライコレ）」サービス開始！ ≫ 業務拡大につき、RIZIN FFスタッフ募集！ ≫【企業様向け】大会、RIZINファイターへのスポンサー / 企業タイアップ募集中！",
+        "This article is a sponsored article by ' '."
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
       "id": "fc605e757ecf253263e9",
       "title": "Benavidez Maps Road to Usyk’s Undisputed Cruiserweight Shot",
       "url": "https://www.worldboxingnews.com/benavidez-usyk-undisputed-cruiserweight/",
@@ -2212,45 +2808,314 @@
         "Benavidez has confirmed discussions with Usyk about returning to 200 pounds, but first needs to collect the two remaining world titles.",
         "That gives his December 5 fight with Michal Cieslak extra importance and places Jai Opetaia’s ongoing IBF dispute at the center of his plans."
       ]
+    },
+    {
+      "id": "361b0d5a3eac3dde624c",
+      "title": "Who Does Mica Galvão Have In First Round? | IBJJF's The Crown Official Brackets",
+      "url": "https://www.flograppling.com/articles/16323792-2026-ibjjfs-the-crown-brackets",
+      "source": "FloGrappling",
+      "sport": "grappling",
+      "publishedAt": "2026-10-29T14:10:00+00:00",
+      "timeBasis": "Bing News index timestamp",
+      "sourceMethod": "Original official domain indexed by Bing News",
+      "score": 1,
+      "image": {
+        "url": "https://d2779tscntxxsw.cloudfront.net/6ae3b42d74a09.png",
+        "alt": "Article image: Who Does Mica Galvão Have In First Round? | IBJJF's The Crown Official Brackets",
+        "credit": "",
+        "sourceUrl": "https://www.flograppling.com/articles/16323792-2026-ibjjfs-the-crown-brackets",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "The brackets are officially out for IBJJF's The Crown taking place on Sunday, November 8th and streaming exclusively on FloGrappling!",
+        "The brackets are officially out for IBJJF's The Crown featuring some of the biggest stars in gi jiu-jitsu!",
+        "PBJJF Patos de Minas Spring Int'l Open"
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "dc7d392bce1445079dd1",
+      "title": "10/28（水）更新情報",
+      "url": "https://jp.rizinff.com/_ct/17871676",
+      "source": "RIZIN",
+      "sport": "mma",
+      "publishedAt": "2026-10-26T17:00:00+00:00",
+      "timeBasis": "Bing News index timestamp",
+      "sourceMethod": "Original official domain indexed by Bing News",
+      "score": 1,
+      "image": {
+        "url": "https://d1uzk9o9cg136f.cloudfront.net/f/16782696/rc/2026/11/01/27e8c9706bee96723d9a469525a9130dac873fd6_xlarge.jpg",
+        "alt": "Article image: 10/28（水）更新情報",
+        "credit": "",
+        "sourceUrl": "https://jp.rizinff.com/_ct/17871676",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "summaryCheckedAt": "2026-11-09T10:59:59.594220+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "11月3日（火・祝）当日、 「ばらあげ」の販売が決定！ さらに、RIZINオフィシャルファンクラブ強者ノ巣 「超強者会員 」を対象に 「ばらあげ」1人前の無料配布も！ 詳細は以下をご覧ください。",
+        "本イベントは2部構成にて実施いたします。 第1部： 会見直前 キックオフトークイベント 第2部： 大晦日 名古屋大会緊急記者会見",
+        "・佐伯繁（DEEP代表） ・RIZIN広報 横島加奈 ・RIZIN実況アカデミー⽣ ⼭下俊⼤ ・RIZINガール2026 出町杏奈 ・RIZINガール2026 橘和奈"
+      ],
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
     }
   ],
   "resultReports": [
     {
-      "title": "RIZIN.55: official flyweight title result — Shinryu vs Laramie",
-      "url": "https://jp.rizinff.com/_ct/17874867",
-      "source": "RIZIN",
+      "id": "787675da8e0751a9b499",
+      "title": "The Scorecard | UFC Fight Night: Cortes Acosta vs Walker",
+      "url": "https://www.ufc.com/news/scorecard-ufc-fight-night-cortes-acosta-vs-walker",
+      "source": "UFC",
       "sport": "mma",
-      "publishedAt": "2026-11-09T12:00:00+00:00",
-      "timeBasis": "Publisher date (exact hour unavailable)",
-      "id": "official-17874867",
-      "score": 4,
-      "sourceMethod": "Original publisher official result report"
+      "publishedAt": "2026-11-08T20:23:45+00:00",
+      "score": 1,
+      "_summaryText": "<p>Highlighting The Biggest Winners From UFC Fight Night: Cortes Acosta vs Walker on November 7, 2026</p>\n <a href=\"https://www.ufc.com/news/scorecard-ufc-fight-night-cortes-acosta-vs-walker\" hreflang=\"en\">Read the Full Article Here</a>",
+      "image": {
+        "url": "https://ufc.com/images/styles/card/s3/2026-11/110826-hero-elijah-smith_GettyImages-2304054959.jpg?itok=ZSQqCLRx",
+        "alt": "Article image: The Scorecard | UFC Fight Night: Cortes Acosta vs Walker",
+        "credit": "",
+        "sourceUrl": "https://www.ufc.com/news/scorecard-ufc-fight-night-cortes-acosta-vs-walker",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
     },
     {
-      "title": "ONE Fight Night 49: official MMA and submission grappling results",
-      "url": "https://www.onefc.com/news/one-fight-night-49-mma-and-submission-grappling-results-lee-czaban-hugo-and-israilov-shine-in-bangkok/",
-      "source": "ONE Championship",
+      "id": "61b27c6e62b21ca959f6",
+      "title": "UFC Vegas 124 Results: Cortes-Acosta vs. Walker",
+      "url": "https://www.mmafighting.com/ufc/519628/ufc-vegas-124-results-cortes-acosta-vs-walker",
+      "source": "MMA Fighting",
       "sport": "mma",
+      "publishedAt": "2026-11-08T04:14:00+00:00",
+      "score": 5,
+      "_summaryText": "MMA Fighting has UFC Vegas 124 results for the Cortes-Acosta vs. Walker fight card, a live blog of the top two fights, and more from Meta APEX in Las Vegas on Saturday night. In the main event, Waldo Cortes-Acosta squares off against Johnny Walker in a heavyweight contest. Cortes-Acosta—the No. 8 at heavyweight in the [&#8230;] \n\t\t\t\t\t\t\t\t\t\t\t\n\n\t\t\t\t\t\t\n<figure>\n\n<img alt=\"Waldo Cortes Acosta and Johnny Walker\" data-caption=\"Waldo Cortes Acosta and Johnny Walker square off in the UFC Vegas 124 main event. | Chris Unger/Zuffa LLC﻿\" data-portal-copyright=\"Chris Unger/Zuffa LLC﻿\" data-has-syndication-rights=\"1\" src=\"https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2303864853.jpg?quality=90&#038;strip=all&#038;crop=0,0,100,100\" />\n\t<figcaption>\n\tWaldo Cortes Acosta and Johnny Walker square off in the UFC Vegas 124 main event. | Chris Unger/Zuffa LLC﻿\t</figcaption>\n</figure>\n<p class=\"wp-block-paragraph\">MMA Fighting has UFC Vegas 124 results for the Cortes-Acosta vs. Walker fight card, a live blog of the top two fights, and more from Meta APEX in Las Vegas on Saturday night.</p>\n\n<p class=\"wp-block-paragraph\">In the main event, Waldo Cortes-Acosta squares off against Johnny Walker in a heavyweight contest. Cortes-Acosta—the No. 8 at heavyweight in the <a href=\"https://www.mmafighting.com/rankings/511846/mma-divisional-rankings-arman-tsarukyan-makes-case-for-lightweight-crown-after-ufc-331-statement-win\">MMA Fighting Global Rankings</a>—vaulted into the contender picture with eight wins in nine appearances, but now finds himself on a two-fight skid after losses to Curtis Blaydes and Alexander Volkov. Walker makes a quick turnaround after successful jump up from light heavyweight in October at UFC 332, where he knocked out Mick Parkin.</p>\n\n<p class=\"wp-block-paragraph\">Strawweight contenders Tatiana Suarez (3) and Virna Jandiroba (2) battle to stay at the front of the title picture in the co-main event.</p>\n\n<p class=\"wp-block-paragraph\">Check out UFC Vegas 124 results below.</p>\n\n<p class=\"wp-block-paragraph\"><strong>Main Card</strong></p>\n\n<p class=\"wp-block-paragraph\">Johnny Walker def. Waldo Cortes-Acosta via third-round TKO (2:27) (<a href=\"https://www.mmafighting.com/ufc/519899/ufc-vegas-124-live-blog-waldo-cortes-acosta-vs-johnny-walker\">live blog</a>) | <a href=\"https://www.mmafighting.com/ufc/519983/johnny-walker-puts-waldo-cortes-acosta-down-and-out-with-nasty-knockout-in-ufc-vegas-124-main-event\">Watch finish</a> | <a href=\"https://www.mmafighting.com/ufc/520002/at-the-apex-is-criminal-pros-react-to-insane-johnny-walker-knockout-win-in-ufc-vegas-124-main-event\">Pros react</a></p>\n\n<p class=\"wp-block-paragraph\">Tatiana Suarez def. Virna Jandiroba via unanimous decision (30-27 x2, 29-28) (<a href=\"https://www.mmafighting.com/ufc/519894/ufc-vegas-124-live-blog-tatiana-suarez-vs-virna-jandiroba\">live blog</a>) | <a href=\"https://www.mmafighting.com/ufc/519960/ufc-vegas-124-results-tatiana-suarez-grinds-her-way-to-decision-win-over-virna-jandiroba\">Recap</a></p>\n\n<p class=\"wp-block-paragraph\">Elijah Smith def. Davey Grant via first-round KO (1:00) | <a href=\"https://www.mmafighting.com/ufc/519935/ufc-vegas-124-video-elijah-smith-demolishes-davey-grant-with-blistering-60-second-knockout\">Watch finish</a></p>\n\n<p class=\"wp-block-paragraph\">Lucas Fernando def. Billy Elekana via unanimous decision (29-28 x3)</p>\n\n<p class=\"wp-block-paragraph\">Nina Milosevic def. Priscila Cachoeira via second-round TKO (3:40)</p>\n\n<p class=\"wp-block-paragraph\">Mitch Raposo def. Marcos Degli via unanimous decision (29-28 x3)</p>\n\n<p class=\"wp-block-paragraph\"><strong>Preliminary Card </strong></p>\n\n<p class=\"wp-block-paragraph\">Ollie Schmid def. Keiichiro Nakamura via unanimous decision (29-28 x3)</p>\n\n<p class=\"wp-block-paragraph\">Thomas Petersen def. Gabriel Lorenco via third-round TKO (4:47)</p>\n\n<p class=\"wp-block-paragraph\">Karine Silva def. Gabriella Fernandes via unanimous decision (29-28 x3)</p>\n\n<p class=\"wp-block-paragraph\">Murtazali Magomedov def. Jose Delano via unanimous decision (29-28 x3)</p>\n\n<p class=\"wp-block-paragraph\">Austin Bashi def. Carlos Calderon via submission (RNC) (R1, 1:07)</p>\n\n<p class=\"wp-block-paragraph\">Andre Petroski def. Mantas Kondratavicius via second-round TKO (4:39)</p>\n\n<p class=\"wp-block-paragraph\">Seokhyon Ko def. Wellington Turman via unanimous decision (30-27 x3)</p>\n\n<p class=\"wp-block-paragraph\">Jose Souza def. Jonny Parsons via first-round KO (4:16) | <a href=\"https://www.mmafighting.com/ufc/519859/video-jose-souza-scores-brutal-first-round-knockout-at-ufc-vegas-124\">Watch finish</a></p>\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t",
+      "image": {
+        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2303864853.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "alt": "Waldo Cortes Acosta and Johnny Walker",
+        "credit": "Chris Unger/Zuffa LLC﻿",
+        "sourceUrl": "https://www.mmafighting.com/ufc/519628/ufc-vegas-124-results-cortes-acosta-vs-walker",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "85a04df1ded52b194805",
+      "title": "Main Card Results | UFC Fight Night: Cortes Acosta vs Walker",
+      "url": "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-results",
+      "source": "UFC",
+      "sport": "mma",
+      "publishedAt": "2026-11-08T04:14:00+00:00",
+      "score": 5,
+      "_summaryText": "<p>Live Results, Highlights, Post-Fight Interviews With The Main Card Winners And More From UFC Fight Night: Cortes Acosta vs Walker, Live From Meta APEX In Las Vegas On November 7</p>\n <a href=\"https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-results\" hreflang=\"en\">Read the Full Article Here</a>",
+      "image": {
+        "url": "https://ufc.com/images/styles/card/s3/2026-11/110726-ufc-fight-night-cortes-acosta-vs-walker-EVENT-ART.jpg?itok=CSU1wVHE",
+        "alt": "Article image: Main Card Results | UFC Fight Night: Cortes Acosta vs Walker",
+        "credit": "",
+        "sourceUrl": "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-results",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "5e1be465cad1e336d27e",
+      "title": "Official Scorecards | UFC Fight Night: Cortes Acosta vs Walker",
+      "url": "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-official-scorecards",
+      "source": "UFC",
+      "sport": "mma",
+      "publishedAt": "2026-11-08T02:41:00+00:00",
+      "score": 1,
+      "_summaryText": "<p>See How The Judges Score Every Round Of Every Fight From UFC Fight Night: Cortes Acosta vs Walker, Live From Meta APEX In Las Vegas On November 7, 2026</p>\n <a href=\"https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-official-scorecards\" hreflang=\"en\">Read the Full Article Here</a>",
+      "image": {
+        "url": "https://ufc.com/images/styles/card/s3/2026-11/110726-hero-bruce-buffer_GettyImages-2294916586.jpg?itok=q0MfMJX1",
+        "alt": "Article image: Official Scorecards | UFC Fight Night: Cortes Acosta vs Walker",
+        "credit": "",
+        "sourceUrl": "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-official-scorecards",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "cc1d88f4204e02a19a5c",
+      "title": "Prelim Results | UFC Fight Night: Cortes Acosta vs Walker",
+      "url": "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-prelim-results",
+      "source": "UFC",
+      "sport": "mma",
+      "publishedAt": "2026-11-08T00:45:00+00:00",
+      "score": 5,
+      "_summaryText": "<p>Live Results, Highlights, Post-Fight Interviews With The Prelim Winners And More From UFC Fight Night: Cortes Acosta vs Walker, Live From Meta APEX In Las Vegas On November 7</p>\n <a href=\"https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-prelim-results\" hreflang=\"en\">Read the Full Article Here</a>",
+      "image": {
+        "url": "https://ufc.com/images/styles/card/s3/2026-11/110726-hero-ollie-schmid_GettyImages-2304043077.jpg?itok=SNwWwhIm",
+        "alt": "Article image: Prelim Results | UFC Fight Night: Cortes Acosta vs Walker",
+        "credit": "",
+        "sourceUrl": "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-prelim-results",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "4fd8e8171b49b5d55cb6",
+      "title": "Zuffa Boxing 12 Results + Scorecards",
+      "url": "https://www.ufc.com/news/zuffa-boxing-12-results-scorecards-billam-smith-vs-clarke",
+      "source": "UFC",
+      "sport": "boxing",
+      "publishedAt": "2026-11-07T21:45:00+00:00",
+      "score": 5,
+      "_summaryText": "<p>Results, Highlights, Scorecards And More From Zuffa Boxing 12: Billam-Smith vs Clarke, Live From Copper Box Arena In London, England On November 7, 2026</p>\n <a href=\"https://www.ufc.com/news/zuffa-boxing-12-results-scorecards-billam-smith-vs-clarke\" hreflang=\"en\">Read the Full Article Here</a>",
+      "image": {
+        "url": "https://ufc.com/images/styles/card/s3/2026-11/zuffa-boxing-12-results-HERO.jpg?itok=37hUkjxJ",
+        "alt": "Article image: Zuffa Boxing 12 Results + Scorecards",
+        "credit": "",
+        "sourceUrl": "https://www.ufc.com/news/zuffa-boxing-12-results-scorecards-billam-smith-vs-clarke",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "7f2aa9c2162a86c7438a",
+      "title": "Chris Billam-Smith vs Cheavon Clarke Scorecard",
+      "url": "https://www.worldboxingnews.com/billam-smith-clarke-scorecard/",
+      "source": "World Boxing News",
+      "sport": "boxing",
+      "publishedAt": "2026-11-07T19:51:49+00:00",
+      "score": 0,
+      "_summaryText": "<p>\n        <img src=\"https://www.worldboxingnews.com/wp-content/uploads/2026/11/Live-Results_-Billam-Smith-vs-Clarke-2.jpg\"\n             alt=\"Chris Billam-Smith vs Cheavon Clarke Scorecard\"\n             style=\"max-width:100%;height:auto;margin-bottom:10px;\" />\n    </p>World Boxing News provides a scorecard as former cruiserweight world champion Chris Billam-Smith faces Cheavon Clarke in a ten-round contest at Zuffa Boxing 12 in London on Saturday, November 7. Billam-Smith enters the fight with a 22-2 professional record, looking to build toward another major opportunity in the cruiserweight division. Clarke brings a 12-2 record&#8230;&#160;<a href=\"https://www.worldboxingnews.com/billam-smith-clarke-scorecard/\" rel=\"bookmark\">Read More &#187;<span class=\"screen-reader-text\">Chris Billam-Smith vs Cheavon Clarke Scorecard</span></a>",
+      "image": {
+        "url": "https://www.worldboxingnews.com/wp-content/uploads/2026/11/Live-Results_-Billam-Smith-vs-Clarke-2.jpg",
+        "alt": "Chris Billam-Smith vs Cheavon Clarke Scorecard",
+        "credit": "",
+        "sourceUrl": "https://www.worldboxingnews.com/billam-smith-clarke-scorecard/",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "92b29ec6aa613c4fbcca",
+      "title": "Denzel Bentley vs Shane Mosley Jr. Scorecard",
+      "url": "https://www.worldboxingnews.com/bentley-mosley-jr-scorecard/",
+      "source": "World Boxing News",
+      "sport": "boxing",
+      "publishedAt": "2026-11-07T18:38:30+00:00",
+      "score": 0,
+      "_summaryText": "<p>\n        <img src=\"https://www.worldboxingnews.com/wp-content/uploads/2026/11/Live-Results_-Billam-Smith-vs-Clarke-2.jpg\"\n             alt=\"Denzel Bentley vs Shane Mosley Jr. Scorecard\"\n             style=\"max-width:100%;height:auto;margin-bottom:10px;\" />\n    </p>World Boxing News provides a scorecard as Denzel Bentley faces Shane Mosley Jr. in the ten-round middleweight main event at Zuffa Boxing 12 in London on Saturday, November 7. Bentley enters the contest with a 22-3-1 record, looking to extend his four-fight winning streak and strengthen his position in the middleweight division. Mosley Jr. brings&#8230;&#160;<a href=\"https://www.worldboxingnews.com/bentley-mosley-jr-scorecard/\" rel=\"bookmark\">Read More &#187;<span class=\"screen-reader-text\">Denzel Bentley vs Shane Mosley Jr. Scorecard</span></a>",
+      "image": {
+        "url": "https://www.worldboxingnews.com/wp-content/uploads/2026/11/Live-Results_-Billam-Smith-vs-Clarke-2.jpg",
+        "alt": "Denzel Bentley vs Shane Mosley Jr. Scorecard",
+        "credit": "",
+        "sourceUrl": "https://www.worldboxingnews.com/bentley-mosley-jr-scorecard/",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "e201c23f1ebcb8ee52e2",
+      "title": "Da’Mazion Vanhouter vs Ivan Balaz Scorecard",
+      "url": "https://www.worldboxingnews.com/vanhouter-balaz-scorecard/",
+      "source": "World Boxing News",
+      "sport": "boxing",
+      "publishedAt": "2026-11-07T17:15:04+00:00",
+      "score": 0,
+      "_summaryText": "<p>\n        <img src=\"https://www.worldboxingnews.com/wp-content/uploads/2026/11/Live-Results_-Billam-Smith-vs-Clarke-2.jpg\"\n             alt=\"Da&#8217;Mazion Vanhouter vs Ivan Balaz Scorecard\"\n             style=\"max-width:100%;height:auto;margin-bottom:10px;\" />\n    </p>World Boxing News provides a live heavyweight scorecard as unbeaten American prospect Da&#8217;Mazion Vanhouter faces Ivan Balaz over eight rounds at Zuffa Boxing 12 in London on Saturday, November 7. Vanhouter enters the contest with a 13-0 professional record, including ten knockouts, as he looks to continue his rise through the heavyweight division. The 21-year-old&#8230;&#160;<a href=\"https://www.worldboxingnews.com/vanhouter-balaz-scorecard/\" rel=\"bookmark\">Read More &#187;<span class=\"screen-reader-text\">Da&#8217;Mazion Vanhouter vs Ivan Balaz Scorecard</span></a>",
+      "image": {
+        "url": "https://www.worldboxingnews.com/wp-content/uploads/2026/11/Live-Results_-Billam-Smith-vs-Clarke-2.jpg",
+        "alt": "Da’Mazion Vanhouter vs Ivan Balaz Scorecard",
+        "credit": "",
+        "sourceUrl": "https://www.worldboxingnews.com/vanhouter-balaz-scorecard/",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "08bac9e473047cc53207",
+      "title": "Zuffa Boxing 12 Results from London",
+      "url": "https://www.worldboxingnews.com/zuffa-boxing-12-results/",
+      "source": "World Boxing News",
+      "sport": "boxing",
+      "publishedAt": "2026-11-07T15:54:12+00:00",
+      "score": 5,
+      "_summaryText": "<p>\n        <img src=\"https://www.worldboxingnews.com/wp-content/uploads/2026/11/Live-Results_-Billam-Smith-vs-Clarke.jpg\"\n             alt=\"Zuffa Boxing 12 Results from London\"\n             style=\"max-width:100%;height:auto;margin-bottom:10px;\" />\n    </p>World Boxing News provides results from Zuffa Boxing 12 at London&#8217;s Copper Box Arena on Saturday, November 7, with Denzel Bentley facing Shane Mosley Jr. in the ten-round middleweight main event. Bentley enters with a 22-3-1 record against Mosley Jr., who has won 23 of his 28 professional contests. Both men are looking to strengthen&#8230;&#160;<a href=\"https://www.worldboxingnews.com/zuffa-boxing-12-results/\" rel=\"bookmark\">Read More &#187;<span class=\"screen-reader-text\">Zuffa Boxing 12 Results from London</span></a>",
+      "image": {
+        "url": "https://www.worldboxingnews.com/wp-content/uploads/2026/11/Live-Results_-Billam-Smith-vs-Clarke.jpg",
+        "alt": "Zuffa Boxing 12 Results from London",
+        "credit": "",
+        "sourceUrl": "https://www.worldboxingnews.com/zuffa-boxing-12-results/",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "d186a62d941cabcae2d1",
+      "title": "Buatsi vs Hutchinson 2 Results and Scorecard",
+      "url": "https://www.worldboxingnews.com/buatsi-hutchinson-2-results-scorecard/",
+      "source": "World Boxing News",
+      "sport": "boxing",
+      "publishedAt": "2026-11-07T14:48:59+00:00",
+      "score": 4,
+      "_summaryText": "<p>\n        <img src=\"https://www.worldboxingnews.com/wp-content/uploads/2026/11/Buatsi-Hutchinson-2-Championship-Fight-Poster.jpg\"\n             alt=\"Buatsi vs Hutchinson 2 Results and Scorecard\"\n             style=\"max-width:100%;height:auto;margin-bottom:10px;\" />\n    </p>World Boxing News provides results from A Point 2 Prove at Manchester Arena on Saturday, November 7, headlined by Joshua Buatsi against Willy Hutchinson for the vacant WBC light heavyweight world title. The Queensberry Promotions event also features Jack Rafferty against Hovhannes Martirosyan for the vacant IBO welterweight world title, alongside Zak Miller and Gully&#8230;&#160;<a href=\"https://www.worldboxingnews.com/buatsi-hutchinson-2-results-scorecard/\" rel=\"bookmark\">Read More &#187;<span class=\"screen-reader-text\">Buatsi vs Hutchinson 2 Results and Scorecard</span></a>",
+      "image": {
+        "url": "https://www.worldboxingnews.com/wp-content/uploads/2026/11/Buatsi-Hutchinson-2-Championship-Fight-Poster.jpg",
+        "alt": "Buatsi vs Hutchinson 2 Results and Scorecard",
+        "credit": "",
+        "sourceUrl": "https://www.worldboxingnews.com/buatsi-hutchinson-2-results-scorecard/",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
+    },
+    {
+      "id": "36800c041d678f73271f",
+      "title": "ONE Fight Night 49 MMA And Submission Grappling Results: Lee, Czaban, Hugo, And Israilov Shine In Bangkok",
+      "url": "https://www.onefc.com/news/one-fight-night-49-mma-and-submission-grappling-results-lee-czaban-hugo-and-israilov-shine-in-bangkok/",
+      "source": "ONE Submission Grappling",
+      "sport": "mma",
+      "publishedAt": "2026-11-07T05:32:34+00:00",
+      "score": 5,
+      "_summaryText": "These four stars catapulted themselves closer to ONE World Title gold on Friday, November 6. <p class=\"wp-block-paragraph\"><a href=\"https://www.onefc.com/events/onefightnight49/\">ONE Fight Night 49: Gabriel vs. Magomedov</a> went down live in U.S. primetime from Lumpinee Stadium in Bangkok, Thailand, on Friday, November 6, and the card’s MMA and submission grappling action kept the energy high from beginning to end.</p>\n\n\n\n<p class=\"wp-block-paragraph\">A heavyweight grappling trilogy between a pair of World Champions was settled in a flash, ending a rivalry nearly a decade in the making.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Plus, two undefeated debutants squared off in a grinding bantamweight clash with a perfect record on the line, while an unbeaten rising star went the distance in a tightly contested atomweight chess match. Finally, a strawweight clash that opened with a grappling scare ended in a choke and could lead to a World Title opportunity.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Here’s what happened in the MMA and submission grappling matches at ONE Fight Night 49.</p>\n\n\n\n<h2 class=\"wp-block-heading\">Lee Sinks In Rear-Naked Choke To Submit Lalthazuala</h2>\n\n\n\n<figure class=\"wp-block-embed is-type-rich is-provider-instagram wp-block-embed-instagram\"><div class=\"wp-block-embed__wrapper\">\n<blockquote class=\"instagram-media\" data-instgrm-captioned data-instgrm-permalink=\"https://www.instagram.com/reel/DfbYi4gOY2C/?utm_source=ig_embed&amp;utm_campaign=loading\" data-instgrm-version=\"14\" style=\" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:640px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);\"><div style=\"padding:16px;\"> <a href=\"https://www.instagram.com/reel/DfbYi4gOY2C/?utm_source=ig_embed&amp;utm_campaign=loading\" style=\" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;\" target=\"_blank\"> <div style=\" display: flex; flex-direction: row; align-items: center;\"> <div style=\"background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;\"></div> <div style=\"display: flex; flex-direction: column; flex-grow: 1; justify-content: center;\"> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;\"></div> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;\"></div></div></div><div style=\"padding: 19% 0;\"></div> <div style=\"display:block; height:50px; margin:0 auto 12px; width:50px;\"><svg width=\"50px\" height=\"50px\" viewbox=\"0 0 60 60\" version=\"1.1\" xmlns=\"https://www.w3.org/2000/svg\" xmlns:xlink=\"https://www.w3.org/1999/xlink\"><g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\"><g transform=\"translate(-511.000000, -20.000000)\" fill=\"#000000\"><g><path d=\"M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631\"></path></g></g></g></svg></div><div style=\"padding-top: 8px;\"> <div style=\" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;\">View this post on Instagram</div></div><div style=\"padding: 12.5% 0;\"></div> <div style=\"display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;\"><div> <div style=\"background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);\"></div> <div style=\"background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;\"></div> <div style=\"background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);\"></div></div><div style=\"margin-left: 8px;\"> <div style=\" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;\"></div> <div style=\" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)\"></div></div><div style=\"margin-left: auto;\"> <div style=\" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);\"></div> <div style=\" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);\"></div> <div style=\" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);\"></div></div></div> <div style=\"display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;\"> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;\"></div> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;\"></div></div></a></div></blockquote>\n</div></figure>\n\n\n\n<p class=\"wp-block-paragraph\"><a href=\"https://www.onefc.com/athletes/lee-seung-cheol/\">“The Flash” Lee Seung Cheol</a> may have just earned a crack at the ONE Strawweight MMA World Title. The South Korean handed <a href=\"https://www.onefc.com/athletes/nazareth-lalthazuala/\">Nazareth “The Northstar” Lalthazuala</a> his first career loss, as he submitted the Indian phenom via rear-naked choke in the second round of a match that was filled with plot twists.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Most of the opening frame was spent on the canvas, with Lalthazuala hunting for submissions and even getting close to securing a choke. The Indian MMA star looked like he’d be gliding toward an easy win. But Lee weathered the storm, and he returned more determined in the second stanza.</p>\n\n\n\n<p class=\"wp-block-paragraph\">The 27-year-old South Korean had his opponent trapped against the ropes and rained down ground-and-pound. Lalthazuala threw up-kicks until he could create enough space to stand, but the two soon went back to the mat and battled for position. Lee won that battle, as he took the back of the 25-year-old and sunk in the choke for the tap at the 3:04 mark of round two.</p>\n\n\n\n<p class=\"wp-block-paragraph\">That submission win moved Lee’s record to 14-1, put him on a 14-bout winning streak, and inched him closer to a shot at ONE Strawweight MMA World Champion <a href=\"https://www.onefc.com/athletes/joshua-pacio/\">Joshua Pacio</a>, who will defend his belt at <a href=\"https://www.onefc.com/events/one-samurai-5/\">ONE SAMURAI 5</a> on November 18.</p>\n\n\n\n<h2 class=\"wp-block-heading\">Czaban Edges Souza In Close Battle, Remains Undefeated</h2>\n\n\n\n<figure class=\"wp-block-image size-large\"><img loading=\"lazy\" decoding=\"async\" width=\"1200\" height=\"800\" src=\"https://cdn.onefc.com/wp-content/uploads/2026/11/Vick-Souza-vs-Magdalena-Czaban-at-ONE-Fight-Night-49-3-1200x800.jpg\" alt=\"Magdalena Czaban punches Vick Souza\" class=\"wp-image-563684\" srcset=\"https://cdn.onefc.com/wp-content/uploads/2026/11/Vick-Souza-vs-Magdalena-Czaban-at-ONE-Fight-Night-49-3-1200x800.jpg 1200w, https://cdn.onefc.com/wp-content/uploads/2026/11/Vick-Souza-vs-Magdalena-Czaban-at-ONE-Fight-Night-49-3-600x400.jpg 600w, https://cdn.onefc.com/wp-content/uploads/2026/11/Vick-Souza-vs-Magdalena-Czaban-at-ONE-Fight-Night-49-3-768x512.jpg 768w, https://cdn.onefc.com/wp-content/uploads/2026/11/Vick-Souza-vs-Magdalena-Czaban-at-ONE-Fight-Night-49-3-1536x1024.jpg 1536w, https://cdn.onefc.com/wp-content/uploads/2026/11/Vick-Souza-vs-Magdalena-Czaban-at-ONE-Fight-Night-49-3-2048x1366.jpg 2048w, https://cdn.onefc.com/wp-content/uploads/2026/11/Vick-Souza-vs-Magdalena-Czaban-at-ONE-Fight-Night-49-3-300x200.jpg 300w, https://cdn.onefc.com/wp-content/uploads/2026/11/Vick-Souza-vs-Magdalena-Czaban-at-ONE-Fight-Night-49-3-1920x1281.jpg 1920w\" sizes=\"auto, (max-width: 1200px) 100vw, 1200px\"><figcaption class=\"wp-element-caption\">Photo Credit: ONE Championship</figcaption></figure>\n\n\n\n<p class=\"wp-block-paragraph\">Polish star <a href=\"https://www.onefc.com/athletes/magdalena-czaban/\">Magdalena “The Powerpuff Girl” Czaban</a> outpointed Brazilian rival <a href=\"https://www.onefc.com/athletes/vick-souza/\">Vick Souza</a> over three tightly contested rounds to take a unanimous decision victory in their atomweight MMA clash and keep her unblemished professional record intact.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Once the opening bell sounded, Souza hunted her opponent’s legs with low kicks. However, the 27-year-old Polish fighter responded with a variety of punches and kicks. Soon, the 29-year-old Brazilian hit a takedown, pinned “The Powerpuff Girl” to the canvas, and searched for the finish.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Czaban stayed on the outside in round two, pelting the Brazilian with combinations. Souza fired back with counters, and the two battled neck and neck. The third and final frame was another back-and-forth affair, as “The Powerpuff Girl” stung her foe with jabs and the Brazilian continued to throw inside low kicks.</p>\n\n\n\n<p class=\"wp-block-paragraph\">In the end, all three judges gave the nod to Czaban, who registered her <a href=\"https://www.onefc.com/news/end-in-second-round-undefeated-magdalena-czaban-predicts-stoppage-of-victoria-souza-at-one-fight-night-49/\">second straight win</a> in ONE Championship, moved her record to 6-0, and took another step forward on the path toward becoming Poland’s first ONE World Champion.</p>\n\n\n\n<h2 class=\"wp-block-heading\">Hugo Submits Johnson In Trilogy</h2>\n\n\n\n<figure class=\"wp-block-embed is-type-rich is-provider-instagram wp-block-embed-instagram\"><div class=\"wp-block-embed__wrapper\">\n<blockquote class=\"instagram-media\" data-instgrm-captioned data-instgrm-permalink=\"https://www.instagram.com/reel/DfbKOmIuA64/?utm_source=ig_embed&amp;utm_campaign=loading\" data-instgrm-version=\"14\" style=\" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:640px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);\"><div style=\"padding:16px;\"> <a href=\"https://www.instagram.com/reel/DfbKOmIuA64/?utm_source=ig_embed&amp;utm_campaign=loading\" style=\" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;\" target=\"_blank\"> <div style=\" display: flex; flex-direction: row; align-items: center;\"> <div style=\"background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;\"></div> <div style=\"display: flex; flex-direction: column; flex-grow: 1; justify-content: center;\"> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;\"></div> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;\"></div></div></div><div style=\"padding: 19% 0;\"></div> <div style=\"display:block; height:50px; margin:0 auto 12px; width:50px;\"><svg width=\"50px\" height=\"50px\" viewbox=\"0 0 60 60\" version=\"1.1\" xmlns=\"https://www.w3.org/2000/svg\" xmlns:xlink=\"https://www.w3.org/1999/xlink\"><g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\"><g transform=\"translate(-511.000000, -20.000000)\" fill=\"#000000\"><g><path d=\"M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631\"></path></g></g></g></svg></div><div style=\"padding-top: 8px;\"> <div style=\" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;\">View this post on Instagram</div></div><div style=\"padding: 12.5% 0;\"></div> <div style=\"display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;\"><div> <div style=\"background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);\"></div> <div style=\"background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;\"></div> <div style=\"background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);\"></div></div><div style=\"margin-left: 8px;\"> <div style=\" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;\"></div> <div style=\" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)\"></div></div><div style=\"margin-left: auto;\"> <div style=\" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);\"></div> <div style=\" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);\"></div> <div style=\" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);\"></div></div></div> <div style=\"display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;\"> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;\"></div> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;\"></div></div></a></div></blockquote>\n</div></figure>\n\n\n\n<p class=\"wp-block-paragraph\">Seven-time BJJ World Champion <a href=\"https://www.onefc.com/athletes/victor-hugo-costa-marques/\">Victor Hugo</a> waited nearly a decade to face American rival, former IBJJF No-Gi World Champion <a href=\"https://www.onefc.com/athletes/devhonte-johnson/\">Devhonte Johnson</a>, in a trilogy match and settle their unfinished business. At ONE Fight Night 49, the Brazilian finally got his wish and made the most of the opportunity.</p>\n\n\n\n<p class=\"wp-block-paragraph\">A foot sweep set up the finish, as Hugo submitted his longtime adversary via rear-naked choke at the 1:35 mark of their openweight submission grappling contest.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Hugo – the reigning ADCC World Champion – used the sweep to put Johnson on the canvas and quickly took his back. The two promotional newcomers then waged a hand-fighting battle for control, until the 29-year-old Brazilian locked in the choke and cranked down on the jaw of the 32-year-old American, who was forced to tap.</p>\n\n\n\n<p class=\"wp-block-paragraph\">The victory broke a 1-1 tie in a <a href=\"https://www.onefc.com/news/i-can-finish-anyone-victor-hugo-devhonte-johnson-ready-to-close-their-trilogy-at-one-fight-night-49/\">rivalry that began in their purple belt days</a>, when Hugo took the first meeting at the 2016 IBJJF Worlds and Johnson won the rematch at the 2017 Europeans. The Brazilian waited nine years for a third encounter, and he won so emphatically in a bout that could help usher in ONE Championship’s heavyweight submission grappling division. It also moved his record to 101-23.</p>\n\n\n\n<h2 class=\"wp-block-heading\">Israilov Stays Perfect With Hard-Fought Win Over Tabarov</h2>\n\n\n\n<figure class=\"wp-block-image size-large\"><img loading=\"lazy\" decoding=\"async\" width=\"1200\" height=\"800\" src=\"https://cdn.onefc.com/wp-content/uploads/2026/11/Kalandar-Tabarov-vs-Ilmadi-Israilov-at-ONE-Fight-Night-49-12-1200x800.jpg\" alt=\"Ilmadi Israilov throws a head kick at Kalandar Tabarov\" class=\"wp-image-563631\" srcset=\"https://cdn.onefc.com/wp-content/uploads/2026/11/Kalandar-Tabarov-vs-Ilmadi-Israilov-at-ONE-Fight-Night-49-12-1200x800.jpg 1200w, https://cdn.onefc.com/wp-content/uploads/2026/11/Kalandar-Tabarov-vs-Ilmadi-Israilov-at-ONE-Fight-Night-49-12-600x400.jpg 600w, https://cdn.onefc.com/wp-content/uploads/2026/11/Kalandar-Tabarov-vs-Ilmadi-Israilov-at-ONE-Fight-Night-49-12-768x512.jpg 768w, https://cdn.onefc.com/wp-content/uploads/2026/11/Kalandar-Tabarov-vs-Ilmadi-Israilov-at-ONE-Fight-Night-49-12-1536x1024.jpg 1536w, https://cdn.onefc.com/wp-content/uploads/2026/11/Kalandar-Tabarov-vs-Ilmadi-Israilov-at-ONE-Fight-Night-49-12-2048x1366.jpg 2048w, https://cdn.onefc.com/wp-content/uploads/2026/11/Kalandar-Tabarov-vs-Ilmadi-Israilov-at-ONE-Fight-Night-49-12-300x200.jpg 300w, https://cdn.onefc.com/wp-content/uploads/2026/11/Kalandar-Tabarov-vs-Ilmadi-Israilov-at-ONE-Fight-Night-49-12-1920x1281.jpg 1920w\" sizes=\"auto, (max-width: 1200px) 100vw, 1200px\"><figcaption class=\"wp-element-caption\">Photo Credit: ONE Championship</figcaption></figure>\n\n\n\n<p class=\"wp-block-paragraph\">French rising star <a href=\"https://www.onefc.com/athletes/ilmadi-israilov/\">Ilmadi Israilov</a> kept his spotless record alive in the opening bout of the night, as he claimed a unanimous decision victory over Tajik sensation <a href=\"https://www.onefc.com/athletes/kalandar-tabarov/\">Kalandar Tabarov</a> in a bantamweight MMA clash between two more undefeated promotional newcomers.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Israilov spent the better part of the battle hunting for the single-leg takedown, while his 27-year-old foe stuffed shots and fought out of scrambles. The 23-year-old Frenchman landed the takedown on several occasions and tried to pummel his opponent with ground-and-pound, but Tabarov defended the attacks well.</p>\n\n\n\n<p class=\"wp-block-paragraph\">An accidental kick to the face of the grounded Tajik cost Israilov a yellow card, though it did little to slow him down. By the final bell, he was right back on the offensive, pinning his opponent to the canvas and searching for a finish with ground-and-pound.</p>\n\n\n\n<p class=\"wp-block-paragraph\">The judges were unanimous in their scoring, and the victory moved Israilov’s career record to 10-0 in his ONE Championship debut.</p>\n    <script defer src=\"https://www.instagram.com/embed.js\"></script>\n\n    <script>\n        window.fbAsyncInit = function() {\n            FB.init({\n                appId: '409843795081488',\n                xfbml: true,\n                version: 'v24.0'\n            });\n        };\n    </script>\n    <script defer src=\"https://connect.facebook.net/en_US/sdk.js\"></script>\n\n<p><a href=\"https://www.onefc.com/news/one-fight-night-49-mma-and-submission-grappling-results-lee-czaban-hugo-and-israilov-shine-in-bangkok/\" rel=\"nofollow\">Source</a></p> \n                Fachrul Sidiq\n                Lee Seung Cheol Nazareth Lalthazuala\n                Photo Credit: ONE Championship\n            ",
       "sports": [
         "mma",
         "grappling"
       ],
-      "publishedAt": "2026-11-07T12:00:00+00:00",
-      "timeBasis": "Publisher date (exact hour unavailable)",
-      "id": "official-one-fight-night-49-mma-and-submission-grappling-results-lee-czaban-hugo-and-israilov-shine-in-bangkok",
-      "score": 4,
-      "sourceMethod": "Original publisher official result report"
+      "image": {
+        "url": "https://cdn.onefc.com/wp-content/uploads/2026/11/Vick-Souza-vs-Magdalena-Czaban-at-ONE-Fight-Night-49-3-1200x800.jpg",
+        "alt": "Magdalena Czaban punches Vick Souza",
+        "credit": "",
+        "sourceUrl": "https://www.onefc.com/news/one-fight-night-49-mma-and-submission-grappling-results-lee-czaban-hugo-and-israilov-shine-in-bangkok/",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00",
+      "updatedAt": "2026-11-09T10:59:59.594220+00:00"
     },
     {
-      "title": "ONE The Inner Circle 37: Tye Ruotolo vs Christian Lee — MMA world-title result",
-      "url": "https://www.onefc.com/news/the-inner-circle-37-main-event-result-tye-ruotolo-dethrones-christian-lee-in-round-one-crowned-two-sport-king/",
-      "source": "ONE Championship",
+      "id": "826bcf7447cef17d5691",
+      "title": "ONE Fight Night 49: Gabriel Vs. Magomedov – Results And Highlights For Every Match",
+      "url": "https://www.onefc.com/news/one-fight-night-49-gabriel-vs-magomedov-results-and-highlights-for-every-match/",
+      "source": "ONE Live Results",
       "sport": "mma",
-      "publishedAt": "2026-11-06T12:00:00+00:00",
-      "timeBasis": "Publisher date (exact hour unavailable)",
-      "id": "official-the-inner-circle-37-main-event-result-tye-ruotolo-dethrones-christian-lee-in-round-one-crowned-two-sport-king",
-      "score": 4,
-      "sourceMethod": "Original publisher official result report"
+      "publishedAt": "2026-11-06T22:39:13+00:00",
+      "score": 5,
+      "_summaryText": "We’re back in U.S. primetime! Follow along for breaking news and updates! <p class=\"wp-block-paragraph\">After <a href=\"https://www.onefc.com/news/the-inner-circle-37-and-one-friday-fights-177-results-and-highlights-for-every-match/\">kicking off the month</a> with two explosive shows and a heart-racing MMA World Title bout, ONE Championship closes out its triple-header weekend with ONE Fight Night 49: Gabriel vs. Magomedov.</p>\n\n\n\n<p class=\"wp-block-paragraph\">The world’s largest martial arts organization will broadcast <a href=\"https://www.onefc.com/events/onefightnight49/\">ONE Fight Night 49: Gabriel vs. Magomedov</a> live in U.S. primetime from Bangkok’s Lumpinee Stadium on Friday, November 6.</p>\n\n\n\n<p class=\"wp-block-paragraph\">In the main event, Brazilian contender Lucas Gabriel will face undefeated star Magomed Magomedov, and the winner could get the next ONE Lightweight MMA World Championship opportunity.</p>\n\n\n\n<figure class=\"wp-block-embed is-type-rich is-provider-instagram wp-block-embed-instagram\"><div class=\"wp-block-embed__wrapper\">\n<blockquote class=\"instagram-media\" data-instgrm-captioned data-instgrm-permalink=\"https://www.instagram.com/p/De0wNrjme0D/?utm_source=ig_embed&amp;utm_campaign=loading\" data-instgrm-version=\"14\" style=\" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:640px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);\"><div style=\"padding:16px;\"> <a href=\"https://www.instagram.com/p/De0wNrjme0D/?utm_source=ig_embed&amp;utm_campaign=loading\" style=\" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;\" target=\"_blank\"> <div style=\" display: flex; flex-direction: row; align-items: center;\"> <div style=\"background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;\"></div> <div style=\"display: flex; flex-direction: column; flex-grow: 1; justify-content: center;\"> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;\"></div> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;\"></div></div></div><div style=\"padding: 19% 0;\"></div> <div style=\"display:block; height:50px; margin:0 auto 12px; width:50px;\"><svg width=\"50px\" height=\"50px\" viewbox=\"0 0 60 60\" version=\"1.1\" xmlns=\"https://www.w3.org/2000/svg\" xmlns:xlink=\"https://www.w3.org/1999/xlink\"><g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\"><g transform=\"translate(-511.000000, -20.000000)\" fill=\"#000000\"><g><path d=\"M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631\"></path></g></g></g></svg></div><div style=\"padding-top: 8px;\"> <div style=\" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;\">View this post on Instagram</div></div><div style=\"padding: 12.5% 0;\"></div> <div style=\"display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;\"><div> <div style=\"background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);\"></div> <div style=\"background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;\"></div> <div style=\"background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);\"></div></div><div style=\"margin-left: 8px;\"> <div style=\" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;\"></div> <div style=\" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)\"></div></div><div style=\"margin-left: auto;\"> <div style=\" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);\"></div> <div style=\" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);\"></div> <div style=\" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);\"></div></div></div> <div style=\"display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;\"> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;\"></div> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;\"></div></div></a></div></blockquote>\n</div></figure>\n\n\n\n<p class=\"wp-block-paragraph\">Before that, in the co-main event, Taiki “Silent Sniper” Naito will go head-to-head with Kongthoranee Sor Sommai in a flyweight kickboxing rematch. This serves as the sequel to their 2023 Muay Thai clash, which the Thai veteran won.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Plus, unbeaten warriors Magdalena Czaban, Kalandar Tabarov, Ilmadi Israilov, and Nazareth Lalthazuala will look to maintain their spotless records. And seven-time BJJ World Champion Victor Hugo will make his ONE Championship debut.</p>\n\n\n\n<p class=\"wp-block-paragraph\">For up-to-the-minute results and video highlights from every match at ONE Fight Night 49: Gabriel vs. Magomedov, check below.</p>\n\n\n\n<figure class=\"wp-block-embed is-type-rich is-provider-instagram wp-block-embed-instagram\"><div class=\"wp-block-embed__wrapper\">\n<blockquote class=\"instagram-media\" data-instgrm-captioned data-instgrm-permalink=\"https://www.instagram.com/p/DfZxQ0oGXQA/?utm_source=ig_embed&amp;utm_campaign=loading\" data-instgrm-version=\"14\" style=\" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:640px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);\"><div style=\"padding:16px;\"> <a href=\"https://www.instagram.com/p/DfZxQ0oGXQA/?utm_source=ig_embed&amp;utm_campaign=loading\" style=\" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;\" target=\"_blank\"> <div style=\" display: flex; flex-direction: row; align-items: center;\"> <div style=\"background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;\"></div> <div style=\"display: flex; flex-direction: column; flex-grow: 1; justify-content: center;\"> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;\"></div> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;\"></div></div></div><div style=\"padding: 19% 0;\"></div> <div style=\"display:block; height:50px; margin:0 auto 12px; width:50px;\"><svg width=\"50px\" height=\"50px\" viewbox=\"0 0 60 60\" version=\"1.1\" xmlns=\"https://www.w3.org/2000/svg\" xmlns:xlink=\"https://www.w3.org/1999/xlink\"><g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\"><g transform=\"translate(-511.000000, -20.000000)\" fill=\"#000000\"><g><path d=\"M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631\"></path></g></g></g></svg></div><div style=\"padding-top: 8px;\"> <div style=\" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;\">View this post on Instagram</div></div><div style=\"padding: 12.5% 0;\"></div> <div style=\"display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;\"><div> <div style=\"background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);\"></div> <div style=\"background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;\"></div> <div style=\"background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);\"></div></div><div style=\"margin-left: 8px;\"> <div style=\" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;\"></div> <div style=\" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)\"></div></div><div style=\"margin-left: auto;\"> <div style=\" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);\"></div> <div style=\" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);\"></div> <div style=\" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);\"></div></div></div> <div style=\"display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;\"> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;\"></div> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;\"></div></div></a></div></blockquote>\n</div></figure>\n    <script defer src=\"https://www.instagram.com/embed.js\"></script>\n\n    <script>\n        window.fbAsyncInit = function() {\n            FB.init({\n                appId: '409843795081488',\n                xfbml: true,\n                version: 'v24.0'\n            });\n        };\n    </script>\n    <script defer src=\"https://connect.facebook.net/en_US/sdk.js\"></script>\n\n<p><a href=\"https://www.onefc.com/news/one-fight-night-49-gabriel-vs-magomedov-results-and-highlights-for-every-match/\" rel=\"nofollow\">Source</a></p> \n                Kriel Ibarrola\n                Lucas Gabriel and Magomed Magomedov throw down at ONE Fight Night 49\n                Photo credit: ONE Championship\n            ",
+      "image": {
+        "url": "https://cdn.onefc.com/wp-content/uploads/2026/11/Lucas-Gabriel-and-Magomed-Magomedov-throw-down-at-ONE-Fight-Night-49.png",
+        "alt": "Article image: ONE Fight Night 49: Gabriel Vs. Magomedov – Results And Highlights For Every Match",
+        "credit": "",
+        "sourceUrl": "https://www.onefc.com/news/one-fight-night-49-gabriel-vs-magomedov-results-and-highlights-for-every-match/",
+        "kind": "publisher",
+        "checkedAt": "2026-11-09T10:59:59.594220+00:00"
+      },
+      "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
     },
     {
       "title": "UFC BJJ 13: Tackett vs Rodriguez — official results and match recaps",
