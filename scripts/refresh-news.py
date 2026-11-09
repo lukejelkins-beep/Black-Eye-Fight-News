@@ -1,9 +1,10 @@
 """Fetch publisher RSS/Atom headlines; retain source dates and last successful checks."""
-import datetime as dt, email.utils, hashlib, html, json, re, urllib.request, urllib.parse
+import datetime as dt, email.utils, hashlib, html, json, re, urllib.request, urllib.error, urllib.parse
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from html.parser import HTMLParser
 from concurrent.futures import ThreadPoolExecutor
+import time
 SOURCES=[('World Boxing News','boxing','https://www.worldboxingnews.net/feed/'),('MMA Fighting','mma','https://www.mmafighting.com/rss/index.xml'),('MMA Junkie','mma','https://mmajunkie.usatoday.com/feed/'),('UFC','mma','https://www.ufc.com/rss/news')]
 UTC=dt.timezone.utc
 
@@ -138,17 +139,49 @@ def mma_junkie_gdelt(raw,now):
             sourceMethod='GDELT indexed MMA Junkie original',timeBasis='GDELT first-seen timestamp',_imageCandidates=candidates))
     return found
 
+
+def mma_junkie_bing(raw,now):
+    """Bing News RSS fallback: extract original MMA Junkie URLs from redirect links."""
+    root=ET.fromstring(raw)
+    approved={'mmajunkie.usatoday.com','www.mmajunkie.usatoday.com','mmajunkie.com','www.mmajunkie.com'}
+    output=[]
+    for item in root.iter():
+        if item.tag.split('}')[-1]!='item':continue
+        fields={child.tag.split('}')[-1]:''.join(child.itertext()) for child in item}
+        link=fields.get('link','').strip()
+        parsed=urllib.parse.urlsplit(link)
+        if parsed.hostname in ('www.bing.com','bing.com'):
+            link=urllib.parse.parse_qs(parsed.query).get('url',[''])[0]
+            parsed=urllib.parse.urlsplit(link)
+        if parsed.scheme!='https' or parsed.hostname not in approved or not parsed.path.startswith('/story/'):continue
+        when=stamp(fields.get('pubDate'))
+        if not when or not now-dt.timedelta(days=14)<=when<=now+dt.timedelta(minutes=30):continue
+        title=plain(fields.get('title'))
+        if not title:continue
+        url=urllib.parse.urlunsplit(parsed._replace(fragment=''))
+        score=sum(weight for pattern,weight in [(r'\b(title|champion|championship)\b',3),(r'\b(result|knockout|wins|defeats|withdraw|cancel|announc|confirm)',4),(r'\b(fight|ufc|boxing|bout)\b',1)] if re.search(pattern,title,re.I))
+        output.append(dict(id=hashlib.sha256(url.encode()).hexdigest()[:20],title=title,url=url,source='MMA Junkie',sport='mma',publishedAt=when.isoformat(),score=score,
+          sourceMethod='Bing News indexed MMA Junkie original',timeBasis='Bing News feed timestamp',_imageCandidates=[]))
+    return output
+
 def source_articles(source,sport,url,now):
     urls=[url]
     if source=='MMA Junkie':
-        urls+=['https://mmajunkie.com/feed/','https://api.gdeltproject.org/api/v2/doc/doc?'+urllib.parse.urlencode({'query':'domain:mmajunkie.usatoday.com','mode':'artlist','maxrecords':'75','format':'json','timespan':'7d','sort':'datedesc'}),'https://news.google.com/rss/search?q=site%3Ammajunkie.usatoday.com%20when%3A7d&hl=en-AU&gl=AU&ceid=AU%3Aen']
+        urls+=['https://mmajunkie.com/feed/','https://api.gdeltproject.org/api/v2/doc/doc?'+urllib.parse.urlencode({'query':'domain:mmajunkie.usatoday.com','mode':'artlist','maxrecords':'75','format':'json','timespan':'7d','sort':'datedesc'}),'https://www.bing.com/news/search?'+urllib.parse.urlencode({'q':'site:mmajunkie.usatoday.com','format':'rss','setmkt':'en-US'}),'https://news.google.com/rss/search?q=site%3Ammajunkie.usatoday.com%20when%3A7d&hl=en-AU&gl=AU&ceid=AU%3Aen']
     errors=[]
     for candidate in urls:
         try:
             req=urllib.request.Request(candidate,headers={'User-Agent':'Mozilla/5.0 (compatible; BlackEyeFightNews/1.0)'})
-            with urllib.request.urlopen(req,timeout=20) as response: raw=response.read(3_000_000)
+            try:
+                with urllib.request.urlopen(req,timeout=20) as response: raw=response.read(3_000_000)
+            except urllib.error.HTTPError as exc:
+                if exc.code!=429 or urllib.parse.urlsplit(candidate).hostname!='api.gdeltproject.org':raise
+                time.sleep(6)
+                with urllib.request.urlopen(req,timeout=20) as response: raw=response.read(3_000_000)
             if urllib.parse.urlsplit(candidate).hostname=='api.gdeltproject.org':
                 found=mma_junkie_gdelt(raw,now)
+            elif urllib.parse.urlsplit(candidate).hostname=='www.bing.com':
+                found=mma_junkie_bing(raw,now)
             elif urllib.parse.urlsplit(candidate).hostname=='news.google.com':
                 found=mma_junkie_google_feed(raw,now)
             else:

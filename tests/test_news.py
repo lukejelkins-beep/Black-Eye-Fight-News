@@ -28,6 +28,14 @@ class GdeltFallbackTests(unittest.TestCase):
   self.assertEqual(items[0]['timeBasis'],'GDELT first-seen timestamp')
   self.assertTrue(items[0]['url'].startswith('https://mmajunkie.usatoday.com/story/'))
 
+class BingFallbackTests(unittest.TestCase):
+ def test_bing_redirect_is_decoded_and_other_sources_dropped(self):
+  raw=b'<rss><channel><item><title>Fight announcement</title><link>https://www.bing.com/news/apiclick.aspx?url=https%3A%2F%2Fmmajunkie.usatoday.com%2Fstory%2Fsports%2Fufc%2F2026%2F11%2F09%2Ffight%2F1234%2F</link><pubDate>Mon, 09 Nov 2026 04:10:00 GMT</pubDate></item><item><title>Unrelated</title><link>https://www.bing.com/news/apiclick.aspx?url=https%3A%2F%2Fexample.org%2Fstory%2Fa</link><pubDate>Mon, 09 Nov 2026 04:10:00 GMT</pubDate></item></channel></rss>'
+  rows=m.mma_junkie_bing(raw,dt.datetime(2026,11,9,6,tzinfo=dt.timezone.utc))
+  self.assertEqual(len(rows),1)
+  self.assertEqual(rows[0]['url'],'https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/09/fight/1234/')
+  self.assertEqual(rows[0]['timeBasis'],'Bing News feed timestamp')
+
 class EditorialRoutingTests(unittest.TestCase):
  def test_routine_results_routed_out_of_news(self):
   headlines=['Chris Billam-Smith vs Cheavon Clarke Scorecard','Denzel Bentley vs Shane Mosley Jr. Scorecard','Da’Mazion Vanhouter vs Ivan Balaz Scorecard','Zuffa Boxing 12 Results from London','Buatsi vs Hutchinson 2 Results and Scorecard','UFC Vegas 124 results: Tatiana Suarez grinds her way to decision win','UFC Vegas 124 live blog: Tatiana Suarez vs Virna Jandiroba','Canelo vs Mbilli Scorecard and Round-by-Round Updates']
