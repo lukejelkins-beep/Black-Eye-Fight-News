@@ -103,4 +103,19 @@ class FilmTests(unittest.TestCase):
   self.assertEqual(m.merge_video(film,results,[entry]),(1,1))
   self.assertEqual(m.merge_video(film,results,[entry]),(0,0))
   self.assertEqual(results['results'][0]['highlights']['publisher'],'UFC')
+
+class VideoDisciplineScopeTests(unittest.TestCase):
+ def test_official_mma_and_grappling_are_separated(self):
+  self.assertEqual(m.video_sport({'publisher':'UFC','title':'UFC BJJ 14 submission highlights','category':'combat','discipline':'MMA'}),'grappling')
+  self.assertEqual(m.video_sport({'publisher':'UFC','title':'UFC 334 KO highlights','category':'combat','discipline':'MMA'}),'mma')
+  self.assertEqual(m.video_sport({'publisher':'PFL','title':'PFL knockout highlights','category':'combat','discipline':'MMA'}),'mma')
+  self.assertEqual(m.video_sport({'publisher':'ONE Championship','title':'ONE MMA world title fight highlights','category':'combat','discipline':'MMA / Grappling'}),'mma')
+  self.assertEqual(m.video_sport({'publisher':'ONE Championship','title':'ONE BJJ submission grappling highlights','category':'combat','discipline':'MMA / Grappling'}),'grappling')
+ def test_striking_only_one_uploads_are_excluded(self):
+  self.assertIsNone(m.video_sport({'publisher':'ONE Championship','title':'ONE Muay Thai knockouts highlights','category':'combat','discipline':'MMA / Grappling'}))
+  self.assertIsNone(m.video_sport({'publisher':'ONE Championship','title':'ONE Fight Night 49 Highlights','category':'combat','discipline':'MMA / Grappling'}))
+ def test_wrestling_rights_holder_and_bjj(self):
+  self.assertEqual(m.video_sport({'publisher':'United World Wrestling','title':'Greco-Roman wrestling finals highlights','category':'combat','discipline':'Wrestling / RAF'}),'grappling')
+  self.assertEqual(m.video_sport({'publisher':'FloGrappling','title':'ADCC finals submission highlights','category':'combat','discipline':'BJJ / Grappling'}),'grappling')
+
 if __name__=='__main__': unittest.main()
