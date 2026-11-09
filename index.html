@@ -360,16 +360,131 @@
 }
 </style>
 
-<style id="calendar-sport-toggle-icons">
-/* Icon-only sport switcher: same event filtering, with larger touch targets. */
-.segment.sport-icon-segment{display:inline-flex;align-items:center;gap:6px;padding:6px;border-radius:8px;max-width:100%;background:#ebe5df}
-.segment.sport-icon-segment button{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;width:clamp(72px,22vw,98px);height:58px;min-height:52px;padding:8px;border:2px solid #b9c7c6;border-radius:6px;color:#2c2424;background:#fff;transition:background-color .15s,border-color .15s,color .15s}
-.segment.sport-icon-segment button[aria-pressed="true"]{background:#ae1924;border-color:#5c1019;color:#fff}
-.segment.sport-icon-segment button:not([aria-pressed="true"]):hover{background:#fbe8e7;border-color:#a72129;color:#9d1722}
-.segment.sport-icon-segment button:focus-visible{outline:3px solid #eabf3f;outline-offset:3px}
-.segment.sport-icon-segment .sport-toggle-icon{display:block;width:38px;height:38px;flex:none;pointer-events:none}
-@media(max-width:365px){.segment.sport-icon-segment button{width:clamp(64px,21vw,77px);height:52px}.segment.sport-icon-segment .sport-toggle-icon{width:34px;height:34px}}
-@media(prefers-reduced-motion:reduce){.segment.sport-icon-segment button{transition:none}}
+<style id="calendar-photo-tabs-and-brush-heading-20261109">
+/* Original mockup art reused for the Fights heading and photo-texture discipline tabs.
+   Native button elements retain the existing accessible calendar filter logic. */
+#main .section-heading.calendar-photo-heading{
+  display:block;
+  background:#0a0a0a;
+  border-bottom:3px solid #bd171e;
+  padding:5px 9px 3px;
+  margin:0 0 18px;
+  overflow:hidden;
+}
+#main .section-heading.calendar-photo-heading h1{
+  display:block !important;
+  margin:0 !important;
+  padding:0 !important;
+  font-size:0 !important;
+  line-height:0 !important;
+  background:none !important;
+  -webkit-text-fill-color:initial !important;
+  -webkit-text-stroke:0 !important;
+  text-shadow:none !important;
+  filter:none !important;
+  transform:none !important;
+  animation:none !important;
+}
+#main .section-heading.calendar-photo-heading img{
+  display:block;
+  width:min(100%,740px);
+  height:auto;
+  aspect-ratio:530/81;
+  object-fit:contain;
+  object-position:left center;
+}
+.segment.sport-photo-segment{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:0;
+  width:min(100%,840px);
+  max-width:100%;
+  padding:0;
+  margin:0 0 24px;
+  background:#0d0d0e;
+  border:2px solid #6b6869;
+  border-radius:19px;
+  overflow:hidden;
+  box-shadow:0 8px 16px rgba(15,9,12,.12);
+}
+.segment.sport-photo-segment button{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:stretch;
+  min-width:0;
+  width:100%;
+  height:clamp(104px,14vw,154px);
+  min-height:92px;
+  margin:0;
+  padding:0;
+  color:#fff;
+  background:#0c0c0f;
+  border:0;
+  border-right:2px solid #a2a4a5;
+  border-radius:0;
+  overflow:hidden;
+  font-family:'Barlow Condensed',Impact,sans-serif;
+  transition:filter .14s ease;
+}
+.segment.sport-photo-segment button:last-child{border-right:0}
+.segment.sport-photo-segment .sport-photo-visual{
+  display:block;
+  width:100%;
+  height:65%;
+  min-height:0;
+  background-image:url('/assets/photo-fight-tabs.webp?v=20261109-photo1');
+  background-repeat:no-repeat;
+  background-size:300% 100%;
+  background-position:left center;
+  box-shadow:inset 0 -12px 18px rgba(4,3,3,.25);
+}
+.segment.sport-photo-segment button[data-value="mma"] .sport-photo-visual{background-position:center center}
+.segment.sport-photo-segment button[data-value="grappling"] .sport-photo-visual{background-position:right center}
+.segment.sport-photo-segment .sport-photo-label{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:35%;
+  min-height:0;
+  padding:3px 3px 4px;
+  background:#0e0d0f;
+  color:#fffdfb;
+  font:italic 900 clamp(16px,2.45vw,27px)/1 'Barlow Condensed',Impact,sans-serif;
+  text-transform:uppercase;
+  letter-spacing:.015em;
+  text-shadow:0 1px 2px rgba(0,0,0,.4);
+  white-space:nowrap;
+}
+.segment.sport-photo-segment button[aria-pressed="true"] .sport-photo-label{
+  background:#bb101b;
+  color:#fff;
+}
+.segment.sport-photo-segment button[aria-pressed="true"]{
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.15);
+}
+@media(hover:hover){
+  .segment.sport-photo-segment button:hover{filter:brightness(1.13)}
+}
+.segment.sport-photo-segment button:focus-visible{
+  outline:3px solid #f5c02e;
+  outline-offset:-4px;
+  z-index:2;
+}
+@media(max-width:600px){
+  #main .section-heading.calendar-photo-heading{padding:4px 4px 2px;margin-bottom:14px}
+  .segment.sport-photo-segment{border-radius:14px;margin-bottom:18px;border-width:1px}
+  .segment.sport-photo-segment button{height:clamp(93px,27vw,120px);min-height:88px;border-right-width:1px}
+  .segment.sport-photo-segment .sport-photo-label{font-size:clamp(14px,4vw,19px);padding:2px 1px}
+}
+@media(max-width:355px){
+  .segment.sport-photo-segment button{height:91px}
+  .segment.sport-photo-segment .sport-photo-label{font-size:13px}
+}
+@media(prefers-reduced-motion:reduce){
+  .segment.sport-photo-segment button{transition:none}
+}
 </style>
 </head>
 <body>
@@ -459,7 +574,8 @@ const calendarSportIcons=Object.freeze({
  grappling:`<svg class="sport-toggle-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" focusable="false"><circle cx="11" cy="7.3" r="4" stroke="currentColor" stroke-width="2.6"/><circle cx="29" cy="7.3" r="4" stroke="currentColor" stroke-width="2.6"/><path d="m9 13-5 8 7 5 8-8m12-5 5 8-7 5-8-8M13 14l7 5 7-5M9 19l6 5-4 12m20-17-6 5 4 12M15 24l6 12m10-12-6 12" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/><path d="m16 15 4 4 4-4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`
 });
 const calendarSportLabels=Object.freeze({boxing:'Boxing',mma:'Mixed martial arts',grappling:'Wrestling and grappling'});
-const segments=(name,opts,selected)=>`<div class="segment${name==='calendar'?' sport-icon-segment':''}" role="group" aria-label="${name==='calendar'?'Fight discipline':esc(name)}">${opts.map(x=>`<button type="button" data-segment="${esc(name)}" data-value="${esc(x)}"${name==='calendar'?` aria-label="${calendarSportLabels[x]||esc(x)}" title="${calendarSportLabels[x]||esc(x)}"`:''} aria-pressed="${String(x===selected)}">${name==='calendar'&&calendarSportIcons[x]?calendarSportIcons[x]:esc(x)}</button>`).join('')}</div>`;
+const calendarHeading=`<header class="section-heading calendar-photo-heading"><h1><img src="/assets/upcoming-fights-brush.webp?v=20261109-photo1" alt="Upcoming Fights" width="530" height="81" loading="eager"></h1></header>`;
+const segments=(name,opts,selected)=>`<div class="segment${name==='calendar'?' sport-photo-segment':''}" role="group" aria-label="${name==='calendar'?'Fight discipline':esc(name)}">${opts.map(x=>`<button type="button" data-segment="${esc(name)}" data-value="${esc(x)}"${name==='calendar'?` aria-label="${calendarSportLabels[x]||esc(x)}" title="${calendarSportLabels[x]||esc(x)}"`:''} aria-pressed="${String(x===selected)}">${name==='calendar'?`<span class="sport-photo-visual" aria-hidden="true"></span><span class="sport-photo-label">${esc(x)}</span>`:esc(x)}</button>`).join('')}</div>`;
 const badge=`<details class="archive-caution"><summary>Archive verification note</summary><p>Some historical fighter records and photographs need reconfirmation. Check the linked sources.</p></details>`;
 const renderFrame=(inner)=>`${(['champions','fighters'].includes(location.hash.slice(1)))?badge:''}<div class="shell page">${inner}</div>`;
 const picture=(src,alt)=>`<div class="card-photo">${src?`<img loading="lazy" src="${safeURL(src)}" alt="${esc(alt)}" referrerpolicy="no-referrer">`:''}<div class="photo-fail">PHOTOGRAPH UNAVAILABLE</div></div>`;
@@ -524,7 +640,7 @@ document.addEventListener('error',event=>{
 function renderNews(){return renderHome();} // Legacy News link compatibility.
 function eventCard(e){return `<article class="news-card" style="padding:24px"><div class="card-kicker">${esc(e.discipline)} · ${esc(e.status)}</div><span data-mat-status="${esc(e.id)}">${window.EventStatus?.badge(e)||''}</span><h3>${esc(e.name)}</h3><p><strong>${esc(dayLabel(e.date))}${e.endDate?' – '+esc(dayLabel(e.endDate)):''}</strong> · venue-local date</p><p>${esc(e.location)}</p><p>${esc(e.competitors)}</p><p>${esc(e.why)}</p>${window.FightTime.instant(e.startAt)?'<p>Local start: '+esc(displayDate(e.startAt))+' · <span class="mat-countdown" data-mat-start="'+esc(e.startAt)+'">'+esc(window.FightTime.relative(e.startAt))+'</span></p>':'<p>Start time TBC · date remains venue-local</p>'}<p>${esc(e.watch)}</p><a href="${safeURL(e.source)}" target="_blank" rel="noopener noreferrer">Official event details ↗</a><p class="panel-note">Checked ${esc(e.verifiedAt)}</p></article>`;}
 function renderCalendar(){
- if(state.calendar!=='grappling')return renderFrame(viewTitle('','Upcoming fights')+segments('calendar',['boxing','mma','grappling'],state.calendar)+window.UpcomingCards.render(state.calendar));
+ if(state.calendar!=='grappling')return renderFrame(calendarHeading+segments('calendar',['boxing','mma','grappling'],state.calendar)+window.UpcomingCards.render(state.calendar));
  const today=window.FightTime.dayKey(new Date());const horizon=window.FightTime.dayKey(new Date(Date.now()+42*86400000));
  const day=e=>window.FightTime.instant(e.startAt)?window.FightTime.dayKey(new Date(e.startAt)):e.date;
  const recent=window.FightTime.dayKey(new Date(Date.now()-2*86400000));
@@ -534,7 +650,7 @@ function renderCalendar(){
   return start?start.getTime()>Date.now()-36*3600000:(e.endDate||e.date)>=recent;
  }).sort((a,b)=>day(a).localeCompare(day(b)));
  const near=all.filter(e=>day(e)<=horizon),later=all.filter(e=>day(e)>horizon);
- return renderFrame(viewTitle('','Grappling & wrestling')+segments('calendar',['boxing','mma','grappling'],state.calendar)+'<div class="filter-row">'+segments('matDiscipline',['all','RAF','BJJ / submission','NCAA','Freestyle','Greco-Roman'],state.matDiscipline)+'</div><p class="panel-note">Official listings last reviewed '+esc(desk.reviewedAt||'not yet loaded')+'. Local starts and countdowns adjust automatically. Date-only listings remain venue dates. Dates may change. Unverified matchups and viewing details are explicitly marked.</p><h2>Next six weeks</h2><div class="grid news-grid">'+(near.length?near.map(eventCard).join(''):'<p>No confirmed upcoming events loaded for this selection.</p>')+'</div>'+(later.length?'<h2>Looking further ahead</h2><div class="grid news-grid">'+later.map(eventCard).join('')+'</div>':''));
+ return renderFrame(calendarHeading+segments('calendar',['boxing','mma','grappling'],state.calendar)+'<div class="filter-row">'+segments('matDiscipline',['all','RAF','BJJ / submission','NCAA','Freestyle','Greco-Roman'],state.matDiscipline)+'</div><p class="panel-note">Official listings last reviewed '+esc(desk.reviewedAt||'not yet loaded')+'. Local starts and countdowns adjust automatically. Date-only listings remain venue dates. Dates may change. Unverified matchups and viewing details are explicitly marked.</p><h2>Next six weeks</h2><div class="grid news-grid">'+(near.length?near.map(eventCard).join(''):'<p>No confirmed upcoming events loaded for this selection.</p>')+'</div>'+(later.length?'<h2>Looking further ahead</h2><div class="grid news-grid">'+later.map(eventCard).join('')+'</div>':''));
 }
 
 function headlineEligible(a){
