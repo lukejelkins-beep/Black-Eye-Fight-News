@@ -59,7 +59,7 @@ def video_sport(video):
  discipline=str(video.get('discipline') or '')
  if BJJ_MATCH.search(title):return 'grappling'
  if ('BJJ' in discipline or 'Wrestling' in discipline or 'Grappling' in discipline and publisher!='ONE Championship'):return 'grappling'
- if STRIKING_MATCH.search(title) and not MMA_MATCH.search(title):
+ if STRIKING_MATCH.search(title) and (not MMA_MATCH.search(title) or publisher in ('RIZIN','RIZIN Fighting Federation','ONE Championship') and not re.search(r'\b(?:mma|mixed martial arts)\b',title,re.I)):
   if video.get('category')=='boxing' and re.search(r'\bboxing\b',title,re.I):return 'boxing'
   return None  # MMA publishers may also host kickboxing or Muay Thai
  if publisher=='ONE Championship':
