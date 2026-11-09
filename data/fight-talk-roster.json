@@ -1,5 +1,5 @@
 {
-  "revisedAt": "2026-11-09",
+  "revisedAt": "2026-11-10",
   "purpose": "Full combat-sports site champion, contender and prospect roster; null profiles mean no sufficiently supported account was found, not that an account does not exist.",
   "fighters": [
     {
@@ -78,10 +78,18 @@
       "sport": "mma",
       "tier": "contender",
       "profiles": {
-        "X": null,
-        "Instagram": null
+        "X": {
+          "username": "AiluPerezUFC",
+          "url": "https://x.com/AiluPerezUFC",
+          "identityBasis": "Public source identifies account: https://thecagegrid.com/fighters/ailin-perez"
+        },
+        "Instagram": {
+          "username": "ailinperezufc",
+          "url": "https://www.instagram.com/ailinperezufc/",
+          "identityBasis": "Public source identifies account: https://thecagegrid.com/fighters/ailin-perez"
+        }
       },
-      "status": "identity-research-needed"
+      "status": "tracked"
     },
     {
       "name": "Albert Gonzalez",
@@ -477,9 +485,13 @@
       "tier": "contender",
       "profiles": {
         "X": null,
-        "Instagram": null
+        "Instagram": {
+          "username": "callumsimp",
+          "url": "https://www.instagram.com/callumsimp/",
+          "identityBasis": "Public source identifies account: https://www.therealmagazine.co.uk/callum-simpson-from-barnsley-to-the-big-stage/"
+        }
       },
-      "status": "identity-research-needed"
+      "status": "tracked"
     },
     {
       "name": "Callum Walsh",
@@ -813,9 +825,13 @@
       "tier": "contender",
       "profiles": {
         "X": null,
-        "Instagram": null
+        "Instagram": {
+          "username": "davidmorrelljr_oficial",
+          "url": "https://www.instagram.com/davidmorrelljr_oficial/",
+          "identityBasis": "Public source identifies account: https://boxing-social.com/news/david-morrell-breaks-silence-after-shock-zak-chelli-loss-with-emotional-statement/"
+        }
       },
-      "status": "identity-research-needed"
+      "status": "tracked"
     },
     {
       "name": "David Nyika",
@@ -3097,10 +3113,10 @@
   ],
   "counts": {
     "total": 215,
-    "tracked": 132,
-    "missingBoth": 83,
-    "withX": 58,
-    "withInstagram": 130,
+    "tracked": 135,
+    "missingBoth": 80,
+    "withX": 59,
+    "withInstagram": 133,
     "withThreads": 38
   }
 }
