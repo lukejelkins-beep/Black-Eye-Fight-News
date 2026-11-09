@@ -27,7 +27,8 @@ vm.runInContext('desk.events='+fs.readFileSync('data/grappling-events.json','utf
 assert(ctx.renderCalendar().includes('RAF Abu Dhabi'));state.matDiscipline='NCAA';assert(!ctx.renderCalendar().includes('RAF Abu Dhabi'));assert(ctx.renderCalendar().includes('NCAA Division I'));
 assert(ctx.headlineCard({title:'<script>bad</script>',sport:'boxing',source:'test',url:'javascript:alert(1)',publishedAt:'2026-11-08T00:00:00Z'}).includes('href="#"'));
 assert(!ctx.headlineCard({title:'<script>bad</script>',sport:'boxing',source:'test',url:'https://example.com',publishedAt:'2026-11-08T00:00:00Z'}).includes('<script>'));
-vm.runInContext("desk.articles=[{title:'Important MMA fight announced',url:'https://example.com/mma',publishedAt:'2026-11-07T23:00:00Z',sport:'mma',source:'Official',score:5},{title:'Regular boxing update',url:'https://example.com/boxing',publishedAt:'2026-11-08T00:00:00Z',sport:'boxing',source:'Trusted',score:0}]",ctx);
+vm.runInContext("desk.articles=[{title:'Important MMA fight announced',url:'https://example.com/mma',publishedAt:'2026-11-07T23:00:00Z',sport:'mma',source:'Official',score:5},{title:'Regular boxing update',url:'https://example.com/boxing',publishedAt:'2026-11-08T00:00:00Z',sport:'boxing',source:'Trusted',score:0},{title:'Main Card Results | UFC Vegas 124',url:'https://example.com/results',publishedAt:'2026-11-08T00:00:00Z',sport:'mma',source:'Official',score:9}]",ctx);
+assert(!ctx.topStories().some(a=>a.title.includes('Main Card Results')),'Routine results do not displace breaking news');
 const home=ctx.renderHome();
 assert(home.includes('Top stories'),'Home page opens with news');
 assert(home.includes('Important MMA fight announced'),'Significant verified news is prioritised');

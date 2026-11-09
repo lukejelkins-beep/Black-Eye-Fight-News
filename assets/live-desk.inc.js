@@ -73,16 +73,36 @@ function topStories(){
  const now=Date.now();
  const verified=desk.articles.filter(a=>a&&typeof a.title==='string'&&/^https:\/\//.test(a.url||'')&&Number.isFinite(Date.parse(a.publishedAt)));
  const recent=verified.filter(a=>Date.parse(a.publishedAt)<=now+30*60*1000&&Date.parse(a.publishedAt)>=now-48*3600*1000);
- const candidates=recent.length?recent:verified;
+ // Routine cards, live blogs, scorecards and finish clips have dedicated Results/Film desks.
+ const routine=/\b(?:main card|prelim(?:inary)?|full card)\s+results\b|\bpost[- ]fight show\b|^video:\s|\bscorecards?\b|\blive blogs?\b/i;
+ const pool=recent.length?recent:verified;
+ const candidates=pool.filter(a=>!routine.test(a.title));
  const unique=new Map();
- for(const a of candidates){
+ for(const a of candidates.length?candidates:pool){
   const key=a.title.toLowerCase().replace(/[^a-z0-9]+/g,'');
   if(!unique.has(key))unique.set(key,a);
  }
- return [...unique.values()].sort((a,b)=>{
-  const rank=x=>Math.max(0,Number(x.score)||0)*3 + Math.max(0,48-(now-Date.parse(x.publishedAt))/3600000)*.12;
-  return rank(b)-rank(a)||Date.parse(b.publishedAt)-Date.parse(a.publishedAt);
- }).slice(0,10);
+ const rank=x=>{
+  const hours=(now-Date.parse(x.publishedAt))/3600000;
+  const development=/\b(?:announces?|announced|confirmed|signs?|signed|booked|scheduled|injur(?:y|ed)|withdraws?|cancelled|title shot|challenge|call.?out|faces?|set for|returns?|suspension|retires?)\b/i.test(x.title);
+  const recap=/\b(?:knockout win|knockout in|post-fight|highlights?|reaction to|pros react to)\b/i.test(x.title);
+  return Math.max(0,Number(x.score)||0)*2.2+Math.max(0,48-hours)*.32+(development?3:0)-(recap?3:0);
+ };
+ const sorted=[...unique.values()].sort((a,b)=>rank(b)-rank(a)||Date.parse(b.publishedAt)-Date.parse(a.publishedAt));
+ if(!sorted.length)return [];
+ const lead=[sorted[0]];
+ // Give both boxing and MMA a place up front when their coverage is comparably newsworthy.
+ const other=sorted.find(a=>a.sport!==lead[0].sport&&rank(a)>=rank(lead[0])-8);
+ if(other)lead.push(other);
+ for(const article of sorted){
+  if(lead.some(a=>a.url===article.url))continue;
+  const event=(article.title.match(/\b(?:UFC Vegas\s+\d+|UFC Fight Night\s+\d+|Zuffa Boxing\s+\d+)\b/i)||[])[0]?.toLowerCase();
+  const repeats=event&&lead.slice(0,4).some(a=>a.title.toLowerCase().includes(event));
+  if(lead.length<4&&repeats)continue;
+  lead.push(article);
+  if(lead.length===10)break;
+ }
+ return lead.slice(0,10);
 }
 function homeLeadCard(a){
  const image=a.image?.url&&/^https:\/\//.test(a.image.url)?a.image.url:newsFighterImage(a)?.url||'assets/mark.svg';
@@ -100,7 +120,7 @@ function renderHome(){
  const stories=topStories();
  if(!stories.length)return renderFrame('<header class="front-home-head"><h1>Top stories</h1></header><p role="status" class="front-loading">Checking the latest fight news…</p>');
  const featured=stories.slice(0,4);
- const more=desk.articles.filter(a=>!featured.some(f=>f.url===a.url)).slice(0,6);
+ const more=stories.slice(4,10);
  return renderFrame('<div class="front-home"><header class="front-home-head"><div><h1>Top stories</h1></div><a href="#news" class="front-all-news">All news ↗</a></header>'
   +'<div class="front-lead-layout">'+homeLeadCard(featured[0])+'<div class="front-brief-list">'+featured.slice(1).map(homeBriefCard).join('')+'</div></div>'
   +'<div class="front-follow-up"><div class="front-follow-up-head"><h2>Latest headlines</h2><a href="#news">More headlines ↗</a></div>'
