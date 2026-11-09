@@ -109,11 +109,25 @@ window.ResultsDesk=(()=>{
  const eventId=r.eventId||r.date+'-'+r.event;
  const main=rows.filter(x=>cardSection(x)==='main');
  const prelims=rows.filter(x=>cardSection(x)==='prelims');
- // Source cards can be chronological (opener first) or ranked (headliner first).
- // Use the sourced featured bout to detect chronological order. Keep both the
- // main card and prelims top-billed-first without disturbing other cards.
- const openerFirst=main.length>1&&main[main.length-1].id===e.featuredId;
- if(openerFirst){main.reverse();prelims.reverse();}
+ // Determine the source's main-card direction using the COMPLETE event, not
+ // the currently filtered bouts (search/clips must not alter fight order).
+ const sourceMain=all.filter(x=>cardSection(x)==='main').sort((a,b)=>(Number.isFinite(a.order)?a.order:all.indexOf(a))-(Number.isFinite(b.order)?b.order:all.indexOf(b)));
+ const headlinerId=[e.mainBoutId,e.featuredId].find(id=>sourceMain.some(x=>x.id===id));
+ if(sourceMain.length>1&&sourceMain[sourceMain.length-1].id===headlinerId)main.reverse();
+ // Ensure the verified headline fight is shown first, even with imperfect
+ // upstream order metadata. Each section must be checked independently:
+ // UFC prelim results may already be headliner-first when the main card isn't.
+ if(headlinerId){
+  const headlineIndex=main.findIndex(x=>x.id===headlinerId);
+  if(headlineIndex>0)main.unshift(main.splice(headlineIndex,1)[0]);
+ }
+ const sourcePrelims=all.filter(x=>cardSection(x)==='prelims').sort((a,b)=>(Number.isFinite(a.order)?a.order:all.indexOf(a))-(Number.isFinite(b.order)?b.order:all.indexOf(b)));
+ const prelimHeadlinerId=[e.prelimHeadlinerId,e.prelimsFeaturedId].find(id=>sourcePrelims.some(x=>x.id===id));
+ if(sourcePrelims.length>1&&sourcePrelims[sourcePrelims.length-1].id===prelimHeadlinerId)prelims.reverse();
+ if(prelimHeadlinerId){
+  const prelimHeadlineIndex=prelims.findIndex(x=>x.id===prelimHeadlinerId);
+  if(prelimHeadlineIndex>0)prelims.unshift(prelims.splice(prelimHeadlineIndex,1)[0]);
+ }
  const sections=[{key:'main',label:r.sport==='Boxing'&&all.some(x=>/main event/i.test(x.section||''))?'Main Event':'Main Card',bouts:main},{key:'prelims',label:r.sport==='Boxing'&&all.some(x=>/undercard/i.test(x.section||''))?'Undercard':'Prelims',bouts:prelims}];
  const available=sections.filter(x=>x.bouts.length);
  const requested=activeCardSection.get(eventId);
