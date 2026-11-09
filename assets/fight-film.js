@@ -19,6 +19,19 @@ window.FightFilm=(()=>{
    &&Date.now()-Date.parse(v.date+'T12:00:00Z')<22*86400000}
   catch{return false}
  }
+ function videoSport(v){
+  if(['boxing','mma','grappling'].includes(v.sport))return v.sport;
+  const title=String(v.title||''),publisher=String(v.publisher||''),discipline=String(v.discipline||'');
+  if(/\b(?:ufc[\s-]*bjj|bjj|jiu[\s-]*jitsu|submission grappling|grappling match|adcc|ibjjf|no[\s-]*gi|greco[\s-]*roman|freestyle wrestling|wrestling|raf[\s-]*\d+)\b/i.test(title))return 'grappling';
+  if(/BJJ|Wrestling/i.test(discipline)||(publisher!=='ONE Championship'&&/Grappling/.test(discipline)))return 'grappling';
+  if(publisher==='ONE Championship'){
+   if(/\b(?:muay thai|kickboxing)\b/i.test(title)&&!/\b(?:mma|bjj|submission grappling)\b/i.test(title))return null;
+   return /\b(?:mma|mixed martial arts)\b/i.test(title)?'mma':null;
+  }
+  if(v.category==='boxing')return 'boxing';
+  if(/\bboxing\b/i.test(title)&&!/ufc/i.test(publisher))return 'boxing';
+  return 'mma';
+ }
  function card(v){
   const thumbnail=`<img loading="lazy" decoding="async" referrerpolicy="no-referrer" src="${safe(v.thumbnail)}" ${v.fallbackThumbnail?`data-film-fallback="${safe(v.fallbackThumbnail)}"`:''} alt="${esc(v.thumbnailType==='portrait'?'Fighter portrait':'Photo from the event')} for ${esc(v.title)}" ${v.thumbnailType==='portrait'?'style="object-fit:contain;background:#14242c"':''}>`;
   const section=v.category==='boxing'?'Boxing':v.discipline||'MMA / Wrestling / BJJ';
@@ -28,23 +41,30 @@ window.FightFilm=(()=>{
     <div class="film-copy"><div class="film-meta"><span>${esc(section)}</span><span>${esc(date(v.date))}</span></div><h3>${esc(v.title)}</h3><div class="film-publisher"><span>${esc(v.publisher||'Original publisher')}${v.sourceType==='publisher-video-page'?'<small class="film-access-note"> · Publisher clip · AU playback not verified</small>':''}</span><strong>${v.sourceType==='publisher-video-page'?'Watch on publisher ↗':'Watch video ↗'}</strong></div></div>
    </a></article>`;
  }
- function section(key,title,desc,discipline=null){
-  const videos=(data?.videos||[]).filter(v=>v.category===key&&v.url&&(isAuYoutube(v)||isPublisherClip(v))&&(!discipline||discipline(v)))
+ function section(key,title,desc,sport=null){
+  const videos=(data?.videos||[]).filter(v=>v.category===key&&v.url&&(isAuYoutube(v)||isPublisherClip(v))&&(!sport||videoSport(v)===sport))
    .sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(a.featuredOrder??999)-(b.featuredOrder??999)).slice(0,72);
-  const featured=key==='combat'?videos.filter(v=>v.eventId==='ufc-cortes-walker-2026-11-07'):[];
+  const featured=sport==='mma'?videos.filter(v=>v.eventId==='ufc-cortes-walker-2026-11-07'):[];
   const other=videos.filter(v=>!featured.includes(v));
   const header=`<section class="film-section" aria-label="${esc(title)}"><div class="film-section-head"><div><div class="eyebrow">${esc(key==='boxing'?'THE SWEET SCIENCE':'THE MAT AND THE CAGE')}</div><h2>${esc(title)}</h2><p>${esc(desc)}</p></div><span class="film-total">${videos.length} clips</span></div>`;
   if(!videos.length)return header+`<div class="film-empty">No verified videos or direct publisher highlight pages available right now.</div></section>`;
   if(!featured.length)return header+`<div class="film-grid">${videos.map(card).join('')}</div></section>`;
   return header+`<div class="film-featured-head"><div class="eyebrow">7 NOVEMBER 2026 · UFC VEGAS 124</div><h3>Walker vs Cortes Acosta — fight finishes</h3><p>${featured.length} sourced finish-video pages from the UFC and MMA Fighting. Direct publisher videos open on their original site; Australian video playback has not been independently confirmed.</p></div>
     <div class="film-grid">${featured.map(card).join('')}</div>
-    ${other.length?`<div class="film-featured-head" style="margin-top:28px"><h3>More recent MMA, wrestling and BJJ film</h3></div><div class="film-grid">${other.map(card).join('')}</div>`:''}
+    ${other.length?`<div class="film-featured-head" style="margin-top:28px"><h3>More recent original MMA film</h3></div><div class="film-grid">${other.map(card).join('')}</div>`:''}
    </section>`;
  }
  function content(){
   if(!data)return `<div class="film-loading" role="status">${failed?'Film feed temporarily unavailable. The archive remains accessible from Editions.':'Loading publisher videos…'}</div>`;
   return `<p class="film-updated">Curated clips from official promotions and verified publisher highlight pages. YouTube clips have Australian region metadata checks; direct UFC publisher pages may have different playback rights. ${failed?'The last available edition is shown while a source is unavailable.':''}${data.updatedAt?' Feed data last updated: '+esc(new Date(data.updatedAt).toLocaleString('en-AU'))+'.':''}</p>
-   ${(window.BEFNSport?.get()||'all')==='all'?section('boxing','Boxing','Knockouts, stoppages and championship-fight highlights available in Australia.')+section('combat','MMA, Wrestling & BJJ','AU-checked YouTube clips and direct UFC finish-video pages (publisher playback may vary by region).'):(window.BEFNSport.get()==='boxing'?section('boxing','Fight film','Verified boxing highlights'):window.BEFNSport.get()==='mma'?section('combat','Fight film','Verified MMA highlights',v=>!/^(wrestling|grappling|bjj|jiu-jitsu|submission)(?:\b|\s*\/)/i.test(v.discipline||'')):section('combat','Fight film','Verified grappling, BJJ and wrestling footage',v=>/grappl|bjj|wrestl|jiu.jitsu|submission/i.test([v.discipline,v.title].join(' '))))}
+   ${(() => {const sport=window.BEFNSport?.get()||'all';
+    if(sport==='boxing')return section('boxing','Fight film','Verified boxing highlights','boxing');
+    if(sport==='mma')return section('combat','Fight film','Verified MMA highlights from UFC, PFL, ONE and other promotions','mma');
+    if(sport==='grappling')return section('combat','Fight film','Verified BJJ, submission grappling, freestyle and Greco-Roman wrestling videos','grappling');
+    return section('boxing','Boxing','Verified boxing highlights','boxing')
+      +section('combat','MMA','Verified original promotion clips','mma')
+      +section('combat','Grappling & wrestling','Verified grappling and wrestling clips','grappling');
+   })()}
    <p class="film-disclosure">YouTube clips are shown after Australian availability and thumbnail checks. UFC.com and publisher-hosted highlight links are clearly marked as direct pages where Australian playback could not be independently verified. We do not host or re-upload fight footage.</p>`;
  }
  function update(){
