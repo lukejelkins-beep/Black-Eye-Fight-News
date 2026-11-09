@@ -63,6 +63,21 @@ class SourceSummaryTests(unittest.TestCase):
  def test_truncated_syndication_fragments_are_rejected(self):
   self.assertEqual(m.verified_key_points('The promotion announced the bout and more details will follow […]'),[])
   self.assertEqual(m.verified_key_points('The replacement accepted the matchup on Nov.'),[])
+ def test_existing_points_must_pass_quality_guard(self):
+  self.assertTrue(m.valid_summary_points([
+   'The promotion officially announced the bout for the upcoming pay-per-view event.',
+   'Both fighters are expected to attend the scheduled media event later this week.',
+   'The venue information was published by the promoter alongside the fight announcement.'
+  ]))
+  self.assertFalse(m.valid_summary_points([
+   'Walker and WAC stepped in on eight days notice to save the main event on Nov.',
+   'A valid sentence with enough words to pass all of the ordinary length checks.',
+   'Another valid sentence with enough words to pass all of the ordinary length checks.'
+  ]))
+ def test_content_encoded_is_used_for_summary_text(self):
+  xml=b'<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><item><title>Fight announced</title><link>https://example.com/fight</link><pubDate>Mon, 09 Nov 2026 04:10:00 GMT</pubDate><content:encoded><![CDATA[Officials confirmed the bout for the event next month. Both fighters accepted the matchup after negotiations concluded this week. The promoter also confirmed the venue and broadcast plans.]]></content:encoded></item></channel></rss>'
+  row=m.parse_feed(xml,'Test','boxing',dt.datetime(2026,11,9,6,tzinfo=dt.timezone.utc))[0]
+  self.assertIn('Both fighters accepted',row['_summaryText'])
  def test_publisher_meta_and_body(self):
   p=m.ArticleText()
   p.feed('<html><head><meta name="description" content="The reported contest will be held at the Sydney venue later this month."></head><body><article><p>The promotion released the event listing following the official announcement earlier today.</p><p>Tickets are expected to go on general sale through the venue next week.</p></article></body></html>')

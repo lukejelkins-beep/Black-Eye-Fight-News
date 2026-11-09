@@ -111,6 +111,18 @@ class ArticleText(HTMLParser):
         if tag in ('script','style','nav','footer','aside'):
             self.suppressed=max(0,self.suppressed-1)
 
+def point_is_usable(part):
+    part=plain(part).strip(' •\n\r\t')
+    words=part.split()
+    if len(words)<7 or len(words)>31 or len(part)>230 or len(part)<38:return False
+    if re.search(r'(?:\[…\]|\.\.\.|…)',part):return False
+    if re.search(r'\b(?:Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\.$',part):return False
+    if re.search(r'(?i)\b(?:privacy policy|advertisement|subscribe|newsletter|read more|cookies|all rights reserved|terms of use|follow us|sign up|results?\s*\+\s*scorecards?)\b',part):return False
+    return True
+
+def valid_summary_points(value):
+    return isinstance(value,list) and len(value)==3 and all(point_is_usable(p) for p in value)
+
 def verified_key_points(*texts):
     """Short excerpts from available original-source material, not invented AI summaries."""
     points=[];seen=set()
@@ -120,12 +132,7 @@ def verified_key_points(*texts):
         clean=re.sub(r'(?i)\b(?:the post|read more|originally appeared on|appeared first on)\b.{0,250}$','',clean).strip()
         for part in re.split(r'(?<=[.!?])\s+(?=[A-Z0-9“‘\'"])',clean):
             part=part.strip(' •\n\r\t')
-            words=part.split()
-            if len(words)<7 or len(words)>31 or len(part)>230 or len(part)<38:continue
-            # Reject syndicated truncation markers and obvious sentence fragments rather than presenting them as summaries.
-            if re.search(r'(?:\[…\]|\.\.\.|…)',part):continue
-            if re.search(r'\b(?:Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\.$',part):continue
-            if re.search(r'(?i)\b(?:privacy policy|advertisement|subscribe|newsletter|read more|cookies|all rights reserved|terms of use|follow us|sign up)\b',part):continue
+            if not point_is_usable(part):continue
             key=re.sub(r'[^a-z0-9]','',part.lower())[:150]
             if key in seen:continue
             seen.add(key)
@@ -137,7 +144,7 @@ def enrich_summary(article,previous,now,force=False):
     snippet=article.pop('_summaryText','')
     old=previous or {}
     old_points=old.get('summaryPoints')
-    if old.get('title')==article['title'] and isinstance(old_points,list) and len(old_points)==3:
+    if old.get('title')==article['title'] and valid_summary_points(old_points):
         article['summaryPoints']=old_points
         article['summaryCheckedAt']=old.get('summaryCheckedAt',now.isoformat())
         return article
@@ -182,7 +189,8 @@ def parse_feed(raw,source,sport,now):
         if not when or not title or not url.startswith('https://') or not now-dt.timedelta(days=14)<=when<=now+dt.timedelta(minutes=30):continue
         url=urllib.parse.urlunsplit(urllib.parse.urlsplit(url)._replace(fragment=''))
         score=sum(weight for pattern,weight in [(r'\b(title|champion|championship)\b',3),(r'\b(result|knockout|wins|defeats|withdraw|cancel|announc|confirm)',4),(r'\b(fight|ufc|boxing|bout)\b',1)] if re.search(pattern,title,re.I))
-        out.append(dict(id=hashlib.sha256(url.encode()).hexdigest()[:20],title=title,url=url,source=source,sport=sport,publishedAt=when.isoformat(),score=score,_imageCandidates=image_candidates(item),_summaryText=fields.get('description') or fields.get('summary') or ''))
+        summary_text=' '.join(x for x in (fields.get('description'),fields.get('summary'),fields.get('encoded'),fields.get('content')) if x)
+        out.append(dict(id=hashlib.sha256(url.encode()).hexdigest()[:20],title=title,url=url,source=source,sport=sport,publishedAt=when.isoformat(),score=score,_imageCandidates=image_candidates(item),_summaryText=summary_text))
     return out
 
 
@@ -320,7 +328,7 @@ def main():
     # Backfill recent carried-forward stories that were not present in the latest RSS page.
     # Process a bounded number per run so source checks remain polite and the workflow stays predictable.
     missing=[a for a in sorted(articles.values(),key=lambda a:a['publishedAt'],reverse=True)
-             if not (isinstance(a.get('summaryPoints'),list) and len(a['summaryPoints'])==3)][:24]
+             if not valid_summary_points(a.get('summaryPoints'))][:48]
     if missing:
         with ThreadPoolExecutor(max_workers=5) as pool:
             refreshed=list(pool.map(lambda a:enrich_summary(dict(a),a,now,force=True),missing))
