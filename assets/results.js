@@ -109,6 +109,11 @@ window.ResultsDesk=(()=>{
  const eventId=r.eventId||r.date+'-'+r.event;
  const main=rows.filter(x=>cardSection(x)==='main');
  const prelims=rows.filter(x=>cardSection(x)==='prelims');
+ // Source cards can be chronological (opener first) or ranked (headliner first).
+ // Use the sourced featured bout to detect chronological order. Keep both the
+ // main card and prelims top-billed-first without disturbing other cards.
+ const openerFirst=main.length>1&&main[main.length-1].id===e.featuredId;
+ if(openerFirst){main.reverse();prelims.reverse();}
  const sections=[{key:'main',label:r.sport==='Boxing'&&all.some(x=>/main event/i.test(x.section||''))?'Main Event':'Main Card',bouts:main},{key:'prelims',label:r.sport==='Boxing'&&all.some(x=>/undercard/i.test(x.section||''))?'Undercard':'Prelims',bouts:prelims}];
  const available=sections.filter(x=>x.bouts.length);
  const requested=activeCardSection.get(eventId);
