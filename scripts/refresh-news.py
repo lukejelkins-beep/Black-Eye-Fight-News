@@ -86,7 +86,7 @@ def enrich_image(a,previous,now):
     if not candidates:
         try:
             host=urllib.parse.urlsplit(a['url']).hostname or ''
-            if host in ('www.worldboxingnews.com','www.worldboxingnews.net','www.mmafighting.com','www.ufc.com','mmajunkie.usatoday.com','www.mmajunkie.usatoday.com','www.onefc.com','cagewarriors.com','www.cagewarriors.com','adcombat.com','www.adcombat.com'):
+            if host in ('www.worldboxingnews.com','www.worldboxingnews.net','www.mmafighting.com','www.ufc.com','mmajunkie.usatoday.com','www.mmajunkie.usatoday.com','www.onefc.com','cagewarriors.com','www.cagewarriors.com','adcombat.com','www.adcombat.com','www.kswmma.com','jp.rizinff.com','www.realamericanfreestyle.com','uww.org','www.flograppling.com','ibjjf.com'):
                 req=urllib.request.Request(a['url'],headers={'User-Agent':'Mozilla/5.0'})
                 with urllib.request.urlopen(req,timeout=10) as r:page=r.read(1_000_000).decode('utf-8','replace')
                 parser=ArticleImages();parser.feed(page);candidates=parser.images[:4]
@@ -260,7 +260,7 @@ def sport_for_article(article, default_sport):
     if GRAPPLING_TERMS.search(title):return 'grappling'
     if BOXING_TERMS.search(title) and (source=='UFC' or 'boxing' in title.lower()):return 'boxing'
     if STRIKING_ONLY.search(title) and not re.search(r'\b(?:mma|mixed martial arts|submission grappling|bjj|jiu[\s-]*jitsu)\b',title,re.I):
-        if source.startswith('ONE'):return None
+        if source.startswith('ONE') or source=='RIZIN':return None
     if source.startswith('ONE') and re.search(r'\b(?:mma|mixed martial arts|mma title|mma world)\b',title,re.I):
         return 'mma'
     if source.startswith('ONE') and default_sport=='grappling':
