@@ -1,4 +1,16 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const fullSite=fs.readFileSync('index.html','utf8');
+const resultsSource=fs.readFileSync('assets/results.js','utf8');
+const filmSource=fs.readFileSync('assets/fight-film.js','utf8');
+assert(fullSite.includes('editorial-compact.css'),'Editorial-first CSS linked');
+assert(fullSite.includes('function topStories()'),'Headline ranking implemented on public home');
+assert(!fullSite.includes('THE FIGHT<br>WORLD'),'Promotional home hero removed');
+assert(!fullSite.includes('Championship trackers. Deep scouting intelligence.'),'Home marketing copy removed');
+assert(!resultsSource.includes('The outcome. The new records.'),'Results introductory fluff removed');
+assert(!resultsSource.includes('Boxing and MMA results grouped by fight card, newest events first.'),'Results top disclaimer removed');
+assert(resultsSource.includes('Auto-refresh 30s'),'Short, clear refresh status retained');
+assert(!filmSource.includes('Fresh finishes, knockouts and submission highlights from around the fight world.'),'Film introductory fluff removed');
+
 const source=fs.readFileSync('assets/live-desk.inc.js','utf8');
 const state={calendar:'grappling',news:'boxing'};
 class FixedDate extends Date {constructor(...args){super(...(args.length?args:['2026-11-08T00:00:00Z']));}static now(){return new Date('2026-11-08T00:00:00Z').getTime();}}

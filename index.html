@@ -491,7 +491,7 @@ function topStories(){
 function homeLeadCard(a){
  const image=a.image?.url&&/^https:\/\//.test(a.image.url)?a.image.url:newsFighterImage(a)?.url||'assets/mark.svg';
  return '<a class="front-lead-card" href="'+safeURL(a.url)+'" target="_blank" rel="noopener noreferrer">'
-  +'<div class="front-lead-image"><img loading="eager" decoding="async" src="'+(image==='assets/mark.svg'?image:safeURL(image))+'" alt="'+esc(a.image?.alt||a.title)+'"></div>'
+  +'<div class="front-lead-image"><img class="live-news-image front-lead-photo" loading="eager" decoding="async" src="'+(image==='assets/mark.svg'?image:safeURL(image))+'" alt="'+esc(a.image?.alt||a.title)+'"></div>'
   +'<div class="front-lead-copy"><span class="front-story-meta">'+esc(a.sport)+' · '+esc(a.source)+'</span><h2>'+esc(a.title)+'</h2>'
   +'<time datetime="'+esc(a.publishedAt)+'">'+esc(displayDate(a.publishedAt))+'</time></div></a>';
 }
