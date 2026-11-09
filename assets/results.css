@@ -173,3 +173,29 @@
 
 /* Keep the compact scoreboard records visually minimal; before/after context stays in the record source. */
 .result-bout-compact .result-bout-record small{display:none}
+
+
+/* BEFN results-card-only refinement: retain existing national-flag artwork and surrounding page. */
+.result-event-bouts .result-card-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+.result-event-bouts .result-card-tab{min-width:0;gap:5px}
+.result-event-bouts .result-card-tab.is-active{border-bottom-color:#d6a52b}
+.result-bout-compact.is-main-event{border-color:#d8a92e!important}
+.result-bout-compact.is-main-event .result-bout-detail{background:linear-gradient(105deg,#c48b17,#f8e9a4);color:#171717;border-top:2px solid #e8c45b}
+.result-bout-compact.is-main-event .result-bout-rounds{color:#24211b}
+.result-bout-compact.is-main-event .result-bout-detail{border-bottom:3px solid #d6a52b}
+.result-bout-compact .result-featured-bout-label{position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:6;padding:4px 14px;border-radius:0 0 9px 9px;background:#343b49;color:#fff;font-size:11px;font-weight:900;letter-spacing:.055em;white-space:nowrap}
+.result-bout-compact.is-main-event .result-featured-bout-label{background:linear-gradient(105deg,#c18a19,#ffe18a,#c28c19);color:#17130a}
+.result-bout-compact:has(.result-featured-bout-label) .result-matchup{padding-top:47px}
+.result-bout-compact:has(.result-featured-bout-label) .result-matchup-result{top:24px}
+.result-fighter-rank{font-weight:900;color:#f3f4f5;white-space:nowrap}
+.result-fighter-tier{display:inline-flex;width:fit-content;max-width:100%;padding:3px 6px;border-radius:4px;border:1px solid #b89ce7;background:#302045;color:#f0dcff;font-size:9px;font-weight:850;letter-spacing:.035em;line-height:1.2}
+.result-contender-right .result-fighter-tier{align-self:flex-end}
+.result-fighter-tier.is-prospect{border-color:#45b8ed;background:#0c3046;color:#bceaff}
+@media(max-width:520px){
+ .result-event-bouts .result-card-tab{font-size:13px;padding:12px 3px;min-height:48px}
+ .result-event-bouts .result-card-tab small{font-size:10px}
+ .result-bout-compact .result-featured-bout-label{font-size:10px;padding:3px 10px}
+ .result-bout-compact:has(.result-featured-bout-label) .result-matchup{padding-top:53px}
+ .result-bout-compact:has(.result-featured-bout-label) .result-matchup-result{top:25px}
+ .result-fighter-tier{font-size:8px;padding:2px 4px}
+}
