@@ -60,8 +60,8 @@ def video_sport(video):
  if BJJ_MATCH.search(title):return 'grappling'
  if ('BJJ' in discipline or 'Wrestling' in discipline or 'Grappling' in discipline and publisher!='ONE Championship'):return 'grappling'
  if STRIKING_MATCH.search(title) and not MMA_MATCH.search(title):
-  if publisher=='ONE Championship':return None  # Do not mislabel ONE Muay Thai/Kickboxing
-  if re.search(r'\bboxing\b',title,re.I):return 'boxing'
+  if video.get('category')=='boxing' and re.search(r'\bboxing\b',title,re.I):return 'boxing'
+  return None  # MMA publishers may also host kickboxing or Muay Thai
  if publisher=='ONE Championship':
   return 'mma' if MMA_MATCH.search(title) else None  # Unknown mixed-rules event
  if video.get('category')=='boxing':return 'boxing'
