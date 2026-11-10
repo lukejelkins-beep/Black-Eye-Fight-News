@@ -47,6 +47,19 @@ class ArchiveBackfillTests(unittest.TestCase):
         self.assertEqual(rows[0]['sport'],'Muay Thai')
         self.assertEqual(rows[0]['winner'],0)
         self.assertEqual(rows[0]['method'],'knockout' if False else 'Knockout')
+    def test_one_removes_repeated_country_codes_without_changing_fighter(self):
+        raw = '''<h1>ONE Fight Night 43</h1><p>1 fights</p>
+        <div>Featherweight MMA</div>
+        <a href="/fighters/tang-kai">★ Tang Kai 22-3 CHN CHN</a>
+        <span>VS</span>
+        <a href="/fighters/shamil-gasanov">Shamil Gasanov RUS RUS</a>
+        <span>TKO R4 2:41</span>'''
+        event,rows=m.parse_one(raw,'https://fighterarena.com/events/one-43',
+                               dt.date(2026,5,16),{})
+        self.assertEqual(len(rows),1)
+        self.assertEqual([f['name'] for f in rows[0]['fighters']],['Tang Kai','Shamil Gasanov'])
+        self.assertEqual(rows[0]['winner'],0)
+
     def test_one_published_winner_without_method_is_kept(self):
         raw='''<h1>ONE Fight Night 48</h1><p>1 fights</p>
         <div>Heavyweight MMA</div>
