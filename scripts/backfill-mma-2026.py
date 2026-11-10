@@ -79,7 +79,12 @@ def make_fighter(name,record,source,portraits):
         obj.update(photo=image,photoSource='Linked fighter-portrait registry; external URL may be unavailable')
     return obj
 def pairkey(fighters):
-    return tuple(sorted(norm(f['name']) for f in fighters))
+    # ONE uses distinctive athlete nicknames and short names across historical listings.
+    # Only these independently confirmed identities are consolidated.
+    aliases={'ayakazombiemiura':'ayakamiura',
+             'vicksouza':'victoriasouza',
+             'victoriavicksouza':'victoriasouza'}
+    return tuple(sorted(aliases.get(norm(f['name']),norm(f['name'])) for f in fighters))
 def result_row(event,name1,name2,record1,record2,winner,method,round_no,clock,division,section,order,source,portraits,sport='MMA'):
     fs=[make_fighter(name1,record1,source,portraits),make_fighter(name2,record2,source,portraits)]
     if not all(norm(f['name']) for f in fs) or norm(name1)==norm(name2): return None
