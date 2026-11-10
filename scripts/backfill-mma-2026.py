@@ -295,8 +295,18 @@ def merge(existing,event,rows,changes):
     found={pairkey(r['fighters']):r for r in existing['results'] if r.get('eventId')==event_id}
     for r in rows:
         r['eventId']=event_id;r['event']=previous['name'];r['id']=event_id+'-'+r['id'].rsplit('-',1)[-1]
-        if r['id'] not in (x['id'] for x in existing['results']):
-            r['id']=event_id+'-'+hashlib.sha1('|'.join(pairkey(r['fighters'])).encode()).hexdigest()[:12]
+        # Every row must have a unique ID. A nickname variation can change
+        # pairkey matching while generating the same canonical bout ID.
+        # Never append a second row with a colliding ID.
+        occupied={x['id'] for x in existing['results']}
+        if r['id'] in occupied and pairkey(r['fighters']) not in found:
+            suffix=hashlib.sha1((event_id+'|'+ '|'.join(pairkey(r['fighters']))).encode()).hexdigest()[:12]
+            candidate=event_id+'-'+suffix
+            number=2
+            while candidate in occupied:
+                candidate=event_id+'-'+suffix+'-'+str(number)
+                number+=1
+            r['id']=candidate
         original=found.get(pairkey(r['fighters']))
         if original:
             if original.get('status')=='completed' and original.get('winner')!=r.get('winner'):
