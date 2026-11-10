@@ -10,6 +10,7 @@ window.ResultsDesk=(()=>{
  const selectedPromotion=()=>window.BEFNFightsUI?.promotion||filters.promotion;
  const belongsToPromotion=r=>{const e=(data?.events||[]).find(x=>x.id===r.eventId)||{};const name=String([r.event,r.promotion,r.organization,e.name,e.promotion,e.organization].filter(Boolean).join(' ')).toLowerCase();return ({ufc:/\bufc\b|ultimate fighting championship/,pfl:/\bpfl\b|professional fighters league/,one:/\bone\b|one championship/})[selectedPromotion()]?.test(name)??false};
  const promotionMatch=r=>window.BEFNSport?.get()!=='mma'||belongsToPromotion(r);
+ const isFinalStatus=s=>['completed','no_contest','draw'].includes(String(s||'').toLowerCase());
  const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const url=x=>{try{const u=new URL(x,location.href);return u.protocol==='https:'?esc(u.href):'#'}catch{return '#'}};
  const date=x=>window.FightTime.venueDay(x);
@@ -47,7 +48,7 @@ window.ResultsDesk=(()=>{
 }
  function boutStatus(r){
  const s=String(r.status||'').toLowerCase();
- if(s==='completed')return '<span class="result-bout-status is-final"><span aria-hidden="true">✓</span> FINAL</span>';
+ if(isFinalStatus(s))return '<span class="result-bout-status is-final"><span aria-hidden="true">✓</span> FINAL</span>';
  if(s==='cancelled')return '<span class="result-bout-status is-cancelled">CANCELLED</span>';
  if(s==='underway'||s==='live')return '<span class="result-bout-status is-live"><span aria-hidden="true">●</span> UNDERWAY</span>';
  return '<span class="result-bout-status is-pending">AWAITING RESULT</span>';
@@ -70,7 +71,7 @@ window.ResultsDesk=(()=>{
   return `<img class="result-corner-flag result-corner-flag-${side}" src="https://flagcdn.com/${code}.svg" alt="" aria-hidden="true" loading="lazy" referrerpolicy="no-referrer" title="${esc(country)} flag">`;
  }
  function matchResult(r){
-  const complete=r.status==='completed';
+  const complete=isFinalStatus(r.status);
   if(complete){
    const detail=[boutMethod(r.method),r.round?'R'+r.round:'',r.time||''].filter(Boolean).join(' · ');
    return `<div class="result-matchup-result" aria-label="Final result"><span class="result-matchup-finished">FINAL</span><strong>${esc(detail)}</strong>${r.scores?`<span class="result-matchup-scores">${esc(r.scores)}</span>`:''}</div>`;
@@ -88,7 +89,7 @@ window.ResultsDesk=(()=>{
   return {rankLabel,tier};
  }
  function row(r,position={}){
-  const finished=r.status==='completed',winner=finished&&(r.winner===0||r.winner===1);
+  const finished=isFinalStatus(r.status),winner=finished&&(r.winner===0||r.winner===1);
   const first=(r.fighters||[])[0]||{name:'Fighter TBC'},second=(r.fighters||[])[1]||{name:'Fighter TBC'};
   const side=(f,i)=>`<div class="result-contender result-contender-${i===0?'left':'right'}${winner&&r.winner===i?' is-winner':''}">${i===0?photo(f,winner&&r.winner===i):''}<div class="result-contender-info"><strong>${esc(f.name)} ${fighterLabels(f).rankLabel}</strong>${boutRecord(f,finished)}${fighterLabels(f).tier}</div>${i===1?photo(f,winner&&r.winner===i):''}</div>`;
   const roundText=Number.isInteger(r.scheduledRounds)&&r.scheduledRounds>0?`<span class="result-bout-rounds">${r.scheduledRounds} rounds</span>`:'';
@@ -121,7 +122,7 @@ window.ResultsDesk=(()=>{
  return /prelim|undercard/.test(section)?'prelims':'main';
 }
  function eventSection(rows){
- const r=rows[0],e=(data.events||[]).find(e=>e.id===r.eventId)||{},all=data.results.filter(x=>x.eventId===r.eventId),done=all.filter(x=>x.status==='completed').length;
+ const r=rows[0],e=(data.events||[]).find(e=>e.id===r.eventId)||{},all=data.results.filter(x=>x.eventId===r.eventId),done=all.filter(x=>isFinalStatus(x.status)).length;
  const featured=all.find(x=>x.id===e.featuredId&&x.status==='completed'&&[0,1].includes(x.winner))||all.find(x=>x.status==='completed'&&[0,1].includes(x.winner));
  const stale=e.feedDelayed||(e.status==='underway'&&Date.now()-Date.parse(e.checkedAt)>900000);
  const takeaways=(e.takeaways||[]).filter(x=>x.text);
