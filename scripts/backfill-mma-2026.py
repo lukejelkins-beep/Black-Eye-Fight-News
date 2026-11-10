@@ -232,6 +232,613 @@ def name_one(anchor):
     # e.g. "Shamil Gasanov RUS RUS". Country metadata is not part of a name.
     # Remove only identical trailing ISO-style codes; leave actual name words intact.
     normalized=re.sub(r'\s+([A-Z]{3})\s+\1\s*
+    if not h:return None,[]
+    name=re.sub(r'\s+',' ',h.get_text(' ',strip=True)).strip()
+    if not name.upper().startswith('ONE'):name='ONE '+name
+    event={'id':'one-archive-'+date.isoformat()+'-'+slug(name)[:26],
+           'name':name,'date':date.isoformat(),'status':'completed','source':url,'feeds':[],
+           'location':'Thailand (venue not confirmed)','takeaways':[],
+           'sectionOrder':{'main':'headliner-first'},'partialCoverage':True}
+    rows=[];seen=set()
+    for txt in soup.find_all(string=lambda s:isinstance(s,str) and s.strip().upper()=='VS'):
+        left=txt.find_previous('a',href=lambda v:bool(v and '/fighters/' in v))
+        right=txt.find_next('a',href=lambda v:bool(v and '/fighters/' in v))
+        if not left or not right or left is right:continue
+        a,wa,ra=name_one(left);b,wb,rb=name_one(right)
+        key=tuple(sorted((pair_name(a),pair_name(b))))
+        if len(a)<3 or len(b)<3 or key in seen:continue
+        seen.add(key)
+        winner=0 if wa and not wb else 1 if wb and not wa else None
+        tail=[]
+        for node in right.next_elements:
+            if isinstance(node,str) and node.strip():tail.append(node.strip())
+            if len(' '.join(tail))>190 or len(tail)>15:break
+        after=' '.join(tail)
+        method,round_no,clock=method_from(after[:145])
+        if winner is None:continue
+        if not method:method='Method not published by event source'
+        prior=[]
+        for node in left.previous_elements:
+            if isinstance(node,str) and node.strip():prior.append(node.strip())
+            if len(' '.join(prior))>200:break
+        div=WEIGHTS.search(' '.join(reversed(prior))[-145:])
+        sport='Muay Thai' if div and 'muay thai' in div.group(0).lower() else 'Kickboxing' if div and 'kickboxing' in div.group(0).lower() else 'Combat sport'
+        row=result_row(event,a,b,ra,rb,winner,method,round_no,clock,
+                    div.group(0) if div else 'Division not verified','Main card',len(rows),url,portraits,sport)
+        if row:rows.append(row)
+    count=re.search(r'\b(\d{1,2})\s+fights\b',soup.get_text(' ',strip=True),re.I)
+    event['expectedBouts']=max(len(rows),int(count.group(1)) if count else len(rows))
+    if rows:event.update(mainBoutId=rows[0]['id'],featuredId=rows[0]['id'])
+    return event,rows
+def merge(existing,event,rows,changes):
+    if not rows:return
+    aliases=[e for e in existing['events'] if e.get('source')==event.get('source')]
+    if event['id'].startswith('pfl-') or event['name'].lower().startswith('pfl'):
+        aliases += [e for e in existing['events'] if e['date']==event['date'] and 'pfl' in e['name'].lower()]
+    if event['name'].lower().startswith('ufc'):
+        aliases += [e for e in existing['events'] if e['date']==event['date'] and e['name'].lower().startswith('ufc')]
+    previous=aliases[0] if aliases else next((e for e in existing['events'] if e['id']==event['id']),None)
+    if previous:
+        event_id=previous['id']
+    else:
+        previous=event
+        existing['events'].append(previous)
+        changes['events']+=1
+        event_id=event['id']
+    found={pairkey(r['fighters']):r for r in existing['results'] if r.get('eventId')==event_id}
+    for r in rows:
+        r['eventId']=event_id;r['event']=previous['name'];r['id']=event_id+'-'+r['id'].rsplit('-',1)[-1]
+        if r['id'] not in (x['id'] for x in existing['results']):
+            r['id']=event_id+'-'+hashlib.sha1('|'.join(pairkey(r['fighters'])).encode()).hexdigest()[:12]
+        original=found.get(pairkey(r['fighters']))
+        if original:
+            if original.get('status')=='completed' and original.get('winner')!=r.get('winner'):
+                print('Conflict retained: ',previous['name'],[f['name'] for f in r['fighters']],file=sys.stderr)
+                continue
+            for field in ('division','round','time','method','source'):
+                if not original.get(field) or original[field] in ('Division not verified','Outcome reported; method unavailable'):
+                    if r.get(field):original[field]=r[field]
+            for old,new in zip(original.get('fighters',[]),r['fighters']):
+                if norm(old.get('name'))!=norm(new.get('name')):continue
+                for field in ('record','recordSource','recordContext','recordNote','photo','photoSource'):
+                    if not old.get(field) and new.get(field):old[field]=new[field]
+            continue
+        existing['results'].append(r)
+        changes['bouts']+=1
+        found[pairkey(r['fighters'])]=r
+    previous['expectedBouts']=max(previous.get('expectedBouts') or 0,event.get('expectedBouts') or 0)
+    count=sum(r.get('status') in ('completed','draw','no_contest') for r in existing['results'] if r.get('eventId')==event_id)
+    previous['partialCoverage']=count<previous['expectedBouts']
+    if not previous.get('mainBoutId') and rows:previous['mainBoutId']=rows[0]['id'].replace(event['id'],event_id,1)
+    if not previous.get('featuredId') and rows:previous['featuredId']=previous['mainBoutId']
+    if not previous.get('source'):previous['source']=event['source']
+def ingest_job(task,portraits):
+    organization,url,date=task
+    try:
+        body=fetch(url)
+        if organization=='PFL':
+            soup=souped(body);h=soup.find('h1');name=h.get_text(' ',strip=True).replace(' · Results','') if h else 'PFL '+date.isoformat()
+            event={'id':'pfl-archive-'+date.isoformat(),'name':name,'date':date.isoformat(),
+                   'status':'completed','source':url,'feeds':[],'takeaways':[],'expectedBouts':0,
+                   'sectionOrder':{'main':'headliner-first','prelims':'headliner-first'},'partialCoverage':True}
+            rows=find_pfl_rows(body,event,portraits)
+            count=re.search(r'\b(\d{1,2}) fights took place\b',soup.get_text(' ',strip=True),re.I)
+            event['expectedBouts']=int(count.group(1)) if count else len(rows)
+            if rows:event['mainBoutId']=rows[0]['id'];event['featuredId']=rows[0]['id']
+        elif organization=='UFC':event,rows=parse_ufc(body,url,date,portraits)
+        else:event,rows=parse_one(body,url,date,portraits)
+        if not event or not rows:return (organization,url,None,[],0)
+        return (organization,url,event,rows,len(rows))
+    except Exception as err:
+        print('Source unavailable (existing data retained):',organization,url,type(err).__name__,str(err)[:100],file=sys.stderr)
+        return (organization,url,None,[],0)
+LAST_AUDIT = {}
+def run(data,portraits,fetcher=fetch):
+    global fetch
+    fetch=fetcher
+    tasks=[]
+    for key in PFL_LINKS:
+        iso=re.search(r'2026-\d{2}-\d{2}',key).group()
+        tasks.append(('PFL','https://www.ufcalendar.com/events/'+key,dt.date.fromisoformat(iso)))
+    for kind,source,extract in (
+        ('UFC','https://www.ufcschedule.net/ufc-results',parse_ufc_links),
+        ('ONE','https://fighterarena.com/organizations/one-championship/events/2026',parse_one_links)):
+        try:tasks += [(kind,url,date) for url,date in extract(fetch(source))]
+        except Exception as err:print('Archive list unavailable:',kind,type(err).__name__,file=sys.stderr)
+    print('Historical event pages to inspect:',len(tasks),dict((k,sum(t[0]==k for t in tasks)) for k in ('UFC','ONE','PFL')))
+    changes={'events':0,'bouts':0}
+    global LAST_AUDIT
+    LAST_AUDIT={'tasks':{k:sum(t[0]==k for t in tasks) for k in ('UFC','ONE','PFL')},'imported':[],'unmatched':[]}
+    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+        futures=[pool.submit(ingest_job,t,portraits) for t in tasks]
+        for task,fut in zip(tasks,futures):
+            org,url,event,rows,total=fut.result()
+            if event and rows:
+                merge(data,event,rows,changes)
+                LAST_AUDIT['imported'].append({'org':org,'date':event['date'],'name':event['name'],'url':url,'bouts':total})
+                print('Verified',org,total,'bouts',event['date'],event['name'][:65])
+            else:
+                LAST_AUDIT['unmatched'].append({'org':org,'url':url})
+    return changes
+def main():
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--dry-run',action='store_true')
+    args=parser.parse_args()
+    path=ROOT/'data/results.json'
+    before=path.read_text()
+    data=json.loads(before)
+    changes=run(data,portrait_map())
+    data['coverage']='Six-month historical UFC, PFL and ONE results (11 May–11 Nov 2026). Verified outcomes are linked to an event source; incomplete cards, missing records and missing portraits are explicitly identified. Records from archive listings are labelled, not assumed to be post-fight.'
+    data['reviewedAt']=dt.datetime.now(dt.timezone(dt.timedelta(hours=11))).date().isoformat()
+    LAST_AUDIT['changes']=changes
+    LAST_AUDIT['totalEvents']=len(data['events'])
+    LAST_AUDIT['totalBouts']=len(data['results'])
+    LAST_AUDIT['countsByPromotion']={k:sum(k.lower() in e['name'].lower() for e in data['events']) for k in ('ufc','one','pfl')}
+    (ROOT/'data'/'backfill-mma-audit.json').write_text(json.dumps(LAST_AUDIT,ensure_ascii=False,indent=2)+'\n')
+    print('Backfill',changes,'total events',len(data['events']),'total rows',len(data['results']))
+    if not args.dry_run and json.dumps(json.loads(before),sort_keys=True)!=json.dumps(data,sort_keys=True):
+        path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
+if __name__=='__main__':main()
+, '', text)
+    match=RECORD.search(normalized)
+    return clean_name(normalized),winner,(match.group(1) if match else None)
+def parse_one(body,url,date,portraits):
+    soup=souped(body);h=soup.find('h1')
+    if not h:return None,[]
+    name=re.sub(r'\s+',' ',h.get_text(' ',strip=True)).strip()
+    if not name.upper().startswith('ONE'):name='ONE '+name
+    event={'id':'one-archive-'+date.isoformat()+'-'+slug(name)[:26],
+           'name':name,'date':date.isoformat(),'status':'completed','source':url,'feeds':[],
+           'location':'Thailand (venue not confirmed)','takeaways':[],
+           'sectionOrder':{'main':'headliner-first'},'partialCoverage':True}
+    rows=[];seen=set()
+    for txt in soup.find_all(string=lambda s:isinstance(s,str) and s.strip().upper()=='VS'):
+        left=txt.find_previous('a',href=lambda v:bool(v and '/fighters/' in v))
+        right=txt.find_next('a',href=lambda v:bool(v and '/fighters/' in v))
+        if not left or not right or left is right:continue
+        a,wa,ra=name_one(left);b,wb,rb=name_one(right)
+        key=tuple(sorted((norm(a),norm(b))))
+        if len(a)<3 or len(b)<3 or key in seen:continue
+        seen.add(key)
+        winner=0 if wa and not wb else 1 if wb and not wa else None
+        tail=[]
+        for node in right.next_elements:
+            if isinstance(node,str) and node.strip():tail.append(node.strip())
+            if len(' '.join(tail))>190 or len(tail)>15:break
+        after=' '.join(tail)
+        method,round_no,clock=method_from(after[:145])
+        if winner is None:continue
+        if not method:method='Method not published by event source'
+        prior=[]
+        for node in left.previous_elements:
+            if isinstance(node,str) and node.strip():prior.append(node.strip())
+            if len(' '.join(prior))>200:break
+        div=WEIGHTS.search(' '.join(reversed(prior))[-145:])
+        sport='Muay Thai' if div and 'muay thai' in div.group(0).lower() else 'Kickboxing' if div and 'kickboxing' in div.group(0).lower() else 'Combat sport'
+        row=result_row(event,a,b,ra,rb,winner,method,round_no,clock,
+                    div.group(0) if div else 'Division not verified','Main card',len(rows),url,portraits,sport)
+        if row:rows.append(row)
+    count=re.search(r'\b(\d{1,2})\s+fights\b',soup.get_text(' ',strip=True),re.I)
+    event['expectedBouts']=max(len(rows),int(count.group(1)) if count else len(rows))
+    if rows:event.update(mainBoutId=rows[0]['id'],featuredId=rows[0]['id'])
+    return event,rows
+def merge(existing,event,rows,changes):
+    if not rows:return
+    aliases=[e for e in existing['events'] if e.get('source')==event.get('source')]
+    if event['id'].startswith('pfl-') or event['name'].lower().startswith('pfl'):
+        aliases += [e for e in existing['events'] if e['date']==event['date'] and 'pfl' in e['name'].lower()]
+    if event['name'].lower().startswith('ufc'):
+        aliases += [e for e in existing['events'] if e['date']==event['date'] and e['name'].lower().startswith('ufc')]
+    previous=aliases[0] if aliases else next((e for e in existing['events'] if e['id']==event['id']),None)
+    if previous:
+        event_id=previous['id']
+    else:
+        previous=event
+        existing['events'].append(previous)
+        changes['events']+=1
+        event_id=event['id']
+    found={pairkey(r['fighters']):r for r in existing['results'] if r.get('eventId')==event_id}
+    for r in rows:
+        r['eventId']=event_id;r['event']=previous['name'];r['id']=event_id+'-'+r['id'].rsplit('-',1)[-1]
+        if r['id'] not in (x['id'] for x in existing['results']):
+            r['id']=event_id+'-'+hashlib.sha1('|'.join(pairkey(r['fighters'])).encode()).hexdigest()[:12]
+        original=found.get(pairkey(r['fighters']))
+        if original:
+            if original.get('status')=='completed' and original.get('winner')!=r.get('winner'):
+                print('Conflict retained: ',previous['name'],[f['name'] for f in r['fighters']],file=sys.stderr)
+                continue
+            for field in ('division','round','time','method','source'):
+                if not original.get(field) or original[field] in ('Division not verified','Outcome reported; method unavailable'):
+                    if r.get(field):original[field]=r[field]
+            for old,new in zip(original.get('fighters',[]),r['fighters']):
+                if norm(old.get('name'))!=norm(new.get('name')):continue
+                for field in ('record','recordSource','recordContext','recordNote','photo','photoSource'):
+                    if not old.get(field) and new.get(field):old[field]=new[field]
+            continue
+        existing['results'].append(r)
+        changes['bouts']+=1
+        found[pairkey(r['fighters'])]=r
+    previous['expectedBouts']=max(previous.get('expectedBouts') or 0,event.get('expectedBouts') or 0)
+    count=sum(r.get('status') in ('completed','draw','no_contest') for r in existing['results'] if r.get('eventId')==event_id)
+    previous['partialCoverage']=count<previous['expectedBouts']
+    if not previous.get('mainBoutId') and rows:previous['mainBoutId']=rows[0]['id'].replace(event['id'],event_id,1)
+    if not previous.get('featuredId') and rows:previous['featuredId']=previous['mainBoutId']
+    if not previous.get('source'):previous['source']=event['source']
+def ingest_job(task,portraits):
+    organization,url,date=task
+    try:
+        body=fetch(url)
+        if organization=='PFL':
+            soup=souped(body);h=soup.find('h1');name=h.get_text(' ',strip=True).replace(' · Results','') if h else 'PFL '+date.isoformat()
+            event={'id':'pfl-archive-'+date.isoformat(),'name':name,'date':date.isoformat(),
+                   'status':'completed','source':url,'feeds':[],'takeaways':[],'expectedBouts':0,
+                   'sectionOrder':{'main':'headliner-first','prelims':'headliner-first'},'partialCoverage':True}
+            rows=find_pfl_rows(body,event,portraits)
+            count=re.search(r'\b(\d{1,2}) fights took place\b',soup.get_text(' ',strip=True),re.I)
+            event['expectedBouts']=int(count.group(1)) if count else len(rows)
+            if rows:event['mainBoutId']=rows[0]['id'];event['featuredId']=rows[0]['id']
+        elif organization=='UFC':event,rows=parse_ufc(body,url,date,portraits)
+        else:event,rows=parse_one(body,url,date,portraits)
+        if not event or not rows:return (organization,url,None,[],0)
+        return (organization,url,event,rows,len(rows))
+    except Exception as err:
+        print('Source unavailable (existing data retained):',organization,url,type(err).__name__,str(err)[:100],file=sys.stderr)
+        return (organization,url,None,[],0)
+LAST_AUDIT = {}
+def run(data,portraits,fetcher=fetch):
+    global fetch
+    fetch=fetcher
+    tasks=[]
+    for key in PFL_LINKS:
+        iso=re.search(r'2026-\d{2}-\d{2}',key).group()
+        tasks.append(('PFL','https://www.ufcalendar.com/events/'+key,dt.date.fromisoformat(iso)))
+    for kind,source,extract in (
+        ('UFC','https://www.ufcschedule.net/ufc-results',parse_ufc_links),
+        ('ONE','https://fighterarena.com/organizations/one-championship/events/2026',parse_one_links)):
+        try:tasks += [(kind,url,date) for url,date in extract(fetch(source))]
+        except Exception as err:print('Archive list unavailable:',kind,type(err).__name__,file=sys.stderr)
+    print('Historical event pages to inspect:',len(tasks),dict((k,sum(t[0]==k for t in tasks)) for k in ('UFC','ONE','PFL')))
+    changes={'events':0,'bouts':0}
+    global LAST_AUDIT
+    LAST_AUDIT={'tasks':{k:sum(t[0]==k for t in tasks) for k in ('UFC','ONE','PFL')},'imported':[],'unmatched':[]}
+    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+        futures=[pool.submit(ingest_job,t,portraits) for t in tasks]
+        for task,fut in zip(tasks,futures):
+            org,url,event,rows,total=fut.result()
+            if event and rows:
+                merge(data,event,rows,changes)
+                LAST_AUDIT['imported'].append({'org':org,'date':event['date'],'name':event['name'],'url':url,'bouts':total})
+                print('Verified',org,total,'bouts',event['date'],event['name'][:65])
+            else:
+                LAST_AUDIT['unmatched'].append({'org':org,'url':url})
+    return changes
+def main():
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--dry-run',action='store_true')
+    args=parser.parse_args()
+    path=ROOT/'data/results.json'
+    before=path.read_text()
+    data=json.loads(before)
+    changes=run(data,portrait_map())
+    data['coverage']='Six-month historical UFC, PFL and ONE results (11 May–11 Nov 2026). Verified outcomes are linked to an event source; incomplete cards, missing records and missing portraits are explicitly identified. Records from archive listings are labelled, not assumed to be post-fight.'
+    data['reviewedAt']=dt.datetime.now(dt.timezone(dt.timedelta(hours=11))).date().isoformat()
+    LAST_AUDIT['changes']=changes
+    LAST_AUDIT['totalEvents']=len(data['events'])
+    LAST_AUDIT['totalBouts']=len(data['results'])
+    LAST_AUDIT['countsByPromotion']={k:sum(k.lower() in e['name'].lower() for e in data['events']) for k in ('ufc','one','pfl')}
+    (ROOT/'data'/'backfill-mma-audit.json').write_text(json.dumps(LAST_AUDIT,ensure_ascii=False,indent=2)+'\n')
+    print('Backfill',changes,'total events',len(data['events']),'total rows',len(data['results']))
+    if not args.dry_run and json.dumps(json.loads(before),sort_keys=True)!=json.dumps(data,sort_keys=True):
+        path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
+if __name__=='__main__':main()
+, '', text)
+    match=RECORD.search(normalized)
+    return clean_name(normalized),winner,(match.group(1) if match else None)
+def parse_one(body,url,date,portraits):
+    soup=souped(body);h=soup.find('h1')
+    if not h:return None,[]
+    name=re.sub(r'\s+',' ',h.get_text(' ',strip=True)).strip()
+    if not name.upper().startswith('ONE'):name='ONE '+name
+    event={'id':'one-archive-'+date.isoformat()+'-'+slug(name)[:26],
+           'name':name,'date':date.isoformat(),'status':'completed','source':url,'feeds':[],
+           'location':'Thailand (venue not confirmed)','takeaways':[],
+           'sectionOrder':{'main':'headliner-first'},'partialCoverage':True}
+    rows=[];seen=set()
+    for txt in soup.find_all(string=lambda s:isinstance(s,str) and s.strip().upper()=='VS'):
+        left=txt.find_previous('a',href=lambda v:bool(v and '/fighters/' in v))
+        right=txt.find_next('a',href=lambda v:bool(v and '/fighters/' in v))
+        if not left or not right or left is right:continue
+        a,wa,ra=name_one(left);b,wb,rb=name_one(right)
+        key=tuple(sorted((norm(a),norm(b))))
+        if len(a)<3 or len(b)<3 or key in seen:continue
+        seen.add(key)
+        winner=0 if wa and not wb else 1 if wb and not wa else None
+        tail=[]
+        for node in right.next_elements:
+            if isinstance(node,str) and node.strip():tail.append(node.strip())
+            if len(' '.join(tail))>190 or len(tail)>15:break
+        after=' '.join(tail)
+        method,round_no,clock=method_from(after[:145])
+        if winner is None:continue
+        if not method:method='Method not published by event source'
+        prior=[]
+        for node in left.previous_elements:
+            if isinstance(node,str) and node.strip():prior.append(node.strip())
+            if len(' '.join(prior))>200:break
+        div=WEIGHTS.search(' '.join(reversed(prior))[-145:])
+        sport='Muay Thai' if div and 'muay thai' in div.group(0).lower() else 'Kickboxing' if div and 'kickboxing' in div.group(0).lower() else 'Combat sport'
+        row=result_row(event,a,b,ra,rb,winner,method,round_no,clock,
+                    div.group(0) if div else 'Division not verified','Main card',len(rows),url,portraits,sport)
+        if row:rows.append(row)
+    count=re.search(r'\b(\d{1,2})\s+fights\b',soup.get_text(' ',strip=True),re.I)
+    event['expectedBouts']=max(len(rows),int(count.group(1)) if count else len(rows))
+    if rows:event.update(mainBoutId=rows[0]['id'],featuredId=rows[0]['id'])
+    return event,rows
+def merge(existing,event,rows,changes):
+    if not rows:return
+    aliases=[e for e in existing['events'] if e.get('source')==event.get('source')]
+    if event['id'].startswith('pfl-') or event['name'].lower().startswith('pfl'):
+        aliases += [e for e in existing['events'] if e['date']==event['date'] and 'pfl' in e['name'].lower()]
+    if event['name'].lower().startswith('ufc'):
+        aliases += [e for e in existing['events'] if e['date']==event['date'] and e['name'].lower().startswith('ufc')]
+    previous=aliases[0] if aliases else next((e for e in existing['events'] if e['id']==event['id']),None)
+    if previous:
+        event_id=previous['id']
+    else:
+        previous=event
+        existing['events'].append(previous)
+        changes['events']+=1
+        event_id=event['id']
+    found={pairkey(r['fighters']):r for r in existing['results'] if r.get('eventId')==event_id}
+    for r in rows:
+        r['eventId']=event_id;r['event']=previous['name'];r['id']=event_id+'-'+r['id'].rsplit('-',1)[-1]
+        if r['id'] not in (x['id'] for x in existing['results']):
+            r['id']=event_id+'-'+hashlib.sha1('|'.join(pairkey(r['fighters'])).encode()).hexdigest()[:12]
+        original=found.get(pairkey(r['fighters']))
+        if original:
+            if original.get('status')=='completed' and original.get('winner')!=r.get('winner'):
+                print('Conflict retained: ',previous['name'],[f['name'] for f in r['fighters']],file=sys.stderr)
+                continue
+            for field in ('division','round','time','method','source'):
+                if not original.get(field) or original[field] in ('Division not verified','Outcome reported; method unavailable'):
+                    if r.get(field):original[field]=r[field]
+            for old,new in zip(original.get('fighters',[]),r['fighters']):
+                if norm(old.get('name'))!=norm(new.get('name')):continue
+                for field in ('record','recordSource','recordContext','recordNote','photo','photoSource'):
+                    if not old.get(field) and new.get(field):old[field]=new[field]
+            continue
+        existing['results'].append(r)
+        changes['bouts']+=1
+        found[pairkey(r['fighters'])]=r
+    previous['expectedBouts']=max(previous.get('expectedBouts') or 0,event.get('expectedBouts') or 0)
+    count=sum(r.get('status') in ('completed','draw','no_contest') for r in existing['results'] if r.get('eventId')==event_id)
+    previous['partialCoverage']=count<previous['expectedBouts']
+    if not previous.get('mainBoutId') and rows:previous['mainBoutId']=rows[0]['id'].replace(event['id'],event_id,1)
+    if not previous.get('featuredId') and rows:previous['featuredId']=previous['mainBoutId']
+    if not previous.get('source'):previous['source']=event['source']
+def ingest_job(task,portraits):
+    organization,url,date=task
+    try:
+        body=fetch(url)
+        if organization=='PFL':
+            soup=souped(body);h=soup.find('h1');name=h.get_text(' ',strip=True).replace(' · Results','') if h else 'PFL '+date.isoformat()
+            event={'id':'pfl-archive-'+date.isoformat(),'name':name,'date':date.isoformat(),
+                   'status':'completed','source':url,'feeds':[],'takeaways':[],'expectedBouts':0,
+                   'sectionOrder':{'main':'headliner-first','prelims':'headliner-first'},'partialCoverage':True}
+            rows=find_pfl_rows(body,event,portraits)
+            count=re.search(r'\b(\d{1,2}) fights took place\b',soup.get_text(' ',strip=True),re.I)
+            event['expectedBouts']=int(count.group(1)) if count else len(rows)
+            if rows:event['mainBoutId']=rows[0]['id'];event['featuredId']=rows[0]['id']
+        elif organization=='UFC':event,rows=parse_ufc(body,url,date,portraits)
+        else:event,rows=parse_one(body,url,date,portraits)
+        if not event or not rows:return (organization,url,None,[],0)
+        return (organization,url,event,rows,len(rows))
+    except Exception as err:
+        print('Source unavailable (existing data retained):',organization,url,type(err).__name__,str(err)[:100],file=sys.stderr)
+        return (organization,url,None,[],0)
+LAST_AUDIT = {}
+def run(data,portraits,fetcher=fetch):
+    global fetch
+    fetch=fetcher
+    tasks=[]
+    for key in PFL_LINKS:
+        iso=re.search(r'2026-\d{2}-\d{2}',key).group()
+        tasks.append(('PFL','https://www.ufcalendar.com/events/'+key,dt.date.fromisoformat(iso)))
+    for kind,source,extract in (
+        ('UFC','https://www.ufcschedule.net/ufc-results',parse_ufc_links),
+        ('ONE','https://fighterarena.com/organizations/one-championship/events/2026',parse_one_links)):
+        try:tasks += [(kind,url,date) for url,date in extract(fetch(source))]
+        except Exception as err:print('Archive list unavailable:',kind,type(err).__name__,file=sys.stderr)
+    print('Historical event pages to inspect:',len(tasks),dict((k,sum(t[0]==k for t in tasks)) for k in ('UFC','ONE','PFL')))
+    changes={'events':0,'bouts':0}
+    global LAST_AUDIT
+    LAST_AUDIT={'tasks':{k:sum(t[0]==k for t in tasks) for k in ('UFC','ONE','PFL')},'imported':[],'unmatched':[]}
+    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+        futures=[pool.submit(ingest_job,t,portraits) for t in tasks]
+        for task,fut in zip(tasks,futures):
+            org,url,event,rows,total=fut.result()
+            if event and rows:
+                merge(data,event,rows,changes)
+                LAST_AUDIT['imported'].append({'org':org,'date':event['date'],'name':event['name'],'url':url,'bouts':total})
+                print('Verified',org,total,'bouts',event['date'],event['name'][:65])
+            else:
+                LAST_AUDIT['unmatched'].append({'org':org,'url':url})
+    return changes
+def main():
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--dry-run',action='store_true')
+    args=parser.parse_args()
+    path=ROOT/'data/results.json'
+    before=path.read_text()
+    data=json.loads(before)
+    changes=run(data,portrait_map())
+    data['coverage']='Six-month historical UFC, PFL and ONE results (11 May–11 Nov 2026). Verified outcomes are linked to an event source; incomplete cards, missing records and missing portraits are explicitly identified. Records from archive listings are labelled, not assumed to be post-fight.'
+    data['reviewedAt']=dt.datetime.now(dt.timezone(dt.timedelta(hours=11))).date().isoformat()
+    LAST_AUDIT['changes']=changes
+    LAST_AUDIT['totalEvents']=len(data['events'])
+    LAST_AUDIT['totalBouts']=len(data['results'])
+    LAST_AUDIT['countsByPromotion']={k:sum(k.lower() in e['name'].lower() for e in data['events']) for k in ('ufc','one','pfl')}
+    (ROOT/'data'/'backfill-mma-audit.json').write_text(json.dumps(LAST_AUDIT,ensure_ascii=False,indent=2)+'\n')
+    print('Backfill',changes,'total events',len(data['events']),'total rows',len(data['results']))
+    if not args.dry_run and json.dumps(json.loads(before),sort_keys=True)!=json.dumps(data,sort_keys=True):
+        path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
+if __name__=='__main__':main()
+, '', text)
+    match=RECORD.search(normalized)
+    return clean_name(normalized),winner,(match.group(1) if match else None)
+def parse_one(body,url,date,portraits):
+    soup=souped(body);h=soup.find('h1')
+    if not h:return None,[]
+    name=re.sub(r'\s+',' ',h.get_text(' ',strip=True)).strip()
+    if not name.upper().startswith('ONE'):name='ONE '+name
+    event={'id':'one-archive-'+date.isoformat()+'-'+slug(name)[:26],
+           'name':name,'date':date.isoformat(),'status':'completed','source':url,'feeds':[],
+           'location':'Thailand (venue not confirmed)','takeaways':[],
+           'sectionOrder':{'main':'headliner-first'},'partialCoverage':True}
+    rows=[];seen=set()
+    for txt in soup.find_all(string=lambda s:isinstance(s,str) and s.strip().upper()=='VS'):
+        left=txt.find_previous('a',href=lambda v:bool(v and '/fighters/' in v))
+        right=txt.find_next('a',href=lambda v:bool(v and '/fighters/' in v))
+        if not left or not right or left is right:continue
+        a,wa,ra=name_one(left);b,wb,rb=name_one(right)
+        key=tuple(sorted((norm(a),norm(b))))
+        if len(a)<3 or len(b)<3 or key in seen:continue
+        seen.add(key)
+        winner=0 if wa and not wb else 1 if wb and not wa else None
+        tail=[]
+        for node in right.next_elements:
+            if isinstance(node,str) and node.strip():tail.append(node.strip())
+            if len(' '.join(tail))>190 or len(tail)>15:break
+        after=' '.join(tail)
+        method,round_no,clock=method_from(after[:145])
+        if winner is None:continue
+        if not method:method='Method not published by event source'
+        prior=[]
+        for node in left.previous_elements:
+            if isinstance(node,str) and node.strip():prior.append(node.strip())
+            if len(' '.join(prior))>200:break
+        div=WEIGHTS.search(' '.join(reversed(prior))[-145:])
+        sport='Muay Thai' if div and 'muay thai' in div.group(0).lower() else 'Kickboxing' if div and 'kickboxing' in div.group(0).lower() else 'Combat sport'
+        row=result_row(event,a,b,ra,rb,winner,method,round_no,clock,
+                    div.group(0) if div else 'Division not verified','Main card',len(rows),url,portraits,sport)
+        if row:rows.append(row)
+    count=re.search(r'\b(\d{1,2})\s+fights\b',soup.get_text(' ',strip=True),re.I)
+    event['expectedBouts']=max(len(rows),int(count.group(1)) if count else len(rows))
+    if rows:event.update(mainBoutId=rows[0]['id'],featuredId=rows[0]['id'])
+    return event,rows
+def merge(existing,event,rows,changes):
+    if not rows:return
+    aliases=[e for e in existing['events'] if e.get('source')==event.get('source')]
+    if event['id'].startswith('pfl-') or event['name'].lower().startswith('pfl'):
+        aliases += [e for e in existing['events'] if e['date']==event['date'] and 'pfl' in e['name'].lower()]
+    if event['name'].lower().startswith('ufc'):
+        aliases += [e for e in existing['events'] if e['date']==event['date'] and e['name'].lower().startswith('ufc')]
+    previous=aliases[0] if aliases else next((e for e in existing['events'] if e['id']==event['id']),None)
+    if previous:
+        event_id=previous['id']
+    else:
+        previous=event
+        existing['events'].append(previous)
+        changes['events']+=1
+        event_id=event['id']
+    found={pairkey(r['fighters']):r for r in existing['results'] if r.get('eventId')==event_id}
+    for r in rows:
+        r['eventId']=event_id;r['event']=previous['name'];r['id']=event_id+'-'+r['id'].rsplit('-',1)[-1]
+        if r['id'] not in (x['id'] for x in existing['results']):
+            r['id']=event_id+'-'+hashlib.sha1('|'.join(pairkey(r['fighters'])).encode()).hexdigest()[:12]
+        original=found.get(pairkey(r['fighters']))
+        if original:
+            if original.get('status')=='completed' and original.get('winner')!=r.get('winner'):
+                print('Conflict retained: ',previous['name'],[f['name'] for f in r['fighters']],file=sys.stderr)
+                continue
+            for field in ('division','round','time','method','source'):
+                if not original.get(field) or original[field] in ('Division not verified','Outcome reported; method unavailable'):
+                    if r.get(field):original[field]=r[field]
+            for old,new in zip(original.get('fighters',[]),r['fighters']):
+                if norm(old.get('name'))!=norm(new.get('name')):continue
+                for field in ('record','recordSource','recordContext','recordNote','photo','photoSource'):
+                    if not old.get(field) and new.get(field):old[field]=new[field]
+            continue
+        existing['results'].append(r)
+        changes['bouts']+=1
+        found[pairkey(r['fighters'])]=r
+    previous['expectedBouts']=max(previous.get('expectedBouts') or 0,event.get('expectedBouts') or 0)
+    count=sum(r.get('status') in ('completed','draw','no_contest') for r in existing['results'] if r.get('eventId')==event_id)
+    previous['partialCoverage']=count<previous['expectedBouts']
+    if not previous.get('mainBoutId') and rows:previous['mainBoutId']=rows[0]['id'].replace(event['id'],event_id,1)
+    if not previous.get('featuredId') and rows:previous['featuredId']=previous['mainBoutId']
+    if not previous.get('source'):previous['source']=event['source']
+def ingest_job(task,portraits):
+    organization,url,date=task
+    try:
+        body=fetch(url)
+        if organization=='PFL':
+            soup=souped(body);h=soup.find('h1');name=h.get_text(' ',strip=True).replace(' · Results','') if h else 'PFL '+date.isoformat()
+            event={'id':'pfl-archive-'+date.isoformat(),'name':name,'date':date.isoformat(),
+                   'status':'completed','source':url,'feeds':[],'takeaways':[],'expectedBouts':0,
+                   'sectionOrder':{'main':'headliner-first','prelims':'headliner-first'},'partialCoverage':True}
+            rows=find_pfl_rows(body,event,portraits)
+            count=re.search(r'\b(\d{1,2}) fights took place\b',soup.get_text(' ',strip=True),re.I)
+            event['expectedBouts']=int(count.group(1)) if count else len(rows)
+            if rows:event['mainBoutId']=rows[0]['id'];event['featuredId']=rows[0]['id']
+        elif organization=='UFC':event,rows=parse_ufc(body,url,date,portraits)
+        else:event,rows=parse_one(body,url,date,portraits)
+        if not event or not rows:return (organization,url,None,[],0)
+        return (organization,url,event,rows,len(rows))
+    except Exception as err:
+        print('Source unavailable (existing data retained):',organization,url,type(err).__name__,str(err)[:100],file=sys.stderr)
+        return (organization,url,None,[],0)
+LAST_AUDIT = {}
+def run(data,portraits,fetcher=fetch):
+    global fetch
+    fetch=fetcher
+    tasks=[]
+    for key in PFL_LINKS:
+        iso=re.search(r'2026-\d{2}-\d{2}',key).group()
+        tasks.append(('PFL','https://www.ufcalendar.com/events/'+key,dt.date.fromisoformat(iso)))
+    for kind,source,extract in (
+        ('UFC','https://www.ufcschedule.net/ufc-results',parse_ufc_links),
+        ('ONE','https://fighterarena.com/organizations/one-championship/events/2026',parse_one_links)):
+        try:tasks += [(kind,url,date) for url,date in extract(fetch(source))]
+        except Exception as err:print('Archive list unavailable:',kind,type(err).__name__,file=sys.stderr)
+    print('Historical event pages to inspect:',len(tasks),dict((k,sum(t[0]==k for t in tasks)) for k in ('UFC','ONE','PFL')))
+    changes={'events':0,'bouts':0}
+    global LAST_AUDIT
+    LAST_AUDIT={'tasks':{k:sum(t[0]==k for t in tasks) for k in ('UFC','ONE','PFL')},'imported':[],'unmatched':[]}
+    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+        futures=[pool.submit(ingest_job,t,portraits) for t in tasks]
+        for task,fut in zip(tasks,futures):
+            org,url,event,rows,total=fut.result()
+            if event and rows:
+                merge(data,event,rows,changes)
+                LAST_AUDIT['imported'].append({'org':org,'date':event['date'],'name':event['name'],'url':url,'bouts':total})
+                print('Verified',org,total,'bouts',event['date'],event['name'][:65])
+            else:
+                LAST_AUDIT['unmatched'].append({'org':org,'url':url})
+    return changes
+def main():
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--dry-run',action='store_true')
+    args=parser.parse_args()
+    path=ROOT/'data/results.json'
+    before=path.read_text()
+    data=json.loads(before)
+    changes=run(data,portrait_map())
+    data['coverage']='Six-month historical UFC, PFL and ONE results (11 May–11 Nov 2026). Verified outcomes are linked to an event source; incomplete cards, missing records and missing portraits are explicitly identified. Records from archive listings are labelled, not assumed to be post-fight.'
+    data['reviewedAt']=dt.datetime.now(dt.timezone(dt.timedelta(hours=11))).date().isoformat()
+    LAST_AUDIT['changes']=changes
+    LAST_AUDIT['totalEvents']=len(data['events'])
+    LAST_AUDIT['totalBouts']=len(data['results'])
+    LAST_AUDIT['countsByPromotion']={k:sum(k.lower() in e['name'].lower() for e in data['events']) for k in ('ufc','one','pfl')}
+    (ROOT/'data'/'backfill-mma-audit.json').write_text(json.dumps(LAST_AUDIT,ensure_ascii=False,indent=2)+'\n')
+    print('Backfill',changes,'total events',len(data['events']),'total rows',len(data['results']))
+    if not args.dry_run and json.dumps(json.loads(before),sort_keys=True)!=json.dumps(data,sort_keys=True):
+        path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
+if __name__=='__main__':main()
+, '', text)
+    return clean_name(normalized), winner, (RECORD.search(text).group(1) if RECORD.search(text) else None)
+
+def parse_one(body,url,date,portraits):
     soup=souped(body);h=soup.find('h1')
     if not h:return None,[]
     name=re.sub(r'\s+',' ',h.get_text(' ',strip=True)).strip()
