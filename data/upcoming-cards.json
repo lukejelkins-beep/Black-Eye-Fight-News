@@ -1,5 +1,5 @@
 {
-  "reviewedAt": "2026-11-10",
+  "reviewedAt": "2026-11-11",
   "editorial": "Promoter announcements and cross-checked named pairings from reputable fight schedules; identify any opponent awaiting promoter reconfirmation. Main/prelim placement shown only where evidenced; source links on each event. Event times, opponents and bout order can change. The Dec 5 Saudi Arabia UFC Fight Night is currently reported by independent outlets, not on the official UFC event listing; it is explicitly labelled provisional. Fighter W-L(-D) records are shown where supported by published fighter rosters, WBC/promoter reports or detailed fight schedules; otherwise marked as unverified. Official event posters appear when a reliable source provides one. Fighter records are independently cross-checked using promoter/schedule sources and direct fighter record pages (including Wikipedia, BoxRec and Tapology when verifiable). Each published record retains a source URL. No-contest counts are omitted from W-L-D display; absence of a record remains labelled rather than guessed.",
   "events": [
     {
@@ -273,6 +273,43 @@
         "height": 3414,
         "verifiedAt": "2026-11-08T21:11:14+00:00"
       }
+    },
+    {
+      "id": "one-friday-fights-178-2026-11-13",
+      "date": "2026-11-13",
+      "sport": "mma",
+      "promotion": "ONE Championship",
+      "title": "ONE Friday Fights 178 & The Inner Circle 38",
+      "location": "Lumpinee Stadium, Bangkok, Thailand",
+      "source": "https://www.onefc.com/events/one-friday-fights-178/",
+      "verifiedAt": "2026-11-11",
+      "sourceAccessible": true,
+      "startAt": "2026-11-13T18:30:00+07:00",
+      "note": "ONE's official card includes Muay Thai and MMA; this MMA calendar lists only the two officially confirmed MMA pairings from ONE Friday Fights 178. Muay Thai pairings are omitted from this MMA feed. Broadcast order of MMA bouts is TBC.",
+      "bouts": [
+        {
+          "id": "off178-mma-1",
+          "section": "announced",
+          "fighters": [
+            "Nattakorn Kesorn",
+            "Mathew Gesto"
+          ],
+          "division": "Strawweight MMA",
+          "note": "Order TBC",
+          "source": "https://www.onefc.com/events/one-friday-fights-178/"
+        },
+        {
+          "id": "off178-mma-2",
+          "section": "announced",
+          "fighters": [
+            "Suhyeon Kim",
+            "Takumi Fukamachi"
+          ],
+          "division": "Bantamweight MMA",
+          "note": "Order TBC",
+          "source": "https://www.onefc.com/events/one-friday-fights-178/"
+        }
+      ]
     },
     {
       "id": "cage-warriors-213-2026-11-14",
@@ -1425,8 +1462,8 @@
       "promotion": "BOXXER",
       "title": "Lauren Price vs Michaela Kotaskova",
       "location": "Utilita Arena, Cardiff, Wales",
-      "source": "https://www.boxxer.com/",
-      "verifiedAt": "2026-11-08",
+      "source": "https://www.boxxer.com/events/lauren-price-vs-michaela-kotaskova-20-november-2026-utilita-arena-cardiff/",
+      "verifiedAt": "2026-11-11",
       "bouts": [
         {
           "id": "b1",
@@ -1437,7 +1474,7 @@
           ],
           "division": "Women's Welterweight",
           "note": "Unified world titles",
-          "source": "https://www.boxxer.com/",
+          "source": "https://www.boxxer.com/events/lauren-price-vs-michaela-kotaskova-20-november-2026-utilita-arena-cardiff/",
           "records": [
             "10-0 (2 KOs)",
             "12-1-2 (4 KOs)"
@@ -1446,10 +1483,32 @@
             "https://wbcboxing.com/en/lauren-price-looks-to-strengthen-her-wbc-reign-against-michaela-kotaskova/",
             "https://wbcboxing.com/en/lauren-price-looks-to-strengthen-her-wbc-reign-against-michaela-kotaskova/"
           ]
+        },
+        {
+          "id": "boxxer-price-2",
+          "section": "announced",
+          "fighters": [
+            "Rhys Edwards",
+            "Lee McGregor"
+          ],
+          "division": "Featherweight",
+          "note": "WBA Continental Featherweight title; running order TBC",
+          "source": "https://www.boxxer.com/events/lauren-price-vs-michaela-kotaskova-20-november-2026-utilita-arena-cardiff/"
+        },
+        {
+          "id": "boxxer-price-3",
+          "section": "announced",
+          "fighters": [
+            "Kyran Jones",
+            "Sean Arkwright"
+          ],
+          "division": "Middleweight",
+          "note": "Running order TBC",
+          "source": "https://www.boxxer.com/events/lauren-price-vs-michaela-kotaskova-20-november-2026-utilita-arena-cardiff/"
         }
       ],
-      "note": "Additional bouts will appear when supported by official card announcements.",
-      "sourceAccessible": false,
+      "note": "Three bouts confirmed by BOXXER; only the headline is assigned to the main card. Undercard order TBC.",
+      "sourceAccessible": true,
       "sourceLastCheckedAt": "2026-11-10T13:19:37+00:00",
       "sourceDigest": "567b1e4435d4bd1a39b09363",
       "sourceChangedAt": "2026-11-10T10:06:33+00:00"
@@ -2192,11 +2251,11 @@
       "source": "https://www.sherdog.com/events/UFC-Fight-Night-295-Riyadh-114777",
       "sourceStatus": "reported",
       "verifiedAt": "2026-11-08",
-      "note": "Reported UFC Riyadh event and headline, not yet on the promotion's official events page. The fight card and broadcast divisions are provisional; only the reported main event is labelled Main Card. The other announced pairings are not assigned to prelims until verified.",
+      "note": "Entire December 5 Riyadh UFC event remains externally reported and provisional pending official UFC confirmation. All nine bouts, including the reported headline, have unconfirmed broadcast placement.",
       "bouts": [
         {
           "id": "riyadh-1",
-          "section": "main",
+          "section": "announced",
           "fighters": [
             "Israel Adesanya",
             "Sharabutdin Magomedov"
