@@ -11,8 +11,8 @@
 .fights-view-tabs button{appearance:none;min-width:0;min-height:52px;padding:12px 7px;border:0;border-bottom:3px solid transparent;background:transparent;color:#827d7e;font:850 17px/1.2 'Barlow',Arial,sans-serif;cursor:pointer}
 .fights-view-tabs button.is-active{border-bottom-color:#b41224;color:#18161a}
 .fights-view-tabs button:focus-visible,.fights-promotion-tab:focus-visible{outline:3px solid #b41224;outline-offset:2px}
-.fights-promotion-tab-tabs{min-width:0;max-width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
-.fights-promotion-tab-tabs[hidden]{display:none!important}
+.fights-promotion-tabs{min-width:0;max-width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.fights-promotion-tabs[hidden]{display:none!important}
 .fights-promotion-tab{appearance:none;min-width:0;min-height:60px;display:flex;align-items:center;justify-content:center;padding:7px 10px;border:2px solid #c4c0bd;border-radius:12px;background:#fff;color:#21191a;font-weight:900;cursor:pointer;overflow:hidden}
 .fights-promotion-tab img{display:block;max-width:100%;width:94px;height:38px;object-fit:contain}
 .fights-promotion-tab img[hidden]{display:none!important}
@@ -58,7 +58,7 @@
   .fights-controls{gap:14px;padding-bottom:17px}
   .fights-search{min-height:48px;padding:0 12px}
   .fights-view-tabs button{min-height:47px;font-size:16px}
-  .fights-promotion-tab-tabs{gap:7px}
+  .fights-promotion-tabs{gap:7px}
   .fights-promotion-tab{min-height:54px;padding:5px;border-radius:10px}
   .fights-promotion-tab img{height:32px;width:83px}
   #fights-active-content{padding:12px 12px;border-radius:14px}
