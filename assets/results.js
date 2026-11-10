@@ -183,8 +183,13 @@ window.ResultsDesk=(()=>{
   return html;
  }
  const group=(title,items)=>items.length?'<section class="fights-result-group"><h2>'+title+'</h2>'+dated(items)+'</section>':'';
+ const sport=window.BEFNSport?.get()||'all',promo=window.BEFNFightsUI?.promotion||filters.promotion;
+ const promotionLabel={ufc:'UFC',one:'ONE Championship',pfl:'PFL'}[promo]||'MMA';
+ const isSearching=String(window.BEFNFightsUI?.query??filters.query).trim().length>0;
+ const empty=isSearching?'<div class="empty">No results match your search. Try another event or fighter.</div>':
+  '<div class="empty">'+(sport==='mma'?'No verified '+promotionLabel+' results are currently available in this feed.':'No completed fight results are currently available in this category.')+'</div>';
  return (error?'<p role="status">Refresh unavailable. Showing the last loaded results.</p>':'')+
-  (events.length?group('This Week',recent)+group('Earlier Results',earlier):'<div class="empty">No results match these filters. <button id="results-reset">Clear filters</button></div>');
+  (events.length?group('This Week',recent)+group('Earlier Results',earlier):empty);
 
  }
 function hydrateResultPhotos(){
