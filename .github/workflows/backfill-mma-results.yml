@@ -7,6 +7,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/backfill-mma-2026.py'
+      - 'scripts/enrich-ufc-history.py'
       - 'tests/test_mma_backfill.py'
       - '.github/workflows/backfill-mma-results.yml'
 permissions:
@@ -27,10 +28,12 @@ jobs:
         run: python -m pip install --disable-pip-version-check beautifulsoup4==4.14.3
       - name: Validate parser and historical data safeguards
         run: |
-          python -m py_compile scripts/backfill-mma-2026.py
+          python -m py_compile scripts/backfill-mma-2026.py scripts/enrich-ufc-history.py
           python -m unittest discover -s tests -p 'test_mma_backfill.py' -v
       - name: Ingest and verify archived event data
         run: python scripts/backfill-mma-2026.py
+      - name: Fill source-matched historic UFC records and portraits
+        run: python scripts/enrich-ufc-history.py
       - name: Publish only verified, changed result cards
         shell: bash
         run: |
