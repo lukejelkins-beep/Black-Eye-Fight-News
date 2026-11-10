@@ -1,0 +1,100 @@
+/* Unified event desk – retain Black Eye typography, photo tabs and dark compact rows. */
+#main .fights-unified{width:100%;max-width:1320px;margin:0 auto;min-width:0}
+#main .fights-unified *{box-sizing:border-box}
+#main .fights-unified .calendar-photo-heading{margin-bottom:20px}
+.fights-controls{display:grid;gap:15px;margin:4px 0 17px;min-width:0;max-width:100%}
+.fights-search{display:flex;align-items:center;gap:11px;width:100%;min-width:0;background:#131419;border:1px solid #444149;border-radius:12px;padding:0 14px;height:55px;color:#c9c5c9}
+.fights-search:focus-within{outline:2px solid #c82433;outline-offset:2px}
+.fights-search-icon{font-size:27px;line-height:1;color:#bbb8be}
+.fights-search input{width:100%;min-width:0;border:0!important;outline:none!important;box-shadow:none!important;background:transparent!important;color:#f7f4f1!important;font:600 15px/1.2 'DM Sans',system-ui,sans-serif;padding:12px 0}
+.fights-search input::placeholder{color:#98969c;opacity:1}
+.fights-view-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));min-width:0;border-bottom:1px solid #4c4447;background:#111216;border-radius:11px 11px 0 0}
+.fights-view-tab{appearance:none;border:0;border-bottom:4px solid transparent;background:transparent;color:#a2a0a5;padding:14px 9px 12px;min-height:54px;font:800 clamp(15px,2.5vw,19px)/1.15 'DM Sans',sans-serif;cursor:pointer}
+.fights-view-tab.is-active{border-bottom-color:#e11c30;color:#fff}
+.fights-view-tab:hover{color:#fff}
+.fights-view-tab:focus-visible,.fights-promotion-tab:focus-visible{outline:3px solid #dd3446;outline-offset:3px}
+.fights-promotion-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;min-width:0;padding:0 1px 5px}
+.fights-promotion-tab{display:flex;justify-content:center;align-items:center;min-width:0;min-height:67px;padding:8px;background:#fff;border:2px solid #c8c0bd;border-radius:12px;box-shadow:0 2px 5px #0002;cursor:pointer}
+.fights-promotion-tab.is-active{background:#b71324;border:3px solid #ef4052;box-shadow:0 0 0 1px #aa1a2b}
+.fights-promotion-tab img{display:block;max-width:100%;height:43px;width:115px;object-fit:contain;object-position:center}
+.fights-promotion-tab img[hidden],.fights-promotion-tab span[hidden]{display:none!important}
+.fights-promotion-tab span:not([hidden]){font:900 18px/1 'DM Sans',sans-serif;color:#1a1b1e}
+.fights-promotion-tab.is-active span:not([hidden]){color:#fff}
+#main #upcoming-cards-root{margin-top:0}
+#main #upcoming-cards-root .upcoming-schedule{border-radius:15px;background:#101115}
+#main #upcoming-cards-root .upcoming-list-overview{display:none!important}
+#main #upcoming-cards-root .upcoming-list-group{padding-top:14px}
+#main #upcoming-cards-root .upcoming-list-heading{font:900 clamp(23px,3vw,33px)/1.15 'DM Sans',system-ui,sans-serif!important;letter-spacing:-.02em!important;color:#fff!important;background:none!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important;padding:0!important;margin:0 0 19px!important}
+#main #upcoming-cards-root .upcoming-list-heading::after{display:none!important;content:none!important}
+#main #upcoming-cards-root .upcoming-list-date{margin:20px 0 4px;color:#55c9fa;font-family:'DM Sans',sans-serif}
+#main #upcoming-cards-root .upcoming-event-summary.upcoming-schedule-row{grid-template-columns:98px minmax(0,1fr) 21px;min-height:122px}
+#main #upcoming-cards-root .upcoming-hero-media{width:98px;height:112px}
+#main #upcoming-cards-root .upcoming-hero-title{font-family:'DM Sans',sans-serif;font-weight:850;font-size:clamp(15px,2.25vw,23px);line-height:1.22}
+#main #upcoming-cards-root .upcoming-row-kicker{color:#e2b963;font-size:10px}
+#main #upcoming-cards-root .upcoming-time-countdown{max-width:100%}
+#main .befn-unified-results{padding:0!important;margin:0!important;max-width:none!important;width:100%;overflow:visible!important}
+#main .befn-unified-results #results-content{background:#101115;color:#f3f4f6;border-radius:15px;border:1px solid #323039;box-shadow:0 10px 28px #0002;padding:clamp(14px,3vw,31px);min-width:0}
+.fights-result-group{padding:11px 0 10px}
+.fights-result-group+.fights-result-group{border-top:1px solid #31333b;margin-top:16px;padding-top:28px}
+.fights-result-group>h2{font:900 clamp(22px,3.2vw,32px)/1.15 'DM Sans',sans-serif;color:#fff;letter-spacing:-.025em;margin:0 0 18px}
+.fights-result-date{font:900 12px/1.3 'DM Sans',sans-serif;color:#9f9fa8;text-transform:uppercase;letter-spacing:.08em;margin:24px 0 3px}
+.fights-result-date>span{color:#47cafa}
+#main .befn-unified-results .befn-result-list-event{border:0!important;border-bottom:1px solid #34333d!important;border-radius:0!important;margin:0!important;overflow:visible!important;background:transparent!important;box-shadow:none!important;color:#fff}
+.befn-result-summary{display:grid;grid-template-columns:98px minmax(0,1fr) 20px;align-items:center;gap:clamp(11px,2.2vw,21px);min-height:125px;padding:12px 2px;cursor:pointer;list-style:none}
+.befn-result-summary::-webkit-details-marker{display:none}
+.befn-result-summary::marker{content:''}
+.befn-result-summary:hover{background:#1c1e24}
+.befn-result-summary:focus-visible{outline:2px solid #e63649;outline-offset:1px}
+.befn-result-thumb{display:flex;align-items:center;justify-content:center;overflow:hidden;width:98px;height:110px;border-radius:7px;border:1px solid #454956;background:linear-gradient(120deg,#29323e,#141820)}
+.befn-result-thumb img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
+.befn-result-thumb img[hidden]{display:none}
+.befn-result-thumb-fallback{color:#b5d5e7;font:900 24px/1 'Barlow Condensed',sans-serif}
+.befn-result-summary-copy{min-width:0;display:flex;flex-direction:column;gap:7px}
+.befn-result-summary-copy>small{color:#e2be6a;font:800 10px/1.25 'DM Sans',sans-serif;letter-spacing:.07em;text-transform:uppercase}
+.befn-result-summary-copy>strong{color:#faf9fa;font:850 clamp(16px,2.4vw,23px)/1.23 'DM Sans',sans-serif;overflow-wrap:anywhere}
+.befn-result-summary-copy>span{color:#aeb0bc;font:600 clamp(11px,1.3vw,13px)/1.4 'DM Sans',sans-serif;overflow-wrap:anywhere}
+.befn-result-caret{color:#d9b661;font-size:25px;line-height:1;justify-self:end;transition:transform .18s}
+.befn-result-list-event[open] .befn-result-caret{transform:rotate(180deg)}
+.befn-result-expanded{border:1px solid #4c4d59;border-radius:9px;overflow:hidden;background:#f3f5f2;color:#192629;margin-bottom:15px}
+.befn-result-expanded .result-event-heading{padding:15px 17px}
+.befn-result-expanded .result-event-heading h2{font-size:clamp(22px,3vw,30px)}
+.befn-result-expanded .result-event-feature{padding:12px}
+.befn-result-expanded .result-takeaways{padding:14px}
+#main .befn-unified-results .empty{background:#1e222a;color:#f7f7f7;border:1px solid #444;max-width:100%;padding:18px;border-radius:9px}
+#main .fights-unified .compact-note{font-size:11px}
+@media(max-width:650px){
+ #main .fights-unified{min-width:0;max-width:100%}
+ #main .fights-unified .calendar-photo-heading{margin-bottom:16px}
+ .fights-controls{gap:12px}
+ .fights-search{height:51px;border-radius:11px}
+ .fights-view-tab{min-height:50px}
+ .fights-promotion-tabs{gap:7px}
+ .fights-promotion-tab{min-height:56px;padding:5px}
+ .fights-promotion-tab img{height:35px;width:92px}
+ #main #upcoming-cards-root .upcoming-schedule{padding:14px 11px;border-radius:11px}
+ #main #upcoming-cards-root .upcoming-event-summary.upcoming-schedule-row{grid-template-columns:78px minmax(0,1fr) 13px;gap:10px;min-height:106px;padding:10px 0!important}
+ #main #upcoming-cards-root .upcoming-hero-media{width:78px;height:99px}
+ #main #upcoming-cards-root .upcoming-hero-title{font-size:clamp(15px,4vw,19px)}
+ #main #upcoming-cards-root .upcoming-hero-times{font-size:10px;gap:3px 6px}
+ #main #upcoming-cards-root .upcoming-hero-location{font-size:10px}
+ #main .befn-unified-results #results-content{padding:13px 10px;border-radius:11px}
+ .fights-result-group>h2{font-size:23px}
+ .fights-result-date{margin:19px 0 6px;font-size:11px}
+ .befn-result-summary{grid-template-columns:78px minmax(0,1fr) 13px;gap:10px;min-height:111px;padding:10px 0}
+ .befn-result-thumb{width:78px;height:99px}
+ .befn-result-summary-copy>strong{font-size:clamp(15px,4vw,19px)}
+ .befn-result-summary-copy>span{font-size:10px}
+ .befn-result-caret{font-size:20px}
+ .befn-result-expanded .result-event-feature .result-feature{display:block}
+ .befn-result-expanded .result-event-feature .result-cover,.befn-result-expanded .result-event-feature .result-faceoff{height:160px;min-height:0}
+ .befn-result-expanded .result-event-heading{padding:12px}
+ .befn-result-expanded .result-event-heading h2{font-size:23px}
+}
+@media(max-width:375px){
+ .fights-promotion-tab img{height:30px;width:70px}
+ .befn-result-summary{grid-template-columns:69px minmax(0,1fr) 12px;gap:9px}
+ .befn-result-thumb{width:69px;height:91px}
+ #main #upcoming-cards-root .upcoming-event-summary.upcoming-schedule-row{grid-template-columns:69px minmax(0,1fr) 12px;gap:9px}
+ #main #upcoming-cards-root .upcoming-hero-media{width:69px;height:91px}
+}
+@media(prefers-reduced-motion:reduce){.befn-result-caret{transition:none}}
