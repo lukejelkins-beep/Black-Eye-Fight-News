@@ -838,8 +838,8 @@ function topStoryPhoto(a){
 function topStoryPhotoSubject(a){
  const known=newsFighterImage(a);
  if(known)return known.name;
- const names=(a.title.match(/\b[A-Z][a-zÀ-ÿ'’-]+(?:\s+(?:[A-Z][a-zÀ-ÿ'’-]+|(?:de|dos|van|da))){0,2}/g)||[]);
- const ignored=/^(?:UFC|MMA|ONE|PFL|Dana White Calls|Breaking News|Fight Night|New York|Las Vegas|World Boxing|The Ultimate|Conor McGregor Demands)$/i;
+ const names=(a.title.match(/\b[A-Z][a-zÀ-ÿ'’-]+\s+[A-Z][a-zÀ-ÿ'’-]+/g)||[]);
+ const ignored=/^(?:Breaking News|Fight Night|New York|Las Vegas|World Boxing|The Ultimate)$/i;
  return names.map(n=>n.trim()).find(n=>n.split(' ').length>=2&&!ignored.test(n))||'';
 }
 const topStoryPhotoCache=new Map();
@@ -851,6 +851,22 @@ async function findTopStoryAlternative(a){
  topStoryPhotoCache.set(subject,request);
  return request;
 }
+async function findCommonsTopStoryPhoto(subject){
+ try{
+  const api='https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrnamespace=6&gsrlimit=12&gsrsearch='+encodeURIComponent('intitle:'+subject)+'&prop=imageinfo&iiprop=url|size&iiurlwidth=1100&format=json&origin=*';
+  const res=await fetch(api,{mode:'cors'});
+  if(!res.ok)return '';
+  const data=await res.json();
+  const pages=Object.values(data.query?.pages||{});
+  const tokens=subject.toLowerCase().split(/\s+/).filter(Boolean);
+  const match=pages.find(p=>{
+   const title=(p.title||'').toLowerCase();
+   const info=p.imageinfo?.[0];
+   return tokens.every(t=>title.includes(t))&&info?.thumburl&&info.width>=400&&info.height>=250&&/\.(?:jpg|jpeg|png|webp)(?:$|\?)/i.test(info.url||'');
+  });
+  return match?.imageinfo?.[0]?.thumburl||'';
+ }catch{return ''}
+}
 function hydrateTopStoryPhotos(){
  document.querySelectorAll('.top-story-full img[data-photo-subject]').forEach(img=>{
   if(img.dataset.photoAttempted==='yes')return;
@@ -859,7 +875,8 @@ function hydrateTopStoryPhotos(){
   const fallback=async()=>{
    if(img.dataset.photoFallback==='yes')return;
    img.dataset.photoFallback='yes';
-   const url=await findWikipediaPortrait(subject).catch(()=>'');
+   let url=await findWikipediaPortrait(subject).catch(()=>'');
+   if(!url)url=await findCommonsTopStoryPhoto(subject);
    if(!url){img.closest('.front-lead-image')?.classList.add('top-story-photo-unavailable');return;}
    img.alt='Photograph of '+subject;
    img.src=url;
