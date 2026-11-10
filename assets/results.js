@@ -320,6 +320,19 @@ function hydrateResultPhotos(){
   if(e.target.closest('#results-reset')){filters.query='';filters.clips=false;document.getElementById('main').innerHTML=render()}
  });
  document.addEventListener('error',function(e){
+ if(e.target.matches?.('.befn-result-thumb img')){
+  const img=e.target,fallback=img.dataset.fallbackSrc;
+  if(fallback&&!img.dataset.fallbackUsed){
+   img.dataset.fallbackUsed='1';img.alt='Fighter portrait';img.src=fallback;return;
+  }
+  img.hidden=true;
+  return;
+ }
+ if(e.target.matches?.('.befn-expanded-poster-image')){
+  const figure=e.target.closest('.befn-result-poster');
+  if(figure)figure.hidden=true;
+  return;
+ }
  if(!e.target.matches?.('.result-photo img,.result-cover img'))return;
  const img=e.target,container=img.closest('.result-photo'),fallback=container?.querySelector('.result-photo-missing');
  const hide=()=>{img.hidden=true;if(fallback)fallback.hidden=false};
