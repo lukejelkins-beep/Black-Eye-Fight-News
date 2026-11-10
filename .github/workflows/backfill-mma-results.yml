@@ -9,6 +9,8 @@ on:
       - 'scripts/backfill-mma-2026.py'
       - 'scripts/enrich-ufc-history.py'
       - 'scripts/import-official-pfl-2026.py'
+      - 'scripts/enrich-pfl-official-portraits.py'
+      - 'tests/test_pfl_portraits.py'
       - 'data/pfl-official-results-2026.json'
       - 'tests/test_pfl_official_history.py'
       - 'tests/test_mma_backfill.py'
@@ -31,15 +33,18 @@ jobs:
         run: python -m pip install --disable-pip-version-check beautifulsoup4==4.14.3
       - name: Validate parser and historical data safeguards
         run: |
-          python -m py_compile scripts/backfill-mma-2026.py scripts/enrich-ufc-history.py scripts/import-official-pfl-2026.py
+          python -m py_compile scripts/backfill-mma-2026.py scripts/enrich-ufc-history.py scripts/import-official-pfl-2026.py scripts/enrich-pfl-official-portraits.py
           python -m unittest discover -s tests -p 'test_mma_backfill.py' -v
           python -m unittest discover -s tests -p 'test_pfl_official_history.py' -v
+          python -m unittest discover -s tests -p 'test_pfl_portraits.py' -v
       - name: Ingest and verify archived event data
         run: python scripts/backfill-mma-2026.py
       - name: Fill source-matched historic UFC records and portraits
         run: python scripts/enrich-ufc-history.py
       - name: Merge seven fully verified PFL event reports
         run: python scripts/import-official-pfl-2026.py
+      - name: Match PFL fighter portraits to official athlete profiles
+        run: python scripts/enrich-pfl-official-portraits.py
       - name: Publish only verified, changed result cards
         shell: bash
         run: |
@@ -50,7 +55,7 @@ jobs:
           # job researches archived events. On a push conflict, replay only
           # the idempotent source-verified PFL fixture on the newest main.
           for attempt in 1 2 3 4; do
-            git add data/results.json data/backfill-mma-audit.json
+            git add data/results.json data/backfill-mma-audit.json data/pfl-portrait-progress.json
             if git diff --cached --quiet; then
               echo "All previously verified results already published"
               exit 0
