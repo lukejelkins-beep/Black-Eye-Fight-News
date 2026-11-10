@@ -77,6 +77,21 @@ class OfficialOneTests(unittest.TestCase):
         self.assertIsNone(decision["round"])
         self.assertIsNone(decision["time"])
 
+    def test_duplicate_import_id_does_not_remove_verified_survivor(self):
+        # A source nickname can yield a second object with the same bout ID.
+        # Only the duplicate object may be removed, not the verified winner.
+        data=mock_archive()
+        oct30=[r for r in data["results"] if r["eventId"]=="one-test-2026-10-30"]
+        canonical=next(r for r in oct30 if any(f["name"]=="Prashanth Guda" for f in r["fighters"])
+                       and not r["id"].endswith("-duplicate"))
+        duplicate=next(r for r in oct30 if r["id"].endswith("-duplicate"))
+        duplicate["id"]=canonical["id"]
+        m.reconcile(data,FIXTURE)
+        retained=[r for r in data["results"] if r["eventId"]=="one-test-2026-10-30"]
+        self.assertEqual(len(retained),12)
+        self.assertEqual(sum(r["id"]==canonical["id"] for r in retained),1)
+        self.assertEqual(next(r for r in retained if r["id"]==canonical["id"])["winner"],0)
+
     def test_idempotent_no_missing_fights_added(self):
         data=mock_archive()
         m.reconcile(data,FIXTURE)
