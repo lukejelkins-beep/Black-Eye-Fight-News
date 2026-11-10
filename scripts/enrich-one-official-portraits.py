@@ -78,13 +78,29 @@ def fetch(url):
     with urllib.request.urlopen(req,timeout=12) as resp:
         return resp.read(1_500_000).decode("utf-8","replace") if resp.status==200 else ""
 
+def profile_urls(name):
+    """Generate conservative ONE profile locations; verify page identity before use."""
+    aliases={"stampfairtex":"stamp"}
+    clean=re.sub(r'[“"][^”"]+[”"]', '', str(name or ''))
+    variants=[slug(name),slug(clean),aliases.get(norm(clean),"")]
+    urls=[]
+    for candidate in variants:
+        if candidate and candidate not in urls:
+            urls.append(candidate)
+    return ["https://www.onefc.com/athletes/"+candidate+"/" for candidate in urls]
+
 def inspect(item, fetcher=fetch):
-    url="https://www.onefc.com/athletes/"+slug(item["name"])+"/"
-    try:
-        img=verify(fetcher(url),item["name"],item["opponents"])
-        return {"photo":img,"source":url} if img else None
-    except Exception:
-        return None
+    # The same athlete may have a shortened or nickname-free official URL.
+    # Identity validation is always performed on the actual athlete page.
+    for url in profile_urls(item["name"]):
+        try:
+            page=fetcher(url)
+            img=verify(page,item["name"],item["opponents"]) if page else None
+            if img:
+                return {"photo":img,"source":url}
+        except Exception:
+            continue
+    return None
 
 def due(document, progress, today):
     roster={}
