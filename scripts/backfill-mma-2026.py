@@ -255,6 +255,7 @@ def parse_one(body,url,date,portraits):
         after=' '.join(tail)
         method,round_no,clock=method_from(after[:145])
         if winner is None:continue
+        if not method:method='Method not published by event source'
         prior=[]
         for node in left.previous_elements:
             if isinstance(node,str) and node.strip():prior.append(node.strip())
