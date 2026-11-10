@@ -86,7 +86,10 @@ def reconcile(data, fixture):
                             for field,value in safe_prior(f).items():
                                 if not existing_f.get(field):
                                     existing_f[field]=value
-                    duplicates.add(extra["id"])
+                    # Track the specific duplicate object, not its ID: scraped
+                    # rows can reuse a canonical ID for a nickname variation.
+                    # Removing by ID would also remove the verified survivor.
+                    duplicates.add(id(extra))
             byname={normal(f.get("name")):safe_prior(f) for f in source["fighters"]}
             winner={"name":win,**byname.get(normal(win),{})}
             loser={"name":loss,**byname.get(normal(loss),{})}
@@ -101,7 +104,7 @@ def reconcile(data, fixture):
                 status="completed",summary="",scheduledRounds=None,
             )
             changed+=1
-        data["results"]=[row for row in data["results"] if row.get("id") not in duplicates]
+        data["results"]=[row for row in data["results"] if id(row) not in duplicates]
         if len([r for r in data["results"] if r.get("eventId")==event["id"]])!=len(given):
             raise ValueError("ONE result count mismatch following reconciliation")
         event.update(expectedBouts=len(given),partialCoverage=False,
