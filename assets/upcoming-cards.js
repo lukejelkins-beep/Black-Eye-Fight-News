@@ -184,8 +184,16 @@ window.UpcomingCards=(()=>{
  function listing(sport){
   if(!feed)return '<div class="upcoming-loading" role="status">'+(error?'Upcoming card feed unavailable. Please reload to try again.':'Loading announced fight cards…')+'</div>';
   const today=localDate(),recent=window.FightTime.dayKey(new Date(Date.now()-2*86400000));
+  const query=String(window.BEFNFightsUI?.query||'').trim().toLowerCase();
+  const promo=window.BEFNFightsUI?.promotion||'ufc';
   const events=feed.events.filter(e=>{
    if((sport!=='all'&&e.sport!==sport)||!Array.isArray(e.bouts)||!e.bouts.length)return false;
+   if(sport==='mma'){
+    const name=String(e.promotion||'').toLowerCase();
+    const matches={ufc:/\bufc\b|ultimate fighting championship/,one:/\bone\b|one championship/,pfl:/\bpfl\b|professional fighters league/};
+    if(!matches[promo]?.test(name))return false;
+   }
+   if(query&&!String([e.title,e.promotion,e.location,...e.bouts.flatMap(b=>b.fighters||[])].join(' ')).toLowerCase().includes(query))return false;
    const t=publishedInstant(e);
    return t?t.getTime()>Date.now()-36*3600000:e.date>=recent;
   }).sort((a,b)=>auDay(a).localeCompare(auDay(b))||a.title.localeCompare(b.title));
@@ -197,7 +205,7 @@ window.UpcomingCards=(()=>{
    for(const e of items){const date=auDay(e);if(date!==prev){html+=dateLabel(date);prev=date}html+=eventCard(e)}
    return '<section class="upcoming-list-group"><h3 class="upcoming-list-heading">'+esc(label)+'</h3>'+html+'</section>';
   }
-  return '<div class="upcoming-schedule"><div class="upcoming-list-overview"><strong>'+events.length+' scheduled / recently started '+esc(sport==='all'?'boxing and MMA':sport==='mma'?'':'')+' cards</strong><span>'+esc(window.FightTime.zoneNotice())+'</span></div>'+
+  return '<div class="upcoming-schedule">'+
    (error?'<p class="upcoming-feed-warning">Latest refresh failed; showing saved listings.</p>':'')+
    section('This Week',events.filter(e=>auDay(e)<=nextWeek))+
    section('Upcoming',events.filter(e=>auDay(e)>nextWeek))+
@@ -392,9 +400,9 @@ window.UpcomingCards=(()=>{
   const el=img.parentElement,name=el?.dataset.upcomingPhotoName;
   if(name&&!portraitTried.has(normalName(name)))hydratePortraits();
  },true);
- document.addEventListener('visibilitychange',()=>{if(!document.hidden&&location.hash.startsWith('#calendar')&&Date.now()-lastCheck>15*60*1000)load()});
- setInterval(()=>{if(!document.hidden&&location.hash.startsWith('#calendar'))load()},15*60*1000);
- setInterval(()=>{if(!document.hidden&&location.hash.startsWith('#calendar'))refreshCountdowns()},15000);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&location.hash.startsWith('#fights')&&window.BEFNFightsUI?.view==='upcoming'&&Date.now()-lastCheck>15*60*1000)load()});
+ setInterval(()=>{if(!document.hidden&&location.hash.startsWith('#fights')&&window.BEFNFightsUI?.view==='upcoming')load()},15*60*1000);
+ setInterval(()=>{if(!document.hidden&&location.hash.startsWith('#fights')&&window.BEFNFightsUI?.view==='upcoming')refreshCountdowns()},15000);
  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshCountdowns()});
  load();
  return {render,load,valid};
