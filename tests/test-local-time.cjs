@@ -20,9 +20,9 @@ class TestDate extends Date{
  static now(){return Date.parse(fixed);}
 }
 const sample={reviewedAt:'2026-11-08',lastCheckedAt:'2026-11-08T02:00:00Z',events:[
- {id:'et-sample',date:'2026-11-14',sport:'mma',title:'Eastern sample',promotion:'Test',location:'New York',
+ {id:'et-sample',date:'2026-11-14',sport:'mma',title:'Eastern sample',promotion:'UFC',location:'New York',
   startLabel:'Main card 9 pm ET',source:'https://example.com',bouts:[{id:'et-bout',section:'main',fighters:['A','B']}]},
- {id:'dubai-sample',date:'2026-11-14',sport:'mma',title:'Dubai sample',promotion:'Test',location:'Dubai',
+ {id:'dubai-sample',date:'2026-11-14',sport:'mma',title:'Dubai sample',promotion:'UFC',location:'Dubai',
   startLabel:'Prelims from 6 pm GST; main card 10 pm GST',source:'https://example.com',
   bouts:[{id:'db-bout',section:'main',fighters:['C','D']}]}
 ]};
