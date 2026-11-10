@@ -307,7 +307,7 @@
 .footer-brand strong{color:#fff;font-size:24px}
 @media(max-width:580px){.masthead{padding:3px 4vw}.masthead .brand-logo{width:min(245px,85vw)}}
 </style>
-<link rel="stylesheet" href="assets/brand-theme.css?v=20261109-v1.0.1">
+<link rel="stylesheet" href="assets/brand-theme.css?v=20261110-topstories-fix2">
 <link rel="stylesheet" href="assets/editorial-compact.css?v=20261109-unified-news-2">
 <link rel="stylesheet" href="assets/news-list.css?v=20261109-separated-news-items-v2">
 <style id="befn-modern-arcade-headings-option-d">
@@ -835,11 +835,26 @@ function topStoryPhoto(a){
  const fighter=newsFighterImage(a);
  return original?{url:original,alt:a.image?.alt||a.title}:fighter?{url:fighter.url,alt:fighter.name}:{url:'',alt:''};
 }
+function topStoryShortPoints(a){
+ const raw=distinctNewsPoints(a);
+ const clean=p=>p.replace(/https?:\/\/\S+|\b(?:t\.co\/\S+|pic\.twitter\.com\/\S+)\b/gi,'').replace(/[“”"‘’]/g,'').replace(/\s+/g,' ').trim().replace(/[\s,;:–—-]+$/,'');
+ const selected=[];
+ for(const p of raw){
+  let q=clean(p);
+  if(!q||q.length<32||/^(?:it.s heartbreaking|read more|watch|follow us)/i.test(q))continue;
+  const words=q.split(/\s+/);
+  if(words.length>19)q=words.slice(0,19).join(' ').replace(/[\s,;:–—-]+$/,'')+'…';
+  if(selected.some(x=>x.toLowerCase()===q.toLowerCase()))continue;
+  selected.push(q);
+  if(selected.length===3)break;
+ }
+ return selected;
+}
 function topStoryCard(a){
- const photo=topStoryPhoto(a),points=distinctNewsPoints(a);
+ const photo=topStoryPhoto(a),points=topStoryShortPoints(a);
  const href=safeURL(a.url);
  return '<article class="front-lead-card top-story-full">'
-  +'<a class="front-lead-image" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image front-lead-photo" loading="lazy" decoding="async" src="'+safeURL(photo.url)+'" alt="'+esc(photo.alt)+'"></a>'
+  +'<a class="front-lead-image" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image front-lead-photo" loading="lazy" referrerpolicy="no-referrer" decoding="async" src="'+safeURL(photo.url)+'" alt="'+esc(photo.alt)+'"></a>'
   +'<div class="front-lead-copy"><span class="front-story-meta">IN FOCUS · '+esc(a.sport.toUpperCase())+' · '+esc(a.source)+'</span>'
   +'<h2><a href="'+href+'" target="_blank" rel="noopener noreferrer">'+esc(a.title)+'</a></h2>'
   +(points.length?'<ul class="top-story-points" aria-label="Three key facts">'+points.slice(0,3).map(p=>'<li>'+esc(p)+'</li>').join('')+'</ul>':'<p class="top-story-pending">Key facts pending source verification</p>')
