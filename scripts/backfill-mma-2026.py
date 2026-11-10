@@ -78,13 +78,14 @@ def make_fighter(name,record,source,portraits):
     if image:
         obj.update(photo=image,photoSource='Linked fighter-portrait registry; external URL may be unavailable')
     return obj
+def pair_name(value):
+    """Keep ONE nickname variants from becoming duplicate fight results."""
+    text=re.sub(r'[“"][^”"]+[”"]', '', str(value or ''))
+    key=norm(text)
+    return {'vicksouza':'victoriasouza',
+            'fabiohenriquedourado':'fabiohenrique'}.get(key,key)
 def pairkey(fighters):
-    # ONE uses distinctive athlete nicknames and short names across historical listings.
-    # Only these independently confirmed identities are consolidated.
-    aliases={'ayakazombiemiura':'ayakamiura',
-             'vicksouza':'victoriasouza',
-             'victoriavicksouza':'victoriasouza'}
-    return tuple(sorted(aliases.get(norm(f['name']),norm(f['name'])) for f in fighters))
+    return tuple(sorted(pair_name(f['name']) for f in fighters))
 def result_row(event,name1,name2,record1,record2,winner,method,round_no,clock,division,section,order,source,portraits,sport='MMA'):
     fs=[make_fighter(name1,record1,source,portraits),make_fighter(name2,record2,source,portraits)]
     if not all(norm(f['name']) for f in fs) or norm(name1)==norm(name2): return None
@@ -225,9 +226,9 @@ def parse_one_links(body):
 def name_one(anchor):
     text=anchor.get_text(' ',strip=True)
     winner='★' in text
-    normalized=re.sub(r'\s+([A-Z]{3})\s+\1\s*$', '', text)
-    match=RECORD.search(normalized)
-    return clean_name(normalized),winner,(match.group(1) if match else None)
+    # Country badges from publisher markup are not part of athlete names.
+    text=re.sub(r'\s+([A-Z]{3})\s+\1\s*$', '', text)
+    return clean_name(text),winner,(RECORD.search(text).group(1) if RECORD.search(text) else None)
 def parse_one(body,url,date,portraits):
     soup=souped(body);h=soup.find('h1')
     if not h:return None,[]
@@ -243,7 +244,7 @@ def parse_one(body,url,date,portraits):
         right=txt.find_next('a',href=lambda v:bool(v and '/fighters/' in v))
         if not left or not right or left is right:continue
         a,wa,ra=name_one(left);b,wb,rb=name_one(right)
-        key=tuple(sorted((norm(a),norm(b))))
+        key=tuple(sorted((pair_name(a),pair_name(b))))
         if len(a)<3 or len(b)<3 or key in seen:continue
         seen.add(key)
         winner=0 if wa and not wb else 1 if wb and not wa else None
@@ -253,8 +254,7 @@ def parse_one(body,url,date,portraits):
             if len(' '.join(tail))>190 or len(tail)>15:break
         after=' '.join(tail)
         method,round_no,clock=method_from(after[:145])
-        if winner is None:continue
-        if not method:method='Method not published by event source'
+        if winner is None or not method:continue
         prior=[]
         for node in left.previous_elements:
             if isinstance(node,str) and node.strip():prior.append(node.strip())
