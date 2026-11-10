@@ -354,3 +354,17 @@ summary:focus-visible,[role="button"]:focus-visible {
 .front-home .top-story-full .top-story-points li::marker{color:#f4c644}
 .front-home .top-story-full .top-story-read{display:inline-block;margin-top:8px;color:#f4c644;font-weight:800;text-decoration:none}
 .front-home .top-story-full .top-story-pending{color:#c9bcb8;font-size:.95rem}
+
+
+/* Mobile Top Stories correction: compact editorial type, image-first cards. */
+#main .front-home .front-lead-layout.top-story-stack{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:18px!important}
+#main .front-home .top-story-full{display:block!important;min-width:0;overflow:hidden}
+#main .front-home .top-story-full .front-lead-image{display:block!important;position:relative;width:100%!important;height:auto!important;aspect-ratio:16/9!important;min-height:190px;overflow:hidden;background:#30252a}
+#main .front-home .top-story-full .front-lead-image img.front-lead-photo{display:block!important;position:absolute;inset:0;width:100%!important;height:100%!important;max-width:none!important;object-fit:cover!important;object-position:center 30%!important;padding:0!important}
+#main .front-home .top-story-full .front-lead-copy{display:block!important;min-width:0;padding:18px 20px 22px!important}
+#main .front-home .top-story-full .front-lead-copy h2{font-family:Georgia,'Times New Roman',serif!important;font-weight:750!important;font-size:clamp(22px,5.6vw,34px)!important;line-height:1.16!important;letter-spacing:-.025em!important;text-transform:none!important;overflow-wrap:break-word;margin:12px 0 16px!important}
+#main .front-home .top-story-full .front-story-meta{font-size:11px!important;letter-spacing:.04em}
+#main .front-home .top-story-full .top-story-points{display:grid!important;gap:8px!important;padding-left:20px!important;margin:12px 0 18px!important;font-size:clamp(13px,3.4vw,16px)!important;line-height:1.45!important;letter-spacing:0!important}
+#main .front-home .top-story-full .top-story-points li{padding-left:2px}
+#main .front-home .top-story-full .top-story-read{font-size:14px!important}
+@media(min-width:800px){#main .front-home .top-story-full .front-lead-copy{padding:28px 32px!important}#main .front-home .top-story-full .front-lead-copy h2{font-size:clamp(28px,3.2vw,44px)!important}#main .front-home .top-story-full .top-story-points{font-size:17px!important}}
