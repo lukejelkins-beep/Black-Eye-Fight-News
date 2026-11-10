@@ -78,8 +78,16 @@ def make_fighter(name,record,source,portraits):
     if image:
         obj.update(photo=image,photoSource='Linked fighter-portrait registry; external URL may be unavailable')
     return obj
+def pair_name(value):
+    """Normalize nickname decoration without confusing different competitors."""
+    text=re.sub(r'[“"][^”"]+[”"]','',str(value or ''))
+    key=norm(text)
+    # These ONE athlete aliases are corroborated by the publisher's event
+    # listings; use only for duplicate detection, not for displaying names.
+    return {'vicksouza':'victoriasouza',
+            'fabiohenriquedourado':'fabiohenrique'}.get(key,key)
 def pairkey(fighters):
-    return tuple(sorted(norm(f['name']) for f in fighters))
+    return tuple(sorted(pair_name(f['name']) for f in fighters))
 def result_row(event,name1,name2,record1,record2,winner,method,round_no,clock,division,section,order,source,portraits,sport='MMA'):
     fs=[make_fighter(name1,record1,source,portraits),make_fighter(name2,record2,source,portraits)]
     if not all(norm(f['name']) for f in fs) or norm(name1)==norm(name2): return None
