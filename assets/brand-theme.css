@@ -321,3 +321,22 @@ summary:focus-visible,[role="button"]:focus-visible {
 .film-featured-head h3 {color:#261719}
 .film-featured-head p {color:#66534e}
 .befn-alerts-toast {border-left-color:var(--brand-red);background:#251719;color:#fff7ef}
+
+
+/* Top Stories: image-led editorial treatment, mobile-first. */
+.front-home .front-lead-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.front-home .front-lead-card,.front-home .front-brief-card{display:block;overflow:hidden;border-radius:22px;background:#1d1519;color:#fff5ed;border:1px solid #6b4b52;text-decoration:none;box-shadow:none}
+.front-home .front-lead-image{display:block;width:100%;height:auto;aspect-ratio:16/10;overflow:hidden;background:#241b1e}
+.front-home .front-lead-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.front-home .front-lead-copy{padding:22px 22px 24px}
+.front-home .front-lead-copy h2{color:#fff5ed;margin:14px 0 14px;line-height:1.08;overflow-wrap:break-word}
+.front-home .front-story-meta{color:#ffce51;font-weight:800;letter-spacing:.035em}
+.front-home .front-lead-copy time,.front-home .front-brief-copy time{color:#c6b9b8;font-size:.88rem}
+.front-home .front-brief-list{display:grid;gap:14px}
+.front-home .front-brief-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(104px,32%);align-items:stretch;min-height:154px}
+.front-home .front-brief-copy{padding:20px;min-width:0}
+.front-home .front-brief-copy h3{color:#fff5ed;margin:12px 0;line-height:1.13;overflow-wrap:break-word}
+.front-home .front-brief-image{min-width:0;overflow:hidden;background:#241b1e}
+.front-home .front-brief-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 30%}
+@media(min-width:1000px){.front-home .front-lead-layout{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}}
+@media(max-width:430px){.front-home .front-lead-copy{padding:18px}.front-home .front-brief-copy{padding:14px}.front-home .front-brief-card{grid-template-columns:minmax(0,1fr) 34%;min-height:138px}.front-home .front-brief-copy h3{font-size:clamp(1.1rem,4.5vw,1.5rem)}}
