@@ -265,6 +265,8 @@ def merge(existing,event,rows,changes):
     aliases=[e for e in existing['events'] if e.get('source')==event.get('source')]
     if event['id'].startswith('pfl-') or event['name'].lower().startswith('pfl'):
         aliases += [e for e in existing['events'] if e['date']==event['date'] and 'pfl' in e['name'].lower()]
+    if event['name'].lower().startswith('ufc'):
+        aliases += [e for e in existing['events'] if e['date']==event['date'] and e['name'].lower().startswith('ufc')]
     previous=aliases[0] if aliases else next((e for e in existing['events'] if e['id']==event['id']),None)
     if previous:
         event_id=previous['id']
