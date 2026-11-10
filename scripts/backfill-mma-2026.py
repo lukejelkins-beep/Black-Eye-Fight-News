@@ -246,7 +246,8 @@ def parse_one(body,url,date,portraits):
             if len(' '.join(tail))>190 or len(tail)>15:break
         after=' '.join(tail)
         method,round_no,clock=method_from(after[:145])
-        if winner is None or not method:continue
+        if winner is None:continue
+        if not method:method='Method not published by event source'
         prior=[]
         for node in left.previous_elements:
             if isinstance(node,str) and node.strip():prior.append(node.strip())
