@@ -284,6 +284,14 @@ def merge(existing,event,rows,changes):
         existing['events'].append(previous)
         changes['events']+=1
         event_id=event['id']
+    # Existing ONE cards are curated and may already contain official corrections.
+    # Never re-add a parallel bout roster from the legacy aggregator: its
+    # nickname/country markup has previously duplicated hundreds of results.
+    # Fresh ONE event discovery remains allowed; official reconciliation
+    # scripts are responsible for improving established event details.
+    if event['name'].lower().startswith('one') and any(
+        r.get('eventId')==event_id for r in existing['results']):
+        return
     found={pairkey(r['fighters']):r for r in existing['results'] if r.get('eventId')==event_id}
     for r in rows:
         r['eventId']=event_id;r['event']=previous['name'];r['id']=event_id+'-'+r['id'].rsplit('-',1)[-1]
