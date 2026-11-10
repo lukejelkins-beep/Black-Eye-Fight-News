@@ -169,7 +169,23 @@ window.ResultsDesk=(()=>{
  return `<details class="result-event befn-result-list-event" data-result-event="${esc(eventId)}" aria-label="${esc(r.event)}"><summary class="befn-result-summary"><span class="befn-result-thumb">${preview?`<img src="${url(preview)}" alt="Event imagery for ${esc(r.event)}" loading="lazy" referrerpolicy="no-referrer">`:'<span class="befn-result-thumb-fallback">BEFN</span>'}</span><span class="befn-result-summary-copy"><small>${esc(r.sport)} · ${esc(date(r.date))}</small><strong>${esc(r.event)}</strong><span>${esc(r.location||'Venue not confirmed')} · ${done} results confirmed</span></span><span class="befn-result-caret" aria-hidden="true">⌄</span></summary><div class="befn-result-expanded"><header class="result-event-heading"><div><span class="result-eyebrow">${esc(r.sport)} · Venue date ${date(r.date)} · ${esc(r.location)}</span><h2>${esc(r.event)}</h2><p>${done} of ${e.expectedBouts||all.length} results confirmed · ${rows.length} ${rows.length===1?'bout':'bouts'} shown${done<all.length?' · Remaining outcomes awaiting confirmation':''}</p><small>${e.checkedAt?'Source checked '+esc(window.FightTime.localDateTime(e.checkedAt)):'Source check pending'}${stale?' · Updates delayed; last confirmed results retained':''}</small></div>${window.EventStatus?.event(r.eventId)||''}</header>${featured?`<div class="result-event-feature">${card(featured)}</div>`:''}${takeaways.length?`<div class="result-takeaways"><h3>Card takeaways${e.status==='underway'?' · so far':''}</h3><ul>${takeaways.map(p=>`<li>${esc(p.text)} ${p.source?link(p.source,'Source'):''}</li>`).join('')}</ul></div>`:''}<details class="result-event-bouts" data-card="${esc(eventId)}" open><summary>Fight card <span>${rows.length} total</span></summary>${tabs}<div class="result-bouts" id="results-bouts-${esc(eventId)}" role="list" aria-label="${esc(r.event)} — ${esc(active?.label||'All fights')}">${shown.map(x=>`<div role="listitem">${row(x,{main:x.id===headlinerId,coMain:main.length>1&&x.id===main[1].id})}</div>`).join('')}</div><p class="result-bouts-note">Green portrait rings and ticks mark confirmed winners only. Records are identified as pre-fight or post-fight.</p></details></div></details>`;
 }
   function content(){if(!data)return `<div class="empty" role="status">${error?'Results could not be loaded. <button id="results-retry">Try again</button>':'Loading sourced results…'}</div>`;
- const rows=selected(),events=groups(rows);return `${error?'<p role="status">Refresh unavailable. Showing the last loaded results.</p>':''}<p class="results-count" role="status">${events.length} ${events.length===1?'event':'events'} · ${rows.length} ${rows.length===1?'bout':'bouts'} · Reviewed ${date(data.reviewedAt)}</p>${rows.length?events.map(eventSection).join(''):'<div class="empty">No results match these filters. <button id="results-reset">Clear filters</button></div>'}`}
+
+ const rows=selected(),events=groups(rows);
+ const cutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
+ const recent=events.filter(e=>e[0].date>=cutoff),earlier=events.filter(e=>e[0].date<cutoff);
+ function dated(items){
+  let previous='',html='';
+  for(const event of items){
+   const day=event[0].date;
+   if(day!==previous){const d=new Date(day+'T12:00:00Z');html+='<h3 class="fights-result-date"><span>'+esc(d.toLocaleDateString('en-AU',{day:'numeric',month:'short',timeZone:'UTC'}).toUpperCase())+'</span> · '+esc(d.toLocaleDateString('en-AU',{weekday:'long',timeZone:'UTC'}))+'</h3>';previous=day;}
+   html+=eventSection(event);
+  }
+  return html;
+ }
+ const group=(title,items)=>items.length?'<section class="fights-result-group"><h2>'+title+'</h2>'+dated(items)+'</section>':'';
+ return (error?'<p role="status">Refresh unavailable. Showing the last loaded results.</p>':'')+
+  (events.length?group('This Week',recent)+group('Earlier Results',earlier):'<div class="empty">No results match these filters. <button id="results-reset">Clear filters</button></div>');
+
  function hydrateResultPhotos(){
  if(typeof findWikipediaPortrait!=='function')return;
  const names=[...new Set([...document.querySelectorAll('.result-photo[data-result-photo-name]')].filter(el=>!el.querySelector('img')).map(el=>el.getAttribute('data-result-photo-name')))];
@@ -195,8 +211,10 @@ window.ResultsDesk=(()=>{
  const el=document.getElementById('results-content');
  if(el){
   const closed=new Set([...el.querySelectorAll('details[data-card]:not([open])')].map(x=>x.dataset.card));
+  const expanded=new Set([...el.querySelectorAll('.befn-result-list-event[open]')].map(x=>x.dataset.resultEvent));
   el.innerHTML=content();
   el.querySelectorAll('details[data-card]').forEach(x=>{if(closed.has(x.dataset.card))x.open=false});
+  el.querySelectorAll('.befn-result-list-event').forEach(x=>{if(expanded.has(x.dataset.resultEvent))x.open=true});
   hydrateResultPhotos();
  }
 }
@@ -238,11 +256,11 @@ window.ResultsDesk=(()=>{
  })();
  return pending;
 }
- setInterval(()=>{if(!document.hidden&&location.hash.startsWith('#results'))load()},30000);
- document.addEventListener('visibilitychange',()=>{if(!document.hidden&&location.hash.startsWith('#results'))load()});
+ setInterval(()=>{if(!document.hidden&&(location.hash.startsWith('#fights')&&window.BEFNFightsUI?.view==='results'))load()},30000);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&(location.hash.startsWith('#fights')&&window.BEFNFightsUI?.view==='results'))load()});
  load();
   function promotionTabs(){return `<div class="befn-promotion-strip" id="befn-promotion-strip" role="group" aria-label="Filter MMA results by organisation" ${window.BEFNSport?.get()==='mma'?'':'hidden'}>${promotions.map(([id,label,domain])=>`<button type="button" class="befn-promotion-tab${filters.promotion===id?' selected':''}" data-result-promotion="${id}" aria-label="${label}" aria-pressed="${filters.promotion===id}">${domain?`<img src="https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(domain)}" alt="" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span hidden>${label}</span>`:`<span>${label}</span>`}</button>`).join('')}</div>`}
- function render(){if((!data||Date.now()-lastPollAt>30000)&&!pending)load();requestAnimationFrame(()=>{hydrateResultPhotos();const strip=document.getElementById("befn-promotion-strip");if(strip)strip.scrollLeft=0});return `<div class="frame results-page">${promotionTabs()}<div class="section-heading"><div><h1>Results & highlights</h1></div></div><div class="results-toolbar"><button id="results-retry" type="button">↻ Refresh results</button><label class="results-search">Find a fight<input id="results-search" type="search" placeholder="Fighter, event or division" value="${esc(filters.query)}"></label><label class="results-check"><input id="results-clips" type="checkbox"${filters.clips?' checked':''}> Highlights available</label></div><p id="results-auto-sync" class="results-sync" role="status" aria-live="polite">Auto-refresh 30s · checking…</p><div id="results-content">${content()}</div><details class="compact-note"><summary>Results and verification</summary><p>Results are sourced from published event listings. Weight classes and fighter records are checked against those sources; discrepancies are noted on individual bouts. Highlight videos may be region-restricted. This feed is not round-by-round scoring.</p></details></div>`}
+ function render(opts={}){if((!data||Date.now()-lastPollAt>30000)&&!pending)load();requestAnimationFrame(()=>{hydrateResultPhotos();const strip=document.getElementById("befn-promotion-strip");if(strip)strip.scrollLeft=0});if(opts.embedded===true)return `<div class="frame results-page befn-unified-results"><div id="results-content">${content()}</div></div>`;return `<div class="frame results-page">${promotionTabs()}<div class="section-heading"><div><h1>Results & highlights</h1></div></div><div class="results-toolbar"><button id="results-retry" type="button">↻ Refresh results</button><label class="results-search">Find a fight<input id="results-search" type="search" placeholder="Fighter, event or division" value="${esc(filters.query)}"></label><label class="results-check"><input id="results-clips" type="checkbox"${filters.clips?' checked':''}> Highlights available</label></div><p id="results-auto-sync" class="results-sync" role="status" aria-live="polite">Auto-refresh 30s · checking…</p><div id="results-content">${content()}</div><details class="compact-note"><summary>Results and verification</summary><p>Results are sourced from published event listings. Weight classes and fighter records are checked against those sources; discrepancies are noted on individual bouts. Highlight videos may be region-restricted. This feed is not round-by-round scoring.</p></details></div>`}
  document.addEventListener('input',e=>{if(e.target.id==='results-search'){filters.query=e.target.value;update()}});
  document.addEventListener('change',e=>{if(e.target.id==='results-clips')filters.clips=e.target.checked;else return;update()});
  document.addEventListener('click',e=>{
