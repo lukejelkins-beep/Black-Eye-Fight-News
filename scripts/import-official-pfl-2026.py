@@ -21,7 +21,9 @@ RECORD = re.compile(r"^\d{1,3}[-–]\d{1,3}(?:[-–]\d{1,2})?$")
 
 def norm(text):
     folded = unicodedata.normalize("NFKD", str(text or ""))
-    return re.sub(r"[^a-z0-9]", "", folded.encode("ascii", "ignore").decode().lower())
+    key = re.sub(r"[^a-z0-9]", "", folded.encode("ascii", "ignore").decode().lower())
+    # Source prints the same Nigerian fighter in both surname-first and given-name-first order.
+    return {"ayindaoctave": "octaveayinda"}.get(key, key)
 
 def pair(names):
     return frozenset(norm(name) for name in names)
