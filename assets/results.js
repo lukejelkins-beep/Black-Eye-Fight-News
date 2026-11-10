@@ -5,7 +5,9 @@ window.ResultsDesk=(()=>{
  const activeCardSection=new Map();
  const attemptedPortraits=new Set(),portraitJobs=[];
  let portraitActive=0;
- const filters={sport:'All',query:'',clips:false};
+ const filters={sport:'All',query:'',clips:false,promotion:'all'};
+ const promotions=[['all','ALL MMA',''],['ufc','UFC','ufc.com'],['pfl','PFL','pflmma.com'],['one','ONE','onefc.com'],['rizin','RIZIN','rizinff.com'],['cage','CAGE WARRIORS','cagewarriors.com'],['ksw','KSW','kswmma.com']];
+ const promotionMatch=r=>{if(filters.promotion==='all')return true;const e=(data?.events||[]).find(x=>x.id===r.eventId)||{};const name=String([r.event,r.promotion,r.organization,e.name,e.promotion,e.organization].filter(Boolean).join(' ')).toLowerCase();return ({ufc:/\bufc\b|ultimate fighting championship/,pfl:/\bpfl\b|professional fighters league/,one:/\bone\b|one championship/,rizin:/\brizin\b/,cage:/cage warriors/,ksw:/\bksw\b|konfrontacja sztuk walki/})[filters.promotion]?.test(name)??true};
  const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const url=x=>{try{const u=new URL(x,location.href);return u.protocol==='https:'?esc(u.href):'#'}catch{return '#'}};
  const date=x=>window.FightTime.venueDay(x);
@@ -103,7 +105,7 @@ window.ResultsDesk=(()=>{
    <div class="result-bout-secondary">${r.highlights?clip(r):''}</div>
   </article>`;
  }
- function selected(){return (data?.results||[]).filter(r=>((window.BEFNSport?.get()||'all')==='all'||r.sport===(window.BEFNSport.get()==='boxing'?'Boxing':window.BEFNSport.get()==='mma'?'MMA':'Grappling'))&&(!filters.clips||r.highlights)&&JSON.stringify([r.event,r.division,...r.fighters.map(f=>f.name)]).toLowerCase().includes(filters.query.toLowerCase())).sort((a,b)=>b.date.localeCompare(a.date)||(a.order||0)-(b.order||0))}
+ function selected(){return (data?.results||[]).filter(r=>((window.BEFNSport?.get()||'all')==='all'||r.sport===(window.BEFNSport.get()==='boxing'?'Boxing':window.BEFNSport.get()==='mma'?'MMA':'Grappling'))&&promotionMatch(r)&&(!filters.clips||r.highlights)&&JSON.stringify([r.event,r.division,...r.fighters.map(f=>f.name)]).toLowerCase().includes(filters.query.toLowerCase())).sort((a,b)=>b.date.localeCompare(a.date)||(a.order||0)-(b.order||0))}
  function groups(rows){const events=new Map();for(const r of rows){const id=r.eventId||r.date+'-'+r.event;if(!events.has(id))events.set(id,[]);events.get(id).push(r)}return [...events.values()]}
  function cardSection(r){
  const section=String(r.section||'').toLowerCase();
@@ -231,10 +233,12 @@ window.ResultsDesk=(()=>{
  setInterval(()=>{if(!document.hidden&&location.hash.startsWith('#results'))load()},30000);
  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&location.hash.startsWith('#results'))load()});
  load();
-  function render(){if((!data||Date.now()-lastPollAt>30000)&&!pending)load();requestAnimationFrame(hydrateResultPhotos);return `<div class="frame results-page"><div class="section-heading"><div><h1>Results & highlights</h1></div></div><div class="results-toolbar"><button id="results-retry" type="button">↻ Refresh results</button><label class="results-search">Find a fight<input id="results-search" type="search" placeholder="Fighter, event or division" value="${esc(filters.query)}"></label><label class="results-check"><input id="results-clips" type="checkbox"${filters.clips?' checked':''}> Highlights available</label></div><p id="results-auto-sync" class="results-sync" role="status" aria-live="polite">Auto-refresh 30s · checking…</p><div id="results-content">${content()}</div><details class="compact-note"><summary>Results and verification</summary><p>Results are sourced from published event listings. Weight classes and fighter records are checked against those sources; discrepancies are noted on individual bouts. Highlight videos may be region-restricted. This feed is not round-by-round scoring.</p></details></div>`}
+  function promotionTabs(){return `<div class="befn-promotion-strip" id="befn-promotion-strip" role="group" aria-label="Filter MMA results by organisation" ${window.BEFNSport?.get()==='mma'?'':'hidden'}>${promotions.map(([id,label,domain])=>`<button type="button" class="befn-promotion-tab${filters.promotion===id?' selected':''}" data-result-promotion="${id}" aria-label="${label}" aria-pressed="${filters.promotion===id}">${domain?`<img src="https://logo.clearbit.com/${domain}" alt="" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span hidden>${label}</span>`:`<span>${label}</span>`}</button>`).join('')}</div>`}
+ function render(){if((!data||Date.now()-lastPollAt>30000)&&!pending)load();requestAnimationFrame(hydrateResultPhotos);return `<div class="frame results-page">${promotionTabs()}<div class="section-heading"><div><h1>Results & highlights</h1></div></div><div class="results-toolbar"><button id="results-retry" type="button">↻ Refresh results</button><label class="results-search">Find a fight<input id="results-search" type="search" placeholder="Fighter, event or division" value="${esc(filters.query)}"></label><label class="results-check"><input id="results-clips" type="checkbox"${filters.clips?' checked':''}> Highlights available</label></div><p id="results-auto-sync" class="results-sync" role="status" aria-live="polite">Auto-refresh 30s · checking…</p><div id="results-content">${content()}</div><details class="compact-note"><summary>Results and verification</summary><p>Results are sourced from published event listings. Weight classes and fighter records are checked against those sources; discrepancies are noted on individual bouts. Highlight videos may be region-restricted. This feed is not round-by-round scoring.</p></details></div>`}
  document.addEventListener('input',e=>{if(e.target.id==='results-search'){filters.query=e.target.value;update()}});
  document.addEventListener('change',e=>{if(e.target.id==='results-clips')filters.clips=e.target.checked;else return;update()});
  document.addEventListener('click',e=>{
+  const promotion=e.target.closest('[data-result-promotion]');if(promotion){filters.promotion=promotion.dataset.resultPromotion;document.querySelectorAll('[data-result-promotion]').forEach(b=>{b.classList.toggle('selected',b.dataset.resultPromotion===filters.promotion);b.setAttribute('aria-pressed',String(b.dataset.resultPromotion===filters.promotion))});update();return;}
   const tab=e.target.closest('[data-result-event-tab]');
   if(tab){
    activeCardSection.set(tab.dataset.resultEventTab,tab.dataset.resultCardSection);
@@ -257,5 +261,6 @@ window.ResultsDesk=(()=>{
   }).catch(hide);
  }else hide();
 },true);
+ const css=document.createElement('style');css.textContent=`.befn-promotion-strip{display:flex;gap:8px;overflow-x:auto;max-width:100%;padding:4px 2px 14px;scrollbar-width:thin;overscroll-behavior-x:contain}.befn-promotion-strip[hidden]{display:none!important}.befn-promotion-tab{flex:0 0 96px;min-height:65px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid #b9b3ae;border-radius:12px;box-shadow:0 2px 3px #0002;padding:9px;color:#21191a;font-weight:900;font-size:13px;cursor:pointer}.befn-promotion-tab img{max-width:100%;max-height:43px;object-fit:contain}.befn-promotion-tab.selected{background:#b70c1c;border:3px solid #ef3343;color:#fff;box-shadow:0 0 0 2px #b70c1c}.befn-promotion-tab:focus-visible{outline:3px solid #111;outline-offset:2px}@media(max-width:600px){.befn-promotion-tab{flex-basis:92px;min-height:60px}}`;document.head.appendChild(css);
  return {render};
 })();
