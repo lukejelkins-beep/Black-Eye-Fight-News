@@ -96,7 +96,7 @@ def result_row(event,name1,name2,record1,record2,winner,method,round_no,clock,di
     return dict(id=event['id']+'-'+key,eventId=event['id'],event=event['name'],sport=sport,
        date=event['date'],location=event.get('location','Venue not confirmed'),
        division=division or 'Division not verified',fighters=fs,winner=winner,
-       method=method or 'Outcome reported; method unavailable',round=round_no,time=clock,
+       method=method or 'Method not published by event source',round=round_no,time=clock,
        source=source,highlights=None,summary='',section=section,order=order,
        status='completed' if is_complete else 'awaiting',
        **({'scheduledRounds':5} if round_no==5 else {}))
@@ -254,7 +254,7 @@ def parse_one(body,url,date,portraits):
             if len(' '.join(tail))>190 or len(tail)>15:break
         after=' '.join(tail)
         method,round_no,clock=method_from(after[:145])
-        if winner is None or not method:continue
+        if winner is None:continue
         prior=[]
         for node in left.previous_elements:
             if isinstance(node,str) and node.strip():prior.append(node.strip())
