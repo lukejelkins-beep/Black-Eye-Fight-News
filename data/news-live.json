@@ -1,13 +1,14 @@
 {
-  "attemptedAt": "2026-11-10T22:01:57.050142+00:00",
-  "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00",
+  "attemptedAt": "2026-11-10T22:45:28.870363+00:00",
+  "lastSuccessfulAt": "2026-11-10T22:45:28.870363+00:00",
   "sources": [
     {
       "name": "World Boxing News",
       "sport": "boxing",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-10T21:19:09.394786+00:00",
-      "error": "www.worldboxingnews.net: The read operation timed out"
+      "ok": true,
+      "items": 10,
+      "feedUrl": "https://www.worldboxingnews.net/feed/",
+      "lastSuccessfulAt": "2026-11-10T22:45:28.870363+00:00"
     },
     {
       "name": "MMA Fighting",
@@ -15,7 +16,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00"
+      "lastSuccessfulAt": "2026-11-10T22:45:28.870363+00:00"
     },
     {
       "name": "MMA Junkie",
@@ -23,7 +24,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00"
+      "lastSuccessfulAt": "2026-11-10T22:45:28.870363+00:00"
     },
     {
       "name": "Sherdog",
@@ -31,7 +32,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.sherdog.com/rss/news.xml",
-      "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00"
+      "lastSuccessfulAt": "2026-11-10T22:45:28.870363+00:00"
     },
     {
       "name": "UFC",
@@ -39,7 +40,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00"
+      "lastSuccessfulAt": "2026-11-10T22:45:28.870363+00:00"
     },
     {
       "name": "ONE MMA",
@@ -54,7 +55,7 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/feed/",
-      "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00"
+      "lastSuccessfulAt": "2026-11-10T22:45:28.870363+00:00"
     },
     {
       "name": "Cage Warriors",
@@ -62,21 +63,22 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Acagewarriors.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00"
+      "lastSuccessfulAt": "2026-11-10T22:45:28.870363+00:00"
     },
     {
       "name": "RIZIN",
       "sport": "mma",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-10T21:19:09.394786+00:00",
-      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
+      "ok": true,
+      "items": 5,
+      "feedUrl": "https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US",
+      "lastSuccessfulAt": "2026-11-10T22:45:28.870363+00:00"
     },
     {
       "name": "KSW",
       "sport": "mma",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
+      "error": "www.bing.com: No recent, source-verified articles"
     },
     {
       "name": "ADCC",
@@ -119,7 +121,7 @@
       "ok": true,
       "items": 4,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Aflograppling.com%2Farticles&format=rss",
-      "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00"
+      "lastSuccessfulAt": "2026-11-10T22:45:28.870363+00:00"
     },
     {
       "name": "Real American Freestyle",
@@ -141,10 +143,33 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/category/live-results/feed/",
-      "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00"
+      "lastSuccessfulAt": "2026-11-10T22:45:28.870363+00:00"
     }
   ],
   "articles": [
+    {
+      "id": "43cdc8de332b3558ef33",
+      "title": "Jake Paul says he'll retire from boxing if Cedric Doumbe beats him",
+      "url": "https://www.sherdog.com/news/news/Jake-Paul-says-hell-retire-from-boxing-if-Cedric-Doumbe-beats-him-203576",
+      "source": "Sherdog",
+      "sport": "mma",
+      "publishedAt": "2026-11-10T22:20:24+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://www1-cdn.sherdog.com/_images/headers/20261110102024_Untitled1.JPG",
+        "alt": "Article image: Jake Paul says he'll retire from boxing if Cedric Doumbe beats him",
+        "credit": "",
+        "sourceUrl": "https://www.sherdog.com/news/news/Jake-Paul-says-hell-retire-from-boxing-if-Cedric-Doumbe-beats-him-203576",
+        "kind": "publisher",
+        "checkedAt": "2026-11-10T22:45:28.870363+00:00"
+      },
+      "summaryCheckedAt": "2026-11-10T22:45:28.870363+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "24 boxing match at Coca-Cola Arena in Dubai, United Arab Emirates."
+      ],
+      "firstSeenAt": "2026-11-10T22:45:28.870363+00:00"
+    },
     {
       "id": "ffd5d11b313060129b5c",
       "title": "Robert Whittaker says Israel Adesanya’s biggest opponent isn’t Shara Bullet, but himself",
@@ -161,13 +186,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-10T22:01:57.050142+00:00"
       },
-      "summaryCheckedAt": "2026-11-10T22:01:57.050142+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Robert Whittaker hopes to see the Israel Adesanya of old.",
         "Next month, Adesanya takes on Shara Magomedov in the main event of UFC Saudi Arabia.",
         "It’s a pivotal fight for the former two-time middleweight champion, who is riding a four-fight losing streak, and it’s one that Adesanya foe-turned-friend Robert Whittaker is concerned about."
       ],
+      "summaryCheckedAt": "2026-11-10T22:01:57.050142+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-10T22:01:57.050142+00:00"
     },
     {
@@ -206,13 +231,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-10T22:01:57.050142+00:00"
       },
-      "summaryCheckedAt": "2026-11-10T22:01:57.050142+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Bo Nickal meets Yoel Romero in a highly anticipated matchup of two of the best wrestlers to ever compete in MMA.",
         "The two were first set to compete at RAF 4 this past December, but Nickal withdrew from that event for undisclosed reasons.",
         "Rescheduled for RAF 5 in January, the co-main event matchup again fell through due to Romero missing weight."
       ],
+      "summaryCheckedAt": "2026-11-10T22:01:57.050142+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-10T22:01:57.050142+00:00"
     },
     {
@@ -551,11 +576,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-10T22:01:57.050142+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "19 at Nassau Veterans Memorial Coliseum in Uniondale, N.Y."
       ],
+      "summaryCheckedAt": "2026-11-10T22:01:57.050142+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-10T22:01:57.050142+00:00"
     },
     {
@@ -1105,7 +1130,7 @@
         "credit": "",
         "sourceUrl": "https://www.ufc.com/news/ufc-and-dct-abu-dhabi-partner-local-non-profit-organizations-part-ufc-333-fight-week",
         "kind": "publisher",
-        "checkedAt": "2026-11-09T22:05:24.429411+00:00"
+        "checkedAt": "2026-11-10T22:45:28.870363+00:00"
       },
       "summaryPoints": [
         "EVLOEV , which took place on Saturday, October 24 , at Etihad Arena in Abu Dhabi.",
@@ -2537,7 +2562,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-10T10:40:56.896447+00:00",
+      "summaryCheckedAt": "2026-11-10T22:45:28.870363+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T06:54:38.438866+00:00",
       "summaryPoints": [
@@ -2605,7 +2630,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-10T10:40:56.896447+00:00",
+      "summaryCheckedAt": "2026-11-10T22:45:28.870363+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
     },
@@ -2620,7 +2645,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-10T10:40:56.896447+00:00",
+      "summaryCheckedAt": "2026-11-10T22:45:28.870363+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
     },
@@ -2685,7 +2710,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-10T10:40:56.896447+00:00",
+      "summaryCheckedAt": "2026-11-10T22:45:28.870363+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T09:17:09.442957+00:00"
     },
@@ -2725,7 +2750,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-10T10:40:56.896447+00:00",
+      "summaryCheckedAt": "2026-11-10T22:45:28.870363+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
     },
@@ -2740,7 +2765,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-10T10:40:56.896447+00:00",
+      "summaryCheckedAt": "2026-11-10T22:45:28.870363+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T06:54:38.438866+00:00",
       "summaryPoints": [
@@ -2758,7 +2783,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-10T10:40:56.896447+00:00",
+      "summaryCheckedAt": "2026-11-10T22:45:28.870363+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
     },
@@ -2800,7 +2825,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-10T10:40:56.896447+00:00",
+      "summaryCheckedAt": "2026-11-10T22:45:28.870363+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T06:54:38.438866+00:00",
       "summaryPoints": [
@@ -2870,7 +2895,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-10T10:40:56.896447+00:00",
+      "summaryCheckedAt": "2026-11-10T22:45:28.870363+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T06:54:38.438866+00:00",
       "summaryPoints": [
@@ -2889,7 +2914,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-10T10:40:56.896447+00:00",
+      "summaryCheckedAt": "2026-11-10T22:45:28.870363+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
     },
@@ -2929,7 +2954,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-10T10:40:56.896447+00:00",
+      "summaryCheckedAt": "2026-11-10T22:45:28.870363+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T06:54:38.438866+00:00",
       "summaryPoints": [
@@ -2972,7 +2997,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-10T10:40:56.896447+00:00",
+      "summaryCheckedAt": "2026-11-10T22:45:28.870363+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T06:54:38.438866+00:00",
       "summaryPoints": [
@@ -4190,7 +4215,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-09T02:44:09.290214+00:00"
       },
-      "summaryCheckedAt": "2026-11-10T10:40:56.896447+00:00",
+      "summaryCheckedAt": "2026-11-10T22:45:28.870363+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T02:44:09.290214+00:00",
       "summaryPoints": [
