@@ -48,6 +48,8 @@ window.ResultsDesk=(()=>{
 }
  function boutStatus(r){
  const s=String(r.status||'').toLowerCase();
+ if(s==='draw')return '<span class="result-bout-status is-final">DRAW</span>';
+ if(s==='no_contest')return '<span class="result-bout-status is-cancelled">NO CONTEST</span>';
  if(isFinalStatus(s))return '<span class="result-bout-status is-final"><span aria-hidden="true">✓</span> FINAL</span>';
  if(s==='cancelled')return '<span class="result-bout-status is-cancelled">CANCELLED</span>';
  if(s==='underway'||s==='live')return '<span class="result-bout-status is-live"><span aria-hidden="true">●</span> UNDERWAY</span>';
@@ -74,7 +76,8 @@ window.ResultsDesk=(()=>{
   const complete=isFinalStatus(r.status);
   if(complete){
    const detail=[boutMethod(r.method),r.round?'R'+r.round:'',r.time||''].filter(Boolean).join(' · ');
-   return `<div class="result-matchup-result" aria-label="Final result"><span class="result-matchup-finished">FINAL</span><strong>${esc(detail)}</strong>${r.scores?`<span class="result-matchup-scores">${esc(r.scores)}</span>`:''}</div>`;
+   const label=r.status==='draw'?'DRAW':r.status==='no_contest'?'NO CONTEST':'FINAL';
+   return `<div class="result-matchup-result" aria-label="Final result"><span class="result-matchup-finished">${label}</span><strong>${esc(detail)}</strong>${r.scores?`<span class="result-matchup-scores">${esc(r.scores)}</span>`:''}</div>`;
   }
   if(r.status==='underway'||r.status==='live')return '<span class="result-matchup-live">● BOUT UNDERWAY</span>';
   if(r.status==='cancelled')return '<span class="result-matchup-cancelled">BOUT CANCELLED</span>';
@@ -119,7 +122,7 @@ window.ResultsDesk=(()=>{
  function groups(rows){const events=new Map();for(const r of rows){const id=r.eventId||r.date+'-'+r.event;if(!events.has(id))events.set(id,[]);events.get(id).push(r)}return [...events.values()]}
  function cardSection(r){
  const section=String(r.section||'').toLowerCase();
- return /prelim|undercard/.test(section)?'prelims':'main';
+ return /prelim|undercard|the inner circle/.test(section)?'prelims':'main';
 }
  function eventSection(rows){
  const r=rows[0],e=(data.events||[]).find(e=>e.id===r.eventId)||{},all=data.results.filter(x=>x.eventId===r.eventId),done=all.filter(x=>isFinalStatus(x.status)).length;
@@ -166,7 +169,7 @@ window.ResultsDesk=(()=>{
   const prelimHeadlineIndex=prelims.findIndex(x=>x.id===prelimHeadlinerId);
   if(prelimHeadlineIndex>0)prelims.unshift(prelims.splice(prelimHeadlineIndex,1)[0]);
  }
- const sections=[{key:'main',label:r.sport==='Boxing'&&all.some(x=>/main event/i.test(x.section||''))?'Main Event':'Main Card',bouts:main},{key:'prelims',label:r.sport==='Boxing'&&all.some(x=>/undercard/i.test(x.section||''))?'Undercard':'Prelims',bouts:prelims}];
+ const sections=[{key:'main',label:r.sport==='Boxing'&&all.some(x=>/main event/i.test(x.section||''))?'Main Event':'Main Card',bouts:main},{key:'prelims',label:all.some(x=>x.session==='The Inner Circle')?'The Inner Circle':r.sport==='Boxing'&&all.some(x=>/undercard/i.test(x.section||''))?'Undercard':'Prelims',bouts:prelims}];
  const available=sections.filter(x=>x.bouts.length);
  const requested=activeCardSection.get(eventId)||'all';
  const active=available.find(x=>x.key===requested);
