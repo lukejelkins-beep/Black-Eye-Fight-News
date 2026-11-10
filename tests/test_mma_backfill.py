@@ -84,6 +84,15 @@ class ArchiveBackfillTests(unittest.TestCase):
         self.assertEqual(rows[0]['winner'],0)
         self.assertEqual(rows[0]['round'],2)
         self.assertEqual(rows[0]['time'],'4:54')
+    def test_one_event_aliases_do_not_duplicate_existing_fight(self):
+        names_a=[{'name':'Ayaka “Zombie” Miura'},{'name':'Vick Souza'}]
+        names_b=[{'name':'Ayaka Miura'},{'name':'Victoria Souza'}]
+        self.assertEqual(m.pairkey(names_a),m.pairkey(names_b))
+        self.assertEqual(
+            m.pairkey([{'name':'Fabio Henrique Dourado'},{'name':'Yosuke Saruta'}]),
+            m.pairkey([{'name':'Fabio Henrique'},{'name':'Yosuke Saruta'}])
+        )
+
     def test_merge_keeps_curated_winner_and_avoids_duplicates(self):
         source=self.event['source']
         old=m.result_row(self.event,'A Alpha','B Beta',None,None,0,'TKO',2,'1:22','Lightweight',
