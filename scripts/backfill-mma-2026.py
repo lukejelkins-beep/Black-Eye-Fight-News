@@ -93,7 +93,7 @@ def result_row(event,name1,name2,record1,record2,winner,method,round_no,clock,di
        method=method or 'Outcome reported; method unavailable',round=round_no,time=clock,
        source=source,highlights=None,summary='',section=section,order=order,
        status='completed' if is_complete else 'awaiting',
-       scheduledRounds=5 if round_no==5 and order==0 else 3)
+       **({'scheduledRounds':5} if round_no==5 else {}))
 def records_for(li,anchors):
     all_text=li.get_text(' ',strip=True)
     names=[clean_name(a.get_text(' ',strip=True)) for a in anchors]
@@ -210,6 +210,11 @@ def parse_one_links(body):
         parent=a.find_parent('li') or a.parent
         text=parent.get_text(' ',strip=True) if parent else ''
         date=date_in(text)
+        if not date:
+            match=re.search(r'(?i)\b(\d{1,2})\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\b',text)
+            if match:
+                try:date=dt.date(2026,MONTHS[match.group(2).lower()],int(match.group(1)))
+                except ValueError:pass
         if within(date) and date<dt.date(2026,11,1):seen.add(href);out.append((href,date))
     return out
 def name_one(anchor):
@@ -247,7 +252,7 @@ def parse_one(body,url,date,portraits):
             if isinstance(node,str) and node.strip():prior.append(node.strip())
             if len(' '.join(prior))>200:break
         div=WEIGHTS.search(' '.join(reversed(prior))[-145:])
-        sport='Muay Thai' if div and 'muay thai' in div.group(0).lower() else 'Kickboxing' if div and 'kickboxing' in div.group(0).lower() else 'MMA'
+        sport='Muay Thai' if div and 'muay thai' in div.group(0).lower() else 'Kickboxing' if div and 'kickboxing' in div.group(0).lower() else 'Combat sport'
         row=result_row(event,a,b,ra,rb,winner,method,round_no,clock,
                     div.group(0) if div else 'Division not verified','Main card',len(rows),url,portraits,sport)
         if row:rows.append(row)
