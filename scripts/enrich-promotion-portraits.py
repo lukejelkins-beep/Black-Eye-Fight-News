@@ -79,7 +79,7 @@ def resolve(job):
         except Exception:
             continue
     return (org,name,None,None)
-def enrich(data,max_names=400):
+def enrich(data,max_names=220):
     events={e['id']:e for e in data.get('events',[])}
     jobs=[];seen=set()
     # Newer events first, so recent fighter cards are enriched on a rate-limited run.
