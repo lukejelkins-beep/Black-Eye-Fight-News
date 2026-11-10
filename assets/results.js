@@ -186,7 +186,8 @@ window.ResultsDesk=(()=>{
  return (error?'<p role="status">Refresh unavailable. Showing the last loaded results.</p>':'')+
   (events.length?group('This Week',recent)+group('Earlier Results',earlier):'<div class="empty">No results match these filters. <button id="results-reset">Clear filters</button></div>');
 
- function hydrateResultPhotos(){
+ }
+function hydrateResultPhotos(){
  if(typeof findWikipediaPortrait!=='function')return;
  const names=[...new Set([...document.querySelectorAll('.result-photo[data-result-photo-name]')].filter(el=>!el.querySelector('img')).map(el=>el.getAttribute('data-result-photo-name')))];
  for(const name of names){if(name&&!attemptedPortraits.has(name)){attemptedPortraits.add(name);portraitJobs.push(name)}}
