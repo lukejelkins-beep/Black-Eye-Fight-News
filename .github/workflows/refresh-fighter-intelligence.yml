@@ -1,0 +1,52 @@
+name: Refresh fighter scouting intelligence
+on:
+  workflow_dispatch:
+  schedule:
+    # Monday 12:15 AEST or 13:15 AEDT.
+    - cron: '15 2 * * 1'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refresh-fighter-intelligence.py'
+      - 'tests/test_fighter_intelligence.py'
+      - '.github/workflows/refresh-fighter-intelligence.yml'
+permissions:
+  contents: write
+concurrency:
+  group: befn-scouting-intelligence
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test safety, name matching, review rules and recovery
+        run: python -m unittest discover -s tests -p 'test_fighter_intelligence.py' -v
+      - name: Produce source-backed review snapshot
+        env:
+          UFCALENDAR_API_KEY: ${{ secrets.UFCALENDAR_API_KEY }}
+          BEFN_OCTAGON_ALLOWED: ${{ vars.BEFN_OCTAGON_ALLOWED }}
+          BEFN_UFC_STATS_ALLOWED: ${{ vars.BEFN_UFC_STATS_ALLOWED }}
+        run: python scripts/refresh-fighter-intelligence.py
+      - name: Commit generated editorial signals
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "BEFN scouting updater"
+          git config user.email "scouting-bot@users.noreply.github.com"
+          git add data/fighter-intelligence.json
+          if git diff --cached --quiet; then
+            echo "No new sourced review data"; exit 0
+          fi
+          git commit -m "Refresh fighter intelligence review signals"
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              echo "Published sourced scouting review"; exit 0
+            fi
+            sleep 2
+          done
+          exit 1
