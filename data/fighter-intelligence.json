@@ -1,9 +1,1321 @@
 {
   "schema": 1,
-  "generatedOn": "",
+  "generatedOn": "2026-11-10",
   "scope": "UFC, PFL and ONE MMA",
-  "note": "Editorial reassessment signals; not official rankings or automatic designations.",
-  "sources": [],
-  "fighters": [],
+  "note": "Editorial reassessment signals, not official rankings or automatic designations.",
+  "sources": [
+    {
+      "provider": "BEFN results",
+      "status": "connected",
+      "detail": "Source-linked confirmed outcomes; original dataset preserved."
+    },
+    {
+      "provider": "UFCalendar",
+      "status": "needs_key",
+      "detail": "Set UFCALENDAR_API_KEY GitHub Actions secret."
+    },
+    {
+      "provider": "Octagon",
+      "status": "pending_permission",
+      "detail": "Enable only when data reuse terms are confirmed."
+    },
+    {
+      "provider": "UFC Stats API",
+      "status": "pending_permission",
+      "detail": "Hosted data is for personal/non-commercial use; explicit approval required."
+    }
+  ],
+  "fighters": [
+    {
+      "id": "mitchraposo",
+      "name": "Mitch Raposo",
+      "organisation": "UFC",
+      "division": "Flyweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 0
+      },
+      "signals": [
+        "2 victories in 2 verified appearances"
+      ],
+      "lastFight": {
+        "date": "2026-11-07",
+        "opponent": "Marcos Degli",
+        "result": "W",
+        "method": "unanimous decision",
+        "source": "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-results"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "ninamilosevic",
+      "name": "Nina Milošević",
+      "organisation": "UFC",
+      "division": "Women's Bantamweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-11-07",
+        "opponent": "Priscila Cachoeira",
+        "result": "W",
+        "method": "TKO (strikes)",
+        "source": "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-results"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "lucasfernando",
+      "name": "Lucas Fernando",
+      "organisation": "UFC",
+      "division": "Light Heavyweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-11-07",
+        "opponent": "Billy Elekana",
+        "result": "W",
+        "method": "unanimous decision",
+        "source": "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-results"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "johnnywalker",
+      "name": "Johnny Walker",
+      "organisation": "UFC",
+      "division": "Heavyweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-11-07",
+        "opponent": "Waldo Cortes Acosta",
+        "result": "W",
+        "method": "TKO (strikes)",
+        "source": "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-results"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "murtazalimagomedov",
+      "name": "Murtazali Magomedov",
+      "organisation": "UFC",
+      "division": "Featherweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-11-07",
+        "opponent": "Jose Delano",
+        "result": "W",
+        "method": "unanimous decision",
+        "source": "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-prelim-results"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "josesouza",
+      "name": "José Souza",
+      "organisation": "UFC",
+      "division": "Welterweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-11-07",
+        "opponent": "Jonny Parsons",
+        "result": "W",
+        "method": "KO (uppercut)",
+        "source": "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-prelim-results"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "leeseungcheol",
+      "name": "Lee Seung Cheol",
+      "organisation": "ONE",
+      "division": "Strawweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-11-07",
+        "opponent": "Nazareth Lalthazuala",
+        "result": "W",
+        "method": "submission (rear-naked choke)",
+        "source": "https://www.onefc.com/news/one-fight-night-49-gabriel-vs-magomedov-results-and-highlights-for-every-match/"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "magdalenaczaban",
+      "name": "Magdalena Czaban",
+      "organisation": "ONE",
+      "division": "Atomweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 0
+      },
+      "signals": [
+        "2 victories in 2 verified appearances"
+      ],
+      "lastFight": {
+        "date": "2026-11-07",
+        "opponent": "Vick Souza",
+        "result": "W",
+        "method": "unanimous decision",
+        "source": "https://www.onefc.com/news/one-fight-night-49-gabriel-vs-magomedov-results-and-highlights-for-every-match/"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "tomnolan",
+      "name": "Tom Nolan",
+      "organisation": "UFC",
+      "division": "Lightweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-31",
+        "opponent": "Renato Moicano",
+        "result": "W",
+        "method": "TKO (punches and elbows)",
+        "source": "https://www.ufc.com/news/ufc-fight-night-moicano-vs-nolan-results"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "jacobesmith",
+      "name": "Jacobe Smith",
+      "organisation": "UFC",
+      "division": "Welterweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-31",
+        "opponent": "Randy Brown",
+        "result": "W",
+        "method": "unanimous decision",
+        "source": "https://www.ufc.com/news/ufc-fight-night-moicano-vs-nolan-results"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "luanasantos",
+      "name": "Luana Santos",
+      "organisation": "UFC",
+      "division": "Women's Bantamweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 0
+      },
+      "signals": [
+        "2 victories in 2 verified appearances"
+      ],
+      "lastFight": {
+        "date": "2026-10-31",
+        "opponent": "Yana Santos",
+        "result": "W",
+        "method": "unanimous decision",
+        "source": "https://www.ufc.com/news/ufc-fight-night-moicano-vs-nolan-results"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "jeanpaullebosnoyani",
+      "name": "Jean-Paul Lebosnoyani",
+      "organisation": "UFC",
+      "division": "Welterweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-31",
+        "opponent": "Farman Hasanov",
+        "result": "W",
+        "method": "TKO (doctor stoppage)",
+        "source": "https://www.ufc.com/news/ufc-fight-night-moicano-vs-nolan-results"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "abdulrakhmanyakhyaev",
+      "name": "Abdul Rakhman Yakhyaev",
+      "organisation": "UFC",
+      "division": "Light Heavyweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-24",
+        "opponent": "Nikita Krylov",
+        "result": "W",
+        "method": "KO/TKO",
+        "source": "https://www.ufc.com/news/ufc-333-volkanovski-vs-evloev-official-scorecards"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "abusmagomedov",
+      "name": "Abus Magomedov",
+      "organisation": "UFC",
+      "division": "Middleweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-24",
+        "opponent": "Cam Rowston",
+        "result": "W",
+        "method": "Submission",
+        "source": "https://www.ufc.com/news/ufc-333-volkanovski-vs-evloev-official-scorecards"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "abubakarvagaev",
+      "name": "Abubakar Vagaev",
+      "organisation": "UFC",
+      "division": "Middleweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 0
+      },
+      "signals": [
+        "2 victories in 2 verified appearances"
+      ],
+      "lastFight": {
+        "date": "2026-10-24",
+        "opponent": "Jacob Malkoun",
+        "result": "W",
+        "method": "Decision",
+        "source": "https://www.ufc.com/news/ufc-333-volkanovski-vs-evloev-official-scorecards"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "chelseachandler",
+      "name": "Chelsea Chandler",
+      "organisation": "UFC",
+      "division": "Women's Bantamweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-17",
+        "opponent": "Melissa Croden",
+        "result": "W",
+        "method": "Submission",
+        "source": "https://www.ufcschedule.net/events/ufc-fight-night-buckley-vs-malott"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "jenabishop",
+      "name": "Jena Bishop",
+      "organisation": "PFL",
+      "division": "Women's Flyweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-16",
+        "opponent": "Liz Carmouche",
+        "result": "W",
+        "method": "Decision",
+        "source": "https://www.ufcalendar.com/events/pfl-2026-10-16"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "sarvarjonkhamidov",
+      "name": "Sarvarjon Khamidov",
+      "organisation": "PFL",
+      "division": "Bantamweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-16",
+        "opponent": "Rafael do Nascimento",
+        "result": "W",
+        "method": "TKO",
+        "source": "https://www.ufcalendar.com/events/pfl-2026-10-16"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "eliezerkubanza",
+      "name": "Eliezer Kubanza",
+      "organisation": "PFL",
+      "division": "Welterweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-16",
+        "opponent": "Trey Waters",
+        "result": "W",
+        "method": "TKO",
+        "source": "https://www.ufcalendar.com/events/pfl-2026-10-16"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "shannonclark",
+      "name": "Shannon Clark",
+      "organisation": "PFL",
+      "division": "Women's Flyweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-16",
+        "opponent": "Lucero Acosta",
+        "result": "W",
+        "method": "TKO",
+        "source": "https://www.ufcalendar.com/events/pfl-2026-10-16"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "gamidkhizriev",
+      "name": "Gamid Khizriev",
+      "organisation": "PFL",
+      "division": "Lightweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-16",
+        "opponent": "Michael Boylan",
+        "result": "W",
+        "method": "TKO",
+        "source": "https://www.ufcalendar.com/events/pfl-2026-10-16"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "cobeyfehr",
+      "name": "Cobey Fehr",
+      "organisation": "PFL",
+      "division": "Bantamweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-16",
+        "opponent": "Rosario Romero",
+        "result": "W",
+        "method": "Submission",
+        "source": "https://www.ufcalendar.com/events/pfl-2026-10-16"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "levankhabalaev",
+      "name": "Levan Khabalaev",
+      "organisation": "PFL",
+      "division": "Lightweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-16",
+        "opponent": "Brock Hamer",
+        "result": "W",
+        "method": "TKO",
+        "source": "https://www.ufcalendar.com/events/pfl-2026-10-16"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "noahhermosillo",
+      "name": "Noah Hermosillo",
+      "organisation": "PFL",
+      "division": "Featherweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-16",
+        "opponent": "Caden Cox",
+        "result": "W",
+        "method": "TKO",
+        "source": "https://www.ufcalendar.com/events/pfl-2026-10-16"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "patrickocheme",
+      "name": "Patrick Ocheme",
+      "organisation": "PFL",
+      "division": "Lightweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-10",
+        "opponent": "Cornel Thompson",
+        "result": "W",
+        "method": "KO (body kick)",
+        "source": "https://pflmma.com/news/complete-pfl-africa-casablanca-results"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "dwightjoseph",
+      "name": "Dwight Joseph",
+      "organisation": "PFL",
+      "division": "Bantamweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 0
+      },
+      "signals": [
+        "2 victories in 2 verified appearances"
+      ],
+      "lastFight": {
+        "date": "2026-10-10",
+        "opponent": "Boule Godogo",
+        "result": "W",
+        "method": "Split decision",
+        "source": "https://pflmma.com/news/complete-pfl-africa-casablanca-results"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "brendanallen",
+      "name": "Brendan Allen",
+      "organisation": "UFC",
+      "division": "Middleweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-10",
+        "opponent": "Christian Leroy Duncan",
+        "result": "W",
+        "method": "Submission",
+        "source": "https://www.ufcschedule.net/events/ufc-fight-night-allen-vs-duncan"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "estebanribovics",
+      "name": "Esteban Ribovics",
+      "organisation": "UFC",
+      "division": "Lightweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-03",
+        "opponent": "King Green",
+        "result": "W",
+        "method": "KO/TKO",
+        "source": "https://www.ufcschedule.net/events/ufc-332-salt-lake-city"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "damianpinas",
+      "name": "Damian Pinas",
+      "organisation": "UFC",
+      "division": "Middleweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-03",
+        "opponent": "Andrey Pulyaev",
+        "result": "W",
+        "method": "KO",
+        "source": "https://www.ufcschedule.net/events/ufc-332-salt-lake-city"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "marcusmcghee",
+      "name": "Marcus McGhee",
+      "organisation": "UFC",
+      "division": "Featherweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-03",
+        "opponent": "Anthony Romero",
+        "result": "W",
+        "method": "TKO",
+        "source": "https://www.ufcschedule.net/events/ufc-332-salt-lake-city"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "anthonywint",
+      "name": "Anthony Wint",
+      "organisation": "UFC",
+      "division": "Heavyweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-03",
+        "opponent": "Lucas Armand",
+        "result": "W",
+        "method": "TKO",
+        "source": "https://www.ufcschedule.net/events/ufc-332-salt-lake-city"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "antoniocesar",
+      "name": "Antonio Cesar",
+      "organisation": "ONE",
+      "division": "Flyweight MMA",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-03",
+        "opponent": "Joshua Perreira",
+        "result": "W",
+        "method": "TKO",
+        "source": "https://www.onefc.com/news/one-fight-night-48-erdogan-vs-elliott-results-and-highlights-for-every-match/"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "mehdisaadi",
+      "name": "Mehdi Saadi",
+      "organisation": "PFL",
+      "division": "Featherweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 0
+      },
+      "signals": [
+        "2 victories in 2 verified appearances"
+      ],
+      "lastFight": {
+        "date": "2026-10-02",
+        "opponent": "Shadi Kabbani",
+        "result": "W",
+        "method": "Split decision",
+        "source": "https://pflmma.com/news/complete-pfl-mena-11-last-man-standing-results"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "badreddinediani",
+      "name": "Badreddine Diani",
+      "organisation": "PFL",
+      "division": "Welterweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-02",
+        "opponent": "Hazem Kayyali",
+        "result": "W",
+        "method": "Submission (arm-triangle choke)",
+        "source": "https://pflmma.com/news/complete-pfl-mena-11-last-man-standing-results"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "yliesdjiroun",
+      "name": "Ylies Djiroun",
+      "organisation": "PFL",
+      "division": "Lightweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-02",
+        "opponent": "Assem Ghanem",
+        "result": "W",
+        "method": "TKO (punches)",
+        "source": "https://pflmma.com/news/complete-pfl-mena-11-last-man-standing-results"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "abdelkrimzouad",
+      "name": "Abdelkrim Zouad",
+      "organisation": "PFL",
+      "division": "Welterweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-10-02",
+        "opponent": "Omar Hussein",
+        "result": "W",
+        "method": "Unanimous decision",
+        "source": "https://pflmma.com/news/complete-pfl-mena-11-last-man-standing-results"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "alonzomenifield",
+      "name": "Alonzo Menifield",
+      "organisation": "UFC",
+      "division": "Light Heavyweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-09-19",
+        "opponent": "Iwo Baraniewski",
+        "result": "W",
+        "method": "Decision",
+        "source": "https://www.ufcschedule.net/events/ufc-van-vs-pantoja-2"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "ryangandra",
+      "name": "Ryan Gandra",
+      "organisation": "UFC",
+      "division": "Middleweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-09-19",
+        "opponent": "Ozzy Diaz",
+        "result": "W",
+        "method": "KO/TKO",
+        "source": "https://www.ufcschedule.net/events/ufc-van-vs-pantoja-2"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "joandersonbrito",
+      "name": "Joanderson Brito",
+      "organisation": "UFC",
+      "division": "Featherweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-09-19",
+        "opponent": "Giga Chikadze",
+        "result": "W",
+        "method": "KO/TKO",
+        "source": "https://www.ufcschedule.net/events/ufc-van-vs-pantoja-2"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "tommymcmillen",
+      "name": "Tommy McMillen",
+      "organisation": "UFC",
+      "division": "Featherweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-09-12",
+        "opponent": "Marwan Rahiki",
+        "result": "W",
+        "method": "Decision",
+        "source": "https://www.ufcschedule.net/events/ufc-fight-night-rodriguez-vs-silva"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "tommygantt",
+      "name": "Tommy Gantt",
+      "organisation": "UFC",
+      "division": "Lightweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-09-12",
+        "opponent": "Drakkar Klose",
+        "result": "W",
+        "method": "Submission",
+        "source": "https://www.ufcschedule.net/events/ufc-fight-night-rodriguez-vs-silva"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "axelsola",
+      "name": "Axel Sola",
+      "organisation": "UFC",
+      "division": "Lightweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-09-05",
+        "opponent": "Farès Ziam",
+        "result": "W",
+        "method": "KO/TKO",
+        "source": "https://www.ufcschedule.net/events/ufc-fight-night-hooker-vs-parnasse"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "daniildonchenko",
+      "name": "Daniil Donchenko",
+      "organisation": "UFC",
+      "division": "Welterweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-09-05",
+        "opponent": "Punahele Soriano",
+        "result": "W",
+        "method": "Decision",
+        "source": "https://www.ufcschedule.net/events/ufc-fight-night-hooker-vs-parnasse"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "modestasbukauskas",
+      "name": "Modestas Bukauskas",
+      "organisation": "UFC",
+      "division": "Light Heavyweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-09-05",
+        "opponent": "Oumar Sy",
+        "result": "W",
+        "method": "TKO",
+        "source": "https://www.ufcschedule.net/events/ufc-fight-night-hooker-vs-parnasse"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "fabiohenriquedourado",
+      "name": "Fabio Henrique Dourado",
+      "organisation": "ONE",
+      "division": "Strawweight MMA",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 1
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "1 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-09-05",
+        "opponent": "Ryohei Kurosawa",
+        "result": "W",
+        "method": "Unanimous decision",
+        "source": "https://www.onefc.com/news/one-fight-night-47-stamp-vs-flores-results-and-highlights-for-every-match/"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "songyadong",
+      "name": "Song Yadong",
+      "organisation": "UFC",
+      "division": "Bantamweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-08-29",
+        "opponent": "Umar Nurmagomedov",
+        "result": "W",
+        "method": "KO",
+        "source": "https://www.ufcschedule.net/events/ufc-fight-night-nurmagomedov-vs-song"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "kaiasakura",
+      "name": "Kai Asakura",
+      "organisation": "UFC",
+      "division": "Bantamweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-08-29",
+        "opponent": "Aoriqileng",
+        "result": "W",
+        "method": "KO",
+        "source": "https://www.ufcschedule.net/events/ufc-fight-night-nurmagomedov-vs-song"
+      },
+      "ranking": null,
+      "stats": null
+    },
+    {
+      "id": "reitsuruya",
+      "name": "Rei Tsuruya",
+      "organisation": "UFC",
+      "division": "Flyweight",
+      "reviewPriority": "medium",
+      "recommendation": "Monitor",
+      "recent": {
+        "wins": 2,
+        "losses": 0,
+        "fights": 2,
+        "stoppages": 2
+      },
+      "signals": [
+        "2 victories in 2 verified appearances",
+        "2 victories by stoppage"
+      ],
+      "lastFight": {
+        "date": "2026-08-29",
+        "opponent": "Kevin Borjas",
+        "result": "W",
+        "method": "Submission",
+        "source": "https://www.ufcschedule.net/events/ufc-fight-night-nurmagomedov-vs-song"
+      },
+      "ranking": null,
+      "stats": null
+    }
+  ],
   "changes": []
 }
