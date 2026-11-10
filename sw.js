@@ -1,5 +1,5 @@
 /* Offline-ready app shell. Always prioritise network for news and fight data. */
-const CACHE_NAME = 'befn-app-shell-v25-20261109-v1.0.4';
+const CACHE_NAME = 'befn-app-shell-v26-20261111-unified-fights';
 const SHELL = [
   '/', '/index.html', '/manifest.webmanifest',
   '/assets/mark.svg', '/assets/site-favicon-192.png', '/assets/icon-192.png', '/assets/icon-512.png', '/assets/apple-touch-icon.png', '/assets/icon-maskable-512.png',
@@ -10,7 +10,7 @@ const SHELL = [
   '/assets/fighter-hover.js', '/assets/local-time.js', '/assets/upcoming-cards.js',
   '/assets/upcoming-cards.css', '/assets/fight-talk.css',
   '/assets/fight-film.css', '/assets/fight-film.js',
-  '/assets/results.css', '/assets/results.js', '/assets/event-status.js'
+  '/assets/results.css', '/assets/results.js', '/assets/fights-hub.css', '/assets/event-status.js'
 ];
 const SHELL_PATHS = new Set(SHELL);
 self.addEventListener('install', event => {
