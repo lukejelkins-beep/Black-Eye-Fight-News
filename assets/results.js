@@ -2,11 +2,32 @@
 window.ResultsDesk=(()=>{
  'use strict';
  let data=null,error='',pending=null,lastPollAt=0;
+ let posters={},posterPending=null,posterLastChecked=0;
  const activeCardSection=new Map();
  const attemptedPortraits=new Set(),portraitJobs=[];
  let portraitActive=0;
  const filters={sport:'All',query:'',clips:false,promotion:'ufc'};
  const promotions=[['ufc','UFC','UFC Logo.svg'],['pfl','PFL','Professional Fighters League Primary Logo.jpg'],['one','ONE','ONE Championship.png']];
+
+ // Event-specific historical promotional images with original source URLs.
+ function posterFor(e){const x=posters[e.id]||e.poster||null;return x&&/^https:\/\//i.test(x.url||'')&&/^https:\/\//i.test(x.source||'')?x:null}
+ async function loadPosters(){
+  if(posterPending||Date.now()-posterLastChecked<15*60*1000)return posterPending;
+  posterLastChecked=Date.now();
+  posterPending=(async()=>{
+   for(const base of ['data/historical-posters.json','https://raw.githubusercontent.com/lukejelkins-beep/Black-Eye-Fight-News/main/data/historical-posters.json']){
+    try{
+     const response=await fetch(base+'?t='+Math.floor(Date.now()/900000),{cache:'no-store',signal:AbortSignal.timeout(12000)});
+     if(!response.ok)continue;
+     const file=await response.json();
+     if(!file||typeof file.events!=='object'||Array.isArray(file.events))continue;
+     if(JSON.stringify(file.events)!==JSON.stringify(posters)){posters=file.events;update()}
+     return;
+    }catch{}
+   }
+  })().finally(()=>{posterPending=null});
+  return posterPending;
+ }
  const selectedPromotion=()=>window.BEFNFightsUI?.promotion||filters.promotion;
  const belongsToPromotion=r=>{const e=(data?.events||[]).find(x=>x.id===r.eventId)||{};const name=String([r.event,r.promotion,r.organization,e.name,e.promotion,e.organization].filter(Boolean).join(' ')).toLowerCase();return ({ufc:/\bufc\b|ultimate fighting championship/,pfl:/\bpfl\b|professional fighters league/,one:/\bone\b|one championship/})[selectedPromotion()]?.test(name)??false};
  const promotionMatch=r=>window.BEFNSport?.get()!=='mma'||belongsToPromotion(r);
@@ -275,6 +296,7 @@ function hydrateResultPhotos(){
  setInterval(()=>{if(!document.hidden&&(location.hash.startsWith('#fights')&&window.BEFNFightsUI?.view==='results'))load()},30000);
  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&(location.hash.startsWith('#fights')&&window.BEFNFightsUI?.view==='results'))load()});
  load();
+ loadPosters();
   function promotionTabs(){return `<div class="befn-promotion-strip" id="befn-promotion-strip" role="group" aria-label="Filter MMA results by organisation" ${window.BEFNSport?.get()==='mma'?'':'hidden'}>${promotions.map(([id,label,domain])=>`<button type="button" class="befn-promotion-tab${filters.promotion===id?' selected':''}" data-result-promotion="${id}" aria-label="${label}" aria-pressed="${filters.promotion===id}">${domain?`<img src="https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(domain)}" alt="" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span hidden>${label}</span>`:`<span>${label}</span>`}</button>`).join('')}</div>`}
  function render(opts={}){if((!data||Date.now()-lastPollAt>30000)&&!pending)load();requestAnimationFrame(()=>{hydrateResultPhotos();const strip=document.getElementById("befn-promotion-strip");if(strip)strip.scrollLeft=0});if(opts.embedded===true)return `<div class="frame results-page befn-unified-results"><div id="results-content">${content()}</div></div>`;return `<div class="frame results-page">${promotionTabs()}<div class="section-heading"><div><h1>Results & highlights</h1></div></div><div class="results-toolbar"><button id="results-retry" type="button">↻ Refresh results</button><label class="results-search">Find a fight<input id="results-search" type="search" placeholder="Fighter, event or division" value="${esc(filters.query)}"></label><label class="results-check"><input id="results-clips" type="checkbox"${filters.clips?' checked':''}> Highlights available</label></div><p id="results-auto-sync" class="results-sync" role="status" aria-live="polite">Auto-refresh 30s · checking…</p><div id="results-content">${content()}</div><details class="compact-note"><summary>Results and verification</summary><p>Results are sourced from published event listings. Weight classes and fighter records are checked against those sources; discrepancies are noted on individual bouts. Highlight videos may be region-restricted. This feed is not round-by-round scoring.</p></details></div>`}
  document.addEventListener('input',e=>{if(e.target.id==='results-search'){filters.query=e.target.value;update()}});
