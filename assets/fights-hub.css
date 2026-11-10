@@ -103,3 +103,31 @@
  #fights-active-content .befn-result-summary{grid-template-columns:68px minmax(0,1fr) 12px!important;gap:9px!important}
  #fights-active-content .befn-result-thumb{width:68px;height:94px;flex-basis:68px}
 }
+
+/* Historical UFC, PFL and ONE promotional posters shared by both card states. */
+#fights-active-content .befn-result-thumb{background:#1c171d!important}
+#fights-active-content .befn-result-thumb img{object-fit:cover!important;object-position:center!important}
+#fights-active-content .befn-result-summary-copy>small{font-weight:800;color:#b7afb4!important}
+#fights-active-content .befn-result-summary-copy .befn-result-outcome{font-size:12px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#fights-active-content .befn-result-expanded{padding:0 0 12px!important;background:#181319!important;color:#f7f2f1!important}
+.befn-result-poster{margin:0;padding:12px 12px 0;background:#181319}
+.befn-result-poster[hidden]{display:none}
+.befn-result-poster-frame{max-height:620px;min-height:160px;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:9px;background:radial-gradient(ellipse at 50% 0%,#37252e,#110d13)}
+.befn-result-poster-frame img{display:block;max-width:100%;width:auto;height:auto;max-height:620px;object-fit:contain}
+.befn-result-detail-header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 18px 12px;background:#181319;border:0;color:#fff}
+.befn-result-detail-header h2{font:850 clamp(18px,3vw,26px)/1.16 'Barlow Condensed',sans-serif;letter-spacing:.01em;margin:0;color:#f4e9e6}
+.befn-result-detail-header>span{flex-shrink:0;font-size:11px;color:#c8bfc2}
+.befn-result-expanded .result-event-bouts{background:#181319}
+.befn-result-expanded .result-event-bouts>summary{background:#241e25;color:#f0ebe7;border-top:1px solid #534451;padding:12px 18px;font-size:14px}
+.befn-result-expanded .result-event-bouts .result-bouts{background:#181319}
+.befn-result-event-foot{display:grid;gap:10px;margin:10px 12px 0;padding:14px 8px 10px;border-top:1px solid #5a5055;color:#d2c9ca;font-size:12px;line-height:1.45}
+.befn-result-event-foot>div{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
+.befn-result-event-foot strong{min-width:62px;color:#f2d288;font-weight:800}
+.befn-result-event-foot a{color:#e9d395;text-decoration:underline}
+@media(max-width:600px){
+ .befn-result-poster{padding:10px 10px 0}
+ .befn-result-poster-frame{max-height:440px;min-height:130px}
+ .befn-result-poster-frame img{max-height:440px}
+ .befn-result-detail-header{padding:12px 13px;align-items:start;flex-direction:column;gap:4px}
+ .befn-result-event-foot{margin:8px 9px 0}
+}
