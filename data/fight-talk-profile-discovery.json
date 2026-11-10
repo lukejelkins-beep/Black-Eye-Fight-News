@@ -1,28 +1,47 @@
 {
-  "checkedAt": "2026-11-09T19:42:49.740Z",
+  "checkedAt": "2026-11-10T01:48:10.583Z",
   "source": "Wikidata P2002/P2003/P11892 + official athlete structured links",
   "discoveredThisRun": 0,
   "promotersAdded": 0,
-  "candidatesChecked": 0,
-  "mode": "search",
-  "wikiBatches": 0,
-  "searchChecked": 10,
+  "candidatesChecked": 135,
+  "mode": "bulk",
+  "wikiBatches": 9,
+  "searchChecked": 0,
   "officialChecked": 50,
   "counts": {
     "total": 215,
-    "tracked": 132,
-    "missingBoth": 83,
-    "withX": 58,
-    "withInstagram": 130,
+    "tracked": 157,
+    "missingBoth": 58,
+    "withX": 73,
+    "withInstagram": 155,
     "withThreads": 38
   },
-  "rateLimited": true,
-  "conflicts": [],
-  "errors": [
-    "Search Gabriel Santos: HTTP 429 www.wikidata.org",
-    "Wikidata ID lookup: HTTP 429 www.wikidata.org"
+  "rateLimited": false,
+  "conflicts": [
+    {
+      "name": "Abdullah Mason",
+      "platform": "Instagram",
+      "username": "abdullah_mason",
+      "evidenceUrl": "https://www.wikidata.org/wiki/Q127315638",
+      "reason": "Conflicts with an already linked identity; never overwrite automatically"
+    },
+    {
+      "name": "Gary Antuanne Russell",
+      "platform": "Instagram",
+      "username": "garyarussell",
+      "evidenceUrl": "https://www.wikidata.org/wiki/Q26260350",
+      "reason": "Conflicts with an already linked identity; never overwrite automatically"
+    },
+    {
+      "name": "Jai Opetaia",
+      "platform": "Instagram",
+      "username": "teamopetaia_",
+      "evidenceUrl": "https://www.wikidata.org/wiki/Q2029085",
+      "reason": "Conflicts with an already linked identity; never overwrite automatically"
+    }
   ],
+  "errors": [],
   "nextSearchOffset": 32,
-  "nextOfficialOffset": 12,
+  "nextOfficialOffset": 4,
   "note": "Profile metadata discovery is not a social timeline feed. Original post collection still depends on public publisher-linked posts or permitted platform APIs. Missing names are not guessed."
 }
