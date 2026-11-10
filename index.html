@@ -835,19 +835,16 @@ function topStoryPhoto(a){
  const fighter=newsFighterImage(a);
  return original?{url:original,alt:a.image?.alt||a.title}:fighter?{url:fighter.url,alt:fighter.name}:{url:'',alt:''};
 }
-function homeLeadCard(a){
- const photo=topStoryPhoto(a);
- return '<a class="front-lead-card" href="'+safeURL(a.url)+'" target="_blank" rel="noopener noreferrer">'
-  +'<div class="front-lead-image"><img class="live-news-image front-lead-photo" loading="eager" decoding="async" src="'+safeURL(photo.url)+'" alt="'+esc(photo.alt)+'"></div>'
-  +'<div class="front-lead-copy"><span class="front-story-meta">'+(activeSport()==='all'?esc(a.sport)+' · ':'')+esc(a.source)+'</span><h2>'+esc(a.title)+'</h2>'
-  +'<time datetime="'+esc(a.publishedAt)+'">'+esc(displayDate(a.publishedAt))+'</time></div></a>';
-}
-function homeBriefCard(a){
- const photo=topStoryPhoto(a);
- return '<a class="front-brief-card" href="'+safeURL(a.url)+'" target="_blank" rel="noopener noreferrer">'
-  +'<div class="front-brief-copy"><span class="front-story-meta">'+(activeSport()==='all'?esc(a.sport)+' · ':'')+esc(a.source)+'</span><h3>'+esc(a.title)+'</h3>'
-  +'<time datetime="'+esc(a.publishedAt)+'">'+esc(displayDate(a.publishedAt))+'</time></div>'
-  +'<div class="front-brief-image"><img class="live-news-image" loading="lazy" decoding="async" src="'+safeURL(photo.url)+'" alt="'+esc(photo.alt)+'"></div></a>';
+function topStoryCard(a){
+ const photo=topStoryPhoto(a),points=distinctNewsPoints(a);
+ const href=safeURL(a.url);
+ return '<article class="front-lead-card top-story-full">'
+  +'<a class="front-lead-image" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image front-lead-photo" loading="lazy" decoding="async" src="'+safeURL(photo.url)+'" alt="'+esc(photo.alt)+'"></a>'
+  +'<div class="front-lead-copy"><span class="front-story-meta">IN FOCUS · '+esc(a.sport.toUpperCase())+' · '+esc(a.source)+'</span>'
+  +'<h2><a href="'+href+'" target="_blank" rel="noopener noreferrer">'+esc(a.title)+'</a></h2>'
+  +(points.length?'<ul class="top-story-points" aria-label="Three key facts">'+points.slice(0,3).map(p=>'<li>'+esc(p)+'</li>').join('')+'</ul>':'<p class="top-story-pending">Key facts pending source verification</p>')
+  +'<a class="top-story-read" href="'+href+'" target="_blank" rel="noopener noreferrer">Read original ↗</a>'
+  +'</div></article>';
 }
 
 function newsFeedItems(){
@@ -877,7 +874,7 @@ function renderHome(){
  const pictured=stories.filter(a=>topStoryPhoto(a).url);
  const top=pictured.slice(0,4);
  return renderFrame('<div class="front-home"><header class="front-home-head"><h1>Top stories</h1></header>'
-  +'<div class="front-lead-layout">'+homeLeadCard(top[0])+'<div class="front-brief-list">'+top.slice(1).map(homeBriefCard).join('')+'</div></div>'
+  +'<div class="front-lead-layout top-story-stack">'+top.map(topStoryCard).join('')+'</div>'
   +'<section id="news-feed" aria-label="Latest fight news">'+renderNewsFeed()+'</section></div>'+window.BEFNCoverage.panel(activeSport()));
 }
 document.addEventListener('click',e=>{if(e.target.closest('#desk-updates')&&desk.pending){const {n,e:events}=desk.pending;Object.assign(desk,n,{events:events.events,reviewedAt:events.reviewedAt,pending:null});navigate();}});
