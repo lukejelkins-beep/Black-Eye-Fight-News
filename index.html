@@ -835,6 +835,39 @@ function topStoryPhoto(a){
  const fighter=newsFighterImage(a);
  return original?{url:original,alt:a.image?.alt||a.title}:fighter?{url:fighter.url,alt:fighter.name}:{url:'',alt:''};
 }
+function topStoryPhotoSubject(a){
+ const known=newsFighterImage(a);
+ if(known)return known.name;
+ const names=(a.title.match(/\b[A-Z][a-zÀ-ÿ'’-]+(?:\s+(?:[A-Z][a-zÀ-ÿ'’-]+|(?:de|dos|van|da))){0,2}/g)||[]);
+ const ignored=/^(?:UFC|MMA|ONE|PFL|Dana White Calls|Breaking News|Fight Night|New York|Las Vegas|World Boxing|The Ultimate|Conor McGregor Demands)$/i;
+ return names.map(n=>n.trim()).find(n=>n.split(' ').length>=2&&!ignored.test(n))||'';
+}
+const topStoryPhotoCache=new Map();
+async function findTopStoryAlternative(a){
+ const subject=topStoryPhotoSubject(a);
+ if(!subject)return '';
+ if(topStoryPhotoCache.has(subject))return topStoryPhotoCache.get(subject);
+ const request=findWikipediaPortrait(subject).catch(()=>'');
+ topStoryPhotoCache.set(subject,request);
+ return request;
+}
+function hydrateTopStoryPhotos(){
+ document.querySelectorAll('.top-story-full img[data-photo-subject]').forEach(img=>{
+  if(img.dataset.photoAttempted==='yes')return;
+  img.dataset.photoAttempted='yes';
+  const subject=img.dataset.photoSubject;
+  const fallback=async()=>{
+   if(img.dataset.photoFallback==='yes')return;
+   img.dataset.photoFallback='yes';
+   const url=await findWikipediaPortrait(subject).catch(()=>'');
+   if(!url){img.closest('.front-lead-image')?.classList.add('top-story-photo-unavailable');return;}
+   img.alt='Photograph of '+subject;
+   img.src=url;
+  };
+  img.addEventListener('error',fallback,{once:true});
+  if(!img.getAttribute('src')||img.complete&&!img.naturalWidth)fallback();
+ });
+}
 function topStoryShortPoints(a){
  const raw=distinctNewsPoints(a);
  const clean=p=>p.replace(/https?:\/\/\S+|\b(?:t\.co\/\S+|pic\.twitter\.com\/\S+)\b/gi,'').replace(/[“”"‘’]/g,'').replace(/\s+/g,' ').trim().replace(/[\s,;:–—-]+$/,'');
@@ -851,10 +884,10 @@ function topStoryShortPoints(a){
  return selected;
 }
 function topStoryCard(a){
- const photo=topStoryPhoto(a),points=topStoryShortPoints(a);
+ const photo=topStoryPhoto(a),points=topStoryShortPoints(a),subject=topStoryPhotoSubject(a);
  const href=safeURL(a.url);
  return '<article class="front-lead-card top-story-full">'
-  +'<a class="front-lead-image" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image front-lead-photo" loading="lazy" referrerpolicy="no-referrer" decoding="async" src="'+safeURL(photo.url)+'" alt="'+esc(photo.alt)+'"></a>'
+  +'<a class="front-lead-image" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image front-lead-photo" data-photo-subject="'+esc(subject)+'" loading="lazy" referrerpolicy="no-referrer" decoding="async" src="'+safeURL(photo.url)+'" alt="'+esc(photo.alt)+'"></a>'
   +'<div class="front-lead-copy"><span class="front-story-meta">IN FOCUS · '+esc(a.sport.toUpperCase())+' · '+esc(a.source)+'</span>'
   +'<h2><a href="'+href+'" target="_blank" rel="noopener noreferrer">'+esc(a.title)+'</a></h2>'
   +(points.length?'<ul class="top-story-points" aria-label="Three key facts">'+points.slice(0,3).map(p=>'<li>'+esc(p)+'</li>').join('')+'</ul>':'<p class="top-story-pending">Key facts pending source verification</p>')
@@ -886,8 +919,8 @@ function renderNewsFeed(){
 function renderHome(){
  const stories=topStories();
  if(!stories.length)return renderFrame('<header class="front-home-head"><h1>News</h1></header><p role="status" class="front-loading">'+(desk.articles.length?'No verified stories available for this sport yet.':'Checking the latest fight news…')+'</p>'+window.BEFNCoverage.panel(activeSport()));
- const pictured=stories.filter(a=>topStoryPhoto(a).url);
- const top=pictured.slice(0,4);
+ const top=stories.slice(0,4);
+ setTimeout(hydrateTopStoryPhotos,0);
  return renderFrame('<div class="front-home"><header class="front-home-head"><h1>Top stories</h1></header>'
   +'<div class="front-lead-layout top-story-stack">'+top.map(topStoryCard).join('')+'</div>'
   +'<section id="news-feed" aria-label="Latest fight news">'+renderNewsFeed()+'</section></div>'+window.BEFNCoverage.panel(activeSport()));
