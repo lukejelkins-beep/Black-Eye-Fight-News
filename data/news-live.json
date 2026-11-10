@@ -1,14 +1,13 @@
 {
-  "attemptedAt": "2026-11-10T21:19:09.394786+00:00",
-  "lastSuccessfulAt": "2026-11-10T21:19:09.394786+00:00",
+  "attemptedAt": "2026-11-10T22:01:57.050142+00:00",
+  "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00",
   "sources": [
     {
       "name": "World Boxing News",
       "sport": "boxing",
-      "ok": true,
-      "items": 10,
-      "feedUrl": "https://www.worldboxingnews.net/feed/",
-      "lastSuccessfulAt": "2026-11-10T21:19:09.394786+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-10T21:19:09.394786+00:00",
+      "error": "www.worldboxingnews.net: The read operation timed out"
     },
     {
       "name": "MMA Fighting",
@@ -16,15 +15,15 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-10T21:19:09.394786+00:00"
+      "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00"
     },
     {
       "name": "MMA Junkie",
       "sport": "mma",
       "ok": true,
-      "items": 9,
+      "items": 10,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-10T21:19:09.394786+00:00"
+      "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00"
     },
     {
       "name": "Sherdog",
@@ -32,7 +31,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.sherdog.com/rss/news.xml",
-      "lastSuccessfulAt": "2026-11-10T21:19:09.394786+00:00"
+      "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00"
     },
     {
       "name": "UFC",
@@ -40,7 +39,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-10T21:19:09.394786+00:00"
+      "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00"
     },
     {
       "name": "ONE MMA",
@@ -55,7 +54,7 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/feed/",
-      "lastSuccessfulAt": "2026-11-10T21:19:09.394786+00:00"
+      "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00"
     },
     {
       "name": "Cage Warriors",
@@ -63,22 +62,21 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Acagewarriors.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-10T21:19:09.394786+00:00"
+      "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00"
     },
     {
       "name": "RIZIN",
       "sport": "mma",
-      "ok": true,
-      "items": 5,
-      "feedUrl": "https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-10T21:19:09.394786+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-10T21:19:09.394786+00:00",
+      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "KSW",
       "sport": "mma",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "www.bing.com: No recent, source-verified articles"
+      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "ADCC",
@@ -121,7 +119,7 @@
       "ok": true,
       "items": 4,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Aflograppling.com%2Farticles&format=rss",
-      "lastSuccessfulAt": "2026-11-10T21:19:09.394786+00:00"
+      "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00"
     },
     {
       "name": "Real American Freestyle",
@@ -143,10 +141,80 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/category/live-results/feed/",
-      "lastSuccessfulAt": "2026-11-10T21:19:09.394786+00:00"
+      "lastSuccessfulAt": "2026-11-10T22:01:57.050142+00:00"
     }
   ],
   "articles": [
+    {
+      "id": "ffd5d11b313060129b5c",
+      "title": "Robert Whittaker says Israel Adesanya’s biggest opponent isn’t Shara Bullet, but himself",
+      "url": "https://www.mmafighting.com/ufc/520322/robert-whittaker-says-israel-adesanyas-biggest-opponent-isnt-shara-bullet-but-himself",
+      "source": "MMA Fighting",
+      "sport": "mma",
+      "publishedAt": "2026-11-10T22:00:00+00:00",
+      "score": 0,
+      "image": {
+        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-1370028009.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "alt": "Israel Adesanya and Robert Whittaker",
+        "credit": "﻿(Photo by Josh Hedges/Zuffa LLC)",
+        "sourceUrl": "https://www.mmafighting.com/ufc/520322/robert-whittaker-says-israel-adesanyas-biggest-opponent-isnt-shara-bullet-but-himself",
+        "kind": "publisher",
+        "checkedAt": "2026-11-10T22:01:57.050142+00:00"
+      },
+      "summaryCheckedAt": "2026-11-10T22:01:57.050142+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Robert Whittaker hopes to see the Israel Adesanya of old.",
+        "Next month, Adesanya takes on Shara Magomedov in the main event of UFC Saudi Arabia.",
+        "It’s a pivotal fight for the former two-time middleweight champion, who is riding a four-fight losing streak, and it’s one that Adesanya foe-turned-friend Robert Whittaker is concerned about."
+      ],
+      "firstSeenAt": "2026-11-10T22:01:57.050142+00:00"
+    },
+    {
+      "id": "f145e0238de4fe94a750",
+      "title": "BKB fighter who works in prison predicts early KO against Jackie Cataline",
+      "url": "https://www.sherdog.com/news/news/BKB-fighter-who-works-in-prison-predicts-early-KO-against-Jackie-Cataline-203575",
+      "source": "Sherdog",
+      "sport": "mma",
+      "publishedAt": "2026-11-10T21:33:15+00:00",
+      "score": 0,
+      "image": {
+        "url": "https://www1-cdn.sherdog.com/_images/headers/20261110093315_bkb.JPG",
+        "alt": "Article image: BKB fighter who works in prison predicts early KO against Jackie Cataline",
+        "credit": "",
+        "sourceUrl": "https://www.sherdog.com/news/news/BKB-fighter-who-works-in-prison-predicts-early-KO-against-Jackie-Cataline-203575",
+        "kind": "publisher",
+        "checkedAt": "2026-11-10T22:01:57.050142+00:00"
+      },
+      "summaryCheckedAt": "2026-11-10T22:01:57.050142+00:00",
+      "summaryQualityVersion": 3,
+      "firstSeenAt": "2026-11-10T22:01:57.050142+00:00"
+    },
+    {
+      "id": "3709ca1406be2960864b",
+      "title": "Bo Nickal vs. Yoel Romero rescheduled for RAF 16",
+      "url": "https://www.mmafighting.com/raf-wrestling/520413/bo-nickal-vs-yoel-romero-rescheduled-for-raf-16",
+      "source": "MMA Fighting",
+      "sport": "grappling",
+      "publishedAt": "2026-11-10T20:30:00+00:00",
+      "score": 0,
+      "image": {
+        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/01/Yoel-Romero-vs-Bo-Nickal.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "alt": "Yoel Romero and Bo Nickal",
+        "credit": "",
+        "sourceUrl": "https://www.mmafighting.com/raf-wrestling/520413/bo-nickal-vs-yoel-romero-rescheduled-for-raf-16",
+        "kind": "publisher",
+        "checkedAt": "2026-11-10T22:01:57.050142+00:00"
+      },
+      "summaryCheckedAt": "2026-11-10T22:01:57.050142+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Bo Nickal meets Yoel Romero in a highly anticipated matchup of two of the best wrestlers to ever compete in MMA.",
+        "The two were first set to compete at RAF 4 this past December, but Nickal withdrew from that event for undisclosed reasons.",
+        "Rescheduled for RAF 5 in January, the co-main event matchup again fell through due to Romero missing weight."
+      ],
+      "firstSeenAt": "2026-11-10T22:01:57.050142+00:00"
+    },
     {
       "id": "e0f2a923fe287d73900d",
       "title": "Coach Conversation | Polymarket UFC 334: Ciryl Gane vs Josh Hokit",
@@ -213,13 +281,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-10T20:24:31.085646+00:00"
       },
-      "summaryCheckedAt": "2026-11-10T20:24:31.085646+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "After sitting out an international card at UFC 333, Joe Rogan is back to call the fights for UFC 334 from Madison Square Garden in New York on Saturday.",
         "MMA Fighting has confirmed the full broadcast details with UFC officials with Rogan re-joining the broadcast team alongside UFC Hall of Famer Daniel Cormier and play-by-play man Jon Anik.",
         "In addition to Anik, Rogan and Cormier calling the fights, Bruce Buffer is scheduled to announce the card with Megan Olivi serving as the in-arena reporter for the event."
       ],
+      "summaryCheckedAt": "2026-11-10T20:24:31.085646+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-10T20:24:31.085646+00:00"
     },
     {
@@ -473,6 +541,24 @@
       "firstSeenAt": "2026-11-10T15:50:59.118139+00:00"
     },
     {
+      "id": "e80dbba51b896bba766c",
+      "title": "RAF books Bo Nickal vs. Yoel Romero",
+      "url": "https://mmajunkie.usatoday.com/story/sports/mma/2026/11/10/raf-16-bo-nickal-vs-yoel-romero-long-island/92713168007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-10T13:20:00+00:00",
+      "score": 0,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryCheckedAt": "2026-11-10T22:01:57.050142+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "19 at Nassau Veterans Memorial Coliseum in Uniondale, N.Y."
+      ],
+      "firstSeenAt": "2026-11-10T22:01:57.050142+00:00"
+    },
+    {
       "id": "78e387e231f424dde50f",
       "title": "Morning Report | Sean O’Malley is rooting for Josh Hokit at UFC 334 so he can continue to be ‘an absolute menace to the UFC’",
       "url": "https://www.mmafighting.com/ufc/519199/morning-report-sean-omalley-is-rooting-for-josh-hokit-at-ufc-334-so-he-can-continue-to-be-an-absolute-menace-to-the-ufc",
@@ -570,11 +656,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-10T20:24:31.085646+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "After a lightning-quick win over a short-notice replacement opponent, Austin Bashi wants another prospect across from him next."
       ],
+      "summaryCheckedAt": "2026-11-10T20:24:31.085646+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-10T20:24:31.085646+00:00"
     },
     {
@@ -1121,11 +1207,11 @@
         "kind": "publisher",
         "checkedAt": "2026-11-10T21:19:09.394786+00:00"
       },
+      "summaryCheckedAt": "2026-11-10T22:01:57.050142+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Josh Hokit believes his coaches already know how to beat Ciryl Gane, pointing to Jon Jones’ submission victory over the Frenchman as a blueprint for their UFC 334 heavyweight title fight."
       ],
-      "summaryCheckedAt": "2026-11-10T09:41:24.101617+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T21:12:22.317276+00:00"
     },
     {
@@ -1761,12 +1847,12 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
+      "summaryCheckedAt": "2026-11-10T22:01:57.050142+00:00",
+      "summaryQualityVersion": 3,
+      "firstSeenAt": "2026-11-09T21:12:22.317276+00:00",
       "summaryPoints": [
         "We want your predictions for Saturday’s PFL Dubai event, where the heavyweight title is on the line."
-      ],
-      "summaryCheckedAt": "2026-11-10T09:41:24.101617+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-09T21:12:22.317276+00:00"
+      ]
     },
     {
       "id": "eacebf6d8894da31c45e",
