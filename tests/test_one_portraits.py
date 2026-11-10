@@ -28,6 +28,23 @@ class OnePortraitTests(unittest.TestCase):
         self.assertIsNone(m.verify(page,"Magomed Magomedov",["Lucas Gabriel"]))
         self.assertTrue(m.verify(page+"<p>Lucas Gabriel</p>","Magomed Magomedov",["Lucas Gabriel"]))
 
+    def test_short_official_profile_alias_still_requires_matching_identity(self):
+        official='''<html><head><meta property="og:image"
+        content="https://cdn.onefc.com/wp-content/uploads/2025/03/Stamp-Fairtex.jpg"></head>
+        <body><h2>About Stamp Fairtex</h2></body></html>'''
+        urls=m.profile_urls("Stamp Fairtex")
+        self.assertIn("https://www.onefc.com/athletes/stamp/",urls)
+        seen=[]
+        def get(url):
+            seen.append(url)
+            return official if url.endswith("/stamp/") else ""
+        item={"name":"Stamp Fairtex","opponents":set()}
+        match=m.inspect(item,get)
+        self.assertEqual(match["source"],"https://www.onefc.com/athletes/stamp/")
+        self.assertEqual(match["photo"],"https://cdn.onefc.com/wp-content/uploads/2025/03/Stamp-Fairtex.jpg")
+        self.assertIsNone(m.inspect({"name":"Different Athlete","opponents":set()},lambda url:official))
+        self.assertGreaterEqual(len(seen),2)
+
     def test_only_applies_to_one(self):
         data={"results":[
             {"eventId":"one-test","fighters":[{"name":"Taiki Naito"},{"name":"Fighter B"}]},
