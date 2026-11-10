@@ -48,7 +48,7 @@ assert.equal(ctx.diverseTalk([media,prospect,champion]).map(p=>p.name).join(',')
 assert.equal(ctx.diverseTalk([media,champion],'latest')[0].name,'Media Test');
 assert.equal(ctx.diverseTalk([media,champion],'engagement')[0].name,'Champion Test');
 ctx.fixture={champion,media,prospect};
-vm.runInContext("liveTalk.selected=[fixture.champion,fixture.prospect,{...fixture.champion,postedAt:'2026-10-28',summary:'Earlier training announcement',url:'https://instagram.com/p/stale/'},{...fixture.champion,url:'https://example.com/p/unsafe/'}]; liveTalk.posts=[fixture.media,{...fixture.prospect,quote:'Original post',summary:undefined,url:'https://x.com/i/status/300'}]",ctx);
+vm.runInContext("liveTalk.selected=[fixture.champion,fixture.prospect,{...fixture.champion,postedAt:'2026-10-28',quote:'Earlier training announcement',summary:'Earlier training announcement',url:'https://instagram.com/p/stale/'},{...fixture.champion,url:'https://example.com/p/unsafe/'}]; liveTalk.posts=[fixture.media,{...fixture.prospect,quote:'Original post',summary:undefined,url:'https://x.com/i/status/300'}]",ctx);
 assert.equal(ctx.recentTalkPosts().length,3);
 assert(ctx.recentTalkPosts().some(p=>p.quote==='Original post'));
 assert(ctx.renderSocial().includes('Latest fighter &amp; promoter posts')||ctx.renderSocial().includes('Latest fighter & promoter posts'));
