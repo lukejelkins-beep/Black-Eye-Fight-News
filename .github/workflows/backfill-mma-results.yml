@@ -9,6 +9,8 @@ on:
       - 'scripts/backfill-mma-2026.py'
       - 'scripts/enrich-ufc-history.py'
       - 'scripts/enrich-promotion-portraits.py'
+      - 'scripts/enrich-one-official-portraits.py'
+      - 'tests/test_one_portraits.py'
       - 'scripts/import-official-pfl-2026.py'
       - 'scripts/enrich-pfl-official-portraits.py'
       - 'tests/test_pfl_portraits.py'
@@ -34,10 +36,11 @@ jobs:
         run: python -m pip install --disable-pip-version-check beautifulsoup4==4.14.3
       - name: Validate parser and historical data safeguards
         run: |
-          python -m py_compile scripts/backfill-mma-2026.py scripts/enrich-ufc-history.py scripts/enrich-promotion-portraits.py scripts/import-official-pfl-2026.py scripts/enrich-pfl-official-portraits.py
+          python -m py_compile scripts/backfill-mma-2026.py scripts/enrich-ufc-history.py scripts/enrich-promotion-portraits.py scripts/import-official-pfl-2026.py scripts/enrich-pfl-official-portraits.py scripts/enrich-one-official-portraits.py
           python -m unittest discover -s tests -p 'test_mma_backfill.py' -v
           python -m unittest discover -s tests -p 'test_pfl_official_history.py' -v
           python -m unittest discover -s tests -p 'test_pfl_portraits.py' -v
+          python -m unittest discover -s tests -p 'test_one_portraits.py' -v
       - name: Ingest and verify archived event data
         run: python scripts/backfill-mma-2026.py
       - name: Fill source-matched historic UFC records and portraits
@@ -48,6 +51,8 @@ jobs:
         run: python scripts/enrich-pfl-official-portraits.py
       - name: Resolve identity-verified ONE and PFL fighter images
         run: python scripts/enrich-promotion-portraits.py
+      - name: Match further ONE portraits with strict athlete identity and source checks
+        run: python scripts/enrich-one-official-portraits.py
       - name: Publish only verified, changed result cards
         shell: bash
         run: |
@@ -60,6 +65,7 @@ jobs:
           for attempt in 1 2 3 4; do
             git add data/results.json data/backfill-mma-audit.json
             if [ -f data/pfl-portrait-progress.json ]; then git add data/pfl-portrait-progress.json; fi
+            if [ -f data/one-portrait-progress.json ]; then git add data/one-portrait-progress.json; fi
             if git diff --cached --quiet; then
               echo "All previously verified results already published"
               exit 0
@@ -74,6 +80,7 @@ jobs:
             git reset --hard -q origin/main
             python scripts/import-official-pfl-2026.py
             python scripts/enrich-pfl-official-portraits.py
+            python scripts/enrich-one-official-portraits.py
           done
           echo "::error::Unable to publish after four concurrency retries; next run will retry safely"
           exit 1
