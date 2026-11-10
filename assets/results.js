@@ -169,7 +169,8 @@ window.ResultsDesk=(()=>{
   const prelimHeadlineIndex=prelims.findIndex(x=>x.id===prelimHeadlinerId);
   if(prelimHeadlineIndex>0)prelims.unshift(prelims.splice(prelimHeadlineIndex,1)[0]);
  }
- const sections=[{key:'main',label:r.sport==='Boxing'&&all.some(x=>/main event/i.test(x.section||''))?'Main Event':'Main Card',bouts:main},{key:'prelims',label:all.some(x=>x.session==='The Inner Circle')?'The Inner Circle':r.sport==='Boxing'&&all.some(x=>/undercard/i.test(x.section||''))?'Undercard':'Prelims',bouts:prelims}];
+ const oneSessions=all.some(x=>x.session==='The Inner Circle')&&all.some(x=>/Friday Fights/.test(x.session||''));
+ const sections=[{key:'main',label:oneSessions?'ONE Friday Fights':r.sport==='Boxing'&&all.some(x=>/main event/i.test(x.section||''))?'Main Event':'Main Card',bouts:main},{key:'prelims',label:oneSessions?'The Inner Circle':r.sport==='Boxing'&&all.some(x=>/undercard/i.test(x.section||''))?'Undercard':'Prelims',bouts:prelims}];
  const available=sections.filter(x=>x.bouts.length);
  const requested=activeCardSection.get(eventId)||'all';
  const active=available.find(x=>x.key===requested);
