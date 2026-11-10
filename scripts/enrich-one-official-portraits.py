@@ -113,7 +113,7 @@ def due(document, progress, today):
             except (KeyError,ValueError):
                 pass
         selected.append(item)
-    return sorted(selected,key=lambda x:(not x["main"],x["lastDate"][::-1],-x["appearances"],x["name"]),reverse=False)
+    return sorted(selected,key=lambda x:(not x["main"],-int(x["lastDate"].replace("-","")),-x["appearances"],x["name"]))
 
 def assign(data,roster,findings):
     by_name={norm(item["name"]):info for item,info in zip(roster,findings) if info}
