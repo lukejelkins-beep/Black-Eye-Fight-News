@@ -154,11 +154,11 @@ window.ResultsDesk=(()=>{
  const poster=posterFor(e);
  const fighterPreview=featured?.image||featured?.fighters?.find(f=>f.photo)?.photo||'';
  const preview=poster?.url||fighterPreview;
- const thumb=preview?'<img src="'+url(preview)+'" alt="'+esc(poster?'Event poster for '+r.event:'Fighter image for '+r.event)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer"'+(poster&&fighterPreview?' data-fallback-src="'+url(fighterPreview)+'"':'')+'>':'<span class="befn-result-thumb-fallback">BEFN</span>';
+ const thumb=preview?'<img src="'+url(preview)+'" alt="'+esc(poster?(poster.kind==='poster'?'Event poster for ':'Event artwork for ')+r.event:'Fighter image for '+r.event)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer"'+(poster&&fighterPreview?' data-fallback-src="'+url(fighterPreview)+'"':'')+'>':'<span class="befn-result-thumb-fallback">BEFN</span>';
  const expandedPoster=poster?'<figure class="befn-result-poster"><div class="befn-result-poster-frame"><img class="befn-expanded-poster-image" src="'+url(poster.url)+'" alt="Event artwork: '+esc(r.event)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer"></div></figure>':'';
  const venue=String(e.location||r.location||poster?.location||'').trim();
  const validVenue=venue&&!/not confirmed|venue tbc|location unknown|thailand \(venue not confirmed\)/i.test(venue);
- const eventFoot='<footer class="befn-result-event-foot">'+(validVenue?'<div><strong>Location</strong><span>'+esc(venue)+'</span></div>':'')+'<div><strong>Date</strong><span>'+esc(date(r.date))+'</span></div>'+(e.source?'<div><strong>Results</strong>'+link(e.source,'View source')+'</div>':'')+(poster?.source?'<div><strong>Poster</strong>'+link(poster.source,'Image source')+'</div>':'')+'</footer>';
+ const eventFoot='<footer class="befn-result-event-foot">'+(validVenue?'<div><strong>Location</strong><span>'+esc(venue)+'</span></div>':'')+(e.source?'<div><strong>Results</strong>'+link(e.source,'View source')+'</div>':'')+(poster?.source?'<div><strong>Artwork</strong>'+link(poster.source,'Image source')+'</div>':'')+'</footer>';
  const winner=featured?.status==='completed'&&[0,1].includes(featured.winner)?featured.fighters[featured.winner]?.name:'';
  const opponent=winner?featured.fighters[1-featured.winner]?.name:'';
  const outcome=winner?(winner+' defeated '+(opponent||'opponent')+' · '+boutMethod(featured.method)) : '';
