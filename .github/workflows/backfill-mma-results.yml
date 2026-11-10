@@ -58,7 +58,8 @@ jobs:
           # job researches archived events. On a push conflict, replay only
           # the idempotent source-verified PFL fixture on the newest main.
           for attempt in 1 2 3 4; do
-            git add data/results.json data/backfill-mma-audit.json data/pfl-portrait-progress.json
+            git add data/results.json data/backfill-mma-audit.json
+            if [ -f data/pfl-portrait-progress.json ]; then git add data/pfl-portrait-progress.json; fi
             if git diff --cached --quiet; then
               echo "All previously verified results already published"
               exit 0
@@ -72,6 +73,7 @@ jobs:
             git fetch -q origin main
             git reset --hard -q origin/main
             python scripts/import-official-pfl-2026.py
+            python scripts/enrich-pfl-official-portraits.py
           done
           echo "::error::Unable to publish after four concurrency retries; next run will retry safely"
           exit 1
