@@ -1,0 +1,48 @@
+name: Refresh historical fight posters
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '20 5 */2 * *'
+  push:
+    paths:
+      - 'scripts/refresh-historical-posters.py'
+      - '.github/workflows/historical-posters.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: befn-historical-posters
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check poster importer syntax
+        run: python -m py_compile scripts/refresh-historical-posters.py
+      - name: Find exact-event images from official promotion pages
+        run: python scripts/refresh-historical-posters.py
+      - name: Commit verified new image references
+        shell: bash
+        run: |
+          if git diff --quiet -- data/historical-posters.json; then
+            echo "No newly verified official event images."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/historical-posters.json
+          git commit -m "Refresh official UFC PFL ONE historical event artwork"
+          git pull --rebase origin main
+          git push origin HEAD:main
