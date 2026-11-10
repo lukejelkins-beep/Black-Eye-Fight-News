@@ -211,13 +211,14 @@
 
 <style>.social-card[data-platform="Facebook"]{background:#fff;border:1px solid #d6dfec}.social-card[data-platform="Facebook"] .platform-letter{color:#1877f2}.social-card[data-platform="Bluesky"]{background:#fff;border:1px solid #b8d9f5}.social-card[data-platform="Bluesky"] .platform-letter{color:#1683fe}</style>
 <link rel="stylesheet" href="assets/results.css">
+<link rel="stylesheet" href="assets/fights-unified.css?v=20261111-fights-v1">
 <link rel="stylesheet" href="assets/upcoming-cards.css?v=20261109-single-fighter-v1">
 <link rel="stylesheet" href="assets/fight-film.css?v=20261108-ufc-finishes">
 <script src="assets/local-time.js?v=20261108-local1"></script>
 <script src="assets/fight-film.js?v=20261111-clean-header"></script>
 <script src="assets/event-status.js"></script>
-<script src="assets/results.js?v=20261110-three-promotions4"></script>
-<script src="assets/upcoming-cards.js?v=20261109-single-fighter-v1"></script>
+<script src="assets/results.js?v=20261111-fights-v1"></script>
+<script src="assets/upcoming-cards.js?v=20261111-fights-v1"></script>
 <style id="original-talk-posts">
 #talk-results .social-grid{grid-template-columns:repeat(4,minmax(0,1fr));align-items:start}
 .talk-original{margin:12px 0;min-width:0;width:100%;color:#172b37;background:#fff;border-radius:6px;overflow:hidden}
@@ -553,7 +554,7 @@ html,body{max-width:100%;overflow-x:clip}
 </header>
 <div class="navrail">
   <nav class="mainnav" aria-label="Primary navigation">
-    <a href="#home" data-nav="home">News</a><a href="#champions" data-nav="champions">Champions</a><a href="#fighters" data-nav="fighters">Fighter scout</a><a href="#social" data-nav="social">The conversation</a><a href="#calendar" data-nav="calendar">Fight calendar</a><a href="#results" data-nav="results">Results & highlights</a><a href="#highlights" data-nav="highlights">Fight film</a>
+    <a href="#home" data-nav="home">News</a><a href="#champions" data-nav="champions">Champions</a><a href="#fighters" data-nav="fighters">Fighter scout</a><a href="#social" data-nav="social">The conversation</a><a href="#fights" data-nav="fights">Fights</a><a href="#highlights" data-nav="highlights">Fight film</a>
   </nav>
   <span class="nav-count">EST. 2026</span>
 </div>
@@ -581,6 +582,7 @@ const D=window.COMBAT_DATA;
 const main=document.querySelector('#main');
 const dialog=document.querySelector('#fighterDialog');
 if(!D||!main){if(main) main.textContent='Fight data unavailable. Please refresh the page.';return;}
+const fightDesk=window.BEFNFightsUI={view:'upcoming',promotion:'ufc',query:''};
 const state={news:'boxing',champions:'boxing',fightersSport:'Boxing',fightersCategory:'All',fightersDivision:'All',fightersQuery:'',social:'all',socialMode:'latest',socialPlatform:'all',socialPage:1,talkRole:'all',talkSort:'balanced',calendar:'boxing',highlights:'boxing'};
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeURL=x=>{try{const u=new URL(x);return u.protocol==='https:'?esc(u.href):'#'}catch(_){return '#'}};
@@ -637,7 +639,7 @@ const calendarSportIcons=Object.freeze({
  grappling:`<svg class="sport-toggle-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" focusable="false"><circle cx="11" cy="7.3" r="4" stroke="currentColor" stroke-width="2.6"/><circle cx="29" cy="7.3" r="4" stroke="currentColor" stroke-width="2.6"/><path d="m9 13-5 8 7 5 8-8m12-5 5 8-7 5-8-8M13 14l7 5 7-5M9 19l6 5-4 12m20-17-6 5 4 12M15 24l6 12m10-12-6 12" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/><path d="m16 15 4 4 4-4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`
 });
 const calendarSportLabels=Object.freeze({boxing:'Boxing',mma:'Mixed martial arts',grappling:'Wrestling and grappling'});
-const calendarHeading=`<header class="section-heading calendar-photo-heading"><h1>Upcoming Fights</h1></header>`;
+const calendarHeading=`<header class="section-heading calendar-photo-heading"><h1>Fights</h1></header>`;
 const segments=(name,opts,selected)=>`<div class="segment${name==='calendar'?' sport-photo-segment':''}" role="group" aria-label="${name==='calendar'?'Fight discipline':esc(name)}">${opts.map(x=>`<button type="button" data-segment="${esc(name)}" data-value="${esc(x)}"${name==='calendar'?` aria-label="${calendarSportLabels[x]||esc(x)}" title="${calendarSportLabels[x]||esc(x)}"`:''} aria-pressed="${String(x===selected)}">${name==='calendar'?`<span class="sport-photo-visual" aria-hidden="true"></span>`:esc(x)}</button>`).join('')}</div>`;
 const badge=`<details class="archive-caution"><summary>Archive verification note</summary><p>Some historical fighter records and photographs need reconfirmation. Check the linked sources.</p></details>`;
 const renderFrame=(inner)=>`${(['champions','fighters'].includes(location.hash.slice(1)))?badge:''}<div class="shell page">${inner}</div>`;
@@ -761,11 +763,20 @@ document.addEventListener('error',event=>{
 },true);
 function renderNews(){return renderHome();} // Legacy News link compatibility.
 function eventCard(e){return `<article class="news-card" style="padding:24px"><div class="card-kicker">${esc(e.discipline)} · ${esc(e.status)}</div><span data-mat-status="${esc(e.id)}">${window.EventStatus?.badge(e)||''}</span><h3>${esc(e.name)}</h3><p><strong>${esc(dayLabel(e.date))}${e.endDate?' – '+esc(dayLabel(e.endDate)):''}</strong> · venue-local date</p><p>${esc(e.location)}</p><p>${esc(e.competitors)}</p><p>${esc(e.why)}</p>${window.FightTime.instant(e.startAt)?'<p>Local start: '+esc(displayDate(e.startAt))+' · <span class="mat-countdown" data-mat-start="'+esc(e.startAt)+'">'+esc(window.FightTime.relative(e.startAt))+'</span></p>':'<p>Start time TBC · date remains venue-local</p>'}<p>${esc(e.watch)}</p><a href="${safeURL(e.source)}" target="_blank" rel="noopener noreferrer">Official event details ↗</a><p class="panel-note">Checked ${esc(e.verifiedAt)}</p></article>`;}
-function renderCalendar(){
+
+function renderFightsContent(){
  const sport=activeSport();
- if(sport!=='grappling')return renderFrame(calendarHeading+window.UpcomingCards.render(sport)+(sport==='all'?renderGrapplingEvents(true):'')+window.BEFNCoverage.panel(sport));
- return renderFrame(calendarHeading+renderGrapplingEvents(false)+window.BEFNCoverage.panel(sport));
+ if(fightDesk.view==='results')return window.ResultsDesk.render({embedded:true});
+ return sport==='grappling'?renderGrapplingEvents(false):window.UpcomingCards.render(sport)+(sport==='all'?renderGrapplingEvents(true):'');
 }
+function renderFightsControls(){
+ const views=[['upcoming','Upcoming'],['results','Results']].map(([id,label])=>'<button type="button" role="tab" data-fights-view="'+id+'" class="fights-view-tab'+(fightDesk.view===id?' is-active':'')+'" aria-selected="'+String(fightDesk.view===id)+'" aria-controls="fights-active-content">'+label+'</button>').join('');
+ const logos=[['ufc','UFC','UFC Logo.svg'],['one','ONE','ONE Championship.png'],['pfl','PFL','Professional Fighters League Primary Logo.jpg']];
+ const promotions=activeSport()==='mma'?'<div class="fights-promotion-tabs" role="group" aria-label="MMA organisation">'+logos.map(([id,label,file])=>'<button type="button" data-fights-promotion="'+id+'" class="fights-promotion-tab'+(fightDesk.promotion===id?' is-active':'')+'" aria-label="'+label+'" aria-pressed="'+String(fightDesk.promotion===id)+'"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(file)+'" alt="" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span hidden>'+label+'</span></button>').join('')+'</div>':'';
+ return '<div class="fights-controls"><label class="fights-search"><span class="fights-search-icon" aria-hidden="true">⌕</span><input type="search" id="fights-event-search" placeholder="Search by events or fighters" aria-label="Search by events or fighters" value="'+esc(fightDesk.query)+'"></label><div class="fights-view-tabs" role="tablist" aria-label="Fight schedule or completed results">'+views+'</div>'+promotions+'</div>';
+}
+function renderFights(){return renderFrame('<section class="fights-unified">'+calendarHeading+renderFightsControls()+'<div id="fights-active-content" role="tabpanel">'+renderFightsContent()+'</div></section>');}
+function renderCalendar(){return renderFights();}
 function renderGrapplingEvents(underOtherSports){
  const horizon=window.FightTime.dayKey(new Date(Date.now()+42*86400000));
  const day=e=>window.FightTime.instant(e.startAt)?window.FightTime.dayKey(new Date(e.startAt)):e.date;
@@ -1383,8 +1394,17 @@ function renderHighlights(){return window.FightFilm.render()+window.BEFNCoverage
 function openFighter(id){const f=D.fighters.find(x=>x.id===id);if(!f)return;const recent=f.latest||[];const img=f.photo?`<img loading="lazy" src="${safeURL(f.photo)}" alt="Published fighter photograph of ${esc(f.name)}" referrerpolicy="no-referrer">`:'<div class="placeholder" aria-label="Photo unavailable"></div>';
  document.querySelector('#fighter-dialog-content').innerHTML=`<div class="dialog-top"><div><div class="eyebrow" style="color:#b4e1d5">${esc(f.sport)} / ${esc(f.division)} / ${esc(f.category)}</div><h2>${esc(f.name)}</h2><small>${esc(f.record)} · Archive date 7 Nov 2026</small></div><button type="button" class="dialog-close" id="closeFighter" aria-label="Close fighter profile">×</button></div><div class="dialog-content"><div class="dialog-bio">${img}<div><h3 style="margin-top:0">Fighter snapshot</h3><p>${esc(f.meta)}</p><p><strong>Next event / path:</strong> ${esc(f.next||'Not currently verified')}</p>${f.verificationNote?`<p><strong>Record caution:</strong> ${esc(f.verificationNote)}</p>`:''}</div></div><h3>Five most recent results</h3>${recent.length?`<div class="scroller"><table class="data-table"><thead><tr><th>Date</th><th>Opponent</th><th>W/L</th><th>Method</th></tr></thead><tbody>${recent.map(r=>`<tr><td>${esc(r.date)}</td><td>${esc(r.opponent)}</td><td>${esc(r.outcome)}</td><td>${esc(r.method)}</td></tr>`).join('')}</tbody></table></div>`:'<p>No verifiable recent-fight table in the source archive.</p>'}<h3>Style & recent form</h3><ul>${f.analysis.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><h3>Source links</h3><div class="source-list">${f.sources.length?f.sources.map(x=>`<a href="${safeURL(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.label)} ↗</a>`).join(''):'<span>Additional source links are not currently available.</span>'}</div><p class="panel-note">Some historical material has not been independently reverified.</p></div>`;
  if(dialog.showModal)dialog.showModal();else dialog.setAttribute('open','');}
-function navigate(){let key=location.hash.replace('#','').split('/')[0]||'home';if(key==='news')key='home';const all=['home','news','champions','fighters','social','calendar','results','highlights'];if(!all.includes(key))key='home';const pages={home:renderHome,news:renderNews,champions:renderChampions,fighters:renderFighters,social:renderSocial,calendar:renderCalendar,results:()=>window.ResultsDesk.render()+window.BEFNCoverage.reports(desk.resultReports||[],activeSport())+window.BEFNCoverage.panel(activeSport()),highlights:renderHighlights};main.innerHTML=pages[key]();if(key==='highlights')window.FightFilm.load();hydrateTalkEmbeds();document.querySelectorAll('[data-nav]').forEach(x=>{const yes=x.dataset.nav===key;x.classList.toggle('active',yes);if(yes)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});if(location.hash.startsWith('#fighter/')){openFighter(decodeURIComponent(location.hash.slice(9)))}window.scrollTo({top:0,behavior:'instant'});hydrateMissingPortraits().catch(()=>{});if(key==='social'&&!liveTalk.loading&&Date.now()-liveTalk.lastAttempt>10*60*1000)loadLiveTalk().catch(()=>{});}
+function navigate(){let key=location.hash.replace('#','').split('/')[0]||'home';if(key==='news')key='home';if(key==='calendar'||key==='results'){fightDesk.view=key==='results'?'results':'upcoming';history.replaceState(null,'','#fights');key='fights';}const all=['home','champions','fighters','social','fights','highlights'];if(!all.includes(key))key='home';const pages={home:renderHome,champions:renderChampions,fighters:renderFighters,social:renderSocial,fights:renderFights,highlights:renderHighlights};main.innerHTML=pages[key]();if(key==='highlights')window.FightFilm.load();hydrateTalkEmbeds();document.querySelectorAll('[data-nav]').forEach(x=>{const yes=x.dataset.nav===key;x.classList.toggle('active',yes);if(yes)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});if(location.hash.startsWith('#fighter/')){openFighter(decodeURIComponent(location.hash.slice(9)))}window.scrollTo({top:0,behavior:'instant'});hydrateMissingPortraits().catch(()=>{});if(key==='social'&&!liveTalk.loading&&Date.now()-liveTalk.lastAttempt>10*60*1000)loadLiveTalk().catch(()=>{});}
 document.addEventListener('click',e=>{
+ const fightButton=e.target.closest('button[data-fights-view],button[data-fights-promotion]');
+ if(fightButton){
+  if(fightButton.dataset.fightsView)fightDesk.view=fightButton.dataset.fightsView;
+  if(fightButton.dataset.fightsPromotion)fightDesk.promotion=fightButton.dataset.fightsPromotion;
+  main.innerHTML=renderFights();
+  if(fightButton.dataset.fightsView)main.querySelector('[data-fights-view="'+fightDesk.view+'"]')?.focus({preventScroll:true});
+  else main.querySelector('[data-fights-promotion="'+fightDesk.promotion+'"]')?.focus({preventScroll:true});
+  return;
+ }
  const segment=e.target.closest('button[data-segment]');
  if(segment){
   const {segment:name,value}=segment.dataset;
@@ -1410,7 +1430,7 @@ document.addEventListener('click',e=>{
   refreshTalkView(undefined,true);
  }
 });
-document.addEventListener('input',e=>{if(e.target.id==='fighterSearch'){state.fightersQuery=e.target.value;renderFighterCards()}});
+document.addEventListener('input',e=>{if(e.target.id==='fights-event-search'){fightDesk.query=e.target.value;const panel=document.getElementById('fights-active-content');if(panel)panel.innerHTML=renderFightsContent();return;}if(e.target.id==='fighterSearch'){state.fightersQuery=e.target.value;renderFighterCards()}});
 document.addEventListener('change',e=>{
  const {id,value}=e.target;
  if(e.target.matches('select[data-talk-filter]')){
