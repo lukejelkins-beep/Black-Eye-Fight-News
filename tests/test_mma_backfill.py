@@ -47,6 +47,19 @@ class ArchiveBackfillTests(unittest.TestCase):
         self.assertEqual(rows[0]['sport'],'Muay Thai')
         self.assertEqual(rows[0]['winner'],0)
         self.assertEqual(rows[0]['method'],'knockout' if False else 'Knockout')
+    def test_one_published_winner_without_method_is_kept(self):
+        raw='''<h1>ONE Fight Night 48</h1><p>1 fights</p>
+        <div>Heavyweight MMA</div>
+        <a href="/fighters/shamil-erdogan">★ Shamil Erdogan 6-0</a>
+        <span>VS</span>
+        <a href="/fighters/paul-elliott">Paul Elliott 2-3</a>'''
+        event,rows=m.parse_one(raw,'https://fighterarena.com/events/one-example',
+                               dt.date(2026,10,3),{})
+        self.assertEqual(len(rows),1)
+        self.assertEqual(rows[0]['winner'],0)
+        self.assertEqual(rows[0]['status'],'completed')
+        self.assertEqual(rows[0]['method'],'Method not published by event source')
+
     def test_ufc_explicit_winner_only(self):
         raw='''<h1>UFC 333: Volkanovski vs Evloev Results, Winners, Methods & Fight Stats</h1>
         <div>Main Card · Featherweight title bout · 5 scheduled rounds</div>
