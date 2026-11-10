@@ -320,6 +320,7 @@ def ingest_job(task,portraits):
     except Exception as err:
         print('Source unavailable (existing data retained):',organization,url,type(err).__name__,str(err)[:100],file=sys.stderr)
         return (organization,url,None,[],0)
+LAST_AUDIT = {}
 def run(data,portraits,fetcher=fetch):
     global fetch
     fetch=fetcher
@@ -334,13 +335,18 @@ def run(data,portraits,fetcher=fetch):
         except Exception as err:print('Archive list unavailable:',kind,type(err).__name__,file=sys.stderr)
     print('Historical event pages to inspect:',len(tasks),dict((k,sum(t[0]==k for t in tasks)) for k in ('UFC','ONE','PFL')))
     changes={'events':0,'bouts':0}
+    global LAST_AUDIT
+    LAST_AUDIT={'tasks':{k:sum(t[0]==k for t in tasks) for k in ('UFC','ONE','PFL')},'imported':[],'unmatched':[]}
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
         futures=[pool.submit(ingest_job,t,portraits) for t in tasks]
         for task,fut in zip(tasks,futures):
             org,url,event,rows,total=fut.result()
             if event and rows:
                 merge(data,event,rows,changes)
+                LAST_AUDIT['imported'].append({'org':org,'date':event['date'],'name':event['name'],'url':url,'bouts':total})
                 print('Verified',org,total,'bouts',event['date'],event['name'][:65])
+            else:
+                LAST_AUDIT['unmatched'].append({'org':org,'url':url})
     return changes
 def main():
     parser=argparse.ArgumentParser()
@@ -352,6 +358,11 @@ def main():
     changes=run(data,portrait_map())
     data['coverage']='Six-month historical UFC, PFL and ONE results (11 May–11 Nov 2026). Verified outcomes are linked to an event source; incomplete cards, missing records and missing portraits are explicitly identified. Records from archive listings are labelled, not assumed to be post-fight.'
     data['reviewedAt']=dt.datetime.now(dt.timezone.utc).date().isoformat()
+    LAST_AUDIT['changes']=changes
+    LAST_AUDIT['totalEvents']=len(data['events'])
+    LAST_AUDIT['totalBouts']=len(data['results'])
+    LAST_AUDIT['countsByPromotion']={k:sum(k.lower() in e['name'].lower() for e in data['events']) for k in ('ufc','one','pfl')}
+    (ROOT/'data'/'backfill-mma-audit.json').write_text(json.dumps(LAST_AUDIT,ensure_ascii=False,indent=2)+'\n')
     print('Backfill',changes,'total events',len(data['events']),'total rows',len(data['results']))
     if not args.dry_run and json.dumps(json.loads(before),sort_keys=True)!=json.dumps(data,sort_keys=True):
         path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
