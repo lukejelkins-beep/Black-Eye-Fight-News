@@ -65,7 +65,8 @@ assert(ctx.renderSocial().includes('href="https://x.com/media/status/200"'),'Dis
 assert(!ctx.renderSocial().includes('Selected post'));
 assert(!ctx.renderSocial().includes('talk-card-meta'));
 assert(ctx.postCard(champion).includes('instagram.com/'));
-assert(ctx.postCard(champion).includes('talk-post-summary'),'Show sourced summaries if original captions cannot be loaded');
+assert(ctx.postCard(champion).includes('Champion training update'),'Display the original social post text when available');
+assert(!ctx.postCard(champion).includes('talk-post-summary'),'Never replace original posts with editorial summaries');
 assert(ctx.postCard(champion).includes('href="https://www.instagram.com/champion/p/abc/"'),'Keep the original Instagram post URL');
 assert(ctx.postCard(champion).includes('Open post'),'Original post must have a direct fallback link');
 assert(html.includes('https://www.instagram.com/embed.js'),'Instagram official embed script should be loaded');
