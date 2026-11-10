@@ -56,7 +56,7 @@ window.FightFilm=(()=>{
  }
  function content(){
   if(!data)return `<div class="film-loading" role="status">${failed?'Film feed temporarily unavailable. The archive remains accessible from Editions.':'Loading publisher videos…'}</div>`;
-  return `<p class="film-updated">Curated clips from official promotions and verified publisher highlight pages. YouTube clips have Australian region metadata checks; direct UFC publisher pages may have different playback rights. ${failed?'The last available edition is shown while a source is unavailable.':''}${data.updatedAt?' Feed data last updated: '+esc(new Date(data.updatedAt).toLocaleString('en-AU'))+'.':''}</p>
+  return `
    ${(() => {const sport=window.BEFNSport?.get()||'all';
     if(sport==='boxing')return section('boxing','Fight film','Verified boxing highlights','boxing');
     if(sport==='mma')return section('combat','Fight film','Verified MMA highlights from UFC, PFL, ONE and other promotions','mma');
@@ -94,7 +94,7 @@ window.FightFilm=(()=>{
  function render(){
   if(!data&&!pending)load();
   else if(Date.now()-lastAttempt>300000&&!pending)load();
-  return `<div class="frame film-page"><div class="section-heading"><div><h1>Fight film</h1></div></div><p class="film-status">Videos checked every 5 minutes · Rights-holder footage</p><div id="fight-film-content">${content()}</div></div>`;
+  return `<div class="frame film-page"><div class="section-heading"><div><h1>Fight film</h1></div></div><div id="fight-film-content">${content()}</div></div>`;
  }
  document.addEventListener('error',e=>{
   const img=e.target;
