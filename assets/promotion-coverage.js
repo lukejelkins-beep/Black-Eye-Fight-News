@@ -51,17 +51,45 @@ window.BEFNCoverage=(()=>{
     +'</div></div>').join('')
    +'</details>';
  };
+ const eventKey=a=>{
+  const title=String(a.title||'').toLowerCase().replace(/[–—]/g,'-').replace(/\\s+/g,' ');
+  const matchup=title.match(/([a-z][a-z' -]{2,35})\\s+(?:vs\\.?|v\\.)\\s+([a-z][a-z' -]{2,35})/i);
+  if(matchup){
+   const clean=x=>x.replace(/^(?:results?|scorecards?|prelim|main card|fight night|ufc vegas|ufc fight night|\\d+|:|\\||-)\\s*/gi,'').replace(/\\s*(?:results?|scorecards?|highlights?|recap).*$/gi,'').trim().split(/\\s+/).slice(-2).join(' ');
+   const pair=[clean(matchup[1]),clean(matchup[2])].sort().join('-');
+   if(pair.length>5)return 'match:'+pair;
+  }
+  const event=title.match(/(?:ufc (?:vegas|fight night)\\s*[:#-]?\\s*\\d+|ufc\\s*\\d+|pfl\\s*\\d+|one\\s*\\d+|rizin\\s*\\d+|ksw\\s*\\d+|cage warriors\\s*\\d+)/);
+  if(event)return 'event:'+event[0];
+  return 'title:'+title.replace(/\\b(?:official|full|results?|scorecards?|prelims?|main card|recap|highlights?)\\b/g,'').replace(/[^a-z0-9]/g,'').slice(0,90);
+ };
  const reports=(articles=[],sport='all')=>{
-  const recent=(Array.isArray(articles)?articles:[]).filter(a=>a&&match(a,sport)&&/^https:\/\//.test(a.url||''))
-    .sort((a,b)=>Date.parse(b.publishedAt||0)-Date.parse(a.publishedAt||0)).slice(0,24);
+  const recent=(Array.isArray(articles)?articles:[]).filter(a=>a&&match(a,sport)&&/^https:\\/\\//.test(a.url||''))
+    .sort((a,b)=>Date.parse(b.publishedAt||0)-Date.parse(a.publishedAt||0));
   if(!recent.length)return '';
-  return '<section class="befn-verified-results" aria-label="Officially published results reports"><h2>Official result reports</h2><p>Results and match recaps linked to their original publishers. These links supplement the independently verified fight-card results above.</p><div class="befn-result-report-list">'
-   +recent.map(a=>{
-      const image=a.image&&/^https:\/\//.test(a.image.url||'')?'<span class="befn-report-image"><img loading="lazy" decoding="async" src="'+link(a.image.url)+'" alt="'+esc(a.image.alt||a.title)+'"></span>':'';
+  const groups=new Map();
+  for(const a of recent){
+   const key=eventKey(a);
+   const date=Date.parse(a.publishedAt||0);
+   const existing=groups.get(key);
+   if(existing&&Math.abs(date-Date.parse(existing[0].publishedAt||0))<8*86400000){existing.push(a)}
+   else groups.set(existing?key+':'+(a.publishedAt||'unknown'):key,[a]);
+  }
+  const ranked=[...groups.values()].map(items=>{
+   items.sort((a,b)=>{
+    const score=x=>(/^(ufc|pfl|one championship|rizin|cage warriors|ksw)$/i.test(x.source||'')?10:0)+(/\\b(main card results|full results|official results|event results)\\b/i.test(x.title||'')?4:0)-(/\\b(prelim|scorecard)\\b/i.test(x.title||'')?2:0);
+    return score(b)-score(a)||Date.parse(b.publishedAt||0)-Date.parse(a.publishedAt||0);
+   });
+   return items;
+  }).sort((a,b)=>Date.parse(b[0].publishedAt||0)-Date.parse(a[0].publishedAt||0)).slice(0,24);
+  return '<section class="befn-verified-results" aria-label="Officially published results reports"><h2>Official result reports</h2><div class="befn-result-report-list">'
+   +ranked.map(items=>{
+      const a=items[0],image=a.image&&/^https:\\/\\//.test(a.image.url||'')?'<span class="befn-report-image"><img loading="lazy" decoding="async" src="'+link(a.image.url)+'" alt="'+esc(a.image.alt||a.title)+'"></span>':'';
       const when=a.publishedAt?new Date(a.publishedAt).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}):'';
-      return '<a class="befn-result-report" href="'+link(a.url)+'" target="_blank" rel="noopener noreferrer">'+image+'<span class="befn-report-text"><small>'+esc(a.source||'Official publisher')+' · '+esc(when)+(sport==='all'?' · '+esc(a.sport||''):'')+'</small><strong>'+esc(a.title)+'</strong></span><span aria-hidden="true">↗</span></a>';
-    }).join('')
-   +'</div></section>';
+      const primary='<a class="befn-result-report" href="'+link(a.url)+'" target="_blank" rel="noopener noreferrer">'+image+'<span class="befn-report-text"><small>'+esc(a.source||'Official publisher')+' · '+esc(when)+'</small><strong>'+esc(a.title)+'</strong></span><span aria-hidden="true">↗</span></a>';
+      const more=items.length>1?'<details class="befn-report-more" style="padding:6px 16px 12px"><summary>More coverage ('+(items.length-1)+')</summary><ul>'+items.slice(1).map(x=>'<li><a href="'+link(x.url)+'" target="_blank" rel="noopener noreferrer">'+esc(x.source||'Publisher')+': '+esc(x.title)+'</a></li>').join('')+'</ul></details>':'';
+      return '<div class="befn-report-event">'+primary+more+'</div>';
+   }).join('')+'</div></section>';
  };
  return Object.freeze({panel,reports});
 })();
