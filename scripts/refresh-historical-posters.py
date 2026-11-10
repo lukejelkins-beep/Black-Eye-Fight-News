@@ -25,22 +25,22 @@ HEADERS = {
 }
 PFL_PAGES = {
     "pfl-2026-10-16-chicago": "https://pflmma.com/event/pfl-chicago",
-    "pfl-2026-10-10-africa-morocco": "https://pflmma.com/event/pfl-africa-casablanca",
-    "pfl-2026-10-02-mena-riyadh": "https://pflmma.com/event/pfl-mena",
+    "pfl-2026-10-10-africa-morocco": "https://pflmma.com/event/pfl-morocco",
+    "pfl-2026-10-02-mena-riyadh": "https://pflmma.com/event/pflmena11/",
     "pfl-2026-08-22-tampa": "https://pflmma.com/event/pfl-tampa",
     "pfl-2026-08-07-charlotte": "https://pflmma.com/event/pfl-charlotte",
     "pfl-2026-07-31-new-york": "https://pflmma.com/event/pfl-new-york",
-    "pfl-2026-07-25-washington-dc": "https://pflmma.com/event/pfl-washington",
-    "pfl-2026-07-18-austin": "https://pflmma.com/event/pfl-austin",
-    "pfl-2026-07-10-mena-10": "https://pflmma.com/event/pfl-mena-10",
+    "pfl-2026-07-25-washington-dc": "https://pflmma.com/event/pfl-washington-dc-2026",
+    "pfl-2026-07-18-austin": "https://pflmma.com/event/pfl-austin-2026/",
+    "pfl-2026-07-10-mena-10": "https://pflmma.com/event/pflmena10",
     "pfl-2026-06-27-san-diego": "https://pflmma.com/event/pfl-san-diego",
     "pfl-2026-06-13-africa-nigeria": "https://pflmma.com/event/pfl-africa-nigeria",
-    "pfl-2026-05-24-mena-9": "https://pflmma.com/event/pfl-mena-9",
-    "pfl-2026-05-23-brussels": "https://pflmma.com/event/pfl-brussels",
+    "pfl-2026-05-24-mena-9": "https://pflmma.com/event/pflmena-9",
+    "pfl-2026-05-23-brussels": "https://pflmma.com/event/pfl-brussels-2026",
 }
 ONE_RE = [
     (re.compile(r"friday fights?\s+(\d{2,3})", re.I), "one-friday-fights-"),
-    (re.compile(r"fight night\s+(\d{1,3})", re.I), "one-fight-night-"),
+    (re.compile(r"fight night\s+(\d{1,3})", re.I), "onefightnight"),
     (re.compile(r"samurai\s+(\d{1,2})", re.I), "one-samurai-"),
 ]
 BAD_IMAGES = re.compile(r"(?:/logo(?:s)?/|(?:site|one|pfl|ufc)[-_]?logo|placeholder|default[_-]?(?:image|poster)|transparent\.png|favicon|avatar|social-share-default)", re.I)
@@ -59,8 +59,11 @@ class Metadata(HTMLParser):
             val = attrs.get("content", "")
             if name and val:
                 self.meta[name] = val
-        if tag == "img" and len(self.images) < 80:
-            self.images.append((attrs.get("alt", ""), attrs.get("src", "") or attrs.get("data-src", "")))
+        if tag == "img" and len(self.images) < 240:
+            candidate = (attrs.get("data-src") or attrs.get("data-lazy-src") or attrs.get("src") or "")
+            if not candidate or candidate.startswith("data:"):
+                candidate = (attrs.get("data-srcset") or attrs.get("srcset") or "").split(",")[0].strip().split(" ")[0]
+            self.images.append((attrs.get("alt", ""), candidate))
 
 
 def metadata(url):
@@ -127,7 +130,9 @@ def identity_match(promotion, page, html, event, ident):
         return False
     if promotion == "PFL":
         city = event["name"].split(":")[0].replace("PFL", "").strip().lower()
-        if "pfl" not in title or (city and city not in title):
+        # PFL sometimes publishes Washington D.C. instead of Washington DC.
+        normalize = lambda x: re.sub(r"[^a-z0-9]", "", x.lower())
+        if "pfl" not in title or (city and normalize(city) not in normalize(title)):
             return False
         return True
     if promotion == "UFC":
@@ -149,15 +154,32 @@ def identity_match(promotion, page, html, event, ident):
 def pick_image(meta, html, url, event):
     image = meta.meta.get("og:image:secure_url") or meta.meta.get("og:image") or meta.meta.get("twitter:image")
     candidates = [image] if image else []
-    # If the primary event social image is a logo, look for an image with an
-    # event-specific alt label; never select the first unrelated news thumbnail.
+    # Official ONE event pages use show-specific asset codes: OFF175, OFN49,
+    # ONESamurai4. Match the *exact* number and official page identity.
+    # This avoids accidentally using a previous event's artwork.
+    event_name = event.get("name", "")
+    number = re.search(r"friday fights?\s+(\d{2,3})", event_name, re.I)
+    if number:
+        image_code = re.compile(r"\bOFF[-_ ]?" + re.escape(number.group(1)) + r"\b", re.I)
+    else:
+        number = re.search(r"fight night\s+(\d{1,3})", event_name, re.I)
+        if number:
+            image_code = re.compile(r"\b(?:OFN[-_ ]?|ONE[ _-]?FIGHT[ _-]?NIGHT[ _-]?)" + re.escape(number.group(1)) + r"\b", re.I)
+        else:
+            number = re.search(r"samurai\s+(\d{1,2})", event_name, re.I)
+            image_code = re.compile(r"\b(?:ONESamurai|OS)[-_ ]?" + re.escape(number.group(1)) + r"\b", re.I) if number else None
+    for alt, candidate in meta.images:
+        combined = alt + " " + candidate
+        if image_code and image_code.search(combined):
+            candidates.insert(0, candidate)
+    # When the OG image is a generic logo, fall back to an identity-checked
+    # event image; never select the first unrelated news thumbnail.
     if not image or BAD_IMAGES.search(image):
-        name = event.get("name", "")
-        tokens = [t.lower() for t in re.findall(r"[\w]+", name) if len(t) > 3 and
+        tokens = [t.lower() for t in re.findall(r"[\w]+", event_name) if len(t) > 3 and
                   t.lower() not in ("fight", "night", "championship", "friday", "results", "archive")]
         for alt, candidate in meta.images:
             low = alt.lower()
-            if candidate and sum(t in low for t in tokens) >= min(2, len(tokens)):
+            if candidate and len(tokens)>1 and sum(t in low for t in tokens) >= 2:
                 candidates.append(candidate)
     for candidate in candidates:
         if not candidate:
@@ -212,6 +234,17 @@ def main():
             if item:
                 entries[eid] = item
                 added.append(eid)
+    # ONE's Inner Circle is sometimes billed as a second session of the same
+    # Friday event. Reuse the officially verified poster for that same date only.
+    for event in eligible:
+        if event["id"] in entries or "inner circle" not in event["name"].lower():
+            continue
+        friday = next((e for e in by_date.get(event["date"], []) if
+                       re.search(r"friday fights?\s+\d+", e["name"], re.I) and e["id"] in entries), None)
+        if friday:
+            entries[event["id"]] = {**entries[friday["id"]], "kind": "shared-event-art",
+                                     "verifiedEventDate": event["date"]}
+            added.append(event["id"])
     print(f"Historical poster lookup: checked {len(eligible)} missing events; added {len(added)} exact-event official artwork; indexed {len(entries)}.")
     if added:
         existing["reviewedAt"] = dt.datetime.now(dt.timezone.utc).date().isoformat()
