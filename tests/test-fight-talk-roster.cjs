@@ -2,7 +2,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const cfg=JSON.parse(fs.readFileSync('data/fight-talk-sources.json','utf8'));
 const roster=JSON.parse(fs.readFileSync('data/fight-talk-roster.json','utf8'));
-const norm=s=>String(s||'').normalize('NFKD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+const norm=s=>String(s||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
 assert(roster.fighters.length>=215,'Track the full champion, contender and prospect roster');
 assert.equal(roster.counts.total,roster.fighters.length);
 assert.equal(roster.counts.tracked,roster.fighters.filter(p=>p.status==='tracked').length);
