@@ -1053,7 +1053,7 @@ function talkBlueskyURI(p){
 function originalTalkPost(p){
  if(!talkDirectSource(p))return '<p class="talk-post-unavailable">This source is unavailable.</p>';
  const source=safeURL(p.url);
- const open='<a href="'+source+'" target="_blank" rel="noopener noreferrer">View original post on '+esc(p.platform)+'</a>';
+ const open='<a href="'+source+'" target="_blank" rel="noopener noreferrer" aria-label="Open post on '+esc(p.platform)+'">Open post on '+esc(p.platform)+' ↗</a>';
  const knownText=typeof p.quote==='string'&&p.quote.trim()?p.quote.trim():'';
  const fallback='<div class="talk-embed-fallback">'+(knownText?'<p class="talk-original-excerpt">'+esc(knownText)+'</p>':'<p>The official post cannot be displayed in this browser.</p>')+'<p>'+open+'</p></div>';
  if(p.platform==='Instagram'){
@@ -1180,7 +1180,11 @@ function postCard(p){
    +steps.map((st,i)=>'<div class="thread-step '+(i?'reply':'')+'">'+thumb(st.photo,st.name)+'<div><div class="social-author"><strong>'+esc(st.name)+' <span class="handle">'+esc(st.handle||'')+'</span></strong></div><p>'+esc(st.quote)+'</p></div></div>').join('')
    +'<div class="social-foot"><span>Reported exchange · X</span>'+(p.url?'<a class="social-source" href="'+safeURL(p.url)+'" target="_blank" rel="noopener noreferrer">Read coverage ↗</a>':'')+'</div></article>';
  }
+ // An official embed already carries its own author, handle, timestamp and media.
+ // Do not duplicate that information inside a second dark editorial card.
  const direct=talkDirectSource(p);
+ if(direct&&['Instagram','Threads','X','Bluesky'].includes(p.platform))
+  return '<article class="social-card talk-native-card" data-platform="'+esc(p.platform)+'">'+originalTalkPost(p)+'</article>';
  const when=p.postedAt?'<time datetime="'+esc(p.postedAt)+'">'+esc(humanTalkTime(p.postedAt))+'</time>':p.nativeEmbed?'<time datetime="'+esc(p.sourceLinkedAt)+'">Discovered in coverage '+esc(humanTalkTime(p.sourceLinkedAt))+'</time>':esc(p.date);
  const label=direct?'Open post':'Read coverage';
  return '<article class="social-card" data-platform="'+esc(p.platform)+'">'
