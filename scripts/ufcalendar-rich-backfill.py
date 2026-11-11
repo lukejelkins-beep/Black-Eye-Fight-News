@@ -418,6 +418,7 @@ def read_fighter_profile(obj):
     if not isinstance(record,str) or not re.fullmatch(r"\d{1,3}-\d{1,3}(?:-\d{1,3})?",record.strip()):
         record=None
     return {"name":name,"slug":slugval,"record":record,"observedOn":dt.date.today().isoformat(),
+            "currentChampion":obj.get("is_champion") is True,
             "source":"UFCalendar","sport":"MMA"}
 
 def collect_profiles(client,state,cards,fighters,today):
@@ -488,13 +489,13 @@ def collect_championship_history(client,state,research):
         historic=[r for r in rows if isinstance(r,dict) and
                   (r.get("is_champion") is True or r.get("rank")==0)]
         state["rankingDone"][slugval]=True
-        profile["formerUfcChampion"]=any(r.get("org")=="ufc" for r in historic)
+        profile["hasHeldUfcTitle"]=any(r.get("org")=="ufc" for r in historic)
         profile["titleHistoryEvidence"]=[{"date":date_str(r.get("snapshot_date")),
                                           "division":safe(r.get("division"),50)}
                                          for r in historic[:6] if r.get("org")=="ufc"]
         done+=1
 
-def recover_previews(cards,archive,pfl_archive):
+def recover_previews(cards,archive,pfl_archive,judging):
     """Reuse saved round observations without re-spending quota on previous requests."""
     import importlib.util
     spec=importlib.util.spec_from_file_location("befn_saved_archive",ROOT/"scripts/refresh-ufc-research-archive.py")
@@ -504,6 +505,9 @@ def recover_previews(cards,archive,pfl_archive):
         dataset=archive if ev.get("org")=="ufc" else pfl_archive
         day=ev.get("date")
         for bout in ev.get("bouts",[]):
+            if not bout.get("scorecardSummary"):
+                recorded=judging.get("decisions",{}).get(bout["id"])
+                if recorded:bout["scorecardSummary"]=recorded
             if bout.get("roundPreview"):continue
             a=bout.get("a",{})
             b=bout.get("b",{})
@@ -525,7 +529,7 @@ def public_events(cards,profiles,today):
         info["bouts"]=[]
         for b in event.get("bouts",[]):
             row={k:b.get(k) for k in ("id","status","section","order","main","titleFight",
-                                      "division","scheduledRounds","result","roundPreview")}
+                                      "division","scheduledRounds","result","roundPreview","scorecardSummary")}
             for corner in ("a","b"):
                 athlete=b[corner]
                 row[corner]=athlete.get("name") if isinstance(athlete,dict) else safe(athlete)
@@ -537,8 +541,13 @@ def public_events(cards,profiles,today):
                     if not p:
                         same=[x for x in profiles.values() if x.get("name","").casefold()==row[corner].casefold()]
                         if len(same)==1:p=same[0]
-                    if p and p.get("record"):
-                        row[corner+"Record"]=p["record"]
+                    if p:
+                        if p.get("record"):row[corner+"Record"]=p["record"]
+                        if p.get("recentHistory"):row[corner+"Recent"]=p["recentHistory"][:3]
+                        if p.get("hasHeldUfcTitle") is True:
+                            row[corner+"HeldUfcTitle"]=True
+                    if not (p and p.get("record")) and b.get(corner+"Record"):
+                        row[corner+"Record"]=b[corner+"Record"]
                     elif b.get(corner+"Record"):
                         row[corner+"Record"]=b[corner+"Record"]
             info["bouts"].append(row)
@@ -583,7 +592,7 @@ def main():
         collect_profiles(client,state,cards,research,today)
         collect_careers(client,state,research)
         collect_championship_history(client,state,research)
-        recover_previews(cards,archive,pfl_archive)
+        recover_previews(cards,archive,pfl_archive,judging)
         public=public_events(cards,research.get("profiles",{}),today)
         write(CARDS,public)
         archive["updatedAt"]=dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
