@@ -47,6 +47,19 @@ export async function collectPlatforms(config,getJSON,insert,since){
     continue;
    }
   }
+  // Confirm Business Discovery itself before touching a large third-party watchlist.
+  // A valid Graph token and a discovered asset do not imply this permission is approved.
+  if(platform==='Instagram'){
+   try{
+    const fields='business_discovery.username(ufc){id,username}';
+    const probe=await getJSON('https://graph.facebook.com/'+version+'/'+own+'?'+new URLSearchParams({fields}),headers);
+    if(probe.business_discovery?.username?.toLowerCase()!=='ufc')throw Error('Business Discovery did not return the requested professional profile');
+   }catch(e){
+    out.push({platform,state:'unavailable',checked:0,failed:0,configured:sources.length,
+     message:'Instagram Business Discovery not permitted ('+String(e.message||e).slice(0,60)+'). Check Meta app permissions and Page-linked professional access.'});
+    continue;
+   }
+  }
   // Rate-limited platforms are scanned in small bounded concurrent batches.
   let cursor=0;
   async function one(src){
