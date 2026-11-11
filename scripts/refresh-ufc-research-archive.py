@@ -148,7 +148,11 @@ def put(archive,day,a,b,event,source,source_id,rounds,stamp):
         rounds=corrected
     old=fight["sources"].get(source,{})
     old_rounds=old.get("rounds",[])
-    if sum(len(x) for x in rounds)<sum(len(x) for x in old_rounds):
+    def evidence_weight(rows):
+        return sum(sum(len(row.get(corner,{})) for corner in ("a","b")) for row in rows)
+    # Prefer previously archived richer per-round evidence; never regress to a
+    # sparse older snapshot when two provider runs report the same round count.
+    if evidence_weight(rounds)<evidence_weight(old_rounds):
         rounds=old_rounds
     fight["sources"][source]={"id":str(source_id),"rounds":rounds,"observedAt":stamp}
     reconcile(fight)
