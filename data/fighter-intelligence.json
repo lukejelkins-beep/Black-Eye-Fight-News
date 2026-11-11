@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedOn": "2026-11-10",
+  "generatedOn": "2026-11-11",
   "scope": "UFC, PFL and ONE MMA",
   "note": "Editorial reassessment signals, not official rankings or automatic designations.",
   "sources": [
@@ -11,8 +11,8 @@
     },
     {
       "provider": "UFCalendar",
-      "status": "needs_key",
-      "detail": "Set UFCALENDAR_API_KEY GitHub Actions secret."
+      "status": "unavailable",
+      "detail": "Rankings lookup unavailable; retained existing insights."
     },
     {
       "provider": "Octagon",
@@ -21,8 +21,8 @@
     },
     {
       "provider": "UFC Stats API",
-      "status": "pending_permission",
-      "detail": "Hosted data is for personal/non-commercial use; explicit approval required."
+      "status": "unavailable",
+      "detail": "Endpoint connectivity or data verification failed (URLError)."
     }
   ],
   "fighters": [
