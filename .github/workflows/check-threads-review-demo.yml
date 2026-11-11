@@ -1,0 +1,23 @@
+name: Check secure Threads OAuth demonstrator
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'threads-review/**'
+      - '.github/workflows/check-threads-review-demo.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax check
+        run: node --check threads-review/server.mjs
+      - name: Check OAuth, session security and source links
+        run: node --test threads-review/test.mjs
