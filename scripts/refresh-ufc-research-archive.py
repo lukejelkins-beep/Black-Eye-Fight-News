@@ -19,7 +19,9 @@ MAX_RUN_CALLS = 9
 METRICS = ("sigLanded", "sigAttempted", "sigAbsorbed", "totalLanded", "totalAttempted",
            "takedowns", "takedownAttempts", "knockdowns", "controlSec", "subAttempts",
            "headLanded", "headAttempted", "bodyLanded", "bodyAttempted", "legLanded",
-           "legAttempted", "distanceLanded", "clinchLanded", "groundLanded")
+           "legAttempted", "distanceLanded", "distanceAttempted",
+           "clinchLanded", "clinchAttempted", "groundLanded", "groundAttempted",
+           "reversals", "distanceTimeSec", "clinchTimeSec", "groundTimeSec")
 CAL_MAP = {"sigLanded":"sigLanded","sigAbsorbed":"sigAbsorbed",
            "takedowns":"takedowns","knockdowns":"knockdowns",
            "controlSec":"controlSec","subAttempts":"subAttempts",
