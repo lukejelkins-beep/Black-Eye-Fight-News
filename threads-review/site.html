@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#112630">
+<title>Threads Discovery | Black Eye Fight News</title>
+<style>
+:root{--paper:#f4f2eb;--ink:#132a31;--line:#d6e0db;--mint:#a8ead9;--soft:#e4ece7}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}
+header{background:#112630;color:#f7f8f2;border-bottom:4px solid var(--mint);padding:18px max(20px,calc((100vw - 1040px)/2))}
+.brand{font-weight:950;letter-spacing:.065em;font-size:20px;text-decoration:none;color:#fff}
+.brand b{background:var(--mint);color:#142a30;padding:6px 9px;margin-right:10px}
+.topline{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#b4d5cb;font-weight:700;margin-top:11px}
+main{max-width:1040px;padding:42px 20px 70px;margin:auto}
+.eyebrow{text-transform:uppercase;letter-spacing:.18em;color:#29716b;font-size:11px;font-weight:900}
+h1{font-size:clamp(40px,8vw,84px);line-height:.92;letter-spacing:-.055em;margin:15px 0 22px;text-transform:uppercase}
+h1 em{font-style:normal;color:#287a6e}
+.intro{max-width:760px;color:#4b6363;font-size:17px}
+.card{margin-top:28px;background:#fff;border:1px solid var(--line);padding:27px;border-radius:6px;box-shadow:0 12px 25px #122a3010}
+.card h2{font-size:24px;margin:0 0 9px;line-height:1.2}
+.card p{margin:7px 0 18px;color:#536a69}
+.row{display:flex;gap:13px;align-items:center;flex-wrap:wrap}
+.button{border:0;border-radius:3px;background:#122c35;color:#fff;padding:13px 18px;font-size:14px;font-weight:850;text-decoration:none;cursor:pointer}
+.button:hover{background:#27555b}.button:disabled{opacity:.5;cursor:not-allowed}
+.button.secondary{background:#e0ece8;color:#123538}
+input{border:1px solid #acbfbb;border-radius:3px;padding:13px 14px;flex:1;min-width:170px;font:inherit}
+input:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid #d08a47;outline-offset:3px}
+.meta{font-size:12px;color:#6a7778}
+.status{padding:12px 14px;background:#edf4f0;border-left:4px solid #5ba594;white-space:pre-wrap;font-weight:650}
+.status.error{background:#fff2ed;border-left-color:#b85b44}
+.profile{padding:16px 18px;background:#eef3ef;margin-top:15px;border-left:4px solid #72b09e}
+.profile h3{font-size:23px;margin:0 0 5px}
+.profile p{margin:0 0 8px}
+.post{border-top:1px solid var(--line);padding:16px 0}
+.post p{white-space:pre-wrap;overflow-wrap:anywhere;color:#21373d}
+.post a{color:#116e65;font-weight:800}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+footer{border-top:1px solid #c8d5cf;padding:27px 20px;text-align:center;color:#566b66;font-size:13px}
+footer a{color:#1e6c62;margin:0 9px}
+small{color:#667d79}
+@media(max-width:700px){.two{grid-template-columns:1fr}main{padding-top:28px}.card{padding:18px}}
+</style>
+</head>
+<body>
+<header>
+<a class="brand" href="https://black-eye-fight-news.onrender.com/"><b>BEFN</b> BLACK EYE FIGHT NEWS</a>
+<div class="topline">FIGHT TALK / ORIGINAL THREADS PROFILES / API REVIEW DEMONSTRATION</div>
+</header>
+<main>
+<div class="eyebrow">PUBLIC PROFILE DISCOVERY · EXPERIMENTAL</div>
+<h1>THREADS <em>DISCOVERY</em></h1>
+<p class="intro">Look up original public Threads profiles and recent posts from fighters and organisations. This BEFN prototype uses Meta's official Threads API and is restricted by the account permissions Meta grants. Posts appear as published by their authors, not as AI summaries.</p>
+<div class="two">
+<section class="card">
+<h2>1. Connect Threads</h2>
+<p>Authorise <strong>threads_basic</strong> and <strong>threads_profile_discovery</strong> to demonstrate public profile discovery. BEFN does not publish posts on your behalf.</p>
+<div class="row"><a class="button" id="connect" href="/auth/start">Connect Threads account</a>
+<form method="post" action="/logout" id="disconnect" hidden><button class="button secondary" type="submit">Disconnect</button></form></div>
+<p id="authStatus" class="status" role="status">Checking connection…</p>
+<small>Tokens are held temporarily in server memory, not placed in the public page or repository. Sessions expire automatically. This preview requests read-only permissions.</small>
+</section>
+<section class="card">
+<h2>2. Find a public profile</h2>
+<p>Start with Meta's official <strong>@threads</strong> profile to test Standard Access. After Meta grants Advanced Access, eligible fighters' public profiles can be queried too.</p>
+<form id="findForm" class="row">
+<label for="username" class="meta">Threads username</label>
+<input id="username" name="username" value="threads" placeholder="Exact account name" autocomplete="off" maxlength="30" required pattern="[A-Za-z0-9_.]{1,30}">
+<button id="lookup" class="button" type="submit" disabled>Discover profile</button>
+</form>
+<p id="lookupStatus" class="status" role="status">Connect your Threads account first.</p>
+<small>Public information only. Private accounts, messages and unpublished analytics are not accessible. One session allows at most 30 lookup attempts.</small>
+</section>
+</div>
+<section class="card" id="results" hidden>
+<h2>3. Original public results</h2>
+<div id="profile" class="profile"></div>
+<h3>Recent posts</h3>
+<div id="posts"></div>
+</section>
+<section class="card">
+<h2>How BEFN uses this</h2>
+<p>BEFN maintains a curated directory of combat sports figures with documented Threads account identities. When Meta enables third-party public profile access, Fight Talk can let readers compare public statements from athletes and promoters in a single division, with direct links back to Threads. This demonstration requests no private information, and the current public Fight Talk feed remains unchanged.</p>
+<div class="row"><a class="button secondary" href="https://black-eye-fight-news.onrender.com/#social">Back to Fight Talk</a>
+<a class="button secondary" href="https://black-eye-fight-news.onrender.com/privacy.html">Privacy policy</a></div>
+</section>
+</main>
+<footer><a href="https://black-eye-fight-news.onrender.com/">BEFN Home</a><a href="https://black-eye-fight-news.onrender.com/data-deletion.html">Data deletion</a><a href="https://developers.facebook.com/docs/threads/">Threads developer documentation</a></footer>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const message=(id,text,bad=false)=>{const node=$(id);node.textContent=text;node.classList.toggle('error',bad)};
+const params=new URLSearchParams(location.search);
+if(params.has('error')){
+ const names={configuration:'The app is not yet configured with the Threads App Secret and approved redirect URL.',invalid_state:'Your sign-in session expired. Try connecting again.',denied:'Threads authorisation was not granted.',oauth_failed:'Threads declined the token exchange. Check the registered callback and app permissions.'};
+ message('authStatus',names[params.get('error')]||'Threads sign-in was unsuccessful.',true);
+}
+let connected=false;
+(async()=>{
+ try{
+ const r=await fetch('/api/status',{credentials:'same-origin',cache:'no-store'});
+ const s=await r.json();
+ connected=!!s.connected;
+ $('connect').hidden=connected;
+ $('disconnect').hidden=!connected;
+ $('lookup').disabled=!connected;
+ if(!params.has('error')){
+  message('authStatus',!s.oauthConfigured?'Threads app configuration is not complete yet.':
+   connected?'Connected to Threads'+(s.username?' as @'+s.username:'')+'.':
+   'Not connected. Select Connect Threads account to authorise read-only access.',
+   !s.oauthConfigured);
+ }
+ message('lookupStatus',connected?'Ready to discover a public profile. Remaining lookups this session: '+s.remainingRequests:'Connect your Threads account first.');
+ }catch{message('authStatus','Backend not available. Try again after the service is deployed.',true)}
+})();
+$('findForm').addEventListener('submit',async e=>{
+ e.preventDefault();
+ if(!connected)return;
+ const username=$('username').value.trim().replace(/^@/,'');
+ $('lookup').disabled=true;
+ $('results').hidden=true;
+ message('lookupStatus','Requesting original public profile and posts from Meta…');
+ try{
+  const response=await fetch('/api/discover?username='+encodeURIComponent(username),{cache:'no-store',credentials:'same-origin'});
+  const data=await response.json();
+  if(!response.ok){
+   const detail=data.details||{};
+   message('lookupStatus',(data.error||'Lookup unsuccessful.')+
+    (detail.httpStatus?' HTTP '+detail.httpStatus:'')+
+    (detail.metaCode?' · Meta code '+detail.metaCode:'')+
+    '. Check that your test token includes threads_profile_discovery and that the target is allowed.',true);
+   return;
+  }
+  $('results').hidden=false;
+  const p=$('profile');
+  p.replaceChildren();
+  const title=document.createElement('h3');
+  title.textContent='@'+data.profile.username+(data.profile.isVerified?' ✓':'');
+  p.append(title);
+  if(data.profile.name){const name=document.createElement('p');name.textContent=data.profile.name;p.append(name)}
+  if(data.profile.biography){const bio=document.createElement('p');bio.textContent=data.profile.biography;p.append(bio)}
+  const container=$('posts');
+  container.replaceChildren();
+  for(const post of data.posts||[]){
+   const article=document.createElement('article');article.className='post';
+   const text=document.createElement('p');text.textContent=post.text||'(Post has media or no text)';
+   const link=document.createElement('a');link.href=post.permalink;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Open original Threads post';
+   const stamp=document.createElement('div');stamp.className='meta';stamp.textContent=post.timestamp||'';
+   article.append(text,stamp,link);container.append(article);
+  }
+  if(!data.posts?.length){const info=document.createElement('p');info.textContent=data.postError?
+    'Profile found, but Meta blocked its posts (HTTP '+data.postError.httpStatus+', code '+data.postError.metaCode+').':
+    'Profile found, but no public posts were returned.';container.append(info)}
+  message('lookupStatus','SUCCESS: Meta returned an original public profile'+(data.postError?' (posts unavailable)':' and '+data.posts.length+' public post(s)')+'.');
+ }catch{message('lookupStatus','The live Threads request failed. Check the API connection.',true)}
+ finally{$('lookup').disabled=!connected}
+});
+</script>
+</body>
+</html>
