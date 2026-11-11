@@ -310,10 +310,7 @@ window.UpcomingCards=(()=>{
      if(!Array.isArray(bout.fighters)||bout.fighters.length!==2||!bout.fighters.every(Boolean))continue;
      const matched=existing.bouts.find(b=>matchup(b)===matchup(bout));
      if(matched){
-       if(bout.section&&['main','prelims','early'].includes(bout.section)&&matched.section!==bout.section){
-         matched.section=bout.section;
-         matched.sectionSource='https://www.ufcalendar.com/events/'+encodeURIComponent(remote.slug);
-       }
+       // Keep official card section placement over supplemental research.
        if(!matched.division&&bout.division)matched.division=bout.division;
        if(!matched.note&&bout.isTitle)matched.note='Title fight';
        continue;
