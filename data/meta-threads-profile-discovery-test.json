@@ -1,23 +1,23 @@
 {
-  "checkedAt": "2026-11-11T01:35:42.812Z",
+  "checkedAt": "2026-11-11T01:36:31.052Z",
   "test": "threads_profile_discovery",
   "basicProfile": "ok",
   "profileLookup": "failed",
   "publicProfilePosts": "failed",
   "diagnostics": {
     "basic": {
-      "http": null,
+      "http": 200,
       "metaCode": null,
       "metaSubcode": null
     },
     "lookup": {
-      "http": null,
-      "metaCode": null,
+      "http": 403,
+      "metaCode": 10,
       "metaSubcode": null
     },
     "posts": {
-      "http": null,
-      "metaCode": null,
+      "http": 403,
+      "metaCode": 10,
       "metaSubcode": null
     }
   },
