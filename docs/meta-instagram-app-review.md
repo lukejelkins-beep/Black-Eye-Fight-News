@@ -60,6 +60,27 @@ A genuine demo must show **both** how the developer authorizes the linked profes
 - **Most recent real Instagram access test:** `instagram_basic` GRANTED, but `instagram_manage_insights`, `pages_read_engagement`, and `pages_show_list` NOT PRESENT in existing token. Assigned Instagram account found but no Page-linked Instagram account in `/me/accounts`. Business Discovery failed HTTP 400 code 10.
 - Adding review permission requests does not modify the existing access token. Once scopes are actually available, the authorizing person must go through the appropriate real Facebook Login OAuth grant/re-authentication and establish the linked Facebook Page/professional Instagram association. Do not hardcode fake results or publish a token.
 
+## Meta App Review status after TinyFish wallet top-up — 11 November 2026
+
+**Meta review remains a draft; not submitted.** The original user-funded TinyFish wallet top-up succeeded. Browser operations on the Meta app were performed.
+
+### Wizard and permission scope
+
+- **App settings** and **Reviewer instructions** are completed; Website Facebook Login answer was corrected to **No** and verified persisted.
+- **Verification** is not complete. The Meta portfolio 'Black Eye Fight News' is **Unverified**. The Meta Graph App Review verification screen only displayed **Business verification**, using 'Start verification'; completing the business/identity record and any requested official documentation is an owner-only task. The availability of an alternative individual verification route for this specific Graph API app was **not** confirmed.
+- **Allowed usage** is incomplete. The actual 'Review before submitting' wizard lists **13 requested permissions/features**, including Facebook Login Instagram scopes, the separate Instagram Login scope `instagram_business_basic` and several Threads requests. One `instagram_business_basic` description was saved (no screencast or permission test recorded). **This scope belongs to Instagram Login, not the site's current Facebook Login collector, so its necessity should be reviewed and it should not be justified as if it powers Business Discovery via graph.facebook.com.** The remaining permission-specific justification forms/screenshots and any API-test counters remain outstanding. Attempts to reach the dynamic 'Get started' entry for `pages_show_list` were unsuccessful; no such description was saved.
+- **Data handling** is incomplete. One TinyFish session reported adding Render as a processor, but the later fresh form audit instead showed the **processors question marked No with an empty list**, indicating the initial entry was not reliably persisted. The responsible legal person/entity textarea was **empty**, and their country not selected. The national-security disclosure question appeared as No in the form but **was not verified by the project owner**; do not submit a legal declaration based on that default. Policies checkbox options were unselected. Verify the actual data processors (including Render and GitHub Actions), legal data controller, jurisdiction and law-enforcement disclosure history with the owner before completing.
+- 'Submit for review' remained disabled.
+- The current GitHub Actions credential-safe API probe shows `instagram_basic` granted, `instagram_manage_insights`, `pages_read_engagement`, `pages_show_list` not present on the token. One assigned Instagram asset appeared, but zero Page-linked Instagram accounts from `/me/accounts`. Business Discovery still failed HTTP 400 code 10. This means **no successful API demonstration exists** and user authorization or role/asset linkage must be corrected legitimately; no fake demo should be recorded.
+
+### Pending decisions and recommended critical path
+
+1. Establish whether the project has an appropriate **registered business/ABN or eligible individual route**, then have the authorized owner complete Meta's required verification using real matching documents. Never invent a company/legal identity.
+2. Confirm the real person/entity responsible for Platform Data and their country, actual providers, historical disclosure answers and applicable security/process policies. Correct Data handling and verify saved fields.
+3. Narrow the requested permission set to what the BEFN current integration actually uses, or intentionally prepare separate Threads review evidence. The current public site does not implement a visitor Facebook Login screen.
+4. Complete the permission-specific Allowed usage justifications, ensure a legitimate grant for the prerequisite scopes, actual Page/professional-IG linkage and test calls, and capture genuine screenshots/screencast only after test works.
+5. Confirm review submission status and only submit once complete and accurate.
+
 ## Evidence / acceptance checklist
 
 - [x] App icon uploaded
