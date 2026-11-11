@@ -526,9 +526,125 @@
       "titleFight": false
     }
   },
-  "comparisons": {},
-  "divisions": {},
-  "events": {},
+  "comparisons": {
+    "johnny-walker:waldo-cortes-acosta-2": {
+      "a": {
+        "avg_control_time_sec": 75,
+        "avg_sig_strikes": 54.38,
+        "avg_takedowns": 0.25
+      },
+      "b": {
+        "avg_control_time_sec": 30,
+        "avg_sig_strikes": 30.11,
+        "avg_takedowns": 0.17
+      },
+      "commonOpponents": 1,
+      "fighterA": {
+        "id": 273,
+        "name": "Waldo Cortes Acosta",
+        "slug": "waldo-cortes-acosta-2"
+      },
+      "fighterB": {
+        "id": 7170,
+        "name": "Johnny Walker",
+        "slug": "johnny-walker"
+      },
+      "headToHeadBouts": 1,
+      "note": "Comparison context; does not predict a winner.",
+      "observedOn": "2026-11-11",
+      "source": "UFCalendar"
+    },
+    "marcos-degli:mitch-raposo": {
+      "a": {
+        "avg_control_time_sec": 77,
+        "avg_sig_strikes": 33.5,
+        "avg_takedowns": 1.67
+      },
+      "b": {
+        "avg_control_time_sec": 214,
+        "avg_sig_strikes": 33.5,
+        "avg_takedowns": 1.5
+      },
+      "commonOpponents": 0,
+      "fighterA": {
+        "id": 124,
+        "name": "Mitch Raposo",
+        "slug": "mitch-raposo"
+      },
+      "fighterB": {
+        "id": 11999,
+        "name": "Marcos Degli",
+        "slug": "marcos-degli"
+      },
+      "headToHeadBouts": 1,
+      "note": "Comparison context; does not predict a winner.",
+      "observedOn": "2026-11-11",
+      "source": "UFCalendar"
+    },
+    "renato-moicano:tom-nolan": {
+      "a": {
+        "avg_control_time_sec": 138,
+        "avg_sig_strikes": 37.14,
+        "avg_takedowns": 1.14
+      },
+      "b": {
+        "avg_control_time_sec": 89,
+        "avg_sig_strikes": 42.13,
+        "avg_takedowns": 0.63
+      },
+      "commonOpponents": 0,
+      "fighterA": {
+        "id": 589,
+        "name": "Renato Moicano",
+        "slug": "renato-moicano"
+      },
+      "fighterB": {
+        "id": 92,
+        "name": "Tom Nolan",
+        "slug": "tom-nolan"
+      },
+      "headToHeadBouts": 1,
+      "note": "Comparison context; does not predict a winner.",
+      "observedOn": "2026-11-11",
+      "source": "UFCalendar"
+    }
+  },
+  "divisions": {
+    "ufc:heavyweight": {
+      "division": "heavyweight",
+      "observedOn": "2026-11-11",
+      "org": "ufc",
+      "rankedCount": 16,
+      "rankingDate": "2026-11-10",
+      "recentBouts": 15,
+      "rosterCount": 30,
+      "source": "UFCalendar",
+      "upcomingBouts": 4
+    },
+    "ufc:lightweight": {
+      "division": "lightweight",
+      "observedOn": "2026-11-11",
+      "org": "ufc",
+      "rankedCount": 16,
+      "rankingDate": "2026-11-10",
+      "recentBouts": 15,
+      "rosterCount": 30,
+      "source": "UFCalendar",
+      "upcomingBouts": 8
+    }
+  },
+  "events": {
+    "2549": {
+      "completedBouts": 14,
+      "date": "2026-11-07",
+      "id": "2549",
+      "name": "UFC Fight Night: Cortes Acosta vs Walker",
+      "observedOn": "2026-11-11",
+      "org": "ufc",
+      "source": "UFCalendar",
+      "totalBouts": 14
+    }
+  },
   "fights": {
     "93077": {
       "date": "2026-10-31",
@@ -738,6 +854,110 @@
       "roundsAvailable": 3,
       "source": "UFCalendar"
     },
+    "93274": {
+      "date": "2026-11-07",
+      "division": "womens-strawweight",
+      "event": "UFC Fight Night: Cortes Acosta vs Walker",
+      "fightId": "93274",
+      "fighterA": {
+        "id": 231,
+        "name": "Tatiana Suarez",
+        "slug": "tatiana-suarez"
+      },
+      "fighterB": {
+        "id": 447,
+        "name": "Virna Jandiroba",
+        "slug": "virna-jandiroba"
+      },
+      "limitation": "Missing metrics are null; observed strikes do not determine official round winners.",
+      "observedOn": "2026-11-11",
+      "org": "ufc",
+      "rounds": [
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 129,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 6,
+            "sigDifferential": 5,
+            "sigLanded": 11,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 6,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 11,
+            "sigDifferential": -5,
+            "sigLanded": 6,
+            "subAttempts": 0,
+            "takedowns": 1
+          },
+          "round": 1
+        },
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 214,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 7,
+            "sigDifferential": -1,
+            "sigLanded": 6,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 0,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 6,
+            "sigDifferential": 1,
+            "sigLanded": 7,
+            "subAttempts": 1,
+            "takedowns": 0
+          },
+          "round": 2
+        },
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 209,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 4,
+            "sigDifferential": 7,
+            "sigLanded": 11,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 0,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 11,
+            "sigDifferential": -7,
+            "sigLanded": 4,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "round": 3
+        }
+      ],
+      "roundsAvailable": 3,
+      "source": "UFCalendar"
+    },
     "93276": {
       "date": "2026-11-07",
       "division": "light-heavyweight",
@@ -842,6 +1062,110 @@
       "roundsAvailable": 3,
       "source": "UFCalendar"
     },
+    "93278": {
+      "date": "2026-11-07",
+      "division": "womens-flyweight",
+      "event": "UFC Fight Night: Cortes Acosta vs Walker",
+      "fightId": "93278",
+      "fighterA": {
+        "id": 355,
+        "name": "Karine Silva",
+        "slug": "karine-silva"
+      },
+      "fighterB": {
+        "id": 515,
+        "name": "Gabriella Fernandes",
+        "slug": "gabriella-fernandes"
+      },
+      "limitation": "Missing metrics are null; observed strikes do not determine official round winners.",
+      "observedOn": "2026-11-11",
+      "org": "ufc",
+      "rounds": [
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 79,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 11,
+            "sigDifferential": -3,
+            "sigLanded": 8,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 206,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 8,
+            "sigDifferential": 3,
+            "sigLanded": 11,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "round": 1
+        },
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 0,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 13,
+            "sigDifferential": 3,
+            "sigLanded": 16,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 98,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 16,
+            "sigDifferential": -3,
+            "sigLanded": 13,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "round": 2
+        },
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 47,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 20,
+            "sigDifferential": 8,
+            "sigLanded": 28,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 65,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 28,
+            "sigDifferential": -8,
+            "sigLanded": 20,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "round": 3
+        }
+      ],
+      "roundsAvailable": 3,
+      "source": "UFCalendar"
+    },
     "93279": {
       "date": "2026-11-07",
       "division": "womens-bantamweight",
@@ -917,6 +1241,314 @@
         }
       ],
       "roundsAvailable": 2,
+      "source": "UFCalendar"
+    },
+    "93280": {
+      "date": "2026-11-07",
+      "division": "featherweight",
+      "event": "UFC Fight Night: Cortes Acosta vs Walker",
+      "fightId": "93280",
+      "fighterA": {
+        "id": 326,
+        "name": "Keiichiro Nakamura",
+        "slug": "keiichiro-nakamura"
+      },
+      "fighterB": {
+        "id": 555,
+        "name": "Ollie Schmid",
+        "slug": "ollie-schmid"
+      },
+      "limitation": "Missing metrics are null; observed strikes do not determine official round winners.",
+      "observedOn": "2026-11-11",
+      "org": "ufc",
+      "rounds": [
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 0,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 18,
+            "sigDifferential": 3,
+            "sigLanded": 21,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 0,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 21,
+            "sigDifferential": -3,
+            "sigLanded": 18,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "round": 1
+        },
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 3,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 27,
+            "sigDifferential": -7,
+            "sigLanded": 20,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 0,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 20,
+            "sigDifferential": 7,
+            "sigLanded": 27,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "round": 2
+        },
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 14,
+            "headStrikes": null,
+            "knockdowns": 1,
+            "legStrikes": null,
+            "sigAbsorbed": 26,
+            "sigDifferential": 27,
+            "sigLanded": 53,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 23,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 53,
+            "sigDifferential": -27,
+            "sigLanded": 26,
+            "subAttempts": 0,
+            "takedowns": 1
+          },
+          "round": 3
+        }
+      ],
+      "roundsAvailable": 3,
+      "source": "UFCalendar"
+    },
+    "93281": {
+      "date": "2026-11-07",
+      "division": "welterweight",
+      "event": "UFC Fight Night: Cortes Acosta vs Walker",
+      "fightId": "93281",
+      "fighterA": {
+        "id": 405,
+        "name": "Seokhyeon Ko",
+        "slug": "seokhyeon-ko"
+      },
+      "fighterB": {
+        "id": 767,
+        "name": "Wellington Turman",
+        "slug": "wellington-turman"
+      },
+      "limitation": "Missing metrics are null; observed strikes do not determine official round winners.",
+      "observedOn": "2026-11-11",
+      "org": "ufc",
+      "rounds": [
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 145,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 15,
+            "sigDifferential": 4,
+            "sigLanded": 19,
+            "subAttempts": 0,
+            "takedowns": 2
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 0,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 19,
+            "sigDifferential": -4,
+            "sigLanded": 15,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "round": 1
+        },
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 111,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 20,
+            "sigDifferential": 4,
+            "sigLanded": 24,
+            "subAttempts": 0,
+            "takedowns": 1
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 0,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 24,
+            "sigDifferential": -4,
+            "sigLanded": 20,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "round": 2
+        },
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 285,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 1,
+            "sigDifferential": 10,
+            "sigLanded": 11,
+            "subAttempts": 0,
+            "takedowns": 3
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 0,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 11,
+            "sigDifferential": -10,
+            "sigLanded": 1,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "round": 3
+        }
+      ],
+      "roundsAvailable": 3,
+      "source": "UFCalendar"
+    },
+    "93282": {
+      "date": "2026-11-07",
+      "division": "welterweight",
+      "event": "UFC Fight Night: Cortes Acosta vs Walker",
+      "fightId": "93282",
+      "fighterA": {
+        "id": 2818,
+        "name": "Jonny Parsons",
+        "slug": "jonny-parsons"
+      },
+      "fighterB": {
+        "id": 286,
+        "name": "Jose Henrique",
+        "slug": "jose-henrique"
+      },
+      "limitation": "Missing metrics are null; observed strikes do not determine official round winners.",
+      "observedOn": "2026-11-11",
+      "org": "ufc",
+      "rounds": [
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 0,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 33,
+            "sigDifferential": -18,
+            "sigLanded": 15,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 2,
+            "headStrikes": null,
+            "knockdowns": 1,
+            "legStrikes": null,
+            "sigAbsorbed": 15,
+            "sigDifferential": 18,
+            "sigLanded": 33,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "round": 1
+        }
+      ],
+      "roundsAvailable": 1,
+      "source": "UFCalendar"
+    },
+    "93283": {
+      "date": "2026-11-07",
+      "division": "bantamweight",
+      "event": "UFC Fight Night: Cortes Acosta vs Walker",
+      "fightId": "93283",
+      "fighterA": {
+        "id": 150,
+        "name": "Davey Grant",
+        "slug": "davey-grant"
+      },
+      "fighterB": {
+        "id": 511,
+        "name": "Elijah Smith",
+        "slug": "elijah-smith"
+      },
+      "limitation": "Missing metrics are null; observed strikes do not determine official round winners.",
+      "observedOn": "2026-11-11",
+      "org": "ufc",
+      "rounds": [
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 0,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 11,
+            "sigDifferential": -3,
+            "sigLanded": 8,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 3,
+            "headStrikes": null,
+            "knockdowns": 1,
+            "legStrikes": null,
+            "sigAbsorbed": 8,
+            "sigDifferential": 3,
+            "sigLanded": 11,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "round": 1
+        }
+      ],
+      "roundsAvailable": 1,
       "source": "UFCalendar"
     },
     "93284": {
@@ -1127,6 +1759,187 @@
       "roundsAvailable": 3,
       "source": "UFCalendar"
     },
+    "93560": {
+      "date": "2026-10-31",
+      "division": "featherweight",
+      "event": "UFC Fight Night: Moicano vs Nolan",
+      "fightId": "93560",
+      "fighterA": {
+        "id": 466,
+        "name": "Francis Marshall",
+        "slug": "francis-marshall"
+      },
+      "fighterB": {
+        "id": 541,
+        "name": "Dakota Hope",
+        "slug": "dakota-hope"
+      },
+      "limitation": "Missing metrics are null; observed strikes do not determine official round winners.",
+      "observedOn": "2026-11-11",
+      "org": "ufc",
+      "rounds": [
+        {
+          "a": {
+            "bodyStrikes": 0,
+            "controlSec": 87,
+            "headStrikes": 6,
+            "knockdowns": 0,
+            "legStrikes": 7,
+            "sigAbsorbed": 15,
+            "sigDifferential": -4,
+            "sigLanded": 11,
+            "subAttempts": 0,
+            "takedowns": 1
+          },
+          "b": {
+            "bodyStrikes": 0,
+            "controlSec": 0,
+            "headStrikes": 7,
+            "knockdowns": 0,
+            "legStrikes": 2,
+            "sigAbsorbed": 11,
+            "sigDifferential": 4,
+            "sigLanded": 15,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "round": 1
+        },
+        {
+          "a": {
+            "bodyStrikes": 0,
+            "controlSec": 7,
+            "headStrikes": 4,
+            "knockdowns": 0,
+            "legStrikes": 1,
+            "sigAbsorbed": 12,
+            "sigDifferential": -1,
+            "sigLanded": 11,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": 3,
+            "controlSec": 41,
+            "headStrikes": 11,
+            "knockdowns": 0,
+            "legStrikes": 3,
+            "sigAbsorbed": 11,
+            "sigDifferential": 1,
+            "sigLanded": 12,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "round": 2
+        },
+        {
+          "a": {
+            "bodyStrikes": 1,
+            "controlSec": 0,
+            "headStrikes": 9,
+            "knockdowns": 0,
+            "legStrikes": 0,
+            "sigAbsorbed": 17,
+            "sigDifferential": -14,
+            "sigLanded": 3,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": 1,
+            "controlSec": 240,
+            "headStrikes": 10,
+            "knockdowns": 0,
+            "legStrikes": 1,
+            "sigAbsorbed": 3,
+            "sigDifferential": 14,
+            "sigLanded": 17,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "round": 3
+        }
+      ],
+      "roundsAvailable": 3,
+      "source": "UFCalendar"
+    },
+    "93562": {
+      "date": "2026-11-07",
+      "division": "middleweight",
+      "event": "UFC Fight Night: Cortes Acosta vs Walker",
+      "fightId": "93562",
+      "fighterA": {
+        "id": 527,
+        "name": "Mantas Kondratavicius",
+        "slug": "mantas-kondratavicius"
+      },
+      "fighterB": {
+        "id": 44,
+        "name": "Andre Petroski",
+        "slug": "andre-petroski"
+      },
+      "limitation": "Missing metrics are null; observed strikes do not determine official round winners.",
+      "observedOn": "2026-11-11",
+      "org": "ufc",
+      "rounds": [
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 58,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 15,
+            "sigDifferential": 3,
+            "sigLanded": 18,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 76,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 18,
+            "sigDifferential": -3,
+            "sigLanded": 15,
+            "subAttempts": 0,
+            "takedowns": 1
+          },
+          "round": 1
+        },
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 0,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 41,
+            "sigDifferential": -36,
+            "sigLanded": 5,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 242,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 5,
+            "sigDifferential": 36,
+            "sigLanded": 41,
+            "subAttempts": 0,
+            "takedowns": 1
+          },
+          "round": 2
+        }
+      ],
+      "roundsAvailable": 2,
+      "source": "UFCalendar"
+    },
     "93615": {
       "date": "2026-11-07",
       "division": "flyweight",
@@ -1334,10 +2147,318 @@
       ],
       "roundsAvailable": 3,
       "source": "UFCalendar"
+    },
+    "93636": {
+      "date": "2026-11-07",
+      "division": "heavyweight",
+      "event": "UFC Fight Night: Cortes Acosta vs Walker",
+      "fightId": "93636",
+      "fighterA": {
+        "id": 123271,
+        "name": "Gabriel Lorenço",
+        "slug": "gabriel-lorenco"
+      },
+      "fighterB": {
+        "id": 167,
+        "name": "Thomas Petersen",
+        "slug": "thomas-petersen"
+      },
+      "limitation": "Missing metrics are null; observed strikes do not determine official round winners.",
+      "observedOn": "2026-11-11",
+      "org": "ufc",
+      "rounds": [
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 107,
+            "headStrikes": null,
+            "knockdowns": 1,
+            "legStrikes": null,
+            "sigAbsorbed": 6,
+            "sigDifferential": 37,
+            "sigLanded": 43,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 72,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 43,
+            "sigDifferential": -37,
+            "sigLanded": 6,
+            "subAttempts": 0,
+            "takedowns": 1
+          },
+          "round": 1
+        },
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 14,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 21,
+            "sigDifferential": -14,
+            "sigLanded": 7,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 110,
+            "headStrikes": null,
+            "knockdowns": 1,
+            "legStrikes": null,
+            "sigAbsorbed": 7,
+            "sigDifferential": 14,
+            "sigLanded": 21,
+            "subAttempts": 1,
+            "takedowns": 0
+          },
+          "round": 2
+        },
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 0,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 30,
+            "sigDifferential": -27,
+            "sigLanded": 3,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 236,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 3,
+            "sigDifferential": 27,
+            "sigLanded": 30,
+            "subAttempts": 0,
+            "takedowns": 1
+          },
+          "round": 3
+        }
+      ],
+      "roundsAvailable": 3,
+      "source": "UFCalendar"
+    },
+    "93715": {
+      "date": "2026-11-07",
+      "division": "featherweight",
+      "event": "UFC Fight Night: Cortes Acosta vs Walker",
+      "fightId": "93715",
+      "fighterA": {
+        "id": 2865,
+        "name": "Austin Bashi",
+        "slug": "austin-bashi"
+      },
+      "fighterB": {
+        "id": 161555,
+        "name": "Carlos Calderon",
+        "slug": "carlos-calderon-3"
+      },
+      "limitation": "Missing metrics are null; observed strikes do not determine official round winners.",
+      "observedOn": "2026-11-11",
+      "org": "ufc",
+      "rounds": [
+        {
+          "a": {
+            "bodyStrikes": null,
+            "controlSec": 40,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 1,
+            "sigDifferential": 1,
+            "sigLanded": 2,
+            "subAttempts": 1,
+            "takedowns": 1
+          },
+          "b": {
+            "bodyStrikes": null,
+            "controlSec": 0,
+            "headStrikes": null,
+            "knockdowns": 0,
+            "legStrikes": null,
+            "sigAbsorbed": 2,
+            "sigDifferential": -1,
+            "sigLanded": 1,
+            "subAttempts": 0,
+            "takedowns": 0
+          },
+          "round": 1
+        }
+      ],
+      "roundsAvailable": 1,
+      "source": "UFCalendar"
     }
   },
   "generatedOn": "2026-11-11",
-  "histories": {},
+  "histories": {
+    "johnny-walker": {
+      "fighter": {
+        "id": 7170,
+        "name": "Johnny Walker",
+        "slug": "johnny-walker"
+      },
+      "lastFive": [
+        {
+          "date": "2026-11-07",
+          "isTitle": false,
+          "method": "KO/TKO",
+          "opponent": "Waldo Cortes Acosta",
+          "org": "ufc",
+          "result": "win"
+        },
+        {
+          "date": "2026-10-03",
+          "isTitle": false,
+          "method": "KO/TKO",
+          "opponent": "Mick Parkin",
+          "org": "ufc",
+          "result": "win"
+        },
+        {
+          "date": "2026-04-11",
+          "isTitle": false,
+          "method": "Decision - Split",
+          "opponent": "Dominick Reyes",
+          "org": "ufc",
+          "result": "loss"
+        },
+        {
+          "date": "2025-08-23",
+          "isTitle": false,
+          "method": "KO/TKO",
+          "opponent": "Zhang Mingyang",
+          "org": "ufc",
+          "result": "win"
+        },
+        {
+          "date": "2025-08-23",
+          "isTitle": false,
+          "method": "TKO",
+          "opponent": "Mingyang Zhang",
+          "org": "",
+          "result": "win"
+        }
+      ],
+      "lastReviewed": "2026-11-11",
+      "scope": "Selected published career-history entries, not the complete feed"
+    },
+    "mitch-raposo": {
+      "fighter": {
+        "id": 124,
+        "name": "Mitch Raposo",
+        "slug": "mitch-raposo"
+      },
+      "lastFive": [
+        {
+          "date": "2026-11-07",
+          "isTitle": false,
+          "method": "Decision - Unanimous",
+          "opponent": "Marcos Degli",
+          "org": "ufc",
+          "result": "win"
+        },
+        {
+          "date": "2026-06-20",
+          "isTitle": false,
+          "method": "Decision - Split",
+          "opponent": "Allan Nascimento",
+          "org": "ufc",
+          "result": "win"
+        },
+        {
+          "date": "2025-10-25",
+          "isTitle": false,
+          "method": "Decision - Unanimous",
+          "opponent": "Azat Maksum",
+          "org": "ufc",
+          "result": "win"
+        },
+        {
+          "date": "2025-04-13",
+          "isTitle": false,
+          "method": "Decision - Split",
+          "opponent": "Sumudaerji",
+          "org": "ufc",
+          "result": "loss"
+        },
+        {
+          "date": "2024-06-02",
+          "isTitle": false,
+          "method": "Decision - Split",
+          "opponent": "André Lima",
+          "org": "ufc",
+          "result": "loss"
+        }
+      ],
+      "lastReviewed": "2026-11-11",
+      "scope": "Selected published career-history entries, not the complete feed"
+    },
+    "tom-nolan": {
+      "fighter": {
+        "id": 92,
+        "name": "Tom Nolan",
+        "slug": "tom-nolan"
+      },
+      "lastFive": [
+        {
+          "date": "2026-10-31",
+          "isTitle": false,
+          "method": "KO/TKO",
+          "opponent": "Renato Moicano",
+          "org": "ufc",
+          "result": "win"
+        },
+        {
+          "date": "2026-06-06",
+          "isTitle": false,
+          "method": "Decision - Unanimous",
+          "opponent": "Farès Ziam",
+          "org": "ufc",
+          "result": "win"
+        },
+        {
+          "date": "2025-09-28",
+          "isTitle": false,
+          "method": "Submission",
+          "opponent": "Charlie Campbell",
+          "org": "ufc",
+          "result": "win"
+        },
+        {
+          "date": "2025-02-09",
+          "isTitle": false,
+          "method": "Decision - Unanimous",
+          "opponent": "Viacheslav Borshchev",
+          "org": "ufc",
+          "result": "win"
+        },
+        {
+          "date": "2024-08-18",
+          "isTitle": false,
+          "method": "Decision - Unanimous",
+          "opponent": "Alex Reyes",
+          "org": "ufc",
+          "result": "win"
+        }
+      ],
+      "lastReviewed": "2026-11-11",
+      "scope": "Selected published career-history entries, not the complete feed"
+    }
+  },
   "note": "Curated per-fight editorial metrics, not a third-party data feed or official rankings.",
   "schema": 1,
   "source": "UFCalendar"

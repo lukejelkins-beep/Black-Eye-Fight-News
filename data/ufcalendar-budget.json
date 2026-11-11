@@ -1,12 +1,25 @@
 {
   "attempted": {
-    "comparisons": [],
+    "comparisons": [
+      "johnny-walker:waldo-cortes-acosta-2",
+      "renato-moicano:tom-nolan",
+      "marcos-degli:mitch-raposo"
+    ],
     "discovery": [
       "2026-11-w2"
     ],
-    "divisions": [],
-    "events": [],
-    "histories": [],
+    "divisions": [
+      "ufc:heavyweight",
+      "ufc:lightweight"
+    ],
+    "events": [
+      "2549"
+    ],
+    "histories": [
+      "johnny-walker",
+      "tom-nolan",
+      "mitch-raposo"
+    ],
     "reserve": [],
     "rounds": [
       "93635",
@@ -17,7 +30,17 @@
       "93276",
       "93557",
       "93264",
-      "93261"
+      "93261",
+      "93715",
+      "93636",
+      "93562",
+      "93283",
+      "93282",
+      "93281",
+      "93280",
+      "93278",
+      "93274",
+      "93560"
     ]
   },
   "budget": {
@@ -42,20 +65,22 @@
   "provider": {
     "befnCap": 100,
     "limit": 100,
-    "remainingForEditorialCalls": 80,
+    "minimumSecondsBetweenCalls": 7.5,
+    "remainingForEditorialCalls": 71,
     "resetAt": "2026-12-01T00:00:00.000Z",
+    "rpmLimit": 10,
     "tier": "free",
-    "used": 9
+    "used": 19
   },
   "schema": 1,
   "spent": {
-    "comparisons": 0,
+    "comparisons": 3,
     "discovery": 1,
-    "divisions": 0,
-    "events": 0,
-    "histories": 0,
-    "reserve": 1,
-    "rounds": 9
+    "divisions": 2,
+    "events": 1,
+    "histories": 3,
+    "reserve": 2,
+    "rounds": 19
   },
-  "status": "quota_or_rate_limited"
+  "status": "connected"
 }
