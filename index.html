@@ -1052,7 +1052,7 @@ function originalTalkPost(p){
   const match=new URL(p.url).pathname.match(/\/(p|reel)\/([a-zA-Z0-9_-]+)\/?/);
   if(!match)return '<div class="talk-native-static">'+fallback+'</div>';
   const canonical='https://www.instagram.com/'+match[1]+'/'+match[2]+'/';
-  return '<div class="talk-original talk-instagram"><blockquote class="instagram-media" data-instgrm-permalink="'+canonical+'" data-instgrm-version="14">'+open+'</blockquote>'+fallback+'</div>';
+  return '<div class="talk-original talk-instagram"><blockquote class="instagram-media" data-instgrm-permalink="'+canonical+'" data-instgrm-version="14" data-instgrm-captioned>'+open+'</blockquote>'+fallback+'</div>';
  }
  if(p.platform==='Threads'){
   const shortCode=new URL(p.url).pathname.match(/\/(?:post|t)\/([a-zA-Z0-9_-]+)\/?$/)?.[1];
