@@ -1361,7 +1361,7 @@ function renderSocial(){
  const featured=highlighted.slice(0,4);
  const preview=featured.length?'<section class="talk-section" aria-label="Four-week Fight Talk highlights"><div class="talk-section-head"><div><div class="talk-section-eyebrow">BOXING · MMA · GRAPPLING</div><h2>Highlights · last 4 weeks</h2></div><button type="button" class="btn" data-segment="socialMode" data-value="highlights">All highlights ↗</button></div><div class="social-grid">'+featured.map(postCard).join('')+'</div></section>':'';
  return renderFrame(viewTitle('','Fight Talk')+toolbar+
-  '<section id="talk-results" aria-label="Fight Talk posts" tabindex="-1"><div class="talk-results-head"><p class="talk-count" aria-live="polite">'+esc(count)+'</p>' +talkCoverage(current)+talkAccountDirectory()+'</div>'+mainSection+preview+'</section>');
+  '<section id="talk-results" aria-label="Fight Talk posts" tabindex="-1"><div class="talk-results-head"><p class="talk-count" aria-live="polite">'+esc(count)+'</p>' +talkCoverage(current)+talkAccountDirectory()+'<a class="btn" href="https://befn-threads-review.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="Open Threads public profile discovery preview">Threads profile discovery ↗</a></div>'+mainSection+preview+'</section>');
 }
 
 
