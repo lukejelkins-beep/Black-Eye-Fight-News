@@ -1,32 +1,143 @@
 {
-  "reviewedAt": "2026-11-09",
+  "reviewedAt": "2026-11-12",
   "events": [
+    {
+      "id": "ncaa-nebraska-oklahoma-state-2026",
+      "discipline": "NCAA",
+      "name": "Nebraska at Oklahoma State",
+      "date": "2026-11-13",
+      "location": "Gallagher-Iba Arena, Stillwater, Oklahoma, USA",
+      "competitors": "Nebraska vs Oklahoma State; individual lineups not yet confirmed.",
+      "why": "Early-season NCAA dual; official school schedule confirms 7 pm Central.",
+      "source": "https://okstate.com/sports/wrestling/schedule/",
+      "verifiedAt": "2026-11-12",
+      "status": "CONFIRMED",
+      "watch": "ESPNU listed by the host school (US). Australian availability unconfirmed.",
+      "startAt": "2026-11-13T19:00:00-06:00"
+    },
     {
       "id": "raf-abu-dhabi-2026",
       "discipline": "RAF",
       "name": "RAF Abu Dhabi",
       "date": "2026-11-14",
       "location": "Abu Dhabi, UAE",
-      "competitors": "Chimaev vs Covington",
-      "why": "A major international RAF freestyle wrestling card.",
+      "competitors": "Khamzat Chimaev vs Chris Weidman (light heavyweight crossover title); Arman Tsarukyan vs Neiman Gracie; Zabit Magomedsharipov vs Giga Chikadze; Abdulrashid Sadulaev vs Dauren Kurugliev; Kyle Dake vs Alp Arslan Begenjov; Umar Nurmagomedov vs Urijah Faber; Jordan Burroughs vs Azamat Nurykau; Kyle Snyder vs Shamil Erdogan",
+      "why": "Chris Weidman replaces Colby Covington; the official card now lists a light heavyweight crossover title match.",
       "startAt": "2026-11-14T20:00:00+04:00",
-      "watch": "FOX Nation (US); Starzplay (MENA). Australian availability unconfirmed.",
-      "source": "https://www.realamericanfreestyle.com/events-gallery",
-      "verifiedAt": "2026-11-08",
-      "status": "CONFIRMED"
+      "watch": "RAF lists YouTube globally, FOX Nation in the US and Starzplay in MENA. Australian playback has not been independently verified.",
+      "source": "https://www.realamericanfreestyle.com/events/raf-abu-dhabi",
+      "verifiedAt": "2026-11-12",
+      "status": "NEW OPPONENT",
+      "changes": [
+        {
+          "field": "competitors",
+          "previous": "Chimaev vs Covington",
+          "current": "Khamzat Chimaev vs Chris Weidman (light heavyweight crossover title); Arman Tsarukyan vs Neiman Gracie; Zabit Magomedsharipov vs Giga Chikadze; Abdulrashid Sadulaev vs Dauren Kurugliev; Kyle Dake vs Alp Arslan Begenjov; Umar Nurmagomedov vs Urijah Faber; Jordan Burroughs vs Azamat Nurykau; Kyle Snyder vs Shamil Erdogan",
+          "reviewedAt": "2026-11-12",
+          "reason": "Current official card names Weidman; Sherdog reproduces RAF’s 9 November replacement announcement and identifies the previous Covington booking.",
+          "sources": [
+            "https://www.realamericanfreestyle.com/events/raf-abu-dhabi",
+            "https://www.sherdog.com/news/news/Khamzat-Chimaev-gets-Chris-Weidman-after-Colby-Covington-exit-203557"
+          ],
+          "label": "NEW OPPONENT"
+        }
+      ]
+    },
+    {
+      "id": "thailand-open-wrestling-2026",
+      "discipline": "Freestyle",
+      "name": "Thailand Open — freestyle, women’s wrestling and Greco-Roman",
+      "date": "2026-11-18",
+      "location": "Sriracha, Thailand",
+      "competitors": "Entrants and individual matchups not yet verified.",
+      "why": "UWW international tournament for senior, U20 and U17 wrestlers.",
+      "source": "https://uww.org/events/thailand-open-0",
+      "verifiedAt": "2026-11-12",
+      "status": "CONFIRMED",
+      "watch": "Australian viewing availability not yet verified.",
+      "endDate": "2026-11-22"
+    },
+    {
+      "id": "ibrahim-moustafa-2026",
+      "discipline": "Freestyle",
+      "name": "Ibrahim Moustafa — freestyle and Greco-Roman",
+      "date": "2026-11-19",
+      "location": "Sharm El-Sheikh, Egypt",
+      "competitors": "Entrants and individual matchups not yet verified.",
+      "why": "Current UWW event listing gives November 19–22 in Sharm El-Sheikh; older calendar copies differ.",
+      "source": "https://uww.org/events/ibrahim-moustafa-12",
+      "verifiedAt": "2026-11-12",
+      "status": "CONFIRMED",
+      "watch": "Australian viewing availability not yet verified.",
+      "endDate": "2026-11-22"
+    },
+    {
+      "id": "polaris-40-2026",
+      "discipline": "BJJ / submission",
+      "name": "Polaris 40: McNally vs Tonon",
+      "date": "2026-11-21",
+      "location": "Southampton Central Hall, Southampton, England",
+      "competitors": "Sam McNally vs Garry Tonon (lightweight title).",
+      "why": "Polaris lightweight championship main event; full undercard not yet verified.",
+      "source": "https://www.polarisprograppling.com/",
+      "verifiedAt": "2026-11-12",
+      "status": "CONFIRMED",
+      "watch": "FloGrappling linked by Polaris; Australian availability not independently verified."
+    },
+    {
+      "id": "uww-grappling-worlds-2026",
+      "discipline": "BJJ / submission",
+      "name": "UWW Grappling World Championships",
+      "date": "2026-11-23",
+      "location": "Baku, Azerbaijan",
+      "competitors": "Entrants and individual matchups not yet verified.",
+      "why": "World championship for senior, U20, U17 and U15 grapplers.",
+      "source": "https://uww.org/events/senior-u20-u17-u15-grappling-world-championships?tab=news",
+      "verifiedAt": "2026-11-12",
+      "status": "CONFIRMED",
+      "watch": "Australian viewing availability not yet verified.",
+      "endDate": "2026-11-25"
+    },
+    {
+      "id": "adcc-thailand-2026",
+      "discipline": "BJJ / submission",
+      "name": "ADCC Thailand Championship",
+      "date": "2026-11-28",
+      "location": "Ramada Plaza by Wyndham Chao Fah, Phuket, Thailand",
+      "competitors": "Entrants and individual matchups not yet verified.",
+      "why": "ADCC regional championship; organiser lists a 10 am competition start.",
+      "source": "https://adcombat.com/adcc-events/adcc-thailand-championship-2026/",
+      "verifiedAt": "2026-11-12",
+      "status": "CONFIRMED",
+      "watch": "Australian viewing availability not yet verified.",
+      "startAt": "2026-11-28T10:00:00+07:00"
+    },
+    {
+      "id": "haparanda-cup-2026",
+      "discipline": "Greco-Roman",
+      "name": "Haparanda Cup",
+      "date": "2026-11-28",
+      "location": "Haparanda, Sweden",
+      "competitors": "Entrants and individual matchups not yet verified.",
+      "why": "Senior Greco-Roman international tournament on the UWW calendar.",
+      "source": "https://uww.org/events/haparanda-cup-10",
+      "verifiedAt": "2026-11-12",
+      "status": "CONFIRMED",
+      "watch": "Australian viewing availability not yet verified."
     },
     {
       "id": "raf15",
       "discipline": "RAF",
       "name": "RAF15",
       "date": "2026-11-28",
-      "location": "Chicago, Illinois",
-      "competitors": "Cejudo vs Song",
-      "why": "A headline RAF freestyle wrestling matchup.",
-      "source": "https://www.realamericanfreestyle.com/events-gallery",
-      "verifiedAt": "2026-11-08",
+      "location": "NOW Arena, Chicago area, Illinois, USA",
+      "competitors": "Henry Cejudo vs Song Yadong (lightweight crossover title); Arman Tsarukyan vs Anthony Pettis (middleweight crossover title); Kennedy Blades vs Alexis Gomez; Real Woods vs Sebastian Rivera; Sergio Pettis vs Cody Garbrandt; Roman Bravo-Young vs Matt Ramos; Chance Marsteller vs Akhmed Usmanov; Raúl Rosas Jr. vs Clay Guida",
+      "why": "Official RAF15 card and 7 pm CST event start published by RAF.",
+      "source": "https://www.realamericanfreestyle.com/events/raf15",
+      "verifiedAt": "2026-11-12",
       "status": "CONFIRMED",
-      "watch": "Viewing details not yet verified."
+      "watch": "Viewing details not yet verified.",
+      "startAt": "2026-11-28T19:00:00-06:00"
     },
     {
       "id": "ufc-bjj-14-2026-12-03",
@@ -34,13 +145,31 @@
       "name": "UFC BJJ 14: Tackett vs Wojcik",
       "date": "2026-12-03",
       "location": "Meta APEX, Las Vegas, Nevada, USA",
-      "competitors": "Andrew Tackett vs Chris Wojcik (welterweight title); Brianna Ste-Marie vs Aurélie Le Verne (women's featherweight title)",
+      "competitors": "Andrew Tackett vs Chris Wojcik (welterweight title); Brianna Ste-Marie vs Aurelie Le Vern (women’s featherweight title); Kennedy Maciel vs Keith Krikorian; Dan Manasoiu vs Nick Hartman; Lucas Barbosa vs Elder Cruz; Sabrina Gondim vs Amanda Bruse",
       "why": "Two officially announced UFC BJJ championship matches with confirmed undercard.",
-      "startAt": "2026-12-03T20:00:00-05:00",
+      "startAt": "2026-12-03T17:00:00-08:00",
       "watch": "UFC Fight Pass (local availability depends on territory).",
       "source": "https://www.ufc.com/news/ufc-bjj-14-tackett-vs-wojcik-fight-card",
-      "verifiedAt": "2026-11-09",
-      "status": "CONFIRMED"
+      "verifiedAt": "2026-11-12",
+      "status": "CONFIRMED",
+      "sources": [
+        "https://www.ufc.com/news/ufc-bjj-14-tackett-vs-wojcik-fight-card",
+        "https://www.ufc.com/index.php/news/ufc-bjj-14-tackett-vs-wojcik-fight-card"
+      ]
+    },
+    {
+      "id": "commonwealth-wrestling-2026",
+      "discipline": "Freestyle",
+      "name": "Commonwealth Wrestling Championships — freestyle and Greco-Roman",
+      "date": "2026-12-04",
+      "location": "Polokwane, South Africa",
+      "competitors": "Entrants and individual matchups not yet verified.",
+      "why": "Current UWW listing confirms Polokwane; older calendar copies list Cape Town.",
+      "source": "https://uww.org/events/commonwealth-wrestling-championships",
+      "verifiedAt": "2026-11-12",
+      "status": "CONFIRMED",
+      "watch": "Australian viewing availability not yet verified.",
+      "endDate": "2026-12-06"
     },
     {
       "id": "ibjjf-nogi-worlds-2026",
@@ -48,13 +177,52 @@
       "name": "IBJJF World No-Gi Championship",
       "date": "2026-12-10",
       "endDate": "2026-12-12",
-      "location": "Las Vegas, Nevada",
+      "location": "Las Vegas Convention Center, Halls N3/N4, Las Vegas, Nevada, USA",
       "competitors": "Entrants to be confirmed from final brackets.",
       "why": "A major no-gi world championship.",
       "source": "https://ibjjf.com/events/world-ibjjf-jiu-jitsu-no-gi-championship-2026",
-      "verifiedAt": "2026-11-08",
+      "verifiedAt": "2026-11-12",
       "status": "CONFIRMED",
       "watch": "Viewing details not yet verified."
+    },
+    {
+      "id": "national-duals-invitational-2026",
+      "discipline": "NCAA",
+      "name": "National Duals Invitational",
+      "date": "2026-12-12",
+      "location": "Tulsa, Oklahoma, USA",
+      "competitors": "Oklahoma State confirmed by its schedule; full field and individual matchups not yet verified.",
+      "why": "Two-day NCAA team tournament confirmed on Oklahoma State’s schedule.",
+      "source": "https://okstate.com/sports/wrestling/schedule/",
+      "verifiedAt": "2026-11-12",
+      "status": "CONFIRMED",
+      "watch": "Australian viewing availability not yet verified.",
+      "endDate": "2026-12-13"
+    },
+    {
+      "id": "one-fight-night-50-2026-12-19-grappling",
+      "discipline": "ONE Grappling",
+      "name": "ONE Fight Night 50 — Diogo Reis vs Bebeto Oliveira",
+      "date": "2026-12-19",
+      "location": "Lumpinee Stadium, Bangkok, Thailand",
+      "competitors": "Diogo Reis vs Bebeto Oliveira (ONE Flyweight Submission Grappling World Championship)",
+      "why": "ONE flyweight submission-grappling title defence. December 19 is the Bangkok venue date; the organiser advertises December 18 in US primetime. Exact start time awaits verification.",
+      "watch": "Official ONE Championship broadcast details vary by location; see event listing.",
+      "source": "https://www.onefc.com/events/onefightnight50/",
+      "verifiedAt": "2026-11-12",
+      "status": "CONFIRMED",
+      "changes": [
+        {
+          "field": "startAt",
+          "previous": "2026-12-19T09:00:00+07:00",
+          "current": null,
+          "reviewedAt": "2026-11-12",
+          "reason": "Reviewed official event page confirms the card and December 18 US broadcast date / December 19 Bangkok event artwork, but does not expose an exact start time. Previous precision withheld pending confirmation.",
+          "sources": [
+            "https://www.onefc.com/events/onefightnight50/"
+          ]
+        }
+      ]
     },
     {
       "id": "raf16",
@@ -65,23 +233,9 @@
       "competitors": "Matchups not verified yet.",
       "why": "The next December RAF event listed by the organiser.",
       "source": "https://www.realamericanfreestyle.com/events-gallery",
-      "verifiedAt": "2026-11-08",
+      "verifiedAt": "2026-11-12",
       "status": "CONFIRMED",
       "watch": "Viewing details not yet verified."
-    },
-    {
-      "id": "one-fight-night-50-2026-12-19-grappling",
-      "discipline": "ONE Grappling",
-      "name": "ONE Fight Night 50 — Diogo Reis vs Bebeto Oliveira",
-      "date": "2026-12-19",
-      "location": "Lumpinee Stadium, Bangkok, Thailand",
-      "competitors": "Diogo Reis vs Bebeto Oliveira (ONE Flyweight Submission Grappling World Championship)",
-      "why": "Official ONE Championship flyweight submission-grappling title defence on a mixed-rules event.",
-      "startAt": "2026-12-19T09:00:00+07:00",
-      "watch": "Official ONE Championship broadcast details vary by location; see event listing.",
-      "source": "https://www.onefc.com/events/onefightnight50/",
-      "verifiedAt": "2026-11-09",
-      "status": "CONFIRMED"
     },
     {
       "id": "raf17",
@@ -92,9 +246,23 @@
       "competitors": "Matchups not verified yet.",
       "why": "A confirmed date on the RAF calendar.",
       "source": "https://www.realamericanfreestyle.com/events-gallery",
-      "verifiedAt": "2026-11-08",
+      "verifiedAt": "2026-11-12",
       "status": "CONFIRMED",
       "watch": "Viewing details not yet verified."
+    },
+    {
+      "id": "ncaa-dii-2027",
+      "discipline": "NCAA",
+      "name": "NCAA Division II Men's Wrestling Championships",
+      "date": "2027-03-12",
+      "location": "Alliant Energy Powerhouse, Cedar Rapids, Iowa, USA",
+      "competitors": "Qualifiers to be determined.",
+      "why": "Longer-range championship: NCAA Division II national titles.",
+      "source": "https://www.ncaa.org/championship/division-ii/mens-wrestling/",
+      "verifiedAt": "2026-11-12",
+      "status": "CONFIRMED",
+      "watch": "Australian viewing availability not yet verified.",
+      "endDate": "2027-03-13"
     },
     {
       "id": "ncaa-di-2027",
@@ -104,9 +272,9 @@
       "endDate": "2027-03-20",
       "location": "Enterprise Center, St. Louis, Missouri",
       "competitors": "Qualifiers to be determined.",
-      "why": "The season-ending NCAA Division I championship.",
+      "why": "Longer-range championship: NCAA Division I season finale; qualifiers and session times pending.",
       "source": "https://www.ncaa.org/championship/division-i/mens-wrestling/",
-      "verifiedAt": "2026-11-08",
+      "verifiedAt": "2026-11-12",
       "status": "CONFIRMED",
       "watch": "Viewing details not yet verified."
     }
