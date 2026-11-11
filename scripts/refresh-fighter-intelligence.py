@@ -137,60 +137,89 @@ def safe_number(x):
     except (TypeError, ValueError):
         return None
 
+def _api_error(exc):
+    """Safe diagnostics: never print response headers, raw body or API key."""
+    code = getattr(exc, "code", None)
+    if code is not None:
+        detail = "HTTP " + str(code)
+        try:
+            payload = json.loads(exc.read(1024).decode("utf-8", "replace"))
+            api_code = (payload.get("error") or {}).get("code") if isinstance(payload.get("error"), dict) else payload.get("code")
+            if isinstance(api_code, str) and re.fullmatch(r"[a-zA-Z0-9_-]{1,50}", api_code):
+                detail += " (" + api_code + ")"
+        except Exception:
+            pass
+        return detail
+    reason = getattr(exc, "reason", None)
+    if isinstance(reason, OSError) and getattr(reason, "errno", None) in (-2, -3, 11001):
+        return "DNS resolution failed"
+    return type(exc).__name__
+
+
 def ufcalendar(queue, fetch=fetch_json, key=None):
+    """Validate API-key access separately from optional rankings and fighter searches."""
     key = key if key is not None else os.environ.get("UFCALENDAR_API_KEY")
     if not key:
         return status("UFCalendar", "needs_key", "Set UFCALENDAR_API_KEY GitHub Actions secret.")
+
+    # Check authentication/quota on a documented endpoint before trying
+    # content endpoints. This distinguishes a rejected key from an endpoint bug.
+    try:
+        usage = fetch(UFCALENDAR + "/usage", key)
+        if not isinstance(usage, dict):
+            raise ValueError("Unexpected usage response")
+    except Exception as exc:
+        return status("UFCalendar", "authentication_unconfirmed",
+                      "Key provided, but /usage request failed: " + _api_error(exc) +
+                      ". Confirm the key is a production API key on the UFCalendar account page.")
+
     try:
         board = fetch(UFCALENDAR + "/rankings/ufc", key)
-        if not isinstance(board, dict) or "data" not in board:
-            raise ValueError("Unexpected response")
+        rank_note = "Rankings request succeeded" if (
+            isinstance(board, dict) and isinstance(board.get("data"), dict)
+        ) else "Rankings response format not recognized"
     except Exception as exc:
-        http_code = getattr(exc, "code", None)
-        if http_code in (401, 403):
-            return status("UFCalendar", "authentication_failed",
-                          "API key was supplied but rejected (HTTP " + str(http_code) + ").")
-        if http_code == 429:
-            return status("UFCalendar", "quota_exceeded",
-                          "API key supplied; the provider returned HTTP 429.")
-        reason = ("HTTP " + str(http_code)) if http_code else type(exc).__name__
-        # Only publish the provider's machine-readable error code, never raw
-        # messages that might contain an API key or request details.
-        if http_code and callable(getattr(exc, "read", None)):
-            try:
-                body = json.loads(exc.read(2048).decode("utf-8", "replace"))
-                code = (body.get("error") or {}).get("code")
-                if isinstance(code, str) and re.fullmatch(r"[A-Za-z0-9_-]{1,48}", code):
-                    reason += ", code " + code
-            except Exception:
-                pass
-        return status("UFCalendar", "unavailable",
-                      "API key supplied but rankings request failed (" + reason + ").")
+        rank_note = "Rankings request failed: " + _api_error(exc)
+
     matched = 0
+    failures = 0
     for item in [f for f in queue if f["organisation"] == "UFC"][:3]:
         try:
-            q = urllib.parse.urlencode({"q": item["name"], "org": "ufc", "limit": 5})
-            fighter = exact(fetch(UFCALENDAR + "/fighters?" + q, key), item["name"])
+            query = urllib.parse.urlencode({"q": item["name"], "org": "ufc", "limit": 5})
+            fighter = exact(fetch(UFCALENDAR + "/fighters?" + query, key), item["name"])
             ident = (fighter or {}).get("slug") or (fighter or {}).get("id")
-            if not ident or not re.fullmatch(r"[A-Za-z0-9_-]+", str(ident)):
+            if not isinstance(ident, (str, int)) or not re.fullmatch(r"[A-Za-z0-9_-]+", str(ident)):
                 continue
             payload = fetch(UFCALENDAR + "/fighters/" + str(ident), key)
             bio = payload.get("data", {}) if isinstance(payload, dict) else {}
             if not isinstance(bio, dict) or norm(bio.get("name")) != norm(item["name"]):
                 continue
-            pro = (bio.get("records") or {}).get("pro_mma") or {}
-            stats = bio.get("stats") or {}
+            records = bio.get("records") or {}
+            pro = records.get("pro_mma") if isinstance(records, dict) else {}
+            stats = bio.get("stats") if isinstance(bio.get("stats"), dict) else {}
             item["stats"] = {
-                "source": "UFCalendar", "record": pro.get("value") if isinstance(pro, dict) else None,
-                "slpm": safe_number(stats.get("slpm")) if isinstance(stats, dict) else None,
-                "tdAvg": safe_number(stats.get("td_avg")) if isinstance(stats, dict) else None,
+                "source": "UFCalendar",
+                "record": pro.get("value") if isinstance(pro, dict) and isinstance(pro.get("value"), str) else None,
+                "slpm": safe_number(stats.get("slpm")),
+                "sapm": safe_number(stats.get("sapm")),
+                "strAcc": safe_number(stats.get("str_acc")),
+                "strDef": safe_number(stats.get("str_def")),
+                "tdAvg": safe_number(stats.get("td_avg")),
+                "tdAcc": safe_number(stats.get("td_acc")),
+                "tdDef": safe_number(stats.get("td_def")),
+                "subAvg": safe_number(stats.get("sub_avg")),
                 "observedOn": dt.date.today().isoformat()
             }
             matched += 1
         except Exception:
+            failures += 1
             continue
-    return status("UFCalendar", "connected", str(matched) +
-                  " UFC profiles enriched. Max 7 requests per weekly run.")
+    state = "connected" if matched else "reachable"
+    return status("UFCalendar", state,
+                  "Authenticated /usage request succeeded. " + rank_note + ". " +
+                  str(matched) + " of " + str(min(3, sum(x["organisation"] == "UFC" for x in queue))) +
+                  " precise fighter profiles enriched; " + str(failures) +
+                  " request errors. Maximum nine requests per weekly run.")
 
 def octagon(queue, fetch=fetch_json, allowed=False):
     if not allowed:

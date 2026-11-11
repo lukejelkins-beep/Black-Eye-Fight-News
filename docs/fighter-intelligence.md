@@ -27,3 +27,11 @@ For full bout-level statistics, point-in-time rankings, boxing integration and f
 ## Non-commercial UFC Stats authorization (11 November 2026)
 
 The BEFN owner explicitly confirmed this site is **non-commercial**. The weekly workflow now enables the hosted malichetty UFC Stats adapter for this use, limited to at most 7 requests per weekly run (a health check, a known-fighter search/detail validation, then up to two exact-match fighter search/detail pairs). A healthy status alone is not presented as a successful working connection; a full verified fighter search and detail response are required. All use remains subject to the provider's published personal/non-commercial terms. Public display is restricted to individual derived profile metrics with attribution; no bulk copying or imagery.
+
+## Connectivity recovery checks
+
+A GitHub Actions secret named `UFCALENDAR_API_KEY` must contain the **production** key exactly, without the string `Bearer`, quotes or spaces. The weekly connector now first requests `GET /v1/usage` with the bearer token; a failed usage request is reported as `authentication_unconfirmed`, not interpreted as definitive proof of an invalid secret. Once usage succeeds, `GET /v1/rankings/ufc` is optional and cannot block individual fighter lookups using `q` and `org=ufc`. A healthy API and a matched fighter biography are required before reporting `connected`.
+
+The malichetty hosted UFC Stats API has returned network errors in BEFN GitHub Actions (11 November 2026). Its connector continues checking a verified live health/search/profile sequence, and is never labelled connected on a code-only test. If the public host remains unreachable, contact the original API maintainer about restoring DNS/hosting, or arrange a separately licensed hosted data mirror. Do not publish raw UFC datasets in the public repository.
+
+Provider connectivity updates do not affect BEFN's source-linked existing result cards.
