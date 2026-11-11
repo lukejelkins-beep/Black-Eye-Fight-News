@@ -13,6 +13,7 @@ on:
       - '.github/workflows/refresh-upcoming-cards.yml'
       - 'tests/test_upcoming_cards.py'
       - 'tests/test-upcoming-ui.cjs'
+      - 'tests/test-upcoming-merge.cjs'
       - 'assets/upcoming-cards.js'
       - 'assets/upcoming-cards.css'
 permissions:
@@ -35,6 +36,7 @@ jobs:
         run: |
           node --check assets/upcoming-cards.js
           node tests/test-upcoming-ui.cjs
+          node tests/test-upcoming-merge.cjs
       - name: Cross-check official sources and publish confirmed fight-card changes
         shell: bash
         run: |

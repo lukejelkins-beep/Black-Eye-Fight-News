@@ -1,5 +1,5 @@
 {
-  "reviewedAt": "2026-11-11",
+  "reviewedAt": "2026-11-12",
   "editorial": "Promoter announcements and cross-checked named pairings from reputable fight schedules; identify any opponent awaiting promoter reconfirmation. Main/prelim placement shown only where evidenced; source links on each event. Event times, opponents and bout order can change. The Dec 5 Saudi Arabia UFC Fight Night is currently reported by independent outlets, not on the official UFC event listing; it is explicitly labelled provisional. Fighter W-L(-D) records are shown where supported by published fighter rosters, WBC/promoter reports or detailed fight schedules; otherwise marked as unverified. Official event posters appear when a reliable source provides one. Fighter records are independently cross-checked using promoter/schedule sources and direct fighter record pages (including Wikipedia, BoxRec and Tapology when verifiable). Each published record retains a source URL. No-contest counts are omitted from W-L-D display; absence of a record remains labelled rather than guessed.",
   "events": [
     {
@@ -282,7 +282,7 @@
       "title": "ONE Friday Fights 178 & The Inner Circle 38",
       "location": "Lumpinee Stadium, Bangkok, Thailand",
       "source": "https://www.onefc.com/events/one-friday-fights-178/",
-      "verifiedAt": "2026-11-11",
+      "verifiedAt": "2026-11-12",
       "sourceAccessible": true,
       "startAt": "2026-11-13T18:30:00+07:00",
       "note": "ONE's official card includes Muay Thai and MMA; this MMA calendar lists only the two officially confirmed MMA pairings from ONE Friday Fights 178. Muay Thai pairings are omitted from this MMA feed. Broadcast order of MMA bouts is TBC.",
@@ -296,7 +296,15 @@
           ],
           "division": "Strawweight MMA",
           "note": "Order TBC",
-          "source": "https://www.onefc.com/events/one-friday-fights-178/"
+          "source": "https://www.onefc.com/events/one-friday-fights-178/",
+          "records": [
+            "1-0",
+            "3-1"
+          ],
+          "recordSources": [
+            "https://www.sherdog.com/events/One-Championship-One-Friday-Fights-178-114883",
+            "https://www.sherdog.com/events/One-Championship-One-Friday-Fights-178-114883"
+          ]
         },
         {
           "id": "off178-mma-2",
@@ -307,7 +315,15 @@
           ],
           "division": "Bantamweight MMA",
           "note": "Order TBC",
-          "source": "https://www.onefc.com/events/one-friday-fights-178/"
+          "source": "https://www.onefc.com/events/one-friday-fights-178/",
+          "records": [
+            "5-2",
+            "3-1"
+          ],
+          "recordSources": [
+            "https://www.sherdog.com/events/One-Championship-One-Friday-Fights-178-114883",
+            "https://www.sherdog.com/events/One-Championship-One-Friday-Fights-178-114883"
+          ]
         }
       ],
       "sourceLastCheckedAt": "2026-11-11T19:14:14+00:00",
@@ -321,8 +337,8 @@
       "promotion": "Cage Warriors",
       "title": "CW 213 London: Bagley vs Souza",
       "location": "BBC Studioworks Television Centre, London, England",
-      "source": "https://cagewarriors.com/nik-bagley-to-defend-145lbs-title-against-bruno-souza/",
-      "verifiedAt": "2026-11-09",
+      "source": "https://cagewarriors.com/cw-213-london-official-fight-card-broadcast-times/",
+      "verifiedAt": "2026-11-12",
       "bouts": [
         {
           "id": "cw213-1",
@@ -332,12 +348,177 @@
             "Bruno Souza"
           ],
           "division": "Featherweight",
-          "note": "Cage Warriors world title · main event",
-          "source": "https://cagewarriors.com/nik-bagley-to-defend-145lbs-title-against-bruno-souza/"
+          "records": [
+            "10-1",
+            "16-4"
+          ],
+          "recordSources": [
+            "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779",
+            "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779"
+          ],
+          "note": "Featherweight championship · main event",
+          "source": "https://cagewarriors.com/cw-213-london-official-fight-card-broadcast-times/"
+        },
+        {
+          "id": "cw213-2",
+          "section": "main",
+          "fighters": [
+            "Jawany Scott",
+            "Willians Nogueira"
+          ],
+          "division": "Flyweight",
+          "records": [
+            "8-2",
+            "9-3"
+          ],
+          "recordSources": [
+            "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779",
+            "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779"
+          ],
+          "note": "Interim flyweight championship · co-main event",
+          "source": "https://cagewarriors.com/cw-213-london-official-fight-card-broadcast-times/"
+        },
+        {
+          "id": "cw213-3",
+          "section": "main",
+          "fighters": [
+            "Tariq Pell",
+            "Wellington Lopes"
+          ],
+          "division": "161 lb Catchweight",
+          "records": [
+            "8-2",
+            "8-5"
+          ],
+          "recordSources": [
+            "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779",
+            "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779"
+          ],
+          "note": "",
+          "source": "https://cagewarriors.com/cw-213-london-official-fight-card-broadcast-times/"
+        },
+        {
+          "id": "cw213-4",
+          "section": "main",
+          "fighters": [
+            "Shirzad Qadrian",
+            "Manoel Silva"
+          ],
+          "division": "Bantamweight",
+          "records": [
+            "8-1",
+            null
+          ],
+          "recordSources": [
+            "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779",
+            null
+          ],
+          "note": "Silva named by Cage Warriors; a conflicting third-party surname means his record is not verified",
+          "source": "https://cagewarriors.com/cw-213-london-official-fight-card-broadcast-times/"
+        },
+        {
+          "id": "cw213-5",
+          "section": "main",
+          "fighters": [
+            "Sado Ucar",
+            "Steven Hill"
+          ],
+          "division": "Welterweight",
+          "records": [
+            "20-9",
+            "7-4"
+          ],
+          "recordSources": [
+            "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779",
+            "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779"
+          ],
+          "note": "",
+          "source": "https://cagewarriors.com/cw-213-london-official-fight-card-broadcast-times/"
+        },
+        {
+          "id": "cw213-6",
+          "section": "main",
+          "fighters": [
+            "Ollie Sarwa",
+            "Ieuan Mackenzie"
+          ],
+          "division": "140 lb Catchweight",
+          "records": [
+            "9-1",
+            "6-3"
+          ],
+          "recordSources": [
+            "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779",
+            "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779"
+          ],
+          "note": "",
+          "source": "https://cagewarriors.com/cw-213-london-official-fight-card-broadcast-times/"
+        },
+        {
+          "id": "cw213-7",
+          "section": "prelims",
+          "fighters": [
+            "Bobby Chikavhu",
+            "Christos Ploumpis"
+          ],
+          "division": "130 lb Catchweight",
+          "records": [
+            "3-0",
+            "2-1"
+          ],
+          "recordSources": [
+            "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779",
+            "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779"
+          ],
+          "note": "",
+          "source": "https://cagewarriors.com/cw-213-london-official-fight-card-broadcast-times/"
+        },
+        {
+          "id": "cw213-8",
+          "section": "prelims",
+          "fighters": [
+            "Ben Edwards",
+            "James Wamsley"
+          ],
+          "division": "Welterweight",
+          "records": [
+            "1-0",
+            "0-1"
+          ],
+          "recordSources": [
+            "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779",
+            "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779"
+          ],
+          "note": "",
+          "source": "https://cagewarriors.com/cw-213-london-official-fight-card-broadcast-times/"
+        },
+        {
+          "id": "cw213-9",
+          "section": "prelims",
+          "fighters": [
+            "Callum Haughian",
+            "Will Fox"
+          ],
+          "division": "Lightweight",
+          "records": [
+            "2-1",
+            "0-0"
+          ],
+          "recordSources": [
+            "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779",
+            "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779"
+          ],
+          "note": "",
+          "source": "https://cagewarriors.com/cw-213-london-official-fight-card-broadcast-times/"
         }
       ],
-      "note": "Only the headline title pairing has been verified from Cage Warriors. Further undercard assignments remain pending official confirmation.",
-      "sourceAccessible": false
+      "note": "All nine bouts (six main, three prelims) from Cage Warriors' official 10 Nov fight-card announcement. Records cross-checked against Sherdog where names match exactly; Manoel Silva record awaiting independent verification.",
+      "sourceAccessible": true,
+      "startAt": "2026-11-14T20:00:00+00:00",
+      "startLabel": "Main card 8 pm GMT",
+      "additionalSources": [
+        "https://www.sherdog.com/events/CW-213-Cage-Warriors-213-London-114779"
+      ]
     },
     {
       "id": "pacheco-fulghum-2026-11-14",
@@ -347,7 +528,7 @@
       "title": "Diego Pacheco vs Darius Fulghum",
       "location": "Dignity Health Sports Park, Carson, California",
       "source": "https://www.matchroomboxing.com/news/olascuaga-pens-multi-fight-deal-with-matchroom-and-defends-world-title-against-two-time-olympian-yuberjen-martinez-on-nov-14-in-carson-ca/",
-      "verifiedAt": "2026-11-09",
+      "verifiedAt": "2026-11-12",
       "bouts": [
         {
           "id": "b1",
@@ -397,7 +578,7 @@
         },
         {
           "id": "b3",
-          "section": "announced",
+          "section": "main",
           "fighters": [
             "David Adeleye",
             "Alexander Flores"
@@ -412,29 +593,6 @@
           "records": [
             "14-2 (13 KOs)",
             "21-6-1 (19 KOs)"
-          ],
-          "recordSources": [
-            "https://schedule.fightmag.com/events/diego-pacheco-vs-darius-fulghum/",
-            "https://schedule.fightmag.com/events/diego-pacheco-vs-darius-fulghum/"
-          ]
-        },
-        {
-          "id": "b4",
-          "section": "announced",
-          "fighters": [
-            "Charlie Sheehy",
-            "Gabriel Flores Jr."
-          ],
-          "countries": [
-            "us",
-            "us"
-          ],
-          "division": "Lightweight",
-          "note": "WBA Continental Gold title · 10 rounds",
-          "source": "https://schedule.fightmag.com/events/diego-pacheco-vs-darius-fulghum/",
-          "records": [
-            "13-0 (8 KOs)",
-            "27-3 (8 KOs)"
           ],
           "recordSources": [
             "https://schedule.fightmag.com/events/diego-pacheco-vs-darius-fulghum/",
@@ -514,7 +672,7 @@
           "id": "b8",
           "section": "prelims",
           "fighters": [
-            "Federico Pacheco Jr.",
+            "Federico Pacheco",
             "Jack May"
           ],
           "countries": [
@@ -526,22 +684,22 @@
           "source": "https://danrafael.substack.com/p/the-updated-daily-fight-schedule-799",
           "records": [
             "11-0 (8 KOs)",
-            "11-1"
+            "11-1 (10 KOs)"
           ],
           "recordSources": [
             "https://schedule.fightmag.com/events/diego-pacheco-vs-darius-fulghum/",
-            "https://helix-oriole-5grr.squarespace.com/boxing"
+            "https://schedule.fightmag.com/events/diego-pacheco-vs-darius-fulghum/"
           ]
         },
         {
           "id": "schedule-0ecc30cba7",
-          "section": "announced",
+          "section": "main",
           "fighters": [
             "Charlie Sheehy",
             "Jose Matias Romero"
           ],
           "division": "Lightweight",
-          "note": "10 rounds · Named in independent schedule; placement awaiting verification",
+          "note": "WBA Continental Gold title · 10 rounds",
           "source": "https://schedule.fightmag.com/events/diego-pacheco-vs-darius-fulghum/",
           "records": [
             "13-0 (8 KOs)",
@@ -551,31 +709,13 @@
             "https://schedule.fightmag.com/events/diego-pacheco-vs-darius-fulghum/",
             "https://schedule.fightmag.com/events/diego-pacheco-vs-darius-fulghum/"
           ]
-        },
-        {
-          "id": "schedule-491455a92f",
-          "section": "announced",
-          "fighters": [
-            "Federico Pacheco",
-            "Jack May"
-          ],
-          "division": "Heavyweight",
-          "note": "8 rounds · Named in independent schedule; placement awaiting verification",
-          "source": "https://schedule.fightmag.com/events/diego-pacheco-vs-darius-fulghum/",
-          "records": [
-            "11-0 (8 KOs)",
-            "11-1 (10 KOs)"
-          ],
-          "recordSources": [
-            "https://schedule.fightmag.com/events/diego-pacheco-vs-darius-fulghum/",
-            "https://schedule.fightmag.com/events/diego-pacheco-vs-darius-fulghum/"
-          ]
         }
       ],
-      "note": "Eight distinct sourced bouts. Matchroom confirms Sheehy vs Gabriel Flores Jr and Federico Pacheco is on the prelims; an independent listing also named Jose Matias Romero against Sheehy, conflicting with Matchroom, so that unconfirmed alternate pairing was excluded. Only Pacheco–Fulghum and Olascuaga–Martinez have officially confirmed main/co-main placement. All other precise running order remains TBC.",
+      "note": "Eight-bout schedule cross-checked 12 Nov against the updated FIGHTMAG event card and Yahoo/Uncrowned fight-week coverage. Charlie Sheehy–Jose Matias Romero replaces an older opponent listing. Four main-card and four preliminary bouts; no duplicate fighters.",
       "additionalSources": [
         "https://danrafael.substack.com/p/the-updated-daily-fight-schedule-799",
-        "https://schedule.fightmag.com/events/diego-pacheco-vs-darius-fulghum/"
+        "https://schedule.fightmag.com/events/diego-pacheco-vs-darius-fulghum/",
+        "https://sports.yahoo.com/boxing/article/diego-pacheco-vs-darius-fulghum-full-fight-card-start-time-ring-walks-odds-how-to-watch-saturdays-fight-013907997.html"
       ],
       "sourceAccessible": true,
       "sourceLastCheckedAt": "2026-11-11T19:14:14+00:00",
@@ -929,7 +1069,7 @@
       "title": "UFC 334: Gane vs Hokit",
       "location": "Madison Square Garden, New York, USA",
       "source": "https://www.ufc.com/event/ufc-334",
-      "verifiedAt": "2026-11-08",
+      "verifiedAt": "2026-11-12",
       "bouts": [
         {
           "id": "ufc334-1",
@@ -1088,18 +1228,18 @@
           "section": "prelims",
           "fighters": [
             "Donte Johnson",
-            "Baisangur Susurkaev"
+            "Cesar Almeida"
           ],
           "division": "Middleweight",
-          "note": "",
-          "source": "https://www.independent.co.uk/sport/ufc/ufc-schedule-2026-events-fights-november-b3077393.html",
+          "note": "Opponent change confirmed in UFC event listing",
+          "source": "https://www.ufc.com/event/ufc-334",
           "records": [
             "9-0",
-            "12-0"
+            "7-3"
           ],
           "recordSources": [
             "https://www.ufc.com/athlete/donte-johnson",
-            "https://www.ufc.com/athlete/baisangur-susurkaev"
+            "https://www.ufc.com/athlete/cesar-almeida"
           ]
         },
         {
@@ -1125,38 +1265,38 @@
           "id": "ufc334-11",
           "section": "early",
           "fighters": [
-            "Adrian Yanez",
+            "Alatengheili",
             "Juan Diaz"
           ],
           "division": "Bantamweight",
-          "note": "",
-          "source": "https://www.independent.co.uk/sport/ufc/ufc-schedule-2026-events-fights-november-b3077393.html",
+          "note": "Alatengheili replaces injured Adrian Yanez (UFC, 10 Nov 2026)",
+          "source": "https://www.ufc.com/news/updates-polymarket-ufc-334-gane-vs-hokit",
           "records": [
-            "18-6-1",
+            "18-10-2",
             "16-1-1"
           ],
           "recordSources": [
-            "https://www.ufc.com/athlete/adrian-yanez",
-            "https://schedule.fightmag.com/events/ufc-334/"
+            "https://www.ufc.com/athlete/heili-alateng",
+            "https://www.ufc.com/event/ufc-334"
           ]
         },
         {
           "id": "ufc334-12",
           "section": "early",
           "fighters": [
-            "Nazim Sadykhov",
-            "Jefferson Nascimento"
+            "Jared Gordon",
+            "Melquizael Costa"
           ],
           "division": "Lightweight",
-          "note": "",
-          "source": "https://www.independent.co.uk/sport/ufc/ufc-schedule-2026-events-fights-november-b3077393.html",
+          "note": "Official replacement of cancelled Sadykhov–Nascimento bout in the early prelims",
+          "source": "https://www.ufc.com/event/ufc-334",
           "records": [
-            "11-3-1",
-            "13-1"
+            "21-9",
+            "26-7"
           ],
           "recordSources": [
-            "https://www.ufc.com/athlete/nazim-sadykhov",
-            "https://www.ufc.com/athlete/jefferson-nascimento"
+            "https://www.ufc.com/athlete/jared-gordon",
+            "https://www.ufc.com/athlete/melquizael-costa"
           ]
         },
         {
@@ -1181,13 +1321,14 @@
       ],
       "startAt": "2026-11-14T21:00:00-05:00",
       "startLabel": "Main card 9 pm ET (Sunday 15 Nov, 1 pm AEDT)",
-      "note": "UFC's official event page confirms Main Card, Prelims and Early Prelims, including Evan Elder vs Samuel Sanches; bouts and sections may change before fight night.",
+      "note": "13 current official bouts: 5 main card, 4 prelims, 4 early prelims. Donte Johnson faces Cesar Almeida; Alatengheili replaces Adrian Yanez; Sadykhov–Nascimento was cancelled (UFC updates 10 Nov).",
       "sourceAccessible": true,
       "sourceLastCheckedAt": "2026-11-11T19:14:14+00:00",
       "sourceDigest": "2c5d855e6f7d3517985e771f",
       "sourceChangedAt": "2026-11-11T19:14:14+00:00",
       "additionalSources": [
-        "https://schedule.fightmag.com/events/ufc-334/"
+        "https://schedule.fightmag.com/events/ufc-334/",
+        "https://www.ufc.com/news/updates-polymarket-ufc-334-gane-vs-hokit"
       ],
       "poster": {
         "url": "https://schedule.fightmag.com/wp-content/uploads/2026/08/ufc-334-gane-vs-hokit-696x392.jpg",
@@ -1405,7 +1546,7 @@
       "title": "Teremoana Teremoana vs Hemi Ahio",
       "location": "Pullman Melbourne Albert Park, Melbourne, Victoria, Australia",
       "source": "https://www.matchroomboxing.com/news/heavyweight-superstar-teremoana-teremoana-meets-dangerous-hemi-ahio-in-melbourne-as-matchroom-boxing-returns-to-australia-on-wednesday-november-18-live-on-fox-sports/",
-      "verifiedAt": "2026-11-10",
+      "verifiedAt": "2026-11-12",
       "bouts": [
         {
           "id": "teremoana-ahio-1",
@@ -1416,7 +1557,15 @@
           ],
           "division": "Heavyweight",
           "note": "Confirmed headliner; running order of undercard TBC",
-          "source": "https://www.matchroomboxing.com/news/heavyweight-superstar-teremoana-teremoana-meets-dangerous-hemi-ahio-in-melbourne-as-matchroom-boxing-returns-to-australia-on-wednesday-november-18-live-on-fox-sports/"
+          "source": "https://www.fightmag.com/teremoana-vs-ahio-undercard-announced/",
+          "records": [
+            "12-0 (12 KOs)",
+            "25-1 (19 KOs)"
+          ],
+          "recordSources": [
+            "https://www.fightmag.com/teremoana-vs-ahio-undercard-announced/",
+            "https://www.fightmag.com/teremoana-vs-ahio-undercard-announced/"
+          ]
         },
         {
           "id": "teremoana-ahio-2",
@@ -1427,7 +1576,15 @@
           ],
           "division": "Middleweight",
           "note": "WBA Oceania Middleweight title; undercard order TBC",
-          "source": "https://www.matchroomboxing.com/news/heavyweight-superstar-teremoana-teremoana-meets-dangerous-hemi-ahio-in-melbourne-as-matchroom-boxing-returns-to-australia-on-wednesday-november-18-live-on-fox-sports/"
+          "source": "https://www.fightmag.com/teremoana-vs-ahio-undercard-announced/",
+          "records": [
+            "14-0 (8 KOs)",
+            "31-8 (15 KOs)"
+          ],
+          "recordSources": [
+            "https://www.fightmag.com/teremoana-vs-ahio-undercard-announced/",
+            "https://www.fightmag.com/teremoana-vs-ahio-undercard-announced/"
+          ]
         },
         {
           "id": "teremoana-ahio-3",
@@ -1438,7 +1595,15 @@
           ],
           "division": "Super Welterweight",
           "note": "Vacant Australian Super Welterweight title; undercard order TBC",
-          "source": "https://www.matchroomboxing.com/news/heavyweight-superstar-teremoana-teremoana-meets-dangerous-hemi-ahio-in-melbourne-as-matchroom-boxing-returns-to-australia-on-wednesday-november-18-live-on-fox-sports/"
+          "source": "https://www.fightmag.com/teremoana-vs-ahio-undercard-announced/",
+          "records": [
+            "7-1 (5 KOs)",
+            "3-1 (1 KO)"
+          ],
+          "recordSources": [
+            "https://www.fightmag.com/teremoana-vs-ahio-undercard-announced/",
+            "https://www.fightmag.com/teremoana-vs-ahio-undercard-announced/"
+          ]
         },
         {
           "id": "teremoana-ahio-4",
@@ -1449,14 +1614,44 @@
           ],
           "division": "Middleweight",
           "note": "Undercard order TBC",
-          "source": "https://www.matchroomboxing.com/news/heavyweight-superstar-teremoana-teremoana-meets-dangerous-hemi-ahio-in-melbourne-as-matchroom-boxing-returns-to-australia-on-wednesday-november-18-live-on-fox-sports/"
+          "source": "https://www.fightmag.com/teremoana-vs-ahio-undercard-announced/",
+          "records": [
+            "6-0 (5 KOs)",
+            "6-1 (6 KOs)"
+          ],
+          "recordSources": [
+            "https://www.fightmag.com/teremoana-vs-ahio-undercard-announced/",
+            "https://www.fightmag.com/teremoana-vs-ahio-undercard-announced/"
+          ]
+        },
+        {
+          "id": "teremoana-ahio-5",
+          "section": "announced",
+          "fighters": [
+            "James Noonan",
+            "Matt Faron"
+          ],
+          "records": [
+            "1-1",
+            "2-0"
+          ],
+          "recordSources": [
+            "https://www.fightmag.com/teremoana-vs-ahio-undercard-announced/",
+            "https://www.fightmag.com/teremoana-vs-ahio-undercard-announced/"
+          ],
+          "division": "Middleweight",
+          "note": "Opening bout · 4 rounds · promoter running order subject to change",
+          "source": "https://www.fightmag.com/teremoana-vs-ahio-undercard-announced/"
         }
       ],
-      "note": "Four complete pairings explicitly named by Matchroom in its October 14 announcement. Main/prelims placement not assigned without official running order; a truncated mention of James Noonan lacks a named opponent and is omitted.",
+      "note": "Five bouts named in Fightmag's 21 October undercard report; changes remain possible before 18 November.",
       "sourceAccessible": true,
       "sourceLastCheckedAt": "2026-11-11T19:14:14+00:00",
       "sourceDigest": "e1ca42d19483ebaf9b2dbc18",
-      "sourceChangedAt": "2026-11-11T19:14:14+00:00"
+      "sourceChangedAt": "2026-11-11T19:14:14+00:00",
+      "additionalSources": [
+        "https://www.fightmag.com/teremoana-vs-ahio-undercard-announced/"
+      ]
     },
     {
       "id": "price-kotaskova-2026-11-20",
@@ -1466,7 +1661,7 @@
       "title": "Lauren Price vs Michaela Kotaskova",
       "location": "Utilita Arena, Cardiff, Wales",
       "source": "https://www.boxxer.com/events/lauren-price-vs-michaela-kotaskova-20-november-2026-utilita-arena-cardiff/",
-      "verifiedAt": "2026-11-11",
+      "verifiedAt": "2026-11-12",
       "bouts": [
         {
           "id": "b1",
@@ -1496,7 +1691,15 @@
           ],
           "division": "Featherweight",
           "note": "WBA Continental Featherweight title; running order TBC",
-          "source": "https://www.boxxer.com/events/lauren-price-vs-michaela-kotaskova-20-november-2026-utilita-arena-cardiff/"
+          "source": "https://www.boxxer.com/events/lauren-price-vs-michaela-kotaskova-20-november-2026-utilita-arena-cardiff/",
+          "records": [
+            "17-1-1 (4 KOs)",
+            "16-3-1 (11 KOs)"
+          ],
+          "recordSources": [
+            "https://britishboxingnews.co.uk/blogs/lauren-price-vs-michaela-kotaskova-full-card-start-time-ring-walks-and-how-to-watch/",
+            "https://britishboxingnews.co.uk/blogs/lauren-price-vs-michaela-kotaskova-full-card-start-time-ring-walks-and-how-to-watch/"
+          ]
         },
         {
           "id": "boxxer-price-3",
@@ -1507,14 +1710,25 @@
           ],
           "division": "Middleweight",
           "note": "Running order TBC",
-          "source": "https://www.boxxer.com/events/lauren-price-vs-michaela-kotaskova-20-november-2026-utilita-arena-cardiff/"
+          "source": "https://www.boxxer.com/events/lauren-price-vs-michaela-kotaskova-20-november-2026-utilita-arena-cardiff/",
+          "records": [
+            "14-0-1 (1 KO)",
+            "10-1"
+          ],
+          "recordSources": [
+            "https://britishboxingnews.co.uk/blogs/lauren-price-vs-michaela-kotaskova-full-card-start-time-ring-walks-and-how-to-watch/",
+            "https://britishboxingnews.co.uk/blogs/lauren-price-vs-michaela-kotaskova-full-card-start-time-ring-walks-and-how-to-watch/"
+          ]
         }
       ],
       "note": "Three bouts confirmed by BOXXER; only the headline is assigned to the main card. Undercard order TBC.",
       "sourceAccessible": false,
       "sourceLastCheckedAt": "2026-11-10T13:19:37+00:00",
       "sourceDigest": "567b1e4435d4bd1a39b09363",
-      "sourceChangedAt": "2026-11-10T10:06:33+00:00"
+      "sourceChangedAt": "2026-11-10T10:06:33+00:00",
+      "additionalSources": [
+        "https://britishboxingnews.co.uk/blogs/lauren-price-vs-michaela-kotaskova-full-card-start-time-ring-walks-and-how-to-watch/"
+      ]
     },
     {
       "id": "ufc-qatar-2026-11-21",

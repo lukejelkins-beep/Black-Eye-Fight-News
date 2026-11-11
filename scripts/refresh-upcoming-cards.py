@@ -186,15 +186,26 @@ def merge_bouts(event, rows, source):
         duplicate = any({simplify(n) for n in b.get("fighters", [])} == pair for b in existing)
         if duplicate:
             continue
-        # A known fighter with a TBA partner may now have a published opponent.
-        tba = next((b for b in existing if simplify(first) in
-                    {simplify(n) for n in b.get("fighters", [])}
-                    and any(simplify(n) in ("tba", "opponenttba", "fightertbc") for n in b.get("fighters", []))), None)
+        # A TBA pairing may be upgraded, but a fighter already booked against
+        # a named opponent must NEVER receive a second bout automatically.
+        unknown = {"tba", "opponenttba", "fightertbc"}
+        tba = next((b for b in existing
+                    if simplify(first) in {simplify(n) for n in b.get("fighters", [])}
+                    and any(simplify(n) in unknown for n in b.get("fighters", []))), None)
         if tba:
+            # The second name could already belong to another fight.
+            if any(b is not tba and simplify(second) in
+                   {simplify(n) for n in b.get("fighters", [])} for b in existing):
+                print(f"Conflicting schedule replacement skipped: {first} vs {second}")
+                continue
             tba["fighters"] = [first, second]
             tba["source"] = source
             tba["note"] = (tba.get("note", "") + " · Opponent named in independent schedule").strip(" ·")
         else:
+            known = {simplify(n) for b in existing for n in b.get("fighters", [])}
+            if pair & known:
+                print(f"Conflicting schedule pairing skipped pending editorial review: {first} vs {second}")
+                continue
             event["bouts"].append({
                 "id": "schedule-" + hashlib.sha256((event["id"] + first + second).encode()).hexdigest()[:10],
                 "section": "announced",
@@ -434,8 +445,10 @@ def refresh_kabayel_undercard(event, now):
                 pair = {simplify(first), simplify(second)}
                 if pair == {simplify(n) for n in event["bouts"][0]["fighters"]}:
                     continue
-                if any(pair == {simplify(n) for n in b.get("fighters", [])}
+                if any(pair & {simplify(n) for n in b.get("fighters", [])}
                        for b in event.get("bouts", [])):
+                    # An updated opponent requires an editorial review, not a
+                    # new duplicate fight row on a live card.
                     continue
                 event["bouts"].append({
                     "id": "boxen1-" + hashlib.sha256((first + second).encode()).hexdigest()[:10],
@@ -505,6 +518,17 @@ def main():
         if event.get("id") == BOXEN1_EVENT:
             updated = refresh_kabayel_undercard(event, now)
             print(f"Boxen1 independent Kabayel undercard: {updated} newly verified named reports")
+    for event in events:
+        participants = {}
+        for bout in event.get("bouts", []):
+            for fighter in bout.get("fighters", []):
+                key = simplify(fighter)
+                if key and key in participants:
+                    raise ValueError(
+                        f"Duplicate fighter in {event['id']}: {fighter} "
+                        f"(bouts {participants[key]} and {bout.get('id')})"
+                    )
+                participants[key] = bout.get("id")
     if valid:
         data["lastCheckedAt"] = now
         data["lastSuccessfulAt"] = now

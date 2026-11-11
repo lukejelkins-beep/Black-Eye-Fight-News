@@ -23,6 +23,12 @@ window.UpcomingCards=(()=>{
   const src=item?.photo||'';
   return /^https:\/\//.test(src)?src:'';
  }
+ function photoAttribution(name){
+  const fighters=registry();
+  const item=fighters[name]||Object.entries(fighters).find(([k])=>k.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()===name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase())?.[1];
+  if(!item?.credit||!item?.source||!item?.license||!item?.licenseUrl)return '';
+  return '<small class="upcoming-photo-credit"><a href="'+href(item.source)+'" target="_blank" rel="noopener noreferrer">Photo: '+esc(item.credit)+'</a> · <a href="'+href(item.licenseUrl)+'" target="_blank" rel="noopener noreferrer">'+esc(item.license)+'</a></small>';
+ }
  function initials(name){
   return String(name||'').trim().split(/\s+/).filter(Boolean).slice(0,2).map(part=>part[0].toUpperCase()).join('')||'?';
  }
@@ -45,7 +51,7 @@ window.UpcomingCards=(()=>{
   const detail=record?'<span class="upcoming-fighter-record" aria-label="Professional record '+esc(record)+'">'+esc(record)+'</span>':
    '<span class="upcoming-fighter-record is-unverified">Record not verified</span>';
   return '<div class="result-contender result-contender-'+(right?'right':'left')+'">'+(!right?photo(name):'')+
-   '<div class="result-contender-info"><strong>'+esc(name)+'</strong>'+detail+'</div>'+(right?photo(name):'')+'</div>';
+   '<div class="result-contender-info"><strong>'+esc(name)+'</strong>'+detail+photoAttribution(name)+'</div>'+(right?photo(name):'')+'</div>';
  }
  function flag(code,side){
   const c=String(code||'').toLowerCase();
@@ -304,24 +310,20 @@ window.UpcomingCards=(()=>{
    options.sort((a,b)=>score(b)-score(a));
    const existing=options.find(e=>score(e)>=2);
    if(existing){
-    const known=new Set(existing.bouts.map(matchup));
+    // Editorially verified fight cards are authoritative. Supplemental
+    // research can enrich matching bouts, never insert stale replacements.
     for(const bout of remote.bouts){
      if(!Array.isArray(bout.fighters)||bout.fighters.length!==2||!bout.fighters.every(Boolean))continue;
      const matched=existing.bouts.find(b=>matchup(b)===matchup(bout));
      if(matched){
-       if(bout.section&&['main','prelims','early'].includes(bout.section)&&matched.section!==bout.section){
-         matched.section=bout.section;
-         matched.sectionSource='https://www.ufcalendar.com/events/'+encodeURIComponent(remote.slug);
-       }
+       // Keep official card section placement over supplemental research.
        if(!matched.division&&bout.division)matched.division=bout.division;
        if(!matched.note&&bout.isTitle)matched.note='Title fight';
        continue;
      }
-     const key=matchup(bout);if(!key||known.has(key))continue;
-     known.add(key);
-     existing.bouts.push({id:'ufcalendar-'+bout.id,section:['main','prelims','early'].includes(bout.section)?bout.section:'other',
-      fighters:bout.fighters,division:bout.division||'',note:bout.isTitle?'Title fight':'',
-      source:'https://www.ufcalendar.com/events/'+encodeURIComponent(remote.slug)});
+     // New pairings require official confirmation before publication.
+     // Otherwise a cancelled fight can be re-added after editorial removal.
+     continue;
     }
     continue;
    }

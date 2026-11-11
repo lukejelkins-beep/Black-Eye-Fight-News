@@ -148,6 +148,33 @@ class UpcomingCardTests(unittest.TestCase):
         self.assertEqual(new_bout["division"], "Weight class not confirmed")
         self.assertEqual(new_bout["records"], [None, None])
 
+    def test_conflicting_opponent_is_not_added_twice(self):
+        self.event["bouts"].append({
+            "id": "sheehy-current", "section": "main",
+            "fighters": ["Charlie Sheehy", "Jose Matias Romero"]})
+        before = len(self.event["bouts"])
+        added = upcoming.merge_bouts(
+            self.event,
+            [("Charlie Sheehy", "Gabriel Flores Jr.", 10, "lightweights")],
+            "https://example.org/outdated-card")
+        self.assertEqual(added, 0)
+        self.assertEqual(len(self.event["bouts"]), before)
+
+    def test_current_event_data_has_no_duplicate_fighters(self):
+        import json
+        payload = json.loads((ROOT / "data/upcoming-cards.json").read_text(encoding="utf-8"))
+        counts = {e["id"]: len(e["bouts"]) for e in payload["events"]}
+        self.assertEqual(counts["ufc-334-2026-11-14"], 13)
+        self.assertEqual(counts["pacheco-fulghum-2026-11-14"], 8)
+        self.assertEqual(counts["cage-warriors-213-2026-11-14"], 9)
+        for e in payload["events"]:
+            seen = set()
+            for bout in e["bouts"]:
+                for fighter in bout["fighters"]:
+                    key = upcoming.simplify(fighter)
+                    self.assertNotIn(key, seen, f"Duplicated {fighter} at {e['id']}")
+                    seen.add(key)
+
     def test_kabayel_report_not_added_to_another_event(self):
         before = len(self.event["bouts"])
         self.assertEqual(upcoming.refresh_kabayel_undercard(
