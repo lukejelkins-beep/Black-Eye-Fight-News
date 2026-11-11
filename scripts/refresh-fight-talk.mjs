@@ -43,38 +43,51 @@ async function getJSON(url,headers={}) {
     return await response.json();
   } finally{clearTimeout(timeout)}
 }
-for(const src of config.sources) {
-  if(!src.did||!src.handle||!['boxing','mma','grappling'].includes(src.sport))continue;
-  const url='https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor='+encodeURIComponent(src.did)+'&limit=100&filter=posts_with_replies';
-  try{
-    const response=await getJSON(url);checked++;
-    for(const item of response.feed||[]) {
-      if(item.reason?.$type==='app.bsky.feed.defs#reasonRepost')continue;
-      const post=item.post||{},rec=post.record||{},author=post.author||{};
-      if(author.did!==src.did||typeof rec.text!=='string'||!rec.text.trim())continue;
-      if(!keywords.test(rec.text))continue;
-      const key=post.uri?.split('/').pop();
-      if(!key||!author.handle||!author.did)continue;
-      const postedAt=rec.createdAt||post.indexedAt||'';
-      insert({
-        id:post.uri,cid:post.cid,platform:'Bluesky',sport:src.sport,type:'post',name:author.displayName?.trim()||src.name,
-        handle:'@'+author.handle,role:src.role,fighterTier:src.fighterTier,quote:rec.text.slice(0,300),
-        postedAt,date:new Date(postedAt).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric',timeZone:'Australia/Melbourne'}),
-        url:'https://bsky.app/profile/'+encodeURIComponent(author.handle)+'/post/'+encodeURIComponent(key),
-        photo:/^https:\/\//.test(author.avatar||'')?author.avatar:'',
-        source:'Bluesky public author API',verifiedDid:src.did,
-        engagement:{likes:post.likeCount,comments:post.replyCount,shares:post.repostCount}
-      },true);
-    }
-  }catch(err){failed++;failures.push(src.handle+': '+String(err.message||err).slice(0,90))}
+// All pinned Bluesky DIDs remain monitored without paid APIs. The collector
+// checks current sources every ~10 minutes; a bounded worker pool prevents a
+// single unreachable profile from delaying the whole feed.
+const blueskySources=config.sources.filter(src=>src.did&&src.handle&&
+ ['boxing','mma','grappling'].includes(src.sport));
+let sourceCursor=0;
+async function checkBlueskyAuthor(src){
+ const url='https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor='+encodeURIComponent(src.did)+'&limit=40&filter=posts_with_replies';
+ try{
+  const response=await getJSON(url);checked++;
+  for(const item of response.feed||[]){
+   if(item.reason?.$type==='app.bsky.feed.defs#reasonRepost')continue;
+   const post=item.post||{},rec=post.record||{},author=post.author||{};
+   if(author.did!==src.did||typeof rec.text!=='string'||!rec.text.trim())continue;
+   if(!keywords.test(rec.text))continue;
+   const key=post.uri?.split('/').pop();
+   if(!key||!author.handle||!author.did)continue;
+   const postedAt=rec.createdAt||post.indexedAt||'';
+   if(!Number.isFinite(Date.parse(postedAt)))continue;
+   insert({
+    id:post.uri,cid:post.cid,platform:'Bluesky',sport:src.sport,type:'post',name:author.displayName?.trim()||src.name,
+    handle:'@'+author.handle,role:src.role,fighterTier:src.fighterTier,quote:rec.text.slice(0,2000),
+    postedAt,date:new Date(postedAt).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric',timeZone:'Australia/Melbourne'}),
+    url:'https://bsky.app/profile/'+encodeURIComponent(author.handle)+'/post/'+encodeURIComponent(key),
+    photo:/^https:\/\//.test(author.avatar||'')?author.avatar:'',
+    source:'Bluesky public author API',verifiedDid:src.did,
+    engagement:{likes:post.likeCount,comments:post.replyCount,shares:post.repostCount}
+   },true);
+  }
+ }catch(err){failed++;failures.push(src.handle+': '+String(err.message||err).slice(0,90))}
 }
+async function blueskyWorker(){
+ while(sourceCursor<blueskySources.length){
+  const src=blueskySources[sourceCursor++];
+  await checkBlueskyAuthor(src);
+ }
+}
+await Promise.all(Array.from({length:Math.min(6,blueskySources.length)},()=>blueskyWorker()));
 // Public Threads post links are now collected from trusted source pages and
 // rendered as official embeds. An approved Meta keyword_search API, OAuth
 // token or app review is NOT required for the view-only public feed.
 const threadsState='source-linked';
 const threadsStatus='Original public Threads links discovered from trusted fight coverage; no account-level Meta API or OAuth required.';
 const platformStatus=await collectPlatforms(config,getJSON,p=>insert(p,true),recentApiSince);
-platformStatus.unshift({platform:'Bluesky',state:checked?'connected':'unavailable',checked,failed,message:checked+' of '+config.sources.length+' sources checked.'});
+platformStatus.unshift({platform:'Bluesky',state:checked?'connected':'unavailable',checked,failed,message:checked+' of '+blueskySources.length+' sources checked.'});
 platformStatus.push({platform:'Threads',state:threadsState,message:threadsStatus});
 const collected=platformStatus.some(p=>p.state==='connected');
 const meaningful=/\b(title|champion|result|wins|won|defeat|knockout|finish|announce|confirmed|signs|signed|withdraw|cancel|injury|opponent|call.?out|matchup|bout|card|round|decision|scorecard|takedown|submission|fight|ufc|boxing|wrestling|grappling|raf)\b/i;
