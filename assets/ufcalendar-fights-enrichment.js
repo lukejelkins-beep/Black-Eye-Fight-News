@@ -19,6 +19,13 @@
     ".befn-cal-row b{font-size:11px;color:#63352d}",
     ".befn-cal-sub{font-size:10px!important;color:#64615b!important}",
     ".befn-cal-record-context{display:block;font-size:10px;color:#655e53;font-weight:500}",
+    ".befn-cal-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:10px}",
+    ".befn-cal-form-person{min-width:0;font-size:11px;color:#393a3a}",
+    ".befn-cal-form-person strong{display:block;margin-bottom:4px}",
+    ".befn-cal-form-line{font-size:11px;line-height:1.5;padding:3px 0;border-top:1px solid #ece6dc}",
+    ".befn-cal-form-line b{color:#7e332c;margin-right:4px}",
+    ".befn-cal-form-line span{display:block;font-size:10px;color:#68645f}",
+    "@media(max-width:520px){.befn-cal-form-grid{grid-template-columns:1fr}}",
     ".befn-cal-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}",
     "@media(max-width:520px){.befn-cal-stats{margin:7px 3px 9px}.befn-cal-row{grid-template-columns:26px minmax(0,1fr) minmax(0,1fr);gap:5px}.befn-cal-row span{font-size:10px}}"
   ].join("");
@@ -98,6 +105,46 @@
       existing.insertAdjacentElement("afterend",sourceNote);
     });
   }
+  function addScorecards(article, bout) {
+    if (article.querySelector(".befn-cal-judges") ||
+        !article.classList.contains("is-completed")) return;
+    const sc=bout.scorecardSummary;
+    if (!sc || !Array.isArray(sc.judges) || !sc.judges.length) return;
+    const known=sc.judges.filter(x=>x.scoresKnown && Number.isInteger(x.totalA)
+      && Number.isInteger(x.totalB));
+    if (!known.length) return;
+    const block=document.createElement("details");
+    block.className="befn-cal-stats befn-cal-judges";
+    const rows=known.map(j=>"<div class='befn-cal-row'><b>Judge</b><span>"+
+      esc(j.judge || "Official judge")+"</span><span><strong>"+esc(j.totalA)+"–"+
+      esc(j.totalB)+"</strong></span></div>").join("");
+    block.innerHTML="<summary>Official judges’ scorecards · UFCalendar</summary>"+
+      "<div class='befn-cal-table'>"+rows+"</div>";
+    article.appendChild(block);
+  }
+  function addUpcomingForm(article,bout) {
+    if (!article.classList.contains("upcoming-bout") ||
+        article.querySelector(".befn-cal-form")) return;
+    const recent=["a","b"].filter(c=>Array.isArray(bout[c+"Recent"]) &&
+       bout[c+"Recent"].length);
+    const champion= ["a","b"].filter(c=>bout[c+"HeldUfcTitle"]===true);
+    if (!recent.length && !champion.length) return;
+    const panel=document.createElement("details");
+    panel.className="befn-cal-stats befn-cal-form";
+    const parts=["a","b"].map(c=>{
+      const history=(bout[c+"Recent"]||[]).slice(0,3);
+      const label=c==="a"?bout.a:bout.b;
+      const title= "<strong>"+esc(label)+"</strong>"+
+        (bout[c+"HeldUfcTitle"]===true?" <small>· Has held a UFC title</small>":"");
+      const rows=history.map(h=>
+        "<div class='befn-cal-form-line'><b>"+esc(String(h.result||"").toUpperCase())+
+        "</b> "+esc(h.opponent)+" <span>"+esc(h.date)+"</span></div>").join("");
+      return "<div class='befn-cal-form-person'>"+title+rows+"</div>";
+    }).join("");
+    panel.innerHTML="<summary>Recent form &amp; championship history · UFCalendar</summary>"+
+      "<div class='befn-cal-form-grid'>"+parts+"</div>";
+    article.appendChild(panel);
+  }
   function apply() {
     if (!index) return;
     const all = Object.values(index.events || {}).filter(e => e && (e.org==="ufc"||e.org==="pfl"));
@@ -112,7 +159,9 @@
         if (matching.length !== 1) return;
         const bout = matching[0];
         addRounds(article,bout);
+        addScorecards(article,bout);
         addUpcomingRecords(article,bout,names);
+        addUpcomingForm(article,bout);
       });
     });
   }
