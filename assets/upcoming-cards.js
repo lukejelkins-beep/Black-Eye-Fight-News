@@ -282,6 +282,58 @@ window.UpcomingCards=(()=>{
   hydratePortraits();reconcileHeroImages();
  }
  function valid(d){return d&&Array.isArray(d.events)&&d.events.every(e=>typeof e.id==='string'&&typeof e.date==='string'&&typeof e.title==='string'&&Array.isArray(e.bouts)&&e.bouts.every(b=>Array.isArray(b.fighters)&&b.fighters.length===2));}
+ function normalizeFighter(x){return String(x||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'')}
+ function matchup(b){return Array.isArray(b?.fighters)?b.fighters.map(normalizeFighter).sort().join(':'):''}
+ function mergeUfcResearch(source,external){
+  if(!valid(source)||!external||external.schema!==1||!external.events||typeof external.events!=='object')return source;
+  const merged={...source,events:source.events.map(e=>({...e,bouts:e.bouts.map(b=>({...b}))}))};
+  const upcoming=Object.values(external.events).filter(e=>
+   e&&e.status!=='completed'&&Array.isArray(e.bouts)&&e.bouts.length>=2&&typeof e.date==='string');
+  const today=new Date().toISOString().slice(0,10);
+  for(const remote of upcoming){
+   if(remote.date<today||remote.date>new Date(Date.now()+120*86400000).toISOString().slice(0,10))continue;
+   const options=merged.events.filter(e=>e.sport==='mma'&&String(e.promotion).toLowerCase()==='ufc'
+      &&Math.abs(Date.parse(e.date+'T12:00:00Z')-Date.parse(remote.date+'T12:00:00Z'))<=86400000);
+   const score=e=>{
+     const all=new Set(e.bouts.map(matchup));
+     return remote.bouts.filter(b=>all.has(matchup(b))).length;
+   };
+   options.sort((a,b)=>score(b)-score(a));
+   const existing=options.find(e=>score(e)>=2);
+   if(existing){
+    const known=new Set(existing.bouts.map(matchup));
+    for(const bout of remote.bouts){
+     if(!Array.isArray(bout.fighters)||bout.fighters.length!==2||!bout.fighters.every(Boolean))continue;
+     const matched=existing.bouts.find(b=>matchup(b)===matchup(bout));
+     if(matched){
+       if(bout.section&&['main','prelims','early'].includes(bout.section)&&matched.section!==bout.section){
+         matched.section=bout.section;
+         matched.sectionSource='https://www.ufcalendar.com/events/'+encodeURIComponent(remote.slug);
+       }
+       if(!matched.division&&bout.division)matched.division=bout.division;
+       if(!matched.note&&bout.isTitle)matched.note='Title fight';
+       continue;
+     }
+     const key=matchup(bout);if(!key||known.has(key))continue;
+     known.add(key);
+     existing.bouts.push({id:'ufcalendar-'+bout.id,section:['main','prelims','early'].includes(bout.section)?bout.section:'other',
+      fighters:bout.fighters,division:bout.division||'',note:bout.isTitle?'Title fight':'',
+      source:'https://www.ufcalendar.com/events/'+encodeURIComponent(remote.slug)});
+    }
+    continue;
+   }
+   // A genuinely new UFC event must have a reliable dated fight card and main event.
+   if(remote.bouts.length<3||!remote.bouts.some(b=>b.isMain))continue;
+   if(options.length)continue; // Never duplicate an existing UFC event with uncertain matching.
+   merged.events.push({id:'ufcalendar-'+remote.id,date:remote.date,sport:'mma',promotion:'UFC',title:remote.title,
+    location:remote.location||'',source:'https://www.ufcalendar.com/events/'+encodeURIComponent(remote.slug),
+    startAt:remote.mainCardAt||remote.startAt,bouts:remote.bouts.filter(b=>b.fighters?.length===2).map(b=>({
+      id:'ufcalendar-'+b.id,section:['main','prelims','early'].includes(b.section)?b.section:'other',
+      fighters:b.fighters,division:b.division||'',note:b.isTitle?'Title fight':'',
+      source:'https://www.ufcalendar.com/events/'+encodeURIComponent(remote.slug)}))});
+  }
+  return merged;
+ }
  async function load(){
   if(loading)return loading;
   loading=(async()=>{
@@ -292,7 +344,13 @@ window.UpcomingCards=(()=>{
     }));
     const next=results.filter(Boolean).sort((a,b)=>(Date.parse(b.lastCheckedAt||b.reviewedAt)||0)-(Date.parse(a.lastCheckedAt||a.reviewedAt)||0))[0];
     if(!next)throw Error('No source available');
-    if(!feed||JSON.stringify(feed)!==JSON.stringify(next)){feed=next;update()}
+    let enriched=next;
+    try{
+      const bonus=await fetch('data/ufcalendar-pro-cards.json?t='+Math.floor(Date.now()/3600000),
+        {cache:'no-store',signal:AbortSignal.timeout(9000)});
+      if(bonus.ok)enriched=mergeUfcResearch(next,await bonus.json());
+    }catch{}
+    if(!feed||JSON.stringify(feed)!==JSON.stringify(enriched)){feed=enriched;update()}
     error='';
    }catch{error='unavailable';if(!feed)update()}
    finally{lastCheck=Date.now();loading=null}
