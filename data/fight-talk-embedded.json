@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-11T14:55:39.536Z",
-  "checkedAt": "2026-11-11T14:55:39.536Z",
+  "attemptedAt": "2026-11-11T15:48:00.122Z",
+  "checkedAt": "2026-11-11T15:48:00.122Z",
   "windowDays": 28,
   "articlesChecked": 32,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 47,
   "publisherSourcesConfigured": 33,
-  "linksFound": 8,
-  "newEmbedsVerified": 0,
+  "linksFound": 10,
+  "newEmbedsVerified": 2,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -18,6 +18,44 @@
   "curatedRejected": 0,
   "curatedPublisherLinked": 2,
   "posts": [
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-11T15:00:00+00:00",
+      "discoveredAt": "2026-11-11T15:48:00.122Z",
+      "sourcePublisher": "MMA Fighting",
+      "evidenceUrl": "https://www.mmafighting.com/ufc/520488/watch-josh-hokit-train-blindfolded-to-prepare-for-eye-pokes-in-ufc-334-title-fight-with-ciryl-gane",
+      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/Dflb_CIgPzx/"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-11T15:00:00+00:00",
+      "discoveredAt": "2026-11-11T15:48:00.122Z",
+      "sourcePublisher": "MMA Fighting",
+      "evidenceUrl": "https://www.mmafighting.com/ufc/520488/watch-josh-hokit-train-blindfolded-to-prepare-for-eye-pokes-in-ufc-334-title-fight-with-ciryl-gane",
+      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/reel/Dflb_CIgPzx/"
+    },
     {
       "type": "post",
       "platform": "Instagram",
@@ -1610,6 +1648,14 @@
     {
       "url": "https://www.instagram.com/reel/DcC6zuHOccH/",
       "firstSeen": "2026-11-11T09:42:14.153Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/Dflb_CIgPzx/",
+      "firstSeen": "2026-11-11T15:48:00.122Z"
+    },
+    {
+      "url": "https://www.instagram.com/reel/Dflb_CIgPzx/",
+      "firstSeen": "2026-11-11T15:48:00.122Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
