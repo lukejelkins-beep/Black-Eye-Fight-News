@@ -45,6 +45,12 @@ vm.runInNewContext(source,sandbox,{timeout:5000});
  assert(html.includes('Kevin Saszik'),'Named undercard pairing remains visible');
  assert(html.includes('Heavyweight'),'The weight class remains visible');
  assert(html.includes('Fight card'),'Expanding a card shows its bouts');
+ assert(html.includes('is-main-event'),'Main bout receives the shared Results main-event style');
+ assert(html.includes('result-featured-bout-label'),'Featured-bout label reuses Results markup');
+ assert(html.includes('MAIN EVENT'),'Main event is labelled');
+ assert(!html.includes('result-win-tick'),'Upcoming bouts never display completed-result winner ticks');
+ assert(!html.includes('is-completed'),'Upcoming bouts never impersonate results');
+
  for(const removed of ['Announced pairing','Reported pairing','Bout source','Event source','Poster source','Other artwork','Local scheduled start','upcoming-event-note','upcoming-bout-note','upcoming-record-source']){
   assert(!html.includes(removed),'Upcoming fixture UI must hide verbose metadata: '+removed);
  }
