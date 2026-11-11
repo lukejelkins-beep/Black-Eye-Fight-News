@@ -548,8 +548,7 @@ def public_events(cards,profiles,today):
                             row[corner+"HeldUfcTitle"]=True
                     if not (p and p.get("record")) and b.get(corner+"Record"):
                         row[corner+"Record"]=b[corner+"Record"]
-                    elif b.get(corner+"Record"):
-                        row[corner+"Record"]=b[corner+"Record"]
+
             info["bouts"].append(row)
         events[key]=info
     return {"schema":1,"generatedAt":dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
