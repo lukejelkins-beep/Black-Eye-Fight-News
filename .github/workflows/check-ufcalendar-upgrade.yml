@@ -1,0 +1,70 @@
+name: Check upgraded UFCalendar plan
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/check-ufcalendar-upgrade.yml'
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test paid quota and inspect safe event data shapes
+        env:
+          UFCALENDAR_API_KEY: ${{ secrets.UFCALENDAR_API_KEY }}
+        run: |
+          python - <<'PY'
+          import datetime,json,os,pathlib,urllib.request,urllib.error
+          key=os.environ.get('UFCALENDAR_API_KEY','').strip()
+          report={'checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'has_key':bool(key),'status':'missing_key'}
+          def get(route):
+              request=urllib.request.Request('https://api.ufcalendar.com/v1'+route,headers={'Authorization':'Bearer '+key,'Accept':'application/json'})
+              with urllib.request.urlopen(request,timeout=25) as response:
+                  return json.load(response)
+          if key:
+              try:
+                  usage=get('/usage').get('data',{})
+                  report.update({'status':'connected','tier':usage.get('tier'),'requests_limit':usage.get('requests_limit'),
+                  'requests_used':usage.get('requests_used'),'reset_at':usage.get('reset_at')})
+                  if isinstance(usage.get('requests_limit'),int) and usage['requests_limit']>=30000:
+                      upcoming=get('/events?org=ufc&status=upcoming&limit=2')
+                      report['upcoming_list_count']=len(upcoming.get('data',[])) if isinstance(upcoming.get('data'),list) else None
+                      if isinstance(upcoming.get('data'),list) and upcoming['data']:
+                          event=upcoming['data'][0]
+                          report['upcoming_sample_keys']=sorted(event.keys())
+                          slug=event.get('slug')
+                          if slug:
+                              detail=get('/events/'+str(slug))
+                              obj=detail.get('data',{})
+                              report['event_detail_keys']=sorted(obj.keys()) if isinstance(obj,dict) else []
+                              report['event_detail_card_type']=type(obj.get('card')).__name__ if isinstance(obj,dict) else None
+                              if isinstance(obj,dict) and isinstance(obj.get('card'),list) and obj['card']:
+                                  report['event_bout_keys']=sorted(obj['card'][0].keys())
+                                  report['event_fighter_a_type']=type(obj['card'][0].get('fighter_a')).__name__
+                  else: report['status']='not_upgraded_to_30000'
+              except urllib.error.HTTPError as exc:
+                  report.update({'status':'http_error','http_status':exc.code})
+              except (OSError,ValueError,TypeError) as exc:
+                  report.update({'status':'network_or_response_error','error_type':type(exc).__name__})
+          path=pathlib.Path('.github/diagnostics/ufcalendar-upgrade.json')
+          path.parent.mkdir(parents=True,exist_ok=True)
+          path.write_text(json.dumps(report,indent=2)+'\n')
+          print('UFCalendar plan:',report['status'],report.get('requests_limit'))
+          PY
+      - name: Save nonsecret diagnostics
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .github/diagnostics/ufcalendar-upgrade.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record UFCalendar upgraded-plan check'
+            for n in 1 2 3 4; do
+              if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
+              sleep 3
+            done
+            exit 1
+          fi
