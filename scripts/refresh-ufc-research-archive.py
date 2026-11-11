@@ -132,12 +132,12 @@ def reconcile(fight):
     fight["conflicts"]=conflict[:40]
     fight["roundsCaptured"]=len(fight["rounds"])
 
-def put(archive,day,a,b,event,source,source_id,rounds,stamp):
+def put(archive,day,a,b,event,source,source_id,rounds,stamp,promotion="UFC"):
     k=key_for(day,a,b)
     if not k or not rounds: return False
     fight=archive.setdefault("fights",{}).setdefault(k,{
         "date":day,"fighterA":a,"fighterB":b,"event":event,
-        "promotion":"UFC","sources":{}})
+        "promotion":promotion,"sources":{}})
     # A source may list the fighters in reverse order. Align every corner to
     # the canonical fighter names before merging or comparing statistics.
     if normal(a)==normal(fight["fighterB"]) and normal(b)==normal(fight["fighterA"]):
