@@ -21,6 +21,8 @@ jobs:
           import datetime, json, os, pathlib, urllib.request, urllib.error
           key = os.environ.get("UFC_STATS_API_CITO", "").strip()
           report = {"checked_at": datetime.datetime.now(datetime.timezone.utc).isoformat(), "provider": "Cito UFC API", "secret_name": "UFC_STATS_API_CITO", "result": "unknown"}
+          report["key_looks_like_cito_key"] = key.startswith("cito_") or key.startswith("pk_demo_")
+          report["key_has_extra_whitespace"] = any(c.isspace() for c in key)
           if not key:
               report["result"] = "secret_missing_in_github_actions"
           else:
@@ -30,7 +32,10 @@ jobs:
                       with urllib.request.urlopen(request, timeout=20) as response:
                           return response.status, dict(response.headers), json.loads(response.read().decode())
                   except urllib.error.HTTPError as exc:
-                      return exc.code, dict(exc.headers), {}
+                      try:
+                          return exc.code, dict(exc.headers), json.loads(exc.read().decode())
+                      except (ValueError, UnicodeDecodeError):
+                          return exc.code, dict(exc.headers), {}
               try:
                   health_status, health_headers, health = fetch("health")
                   report["health_http_status"] = health_status
@@ -42,6 +47,7 @@ jobs:
                   else:
                       event_status, event_headers, event_data = fetch("ufc/events/upcoming?limit=1")
                       report["data_http_status"] = event_status
+                      report["api_error_code"] = event_data.get("error", {}).get("code") if isinstance(event_data.get("error"), dict) else None
                       report["monthly_limit"] = event_headers.get("X-RateLimit-Monthly-Limit") or report.get("monthly_limit")
                       report["monthly_remaining"] = event_headers.get("X-RateLimit-Monthly-Remaining")
                       report["result"] = "connected" if event_status == 200 and event_data.get("success") is True else ("authentication_failed" if event_status in (401, 403) else ("quota_exhausted_or_throttled" if event_status == 429 else "endpoint_failed"))
