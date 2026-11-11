@@ -289,7 +289,12 @@ def run(today=None,transport=None,collect=True):
             if not added:
                 record["shape"]={"keys":sorted(stats.keys())[:20] if isinstance(stats,dict) else [],
                                  "roundRows":len(list_of(stats.get("roundStats") or stats.get("rounds"),"rounds")) if isinstance(stats,dict) else 0,
-                                 "boutRows":len(list_of(bouts,"bouts"))}
+                                 "boutRows":len(list_of(bouts,"bouts")),
+                                 "boutSampleId":(list_of(bouts,"bouts")[0].get("id") if list_of(bouts,"bouts") else None),
+                                 "boutSampleDataId":(list_of(bouts,"bouts")[0].get("dataId") if list_of(bouts,"bouts") else None),
+                                 "fighterSampleType":type(list_of(bouts,"bouts")[0].get("fighters")).__name__ if list_of(bouts,"bouts") else None,
+                                 "fighterSampleKeys":sorted(list_of(bouts,"bouts")[0]["fighters"][0].keys()) if list_of(bouts,"bouts") and isinstance(list_of(bouts,"bouts")[0].get("fighters"),list) and list_of(bouts,"bouts")[0]["fighters"] and isinstance(list_of(bouts,"bouts")[0]["fighters"][0],dict) else [],
+                                 "roundSampleBoutId":(list_of(stats.get("roundStats"),"rounds")[0].get("boutId") if isinstance(stats,dict) and list_of(stats.get("roundStats"),"rounds") else None)}
     archive["updatedAt"]=stamp
     ledger["lastRun"]=stamp
     ledger["lastCalls"]=client.calls
