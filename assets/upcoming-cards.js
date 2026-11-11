@@ -288,7 +288,10 @@ window.UpcomingCards=(()=>{
   if(!valid(source)||!external||external.schema!==1||!external.events||typeof external.events!=='object')return source;
   const merged={...source,events:source.events.map(e=>({...e,bouts:e.bouts.map(b=>({...b}))}))};
   const upcoming=Object.values(external.events).filter(e=>
-   e&&e.status!=='completed'&&Array.isArray(e.bouts)&&e.bouts.length>=2&&typeof e.date==='string');
+   e&&e.org==='ufc'&&e.status!=='completed'&&Array.isArray(e.bouts)&&e.bouts.length>=2&&typeof e.date==='string')
+   .map(e=>({...e,bouts:e.bouts.filter(b=>b&&b.status!=='cancelled').map(b=>({
+     ...b,fighters:[b.a,b.b],isMain:b.main,isTitle:b.titleFight
+   }))}));
   const today=new Date().toISOString().slice(0,10);
   for(const remote of upcoming){
    if(remote.date<today||remote.date>new Date(Date.now()+120*86400000).toISOString().slice(0,10))continue;
@@ -327,7 +330,7 @@ window.UpcomingCards=(()=>{
    if(options.length)continue; // Never duplicate an existing UFC event with uncertain matching.
    merged.events.push({id:'ufcalendar-'+remote.id,date:remote.date,sport:'mma',promotion:'UFC',title:remote.title,
     location:remote.location||'',source:'https://www.ufcalendar.com/events/'+encodeURIComponent(remote.slug),
-    startAt:remote.mainCardAt||remote.startAt,bouts:remote.bouts.filter(b=>b.fighters?.length===2).map(b=>({
+    startAt:remote.mainAt||remote.startAt,bouts:remote.bouts.filter(b=>b.fighters?.length===2).map(b=>({
       id:'ufcalendar-'+b.id,section:['main','prelims','early'].includes(b.section)?b.section:'other',
       fighters:b.fighters,division:b.division||'',note:b.isTitle?'Title fight':'',
       source:'https://www.ufcalendar.com/events/'+encodeURIComponent(remote.slug)}))});
@@ -346,7 +349,7 @@ window.UpcomingCards=(()=>{
     if(!next)throw Error('No source available');
     let enriched=next;
     try{
-      const bonus=await fetch('data/ufcalendar-pro-cards.json?t='+Math.floor(Date.now()/3600000),
+      const bonus=await fetch('data/ufcalendar-card-enhancements.json?t='+Math.floor(Date.now()/3600000),
         {cache:'no-store',signal:AbortSignal.timeout(9000)});
       if(bonus.ok)enriched=mergeUfcResearch(next,await bonus.json());
     }catch{}
