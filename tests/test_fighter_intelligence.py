@@ -105,10 +105,10 @@ class ScoutingTests(unittest.TestCase):
         calls = []
         def fetch(url, key=None):
             calls.append(url)
-            self.assertEqual(key, "test_key")
             if url.endswith("/plans"):
                 self.assertIsNone(key)
                 return {"data":{"plans":[]}}
+            self.assertEqual(key, "test_key")
             if url.endswith("/usage"):
                 return {"data":{"tier":"free","requests_used":1}}
             if url.endswith("/rankings/ufc"):
