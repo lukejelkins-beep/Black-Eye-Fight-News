@@ -16,6 +16,19 @@ We request threads_profile_discovery to identify and retrieve public Threads pro
 
 The permission is required to use Threads' profile_lookup and profile_posts API operations for other public Threads accounts; threads_basic alone does not provide general third-party public profile discovery. We display the public author's identity and link to the original Threads post. We do not collect private posts or messages, access private insights, or publish, edit or delete posts on anyone's behalf. Backend access tokens are held securely and are not exposed to visitors. Data handling is described in our published Privacy Policy.
 
+## Live test outcome — 11 November 2026 (AEDT)
+
+The authenticated GitHub Action successfully ran against the configured `THREADS_ACCESS_TOKEN`. Sanitised run result is stored at `data/meta-threads-profile-discovery-test.json`:
+
+- `GET /me?fields=id` — HTTP **200** (basic Threads token valid)
+- `GET /profile_lookup?username=threads` — HTTP **403**, Meta error **10**
+- `GET /profile_posts?username=threads&fields=id,username,permalink,timestamp&limit=3` — HTTP **403**, Meta error **10**
+- Meta Testing 1/1 counter, advanced access approval and reviewer upload — **not verified**
+
+This indicates the supplied token does not currently have permission for public profile discovery. It is not evidence that Meta has awarded advanced access or counted a qualifying successful test. In Meta's Threads app configuration, confirm `threads_profile_discovery` is enabled for the correct app; ensure the token was generated/reauthorised with `threads_basic` plus `threads_profile_discovery`, and the account is an authorised test/developer user. Do not paste token or app secret into ChatGPT, GitHub source files, issues or recordings. Replace the GitHub Actions secret with the newly authorised token, then manually rerun the workflow. Test success for @threads is not equivalent to advanced access to ordinary fighters.
+
+**End-to-end reviewer screencast still blocked**: current static website has no secure OAuth callback + backend data-access service or running profile-discovery UI. Implement and deploy an actual secure feature first; do not upload a mock recording. **Meta review submission still needs the authorised app owner to complete Meta's form.**
+
 ## API proof — complete Meta Testing 1/1
 
 1. Confirm `THREADS_ACCESS_TOKEN` is configured as a GitHub Actions secret (spelling without hidden characters: `THREADS_ACCESS_TOKEN`). This must be a valid user token issued by your Threads app and with `threads_basic` and `threads_profile_discovery` granted. It cannot be a Facebook/Instagram token.
