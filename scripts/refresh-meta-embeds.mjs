@@ -186,7 +186,17 @@ async function main(){
    return parseRSS(text,feed,Date.parse(checkedAt));
   }catch{rssFailed++;return []}
  }))).flat();
- const candidates=discoveryCandidates(news.articles||[],rssArticles,checkedAt,100);
+ // The site checks for new social-post links every ten minutes. We always
+ // inspect the five official homepages plus the freshest eight articles.
+ // Rotate the remaining publisher/RSS articles through five ten-minute slots
+ // so we do not bombard publishers or spend money on social API timelines.
+ const allCandidates=discoveryCandidates(news.articles||[],rssArticles,checkedAt,110);
+ const homepages=allCandidates.filter(p=>p.origin==='official-homepage');
+ const articles=allCandidates.filter(p=>p.origin!=='official-homepage');
+ const latestArticles=articles.slice(0,8);
+ const slot=Math.floor(Date.parse(checkedAt)/600000)%5;
+ const rotation=articles.slice(8).filter((_,i)=>i%5===slot).slice(0,22);
+ const candidates=[...homepages,...latestArticles,...rotation];
  // Persistent original-URL discovery history prevents old homepage links from
  // being recycled into the "Live" feed whenever another scan succeeds.
  const firstSeen=new Map((old.seenOriginals||[])

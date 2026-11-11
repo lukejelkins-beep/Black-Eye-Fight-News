@@ -1,8 +1,8 @@
 name: Discover official Instagram, Threads and X post embeds
 on:
   schedule:
-    # Recheck public publishers and RSS once an hour; the display feed refreshes every 10 minutes.
-    - cron: '16 * * * *'
+    # Small rotating public-source checks every ten minutes. GitHub scheduling is best effort.
+    - cron: '6,16,26,36,46,56 * * * *'
   workflow_dispatch:
   push:
     branches: [main]
@@ -21,7 +21,7 @@ concurrency:
 jobs:
   discover:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
