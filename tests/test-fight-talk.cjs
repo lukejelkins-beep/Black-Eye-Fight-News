@@ -73,6 +73,9 @@ assert(html.includes("talkRole:'all',talkSort:'balanced'"),'Balanced Fight Talk 
 assert(!ctx.renderSocial().includes('twitter-timeline'),'Blocked external X timelines must not leave empty panels');
 assert(!ctx.postCard(champion).includes('<iframe'),'Source-linked Instagram posts render readable cards with no blank iframe');
 assert(ctx.postCard(champion).includes('class="instagram-media"'),'Instagram posts must use the original Meta widget even when their quote is already known');
+assert(ctx.postCard(champion).includes('data-instgrm-captioned'),'Instagram posts must request the original caption from Meta');
+assert(ctx.postCard({...champion,url:'https://www.instagram.com/reel/ABCd123/'}).includes('data-instgrm-captioned'),'Instagram Reels must also request their original captions');
+assert(ctx.postCard(champion).includes('data-instgrm-version="14"'),'Keep using Instagram official embed markup');
 assert(ctx.postCard(media).includes('class="twitter-tweet"'),'X posts must use the official X post widget');
 for(const p of [champion,media,{platform:'Threads',type:'post',sport:'mma',name:'Thread author',role:'fighter',url:'https://www.threads.com/@fighter/post/ABcdEfG/',nativeEmbed:true},{platform:'Bluesky',type:'post',sport:'mma',name:'Bluesky author',role:'fighter',url:'https://bsky.app/profile/test.bsky.social/post/3abcd1234',id:'at://did:plc:testid/app.bsky.feed.post/3abcd1234',cid:'bafyreiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',quote:'Original post'}]){
  const markup=ctx.postCard(p);
