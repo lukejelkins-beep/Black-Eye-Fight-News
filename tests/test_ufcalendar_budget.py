@@ -148,6 +148,29 @@ class BudgetTests(unittest.TestCase):
         self.assertNotIn("private_key",json.dumps(ledger))
         self.assertNotIn("secret_payload",json.dumps(ledger))
 
+    def test_rpm_limit_sets_a_safe_pacing_interval(self):
+        ledger=m.new_ledger(dt.date(2026,11,11))
+        def fetch(route):
+            return {"data":{"requests_used":12,"requests_limit":100,"rpm_limit":10}}
+        cli=m.BudgetClient("test",ledger,dt.date(2026,11,11),fetch)
+        self.assertTrue(cli.bootstrap())
+        self.assertGreaterEqual(cli.min_interval_seconds,7.5)
+        self.assertEqual(cli.ledger["provider"]["rpmLimit"],10)
+        self.assertLessEqual(cli.call_ceiling,23)
+
+    def test_rate_429_halts_this_run_but_preserves_monthly_budget(self):
+        ledger=m.new_ledger(dt.date(2026,11,11))
+        def fetch(route):
+            if route=="/usage":return {"data":{"requests_used":5,"requests_limit":100,"rpm_limit":8}}
+            raise HTTPError(m.BASE+route,429,"Rate",{"Retry-After":"30"},BytesIO(b''))
+        cli=m.BudgetClient("test",ledger,dt.date(2026,11,11),fetch)
+        self.assertTrue(cli.bootstrap())
+        self.assertIsNone(cli.call("discovery","w2","/fights/search?from=2026-11-01"))
+        self.assertEqual(ledger["status"],"rate_limited")
+        self.assertEqual(ledger["retryAfterSec"],30)
+        self.assertEqual(cli.available,0)
+        self.assertEqual(ledger["spent"]["discovery"],1)
+
     def test_new_month_resets_request_budgets_not_historical_data(self):
         old=m.new_ledger(dt.date(2026,11,11))
         old["spent"]["rounds"]=42
