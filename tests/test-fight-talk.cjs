@@ -61,6 +61,15 @@ assert(!ctx.renderSocial().includes('twitter-timeline'),'Blocked external X time
 assert(!ctx.postCard(champion).includes('<iframe'),'Source-linked Instagram posts render readable cards with no blank iframe');
 assert(ctx.postCard(champion).includes('class="instagram-media"'),'Instagram posts must use the original Meta widget even when their quote is already known');
 assert(ctx.postCard(media).includes('class="twitter-tweet"'),'X posts must use the official X post widget');
+for(const p of [champion,media,{platform:'Threads',type:'post',sport:'mma',name:'Thread author',role:'fighter',url:'https://www.threads.com/@fighter/post/ABcdEfG/',nativeEmbed:true},{platform:'Bluesky',type:'post',sport:'mma',name:'Bluesky author',role:'fighter',url:'https://bsky.app/profile/test.bsky.social/post/3abcd1234',id:'at://did:plc:testid/app.bsky.feed.post/3abcd1234',cid:'bafyreiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',quote:'Original post'}]){
+ const markup=ctx.postCard(p);
+ assert(markup.includes('talk-native-card'),'Original post must not be nested in the dark BEFN editorial wrapper');
+ assert(!markup.includes('class="social-head"'),'Original platform embeds already display their own author header');
+ assert(!markup.includes('class="social-foot"'),'Original platform embeds already display their own source footer');
+ assert(!markup.includes('talk-source-note'),'Do not duplicate publisher provenance under the native post');
+ assert(markup.includes('Open post on'),'Every native post must retain a direct accessible fallback link');
+}
+
 assert(ctx.postCard({platform:'Threads',type:'post',sport:'mma',name:'Fighter',role:'fighter',url:'https://www.threads.com/@fighter/post/ABcdEfG/',nativeEmbed:true}).includes('class="text-post-media"'),'Threads original posts must use the official Meta post widget');
 assert(ctx.postCard({platform:'Bluesky',type:'post',sport:'mma',name:'Fighter',role:'fighter',url:'https://bsky.app/profile/test.bsky.social/post/3abcd1234',id:'at://did:plc:testid/app.bsky.feed.post/3abcd1234',cid:'bafyreiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',quote:'Direct original post'}).includes('class="bluesky-embed"'),'Bluesky official widget must receive its AT URI and CID');
 assert(!ctx.postCard({...champion,quote:undefined,summary:'Reporter explanation'}).includes('Reporter explanation'),'Never display a third-party summary in place of an original post');
