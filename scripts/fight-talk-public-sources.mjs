@@ -106,7 +106,7 @@ export function discoveryCandidates(newsArticles,rssArticles,checkedAt,limit=110
 }
 export function linkPriority({role,fighterTier,platform}={}){
  const base=({fighter:60,promoter:55,trainer:48,team:45,fan:35,commentator:20,media:10})[role]||10;
- return base+({champion:12,contender:9,prospect:8})[fighterTier]+(platform==='Threads'?2:0)||base;
+ return base+(({champion:12,contender:9,prospect:8})[fighterTier]||0)+(platform==='Threads'?2:0);
 }
 /**
  * Hard spending policy: X API reads are DISABLED in automated collectors.
