@@ -8,6 +8,7 @@
  * oEmbed HTML (which is presentation-only content).
  */
 import fs from 'node:fs';
+import {publisherOf,RSS_FEEDS,parseRSS,discoveryCandidates,linkPriority,X_API_SPENDING} from './fight-talk-public-sources.mjs';
 export const nowISO=()=>new Date().toISOString();
 const xWatchlist=JSON.parse(fs.readFileSync('data/fight-talk-sources.json','utf8')).platforms?.X?.accounts||[];
 const trackedX=new Map(xWatchlist.filter(x=>x.username).map(x=>[x.username.replace(/^@/,'').toLowerCase(),x]));
@@ -22,12 +23,6 @@ function xDate(url){
  const now=Date.now();
  return Number.isFinite(ms)&&ms>1288834974657&&ms<=now+1800000?new Date(ms).toISOString():null;
 }
-const acceptedPublishers=new Map([
- ['www.mmafighting.com','MMA Fighting'],['mmafighting.com','MMA Fighting'],
- ['www.worldboxingnews.com','World Boxing News'],['www.worldboxingnews.net','World Boxing News'],
- ['www.ufc.com','UFC'],['ufc.com','UFC'],
- ['mmajunkie.usatoday.com','MMA Junkie'],['www.mmajunkie.usatoday.com','MMA Junkie'],
-]);
 export function normalizePostLink(raw) {
  try {
   const u=new URL(String(raw||'').replace(/&amp;/g,'&').replace(/[)\],.;]+$/,''));
@@ -80,6 +75,7 @@ async function getText(url,timeout=10000,limit=1_800_000){
   Accept:'text/html'
  }});
  if(!r.ok)throw Error('HTTP '+r.status);
+ if(!publisherOf(r.url))throw Error('Unexpected publisher redirect');
  const type=r.headers.get('content-type')||'';
  if(!type.includes('html'))throw Error('Not HTML');
  return (await r.text()).slice(0,limit);
@@ -133,7 +129,7 @@ export function mergeSourceLinks(articles, links, prior, checkedAt){
   return [p.url,p];
  }));
  for(const {article,item} of links){
-  const name=article.sourceLabel||publisherOf(article.url);
+  const name=publisherOf(article.url);
   if(!name)continue;
   const pinned=item.platform==='X'?trackedX.get(item.username?.toLowerCase()):
    item.platform==='Instagram'&&item.authorUsername?trackedIG.get(item.authorUsername):
@@ -155,28 +151,45 @@ export function mergeSourceLinks(articles, links, prior, checkedAt){
    discoveredAt:old?.discoveredAt||checkedAt,
    sourcePublisher:name,evidenceUrl:article.url,
    summary:'Original social post linked in '+name+' coverage. Its author, caption and publication date appear in the official embed.',
-   source:item.platform==='X'?'Publisher link + official X oEmbed verification':'Publisher link + official Meta oEmbed verification',
+   source:item.embedVerified?'Publisher permalink + official embed verification':'Trusted publisher permalink (embed unconfirmed)',
+   verification:item.embedVerified?'official-oembed':'trusted-publisher-link',
+   embedVerified:item.embedVerified===true,
+   linkPriority:linkPriority({role:pinned?.role,fighterTier:pinned?.fighterTier,platform:item.platform}),
    url:item.url,
   });
  }
- return [...existing.values()].sort((a,b)=>Date.parse(b.sourceLinkedAt)-Date.parse(a.sourceLinkedAt)).slice(0,80);
+ return [...existing.values()].sort((a,b)=>{
+  const aDay=Math.floor(Date.parse(a.sourceLinkedAt||a.discoveredAt)/86400000);
+  const bDay=Math.floor(Date.parse(b.sourceLinkedAt||b.discoveredAt)/86400000);
+  return bDay-aDay||(b.linkPriority||0)-(a.linkPriority||0)||
+   Date.parse(b.sourceLinkedAt)-Date.parse(a.sourceLinkedAt);
+ }).slice(0,120);
 }
 async function main(){
  const file='data/fight-talk-embedded.json',checkedAt=nowISO();
  const old=fs.existsSync(file)?JSON.parse(fs.readFileSync(file,'utf8')):{posts:[]};
  const news=JSON.parse(fs.readFileSync('data/news-live.json','utf8'));
  const curated=JSON.parse(fs.readFileSync('data/fight-talk-selected.json','utf8')).posts||[];
- const curatedCandidates=curated.filter(p=>['Instagram','Threads'].includes(p.platform)&&
+ const curatedCandidates=curated.filter(p=>['Instagram','Threads','X'].includes(p.platform)&&
   ['boxing','mma','grappling'].includes(p.sport)&&Date.parse(p.postedAt||'')>=Date.now()-28*24*60*60*1000)
   .map(p=>({article:{url:p.url,sport:p.sport,publishedAt:p.postedAt,sourceLabel:'Fight Talk curated original link'},
             item:normalizePostLink(p.url)}))
   .filter(x=>x.item&&x.item.platform===curated.find(p=>p.url===x.article.url)?.platform);
-  // UFC's public homepage has a first-party "View on Threads" section, which
-  // ordinary editorial RSS articles often omit. Homepage inclusion is a link
-  // observation only, never evidence of the original social-post timestamp.
-  const officialHomepages=[{url:'https://www.ufc.com/',sport:'mma',publishedAt:checkedAt,sourceLabel:'UFC official homepage'}];
-  const candidates=[...officialHomepages,...(news.articles||[]).filter(a=>['boxing','mma','grappling'].includes(a.sport)&&publisherOf(a.url)&&
-   Date.parse(a.publishedAt)>=Date.now()-7*24*60*60*1000).slice(0,45)];
+ // The site's editorial news index plus three publisher-controlled RSS feeds
+ // and selected official organisation homepages; no scraped social timelines.
+ let rssFailed=0;
+ const rssArticles=(await Promise.all(RSS_FEEDS.map(async feed=>{
+  try{
+   const response=await fetch(feed.url,{
+    signal:AbortSignal.timeout(8500),
+    headers:{Accept:'application/rss+xml,application/xml,text/xml;q=0.9','User-Agent':'BlackEyeFightNews/1.0 editorial link index'}
+   });
+   if(!response.ok||!publisherOf(response.url))throw Error('Publisher feed unavailable');
+   const text=(await response.text()).slice(0,1_000_000);
+   return parseRSS(text,feed,Date.parse(checkedAt));
+  }catch{rssFailed++;return []}
+ }))).flat();
+ const candidates=discoveryCandidates(news.articles||[],rssArticles,checkedAt,100);
  // Persistent original-URL discovery history prevents old homepage links from
  // being recycled into the "Live" feed whenever another scan succeeds.
  const firstSeen=new Map((old.seenOriginals||[])
@@ -188,14 +201,17 @@ async function main(){
   }
  }
  const prior=new Map((old.posts||[]).map(p=>[p.url,p]));
- let articleCount=0,linkCount=0,verified=0,rejected=0;
+ let articleCount=0,linkCount=0,verified=0,rejected=0,sourceVerified=0;
  const combined=[];
- let curatedVerified=0,curatedRejected=0;
+ let curatedVerified=0,curatedRejected=0,curatedPublisherLinked=0;
  for(const candidate of curatedCandidates){
   if(!originalStillRelevant(candidate.item.url,firstSeen,checkedAt))continue;
   if(prior.has(candidate.item.url)){combined.push(candidate);continue;}
-  try{if(await metaVerify(candidate.item)){combined.push(candidate);curatedVerified++}else curatedRejected++;}
-  catch{curatedRejected++}
+  // The curated file explicitly contains an original public-post permalink.
+  // It can be shown with a source link even if tokenless oEmbed is blocked.
+  try{candidate.item.embedVerified=await metaVerify(candidate.item)}catch{candidate.item.embedVerified=false}
+  combined.push(candidate);
+  if(candidate.item.embedVerified)curatedVerified++;else curatedPublisherLinked++;
  }
  let index=0;
  async function worker(){
@@ -208,10 +224,13 @@ async function main(){
     for(const item of links){
      if(!originalStillRelevant(item.url,firstSeen,checkedAt))continue;
      if(prior.has(item.url)){combined.push({article,item});continue}
-     try{
-      if(await metaVerify(item)){combined.push({article,item});verified++}
-      else rejected++;
-     }catch{rejected++}
+     // An original permalink observed in a trusted publisher's actual HTML
+     // is source-verified, but not necessarily widget-verified. Meta's tokenless
+     // oEmbed can fail from rate limits or blocked fetches. Preserve the real
+     // original link and let the official widget render with a direct-link fallback.
+     try{item.embedVerified=await metaVerify(item)}catch{item.embedVerified=false}
+     combined.push({article,item});
+     if(item.embedVerified)verified++;else sourceVerified++;
     }
    }catch{}
   }
@@ -226,15 +245,23 @@ async function main(){
   checkedAt,
   windowDays:28,
   articlesChecked:articleCount,
+  publisherFeedsChecked:RSS_FEEDS.length,
+  publisherFeedsFailed:rssFailed,
+  rssArticleCandidates:rssArticles.length,
+  publisherSourcesConfigured:candidates.length,
   linksFound:linkCount,
   newEmbedsVerified:verified,
+  newPublisherLinksDiscovered:sourceVerified,
+  paidXApiCalls:0,
+  xApiBudgetUsd:X_API_SPENDING.monthlyUsdCap,
+  xApiEstimatedSpendUsd:0,
   linksRejected:rejected,
-  curatedVerified,curatedRejected,
+  curatedVerified,curatedRejected,curatedPublisherLinked,
   posts,
   seenOriginals:[...firstSeen].slice(-5000).map(([url,firstSeen])=>({url,firstSeen})),
-  note:'Source discovery finds original Instagram, Threads and pinned-author X links in combat-sports publisher articles. A news article timestamp is NOT the Instagram/Threads post time. Original post text, author and date are rendered by Meta directly. A homepage mention is not the original post publication date. Links stay in Live for at most 7 days after first discovery, in Highlights for at most 28 days, and never refresh their age on rescans. Discovery is not a complete Instagram/Threads feed.'
+  note:'Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed.'
  },null,2)+'\n');
  console.log('Meta embeds checked '+articleCount+' articles; found '+linkCount+
-  ' original publisher links, verified '+verified+' new publisher embeds; curated verified '+curatedVerified+', rejected '+curatedRejected+'; kept '+posts.length+' source-linked entries');
+  ' original publisher links, officially embedded '+verified+', additional publisher-linked '+sourceVerified+', curated verified '+curatedVerified+', curated links '+curatedPublisherLinked+', rejected '+rejected+'; kept '+posts.length+' source-linked entries; paid X calls 0');
 }
 if(process.argv[1]&&new URL('file://'+process.argv[1]).href===import.meta.url)await main();
