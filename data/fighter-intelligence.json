@@ -11,8 +11,8 @@
     },
     {
       "provider": "UFCalendar",
-      "status": "authentication_unconfirmed",
-      "detail": "Key provided, but /usage request failed: HTTP 400. Confirm the key is a production API key on the UFCalendar account page."
+      "status": "connected",
+      "detail": "Authenticated /usage request succeeded. Rankings request succeeded. 3 of 3 precise fighter profiles enriched; 0 request errors. Maximum nine requests per weekly run."
     },
     {
       "provider": "Octagon",
@@ -50,7 +50,19 @@
         "source": "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-results"
       },
       "ranking": null,
-      "stats": null
+      "stats": {
+        "source": "UFCalendar",
+        "record": "12-3-0",
+        "slpm": 2.42,
+        "sapm": 2.97,
+        "strAcc": null,
+        "strDef": null,
+        "tdAvg": 1.8,
+        "tdAcc": null,
+        "tdDef": null,
+        "subAvg": 0.0,
+        "observedOn": "2026-11-11"
+      }
     },
     {
       "id": "ninamilosevic",
@@ -77,7 +89,19 @@
         "source": "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-results"
       },
       "ranking": null,
-      "stats": null
+      "stats": {
+        "source": "UFCalendar",
+        "record": "10-1-0",
+        "slpm": 4.13,
+        "sapm": 1.94,
+        "strAcc": null,
+        "strDef": null,
+        "tdAvg": 1.1,
+        "tdAcc": null,
+        "tdDef": null,
+        "subAvg": 2.7,
+        "observedOn": "2026-11-11"
+      }
     },
     {
       "id": "lucasfernando",
@@ -104,7 +128,19 @@
         "source": "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-results"
       },
       "ranking": null,
-      "stats": null
+      "stats": {
+        "source": "UFCalendar",
+        "record": "15-3-0",
+        "slpm": 3.91,
+        "sapm": 2.53,
+        "strAcc": null,
+        "strDef": null,
+        "tdAvg": 1.09,
+        "tdAcc": null,
+        "tdDef": null,
+        "subAvg": 0.4,
+        "observedOn": "2026-11-11"
+      }
     },
     {
       "id": "johnnywalker",
