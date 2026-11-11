@@ -30,7 +30,23 @@ test('OAuth routes enforce server configuration and do not expose tokens',async(
     assert.match(page.headers.get('set-cookie')||'',/HttpOnly; Secure; SameSite=Lax/);
     const starter=await fetch(url+'/auth/start',{redirect:'manual'});
     assert.equal(starter.status,302);
-    assert.equal(starter.headers.get('location'),'/?error=configuration');
+    // Render runs these build-time tests with its real environment variables.
+    // A configured server must redirect securely to Threads OAuth; an unconfigured
+    // local test must explain missing setup without ever exposing secrets.
+    if (status.oauthConfigured) {
+      const oauthUrl = new URL(starter.headers.get('location'));
+      assert.equal(oauthUrl.origin, 'https://threads.net');
+      assert.equal(oauthUrl.pathname, '/oauth/authorize');
+      assert.equal(oauthUrl.searchParams.get('response_type'), 'code');
+      assert.equal(oauthUrl.searchParams.get('scope'), 'threads_basic,threads_profile_discovery');
+      assert.match(oauthUrl.searchParams.get('client_id') || '', /^[0-9]+$/);
+      assert.match(oauthUrl.searchParams.get('state') || '', /^[0-9a-f]{64}$/);
+      const callback = new URL(oauthUrl.searchParams.get('redirect_uri'));
+      assert.equal(callback.protocol, 'https:');
+      assert.equal(callback.pathname, '/oauth/callback');
+    } else {
+      assert.equal(starter.headers.get('location'), '/?error=configuration');
+    }
     const noToken=await fetch(url+'/api/discover?username=threads');
     assert.equal(noToken.status,401);
     const missingState=await fetch(url+'/oauth/callback?code=unsafe',{redirect:'manual'});
