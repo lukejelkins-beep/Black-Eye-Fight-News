@@ -9,6 +9,8 @@ on:
     paths:
       - 'scripts/refresh-ufc-research-archive.py'
       - 'tests/test_ufc_research_archive.py'
+      - 'scripts/crosscheck-ufc-stats-api.py'
+      - 'tests/test_ufc_stats_crosscheck.py'
       - '.github/workflows/archive-ufc-research.yml'
 
 permissions:
@@ -28,11 +30,15 @@ jobs:
         with:
           python-version: '3.12'
       - name: Offline verification (no API requests)
-        run: python -m unittest discover -s tests -p 'test_ufc_research_archive.py' -v
+        run: |
+          python -m unittest discover -s tests -p 'test_ufc_research_archive.py' -v
+          python -m unittest discover -s tests -p 'test_ufc_stats_crosscheck.py' -v
       - name: Merge existing research and capture recent Cito UFC stats
         env:
           UFC_STATS_API_CITO: ${{ secrets.UFC_STATS_API_CITO }}
         run: python scripts/refresh-ufc-research-archive.py
+      - name: Independently crosscheck disputed rounds when UFC Stats API is reachable
+        run: python scripts/crosscheck-ufc-stats-api.py
       - name: Publish incremental archive with provenance and quota ledger
         shell: bash
         run: |
