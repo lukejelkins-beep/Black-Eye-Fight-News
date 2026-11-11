@@ -351,7 +351,7 @@ def collect_rounds(client,state,cards,archive,pfl_archive,today):
             event={"date":bout["eventDate"],"title":bout["event"],"org":bout["org"]}
             target=archive if bout["org"]=="ufc" else pfl_archive
             merge_archive(target,event,bout,rounds,dt.datetime.now(dt.timezone.utc).isoformat())
-            ui_event=cards["events"].get(bout["eventId"])
+            ui_event=cards["events"].get(bout["org"]+":"+bout["eventId"]) or cards["events"].get(bout["eventId"])
             if ui_event:
                 for ui_bout in ui_event.get("bouts",[]):
                     if ui_bout["id"]==bid:
@@ -395,6 +395,26 @@ def collect_profiles(client,state,cards,fighters,today):
         state["fighterDone"][slugval]=dt.date.today().isoformat()
         fighters["profiles"][slugval]=profile
 
+def recover_previews(cards,archive,pfl_archive):
+    """Reuse saved round observations without re-spending quota on previous requests."""
+    import importlib.util
+    spec=importlib.util.spec_from_file_location("befn_saved_archive",ROOT/"scripts/refresh-ufc-research-archive.py")
+    m=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    for ev in cards["events"].values():
+        dataset=archive if ev.get("org")=="ufc" else pfl_archive
+        day=ev.get("date")
+        for bout in ev.get("bouts",[]):
+            if bout.get("roundPreview"):continue
+            a=bout.get("a",{})
+            b=bout.get("b",{})
+            namea=a.get("name") if isinstance(a,dict) else a
+            nameb=b.get("name") if isinstance(b,dict) else b
+            key=m.key_for(day,namea,nameb)
+            record=(dataset.get("fights") or {}).get(key) if key else None
+            if record and record.get("rounds"):
+                bout["roundPreview"]=selected_stats(record["rounds"])
+
 def public_events(cards,profiles,today):
     events={}
     for key,event in cards.get("events",{}).items():
@@ -410,9 +430,14 @@ def public_events(cards,profiles,today):
             for corner in ("a","b"):
                 athlete=b[corner]
                 row[corner]=athlete.get("name") if isinstance(athlete,dict) else safe(athlete)
+                athlete_slug=athlete.get("slug") if isinstance(athlete,dict) else b.get(corner+"Slug")
+                if athlete_slug:
+                    row[corner+"Slug"]=athlete_slug
                 if event["status"] in ("announced","scheduled","live"):
-                    slugval=athlete.get("slug") if isinstance(athlete,dict) else None
-                    p=profiles.get(slugval)
+                    p=profiles.get(athlete_slug)
+                    if not p:
+                        same=[x for x in profiles.values() if x.get("name","").casefold()==row[corner].casefold()]
+                        if len(same)==1:p=same[0]
                     if p and p.get("record"):
                         row[corner+"Record"]=p["record"]
                     elif b.get(corner+"Record"):
@@ -455,6 +480,7 @@ def main():
         visible=collect_cards(client,state,cards,today)
         collect_rounds(client,state,cards,archive,pfl_archive,today)
         collect_profiles(client,state,cards,research,today)
+        recover_previews(cards,archive,pfl_archive)
         public=public_events(cards,research.get("profiles",{}),today)
         write(CARDS,public)
         archive["updatedAt"]=dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
