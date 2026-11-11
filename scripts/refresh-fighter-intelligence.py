@@ -154,6 +154,16 @@ def ufcalendar(queue, fetch=fetch_json, key=None):
             return status("UFCalendar", "quota_exceeded",
                           "API key supplied; the provider returned HTTP 429.")
         reason = ("HTTP " + str(http_code)) if http_code else type(exc).__name__
+        # Only publish the provider's machine-readable error code, never raw
+        # messages that might contain an API key or request details.
+        if http_code and callable(getattr(exc, "read", None)):
+            try:
+                body = json.loads(exc.read(2048).decode("utf-8", "replace"))
+                code = (body.get("error") or {}).get("code")
+                if isinstance(code, str) and re.fullmatch(r"[A-Za-z0-9_-]{1,48}", code):
+                    reason += ", code " + code
+            except Exception:
+                pass
         return status("UFCalendar", "unavailable",
                       "API key supplied but rankings request failed (" + reason + ").")
     matched = 0
