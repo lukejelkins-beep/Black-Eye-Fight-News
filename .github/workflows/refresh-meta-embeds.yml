@@ -1,15 +1,17 @@
 name: Discover official Instagram, Threads and X post embeds
 on:
   schedule:
-    # Best-effort discovery of public original links every 10 minutes.
-    - cron: '6,16,26,36,46,56 * * * *'
+    # Recheck public publishers and RSS once an hour; the display feed refreshes every 10 minutes.
+    - cron: '16 * * * *'
   workflow_dispatch:
   push:
     branches: [main]
     paths:
       - 'scripts/refresh-meta-embeds.mjs'
+      - 'scripts/fight-talk-public-sources.mjs'
       - 'data/fight-talk-sources.json'
       - 'tests/test-meta-embeds.mjs'
+      - 'tests/test-fight-talk-public-sources.mjs'
       - '.github/workflows/refresh-meta-embeds.yml'
 permissions:
   contents: write
@@ -19,7 +21,7 @@ concurrency:
 jobs:
   discover:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -29,7 +31,8 @@ jobs:
         run: |
           node --check scripts/refresh-meta-embeds.mjs
           node tests/test-meta-embeds.mjs
-      - name: Verify publisher-linked originals with Meta oEmbed (no access tokens)
+          node tests/test-fight-talk-public-sources.mjs
+      - name: Discover linked original posts from trusted publishers and RSS (zero paid X API calls)
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
