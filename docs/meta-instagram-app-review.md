@@ -34,7 +34,7 @@ Do **not** request permissions to publish, manage DMs, manage comments, or run a
 
 The user-facing BEFN website does **not currently** implement Facebook Login with an OAuth redirect/callback or a visitor login button. Its backend's developer-authorized Facebook Graph API token is **not** equivalent to Facebook Login being integrated *on the Website platform*. If the Meta Website reviewer questionnaire asks **"Is Facebook Login integrated on this platform?"**, the truthful answer is **No** unless/until an actual Website Facebook Login flow exists.
 
-The Meta browser initially saved **Yes** on 11 November 2026. This was identified as inaccurate and requires correction before submitting. A later browser session had expired before it could be corrected. Do not misrepresent the site's features or produce a simulated successful login/API screenshot.
+The Meta browser initially saved **Yes** on 11 November 2026. **Corrected to No and verified persistent after reload on 11 November 2026**, using TinyFish. Reviewer instructions and Website platform remain saved. Do not misrepresent the site's features or produce a simulated successful login/API screenshot.
 
 ## Reproducible reviewer demonstration — not yet complete
 
@@ -47,6 +47,18 @@ A genuine demo must show **both** how the developer authorizes the linked profes
 5. Record a short continuous screencast (login authorization → successful API Business Discovery query → actual feed display) and attach it through Meta's review interface, with credentials and private account identifiers hidden.
 
 **Current limitation:** Prior API checks return HTTP 400 code 10 for Business Discovery. Adding `instagram_manage_insights` to the app review draft does **not** grant it to an existing token or make this demonstration succeed. Confirm the linked Page/professional account, granted scopes, Meta approval and token renewal before recording a success demo.
+
+## Latest Meta App Review wizard status (11 November 2026)
+
+- **App settings:** completed, 100%.
+- **Reviewer instructions:** completed, 100%; Website platform URL saved, Facebook Login integrated on Website = **No** (verified after reload).
+- **Verification:** incomplete; requires Meta identity/business verification by the authorized owner.
+- **Allowed usage:** incomplete; questionnaire must be answered from actual operating practices.
+- **Data handling:** incomplete; questionnaire must be answered from actual operating practices.
+- **Submit for review:** disabled until the remaining steps are complete. No review was submitted.
+- **Browser access:** TinyFish browser automation exhausted wallet balance before the Allowed usage questionnaire could be opened. Do not claim it was filled.
+- **Most recent real Instagram access test:** `instagram_basic` GRANTED, but `instagram_manage_insights`, `pages_read_engagement`, and `pages_show_list` NOT PRESENT in existing token. Assigned Instagram account found but no Page-linked Instagram account in `/me/accounts`. Business Discovery failed HTTP 400 code 10.
+- Adding review permission requests does not modify the existing access token. Once scopes are actually available, the authorizing person must go through the appropriate real Facebook Login OAuth grant/re-authentication and establish the linked Facebook Page/professional Instagram association. Do not hardcode fake results or publish a token.
 
 ## Evidence / acceptance checklist
 
