@@ -8,6 +8,17 @@ export async function collectPlatforms(config,getJSON,insert,since){
  const out=[],cfg=config.platforms||{};
  for(const [platform,env] of [['X','X_BEARER_TOKEN'],['Instagram','INSTAGRAM_ACCESS_TOKEN'],['Facebook','FACEBOOK_ACCESS_TOKEN'],['Reddit','REDDIT_ACCESS_TOKEN']]){
   const token=process.env[env],settings=cfg[platform]||{},sources=platform==='Reddit'?settings.communities||[]:settings.accounts||[];
+  // HARD US$2/MONTH X SPEND GUARD: no unattended paid X API traffic.
+  // A client-side request ledger cannot enforce a provider's bill cap when
+  // workflows restart/race or the provider changes per-request rates. We
+  // therefore make zero X timeline API requests, even if a token exists.
+  // Public source-linked original X posts still appear via official embeds.
+  if(platform==='X'){
+   out.push({platform,state:'source-linked',configured:sources.length,
+    paidApiCalls:0,monthlyUsdCap:2,estimatedMonthlySpendUsd:0,
+    message:'Paid X API reads disabled (US$0 of US$2 monthly cap). Source-linked original X embeds remain available.'});
+   continue;
+  }
   if(!token){out.push({platform,state:'not-connected',configured:sources.length,message:'Official API credential not supplied; selected original post embeds remain available.'});continue}
   if(!sources.length){out.push({platform,state:'needs-approval',configured:0,message:'No approved author accounts configured.'});continue}
   let checked=0,failed=0,posts=0; const problems=[];
