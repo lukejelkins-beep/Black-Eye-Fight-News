@@ -136,6 +136,13 @@ def put(archive,day,a,b,event,source,source_id,rounds,stamp):
     fight=archive.setdefault("fights",{}).setdefault(k,{
         "date":day,"fighterA":a,"fighterB":b,"event":event,
         "promotion":"UFC","sources":{}})
+    # A source may list the fighters in reverse order. Align every corner to
+    # the canonical fighter names before merging or comparing statistics.
+    if normal(a)==normal(fight["fighterB"]) and normal(b)==normal(fight["fighterA"]):
+        rounds=[dict(r, **({"a":r["b"]} if "b" in r else {}),
+                          **({"b":r["a"]} if "a" in r else {})) for r in rounds]
+        for row in rounds:
+            if "a" in row and "b" not in row and any("a" in z for z in rounds): pass
     old=fight["sources"].get(source,{})
     old_rounds=old.get("rounds",[])
     if sum(len(x) for x in rounds)<sum(len(x) for x in old_rounds):
@@ -281,7 +288,7 @@ def run(today=None,transport=None,collect=True):
                 candidates.setdefault(slug,{"day":dt.date.fromisoformat(metadata["date"]),"title":metadata.get("title",slug)})
         for slug,info in sorted(candidates.items(),key=lambda pair:pair[1]["day"],reverse=True)[:5]:
             day,title=info["day"],info["title"]
-            if archive.get("events",{}).get(slug,{}).get("verified"): continue
+            if archive.get("events",{}).get(slug,{}).get("verified") and archive.get("cornerAlignmentVersion")==2: continue
             stats=client.get("/ufc/events/"+slug+"/stats")
             if stats is None: continue
             bouts=stats.get("bouts",[]) if isinstance(stats,dict) else []
@@ -300,6 +307,9 @@ def run(today=None,transport=None,collect=True):
                                  "fighterSampleType":type(list_of(bouts,"bouts")[0].get("fighters")).__name__ if list_of(bouts,"bouts") else None,
                                  "fighterSampleKeys":sorted(list_of(bouts,"bouts")[0]["fighters"][0].keys()) if list_of(bouts,"bouts") and isinstance(list_of(bouts,"bouts")[0].get("fighters"),list) and list_of(bouts,"bouts")[0]["fighters"] and isinstance(list_of(bouts,"bouts")[0]["fighters"][0],dict) else [],
                                  "roundSampleBoutId":(list_of(stats.get("roundStats"),"rounds")[0].get("boutId") if isinstance(stats,dict) and list_of(stats.get("roundStats"),"rounds") else None)}
+    # Mark the migration complete only after all eligible saved cards were successfully rechecked.
+    if all((v.get("capturedBouts") or 0)>0 for v in archive.get("events",{}).values()):
+        archive["cornerAlignmentVersion"]=2
     archive["updatedAt"]=stamp
     ledger["lastRun"]=stamp
     ledger["lastCalls"]=client.calls
