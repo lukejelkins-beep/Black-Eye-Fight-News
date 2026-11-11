@@ -39,19 +39,21 @@ else {
    const a=Array.isArray(assigned.data?.data)?assigned.data.data.length:0;
    const b=Array.isArray(pages.data?.data)?pages.data.data.filter(p=>p.instagram_business_account?.id).length:0;
    console.log('INSTAGRAM_ASSETS assigned='+a+' pageLinked='+b);
-   console.log(a||b?'INSTAGRAM_RESULT: FB_GRAPH_TOKEN_ACCEPTED_AND_ASSETS_DISCOVERED; public athlete posts need Business Discovery approval.':'INSTAGRAM_RESULT: FB_GRAPH_TOKEN_ACCEPTED_BUT_NO_IG_ASSET_DISCOVERED; check asset assignment and Page permissions.');
-   if(a||b){
-    const candidates=[...(Array.isArray(assigned.data?.data)?assigned.data.data.map(x=>x.id):[]),
-                      ...(Array.isArray(pages.data?.data)?pages.data.data.map(x=>x.instagram_business_account?.id):[])].filter(x=>/^\d+$/.test(String(x||'')));
-    const ownId=candidates[0];
-    if(ownId){
-     const fields='business_discovery.username(ufc){id,username,media.limit(1){id,timestamp,permalink}}';
-     const check=await probe('business-discovery','https://graph.facebook.com/'+version+'/'+encodeURIComponent(ownId)+'?'+new URLSearchParams({fields}));
-     summary(check);
-     const username=check.data?.business_discovery?.username;
-     const posts=Array.isArray(check.data?.business_discovery?.media?.data)?check.data.business_discovery.media.data.length:0;
-     console.log('INSTAGRAM_PUBLIC_POST_DISCOVERY '+(check.ok&&username==='ufc'?'AVAILABLE':'UNAVAILABLE')+' sampleItems='+posts);
-    }
+   const candidates=[...(Array.isArray(assigned.data?.data)?assigned.data.data.map(x=>x.id):[]),
+                     ...(Array.isArray(pages.data?.data)?pages.data.data.map(x=>x.instagram_business_account?.id):[])].filter(x=>/^\d+$/.test(String(x||'')));
+   const configuredId=(process.env.INSTAGRAM_USER_ID||'').trim();
+   const ownId=/^\d+$/.test(configuredId)?configuredId:[...new Set(candidates)].length===1?candidates[0]:null;
+   console.log('INSTAGRAM_ASSET '+(ownId?(configuredId?'CONFIGURED':'DISCOVERED'):'MISSING_OR_AMBIGUOUS'));
+   if(ownId){
+    const fields='business_discovery.username(ufc){id,username,media.limit(1){id,timestamp,permalink}}';
+    const check=await probe('business-discovery','https://graph.facebook.com/'+version+'/'+encodeURIComponent(ownId)+'?'+new URLSearchParams({fields}));
+    summary(check);
+    const username=check.data?.business_discovery?.username;
+    const posts=Array.isArray(check.data?.business_discovery?.media?.data)?check.data.business_discovery.media.data.length:0;
+    console.log('INSTAGRAM_PUBLIC_POST_DISCOVERY '+(check.ok&&username==='ufc'?'AVAILABLE':'UNAVAILABLE')+' sampleItems='+posts);
+    console.log(check.ok?'INSTAGRAM_RESULT: BUSINESS_DISCOVERY_API_ACCEPTED':'INSTAGRAM_RESULT: BUSINESS_DISCOVERY_DENIED; review Facebook Login, app permissions and professional account linkage.');
+   } else {
+    console.log('INSTAGRAM_RESULT: NO_LINKED_PROFESSIONAL_ASSET; set INSTAGRAM_USER_ID or connect a professional Instagram account to a Facebook Page.');
    }
   }
   if(ig.ok){
