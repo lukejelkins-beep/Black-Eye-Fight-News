@@ -2,8 +2,8 @@ name: Paid UFCalendar UFC/PFL historic research and fight card improvements
 on:
   workflow_dispatch:
   schedule:
-    # Paid backfill burst: every 15 minutes through November, with serialized runs.
-    - cron: '7,22,37,52 * * 11 *'
+    # Paid backfill burst: every 5 minutes in November; one running collector at a time.
+    - cron: '3,8,13,18,23,28,33,38,43,48,53,58 * * 11 *'
     # Outside the November burst, retain the existing four daily maintenance windows.
     - cron: '20 0,6,12,18 * 1-10,12 *'
   push:
@@ -20,7 +20,7 @@ concurrency:
 jobs:
   backfill:
     runs-on: ubuntu-latest
-    timeout-minutes: 19
+    timeout-minutes: 22
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -33,7 +33,7 @@ jobs:
       - name: Build resumable UFC/PFL fight history and current card insights
         env:
           UFCALENDAR_API_KEY: ${{ secrets.UFCALENDAR_API_KEY }}
-          BEFN_UFCAL_MAX_CALLS: '420'
+          BEFN_UFCAL_MAX_CALLS: '500'
         run: python scripts/ufcalendar-rich-backfill.py
       - name: Commit sourced observations without exposing credentials
         shell: bash
