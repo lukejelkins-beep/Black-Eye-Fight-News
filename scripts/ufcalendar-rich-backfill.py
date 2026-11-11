@@ -26,8 +26,8 @@ PFL_ARCHIVE = ROOT / "data/pfl-research-archive.json"
 FIGHTERS = ROOT / "data/ufcalendar-fighter-research.json"
 JUDGING = ROOT / "data/ufcalendar-judging-research.json"
 BASE = "https://api.ufcalendar.com/v1"
-MAX_SPEND_PER_MONTH = 18000  # Preserve allowance for other BEFN integrations.
-MAX_PER_RUN = 180
+MAX_SPEND_PER_MONTH = 27000  # 90% of Hobby; reserve 3,000 for live BEFN integrations.
+MAX_PER_RUN = 420
 REST_SECONDS = 1.2
 ORGS = ("ufc", "pfl")
 ROUND_MAP = {
@@ -325,7 +325,8 @@ def merge_archive(archive,event,bout,rounds,stamp):
 def selection(state):
     pairs=[x for x in state.get("bouts",{}).values()
            if x.get("status") in ("completed","draw","no_contest")]
-    pairs.sort(key=lambda x:(x.get("eventDate") or "",x.get("org")=="ufc",
+    # Complete eligible UFC research first; then continue PFL without losing either queue.
+    pairs.sort(key=lambda x:(x.get("org")=="ufc",x.get("eventDate") or "",
                      x.get("main",False),x.get("titleFight",False)),reverse=True)
     return pairs
 
@@ -339,7 +340,7 @@ def selected_stats(rounds):
 def collect_rounds(client,state,cards,archive,pfl_archive,today):
     pairs=selection(state)
     count=0
-    cap=max(0,min(120,int(client.max_calls*.43),client.max_calls-client.calls-10))
+    cap=max(0,min(195,int(client.max_calls*.45),client.max_calls-client.calls-15))
     for bout in pairs:
         if client.remaining<=0 or client.stopped or count>=cap:break
         bid=bout["id"]
@@ -384,7 +385,7 @@ def short_scorecards(payload):
             "observedOn":dt.date.today().isoformat()}
 
 def collect_judging(client,state,cards,judging):
-    maximum=max(0,min(32,int(client.max_calls*.13)))
+    maximum=max(0,min(48,int(client.max_calls*.13)))
     done=0
     for b in selection(state):
         if client.remaining<=0 or client.stopped or done>=maximum:break
@@ -437,7 +438,7 @@ def collect_profiles(client,state,cards,fighters,today):
                 seen[slugval]=priority
     collected=0
     for slugval,rank in sorted(seen.items(),key=lambda it:it[1],reverse=True):
-        if client.remaining<=0 or client.stopped or client.calls>=client.max_calls-2 or collected>=max(4,int(client.max_calls*.13)):break
+        if client.remaining<=0 or client.stopped or client.calls>=client.max_calls-2 or collected>=max(4,min(84,int(client.max_calls*.20))):break
         if slugval in state["fighterDone"]:continue
         payload=client.call("/fighters/"+slugval)
         collected+=1
@@ -465,7 +466,7 @@ def summarize_history(payload):
 
 def collect_careers(client,state,research):
     # Previously researched fighters remain in the cache after cancellation.
-    remaining=max(0,min(28,int(client.max_calls*.09)))
+    remaining=max(0,min(62,int(client.max_calls*.15)))
     done=0
     for slugval,profile in list(research.get("profiles",{}).items()):
         if client.remaining<=0 or client.stopped or done>=remaining:break
@@ -478,7 +479,7 @@ def collect_careers(client,state,research):
         done+=1
 
 def collect_championship_history(client,state,research):
-    maximum=max(0,min(18,int(client.max_calls*.06)))
+    maximum=max(0,min(36,int(client.max_calls*.09)))
     done=0
     for slugval,profile in list(research.get("profiles",{}).items()):
         if client.remaining<=0 or client.stopped or done>=maximum:break
@@ -581,7 +582,7 @@ def main():
             add_index(state,e["org"],[{"id":int(k),"org":e["org"],"title":e.get("title"),
                                        "slug":e.get("slug"),"starts_at":e.get("startAt"),
                                        "status":e.get("status")}])
-    max_calls=int(os.getenv("BEFN_UFCAL_MAX_CALLS","180"))
+    max_calls=int(os.getenv("BEFN_UFCAL_MAX_CALLS","420"))
     client=Client(os.getenv("UFCALENDAR_API_KEY","").strip(),state,today,max_calls=max_calls)
     if client.bootstrap():
         read_events(client,state,today)
