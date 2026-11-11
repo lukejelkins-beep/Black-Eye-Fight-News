@@ -68,35 +68,11 @@ for(const src of config.sources) {
     }
   }catch(err){failed++;failures.push(src.handle+': '+String(err.message||err).slice(0,90))}
 }
-let threadsStatus='Automatic collection needs an approved Meta Threads API connection.';
-let threadsState='not-connected';
-const token=process.env.THREADS_ACCESS_TOKEN||'';
-const allow=new Set((config.threads?.allowlistedUsernames||[]).map(x=>x.toLowerCase().replace(/^@/,'')));
-const threadsAuthors=new Map((config.threads?.accounts||[]).map(a=>[String(a.username||'').toLowerCase().replace(/^@/,''),a]));
-if(token&&allow.size){
-  let successes=0,errors=0;
-  for(const [sport,q] of [['boxing','boxing'],['mma','ufc']]) {
-    const params=new URLSearchParams({q,search_type:'RECENT',search_mode:'KEYWORD',fields:'id,text,username,timestamp,permalink,is_reply',limit:'100',since:String(Math.floor(recentApiSince/1000))});
-    try{
-      const result=await getJSON('https://graph.threads.net/v1.0/keyword_search?'+params.toString(),{'Authorization':'Bearer '+token});
-      successes++;
-      for(const p of result.data||[]){
-        if(!p.username||!allow.has(p.username.toLowerCase().replace(/^@/,''))||!p.permalink||!p.text)continue;
-        const url=new URL(p.permalink);if(!['threads.com','www.threads.com','threads.net','www.threads.net'].includes(url.hostname))continue;
-        const account=threadsAuthors.get(p.username.toLowerCase().replace(/^@/,''));
-        if(!account)continue;
-        insert({id:p.id,platform:'Threads',sport:account.sport||sport,type:'post',name:account.name,
-          handle:'@'+p.username,role:account.role||'fighter',fighterTier:account.fighterTier,
-          quote:p.text.slice(0,400),postedAt:p.timestamp,date:new Date(p.timestamp).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric',timeZone:'Australia/Melbourne'}),
-          url:p.permalink,photo:'',source:'Meta Threads keyword-search API; pinned author identity'});
-      }
-    }catch(err){errors++;failures.push('Threads '+sport+': '+String(err.message||err).slice(0,90))}
-  }
-  threadsState=successes?'connected':'unavailable';
-  threadsStatus=successes?'Threads API queried; only allowlisted original posts displayed.':'Threads API attempted but unavailable; check approved access.';
-}else if(token&&!allow.size){
-  threadsStatus='Threads API token supplied, but no authenticated author handles are approved in source configuration.';
-}
+// Public Threads post links are now collected from trusted source pages and
+// rendered as official embeds. An approved Meta keyword_search API, OAuth
+// token or app review is NOT required for the view-only public feed.
+const threadsState='source-linked';
+const threadsStatus='Original public Threads links discovered from trusted fight coverage; no account-level Meta API or OAuth required.';
 const platformStatus=await collectPlatforms(config,getJSON,p=>insert(p,true),recentApiSince);
 platformStatus.unshift({platform:'Bluesky',state:checked?'connected':'unavailable',checked,failed,message:checked+' of '+config.sources.length+' sources checked.'});
 platformStatus.push({platform:'Threads',state:threadsState,message:threadsStatus});
