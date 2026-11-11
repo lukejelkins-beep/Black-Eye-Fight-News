@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROGRESS = ROOT / "data/ufcalendar-rich-progress.json"
 CARDS = ROOT / "data/ufcalendar-card-enhancements.json"
 ARCHIVE = ROOT / "data/ufc-research-archive.json"
+PFL_ARCHIVE = ROOT / "data/pfl-research-archive.json"
 FIGHTERS = ROOT / "data/ufcalendar-fighter-research.json"
 BASE = "https://api.ufcalendar.com/v1"
 MAX_SPEND_PER_MONTH = 18000  # Preserve allowance for other BEFN integrations.
@@ -311,15 +312,14 @@ def convert_rounds(payload):
 
 def merge_archive(archive,event,bout,rounds,stamp):
     if not rounds:return False
-    # The persistent research archive currently covers UFC; retain PFL selected
-    # evidence in the separate UFCalendar source data and do not mislabel it UFC.
-    if event["org"]!="ufc":return False
+    if event["org"] not in ORGS:return False
     import importlib.util
     spec=importlib.util.spec_from_file_location("befn_archive",ROOT/"scripts/refresh-ufc-research-archive.py")
     m=importlib.util.module_from_spec(spec)
     spec.loader.exec_module(m)
     return m.put(archive,event["date"],bout["a"]["name"],bout["b"]["name"],
-                 event["title"],"ufcalendar",bout["id"],rounds,stamp)
+                 event["title"],"ufcalendar",bout["id"],rounds,stamp,
+                 promotion=event["org"].upper())
 
 def selection(state):
     pairs=[x for x in state.get("bouts",{}).values()
@@ -335,7 +335,7 @@ def selected_stats(rounds):
              "b":{k:v for k,v in r.get("b",{}).items() if k in ("sigLanded","sigAttempted","takedowns","takedownAttempts","controlSec","knockdowns")}}
             for r in rounds]
 
-def collect_rounds(client,state,cards,archive,today):
+def collect_rounds(client,state,cards,archive,pfl_archive,today):
     pairs=selection(state)
     count=0
     cap=max(0,min(180,int(client.max_calls*.58),client.max_calls-client.calls-6))
@@ -348,9 +348,9 @@ def collect_rounds(client,state,cards,archive,today):
         rounds=convert_rounds(payload)
         state["roundDone"][bid]=len(rounds)
         if rounds:
-            if bout["org"]=="ufc":
-                event={"date":bout["eventDate"],"title":bout["event"],"org":"ufc"}
-                merge_archive(archive,event,bout,rounds,dt.datetime.now(dt.timezone.utc).isoformat())
+            event={"date":bout["eventDate"],"title":bout["event"],"org":bout["org"]}
+            target=archive if bout["org"]=="ufc" else pfl_archive
+            merge_archive(target,event,bout,rounds,dt.datetime.now(dt.timezone.utc).isoformat())
             ui_event=cards["events"].get(bout["eventId"])
             if ui_event:
                 for ui_bout in ui_event.get("bouts",[]):
@@ -431,7 +431,16 @@ def main():
     cards=read(CARDS,{"schema":1,"events":{}})
     research=read(FIGHTERS,{"schema":1,"profiles":{}})
     archive=read(ARCHIVE,{"schema":1,"fights":{},"events":{}})
-    if archive.get("schema")!=1:raise RuntimeError("Unknown archive version")
+    pfl_archive=read(PFL_ARCHIVE,{"schema":1,"fights":{},"events":{}})
+    if archive.get("schema")!=1 or pfl_archive.get("schema")!=1:
+        raise RuntimeError("Unknown archive version")
+    if not state.get("pflArchiveMigrated"):
+        # One-time migration: previously collected PFL rounds were only held as
+        # short-lived card previews, so recollect them for lasting storage.
+        for bid,bout in state.get("bouts",{}).items():
+            if bout.get("org")=="pfl":
+                state["roundDone"].pop(bid,None)
+        state["pflArchiveMigrated"]=True
     # CURATED card format output may have dropped historic cards; keep only
     # the recent public subset as API refresh input alongside indexed events.
     for k,e in cards.get("events",{}).items():
@@ -444,12 +453,14 @@ def main():
     if client.bootstrap():
         read_events(client,state,today)
         visible=collect_cards(client,state,cards,today)
-        collect_rounds(client,state,cards,archive,today)
+        collect_rounds(client,state,cards,archive,pfl_archive,today)
         collect_profiles(client,state,cards,research,today)
         public=public_events(cards,research.get("profiles",{}),today)
         write(CARDS,public)
         archive["updatedAt"]=dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
         write(ARCHIVE,archive)
+        pfl_archive["updatedAt"]=archive["updatedAt"]
+        write(PFL_ARCHIVE,pfl_archive)
         write(FIGHTERS,research)
     state["lastRun"]=dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
     state["lastCalls"]=client.calls
