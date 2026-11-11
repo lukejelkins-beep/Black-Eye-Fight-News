@@ -1,3 +1,16 @@
+## Meta developer dashboard progress — 11 November 2026
+
+Verified in the authenticated BEFN Meta developer app (Facebook app ID 938461119197992, Threads app ID displayed separately):
+
+- `threads_profile_discovery` was added to **New requests** in App Review and verified present after page refresh.
+- The review wizard advanced to **Allowed usage**; the specific `threads_profile_discovery` justification was entered, the allowed-usage agreement was checked, and the draft was saved.
+- The live Meta Testing screen still displays **0 of 1 API calls required** for `threads_profile_discovery`. This is **not complete**.
+- The existing GitHub-side Threads API token passes `GET /me` (HTTP 200) but returns HTTP 403 / Meta code 10 for both `GET /profile_lookup?username=threads` and `GET /profile_posts?username=threads`. Whether this token has the required Threads-specific permission scope has not been confirmed; do not claim the precise cause is known.
+- **No screencast** demonstrating an actual OAuth/profile-lookup flow has been uploaded. BEFN public static website does not yet expose a functioning secure end-to-end OAuth and Threads profile discovery interface.
+- **App Review has NOT been submitted**, and the Meta app is still in development.
+
+Important distinction: the general **Facebook Graph API Explorer** may generate Facebook Graph tokens; do not assume these are valid **Threads user tokens** for graph.threads.net. A proper Threads OAuth connection must request the actual `threads_basic` and `threads_profile_discovery` scopes, then a permission-specific successful request must be checked in the Meta Testing screen. API test success may take up to 24 hours to appear there.
+
 # Meta App Review: threads_profile_discovery — Black Eye Fight News
 
 Updated: 11 November 2026
