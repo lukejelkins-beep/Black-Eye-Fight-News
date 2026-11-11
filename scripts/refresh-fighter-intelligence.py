@@ -145,8 +145,17 @@ def ufcalendar(queue, fetch=fetch_json, key=None):
         board = fetch(UFCALENDAR + "/rankings/ufc", key)
         if not isinstance(board, dict) or "data" not in board:
             raise ValueError("Unexpected response")
-    except Exception:
-        return status("UFCalendar", "unavailable", "Rankings lookup unavailable; retained existing insights.")
+    except Exception as exc:
+        http_code = getattr(exc, "code", None)
+        if http_code in (401, 403):
+            return status("UFCalendar", "authentication_failed",
+                          "API key was supplied but rejected (HTTP " + str(http_code) + ").")
+        if http_code == 429:
+            return status("UFCalendar", "quota_exceeded",
+                          "API key supplied; the provider returned HTTP 429.")
+        reason = ("HTTP " + str(http_code)) if http_code else type(exc).__name__
+        return status("UFCalendar", "unavailable",
+                      "API key supplied but rankings request failed (" + reason + ").")
     matched = 0
     for item in [f for f in queue if f["organisation"] == "UFC"][:3]:
         try:
