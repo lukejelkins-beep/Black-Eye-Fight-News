@@ -9,6 +9,8 @@ on:
     paths:
       - 'scripts/refresh-fighter-intelligence.py'
       - 'tests/test_fighter_intelligence.py'
+      - 'scripts/refresh-ufcalendar-budget.py'
+      - 'tests/test_ufcalendar_budget.py'
       - '.github/workflows/refresh-fighter-intelligence.yml'
 permissions:
   contents: write
@@ -18,28 +20,34 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - name: Test safety, name matching, review rules and recovery
-        run: python -m unittest discover -s tests -p 'test_fighter_intelligence.py' -v
+        run: |
+          python -m unittest discover -s tests -p 'test_fighter_intelligence.py' -v
+          python -m unittest discover -s tests -p 'test_ufcalendar_budget.py' -v
       - name: Produce source-backed review snapshot
         env:
-          UFCALENDAR_API_KEY: ${{ secrets.UFCALENDAR_API_KEY }}
+          BEFN_UFCALENDAR_MANAGED: 'true'
           BEFN_OCTAGON_ALLOWED: ${{ vars.BEFN_OCTAGON_ALLOWED }}
           # Website owner confirmed BEFN is a personal non-commercial project.
           BEFN_UFC_STATS_ALLOWED: 'true'
         run: python scripts/refresh-fighter-intelligence.py
+      - name: Select high-value intelligence within the 100-call monthly budget
+        env:
+          UFCALENDAR_API_KEY: ${{ secrets.UFCALENDAR_API_KEY }}
+        run: python scripts/refresh-ufcalendar-budget.py
       - name: Commit generated editorial signals
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "BEFN scouting updater"
           git config user.email "scouting-bot@users.noreply.github.com"
-          git add data/fighter-intelligence.json
+          git add data/fighter-intelligence.json data/ufcalendar-intelligence.json data/ufcalendar-budget.json
           if git diff --cached --quiet; then
             echo "No new sourced review data"; exit 0
           fi
