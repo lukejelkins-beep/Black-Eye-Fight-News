@@ -38,6 +38,27 @@ class ArchiveTests(unittest.TestCase):
         self.assertEqual(saved["sources"]["ufcalendar"]["rounds"][0]["a"]["sigLanded"],7)
         self.assertEqual(saved["conflicts"][0]["metric"],"sigLanded")
 
+    def test_reversed_red_blue_corner_order_is_aligned(self):
+        archive={"fights":{}}
+        a={"round":1,"a":{"sigLanded":13},"b":{"sigLanded":8}}
+        reversed_source={"round":1,"a":{"sigLanded":8},"b":{"sigLanded":13}}
+        m.put(archive,"2026-11-08","Alpha","Beta","UFC","ufcalendar",44,[a],"now")
+        m.put(archive,"2026-11-08","Beta","Alpha","UFC","cito","id",[reversed_source],"later")
+        fight=next(iter(archive["fights"].values()))
+        self.assertEqual(fight["rounds"][0]["a"]["sigLanded"],13)
+        self.assertEqual(fight["rounds"][0]["b"]["sigLanded"],8)
+        self.assertEqual(fight["conflicts"],[])
+
+    def test_reversed_single_corned_round_is_not_mislabeled(self):
+        archive={"fights":{}}
+        m.put(archive,"2026-11-08","Alpha","Beta","UFC","ufcalendar",44,
+              [{"round":1,"a":{"sigLanded":13}}],"now")
+        m.put(archive,"2026-11-08","Beta","Alpha","UFC","cito","id",
+              [{"round":1,"a":{"sigLanded":8}}],"later")
+        fight=next(iter(archive["fights"].values()))
+        self.assertEqual(fight["rounds"][0]["a"]["sigLanded"],13)
+        self.assertEqual(fight["rounds"][0]["b"]["sigLanded"],8)
+
     def test_batch_cito_rounds_identity_is_verified(self):
         archive={"fights":{}}
         bouts=[{"id":"fight-1","red":{"name":"Fighter Red"},"blue":{"name":"Fighter Blue"}}]
