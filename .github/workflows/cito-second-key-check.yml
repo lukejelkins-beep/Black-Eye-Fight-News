@@ -1,0 +1,105 @@
+name: Test second Cito API key
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/cito-second-key-check.yml'
+permissions:
+  contents: write
+concurrency:
+  group: befn-cito-second-key-test
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify second key without exposing credentials
+        env:
+          UFC_STATS_API_CITO: ${{ secrets.UFC_STATS_API_CITO }}
+          UFC_STATS_API_CITO_2: ${{ secrets.UFC_STATS_API_CITO_2 }}
+          UFC_STATS_API_CITO2: ${{ secrets.UFC_STATS_API_CITO2 }}
+          UFC_STATS_API_CITO_SECOND: ${{ secrets.UFC_STATS_API_CITO_SECOND }}
+          UFC_STATS_API_CITO_SECONDARY: ${{ secrets.UFC_STATS_API_CITO_SECONDARY }}
+          UFC_STATS_API_CITO_ALT: ${{ secrets.UFC_STATS_API_CITO_ALT }}
+          CITO_API_KEY_2: ${{ secrets.CITO_API_KEY_2 }}
+          CITO_API_KEY2: ${{ secrets.CITO_API_KEY2 }}
+          CITO_API_KEY_SECOND: ${{ secrets.CITO_API_KEY_SECOND }}
+          CITO_API_KEY_SECONDARY: ${{ secrets.CITO_API_KEY_SECONDARY }}
+          CITO_API_KEY_B: ${{ secrets.CITO_API_KEY_B }}
+          UFC_CITO_API_KEY_2: ${{ secrets.UFC_CITO_API_KEY_2 }}
+          UFC_STATS_CITO_2: ${{ secrets.UFC_STATS_CITO_2 }}
+        run: |
+          python - <<'PY'
+          import datetime,json,os,pathlib,urllib.request,urllib.error
+          PRIMARY = os.environ.get('UFC_STATS_API_CITO','').strip()
+          CANDIDATES = ["UFC_STATS_API_CITO_2","UFC_STATS_API_CITO2","UFC_STATS_API_CITO_SECOND","UFC_STATS_API_CITO_SECONDARY","UFC_STATS_API_CITO_ALT","CITO_API_KEY_2","CITO_API_KEY2","CITO_API_KEY_SECOND","CITO_API_KEY_SECONDARY","CITO_API_KEY_B","UFC_CITO_API_KEY_2","UFC_STATS_CITO_2"]
+          report = {'checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            'provider':'Cito UFC API','result':'unknown','tested':[],
+            'second_key_connected':False,'key_exposed':False}
+          def check(key):
+              req=urllib.request.Request('https://api.citoapi.com/api/v1/ufc/events/upcoming?limit=1',headers={'x-api-key':key,'Accept':'application/json','User-Agent':'BEFN-Second-Cito-Check/1.0'})
+              try:
+                  with urllib.request.urlopen(req,timeout=20) as res:
+                      body=json.loads(res.read().decode('utf8'))
+                      return {'status':res.status,'monthly_limit':res.headers.get('X-RateLimit-Monthly-Limit'),'monthly_remaining':res.headers.get('X-RateLimit-Monthly-Remaining'),'success':body.get('success') is True}
+              except urllib.error.HTTPError as exc:
+                  try:
+                      error=json.loads(exc.read().decode('utf8'))
+                      code=error.get('error',{}).get('code') if isinstance(error.get('error'),dict) else None
+                  except (ValueError,UnicodeDecodeError): code=None
+                  return {'status':exc.code,'api_error_code':code,'success':False}
+              except (urllib.error.URLError,TimeoutError,OSError,ValueError) as err:
+                  return {'status':None,'error_type':type(err).__name__,'success':False}
+          found=False
+          duplicate=[]
+          for name in CANDIDATES:
+              key=os.environ.get(name,'').strip()
+              if not key: continue
+              found=True
+              if PRIMARY and key==PRIMARY:
+                  duplicate.append(name)
+                  continue
+              result=check(key)
+              report['tested'].append({'secret_name':name,**result})
+              if result.get('success') and result.get('status')==200:
+                  report['second_key_connected']=True
+                  report['second_secret_name']=name
+                  report['second_monthly_limit']=result.get('monthly_limit')
+                  report['second_monthly_remaining']=result.get('monthly_remaining')
+                  break
+          report['different_from_primary']=bool(report['second_key_connected'])
+          report['duplicate_secret_names']=duplicate
+          if report['second_key_connected']:
+              report['result']='connected'
+              if PRIMARY:
+                  report['primary_comparison']=check(PRIMARY)
+                  first=report['primary_comparison'].get('monthly_remaining')
+                  second=report.get('second_monthly_remaining')
+                  report['different_quota_counters']=bool(first is not None and second is not None and str(first)!=str(second))
+          elif not found:
+              report['result']='second_secret_not_found_among_common_names'
+          elif duplicate and not report['tested']:
+              report['result']='only_duplicate_of_first_key'
+          else:
+              report['result']='second_key_present_but_authentication_failed'
+          path=pathlib.Path('.github/diagnostics/cito-second-health.json')
+          path.parent.mkdir(parents=True,exist_ok=True)
+          path.write_text(json.dumps(report,indent=2)+'\n',encoding='utf8')
+          print('Second Cito diagnostic:',report['result'])
+          PY
+      - name: Save safe second-key outcome
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .github/diagnostics/cito-second-health.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record second Cito API authentication result'
+            for i in 1 2 3 4; do
+              if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
+              sleep 2
+            done
+            exit 1
+          fi
