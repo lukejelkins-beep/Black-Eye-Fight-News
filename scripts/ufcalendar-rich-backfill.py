@@ -24,6 +24,7 @@ CARDS = ROOT / "data/ufcalendar-card-enhancements.json"
 ARCHIVE = ROOT / "data/ufc-research-archive.json"
 PFL_ARCHIVE = ROOT / "data/pfl-research-archive.json"
 FIGHTERS = ROOT / "data/ufcalendar-fighter-research.json"
+JUDGING = ROOT / "data/ufcalendar-judging-research.json"
 BASE = "https://api.ufcalendar.com/v1"
 MAX_SPEND_PER_MONTH = 18000  # Preserve allowance for other BEFN integrations.
 MAX_PER_RUN = 180
@@ -163,7 +164,7 @@ def default_progress():
     return {"schema":1,"status":"pending","provider":{},"lastRun":"",
             "historicalCursor":{},"historicalComplete":{},
             "eventIndex":{},"eventDetails":{},"bouts":{},"roundDone":{},
-            "scorecardDone":{},"fighterDone":{},"errors":[]}
+            "scorecardDone":{},"fighterDone":{},"historyDone":{},"rankingDone":{},"errors":[]}
 
 def add_index(state,org,events,upcoming=False):
     added=0
@@ -259,7 +260,7 @@ def collect_cards(client,state,cards,today):
     ordered=sorted(index.items(),key=lambda kv:(kv[1].get("upcoming",False),
                         kv[1].get("date") or "",kv[0]),reverse=True)
     # Reserve requests for round statistics and verified upcoming fighter records.
-    detail_limit=max(8,min(42,int(client.max_calls*.22)))
+    detail_limit=max(8,min(42,int(client.max_calls*.19)))
     detailed=0
     for k,event in ordered:
         if client.remaining<=0 or client.stopped or detailed>=detail_limit:break
@@ -338,7 +339,7 @@ def selected_stats(rounds):
 def collect_rounds(client,state,cards,archive,pfl_archive,today):
     pairs=selection(state)
     count=0
-    cap=max(0,min(180,int(client.max_calls*.58),client.max_calls-client.calls-6))
+    cap=max(0,min(120,int(client.max_calls*.43),client.max_calls-client.calls-10))
     for bout in pairs:
         if client.remaining<=0 or client.stopped or count>=cap:break
         bid=bout["id"]
@@ -358,6 +359,53 @@ def collect_rounds(client,state,cards,archive,pfl_archive,today):
                         ui_bout["roundPreview"]=selected_stats(rounds)
                         break
         count+=1
+
+def short_scorecards(payload):
+    obj=(payload or {}).get("data")
+    if not isinstance(obj,dict):return None
+    judges=[]
+    for row in obj.get("cards",[]):
+        if not isinstance(row,dict):continue
+        known=row.get("scores_known") is True
+        rounds=[]
+        if known:
+            for rd in row.get("rounds") or []:
+                if not isinstance(rd,dict):continue
+                no=number(rd.get("round"))
+                a,b=number(rd.get("a")),number(rd.get("b"))
+                if no is not None and a is not None and b is not None:
+                    rounds.append([no,a,b])
+        judges.append({"judge":safe(row.get("judge_name"),75),
+                       "totalA":number(row.get("total_a")) if known else None,
+                       "totalB":number(row.get("total_b")) if known else None,
+                       "scoresKnown":known,"rounds":rounds})
+    return {"decision":safe(obj.get("decision_type"),40),
+            "judges":judges[:5],"source":"UFCalendar",
+            "observedOn":dt.date.today().isoformat()}
+
+def collect_judging(client,state,cards,judging):
+    maximum=max(0,min(32,int(client.max_calls*.13)))
+    done=0
+    for b in selection(state):
+        if client.remaining<=0 or client.stopped or done>=maximum:break
+        if b["id"] in state["scorecardDone"]:continue
+        result=b.get("result") or {}
+        method=result.get("method") or ""
+        if "decision" not in method.lower() and "draw" not in method.lower():continue
+        payload=client.call("/fights/"+b["id"]+"/scorecards")
+        if payload is None:continue
+        summary=short_scorecards(payload)
+        if summary is None:continue
+        state["scorecardDone"][b["id"]]=len(summary["judges"])
+        if summary["judges"]:
+            judging["decisions"][b["id"]]=summary
+            card=cards["events"].get(b["org"]+":"+b["eventId"])
+            if card:
+                for public_bout in card["bouts"]:
+                    if public_bout["id"]==b["id"]:
+                        public_bout["scorecardSummary"]=summary
+                        break
+        done+=1
 
 def read_fighter_profile(obj):
     if not isinstance(obj,dict):return None
@@ -386,14 +434,65 @@ def collect_profiles(client,state,cards,fighters,today):
             priority=(1 if upcoming else 0,day)
             if slugval not in seen or priority>seen[slugval]:
                 seen[slugval]=priority
+    collected=0
     for slugval,rank in sorted(seen.items(),key=lambda it:it[1],reverse=True):
-        if client.remaining<=0 or client.stopped or client.calls>=client.max_calls-2:break
+        if client.remaining<=0 or client.stopped or client.calls>=client.max_calls-2 or collected>=max(4,int(client.max_calls*.13)):break
         if slugval in state["fighterDone"]:continue
         payload=client.call("/fighters/"+slugval)
+        collected+=1
         profile=read_fighter_profile((payload or {}).get("data"))
         if not profile:continue
         state["fighterDone"][slugval]=dt.date.today().isoformat()
         fighters["profiles"][slugval]=profile
+
+def summarize_history(payload):
+    entries=response_rows(payload)
+    history=[]
+    for row in entries:
+        if not isinstance(row,dict):continue
+        opp=row.get("opponent") if isinstance(row.get("opponent"),dict) else {}
+        opponent=safe(opp.get("name") or row.get("opponent_name"))
+        status=safe(row.get("status"),18)
+        when=date_str(row.get("date") or row.get("fought_at") or row.get("starts_at"))
+        if not opponent or not when or status not in ("win","loss","draw","no_contest"):continue
+        history.append({"date":when,"opponent":opponent,"result":status,
+                        "method":safe(row.get("method_normalized") or row.get("method"),50),
+                        "promotion":safe(row.get("org_slug") or row.get("org"),24),
+                        "titleFight":bool(row.get("is_title"))})
+        if len(history)>=20:break
+    return history
+
+def collect_careers(client,state,research):
+    # Previously researched fighters remain in the cache after cancellation.
+    remaining=max(0,min(28,int(client.max_calls*.09)))
+    done=0
+    for slugval,profile in list(research.get("profiles",{}).items()):
+        if client.remaining<=0 or client.stopped or done>=remaining:break
+        if slugval in state.setdefault("historyDone",{}):continue
+        payload=client.call("/fighters/"+slugval+"/history")
+        if payload is None:continue
+        history=summarize_history(payload)
+        state["historyDone"][slugval]=len(history)
+        if history:profile["recentHistory"]=history
+        done+=1
+
+def collect_championship_history(client,state,research):
+    maximum=max(0,min(18,int(client.max_calls*.06)))
+    done=0
+    for slugval,profile in list(research.get("profiles",{}).items()):
+        if client.remaining<=0 or client.stopped or done>=maximum:break
+        if slugval in state.setdefault("rankingDone",{}):continue
+        payload=client.call("/fighters/"+slugval+"/rankings"+param(limit=500))
+        if payload is None:continue
+        rows=response_rows(payload)
+        historic=[r for r in rows if isinstance(r,dict) and
+                  (r.get("is_champion") is True or r.get("rank")==0)]
+        state["rankingDone"][slugval]=True
+        profile["formerUfcChampion"]=any(r.get("org")=="ufc" for r in historic)
+        profile["titleHistoryEvidence"]=[{"date":date_str(r.get("snapshot_date")),
+                                          "division":safe(r.get("division"),50)}
+                                         for r in historic[:6] if r.get("org")=="ufc"]
+        done+=1
 
 def recover_previews(cards,archive,pfl_archive):
     """Reuse saved round observations without re-spending quota on previous requests."""
@@ -455,6 +554,7 @@ def main():
     if state.get("schema")!=1:raise RuntimeError("Unknown progress format")
     cards=read(CARDS,{"schema":1,"events":{}})
     research=read(FIGHTERS,{"schema":1,"profiles":{}})
+    judging=read(JUDGING,{"schema":1,"decisions":{}})
     archive=read(ARCHIVE,{"schema":1,"fights":{},"events":{}})
     pfl_archive=read(PFL_ARCHIVE,{"schema":1,"fights":{},"events":{}})
     if archive.get("schema")!=1 or pfl_archive.get("schema")!=1:
@@ -479,7 +579,10 @@ def main():
         read_events(client,state,today)
         visible=collect_cards(client,state,cards,today)
         collect_rounds(client,state,cards,archive,pfl_archive,today)
+        collect_judging(client,state,cards,judging)
         collect_profiles(client,state,cards,research,today)
+        collect_careers(client,state,research)
+        collect_championship_history(client,state,research)
         recover_previews(cards,archive,pfl_archive)
         public=public_events(cards,research.get("profiles",{}),today)
         write(CARDS,public)
@@ -488,6 +591,7 @@ def main():
         pfl_archive["updatedAt"]=archive["updatedAt"]
         write(PFL_ARCHIVE,pfl_archive)
         write(FIGHTERS,research)
+        write(JUDGING,judging)
     state["lastRun"]=dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
     state["lastCalls"]=client.calls
     state["errors"]=(state.get("errors",[])+client.errors)[-15:]
@@ -495,6 +599,9 @@ def main():
     state["roundsDoneCount"]=len(state["roundDone"])
     state["indexedBouts"]=len(state["bouts"])
     state["fighterProfilesDone"]=len(state["fighterDone"])
+    state["scorecardsDone"]=len(state["scorecardDone"])
+    state["careerHistoriesDone"]=len(state.get("historyDone",{}))
+    state["rankingHistoriesDone"]=len(state.get("rankingDone",{}))
     state["publicEvents"]=len(cards.get("events",{}))
     write(PROGRESS,state)
     print("UFCalendar: status=%s, api_calls=%s, indexed=%s, rounds=%s, profiles=%s, public_events=%s" %
