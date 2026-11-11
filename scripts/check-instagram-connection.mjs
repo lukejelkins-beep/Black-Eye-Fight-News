@@ -31,6 +31,19 @@ else {
   process.exitCode=1;
  }else {
   if(fb.ok){
+   // Inspect scope names/status only. Never print a token, account ID or personal profile data.
+   const grants=await probe('facebook-permission-grants','https://graph.facebook.com/'+version+'/me/permissions?limit=100');
+   summary(grants);
+   if(grants.ok){
+    const entries=Array.isArray(grants.data?.data)?grants.data.data:[];
+    for(const scope of ['instagram_basic','instagram_manage_insights','pages_read_engagement','pages_show_list']){
+     const found=entries.find(p=>p.permission===scope);
+     const status=found?.status==='granted'?'GRANTED':found?.status?'NOT_GRANTED':'NOT_PRESENT';
+     console.log('INSTAGRAM_SCOPE '+scope+' '+status);
+    }
+   }else{
+    console.log('INSTAGRAM_SCOPES: UNAVAILABLE; verify the token is a Facebook User token with access to /me/permissions.');
+   }
    const [assigned,pages]=await Promise.all([
     probe('assigned-instagram-accounts','https://graph.facebook.com/'+version+'/me/assigned_instagram_accounts?fields=id,username&limit=50'),
     probe('page-linked-instagram-accounts','https://graph.facebook.com/'+version+'/me/accounts?fields=id,instagram_business_account%7Bid%2Cusername%7D&limit=50')
