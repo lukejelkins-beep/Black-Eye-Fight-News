@@ -304,7 +304,8 @@ window.UpcomingCards=(()=>{
    options.sort((a,b)=>score(b)-score(a));
    const existing=options.find(e=>score(e)>=2);
    if(existing){
-    const known=new Set(existing.bouts.map(matchup));
+    // Editorially verified fight cards are authoritative. Supplemental
+    // research can enrich matching bouts, never insert stale replacements.
     for(const bout of remote.bouts){
      if(!Array.isArray(bout.fighters)||bout.fighters.length!==2||!bout.fighters.every(Boolean))continue;
      const matched=existing.bouts.find(b=>matchup(b)===matchup(bout));
@@ -317,11 +318,9 @@ window.UpcomingCards=(()=>{
        if(!matched.note&&bout.isTitle)matched.note='Title fight';
        continue;
      }
-     const key=matchup(bout);if(!key||known.has(key))continue;
-     known.add(key);
-     existing.bouts.push({id:'ufcalendar-'+bout.id,section:['main','prelims','early'].includes(bout.section)?bout.section:'other',
-      fighters:bout.fighters,division:bout.division||'',note:bout.isTitle?'Title fight':'',
-      source:'https://www.ufcalendar.com/events/'+encodeURIComponent(remote.slug)});
+     // New pairings require official confirmation before publication.
+     // Otherwise a cancelled fight can be re-added after editorial removal.
+     continue;
     }
     continue;
    }
