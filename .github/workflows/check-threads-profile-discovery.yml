@@ -1,13 +1,8 @@
 name: Meta Threads profile discovery test
 
-# Push trigger runs a one-time diagnostic when this workflow is first updated.
-# Future use is manual via GitHub Actions > Run workflow.
+# Diagnostic completed 11 November 2026; future runs are manual only.
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/check-threads-profile-discovery.yml'
 
 permissions:
   contents: write
