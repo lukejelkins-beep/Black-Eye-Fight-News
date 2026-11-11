@@ -22,5 +22,6 @@ jobs:
       - name: Probe Meta endpoints using secret headers only
         env:
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
           META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION }}
         run: node scripts/check-instagram-connection.mjs
