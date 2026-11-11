@@ -70,6 +70,35 @@ class RichBackfillTests(unittest.TestCase):
                               "bouts":[],"org":"ufc"}}}
         self.assertFalse(m.public_events(data,{},dt.date(2026,11,11))["events"])
 
+    def test_scorecards_retain_judges_and_discard_outcome_only_placeholders(self):
+        payload={"data":{"decision_type":"split","cards":[
+          {"judge_name":"Judge A","scores_known":True,"total_a":29,"total_b":28,
+           "rounds":[{"round":1,"a":10,"b":9},{"round":2,"a":9,"b":10}]},
+          {"judge_name":"Judge B","scores_known":False,"total_a":1,"total_b":0,
+           "rounds":[]}]}}
+        saved=m.short_scorecards(payload)
+        self.assertEqual(saved["decision"],"split")
+        self.assertEqual(saved["judges"][0]["rounds"],[[1,10,9],[2,9,10]])
+        self.assertIsNone(saved["judges"][1]["totalA"])
+
+    def test_career_history_preserves_results_and_source_scope(self):
+        sample={"data":[{"date":"2026-10-24","opponent":{"name":"A Veteran"},
+                         "status":"win","method_normalized":"ko_tko","org_slug":"ufc","is_title":False},
+                        {"date":"2024-05-01","opponent":{"name":"Former Champion"},
+                         "status":"loss","method_normalized":"decision","org_slug":"pfl","is_title":True},
+                        {"date":"2025-06-30","status":"unknown","opponent":{"name":"Another"}}]}
+        rows=m.summarize_history(sample)
+        self.assertEqual(len(rows),2)
+        self.assertEqual(rows[0]["opponent"],"A Veteran")
+        self.assertEqual(rows[1]["promotion"],"pfl")
+        self.assertTrue(rows[1]["titleFight"])
+
+    def test_current_career_record_requires_valid_format(self):
+        self.assertIsNone(m.read_fighter_profile({"name":"A","slug":"a",
+            "records":{"pro_mma":{"value":"unverified"}}})["record"])
+        self.assertEqual(m.read_fighter_profile({"name":"B","slug":"b",
+            "records":{"pro_mma":{"value":"18-3-1"}}})["record"],"18-3-1")
+
     def test_index_page_pagination(self):
         state=m.default_progress()
         m.add_index(state,"ufc",[{"id":200,"org":"ufc","slug":"ufc-example-2026-11-11",
