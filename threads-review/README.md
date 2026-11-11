@@ -1,3 +1,11 @@
+## Verified review state — 11 November 2026, after successful live user lookup
+
+The BEFN owner reports that the official @threads public profile **and its real posts** appeared successfully after connecting via the deployed OAuth page. The technical UI flow now works for this test. However, a fresh inspection of the Meta Testing dashboard **still shows threads_profile_discovery: 0 of 1 qualifying API calls**, with threads_basic marked Completed. Meta notes that test-call credit may take up to 24 hours. Do not represent the testing requirement as complete until Meta's own counter changes.
+
+Read-only inspection of App Review > Allowed Usage > threads_profile_discovery showed that the **description field is empty, compliance checkbox unchecked, and no screencast uploaded** despite an earlier agent attempt to save the description. A subsequent attempt to navigate and save the description did not complete, so the current saved state is **unverified / apparently blank**. The form requires a genuine screen recording incorporating Threads OAuth authorization and actual public-profile lookup; do not upload mock content.
+
+Several other unrelated Instagram, Page and Threads permissions are queued in the same App Review submission. Their requirements are not fulfilled. They need separate proper review preparation or must be excluded intentionally before the whole submission can proceed.
+
 # BEFN Threads Discovery — OAuth Demonstration
 
 Updated 11 November 2026.
