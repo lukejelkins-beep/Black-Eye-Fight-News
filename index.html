@@ -1183,7 +1183,19 @@ function postCard(p){
 }
 
 
-const liveTalk={posts:[],selected:[],checkedAt:null,platformStatus:[],directory:[],directoryCounts:null,loading:false,lastAttempt:0,error:''};
+const liveTalk={posts:[],primaryPosts:[],embedPosts:[],embedCheckedAt:null,selected:[],checkedAt:null,platformStatus:[],directory:[],directoryCounts:null,loading:false,lastAttempt:0,error:''};
+function rebuildTalkPosts(){
+ liveTalk.posts=[...liveTalk.primaryPosts,...liveTalk.embedPosts];
+ // A platform's account API can be unavailable while authentic original
+ // source-linked post embeds are still available.
+ for(const platform of new Set(liveTalk.embedPosts.map(p=>p.platform))){
+  if(!liveTalk.platformStatus.some(p=>p.platform===platform&&p.state==='connected'))
+   liveTalk.platformStatus.push({platform,state:'source-linked',message:'Original source-linked posts; no account API access required.'});
+ }
+}
+function redrawTalkIfVisible(){
+ if(location.hash.split('/')[0]==='#social'&&state.socialMode!=='archive')refreshTalkView();
+}
 const talkWindow=7*24*60*60*1000;
 async function loadLiveTalk(){
  if(liveTalk.loading)return;
@@ -1220,10 +1232,11 @@ async function loadLiveTalk(){
   catch{return null}
  };
  const remoteFeed=read(root+feed);
+ const remoteEmbeds=read(root+embeds);
  const [newest,selected,originalEmbeds,directory]=await Promise.all([
   firstUsable([read(feed),remoteFeed]),
   firstUsable([read(picks),read(root+picks)]),
-  firstUsable([read(embeds),read(root+embeds)]),
+  firstUsable([read(embeds),remoteEmbeds]),
   firstUsable([readRoster(directoryPath),readRoster(root+directoryPath)])
  ]);
  if(directory){
@@ -1232,30 +1245,39 @@ async function loadLiveTalk(){
  }
 
  if(newest){
-  liveTalk.posts=[...newest.posts,...(originalEmbeds?.posts||[])];
+  liveTalk.primaryPosts=newest.posts;
   liveTalk.checkedAt=newest.checkedAt;
   liveTalk.platformStatus=Array.isArray(newest.platformStatus)?newest.platformStatus:[];
  }
- if(!newest&&originalEmbeds)liveTalk.posts=originalEmbeds.posts;
- if(originalEmbeds?.posts?.length){
-  const sources=[...new Set(originalEmbeds.posts.map(p=>p.platform))];
-  for(const platform of sources){
-   if(!liveTalk.platformStatus.some(p=>p.platform===platform&&p.state==='connected'))
-    liveTalk.platformStatus.push({platform,state:'source-linked',message:'Original posts linked by combat-news publishers; no account API access required.'});
-  }
+ if(originalEmbeds&&(!liveTalk.embedCheckedAt||
+    Date.parse(originalEmbeds.checkedAt||originalEmbeds.attemptedAt)>Date.parse(liveTalk.embedCheckedAt))){
+  liveTalk.embedPosts=originalEmbeds.posts;
+  liveTalk.embedCheckedAt=originalEmbeds.checkedAt||originalEmbeds.attemptedAt||null;
  }
+ rebuildTalkPosts();
  if(selected)liveTalk.selected=selected.posts;
  liveTalk.error=(newest||selected)?'':'Automatic feed temporarily unavailable';
  liveTalk.loading=false;
- if(location.hash.split('/')[0]==='#social'&&state.socialMode!=='archive')refreshTalkView();
+ redrawTalkIfVisible();
  // An updated GitHub JSON can supersede the fast local copy without holding up
  // mobile rendering. Re-render only when the remote feed is actually newer.
  remoteFeed.then(remote=>{
   if(!remote||!(Date.parse(remote.checkedAt)>Date.parse(liveTalk.checkedAt||'')))return;
-  liveTalk.posts=[...remote.posts,...(originalEmbeds?.posts||[])];
+  liveTalk.primaryPosts=remote.posts;
   liveTalk.checkedAt=remote.checkedAt;
   liveTalk.platformStatus=Array.isArray(remote.platformStatus)?remote.platformStatus:[];
-  if(location.hash.split('/')[0]==='#social'&&state.socialMode!=='archive')refreshTalkView();
+  rebuildTalkPosts();
+  redrawTalkIfVisible();
+ }).catch(()=>{});
+ // Render's static JSON can lag behind 10-minute GitHub Actions commits.
+ // Independently compare the raw GitHub embed feed and take whichever is newer.
+ // This avoids a manual Render deploy for new Instagram/Threads/X originals.
+ remoteEmbeds.then(remote=>{
+  if(!remote||!(Date.parse(remote.checkedAt||remote.attemptedAt)>Date.parse(liveTalk.embedCheckedAt||'')))return;
+  liveTalk.embedPosts=remote.posts;
+  liveTalk.embedCheckedAt=remote.checkedAt||remote.attemptedAt;
+  rebuildTalkPosts();
+  redrawTalkIfVisible();
  }).catch(()=>{});
 }
 
