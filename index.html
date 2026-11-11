@@ -994,9 +994,7 @@ const talkPlatforms = {
  X: {mark:'𝕏', hosts:['x.com','twitter.com']},
  Instagram: {mark:'◎', hosts:['instagram.com']},
  Threads: {mark:'@', hosts:['threads.com','threads.net']},
- Bluesky: {mark:'🦋', hosts:['bsky.app']},
- Facebook: {mark:'f', hosts:['facebook.com']},
- Reddit: {mark:'r/', hosts:['reddit.com']}
+ Bluesky: {mark:'🦋', hosts:['bsky.app']}
 };
 const talkSports = {all:'All sports', boxing:'Boxing', mma:'MMA', grappling:'Grappling'};
 const talkRoles = {fighter:'Fighter', promoter:'Promoter', trainer:'Coach', team:'Fight team', commentator:'Commentator', media:'Media', fan:'Fan discussion'};
@@ -1066,8 +1064,11 @@ function originalTalkPost(p){
   return '<div class="talk-original talk-instagram"><blockquote class="instagram-media" data-instgrm-permalink="'+canonical+'" data-instgrm-version="14">'+open+'</blockquote>'+fallback+'</div>';
  }
  if(p.platform==='Threads'){
-  const id='ig-tp-befn-'+(++talkEmbedSequence);
-  return '<div class="talk-original talk-threads"><blockquote class="text-post-media" id="'+id+'" data-text-post-permalink="'+source+'" data-text-post-version="0">'+open+'</blockquote>'+fallback+'</div>';
+  const shortCode=new URL(p.url).pathname.match(/\/(?:post|t)\/([a-zA-Z0-9_-]+)\/?$/)?.[1];
+  if(!shortCode)return '<div class="talk-native-static">'+fallback+'</div>';
+  // Match the official Threads oEmbed markup. Each post appears only once per page.
+  const id='ig-tp-'+shortCode;
+  return '<div class="talk-original talk-threads"><blockquote class="text-post-media" id="'+id+'" data-text-post-permalink="'+source+'" data-text-post-version="0" data-theme="light">'+open+'</blockquote>'+fallback+'</div>';
  }
  if(p.platform==='X'){
   return '<div class="talk-original talk-x"><blockquote class="twitter-tweet" data-dnt="true" data-theme="light">'+open+'</blockquote>'+fallback+'</div>';
@@ -1373,13 +1374,16 @@ function talkFilter(id,label,options){
 }
 
 function talkCoverage(posts){
- const automatic=liveTalk.platformStatus.filter(p=>p.state==='connected'||(p.platform==='Threads'&&p.state==='configured'&&p.message?.startsWith('Threads API queried')));
+ const statuses=liveTalk.platformStatus.filter(p=>Object.hasOwn(talkPlatforms,p.platform));
+ const automatic=statuses.filter(p=>p.state==='connected');
  const picked=new Set(posts.filter(p=>p.summary).map(p=>p.platform));
  const verifiedEmbeds=new Set(posts.filter(p=>p.nativeEmbed).map(p=>p.platform));
- return `<details class="talk-coverage" id="talk-coverage"><summary>Source coverage</summary><p>Automatic updates: ${automatic.map(p=>esc(p.platform)).join(', ')||'awaiting a feed check'}.</p>
- ${picked.size?`<p>Source-linked posts: ${[...picked].map(esc).join(', ')}. Each card links to the original.</p>`:''}
- ${verifiedEmbeds.size?`<p>Official public embeds discovered through publisher coverage: ${[...verifiedEmbeds].map(esc).join(', ')}. Publisher dates are not post dates.</p>`:''}
- ${liveTalk.platformStatus.length?`<ul>${liveTalk.platformStatus.map(p=>`<li><strong>${esc(p.platform)}</strong> · ${automatic.includes(p)?'Automatic collection':p.state==='source-linked'?'Original public posts linked by verified sources':p.state==='unavailable'?'Connection temporarily unavailable':'Account API not approved (direct original posts still supported)'}${picked.has(p.platform)?' · Selected posts available':''}</li>`).join('')}</ul>`:''}</details>`;
+ return '<details class="talk-coverage" id="talk-coverage"><summary>Post sources</summary>'
+  +'<p>Public post display uses the official platform widgets; it does not require a Meta App Review.</p>'
+  +'<p>Automatic source discovery: '+(automatic.map(p=>esc(p.platform)).join(', ')||'awaiting a feed check')+'. Other posts are sourced from direct public links.</p>'
+  +(verifiedEmbeds.size?'<p>Linked original post embeds: '+[...verifiedEmbeds].map(esc).join(', ')+'. Publication dates of reporting are not post dates.</p>':'')
+  +(statuses.length?'<ul>'+statuses.map(p=>'<li><strong>'+esc(p.platform)+'</strong> · '+(p.state==='connected'?'Automatic collection active':p.state==='source-linked'?'Public post links available':'Automated account discovery limited; direct embeds supported')+'</li>').join('')+'</ul>':'')
+  +'</details>';
 }
 
 function talkAccountDirectory(){
@@ -1432,7 +1436,8 @@ function renderSocial(){
  const resultHead='<div class="talk-section-head"><div><h2>'+title+'</h2></div></div>';
  const mainSection='<section class="talk-section" aria-label="'+title+'">'+resultHead+(list.length?'<div class="social-grid">'+list.slice(start,start+pageSize).map(postCard).join('')+'</div>':empty)+pages+'</section>';
  const highlighted=highlights?[]:highlightedTalkPosts().filter(visible);
- const featured=highlighted.slice(0,4);
+ const onPage=new Set(list.slice(start,start+pageSize).map(p=>p.url));
+ const featured=highlighted.filter(p=>!onPage.has(p.url)).slice(0,4);
  const preview=featured.length?'<section class="talk-section" aria-label="Four-week Fight Talk highlights"><div class="talk-section-head"><div><div class="talk-section-eyebrow">BOXING · MMA · GRAPPLING</div><h2>Highlights · last 4 weeks</h2></div><button type="button" class="btn" data-segment="socialMode" data-value="highlights">All highlights ↗</button></div><div class="social-grid">'+featured.map(postCard).join('')+'</div></section>':'';
  return renderFrame(viewTitle('','Fight Talk')+toolbar+
   '<section id="talk-results" aria-label="Fight Talk posts" tabindex="-1"><div class="talk-results-head"><p class="talk-count" aria-live="polite">'+esc(count)+'</p>' +talkCoverage(current)+talkAccountDirectory()+'</div>'+mainSection+preview+'</section>');
