@@ -2,18 +2,21 @@ name: Refresh live Fight Talk
 
 on:
   schedule:
-    # Run every ten minutes when GitHub Actions scheduling permits.
-    - cron: '3,13,23,33,43,53 * * * *'
+    # Rotate up to 84 unique directory entries every five minutes (1000 per hour target).
+    # GitHub Actions scheduling is best effort, not a real-time guarantee.
+    - cron: '4,9,14,19,24,29,34,39,44,49,54,59 * * * *'
   workflow_dispatch:
   push:
     branches: [main]
     paths:
       - 'scripts/refresh-fight-talk.mjs'
+      - 'scripts/fight-talk-rotation.mjs'
       - 'scripts/fight-talk-platforms.mjs'
       - 'scripts/fight-talk-public-sources.mjs'
       - 'data/fight-talk-sources.json'
       - 'data/fight-talk-selected.json'
       - 'tests/test-fight-talk.cjs'
+      - 'tests/test-fight-talk-rotation.mjs'
       - 'tests/test-fight-talk-roster.cjs'
       - 'tests/test-fight-talk-public-sources.mjs'
       - 'data/fight-talk-roster.json'
@@ -41,6 +44,8 @@ jobs:
       - name: Check feed collector syntax
         run: |
           node --check scripts/refresh-fight-talk.mjs
+          node --check scripts/fight-talk-rotation.mjs
+          node tests/test-fight-talk-rotation.mjs
           node --check scripts/fight-talk-platforms.mjs
           node tests/test-fight-talk.cjs
           node tests/test-fight-talk-roster.cjs

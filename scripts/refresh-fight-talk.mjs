@@ -1,17 +1,20 @@
 /**
- * Public-source Fight Talk collector, safe to rerun every 10 minutes.
+ * Public-source Fight Talk collector with a five-minute rolling source rotation.
  * Public author APIs for pinned Bluesky accounts plus verified X/Instagram accounts.
  * Optional Meta Threads keyword search requires explicitly approved API access.
  * No model-generated posts or unattributed invented quotes.
  */
 import fs from 'node:fs';
 import {collectPlatforms} from './fight-talk-platforms.mjs';
+import {buildSocialWatchlist,rollingSocialBatch,scopedSocialConfig} from './fight-talk-rotation.mjs';
 const now=Date.now();
 const checkedAt=new Date(now).toISOString();
 // Keep post history for the rolling highlights; the Live view filters to seven days.
 const since=now-28*24*60*60*1000;
 const recentApiSince=now-7*24*60*60*1000;
 const config=JSON.parse(fs.readFileSync('data/fight-talk-sources.json','utf8'));
+const rolling=rollingSocialBatch(buildSocialWatchlist(config),now);
+const scheduledConfig=scopedSocialConfig(config,rolling);
 const file='data/fight-talk-live.json';
 let previous={posts:[]};
 try{previous=JSON.parse(fs.readFileSync(file,'utf8'))}catch{}
@@ -43,10 +46,9 @@ async function getJSON(url,headers={}) {
     return await response.json();
   } finally{clearTimeout(timeout)}
 }
-// All pinned Bluesky DIDs remain monitored without paid APIs. The collector
-// checks current sources every ~10 minutes; a bounded worker pool prevents a
-// single unreachable profile from delaying the whole feed.
-const blueskySources=config.sources.filter(src=>src.did&&src.handle&&
+// Rotate identified Bluesky DIDs across five-minute slots. A bounded worker
+// pool prevents a single unavailable source from delaying the feed.
+const blueskySources=scheduledConfig.sources.filter(src=>src.did&&src.handle&&
  ['boxing','mma','grappling'].includes(src.sport));
 let sourceCursor=0;
 async function checkBlueskyAuthor(src){
@@ -86,8 +88,8 @@ await Promise.all(Array.from({length:Math.min(6,blueskySources.length)},()=>blue
 // token or app review is NOT required for the view-only public feed.
 const threadsState='source-linked';
 const threadsStatus='Original public Threads links discovered from trusted fight coverage; no account-level Meta API or OAuth required.';
-const platformStatus=await collectPlatforms(config,getJSON,p=>insert(p,true),recentApiSince);
-platformStatus.unshift({platform:'Bluesky',state:checked?'connected':'unavailable',checked,failed,message:checked+' of '+blueskySources.length+' sources checked.'});
+const platformStatus=await collectPlatforms(scheduledConfig,getJSON,p=>insert(p,true),recentApiSince);
+platformStatus.unshift({platform:'Bluesky',state:checked?'connected':blueskySources.length?'unavailable':'not-scheduled',checked,failed,configured:blueskySources.length,message:checked+' of '+blueskySources.length+' scheduled sources checked.'});
 platformStatus.push({platform:'Threads',state:threadsState,message:threadsStatus});
 const collected=platformStatus.some(p=>p.state==='connected');
 const meaningful=/\b(title|champion|result|wins|won|defeat|knockout|finish|announce|confirmed|signs|signed|withdraw|cancel|injury|opponent|call.?out|matchup|bout|card|round|decision|scorecard|takedown|submission|fight|ufc|boxing|wrestling|grappling|raf)\b/i;
@@ -105,9 +107,36 @@ const output={
   attemptedAt:checkedAt,checkedAt:collected?checkedAt:(previous.checkedAt||null),updatedAt:all[0]?.postedAt||null,windowDays:28,
   sourcesConfigured:config.sources.length,sourcesChecked:checked,sourcesFailed:failed,
   platformStatus,threadsStatus,failures:failures.slice(0,12),
+  rollingScan:{directoryEntries:rolling.total,scheduledEntries:rolling.scheduled,
+   batchIndex:rolling.batchIndex,batchCount:rolling.batchCount,
+   batchSize:84,intervalMinutes:rolling.intervalMinutes,
+   nominalCycleMinutes:rolling.cycleMinutes,scheduledByPlatform:rolling.scheduledByPlatform,
+   directlyChecked:checked+platformStatus.reduce((n,p)=>n+(p.platform==='Bluesky'?0:(p.checked||0)),0),
+   note:'Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks.'},
   posts:selected,
-  message:'Source-linked posts retained for rolling 28-day highlights; the Live view shows the latest seven days. Post claims are not independently fact-checked. Newest-first feed; original posts need no minimum engagement. Checks are scheduled every 10 minutes, subject to GitHub Actions timing and platform API availability.'
+  message:'Source-linked posts retained for rolling 28-day highlights; the Live view shows the latest seven days. Post claims are not independently fact-checked. Newest-first feed; original posts need no minimum engagement. Directory rotation is scheduled every five minutes, subject to GitHub Actions delays and platform API availability.'
 };
-fs.writeFileSync(file,JSON.stringify(output,null,2)+'\n');
-console.log('Fight Talk checked',checked,'of',config.sources.length,'sources; published',selected.length,'original posts; failures',failed,'Threads:',threadsStatus);
-if(!collected&&!all.length){console.error('All sources failed; no new content to publish.');process.exitCode=1}
+// A scan without new original posts should not cause another GitHub commit,
+// Render redeploy or failure email. Preserve the hourly metadata heartbeat.
+const contentSignature=list=>JSON.stringify(list.map(p=>{
+ const {engagement,engagementCheckedAt,...stable}=p;
+ return stable;
+}));
+const oldCheck=Date.parse(previous.checkedAt||'');
+const heartbeatDue=!Number.isFinite(oldCheck)||now-oldCheck>=60*60*1000;
+const contentChanged=contentSignature(selected)!==contentSignature(previous.posts||[]);
+if(contentChanged||heartbeatDue){
+ fs.writeFileSync(file,JSON.stringify(output,null,2)+'\n');
+ console.log('Published Fight Talk source-linked feed',selected.length,'posts; reason:',contentChanged?'content changed':'hourly heartbeat');
+}else{
+ console.log('No new original posts; retaining previous published feed to avoid an empty-scan commit');
+}
+console.log('Rolling Fight Talk',rolling.scheduled,'of',rolling.total,'directory entries (batch',
+ rolling.batchIndex+1,'of',rolling.batchCount,'), direct checks',
+ output.rollingScan.directlyChecked,'; API failures',failed,'; Threads:',threadsStatus);
+// Blocked or source-linked-only batches are expected; never treat a missing
+// official Instagram or Threads permission as a failing GitHub Action.
+if(!collected&&!all.length&&blueskySources.length){
+ console.error('Selected Bluesky author feeds failed and no saved posts are available.');
+ process.exitCode=1;
+}
