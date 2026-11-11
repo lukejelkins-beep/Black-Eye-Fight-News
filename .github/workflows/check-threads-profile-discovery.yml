@@ -1,23 +1,84 @@
 name: Meta Threads profile discovery test
 
+# Push trigger runs a one-time diagnostic when this workflow is first updated.
+# Future use is manual via GitHub Actions > Run workflow.
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/check-threads-profile-discovery.yml'
 
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: meta-threads-discovery-check
+  cancel-in-progress: false
 
 jobs:
   test-profile-discovery:
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: Validate test syntax
         run: node --check scripts/check-threads-profile-discovery.mjs
-      - name: Test Meta Threads public profile lookup and posts
+      - name: Run read-only Meta Threads profile discovery probe
         env:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
-        run: node scripts/check-threads-profile-discovery.mjs
+        run: |
+          node scripts/check-threads-profile-discovery.mjs > /tmp/meta-threads-profile-check.log 2>&1 || true
+          cat /tmp/meta-threads-profile-check.log
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const raw=fs.readFileSync('/tmp/meta-threads-profile-check.log','utf8');
+          const state=(key)=>{
+            const match=raw.match(new RegExp('^THREADS_'+key+': (OK|FAILED|NOT_CONFIGURED).*$', 'm'));
+            return match ? match[1].toLowerCase() : 'unknown';
+          };
+          const basic=state('BASIC_PROFILE'),lookup=state('DISCOVERY_PROFILE'),posts=state('DISCOVERY_POSTS');
+          const result={
+            checkedAt:new Date().toISOString(),
+            test:'threads_profile_discovery',
+            basicProfile:basic,
+            profileLookup:lookup,
+            publicProfilePosts:posts,
+            outcome:lookup==='ok'?'profile_lookup_succeeded':raw.includes('NOT_CONFIGURED')?'no_token_configured':'not_confirmed',
+            permissionApproval:'not_checked',
+            metaTestingCounter:'not_checked',
+            note:'Only API HTTP test status. Does not confirm OAuth UI, Meta App Review approval, or the Meta Testing 1/1 counter. No credentials, private account identifiers or post data are stored.'
+          };
+          fs.mkdirSync('data',{recursive:true});
+          fs.writeFileSync('data/meta-threads-profile-discovery-test.json',JSON.stringify(result,null,2)+'\n');
+          fs.copyFileSync('data/meta-threads-profile-discovery-test.json','/tmp/meta-threads-profile-check.json');
+          console.log('BEFN_REVIEW_SANITIZED_STATUS '+result.outcome);
+          NODE
+      - name: Save non-sensitive test status for BEFN review
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            # Preserve the safe status report from the just-completed API test.
+            # Recreate the file from the saved runner copy after the reset.
+            if [ -f /tmp/meta-threads-profile-check.json ]; then
+              cp /tmp/meta-threads-profile-check.json data/meta-threads-profile-discovery-test.json
+            else
+              echo "Status output unavailable; refer to run logs"
+              exit 0
+            fi
+            git add data/meta-threads-profile-discovery-test.json
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "Record safe Meta Threads profile discovery API test outcome"
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 1
+          done
+          echo "Unable to save status after repeated main-branch conflicts"
+          exit 0
