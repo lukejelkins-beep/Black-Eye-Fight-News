@@ -11,6 +11,7 @@ import datetime as dt
 import json
 import os
 import re
+import time
 import unicodedata
 import urllib.error
 import urllib.parse
@@ -239,11 +240,22 @@ class BudgetClient:
         self.token, self.ledger, self.today = token, ledger, today
         self.fetch = fetch or self.http_get
         self.network_calls = 0
+        self.last_request_started = None
+        self.min_interval_seconds = 6.5
+        self.call_ceiling = MAX_CALLS_PER_RUN
         self.this_run = {category: 0 for category in BUDGET}
         self.available = 0
         self.mon, self.mons = week_fraction(today)
 
     def http_get(self, route):
+        # Free accounts often have a restrictive RPM window despite unused
+        # monthly quota. Pace calls rather than wasting them on HTTP 429.
+        now = time.monotonic()
+        if self.last_request_started is not None:
+            delay = self.min_interval_seconds - (now - self.last_request_started)
+            if delay > 0:
+                time.sleep(delay)
+        self.last_request_started = time.monotonic()
         request = urllib.request.Request(BASE + route, headers={
             "Authorization": "Bearer " + self.token,
             "Accept": "application/json", "User-Agent": "BEFN-Intelligence-Budget/1.0"})
@@ -253,7 +265,7 @@ class BudgetClient:
     def bootstrap(self):
         if not self.token: self.ledger["status"] = "needs_key"; return False
         # Budget reserve contains auth checks and failures.
-        if self.network_calls >= MAX_CALLS_PER_RUN: return False
+        if self.network_calls >= self.call_ceiling: return False
         self.ledger["spent"]["reserve"] += 1
         self.network_calls += 1
         try:
@@ -265,11 +277,18 @@ class BudgetClient:
                 raise ValueError("No authoritative quota figures")
             if used < 0 or limit <= 0: raise ValueError("Invalid quota figures")
             cap = min(CAP, limit)
+            rpm = usage.get("rpm_limit")
+            if type(rpm) is int and rpm > 0:
+                self.min_interval_seconds = (60.0 / rpm) + 1.5
+            self.call_ceiling = min(MAX_CALLS_PER_RUN,
+                max(2, int(470 / self.min_interval_seconds)))
             self.available = max(0, cap - used - max(0, BUDGET["reserve"] -
                                                       self.ledger["spent"]["reserve"]))
             self.ledger["provider"] = {
                 "tier": str(usage.get("tier") or "")[:16], "used": used,
                 "limit": limit, "befnCap": cap,
+                "rpmLimit": rpm if type(rpm) is int else None,
+                "minimumSecondsBetweenCalls": round(self.min_interval_seconds, 2),
                 "resetAt": str(usage.get("reset_at") or "")[:32],
                 "remainingForEditorialCalls": self.available}
             self.ledger["status"] = "connected" if self.available else "budget_exhausted"
@@ -284,7 +303,7 @@ class BudgetClient:
         if category not in BUDGET or category == "reserve": return 0
         share = (BUDGET[category] * self.mon) // self.mons
         return max(0, min(share - self.ledger["spent"][category],
-                          self.available, MAX_CALLS_PER_RUN-self.network_calls,
+                          self.available, self.call_ceiling-self.network_calls,
                           MAX_PER_CATEGORY_PER_RUN[category] - self.this_run[category]))
 
     def call(self, category, ident, route):
@@ -305,7 +324,15 @@ class BudgetClient:
             self.ledger["failures"] = self.ledger["failures"][-18:]
             if isinstance(error, urllib.error.HTTPError) and error.code == 429:
                 self.available = 0
-                self.ledger["status"] = "quota_or_rate_limited"
+                # A 429 can mean per-minute pacing OR monthly quota, which are
+                # distinct issues. Do not retry in the same run.
+                self.ledger["status"] = "rate_limited"
+                try:
+                    retry = int(error.headers.get("Retry-After", "0"))
+                    if 0 < retry <= 3600:
+                        self.ledger["retryAfterSec"] = retry
+                except (ValueError, TypeError, AttributeError):
+                    pass
             elif isinstance(error, urllib.error.HTTPError) and error.code in (401, 403):
                 self.available = 0
                 self.ledger["status"] = "authorization_failed"
