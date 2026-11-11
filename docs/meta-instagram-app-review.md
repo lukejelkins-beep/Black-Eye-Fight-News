@@ -108,6 +108,12 @@ A separate read-only inspection of the BEFN Meta Business Portfolio's Instagram 
 
 **Decision:** Pause spending money or filing business registration solely for App Review; test this legitimate role-only authorization first. For the full third-party fighter feed, Advanced Access / the public content feature may still be mandatory; a successful test on one app-role account does not grant unrestricted production coverage.
 
+## Facebook Page consent blocker — 11 November 2026
+
+The user expressly authorized TinyFish to complete the Meta Graph API Explorer Standard Access OAuth consent on the signed-in account. In the BEFN app, exactly the four Facebook Login scopes `pages_show_list`, `pages_read_engagement`, `instagram_basic`, and `instagram_manage_insights` were selected; extra posting/messaging permissions were excluded. The consent dialog advanced to **"Opt in to current Pages only"** (chosen for least privilege), but displayed **"You don't have any Pages."** There was **no Facebook Page to grant access to** for this particular authenticated Facebook account, so OAuth could not finish, no new token was generated, and no further API test was possible. This does not establish that no Page exists under some other Facebook account or business portfolio.
+
+**Next prerequisite:** Either (a) obtain Facebook Page access for this actual Facebook login to an existing Page linked to a professional Instagram account, or (b) with explicit owner authorization, create a BEFN Facebook Page and link a professional Instagram account, then retry the four-scope OAuth. Creating a public Page is a separate publishing decision and was **not** undertaken as part of the existing Page-consent request. Don't use a broad "all current and future Pages" grant.
+
 ## Evidence / acceptance checklist
 
 - [x] App icon uploaded
