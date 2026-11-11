@@ -1,0 +1,86 @@
+name: Verify upgraded UFCalendar plan
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ufcalendar-upgrade-health.yml'
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check quota and selected schema safely
+        env:
+          UFCALENDAR_API_KEY: ${{ secrets.UFCALENDAR_API_KEY }}
+        run: |
+          python - <<'PY'
+          import datetime,json,os,pathlib,urllib.parse,urllib.error,urllib.request
+          token=os.getenv('UFCALENDAR_API_KEY','').strip()
+          report={'checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'provider':'UFCalendar','secret_present':bool(token)}
+          def fetch(path):
+              req=urllib.request.Request('https://api.ufcalendar.com/v1'+path,headers={'Authorization':'Bearer '+token,'Accept':'application/json','User-Agent':'BEFN-PlanVerification/1.0'})
+              try:
+                  with urllib.request.urlopen(req,timeout=20) as res: return res.status,json.load(res)
+              except urllib.error.HTTPError as e:
+                  return e.code,{}
+          if token:
+              try:
+                  status,usage=fetch('/usage')
+                  report['usage_status']=status
+                  if status==200 and isinstance(usage.get('data'),dict):
+                      data=usage['data']
+                      report['tier']=data.get('tier')
+                      report['requests_limit']=data.get('requests_limit')
+                      report['requests_used']=data.get('requests_used')
+                      report['rpm_limit']=data.get('rpm_limit')
+                      report['reset_at']=data.get('reset_at')
+                      if isinstance(report['requests_limit'],int) and report['requests_limit']>=30000:
+                          for label,path in [('upcoming','/events?org=ufc&status=upcoming&limit=2'),('recent','/events?org=ufc&status=completed&limit=2')]:
+                              code,body=fetch(path)
+                              report[label+'_status']=code
+                              rows=body.get('data') if isinstance(body,dict) else None
+                              report[label+'_count']=len(rows) if isinstance(rows,list) else None
+                              if isinstance(rows,list) and rows and isinstance(rows[0],dict):
+                                  report[label+'_keys']=sorted(rows[0].keys())
+                                  report[label+'_sample_slug']=rows[0].get('slug')
+                                  report[label+'_sample_id']=rows[0].get('id')
+                                  ref=rows[0].get('slug') or rows[0].get('id')
+                                  if ref:
+                                      detail_code,detail=fetch('/events/'+urllib.parse.quote(str(ref)))
+                                      report[label+'_detail_status']=detail_code
+                                      obj=detail.get('data') if isinstance(detail,dict) else None
+                                      if isinstance(obj,dict):
+                                          report[label+'_detail_keys']=sorted(obj.keys())
+                                          card=obj.get('card')
+                                          report[label+'_card_count']=len(card) if isinstance(card,list) else None
+                                          if isinstance(card,list) and card and isinstance(card[0],dict):
+                                              report[label+'_card_keys']=sorted(card[0].keys())
+                                              report[label+'_card_example_status']=card[0].get('status')
+                                              report[label+'_card_example_fighter_a_type']=type(card[0].get('fighter_a')).__name__
+                                              report[label+'_card_example_fighter_b_type']=type(card[0].get('fighter_b')).__name__
+                  report['result']='paid_verified' if report.get('requests_limit',0)>=30000 else 'limit_unconfirmed'
+              except Exception as exc:
+                  report['result']='request_error'
+                  report['error_type']=type(exc).__name__
+          else: report['result']='missing_secret'
+          p=pathlib.Path('.github/diagnostics/ufcalendar-upgrade.json')
+          p.parent.mkdir(parents=True,exist_ok=True)
+          p.write_text(json.dumps(report,indent=2)+'\n')
+          print('UFCalendar diagnostic:',report['result'])
+          PY
+      - name: Record safe plan report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .github/diagnostics/ufcalendar-upgrade.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Verify UFCalendar upgraded plan and feed schema'
+          for attempt in 1 2 3 4; do
+            if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
+            sleep 2
+          done
+          exit 1
