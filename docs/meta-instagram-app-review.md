@@ -2,6 +2,22 @@
 
 Last checked: 11 November 2026. Meta app ID: 938461119197992. Status: **draft only; not submitted**.
 
+## Current connection verification — 11 November 2026
+
+**What is confirmed in Meta's actual browser UI:**
+- The **public Facebook Page "Black Eye Fight News"** has been created and is managed by the authenticated account: https://www.facebook.com/profile.php?id=61596616373694.
+- The Page's **Linked accounts > Instagram** flow confirmed that **Instagram Business @blackeyefightnews** was connected to this Page (successful Meta confirmation dialog).
+- Meta Graph API Explorer's **User Token** for the BEFN app returned `GET /me/permissions` with all four permissions `pages_show_list`, `pages_read_engagement`, `instagram_basic`, `instagram_manage_insights` **granted**.
+- An additional OAuth consent flow was completed with **"Opt in to current Pages only"**, with only the BEFN Page selected. This updated the app's Page-selection consent, but it **did not fix the API visibility issue**.
+
+**Final verified blocker:**
+- The final independent GET request in Graph API Explorer using the selected BEFN app and User Token, `GET /me/accounts?fields=id,name,instagram_business_account{id,username}`, returned **HTTP 200**, `{"data":[]}`, **0 Pages** (response observed in 196 ms).
+- Therefore the Page/Instagram linked asset is **not visible through this specific Graph API User Token**, despite the UI linkage and granted scope statuses. **Business Discovery was not tested** because no linked Instagram professional account ID was available from this request.
+- Do not claim that the Facebook–Instagram UI link is missing (it was confirmed), that permission granting fixed the API, that an Instagram Business Discovery post was retrieved, or that production integration is ready. The issue could concern the current token's Page-task access, user identity/account context, connected assets, or Meta configuration, and is **not yet diagnosed conclusively**.
+- No access tokens were exposed or saved to GitHub/Render, and no App Review was submitted. The existing collector secret has **not** been replaced.
+
+**Next targeted manual diagnostic before spending more TinyFish credits:** Open the Page as the Facebook personal profile that authorizes BEFN; inspect **Page settings > Page access** for whether that exact Facebook account has sufficient Facebook access/full control, and **Business integrations > Black Eye Fight News > View and edit** for selected Pages/Instagram accounts. Also confirm Graph API Explorer is using a User Token for the same personal account (rather than acting as the Page). After correcting any real access mismatch, renew the least-privilege token and repeat `GET /me/accounts?fields=id,name,instagram_business_account{id,username}`. Only then attempt a public Business Discovery request and capture its actual HTTP code and any Graph API error.
+
 ## What BEFN does
 
 Black Eye Fight News (BEFN) is a non-commercial combat-sports editorial website and installable web app. Its **Fight Talk** area links or embeds original, publicly available posts from fighters, promotions and fight-media accounts, with source attribution and original permalinks. Instagram API access is used **read-only** to discover the public profile and recent media of eligible Business/Creator (professional) Instagram accounts. The collector never publishes posts, reads private messages, modifies content or tries to access personal/consumer Instagram accounts.
