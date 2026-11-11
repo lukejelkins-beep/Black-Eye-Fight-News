@@ -277,3 +277,43 @@
 .upcoming-bout .upcoming-photo-credit{display:block;font-size:9px;line-height:1.25;font-weight:500;color:#c2d2d5;overflow-wrap:anywhere}
 .upcoming-bout .upcoming-photo-credit a{color:#c2d2d5;text-decoration:underline;text-underline-offset:2px}
 @media(max-width:520px){.upcoming-bout .upcoming-photo-credit{font-size:8px}}
+
+
+/* Upcoming/Results visual parity — same featured-bout, tier and card-tab styles. */
+#upcoming-cards-root .upcoming-tabs.result-card-tabs .result-card-tab{
+ background:#1f1c20!important;color:#f2eff0!important;border-bottom:4px solid transparent!important;
+}
+#upcoming-cards-root .upcoming-tabs.result-card-tabs .result-card-tab small{color:#c8c5c7!important}
+#upcoming-cards-root .upcoming-tabs.result-card-tabs .result-card-tab.is-active{
+ background:#f1d58c!important;color:#201915!important;border-bottom-color:#b27d15!important;font-weight:900;
+}
+#upcoming-cards-root .upcoming-tabs.result-card-tabs .result-card-tab.is-active small{color:#35291b!important;font-weight:850}
+#upcoming-cards-root .upcoming-bout.result-bout-compact.is-main-event{border-color:#d8a92e!important}
+#upcoming-cards-root .upcoming-bout.result-bout-compact.is-main-event .result-bout-detail{
+ background:linear-gradient(105deg,#c48b17,#f8e9a4)!important;color:#171717!important;
+ border-top:2px solid #e8c45b;border-bottom:3px solid #d6a52b;
+}
+#upcoming-cards-root .upcoming-bout.result-bout-compact.is-main-event .result-bout-rounds{color:#24211b}
+#upcoming-cards-root .upcoming-bout.result-bout-compact .result-matchup:has(.result-featured-bout-label){padding-top:65px!important}
+#upcoming-cards-root .upcoming-bout .result-featured-bout-label{z-index:7}
+#upcoming-cards-root .upcoming-bout.is-main-event .upcoming-matchup-status,
+#upcoming-cards-root .upcoming-bout.is-co-main-event .upcoming-matchup-status{top:31px;left:25%;width:50%;z-index:6}
+#upcoming-cards-root .upcoming-bout .result-fighter-tier{font-size:9px;padding:3px 6px;max-width:100%;width:fit-content}
+#upcoming-cards-root .upcoming-bout .result-contender-right .result-fighter-tier{align-self:flex-end}
+#upcoming-cards-root .upcoming-bout .result-fighter-rank{color:#f5d478}
+#upcoming-cards-root .upcoming-bout .result-contender-info>strong{overflow-wrap:anywhere;line-height:1.2}
+#upcoming-cards-root .upcoming-bout.result-bout-compact .result-corner-flag{top:0;width:31%;height:60px;opacity:.64;object-fit:cover}
+#upcoming-cards-root .upcoming-bout.result-bout-compact .result-photo.upcoming-photo{border:3px solid #121820}
+#upcoming-cards-root .upcoming-bout.result-bout-compact .result-bout-detail{display:flex;justify-content:space-between;align-items:center}
+@media(max-width:520px){
+ #upcoming-cards-root .upcoming-bout.result-bout-compact .result-matchup:has(.result-featured-bout-label){padding-top:65px!important;min-height:140px}
+ #upcoming-cards-root .upcoming-bout .upcoming-matchup-status{font-size:9px}
+ #upcoming-cards-root .upcoming-bout.result-bout-compact .result-corner-flag{height:54px}
+ #upcoming-cards-root .upcoming-bout .result-fighter-tier{font-size:8px;padding:2px 4px}
+ #upcoming-cards-root .upcoming-bout .result-contender-info{gap:5px}
+ #upcoming-cards-root .upcoming-bout .result-contender-info>strong{font-size:12px}
+}
+@media(max-width:365px){
+ #upcoming-cards-root .upcoming-bout.result-bout-compact .result-matchup{gap:4px!important}
+ #upcoming-cards-root .upcoming-bout .result-contender-info>strong{font-size:11px}
+}
