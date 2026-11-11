@@ -22,6 +22,15 @@ def example_event(upcoming=False):
                      "result":None if upcoming else {"winner_fighter_id":13,"method_normalized":"decision","round":3,"time":"5:00"}}]}
 
 class RichBackfillTests(unittest.TestCase):
+    def test_full_monthly_ceiling_skips_api_until_next_utc_month(self):
+        state=m.default_progress()
+        state["lastRun"]="2026-11-11T20:00:00+00:00"
+        state["provider"]={"tier":"hobby","usedAtStart":27000,"limit":30000}
+        self.assertTrue(m.quota_guard_reached(state,dt.date(2026,11,12)))
+        self.assertFalse(m.quota_guard_reached(state,dt.date(2026,12,1)))
+        state["provider"]["usedAtStart"]=26999
+        self.assertFalse(m.quota_guard_reached(state,dt.date(2026,11,12)))
+
     def test_backfill_reserves_3000_calls_for_live_website(self):
         self.assertEqual(m.MAX_SPEND_PER_MONTH,27000)
         self.assertEqual(m.MAX_PER_RUN,420)
