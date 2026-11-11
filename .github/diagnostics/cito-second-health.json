@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-11-11T02:36:33.084299+00:00",
+  "provider": "Cito UFC API",
+  "result": "connected",
+  "tested": [
+    {
+      "secret_name": "UFC_STATS_API_CITO_2",
+      "status": 200,
+      "monthly_limit": "500",
+      "monthly_remaining": "500",
+      "success": true
+    }
+  ],
+  "second_key_connected": true,
+  "key_exposed": false,
+  "second_secret_name": "UFC_STATS_API_CITO_2",
+  "second_monthly_limit": "500",
+  "second_monthly_remaining": "500",
+  "different_from_primary": true,
+  "duplicate_secret_names": [],
+  "primary_comparison": {
+    "status": 200,
+    "monthly_limit": "500",
+    "monthly_remaining": "467",
+    "success": true
+  },
+  "different_quota_counters": true
+}
