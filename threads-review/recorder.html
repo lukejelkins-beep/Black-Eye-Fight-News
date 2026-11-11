@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><title>BEFN | App Review Recording</title>
+<style>
+:root{--ink:#122b31;--paper:#f3f2eb}
+*{box-sizing:border-box}body{font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif;background:var(--paper);color:var(--ink);margin:0}
+header{background:#102830;color:#fff;padding:20px max(20px,calc((100vw - 900px)/2))}header a{color:#fff;text-decoration:none;font-weight:900;letter-spacing:.04em}
+main{max-width:900px;margin:auto;padding:30px 20px 70px}h1{font-size:clamp(36px,7vw,62px);text-transform:uppercase;letter-spacing:-.05em;line-height:1;margin:16px 0}.lead{font-size:18px;color:#435c62;max-width:700px}
+.card{background:#fff;padding:24px;margin:25px 0;border:1px solid #cbd7d0;border-radius:6px}.card h2{margin:0 0 12px}
+button,.button{display:inline-block;border:0;border-radius:4px;background:#142c33;color:white;padding:13px 18px;font:700 15px system-ui;cursor:pointer;text-decoration:none}
+button:disabled{opacity:.5;cursor:not-allowed}button.secondary{background:#e1ece7;color:#143d39}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}a{color:#146f64}
+ol{padding-left:24px}li{margin:12px 0}.note{font-size:13px;color:#536768}
+#status{padding:15px;border-left:4px solid #4e9c85;background:#ebf4ef;margin:15px 0;white-space:pre-wrap}
+#status.error{border-color:#bb6141;background:#fff0e9}
+#download{display:none}
+video{display:none;width:100%;max-height:320px;background:#122b31;margin-top:15px}
+</style></head>
+<body>
+<header><a href="/">BEFN · FIGHT TALK / APP REVIEW RECORDING</a></header>
+<main><div class="note">PRIVATE, LOCAL SCREEN CAPTURE</div><h1>Review recording studio</h1>
+<p class="lead">Capture the genuine Threads authorisation and original public-profile lookup for Meta App Review. Recording stays on your computer. BEFN never uploads or stores the video.</p>
+<section class="card"><h2>1. Prepare your screen</h2>
+<ol>
+<li>Use a desktop browser. Keep this recording studio open in a separate tab from the BEFN demonstration.</li>
+<li>Press <strong>Start recording</strong> and choose <strong>Entire screen</strong> when prompted. Sharing just this tab will not capture the Threads authorisation page.</li>
+<li>Select <strong>Open Threads demo</strong>, connect your Threads account through the real OAuth authorisation flow, search for the public account <strong>threads</strong>, and show the returned original public posts.</li>
+<li>Return here, select <strong>Stop &amp; save video</strong>, play the saved file and upload it to the threads_profile_discovery review in Meta.</li>
+</ol>
+<p class="note">If you must enter a password, click Pause before typing, then Resume afterward. Never record app secrets, access tokens, private profiles or password entry. If Meta needs a fresh OAuth consent but it is skipped because you previously authorised the app, do not pretend it was shown.</p>
+</section>
+<section class="card"><h2>2. Record the real demonstration</h2>
+<div class="actions">
+<button id="start" type="button">Start recording</button>
+<button id="pause" type="button" class="secondary" disabled>Pause</button>
+<button id="resume" type="button" class="secondary" disabled>Resume</button>
+<button id="stop" type="button" disabled>Stop &amp; save video</button>
+<a class="button" href="/" target="_blank" rel="noopener noreferrer">Open Threads demo</a>
+</div>
+<div role="status" id="status">Ready. Select Start recording to request screen-sharing permission.</div>
+<a id="download" class="button" href="#" download="BEFN-Threads-Review-Demo.webm">Download video again</a>
+<video id="preview" controls playsinline></video>
+<p class="note">This browser feature prefers MP4 when available; otherwise it saves WebM. If Meta rejects WebM, convert the local file to MP4 before upload. No video bytes leave your device through BEFN.</p>
+</section>
+<section class="card"><h2>3. Upload to Meta</h2>
+<p>Open <a href="https://developers.facebook.com/apps/938461119197992/app-review/submissions/?business_id=1155225336843859" target="_blank" rel="noopener noreferrer">Meta App Review</a>, navigate to Allowed usage and the threads_profile_discovery permission. Add the genuine recording, permission explanation and allowed-usage agreement. A qualifying API test and any other requested permissions must be completed before final submission.</p>
+</section></main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+let recorder=null,stream=null,parts=[],mime='',objectUrl=null;
+function info(v,bad=false){$('status').textContent=v;$('status').classList.toggle('error',bad)}
+function buttons(active,paused=false){
+ $('start').disabled=active;$('pause').disabled=!active||paused;
+ $('resume').disabled=!active||!paused;$('stop').disabled=!active;
+}
+function stopTracks(){if(stream){for(const t of stream.getTracks())t.stop();stream=null}}
+function save(){
+ if(!parts.length){info('No video frames were recorded.',true);return}
+ const blob=new Blob(parts,{type:mime||'video/webm'});
+ if(objectUrl)URL.revokeObjectURL(objectUrl);
+ objectUrl=URL.createObjectURL(blob);
+ const ext=mime.includes('mp4')?'mp4':'webm';
+ const link=$('download');link.href=objectUrl;link.download='BEFN-Threads-Review-Demo.'+ext;
+ link.style.display='inline-block';
+ const video=$('preview');video.src=objectUrl;video.style.display='block';
+ link.click();
+ info('Saved to your computer. Please inspect the actual OAuth flow and public-post result before uploading to Meta.');
+}
+$('start').addEventListener('click',async()=>{
+ if(!navigator.mediaDevices?.getDisplayMedia||typeof MediaRecorder==='undefined'){
+   info('Browser screen recording is unavailable. Please use Chrome or your Mac screen recorder.',true);return
+ }
+ try{
+   stream=await navigator.mediaDevices.getDisplayMedia({video:{frameRate:15},audio:false});
+   mime=['video/mp4;codecs=avc1.42E01E','video/mp4','video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'].find(x=>MediaRecorder.isTypeSupported(x))||'';
+   parts=[];
+   recorder=new MediaRecorder(stream,{...(mime?{mimeType:mime}:{}),videoBitsPerSecond:1300000});
+   recorder.addEventListener('dataavailable',e=>{if(e.data&&e.data.size)parts.push(e.data)});
+   recorder.addEventListener('stop',()=>{stopTracks();buttons(false);save()},{once:true});
+   stream.getVideoTracks()[0].addEventListener('ended',()=>{if(recorder?.state!=='inactive')recorder.stop()},{once:true});
+   recorder.start(1000);buttons(true);
+   info('● Recording your screen. Switch to the separate BEFN demonstration tab. Pause before entering credentials.');
+ }catch(e){stopTracks();buttons(false);info('Screen sharing was not started. Select Entire screen and grant permission. '+String(e?.name||''),true)}
+});
+$('pause').addEventListener('click',()=>{if(recorder?.state==='recording'){recorder.pause();buttons(true,true);info('Paused: resume after sensitive screens are hidden.')}});
+$('resume').addEventListener('click',()=>{if(recorder?.state==='paused'){recorder.resume();buttons(true);info('● Recording resumed.')}});
+$('stop').addEventListener('click',()=>{if(recorder&&recorder.state!=='inactive'){recorder.stop();buttons(false);info('Saving your screen recording…')}});
+window.addEventListener('beforeunload',()=>{stopTracks();if(objectUrl)URL.revokeObjectURL(objectUrl)});
+</script>
+</body></html>
