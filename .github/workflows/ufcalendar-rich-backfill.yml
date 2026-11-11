@@ -1,19 +1,33 @@
 name: Paid UFCalendar UFC/PFL historic research and fight card improvements
 on:
   workflow_dispatch:
+    inputs:
+      continuous:
+        description: 'Internal bounded five-minute relay (manual runs default to one-time)'
+        required: false
+        type: boolean
+        default: false
+      hop:
+        description: 'Internal relay hop number (0-71)'
+        required: false
+        type: string
+        default: '0'
   schedule:
-    # Paid backfill burst: every 5 minutes in November; one running collector at a time.
-    - cron: '3,8,13,18,23,28,33,38,43,48,53,58 * * 11 *'
-    # Outside the November burst, retain the existing four daily maintenance windows.
+    # Outside the November burst, retain four daily maintenance windows.
+    # November runs use GitHub's explicit workflow_dispatch relay and
+    # the separate watchdog: cron every five minutes was routinely dropped.
     - cron: '20 0,6,12,18 * 1-10,12 *'
   push:
     branches: [main]
     paths:
       - 'scripts/ufcalendar-rich-backfill.py'
+      - 'scripts/ufcalendar-relay.mjs'
+      - 'tests/test-ufcalendar-relay.mjs'
       - 'tests/test_ufcalendar_rich_backfill.py'
       - '.github/workflows/ufcalendar-rich-backfill.yml'
 permissions:
   contents: write
+  actions: write
 concurrency:
   group: befn-ufc-research-archive
   cancel-in-progress: false
@@ -23,11 +37,17 @@ jobs:
     timeout-minutes: 22
     steps:
       - uses: actions/checkout@v4
+      - name: Record job start for the five-minute interval
+        run: echo "BEFN_RELAY_STARTED_AT=$(date -u +%s)" >> "$GITHUB_ENV"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - name: Validate monthly quota, safe record merges and feed formatting
         run: |
+          node --test tests/test-ufcalendar-relay.mjs
           python -m unittest discover -s tests -p 'test_ufcalendar_rich_backfill.py' -v
           python -m unittest discover -s tests -p 'test_ufc_research_archive.py' -v
       - name: Build resumable UFC/PFL fight history and current card insights
@@ -52,3 +72,11 @@ jobs:
             sleep 3
           done
           exit 1
+      - name: Safely request next bounded five-minute run
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPOSITORY: ${{ github.repository }}
+          GH_EVENT_NAME: ${{ github.event_name }}
+          GH_EVENT_PATH: ${{ github.event_path }}
+        run: node scripts/ufcalendar-relay.mjs
