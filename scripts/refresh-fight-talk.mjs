@@ -57,7 +57,7 @@ for(const src of config.sources) {
       if(!key||!author.handle||!author.did)continue;
       const postedAt=rec.createdAt||post.indexedAt||'';
       insert({
-        id:post.uri,platform:'Bluesky',sport:src.sport,type:'post',name:author.displayName?.trim()||src.name,
+        id:post.uri,cid:post.cid,platform:'Bluesky',sport:src.sport,type:'post',name:author.displayName?.trim()||src.name,
         handle:'@'+author.handle,role:src.role,fighterTier:src.fighterTier,quote:rec.text.slice(0,300),
         postedAt,date:new Date(postedAt).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric',timeZone:'Australia/Melbourne'}),
         url:'https://bsky.app/profile/'+encodeURIComponent(author.handle)+'/post/'+encodeURIComponent(key),

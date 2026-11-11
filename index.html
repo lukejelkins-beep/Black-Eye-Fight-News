@@ -1036,30 +1036,65 @@ function talkEngagement(p){
  }).join('')}</div>`:'';
 }
 
+// Official public post widgets display the publisher's actual media, text and author.
+// Fallbacks only quote original text known from the platform; never use a news summary.
+let talkEmbedSequence=0;
+let talkEmbedRender=0;
+const talkBlueskyCidCache=new Map();
+function talkBlueskyURI(p){
+ const direct=String(p.id||'');
+ if(/^at:\/\/did:[a-z0-9:]+\/app\.bsky\.feed\.post\/[a-z0-9]+$/i.test(direct))return direct;
+ try{
+  const postId=new URL(p.url).pathname.match(/\/post\/([a-z0-9]+)\/?$/i)?.[1];
+  const did=String(p.verifiedDid||'');
+  if(postId&&/^did:(?:plc|web):[a-z0-9.:%-]+$/i.test(did))
+   return 'at://'+did+'/app.bsky.feed.post/'+postId;
+ }catch{}
+ return '';
+}
 function originalTalkPost(p){
- // Render source-backed content ourselves. Third-party timeline and post widgets
- // are commonly blocked on mobile Safari, leaving tall blank panels.
- if(typeof p.quote==='string'&&p.quote.trim()){
-  return '<blockquote class="social-quote">'+esc(p.quote)+'</blockquote>';
+ if(!talkDirectSource(p))return '<p class="talk-post-unavailable">This source is unavailable.</p>';
+ const source=safeURL(p.url);
+ const open='<a href="'+source+'" target="_blank" rel="noopener noreferrer">View original post on '+esc(p.platform)+'</a>';
+ const knownText=typeof p.quote==='string'&&p.quote.trim()?p.quote.trim():'';
+ const fallback='<div class="talk-embed-fallback">'+(knownText?'<p class="talk-original-excerpt">'+esc(knownText)+'</p>':'<p>The official post cannot be displayed in this browser.</p>')+'<p>'+open+'</p></div>';
+ if(p.platform==='Instagram'){
+  // Instagram recognises canonical /p/ and /reel/ permalinks, not profile-prefixed variants.
+  const match=new URL(p.url).pathname.match(/\/(p|reel)\/([a-zA-Z0-9_-]+)\/?/);
+  if(!match)return '<div class="talk-native-static">'+fallback+'</div>';
+  const canonical='https://www.instagram.com/'+match[1]+'/'+match[2]+'/';
+  return '<div class="talk-original talk-instagram"><blockquote class="instagram-media" data-instgrm-permalink="'+canonical+'" data-instgrm-version="14">'+open+'</blockquote>'+fallback+'</div>';
  }
- // Never substitute editorial or AI summaries for the author's actual words.
- // A verified permalink can still be opened if platform embeds are unavailable.
- if(p.nativeEmbed&&talkDirectSource(p)){
-  const url=safeURL(p.url);
-  if(p.platform==='Instagram')return '<blockquote class="instagram-media" data-instgrm-permalink="'+url+'" data-instgrm-version="14"><a href="'+url+'" target="_blank" rel="noopener noreferrer">View original Instagram post</a></blockquote>';
-  if(p.platform==='X')return '<blockquote class="twitter-tweet"><a href="'+url+'" target="_blank" rel="noopener noreferrer">View original post on X</a></blockquote>';
-  if(p.platform==='Threads')return '<blockquote class="text-post-media" data-text-post-permalink="'+url+'"><a href="'+url+'" target="_blank" rel="noopener noreferrer">View original Threads post</a></blockquote>';
+ if(p.platform==='Threads'){
+  const id='ig-tp-befn-'+(++talkEmbedSequence);
+  return '<div class="talk-original talk-threads"><blockquote class="text-post-media" id="'+id+'" data-text-post-permalink="'+source+'" data-text-post-version="0">'+open+'</blockquote>'+fallback+'</div>';
  }
- return '<p class="talk-post-unavailable">Original post text is not available here. Open the source post to read it directly.</p>';
+ if(p.platform==='X'){
+  return '<div class="talk-original talk-x"><blockquote class="twitter-tweet" data-dnt="true" data-theme="light">'+open+'</blockquote>'+fallback+'</div>';
+ }
+ if(p.platform==='Bluesky'){
+  const uri=talkBlueskyURI(p),cached=String(p.cid||talkBlueskyCidCache.get(uri)||'');
+  if(!uri)return '<div class="talk-native-static">'+fallback+'</div>';
+  const validCid=/^baf[a-z0-9]{20,}$/i.test(cached);
+  // The official Bluesky widget needs the post's AT URI and CID; resolve missing CIDs
+  // from Bluesky's public API in one batch when older collected posts are displayed.
+  const cls=validCid?'bluesky-embed':'talk-bsky-pending';
+  const attributes='data-bluesky-uri="'+esc(uri)+'"'+(validCid?' data-bluesky-cid="'+esc(cached)+'"':'')+' data-bluesky-embed-color-mode="light"';
+  const content=knownText?'<p>'+esc(knownText)+'</p>':'<p>View the original Bluesky post.</p>';
+  return '<div class="talk-original talk-bluesky"><blockquote class="'+cls+'" '+attributes+'>'+content+'<p>'+open+'</p></blockquote></div>';
+ }
+ return '<div class="talk-native-static">'+fallback+'</div>';
 }
 function hydrateTalkEmbeds(){
- // Instagram's official blockquote embed API, no public-post search permission required.
+ if(!document.getElementById('talk-results'))return;
+ ++talkEmbedRender;
+ const renderToken=talkEmbedRender;
  if(document.querySelector('.instagram-media')){
   if(window.instgrm?.Embeds?.process)window.instgrm.Embeds.process();
   else if(!document.getElementById('talk-instagram-widgets')){
    const script=document.createElement('script');script.id='talk-instagram-widgets';
    script.src='https://www.instagram.com/embed.js';script.async=true;
-   script.onload=()=>window.instgrm?.Embeds?.process();
+   script.onload=()=>window.instgrm?.Embeds?.process?.();
    script.onerror=()=>script.remove();document.head.appendChild(script);
   }
  }
@@ -1072,12 +1107,51 @@ function hydrateTalkEmbeds(){
    script.onerror=()=>script.remove();document.head.appendChild(script);
   }
  }
- if(!document.querySelector('.twitter-tweet, .twitter-timeline'))return;
- if(window.twttr?.widgets){window.twttr.widgets.load();return;}
- if(document.getElementById('talk-x-widgets'))return;
- const script=document.createElement('script');script.id='talk-x-widgets';script.src='https://platform.twitter.com/widgets.js';script.async=true;
- script.onload=()=>window.twttr?.widgets?.load();
- script.onerror=()=>script.remove();document.head.appendChild(script);
+ if(document.querySelector('.twitter-tweet')){
+  if(window.twttr?.widgets)window.twttr.widgets.load(document.getElementById('talk-results'));
+  else if(!document.getElementById('talk-x-widgets')){
+   const script=document.createElement('script');script.id='talk-x-widgets';
+   script.src='https://platform.twitter.com/widgets.js';script.async=true;
+   script.onload=()=>window.twttr?.widgets?.load?.(document.getElementById('talk-results'));
+   script.onerror=()=>script.remove();document.head.appendChild(script);
+  }
+ }
+ const showBluesky=()=>{
+  if(renderToken!==talkEmbedRender||!document.querySelector('blockquote.bluesky-embed'))return;
+  // Bluesky's script scans the DOM when executed, so re-execute after feed pagination.
+  document.getElementById('talk-bsky-widgets')?.remove();
+  const script=document.createElement('script');script.id='talk-bsky-widgets';
+  script.src='https://embed.bsky.app/static/embed.js';script.async=true;
+  script.onerror=()=>script.remove();document.head.appendChild(script);
+ };
+ const pending=[...document.querySelectorAll('blockquote.talk-bsky-pending[data-bluesky-uri]')];
+ if(!pending.length){showBluesky();return}
+ const groups=[];
+ for(let i=0;i<pending.length;i+=25)groups.push(pending.slice(i,i+25));
+ Promise.all(groups.map(async group=>{
+  const params=new URLSearchParams();
+  group.forEach(el=>params.append('uris',el.getAttribute('data-bluesky-uri')));
+  try{
+   const response=await fetch('https://public.api.bsky.app/xrpc/app.bsky.feed.getPosts?'+params,{signal:AbortSignal.timeout(7000)});
+   if(!response.ok)return;
+   const data=await response.json();
+   for(const post of data.posts||[]){
+    if(!/^baf[a-z0-9]{20,}$/i.test(post.cid||''))continue;
+    talkBlueskyCidCache.set(post.uri,post.cid);
+   }
+  }catch{}
+ })).then(()=>{
+  if(renderToken!==talkEmbedRender)return;
+  for(const el of pending){
+   if(!el.isConnected)return;
+   const cid=talkBlueskyCidCache.get(el.getAttribute('data-bluesky-uri'));
+   if(!cid)continue;
+   el.setAttribute('data-bluesky-cid',cid);
+   el.classList.remove('talk-bsky-pending');
+   el.classList.add('bluesky-embed');
+  }
+  showBluesky();
+ }).catch(()=>{});
 }
 
 function talkDirectSource(p){
@@ -1361,7 +1435,7 @@ function renderSocial(){
  const featured=highlighted.slice(0,4);
  const preview=featured.length?'<section class="talk-section" aria-label="Four-week Fight Talk highlights"><div class="talk-section-head"><div><div class="talk-section-eyebrow">BOXING · MMA · GRAPPLING</div><h2>Highlights · last 4 weeks</h2></div><button type="button" class="btn" data-segment="socialMode" data-value="highlights">All highlights ↗</button></div><div class="social-grid">'+featured.map(postCard).join('')+'</div></section>':'';
  return renderFrame(viewTitle('','Fight Talk')+toolbar+
-  '<section id="talk-results" aria-label="Fight Talk posts" tabindex="-1"><div class="talk-results-head"><p class="talk-count" aria-live="polite">'+esc(count)+'</p>' +talkCoverage(current)+talkAccountDirectory()+'<a class="btn" href="https://befn-threads-review.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="Open Threads public profile discovery preview">Threads profile discovery ↗</a></div>'+mainSection+preview+'</section>');
+  '<section id="talk-results" aria-label="Fight Talk posts" tabindex="-1"><div class="talk-results-head"><p class="talk-count" aria-live="polite">'+esc(count)+'</p>' +talkCoverage(current)+talkAccountDirectory()+''</div>'+mainSection+preview+'</section>');
 }
 
 

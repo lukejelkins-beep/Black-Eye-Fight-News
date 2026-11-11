@@ -1,4 +1,4 @@
-# Fight Talk connections and source coverage (9 November 2026)
+# Fight Talk connections and source coverage (11 November 2026)
 
 Fight Talk displays original X, Instagram, Threads and Bluesky posts using native platform embeds where available. The public Live view defaults to newest-first with 20 posts per page, without likes/comments thresholds or engagement ranking. Older directly linked originals remain in the four-week Highlights view.
 
@@ -36,3 +36,15 @@ A full internal roster lives at `data/fight-talk-roster.json`; this distinguishe
 ## Automatic identity discovery (November 2026)
 
 `discover-fighter-profiles.yml` runs twice daily. It checks the complete site roster against Wikidata's X (P2002), Instagram (P2003) and Threads (P11892) identifiers; rotates requests for fighters with nonstandard article names; and looks for explicit Person `sameAs` identities on official UFC, Matchroom and Top Rank athlete pages. This is **profile lookup**, not a social timeline reader. Conflicting identities are quarantined in `data/fight-talk-profile-discovery.json`. The job is deliberately throttled on Wikimedia HTTP 429 responses. Successful discoveries populate `data/fight-talk-roster.json`, `data/fight-talk-sources.json`, and the Threads author allowlist. Source metadata such as Wikidata handles can be stale; API reads or original post oEmbeds still have to verify author identity.
+
+
+## Official embedded-post display (11 November 2026)
+
+The website renders source-linked public original post URLs through the official client-side widget scripts, not Meta's authenticated content-search APIs:
+
+* Instagram: native \`instagram-media\` blockquotes + \`instagram.com/embed.js\`; profile-prefixed URLs are reduced to canonical post or Reel URLs.
+* Threads: native \`text-post-media\` blockquotes + \`threads.com/embed.js\`.
+* X: native \`twitter-tweet\` blockquotes + \`platform.twitter.com/widgets.js\`.
+* Bluesky: official AT-URI/CID post blockquotes + \`embed.bsky.app/static/embed.js\`. The Bluesky collector now records the CID; older posts resolve missing CIDs from the public getPosts endpoint in small batches.
+
+All original posts are displayed at natural widget size, including post media and links when available. No synthetic summaries are used as post text. If an original platform blocks embedding or an author deletes a post, the visitor retains the original-source link; only verbatim text already retrieved from the original platform is presented as a fallback. The four post sources remain tracked by existing editorial discovery workflows. **These embeds do not grant automatic account discovery, search or retrieval privileges.** Direct public embeds do not require the Meta content API App Review submission. Third-party embed scripts will send visitor requests to their respective platforms.

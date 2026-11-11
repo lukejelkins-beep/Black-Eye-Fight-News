@@ -194,3 +194,35 @@
  #talk-results .talk-post-summary p {font-size:14px}
  #talk-results .social-card, #talk-results .social-card[data-platform] {min-height:0}
 }
+
+
+/* Public Fight Talk embeds (Nov 2026): full-scale, responsive, no fixed-height crops. */
+#talk-results .social-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+#talk-results .talk-original{width:100%;max-width:100%;min-width:0;margin:14px auto;background:transparent;overflow:visible;zoom:1!important}
+#talk-results .talk-original iframe,
+#talk-results .talk-original.talk-threads iframe,
+#talk-results .talk-original.talk-bluesky iframe{display:block;width:100%!important;max-width:100%!important;min-width:0!important;min-height:0!important;height:auto;margin:0 auto!important;border:0;zoom:1!important}
+#talk-results .talk-original .twitter-tweet{width:100%!important;max-width:550px!important;zoom:1!important;margin:0 auto!important}
+#talk-results .talk-original .instagram-media,
+#talk-results .talk-original .text-post-media{box-sizing:border-box!important;width:100%!important;max-width:540px!important;min-width:0!important;display:block;margin:0 auto!important;background:white;color:#1b2b35;border-radius:9px;padding:15px;overflow-wrap:anywhere}
+#talk-results .talk-original .bluesky-embed,
+#talk-results .talk-original .talk-bsky-pending{display:block;max-width:540px;width:100%;margin:0 auto;background:#fff;color:#1b2b35;border-radius:9px;padding:15px;overflow-wrap:anywhere}
+#talk-results .talk-original .bluesky-embed p,
+#talk-results .talk-original .talk-bsky-pending p{color:#1b2b35;line-height:1.5}
+#talk-results .talk-original .bluesky-embed a,
+#talk-results .talk-original .talk-bsky-pending a,
+#talk-results .talk-original .talk-embed-fallback a{color:#166d7b;text-decoration:underline}
+#talk-results .talk-embed-fallback{margin:8px auto 0;max-width:540px;padding:10px 14px;border-radius:8px;background:#f7faf9;color:#344b52;font-size:12px;line-height:1.55}
+#talk-results .talk-embed-fallback p{color:#344b52;margin:4px 0;overflow-wrap:anywhere}
+#talk-results .talk-original-excerpt{font-size:14px;line-height:1.6;white-space:pre-wrap}
+#talk-results .talk-original:has(iframe) .talk-embed-fallback{display:none}
+#talk-results .talk-native-static{margin:12px 0;color:#dce8e8}
+#talk-results .talk-native-static .talk-embed-fallback{background:#f7faf9}
+@media(max-width:800px){#talk-results .social-grid{grid-template-columns:1fr}}
+@media(max-width:430px){
+ #talk-results .talk-original{margin:10px 0}
+ #talk-results .talk-original .instagram-media,
+ #talk-results .talk-original .text-post-media,
+ #talk-results .talk-original .bluesky-embed,
+ #talk-results .talk-original .talk-bsky-pending{padding:9px}
+}
