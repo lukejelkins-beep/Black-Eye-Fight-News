@@ -43,12 +43,24 @@ jobs:
             return match ? match[1].toLowerCase() : 'unknown';
           };
           const basic=state('BASIC_PROFILE'),lookup=state('DISCOVERY_PROFILE'),posts=state('DISCOVERY_POSTS');
+          const safeError=(key)=>{
+            const line=raw.split('\\n').find(s=>s.startsWith('THREADS_'+key+': '))||'';
+            const http=Number(line.match(/HTTP=(\\d{1,3})/)?.[1]);
+            const metaCode=Number(line.match(/meta_code=(\\d{1,6})/)?.[1]);
+            const metaSubcode=Number(line.match(/meta_subcode=(\\d{1,8})/)?.[1]);
+            return {http:Number.isInteger(http)?http:null,metaCode:Number.isInteger(metaCode)?metaCode:null,metaSubcode:Number.isInteger(metaSubcode)?metaSubcode:null};
+          };
           const result={
             checkedAt:new Date().toISOString(),
             test:'threads_profile_discovery',
             basicProfile:basic,
             profileLookup:lookup,
             publicProfilePosts:posts,
+            diagnostics:{
+              basic:safeError('BASIC_PROFILE'),
+              lookup:safeError('DISCOVERY_PROFILE'),
+              posts:safeError('DISCOVERY_POSTS')
+            },
             outcome:lookup==='ok'?'profile_lookup_succeeded':raw.includes('NOT_CONFIGURED')?'no_token_configured':'not_confirmed',
             permissionApproval:'not_checked',
             metaTestingCounter:'not_checked',
