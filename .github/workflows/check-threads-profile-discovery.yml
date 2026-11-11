@@ -1,0 +1,23 @@
+name: Meta Threads profile discovery test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-profile-discovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate test syntax
+        run: node --check scripts/check-threads-profile-discovery.mjs
+      - name: Test Meta Threads public profile lookup and posts
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+        run: node scripts/check-threads-profile-discovery.mjs
