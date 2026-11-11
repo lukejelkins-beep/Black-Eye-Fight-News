@@ -45,33 +45,57 @@ window.UpcomingCards=(()=>{
   if(typeof record!=='string'||!/^[0-9]{1,3}\s*[-–]\s*[0-9]{1,3}(?:\s*[-–]\s*[0-9]{1,2})?(?:\s*\([0-9]{1,3}\s*KOs?\))?$/.test(record.trim()))return '';
   return record.replace(/–/g,'-').replace(/\s+/g,' ').trim();
  }
- function contender(name,right,record){
-  // Records remain visible, but source hyperlinks are kept in event data rather
-  // than cluttering the expanded mobile fight card.
+ function fighterLabels(b,index,name,event){
+  const normal=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+  const supplied=Array.isArray(b.fighterMeta)?b.fighterMeta[index]||{}:{};
+  const profile=(window.COMBAT_DATA?.fighters||[]).find(f=>normal(f.name)===normal(name)&&String(f.sport||'').toLowerCase()===String(event.sport||'').toLowerCase());
+  const classification=String(supplied.classification||b.fighterTiers?.[index]||profile?.category||'').toLowerCase();
+  const tierEvidence=supplied.classificationSource||b.fighterTierSources?.[index]||(profile?.sources?.length?'scouting archive':'');
+  const tier=['contender','prospect'].includes(classification)&&tierEvidence?
+   '<span class="result-fighter-tier is-'+classification+'">'+classification.toUpperCase()+'</span>':'';
+  const rank=Number(supplied.rank??b.ranks?.[index]),rankSource=supplied.rankSource||b.rankSources?.[index];
+  const champion=supplied.champion===true&&supplied.championSource;
+  const rankLabel=champion?'<span class="result-fighter-rank is-champion">CHAMPION</span>':
+   Number.isInteger(rank)&&rank>=1&&rank<=15&&rankSource?'<span class="result-fighter-rank" title="Source-verified divisional ranking">#'+rank+'</span>':'';
+  return {rankLabel,tier};
+ }
+ function contender(name,right,record,labels){
   const detail=record?'<span class="upcoming-fighter-record" aria-label="Professional record '+esc(record)+'">'+esc(record)+'</span>':
    '<span class="upcoming-fighter-record is-unverified">Record not verified</span>';
   return '<div class="result-contender result-contender-'+(right?'right':'left')+'">'+(!right?photo(name):'')+
-   '<div class="result-contender-info"><strong>'+esc(name)+'</strong>'+detail+photoAttribution(name)+'</div>'+(right?photo(name):'')+'</div>';
+   '<div class="result-contender-info"><strong>'+esc(name)+(labels.rankLabel?' '+labels.rankLabel:'')+'</strong>'+detail+labels.tier+photoAttribution(name)+'</div>'+(right?photo(name):'')+'</div>';
  }
  function flag(code,side){
   const c=String(code||'').toLowerCase();
   if(!/^(?:[a-z]{2}|gb-(?:eng|sct|wls))$/.test(c))return '';
   return '<img class="result-corner-flag result-corner-flag-'+side+'" src="https://flagcdn.com/'+c+'.svg" alt="" aria-hidden="true" decoding="async" loading="lazy" referrerpolicy="no-referrer">';
  }
+ function featuredPosition(b,event){
+  const note=String(b.note||''),rows=event.bouts.filter(x=>x.section==='main');
+  const unknown=/\b(?:bout order|card order|main card order|placement)\b.{0,28}(?:tbc|unconfirmed|unknown)/i.test(String(event.note||''));
+  const coMain=/\bco[\s-]?main\b|\bco[\s-]?feature\b/i.test(note);
+  const main=(b.isMain===true||(/\bmain event\b/i.test(note)&&!coMain)||(!unknown&&rows[0]===b))&&!coMain;
+  const co=coMain||(!main&&!unknown&&rows.length>1&&rows[1]===b);
+  return {main,coMain:!main&&co};
+ }
  function bout(b,event){
   const countries=Array.isArray(b.countries)?b.countries:[];
   const f=Array.isArray(b.fighters)?b.fighters:[];
   const first=f[0]||'Fighter TBC',second=f[1]||'Fighter TBC';
   const provisional=event.sourceStatus==='reported'||b.status==='reported';
-  // Keep the provisional status above the matchup; omit the repeated
-  // "announced/reported pairing" label and all per-bout source footers.
-  return '<article class="result-bout result-bout-compact upcoming-bout" aria-label="'+esc(first+' versus '+second)+'">'+
-   '<div class="result-matchup">'+flag(countries[0],'left')+flag(countries[1],'right')+'<span class="result-matchup-vs-watermark" aria-hidden="true">VS</span>'+
+  const position=featuredPosition(b,event),label=position.main?'MAIN EVENT':position.coMain?'CO-MAIN EVENT':'';
+  const foundRounds=String(b.note||'').match(/\b(\d{1,2})\s*rounds?\b/i);
+  const rounds=Number.isInteger(b.scheduledRounds)&&b.scheduledRounds>0?b.scheduledRounds:foundRounds?Number(foundRounds[1]):null;
+  const roundText=rounds?'<span class="result-bout-rounds">'+rounds+' rounds</span>':'';
+  return '<article class="result-bout result-bout-compact upcoming-bout'+(position.main?' is-main-event':'')+(position.coMain?' is-co-main-event':'')+'" aria-label="'+esc(first+' versus '+second)+'">'+
+   '<div class="result-matchup">'+(label?'<span class="result-featured-bout-label">'+label+'</span>':'')+
+   flag(countries[0],'left')+flag(countries[1],'right')+'<span class="result-matchup-vs-watermark" aria-hidden="true">VS</span>'+
    '<span class="upcoming-matchup-status">'+esc(provisional?'REPORTED':'SCHEDULED')+'</span>'+
-   contender(first,false,fighterRecord(b,0))+contender(second,true,fighterRecord(b,1))+'</div>'+
-   '<div class="result-bout-detail"><span class="result-bout-division">'+esc(b.division||'Weight class not confirmed')+'</span></div></article>';
+   contender(first,false,fighterRecord(b,0),fighterLabels(b,0,first,event))+
+   contender(second,true,fighterRecord(b,1),fighterLabels(b,1,second,event))+'</div>'+
+   '<div class="result-bout-detail"><span class="result-bout-division">'+esc(b.division||'Weight class not confirmed')+'</span>'+roundText+'</div></article>';
  }
-  const groups=[['main','Main Card'],['prelims','Prelims'],['early','Early Prelims'],['undercard','Undercard / order TBC'],['announced','Announced / order TBC']];
+ const groups=[['main','Main Card'],['prelims','Prelims'],['early','Early Prelims'],['undercard','Undercard / order TBC'],['announced','Announced / order TBC']];
 
  function heroWhen(e){
   const date=window.FightTime.instant(e.startAt);
