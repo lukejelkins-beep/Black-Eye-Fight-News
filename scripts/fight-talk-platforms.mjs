@@ -18,14 +18,32 @@ export async function collectPlatforms(config,getJSON,insert,since){
   // If the token is Instagram Login-only or lacks Business Discovery permissions,
   // exit this platform cleanly rather than making dozens of failing API calls.
   if(platform==='Instagram'&&!/^\d+$/.test(own)){
-   try{
-    const assigned=await getJSON('https://graph.facebook.com/'+version+'/me/accounts?fields=id,name,instagram_business_account{id,username}&limit=50',headers);
-    const assets=(assigned.data||[]).map(p=>p.instagram_business_account).filter(p=>/^\d+$/.test(String(p?.id||'')));
-    if(assets.length!==1)throw Error('Set INSTAGRAM_USER_ID to the linked professional account ID for Business Discovery');
-    own=String(assets[0].id);
-   }catch(e){
+   // Meta can expose linked Instagram assets via managed Pages or assigned assets.
+   // The explicit INSTAGRAM_USER_ID secret takes precedence if the account has more than one.
+   const discovered=[];
+   for(const [route,extract] of [
+    ['me/accounts?fields=id,instagram_business_account{id,username}&limit=50',
+     row=>row.instagram_business_account?.id],
+    ['me/assigned_instagram_accounts?fields=id,username&limit=50',
+     row=>row.id]
+   ]){
+    try{
+     const result=await getJSON('https://graph.facebook.com/'+version+'/'+route,headers);
+     for(const row of result.data||[]){
+      const id=String(extract(row)||'');
+      if(/^\d+$/.test(id))discovered.push(id);
+     }
+    }catch{
+     // A token can have access to one asset route but not the other.
+    }
+   }
+   const ids=[...new Set(discovered)];
+   if(ids.length===1)own=ids[0];
+   else {
     out.push({platform,state:'unavailable',checked:0,failed:0,configured:sources.length,
-     message:'Instagram Business Discovery unavailable: '+String(e.message||e).slice(0,110)});
+     message:ids.length>1?
+      'More than one Instagram asset found. Set INSTAGRAM_USER_ID to the intended linked professional account ID.':
+      'No Facebook-linked Instagram professional asset found. Verify token login type, Page linkage and permissions, or set INSTAGRAM_USER_ID.'});
     continue;
    }
   }
