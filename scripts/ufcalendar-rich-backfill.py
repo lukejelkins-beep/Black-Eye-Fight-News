@@ -27,7 +27,7 @@ FIGHTERS = ROOT / "data/ufcalendar-fighter-research.json"
 JUDGING = ROOT / "data/ufcalendar-judging-research.json"
 BASE = "https://api.ufcalendar.com/v1"
 MAX_SPEND_PER_MONTH = 27000  # 90% of Hobby; reserve 3,000 for live BEFN integrations.
-MAX_PER_RUN = 420
+MAX_PER_RUN = 500
 REST_SECONDS = 1.2
 ORGS = ("ufc", "pfl")
 ROUND_MAP = {
@@ -606,7 +606,7 @@ def main():
             add_index(state,e["org"],[{"id":int(k),"org":e["org"],"title":e.get("title"),
                                        "slug":e.get("slug"),"starts_at":e.get("startAt"),
                                        "status":e.get("status")}])
-    max_calls=int(os.getenv("BEFN_UFCAL_MAX_CALLS","420"))
+    max_calls=int(os.getenv("BEFN_UFCAL_MAX_CALLS","500"))
     client=Client(os.getenv("UFCALENDAR_API_KEY","").strip(),state,today,max_calls=max_calls)
     if client.bootstrap():
         read_events(client,state,today)
