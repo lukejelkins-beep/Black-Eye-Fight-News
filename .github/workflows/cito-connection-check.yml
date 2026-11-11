@@ -46,6 +46,13 @@ jobs:
                       report["result"] = "health_endpoint_failed"
                   else:
                       event_status, event_headers, event_data = fetch("ufc/events/upcoming?limit=1")
+                      recent_status, _, recent_body = fetch("ufc/events/recent")
+                      report["recent_events_http_status"] = recent_status
+                      report["recent_events_error_code"] = recent_body.get("error", {}).get("code") if isinstance(recent_body.get("error"), dict) else None
+                      events_status, _, events_body = fetch("ufc/events?hasStats=true&page=1&limit=3")
+                      report["events_list_http_status"] = events_status
+                      report["events_list_error_code"] = events_body.get("error", {}).get("code") if isinstance(events_body.get("error"), dict) else None
+                      report["events_list_data_type"] = type(events_body.get("data")).__name__
                       report["data_http_status"] = event_status
                       report["api_error_code"] = event_data.get("error", {}).get("code") if isinstance(event_data.get("error"), dict) else None
                       report["monthly_limit"] = event_headers.get("X-RateLimit-Monthly-Limit") or report.get("monthly_limit")
