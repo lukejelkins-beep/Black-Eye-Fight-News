@@ -1,0 +1,64 @@
+name: Test Cito UFC API connection
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/cito-connection-check.yml
+
+permissions:
+  contents: write
+
+jobs:
+  check-cito:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test secret and authenticated endpoints
+        env:
+          UFC_STATS_API_CITO: ${{ secrets.UFC_STATS_API_CITO }}
+        run: |
+          python - <<'PY'
+          import datetime, json, os, pathlib, urllib.request, urllib.error
+          key = os.environ.get("UFC_STATS_API_CITO", "").strip()
+          report = {"checked_at": datetime.datetime.now(datetime.timezone.utc).isoformat(), "provider": "Cito UFC API", "secret_name": "UFC_STATS_API_CITO", "result": "unknown"}
+          if not key:
+              report["result"] = "secret_missing_in_github_actions"
+          else:
+              def fetch(path):
+                  request = urllib.request.Request("https://api.citoapi.com/api/v1/" + path, headers={"x-api-key": key, "Accept": "application/json"})
+                  try:
+                      with urllib.request.urlopen(request, timeout=20) as response:
+                          return response.status, dict(response.headers), json.loads(response.read().decode())
+                  except urllib.error.HTTPError as exc:
+                      return exc.code, dict(exc.headers), {}
+              try:
+                  health_status, health_headers, health = fetch("health")
+                  report["health_http_status"] = health_status
+                  report["tier"] = health.get("tier") or health_headers.get("X-Cito-Tier")
+                  report["monthly_limit"] = health_headers.get("X-RateLimit-Monthly-Limit")
+                  report["monthly_remaining_before_data_test"] = health_headers.get("X-RateLimit-Monthly-Remaining")
+                  if health_status != 200:
+                      report["result"] = "health_endpoint_failed"
+                  else:
+                      event_status, event_headers, event_data = fetch("ufc/events/upcoming?limit=1")
+                      report["data_http_status"] = event_status
+                      report["monthly_limit"] = event_headers.get("X-RateLimit-Monthly-Limit") or report.get("monthly_limit")
+                      report["monthly_remaining"] = event_headers.get("X-RateLimit-Monthly-Remaining")
+                      report["result"] = "connected" if event_status == 200 and event_data.get("success") is True else ("authentication_failed" if event_status in (401, 403) else ("quota_exhausted_or_throttled" if event_status == 429 else "endpoint_failed"))
+              except Exception as exc:
+                  report["result"] = "network_or_response_error"
+                  report["exception_type"] = type(exc).__name__
+          path = pathlib.Path(".github/diagnostics/cito-health.json")
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(report, indent=2) + "\n")
+          print("Cito diagnostic result:", report["result"])
+          PY
+      - name: Save safe test outcome (never save API key)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/diagnostics/cito-health.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record Cito UFC API connection test"
+            git push
+          fi
