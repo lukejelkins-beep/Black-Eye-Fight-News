@@ -10,10 +10,12 @@ on:
     paths:
       - 'scripts/refresh-fight-talk.mjs'
       - 'scripts/fight-talk-platforms.mjs'
+      - 'scripts/fight-talk-public-sources.mjs'
       - 'data/fight-talk-sources.json'
       - 'data/fight-talk-selected.json'
       - 'tests/test-fight-talk.cjs'
       - 'tests/test-fight-talk-roster.cjs'
+      - 'tests/test-fight-talk-public-sources.mjs'
       - 'data/fight-talk-roster.json'
       - 'index.html'
       - '.github/workflows/refresh-fight-talk.yml'
@@ -42,12 +44,12 @@ jobs:
           node --check scripts/fight-talk-platforms.mjs
           node tests/test-fight-talk.cjs
           node tests/test-fight-talk-roster.cjs
+          node tests/test-fight-talk-public-sources.mjs
           node --check scripts/refresh-meta-embeds.mjs
+          node --check scripts/fight-talk-public-sources.mjs
           node tests/test-meta-embeds.mjs
       - name: Refresh and commit real source-linked posts safely
         env:
-          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
-          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
           FACEBOOK_ACCESS_TOKEN: ${{ secrets.FACEBOOK_ACCESS_TOKEN }}
