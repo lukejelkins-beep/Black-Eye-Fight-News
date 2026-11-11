@@ -97,6 +97,43 @@ class ScoutingTests(unittest.TestCase):
                                   "fighters_loaded": 0}, True)
         self.assertEqual(result["status"], "degraded")
 
+    def test_ufcalendar_accepted_key_but_rankings_400_still_enriches_profile(self):
+        from urllib.error import HTTPError
+        from io import BytesIO
+        candidate = {"id":"johnnywalker", "name":"Johnny Walker",
+                     "organisation":"UFC", "stats":None}
+        calls = []
+        def fetch(url, key=None):
+            calls.append(url)
+            self.assertEqual(key, "test_key")
+            if url.endswith("/usage"):
+                return {"data":{"tier":"free","requests_used":1}}
+            if url.endswith("/rankings/ufc"):
+                raise HTTPError(url,400,"Bad request",{},BytesIO(b'{"error":{"code":"invalid_query"}}'))
+            if "/fighters?" in url:
+                return {"data":[{"name":"Johnny Walker","slug":"johnny-walker"}]}
+            if url.endswith("/fighters/johnny-walker"):
+                return {"data":{"name":"Johnny Walker",
+                    "records":{"pro_mma":{"value":"21-9-0"}},
+                    "stats":{"slpm":4.11,"td_avg":1.0}}}
+            self.fail("Unexpected request "+url)
+        result=module.ufcalendar([candidate],fetch,key="test_key")
+        self.assertEqual(result["status"],"connected")
+        self.assertIn("invalid_query",result["detail"])
+        self.assertEqual(candidate["stats"]["record"],"21-9-0")
+        self.assertEqual(candidate["stats"]["slpm"],4.11)
+        self.assertEqual(len(calls),4)
+
+    def test_ufcalendar_rejected_key_is_not_reported_connected(self):
+        from urllib.error import HTTPError
+        from io import BytesIO
+        def fail(url,key=None):
+            raise HTTPError(url,401,"Unauthorized",{},BytesIO(b'{"error":{"code":"invalid_api_key"}}'))
+        r=module.ufcalendar([],fetch=fail,key="bad_key")
+        self.assertEqual(r["status"],"authentication_unconfirmed")
+        self.assertIn("HTTP 401",r["detail"])
+        self.assertNotIn("bad_key",r["detail"])
+
     def test_avoid_fuzzy_api_merge(self):
         response = {"data": [{"name": "Candidate Fight", "id": 12}]}
         self.assertIsNone(module.exact(response, "Candidate Fighter"))
