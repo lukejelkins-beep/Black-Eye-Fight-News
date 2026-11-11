@@ -11,6 +11,7 @@ import path from 'node:path';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const PAGE = readFileSync(path.join(root, 'site.html'));
+const RECORDER_PAGE = readFileSync(path.join(root, 'recorder.html'));
 const APP_ID = (process.env.THREADS_APP_ID || '').trim();
 const APP_SECRET = (process.env.THREADS_APP_SECRET || '').trim();
 const BASE = (process.env.PUBLIC_BASE_URL || '').replace(/\/+$/, '');
@@ -150,6 +151,15 @@ export function makeServer() {
     if (pathname==='/' && isRead) {
       const s=session(req);
       return sendPage(res,s.id);
+    }
+    if (pathname==='/recorder' && isRead) {
+      res.writeHead(200, {
+        'Content-Type':'text/html; charset=utf-8',
+        'Cache-Control':'no-store', 'X-Content-Type-Options':'nosniff',
+        'X-Frame-Options':'DENY','Referrer-Policy':'no-referrer',
+        'Content-Security-Policy':"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"
+      });
+      return res.end(RECORDER_PAGE);
     }
     if (pathname==='/api/status' && isRead) {
       const existing=session(req,false);
