@@ -81,6 +81,29 @@ A genuine demo must show **both** how the developer authorizes the linked profes
 4. Complete the permission-specific Allowed usage justifications, ensure a legitimate grant for the prerequisite scopes, actual Page/professional-IG linkage and test calls, and capture genuine screenshots/screencast only after test works.
 5. Confirm review submission status and only submit once complete and accurate.
 
+## Personal-use Standard Access investigation — 11 November 2026
+
+User has confirmed that BEFN is a **personal, non-commercial project**, not a registered business. Do not assume it has an ABN or company registration; do not enter invented business identity documents.
+
+### Observed Meta UI
+
+- App is still unpublished, and the linked Meta business portfolio still shows **Unverified**. Its App Review > Verification page offers **Business verification**, with no visible individual/admin alternative. Advanced Access review is therefore blocked or at least dependent on business-verification eligibility for this particular app.
+- In Meta Graph API Explorer (`https://developers.facebook.com/tools/explorer/`), BEFN was selected under the owner's App Administrator role. The Facebook Login permissions `pages_show_list`, `pages_read_engagement`, `instagram_basic`, and `instagram_manage_insights` were all selectable for a test OAuth request **without being stopped at the picker by App Review**.
+- Selecting these permissions and invoking **Generate Access Token** opened real Facebook consent. It first asked to continue as the authenticated account, then offered **"Opt in to all current and future Pages"** versus **"Opt in to current Pages only"**. The first option was the default. The assistant did not grant broad future Page access on the user's behalf.
+- **No token was issued, no permission grant verified, and no Business Discovery test succeeded in that browser attempt.** Therefore Standard Access is a plausible test route, **not yet a proven production solution**. API Explorer permission visibility alone does not establish data-access approval.
+- The previously configured GitHub Actions token granted `instagram_basic`, but **not** `instagram_manage_insights`, `pages_read_engagement`, `pages_show_list`. It returned 0 Page-linked Instagram accounts from `/me/accounts` and HTTP 400 code 10 for `business_discovery.username(ufc)`.
+
+### Safe owner consent and diagnostic procedure
+
+1. Open Meta Graph API Explorer and choose the **Black Eye Fight News** app and **User Token**.
+2. Select only `pages_show_list`, `pages_read_engagement`, `instagram_basic`, and `instagram_manage_insights`. Remove unrelated publishing, messages, comments permissions if present.
+3. Click **Generate Access Token**. Read the actual Meta dialog. Prefer **"Opt in to current Pages only"** and select only the Facebook Page genuinely linked to the BEFN-authorized **Instagram Professional** account. Do **not** opt into all future Pages needlessly.
+4. After consent, run `GET /me/permissions` and verify the four requested permissions are actually `granted`. Run `GET /me/accounts?fields=id,instagram_business_account{id,username}` **inside Graph API Explorer** and check there is a Page-linked Instagram professional account. Do not paste access tokens or private IDs into public chat, logs or repository.
+5. Only if the linked IG asset and permissions are genuinely available, test the official Business Discovery request on a public professional target such as `ufc`. Avoid claims of success unless the API returns a real successful response.
+6. If the test succeeds, plan secure token replacement in GitHub Secrets and rerun `.github/workflows/check-instagram-connection.yml` to confirm the deployed collector can work, subject to Meta terms and rate limits. If consent is denied or required Page absent, diagnose the exact Page-account association rather than spending on business verification.
+
+**Decision:** Pause spending money or filing business registration solely for App Review; test this legitimate role-only authorization first. For the full third-party fighter feed, Advanced Access / the public content feature may still be mandatory; a successful test on one app-role account does not grant unrestricted production coverage.
+
 ## Evidence / acceptance checklist
 
 - [x] App icon uploaded
