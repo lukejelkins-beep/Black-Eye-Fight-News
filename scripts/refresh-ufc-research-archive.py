@@ -209,7 +209,7 @@ def list_of(value,plural):
 
 def name_of(raw):
     if isinstance(raw,str): return raw[:95]
-    if isinstance(raw,dict): return str(raw.get("name") or raw.get("fullName") or "")[:95]
+    if isinstance(raw,dict): return str(raw.get("name") or raw.get("fullName") or raw.get("fighterName") or "")[:95]
     return ""
 
 def bout_of(raw):
@@ -219,7 +219,12 @@ def bout_of(raw):
     if not a or not b:
         pair=raw.get("fighters")
         if isinstance(pair,list) and len(pair)==2:
-            a,b=name_of(pair[0]),name_of(pair[1])
+            red=next((f for f in pair if isinstance(f,dict) and str(f.get("corner","")).lower() in ("red","a")),None)
+            blue=next((f for f in pair if isinstance(f,dict) and str(f.get("corner","")).lower() in ("blue","b")),None)
+            if red is not None and blue is not None:
+                a,b=name_of(red),name_of(blue)
+            else:
+                a,b=name_of(pair[0]),name_of(pair[1])
     bid=raw.get("id") or raw.get("boutId") or raw.get("dataId")
     return (str(bid),a,b) if bid and a and b else None
 
