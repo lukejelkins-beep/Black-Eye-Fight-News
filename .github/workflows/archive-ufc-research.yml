@@ -1,0 +1,56 @@
+name: Archive UFC round-by-round research
+on:
+  workflow_dispatch:
+  schedule:
+    # 19:10 AEDT / 18:10 AEST on Sunday, Monday, Wednesday.
+    - cron: '10 8 * * 0,1,3'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refresh-ufc-research-archive.py'
+      - 'tests/test_ufc_research_archive.py'
+      - '.github/workflows/archive-ufc-research.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: befn-ufc-research-archive
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline verification (no API requests)
+        run: python -m unittest discover -s tests -p 'test_ufc_research_archive.py' -v
+      - name: Merge existing research and capture recent Cito UFC stats
+        env:
+          UFC_STATS_API_CITO: \${{ secrets.UFC_STATS_API_CITO }}
+        run: python scripts/refresh-ufc-research-archive.py
+      - name: Publish incremental archive with provenance and quota ledger
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "BEFN UFC research archive"
+          git config user.email "ufc-archive-bot@users.noreply.github.com"
+          git add data/ufc-research-archive.json data/ufc-research-ledger.json
+          if git diff --cached --quiet; then
+            echo "Archive unchanged"
+            exit 0
+          fi
+          git commit -m "Archive sourced UFC round statistics"
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              echo "UFC archive saved to main"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "Could not persist archive after 5 retries" >&2
+          exit 1
