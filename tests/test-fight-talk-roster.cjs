@@ -9,7 +9,7 @@ assert.equal(roster.counts.tracked,roster.fighters.filter(p=>p.status==='tracked
 for(const platform of ['X','Instagram']){
  const seen=new Set();
  for(const p of cfg.platforms[platform].accounts){
-  assert(p.name&&p.sport&&['fighter','promoter','trainer','team','media'].includes(p.role));
+  assert(p.name&&p.sport&&['fighter','promoter','manager','trainer','team','media'].includes(p.role));
   assert(typeof p.identityBasis==='string'&&p.identityBasis.length>=20,'Account needs an identity evidence record');
   assert(platform==='X'?/^[a-z0-9_]{1,15}$/i.test(p.username):/^[a-z0-9_.]{2,30}$/i.test(p.username));
   assert(!seen.has(p.username.toLowerCase()),'Duplicate '+platform+' username: '+p.username);

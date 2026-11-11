@@ -997,7 +997,7 @@ const talkPlatforms = {
  Bluesky: {mark:'🦋', hosts:['bsky.app']}
 };
 const talkSports = {all:'All sports', boxing:'Boxing', mma:'MMA', grappling:'Grappling'};
-const talkRoles = {fighter:'Fighter', promoter:'Promoter', trainer:'Coach', team:'Fight team', commentator:'Commentator', media:'Media', fan:'Fan discussion'};
+const talkRoles = {fighter:'Fighter', promoter:'Promoter', manager:'Manager', trainer:'Coach', team:'Fight team', commentator:'Commentator', media:'Media', fan:'Fan discussion'};
 const talkTiers = {champion:'Champion', contender:'Contender', prospect:'Prospect'};
 const talkCounts = {likes:'likes', comments:'comments', shares:'reposts'};
 const talkCutoffs = {Instagram:[5000,100], X:[500,50], Threads:[500,50], Bluesky:[30,10], Facebook:[500,50], Reddit:[100,30]};
@@ -1304,7 +1304,7 @@ function recentTalkPosts(windowDays=7){
 }
 
 function diverseTalk(posts,mode='balanced'){
- const priority=p=>['fighter','promoter','trainer','team'].includes(p.role)?0:p.role==='fan'?2:1;
+ const priority=p=>['fighter','promoter','manager','trainer','team'].includes(p.role)?0:p.role==='fan'?2:1;
  const compare=(a,b)=>{
   if(mode==='engagement'){
    const difference=talkAttention(b)-talkAttention(a);
@@ -1414,7 +1414,7 @@ function renderSocial(){
  const options={all:'All platforms',...Object.fromEntries(Object.keys(talkPlatforms).map(platform=>[platform,platform]))};
  const visible=p=>(state.social==='all'||p.sport===state.social)
   &&(state.socialPlatform==='all'||p.platform===state.socialPlatform)
-  &&(state.talkRole==='all'||(state.talkRole==='fighters'?p.role==='fighter':state.talkRole==='fans'?p.role==='fan':['commentator','media','promoter','trainer','team'].includes(p.role)||p.type==='thread'));
+  &&(state.talkRole==='all'||(state.talkRole==='fighters'?p.role==='fighter':state.talkRole==='fans'?p.role==='fan':['commentator','media','promoter','manager','trainer','team'].includes(p.role)||p.type==='thread'));
  const filtered=current.filter(visible);
  const list=diverseTalk(filtered,highlights?'latest':state.talkSort);
  const pageSize=20;

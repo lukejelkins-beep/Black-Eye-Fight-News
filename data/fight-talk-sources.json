@@ -1,6 +1,6 @@
 {
-  "edition": "2026-11-09",
-  "description": "Pinned Bluesky identities and directly sourced X/Instagram watchlists. API account identity is checked at each read. Inactive/missing permissions never generate synthetic posts.",
+  "edition": "2026-11-11",
+  "description": "Pinned public fighter and industry social identities, verified source links and Bluesky DID feeds. API read permissions are not inferred by membership. Paid X timeline API is opt-in only; public embeds work without tokens.",
   "sources": [
     {
       "handle": "danrafael1.bsky.social",
@@ -1330,6 +1330,321 @@
           "fighterTier": "contender",
           "identityBasis": "Public athlete/social identity source: https://jp.rizinff.com/_tags/%E9%82%A3%E9%A0%88%E5%B7%9D%E5%A4%A9%E5%BF%83?p=7",
           "evidenceUrl": "https://jp.rizinff.com/_tags/%E9%82%A3%E9%A0%88%E5%B7%9D%E5%A4%A9%E5%BF%83?p=7"
+        },
+        {
+          "username": "DAZNBoxing",
+          "name": "DAZN Boxing",
+          "sport": "boxing",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/dazngroup/with_replies",
+          "evidenceUrl": "https://x.com/dazngroup/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "boxingscene",
+          "name": "BoxingScene",
+          "sport": "boxing",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/FreelanceFoz/with_replies",
+          "evidenceUrl": "https://x.com/FreelanceFoz/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "RingMagazine",
+          "name": "The Ring",
+          "sport": "boxing",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/MikeCoppinger/with_replies",
+          "evidenceUrl": "https://x.com/MikeCoppinger/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "BoxingNewsED",
+          "name": "Boxing News magazine",
+          "sport": "boxing",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/FreelanceFoz/with_replies",
+          "evidenceUrl": "https://x.com/FreelanceFoz/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "boxing_ts",
+          "name": "talkSPORT Boxing",
+          "sport": "boxing",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/boxing_ts/with_replies",
+          "evidenceUrl": "https://x.com/boxing_ts/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "boxingontnt",
+          "name": "TNT Sports Boxing",
+          "sport": "boxing",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://twstalker.com/search/Boxing",
+          "evidenceUrl": "https://twstalker.com/search/Boxing",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "WorldBoxingNews",
+          "name": "World Boxing News",
+          "sport": "boxing",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://twstalker.com/search/Boxing",
+          "evidenceUrl": "https://twstalker.com/search/Boxing",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "WBCBoxing",
+          "name": "World Boxing Council",
+          "sport": "boxing",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/WBCBoxing/with_replies",
+          "evidenceUrl": "https://x.com/WBCBoxing/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "Queensberry",
+          "name": "Queensberry Promotions",
+          "sport": "boxing",
+          "role": "promoter",
+          "identityBasis": "Named public source identifies this account: https://x.com/Queensberry/with_replies",
+          "evidenceUrl": "https://x.com/Queensberry/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "MisfitsBoxing",
+          "name": "Misfits Boxing",
+          "sport": "boxing",
+          "role": "promoter",
+          "identityBasis": "Named public source identifies this account: https://twstalker.com/search/Boxing",
+          "evidenceUrl": "https://twstalker.com/search/Boxing",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "MMAFighting",
+          "name": "MMA Fighting",
+          "sport": "mma",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/MMAFighting/status/1680300596887207936",
+          "evidenceUrl": "https://x.com/MMAFighting/status/1680300596887207936",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "mmamania",
+          "name": "MMA Mania",
+          "sport": "mma",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/mmamania/with_replies",
+          "evidenceUrl": "https://x.com/mmamania/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "sherdogdotcom",
+          "name": "Sherdog",
+          "sport": "mma",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/sherdogdotcom/with_replies",
+          "evidenceUrl": "https://x.com/sherdogdotcom/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "espnmma",
+          "name": "ESPN MMA",
+          "sport": "mma",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/espnmma/with_replies",
+          "evidenceUrl": "https://x.com/espnmma/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "FightersOnly",
+          "name": "Fighters Only",
+          "sport": "mma",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/FightersOnly/with_replies",
+          "evidenceUrl": "https://x.com/FightersOnly/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "tapology",
+          "name": "Tapology",
+          "sport": "mma",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/tapology/with_replies",
+          "evidenceUrl": "https://x.com/tapology/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "MMAOrbit",
+          "name": "MMA Orbit",
+          "sport": "mma",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/mma_orbit/with_replies",
+          "evidenceUrl": "https://x.com/mma_orbit/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "KSW_MMA",
+          "name": "KSW",
+          "sport": "mma",
+          "role": "promoter",
+          "identityBasis": "Named public source identifies this account: https://x.com/KSW_MMA/with_replies",
+          "evidenceUrl": "https://x.com/KSW_MMA/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "CageWarriors",
+          "name": "Cage Warriors",
+          "sport": "mma",
+          "role": "promoter",
+          "identityBasis": "Named public source identifies this account: https://linktr.ee/cagewarriors",
+          "evidenceUrl": "https://linktr.ee/cagewarriors",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "rizin_PR",
+          "name": "RIZIN Fighting Federation",
+          "sport": "mma",
+          "role": "promoter",
+          "identityBasis": "Named public source identifies this account: https://x.com/nobu_sakakibara/with_replies",
+          "evidenceUrl": "https://x.com/nobu_sakakibara/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "nobu_sakakibara",
+          "name": "Nobuyuki Sakakibara",
+          "sport": "mma",
+          "role": "promoter",
+          "identityBasis": "Named public source identifies this account: https://x.com/nobu_sakakibara/with_replies",
+          "evidenceUrl": "https://x.com/nobu_sakakibara/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "AliAbdelaziz00",
+          "name": "Ali Abdelaziz",
+          "sport": "mma",
+          "role": "manager",
+          "identityBasis": "Named public source identifies this account: https://x.com/AliAbdelaziz00/with_replies",
+          "evidenceUrl": "https://x.com/AliAbdelaziz00/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "MikeCoppinger",
+          "name": "Mike Coppinger",
+          "sport": "boxing",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/MikeCoppinger/with_replies",
+          "evidenceUrl": "https://x.com/MikeCoppinger/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "DanRafael1",
+          "name": "Dan Rafael",
+          "sport": "boxing",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/DanRafael1/status/2059394187011690752",
+          "evidenceUrl": "https://x.com/DanRafael1/status/2059394187011690752",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "guicruzzz",
+          "name": "Guilherme Cruz",
+          "sport": "mma",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/guicruzzz/with_replies",
+          "evidenceUrl": "https://x.com/guicruzzz/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "FreelanceFoz",
+          "name": "Elliot Foster",
+          "sport": "boxing",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/FreelanceFoz/with_replies",
+          "evidenceUrl": "https://x.com/FreelanceFoz/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "aaronbronsteter",
+          "name": "Aaron Bronsteter",
+          "sport": "mma",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://blog.x.com/en/insights/inside-the-canadian-sports-betting-industry-on-twitter",
+          "evidenceUrl": "https://blog.x.com/en/insights/inside-the-canadian-sports-betting-industry-on-twitter",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "laura_sanko",
+          "name": "Laura Sanko",
+          "sport": "mma",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/laura_sanko/with_replies",
+          "evidenceUrl": "https://x.com/laura_sanko/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "wbcmoro",
+          "name": "Mauricio Sulaimán",
+          "sport": "boxing",
+          "role": "promoter",
+          "identityBasis": "Named public source identifies this account: https://x.com/wbcmoro/with_replies",
+          "evidenceUrl": "https://x.com/wbcmoro/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "Ben_Damon",
+          "name": "Ben Damon",
+          "sport": "boxing",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/ben_damon/with_replies",
+          "evidenceUrl": "https://x.com/ben_damon/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "bigdaddybunce",
+          "name": "Steve Bunce",
+          "sport": "boxing",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/bigdaddybunce/with_replies",
+          "evidenceUrl": "https://x.com/bigdaddybunce/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "davemeltzerWON",
+          "name": "Dave Meltzer",
+          "sport": "mma",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/davemeltzerWON/with_replies",
+          "evidenceUrl": "https://x.com/davemeltzerWON/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "UFCFightPass",
+          "name": "UFC Fight Pass",
+          "sport": "grappling",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/UFCFightPass/with_replies",
+          "evidenceUrl": "https://x.com/UFCFightPass/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "boxing_social",
+          "name": "Boxing Social",
+          "sport": "boxing",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/FreelanceFoz/with_replies",
+          "evidenceUrl": "https://x.com/FreelanceFoz/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "secondsoutlive",
+          "name": "Seconds Out",
+          "sport": "boxing",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/FreelanceFoz/with_replies",
+          "evidenceUrl": "https://x.com/FreelanceFoz/with_replies",
+          "identityConfidence": "public-source"
         }
       ],
       "status": "requires-approved-X-API-bearer-token"
@@ -2857,6 +3172,105 @@
           "fighterTier": "prospect",
           "identityBasis": "Public athlete/social identity source: https://fightiq.net/fighter/tereza-bleda",
           "evidenceUrl": "https://fightiq.net/fighter/tereza-bleda"
+        },
+        {
+          "username": "aliabdelaziz",
+          "name": "Ali Abdelaziz",
+          "sport": "mma",
+          "role": "manager",
+          "identityBasis": "Named public source identifies this account: https://link.me/aliabdelaziz",
+          "evidenceUrl": "https://link.me/aliabdelaziz",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "CageWarriors",
+          "name": "Cage Warriors",
+          "sport": "mma",
+          "role": "promoter",
+          "identityBasis": "Named public source identifies this account: https://linktr.ee/cagewarriors",
+          "evidenceUrl": "https://linktr.ee/cagewarriors",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "mikecoppinger",
+          "name": "Mike Coppinger",
+          "sport": "boxing",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/MikeCoppinger/with_replies",
+          "evidenceUrl": "https://x.com/MikeCoppinger/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "guicruz.mma",
+          "name": "Guilherme Cruz",
+          "sport": "mma",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/guicruzzz/with_replies",
+          "evidenceUrl": "https://x.com/guicruzzz/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "laura_sanko",
+          "name": "Laura Sanko",
+          "sport": "mma",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/laura_sanko/with_replies",
+          "evidenceUrl": "https://x.com/laura_sanko/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "ben_damon",
+          "name": "Ben Damon",
+          "sport": "boxing",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/ben_damon/with_replies",
+          "evidenceUrl": "https://x.com/ben_damon/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "acdmma",
+          "name": "ACD MMA",
+          "sport": "mma",
+          "role": "media",
+          "identityBasis": "Named public source identifies this account: https://x.com/acdmma_/with_replies",
+          "evidenceUrl": "https://x.com/acdmma_/with_replies",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "gervontaa",
+          "name": "Gervonta Davis",
+          "sport": "boxing",
+          "role": "fighter",
+          "identityBasis": "Named public source identifies this account: https://handledex.com/en/category/combat-sports/instagram/",
+          "evidenceUrl": "https://handledex.com/en/category/combat-sports/instagram/",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "savage_ufc",
+          "name": "Gillian Robertson",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Named public source identifies this account: https://handledex.com/en/category/combat-sports/instagram/",
+          "evidenceUrl": "https://handledex.com/en/category/combat-sports/instagram/",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "ajmckee101",
+          "name": "A.J. McKee",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Named public source identifies this account: https://handledex.com/en/category/combat-sports/instagram/",
+          "evidenceUrl": "https://handledex.com/en/category/combat-sports/instagram/",
+          "identityConfidence": "public-source"
+        },
+        {
+          "username": "phildefriesmma",
+          "name": "Phil De Fries",
+          "sport": "mma",
+          "role": "fighter",
+          "identityBasis": "Named public source identifies this account: https://handledex.com/en/category/combat-sports/instagram/",
+          "evidenceUrl": "https://handledex.com/en/category/combat-sports/instagram/",
+          "identityConfidence": "public-source"
         }
       ],
       "status": "requires-Facebook-Login-Instagram-Business-Discovery",
