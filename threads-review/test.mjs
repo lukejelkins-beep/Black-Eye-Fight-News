@@ -26,6 +26,14 @@ test('OAuth routes enforce server configuration and do not expose tokens',async(
     assert.equal(status.connected,false);assert(!('token' in status));
     const page=await fetch(url+'/');
     assert.equal(page.status,200);
+    // Recording studio route serves real screen capture UI without server uploads.
+    const recordPage=await fetch(url+'/recorder');
+    assert.equal(recordPage.status,200);
+    const recordHtml=await recordPage.text();
+    assert.match(recordHtml,/getDisplayMedia/);
+    assert.match(recordHtml,/MediaRecorder/);
+    assert.match(recordHtml,/Stop &amp; save video/);
+    assert.equal(recordPage.headers.get('x-frame-options'),'DENY');
     assert.equal(page.headers.get('x-frame-options'),'DENY');
     assert.match(page.headers.get('set-cookie')||'',/HttpOnly; Secure; SameSite=Lax/);
     const starter=await fetch(url+'/auth/start',{redirect:'manual'});
