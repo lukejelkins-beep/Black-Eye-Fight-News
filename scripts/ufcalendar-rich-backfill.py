@@ -257,8 +257,11 @@ def collect_cards(client,state,cards,today):
     index=state["eventIndex"]
     ordered=sorted(index.items(),key=lambda kv:(kv[1].get("upcoming",False),
                         kv[1].get("date") or "",kv[0]),reverse=True)
+    # Reserve requests for round statistics and verified upcoming fighter records.
+    detail_limit=max(8,min(42,int(client.max_calls*.22)))
+    detailed=0
     for k,event in ordered:
-        if client.remaining<=0 or client.stopped:break
+        if client.remaining<=0 or client.stopped or detailed>=detail_limit:break
         key=event["id"]
         prior=state["eventDetails"].get(k)
         # Upcoming cards update every 6 hours, completed cards are immutable for collection
@@ -267,6 +270,7 @@ def collect_cards(client,state,cards,today):
             prior and (dt.datetime.now(dt.timezone.utc)-dt.datetime.fromisoformat(prior)).total_seconds()>21000)
         if prior and not refresh:continue
         payload=client.call("/events/"+key)
+        detailed+=1
         obj=(payload or {}).get("data")
         card=summary_event(obj)
         if not card:continue
@@ -334,7 +338,7 @@ def selected_stats(rounds):
 def collect_rounds(client,state,cards,archive,today):
     pairs=selection(state)
     count=0
-    cap=max(0,min(125,client.max_calls-client.calls-4))
+    cap=max(0,min(180,int(client.max_calls*.58),client.max_calls-client.calls-6))
     for bout in pairs:
         if client.remaining<=0 or client.stopped or count>=cap:break
         bid=bout["id"]
