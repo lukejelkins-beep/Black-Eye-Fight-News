@@ -166,6 +166,15 @@ def default_progress():
             "eventIndex":{},"eventDetails":{},"bouts":{},"roundDone":{},
             "scorecardDone":{},"fighterDone":{},"historyDone":{},"rankingDone":{},"errors":[]}
 
+def quota_guard_reached(state,today):
+    """Avoid repeated /usage calls once this month's paid research budget is spent."""
+    provider=state.get("provider") if isinstance(state,dict) else {}
+    if not isinstance(provider,dict):return False
+    used=provider.get("usedAtStart")
+    return (str(state.get("lastRun") or "")[:7]==today.strftime("%Y-%m")
+            and type(used) is int and used>=MAX_SPEND_PER_MONTH
+            and type(provider.get("limit")) is int and provider["limit"]>=30000)
+
 def add_index(state,org,events,upcoming=False):
     added=0
     for event in events:
@@ -571,6 +580,9 @@ def public_events(cards,profiles,today):
 def main():
     today=dt.datetime.now(dt.timezone.utc).date()
     state=read(PROGRESS,default_progress())
+    if quota_guard_reached(state,today):
+        print("UFCalendar: paid research ceiling already reached this month; no API requests needed")
+        return
     state.setdefault("bouts",{})
     if state.get("schema")!=1:raise RuntimeError("Unknown progress format")
     cards=read(CARDS,{"schema":1,"events":{}})
