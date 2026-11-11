@@ -49,6 +49,30 @@ jobs:
                       recent_status, _, recent_body = fetch("ufc/events/recent")
                       report["recent_events_http_status"] = recent_status
                       report["recent_events_error_code"] = recent_body.get("error", {}).get("code") if isinstance(recent_body.get("error"), dict) else None
+                      recent_rows = recent_body.get("data")
+                      if isinstance(recent_rows, dict):
+                          recent_rows = recent_rows.get("events") or recent_rows.get("items") or []
+                      report["recent_events_count"] = len(recent_rows) if isinstance(recent_rows, list) else None
+                      if isinstance(recent_rows, list) and recent_rows and isinstance(recent_rows[0], dict):
+                          report["recent_event_sample_keys"] = sorted(recent_rows[0].keys())[:30]
+                          first_event = recent_rows[0]
+                          recent_slug = first_event.get("slug") or first_event.get("eventSlug")
+                          report["sample_slug"] = recent_slug if isinstance(recent_slug, str) else None
+                          if isinstance(recent_slug, str) and "/" not in recent_slug:
+                              stats_status, _, stats_body = fetch("ufc/events/" + recent_slug + "/stats")
+                              report["recent_stats_http_status"] = stats_status
+                              report["recent_stats_error_code"] = stats_body.get("error", {}).get("code") if isinstance(stats_body.get("error"), dict) else None
+                              stats_data = stats_body.get("data")
+                              report["recent_stats_data_type"] = type(stats_data).__name__
+                              if isinstance(stats_data, dict):
+                                  report["recent_stats_keys"] = sorted(stats_data.keys())[:30]
+                                  for row_field in ("bouts", "roundStats", "boutStats", "rounds"):
+                                      rows = stats_data.get(row_field)
+                                      report["recent_stats_" + row_field + "_type"] = type(rows).__name__
+                                      if isinstance(rows, list):
+                                          report["recent_stats_" + row_field + "_length"] = len(rows)
+                                          if rows and isinstance(rows[0], dict):
+                                              report["recent_stats_" + row_field + "_sample_keys"] = sorted(rows[0].keys())[:30]
                       events_status, _, events_body = fetch("ufc/events?hasStats=true&page=1&limit=3")
                       report["events_list_http_status"] = events_status
                       report["events_list_error_code"] = events_body.get("error", {}).get("code") if isinstance(events_body.get("error"), dict) else None
