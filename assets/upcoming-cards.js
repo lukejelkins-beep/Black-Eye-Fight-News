@@ -190,11 +190,13 @@ window.UpcomingCards=(()=>{
  }
  function eventCard(e){
   const sections=groups.map(([key,label])=>({key,label,rows:e.bouts.filter(b=>b.section===key)})).filter(g=>g.rows.length);
-  const selected=sections.find(g=>g.key===active.get(e.id))||sections[0];
-  const tabs=sections.length>1?'<div class="result-card-tabs upcoming-tabs" role="group" aria-label="'+esc(e.title)+' sections" style="grid-template-columns:repeat('+sections.length+',minmax(0,1fr))">'+sections.map(g=>
-   '<button type="button" class="result-card-tab'+(g.key===selected.key?' is-active':'')+'" data-upcoming-tab="'+esc(e.id)+'" data-upcoming-section="'+esc(g.key)+'" aria-controls="upcoming-'+esc(e.id)+'-'+g.key+'" aria-pressed="'+String(g.key===selected.key)+'"><span>'+esc(g.label)+'</span><small>'+g.rows.length+' '+(g.rows.length===1?'fight':'fights')+'</small></button>').join('')+'</div>':
+  const allOption={key:'all',label:'All',rows:e.bouts};
+  const choices=sections.length>1?[allOption,...sections]:sections;
+  const selected=choices.find(g=>g.key===active.get(e.id))||choices[0];
+  const tabs=choices.length>1?'<div class="result-card-tabs upcoming-tabs" role="group" aria-label="'+esc(e.title)+' sections" style="grid-template-columns:repeat('+choices.length+',minmax(0,1fr))">'+choices.map(g=>
+   '<button type="button" class="result-card-tab'+(g.key===selected.key?' is-active':'')+'" data-upcoming-tab="'+esc(e.id)+'" data-upcoming-section="'+esc(g.key)+'" aria-controls="upcoming-'+esc(e.id)+'-'+(g.key==='all'?sections[0].key:g.key)+'" aria-pressed="'+String(g.key===selected.key)+'"><span>'+esc(g.label)+'</span><small>'+g.rows.length+'</small></button>').join('')+'</div>':
    '<div class="upcoming-single-section">'+esc(selected?.label||'Announced bouts')+'</div>';
-  const panels=sections.map(g=>'<div id="upcoming-'+esc(e.id)+'-'+esc(g.key)+'" class="result-bouts upcoming-fights" data-upcoming-panel="'+esc(g.key)+'" role="list" aria-label="'+esc(g.label)+'" '+(g.key===selected.key?'':'hidden')+'>'+g.rows.map(b=>'<div role="listitem">'+bout(b,e)+'</div>').join('')+'</div>').join('');
+  const panels=sections.map(g=>'<div id="upcoming-'+esc(e.id)+'-'+esc(g.key)+'" class="result-bouts upcoming-fights" data-upcoming-panel="'+esc(g.key)+'" role="list" aria-label="'+esc(g.label)+'" '+(selected.key==='all'||g.key===selected.key?'':'hidden')+'>'+g.rows.map(b=>'<div role="listitem">'+bout(b,e)+'</div>').join('')+'</div>').join('');
   const artCandidates=posterCandidates(e),first=artCandidates[0],art=first?href(first.url):'';
   const media='<span class="upcoming-hero-media" aria-hidden="true"><span class="upcoming-hero-fallback is-single-fighter">'+heroFighters(e)+'</span>'+
    (first?'<img class="upcoming-hero-poster" src="'+art+'" data-upcoming-poster-candidates="'+esc(JSON.stringify(artCandidates))+'" data-upcoming-poster-index="0" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">':'')+'</span>';
@@ -392,7 +394,7 @@ window.UpcomingCards=(()=>{
   const card=button.closest('details[data-upcoming-card]');if(!card)return;
   const selected=button.dataset.upcomingSection;active.set(card.dataset.upcomingCard,selected);
   card.querySelectorAll('button[data-upcoming-tab]').forEach(b=>{const on=b.dataset.upcomingSection===selected;b.classList.toggle('is-active',on);b.setAttribute('aria-pressed',on?'true':'false')});
-  card.querySelectorAll('[data-upcoming-panel]').forEach(panel=>{panel.hidden=panel.dataset.upcomingPanel!==selected});
+  card.querySelectorAll('[data-upcoming-panel]').forEach(panel=>{panel.hidden=selected!=='all'&&panel.dataset.upcomingPanel!==selected});
  },false);
  document.addEventListener('toggle',event=>{
   const el=event.target;if(!el.matches?.('details[data-upcoming-card]'))return;
