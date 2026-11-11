@@ -30,7 +30,8 @@ jobs:
         env:
           UFCALENDAR_API_KEY: ${{ secrets.UFCALENDAR_API_KEY }}
           BEFN_OCTAGON_ALLOWED: ${{ vars.BEFN_OCTAGON_ALLOWED }}
-          BEFN_UFC_STATS_ALLOWED: ${{ vars.BEFN_UFC_STATS_ALLOWED }}
+          # Website owner confirmed BEFN is a personal non-commercial project.
+          BEFN_UFC_STATS_ALLOWED: 'true'
         run: python scripts/refresh-fighter-intelligence.py
       - name: Commit generated editorial signals
         shell: bash

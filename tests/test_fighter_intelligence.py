@@ -68,6 +68,35 @@ class ScoutingTests(unittest.TestCase):
         current = next(x for x in output["fighters"] if x["name"] == "Candidate Fighter")
         self.assertEqual(current["stats"]["record"], "10-1-0")
 
+    def test_ufc_api_live_shape_verification_and_enrichment(self):
+        candidate = {"id": "johnnywalker", "name": "Johnny Walker",
+                     "organisation": "UFC", "stats": None}
+        mcgregor = {"id": "f4c49976c75c5ab2", "name": "Conor McGregor"}
+        walker = {"id": "032cc3922d871c7f", "name": "Johnny Walker"}
+        calls = []
+        def fake_fetch(url, key=None):
+            calls.append(url)
+            if url.endswith("/health"):
+                return {"status": "healthy", "fighters_loaded": 4400}
+            if "Conor%20McGregor" in url:
+                return {"data": [mcgregor]}
+            if url.endswith(mcgregor["id"]):
+                return dict(mcgregor, record="22-6-0")
+            if "Johnny+Walker" in url:
+                return {"data": [walker]}
+            if url.endswith(walker["id"]):
+                return dict(walker, slpm=4.12, sapm=3.72, record="21-9-0")
+            self.fail("Unexpected endpoint " + url)
+        result = module.ufc_stats([candidate], fake_fetch, True)
+        self.assertEqual(result["status"], "connected")
+        self.assertEqual(candidate["stats"]["slpm"], 4.12)
+        self.assertEqual(len(calls), 5)
+
+    def test_ufc_api_unhealthy_does_not_fake_a_connection(self):
+        result = module.ufc_stats([], lambda url, key=None: {"status": "healthy",
+                                  "fighters_loaded": 0}, True)
+        self.assertEqual(result["status"], "degraded")
+
     def test_avoid_fuzzy_api_merge(self):
         response = {"data": [{"name": "Candidate Fight", "id": 12}]}
         self.assertIsNone(module.exact(response, "Candidate Fighter"))

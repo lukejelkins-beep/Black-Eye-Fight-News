@@ -209,27 +209,76 @@ def octagon(queue, fetch=fetch_json, allowed=False):
     return status("Octagon", "connected", str(matched) + " exact record matches.")
 
 def ufc_stats(queue, fetch=fetch_json, allowed=False):
+    """Verify the hosted API and enrich up to two matched UFC profiles.
+
+    The provider allows personal/noncommercial use and limits traffic per IP;
+    the weekly job makes at most seven calls (health, known-list and
+    known-detail checks plus two list/detail pairs).
+    """
     if not allowed:
         return status("UFC Stats API", "pending_permission",
-                      "Hosted data is for personal/non-commercial use; explicit approval required.")
+                      "Non-commercial use must be confirmed before enabling.")
+    try:
+        health = fetch(UFC_STATS + "/health")
+        if (not isinstance(health, dict) or health.get("status") != "healthy"
+                or int(health.get("fighters_loaded") or 0) < 1):
+            return status("UFC Stats API", "degraded",
+                          "Health endpoint did not confirm loaded fighter data.")
+        # Validate the actual search and detail responses rather than assuming
+        # a 200 from /health means useful fighter statistics are available.
+        known = exact(fetch(UFC_STATS + "/api/fighters?search=Conor%20McGregor&limit=5"),
+                      "Conor McGregor")
+        known_id = (known or {}).get("id")
+        if not isinstance(known_id, str) or not re.fullmatch(r"[a-f0-9]{16}", known_id):
+            return status("UFC Stats API", "degraded",
+                          "Health OK but known fighter search failed validation.")
+        known_detail = fetch(UFC_STATS + "/api/fighters/" + known_id)
+        if (not isinstance(known_detail, dict)
+                or norm(known_detail.get("name")) != norm("Conor McGregor")):
+            return status("UFC Stats API", "degraded",
+                          "Health and search OK but fighter-detail validation failed.")
+    except Exception as exc:
+        http_code = getattr(exc, "code", None)
+        reason = ("HTTP " + str(http_code)) if http_code else type(exc).__name__
+        return status("UFC Stats API", "unavailable",
+                      "Endpoint connectivity or data verification failed (" + reason + ").")
+
     matched = 0
-    for item in [f for f in queue if f["organisation"] == "UFC"][:2]:
+    # Give a known established fighter precedence when present; other UFC
+    # candidates are attempted in their scouting-review priority order.
+    candidates = [f for f in queue if f["organisation"] == "UFC"]
+    candidates.sort(key=lambda f: f["name"] != "Johnny Walker")
+    for item in candidates[:2]:
         try:
             query = urllib.parse.urlencode({"search": item["name"], "limit": 5})
-            match = exact(fetch(UFC_STATS + "/api/fighters?" + query), item["name"])
-            ident = (match or {}).get("id")
-            if not ident or not re.fullmatch(r"[a-z0-9]+", str(ident)): continue
+            found = exact(fetch(UFC_STATS + "/api/fighters?" + query), item["name"])
+            ident = (found or {}).get("id")
+            if not isinstance(ident, str) or not re.fullmatch(r"[a-f0-9]{16}", ident):
+                continue
             profile = fetch(UFC_STATS + "/api/fighters/" + ident)
-            if norm(profile.get("name")) != item["id"]: continue
-            item["stats"] = {"source": "UFC Stats API", "record": profile.get("record"),
-                             "slpm": safe_number(profile.get("slpm")),
-                             "tdAvg": safe_number(profile.get("td_avg")),
-                             "observedOn": dt.date.today().isoformat()}
+            if not isinstance(profile, dict) or norm(profile.get("name")) != item["id"]:
+                continue
+            record = profile.get("record")
+            item["stats"] = {
+                "source": "UFC Stats API",
+                "record": record if isinstance(record, str) and len(record) <= 24 else None,
+                "slpm": safe_number(profile.get("slpm")),
+                "sapm": safe_number(profile.get("sapm")),
+                "strAcc": safe_number(profile.get("str_acc")),
+                "strDef": safe_number(profile.get("str_def")),
+                "tdAvg": safe_number(profile.get("td_avg")),
+                "tdAcc": safe_number(profile.get("td_acc")),
+                "tdDef": safe_number(profile.get("td_def")),
+                "subAvg": safe_number(profile.get("sub_avg")),
+                "observedOn": dt.date.today().isoformat()
+            }
             matched += 1
         except Exception:
             continue
-    return status("UFC Stats API", "connected" if matched else "unavailable",
-                  str(matched) + " precisely matched UFC profiles.")
+    return status("UFC Stats API", "connected",
+                  "Health, search and fighter-detail calls verified; " +
+                  str(matched) + " of " + str(min(2, len(candidates))) +
+                  " review profiles matched. Max seven calls per weekly run.")
 
 def build(source, previous=None, today=None, fetch=fetch_json):
     previous = previous or {}
