@@ -262,11 +262,21 @@ function hydrateResultPhotos(){
   hydrateResultPhotos();
  }
 }
+ // The browser can poll faster than GitHub's scheduled five-minute runs.
+ // Poll every 30s only when the published feed has a recently checked
+ // live event; otherwise use five minutes to avoid repeated 1 MB+ fetches.
+ function isLiveCard(){
+  return (data?.events||[]).some(e=>
+   ['underway','live'].includes(String(e.status||'').toLowerCase())&&
+   Number.isFinite(Date.parse(e.checkedAt))&&
+   Date.now()-Date.parse(e.checkedAt)<15*60*1000);
+ }
+ const pollDelay=()=>isLiveCard()?30*1000:5*60*1000;
  function refreshPollLabel(){
  const label=document.getElementById('results-auto-sync');
  if(!label)return;
  const when=lastPollAt?new Date(lastPollAt).toLocaleTimeString(window.FightTime.locale,{hour:'numeric',minute:'2-digit',second:'2-digit',timeZoneName:'short'}):'not yet';
- label.textContent=(error?'Check failed · showing saved results':'Auto-refresh 30s')+' · Checked '+when;
+ label.textContent=(error?'Check failed · showing saved results':isLiveCard()?'Auto-refresh 30s · live':'Auto-refresh 5 min · idle')+' · Checked '+when;
 }
  async function load(){
  if(pending)return pending;
@@ -300,12 +310,12 @@ function hydrateResultPhotos(){
  })();
  return pending;
 }
- setInterval(()=>{if(!document.hidden&&(location.hash.startsWith('#fights')&&window.BEFNFightsUI?.view==='results'))load()},30000);
+ setInterval(()=>{if(!document.hidden&&location.hash?.startsWith('#fights')&&window.BEFNFightsUI?.view==='results'&&Date.now()-lastPollAt>=pollDelay())load()},30000);
  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&(location.hash.startsWith('#fights')&&window.BEFNFightsUI?.view==='results'))load()});
  load();
  loadPosters();
   function promotionTabs(){return `<div class="befn-promotion-strip" id="befn-promotion-strip" role="group" aria-label="Filter MMA results by organisation" ${window.BEFNSport?.get()==='mma'?'':'hidden'}>${promotions.map(([id,label,domain])=>`<button type="button" class="befn-promotion-tab${filters.promotion===id?' selected':''}" data-result-promotion="${id}" aria-label="${label}" aria-pressed="${filters.promotion===id}">${domain?`<img src="https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(domain)}" alt="" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span hidden>${label}</span>`:`<span>${label}</span>`}</button>`).join('')}</div>`}
- function render(opts={}){if((!data||Date.now()-lastPollAt>30000)&&!pending)load();requestAnimationFrame(()=>{hydrateResultPhotos();const strip=document.getElementById("befn-promotion-strip");if(strip)strip.scrollLeft=0});if(opts.embedded===true)return `<div class="frame results-page befn-unified-results"><div id="results-content">${content()}</div></div>`;return `<div class="frame results-page">${promotionTabs()}<div class="section-heading"><div><h1>Results & highlights</h1></div></div><div class="results-toolbar"><button id="results-retry" type="button">↻ Refresh results</button><label class="results-search">Find a fight<input id="results-search" type="search" placeholder="Fighter, event or division" value="${esc(filters.query)}"></label><label class="results-check"><input id="results-clips" type="checkbox"${filters.clips?' checked':''}> Highlights available</label></div><p id="results-auto-sync" class="results-sync" role="status" aria-live="polite">Auto-refresh 30s · checking…</p><div id="results-content">${content()}</div><details class="compact-note"><summary>Results and verification</summary><p>Results are sourced from published event listings. Weight classes and fighter records are checked against those sources; discrepancies are noted on individual bouts. Highlight videos may be region-restricted. This feed is not round-by-round scoring.</p></details></div>`}
+ function render(opts={}){if((!data||Date.now()-lastPollAt>pollDelay())&&!pending)load();requestAnimationFrame(()=>{hydrateResultPhotos();const strip=document.getElementById("befn-promotion-strip");if(strip)strip.scrollLeft=0});if(opts.embedded===true)return `<div class="frame results-page befn-unified-results"><div id="results-content">${content()}</div></div>`;return `<div class="frame results-page">${promotionTabs()}<div class="section-heading"><div><h1>Results & highlights</h1></div></div><div class="results-toolbar"><button id="results-retry" type="button">↻ Refresh results</button><label class="results-search">Find a fight<input id="results-search" type="search" placeholder="Fighter, event or division" value="${esc(filters.query)}"></label><label class="results-check"><input id="results-clips" type="checkbox"${filters.clips?' checked':''}> Highlights available</label></div><p id="results-auto-sync" class="results-sync" role="status" aria-live="polite">Auto-refresh · checking…</p><div id="results-content">${content()}</div><details class="compact-note"><summary>Results and verification</summary><p>Results are sourced from published event listings. Weight classes and fighter records are checked against those sources; discrepancies are noted on individual bouts. Highlight videos may be region-restricted. This feed is not round-by-round scoring.</p></details></div>`}
  document.addEventListener('input',e=>{if(e.target.id==='results-search'){filters.query=e.target.value;update()}});
  document.addEventListener('change',e=>{if(e.target.id==='results-clips')filters.clips=e.target.checked;else return;update()});
  document.addEventListener('click',e=>{
