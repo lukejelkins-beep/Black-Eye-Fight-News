@@ -5,6 +5,19 @@ assert(html.includes('https://mmajunkie.usatoday.com/'),'MMA Junkie canonical re
 for(const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)){if(m[1].includes('application/json'))JSON.parse(m[2]);else new Function(m[2]);}
 const fn=html.slice(html.indexOf('const talkPlatforms'),html.indexOf('/* Strip illustration initials'));
 
+const fightTalkCSS=fs.readFileSync('assets/fight-talk.css','utf8');
+assert(html.includes('fight-talk.css?v=20261111-instagram-embed-height'),'The updated Fight Talk stylesheet must bypass stale mobile caches');
+assert(!html.includes('id="original-talk-posts"'),'Remove legacy mobile embed styles with zoom and fixed iframe heights');
+for(const m of fightTalkCSS.matchAll(/([^{}]+)\{([^{}]*)\}/g)){
+ const selector=m[1],body=m[2];
+ if(selector.includes('.talk-original')&&selector.includes('iframe')){
+  assert(!/(?:^|;)\s*(?:min-|max-)?height\s*:/i.test(body),
+   'Official post iframe height must be controlled by its platform embed script, not BEFN CSS: '+selector.trim());
+ }
+}
+assert(fightTalkCSS.includes('overflow:visible'),'Native social embed cards must not crop their contents');
+
+
 const selectedFeed=JSON.parse(fs.readFileSync('data/fight-talk-selected.json','utf8')).posts;
 const fighterPosts=selectedFeed.filter(p=>p.role==='fighter');
 const originalX=selectedFeed.filter(p=>p.platform==='X');
