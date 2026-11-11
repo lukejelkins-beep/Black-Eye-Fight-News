@@ -36,7 +36,7 @@ if (!token) {
     process.exitCode = 1;
   } else {
     console.log('THREADS_RESULT: BASIC_ACCOUNT_CONNECTION_OK');
-    const params = new URLSearchParams({q: 'boxing', search_type: 'RECENT', fields: 'id,username,timestamp,permalink,text', limit: '5'});
+    const params = new URLSearchParams({q: 'boxing', search_type: 'RECENT', search_mode: 'KEYWORD', fields: 'id,username,timestamp,permalink,text', limit: '5'});
     const search = await probe('keyword-search', 'https://graph.threads.net/v1.0/keyword_search?' + params);
     console.log(search
       ? 'THREADS_PUBLIC_DISCOVERY: KEYWORD_ENDPOINT_ACCEPTED; THIRD_PARTY_SEARCH_STILL_REQUIRES_ADVANCED_APP_REVIEW'
