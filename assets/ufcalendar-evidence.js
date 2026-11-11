@@ -32,7 +32,7 @@
       return '<article class="befn-round-card"><strong>' + names + '</strong>' +
         '<div class="befn-round-meta">' + esc(f.event || "") + ' · ' +
         esc(f.date || "") + ' · ' + esc(f.division || "MMA") + '</div>' +
-        lines + '<div class="befn-round-source">Source: UFCalendar · Strikes are listed A–B, not judges’ scores · — means unavailable</div></article>';
+        lines + '<div class="befn-round-source">Source: ' + esc(f.sourceNames || 'UFCalendar') + ' · Strikes are listed A–B, not judges’ scores · — means unavailable</div></article>';
     }).join("");
     section.innerHTML = '<h3>Round-by-round intelligence</h3><p class="befn-explain">' +
       'Selected fight evidence for scouting reviews. ' + list.length +
@@ -41,13 +41,36 @@
       '<div class="befn-round-grid">' + cards + '</div>';
     grid.parentNode.insertBefore(section,grid);
   }
+  function transformArchive(payload) {
+    if (!payload || payload.schema !== 1 || !payload.fights) return null;
+    const fights = {};
+    Object.entries(payload.fights).forEach(([id,f]) => {
+      if (!f || !Array.isArray(f.rounds) || !f.rounds.length) return;
+      fights[id] = {
+        date: f.date, event: f.event, division: f.division || "UFC",
+        fighterA: {name: f.fighterA}, fighterB: {name: f.fighterB},
+        sourceNames: Object.keys(f.sources || {}).map(x => x === "cito" ? "Cito" :
+          x === "ufcalendar" ? "UFCalendar" : "UFC Stats API").join(" + "),
+        rounds: f.rounds
+      };
+    });
+    return {schema:1, fights};
+  }
   function load() {
     if (state || loading) return;
     loading = true;
-    fetch("data/ufcalendar-intelligence.json", {cache:"no-store"})
-      .then(r => { if(!r.ok) throw Error("No evidence snapshot"); return r.json(); })
-      .then(data => { if(data && data.schema === 1) {state = data; draw();} })
-      .catch(() => {}).finally(() => {loading = false;});
+    fetch("data/ufc-research-archive.json", {cache:"no-store"})
+      .then(r => {if (!r.ok) throw Error("Archive not ready"); return r.json();})
+      .then(data => {
+        state = transformArchive(data);
+        if (!state || !Object.keys(state.fights).length) throw Error("No archive evidence yet");
+        draw();
+      })
+      .catch(() => fetch("data/ufcalendar-intelligence.json", {cache:"no-store"})
+        .then(r => {if(!r.ok) throw Error("No fallback evidence"); return r.json();})
+        .then(data => {if (data && data.schema===1) {state=data;draw();}})
+        .catch(() => {}))
+      .finally(() => {loading = false;});
   }
   const main = document.getElementById("main");
   if(main) new MutationObserver(draw).observe(main,{childList:true,subtree:true});
