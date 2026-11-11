@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict';
+import {canonicalSocial,compact,officialLinks,registerAccount} from '../scripts/discover-industry-profiles.mjs';
+assert.equal(compact('MMA Fighting'),'mmafighting');
+assert.equal(canonicalSocial('https://www.instagram.com/mma_fighting/').username,'mma_fighting');
+assert.equal(canonicalSocial('https://x.com/MMAFighting/status/123456789'),null);
+assert.equal(canonicalSocial('https://www.threads.com/@mmafighting').platform,'Threads');
+assert.equal(canonicalSocial('https://bsky.app/profile/mmafighting.bsky.social/post/3abc'),null);
+assert.equal(canonicalSocial('https://x.com:444/ufc'),null);
+const target={name:'MMA Fighting',url:'https://www.mmafighting.com/',aliases:['mmafighting'],role:'media',sport:'mma'};
+const html='<article><a href="https://www.instagram.com/unrelatedfighter/">Sponsored athlete</a></article>'+
+ '<footer><a href="https://x.com/MMAFighting">X</a><a href="https://www.instagram.com/mmafighting/">Instagram</a><a href="https://x.com/otherpublisher">Other</a></footer>';
+assert.deepEqual(officialLinks(html,target).map(p=>p.platform).sort(),['Instagram','X']);
+const ld='<script type="application/ld+json">'+JSON.stringify({'@type':'Organization',name:'MMA Fighting',sameAs:['https://bsky.app/profile/mmafighting.bsky.social']})+'</script>';
+assert.equal(officialLinks(ld,{...target,aliases:['mmafighting.bsky.social']})[0].platform,'Bluesky');
+assert.equal(officialLinks(ld.replace('MMA Fighting','Other Publication'),target).length,0);
+const cfg={sources:[],threads:{accounts:[],allowlistedUsernames:[]},platforms:{X:{accounts:[]},Instagram:{accounts:[]}}};
+const conflicts=[];
+assert(registerAccount(cfg,target,{platform:'X',username:'MMAFighting'},conflicts));
+assert(!registerAccount(cfg,target,{platform:'X',username:'MMAFighting'},conflicts));
+assert(registerAccount(cfg,target,{platform:'Threads',username:'mmafighting'},conflicts));
+assert.equal(cfg.threads.allowlistedUsernames.length,1);
+assert(registerAccount(cfg,target,{platform:'Bluesky',username:'mmafighting.bsky.social',did:'did:plc:mljgtdz3acgo6ix4j2qegd3f'},conflicts));
+assert.equal(cfg.sources.length,1);
+assert(!registerAccount(cfg,{...target,name:'Wrong Partner'},{platform:'X',username:'MMAFighting'},conflicts));
+assert.equal(conflicts.length,1);
+console.log('Official combat organisation social discovery identity and safety tests passed');

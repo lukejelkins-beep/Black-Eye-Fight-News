@@ -1,0 +1,49 @@
+name: Expand official combat sports source directory
+on:
+  schedule:
+    # Four times daily; public homepage metadata only, no social API timelines.
+    - cron: '41 1,7,13,19 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/discover-industry-profiles.mjs'
+      - 'tests/test-industry-profiles.mjs'
+      - 'data/fight-talk-industry-sites.json'
+      - '.github/workflows/discover-industry-profiles.yml'
+permissions:
+  contents: write
+concurrency:
+  group: discover-industry-profiles
+  cancel-in-progress: false
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check official identity sourcing
+        run: |
+          node --check scripts/discover-industry-profiles.mjs
+          node tests/test-industry-profiles.mjs
+      - name: Read first-party links and safely save new identities
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for attempt in 1 2 3; do
+            git fetch -q origin main
+            git reset --hard -q origin/main
+            node scripts/discover-industry-profiles.mjs
+            node tests/test-fight-talk-roster.cjs
+            git add data/fight-talk-sources.json data/fight-talk-industry-discovery.json
+            if git diff --cached --quiet; then
+              echo 'Official organisation links unchanged'
+              exit 0
+            fi
+            git commit -m 'Expand verified industry Fight Talk source accounts'
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
