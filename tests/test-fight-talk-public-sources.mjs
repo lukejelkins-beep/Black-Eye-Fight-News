@@ -34,6 +34,7 @@ assert(!candidates.some(x=>x.url.includes('untrusted.test')));
 assert.equal(candidates.filter(x=>x.url.includes('/ufc/reaction')).length,1);
 assert(linkPriority({role:'fighter',fighterTier:'champion',platform:'X'})>linkPriority({role:'media'}));
 assert(linkPriority({role:'promoter'})>linkPriority({role:'commentator'}));
+assert(linkPriority({role:'meme'})>linkPriority({role:'media'}),'Verified meme content can surface in original-post discovery');
 assert.equal(X_API_SPENDING.monthlyUsdCap,2);
 assert.equal(X_API_SPENDING.automaticPaidRequestsAllowed,0);
 assert.equal(X_API_SPENDING.estimatedMonthlySpendUsd,0);

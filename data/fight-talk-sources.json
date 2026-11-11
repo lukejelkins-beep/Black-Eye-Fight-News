@@ -1,6 +1,6 @@
 {
   "edition": "2026-11-11",
-  "description": "Pinned public fighter and industry social identities, verified source links and Bluesky DID feeds. API read permissions are not inferred by membership. Paid X timeline API is opt-in only; public embeds work without tokens.",
+  "description": "Pinned public fighter, manager, promoter, media, fan and combat-sports meme-page identities, verified source links and Bluesky DID feeds. A profile entry is a discovery lead, not permission to read an account's timeline. Paid X timeline API is opt-in only; public original embeds work without tokens.",
   "sources": [
     {
       "handle": "danrafael1.bsky.social",
@@ -231,7 +231,8 @@
       "onechampionship",
       "ufc",
       "oktagonmma",
-      "worldboxingnews"
+      "worldboxingnews",
+      "ufcmayhem"
     ],
     "accounts": [
       {
@@ -639,6 +640,17 @@
         "role": "media",
         "evidenceUrl": "https://www.worldboxingnews.com/",
         "identityBasis": "Social profile published in first-party official footer or Organization sameAs on https://www.worldboxingnews.com/"
+      },
+      {
+        "username": "ufcmayhem",
+        "name": "UFCMayhem",
+        "sport": "mma",
+        "role": "meme",
+        "category": "combat-sports-humour",
+        "identityBasis": "Named combat-sports humour account independently referenced at https://linktr.ee/ufcmayhem",
+        "evidenceUrl": "https://linktr.ee/ufcmayhem",
+        "identityConfidence": "creator-linked",
+        "profileUrl": "https://www.threads.com/@ufcmayhem"
       }
     ]
   },
@@ -1766,6 +1778,28 @@
           "role": "promoter",
           "evidenceUrl": "https://ibjjf.com/",
           "identityBasis": "Social profile published in first-party official footer or Organization sameAs on https://ibjjf.com/"
+        },
+        {
+          "username": "MMARoasted",
+          "name": "MMA Roasted",
+          "sport": "mma",
+          "role": "meme",
+          "category": "combat-sports-humour",
+          "identityBasis": "Named combat-sports humour account independently referenced at https://themmabible.net/mma-twitter",
+          "evidenceUrl": "https://themmabible.net/mma-twitter",
+          "identityConfidence": "publisher-linked",
+          "profileUrl": "https://x.com/MMARoasted"
+        },
+        {
+          "username": "UFCMayhem_",
+          "name": "UFCMayhem",
+          "sport": "mma",
+          "role": "meme",
+          "category": "combat-sports-humour",
+          "identityBasis": "Named combat-sports humour account independently referenced at https://linktr.ee/ufcmayhem",
+          "evidenceUrl": "https://linktr.ee/ufcmayhem",
+          "identityConfidence": "creator-linked",
+          "profileUrl": "https://x.com/UFCMayhem_"
         }
       ],
       "status": "requires-approved-X-API-bearer-token"
@@ -3480,6 +3514,105 @@
           "role": "promoter",
           "evidenceUrl": "https://ibjjf.com/",
           "identityBasis": "Social profile published in first-party official footer or Organization sameAs on https://ibjjf.com/"
+        },
+        {
+          "username": "mma247memes",
+          "name": "MMA247 Memes",
+          "sport": "mma",
+          "role": "meme",
+          "category": "combat-sports-humour",
+          "identityBasis": "Named combat-sports humour account independently referenced at https://socialblade.com/instagram/user/mma247memes/realtime",
+          "evidenceUrl": "https://socialblade.com/instagram/user/mma247memes/realtime",
+          "identityConfidence": "independent-directory",
+          "profileUrl": "https://www.instagram.com/mma247memes/"
+        },
+        {
+          "username": "tony_has_died",
+          "name": "THD / Tony Has Died",
+          "sport": "mma",
+          "role": "meme",
+          "category": "combat-sports-humour",
+          "identityBasis": "Named combat-sports humour account independently referenced at https://instme.com/profile/tony_has_died",
+          "evidenceUrl": "https://instme.com/profile/tony_has_died",
+          "identityConfidence": "independent-directory",
+          "profileUrl": "https://www.instagram.com/tony_has_died/"
+        },
+        {
+          "username": "ufcmemery",
+          "name": "UFC Memes",
+          "sport": "mma",
+          "role": "meme",
+          "category": "combat-sports-humour",
+          "identityBasis": "Named combat-sports humour account independently referenced at https://socialblade.com/instagram/user/ufcmemery",
+          "evidenceUrl": "https://socialblade.com/instagram/user/ufcmemery",
+          "identityConfidence": "independent-directory",
+          "profileUrl": "https://www.instagram.com/ufcmemery/"
+        },
+        {
+          "username": "mma.memes",
+          "name": "MMA Memes",
+          "sport": "mma",
+          "role": "meme",
+          "category": "combat-sports-humour",
+          "identityBasis": "Named combat-sports humour account independently referenced at https://themmabible.net/mma-twitter",
+          "evidenceUrl": "https://themmabible.net/mma-twitter",
+          "identityConfidence": "publisher-linked",
+          "profileUrl": "https://www.instagram.com/mma.memes/"
+        },
+        {
+          "username": "_asaig_",
+          "name": "As Shopped As It Gets",
+          "sport": "mma",
+          "role": "meme",
+          "category": "combat-sports-humour",
+          "identityBasis": "Named combat-sports humour account independently referenced at https://themmabible.net/mma-twitter",
+          "evidenceUrl": "https://themmabible.net/mma-twitter",
+          "identityConfidence": "publisher-linked",
+          "profileUrl": "https://www.instagram.com/_asaig_/"
+        },
+        {
+          "username": "ufcmayhem",
+          "name": "UFCMayhem",
+          "sport": "mma",
+          "role": "meme",
+          "category": "combat-sports-humour",
+          "identityBasis": "Named combat-sports humour account independently referenced at https://linktr.ee/ufcmayhem",
+          "evidenceUrl": "https://linktr.ee/ufcmayhem",
+          "identityConfidence": "creator-linked",
+          "profileUrl": "https://www.instagram.com/ufcmayhem/"
+        },
+        {
+          "username": "showboating_boxing",
+          "name": "Showboating Boxing",
+          "sport": "boxing",
+          "role": "meme",
+          "category": "combat-sports-humour",
+          "identityBasis": "Named combat-sports humour account independently referenced at https://pictame.com/en/instagram/showboating_boxing/6879656998",
+          "evidenceUrl": "https://pictame.com/en/instagram/showboating_boxing/6879656998",
+          "identityConfidence": "independent-directory",
+          "profileUrl": "https://www.instagram.com/showboating_boxing/"
+        },
+        {
+          "username": "boxing__memes",
+          "name": "Boxing Memes",
+          "sport": "boxing",
+          "role": "meme",
+          "category": "combat-sports-humour",
+          "identityBasis": "Named combat-sports humour account independently referenced at https://www.speakrj.com/audit/report/boxing__memes/instagram",
+          "evidenceUrl": "https://www.speakrj.com/audit/report/boxing__memes/instagram",
+          "identityConfidence": "historical-directory",
+          "profileUrl": "https://www.instagram.com/boxing__memes/"
+        },
+        {
+          "username": "the_mmazone",
+          "name": "The MMA Zone",
+          "sport": "mma",
+          "role": "meme",
+          "category": "combat-sports-humour",
+          "identityBasis": "Named combat-sports humour account independently referenced at https://pictame.com/en/instagram/the_mmazone/58521032245",
+          "evidenceUrl": "https://pictame.com/en/instagram/the_mmazone/58521032245",
+          "identityConfidence": "independent-directory",
+          "profileUrl": "https://www.instagram.com/the_mmazone/"
         }
       ],
       "status": "requires-Facebook-Login-Instagram-Business-Discovery",
@@ -3527,5 +3660,13 @@
         }
       ]
     }
+  },
+  "memePolicy": {
+    "role": "meme",
+    "scope": "Public MMA, boxing, grappling and combat-sports humour creators; only source-authenticated original posts, no impersonation, fabricated posts or AI summaries.",
+    "priority": "Supplement fighter and promoter coverage without displacing it.",
+    "directCollection": "Platform API permissions still required; profile links alone do not provide a timeline API.",
+    "addedOn": "2026-11-11",
+    "examplesVerified": 12
   }
 }

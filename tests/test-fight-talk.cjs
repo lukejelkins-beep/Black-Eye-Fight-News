@@ -6,6 +6,8 @@ for(const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)){if(m[1].
 const fn=html.slice(html.indexOf('const talkPlatforms'),html.indexOf('/* Strip illustration initials'));
 
 const fightTalkCSS=fs.readFileSync('assets/fight-talk.css','utf8');
+assert(html.includes("memes:'Meme pages'"),'Fight Talk shows an explicit Meme pages feed filter');
+assert(html.includes("state.talkRole==='memes'?p.role==='meme'"),'Fight Talk isolates meme sources in their own filter');
 assert(html.includes('fight-talk.css?v=20261111-instagram-embed-height'),'The updated Fight Talk stylesheet must bypass stale mobile caches');
 assert(!html.includes('id="original-talk-posts"'),'Remove legacy mobile embed styles with zoom and fixed iframe heights');
 for(const m of fightTalkCSS.matchAll(/([^{}]+)\{([^{}]*)\}/g)){

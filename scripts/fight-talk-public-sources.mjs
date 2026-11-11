@@ -105,7 +105,7 @@ export function discoveryCandidates(newsArticles,rssArticles,checkedAt,limit=110
  return picked;
 }
 export function linkPriority({role,fighterTier,platform}={}){
- const base=({fighter:60,promoter:55,trainer:48,team:45,fan:35,commentator:20,media:10})[role]||10;
+ const base=({fighter:60,promoter:55,trainer:48,team:45,fan:35,meme:28,commentator:20,media:10})[role]||10;
  return base+(({champion:12,contender:9,prospect:8})[fighterTier]||0)+(platform==='Threads'?2:0);
 }
 /**

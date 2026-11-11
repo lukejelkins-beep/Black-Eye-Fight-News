@@ -988,7 +988,7 @@ const talkPlatforms = {
  Bluesky: {mark:'🦋', hosts:['bsky.app']}
 };
 const talkSports = {all:'All sports', boxing:'Boxing', mma:'MMA', grappling:'Grappling'};
-const talkRoles = {fighter:'Fighter', promoter:'Promoter', manager:'Manager', trainer:'Coach', team:'Fight team', commentator:'Commentator', media:'Media', fan:'Fan discussion'};
+const talkRoles = {fighter:'Fighter', promoter:'Promoter', manager:'Manager', trainer:'Coach', team:'Fight team', commentator:'Commentator', media:'Media', fan:'Fan discussion',meme:'Meme page'};
 const talkTiers = {champion:'Champion', contender:'Contender', prospect:'Prospect'};
 const talkCounts = {likes:'likes', comments:'comments', shares:'reposts'};
 const talkCutoffs = {Instagram:[5000,100], X:[500,50], Threads:[500,50], Bluesky:[30,10], Facebook:[500,50], Reddit:[100,30]};
@@ -1321,7 +1321,7 @@ function recentTalkPosts(windowDays=7){
 }
 
 function diverseTalk(posts,mode='balanced'){
- const priority=p=>['fighter','promoter','manager','trainer','team'].includes(p.role)?0:p.role==='fan'?2:1;
+ const priority=p=>['fighter','promoter','manager','trainer','team'].includes(p.role)?0:['fan','meme'].includes(p.role)?2:1;
  const compare=(a,b)=>{
   if(mode==='engagement'){
    const difference=talkAttention(b)-talkAttention(a);
@@ -1431,7 +1431,7 @@ function renderSocial(){
  const options={all:'All platforms',...Object.fromEntries(Object.keys(talkPlatforms).map(platform=>[platform,platform]))};
  const visible=p=>(state.social==='all'||p.sport===state.social)
   &&(state.socialPlatform==='all'||p.platform===state.socialPlatform)
-  &&(state.talkRole==='all'||(state.talkRole==='fighters'?p.role==='fighter':state.talkRole==='fans'?p.role==='fan':['commentator','media','promoter','manager','trainer','team'].includes(p.role)||p.type==='thread'));
+  &&(state.talkRole==='all'||(state.talkRole==='fighters'?p.role==='fighter':state.talkRole==='fans'?p.role==='fan':state.talkRole==='memes'?p.role==='meme':['commentator','media','promoter','manager','trainer','team'].includes(p.role)||p.type==='thread'));
  const filtered=current.filter(visible);
  const list=diverseTalk(filtered,highlights?'latest':state.talkSort);
  const pageSize=20;
@@ -1441,7 +1441,7 @@ function renderSocial(){
  const freshness=highlights?'Highlights from the previous four weeks':liveTalk.error||(!liveTalk.lastAttempt||liveTalk.loading?'Checking fresh posts…':liveTalk.checkedAt?'Live feed checked '+humanTalkTime(liveTalk.checkedAt)+' local time':'Checking fresh posts…');
  const mode='<div class="segment" role="group" aria-label="Fight Talk view">'+[['latest','Latest posts'],['highlights','Last 4 weeks']].map(([value,label])=>'<button type="button" id="talk-'+value+'" data-segment="socialMode" data-value="'+value+'" aria-pressed="'+String(value===state.socialMode)+'">'+label+'</button>').join('')+'</div>';
  const filters=talkFilter('socialPlatform','Platform',options)
-  +talkFilter('talkRole','Posts from',{all:'Everyone',fighters:'Fighters',media:'Media & industry',fans:'Fans'})+talkFilter('talkSort','Order',{latest:'Newest first',balanced:'Balanced feed'});
+  +talkFilter('talkRole','Posts from',{all:'Everyone',fighters:'Fighters',media:'Media & industry',fans:'Fans',memes:'Meme pages'})+talkFilter('talkSort','Order',{latest:'Newest first',balanced:'Balanced feed'});
  const toolbar='<div class="talk-toolbar"><div class="talk-toolbar-top">'+mode+'<p class="talk-freshness">'+esc(freshness)+'</p></div><div class="talk-filters">'+filters+'</div></div>';
  const platformNeedsConnection=liveTalk.platformStatus.some(p=>p.platform===state.socialPlatform&&p.state==='not-connected')&&!current.some(p=>p.platform===state.socialPlatform);
  const empty='<div class="talk-empty"><h2>No posts match these filters</h2><p>'+
