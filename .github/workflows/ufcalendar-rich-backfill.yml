@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
   schedule:
     # Paid backfill burst: every 15 minutes through November, with serialized runs.
-    - cron: '7,22,37,52 * * * 11'
+    - cron: '7,22,37,52 * * 11 *'
     # Outside the November burst, retain the existing four daily maintenance windows.
-    - cron: '20 0,6,12,18 * * 1-10,12'
+    - cron: '20 0,6,12,18 * 1-10,12 *'
   push:
     branches: [main]
     paths:
