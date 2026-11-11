@@ -114,6 +114,14 @@ The user expressly authorized TinyFish to complete the Meta Graph API Explorer S
 
 **Next prerequisite:** Either (a) obtain Facebook Page access for this actual Facebook login to an existing Page linked to a professional Instagram account, or (b) with explicit owner authorization, create a BEFN Facebook Page and link a professional Instagram account, then retry the four-scope OAuth. Creating a public Page is a separate publishing decision and was **not** undertaken as part of the existing Page-consent request. Don't use a broad "all current and future Pages" grant.
 
+## New public BEFN Facebook Page and OAuth test — 11 November 2026
+
+- The user explicitly authorized creating a public Facebook Page. TinyFish confirmed a newly created, published Page **Black Eye Fight News**, category **News & media website**, URL **https://www.facebook.com/profile.php?id=61596616373694**, site link **https://black-eye-fight-news.onrender.com/**. It is managed by the signed-in account. No Facebook posts, advertising, WhatsApp integration, invitations, or paid services were created.
+- A subsequent OAuth run in Graph API Explorer used Facebook Login and selected only `pages_show_list`, `pages_read_engagement`, `instagram_basic`, `instagram_manage_insights`; current Pages only, not all future Pages. The browser run reported a User Token generated, and **all four scopes granted** by `GET /me/permissions`. Do not infer that the repository's existing GitHub Actions secret token was replaced; it was not.
+- `GET /me/accounts` was reported to return one accessible Facebook Page with **no `instagram_business_account` link**. The reported API Page ID differed from the published Page URL ID, and a follow-up read-only verification could not reconcile this because **the Graph Explorer token did not persist into the new session**. Recheck the returned Page's `name,id` against the newly created Page before treating it as the same Page. Never expose the token publicly.
+- **No professional Instagram account is linked to the new Page yet**, and no Instagram account was created/converted. Consequently **Business Discovery is not proven working** and BEFN's stored Instagram token was not changed.
+- The owner must select/authorize an Instagram **Professional** account to link to the new Facebook Page, if they own or wish to create one. Converting or creating an Instagram account is a separate action requiring the user's choice. After linking, redo the least-privilege OAuth/Graph API checks and run a genuine Business Discovery test before updating GitHub Secrets or deployment.
+
 ## Evidence / acceptance checklist
 
 - [x] App icon uploaded
