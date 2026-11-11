@@ -161,7 +161,7 @@ class Client:
 def default_progress():
     return {"schema":1,"status":"pending","provider":{},"lastRun":"",
             "historicalCursor":{},"historicalComplete":{},
-            "eventIndex":{},"eventDetails":{},"roundDone":{},
+            "eventIndex":{},"eventDetails":{},"bouts":{},"roundDone":{},
             "scorecardDone":{},"fighterDone":{},"errors":[]}
 
 def add_index(state,org,events,upcoming=False):
@@ -270,7 +270,15 @@ def collect_cards(client,state,cards,today):
         obj=(payload or {}).get("data")
         card=summary_event(obj)
         if not card:continue
-        cards["events"][k]=card
+        for bout in card["bouts"]:
+            state["bouts"][bout["id"]]={
+                "id":bout["id"],"a":bout["a"],"b":bout["b"],
+                "event":card["title"],"eventDate":card["date"],"org":card["org"],
+                "eventId":key,"status":bout["status"],
+                "main":bout["main"],"titleFight":bout["titleFight"],
+                "result":bout.get("result")}
+        if enrichment_visible(card,today):
+            cards["events"][k]=card
         state["eventDetails"][k]=dt.datetime.now(dt.timezone.utc).isoformat()
         event["upcoming"]=card["status"] in ("announced","scheduled","live")
     # Include only recent + upcoming event facts in the public display data;
@@ -309,16 +317,12 @@ def merge_archive(archive,event,bout,rounds,stamp):
     return m.put(archive,event["date"],bout["a"]["name"],bout["b"]["name"],
                  event["title"],"ufcalendar",bout["id"],rounds,stamp)
 
-def selection(cards):
-    candidates=[]
-    for ev in cards["events"].values():
-        if ev.get("status") not in ("completed","no_contest","draw"):continue
-        for b in ev.get("bouts",[]):
-            if b["status"] in ("completed","no_contest","draw"):
-                candidates.append((ev,b))
-    candidates.sort(key=lambda x:(x[0].get("date") or "",x[1]["main"],x[1]["titleFight"]),
-                    reverse=True)
-    return candidates
+def selection(state):
+    pairs=[x for x in state.get("bouts",{}).values()
+           if x.get("status") in ("completed","draw","no_contest")]
+    pairs.sort(key=lambda x:(x.get("eventDate") or "",x.get("org")=="ufc",
+                     x.get("main",False),x.get("titleFight",False)),reverse=True)
+    return pairs
 
 def selected_stats(rounds):
     # Derived display facts are a narrow subset; do not republish API payloads.
@@ -328,11 +332,10 @@ def selected_stats(rounds):
             for r in rounds]
 
 def collect_rounds(client,state,cards,archive,today):
-    pairs=selection(cards)
-    # Research older UFC cards too, not only events published on the website.
-    cap=max(0,min(120,client.max_calls-client.calls-4))
+    pairs=selection(state)
     count=0
-    for event,bout in pairs:
+    cap=max(0,min(125,client.max_calls-client.calls-4))
+    for bout in pairs:
         if client.remaining<=0 or client.stopped or count>=cap:break
         bid=bout["id"]
         if bid in state["roundDone"]:continue
@@ -341,8 +344,15 @@ def collect_rounds(client,state,cards,archive,today):
         rounds=convert_rounds(payload)
         state["roundDone"][bid]=len(rounds)
         if rounds:
-            bout["roundPreview"]=selected_stats(rounds)
-            if event["org"]=="ufc":merge_archive(archive,event,bout,rounds,dt.datetime.now(dt.timezone.utc).isoformat())
+            if bout["org"]=="ufc":
+                event={"date":bout["eventDate"],"title":bout["event"],"org":"ufc"}
+                merge_archive(archive,event,bout,rounds,dt.datetime.now(dt.timezone.utc).isoformat())
+            ui_event=cards["events"].get(bout["eventId"])
+            if ui_event:
+                for ui_bout in ui_event.get("bouts",[]):
+                    if ui_bout["id"]==bid:
+                        ui_bout["roundPreview"]=selected_stats(rounds)
+                        break
         count+=1
 
 def read_fighter_profile(obj):
@@ -360,18 +370,19 @@ def read_fighter_profile(obj):
 
 def collect_profiles(client,state,cards,fighters,today):
     seen={}
-    for event in cards["events"].values():
-        day=event.get("date") or ""
-        upcoming=event["status"] in ("announced","scheduled","live")
-        for bout in event.get("bouts",[]):
-            for side in ("a","b"):
-                fighter=bout[side]
-                slugval=fighter.get("slug")
-                if not slugval:continue
-                priority=(1 if upcoming else 0,day)
-                if slugval not in seen or priority>seen[slugval]:seen[slugval]=priority
-    seen=sorted(seen.items(),key=lambda it:it[1],reverse=True)
-    for slugval,rank in seen:
+    for bout in state.get("bouts",{}).values():
+        day=bout.get("eventDate") or ""
+        org=bout.get("org")
+        if org not in ORGS:continue
+        upcoming=bout["status"] in ("announced","scheduled","live")
+        for side in ("a","b"):
+            athlete=bout[side]
+            slugval=athlete.get("slug")
+            if not slugval:continue
+            priority=(1 if upcoming else 0,day)
+            if slugval not in seen or priority>seen[slugval]:
+                seen[slugval]=priority
+    for slugval,rank in sorted(seen.items(),key=lambda it:it[1],reverse=True):
         if client.remaining<=0 or client.stopped or client.calls>=client.max_calls-2:break
         if slugval in state["fighterDone"]:continue
         payload=client.call("/fighters/"+slugval)
@@ -392,12 +403,16 @@ def public_events(cards,profiles,today):
         for b in event.get("bouts",[]):
             row={k:b.get(k) for k in ("id","status","section","order","main","titleFight",
                                       "division","scheduledRounds","result","roundPreview")}
-            row["a"]=b["a"]["name"]
-            row["b"]=b["b"]["name"]
-            if event["status"] in ("announced","scheduled","live"):
-                for corner in ("a","b"):
-                    p=profiles.get(b[corner].get("slug"))
-                    if p and p.get("record"):row[corner+"Record"]=p["record"]
+            for corner in ("a","b"):
+                athlete=b[corner]
+                row[corner]=athlete.get("name") if isinstance(athlete,dict) else safe(athlete)
+                if event["status"] in ("announced","scheduled","live"):
+                    slugval=athlete.get("slug") if isinstance(athlete,dict) else None
+                    p=profiles.get(slugval)
+                    if p and p.get("record"):
+                        row[corner+"Record"]=p["record"]
+                    elif b.get(corner+"Record"):
+                        row[corner+"Record"]=b[corner+"Record"]
             info["bouts"].append(row)
         events[key]=info
     return {"schema":1,"generatedAt":dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
@@ -407,6 +422,7 @@ def public_events(cards,profiles,today):
 def main():
     today=dt.datetime.now(dt.timezone.utc).date()
     state=read(PROGRESS,default_progress())
+    state.setdefault("bouts",{})
     if state.get("schema")!=1:raise RuntimeError("Unknown progress format")
     cards=read(CARDS,{"schema":1,"events":{}})
     research=read(FIGHTERS,{"schema":1,"profiles":{}})
@@ -436,6 +452,7 @@ def main():
     state["errors"]=(state.get("errors",[])+client.errors)[-15:]
     state["indexedEvents"]=len(state["eventIndex"])
     state["roundsDoneCount"]=len(state["roundDone"])
+    state["indexedBouts"]=len(state["bouts"])
     state["fighterProfilesDone"]=len(state["fighterDone"])
     state["publicEvents"]=len(cards.get("events",{}))
     write(PROGRESS,state)
