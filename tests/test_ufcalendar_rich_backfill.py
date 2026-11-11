@@ -33,13 +33,13 @@ class RichBackfillTests(unittest.TestCase):
 
     def test_backfill_reserves_3000_calls_for_live_website(self):
         self.assertEqual(m.MAX_SPEND_PER_MONTH,27000)
-        self.assertEqual(m.MAX_PER_RUN,420)
+        self.assertEqual(m.MAX_PER_RUN,500)
         for used,allowed in ((1000,26000),(26000,1000),(27000,0),(29900,0)):
             state=m.default_progress()
             client=m.Client("fake",state,dt.date(2026,11,11),
                             fetch=lambda route, used=used:{
                                 "data":{"tier":"hobby","requests_used":used,
-                                        "requests_limit":30000,"rpm_limit":60}},max_calls=420)
+                                        "requests_limit":30000,"rpm_limit":60}},max_calls=500)
             self.assertEqual(client.bootstrap(),allowed>0)
             self.assertEqual(client.remaining,allowed)
             self.assertEqual(client.interval,1.2)
