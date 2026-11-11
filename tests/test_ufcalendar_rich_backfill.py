@@ -22,6 +22,46 @@ def example_event(upcoming=False):
                      "result":None if upcoming else {"winner_fighter_id":13,"method_normalized":"decision","round":3,"time":"5:00"}}]}
 
 class RichBackfillTests(unittest.TestCase):
+    def test_backfill_reserves_3000_calls_for_live_website(self):
+        self.assertEqual(m.MAX_SPEND_PER_MONTH,27000)
+        self.assertEqual(m.MAX_PER_RUN,420)
+        for used,allowed in ((1000,26000),(26000,1000),(27000,0),(29900,0)):
+            state=m.default_progress()
+            client=m.Client("fake",state,dt.date(2026,11,11),
+                            fetch=lambda route, used=used:{
+                                "data":{"tier":"hobby","requests_used":used,
+                                        "requests_limit":30000,"rpm_limit":60}},max_calls=420)
+            self.assertEqual(client.bootstrap(),allowed>0)
+            self.assertEqual(client.remaining,allowed)
+            self.assertEqual(client.interval,1.2)
+
+    def test_burst_prefers_ufc_results_before_pfl(self):
+        state=m.default_progress()
+        base={"status":"completed","a":{"name":"Alpha"},"b":{"name":"Beta"},
+              "main":False,"titleFight":False,"result":{}}
+        state["bouts"]={
+            "pfl":{"id":"1","org":"pfl","eventDate":"2026-11-10",**base},
+            "ufc":{"id":"2","org":"ufc","eventDate":"2026-10-20",**base}
+        }
+        self.assertEqual([x["id"] for x in m.selection(state)],["2","1"])
+
+    def test_fast_runs_do_not_repeat_recent_event_discovery(self):
+        state=m.default_progress()
+        state["historicalComplete"]={"ufc":True,"pfl":True}
+        now=dt.datetime.now(dt.timezone.utc)
+        state["upcomingCheckedAt"]={"ufc":now.isoformat(),"pfl":now.isoformat()}
+        calls=[]
+        client=m.Client("fake",state,dt.date(2026,11,11),
+                        fetch=lambda route:(calls.append(route) or {"data":[]}),
+                        max_calls=20)
+        client.remaining=100
+        m.read_events(client,state,dt.date(2026,11,11))
+        self.assertEqual(calls,[])
+        state["upcomingCheckedAt"]["ufc"]=(now-dt.timedelta(hours=2)).isoformat()
+        m.read_events(client,state,dt.date(2026,11,11))
+        self.assertEqual(len(calls),1)
+        self.assertIn("org=ufc",calls[0])
+
     def test_paid_tier_unlocks_only_when_verified(self):
         for limit,expected in ((100,False),(30000,True)):
             data={"data":{"tier":"hobby" if expected else "free",
