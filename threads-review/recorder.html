@@ -41,12 +41,23 @@ video{display:none;width:100%;max-height:320px;background:#122b31;margin-top:15p
 <video id="preview" controls playsinline></video>
 <p class="note">This browser feature prefers MP4 when available; otherwise it saves WebM. If Meta rejects WebM, convert the local file to MP4 before upload. No video bytes leave your device through BEFN.</p>
 </section>
-<section class="card"><h2>3. Upload to Meta</h2>
+<section class="card"><h2>3. Prepared Meta explanation</h2>
+<p>Copy the approved-purpose explanation below into the permission-specific description field for threads_profile_discovery.</p>
+<textarea id="reviewDraft" readonly aria-label="Meta Threads profile discovery explanation" rows="9" style="width:100%;padding:14px;font:14px/1.6 system-ui;border:1px solid #afc6ba;border-radius:4px">Black Eye Fight News (BEFN) is an independent, non-commercial combat sports news and analysis platform. Its Fight Talk feature links to a live Threads Discovery demonstration at https://befn-threads-review.onrender.com/. A user connects a Threads account using official Meta OAuth with read-only threads_basic and threads_profile_discovery permissions, enters a public account username and retrieves that account's original publicly available profile and posts using the official profile_lookup and profile_posts API endpoints. The app displays original author identity, public biography, post text, timestamps and direct source links rather than AI-generated summaries. This helps readers compare publicly shared statements and announcements from competing combat sports fighters, promoters and organisations as part of competitor analysis. We need threads_profile_discovery because threads_basic alone cannot retrieve public profiles and posts belonging to other accounts. We do not access private messages, nonpublic accounts or private insights, and we do not post or publish on behalf of the user. OAuth access tokens are maintained temporarily in secure server-side memory and are removed on disconnection or session expiry.</textarea>
+<div style="margin-top:12px"><button id="copyDraft" type="button" class="secondary">Copy explanation</button></div>
+</section>
+<section class="card"><h2>4. Upload to Meta</h2>
 <p>Open <a href="https://developers.facebook.com/apps/938461119197992/app-review/submissions/?business_id=1155225336843859" target="_blank" rel="noopener noreferrer">Meta App Review</a>, navigate to Allowed usage and the threads_profile_discovery permission. Add the genuine recording, permission explanation and allowed-usage agreement. A qualifying API test and any other requested permissions must be completed before final submission.</p>
 </section></main>
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
+$('copyDraft').addEventListener('click',async()=>{
+const value=$('reviewDraft').value;
+try{await navigator.clipboard.writeText(value);info('Review explanation copied. Paste it into the threads_profile_discovery form on Meta.');}
+catch{$('reviewDraft').focus();$('reviewDraft').select();info('Selected the explanation. Copy it with Command+C, then paste into Meta.')}
+});
+
 let recorder=null,stream=null,parts=[],mime='',objectUrl=null;
 function info(v,bad=false){$('status').textContent=v;$('status').classList.toggle('error',bad)}
 function buttons(active,paused=false){
