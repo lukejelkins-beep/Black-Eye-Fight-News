@@ -139,10 +139,13 @@ def put(archive,day,a,b,event,source,source_id,rounds,stamp):
     # A source may list the fighters in reverse order. Align every corner to
     # the canonical fighter names before merging or comparing statistics.
     if normal(a)==normal(fight["fighterB"]) and normal(b)==normal(fight["fighterA"]):
-        rounds=[dict(r, **({"a":r["b"]} if "b" in r else {}),
-                          **({"b":r["a"]} if "a" in r else {})) for r in rounds]
-        for row in rounds:
-            if "a" in row and "b" not in row and any("a" in z for z in rounds): pass
+        corrected=[]
+        for r in rounds:
+            row={"round":r["round"]}
+            if "a" in r: row["b"]=r["a"]
+            if "b" in r: row["a"]=r["b"]
+            corrected.append(row)
+        rounds=corrected
     old=fight["sources"].get(source,{})
     old_rounds=old.get("rounds",[])
     if sum(len(x) for x in rounds)<sum(len(x) for x in old_rounds):
@@ -297,7 +300,11 @@ def run(today=None,transport=None,collect=True):
             record=archive["events"].setdefault(slug,{"date":day.isoformat(),"title":title})
             record["checkedAt"]=stamp
             record["capturedBouts"]=max(added,record.get("capturedBouts",0))
-            if added and (today-day).days>=2: record["verified"]=True
+            if added:
+                if not record.get("firstCapturedAt"):
+                    record["firstCapturedAt"]=stamp
+                elif (today-day).days>=2 and record["firstCapturedAt"]!=stamp:
+                    record["verified"]=True
             if not added:
                 record["shape"]={"keys":sorted(stats.keys())[:20] if isinstance(stats,dict) else [],
                                  "roundRows":len(list_of(stats.get("roundStats") or stats.get("rounds"),"rounds")) if isinstance(stats,dict) else 0,
@@ -308,7 +315,8 @@ def run(today=None,transport=None,collect=True):
                                  "fighterSampleKeys":sorted(list_of(bouts,"bouts")[0]["fighters"][0].keys()) if list_of(bouts,"bouts") and isinstance(list_of(bouts,"bouts")[0].get("fighters"),list) and list_of(bouts,"bouts")[0]["fighters"] and isinstance(list_of(bouts,"bouts")[0]["fighters"][0],dict) else [],
                                  "roundSampleBoutId":(list_of(stats.get("roundStats"),"rounds")[0].get("boutId") if isinstance(stats,dict) and list_of(stats.get("roundStats"),"rounds") else None)}
     # Mark the migration complete only after all eligible saved cards were successfully rechecked.
-    if all((v.get("capturedBouts") or 0)>0 for v in archive.get("events",{}).values()):
+    if archive.get("events") and all(v.get("checkedAt")==stamp and v.get("capturedBouts",0)>0
+        for v in archive["events"].values() if 0<=(today-dt.date.fromisoformat(v["date"])).days<=28):
         archive["cornerAlignmentVersion"]=2
     archive["updatedAt"]=stamp
     ledger["lastRun"]=stamp
