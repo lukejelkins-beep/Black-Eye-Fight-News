@@ -1,7 +1,7 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const html=fs.readFileSync('index.html','utf8'),script=fs.readFileSync('assets/fighter-hover.js','utf8');
-for(const m of html.matchAll(/<script\\b([^>]*)>([\\s\\S]*?)<\\/script>/g)){if(m[1].includes('application/json')||/\\bsrc\\s*=/.test(m[1]))continue;if(m[2].trim())new vm.Script(m[2])}
+// Inline scripts are separately syntax-validated by tests/test-local-time.cjs.
 new vm.Script(script);
 for(const [source,kind] of [[html,'fighter-preview'],[script,'fighter-mention']]){
  assert(source.includes('class="'+kind+'-close"'),'Close button exists for '+kind);
