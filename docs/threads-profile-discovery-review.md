@@ -18,7 +18,7 @@ The permission is required to use Threads' profile_lookup and profile_posts API 
 
 ## API proof — complete Meta Testing 1/1
 
-1. Confirm `THRE​​ADS_ACCESS_TOKEN` is configured as a GitHub Actions secret (spelling without hidden characters: `THREADS_ACCESS_TOKEN`). This must be a valid user token issued by your Threads app and with `threads_basic` and `threads_profile_discovery` granted. It cannot be a Facebook/Instagram token.
+1. Confirm `THREADS_ACCESS_TOKEN` is configured as a GitHub Actions secret (spelling without hidden characters: `THREADS_ACCESS_TOKEN`). This must be a valid user token issued by your Threads app and with `threads_basic` and `threads_profile_discovery` granted. It cannot be a Facebook/Instagram token.
 2. Open the [Meta Threads profile discovery test workflow](https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/workflows/check-threads-profile-discovery.yml).
 3. Choose **Run workflow** → **main** → **Run workflow**.
 4. Open the run's **Test Meta Threads public profile lookup and posts** step. Look for `THREADS_DISCOVERY_PROFILE: OK`; `THREADS_DISCOVERY_POSTS: OK` confirms the posts endpoint too.
