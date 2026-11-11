@@ -106,6 +106,9 @@ class ScoutingTests(unittest.TestCase):
         def fetch(url, key=None):
             calls.append(url)
             self.assertEqual(key, "test_key")
+            if url.endswith("/plans"):
+                self.assertIsNone(key)
+                return {"data":{"plans":[]}}
             if url.endswith("/usage"):
                 return {"data":{"tier":"free","requests_used":1}}
             if url.endswith("/rankings/ufc"):
@@ -122,17 +125,30 @@ class ScoutingTests(unittest.TestCase):
         self.assertIn("invalid_query",result["detail"])
         self.assertEqual(candidate["stats"]["record"],"21-9-0")
         self.assertEqual(candidate["stats"]["slpm"],4.11)
-        self.assertEqual(len(calls),4)
+        self.assertEqual(len(calls),5)
 
     def test_ufcalendar_rejected_key_is_not_reported_connected(self):
         from urllib.error import HTTPError
         from io import BytesIO
         def fail(url,key=None):
+            if url.endswith("/plans"):
+                return {"data":{"plans":[]}}
             raise HTTPError(url,401,"Unauthorized",{},BytesIO(b'{"error":{"code":"invalid_api_key"}}'))
         r=module.ufcalendar([],fetch=fail,key="bad_key")
         self.assertEqual(r["status"],"authentication_unconfirmed")
         self.assertIn("HTTP 401",r["detail"])
         self.assertNotIn("bad_key",r["detail"])
+
+    def test_public_probe_failure_does_not_blame_api_key(self):
+        from urllib.error import HTTPError
+        from io import BytesIO
+        def public_fail(url,key=None):
+            self.assertTrue(url.endswith("/plans"))
+            self.assertIsNone(key)
+            raise HTTPError(url,400,"Bad Request",{},BytesIO(b'{"error":"bad_request"}'))
+        result=module.ufcalendar([],fetch=public_fail,key="production_key")
+        self.assertEqual(result["status"],"public_endpoint_unavailable")
+        self.assertIn("Do not rotate",result["detail"])
 
     def test_avoid_fuzzy_api_merge(self):
         response = {"data": [{"name": "Candidate Fight", "id": 12}]}

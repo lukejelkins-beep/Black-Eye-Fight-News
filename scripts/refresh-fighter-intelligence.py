@@ -162,6 +162,17 @@ def ufcalendar(queue, fetch=fetch_json, key=None):
     if not key:
         return status("UFCalendar", "needs_key", "Set UFCALENDAR_API_KEY GitHub Actions secret.")
 
+    # First verify a public no-key endpoint from the same GitHub runner.
+    # A failure here cannot be solved by rotating the user's API key.
+    try:
+        plans = fetch(UFCALENDAR + "/plans")
+        if not isinstance(plans, dict):
+            raise ValueError("Unexpected plans payload")
+    except Exception as exc:
+        return status("UFCalendar", "public_endpoint_unavailable",
+                      "Public /plans endpoint failed without authentication: " +
+                      _api_error(exc) + ". Do not rotate the API key; inspect DNS, proxy and API hosting.")
+
     # Check authentication/quota on a documented endpoint before trying
     # content endpoints. This distinguishes a rejected key from an endpoint bug.
     try:
