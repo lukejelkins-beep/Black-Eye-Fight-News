@@ -185,11 +185,23 @@ def add_index(state,org,events,upcoming=False):
     return added
 
 def read_events(client,state,today):
-    # Query future calendars on every collector run, including card changes.
+    # During paid backfill we run every 15 minutes. Do not spend eight upcoming
+    # event-list calls per hour when those cards are already cached.
+    now=dt.datetime.now(dt.timezone.utc)
+    last_checked=state.setdefault("upcomingCheckedAt",{})
     for org in ORGS:
         if client.remaining<=0 or client.stopped:break
+        last=last_checked.get(org)
+        try:
+            last_time=dt.datetime.fromisoformat(last.replace("Z","+00:00"))
+            stale=(now-last_time).total_seconds()>=90*60
+        except (AttributeError,TypeError,ValueError):
+            stale=True
+        if not stale:continue
         payload=client.call("/events"+param(org=org,status="upcoming",limit=50))
-        if payload:add_index(state,org,response_rows(payload),True)
+        if payload is not None:
+            add_index(state,org,response_rows(payload),True)
+            last_checked[org]=now.isoformat()
     for org in ORGS:
         if client.remaining<=0 or client.stopped or state["historicalComplete"].get(org):continue
         for n in range(4):
@@ -617,7 +629,9 @@ def main():
           (state["status"],client.calls,state["indexedEvents"],state["roundsDoneCount"],
            state["fighterProfilesDone"],state["publicEvents"]))
     if client.errors:print("Encountered:",",".join(client.errors[:5]))
-    if state["status"] not in ("connected","budget_guard"):
+    # A downgraded plan is expected after the paid backfill and is not a CI error.
+    # Historical data remains untouched and the workflow can resume after an upgrade.
+    if state["status"] not in ("connected","budget_guard","upgrade_not_detected"):
         sys.exit(1)
 
 if __name__=="__main__":
