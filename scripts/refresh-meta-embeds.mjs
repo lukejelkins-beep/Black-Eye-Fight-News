@@ -61,10 +61,7 @@ export function extractPostLinks(html){
  }
  return [...results.values()].slice(0,45);
 }
-export function publisherOf(url){
- try{const u=new URL(url);return u.protocol==='https:'?acceptedPublishers.get(u.hostname)||'':''}
- catch{return ''}
-}
+export {publisherOf};
 export function validMetaEmbed(data,platform){
  return !!data&&data.type==='rich'&&typeof data.html==='string'&&
  data.html.length>40&&String(data.provider_name||'').toLowerCase().includes(platform.toLowerCase());
