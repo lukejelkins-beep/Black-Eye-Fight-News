@@ -226,3 +226,36 @@
  #talk-results .talk-original .bluesky-embed,
  #talk-results .talk-original .talk-bsky-pending{padding:9px}
 }
+
+/* Official single-layer embeds: the social platform owns the post, not an outer BEFN card. */
+#talk-results .social-card.talk-native-card,
+#talk-results .social-card.talk-native-card[data-platform]{
+  display:block;
+  min-width:0;
+  min-height:0;
+  padding:0!important;
+  margin:0;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  background:transparent!important;
+  color:inherit;
+  overflow:visible;
+}
+#talk-results .talk-native-card>.talk-original,
+#talk-results .talk-native-card>.talk-native-static{
+  width:100%;
+  max-width:100%;
+  margin:0 auto;
+}
+#talk-results .talk-native-card .talk-original .twitter-tweet,
+#talk-results .talk-native-card .talk-original .instagram-media,
+#talk-results .talk-native-card .talk-original .text-post-media,
+#talk-results .talk-native-card .talk-original .bluesky-embed{
+  margin-top:0!important;
+}
+#talk-results .talk-native-card .talk-native-static .talk-embed-fallback{
+  border:1px solid #cfdbd7;
+  border-radius:12px;
+  padding:16px;
+}
