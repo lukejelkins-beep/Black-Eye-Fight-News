@@ -27,6 +27,8 @@ BUDGET = {"rounds": 48, "comparisons": 12, "histories": 12,
           "divisions": 8, "events": 4, "discovery": 4, "reserve": 12}
 assert sum(BUDGET.values()) == CAP
 MAX_CALLS_PER_RUN = 23   # Includes the usage call
+MAX_PER_CATEGORY_PER_RUN = {"rounds": 12, "comparisons": 3, "histories": 3,
+                            "divisions": 2, "events": 1, "discovery": 1}
 RECENT_DAYS = 18 * 30  # Activity eligibility; older career evidence remains valid.
 DIVISIONS = {"strawweight", "flyweight", "bantamweight", "featherweight",
              "lightweight", "welterweight", "middleweight", "light-heavyweight",
@@ -237,6 +239,7 @@ class BudgetClient:
         self.token, self.ledger, self.today = token, ledger, today
         self.fetch = fetch or self.http_get
         self.network_calls = 0
+        self.this_run = {category: 0 for category in BUDGET}
         self.available = 0
         self.mon, self.mons = week_fraction(today)
 
@@ -281,7 +284,8 @@ class BudgetClient:
         if category not in BUDGET or category == "reserve": return 0
         share = (BUDGET[category] * self.mon) // self.mons
         return max(0, min(share - self.ledger["spent"][category],
-                          self.available, MAX_CALLS_PER_RUN-self.network_calls))
+                          self.available, MAX_CALLS_PER_RUN-self.network_calls,
+                          MAX_PER_CATEGORY_PER_RUN[category] - self.this_run[category]))
 
     def call(self, category, ident, route):
         if self.allowance(category) < 1: return None
@@ -289,6 +293,7 @@ class BudgetClient:
         if key in self.ledger["attempted"][category]: return None
         # Attempts count even for HTTP failures or no data.
         self.ledger["spent"][category] += 1
+        self.this_run[category] += 1
         self.ledger["attempted"][category].append(key)
         self.available -= 1
         self.network_calls += 1

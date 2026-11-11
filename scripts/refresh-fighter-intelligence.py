@@ -158,6 +158,9 @@ def _api_error(exc):
 
 def ufcalendar(queue, fetch=fetch_json, key=None):
     """Validate API-key access separately from optional rankings and fighter searches."""
+    if os.environ.get("BEFN_UFCALENDAR_MANAGED") == "true":
+        return status("UFCalendar", "managed",
+                      "Quota-aware monthly job replaces legacy weekly fighter polling.")
     key = key if key is not None else os.environ.get("UFCALENDAR_API_KEY")
     if not key:
         return status("UFCalendar", "needs_key", "Set UFCALENDAR_API_KEY GitHub Actions secret.")
