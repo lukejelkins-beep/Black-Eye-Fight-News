@@ -30,6 +30,12 @@ Do **not** request permissions to publish, manage DMs, manage comments, or run a
 
 > Black Eye Fight News is a non-commercial combat sports news and results site. Its Fight Talk section showcases attributed links and embeds of original public posts from professional athletes, promotions and sports media. A site administrator authorizes BEFN to use a Facebook Page-linked professional Instagram account via Facebook Login. BEFN uses the Instagram Graph API Business Discovery endpoint to look up eligible public professional Instagram profiles and permitted public media, including usernames, media dates, media types and original permalinks. These are used to link or embed original posts in the website's read-only feed. BEFN does not access consumer/private Instagram accounts, collect private messages, publish on a connected account or modify third-party content. Readers can open the original Instagram post for its full context.
 
+## Platform questionnaire accuracy (action required in Meta)
+
+The user-facing BEFN website does **not currently** implement Facebook Login with an OAuth redirect/callback or a visitor login button. Its backend's developer-authorized Facebook Graph API token is **not** equivalent to Facebook Login being integrated *on the Website platform*. If the Meta Website reviewer questionnaire asks **"Is Facebook Login integrated on this platform?"**, the truthful answer is **No** unless/until an actual Website Facebook Login flow exists.
+
+The Meta browser initially saved **Yes** on 11 November 2026. This was identified as inaccurate and requires correction before submitting. A later browser session had expired before it could be corrected. Do not misrepresent the site's features or produce a simulated successful login/API screenshot.
+
 ## Reproducible reviewer demonstration — not yet complete
 
 A genuine demo must show **both** how the developer authorizes the linked professional Instagram account and how the enabled API response feeds real posts into BEFN.
