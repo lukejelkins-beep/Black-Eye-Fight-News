@@ -103,7 +103,11 @@ async function checkProfile(page,profile,screen){
   assert.equal(details.title,profile.name,"dialog title wrong");
   assert.equal(details.record,profile.record,"record mismatch");
   assert.equal(details.division,profile.division,"division mismatch");
-  assert.equal(details.category,profile.category,"category mismatch");
+  // Incomplete reviewed roster entries remain visible but must NOT receive
+  // an unsourced prospect/contender label. Their UI category is Unassessed.
+  const expectedCategory=profile.category==="Roster"&&!profile.ufcRecord?.complete?
+   "Unassessed":profile.category;
+  assert.equal(details.category,expectedCategory,"classification display mismatch");
   assert.equal(details.metrics,5,"expected exactly 5 rating rows");
   assert.equal(details.recent,profile.latest.length,"recent results do not match sourced data");
   assert(details.credentialsVisible,"credentials or missing-credential statement absent");
