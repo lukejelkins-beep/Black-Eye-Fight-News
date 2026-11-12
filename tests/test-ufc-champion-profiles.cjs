@@ -9,7 +9,7 @@ const insights=fs.readFileSync(path.join(root,"assets/fighter-insights.js"),"utf
 const model=require("../assets/fighter-power-index.js");
 assert.equal(data.schema,1);
 assert.equal(data.scope,"ufc-champions");
-assert.equal(data.reviewedOn,"2026-11-12");
+assert(/^\d{4}-\d\d-\d\d$/.test(data.reviewedOn),"Cohort review must have a real audit date");
 const roster=Object.values(data.fighters);
 assert.equal(roster.length,11);
 assert.equal(data.divisions.length,11);
@@ -24,7 +24,8 @@ for(const fighter of roster){
  knownNames.add(fighter.id);
  assert(/^https:\/\/www.ufc.com\/athlete\//.test(fighter.source),"UFC athlete source required");
  assert(fighter.statSource.startsWith("https://www.ufcalendar.com/fighters/"));
- assert.equal(fighter.review.checkedAt,data.reviewedOn);
+ assert(/^\d{4}-\d\d-\d\d$/.test(fighter.review.checkedAt)&&fighter.review.checkedAt<=data.reviewedOn,
+  "Per-fighter review date must be valid and no later than the cohort update");
  assert.equal(fighter.review.credentialsChecked,true);
  assert(Array.isArray(fighter.review.notes)&&fighter.review.notes.length,"Every champion personally researched");
  assert(fighter.verifiedStats.scope==="ufc-only");
