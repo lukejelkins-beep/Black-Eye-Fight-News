@@ -4,10 +4,20 @@
 (function(){
  "use strict";
  const engine=window.BEFNPowerIndex;
+ const classifier=window.BEFNUfcClassifier;
  if(!engine)return;
  const escapeHTML=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  const norm=engine.normalize;
  const profiles=(window.COMBAT_DATA?.fighters||[]);
+ // Legacy MMA scouting labels predate the evidence-backed UFC classifier.
+ // Preserve all legacy cards but do not display old curated tags as algorithmic.
+ for(const fighter of profiles){
+  if(fighter?.sport==="MMA"&&["Prospect","Contender"].includes(fighter.category)){
+   fighter.category="Unassessed";
+   fighter.classification={label:"Unassessed",score:null,eligible:false,
+    reason:"Historical scouting entry; pending a complete individually sourced UFC-only record."};
+  }
+ }
  const byId=new Map(profiles.map(f=>[f.id,f]));
  const byName=new Map();
  for(const f of profiles){const k=norm(f.name);if(!byName.has(k))byName.set(k,f)}
@@ -242,6 +252,23 @@
    '</div></section>';
  }
 
+
+ function classificationHTML(f){
+  if(f?.sport!=="MMA")return "";
+  const c=f.classification;
+  if(!c)return "";
+  const category=String(c.label||"Unassessed");
+  const score=c.score===null?"Not scored":c.score+" / 100";
+  return '<section class="befn-profile-block befn-scout-classification" data-befn-classification="'+
+   escapeHTML(f.id||"")+'"><h3>BEFN scouting classification</h3><div class="befn-profile-body">'+
+   '<p><strong>'+escapeHTML(category)+'</strong> · '+escapeHTML(score)+'</p>'+
+   '<p class="befn-score-note">'+escapeHTML(c.reason||"Evidence review pending")+'</p>'+
+   '<p class="befn-score-note">Editorial classification only, not an official UFC ranking. '+
+   'No limit on the number of prospects or contenders in any division. '+
+   'Results, dated opponent rankings and verified statistics determine eligibility; '+
+   'missing information does not earn bonus points.</p></div></section>';
+ }
+
  function renderProfile(f){
   const kind=f.sport==="Boxing"?"Boxing credentials":"Combat & grappling credentials";
   const metrics=ratingsFor(f);
@@ -266,6 +293,7 @@
    '<p class="befn-rating-source-row">'+ratingsEvidence(f)+'</p>'+
    '<p class="befn-score-note">0–100 descriptive indices, not win probabilities. Missing statistics remain unrated. '+(f.sport==="Boxing"?'Power uses documented KO-win share as a finishing proxy.':'MMA ratings use source-backed striking, grappling, wrestling, defence and recent form data.')+'</p></div></section>'+
    trackedMetricHTML(f)+
+   classificationHTML(f)+
    '<section class="befn-profile-block"><h3>Recent form (last 5)</h3><div class="befn-profile-body">'+formHTML(f)+'</div></section>'+
    '<section class="befn-profile-block"><h3>'+escapeHTML(kind)+'</h3><div class="befn-profile-body">'+credentialsHTML(f)+'</div></section>'+
    '<section class="befn-profile-block"><h3>'+(reviewedChampion?'Championship status':'Championship history')+'</h3><div class="befn-profile-body"><p class="befn-score-note" style="margin:0">'+escapeHTML(championshipText)+championshipLink+'</p></div></section></section>';
@@ -685,6 +713,8 @@
       Number.isInteger(covered.sampleBouts)&&covered.sampleBouts>=2)
     target.verifiedStats={...covered};
    target.championReview=true;
+   target.classification=classifier?.classify(source,engine)||{label:"Champion",score:null,
+    reason:"Dated verified UFC titleholder",eligible:true};
    const round=roundObservations.get(key);
    if(round)target.performanceEvidence=round;
    sampleEvidence.set(key,target);
@@ -712,6 +742,11 @@
        !Array.isArray(source.review.notes)||!source.review.notes.length||
        !Array.isArray(source.latest)||!source.latest.length||
        !Array.isArray(source.credentials))continue;
+    // Source-review is necessary but not sufficient: the BEFN algorithm
+    // independently classifies every athlete, with no division quotas.
+    const classified=classifier?.classify(source,engine);
+    if(!classified?.eligible||
+       !["Contender","Prospect","Roster"].includes(classified.label))continue;
     const key=norm(source.name);
     if(duplicates.has(key)||champions.has(key))continue;
     if(!source.latest.every(x=>x?.opponent&&x?.method&&
@@ -730,7 +765,8 @@
     target.id=source.id;
     byId.set(source.id,target);
     target.organisation="UFC";target.sport="MMA";
-    target.category=source.category;
+    target.category=classified.label;
+    target.classification=classified;
     target.division=source.division;
     target.record=source.record;
     target.reviewedUfcProfile=true;

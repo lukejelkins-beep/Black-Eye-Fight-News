@@ -8,6 +8,7 @@ const fs=require("node:fs");
 const path=require("node:path");
 const root=path.resolve(__dirname,"..");
 const model=require("../assets/fighter-power-index.js");
+const classifier=require("../assets/ufc-prospect-contender.js");
 const read=p=>fs.readFileSync(path.join(root,p),"utf8");
 const html=read("index.html");
 const insights=read("assets/fighter-insights.js");
@@ -105,6 +106,12 @@ for(const file of files){
       context+": unverified credential must not contribute points");
    }
   }
+  if(f.category!=="Champion"){
+   const classification=classifier.classify(f,model);
+   assert(classification.eligible,context+": classification has insufficient verified input");
+   assert.equal(classification.label,f.category,
+     context+": algorithmic classification does not match published category");
+  }
   const scores=model.evaluate({stats:stats||undefined,credentials:f.credentials,
    recent:{fights:stats?.sampleBouts||0}},f.latest);
   assert.equal(scores.length,5,context+": expected 5 dimensions");
@@ -125,6 +132,9 @@ for(const file of files){
   checked++;
  }
 }
+assert(insights.includes('BEFNUfcClassifier')&&
+ insights.includes('target.category=classified.label'),
+ "All reviewed UFC fighters must use uncapped algorithmic category assignment");
 assert(insights.includes('data/ufc-ranked-profiles.json')&&
  insights.includes('data/ufc-contender-profiles.json')&&
  insights.includes('data/ufc-prospect-profiles.json')&&

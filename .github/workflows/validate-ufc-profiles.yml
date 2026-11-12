@@ -15,6 +15,8 @@ on:
       - 'tests/test-ufc-profile-visual.mjs'
       - 'data/ufc-postfight-metrics.json'
       - 'assets/fighter-insights.js'
+      - 'assets/ufc-prospect-contender.js'
+      - 'tests/test-ufc-prospect-contender.cjs'
       - 'assets/fighter-power.css'
       - 'index.html'
       - 'sw.js'
@@ -46,12 +48,14 @@ jobs:
         run: |
           node --check assets/fighter-power-index.js
           node --check assets/fighter-insights.js
+          node --check assets/ufc-prospect-contender.js
       - name: Validate all UFC profile cards and source data
         run: node tests/test-ufc-profile-card-qa.cjs
       - name: Verify champion cohort and evidence gates
         run: |
           node tests/test-ufc-champion-profiles.cjs
           node tests/test-fighter-power-index.cjs
+          node tests/test-ufc-prospect-contender.cjs
       - name: Verify deterministic research queue
         run: node --test tests/test-ufc-profile-queue.mjs
       - name: Verify post-fight event reconciliation and no double counting
