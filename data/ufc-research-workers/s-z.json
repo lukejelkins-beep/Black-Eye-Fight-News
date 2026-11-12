@@ -37,6 +37,30 @@
         "Validate existing champion cohort statistical sample denominators and preserve independently verified credentials; run classifier and card QA tests before cohort edit."
       ],
       "nextAction": "Verify 25 career results against official UFC event results, prioritize last five per-event pages; then merge only sean-strickland ufcRecord and corrected sourced rows into latest champion cohort."
+    },
+    "seokhyeon-ko": {
+      "name": "Seokhyeon Ko",
+      "status": "blocked",
+      "lastCheckedOn": "2026-11-13",
+      "sourceUrls": [
+        "https://www.ufc.com/athlete/seokhyeon-ko",
+        "https://www.ufcalendar.com/fighters/seokhyeon-ko",
+        "https://statwell.io/ufc/fighters/seokhyeon-ko-4701954"
+      ],
+      "findings": [
+        "Official UFC athlete detailed narrative lists four UFC bouts: 2026-11-07 W Wellington Turman unanimous decision R3 5:00; 2026-07-18 L Jean-Paul Lebosnoyani unanimous decision R3 5:00; 2025-11-01 W Phil Rowe unanimous decision R3 5:00; 2025-06-21 W Oban Elliott unanimous decision R3 5:00. This implies UFC-only 3-1-0, excluding 2024-09-03 DWCS victory over Igor Cavalcanti.",
+        "UFC biography abbreviated athlete record widget incorrectly labels July 2026 Lebosnoyani bout as win; detailed narrative calls it loss, matching UFCalendar and independent bout history.",
+        "Official UFC biography reports professional 14-3-0, active welterweight, 243 significant strikes landed of 473 attempted; official takedown displayed totals 6 of 33 contradict reported 3.60 per 15 minute takedown average over four 15-minute UFC bouts.",
+        "Reported sambo world championship, judo black belt and BJJ purple belt have not been independently validated by federation/instructor; zero credential points pending primary verification.",
+        "UFCalendar and some third-party sources incorrectly include DWCS as UFC, claiming 4-1; must not publish this count."
+      ],
+      "blockers": [
+        "Reconcile official UFC individual event results for all four UFC bouts, especially contradictory July 2026 UFC result widget; establish authoritative 3-1 UFC-only career count.",
+        "Reconcile UFC-only statistics denominators: 243/473 significant strikes and 6/33 takedowns on UFC.com conflict with four-bout rate averages; identify whether site aggregate includes DWCS or other data.",
+        "Independently verify reported sambo/judo/BJJ credentials via FIAS/federation or instructor primary sources; otherwise leave unscored, and run deterministic V2 classification and card QA.",
+        "Check whether priority worker claims post-fight ownership of 2026-11-07 result before any public profile edit; queue currently has no postFightRefreshCandidates but the recent bout requires ownership caution."
+      ],
+      "nextAction": "After 24h or new evidence, audit individual UFC event result pages and primary sambo credentials; exclude DWCS and resolve stats denominators before any cohort commit."
     }
   }
 }
