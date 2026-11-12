@@ -522,10 +522,10 @@
     if(!fighter.sources.some(x=>x.url===item.source))
      fighter.sources.push({label:"UFC 334 research and statistical source",url:item.source});
    }
-   if(item.verifiedStats&&validSource(item.verifiedStats.source)&&
+   if(!fighter.championReview&&item.verifiedStats&&validSource(item.verifiedStats.source)&&
       Number.isInteger(item.verifiedStats.sampleBouts))
     fighter.verifiedStats=item.verifiedStats;
-   if(Array.isArray(item.credentials)){
+   if(!fighter.championReview&&Array.isArray(item.credentials)){
     const original=Array.isArray(fighter.credentials)?fighter.credentials:[];
     for(const c of item.credentials){
      if(!c||!validSource(c.source))continue;
@@ -537,13 +537,65 @@
    }
    // Curated verified result summaries replace screenshot-only timing examples
    // only for this card, never for unrelated fighter records.
-   if(Array.isArray(item.latest)&&item.latest.length)
+   if(!fighter.championReview&&Array.isArray(item.latest)&&item.latest.length)
     fighter.latest=item.latest.map(x=>({...x}));
    const round=roundObservations.get(key);
    if(round)fighter.performanceEvidence=round;
    sampleEvidence.set(key,fighter);
   }
   update();
+ }).catch(()=>{});
+ // UFC champions are the first fully researched athlete cohort.
+ // This may resolve before or after the UFC 334 card sample: the reviewed
+ // champion profile is authoritative for its UFC-only statistics and history.
+ fetch("data/ufc-champion-profiles.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{
+  if(!d||d.schema!==1||d.scope!=="ufc-champions"||
+    !Array.isArray(d.divisions)||d.divisions.length!==11||!d.fighters)return;
+  for(const source of Object.values(d.fighters)){
+   if(!source?.name||source.organisation!=="UFC"||source.sport!=="MMA"||
+      source.category!=="Champion"||!validSource(source.source)||!source.review?.credentialsChecked)continue;
+   const key=norm(source.name);
+   let target=byName.get(key);
+   if(!target){
+    target={...source,photo:"",report:"mma-champions",
+     sources:[],analysis:[]};
+    profiles.push(target);byName.set(key,target);
+   }
+   // The champion ID is canonical for links in the Champions and Fighters pages.
+   if(target.id!==source.id){
+    byId.delete(target.id);
+    target.id=source.id;
+   }
+   byId.set(source.id,target);
+   target.organisation="UFC";
+   target.sport="MMA";target.category="Champion";
+   target.division=source.division;target.record=source.record;
+   target.meta=source.meta;target.review=source.review;
+   target.verificationNote=source.verificationNote;
+   target.latest=source.latest.map(x=>({...x}));
+   target.analysis=source.review?.notes?.length?source.review.notes:
+      ["Individual credential review completed; no confirmed qualifying award entered."];
+   target.sources=[
+    {label:"Official UFC athlete biography & fight history",url:source.source},
+    {label:"UFC-only statistics and sample size",url:source.statSource},
+    {label:"UFC titleholders",url:d.sources?.champions}
+   ].filter(x=>validSource(x.url));
+   for(const c of source.credentials||[]){
+    if(validSource(c?.source)&&!target.sources.some(x=>x.url===c.source))
+     target.sources.push({label:"Credential: "+c.kind,url:c.source});
+   }
+   target.credentials=(source.credentials||[]).filter(c=>validSource(c.source)).map(x=>({...x}));
+   const covered=source.verifiedStats;
+   if(covered&&covered.scope==="ufc-only"&&validSource(covered.source)&&
+      Number.isInteger(covered.sampleBouts)&&covered.sampleBouts>=2)
+    target.verifiedStats={...covered};
+   target.championReview=true;
+   const round=roundObservations.get(key);
+   if(round)target.performanceEvidence=round;
+   sampleEvidence.set(key,target);
+  }
+  update();
+  window.dispatchEvent(new CustomEvent("befn:champion-profiles-ready",{detail:{count:11}}));
  }).catch(()=>{});
  fetch("data/fighter-intelligence.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{
   if(!d||!Array.isArray(d.fighters))return;
