@@ -130,6 +130,10 @@ assert(insights.includes('data/ufc-ranked-profiles.json')&&
  insights.includes('data/ufc-prospect-profiles.json')&&
  insights.includes('data/ufc-roster-profiles.json'),
  "Reviewed UFC cohorts must hydrate the same shared profile engine");
+assert(insights.includes('data/ufc-postfight-metrics.json')&&
+ insights.includes('Tracked UFC fight statistics')&&
+ insights.includes('tracked-sample totals, not career totals'),
+ "UFC post-fight totals must hydrate into clearly labelled fighter cards");
 assert(insights.includes('data/ufc-champion-profiles.json'),
  "Champion data must be loaded into fighter cards");
 assert(html.includes('data-fighter="mma-champion--'),

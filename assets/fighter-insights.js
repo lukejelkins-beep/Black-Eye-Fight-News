@@ -12,6 +12,7 @@
  const byName=new Map();
  for(const f of profiles){const k=norm(f.name);if(!byName.has(k))byName.set(k,f)}
  const stats=new Map();
+ const trackedUfcStats=new Map();
  const openSnapshots=new Set();
  const selectedTabs=new Map();
  const sampleEvidence=new Map();
@@ -177,6 +178,70 @@
     escapeHTML(v.grapplingEvidenceNote||'Verified submission finish evidence')+
     '">Submission finishes</a>':'')+'</span>';
  }
+
+ function trackedMetric(v,format){
+  if(!Number.isInteger(v))return "—";
+  if(format==="time"){
+   const sign=v<0?"−":v>0?"+":"";
+   const absolute=Math.abs(v);
+   return sign+Math.floor(absolute/60)+":"+String(absolute%60).padStart(2,"0");
+  }
+  if(format==="duration"){
+   return Math.floor(v/60)+":"+String(v%60).padStart(2,"0");
+  }
+  return (v>0&&format==="signed"?"+":"")+v.toLocaleString("en-AU");
+ }
+ function trackedMetricHTML(f){
+  if(!f||f.sport!=="MMA")return "";
+  const d=trackedUfcStats.get(norm(f.name));
+  if(!d||!Number.isInteger(d.trackedBouts)||d.trackedBouts<1)return "";
+  const rows=[
+   ["Total strikes landed","totalLanded"],
+   ["Total strikes received","totalAbsorbed"],
+   ["Total strike differential","totalStrikeDifferential","signed"],
+   ["Significant strikes landed","sigLanded"],
+   ["Significant strikes received","sigAbsorbed"],
+   ["Significant strike differential","sigStrikeDifferential","signed"],
+   ["Control time","controlSec","duration"],
+   ["Control differential","controlDifferentialSec","time"],
+   ["Knockdowns","knockdowns"],
+   ["Takedowns landed","takedowns"],
+   ["Submission attempts","subAttempts"]
+  ];
+  const cell=([label,key,format])=>{
+   const entry=d.totals?.[key];
+   const covered=Number.isInteger(entry?.coveredBouts)?entry.coveredBouts:0;
+   return '<div class="befn-postfight-stat"><span>'+escapeHTML(label)+'</span>'+
+    '<strong>'+escapeHTML(trackedMetric(entry?.value,format))+'</strong>'+
+    '<small>'+covered+'/'+d.trackedBouts+' tracked UFC bouts</small></div>';
+  };
+  const recent=(d.recentBouts||[]).filter(x=>x?.date&&x?.opponent).slice(0,5);
+  const fightRows=recent.map(b=>{
+   const m=b.metrics||{};
+   const delta=m.totalStrikeDifferential;
+   return '<li class="befn-postfight-bout"><span><b>'+escapeHTML(b.opponent)+
+    '</b><small>'+escapeHTML(b.date)+' · '+escapeHTML(b.event||"UFC")+'</small></span>'+
+    '<span><b>'+escapeHTML(trackedMetric(m.totalLanded))+' total strikes</b>'+
+    '<small>Difference '+escapeHTML(trackedMetric(delta,"signed"))+
+    ' · Control '+escapeHTML(trackedMetric(m.controlSec,"duration"))+'</small></span></li>';
+  }).join("");
+  const lastReviewed=String(f.latest?.[0]?.date||"").slice(0,10);
+  const pending=lastReviewed&&d.lastFightDate>lastReviewed;
+  return '<section class="befn-profile-block" data-befn-postfight="'+escapeHTML(f.id)+
+   '"><h3>Tracked UFC fight statistics</h3><div class="befn-profile-body">'+
+   '<p class="befn-score-note">Updated from completed UFC bouts with archived round-by-round observations. '+
+   '<b>'+d.trackedBouts+' recorded bouts</b>, latest '+escapeHTML(d.lastFightDate)+
+   '. These are <b>tracked-sample totals, not career totals</b>. Missing round fields are not guessed.</p>'+
+   (pending?'<p class="befn-postfight-warning">New fight observed. Career record, recent form and 0–100 ratings await source review.</p>':"")+
+   '<div class="befn-postfight-grid">'+rows.map(cell).join("")+'</div>'+
+   (fightRows?'<details class="befn-postfight-history"><summary>Show per-fight strike and control observations</summary>'+
+    '<ul>'+fightRows+'</ul></details>':"")+
+   '<p class="befn-rating-source-note">Source: saved UFC-only UFCalendar-derived fight observations. '+
+   '<a href="https://www.ufcalendar.com/" target="_blank" rel="noopener noreferrer">UFCalendar</a>. '+
+   'Source disagreements and incomplete rounds are withheld pending verification.</p>'+
+   '</div></section>';
+ }
+
  function renderProfile(f){
   const kind=f.sport==="Boxing"?"Boxing credentials":"Combat & grappling credentials";
   const metrics=ratingsFor(f);
@@ -200,6 +265,7 @@
    '<div class="befn-power-bars">'+metrics.map(profileMetric).join("")+'</div>'+scoreMethodHTML(f.sport)+
    '<p class="befn-rating-source-row">'+ratingsEvidence(f)+'</p>'+
    '<p class="befn-score-note">0–100 descriptive indices, not win probabilities. Missing statistics remain unrated. '+(f.sport==="Boxing"?'Power uses documented KO-win share as a finishing proxy.':'MMA ratings use source-backed striking, grappling, wrestling, defence and recent form data.')+'</p></div></section>'+
+   trackedMetricHTML(f)+
    '<section class="befn-profile-block"><h3>Recent form (last 5)</h3><div class="befn-profile-body">'+formHTML(f)+'</div></section>'+
    '<section class="befn-profile-block"><h3>'+escapeHTML(kind)+'</h3><div class="befn-profile-body">'+credentialsHTML(f)+'</div></section>'+
    '<section class="befn-profile-block"><h3>'+(reviewedChampion?'Championship status':'Championship history')+'</h3><div class="befn-profile-body"><p class="befn-score-note" style="margin:0">'+escapeHTML(championshipText)+championshipLink+'</p></div></section></section>';
@@ -284,6 +350,9 @@
    ["Significant strikes / min","sigLandedPerMin","rate"],
    ["Strikes absorbed / min","sigAbsorbedPerMin","rate"],
    ["Striking accuracy","sigAccuracy","percent"],
+   ["Total strikes landed (tracked)","totalLanded","count"],
+   ["Total strike differential (tracked)","totalStrikeDifferential","signed"],
+   ["Significant strike differential (tracked)","sigStrikeDifferential","signed"],
    ["Knockdowns landed","knockdowns","count"],
    ["Grappling",null],
    ["Control time","controlSec","time"],
@@ -291,18 +360,29 @@
    ["Takedowns defended","takedownsDefended","count"],
    ["Submission attempts","submissionAttempts","count"]
   ];
-  const hasVerified=f.some(x=>statRecord(x)?.stats?.observedOn);
+  const hasVerified=f.some(x=>statRecord(x)?.stats?.observedOn||trackedUfcStats.has(norm(x?.name)));
   const body=rows.map(([label,key,fmt])=>{
    if(!key)return '<h4 class="befn-history-stat-heading">'+escapeHTML(label)+'</h4>';
-   const values=f.map(x=>referenceStat(x,key));
-   const value=x=>x===null?"—":fmt==="rate"?availableNumber(x,2):fmt==="percent"?availableNumber(x)+"%":fmt==="time"?secTime(x):String(x);
+   const values=f.map(x=>{
+    const d=trackedUfcStats.get(norm(x?.name));
+    const field=key==="knockdowns"?"knockdowns":
+     key==="controlSec"?"controlSec":
+     key==="takedowns"?"takedowns":
+     key==="submissionAttempts"?"subAttempts":key;
+    const entry=d?.totals?.[field];
+    if(Number.isInteger(entry?.value))return entry.value;
+    return referenceStat(x,key);
+   });
+   const value=x=>x===null?"—":fmt==="rate"?availableNumber(x,2):
+    fmt==="percent"?availableNumber(x)+"%":fmt==="time"?secTime(x):
+    fmt==="signed"?trackedMetric(x,"signed"):String(x);
    return '<div class="befn-history-stat"><b>'+escapeHTML(value(values[0]))+'</b>'+
     '<span>'+escapeHTML(label)+'</span><b>'+escapeHTML(value(values[1]))+'</b></div>';
   }).join("");
   return '<section class="befn-history-stats"><div class="befn-history-stats-head"><strong>'+
     escapeHTML(names[0])+'</strong><span>Last five / available sample</span><strong>'+escapeHTML(names[1])+'</strong></div>'+
     body+'<p class="befn-snapshot-disclaimer">'+(hasVerified?
-    'Only source-backed rate statistics are shown. Some counts are unavailable until additional fight records have been checked.':
+    'Rates come from separately verified fighter statistics; strike, control and finishing counts cover only completed UFC bouts with matching round archives. Missing values are not zeros.':
     'No independently sourced statistics for this matchup yet; screenshot reference values are excluded and missing fields show —.')+'</p></section>';
  }
  const inchesText=inches=>typeof inches==="number"&&Number.isFinite(inches)?
@@ -689,6 +769,27 @@
      {detail:{count}}));
   }
  }).catch(()=>{});
+
+
+ // Live-derived post-fight sample totals are independent of the career-wide
+ // rating snapshot; they must not silently replace a longer audited sample.
+ fetch("data/ufc-postfight-metrics.json",{cache:"no-store"})
+  .then(r=>r.ok?r.json():null).then(d=>{
+   if(!d||d.schema!==1||d.scope!=="ufc-only"||!d.fighters)return;
+   let added=0;
+   for(const value of Object.values(d.fighters)){
+    if(!value?.name||!Array.isArray(value.recentBouts)||
+       !Number.isInteger(value.trackedBouts)||value.trackedBouts<1)continue;
+    if(!value.recentBouts.every(b=>b?.boutId&&b?.opponent&&
+       /^\d{4}-\d\d-\d\d$/.test(String(b.date||""))))continue;
+    trackedUfcStats.set(norm(value.name),value);added++;
+   }
+   if(added){
+    update();
+    window.dispatchEvent(new CustomEvent("befn:ufc-postfight-stats-ready",
+      {detail:{count:added}}));
+   }
+  }).catch(()=>{});
 
  fetch("data/fighter-intelligence.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{
   if(!d||!Array.isArray(d.fighters))return;
