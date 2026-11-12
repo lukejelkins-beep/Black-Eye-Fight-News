@@ -14,9 +14,9 @@ const OUTPUT="data/ufc-profile-research-queue.json";
 const REVIEW_FILES=["data/ufc-champion-profiles.json","data/ufc-ranked-profiles.json",
  "data/ufc-contender-profiles.json","data/ufc-prospect-profiles.json","data/ufc-roster-profiles.json"];
 const norm=x=>String(x||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
- .toLowerCase().replace(/[^a-z0-9]/g,"");
+ .toLowerCase().replace(/[^\p{L}\p{N}]/gu,"");
 const slug=x=>String(x||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
- .toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+ .toLowerCase().replace(/[^\p{L}\p{N}]+/gu,"-").replace(/^-|-$/g,"");
 const date=x=>String(x||"").slice(0,10);
 const validDate=x=>/^\d{4}-\d\d-\d\d$/.test(x);
 const days=(a,b)=>Math.round((Date.parse(a+"T00:00:00Z")-Date.parse(b+"T00:00:00Z"))/86400000);
