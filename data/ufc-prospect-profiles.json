@@ -1,0 +1,229 @@
+{
+  "schema": 1,
+  "scope": "ufc-only",
+  "reviewedOn": "2026-11-12",
+  "methodology": "Individually verified official UFC bout histories, UFC-only statistical samples, optional independently verified credentials. BEFN rule-based algorithm applies across ALL divisions with no numerical cap.",
+  "fighters": {
+    "jose-souza": {
+      "id": "mma-ufc--jose-souza",
+      "name": "José Souza",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "division": "Welterweight",
+      "category": "Prospect",
+      "age": 24,
+      "record": "10–1–0",
+      "source": "https://www.ufc.com/athlete/jose-souza",
+      "ufcRecord": {
+        "wins": 2,
+        "losses": 0,
+        "draws": 0,
+        "complete": true,
+        "checkedAt": "2026-11-12",
+        "source": "https://www.ufc.com/athlete/jose-souza"
+      },
+      "latest": [
+        {
+          "date": "2026-11-07",
+          "opponent": "Jonny Parsons",
+          "outcome": "W",
+          "method": "KO R1 4:16",
+          "cageSec": 256,
+          "source": "https://www.ufc.com/event/ufc-fight-night-november-07-2026"
+        },
+        {
+          "date": "2026-05-30",
+          "opponent": "Ding Meng",
+          "outcome": "W",
+          "method": "Split decision R3",
+          "cageSec": 900,
+          "source": "https://www.ufc.com/athlete/jose-souza"
+        }
+      ],
+      "verifiedStats": {
+        "scope": "ufc-only",
+        "source": "https://thecagegrid.com/fighters/jose-souza",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 2,
+        "slpm": 5.45,
+        "sapm": 4.05,
+        "strAcc": 54,
+        "strDef": 56,
+        "tdAvg": 0,
+        "subAvg": 0,
+        "kdAvg": 0.5,
+        "koTkoWinRate": 0.5,
+        "submissionWinRate": 0,
+        "denominatorNotes": "Two completed UFC bouts; DWCS excluded, no unverified takedown defence or control totals."
+      },
+      "credentials": [],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "credentialsChecked": true,
+        "notes": [
+          "Official UFC history verifies two consecutive Octagon wins: decision over Ding Meng and first-round KO of Jonny Parsons.",
+          "DWCS 2022 result is not counted as an official UFC bout; no independently confirmed qualifying combat-sports awards were used."
+        ]
+      },
+      "meta": "UFC Welterweight · BEFN algorithm-audited scouting profile · 12 Nov 2026",
+      "verificationNote": "UFC-only results, dated statistical samples and explicit credential verification. Editorial prospect/contender status is recalculated; missing metrics remain unrated."
+    },
+    "austin-bashi": {
+      "id": "mma-ufc--austin-bashi",
+      "name": "Austin Bashi",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "division": "Featherweight",
+      "category": "Prospect",
+      "age": 25,
+      "record": "15–2–0",
+      "source": "https://www.ufc.com/athlete/austin-bashi",
+      "ufcRecord": {
+        "wins": 2,
+        "losses": 2,
+        "draws": 0,
+        "complete": true,
+        "checkedAt": "2026-11-12",
+        "source": "https://www.ufc.com/athlete/austin-bashi"
+      },
+      "latest": [
+        {
+          "date": "2026-11-07",
+          "opponent": "Carlos Calderon",
+          "outcome": "W",
+          "method": "Submission (RNC) R1 1:07",
+          "cageSec": 67,
+          "source": "https://www.ufc.com/event/ufc-fight-night-november-07-2026"
+        },
+        {
+          "date": "2026-07-18",
+          "opponent": "Jose Miguel Delgado",
+          "outcome": "L",
+          "method": "Unanimous decision R3",
+          "cageSec": 900,
+          "source": "https://www.ufc.com/athlete/austin-bashi"
+        },
+        {
+          "date": "2025-08-02",
+          "opponent": "John Yannis",
+          "outcome": "W",
+          "method": "Submission (RNC) R1 3:39",
+          "cageSec": 219,
+          "source": "https://www.ufc.com/athlete/austin-bashi"
+        },
+        {
+          "date": "2025-01-11",
+          "opponent": "Christian Rodriguez",
+          "outcome": "L",
+          "method": "Unanimous decision R3",
+          "cageSec": 900,
+          "source": "https://www.ufc.com/athlete/austin-bashi"
+        }
+      ],
+      "verifiedStats": {
+        "scope": "ufc-only",
+        "source": "https://cagealmanac.com/fighters/austin-bashi-d3f89f",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 4,
+        "slpm": 1.7,
+        "sapm": 2.3,
+        "strAcc": 39,
+        "strDef": 55,
+        "tdAvg": 3.45,
+        "tdAcc": 23,
+        "tdDef": 57,
+        "subAvg": 1.29,
+        "kdAvg": 0,
+        "koTkoWinRate": 0,
+        "submissionWinRate": 0.5,
+        "controlShare": 0.357,
+        "denominatorNotes": "Four regular UFC bouts, excluding Dana White's Contender Series; no separate verified reversal sample."
+      },
+      "credentials": [
+        {
+          "kind": "bjj",
+          "belt": "black",
+          "verification": "reported",
+          "source": "https://www.ufc.com/athlete/austin-bashi",
+          "detail": "UFC athlete Q&A reports a black belt. Independent gym/instructor confirmation pending; zero rating bonus."
+        }
+      ],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "credentialsChecked": true,
+        "notes": [
+          "Official UFC athlete history and current card verify two submission wins and two decision defeats in four UFC bouts.",
+          "UFC biography mentions an IBJJF world title and a black belt; independent primary event records and belt validation are still required for bonus credit."
+        ]
+      },
+      "meta": "UFC Featherweight · BEFN algorithm-audited scouting profile · 12 Nov 2026",
+      "verificationNote": "UFC-only results, dated statistical samples and explicit credential verification. Editorial prospect/contender status is recalculated; missing metrics remain unrated."
+    },
+    "lucas-fernando": {
+      "id": "mma-ufc--lucas-fernando",
+      "name": "Lucas Fernando",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "division": "Light Heavyweight",
+      "category": "Prospect",
+      "age": 29,
+      "record": "15–3–0",
+      "source": "https://www.ufc.com/athlete/lucas-fernando",
+      "ufcRecord": {
+        "wins": 2,
+        "losses": 0,
+        "draws": 0,
+        "complete": true,
+        "checkedAt": "2026-11-12",
+        "source": "https://www.ufc.com/athlete/lucas-fernando"
+      },
+      "latest": [
+        {
+          "date": "2026-11-07",
+          "opponent": "Billy Elekana",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "cageSec": 900,
+          "source": "https://www.ufc.com/event/ufc-fight-night-november-07-2026"
+        },
+        {
+          "date": "2026-08-15",
+          "opponent": "Rafael Tobias",
+          "outcome": "W",
+          "method": "TKO R3 1:10",
+          "cageSec": 970,
+          "source": "https://www.ufc.com/athlete/lucas-fernando"
+        }
+      ],
+      "verifiedStats": {
+        "scope": "ufc-only",
+        "source": "https://cagealmanac.com/fighters/lucas-fernando-3df223",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 2,
+        "slpm": 5.08,
+        "sapm": 1.26,
+        "strAcc": 60,
+        "strDef": 65,
+        "tdAvg": 0,
+        "tdDef": 50,
+        "subAvg": 0,
+        "kdAvg": 1.15,
+        "koTkoWinRate": 0.5,
+        "submissionWinRate": 0,
+        "controlShare": 0.115,
+        "denominatorNotes": "Two regular UFC fights, total 26m10s; the previous DWCS fight is excluded."
+      },
+      "credentials": [],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "credentialsChecked": true,
+        "notes": [
+          "Two UFC wins: TKO against Rafael Tobias and decision against Billy Elekana. Eight career KO wins are not eight UFC KO wins.",
+          "LFA regional titles noted on the UFC biography; no UFC titleholder or scoring-schedule credential is inferred from them."
+        ]
+      },
+      "meta": "UFC Light Heavyweight · BEFN algorithm-audited scouting profile · 12 Nov 2026",
+      "verificationNote": "UFC-only results, dated statistical samples and explicit credential verification. Editorial prospect/contender status is recalculated; missing metrics remain unrated."
+    }
+  }
+}
