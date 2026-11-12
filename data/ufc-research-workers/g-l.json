@@ -14,6 +14,45 @@
       "sourceUrls": [
         "https://www.ufc.com/athlete/karine-silva"
       ]
+    },
+    "justin-gaethje": {
+      "name": "Justin Gaethje",
+      "status": "blocked",
+      "lastCheckedOn": "2026-11-13",
+      "sourceUrls": [
+        "https://www.ufc.com/athlete/justin-gaethje",
+        "https://www.ufc.com/athlete/ilia-topuria",
+        "https://jp.ufc.com/athlete/justin-gaethje"
+      ],
+      "verifiedFindings": [
+        "Existing champion cohort lacks ufcRecord despite five recent rows and 16-bout tracked statistics sample; sampleBouts must not be used as career count.",
+        "UFC athlete profile lists professional record 28-5 and UFC debut July 8 2017; recent history includes June 14 2026 Topuria, January 24 2026 Pimblett and March 8 2025 Fiziev.",
+        "Official Topuria athlete page also labels the June 14 2026 Gaethje fight as a win, conflicting with Gaethje athlete page's win label. Individual official event result is required."
+      ],
+      "blockers": [
+        "Full lifetime UFC W-L-D/NC count not yet reconciled from individual UFC event results; do not equate 16 tracked statistical bouts with career total.",
+        "June 14 2026 Topuria/Gaethje contradictory UFC athlete win labels need official event outcome and finish clock independently confirmed.",
+        "Last five official event results and source-specific methods/clocks require per-bout audit."
+      ],
+      "nextAction": "Resolve June 14 2026 event result first, then enumerate all UFC bouts from 2017 debut to derive lifetime record and validate five latest event results; preserve existing credential evidence; publish only after source-integrity and live QA gates."
+    },
+    "kayla-harrison": {
+      "name": "Kayla Harrison",
+      "status": "blocked",
+      "lastCheckedOn": "2026-11-13",
+      "sourceUrls": [
+        "https://jp.ufc.com/athlete/kayla-harrison",
+        "https://www.ufc.com/event/ufc-316",
+        "https://www.ufc.com/event/ufc-307"
+      ],
+      "verifiedFindings": [
+        "Official UFC 316 and UFC 307 event results confirm Harrison defeated Julianna Pena by second-round kimura at 4:55 and Ketlen Vieira by unanimous decision.",
+        "Official UFC athlete page displays upcoming Harrison vs Amanda Nunes for November 15 Japan date (November 14 US event date)."
+      ],
+      "blockers": [
+        "Booked UFC-card entrant: exclusively owned by priority worker; do not modify champion cohort or claim complete UFC career record."
+      ],
+      "nextAction": "Defer all Harrison champion repairs to priority worker while booked; do not retry as G-L historical repair unless booking exclusion clears."
     }
   }
 }
