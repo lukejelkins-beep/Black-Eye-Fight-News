@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "scope": "ufc-champions",
-  "reviewedOn": "2026-11-12",
+  "reviewedOn": "2026-11-13",
   "sources": {
     "champions": "https://www.ufc.com/athletes?redirect=no",
     "stats": "Individual UFC.com fighter bios and UFCalendar UFC-only statistics"
@@ -190,7 +190,7 @@
         "observedOn": "2026-11-12",
         "sampleBouts": 11,
         "scope": "ufc-only",
-        "denominatorNotes": "Rates and finish ratios refer to tracked UFC fights only; omissions represent unverified data."
+        "denominatorNotes": "UFCalendar tracked UFC-only sample: 11 bouts. Career UFC-only record independently enumerated as 11 completed bouts (10-1-0, 0 NC) in official UFC biography. Per-metric coverage and measured rates are not assumed to be full-career totals where missing."
       },
       "latest": [
         {
@@ -240,18 +240,29 @@
         "https://www.ufcalendar.com/fighters/carlos-ulberg/stats"
       ],
       "review": {
-        "checkedAt": "2026-11-12",
+        "checkedAt": "2026-11-13",
         "championStatusSource": "https://www.ufc.com/athletes?redirect=no",
         "statsSource": "https://www.ufcalendar.com/fighters/carlos-ulberg/stats",
         "recentHistorySource": "https://www.ufc.com/athlete/carlos-ulberg",
         "credentialsChecked": true,
         "notes": [
-          "UFCStats-only 11 bouts, excluding Dana White Contender Series; no externally verified BJJ belt, wrestling medal, or Sambo championship identified."
+          "UFCStats-only 11 bouts, excluding Dana White Contender Series; no externally verified BJJ belt, wrestling medal, or Sambo championship identified.",
+          "13 Nov 2026 UFC-only career audit: official UFC athlete biography individually lists 11 UFC bouts, a ten-fight UFC winning streak after the debut loss to Kennedy Nzechukwu; 10-1-0 (0 NC). DWCS excluded. The existing latest five rows correspond to the official biography's five most recent completed UFC bouts."
         ]
       },
       "meta": "Reigning UFC Light Heavyweight champion · independently reviewed fighter profile · 2026-11-12",
       "analysis": [],
-      "verificationNote": "UFC-only sample and separately linked source-backed credentials. Unverified awards carry zero point bonus."
+      "verificationNote": "UFC-only sample and separately linked source-backed credentials. Unverified awards carry zero point bonus.",
+      "ufcRecord": {
+        "wins": 10,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0,
+        "complete": true,
+        "checkedAt": "2026-11-13",
+        "source": "https://www.ufc.com/athlete/carlos-ulberg",
+        "denominatorNotes": "Eleven completed UFC bouts (10 wins, 1 loss), enumerated individually in official UFC athlete biography from UFC 259 through UFC 327. The 4 November 2020 DWCS victory over Bruno Oliveira is excluded. This UFC-only career count is distinct from the professional 15-1 record and from any tracked statistics sample."
+      }
     },
     "sean-strickland": {
       "id": "mma-champion--sean-strickland",
