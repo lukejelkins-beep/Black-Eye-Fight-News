@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-12T01:59:51.945Z",
-  "checkedAt": "2026-11-11T23:47:12.486Z",
-  "updatedAt": "2026-11-11T23:30:04+0000",
+  "attemptedAt": "2026-11-12T02:51:46.577Z",
+  "checkedAt": "2026-11-12T02:51:46.577Z",
+  "updatedAt": "2026-11-12T02:20:37Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 0,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
-      "state": "not-scheduled",
-      "checked": 0,
+      "state": "connected",
+      "checked": 6,
       "failed": 0,
-      "configured": 0,
-      "message": "0 of 0 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 7,
+      "configured": 33,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 13,
+      "configured": 36,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 1,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -54,21 +54,143 @@
   "failures": [],
   "rollingScan": {
     "directoryEntries": 442,
-    "scheduledEntries": 22,
-    "batchIndex": 5,
+    "scheduledEntries": 84,
+    "batchIndex": 4,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 13,
-      "Threads": 2,
-      "X": 7
+      "X": 33,
+      "Instagram": 36,
+      "Bluesky": 6,
+      "Threads": 8,
+      "Reddit": 1
     },
-    "directlyChecked": 0,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n23fulgzer2e",
+      "cid": "bafyreif3zwxanqyxzisfmq3orsvetzedi3g6gr5hdukw6ozgyiimnz6fye",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Julio César Chávez says Canelo Alvarez’s legacy will not be affected if he never fights Terence Crawford again. 🥊\n\nSpeaking at the WBC Convention, Chávez was adamant that Canelo remains a Mexican boxing legend, just like himself, regardless of whether a rematch happens.",
+      "postedAt": "2026-11-12T02:20:37Z",
+      "date": "12 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n23fulgzer2e",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n237lguicc2n",
+      "cid": "bafyreidbbgnuitjsycxouryfik3ejcdhfirpxdd7rhuvlflsfpgyxiuxve",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "‘Deplorable sh*t’: Pros condemn Usman Nurmagomedov, friends for jumping Merab Dvalishvili www.mmafighting.com/ufc/520626/d...",
+      "postedAt": "2026-11-12T00:28:06.517313Z",
+      "date": "12 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n237lguicc2n",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n236v5yc2a2o",
+      "cid": "bafyreicmafrdckvto7gazf5y74gwe4dyrrai5tbfkgrlgoszjq3h7zgpha",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Josh Hokit won’t wait around for Tom Aspinall\n\n📰 mma-fighting.visitlink.me/hS6dks",
+      "postedAt": "2026-11-12T00:15:39.499791Z",
+      "date": "12 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n236v5yc2a2o",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n236pqsapq2i",
+      "cid": "bafyreihybojmwa2retydzadfeoox73f7a242aaioj4ck2gebjzo4e3w6nm",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Devin Haney has made his intentions clear. 🥊\n\nSpeaking at the press conference for his fight with Liam Paro, Haney revealed that the fight he wants most is a rematch with Ryan Garcia.\n\nThe unfinished business with Garcia remains firmly on his mind.",
+      "postedAt": "2026-11-12T00:12:39Z",
+      "date": "12 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n236pqsapq2i",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2364apc542y",
+      "cid": "bafyreihrqbnoza5kdmogzbnbzm42kkcygwhcxwviipydjmnv7b4he62jpu",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "UFC announcer Jon Anik signs long-term contract extension www.mmafighting.com/ufc/520497/u...",
+      "postedAt": "2026-11-12T00:01:43.775995Z",
+      "date": "12 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2364apc542y",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 1,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "platform": "Instagram",
       "sport": "boxing",
@@ -150,7 +272,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -408,7 +530,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -606,7 +728,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -684,7 +806,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1033,7 +1155,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1103,7 +1225,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1153,11 +1275,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
       "engagement": {
-        "likes": 1,
+        "likes": 2,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1348,7 +1470,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1508,7 +1630,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1592,7 +1714,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1635,30 +1757,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n226znue2x2k",
-      "cid": "bafyreibx3gggqwbwvj7e2saw2eicw4m3i2yicx67qspeh7wjvgb43smkf4",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "🚨 Jon Anik will be sticking around calling the biggest #UFC fights for the foreseeable future as the promotion announced Anik has inked a long-term extension 👏",
-      "postedAt": "2026-11-11T14:45:30.899849Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n226znue2x2k",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:u6b6v2jhqpe6hfezjffq7zrh/app.bsky.feed.post/3n226rwslfk22",
       "cid": "bafyreib7nywtl6u2j5lo7xuj4uisforcstunck5clrgv4onn3ouv4w3efm",
       "platform": "Bluesky",
@@ -1695,30 +1793,6 @@
       "postedAt": "2026-11-11T14:36:05+0000",
       "url": "https://www.instagram.com/p/Dfmtb32ofZW/",
       "photo": "https://scontent-sea5-1.xx.fbcdn.net/v/t51.82787-15/613533425_18551268529034324_2166698658324562559_n.jpg?_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=JFXgqWr24xcQ7kNvwF0K39o&_nc_oc=AdrqTqZCzsQWwpdewdXQuFvzn_8U_QGL-T4E_L8GZsjIXHP4jiLynNYgJ24XiIJp-xk&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AL-3X8kEAAAA&_nc_gid=F3q7YKnK98W_JhF91emOWg&oh=00_AQTN4TLLLUsYBvQufWTMYrC3ZKmOF-3IazsY8TJUeJQNXw&oe=6AFAE3F0",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2266tb34h2l",
-      "cid": "bafyreicbv75rus226fbx7d2ylbqn3xr7sh7h4otvpx36q3t2jovvr3ieuy",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Kayla Harrison's coach Mike Brown says his past with Amanda Nunes really plays no part in Kayla Harrison's fight at UFC 334\n\n📰 mma-fighting.visitlink.me/X7npsJ",
-      "postedAt": "2026-11-11T14:30:30.518078Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2266tb34h2l",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1791,30 +1865,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n224nzjzvd2x",
-      "cid": "bafyreibbtvvdpb7ra7faxpyvoxbawjlucprljxpunayfz34zdgyiol3q4y",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Kayla Harrison’s coach downplays past experience with Amanda Nunes playing any real part in UFC 334 fight www.mmafighting.com/ufc/520437/k...",
-      "postedAt": "2026-11-11T14:03:12.777151Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n224nzjzvd2x",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "platform": "Instagram",
       "sport": "boxing",
       "type": "post",
@@ -1880,7 +1930,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2123,7 +2173,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2222,7 +2272,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2600,7 +2650,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2842,7 +2892,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
+      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3130,30 +3180,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3mzyhv53qwl25",
-      "cid": "bafyreihureslw5fg5qh4hm4c2zwkksx3t3mr7gzw34ode7ne4rvf4dr75e",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "WBC APPROVED! 🔰\n\nWBC President Mauricio Sulaiman says Floyd Mayweather can fight for a world title despite his retirement at the ongoing Convention in Mexico.\n\nThe unbeaten legend could be back in the world title picture at 49.",
-      "postedAt": "2026-11-10T22:18:44Z",
-      "date": "11 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3mzyhv53qwl25",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 1,
-        "comments": 1,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "platform": "Instagram",
       "sport": "boxing",
       "type": "post",
@@ -3211,30 +3237,6 @@
       "postedAt": "2026-11-10T21:11:43+0000",
       "url": "https://www.instagram.com/reel/DfkymLfs3dq/",
       "photo": "https://scontent-sea5-1.xx.fbcdn.net/v/t51.2885-15/489308587_554955430954096_8004744003042081242_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=7d201b&_nc_ohc=vCz7Q0rblsEQ7kNvwHuw34Y&_nc_oc=Adq-nALr59XRBpHwJyfgo9BzZJ3Gb_lUI-29hp8GGqh5vaRINsJWweBE-fxmJoABEr0&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AL-3X8kEAAAA&oh=00_AQSdV88EwDLVRw79IHnVOsQWysPiTyFowHYgnmlErU1q7Q&oe=6AFAA842",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3mzye4rsyt22v",
-      "cid": "bafyreicvxfiqwbsn72u4clowpvoicy2bfbc2x6m6sqbnmlsbv4pkhm66ei",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Julio César Chávez Jr. believes former opponent Canelo Alvarez is a great champion, but, like many, ranks him second in Mexican boxing history behind his father, Julio César Chávez Sr.\n\nThe former world champion gave his verdict on Canelo's legacy at the WBC Convention. 🇲🇽🥊",
-      "postedAt": "2026-11-10T21:11:26Z",
-      "date": "11 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3mzye4rsyt22v",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-11T23:23:52.342Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
