@@ -40,6 +40,47 @@ def published(article):
         return result if result.tzinfo else result.replace(tzinfo=timezone.utc)
     except (ValueError,TypeError):return None
 
+
+# High-confidence event signatures catch differently worded reports about the
+# *same development*. Never merge merely because two articles mention a fighter.
+EVENT_PATTERNS={
+ 'contract-extension':r'\\b(?:extension|extends?|re-signs?|renews?|renewal)\\b',
+ 'fight-booking':r'\\b(?:booked|scheduled|set to face|to fight|fight announced)\\b',
+ 'withdrawal':r'\\b(?:withdraws?|withdrawn|pulls? out)\\b',
+ 'cancellation':r'\\b(?:cancelled|canceled|called off)\\b',
+ 'postponement':r'\\b(?:postponed|delayed)\\b',
+ 'retirement':r'\\b(?:retired|retires|retirement)\\b',
+ 'injury':r'\\b(?:injured|injury|hospitalized|hospitalised)\\b',
+ 'suspension':r'\\b(?:suspended|suspension)\\b'
+}
+GENERIC_SUBJECT=set(('ufc mma boxing fighter fighters announcer commentator broadcaster broadcast '
+ 'team long term multi year contract extension signs signed extends continue continues role '
+ 'years year deal major news official confirmed report announces announced fight bout match '
+ 'championship champion world title record breaking').split())
+def event_kind(title):
+    name=title.lower()
+    for kind,pattern in EVENT_PATTERNS.items():
+        if re.search(pattern,name):return kind
+    return ''
+
+def subject_terms(title):
+    return set(title_terms(title))-GENERIC_SUBJECT
+
+def same_event(a,b):
+    kind=event_kind(a.get('title',''))
+    if not kind or kind!=event_kind(b.get('title','')):return False
+    left,right=subject_terms(a.get('title','')),subject_terms(b.get('title',''))
+    shared=left&right
+    # Matching two rare subject tokens (e.g. 'jon'+'anik') plus the event type
+    # is a stronger signal than generic sport/promotion overlap.
+    if len(shared)<2:return False
+    # Contract renewals have distinctive event semantics and should be grouped
+    # even when the publishers phrase the duration differently.
+    if kind=='contract-extension':
+        return len(shared)>=2 and (len(shared)/min(len(left),len(right))>=.65)
+    # Other incidents need a high subject overlap; protect follow-up angles.
+    return len(shared)>=3 and len(shared)/min(len(left),len(right))>=.85
+
 def duplicate_of(a,b):
     if canonical_url(a.get('url')) and canonical_url(a.get('url'))==canonical_url(b.get('url')):
         return True
@@ -51,6 +92,7 @@ def duplicate_of(a,b):
     x,y=title_terms(a.get('title')),title_terms(b.get('title'))
     if not x or not y:return False
     if x==y:return True
+    if same_event(a,b):return True
     sa,sb=set(x),set(y)
     if min(len(sa),len(sb))<6:return False
     if (sa & UPDATES)!=(sb & UPDATES):return False
