@@ -72,7 +72,7 @@ const mk=model.evaluate({stats:mack.verifiedStats,credentials:mack.credentials,
 assert.equal(mk.find(x=>x.id==="grappling").credentialAdjustment,12);
 assert(index.includes('class="befn-champion-profile-link" data-fighter="mma-champion--'),
  "Champions page requires clickable complete-profile links");
-assert(index.includes("['All','Champion','Prospect','Contender']"),
+assert(index.includes("['All','Champion','Contender','Prospect','Roster','Unassessed']"),
  "Fighter profiles must include Champion filter");
 assert(insights.includes("data/ufc-champion-profiles.json"),
  "Champion research must hydrate shared profile engine");
