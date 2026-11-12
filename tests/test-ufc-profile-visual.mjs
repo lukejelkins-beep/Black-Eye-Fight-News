@@ -130,13 +130,12 @@ async function checkProfile(page,profile,screen){
     .map(tr=>[...tr.querySelectorAll("td")].map(td=>td.textContent.trim()));
    const metrics=ins?.querySelectorAll(".befn-power-metric").length??0;
    const credential=ins?.querySelector(".befn-credential-list,.befn-credential-empty");
-   const ratingSource=ins?.querySelector(".befn-rating-source-note a");
    const postfight=ins?.querySelector(".befn-profile-block[data-befn-postfight]");
    const postfightCells=postfight?.querySelectorAll(".befn-postfight-stat")?.length??0;
    const recentFive=postfight?.querySelector(".befn-recent-five-coverage");
    const recentFiveCount=recentFive?.querySelectorAll("li.befn-postfight-bout").length??0;
    const recentFiveSummary=recentFive?.querySelector("summary")?.textContent?.trim()||"";
-   const coverageVisible=postfight?.textContent?.includes("tracked-sample totals, not career totals")??false;
+   const coverageVisible=postfight?.textContent?.includes("not career totals")??false;
    const rect=d?.getBoundingClientRect();
    const rootWidth=document.documentElement.clientWidth;
    const content=d?.querySelector(".dialog-content");
@@ -145,8 +144,8 @@ async function checkProfile(page,profile,screen){
     identity:!!f,title,record:f?.record,division:f?.division,category:f?.category,
     metrics,recentRows,credentialsVisible:!!credential,postfightCells,coverageVisible,
     recentFiveCount,recentFiveSummary,
-    ratingSource:ratingSource?.getAttribute("href")||"",
-    ratingSourceText:ins?.querySelector(".befn-rating-source-note")?.textContent||"",
+    publicLinks:[...(d?.querySelectorAll("a[href]")||[])].map(a=>a.getAttribute("href")),
+    provenanceText:d?.querySelector(".dialog-content")?.textContent||"",
     rect:rect&&{left:rect.left,right:rect.right,width:rect.width},
     rootWidth,viewportOverflow,
     dialogClip:!!rect&&(rect.left< -4||rect.right>innerWidth+4),
@@ -169,7 +168,6 @@ async function checkProfile(page,profile,screen){
     })(),
     closeVisible:!!d?.querySelector("button#closeFighter"),
     renderedClassification:ins?.querySelector(".befn-scout-classification")?.textContent||"",
-    sourceLinks:[...(ins?.querySelectorAll(".befn-rating-source-note a,.befn-credential-list a")||[])].map(x=>x.href),
     clippedElements:[...(ins?.querySelectorAll(".befn-profile-block h3,.befn-classifier-indices strong,.dialog-content > h3")||[])]
       .filter(x=>{const c=getComputedStyle(x);return (x.scrollWidth>x.clientWidth+5&&c.overflowX==="hidden")||
        (x.scrollHeight>x.clientHeight+5&&c.overflowY==="hidden")})
@@ -230,15 +228,12 @@ async function checkProfile(page,profile,screen){
   assert(!details.contentOverflow,"fighter profile content clips horizontally");
   if(isLive){
    assert.deepEqual(details.clippedElements,[],"important profile labels visibly clipped");
-   for(const url of details.sourceLinks)
-    assert(/^https:\/\//.test(url),"non-HTTPS source link in rendered fighter profile");
+   assert.deepEqual(details.publicLinks,[],"fighter dialog must not show external research links");
    assert(details.renderedClassification.includes(expectedCategory),
     "scouting classification missing in live profile dialog");
   }
-  if(profile.verifiedStats)assert(details.ratingSource.startsWith("https://"),
-    "verified statistical score lacks source link");
-  if(!profile.verifiedStats)assert(/insufficient verified/i.test(details.ratingSourceText),
-    "missing statistics must be labelled unrated");
+  assert(!/(?:source links|view stats source|how are .* calculated|evidence confidence|credential points|record caution|research snapshot|independently reviewed)/i.test(details.provenanceText),
+   "public fighter dialog contains research or calculation commentary");
   const portrait=details.portraitStatus;
   assert(portrait?.framePresent,"fighter portrait frame missing");
   assert(portrait.state==="image"||portrait.state==="fallback",

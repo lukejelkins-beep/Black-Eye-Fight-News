@@ -28,6 +28,7 @@ jobs:
       - name: Verify reviewed UFC profile integrity and scoring
         run: |
           node tests/test-ufc-profile-card-qa.cjs
+          node tests/test-ufc-public-profile-clean.cjs
           node tests/test-ufc-prospect-contender.cjs
           node tests/test-fighter-power-index.cjs
           node --test tests/test-ufc-async-authority.cjs

@@ -84,14 +84,13 @@
    c.kind==="olympics"?'<span aria-hidden="true">'+medalIcon[c.medal]+'</span>':
    '<span aria-hidden="true">♛</span>';
   return '<button type="button" class="befn-credential" data-kind="'+escapeHTML(c.kind)+
-   (c.verification==="reported"?'" data-credential-verification="reported':'')+
-   '" data-credential-info="'+escapeHTML(detail)+'" data-credential-source="'+escapeHTML(c.source)+
+   '" data-credential-info="'+escapeHTML(detail)+
    '" title="'+escapeHTML(detail)+'" aria-label="'+escapeHTML(detail)+'">'+content+'</button>';
  }
  const credentialsHTML=f=>{
   const list=credentialsFor(f);
   return list.length?'<div class="befn-credential-list">'+list.map(badge).join("")+'</div>':
-   '<span class="befn-credential-empty">No verified credentials from the selected categories on file.</span>';
+   '<span class="befn-credential-empty">No credentials listed.</span>';
  };
  function historyFor(f){
   return engine.normalizeHistory((f?.latest||[]).map(x=>({
@@ -139,59 +138,14 @@
   return '<span class="befn-power-track is-'+type+(reverse?' befn-bar-left':'')+'" '+
    (valid?'role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+m.score+'"':
     'role="img" aria-label="Not rated: insufficient evidence"')+
-   ' title="'+escapeHTML(m.description)+'">'+(valid?'<span class="befn-power-fill" style="--power-width:'+m.score+'%"></span>':'')+'</span>';
- }
- function credentialScoreDetail(m){
-  if(!m?.credentialAdjustment)return '';
-  const links=(m.credentialBreakdown||[]).map(x=>
-    '<a href="'+escapeHTML(x.source)+'" target="_blank" rel="noopener noreferrer" title="'+
-    escapeHTML(x.label)+'">+'+x.points+' '+escapeHTML(x.label)+'</a>').join(' · ');
-  return '<div class="befn-credential-score-note">'+
-   '<strong>'+escapeHTML(String(m.baseScore))+' stats + '+
-     m.credentialAdjustment+' credentials = '+m.score+'</strong>'+
-   (links?'<span>'+links+'</span>':'')+'</div>';
+   ' title="'+escapeHTML(m.label)+': '+(valid?m.score+' / 100':'Not rated')+'">'+(valid?'<span class="befn-power-fill" style="--power-width:'+m.score+'%"></span>':'')+'</span>';
  }
  function profileMetric(m){
   return '<div class="befn-power-metric"><div class="befn-power-metric-label">'+
    '<span>'+escapeHTML(m.label)+'</span><b'+(m.score===null?' class="is-unrated"':'')+'>'+
    (m.score===null?'Not rated':m.score+' / 100')+'</b></div>'+
-   performanceMeter(m,false)+credentialScoreDetail(m)+'</div>';
+   performanceMeter(m,false)+'</div>';
  }
- const scoreMethodHTML=sport=>sport==="Boxing"?
-  '<p class="befn-score-note">Boxing uses a separate evidence-gated model. KO share is a finishing proxy, not measured punch force. Boxing technical assessments require verified data.</p>':
-  '<details class="befn-rating-method"><summary>How are MMA scores and credential points calculated?</summary>'+
-  '<p><b>Data model:</b> A 0–100 descriptive scouting index, not objective skill or win probability. Only available verified stats contribute. Knockdown and finish rates are measured per fight or per 15 minutes, not counted without denominators. Small samples are moderated toward 50.</p>'+
-  '<ul>'+
-  '<li><b>Striking:</b> 25% KO/TKO finishes, 20% knockdowns/15 (45% finishing combined), 22% significant-strike differential, 18% volume, 15% accuracy.</li>'+
-  '<li><b>Grappling:</b> 50% submission finishes, 30% submission attempts/15, 15% reversals/15, 5% control time. Submission evidence is compulsory.</li>'+
-  '<li><b>Wrestling:</b> 34% takedowns/15, 21% accuracy, 28% control share, 12% takedown defence, 5% reversals/15. Takedown activity is compulsory.</li>'+
-  '<li><b>Defence:</b> 31% inverse strikes absorbed, 29% strike defence, 22% takedown defence, 12% inverse knockdowns received, 6% inverse opponent control.</li>'+
-  '<li><b>Recent form:</b> Last five verified results, weighted 5–4–3–2–1; no-contests ignored.</li>'+
-  '</ul>'+
-  '<p><b>Fixed sourced credential bonuses, applied to existing stats only:</b></p>'+
-  '<ul>'+
-  '<li><b>NCAA wrestling:</b> Division I gold +11, silver +10, bronze +9; Division II gold +8, silver +7, bronze +6; Division III gold +5, silver +4, bronze +3. Division I/II/III participation: +3/+2/+1. Verified All-American top-eight without podium: up to +2 more. Wrestling only.</li>'+
-  '<li><b>Olympic judo:</b> Gold +9 Wrestling/+7 Grappling, silver +7/+5, bronze +5/+4, participant +2/+1. A repeat medal adds +1 to each (max +2).</li>'+
-  '<li><b>ADCC:</b> Gold +8, silver +6, bronze +4 Grappling. <b>BJJ:</b> Black +4, brown +3, purple +2, blue +1 Grappling. Reported or disputed ranks earn zero.</li>'+
-  '<li><b>Sambo:</b> Gold +5 Wrestling/+5 Grappling, silver +4/+4, bronze +3/+3. Verified <b>Combat</b> Sambo adds +3/+2/+1 Striking respectively; Sport Sambo adds no Striking.</li>'+
-  '<li><b>Golden Gloves:</b> National +5, state +4, regional +3, junior +2, unspecified +1 Striking.</li>'+
-  '</ul><p>The highest achievement per credential family counts; duplicate records cannot stack. Different families may combine, capped at +12 points per attribute. No credential points create a score when the MMA statistical minimum is not met. Badge sources, stat bases and bonuses are shown separately. Bonuses are editorial heuristics, <b>not scientifically validated or opponent-adjusted ratings</b>.</p></details>';
-
- function ratingsEvidence(f){
-  const v=f?.verifiedStats;
-  const sample=Number.isInteger(v?.sampleBouts)?v.sampleBouts:null;
-  const src=validSource(v?.source)?v.source:null;
-  if(!src)return '<span class="befn-rating-source-note">Insufficient verified statistical coverage.</span>';
-  return '<span class="befn-rating-source-note">'+
-   (sample!==null?escapeHTML(String(sample))+(v.scope==="ufc-only"?' UFC bouts · ':' recorded bouts · '):'')+
-   (v.observedOn?'Checked '+escapeHTML(v.observedOn)+' · ':'')+
-   '<a href="'+escapeHTML(src)+'" target="_blank" rel="noopener noreferrer">View stats source</a>'+
-   (validSource(v.submissionWinSource)?' · <a href="'+escapeHTML(v.submissionWinSource)+
-    '" target="_blank" rel="noopener noreferrer" title="'+
-    escapeHTML(v.grapplingEvidenceNote||'Verified submission finish evidence')+
-    '">Submission finishes</a>':'')+'</span>';
- }
-
  function trackedMetric(v,format){
   if(!Number.isInteger(v))return "—";
   if(format==="time"){
@@ -243,10 +197,10 @@
   const coveragePanel=latestUfc.length?
    '<details class="befn-postfight-history befn-recent-five-coverage" data-befn-recent-five="'+
     escapeHTML(f.id)+'"><summary>Latest UFC fights: '+coveredLatest+'/'+latestUfc.length+
-    ' with verified round data</summary><ul>'+
+    ' with round statistics</summary><ul>'+
     latestUfc.map(b=>'<li class="befn-postfight-bout"><span><b>'+escapeHTML(b.opponent)+
      '</b><small>'+escapeHTML(b.date)+' · '+escapeHTML(b.method||"UFC result")+'</small></span>'+
-     '<span><small>'+(matchedBout(b)?'Round statistics available':'Round statistics pending')+
+     '<span><small>'+(matchedBout(b)?'Round statistics available':'Statistics unavailable')+
      '</small></span></li>').join('')+
    '</ul></details>':"";
   const recent=trackedBouts.slice(0,5);
@@ -263,77 +217,46 @@
   const pending=lastReviewed&&d.lastFightDate>lastReviewed;
   return '<section class="befn-profile-block" data-befn-postfight="'+escapeHTML(f.id)+
    '"><h3>Tracked UFC fight statistics</h3><div class="befn-profile-body">'+
-   '<p class="befn-score-note">Updated from completed UFC bouts with archived round-by-round observations. '+
-   '<b>'+d.trackedBouts+' UFC bouts with archived round data</b>, latest '+escapeHTML(d.lastFightDate)+
-   '. These are <b>tracked-sample totals, not career totals</b>. Missing round fields are not guessed.</p>'+
-   (pending?'<p class="befn-postfight-warning">New fight observed. Career record, recent form and 0–100 ratings await source review.</p>':"")+
+   '<p class="befn-score-note"><b>'+d.trackedBouts+' UFC bouts in this sample</b> · not career totals.</p>'+
+   (pending?'<p class="befn-postfight-warning">Latest result pending an update.</p>':"")+
    coveragePanel+
    '<div class="befn-postfight-grid">'+rows.map(cell).join("")+'</div>'+
    (fightRows?'<details class="befn-postfight-history"><summary>Show per-fight strike and control observations</summary>'+
     '<ul>'+fightRows+'</ul></details>':"")+
-   '<p class="befn-rating-source-note">Source: saved UFC-only UFCalendar-derived fight observations. '+
-   '<a href="https://www.ufcalendar.com/" target="_blank" rel="noopener noreferrer">UFCalendar</a>. '+
-   'Source disagreements and incomplete rounds are withheld pending verification.</p>'+
    '</div></section>';
  }
 
 
  function classificationHTML(f){
-  if(f?.sport!=="MMA")return "";
+  if(f?.sport!=="MMA"||!f.classification)return "";
   const c=f.classification;
-  if(!c)return "";
   const category=String(c.label||"Unassessed");
-  const score=c.score===null?"Not scored":c.score+" / 100";
-  const fmt=n=>typeof n==="number"?n.toFixed(1)+"/100":"Not scored";
-  const v2=c.version===2&&c.eligible&&c.label!=="Champion";
-  const v2Summary=v2?'<div class="befn-classifier-indices">'+
-   '<span><b>Prospect Index</b><strong>'+fmt(c.prospectIndex)+'</strong></span>'+
-   '<span><b>Contender Index</b><strong>'+fmt(c.contenderIndex)+'</strong></span></div>'+
-   '<p class="befn-score-note"><b>Evidence confidence:</b> '+escapeHTML(c.confidence||"Limited")+
-   '. A strong prospect score does not establish contender-level opposition.</p>'+
-   (Array.isArray(c.evidenceGaps)&&c.evidenceGaps.length?
-    '<details><summary>Unverified or missing evidence</summary><ul>'+
-    c.evidenceGaps.map(s=>'<li>'+escapeHTML(s)+'</li>').join('')+
-    '</ul></details>':''):"";
+  const score=Number.isFinite(c.score)&&!["Champion","Unassessed"].includes(category)?
+   '<span class="befn-scout-score">'+escapeHTML(String(c.score))+' / 100</span>':"";
   return '<section class="befn-profile-block befn-scout-classification" data-befn-classification="'+
-   escapeHTML(f.id||"")+'"><h3>BEFN scouting classification</h3><div class="befn-profile-body">'+
-   '<p><strong>'+escapeHTML(category)+'</strong> · '+escapeHTML(score)+'</p>'+
-   v2Summary+
-   '<p class="befn-score-note">'+escapeHTML(c.reason||"Evidence review pending")+'</p>'+
-   '<p class="befn-score-note">Editorial classification only, not an official UFC ranking. '+
-   'No limit on the number of prospects or contenders in any division. '+
-   'Results, dated opponent rankings and verified statistics determine eligibility; '+
-   'missing information does not earn bonus points.</p></div></section>';
+   escapeHTML(f.id||"")+'"><h3>Scouting</h3><div class="befn-profile-body">'+
+   '<p><strong>'+escapeHTML(category)+'</strong> '+score+'</p></div></section>';
  }
-
  function renderProfile(f){
   const kind=f.sport==="Boxing"?"Boxing credentials":"Combat & grappling credentials";
   const metrics=ratingsFor(f);
-  const medallist=credentialsFor(f).find(x=>x.kind==="champion");
+  const medallist=credentialsFor(f).some(x=>x.kind==="champion");
   const reviewedChampion=f.sport==="MMA"&&f.organisation==="UFC"&&
     f.category==="Champion"&&f.championReview===true&&
     validSource(f.review?.championStatusSource);
-  const championshipText=reviewedChampion?
-    "UFC "+String(f.division||"")+" titleholder as checked "+
-    String(f.review.checkedAt||"on the profile review date")+
-    ". Title status is a dated snapshot, not a live confirmation.":
-    medallist?"Former world champion (see linked source reports).":
-    f.sport==="Boxing"?"No independently documented former world title in this profile.":
-    /former\s+UFC\s+[\w\s-]{0,25}champion/i.test(sourceText(f))?"Former UFC champion (see source notes).":
-    "Championship history is not confirmed in the current profile.";
-  const championshipLink=reviewedChampion?
-    ' <a href="'+escapeHTML(f.review.championStatusSource)+
-    '" target="_blank" rel="noopener noreferrer">Check UFC titleholders</a>':'';
-  return '<section class="befn-profile-insights" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="Fighter performance insights">'+
+  const title=reviewedChampion?"UFC "+String(f.division||"")+" champion":
+    medallist?"Former world champion":
+    f.sport==="Boxing"?"No title history listed":
+    /former\s+UFC\s+[\w\s-]{0,25}champion/i.test(sourceText(f))?
+     "Former UFC champion":"No championship history listed";
+  return '<section class="befn-profile-insights" data-befn-profile="'+escapeHTML(f.id)+
+   '" aria-label="Fighter performance insights">'+
    '<section class="befn-profile-block"><h3>Fighter ratings</h3><div class="befn-profile-body">'+
-   '<div class="befn-power-bars">'+metrics.map(profileMetric).join("")+'</div>'+scoreMethodHTML(f.sport)+
-   '<p class="befn-rating-source-row">'+ratingsEvidence(f)+'</p>'+
-   '<p class="befn-score-note">0–100 descriptive indices, not win probabilities. Missing statistics remain unrated. '+(f.sport==="Boxing"?'Power uses documented KO-win share as a finishing proxy.':'MMA ratings use source-backed striking, grappling, wrestling, defence and recent form data.')+'</p></div></section>'+
-   trackedMetricHTML(f)+
-   classificationHTML(f)+
+   '<div class="befn-power-bars">'+metrics.map(profileMetric).join("")+'</div></div></section>'+
+   trackedMetricHTML(f)+classificationHTML(f)+
    '<section class="befn-profile-block"><h3>Recent form (last 5)</h3><div class="befn-profile-body">'+formHTML(f)+'</div></section>'+
    '<section class="befn-profile-block"><h3>'+escapeHTML(kind)+'</h3><div class="befn-profile-body">'+credentialsHTML(f)+'</div></section>'+
-   '<section class="befn-profile-block"><h3>'+(reviewedChampion?'Championship status':'Championship history')+'</h3><div class="befn-profile-body"><p class="befn-score-note" style="margin:0">'+escapeHTML(championshipText)+championshipLink+'</p></div></section></section>';
+   '<section class="befn-profile-block"><h3>Championship history</h3><div class="befn-profile-body"><p>'+escapeHTML(title)+'</p></div></section></section>';
  }
  function getName(article,side){
   const el=article.querySelectorAll(".result-contender-info > strong")[side];
@@ -393,9 +316,7 @@
   return '<section class="befn-history-two befn-history-with-cage" aria-label="Last five fights and cage time side-by-side">'+
    fightHistoryColumn(f[0],names[0])+fightHistoryColumn(f[1],names[1])+'</section>'+
    '<p class="befn-snapshot-disclaimer befn-history-cage-note">'+
-   (f.some(x=>x?.reference?.sourceType==="user-screenshot")?
-    'Cage times in the design sample are unverified references from the supplied comparison; confirm against official bout records before production.':
-    'Cage time is total elapsed fight time, not control time; — means exact duration unavailable.')+
+   'Cage time is total elapsed fight time; — means exact duration unavailable.'+
    '</p>';
  };
  const availableNumber=(v,digits)=>{
@@ -425,7 +346,6 @@
    ["Takedowns defended","takedownsDefended","count"],
    ["Submission attempts","submissionAttempts","count"]
   ];
-  const hasVerified=f.some(x=>statRecord(x)?.stats?.observedOn||trackedUfcStats.has(norm(x?.name)));
   const body=rows.map(([label,key,fmt])=>{
    if(!key)return '<h4 class="befn-history-stat-heading">'+escapeHTML(label)+'</h4>';
    const values=f.map(x=>{
@@ -446,9 +366,7 @@
   }).join("");
   return '<section class="befn-history-stats"><div class="befn-history-stats-head"><strong>'+
     escapeHTML(names[0])+'</strong><span>Last five / available sample</span><strong>'+escapeHTML(names[1])+'</strong></div>'+
-    body+'<p class="befn-snapshot-disclaimer">'+(hasVerified?
-    'Rates come from separately verified fighter statistics; strike, control and finishing counts cover only completed UFC bouts with matching round archives. Missing values are not zeros.':
-    'No independently sourced statistics for this matchup yet; screenshot reference values are excluded and missing fields show —.')+'</p></section>';
+    body+'<p class="befn-snapshot-disclaimer">— indicates unavailable statistics.</p></section>';
  }
  const inchesText=inches=>typeof inches==="number"&&Number.isFinite(inches)?
   Math.floor(inches/12)+"′"+(inches%12===0?0:Math.round((inches%12)*10)/10)+"″":"—";
@@ -469,12 +387,12 @@
   ];
   return '<details class="befn-tale"><summary>Tale of the Tape <span>Age · height · reach · career</span></summary>'+
    '<div class="befn-history-stats-head"><strong>'+escapeHTML(names[0])+'</strong><span>Comparison</span><strong>'+escapeHTML(names[1])+'</strong></div>'+
-   rows.map(([label,fn,ref])=>{
+   rows.filter(row=>!row[2]).map(([label,fn,ref])=>{
     const values=f.map(x=>fn(x));
     if(values.every(v=>v==="—"))return "";
-    return '<div class="befn-history-stat"><b>'+escapeHTML(values[0])+'</b><span>'+escapeHTML(label)+(ref?' *':'')+'</span><b>'+escapeHTML(values[1])+'</b></div>';
+    return '<div class="befn-history-stat"><b>'+escapeHTML(values[0])+'</b><span>'+escapeHTML(label)+'</span><b>'+escapeHTML(values[1])+'</b></div>';
    }).join("")+
-   '<p class="befn-snapshot-disclaimer">Official athlete biographies provide physical details. * Other comparison figures are included as a design reference from your screenshots pending verification.</p>'+
+
    '</details>';
  }
  function renderSnapshot(article){
@@ -484,23 +402,15 @@
   const rows=f.map(x=>ratingsFor(x,sport)),labels=rows[0].map(x=>x.label);
   const metricHTML=labels.map((label,i)=>{
    const m0=rows[0][i],m1=rows[1][i];
-   const bonus=(m,dir)=>m.credentialAdjustment?
-     (dir==='left'?'← ':'')+'+'+m.credentialAdjustment+' badges'+(dir==='right'?' →':''):'';
-   const tooltip=names[0]+': '+(m0.score===null?'Not rated':m0.baseScore+' stats +'+m0.credentialAdjustment+' badges = '+m0.score)+
-    '; '+names[1]+': '+(m1.score===null?'Not rated':m1.baseScore+' stats +'+m1.credentialAdjustment+' badges = '+m1.score);
-   return '<div class="befn-snapshot-metric" title="'+escapeHTML(tooltip)+'">'+
+   return '<div class="befn-snapshot-metric">'+
     '<b>'+(m0.score===null?'—':m0.score)+'</b>'+performanceMeter(m0,true)+
-    '<span class="befn-snapshot-metric-label">'+escapeHTML(label)+
-    (m0.credentialAdjustment||m1.credentialAdjustment?
-       '<small class="befn-college-bonus">'+escapeHTML(bonus(m0,'left'))+
-       ' '+escapeHTML(bonus(m1,'right'))+'</small>':'')+
-    '</span>'+
+    '<span class="befn-snapshot-metric-label">'+escapeHTML(label)+'</span>'+
     performanceMeter(m1,false)+'<b>'+(m1.score===null?'—':m1.score)+'</b></div>';
   }).join("");
   const sides=f.map((p,i)=>
    '<div><h4>'+escapeHTML(names[i])+' · recent form</h4>'+formHTML(p)+
    '<h4 style="margin-top:12px!important">Credentials</h4>'+credentialsHTML(p)+
-   rows[i].map(m=>credentialScoreDetail(m)).join('')+'</div>'
+   '</div>'
   ).join("");
   const buttons=f.map((p,i)=>p?
    '<button type="button" data-fighter="'+escapeHTML(p.id)+'" aria-label="Open '+escapeHTML(p.name)+' full fighter profile">'+escapeHTML(p.name)+' profile</button>':
@@ -518,13 +428,13 @@
   return '<details class="befn-fight-snapshot" data-snapshot-key="'+escapeHTML(key)+'" '+(openSnapshots.has(key)?'open':'')+'>'+
    '<summary><span>Fight snapshot</span></summary>'+
    '<div class="befn-snapshot-body">'+
-   '<div class="befn-snapshot-head"><div><strong>'+escapeHTML(names[0])+'</strong>'+ratingsEvidence(f[0])+
-   '</div><div><strong>'+escapeHTML(names[1])+'</strong>'+ratingsEvidence(f[1])+'</div></div>'+
+   '<div class="befn-snapshot-head"><div><strong>'+escapeHTML(names[0])+'</strong>'+
+   '</div><div><strong>'+escapeHTML(names[1])+'</strong></div></div>'+
    '<div class="befn-snapshot-bars">'+metricHTML+'</div>'+
    '<div class="befn-snapshot-extra">'+sides+'</div>'+
-   historyTab+scoreMethodHTML(sport)+talePanel(f,names)+
+   historyTab+talePanel(f,names)+
    '<div class="befn-snapshot-links">'+buttons+'</div>'+
-   '<p class="befn-snapshot-disclaimer">Fighter ratings are descriptive indices, not fight predictions. “—” means no reliable data; credentials appear only after expanding this panel.</p>'+
+   '<p class="befn-snapshot-disclaimer">— indicates unavailable data.</p>'+
    '</div></details>';
  }
  let timer=null;
@@ -586,12 +496,6 @@
   }
   const label=document.createElement("span");label.textContent=button.dataset.credentialInfo||"Verified credential";
   note.replaceChildren(label);
-  const link=document.createElement("a");
-  const source=button.dataset.credentialSource||"";
-  if(/^https:\/\//.test(source)){
-   link.href=source;link.target="_blank";link.rel="noopener noreferrer";
-   link.textContent=" · Source";note.appendChild(link);
-  }
  },true);
  document.addEventListener("toggle",event=>{
   const el=event.target;
