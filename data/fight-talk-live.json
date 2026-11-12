@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-12T22:22:01.277Z",
-  "checkedAt": "2026-11-12T22:22:01.277Z",
+  "attemptedAt": "2026-11-12T23:41:46.825Z",
+  "checkedAt": "2026-11-12T23:41:46.825Z",
   "updatedAt": "2026-11-12T22:04:51.902302Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 6,
+  "sourcesChecked": 4,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 6,
+      "checked": 4,
       "failed": 0,
-      "configured": 6,
-      "message": "6 of 6 scheduled sources checked."
+      "configured": 4,
+      "message": "4 of 4 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 33,
+      "configured": 26,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 37,
+      "configured": 42,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 1,
+      "configured": 2,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,19 +55,19 @@
   "rollingScan": {
     "directoryEntries": 446,
     "scheduledEntries": 84,
-    "batchIndex": 4,
+    "batchIndex": 2,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 37,
-      "X": 33,
-      "Bluesky": 6,
-      "Threads": 7,
-      "Reddit": 1
+      "Instagram": 42,
+      "Bluesky": 4,
+      "X": 26,
+      "Threads": 10,
+      "Reddit": 2
     },
-    "directlyChecked": 6,
+    "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
@@ -3480,7 +3480,7 @@
         "comments": 0,
         "shares": 2
       },
-      "engagementCheckedAt": "2026-11-12T12:11:29.562Z",
+      "engagementCheckedAt": "2026-11-12T23:41:46.825Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4906,7 +4906,7 @@
         "comments": 0,
         "shares": 1
       },
-      "engagementCheckedAt": "2026-11-12T12:11:29.562Z",
+      "engagementCheckedAt": "2026-11-12T23:41:46.825Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
