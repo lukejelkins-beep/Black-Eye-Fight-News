@@ -23,7 +23,7 @@ AUDIT = ROOT / "qa/grappling-calendar-source-audit.json"
 SOURCES = {
  "RAF": "https://www.realamericanfreestyle.com/events-gallery",
  "UFC BJJ": "https://www.ufc.com/ufcbjj",
- "IBJJF": "https://ibjjf.com/events",
+ "IBJJF": "https://ibjjf.com/events/world-ibjjf-jiu-jitsu-no-gi-championship-2026",
  "ADCC": "https://adcombat.com/",
  "NCAA": "https://www.ncaa.org/championship/division-i/mens-wrestling/",
  "UWW": "https://uww.org/events",

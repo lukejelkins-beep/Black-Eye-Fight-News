@@ -1,7 +1,7 @@
 name: Refresh grappling and wrestling events
 on:
   schedule:
-    # 07:12 Melbourne summer / 08:12 Melbourne winter, UTC fixed.
+    # 07:12 Melbourne summer / 06:12 Melbourne winter, UTC fixed.
     # GitHub cron is best-effort and may be delayed.
     - cron: '12 20 * * *'
   workflow_dispatch:
