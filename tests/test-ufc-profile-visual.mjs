@@ -90,8 +90,13 @@ async function checkProfile(page,profile,screen){
   // the reviewed record is still being loaded.
   await page.waitForFunction(expected=>{
    const f=window.COMBAT_DATA?.fighters?.find(x=>x.id===expected.id);
+   const ur=expected.ufcRecord||{};
+   const bouts=(ur.wins||0)+(ur.losses||0)+(ur.draws||0)+(ur.noContests||0);
+   const category=expected.category==="Roster"&&
+    (!ur.complete||bouts<2||(expected.latest||[]).length<2)?
+    "Unassessed":expected.category;
    return !!f?.reviewedUfcProfile&&f.record===expected.record&&
-    f.division===expected.division&&f.category===expected.category&&
+    f.division===expected.division&&f.category===category&&
     JSON.stringify((f.latest||[]).map(x=>[x.date,x.opponent,x.outcome,x.method]))===
     JSON.stringify(expected.latest.map(x=>[x.date,x.opponent,x.outcome,x.method]));
   },profile,{timeout:18000});
