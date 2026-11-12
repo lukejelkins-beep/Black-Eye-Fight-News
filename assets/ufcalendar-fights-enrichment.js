@@ -81,7 +81,7 @@
       esc(bout.a)+"</strong></span><span><strong>"+esc(bout.b)+"</strong></span></div>";
     const rows = bout.roundPreview.map(r => "<div class='befn-cal-row'><b>R"+
       esc(r.round)+"</b>"+line(r,"a")+line(r,"b")+"</div>").join("");
-    section.innerHTML = "<summary>Round statistics · UFCalendar</summary><div class='befn-cal-table'>" +
+    section.innerHTML = "<summary>Round statistics</summary><div class='befn-cal-table'>" +
       head + rows + "</div><p class='befn-cal-sub' style='margin:0 10px 9px'>Sig = significant strikes landed/attempted; TD = takedowns; Ctrl = control time. — means unavailable.</p>";
     article.appendChild(section);
   }
@@ -98,10 +98,10 @@
       if (!existing || !existing.classList.contains("is-unverified")) return;
       existing.classList.remove("is-unverified");
       existing.textContent = record;
-      existing.title = "Current professional MMA record, UFCalendar; not a historical pre-fight record";
+      existing.title = "Current recorded professional MMA record; not a historical pre-fight record";
       const sourceNote = document.createElement("span");
       sourceNote.className="befn-cal-record-context";
-      sourceNote.textContent="Career record · UFCalendar";
+      sourceNote.textContent="Current career record";
       existing.insertAdjacentElement("afterend",sourceNote);
     });
   }
@@ -118,11 +118,12 @@
     const rows=known.map(j=>"<div class='befn-cal-row'><b>Judge</b><span>"+
       esc(j.judge || "Official judge")+"</span><span><strong>"+esc(j.totalA)+"–"+
       esc(j.totalB)+"</strong></span></div>").join("");
-    block.innerHTML="<summary>Official judges’ scorecards · UFCalendar</summary>"+
+    block.innerHTML="<summary>Official judges’ scorecards</summary>"+
       "<div class='befn-cal-table'>"+rows+"</div>";
     article.appendChild(block);
   }
   function addUpcomingForm(article,bout) {
+    if (window.BEFNFighterInsights) return;
     if (!article.classList.contains("upcoming-bout") ||
         article.querySelector(".befn-cal-form")) return;
     const recent=["a","b"].filter(c=>Array.isArray(bout[c+"Recent"]) &&
@@ -141,7 +142,7 @@
         "</b> "+esc(h.opponent)+" <span>"+esc(h.date)+"</span></div>").join("");
       return "<div class='befn-cal-form-person'>"+title+rows+"</div>";
     }).join("");
-    panel.innerHTML="<summary>Recent form &amp; championship history · UFCalendar</summary>"+
+    panel.innerHTML="<summary>Recent form &amp; championship history</summary>"+
       "<div class='befn-cal-form-grid'>"+parts+"</div>";
     article.appendChild(panel);
   }
