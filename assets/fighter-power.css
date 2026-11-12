@@ -444,3 +444,29 @@
  background:#67512b;color:#fff6dc;border-radius:50%;display:grid;place-items:center;
  border:1px solid #c4a05a;font-size:10px;font-weight:900;
 }
+
+
+/* 12 Nov v3: evidence-backed statistic base + fixed sourced credential points */
+.befn-credential-score-note{
+ display:grid;gap:4px;min-width:0;margin:7px 0;
+ padding:8px 10px;border:1px solid #685839;
+ border-radius:8px;background:rgba(217,167,77,.075);
+ font-size:10px;line-height:1.45;color:#e6d7b1;
+}
+.befn-credential-score-note strong{font-size:11px;font-variant-numeric:tabular-nums;color:#f4dfad}
+.befn-credential-score-note span{color:#c8ced6;overflow-wrap:anywhere}
+.befn-credential-score-note a{
+ color:#edd09b;text-decoration:underline;
+ text-underline-offset:2px;overflow-wrap:anywhere;
+}
+.befn-credential-score-note a:focus-visible{outline:2px solid #f0d094;outline-offset:2px}
+.befn-snapshot-extra .befn-credential-score-note{margin:8px 0}
+.befn-snapshot-metric .befn-college-bonus{
+ display:block;margin-top:3px;color:#f1c979;
+ font-size:9px;font-weight:800;white-space:normal;line-height:1.2;
+}
+.befn-rating-method li{overflow-wrap:anywhere}
+@media(max-width:430px){
+ .befn-snapshot-metric .befn-college-bonus{font-size:8px}
+ .befn-snapshot-extra .befn-credential-score-note{padding:7px}
+}
