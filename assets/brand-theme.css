@@ -368,3 +368,82 @@ summary:focus-visible,[role="button"]:focus-visible {
 #main .front-home .top-story-full .top-story-points li{padding-left:2px}
 #main .front-home .top-story-full .top-story-read{font-size:14px!important}
 @media(min-width:800px){#main .front-home .top-story-full .front-lead-copy{padding:28px 32px!important}#main .front-home .top-story-full .front-lead-copy h2{font-size:clamp(28px,3.2vw,44px)!important}#main .front-home .top-story-full .top-story-points{font-size:17px!important}}
+
+
+/* BEFN Top Stories editorial grid restoration — 2026-11-13.
+   Desktop: one feature left + three compact stories right.
+   Tablet and mobile: responsive stack without stretched images. */
+@media (min-width: 980px) {
+  #main .front-home .front-lead-layout.top-story-stack {
+    display:grid!important;
+    grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)!important;
+    grid-template-rows:repeat(3, minmax(0,auto));
+    gap:14px!important;
+    align-items:stretch;
+  }
+  #main .front-home .top-story-stack > .top-story-full:first-child {
+    grid-column:1;
+    grid-row:1 / span 3;
+    display:flex!important;
+    flex-direction:column;
+  }
+  #main .front-home .top-story-stack > .top-story-full:first-child .front-lead-image {
+    aspect-ratio:16/10!important;
+    min-height:0;
+    flex:none;
+  }
+  #main .front-home .top-story-stack > .top-story-full:not(:first-child) {
+    display:grid!important;
+    grid-template-columns:minmax(118px,36%) minmax(0,1fr);
+    min-height:0;
+    border-radius:14px;
+  }
+  #main .front-home .top-story-stack > .top-story-full:not(:first-child) .front-lead-image {
+    height:100%!important;
+    aspect-ratio:auto!important;
+    min-height:0;
+  }
+  #main .front-home .top-story-stack > .top-story-full:not(:first-child) .front-lead-copy {
+    padding:14px 16px!important;
+    align-self:center;
+  }
+  #main .front-home .top-story-stack > .top-story-full:not(:first-child) h2 {
+    font-size:clamp(17px,1.45vw,23px)!important;
+    line-height:1.15!important;
+    margin:7px 0 9px!important;
+  }
+  #main .front-home .top-story-stack > .top-story-full:not(:first-child) .top-story-points {
+    display:none!important;
+  }
+  #main .front-home .top-story-stack > .top-story-full:not(:first-child) .front-story-meta {
+    font-size:10px!important;
+  }
+  #main .front-home .top-story-stack > .top-story-full:not(:first-child) .top-story-read {
+    font-size:12px!important;
+    margin-top:4px;
+  }
+}
+/* Preserve event-poster lettering and avoid the severe source-image crop seen in production. */
+#main .front-home .top-story-full .front-lead-image img.front-lead-photo {
+  object-fit:contain!important;
+  object-position:center!important;
+  background:#1d1519;
+}
+@media (max-width:979px) {
+  #main .front-home .front-lead-layout.top-story-stack {
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:14px!important;
+  }
+  #main .front-home .top-story-full .front-lead-image {
+    aspect-ratio:16/9!important;
+    min-height:0!important;
+  }
+}
+@media (max-width:560px) {
+  #main .front-home .top-story-full .front-lead-image {
+    aspect-ratio:16/10!important;
+  }
+  #main .front-home .top-story-full .front-lead-copy {
+    padding:15px 16px 18px!important;
+  }
+}
