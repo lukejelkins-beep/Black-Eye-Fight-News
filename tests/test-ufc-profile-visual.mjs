@@ -116,7 +116,9 @@ try{
   ["desktop",{width:1366,height:900}],
   ["mobile",{width:390,height:844}]
  ]){
-  const context=await browser.newContext({viewport,deviceScaleFactor:1});
+  const context=await browser.newContext({
+   viewport,deviceScaleFactor:1,locale:"en-AU",timezoneId:"Australia/Melbourne"
+  });
   const page=await context.newPage();
   page.setDefaultTimeout(12000);
   const pageErrors=[];
