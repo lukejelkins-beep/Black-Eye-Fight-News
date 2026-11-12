@@ -527,3 +527,129 @@ body.befn-force-desktop {overflow-x:auto}
  #news-feed .news-strip-points,
  #news-feed .news-feature-card .news-strip-points {font-size:12px;line-height:1.4}
 }
+
+/* v9: mobile Top Stories clash fix. Older brand-theme CSS uses !important on
+   full-width image-first cards even on phones. Use stronger, scoped selectors.
+   Only phones change; desktop's lead-and-sidebar grid remains intact. */
+@media (max-width:760px) {
+  #main .front-home .front-lead-layout.top-story-stack {
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) !important;
+    gap:10px !important;
+    overflow:visible !important;
+    border-radius:0 !important;
+    background:transparent !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full {
+    min-width:0 !important;
+    max-width:100% !important;
+    background:#1d1519 !important;
+    color:#fff7ed !important;
+    border:1px solid #594347 !important;
+    border-radius:11px !important;
+    box-shadow:none !important;
+  }
+  /* The first card is the only full-width visual feature. */
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:first-child {
+    display:flex !important;
+    flex-direction:column !important;
+    grid-column:auto !important;
+    grid-row:auto !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:first-child .front-lead-image {
+    width:100% !important;
+    height:auto !important;
+    aspect-ratio:16/9 !important;
+    min-height:0 !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:first-child .front-lead-copy {
+    background:#1d1519 !important;
+    padding:17px 18px 18px !important;
+  }
+  /* Three slim, horizontal article rows, with no huge cream text panels. */
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) {
+    display:grid !important;
+    grid-template-columns:110px minmax(0,1fr) !important;
+    grid-template-rows:auto !important;
+    align-items:stretch !important;
+    gap:0 !important;
+    min-height:116px !important;
+    max-height:none !important;
+    background:#201719 !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-lead-image {
+    display:block !important;
+    position:relative !important;
+    grid-column:1 !important;
+    width:110px !important;
+    height:100% !important;
+    min-height:0 !important;
+    max-height:none !important;
+    aspect-ratio:auto !important;
+    background:#282024 !important;
+    overflow:hidden !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-lead-image img.front-lead-photo {
+    position:absolute !important;
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-lead-copy {
+    display:flex !important;
+    flex-direction:column !important;
+    justify-content:center !important;
+    gap:7px !important;
+    padding:12px 13px !important;
+    background:#201719 !important;
+    color:#fff7ed !important;
+    min-width:0 !important;
+    min-height:0 !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-lead-copy h2 {
+    margin:0 !important;
+    color:#fff7ed !important;
+    font-size:clamp(18px,4.7vw,22px) !important;
+    line-height:1.14 !important;
+    overflow-wrap:break-word !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-lead-copy h2 a {
+    color:#fff7ed !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-story-meta {
+    margin:0 !important;
+    color:#f2ce60 !important;
+    font-size:9px !important;
+    line-height:1.35 !important;
+    gap:3px !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-story-meta .befn-news-meta {
+    color:#e6c87a !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-story-meta .befn-news-time {
+    color:#d6c8c7 !important;
+    white-space:normal;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .top-story-points,
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .top-story-pending,
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .top-story-read {
+    display:none !important;
+  }
+  /* No full-width black placeholder if an image fails to resolve. */
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full .front-lead-image.top-story-photo-unavailable {
+    display:none !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child):has(.top-story-photo-unavailable) {
+    grid-template-columns:minmax(0,1fr) !important;
+  }
+  /* Preview-only debug toggle must not obscure phone content. */
+  .befn-preview-switch {display:none !important}
+}
+@media(max-width:370px){
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child){
+    grid-template-columns:94px minmax(0,1fr) !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-lead-image{
+    width:94px !important;
+  }
+}
