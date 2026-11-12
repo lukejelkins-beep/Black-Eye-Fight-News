@@ -411,7 +411,7 @@
     }
     if(Array.isArray(fighter.latest)&&Array.isArray(existing.latest)){
      for(const item of existing.latest){
-      const same=fighter.latest.find(x=>norm(item.opponent)===norm(x.opponent)||norm(item.opponent).endsWith(norm(x.opponent)));
+      const same=fighter.latest.find(x=>norm(item.opponent)===norm(x.opponent)||norm(item.opponent).includes(norm(x.opponent)));
       if(same&&Number.isInteger(same.cageSec))item.cageSec=same.cageSec;
      }
     }
