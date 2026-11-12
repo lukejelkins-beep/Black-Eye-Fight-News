@@ -1,0 +1,59 @@
+name: Verify live UFC fighter profiles
+on:
+  workflow_dispatch:
+  schedule:
+    # Production may deploy after GitHub validation; hourly independent check.
+    - cron: '17 * * * *'
+  workflow_run:
+    workflows: ["Validate UFC fighter profile cards"]
+    types: [completed]
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/verify-live-ufc-profiles.yml'
+      - 'tests/test-ufc-profile-visual.mjs'
+permissions:
+  contents: read
+concurrency:
+  group: befn-production-ufc-profile-qa
+  cancel-in-progress: true
+jobs:
+  production-profiles:
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Confirm source JSON is valid and algorithmic labels are consistent
+        run: |
+          node tests/test-ufc-profile-card-qa.cjs
+          node tests/test-ufc-prospect-contender.cjs
+          node --check tests/test-ufc-profile-visual.mjs
+      - name: Install browser test dependency (CI only)
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check the actual production domain and every reviewed fighter
+        env:
+          BEFN_PROFILE_QA_BASE: https://blackeyefightnews.com.au
+        run: node tests/test-ufc-profile-visual.mjs
+      - name: Upload per-fighter desktop/mobile screenshots and reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-live-ufc-profile-qa
+          path: qa/ufc-profile-screenshots/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Report production QA separately from editorial fact checks
+        if: always()
+        run: |
+          echo 'A passing production run proves the deployed dataset and UI match independently reviewed repository records at check time, not independent truth of all source claims or visual-perfect human signoff.'

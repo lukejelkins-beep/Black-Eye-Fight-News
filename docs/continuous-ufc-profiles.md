@@ -57,3 +57,21 @@ An unsourced claim that an opponent was "ranked", or a modern rank projected bac
 **Worked source-linked November 7, 2026 examples:** José Souza, Austin Bashi, Lucas Fernando and Elijah Smith are Prospect with their currently verified evidence. The earlier automatic "Contender" label for Elijah Smith was premature: four UFC wins and three finishes are encouraging, but the supplied record does not establish a dated ranked win. This classification can change as missing opponent-quality evidence is verified.
 
 **Required QA:** rerun \`node tests/test-ufc-prospect-contender.cjs\`, \`node tests/test-ufc-profile-card-qa.cjs\`, remaining Node model tests, and the Playwright mobile/desktop screenshot workflow. Every newly sourced fighter and every post-fight update is reclassified. Profile cohort filenames are storage organisation, not labels; validation requires the published category to match the algorithm.
+
+## Mandatory production QA after publishing a UFC profile
+
+The **local** GitHub Actions workflow \`.github/workflows/validate-ufc-profiles.yml\` runs source-data integrity tests and visual preview checks before a profile can be considered ready. It is NOT evidence that the profile has reached Render.
+
+\`.github/workflows/verify-live-ufc-profiles.yml\` separately verifies the actual public site at \`https://blackeyefightnews.com.au\`. It runs after successful local validation workflows and at least hourly, and can be manually dispatched. The browser test \`tests/test-ufc-profile-visual.mjs\` is shared between local and production modes.
+
+A production check is **passing only if ALL** of the following hold for every independently reviewed UFC fighter on the checked GitHub \`main\` snapshot:
+
+1. The public homepage responds successfully and *all five* live cohort JSON files contain the current individually reviewed source records (id, name, source-audited UFC-only history, professional record, stats, official rank evidence, credentials, notes and editorial category). This prevents calling a stale Render deployment complete.
+2. The published profile successfully loads in a **real headless Chromium browser**. The dialog opens to the correct fighter and displays the exact record, division, category, five rating dimensions, sources and recent-fight rows.
+3. Both **desktop 1366×900** and **mobile 390×844** views are tested for horizontal overflow/clipping, close controls and screenshots.
+4. Broken or absent fighter portraits are recorded as a **failure on production**, not silently ignored. Missing external portrait licences and independently source-verified identity continue to require editorial review, even if the image HTTP response is successful.
+5. Automated report and per-profile screenshots are uploaded with the live QA run. Any failed step is a blocker, not an implicit approval.
+
+GitHub Actions/Render deploys are asynchronous. A fresh GitHub commit is not proof that production has deployed. The production job waits for the public cohorts to agree before examining browser UI; if production is stale, the job fails and reports precisely which records have not appeared. This is a **detection/verification gate**, not a Render deployment hook or rollback system; do not assert the public release is verified until its live QA actually passes. In particular, no automated DOM screenshot suite can guarantee editorial truth or pixel-perfect aesthetics without an additional independent reviewer examining artifacts and linked primary sources.
+
+Investigate and fix failures at their origin (data, JavaScript, CSS, image URL, or deployment integration), then rerun local and production tests. Do not overwrite a newer production profile with stale data merely to make a check pass.
