@@ -85,6 +85,16 @@ async function checkProfile(page,profile,screen){
  const scope=screen+" | "+profile.name;
  checkedCount++;
  try{
+  // The initial HTML contains legacy fighter cards. Reviewed UFC cohorts
+  // hydrate asynchronously; never open a stale legacy profile while
+  // the reviewed record is still being loaded.
+  await page.waitForFunction(expected=>{
+   const f=window.COMBAT_DATA?.fighters?.find(x=>x.id===expected.id);
+   return !!f?.reviewedUfcProfile&&f.record===expected.record&&
+    f.division===expected.division&&f.category===expected.category&&
+    JSON.stringify((f.latest||[]).map(x=>[x.date,x.opponent,x.outcome,x.method]))===
+    JSON.stringify(expected.latest.map(x=>[x.date,x.opponent,x.outcome,x.method]));
+  },profile,{timeout:18000});
   await page.evaluate(id=>{
    const hash="#fighter/"+encodeURIComponent(id);
    if(location.hash!==hash)location.hash=hash;
