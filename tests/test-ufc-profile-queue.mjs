@@ -95,3 +95,20 @@ test("one-day later fight against a different opponent still requires verificati
  const q=buildQueue(progress,reviewed,{asOf:"2026-11-12"});
  assert.equal(q.postFightRefreshCandidates.length,1);
 });
+
+test("full owned partitions are not truncated to the 120-candidate preview",()=>{
+ const bouts={};
+ for(let i=0;i<160;i++){
+  const name="Alpha "+String(i).padStart(3,"0");
+  bouts[i]={org:"ufc",status:"completed",eventDate:"2026-10-01",event:"Example",
+   a:{name},b:{name:"Zulu "+String(i).padStart(3,"0")}};
+ }
+ const cards={events:[{sport:"mma",promotion:"UFC",date:"2026-11-15",
+  title:"Priority Card",bouts:[{fighters:["Alpha 001"]}]}]};
+ const q=buildQueue({bouts},[],{asOf:"2026-11-12",upcomingCards:cards});
+ assert.equal(q.candidates.length,120);
+ assert(q.historicalCounts["A-F"]>120);
+ assert(!q.historicalByWorker["A-F"].some(x=>x.name==="Alpha 001"));
+ assert(q.historicalByWorker["S-Z"].some(x=>x.name==="Zulu 001"));
+ assert.equal(q.historicalByWorker["A-F"].length,q.historicalCounts["A-F"]);
+});

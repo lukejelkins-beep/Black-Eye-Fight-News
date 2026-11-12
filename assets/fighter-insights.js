@@ -264,7 +264,7 @@
   return '<section class="befn-profile-block" data-befn-postfight="'+escapeHTML(f.id)+
    '"><h3>Tracked UFC fight statistics</h3><div class="befn-profile-body">'+
    '<p class="befn-score-note">Updated from completed UFC bouts with archived round-by-round observations. '+
-   '<b>'+d.trackedBouts+' recorded bouts</b>, latest '+escapeHTML(d.lastFightDate)+
+   '<b>'+d.trackedBouts+' UFC bouts with archived round data</b>, latest '+escapeHTML(d.lastFightDate)+
    '. These are <b>tracked-sample totals, not career totals</b>. Missing round fields are not guessed.</p>'+
    (pending?'<p class="befn-postfight-warning">New fight observed. Career record, recent form and 0–100 ratings await source review.</p>':"")+
    coveragePanel+

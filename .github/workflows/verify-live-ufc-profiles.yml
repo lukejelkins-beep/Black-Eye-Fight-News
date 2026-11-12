@@ -15,6 +15,7 @@ on:
       - 'tests/test-ufc-async-authority.cjs'
       - 'assets/fighter-insights.js'
       - 'scripts/ufc-qa-freshness.mjs'
+      - 'scripts/verify-ufc-live-freshness.mjs'
       - 'tests/test-ufc-qa-freshness.mjs'
       - 'sw.js'
 permissions:
@@ -46,6 +47,10 @@ jobs:
         run: node --test tests/test-ufc-async-authority.cjs
       - name: Regression-test old HTML/JS with new profile JSON
         run: node --test tests/test-ufc-qa-freshness.mjs
+      - name: Check Render deployment freshness before browser installation
+        env:
+          BEFN_PROFILE_QA_BASE: https://blackeyefightnews.com.au
+        run: node scripts/verify-ufc-live-freshness.mjs
       - name: Install browser test dependency (CI only)
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1
