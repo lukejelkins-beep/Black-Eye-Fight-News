@@ -6,13 +6,22 @@
     "data/upcoming-cards.json"
   ],
   "note": "Candidate names from announced cards or past bouts are NOT verified active UFC roster members. Only publish after primary-source checking, accurate biography/credentials, and per-card visual QA. Post-fight refresh candidates require validation before career stats or records change.",
-  "knownCompletedProfiles": 13,
-  "candidateCount": 891,
+  "knownCompletedProfiles": 16,
+  "candidateCount": 889,
   "fullActiveRosterVerified": false,
   "newCardEntrants": [
     {
       "name": "Amanda Nunes",
       "slug": "amanda-nunes",
+      "cardDate": "2026-11-14",
+      "cardEvent": "UFC 334: Gane vs Hokit",
+      "cardSource": "https://www.independent.co.uk/sport/ufc/ufc-schedule-2026-events-fights-november-b3077393.html",
+      "confirmation": "source_review_required",
+      "task": "Individually research and publish a sourced UFC profile before fight night; do not infer opponent confirmation"
+    },
+    {
+      "name": "Bia Mesquita",
+      "slug": "bia-mesquita",
       "cardDate": "2026-11-14",
       "cardEvent": "UFC 334: Gane vs Hokit",
       "cardSource": "https://www.independent.co.uk/sport/ufc/ufc-schedule-2026-events-fights-november-b3077393.html",
@@ -711,6 +720,29 @@
     },
     {
       "priority": 2,
+      "name": "Bia Mesquita",
+      "slug": "bia-mesquita",
+      "lastSeenDate": "2026-11-14",
+      "lastSeenEvent": "Polymarket UFC 334: Gane vs Hokit",
+      "appearanceEvidence": "UFCalendar UFC bout archive; not proof of current roster eligibility",
+      "upcoming": true,
+      "rosterStatus": "unverified",
+      "rankingStatus": "unverified",
+      "onCard": true,
+      "cardDate": "2026-11-14",
+      "cardSource": "https://www.independent.co.uk/sport/ufc/ufc-schedule-2026-events-fights-november-b3077393.html",
+      "needs": [
+        "current UFC roster status",
+        "dated official ranking (if any)",
+        "official UFC fighter biography",
+        "most recent UFC fight history and methods",
+        "UFC-only statistics with sample denominators",
+        "primary-sourced non-API credentials",
+        "licensed portrait and individual desktop/mobile card QA"
+      ]
+    },
+    {
+      "priority": 3,
       "name": "Bilal Hasan",
       "slug": "bilal-hasan",
       "lastSeenDate": "2026-11-14",
@@ -733,7 +765,7 @@
       ]
     },
     {
-      "priority": 3,
+      "priority": 4,
       "name": "Caio Borralho",
       "slug": "caio-borralho",
       "lastSeenDate": "2026-11-14",
@@ -756,7 +788,7 @@
       ]
     },
     {
-      "priority": 4,
+      "priority": 5,
       "name": "Cesar Almeida",
       "slug": "cesar-almeida",
       "lastSeenDate": "2026-11-14",
@@ -779,7 +811,7 @@
       ]
     },
     {
-      "priority": 5,
+      "priority": 6,
       "name": "Charles Radtke",
       "slug": "charles-radtke",
       "lastSeenDate": "2026-11-14",
@@ -802,7 +834,7 @@
       ]
     },
     {
-      "priority": 6,
+      "priority": 7,
       "name": "Chris Duncan",
       "slug": "chris-duncan",
       "lastSeenDate": "2026-11-14",
@@ -825,7 +857,7 @@
       ]
     },
     {
-      "priority": 7,
+      "priority": 8,
       "name": "Donte Johnson",
       "slug": "donte-johnson",
       "lastSeenDate": "2026-11-14",
@@ -848,7 +880,7 @@
       ]
     },
     {
-      "priority": 8,
+      "priority": 9,
       "name": "Drew Dober",
       "slug": "drew-dober",
       "lastSeenDate": "2026-11-14",
@@ -871,7 +903,7 @@
       ]
     },
     {
-      "priority": 9,
+      "priority": 10,
       "name": "Evan Elder",
       "slug": "evan-elder",
       "lastSeenDate": "2026-11-14",
@@ -894,7 +926,7 @@
       ]
     },
     {
-      "priority": 10,
+      "priority": 11,
       "name": "Jared Gordon",
       "slug": "jared-gordon",
       "lastSeenDate": "2026-11-14",
@@ -917,7 +949,7 @@
       ]
     },
     {
-      "priority": 11,
+      "priority": 12,
       "name": "Jim Miller",
       "slug": "jim-miller",
       "lastSeenDate": "2026-11-14",
@@ -940,7 +972,7 @@
       ]
     },
     {
-      "priority": 12,
+      "priority": 13,
       "name": "Josh Hokit",
       "slug": "josh-hokit",
       "lastSeenDate": "2026-11-14",
@@ -963,7 +995,7 @@
       ]
     },
     {
-      "priority": 13,
+      "priority": 14,
       "name": "Juan Díaz",
       "slug": "juan-diaz",
       "lastSeenDate": "2026-11-14",
@@ -986,7 +1018,7 @@
       ]
     },
     {
-      "priority": 14,
+      "priority": 15,
       "name": "Kevin Holland",
       "slug": "kevin-holland",
       "lastSeenDate": "2026-11-14",
@@ -1009,7 +1041,7 @@
       ]
     },
     {
-      "priority": 15,
+      "priority": 16,
       "name": "Luis Gurule",
       "slug": "luis-gurule",
       "lastSeenDate": "2026-11-14",
@@ -1032,7 +1064,7 @@
       ]
     },
     {
-      "priority": 16,
+      "priority": 17,
       "name": "Macy Chiasson",
       "slug": "macy-chiasson",
       "lastSeenDate": "2026-11-14",
@@ -1055,7 +1087,7 @@
       ]
     },
     {
-      "priority": 17,
+      "priority": 18,
       "name": "Melquizael Costa",
       "slug": "melquizael-costa",
       "lastSeenDate": "2026-11-14",
@@ -1078,7 +1110,7 @@
       ]
     },
     {
-      "priority": 18,
+      "priority": 19,
       "name": "Samuel Sanches",
       "slug": "samuel-sanches",
       "lastSeenDate": "2026-11-14",
@@ -1101,7 +1133,7 @@
       ]
     },
     {
-      "priority": 19,
+      "priority": 20,
       "name": "Stephen Thompson",
       "slug": "stephen-thompson",
       "lastSeenDate": "2026-11-14",
@@ -1124,7 +1156,7 @@
       ]
     },
     {
-      "priority": 20,
+      "priority": 21,
       "name": "Terrance McKinney",
       "slug": "terrance-mckinney",
       "lastSeenDate": "2026-11-14",
@@ -1147,7 +1179,7 @@
       ]
     },
     {
-      "priority": 21,
+      "priority": 22,
       "name": "Uros Medic",
       "slug": "uros-medic",
       "lastSeenDate": "2026-11-14",
@@ -1170,7 +1202,7 @@
       ]
     },
     {
-      "priority": 22,
+      "priority": 23,
       "name": "Yousri Belgaroui",
       "slug": "yousri-belgaroui",
       "lastSeenDate": "2026-11-14",
@@ -1193,7 +1225,7 @@
       ]
     },
     {
-      "priority": 23,
+      "priority": 24,
       "name": "Aleksandre Topuria",
       "slug": "aleksandre-topuria",
       "lastSeenDate": "2026-11-21",
@@ -1216,7 +1248,7 @@
       ]
     },
     {
-      "priority": 24,
+      "priority": 25,
       "name": "Alessandro Costa",
       "slug": "alessandro-costa",
       "lastSeenDate": "2026-11-21",
@@ -1239,7 +1271,7 @@
       ]
     },
     {
-      "priority": 25,
+      "priority": 26,
       "name": "Aljamain Sterling",
       "slug": "aljamain-sterling",
       "lastSeenDate": "2026-11-21",
@@ -1262,7 +1294,7 @@
       ]
     },
     {
-      "priority": 26,
+      "priority": 27,
       "name": "Amir Albazi",
       "slug": "amir-albazi",
       "lastSeenDate": "2026-11-21",
@@ -1285,7 +1317,7 @@
       ]
     },
     {
-      "priority": 27,
+      "priority": 28,
       "name": "Asu Almabayev",
       "slug": "asu-almabayev",
       "lastSeenDate": "2026-11-21",
@@ -1308,7 +1340,7 @@
       ]
     },
     {
-      "priority": 28,
+      "priority": 29,
       "name": "Brian Ortega",
       "slug": "brian-ortega",
       "lastSeenDate": "2026-11-21",
@@ -1331,7 +1363,7 @@
       ]
     },
     {
-      "priority": 29,
+      "priority": 30,
       "name": "Dan Hooker",
       "slug": "dan-hooker",
       "lastSeenDate": "2026-11-21",
@@ -1354,7 +1386,7 @@
       ]
     },
     {
-      "priority": 30,
+      "priority": 31,
       "name": "Ikram Aliskerov",
       "slug": "ikram-aliskerov",
       "lastSeenDate": "2026-11-21",
@@ -1377,7 +1409,7 @@
       ]
     },
     {
-      "priority": 31,
+      "priority": 32,
       "name": "Jake Matthews",
       "slug": "jake-matthews",
       "lastSeenDate": "2026-11-21",
@@ -1400,7 +1432,7 @@
       ]
     },
     {
-      "priority": 32,
+      "priority": 33,
       "name": "Jared Cannonier",
       "slug": "jared-cannonier",
       "lastSeenDate": "2026-11-21",
@@ -1423,7 +1455,7 @@
       ]
     },
     {
-      "priority": 33,
+      "priority": 34,
       "name": "Jiri Prochazka",
       "slug": "jiri-prochazka",
       "lastSeenDate": "2026-11-21",
@@ -1446,7 +1478,7 @@
       ]
     },
     {
-      "priority": 34,
+      "priority": 35,
       "name": "Kevin Vallejos",
       "slug": "kevin-vallejos",
       "lastSeenDate": "2026-11-21",
@@ -1469,7 +1501,7 @@
       ]
     },
     {
-      "priority": 35,
+      "priority": 36,
       "name": "Kyoji Horiguchi",
       "slug": "kyoji-horiguchi",
       "lastSeenDate": "2026-11-21",
@@ -1492,7 +1524,7 @@
       ]
     },
     {
-      "priority": 36,
+      "priority": 37,
       "name": "Navajo Stirling",
       "slug": "navajo-stirling",
       "lastSeenDate": "2026-11-21",
@@ -1515,7 +1547,7 @@
       ]
     },
     {
-      "priority": 37,
+      "priority": 38,
       "name": "Santiago Luna",
       "slug": "santiago-luna",
       "lastSeenDate": "2026-11-21",
@@ -1538,7 +1570,7 @@
       ]
     },
     {
-      "priority": 38,
+      "priority": 39,
       "name": "Shamil Gaziev",
       "slug": "shamil-gaziev",
       "lastSeenDate": "2026-11-21",
@@ -1561,7 +1593,7 @@
       ]
     },
     {
-      "priority": 39,
+      "priority": 40,
       "name": "Tahir Abdullayev",
       "slug": "tahir-abdullayev",
       "lastSeenDate": "2026-11-21",
@@ -1584,7 +1616,7 @@
       ]
     },
     {
-      "priority": 40,
+      "priority": 41,
       "name": "Tallison Teixeira",
       "slug": "tallison-teixeira",
       "lastSeenDate": "2026-11-21",
@@ -1607,7 +1639,7 @@
       ]
     },
     {
-      "priority": 41,
+      "priority": 42,
       "name": "Abdul Hussein",
       "slug": "abdul-hussein",
       "lastSeenDate": "2026-12-05",
@@ -1630,7 +1662,7 @@
       ]
     },
     {
-      "priority": 42,
+      "priority": 43,
       "name": "Akbar Abdullaev",
       "slug": "akbar-abdullaev",
       "lastSeenDate": "2026-12-05",
@@ -1653,7 +1685,7 @@
       ]
     },
     {
-      "priority": 43,
+      "priority": 44,
       "name": "Bruno Silva",
       "slug": "bruno-silva",
       "lastSeenDate": "2026-12-05",
@@ -1676,7 +1708,7 @@
       ]
     },
     {
-      "priority": 44,
+      "priority": 45,
       "name": "Hecher Sosa",
       "slug": "hecher-sosa",
       "lastSeenDate": "2026-12-05",
@@ -1699,7 +1731,7 @@
       ]
     },
     {
-      "priority": 45,
+      "priority": 46,
       "name": "Ion Cuțelaba",
       "slug": "ion-cutelaba",
       "lastSeenDate": "2026-12-05",
@@ -1722,7 +1754,7 @@
       ]
     },
     {
-      "priority": 46,
+      "priority": 47,
       "name": "Islam Dulatov",
       "slug": "islam-dulatov",
       "lastSeenDate": "2026-12-05",
@@ -1745,7 +1777,7 @@
       ]
     },
     {
-      "priority": 47,
+      "priority": 48,
       "name": "Israel Adesanya",
       "slug": "israel-adesanya",
       "lastSeenDate": "2026-12-05",
@@ -1768,7 +1800,7 @@
       ]
     },
     {
-      "priority": 48,
+      "priority": 49,
       "name": "Ivan Gnizditskiy",
       "slug": "ivan-gnizditskiy",
       "lastSeenDate": "2026-12-05",
@@ -1791,7 +1823,7 @@
       ]
     },
     {
-      "priority": 49,
+      "priority": 50,
       "name": "Jafel Filho",
       "slug": "jafel-filho",
       "lastSeenDate": "2026-12-05",
@@ -1814,7 +1846,7 @@
       ]
     },
     {
-      "priority": 50,
+      "priority": 51,
       "name": "JunYong Park",
       "slug": "junyong-park",
       "lastSeenDate": "2026-12-05",
@@ -1837,7 +1869,7 @@
       ]
     },
     {
-      "priority": 51,
+      "priority": 52,
       "name": "Levan Chokheli",
       "slug": "levan-chokheli",
       "lastSeenDate": "2026-12-05",
@@ -1860,7 +1892,7 @@
       ]
     },
     {
-      "priority": 52,
+      "priority": 53,
       "name": "Magomed Tuchalov",
       "slug": "magomed-tuchalov",
       "lastSeenDate": "2026-12-05",
@@ -1883,7 +1915,7 @@
       ]
     },
     {
-      "priority": 53,
+      "priority": 54,
       "name": "Mairon Santos",
       "slug": "mairon-santos",
       "lastSeenDate": "2026-12-05",
@@ -1906,7 +1938,7 @@
       ]
     },
     {
-      "priority": 54,
+      "priority": 55,
       "name": "Marco Tulio",
       "slug": "marco-tulio",
       "lastSeenDate": "2026-12-05",
@@ -1929,7 +1961,7 @@
       ]
     },
     {
-      "priority": 55,
+      "priority": 56,
       "name": "Matthieu Letho Duclos",
       "slug": "matthieu-letho-duclos",
       "lastSeenDate": "2026-12-05",
@@ -1952,7 +1984,7 @@
       ]
     },
     {
-      "priority": 56,
+      "priority": 57,
       "name": "Modestino Rodrigues",
       "slug": "modestino-rodrigues",
       "lastSeenDate": "2026-12-05",
@@ -1975,7 +2007,7 @@
       ]
     },
     {
-      "priority": 57,
+      "priority": 58,
       "name": "Sharabutdin Magomedov",
       "slug": "sharabutdin-magomedov",
       "lastSeenDate": "2026-12-05",
@@ -1998,7 +2030,7 @@
       ]
     },
     {
-      "priority": 58,
+      "priority": 59,
       "name": "Uran Satybaldiev",
       "slug": "uran-satybaldiev",
       "lastSeenDate": "2026-12-05",
@@ -2021,7 +2053,7 @@
       ]
     },
     {
-      "priority": 59,
+      "priority": 60,
       "name": "Alex Pereira",
       "slug": "alex-pereira",
       "lastSeenDate": "2026-12-12",
@@ -2044,7 +2076,7 @@
       ]
     },
     {
-      "priority": 60,
+      "priority": 61,
       "name": "Bo Nickal",
       "slug": "bo-nickal",
       "lastSeenDate": "2026-12-12",
@@ -2067,7 +2099,7 @@
       ]
     },
     {
-      "priority": 61,
+      "priority": 62,
       "name": "Brandon Moreno",
       "slug": "brandon-moreno",
       "lastSeenDate": "2026-12-12",
@@ -2090,7 +2122,7 @@
       ]
     },
     {
-      "priority": 62,
+      "priority": 63,
       "name": "Carli Judice",
       "slug": "carli-judice",
       "lastSeenDate": "2026-12-12",
@@ -2113,7 +2145,7 @@
       ]
     },
     {
-      "priority": 63,
+      "priority": 64,
       "name": "Charles Johnson",
       "slug": "charles-johnson",
       "lastSeenDate": "2026-12-12",
@@ -2136,7 +2168,7 @@
       ]
     },
     {
-      "priority": 64,
+      "priority": 65,
       "name": "Charles Oliveira",
       "slug": "charles-oliveira",
       "lastSeenDate": "2026-12-12",
@@ -2159,7 +2191,7 @@
       ]
     },
     {
-      "priority": 65,
+      "priority": 66,
       "name": "Diego Lopes",
       "slug": "diego-lopes",
       "lastSeenDate": "2026-12-12",
@@ -2182,7 +2214,7 @@
       ]
     },
     {
-      "priority": 66,
+      "priority": 67,
       "name": "Joe Pyfer",
       "slug": "joe-pyfer",
       "lastSeenDate": "2026-12-12",
@@ -2205,7 +2237,7 @@
       ]
     },
     {
-      "priority": 67,
+      "priority": 68,
       "name": "Junior Tafa",
       "slug": "junior-tafa",
       "lastSeenDate": "2026-12-12",
@@ -2228,7 +2260,7 @@
       ]
     },
     {
-      "priority": 68,
+      "priority": 69,
       "name": "Maycee Barber",
       "slug": "maycee-barber",
       "lastSeenDate": "2026-12-12",
@@ -2251,7 +2283,7 @@
       ]
     },
     {
-      "priority": 69,
+      "priority": 70,
       "name": "Quentin Pasley",
       "slug": "quentin-pasley",
       "lastSeenDate": "2026-12-12",
@@ -2274,7 +2306,7 @@
       ]
     },
     {
-      "priority": 70,
+      "priority": 71,
       "name": "Sergei Pavlovich",
       "slug": "sergei-pavlovich",
       "lastSeenDate": "2026-12-12",
@@ -2297,7 +2329,7 @@
       ]
     },
     {
-      "priority": 71,
+      "priority": 72,
       "name": "Benoit Saint Denis",
       "slug": "benoit-saint-denis",
       "lastSeenDate": "2027-02-06",
@@ -2317,7 +2349,7 @@
       ]
     },
     {
-      "priority": 72,
+      "priority": 73,
       "name": "Bo Hyun Park",
       "slug": "bo-hyun-park",
       "lastSeenDate": "2027-02-06",
@@ -2337,7 +2369,7 @@
       ]
     },
     {
-      "priority": 73,
+      "priority": 74,
       "name": "Bogdan Guskov",
       "slug": "bogdan-guskov",
       "lastSeenDate": "2027-02-06",
@@ -2357,7 +2389,7 @@
       ]
     },
     {
-      "priority": 74,
+      "priority": 75,
       "name": "Dagiisuren Chagnaadorj",
       "slug": "dagiisuren-chagnaadorj",
       "lastSeenDate": "2027-02-06",
@@ -2377,7 +2409,7 @@
       ]
     },
     {
-      "priority": 75,
+      "priority": 76,
       "name": "George Mangos",
       "slug": "george-mangos",
       "lastSeenDate": "2027-02-06",
@@ -2397,7 +2429,7 @@
       ]
     },
     {
-      "priority": 76,
+      "priority": 77,
       "name": "Jiniushiyue",
       "slug": "jiniushiyue",
       "lastSeenDate": "2027-02-06",
@@ -2417,7 +2449,7 @@
       ]
     },
     {
-      "priority": 77,
+      "priority": 78,
       "name": "Joanderson Brito",
       "slug": "joanderson-brito",
       "lastSeenDate": "2027-02-06",
@@ -2437,7 +2469,7 @@
       ]
     },
     {
-      "priority": 78,
+      "priority": 79,
       "name": "JooSang Yoo",
       "slug": "joosang-yoo",
       "lastSeenDate": "2027-02-06",
@@ -2457,7 +2489,7 @@
       ]
     },
     {
-      "priority": 79,
+      "priority": 80,
       "name": "Kaan Ofli",
       "slug": "kaan-ofli",
       "lastSeenDate": "2027-02-06",
@@ -2477,7 +2509,7 @@
       ]
     },
     {
-      "priority": 80,
+      "priority": 81,
       "name": "Marwan Rahiki",
       "slug": "marwan-rahiki",
       "lastSeenDate": "2027-02-06",
@@ -2497,7 +2529,7 @@
       ]
     },
     {
-      "priority": 81,
+      "priority": 82,
       "name": "Meng Bo",
       "slug": "meng-bo-2",
       "lastSeenDate": "2027-02-06",
@@ -2517,7 +2549,7 @@
       ]
     },
     {
-      "priority": 82,
+      "priority": 83,
       "name": "Quillan Salkilld",
       "slug": "quillan-salkilld",
       "lastSeenDate": "2027-02-06",
@@ -2537,7 +2569,7 @@
       ]
     },
     {
-      "priority": 83,
+      "priority": 84,
       "name": "Rabindra Dhant",
       "slug": "rabindra-dhant",
       "lastSeenDate": "2027-02-06",
@@ -2557,7 +2589,7 @@
       ]
     },
     {
-      "priority": 84,
+      "priority": 85,
       "name": "Robert Whittaker",
       "slug": "robert-whittaker",
       "lastSeenDate": "2027-02-06",
@@ -2577,7 +2609,7 @@
       ]
     },
     {
-      "priority": 85,
+      "priority": 86,
       "name": "Ryo Tajima",
       "slug": "ryo-tajima",
       "lastSeenDate": "2027-02-06",
@@ -2597,7 +2629,7 @@
       ]
     },
     {
-      "priority": 86,
+      "priority": 87,
       "name": "Takaya Suzuki",
       "slug": "takaya-suzuki",
       "lastSeenDate": "2027-02-06",
@@ -2617,7 +2649,7 @@
       ]
     },
     {
-      "priority": 87,
+      "priority": 88,
       "name": "Carlos Prates",
       "slug": "carlos-prates",
       "lastSeenDate": "2027-01-30",
@@ -2637,7 +2669,7 @@
       ]
     },
     {
-      "priority": 88,
+      "priority": 89,
       "name": "Manel Kape",
       "slug": "manel-kape",
       "lastSeenDate": "2027-01-30",
@@ -2657,7 +2689,7 @@
       ]
     },
     {
-      "priority": 89,
+      "priority": 90,
       "name": "Michael Morales",
       "slug": "michael-morales",
       "lastSeenDate": "2027-01-30",
@@ -2677,7 +2709,7 @@
       ]
     },
     {
-      "priority": 90,
+      "priority": 91,
       "name": "Ian Machado Garry",
       "slug": "ian-machado-garry",
       "lastSeenDate": "2026-12-05",
@@ -2697,7 +2729,7 @@
       ]
     },
     {
-      "priority": 91,
+      "priority": 92,
       "name": "Mario Pinto",
       "slug": "mario-pinto",
       "lastSeenDate": "2026-12-05",
@@ -2717,7 +2749,7 @@
       ]
     },
     {
-      "priority": 92,
+      "priority": 93,
       "name": "Matthieu Duclos",
       "slug": "matthieu-duclos",
       "lastSeenDate": "2026-12-05",
@@ -2737,7 +2769,7 @@
       ]
     },
     {
-      "priority": 93,
+      "priority": 94,
       "name": "Mehemmedeli Osmanli",
       "slug": "mehemmedeli-osmanli",
       "lastSeenDate": "2026-12-05",
@@ -2757,7 +2789,7 @@
       ]
     },
     {
-      "priority": 94,
+      "priority": 95,
       "name": "Pavel Andrusca",
       "slug": "pavel-andrusca",
       "lastSeenDate": "2026-12-05",
@@ -2777,7 +2809,7 @@
       ]
     },
     {
-      "priority": 95,
+      "priority": 96,
       "name": "Serghei Spivac",
       "slug": "serghei-spivac",
       "lastSeenDate": "2026-12-05",
@@ -2797,7 +2829,7 @@
       ]
     },
     {
-      "priority": 96,
+      "priority": 97,
       "name": "Shara Magomedov",
       "slug": "shara-magomedov",
       "lastSeenDate": "2026-12-05",
@@ -2817,7 +2849,7 @@
       ]
     },
     {
-      "priority": 97,
+      "priority": 98,
       "name": "Yaroslav Amosov",
       "slug": "yaroslav-amosov",
       "lastSeenDate": "2026-12-05",
@@ -2837,7 +2869,7 @@
       ]
     },
     {
-      "priority": 98,
+      "priority": 99,
       "name": "Heili Alateng",
       "slug": "heili-alateng",
       "lastSeenDate": "2026-11-14",
@@ -2857,7 +2889,7 @@
       ]
     },
     {
-      "priority": 99,
+      "priority": 100,
       "name": "Adrian Yanez",
       "slug": "adrian-yanez",
       "lastSeenDate": "2026-11-14",
@@ -2877,7 +2909,7 @@
       ]
     },
     {
-      "priority": 100,
+      "priority": 101,
       "name": "Baisangur Susurkaev",
       "slug": "baisangur-susurkaev",
       "lastSeenDate": "2026-11-14",
@@ -2897,7 +2929,7 @@
       ]
     },
     {
-      "priority": 101,
+      "priority": 102,
       "name": "Jefferson Nascimento",
       "slug": "jefferson-nascimento",
       "lastSeenDate": "2026-11-14",
@@ -2917,7 +2949,7 @@
       ]
     },
     {
-      "priority": 102,
+      "priority": 103,
       "name": "Nazim Sadykhov",
       "slug": "nazim-sadykhov",
       "lastSeenDate": "2026-11-14",
@@ -2937,7 +2969,7 @@
       ]
     },
     {
-      "priority": 103,
+      "priority": 104,
       "name": "Alvin Hines",
       "slug": "alvin-hines",
       "lastSeenDate": "2026-11-07",
@@ -2957,29 +2989,9 @@
       ]
     },
     {
-      "priority": 104,
+      "priority": 105,
       "name": "Andre Petroski",
       "slug": "andre-petroski",
-      "lastSeenDate": "2026-11-07",
-      "lastSeenEvent": "UFC Fight Night: Cortes Acosta vs Walker",
-      "appearanceEvidence": "UFCalendar UFC bout archive; not proof of current roster eligibility",
-      "upcoming": false,
-      "rosterStatus": "unverified",
-      "rankingStatus": "unverified",
-      "needs": [
-        "current UFC roster status",
-        "dated official ranking (if any)",
-        "official UFC fighter biography",
-        "most recent UFC fight history and methods",
-        "UFC-only statistics with sample denominators",
-        "primary-sourced non-API credentials",
-        "licensed portrait and individual desktop/mobile card QA"
-      ]
-    },
-    {
-      "priority": 105,
-      "name": "Austin Bashi",
-      "slug": "austin-bashi",
       "lastSeenDate": "2026-11-07",
       "lastSeenEvent": "UFC Fight Night: Cortes Acosta vs Walker",
       "appearanceEvidence": "UFCalendar UFC bout archive; not proof of current roster eligibility",
@@ -3058,26 +3070,6 @@
     },
     {
       "priority": 109,
-      "name": "Elijah Smith",
-      "slug": "elijah-smith",
-      "lastSeenDate": "2026-11-07",
-      "lastSeenEvent": "UFC Fight Night: Cortes Acosta vs Walker",
-      "appearanceEvidence": "UFCalendar UFC bout archive; not proof of current roster eligibility",
-      "upcoming": false,
-      "rosterStatus": "unverified",
-      "rankingStatus": "unverified",
-      "needs": [
-        "current UFC roster status",
-        "dated official ranking (if any)",
-        "official UFC fighter biography",
-        "most recent UFC fight history and methods",
-        "UFC-only statistics with sample denominators",
-        "primary-sourced non-API credentials",
-        "licensed portrait and individual desktop/mobile card QA"
-      ]
-    },
-    {
-      "priority": 110,
       "name": "Gabriel Bonfim",
       "slug": "gabriel-bonfim",
       "lastSeenDate": "2026-11-07",
@@ -3097,7 +3089,7 @@
       ]
     },
     {
-      "priority": 111,
+      "priority": 110,
       "name": "Gabriel Lorenço",
       "slug": "gabriel-lorenco",
       "lastSeenDate": "2026-11-07",
@@ -3117,7 +3109,7 @@
       ]
     },
     {
-      "priority": 112,
+      "priority": 111,
       "name": "Gabriella Fernandes",
       "slug": "gabriella-fernandes",
       "lastSeenDate": "2026-11-07",
@@ -3137,7 +3129,7 @@
       ]
     },
     {
-      "priority": 113,
+      "priority": 112,
       "name": "Johnny Walker",
       "slug": "johnny-walker",
       "lastSeenDate": "2026-11-07",
@@ -3157,7 +3149,7 @@
       ]
     },
     {
-      "priority": 114,
+      "priority": 113,
       "name": "Jonny Parsons",
       "slug": "jonny-parsons",
       "lastSeenDate": "2026-11-07",
@@ -3177,7 +3169,7 @@
       ]
     },
     {
-      "priority": 115,
+      "priority": 114,
       "name": "Jose Delano",
       "slug": "jose-delano",
       "lastSeenDate": "2026-11-07",
@@ -3197,7 +3189,7 @@
       ]
     },
     {
-      "priority": 116,
+      "priority": 115,
       "name": "Jose Henrique",
       "slug": "jose-henrique",
       "lastSeenDate": "2026-11-07",
@@ -3217,7 +3209,7 @@
       ]
     },
     {
-      "priority": 117,
+      "priority": 116,
       "name": "Karine Silva",
       "slug": "karine-silva",
       "lastSeenDate": "2026-11-07",
@@ -3237,7 +3229,7 @@
       ]
     },
     {
-      "priority": 118,
+      "priority": 117,
       "name": "Keiichiro Nakamura",
       "slug": "keiichiro-nakamura",
       "lastSeenDate": "2026-11-07",
@@ -3257,7 +3249,7 @@
       ]
     },
     {
-      "priority": 119,
+      "priority": 118,
       "name": "Lucas Brennan",
       "slug": "lucas-brennan",
       "lastSeenDate": "2026-11-07",
@@ -3277,9 +3269,29 @@
       ]
     },
     {
+      "priority": 119,
+      "name": "Mantas Kondratavicius",
+      "slug": "mantas-kondratavicius",
+      "lastSeenDate": "2026-11-07",
+      "lastSeenEvent": "UFC Fight Night: Cortes Acosta vs Walker",
+      "appearanceEvidence": "UFCalendar UFC bout archive; not proof of current roster eligibility",
+      "upcoming": false,
+      "rosterStatus": "unverified",
+      "rankingStatus": "unverified",
+      "needs": [
+        "current UFC roster status",
+        "dated official ranking (if any)",
+        "official UFC fighter biography",
+        "most recent UFC fight history and methods",
+        "UFC-only statistics with sample denominators",
+        "primary-sourced non-API credentials",
+        "licensed portrait and individual desktop/mobile card QA"
+      ]
+    },
+    {
       "priority": 120,
-      "name": "Lucas Fernando",
-      "slug": "lucas-fernando",
+      "name": "Marcos Degli",
+      "slug": "marcos-degli",
       "lastSeenDate": "2026-11-07",
       "lastSeenEvent": "UFC Fight Night: Cortes Acosta vs Walker",
       "appearanceEvidence": "UFCalendar UFC bout archive; not proof of current roster eligibility",
