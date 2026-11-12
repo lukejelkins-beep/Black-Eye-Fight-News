@@ -120,7 +120,8 @@ async function checkProfile(page,profile,screen){
    const d=document.querySelector("#fighterDialog"),f=window.COMBAT_DATA?.fighters?.find(x=>x.id===id);
    const ins=d?.querySelector(".befn-profile-insights");
    const title=d?.querySelector(".dialog-top h2")?.textContent?.trim();
-   const recent=d?.querySelectorAll(".data-table tbody tr").length??0;
+   const recentRows=[...(d?.querySelectorAll("table[data-befn-recent-results] tbody tr")||[])]
+    .map(tr=>[...tr.querySelectorAll("td")].map(td=>td.textContent.trim()));
    const metrics=ins?.querySelectorAll(".befn-power-metric").length??0;
    const credential=ins?.querySelector(".befn-credential-list,.befn-credential-empty");
    const ratingSource=ins?.querySelector(".befn-rating-source-note a");
@@ -133,15 +134,26 @@ async function checkProfile(page,profile,screen){
    const viewportOverflow=document.documentElement.scrollWidth>rootWidth+4;
    return {
     identity:!!f,title,record:f?.record,division:f?.division,category:f?.category,
-    metrics,recent,credentialsVisible:!!credential,postfightCells,coverageVisible,
+    metrics,recentRows,credentialsVisible:!!credential,postfightCells,coverageVisible,
     ratingSource:ratingSource?.getAttribute("href")||"",
     ratingSourceText:ins?.querySelector(".befn-rating-source-note")?.textContent||"",
     rect:rect&&{left:rect.left,right:rect.right,width:rect.width},
     rootWidth,viewportOverflow,
     dialogClip:!!rect&&(rect.left< -4||rect.right>innerWidth+4),
     contentOverflow:!!content&&content.scrollWidth>content.clientWidth+4,
-    portrait:!!d?.querySelector(".dialog-bio img"),
-    portraitStatus:(()=>{const im=d?.querySelector(".dialog-bio img");return im?{src:im.src,loaded:im.complete&&im.naturalWidth>0}:null})(),
+    portraitStatus:(()=>{
+     const frame=d?.querySelector(".dialog-bio [data-fighter-portrait]");
+     const im=frame?.querySelector("img");
+     const fallback=frame?.querySelector(".befn-portrait-fallback");
+     const styles=fallback?getComputedStyle(fallback):null;
+     const shown=!!fallback&&styles?.display!=="none"&&styles?.visibility!=="hidden"&&
+      fallback.getBoundingClientRect().width>0&&fallback.getBoundingClientRect().height>0;
+     return {imgPresent:!!im,imageLoaded:!!im&&im.complete&&im.naturalWidth>0&&
+      frame.classList.contains("is-loaded"),fallbackVisible:shown,
+      fallbackLabel:fallback?.textContent?.trim()||"",
+      state:frame?.dataset.portraitState||"missing",framePresent:!!frame,
+      photoVerified:!!f?.photoRightsVerified};
+    })(),
     closeVisible:!!d?.querySelector("button#closeFighter"),
     renderedClassification:ins?.querySelector(".befn-scout-classification")?.textContent||"",
     sourceLinks:[...(ins?.querySelectorAll(".befn-rating-source-note a,.befn-credential-list a")||[])].map(x=>x.href),
@@ -164,7 +176,11 @@ async function checkProfile(page,profile,screen){
    "Unassessed":profile.category;
   assert.equal(details.category,expectedCategory,"classification display mismatch");
   assert.equal(details.metrics,5,"expected exactly 5 rating rows");
-  assert.equal(details.recent,profile.latest.length,"recent results do not match sourced data");
+  // Profile details may contain OTHER tables (including post-fight metrics).
+  // Only the uniquely annotated fight-history table may be counted and audited.
+  const sourcedRows=profile.latest.map(x=>[x.date,x.opponent,x.outcome,x.method].map(String));
+  assert.deepEqual(details.recentRows,sourcedRows,
+    "published fight-by-fight history differs from the individually sourced UFC results");
   assert(details.credentialsVisible,"credentials or missing-credential statement absent");
   if(expectedPostfight.has(normalized(profile.name))){
    assert.equal(details.postfightCells,11,"incomplete UFC post-fight metrics panel");
@@ -185,9 +201,18 @@ async function checkProfile(page,profile,screen){
     "verified statistical score lacks source link");
   if(!profile.verifiedStats)assert(/insufficient verified/i.test(details.ratingSourceText),
     "missing statistics must be labelled unrated");
-  if(!details.portraitStatus?.loaded){
-   photos.push(scope+" | fighter portrait is not loaded");
-   if(isLive)pushError(scope,"LIVE PORTRAIT BROKEN: image absent, blocked or failed to load");
+  const portrait=details.portraitStatus;
+  assert(portrait?.framePresent,"fighter portrait frame missing");
+  assert(portrait.state==="image"||portrait.state==="fallback",
+    "fighter portrait in an invalid display state");
+  assert(portrait.imageLoaded||portrait.fallbackVisible,
+    "BROKEN PORTRAIT UI: neither image nor fallback is visible");
+  if(!portrait.imageLoaded){
+   assert(portrait.fallbackVisible&&/Photo unavailable/i.test(portrait.fallbackLabel),
+    "missing fighter image without labelled fallback");
+   photos.push(scope+" | clear photo-unavailable fallback, portrait sourcing pending");
+   if(portrait.photoVerified)pushError(scope,
+    "VERIFIED PORTRAIT UNAVAILABLE: sourced, licensed image did not load");
   }
   await page.screenshot({path:path.join(screenshots,safe(profile.name)+"-"+screen+".png"),
    animations:"disabled",timeout:12000});
@@ -243,7 +268,7 @@ const report={
  mode:isLive?"production":"local",baseUrl:base,
  fighters:profiles.length,viewports:["desktop 1366px","mobile 390px"],
  expectedChecks:profiles.length*2,checks:checkedCount,readyForBrowser,failures,warnings,
- portraitNetworkWarnings:photos,
+ portraitCoveragePending:photos,
  sourceAccuracy:"Matching GitHub records proves publication consistency, not independent truth. Verify source URLs, portrait identity and image rights separately."
 };
 fs.writeFileSync(path.join(screenshots,"report.json"),JSON.stringify(report,null,2)+"\n");
@@ -251,5 +276,5 @@ console.log(JSON.stringify({checked:report.checks,errors:failures.length,photoWa
  warnings:warnings.length},null,2));
 for(const item of failures)console.error("FAIL",item);
 for(const item of warnings)console.warn("NOTE",item);
-if(photos.length)console.warn("Portrait CDN/reuse checks pending on",photos.length,"views; inspect uploaded screenshots.");
+if(photos.length)console.warn("Unverified or unavailable portraits show accessible fallbacks on",photos.length,"views. Portrait sourcing is still pending; inspect screenshots.");
 if(failures.length)process.exitCode=1;
