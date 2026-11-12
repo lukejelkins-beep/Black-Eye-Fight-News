@@ -240,3 +240,94 @@
  .befn-snapshot-metric-label{font-size:8px}
  .befn-snapshot-links button{font-size:10px}
 }
+
+
+/* Mobile head-to-head fight history: 3 tabs, honest statistics, cage-time and tale. */
+.befn-recent-history{margin:16px 0 0;padding-top:13px;border-top:1px solid #3a404b}
+.befn-comparison-heading{margin:0 0 12px!important;color:#fff!important;font-size:16px!important;font-weight:900}
+.befn-history-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:11px}
+.befn-history-tabs button{
+ min-width:0;min-height:41px;padding:8px 4px;cursor:pointer;
+ border:1px solid #414550;border-radius:21px;background:#16171e;
+ color:#c5c7d0;font-size:11px;font-weight:850;line-height:1.18;
+ white-space:normal;overflow-wrap:break-word;
+}
+.befn-history-tabs button.is-active,
+.befn-history-tabs button[aria-selected="true"]{
+ background:#faefd6;border-color:#faefd6;color:#211b13;
+}
+.befn-history-tabs button:focus-visible{outline:3px solid #79c9ff;outline-offset:2px}
+.befn-history-panel{background:#1f212a;border:1px solid #373b47;border-radius:12px;overflow:hidden}
+.befn-history-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.befn-history-side{min-width:0}
+.befn-history-side+.befn-history-side{border-left:1px solid #3b4050}
+.befn-history-fighter{display:grid;gap:4px;padding:11px 10px;border-bottom:1px solid #39404b;text-align:left}
+.befn-history-side:last-child .befn-history-fighter{text-align:right}
+.befn-history-fighter b{color:#fff;font-size:12px;overflow-wrap:anywhere}
+.befn-history-fighter span{color:#aeb6c3;font-size:11px}
+.befn-history-fight{display:flex;align-items:flex-start;gap:7px;min-height:69px;padding:9px 8px;border-bottom:1px solid #2c3039}
+.befn-history-side:last-child .befn-history-fight{flex-direction:row-reverse;text-align:right}
+.befn-history-outcome{display:grid;align-content:center;justify-items:center;flex:0 0 28px;min-width:28px;border-radius:7px;overflow:hidden;background:#3b454e;color:#fff}
+.befn-history-outcome b{padding:4px;font-size:11px;line-height:1.3}
+.befn-history-outcome small{font-size:8px;line-height:1.6;width:100%;padding:0 2px;background:rgba(255,255,255,.16);text-align:center}
+.befn-history-outcome.is-win{background:#215333;color:#a8ffba}
+.befn-history-outcome.is-loss{background:#673335;color:#ffb9b5}
+.befn-history-outcome.is-no-contest{background:#244c6f;color:#bedffe}
+.befn-history-desc{min-width:0;display:grid;gap:2px;overflow-wrap:anywhere}
+.befn-history-desc small{font-size:10px;color:#b2b6c0}
+.befn-history-desc strong{font-size:11px;color:#f9f7f4;line-height:1.25}
+.befn-history-desc span{font-size:9px;color:#b9bfc9}
+.befn-history-empty{padding:11px 9px;color:#aeb5bd;font-size:10px;line-height:1.45}
+.befn-history-stats{padding:12px 10px}
+.befn-history-stats-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(62px,.85fr) minmax(0,1fr);gap:5px;align-items:center;margin-bottom:13px}
+.befn-history-stats-head strong{color:#fff;font-size:11px;line-height:1.3;overflow-wrap:anywhere}
+.befn-history-stats-head strong:last-child{text-align:right}
+.befn-history-stats-head>span{color:#afb5c1;font-size:9px;text-align:center}
+.befn-history-stat-heading{display:flex;align-items:center;gap:8px;color:#f7dba3!important;font-size:12px!important;font-weight:850;margin:14px 0 5px!important}
+.befn-history-stat-heading::before,.befn-history-stat-heading::after{content:"";height:1px;flex:1;background:#4a505c}
+.befn-history-stat{display:grid;grid-template-columns:minmax(0,.7fr) minmax(100px,1.7fr) minmax(0,.7fr);gap:6px;min-height:40px;align-items:center;padding:6px 0;border-bottom:1px solid #2c313b}
+.befn-history-stat b{color:#f0f0f3;font-size:14px;font-variant-numeric:tabular-nums}
+.befn-history-stat b:last-child{text-align:right}
+.befn-history-stat span{color:#c0c4cc;text-align:center;font-size:10px;font-weight:750;line-height:1.35}
+.befn-history-stats .befn-snapshot-disclaimer{margin:12px 0 2px;font-size:10px}
+.befn-cage-comparison{padding:12px 9px}
+.befn-history-caption{font-size:10px;color:#c4c7d0;text-align:center;margin:0 0 11px}
+.befn-cage-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
+.befn-cage-fighter{min-width:0;padding:0 7px}
+.befn-cage-fighter+.befn-cage-fighter{border-left:1px solid #3e4550}
+.befn-cage-head{display:grid;gap:2px;min-height:74px;border-bottom:1px solid #353b48;padding-bottom:10px}
+.befn-cage-head>span{font-size:10px;color:#e1e3e7;font-weight:800;overflow-wrap:anywhere}
+.befn-cage-head>strong{font-size:24px;color:#fff;font-weight:900;font-variant-numeric:tabular-nums}
+.befn-cage-head>small{font-size:9px;color:#b4bac5}
+.befn-cage-row{display:grid;grid-template-columns:minmax(0,1fr) 9px;gap:6px;align-items:center;min-height:68px;padding:10px 0;border-bottom:1px solid #2d323a}
+.befn-cage-fighter:last-child .befn-cage-row{grid-template-columns:9px minmax(0,1fr)}
+.befn-cage-fighter:last-child .befn-cage-row>div{grid-column:2;grid-row:1;text-align:right}
+.befn-cage-fighter:last-child .befn-cage-row>.befn-cage-track{grid-column:1;grid-row:1}
+.befn-cage-row>div{min-width:0}
+.befn-cage-row strong{display:block;color:#fff;font-size:15px;font-variant-numeric:tabular-nums}
+.befn-cage-row small{display:block;color:#b4b7c3;font-size:10px;line-height:1.35;overflow-wrap:anywhere}
+.befn-cage-track{height:37px;border-radius:4px;background:#373137;display:flex;align-items:flex-end;overflow:hidden}
+.befn-cage-fighter:last-child .befn-cage-track{background:#293e51}
+.befn-cage-track i{width:100%;height:var(--cage-fill,0%);background:#e8585c;border-radius:3px;display:block}
+.befn-cage-fighter:last-child .befn-cage-track i{background:#60b4fe}
+.befn-tale{margin:13px 0 0;background:#1f222b;border:1px solid #424753;border-radius:10px;overflow:hidden}
+.befn-tale>summary{padding:12px;cursor:pointer;color:#f5e7c7;font-weight:900;font-size:13px;min-height:44px}
+.befn-tale>summary span{display:block;color:#aeb6c3;font-weight:500;font-size:10px;margin-top:3px}
+.befn-tale[open]{padding-bottom:9px}
+.befn-tale .befn-history-stats-head,.befn-tale .befn-history-stat,.befn-tale .befn-snapshot-disclaimer{margin-left:10px;margin-right:10px}
+.befn-tale .befn-history-stats-head{padding-top:12px;border-top:1px solid #373e49}
+@media(max-width:420px){
+ .befn-history-tabs{gap:4px}
+ .befn-history-tabs button{font-size:10px;padding:8px 3px}
+ .befn-history-fight{gap:5px;padding:8px 5px;min-height:76px}
+ .befn-history-outcome{flex-basis:23px;min-width:23px}
+ .befn-history-desc strong{font-size:10px}
+ .befn-history-desc small{font-size:9px}
+ .befn-history-stats{padding:9px 7px}
+ .befn-history-stat{grid-template-columns:minmax(0,.65fr) minmax(88px,1.7fr) minmax(0,.65fr)}
+ .befn-history-stat b{font-size:12px}
+ .befn-history-stat span{font-size:9px}
+ .befn-cage-fighter{padding:0 5px}
+ .befn-cage-row strong{font-size:13px}
+ .befn-cage-row small{font-size:9px}
+}
