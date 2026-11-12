@@ -6,6 +6,11 @@ on:
     # Every two hours, UTC; offset from top-of-hour GitHub scheduler congestion.
     - cron: '31 */2 * * *'
   workflow_dispatch:
+  # Exercise the controller when its implementation changes.
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/befn-render-deploy-recovery.yml'
 permissions:
   contents: read
   actions: write
