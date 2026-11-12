@@ -81,7 +81,72 @@ for(const rated of collegeStats){
   assert.equal(rated.score,model.evaluate(career,last5).find(x=>x.id===rated.id).score);
 }
 assert.equal(model.evaluate({credentials:[credential]},[]).find(x=>x.id==="wrestling").score,null);
-assert.equal(model.ncaaWrestlingPrior(null,{credentials:[credential]},5),null);
+assert.equal(model.credentialBonuses({credentials:[credential]}).wrestling.points,3);
 assert.equal(model.evaluate({...career,credentials:[{...credential,source:""}]},last5)
  .find(x=>x.id==="wrestling").credentialAdjustment,0);
+// The entire credential schedule is fixed and auditable.
+const sourced=(kind,opts={})=>({kind,source:"https://example.org/official-record",...opts});
+const ncaa=(division,medal,placement)=>sourced("ncaa",{
+ division,...(medal?{medal}:{}),...(placement?{placement}:{})
+});
+const wPts=c=>model.credentialBonuses({credentials:[c]}).wrestling.points;
+assert.equal(wPts(ncaa("I","gold")),11);
+assert.equal(wPts(ncaa("I","silver")),10);
+assert.equal(wPts(ncaa("I","bronze")),9);
+assert.equal(wPts(ncaa("II","gold")),8);
+assert.equal(wPts(ncaa("II","silver")),7);
+assert.equal(wPts(ncaa("II","bronze")),6);
+assert.equal(wPts(ncaa("III","gold")),5);
+assert.equal(wPts(ncaa("III","silver")),4);
+assert.equal(wPts(ncaa("III","bronze")),3);
+assert.equal(wPts(ncaa("I",null,5)),5,"Non-medallist All-American gets no medal, but a documented top-eight award");
+assert.equal(wPts(ncaa("I","gold",5)),5,"Incorrect medal placement must not gain gold points");
+assert.equal(wPts(ncaa("II")),2);
+assert.equal(wPts(ncaa("III")),1);
+assert.equal(wPts(ncaa("I",null,5)),5);
+const noData=model.evaluate({credentials:[ncaa("I","gold")]},[]);
+assert.equal(noData.find(x=>x.id==="wrestling").score,null,
+ "Credential must not manufacture an otherwise missing metric");
+const duplicate=model.credentialBonuses({credentials:[
+ ncaa("I","gold"),ncaa("I","gold"),ncaa("II","silver")
+]});
+assert.equal(duplicate.wrestling.points,11,"Highest NCAA award only, never sum duplicates");
+const reported=model.credentialBonuses({credentials:[sourced("bjj",{belt:"black",verification:"reported"})]});
+assert.equal(reported.grappling.points,0,"Reported rank is not verified achievement");
+const black=model.credentialBonuses({credentials:[sourced("bjj",{belt:"black"})]});
+assert.equal(black.grappling.points,4);
+const judo=model.credentialBonuses({credentials:[
+ sourced("olympic-judo",{participated:true,medal:"gold",medalCount:2})
+]});
+assert.equal(judo.wrestling.points,10);
+assert.equal(judo.grappling.points,8);
+const adccAndBjj=model.credentialBonuses({credentials:[
+ sourced("adcc",{medal:"gold"}),sourced("bjj",{belt:"black"})
+]});
+assert.equal(adccAndBjj.grappling.points,12,"Capped across different families");
+const samboSport=model.credentialBonuses({credentials:[sourced("sambo",{medal:"gold",discipline:"sport"})]});
+assert.equal(samboSport.striking.points,0);
+assert.equal(samboSport.grappling.points,5);
+assert.equal(samboSport.wrestling.points,5);
+const samboCombat=model.credentialBonuses({credentials:[sourced("sambo",{medal:"gold",discipline:"combat"})]});
+assert.equal(samboCombat.striking.points,3);
+assert.equal(samboCombat.grappling.points,5);
+assert.equal(samboCombat.wrestling.points,5);
+assert.equal(model.credentialBonuses({credentials:[
+ sourced("adcc",{medal:"gold",source:"http://insecure.example"}),
+ sourced("bjj",{belt:"black",source:""})
+]}).grappling.points,0);
+// Finishing impact: with all else unchanged, more KDs/KOs or submissions
+// must raise respective statistical indices.
+const strongerStriker={...career,stats:{...career.stats,kdAvg:1.7,koTkoWinRate:.65}};
+const regularStriker=model.evaluate(career,last5).find(x=>x.id==="striking");
+const finisher=model.evaluate(strongerStriker,last5).find(x=>x.id==="striking");
+assert(finisher.baseScore>regularStriker.baseScore,"Finishing evidence must matter");
+const submissionFinisher={...career,stats:{...career.stats,submissionWinRate:.31}};
+const regularGrappler=model.evaluate(career,last5).find(x=>x.id==="grappling");
+const finisherGrappler=model.evaluate(submissionFinisher,last5).find(x=>x.id==="grappling");
+assert(finisherGrappler.baseScore>regularGrappler.baseScore,"Submission finishes must matter");
+assert.equal(model.evaluate({...career,credentials:[sourced("bjj",{belt:"black"})]},last5)
+ .find(x=>x.id==="form").credentialAdjustment,0,"Credential cannot alter form");
+assert(model.CREDENTIAL_CAP===12);
 console.log("PASS: 5 MMA dimensions, evidence gating, form, no cardio, merged cage-time history");
