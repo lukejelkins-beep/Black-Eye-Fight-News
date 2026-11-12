@@ -185,10 +185,31 @@ jobs:
           echo 'Render hostname now matches checked public assets' >> "$GITHUB_STEP_SUMMARY"
           latest=$(git ls-remote https://github.com/"$GITHUB_REPOSITORY".git refs/heads/main | cut -f1)
           if [[ "$latest" == "$expected" ]]; then
-            gh api --method POST \
-              "repos/$GITHUB_REPOSITORY/actions/workflows/verify-live-ufc-profiles.yml/dispatches" \
-              -f ref=main > /dev/null
-            echo 'Started independent post-deploy UFC desktop/mobile QA. Pending result.' >> "$GITHUB_STEP_SUMMARY"
+            # Custom-domain CDN can lag Render; avoid triggering browser QA
+            # until the main public assets have reached visitors too.
+            custom_ready=false
+            for attempt in {1..6}; do
+              stale=0
+              for file in index.html assets/fighter-insights.js assets/fighter-power.css data/ufc-prospect-profiles.json; do
+                body=$(mktemp)
+                if ! curl --fail --location --silent --show-error --max-time 35 \
+                  "https://blackeyefightnews.com.au/$file?befn_custom_qa=$GITHUB_RUN_ID-$attempt" -o "$body" \
+                  || ! cmp -s "$file" "$body"; then
+                  stale=$((stale + 1))
+                fi
+                rm -f "$body"
+              done
+              if [[ "$stale" -eq 0 ]]; then custom_ready=true; break; fi
+              sleep 25
+            done
+            if [[ "$custom_ready" == true ]]; then
+              gh api --method POST \
+                "repos/$GITHUB_REPOSITORY/actions/workflows/verify-live-ufc-profiles.yml/dispatches" \
+                -f ref=main > /dev/null
+              echo 'Started independent post-deploy UFC desktop/mobile QA. Pending result.' >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo 'Custom-domain CDN still converging; hourly production QA will recheck.' >> "$GITHUB_STEP_SUMMARY"
+            fi
           else
             echo 'Newer HEAD arrived; hourly live QA will evaluate the next release' >> "$GITHUB_STEP_SUMMARY"
           fi
