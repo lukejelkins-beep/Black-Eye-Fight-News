@@ -534,8 +534,8 @@ html,body{max-width:100%;overflow-x:clip}
 <meta name="application-version" content="1.0.4">
 <link rel="stylesheet" href="/assets/promotion-coverage.css?v=20261109-scope1">
 <script src="/assets/promotion-coverage.js?v=20261110-syntaxfix2"></script>
-<link rel="stylesheet" href="assets/responsive-layout-experiment.css?v=responsive-branch-1">
-<script src="assets/news-dedupe.js?v=responsive-news-1"></script>
+<link rel="stylesheet" href="assets/responsive-layout-experiment.css?v=20261112-news-metadata-v6">
+<script src="assets/news-dedupe.js?v=20261112-news-metadata-v6"></script>
 </head>
 <body>
 
@@ -1587,7 +1587,14 @@ document.addEventListener('error',e=>{
 document.addEventListener('load',e=>{const img=e.target;if(img.tagName!=='IMG')return;const ratio=img.naturalWidth/Math.max(1,img.naturalHeight);if(ratio<.69&&img.closest('.fighter-image,.dialog-bio,.card-photo'))img.classList.add('photo-contain');
 if(ratio<.8&&img.closest('.thumb'))img.style.objectPosition='50% 6%';},true);
 window.addEventListener('hashchange',navigate);
-if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
+if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
+ window.addEventListener('load',()=>{
+  if(location.hostname==='befn-responsive-preview.onrender.com'){
+   navigator.serviceWorker.getRegistrations().then(registrations=>registrations.forEach(reg=>reg.unregister())).catch(()=>{});
+   if('caches' in window)caches.keys().then(names=>Promise.all(names.filter(n=>n.startsWith('befn-app-shell-')).map(n=>caches.delete(n)))).catch(()=>{});
+  } else navigator.serviceWorker.register('./sw.js').catch(()=>{});
+ });
+}
 document.addEventListener('befn:sport-change',()=>{syncGlobalSport();navigate()});
 loadDesk();
 navigate();
