@@ -79,7 +79,7 @@
   const sport=f?.sport||sportHint||"MMA";
   if(sport==="Boxing")return engine.evaluateBoxing(f);
   const record=statRecord(f);
-  return engine.evaluate(record,historyFor(f),[]);
+  return engine.evaluate(record,historyFor(f));
  }
  function resultSymbol(outcome){
   const text=String(outcome||"").toLowerCase();
@@ -109,6 +109,17 @@
    (m.score===null?'Not rated':m.score+' / 100')+'</b></div>'+
    performanceMeter(m,false)+'</div>';
  }
+ const scoreMethodHTML=sport=>sport==="Boxing"?
+  '<p class="befn-score-note">Boxing uses a separate evidence-gated model. A recorded KO share is a finishing proxy, not direct punch power; other attributes await verified technical scouting.</p>':
+  '<details class="befn-rating-method"><summary>How MMA ratings are calculated</summary>'+
+  '<p>All scores are descriptive 0–100 indices, <strong>not ability rankings or win predictions</strong>. Each observed metric is scaled against a fixed reference range; only recorded statistics contribute. Categories need at least two independent inputs and sufficient weighted coverage.</p>'+
+  '<ul>'+
+  '<li><b>Striking:</b> 25% significant strikes landed/min, 30% landed-minus-absorbed differential/min, 17% accuracy, 17% knockdowns/15, 11% KO/TKO wins per observed bout.</li>'+
+  '<li><b>Grappling:</b> 42% submission attempts/15, 30% submission finishes, 18% reversals/15, 10% control share. Submission or reversal evidence is compulsory.</li>'+
+  '<li><b>Wrestling:</b> 34% takedowns/15, 21% accuracy, 28% control share, 12% takedown defence, 5% reversals/15. Takedown activity is compulsory.</li>'+
+  '<li><b>Defence:</b> 31% inverse strikes absorbed/min, 29% strike defence, 22% takedown defence, 12% inverse knockdowns received/15, 6% inverse opponent control.</li>'+
+  '<li><b>Recent form:</b> verified wins=1, draws=½, losses=0, no-contests omitted; last five fights weighted 5,4,3,2,1 with a neutral prior.</li>'+
+  '</ul><p>When the provider omits a statistic, its weight is redistributed among available inputs only if the category still meets evidence coverage thresholds. Ratings shrink toward 50 according to the observed bout count (n/(n+4)); insufficient samples remain unrated. Statistical sources and samples differ by promotion.</p></details>';
  function renderProfile(f){
   const kind=f.sport==="Boxing"?"Boxing credentials":"Combat & grappling credentials";
   const metrics=ratingsFor(f);
@@ -119,8 +130,8 @@
     "Championship history is not confirmed in the current profile.";
   return '<section class="befn-profile-insights" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="Fighter performance insights">'+
    '<section class="befn-profile-block"><h3>Fighter ratings</h3><div class="befn-profile-body">'+
-   '<div class="befn-power-bars">'+metrics.map(profileMetric).join("")+'</div>'+
-   '<p class="befn-score-note">Performance indices (0–100), not win probabilities. Unrated means no reliable statistic. '+(f.sport==="Boxing"?'Power uses verified KO-win share as a finishing proxy.':'Activity ratings use available strikes, takedowns and submissions.')+'</p></div></section>'+
+   '<div class="befn-power-bars">'+metrics.map(profileMetric).join("")+'</div>'+scoreMethodHTML(f.sport)+
+   '<p class="befn-score-note">0–100 descriptive indices, not win probabilities. Missing statistics remain unrated. '+(f.sport==="Boxing"?'Power uses documented KO-win share as a finishing proxy.':'MMA ratings use source-backed striking, grappling, wrestling, defence and recent form data.')+'</p></div></section>'+
    '<section class="befn-profile-block"><h3>Recent form (last 5)</h3><div class="befn-profile-body">'+formHTML(f)+'</div></section>'+
    '<section class="befn-profile-block"><h3>'+escapeHTML(kind)+'</h3><div class="befn-profile-body">'+credentialsHTML(f)+'</div></section>'+
    '<section class="befn-profile-block"><h3>Championship history</h3><div class="befn-profile-body"><p class="befn-score-note" style="margin:0">'+escapeHTML(championshipText)+'</p></div></section></section>';
@@ -169,23 +180,30 @@
   const fights=latestRows(f);
   return '<section class="befn-history-side"><div class="befn-history-fighter"><b>'+escapeHTML(heading)+'</b>'+
    '<span>'+escapeHTML(f?shortRecord(f):"Profile not yet available")+'</span></div>'+
+   '<div class="befn-history-table-head" aria-hidden="true"><span>Result / opponent</span><span>Cage time</span></div>'+
    (fights.length?fights.map(h=>
     '<div class="befn-history-fight">'+outcomeTag(h)+
     '<div class="befn-history-desc"><small>'+escapeHTML(plainDate(h.date))+'</small>'+
     '<strong>'+escapeHTML(h.opponent)+'</strong>'+
-    '<span>'+escapeHTML(h.method||"Method not recorded")+'</span></div></div>').join(""):
+    '<span>'+escapeHTML(h.method||"Method not recorded")+'</span></div>'+
+    '<div class="befn-history-duration" title="Total cage time, not control time" aria-label="Total cage time '+escapeHTML(secTime(h.cageSec))+'">'+
+    '<strong>'+escapeHTML(secTime(h.cageSec))+'</strong></div></div>').join(""):
     '<p class="befn-history-empty">Last five verified results not yet available.</p>')+'</section>';
  }
  const lastFivePanel=(f,names)=>{
-  return '<section class="befn-history-two" aria-label="Last five fights side-by-side">'+
-   fightHistoryColumn(f[0],names[0])+fightHistoryColumn(f[1],names[1])+'</section>';
+  return '<section class="befn-history-two befn-history-with-cage" aria-label="Last five fights and cage time side-by-side">'+
+   fightHistoryColumn(f[0],names[0])+fightHistoryColumn(f[1],names[1])+'</section>'+
+   '<p class="befn-snapshot-disclaimer befn-history-cage-note">'+
+   (f.some(x=>x?.reference?.sourceType==="user-screenshot")?
+    'Cage times in the design sample are unverified references from the supplied comparison; confirm against official bout records before production.':
+    'Cage time is total elapsed fight time, not control time; — means exact duration unavailable.')+
+   '</p>';
  };
  const availableNumber=(v,digits)=>{
   return typeof v==="number"&&Number.isFinite(v)?v.toFixed(digits??0):"—";
  };
  const referenceStat=(f,key)=>{
-  const ref=f?.statsReference?.[key];
-  if(typeof ref==="number"&&Number.isFinite(ref))return ref;
+  // Screenshot comparison figures are illustrative and never treated as sourced observations.
   const data=statRecord(f)?.stats;
   if(!data)return null;
   const map={sigLandedPerMin:"slpm",sigAbsorbedPerMin:"sapm",sigAccuracy:"strAcc"};
@@ -205,7 +223,7 @@
    ["Takedowns defended","takedownsDefended","count"],
    ["Submission attempts","submissionAttempts","count"]
   ];
-  const hasScreenshot=f.some(x=>x?.statsReference);
+  const hasVerified=f.some(x=>statRecord(x)?.stats?.observedOn);
   const body=rows.map(([label,key,fmt])=>{
    if(!key)return '<h4 class="befn-history-stat-heading">'+escapeHTML(label)+'</h4>';
    const values=f.map(x=>referenceStat(x,key));
@@ -215,33 +233,9 @@
   }).join("");
   return '<section class="befn-history-stats"><div class="befn-history-stats-head"><strong>'+
     escapeHTML(names[0])+'</strong><span>Last five / available sample</span><strong>'+escapeHTML(names[1])+'</strong></div>'+
-    body+'<p class="befn-snapshot-disclaimer">'+(hasScreenshot?
-    'Prototype example: some figures are taken from your supplied comparison screenshots, not yet independently verified. Do not treat these figures as official statistics.':
-    'Only recorded statistical fields are shown. Samples may differ between fighters; unavailable metrics display —.')+'</p></section>';
- }
- function cageColumn(f,heading){
-  const rows=latestRows(f);
-  const timed=rows.filter(x=>Number.isInteger(x.cageSec)&&x.cageSec>=0);
-  const avg=timed.length>=2?secTime(Math.round(timed.reduce((sum,x)=>sum+x.cageSec,0)/timed.length)):"—";
-  const max=900;
-  return '<div class="befn-cage-fighter"><div class="befn-cage-head">'+
-   '<span>'+escapeHTML(heading)+'</span><strong>'+avg+'</strong>'+
-   '<small>Avg. · '+timed.length+' timed fights</small></div>'+
-   (rows.length?rows.map(h=>{
-    const valid=Number.isInteger(h.cageSec)&&h.cageSec>=0;
-    const pct=valid?Math.min(100,Math.max(2,Math.round(h.cageSec/max*100))):0;
-    return '<div class="befn-cage-row"><div><strong>'+secTime(h.cageSec)+'</strong>'+
-     '<small>vs. '+escapeHTML(h.opponent)+'</small></div>'+
-     '<span class="befn-cage-track" aria-label="'+(valid?secTime(h.cageSec):"Duration not verified")+
-     '"><i style="--cage-fill:'+pct+'%"></i></span></div>';
-   }).join(""):'<p class="befn-history-empty">Fight durations unavailable.</p>')+'</div>';
- }
- function cagePanel(f,names){
-  return '<section class="befn-cage-comparison"><p class="befn-history-caption">Cage time · five latest bouts where exact durations are recorded</p>'+
-   '<div class="befn-cage-columns">'+cageColumn(f[0],names[0])+cageColumn(f[1],names[1])+'</div>'+
-   '<p class="befn-snapshot-disclaimer">'+(f.some(x=>x?.reference?.sourceType==="user-screenshot")?
-    'Example fight durations from your supplied screenshots, pending independent verification.':
-    'Fight durations are shown only when the exact time is available. Missing data is not treated as a full round.')+'</p></section>';
+    body+'<p class="befn-snapshot-disclaimer">'+(hasVerified?
+    'Only source-backed rate statistics are shown. Some counts are unavailable until additional fight records have been checked.':
+    'No independently sourced statistics for this matchup yet; screenshot reference values are excluded and missing fields show —.')+'</p></section>';
  }
  const inchesText=inches=>typeof inches==="number"&&Number.isFinite(inches)?
   Math.floor(inches/12)+"′"+(inches%12===0?0:Math.round((inches%12)*10)/10)+"″":"—";
@@ -289,8 +283,8 @@
   const buttons=f.map((p,i)=>p?
    '<button type="button" data-fighter="'+escapeHTML(p.id)+'" aria-label="Open '+escapeHTML(p.name)+' full fighter profile">'+escapeHTML(p.name)+' profile</button>':
    '<span class="befn-link-unavailable">Profile not yet available</span>').join("");
-  const key=matchupKey(article,names),active=selectedTabs.get(key)||"fights";
-  const tabOptions=[["fights","Last 5 Fights"],["stats","Stats"],["cage","Cage Time"]];
+  const key=matchupKey(article,names),active=selectedTabs.get(key)==="stats"?"stats":"fights";
+  const tabOptions=[["fights","Last 5 Fights"],["stats","Stats"]];
   const historyTab='<section class="befn-recent-history" aria-label="Recent fight history">'+
    '<h3 class="befn-comparison-heading">Recent fight history</h3>'+
    '<div class="befn-history-tabs" role="tablist" aria-label="Choose fight history view">'+
@@ -298,15 +292,14 @@
     '<button type="button" role="tab" data-befn-history-tab="'+id+
     '" aria-selected="'+String(active===id)+'" class="'+(active===id?'is-active':'')+'">'+label+'</button>'
    ).join("")+'</div>'+
-   '<div class="befn-history-panel">'+(active==="stats"?statsPanel(f,names):active==="cage"?
-    cagePanel(f,names):lastFivePanel(f,names))+'</div></section>';
+   '<div class="befn-history-panel">'+(active==="stats"?statsPanel(f,names):lastFivePanel(f,names))+'</div></section>';
   return '<details class="befn-fight-snapshot" data-snapshot-key="'+escapeHTML(key)+'" '+(openSnapshots.has(key)?'open':'')+'>'+
    '<summary><span>Fight snapshot</span></summary>'+
    '<div class="befn-snapshot-body">'+
    '<div class="befn-snapshot-head"><div><strong>'+escapeHTML(names[0])+'</strong></div><div><strong>'+escapeHTML(names[1])+'</strong></div></div>'+
    '<div class="befn-snapshot-bars">'+metricHTML+'</div>'+
    '<div class="befn-snapshot-extra">'+sides+'</div>'+
-   historyTab+talePanel(f,names)+
+   historyTab+scoreMethodHTML(sport)+talePanel(f,names)+
    '<div class="befn-snapshot-links">'+buttons+'</div>'+
    '<p class="befn-snapshot-disclaimer">Fighter ratings are descriptive indices, not fight predictions. “—” means no reliable data; credentials appear only after expanding this panel.</p>'+
    '</div></details>';
@@ -343,7 +336,7 @@
   if(!snap)return;
   const key=snap.dataset.snapshotKey;
   const id=btn.dataset.befnHistoryTab;
-  if(!["fights","stats","cage"].includes(id))return;
+  if(!["fights","stats"].includes(id))return;
   selectedTabs.set(key,id);
   for(const tab of snap.querySelectorAll("[data-befn-history-tab]")){
    const active=tab.dataset.befnHistoryTab===id;
@@ -355,7 +348,7 @@
   const names=[getName(article,0),getName(article,1)];
   const f=names.map(profileFor);
   const panel=snap.querySelector(".befn-history-panel");
-  if(panel)panel.innerHTML=id==="stats"?statsPanel(f,names):id==="cage"?cagePanel(f,names):lastFivePanel(f,names);
+  if(panel)panel.innerHTML=id==="stats"?statsPanel(f,names):lastFivePanel(f,names);
  },true);
  document.addEventListener("click",e=>{
   const button=e.target.closest?.("[data-credential-info]");
