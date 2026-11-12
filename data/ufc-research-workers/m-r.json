@@ -3,5 +3,79 @@
   "scope": "ufc-only",
   "updatedOn": "2026-11-13",
   "worker": "M-R",
-  "fighters": {}
+  "fighters": {
+    "nina-milosevic": {
+      "name": "Nina Milošević",
+      "status": "source_research",
+      "lastCheckedOn": "2026-11-13",
+      "sourceUrls": [
+        "https://www.ufc.com/athlete/nina-milosevic",
+        "https://www.ufc.com/video/158802",
+        "https://www.ufc.com/video/161741",
+        "https://immaf.org/athlete/nina-nikolija-milosevic/",
+        "https://immaf.org/2023/02/18/ramazan-gitinov-and-sabrina-de-sousa-become-three-time-world-champions-on-final-day-of-2022-world-championships/"
+      ],
+      "verifiedFindings": {
+        "division": "Women's Bantamweight",
+        "ufcStatus": "Active (UFC biography, checked 2026-11-13)",
+        "professionalRecord": "10-1-0 (UFC biography, checked 2026-11-13)",
+        "ufcRecord": {
+          "wins": 2,
+          "losses": 0,
+          "draws": 0,
+          "noContests": 0,
+          "completedBouts": 2
+        },
+        "latest": [
+          {
+            "opponent": "Priscila Cachoeira",
+            "date": "2026-11-07",
+            "outcome": "W",
+            "method": "TKO (strikes)",
+            "round": 2,
+            "clock": "3:40",
+            "source": "https://www.ufc.com/video/161741"
+          },
+          {
+            "opponent": "Hailey Cowan",
+            "date": "2026-08-01",
+            "outcome": "W",
+            "method": "TKO (strikes)",
+            "round": 1,
+            "clock": "3:41",
+            "source": "https://www.ufc.com/athlete/nina-milosevic"
+          }
+        ],
+        "ufcSignificantStrikes": {
+          "landed": 66,
+          "attempted": 112,
+          "source": "https://www.ufc.com/athlete/nina-milosevic",
+          "sampleBouts": "not independently established"
+        },
+        "credentials": [
+          {
+            "claim": "2021 IMMAF women's bantamweight world gold",
+            "source": "https://immaf.org/athlete/nina-nikolija-milosevic/"
+          },
+          {
+            "claim": "2022 IMMAF European women's bantamweight gold",
+            "source": "https://immaf.org/athlete/nina-nikolija-milosevic/"
+          },
+          {
+            "claim": "2022 IMMAF World Championship gold awarded after opponent was not cleared; not a contested final victory",
+            "source": "https://immaf.org/2023/02/18/ramazan-gitinov-and-sabrina-de-sousa-become-three-time-world-champions-on-final-day-of-2022-world-championships/"
+          }
+        ]
+      },
+      "remainingBlockers": [
+        "Reconcile current official ranking as of 2026-11-13 (null unless verified)",
+        "Validate UFC-only significant-strike sampleBouts and all statistical denominators against saved round/bout archive",
+        "Check professional and UFC W-L-D/NC against full UFC archive; currently biography lists two UFC bouts",
+        "Run deterministic BEFN V2 classification and profile integrity tests on actual cohort candidate",
+        "Check opponent-quality gate with dated evidence rather than assuming opponent rank",
+        "Run local/CI desktop and mobile card QA, Render deployment freshness and post-deployment live QA screenshots before production approval"
+      ],
+      "nextAction": "Use saved UFC bout/round archive to reconcile sampleBouts and all UFC record fields, then assemble a schema:1 cohort candidate, run V2 and source-integrity tests. Do not publish until all blockers are resolved."
+    }
+  }
 }
