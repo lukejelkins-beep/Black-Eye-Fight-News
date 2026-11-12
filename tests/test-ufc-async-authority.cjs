@@ -102,6 +102,13 @@ async function examine(order) {
    file==="data/ufc334-fighter-evidence.json"?preview:data[file];
   resolve(payload===null?{ok:false}:{ok:true,json:async()=>payload});
   for(let n=0;n<8;n++)await Promise.resolve();
+  // The earlier old preview can contribute partial round observations before
+  // canonical fighters hydrate; champion/roster hydration must discard them.
+  if(file==="data/ufc334-fighter-evidence.json" &&
+     order[0]==="data/fighter-comparison-sample.json"){
+   window.dispatchEvent(new TestEvent("befn:round-previews-ready",
+    {detail:{events:[{id:"early-preview"}]}}));
+  }
  }
  const byName=name=>fighters.find(f=>normalize(f.name)===normalize(name));
  for(const expected of [bia,champion]){
