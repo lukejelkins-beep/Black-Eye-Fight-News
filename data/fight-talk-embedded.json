@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-12T00:11:06.532Z",
-  "checkedAt": "2026-11-12T00:11:06.532Z",
+  "attemptedAt": "2026-11-12T01:29:53.115Z",
+  "checkedAt": "2026-11-12T01:29:53.115Z",
   "windowDays": 28,
   "articlesChecked": 31,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 48,
   "publisherSourcesConfigured": 32,
-  "linksFound": 10,
-  "newEmbedsVerified": 0,
+  "linksFound": 11,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -18,6 +18,27 @@
   "curatedRejected": 0,
   "curatedPublisherLinked": 2,
   "posts": [
+    {
+      "type": "post",
+      "platform": "X",
+      "sport": "mma",
+      "name": "OKTAGON MMA",
+      "role": "promoter",
+      "handle": "@OktagonOfficial",
+      "nativeEmbed": true,
+      "originalDateUnverified": false,
+      "postedAt": "2026-11-11T23:10:48.003Z",
+      "sourceLinkedAt": "2026-11-12T00:36:42+00:00",
+      "discoveredAt": "2026-11-12T01:29:53.115Z",
+      "sourcePublisher": "Sherdog",
+      "evidenceUrl": "https://www.sherdog.com/news/news/MMA-fighter-Jindrich-Janecka-resuscitated-after-cardiac-arrest-in-cage-203589",
+      "summary": "Original social post linked in Sherdog coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 55,
+      "url": "https://x.com/OktagonOfficial/status/2120655509531320625"
+    },
     {
       "type": "post",
       "platform": "X",
@@ -1802,6 +1823,10 @@
     {
       "url": "https://www.instagram.com/p/DfhoQ2ukWxc/",
       "firstSeen": "2026-11-11T22:19:12.207Z"
+    },
+    {
+      "url": "https://x.com/OktagonOfficial/status/2120655509531320625",
+      "firstSeen": "2026-11-12T01:29:53.115Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
