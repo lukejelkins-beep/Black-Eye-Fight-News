@@ -68,4 +68,20 @@ assert(model.evaluate({performanceEvidence:extracted},last5).filter(x=>x.score!=
 events.a.bouts[1].result.time="unconfirmed";
 assert.equal(model.aggregateRoundPreviews(events).size,0,"One timed fight alone is insufficient evidence");
 assert(insights.includes("befn:round-previews-ready"),"Round observations must reach the rating model");
+// Verified collegiate competition may nudge statistically supported
+// wrestling, but may not invent an otherwise missing wrestling rating.
+const credential={kind:"ncaa",division:"I",source:"https://gobulldogs.com/news/2019/3/23/wrestling-2019-ncaa-championships-day-three"};
+const collegeBase=model.evaluate(career,last5).find(x=>x.id==="wrestling");
+const collegeStats=model.evaluate({...career,credentials:[credential]},last5);
+const collegeWrestling=collegeStats.find(x=>x.id==="wrestling");
+assert(collegeWrestling.score>collegeBase.score);
+assert(collegeWrestling.credentialAdjustment>=1&&collegeWrestling.credentialAdjustment<=5);
+for(const rated of collegeStats){
+ if(rated.id!=="wrestling")
+  assert.equal(rated.score,model.evaluate(career,last5).find(x=>x.id===rated.id).score);
+}
+assert.equal(model.evaluate({credentials:[credential]},[]).find(x=>x.id==="wrestling").score,null);
+assert.equal(model.ncaaWrestlingPrior(null,{credentials:[credential]},5),null);
+assert.equal(model.evaluate({...career,credentials:[{...credential,source:""}]},last5)
+ .find(x=>x.id==="wrestling").credentialAdjustment,0);
 console.log("PASS: 5 MMA dimensions, evidence gating, form, no cardio, merged cage-time history");
