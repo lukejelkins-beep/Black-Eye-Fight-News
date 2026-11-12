@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "reviewedOn": "2026-11-12",
-  "purpose": "Prototype Gane–Hokit comparison on news-redesign preview. Source labels distinguish official biographical records from user-provided comparison screenshots. Do not publish screenshot-only derived metrics as verified UFC statistics.",
+  "purpose": "Test-branch fighter comparisons and verified credentials. Participation badges and championship medals are separate; do not infer medals from NCAA All-American status. Screenshot-only timing metrics remain unverified.",
   "fighters": {
     "cirylgane": {
       "name": "Ciryl Gane",
@@ -164,6 +164,33 @@
           "division": "I",
           "source": "https://gobulldogs.com/sports/wrestling/roster/josh-hokit/9589",
           "detail": "NCAA Division I wrestling competitor · Fresno State · 2019 NCAA Championships fifth place (All-American); no national title or top-three medal"
+        }
+      ]
+    },
+    "bonickal": {
+      "id": "mma-prospects--bo-nickal",
+      "name": "Bo Nickal",
+      "sport": "MMA",
+      "credentials": [
+        {
+          "kind": "ncaa",
+          "division": "I",
+          "medal": "gold",
+          "source": "https://nwhof.org/national-wrestling-hall-of-fame/champions-database?wrestler=3335",
+          "detail": "NCAA Division I wrestling · 3-time individual national champion (2017, 2018 and 2019); also 2016 runner-up"
+        }
+      ]
+    },
+    "dakotahope": {
+      "id": "mma-prospects--dakota-hope",
+      "name": "Dakota Hope",
+      "sport": "MMA",
+      "credentials": [
+        {
+          "kind": "ncaa",
+          "division": "II",
+          "source": "https://www.ufc.com/athlete/dakota-hope",
+          "detail": "NCAA Division II wrestling participant · New Mexico Highlands University (one season); no documented NCAA individual medal"
         }
       ]
     }
