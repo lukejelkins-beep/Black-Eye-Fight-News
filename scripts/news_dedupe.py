@@ -95,14 +95,14 @@ def distinctive(title):
 def headline_stage(title):
     t=str(title or '').lower()
     rules=[
-      ('declined',r'\\b(?:turns? down|declines?|rejects?)\\b'),
-      ('offered',r'\\b(?:offered?|offer)\\b'),
-      ('meeting',r'\\b(?:meeting|met with)\\b'),
-      ('withdrawal',r'\\b(?:withdrawn|withdraws?|out of|pulls? out)\\b'),
-      ('cancelled',r'\\b(?:cancelled|canceled|called off)\\b'),
-      ('postponed',r'\\b(?:postponed|delayed)\\b'),
-      ('result',r'\\b(?:knocked out|knockout|wins?|defeats?|stops?|submits?)\\b'),
-      ('unconfirmed',r'\\b(?:rumou?rs?|reportedly|possible|could|may)\\b')]
+      ('declined',r'\b(?:turns? down|declines?|rejects?)\b'),
+      ('offered',r'\b(?:offered?|offer)\b'),
+      ('meeting',r'\b(?:meeting|met with)\b'),
+      ('withdrawal',r'\b(?:withdrawn|withdraws?|out of|pulls? out)\b'),
+      ('cancelled',r'\b(?:cancelled|canceled|called off)\b'),
+      ('postponed',r'\b(?:postponed|delayed)\b'),
+      ('result',r'\b(?:knocked out|knockout|wins?|defeats?|stops?|submits?)\b'),
+      ('unconfirmed',r'\b(?:rumou?rs?|reportedly|possible|could|may)\b')]
     return next((kind for kind,pattern in rules if re.search(pattern,t)),'')
 
 def reworded_headline(a,b):
@@ -114,15 +114,15 @@ def reworded_headline(a,b):
 
 def matching_event_media(a,b):
     def card(t):
-        m=re.search(r'\\b(?:ufc|pfl|raf|rizin)\\s*[- ]?\\d+\\b',str(t or ''),re.I)
+        m=re.search(r'\b(?:ufc|pfl|raf|rizin)\s*[- ]?\d+\b',str(t or ''),re.I)
         return re.sub(r'[- ]+','',m.group(0).lower()) if m else ''
     def kind(t):
         t=str(t or '')
         return 'press-conference' if re.search(r'press[ -]?conference',t,re.I) else 'media-day' if re.search(r'media[ -]?day',t,re.I) else ''
     x,y=a.get('title',''),b.get('title','')
     return bool(card(x) and card(x)==card(y) and kind(x) and kind(x)==kind(y) and
-                re.search(r'\\b(?:video|stream|watch|live)\\b',x,re.I) and
-                re.search(r'\\b(?:video|stream|watch|live)\\b',y,re.I))
+                re.search(r'\b(?:video|stream|watch|live)\b',x,re.I) and
+                re.search(r'\b(?:video|stream|watch|live)\b',y,re.I))
 
 def duplicate_of(a,b):
     if canonical_url(a.get('url')) and canonical_url(a.get('url'))==canonical_url(b.get('url')):
