@@ -1,0 +1,46 @@
+name: Diagnose production UFC asset freshness
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/diagnose-production-assets.yml'
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare current GitHub asset against custom domain and Render hostname
+        shell: bash
+        run: |
+          set -euo pipefail
+          file=assets/fighter-insights.js
+          expected=$(sha256sum "$file" | cut -d' ' -f1)
+          echo "GitHub HEAD: $GITHUB_SHA"
+          echo "Expected SHA256: $expected"
+          {
+            echo "## BEFN live asset comparison"
+            echo ""
+            echo "GitHub reference: \`$GITHUB_SHA\`"
+            echo ""
+            echo "| Host | HTTP status | SHA256 | Matches GitHub |"
+            echo "|---|---|---|---|"
+          } >> "$GITHUB_STEP_SUMMARY"
+          for base in https://blackeyefightnews.com.au https://black-eye-fight-news.onrender.com; do
+            body=$(mktemp)
+            headers=$(mktemp)
+            status=$(curl -L -sS --connect-timeout 8 --max-time 22 -H 'Cache-Control: no-cache' -H 'Pragma: no-cache' -D "$headers" -o "$body" -w '%{http_code}' "$base/$file?befn_asset_probe=$GITHUB_RUN_ID" || true)
+            actual=$(sha256sum "$body" | cut -d' ' -f1)
+            match=no
+            if [ "$status" = "200" ] && [ "$actual" = "$expected" ]; then match=yes; fi
+            echo "$base status=$status sha256=$actual match=$match"
+            echo "--- Relevant response headers ($base) ---"
+            grep -Ei '^(HTTP/|server:|etag:|age:|cache-control:|x-render|cf-cache-status:|location:|last-modified:)' "$headers" || true
+            echo "| $base | $status | \`$actual\` | $match |" >> "$GITHUB_STEP_SUMMARY"
+            rm -f "$body" "$headers"
+          done
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Diagnostic only; this workflow does not deploy or approve live QA." >> "$GITHUB_STEP_SUMMARY"
