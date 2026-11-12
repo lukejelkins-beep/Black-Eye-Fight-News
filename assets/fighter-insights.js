@@ -397,7 +397,8 @@
    if(existing){
     // Preserve canonical editorial records, photos, and citations; add only
     // reference comparison dimensions and independently supplied timing data.
-    existing.tale=fighter.tale;
+    if(Array.isArray(fighter.credentials))existing.credentials=[...(existing.credentials||[]),...fighter.credentials.filter(x=>!(existing.credentials||[]).some(y=>y.kind===x.kind&&y.source===x.source))];
+    if(fighter.tale)existing.tale=fighter.tale;
     existing.taleReference=fighter.taleReference;
     existing.statsReference=fighter.statsReference;
     existing.reference=fighter.reference;
