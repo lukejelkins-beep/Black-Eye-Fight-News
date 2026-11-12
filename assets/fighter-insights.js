@@ -9,6 +9,9 @@
  const escapeHTML=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  const norm=engine.normalize;
  const profiles=(window.COMBAT_DATA?.fighters||[]);
+ // Individually source-reviewed UFC records always override old previews,
+ // regardless of asynchronous fetch completion order.
+ const isReviewedUfc=f=>f?.championReview===true||f?.reviewedUfcProfile===true;
  // Legacy MMA scouting labels predate the evidence-backed UFC classifier.
  // Preserve all legacy cards but do not display old curated tags as algorithmic.
  for(const fighter of profiles){
@@ -583,7 +586,7 @@
   for(const [key,observation] of aggregate){
    roundObservations.set(key,observation);
    const fighter=byName.get(key)||sampleEvidence.get(key);
-   if(!fighter||fighter.sport!=="MMA")continue;
+   if(!fighter||fighter.sport!=="MMA"||isReviewedUfc(fighter))continue;
    fighter.performanceEvidence=observation;
    added++;
   }
@@ -599,6 +602,10 @@
    const key=norm(fighter.name);
    const existing=byName.get(key);
    if(existing){
+    if(isReviewedUfc(existing)){
+     sampleEvidence.set(key,existing);
+     continue;
+    }
     // Preserve canonical editorial records, photos, and citations; add only
     // reference comparison dimensions and independently supplied timing data.
     // Do not overwrite the newer, source-checked card credentials with an
@@ -631,7 +638,8 @@
     profiles.push(p);byId.set(p.id,p);byName.set(key,p);
    }
    const target=byName.get(key);
-   if(roundObservations.has(key)&&target?.sport==="MMA")target.performanceEvidence=roundObservations.get(key);
+   if(roundObservations.has(key)&&target?.sport==="MMA"&&!isReviewedUfc(target))
+    target.performanceEvidence=roundObservations.get(key);
    sampleEvidence.set(key,target);
   }
   update();
@@ -642,6 +650,11 @@
    if(!item?.name||item.sport!=="MMA"||!validSource(item.source))continue;
    const key=norm(item.name);
    let fighter=byName.get(key);
+   if(isReviewedUfc(fighter)){
+    // Never overwrite authoritative UFC-only bouts with event preview results.
+    sampleEvidence.set(key,fighter);
+    continue;
+   }
    if(!fighter){
     fighter={...item,latest:[],analysis:[],photo:"",report:"mma-contenders",
      category:item.category||"Featured card",
@@ -675,7 +688,7 @@
    if(!fighter.championReview&&Array.isArray(item.latest)&&item.latest.length)
     fighter.latest=item.latest.map(x=>({...x}));
    const round=roundObservations.get(key);
-   if(round)fighter.performanceEvidence=round;
+   if(round&&!isReviewedUfc(fighter))fighter.performanceEvidence=round;
    sampleEvidence.set(key,fighter);
   }
   update();
