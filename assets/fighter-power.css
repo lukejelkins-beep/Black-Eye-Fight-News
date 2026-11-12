@@ -331,3 +331,69 @@
  .befn-cage-row strong{font-size:13px}
  .befn-cage-row small{font-size:9px}
 }
+
+
+/* BEFN November 12: Last 5 Fights with cage-time column, mobile-first. */
+.befn-history-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+.befn-history-with-cage .befn-history-side{min-width:0}
+.befn-history-with-cage .befn-history-table-head{
+ display:grid;grid-template-columns:minmax(0,1fr) 56px;gap:6px;
+ padding:8px 9px 7px;border-bottom:1px solid #3c4250;
+ background:#292d37;color:#d6d9e1;
+ font-size:9px;font-weight:850;letter-spacing:.04em;text-transform:uppercase;
+}
+.befn-history-with-cage .befn-history-table-head span:last-child{text-align:right}
+.befn-history-with-cage .befn-history-fight,
+.befn-history-with-cage .befn-history-side:last-child .befn-history-fight{
+ display:grid;grid-template-columns:28px minmax(0,1fr) 56px;
+ grid-auto-flow:row;gap:7px;align-items:center;
+ min-height:71px;padding:9px 8px;text-align:left;
+}
+.befn-history-with-cage .befn-history-desc{min-width:0;overflow-wrap:anywhere}
+.befn-history-with-cage .befn-history-desc strong{word-break:normal}
+.befn-history-with-cage .befn-history-duration{
+ display:flex;justify-content:flex-end;align-items:center;
+ align-self:stretch;border-left:1px solid #3d414c;
+ padding-left:4px;min-width:0;
+}
+.befn-history-with-cage .befn-history-duration strong{
+ color:#ffe0a1;font-variant-numeric:tabular-nums;
+ font-size:12px;font-weight:900;white-space:nowrap;
+}
+.befn-history-cage-note{margin:0!important;padding:9px 11px;border-top:1px solid #343944}
+.befn-rating-method{
+ margin:13px 0 8px;background:#21242c;
+ border:1px solid #484b55;border-radius:8px;
+ color:#ccd3dd;font-size:11px;line-height:1.6;overflow:hidden;
+}
+.befn-rating-method>summary{
+ display:list-item;padding:11px 13px;min-height:43px;
+ color:#f3d48b;font-weight:850;cursor:pointer;
+ list-style-position:inside;
+}
+.befn-rating-method>summary:focus-visible{outline:3px solid #7dc3ff;outline-offset:-3px}
+.befn-rating-method[open]>summary{border-bottom:1px solid #454a54}
+.befn-rating-method p{margin:10px 12px!important;color:#cbd0d9!important;font-size:11px!important;line-height:1.6!important}
+.befn-rating-method ul{margin:0;padding:2px 14px 3px 30px}
+.befn-rating-method li{margin:7px 0}
+.befn-rating-method b,.befn-rating-method strong{color:#f4ddb0}
+@media(max-width:720px){
+ .befn-history-with-cage{grid-template-columns:minmax(0,1fr)}
+ .befn-history-with-cage .befn-history-side+.befn-history-side{border-left:0;border-top:2px solid #55586a}
+ .befn-history-with-cage .befn-history-side:last-child .befn-history-fighter{text-align:left}
+ .befn-history-with-cage .befn-history-fight,
+ .befn-history-with-cage .befn-history-side:last-child .befn-history-fight{
+  grid-template-columns:30px minmax(0,1fr) 62px;padding:10px 11px;gap:9px
+ }
+ .befn-history-with-cage .befn-history-table-head{grid-template-columns:minmax(0,1fr) 62px;padding:9px 11px}
+ .befn-history-with-cage .befn-history-desc strong{font-size:12px}
+ .befn-history-with-cage .befn-history-duration strong{font-size:13px}
+}
+@media(max-width:380px){
+ .befn-history-with-cage .befn-history-fight,
+ .befn-history-with-cage .befn-history-side:last-child .befn-history-fight{
+  grid-template-columns:25px minmax(0,1fr) 55px;gap:6px;padding:9px 8px
+ }
+ .befn-history-with-cage .befn-history-duration strong{font-size:12px}
+ .befn-history-with-cage .befn-history-table-head{grid-template-columns:minmax(0,1fr) 55px}
+}
