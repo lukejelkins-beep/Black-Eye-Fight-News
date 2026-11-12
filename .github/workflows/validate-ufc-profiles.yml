@@ -9,6 +9,7 @@ on:
       - 'data/ufc-*-profiles.json'
       - 'scripts/build-ufc-profile-queue.mjs'
       - 'tests/test-ufc-profile-queue.mjs'
+      - 'tests/test-ufc-profile-visual.mjs'
       - 'assets/fighter-insights.js'
       - 'assets/fighter-power-index.js'
       - 'tests/test-ufc-*.cjs'
@@ -27,7 +28,7 @@ permissions:
 jobs:
   profile-integrity:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -45,5 +46,19 @@ jobs:
           node tests/test-fighter-power-index.cjs
       - name: Verify deterministic research queue
         run: node --test tests/test-ufc-profile-queue.mjs
+      - name: Install browser test dependency (CI only)
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Inspect every UFC profile card on desktop and mobile
+        run: node tests/test-ufc-profile-visual.mjs
+      - name: Upload screenshots and QA report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-profile-qa
+          path: qa/ufc-profile-screenshots/
+          retention-days: 7
+          if-no-files-found: warn
       - name: Publication notice
         run: echo 'Validation only; publish gate must pass before reviewed cohort is committed.'
