@@ -14,4 +14,6 @@ assert(html.includes('#fighter-photo-preview.is-open.is-pinned{pointer-events:au
 assert(script.includes('#all-fighter-preview.visible.locked{pointer-events:auto}'));
 assert(html.includes("popup.classList.remove('is-open','is-pinned')"));
 assert(script.includes("tip.classList.remove('visible','locked')"));
+assert(script.includes("if(el&&el===active&&!locked&&(!e.relatedTarget||!el.contains(e.relatedTarget)))"),
+ "Pointer leave must not call contains on a null inactive fighter preview");
 console.log('Fighter portrait close controls: both viewers validated');

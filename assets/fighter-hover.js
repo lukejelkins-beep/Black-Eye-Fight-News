@@ -28,7 +28,7 @@ var queued=false;function refresh(){if(queued)return;queued=true;requestAnimatio
 var hit=e=>e.target?.closest?.('.fighter-mention')||null;
 closeTip.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();hide(true)});
 document.addEventListener('pointerover',e=>{if(e.pointerType==='touch')return;var el=hit(e);if(el&&el!==active)show(el,false)});
-document.addEventListener('pointerout',e=>{if(e.pointerType==='touch')return;var el=hit(e);if(el===active&&!locked&&(!e.relatedTarget||!el.contains(e.relatedTarget)))hide(true)});
+document.addEventListener('pointerout',e=>{if(e.pointerType==='touch')return;var el=hit(e);if(el&&el===active&&!locked&&(!e.relatedTarget||!el.contains(e.relatedTarget)))hide(true)});
 document.addEventListener('focusin',e=>{var el=hit(e);if(el)show(el,false)});
 document.addEventListener('focusout',e=>{var el=hit(e);if(el===active&&!locked)hide(true)});
 document.addEventListener('click',e=>{if(e.target.closest?.('#all-fighter-preview'))return;var el=hit(e);if(!el){if(locked)hide(true);return}if(el.closest('a,button'))return;if(el===active&&locked)hide(true);else show(el,true)});
