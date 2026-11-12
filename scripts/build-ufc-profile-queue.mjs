@@ -33,7 +33,8 @@ function reviewedIndex(files){
       !Array.isArray(f.latest)||!f.latest.length)continue;
    reviewed.set(norm(f.name),{
     name:f.name,reviewedOn:f.review.checkedAt,
-    mostRecentFight:date(f.latest[0].date)
+    mostRecentFight:date(f.latest[0].date),
+    mostRecentOpponent:norm(f.latest[0].opponent)
    });
   }
  }
@@ -71,7 +72,13 @@ export function buildQueue(progress,profileFiles,{
    const prior=reviewed.get(k);
    if(prior){
     const finished=["completed","draw","no_contest"].includes(b.status);
-    if(finished&&when<=asOf&&validDate(prior.mostRecentFight)&&when>prior.mostRecentFight){
+    // Provider archive dates can be UTC while the individually verified UFC
+    // fight history uses event-local dates. A one-day shift with the SAME
+    // opponent is the same fight, not a new completed appearance.
+    const sameFight=validDate(prior.mostRecentFight)&&
+     Math.abs(days(when,prior.mostRecentFight))<=1&&
+     prior.mostRecentOpponent===norm(b[side==="a"?"b":"a"]?.name);
+    if(finished&&!sameFight&&when<=asOf&&validDate(prior.mostRecentFight)&&when>prior.mostRecentFight){
      const old=needsRefresh.get(k);
      if(!old||when>old.newFightDate)
       needsRefresh.set(k,{name:prior.name,newFightDate:when,

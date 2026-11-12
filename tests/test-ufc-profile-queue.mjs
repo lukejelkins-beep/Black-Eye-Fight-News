@@ -76,3 +76,22 @@ test("scheduled bouts cannot falsely trigger post-fight profile refreshes",()=>{
  const q=buildQueue(source,profiles,{asOf:"2026-11-12"});
  assert.equal(q.postFightRefreshCandidates.length,0);
 });
+
+test("UTC date rollover does not falsely flag the same opponent as a new UFC fight",()=>{
+ const progress={bouts:{g:{...bout("Ciryl Gane","2026-06-15"),id:"66006",
+  b:{name:"Alex Pereira"}}}};
+ const reviewed=[{fighters:{g:{name:"Ciryl Gane",
+  latest:[{date:"2026-06-14",opponent:"Alex Pereira"}],
+  review:{credentialsChecked:true,checkedAt:"2026-11-12"}}}}];
+ const q=buildQueue(progress,reviewed,{asOf:"2026-11-12"});
+ assert.equal(q.postFightRefreshCandidates.length,0);
+});
+test("one-day later fight against a different opponent still requires verification",()=>{
+ const progress={bouts:{g:{...bout("Ciryl Gane","2026-06-15"),id:"66007",
+  b:{name:"Different Opponent"}}}};
+ const reviewed=[{fighters:{g:{name:"Ciryl Gane",
+  latest:[{date:"2026-06-14",opponent:"Alex Pereira"}],
+  review:{credentialsChecked:true,checkedAt:"2026-11-12"}}}}];
+ const q=buildQueue(progress,reviewed,{asOf:"2026-11-12"});
+ assert.equal(q.postFightRefreshCandidates.length,1);
+});
