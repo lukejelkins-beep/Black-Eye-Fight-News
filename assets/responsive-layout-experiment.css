@@ -129,3 +129,71 @@ img { max-width:100%; }
 @media(prefers-reduced-motion:reduce) {
   .news-card img,.fighter-card,.btn { transition:none !important; }
 }
+
+/* Desktop correction: the existing #news-feed .news-grid selector forces a
+   single-column flex list at EVERY width. Override that exact selector. */
+@media (min-width: 1025px) {
+  #news-feed .news-grid {
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    align-items:stretch;
+    gap:22px;
+  }
+  #news-feed .news-card.live-news-card {
+    display:flex;
+    flex-direction:column;
+    padding:19px !important;
+    border-radius:9px !important;
+    min-width:0;
+  }
+  #news-feed .news-strip-top {
+    display:flex;
+    flex-direction:column-reverse;
+    align-items:stretch;
+    gap:15px;
+  }
+  #news-feed .news-strip-story { flex:1; }
+  #news-feed .news-strip-thumbnail {
+    width:100%;
+    height:auto;
+    aspect-ratio:16 / 9;
+    align-self:stretch;
+    border-radius:6px;
+  }
+  #news-feed .news-strip-headline {
+    font-size:clamp(22px,1.7vw,30px) !important;
+    line-height:1.15 !important;
+  }
+  #news-feed .news-strip-points { margin-top:13px; font-size:12px; }
+  #news-feed .news-feature-card { grid-column:span 2; }
+  #news-feed .news-feature-photo { aspect-ratio:16 / 7.5; max-height:345px; }
+  .front-lead-layout { grid-template-columns:minmax(0,1.55fr) minmax(320px,.8fr); gap:24px; }
+  .front-brief-list { gap:14px; }
+  .front-lead-image { height:clamp(275px,28vw,460px); }
+  .befn-mobile-tabs,.befn-mobile-topbar { display:none !important; }
+  .navrail { position:sticky; top:0; bottom:auto; }
+  .navrail .mainnav { display:flex; }
+}
+@media (min-width: 1500px) {
+  #news-feed .news-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+}
+/* Tablet: keep an editorial grid while retaining room for headlines. */
+@media (min-width: 761px) and (max-width: 1024px) {
+  #news-feed .news-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+  #news-feed .news-card.live-news-card { padding:16px !important; }
+  #news-feed .news-strip-top { grid-template-columns:minmax(0,1fr); }
+  #news-feed .news-strip-thumbnail { grid-row:1; height:auto; aspect-ratio:16/9; }
+  #news-feed .news-feature-card { grid-column:span 2; }
+  .befn-mobile-tabs,.befn-mobile-topbar { display:none !important; }
+}
+/* Phone: use the EXISTING accessible five-tab dock and compact header,
+   rather than introducing a competing six-tab fixed rail. */
+@media (max-width:760px) {
+  .navrail { position:relative; top:auto; bottom:auto; left:auto; right:auto;
+    min-height:45px; z-index:30; padding:0 12px; border-top:0; border-bottom:2px solid var(--brand-red,#cf1824); box-shadow:none; }
+  .navrail .mainnav { display:none !important; }
+  .navrail .befn-mobile-topbar { display:flex; }
+  .befn-mobile-tabs { display:grid; }
+  #news-feed .news-grid { display:flex; flex-direction:column; }
+  #news-feed .news-feature-card { grid-column:auto; }
+}
