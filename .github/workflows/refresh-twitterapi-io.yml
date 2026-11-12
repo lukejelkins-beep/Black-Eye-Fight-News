@@ -1,0 +1,94 @@
+name: Collect original X posts with TwitterAPI.io (US$2 budget)
+on:
+  # 16 paid searches per day at most: one every 90 minutes.
+  # A 31-day month of full 20-post pages costs about US$1.488.
+  schedule:
+    - cron: '17 0,3,6,9,12,15,18,21 * * *'
+    - cron: '47 1,4,7,10,13,16,19,22 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refresh-twitterapi-io.mjs'
+      - 'scripts/twitterapi-io-core.mjs'
+      - 'tests/test-twitterapi-io.mjs'
+      - '.github/workflows/refresh-twitterapi-io.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: befn-twitterapi-io-paid-collector
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify X source identity, page bounds and budget logic
+        run: |
+          node --check scripts/twitterapi-io-core.mjs
+          node --check scripts/refresh-twitterapi-io.mjs
+          node tests/test-twitterapi-io.mjs
+          node tests/test-fight-talk.cjs
+
+      - name: Reserve budget on GitHub main before any paid call
+        id: reserve
+        env:
+          TWITTERAPI_IO_API_KEY: ${{ secrets.TWITTERAPI_IO_API_KEY }}
+        run: |
+          set -eu
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3; do
+            git fetch -q origin main
+            git reset --hard -q origin/main
+            node scripts/refresh-twitterapi-io.mjs reserve
+            git add data/fight-talk-x-budget.json
+            if git diff --cached --quiet; then
+              echo 'go=false' >> "$GITHUB_OUTPUT"
+              echo 'No paid request: missing key, cooldown, pause or budget protection.'
+              exit 0
+            fi
+            git commit -m 'Reserve bounded BEFN X API budget before paid read'
+            if git push origin HEAD:main; then
+              echo 'go=true' >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo 'Budget commit raced another update; retrying from latest main.'
+          done
+          exit 1
+
+      - name: Collect one original X search page (no retries)
+        if: steps.reserve.outputs.go == 'true'
+        env:
+          TWITTERAPI_IO_API_KEY: ${{ secrets.TWITTERAPI_IO_API_KEY }}
+        run: |
+          set -eu
+          node scripts/refresh-twitterapi-io.mjs collect
+          cp data/fight-talk-x-budget.json "$RUNNER_TEMP/befn-x-budget.json"
+          cp data/fight-talk-x-api.json "$RUNNER_TEMP/befn-x-feed.json"
+          for attempt in 1 2 3; do
+            git fetch -q origin main
+            git reset --hard -q origin/main
+            cp "$RUNNER_TEMP/befn-x-budget.json" data/fight-talk-x-budget.json
+            cp "$RUNNER_TEMP/befn-x-feed.json" data/fight-talk-x-api.json
+            git add data/fight-talk-x-budget.json data/fight-talk-x-api.json
+            if git diff --cached --quiet; then
+              echo 'Original X cache already current.'
+              exit 0
+            fi
+            git commit -m 'Cache verified X originals and record TwitterAPI.io spend reservation'
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo 'Data push raced another collector; retrying without another paid API call.'
+          done
+          exit 1
