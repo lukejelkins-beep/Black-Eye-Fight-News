@@ -44,3 +44,26 @@ jobs:
           done
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "Diagnostic only; this workflow does not deploy or approve live QA." >> "$GITHUB_STEP_SUMMARY"
+      - name: Check domain routing and HTML/JSON freshness
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "## Domain routing and other critical files" >> "$GITHUB_STEP_SUMMARY"
+          for host in blackeyefightnews.com.au black-eye-fight-news.onrender.com; do
+            echo "--- DNS for $host ---"
+            dig +short A "$host" || true
+            dig +short CNAME "$host" || true
+            for file in index.html data/ufc-prospect-profiles.json; do
+              out=$(mktemp)
+              hdr=$(mktemp)
+              status=$(curl -L -sS --connect-timeout 8 --max-time 22 -H 'Cache-Control: no-cache' -D "$hdr" -o "$out" -w '%{http_code}' "https://$host/$file?befn_probe=$GITHUB_RUN_ID" || true)
+              actual=$(sha256sum "$out" | cut -d' ' -f1)
+              expected=$(sha256sum "$file" | cut -d' ' -f1)
+              echo "$host/$file HTTP $status expected=$expected actual=$actual"
+              grep -Ei '^(HTTP/|etag:|last-modified:|cf-cache-status:|server:|cache-control:|location:)' "$hdr" || true
+              match=no
+              if [ "$status" = "200" ] && [ "$expected" = "$actual" ]; then match=yes; fi
+              echo "- $host/$file: HTTP $status, matches=$match" >> "$GITHUB_STEP_SUMMARY"
+              rm -f "$out" "$hdr"
+            done
+          done
