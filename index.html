@@ -1300,9 +1300,9 @@ function postCard(p){
 }
 
 
-const liveTalk={posts:[],primaryPosts:[],embedPosts:[],embedCheckedAt:null,selected:[],checkedAt:null,platformStatus:[],directory:[],directoryCounts:null,loading:false,lastAttempt:0,error:''};
+const liveTalk={posts:[],primaryPosts:[],embedPosts:[],paidXPosts:[],paidXCheckedAt:null,embedCheckedAt:null,selected:[],checkedAt:null,platformStatus:[],directory:[],directoryCounts:null,loading:false,lastAttempt:0,error:''};
 function rebuildTalkPosts(){
- liveTalk.posts=[...liveTalk.primaryPosts,...liveTalk.embedPosts];
+ liveTalk.posts=[...liveTalk.primaryPosts,...liveTalk.paidXPosts,...liveTalk.embedPosts];
  // A platform's account API can be unavailable while authentic original
  // source-linked post embeds are still available.
  for(const platform of new Set(liveTalk.embedPosts.map(p=>p.platform))){
@@ -1338,6 +1338,7 @@ async function loadLiveTalk(){
  const feed='data/fight-talk-live.json';
  const picks='data/fight-talk-selected.json';
  const embeds='data/fight-talk-embedded.json';
+ const xApiFeed='data/fight-talk-x-api.json';
  const directoryPath='data/fight-talk-roster.json';
  // Prefer same-origin JSON on mobile, while allowing GitHub to supply fresh data
  // without blocking the initial feed if a cross-origin request is slow or blocked.
@@ -1350,11 +1351,13 @@ async function loadLiveTalk(){
  };
  const remoteFeed=read(root+feed);
  const remoteEmbeds=read(root+embeds);
- const [newest,selected,originalEmbeds,directory]=await Promise.all([
+ const remoteXApiFeed=read(root+xApiFeed);
+ const [newest,selected,originalEmbeds,directory,originalXApi]=await Promise.all([
   firstUsable([read(feed),remoteFeed]),
   firstUsable([read(picks),read(root+picks)]),
   firstUsable([read(embeds),remoteEmbeds]),
-  firstUsable([readRoster(directoryPath),readRoster(root+directoryPath)])
+  firstUsable([readRoster(directoryPath),readRoster(root+directoryPath)]),
+  firstUsable([read(xApiFeed),remoteXApiFeed])
  ]);
  if(directory){
   liveTalk.directory=directory.fighters;
@@ -1370,6 +1373,10 @@ async function loadLiveTalk(){
     Date.parse(originalEmbeds.checkedAt||originalEmbeds.attemptedAt)>Date.parse(liveTalk.embedCheckedAt))){
   liveTalk.embedPosts=originalEmbeds.posts;
   liveTalk.embedCheckedAt=originalEmbeds.checkedAt||originalEmbeds.attemptedAt||null;
+ }
+ if(originalXApi?.posts?.length){
+  liveTalk.paidXPosts=originalXApi.posts;
+  liveTalk.paidXCheckedAt=originalXApi.checkedAt||originalXApi.attemptedAt;
  }
  rebuildTalkPosts();
  if(selected)liveTalk.selected=selected.posts;
@@ -1393,6 +1400,15 @@ async function loadLiveTalk(){
   if(!remote||!(Date.parse(remote.checkedAt||remote.attemptedAt)>Date.parse(liveTalk.embedCheckedAt||'')))return;
   liveTalk.embedPosts=remote.posts;
   liveTalk.embedCheckedAt=remote.checkedAt||remote.attemptedAt;
+  rebuildTalkPosts();
+  redrawTalkIfVisible();
+ }).catch(()=>{});
+ // TwitterAPI.io original posts are read-only verified author posts.
+ // Keep the latest GitHub dataset when Render static publication lags.
+ remoteXApiFeed.then(remote=>{
+  if(!remote||!(Date.parse(remote.checkedAt||remote.attemptedAt)>Date.parse(liveTalk.paidXCheckedAt||'')))return;
+  liveTalk.paidXPosts=remote.posts;
+  liveTalk.paidXCheckedAt=remote.checkedAt||remote.attemptedAt;
   rebuildTalkPosts();
   redrawTalkIfVisible();
  }).catch(()=>{});
