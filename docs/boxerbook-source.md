@@ -31,7 +31,7 @@ python scripts/boxerbook_source.py --live --report qa/boxerbook-source-review.js
 python scripts/boxerbook_source.py --schedule-fixture /path/schedule.json --results-fixture /path/results.json
 ```
 
-In GitHub, use **Actions → Boxerbook source QA → Run workflow**. The default runs offline tests; enable **Live API QA check** to run the two read-only API requests and download the one-day QA artifact. An API key is optional for a limited one-off personal test, but required for an app/site deployment and for protected lookup endpoints.
+Branch pushes run the offline tests automatically. GitHub only enables **Actions → Boxerbook source QA → Run workflow** after the workflow file is on the default branch (main); when merged, use its **Live API QA check** option to make two read-only requests and download the one-day QA artifact. Before merge, run the script locally against fixtures or the two live testing endpoints. A key is optional for a limited personal test, but required for app/site deployment and protected lookups.
 
 A zero match count is not proof of no bouts; check the actual schema, dates, response shapes and source links. Never relax identity rules to force a match.
 
