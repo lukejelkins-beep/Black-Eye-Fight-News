@@ -31,7 +31,8 @@ test("prioritises upcoming card candidates and remains deterministic",()=>{
  const a=buildQueue(progress,[],{max:3});
  const b=buildQueue(progress,[],{max:3});
  assert.deepEqual(a,b);
- assert.equal(a.candidates[0].name,"Upcoming Name");
+ assert(a.candidates[0].upcoming,"Upcoming bouts must appear first");
+ assert.equal(a.candidates[0].lastSeenDate,"2026-11-15");
  assert.equal(a.candidates.find(x=>x.name==="Old Name").lastSeenDate,"2026-11-01");
 });
 test("live files contain confirmed champion starting cohort and no unsupported claim of a complete roster",()=>{
