@@ -1,6 +1,6 @@
 # Fight Talk public-post discovery and refresh
 
-Updated 11 November 2026. This is the production workflow for the **public**, view-only Fight Talk feed. It is separate from the experimental Threads OAuth App Review prototype and does not make BEFN visitors log in.
+Updated 13 November 2026. This is the production workflow for the **public**, view-only Fight Talk feed. It is separate from the experimental Threads OAuth App Review prototype and does not make BEFN visitors log in.
 
 ## Inputs and schedules
 
@@ -32,20 +32,33 @@ Each post link is normalised to an HTTPS canonical platform permalink and dedupl
 
 Do not use an article timestamp or homepage observation as proof of when the original Instagram/Threads post was published. The public interface says `Discovered in coverage` where the original post time is not available. The current 7-day Latest view and 28-day Highlights window operate on source-linked discovery dates where required. Old homepage links cannot re-enter the feed as newly posted items simply because they were rediscovered. The candidates are capped and rotated: five official homepages, eight recent articles and at most 22 additional articles per ten-minute run, with four page workers. The broader pool is covered over approximately 50 minutes when all scheduled runs occur.
 
-## X monthly hard spending policy
+## Optional TwitterAPI.io original-post discovery — strict US$2 project limit
 
-**US$2 is the maximum approved X/Twitter API budget; the current production system spends US$0.** The unattended X API timeline reader is deliberately hard-disabled in `scripts/fight-talk-platforms.mjs`, even if an `X_BEARER_TOKEN` exists. The workflow no longer passes an X API secret. This enforces a strict zero-spend upper bound without relying on untrustworthy client-side account balance estimation. Real X posts are still collected from trusted publisher links and displayed with X's official public embed. The discovery output records `paidXApiCalls: 0` and `xApiEstimatedSpendUsd: 0`.
+The existing official X API timeline reader in `scripts/fight-talk-platforms.mjs` remains fully disabled. Public-source X embeds are free and continue updating.
 
-Do not reactivate paid X requests unless an external **provider-enforced** US$2 billing limit exists and is verified. A local counter reset on a new GitHub runner does not constitute a reliable billing safeguard.
+A **separate**, read-only TwitterAPI.io worker is now installed:
+- `.github/workflows/refresh-twitterapi-io.yml`, with the GitHub repository **Actions secret** `TWITTERAPI_IO_API_KEY` (never put the key in website code or a file).
+- `scripts/twitterapi-io-core.mjs` provides source authentication, group rotation, strict pricing assumptions, deduplication and pure budgeting logic.
+- `scripts/refresh-twitterapi-io.mjs` first reserves the cost on GitHub `main`, then makes **one** API GET without retries or pagination. A reservation must be committed before the API is used.
+- `data/fight-talk-x-budget.json` is the persistent UTC-month request ledger; `data/fight-talk-x-api.json` is the independent public original X post cache. The client compares Render's copy with GitHub's newer copy and keeps original native X embeds.
+- The 140-account source watchlist is partitioned into approximately 18 groups of eight fighters, promoters, managers, media and meme pages. One group is queried every **90 minutes** (16 searches daily), so the full roster is covered on a roughly 27-hour rotation when scheduled jobs and API calls succeed.
+- The worker uses `/twitter/tweet/advanced_search` with a parenthesised OR of exact tracked author usernames and a recent-date filter. It accepts only matching public original-post authors, verified timestamps and original X links. It does not follow users, log into an account, repost or publish.
+- Native X widgets render the real post, with a source link fallback. No fabricated captions or display dates.
+
+**Budget:** TwitterAPI.io's published pricing is US$0.00015 per returned tweet, a 15-credit minimum per request, typically 20 posts maximum per first search page. A full response is about US$0.003. The worker pessimistically reserves US$0.0034 before every call and stops reserving at US$1.80 per UTC month. At the scheduled maximum of 16 calls/day over a 31-day month, this reserves US$1.6864 and costs about US$1.488 at the currently published full-page rate. No automatic retries or pagination. Old/empty results can cost less, but all attempts consume a full budget reservation.
+
+**Critical:** the GitHub ledger is a software guard, **not a guaranteed provider billing cap**. Actual charging rules could change, and separate keys or workflows could spend outside this ledger. Keep only a small **prepaid balance** on TwitterAPI.io with **automatic top-ups disabled**, confirm your account settings yourself, and stop the workflow if prices change.
+
+**Activation state, 13 Nov 2026:** the new workflow tests passed, but its first triggered run reported **no key** in `TWITTERAPI_IO_API_KEY`, so the paid request was skipped. Until a valid repository Actions secret is present, the public original X source-link collector remains active and the third-party API collector makes **zero calls**.
 
 ## Ten-minute end-to-end freshness
 
 - **Bluesky:** author feeds are polled every ten minutes using the free public API.
 - **Instagram, Threads, X:** each ten-minute discovery run searches vetted fight coverage and official publisher links for original public posts. This is **link discovery** and not permission to query every account's timeline. New posts not indexed or linked publicly may take longer to be found or may be missed.
 - **Facebook and Reddit:** the underlying live collector runs every ten minutes too, but automatic account-feed collection requires supported access and configured sources. Unconfigured/unauthorised sources cannot produce new posts simply by polling more often.
-- **Open Fight Talk webpage:** while the view is open, it refreshes every ten minutes and now compares the statically deployed Render JSON with the latest GitHub JSON for **both** direct posts and publisher-linked embeds. The newer GitHub version wins; new embeds no longer require a manual Render deploy. A viewer can also reload the page.
+- **Open Fight Talk webpage:** while the view is open, it refreshes every ten minutes and now compares the statically deployed Render JSON with the latest GitHub JSON for direct posts, publisher-linked embeds **and the optional X API feed**. The newer GitHub version wins; new embeds no longer require a manual Render deploy. A viewer can also reload the page.
 - GitHub Actions scheduled runs are **best-effort**, and external platforms may delay, rate-limit or block discovery. Ten minutes is the intended *check interval*, not a guarantee that every new post on every site will appear within ten minutes.
-- Unattended X paid-API requests remain disabled: **US$0 monthly X API spend**.
+- The official X paid API remains disabled. Optional TwitterAPI.io read-only searches have separate 90-minute rotation and a conservative US$2 project budget. With no accessible API secret, these searches remain disabled and cost US$0.
 
 ## Source quality and priority
 
