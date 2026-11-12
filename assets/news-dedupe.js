@@ -59,10 +59,17 @@
   function sameRewordedHeadline(a,b){
     const ax=distinctive(a.title),bx=distinctive(b.title);
     const both=[...ax].filter(w=>bx.has(w)).length;
-    if(both<4||Math.min(ax.size,bx.size)<4)return false;
+    if(both<5||Math.min(ax.size,bx.size)<5)return false;
     if(stage(a.title)!==stage(b.title))return false;
     return both/Math.min(ax.size,bx.size)>=.78 &&
            both/new Set([...ax,...bx]).size>=.50;
+  }
+  function matchingBooking(a,b){
+    const booking=t=>/\b(?:booked|added to|make (?:a |his |her )?(?:boxing |mma )?debut|scheduled|set to face|fight announced)\b/i.test(t||'');
+    const ax=distinctive(a.title),bx=distinctive(b.title);
+    const common=[...ax].filter(w=>bx.has(w)).length;
+    return booking(a.title)&&booking(b.title)&&common>=4&&
+      common/Math.min(ax.size,bx.size)>=.70;
   }
   function matchingEventMedia(a,b){
     const card=t=>(String(t||'').match(/\b(?:ufc|pfl|raf|rizin)\s*[- ]?\d+\b/i)||[])[0]?.toLowerCase().replace(/[- ]+/g,'')||'';
@@ -75,7 +82,7 @@
     if(a.sport!==b.sport||Math.abs(Date.parse(a.publishedAt)-Date.parse(b.publishedAt))>72*3600e3)return false;
     const x=terms(a.title),y=terms(b.title),sx=new Set(x),sy=new Set(y);
     if(x.join(' ')==y.join(' '))return true;
-    if(sameEvent(a,b)||sameRewordedHeadline(a,b)||matchingEventMedia(a,b))return true;
+    if(sameEvent(a,b)||sameRewordedHeadline(a,b)||matchingBooking(a,b)||matchingEventMedia(a,b))return true;
     if(Math.min(sx.size,sy.size)<6)return false;
     const stages=s=>[...s].filter(w=>updates.has(w)).sort().join(',');
     if(stages(sx)!==stages(sy))return false;
