@@ -108,9 +108,16 @@ def headline_stage(title):
 def reworded_headline(a,b):
     left,right=distinctive(a.get('title')),distinctive(b.get('title'))
     common=len(left&right)
-    if common<4 or min(len(left),len(right))<4:return False
+    if common<5 or min(len(left),len(right))<5:return False
     if headline_stage(a.get('title'))!=headline_stage(b.get('title')):return False
     return common/min(len(left),len(right))>=.78 and common/len(left|right)>=.50
+
+def matching_booking(a,b):
+    def booking(t):
+        return bool(re.search(r'\b(?:booked|added to|make (?:a |his |her )?(?:boxing |mma )?debut|scheduled|set to face|fight announced)\b',str(t or ''),re.I))
+    left,right=distinctive(a.get('title')),distinctive(b.get('title'))
+    common=len(left&right)
+    return booking(a.get('title')) and booking(b.get('title')) and common>=4 and common/min(len(left),len(right))>=.70
 
 def matching_event_media(a,b):
     def card(t):
@@ -135,7 +142,7 @@ def duplicate_of(a,b):
     x,y=title_terms(a.get('title')),title_terms(b.get('title'))
     if not x or not y:return False
     if x==y:return True
-    if same_event(a,b) or reworded_headline(a,b) or matching_event_media(a,b):return True
+    if same_event(a,b) or reworded_headline(a,b) or matching_booking(a,b) or matching_event_media(a,b):return True
     sa,sb=set(x),set(y)
     if min(len(sa),len(sb))<6:return False
     if (sa & UPDATES)!=(sb & UPDATES):return False
