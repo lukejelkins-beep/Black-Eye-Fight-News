@@ -130,6 +130,7 @@ export function buildQueue(progress,profileFiles,{
   .sort((a,b)=>Number(b.upcoming)-Number(a.upcoming)||
    b.lastSeenDate.localeCompare(a.lastSeenDate)||a.name.localeCompare(b.name));
  const historicalByWorker={"A-F":[],"G-L":[],"M-R":[],"S-Z":[]};
+ const unassignedHistoricalCandidates=[];
  // Include the ENTIRE historical pool in deterministic owner-specific queues.
  // The short public priority preview below remains bounded at 120 names.
  // Previously only the preview existed, causing historical workers to repeat
@@ -142,7 +143,11 @@ export function buildQueue(progress,profileFiles,{
    initial>="G"&&initial<="L"?"G-L":
    initial>="M"&&initial<="R"?"M-R":
    initial>="S"&&initial<="Z"?"S-Z":null;
-  if(!owner)continue;
+  if(!owner){
+   unassignedHistoricalCandidates.push({name:athlete.name,slug:athlete.slug,
+    lastSeenDate:athlete.lastSeenDate,lastSeenEvent:athlete.lastSeenEvent});
+   continue;
+  }
   historicalByWorker[owner].push({
    name:athlete.name,slug:athlete.slug,lastSeenDate:athlete.lastSeenDate,
    lastSeenEvent:athlete.lastSeenEvent,upcoming:athlete.upcoming
@@ -166,7 +171,7 @@ export function buildQueue(progress,profileFiles,{
   knownCompletedProfiles:reviewed.size,candidateCount:candidates.size,
   fullActiveRosterVerified:false,
   newCardEntrants:entrants,
-  historicalCounts,historicalByWorker,
+  historicalCounts,historicalByWorker,unassignedHistoricalCandidates,
   postFightRefreshCandidates:[...needsRefresh.values()].sort((a,b)=>
    b.newFightDate.localeCompare(a.newFightDate)||a.name.localeCompare(b.name)),
   candidates:[...chosen.values()].map((c,i)=>({priority:i+1,...c,needs:requirement}))
