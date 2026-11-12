@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-12T16:38:14.904Z",
-  "checkedAt": "2026-11-12T16:38:14.904Z",
-  "updatedAt": "2026-11-12T14:11:53Z",
+  "attemptedAt": "2026-11-12T17:34:08.412Z",
+  "checkedAt": "2026-11-12T17:34:08.412Z",
+  "updatedAt": "2026-11-12T17:08:58Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 4,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 4,
+      "checked": 6,
       "failed": 0,
-      "configured": 4,
-      "message": "4 of 4 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 17,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 53,
+      "configured": 44,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -55,21 +55,45 @@
   "rollingScan": {
     "directoryEntries": 442,
     "scheduledEntries": 84,
-    "batchIndex": 1,
+    "batchIndex": 0,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 53,
-      "X": 17,
-      "Bluesky": 4,
-      "Threads": 10
+      "Instagram": 44,
+      "Bluesky": 6,
+      "X": 27,
+      "Threads": 7
     },
-    "directlyChecked": 4,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n24xj2f5gb2v",
+      "cid": "bafyreibq6cdrrs4xsv3wq6blwadxxls4aptjmm3d3hdki3iflxmldd27yq",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Dana White Takes Fury vs Joshua Undercard, Eddie Hearn Out #boxing #boxingnews",
+      "postedAt": "2026-11-12T17:08:58Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n24xj2f5gb2v",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n24nmgdwan2z",
       "cid": "bafyreigf2jntgls26qgeieqotsijfhot5lhxmtk6snd76r6vvpp45atpqy",
@@ -91,7 +115,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -111,11 +135,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
       "engagement": {
-        "likes": 1,
+        "likes": 2,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -235,7 +259,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -403,7 +427,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1992,7 +2016,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2865,7 +2889,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3088,7 +3112,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3500,7 +3524,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3829,7 +3853,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4019,7 +4043,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4410,7 +4434,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4511,7 +4535,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4626,7 +4650,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4741,7 +4765,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5212,7 +5236,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5236,7 +5260,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5321,7 +5345,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
+      "engagementCheckedAt": "2026-11-12T17:34:08.412Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5352,30 +5376,6 @@
       "postedAt": "2026-11-08T02:38:22+0000",
       "url": "https://www.instagram.com/reel/DfdsDr5RQy9/",
       "photo": "https://scontent-iad6-1.xx.fbcdn.net/v/t51.82787-15/681515924_18593607535002091_6578503794024641276_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=7d201b&_nc_ohc=CfJAOnuI9rYQ7kNvwGFx9dS&_nc_oc=AdotoBlaIo8cfag1y5ZCrBNCsgXGVy_jYjbiY49qA57rHtKmMIoxKCBQDkV4phTWL7g&_nc_zt=23&_nc_ht=scontent-iad6-1.xx&edm=AL-3X8kEAAAA&_nc_gid=vHojBLZC6p_3PQFAatM63A&oh=00_AQSvVVu-uujm7E-2hM82m34hrQoRguAFH-9Sx4zfE5xBpg&oe=6AFAE44B",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3mzrbmvknlx2z",
-      "cid": "bafyreicjb5iheazpiv6buw2ygsmsbyz6t5wlpll5vawr3mu7z5bozmfbza",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Aaron Bronsteter",
-      "handle": "@aaron.report",
-      "role": "media",
-      "quote": "I have it 30-27 Raposo, which doesn’t tell the story of how close this fight was, but that’s my scorecard. Raposo by a thin margin in 1 & 3 and pretty clear 2.",
-      "postedAt": "2026-11-08T01:38:07.891Z",
-      "date": "8 Nov 2026",
-      "url": "https://bsky.app/profile/aaron.report/post/3mzrbmvknlx2z",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T14:32:30.619Z",
       "topic": "Original source post · claims may need confirmation"
     }
   ],
