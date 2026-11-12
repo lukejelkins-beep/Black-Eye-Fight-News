@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-12T06:48:17.874Z",
-  "checkedAt": "2026-11-12T06:48:17.874Z",
+  "attemptedAt": "2026-11-12T07:02:43.624Z",
+  "checkedAt": "2026-11-12T07:02:43.624Z",
   "updatedAt": "2026-11-12T04:02:31Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 4,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 4,
+      "checked": 6,
       "failed": 0,
-      "configured": 4,
-      "message": "4 of 4 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 28,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 40,
+      "configured": 44,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 2,
+      "configured": 0,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,19 +55,18 @@
   "rollingScan": {
     "directoryEntries": 442,
     "scheduledEntries": 84,
-    "batchIndex": 3,
+    "batchIndex": 0,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 40,
-      "X": 28,
-      "Threads": 10,
-      "Bluesky": 4,
-      "Reddit": 2
+      "Instagram": 44,
+      "Bluesky": 6,
+      "X": 27,
+      "Threads": 7
     },
-    "directlyChecked": 4,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
@@ -141,6 +140,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:u6b6v2jhqpe6hfezjffq7zrh/app.bsky.feed.post/3n23f6gzzxk2k",
+      "cid": "bafyreifj2juciq56mceyokhl5xptfg6qqt6r4ew7b6qdvuapftnia3jbiy",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Jack Wannan",
+      "handle": "@jackwannan.bsky.social",
+      "role": "commentator",
+      "quote": "Winner of FTR vs. MCMG tonight gets tag title shot next.",
+      "postedAt": "2026-11-12T02:08:15.279Z",
+      "date": "12 Nov 2026",
+      "url": "https://bsky.app/profile/jackwannan.bsky.social/post/3n23f6gzzxk2k",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:u6b6v2jhqpe6hfezjffq7zrh/bafkreieqcjv6rcvaozy2eikgm52rql3rmtpyj4w5l7r3hhbvmm65zyiks4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:u6b6v2jhqpe6hfezjffq7zrh",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T07:02:43.624Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -285,6 +308,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n234ht7pa22h",
+      "cid": "bafyreibpjpot3norngn5dk46nuvo263hs3wojvhjy6ilicah6d3h67pane",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Dan Rafael",
+      "handle": "@danrafael1.bsky.social",
+      "role": "commentator",
+      "quote": "From my latest #boxing notebook. Subscribe at danrafael.substack.com",
+      "postedAt": "2026-11-11T23:32:26.358Z",
+      "date": "12 Nov 2026",
+      "url": "https://bsky.app/profile/danrafael1.bsky.social/post/3n234ht7pa22h",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:ukajoiyhrbbiiu7qpcz43aha/bafkreifun33dacusv726vgtqm3jhyo44mqkzgax2esadqlh67jcvwz5hga",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T07:02:43.624Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1873,7 +1920,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T21:01:04.778Z",
+      "engagementCheckedAt": "2026-11-12T07:02:43.624Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2746,7 +2793,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T21:01:04.778Z",
+      "engagementCheckedAt": "2026-11-12T07:02:43.624Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2993,7 +3040,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T21:01:04.778Z",
+      "engagementCheckedAt": "2026-11-12T07:02:43.624Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3405,7 +3452,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T21:01:04.778Z",
+      "engagementCheckedAt": "2026-11-12T07:02:43.624Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3734,7 +3781,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T21:01:04.778Z",
+      "engagementCheckedAt": "2026-11-12T07:02:43.624Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3924,7 +3971,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T21:01:04.778Z",
+      "engagementCheckedAt": "2026-11-12T07:02:43.624Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4315,7 +4362,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T21:01:04.778Z",
+      "engagementCheckedAt": "2026-11-12T07:02:43.624Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4416,7 +4463,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T21:01:04.778Z",
+      "engagementCheckedAt": "2026-11-12T07:02:43.624Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4531,7 +4578,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T21:01:04.778Z",
+      "engagementCheckedAt": "2026-11-12T07:02:43.624Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4646,7 +4693,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T21:01:04.778Z",
+      "engagementCheckedAt": "2026-11-12T07:02:43.624Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5117,7 +5164,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T21:01:04.778Z",
+      "engagementCheckedAt": "2026-11-12T07:02:43.624Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5141,7 +5188,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T21:01:04.778Z",
+      "engagementCheckedAt": "2026-11-12T07:02:43.624Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5226,7 +5273,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T21:01:04.778Z",
+      "engagementCheckedAt": "2026-11-12T07:02:43.624Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5280,7 +5327,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T21:01:04.778Z",
+      "engagementCheckedAt": "2026-11-12T07:02:43.624Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5304,7 +5351,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-11T21:01:04.778Z",
+      "engagementCheckedAt": "2026-11-12T07:02:43.624Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5321,45 +5368,6 @@
       "postedAt": "2026-11-08T00:57:08+0000",
       "url": "https://www.instagram.com/p/DfdhVJlmo-K/",
       "photo": "https://scontent-sea5-1.xx.fbcdn.net/v/t51.82787-15/730294629_18610102981023261_2758076596362415474_n.jpg?_nc_cat=103&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=9Qi41spYSDQQ7kNvwHeTKC_&_nc_oc=Adro2Tcj_5slFEqiqQi4DIE_z18cw-cFR6Epazg7zKA-vTFEVkXa2z7l7lF02K3yb_8&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AL-3X8kEAAAA&_nc_gid=xpULOMWZWUV3ezQg97j-kg&oh=00_AQSJGJ9P7vmvpvWEpvN_c8Gor-NRxRUMBJFEJ-pjU8HJIg&oe=6AFABE22",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "platform": "Instagram",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Ryan Garcia",
-      "handle": "@kingryan",
-      "role": "fighter",
-      "source": "Instagram original author API",
-      "id": "18093478772235780",
-      "quote": "Are you okay",
-      "postedAt": "2026-11-08T00:27:03+0000",
-      "url": "https://www.instagram.com/reel/DfddzpnIfSB/",
-      "photo": "https://scontent-sea5-1.xx.fbcdn.net/v/t51.82787-15/640434818_18580797688056588_5388830477813014018_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=7d201b&_nc_ohc=zqCJqYtcnEYQ7kNvwGJhbvC&_nc_oc=AdqEbyF_y3AJS27ryfwDkAxiWQCAo1tZOxkIvIXtjKZt9sC76KAxOVbSQevHCSn7nP0&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AL-3X8kEAAAA&_nc_gid=t5vTS3ryrzImsFlpb6rV6w&oh=00_AQQgNHeG6OrLBBL5nyOS7N_MBQlN-1ItUZx19V_YvowcDw&oe=6AFABCF7",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3mzr44sacpy2r",
-      "cid": "bafyreibh4npq4hthqevb5tctv2rnqu7poifrarrve3r222bxckkmph5ksy",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Aaron Bronsteter",
-      "handle": "@aaron.report",
-      "role": "media",
-      "quote": "10-9 Fernandes\n\nI have it 19-19 heading into the final round. Close fight so far.",
-      "postedAt": "2026-11-07T23:59:38.832Z",
-      "date": "8 Nov 2026",
-      "url": "https://bsky.app/profile/aaron.report/post/3mzr44sacpy2r",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-11T21:01:04.778Z",
       "topic": "Original source post · claims may need confirmation"
     }
   ],
