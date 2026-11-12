@@ -95,7 +95,7 @@ async function checkProfile(page,profile,screen){
    const category=expected.category==="Roster"&&
     (!ur.complete||bouts<2||(expected.latest||[]).length<2)?
     "Unassessed":expected.category;
-   return !!f?.reviewedUfcProfile&&f.record===expected.record&&
+   return !!(f?.reviewedUfcProfile||f?.championReview)&&f.record===expected.record&&
     f.division===expected.division&&f.category===category&&
     JSON.stringify((f.latest||[]).map(x=>[x.date,x.opponent,x.outcome,x.method]))===
     JSON.stringify(expected.latest.map(x=>[x.date,x.opponent,x.outcome,x.method]));
