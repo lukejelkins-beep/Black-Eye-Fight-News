@@ -46,7 +46,9 @@ function fullMetric(rounds,corner,field,roundCount){
 function rollup(parts,field){
  let sum=0,covered=0;
  for(const p of parts){
-  const n=num(p.metrics[field]);
+  const raw=p.metrics[field];
+  const n=field.endsWith("Differential")||field.endsWith("DifferentialSec")?
+    (Number.isInteger(raw)?raw:null):num(raw);
   if(n!==null){sum+=n;covered++;}
  }
  return {value:covered?sum:null,coveredBouts:covered};
