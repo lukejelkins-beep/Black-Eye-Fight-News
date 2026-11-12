@@ -1,19 +1,19 @@
 {
-  "attemptedAt": "2026-11-12T12:11:29.562Z",
-  "checkedAt": "2026-11-12T12:11:29.562Z",
-  "updatedAt": "2026-11-12T05:52:42Z",
+  "attemptedAt": "2026-11-12T13:30:34.001Z",
+  "checkedAt": "2026-11-12T13:30:34.001Z",
+  "updatedAt": "2026-11-12T09:10:03.168Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 3,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 3,
+      "checked": 6,
       "failed": 0,
-      "configured": 3,
-      "message": "3 of 3 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 42,
+      "configured": 44,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 2,
+      "configured": 0,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,22 +55,45 @@
   "rollingScan": {
     "directoryEntries": 442,
     "scheduledEntries": 84,
-    "batchIndex": 2,
+    "batchIndex": 0,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
+      "Instagram": 44,
+      "Bluesky": 6,
       "X": 27,
-      "Threads": 10,
-      "Bluesky": 3,
-      "Instagram": 42,
-      "Reddit": 2
+      "Threads": 7
     },
-    "directlyChecked": 3,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n244qojkc22x",
+      "cid": "bafyreidngsa2oey6sysbbxwn7ltck6baxixyulssxyo4e3ybl6546fjzym",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Dan Rafael",
+      "handle": "@danrafael1.bsky.social",
+      "role": "commentator",
+      "quote": "#Boxing Notebook: #BootsKelly 3-belt 154 unification fight set; WBA denies Bahdi rematch vs. Schofield; Jarrell Miler-Tony Yoka details; #FuryJoshua undercard official; Quick hits; Show & tell. Read & sign up for my Substack: danrafael.substack.com/p/notebook-e...",
+      "postedAt": "2026-11-12T09:10:03.168Z",
+      "date": "12 Nov 2026",
+      "url": "https://bsky.app/profile/danrafael1.bsky.social/post/3n244qojkc22x",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:ukajoiyhrbbiiu7qpcz43aha/bafkreifun33dacusv726vgtqm3jhyo44mqkzgax2esadqlh67jcvwz5hga",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n23rpsftmf2g",
       "cid": "bafyreigyfmpe5qnalwldjimeaqfgjx76yw6w6esghteh2zrorkwzj7ads4",
@@ -188,7 +211,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T08:04:41.292Z",
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -352,11 +375,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
       "engagement": {
-        "likes": 1,
+        "likes": 2,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T08:04:41.292Z",
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1945,7 +1968,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T08:04:41.292Z",
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2818,7 +2841,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T08:04:41.292Z",
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3041,7 +3064,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T08:04:41.292Z",
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3453,7 +3476,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T08:04:41.292Z",
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3782,7 +3805,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T08:04:41.292Z",
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3972,7 +3995,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T08:04:41.292Z",
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4363,7 +4386,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T08:04:41.292Z",
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4464,7 +4487,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T08:04:41.292Z",
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4579,7 +4602,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T08:04:41.292Z",
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4694,7 +4717,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T08:04:41.292Z",
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5165,7 +5188,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T08:04:41.292Z",
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5189,7 +5212,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T08:04:41.292Z",
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5274,7 +5297,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T08:04:41.292Z",
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5328,7 +5351,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T08:04:41.292Z",
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5352,23 +5375,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T08:04:41.292Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "platform": "Instagram",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Jason Moloney",
-      "handle": "@jasonmoloney",
-      "role": "fighter",
-      "fighterTier": "contender",
-      "source": "Instagram original author API",
-      "id": "18126784561884014",
-      "quote": "DO or DIE ⚔️ 6 Days to go.",
-      "postedAt": "2026-11-08T00:57:08+0000",
-      "url": "https://www.instagram.com/p/DfdhVJlmo-K/",
-      "photo": "https://scontent-sea5-1.xx.fbcdn.net/v/t51.82787-15/730294629_18610102981023261_2758076596362415474_n.jpg?_nc_cat=103&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=9Qi41spYSDQQ7kNvwHeTKC_&_nc_oc=Adro2Tcj_5slFEqiqQi4DIE_z18cw-cFR6Epazg7zKA-vTFEVkXa2z7l7lF02K3yb_8&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AL-3X8kEAAAA&_nc_gid=xpULOMWZWUV3ezQg97j-kg&oh=00_AQSJGJ9P7vmvpvWEpvN_c8Gor-NRxRUMBJFEJ-pjU8HJIg&oe=6AFABE22",
+      "engagementCheckedAt": "2026-11-12T13:30:34.001Z",
       "topic": "Original source post · claims may need confirmation"
     }
   ],
