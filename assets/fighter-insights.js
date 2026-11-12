@@ -32,12 +32,12 @@
   const allowed=permitted[f.sport]||permitted.MMA;
   const out=[],seen=new Set();
   for(const c of (Array.isArray(f.credentials)?f.credentials:[])){
-   if(!c||!allowed.has(c.kind)||!validSource(c.source)||seen.has(c.kind))continue;
+   if(!c||!allowed.has(c.kind)||!validSource(c.source)||seen.has(c.kind==="ncaa"?c.kind+":"+c.division:c.kind))continue;
    if(c.kind==="ncaa"&&!["I","II","III"].includes(c.division))continue;
    if(c.kind==="bjj"&&!Object.keys(beltColors).includes(c.belt))continue;
    if(["adcc","sambo","olympics"].includes(c.kind)&&!medalIcon[c.medal])continue;
    if(c.kind==="golden-gloves"&&!["national","junior","regional","state","unspecified"].includes(c.level))continue;
-   seen.add(c.kind);
+   seen.add(c.kind==="ncaa"?c.kind+":"+c.division:c.kind);
    out.push({...c,detail:String(c.detail||"").trim()});
   }
   return out;
@@ -45,7 +45,7 @@
  function badge(c){
   const detail=c.detail||({
    bjj:"Brazilian jiu-jitsu "+c.belt+" belt",
-   ncaa:"NCAA Division "+c.division+" collegiate wrestling",
+   ncaa:"NCAA Division "+c.division+(c.medal?" wrestling championship "+c.medal+" medal":" wrestling participant"),
    adcc:"ADCC "+c.medal+" medal",
    sambo:"Sambo "+c.medal+" medal",
    "golden-gloves":"Golden Gloves "+c.level+" achievement",
@@ -401,6 +401,14 @@
     existing.taleReference=fighter.taleReference;
     existing.statsReference=fighter.statsReference;
     existing.reference=fighter.reference;
+    if(Array.isArray(fighter.credentials)){
+     // Only explicitly source-linked credentials from the reviewed sample.
+     const current=Array.isArray(existing.credentials)?existing.credentials:[];
+     for(const c of fighter.credentials){
+      if(!current.some(x=>x.kind===c.kind&&x.division===c.division))current.push(c);
+     }
+     existing.credentials=current;
+    }
     if(Array.isArray(fighter.latest)&&Array.isArray(existing.latest)){
      for(const item of existing.latest){
       const same=fighter.latest.find(x=>norm(item.opponent)===norm(x.opponent)||norm(item.opponent).endsWith(norm(x.opponent)));
