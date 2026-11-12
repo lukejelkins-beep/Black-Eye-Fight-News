@@ -23,7 +23,7 @@
  // participation is separate from NCAA tournament medals/individual titles.
  const permitted={
   Boxing:new Set(["champion","golden-gloves","olympics"]),
-  MMA:new Set(["ncaa","bjj","adcc","sambo","golden-gloves"])
+  MMA:new Set(["ncaa","bjj","adcc","sambo","golden-gloves","olympic-judo"])
  };
  const medalIcon={gold:"🥇",silver:"🥈",bronze:"🥉"};
  const beltColors={white:"#ececec",blue:"#2875cf",purple:"#843fc8",brown:"#89512d",black:"#181a1e"};
@@ -35,6 +35,10 @@
   for(const c of (Array.isArray(f.credentials)?f.credentials:[])){
    if(!c||!allowed.has(c.kind)||!validSource(c.source)||seen.has(c.kind==="ncaa"?c.kind+":"+c.division:c.kind))continue;
    if(c.kind==="ncaa"&&!["I","II","III"].includes(c.division))continue;
+   if(c.kind==="olympic-judo"&&(c.participated!==true||
+      (c.medal&&!medalIcon[c.medal])||
+      (c.medalCount!==undefined&&(!Number.isInteger(c.medalCount)||c.medalCount<1||c.medalCount>15))||
+      (!c.medal&&c.medalCount)))continue;
    if(c.kind==="bjj"&&!Object.keys(beltColors).includes(c.belt))continue;
    if(["adcc","sambo","olympics"].includes(c.kind)&&!medalIcon[c.medal])continue;
    if(c.kind==="golden-gloves"&&!["national","junior","regional","state","unspecified"].includes(c.level))continue;
@@ -47,6 +51,7 @@
   const detail=c.detail||({
    bjj:"Brazilian jiu-jitsu "+c.belt+" belt",
    ncaa:"NCAA Division "+c.division+(c.medal?" wrestling championship "+c.medal+" medal":" wrestling participant"),
+   "olympic-judo":"Olympic judo "+(c.medal?c.medal+" medal":"participant"),
    adcc:"ADCC "+c.medal+" medal",
    sambo:"Sambo "+c.medal+" medal",
    "golden-gloves":"Golden Gloves "+c.level+" achievement",
@@ -56,6 +61,9 @@
   const content=c.kind==="bjj"?'<span class="befn-belt" style="--belt:'+beltColors[c.belt]+'"></span>':
    c.kind==="ncaa"?'<span class="befn-credential-ncaa"><small>NCAA'+(["I","II","III"].indexOf(c.division)+1)+'</small><b>🤼</b></span>'+
      (medalIcon[c.medal]?'<em class="befn-credential-medal">'+medalIcon[c.medal]+'</em>':''):
+   c.kind==="olympic-judo"?'<span class="befn-credential-judo"><small>JUDO</small><b>🥋</b><small>OG</small></span>'+
+     (c.medal&&medalIcon[c.medal]?'<em class="befn-credential-medal">'+medalIcon[c.medal]+
+       (c.medalCount>1?'<small>×'+c.medalCount+'</small>':'')+'</em>':''):
    c.kind==="adcc"?'<span aria-hidden="true">🏆</span>':
    c.kind==="sambo"?'<span aria-hidden="true">⭐</span>':
    c.kind==="golden-gloves"?'<span aria-hidden="true">🥊</span>':
@@ -79,9 +87,13 @@
  function ratingsFor(f,sportHint){
   const sport=f?.sport||sportHint||"MMA";
   if(sport==="Boxing")return engine.evaluateBoxing(f);
-  const record=statRecord(f);
+  // Prefer the individually researched and linked UFC 334 observations over
+  // the older general scouting feed; keep completed-round evidence separate.
+  const archival=statRecord(f);
+  const verified=f?.verifiedStats;
+  const sourceRecord=verified?{...archival,stats:verified,recent:{fights:verified.sampleBouts}}:archival;
   const evidence=f?.performanceEvidence;
-  return engine.evaluate(evidence?{...(record||{}),performanceEvidence:evidence}:record,historyFor(f));
+  return engine.evaluate(evidence?{...(sourceRecord||{}),performanceEvidence:evidence}:sourceRecord,historyFor(f));
  }
  function resultSymbol(outcome){
   const text=String(outcome||"").toLowerCase();
@@ -122,6 +134,16 @@
   '<li><b>Defence:</b> 31% inverse strikes absorbed/min, 29% strike defence, 22% takedown defence, 12% inverse knockdowns received/15, 6% inverse opponent control.</li>'+
   '<li><b>Recent form:</b> verified wins=1, draws=½, losses=0, no-contests omitted; last five fights weighted 5,4,3,2,1 with a neutral prior.</li>'+
   '</ul><p>When the provider omits a statistic, its weight is redistributed among available inputs only if the category still meets evidence coverage thresholds. Ratings shrink toward 50 according to the observed bout count (n/(n+4)); insufficient samples remain unrated. Statistical sources and samples differ by promotion.</p></details>';
+ function ratingsEvidence(f){
+  const v=f?.verifiedStats;
+  const sample=Number.isInteger(v?.sampleBouts)?v.sampleBouts:null;
+  const src=validSource(v?.source)?v.source:null;
+  if(!src)return '<span class="befn-rating-source-note">Insufficient verified statistical coverage.</span>';
+  return '<span class="befn-rating-source-note">'+
+   (sample!==null?escapeHTML(String(sample))+' recorded bouts · ':'')+
+   (v.observedOn?'Checked '+escapeHTML(v.observedOn)+' · ':'')+
+   '<a href="'+escapeHTML(src)+'" target="_blank" rel="noopener noreferrer">View stats source</a></span>';
+ }
  function renderProfile(f){
   const kind=f.sport==="Boxing"?"Boxing credentials":"Combat & grappling credentials";
   const metrics=ratingsFor(f);
@@ -133,6 +155,7 @@
   return '<section class="befn-profile-insights" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="Fighter performance insights">'+
    '<section class="befn-profile-block"><h3>Fighter ratings</h3><div class="befn-profile-body">'+
    '<div class="befn-power-bars">'+metrics.map(profileMetric).join("")+'</div>'+scoreMethodHTML(f.sport)+
+   '<p class="befn-rating-source-row">'+ratingsEvidence(f)+'</p>'+
    '<p class="befn-score-note">0–100 descriptive indices, not win probabilities. Missing statistics remain unrated. '+(f.sport==="Boxing"?'Power uses documented KO-win share as a finishing proxy.':'MMA ratings use source-backed striking, grappling, wrestling, defence and recent form data.')+'</p></div></section>'+
    '<section class="befn-profile-block"><h3>Recent form (last 5)</h3><div class="befn-profile-body">'+formHTML(f)+'</div></section>'+
    '<section class="befn-profile-block"><h3>'+escapeHTML(kind)+'</h3><div class="befn-profile-body">'+credentialsHTML(f)+'</div></section>'+
@@ -298,7 +321,8 @@
   return '<details class="befn-fight-snapshot" data-snapshot-key="'+escapeHTML(key)+'" '+(openSnapshots.has(key)?'open':'')+'>'+
    '<summary><span>Fight snapshot</span></summary>'+
    '<div class="befn-snapshot-body">'+
-   '<div class="befn-snapshot-head"><div><strong>'+escapeHTML(names[0])+'</strong></div><div><strong>'+escapeHTML(names[1])+'</strong></div></div>'+
+   '<div class="befn-snapshot-head"><div><strong>'+escapeHTML(names[0])+'</strong>'+ratingsEvidence(f[0])+
+   '</div><div><strong>'+escapeHTML(names[1])+'</strong>'+ratingsEvidence(f[1])+'</div></div>'+
    '<div class="befn-snapshot-bars">'+metricHTML+'</div>'+
    '<div class="befn-snapshot-extra">'+sides+'</div>'+
    historyTab+scoreMethodHTML(sport)+talePanel(f,names)+
@@ -431,6 +455,49 @@
    const target=byName.get(key);
    if(roundObservations.has(key)&&target?.sport==="MMA")target.performanceEvidence=roundObservations.get(key);
    sampleEvidence.set(key,target);
+  }
+  update();
+ }).catch(()=>{});
+ fetch("data/ufc334-fighter-evidence.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(data=>{
+  if(!data||data.schema!==1||data.eventId!=="ufc-334-2026-11-14"||!data.fighters)return;
+  for(const item of Object.values(data.fighters)){
+   if(!item?.name||item.sport!=="MMA"||!validSource(item.source))continue;
+   const key=norm(item.name);
+   let fighter=byName.get(key);
+   if(!fighter){
+    fighter={...item,latest:[],analysis:[],photo:"",report:"mma-contenders",
+     category:item.category||"Featured card",
+     meta:"Upcoming at UFC 334. Stats are descriptive, not an ability prediction.",
+     sources:[{label:"Fighter statistics and verified results",url:item.source}],
+     verificationNote:"Research snapshot checked "+data.reviewedOn+
+       "; incomplete categories remain unrated."};
+    profiles.push(fighter);
+    byName.set(key,fighter);
+    byId.set(fighter.id,fighter);
+   }else{
+    if(!Array.isArray(fighter.sources))fighter.sources=[];
+    if(!fighter.sources.some(x=>x.url===item.source))
+     fighter.sources.push({label:"UFC 334 research and statistical source",url:item.source});
+   }
+   if(item.verifiedStats&&validSource(item.verifiedStats.source)&&
+      Number.isInteger(item.verifiedStats.sampleBouts))
+    fighter.verifiedStats=item.verifiedStats;
+   if(Array.isArray(item.credentials)){
+    const original=Array.isArray(fighter.credentials)?fighter.credentials:[];
+    for(const c of item.credentials){
+     if(!c||!validSource(c.source))continue;
+     if(!original.some(x=>x.kind===c.kind&&x.division===c.division&&x.source===c.source))
+      original.push(c);
+    }
+    fighter.credentials=original;
+   }
+   // Curated verified result summaries replace screenshot-only timing examples
+   // only for this card, never for unrelated fighter records.
+   if(Array.isArray(item.latest)&&item.latest.length)
+    fighter.latest=item.latest.map(x=>({...x}));
+   const round=roundObservations.get(key);
+   if(round)fighter.performanceEvidence=round;
+   sampleEvidence.set(key,fighter);
   }
   update();
  }).catch(()=>{});
