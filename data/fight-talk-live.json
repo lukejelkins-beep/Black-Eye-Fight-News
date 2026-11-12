@@ -1,7 +1,7 @@
 {
-  "attemptedAt": "2026-11-12T08:04:41.292Z",
-  "checkedAt": "2026-11-12T08:04:41.292Z",
-  "updatedAt": "2026-11-12T04:02:31Z",
+  "attemptedAt": "2026-11-12T08:21:36.784Z",
+  "checkedAt": "2026-11-12T08:21:36.784Z",
+  "updatedAt": "2026-11-12T05:52:42Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
   "sourcesChecked": 6,
@@ -18,7 +18,7 @@
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 27,
+      "configured": 33,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 44,
+      "configured": 36,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 1,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,21 +55,46 @@
   "rollingScan": {
     "directoryEntries": 442,
     "scheduledEntries": 84,
-    "batchIndex": 0,
+    "batchIndex": 4,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 44,
+      "X": 33,
+      "Instagram": 36,
       "Bluesky": 6,
-      "X": 27,
-      "Threads": 7
+      "Threads": 8,
+      "Reddit": 1
     },
     "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n23rpsftmf2g",
+      "cid": "bafyreigyfmpe5qnalwldjimeaqfgjx76yw6w6esghteh2zrorkwzj7ads4",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Imagine trying to explain this image to non-boxing fan. 😳",
+      "postedAt": "2026-11-12T05:52:42Z",
+      "date": "12 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n23rpsftmf2g",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n23lkscxty2a",
       "cid": "bafyreieafn54oxazbsslpk3tbjdrfy3lqvx5a7acp4i7gxp4olzjlnzxda",
@@ -139,7 +164,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -211,7 +236,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -235,7 +260,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -259,7 +284,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -307,7 +332,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -415,7 +440,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -673,7 +698,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -871,7 +896,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -949,7 +974,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1298,7 +1323,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1368,7 +1393,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1422,7 +1447,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1613,7 +1638,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1773,7 +1798,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1857,7 +1882,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2073,7 +2098,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2316,7 +2341,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2415,7 +2440,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2769,7 +2794,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
+      "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2916,30 +2941,6 @@
       "postedAt": "2026-11-11T02:17:27+0000",
       "url": "https://www.instagram.com/reel/DflVlogzH0f/",
       "photo": "https://scontent-sea5-2.xx.fbcdn.net/v/t51.82787-15/799296859_18622602904053941_5371815414402263659_n.jpg?_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=v5Py29R6N34Q7kNvwFHQh9r&_nc_oc=AdpnuLoPCFkVlE3Nv4zUWXV4DzO0Duv1b3P945NxrAm8rdZc-gytLew_jLRINmeh9cg&_nc_zt=23&_nc_ht=scontent-sea5-2.xx&edm=AL-3X8kEAAAA&_nc_gid=1da8yLY5QhKcK1SKlSKNLA&oh=00_AQSzWY0Euht_-ilU4e0JN5S7hI_1Y9F5mXxut9VmPdW-nA&oe=6AFAC32B",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3mzyuc3rprm2y",
-      "cid": "bafyreiavusldcqaj3jkca2qatgggyyamgneacx5qryk7s3vo6epxgi5wbi",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Davey Moore lost his world featherweight title to Sugar Ramos in March 1963. Four days later, he was dead. 💔\n\nMoore suffered a fatal brain injury in Los Angeles, dying aged 29 and leaving behind five children.\n\nWBN remembers Davey Moore — Part 3. 🕊️",
-      "postedAt": "2026-11-11T02:00:44Z",
-      "date": "11 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3mzyuc3rprm2y",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T02:51:46.577Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
