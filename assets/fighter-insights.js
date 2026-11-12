@@ -70,6 +70,7 @@
    c.kind==="olympics"?'<span aria-hidden="true">'+medalIcon[c.medal]+'</span>':
    '<span aria-hidden="true">♛</span>';
   return '<button type="button" class="befn-credential" data-kind="'+escapeHTML(c.kind)+
+   (c.verification==="reported"?'" data-credential-verification="reported':'')+
    '" data-credential-info="'+escapeHTML(detail)+'" data-credential-source="'+escapeHTML(c.source)+
    '" title="'+escapeHTML(detail)+'" aria-label="'+escapeHTML(detail)+'">'+content+'</button>';
  }
@@ -93,7 +94,11 @@
   const verified=f?.verifiedStats;
   const sourceRecord=verified?{...archival,stats:verified,recent:{fights:verified.sampleBouts}}:archival;
   const evidence=f?.performanceEvidence;
-  return engine.evaluate(evidence?{...(sourceRecord||{}),performanceEvidence:evidence}:sourceRecord,historyFor(f));
+  // Credentials accompany verified MMA statistics; only Wrestling may use
+  // the tightly bounded NCAA prior, and never for an otherwise unrated fighter.
+  const input={...(sourceRecord||{}),credentials:credentialsFor(f)};
+  if(evidence)input.performanceEvidence=evidence;
+  return engine.evaluate(input,historyFor(f));
  }
  function resultSymbol(outcome){
   const text=String(outcome||"").toLowerCase();
@@ -121,7 +126,12 @@
   return '<div class="befn-power-metric"><div class="befn-power-metric-label">'+
    '<span>'+escapeHTML(m.label)+'</span><b'+(m.score===null?' class="is-unrated"':'')+'>'+
    (m.score===null?'Not rated':m.score+' / 100')+'</b></div>'+
-   performanceMeter(m,false)+'</div>';
+   performanceMeter(m,false)+
+   (m.credentialAdjustment?'<small class="befn-college-prior-note">+'+m.credentialAdjustment+
+    ' NCAA '+escapeHTML(m.credentialSource?'wrestling background':'')+
+    ' · MMA-only '+escapeHTML(String(m.baseScore))+
+    ' · <a target="_blank" rel="noopener noreferrer" href="'+escapeHTML(m.credentialSource)+'">Source</a></small>':'')+
+   '</div>';
  }
  const scoreMethodHTML=sport=>sport==="Boxing"?
   '<p class="befn-score-note">Boxing uses a separate evidence-gated model. A recorded KO share is a finishing proxy, not direct punch power; other attributes await verified technical scouting.</p>':
@@ -130,7 +140,7 @@
   '<ul>'+
   '<li><b>Striking:</b> 25% significant strikes landed/min, 30% landed-minus-absorbed differential/min, 17% accuracy, 17% knockdowns/15, 11% KO/TKO wins per observed bout.</li>'+
   '<li><b>Grappling:</b> 42% submission attempts/15, 30% submission finishes, 18% reversals/15, 10% control share. Submission or reversal evidence is compulsory.</li>'+
-  '<li><b>Wrestling:</b> 34% takedowns/15, 21% accuracy, 28% control share, 12% takedown defence, 5% reversals/15. Takedown activity is compulsory.</li>'+
+  '<li><b>Wrestling:</b> 34% takedowns/15, 21% accuracy, 28% control share, 12% takedown defence, 5% reversals/15. Takedown activity is compulsory. Verified collegiate NCAA competition adds a separately identified, sample-weighted prior of at most 5 points, never without an MMA statistical score. Division I participation is distinct from winning a medal.</li>'+
   '<li><b>Defence:</b> 31% inverse strikes absorbed/min, 29% strike defence, 22% takedown defence, 12% inverse knockdowns received/15, 6% inverse opponent control.</li>'+
   '<li><b>Recent form:</b> verified wins=1, draws=½, losses=0, no-contests omitted; last five fights weighted 5,4,3,2,1 with a neutral prior.</li>'+
   '</ul><p>When the provider omits a statistic, its weight is redistributed among available inputs only if the category still meets evidence coverage thresholds. Ratings shrink toward 50 according to the observed bout count (n/(n+4)); insufficient samples remain unrated. Statistical sources and samples differ by promotion.</p></details>';
@@ -296,9 +306,16 @@
   const rows=f.map(x=>ratingsFor(x,sport)),labels=rows[0].map(x=>x.label);
   const metricHTML=labels.map((label,i)=>{
    const m0=rows[0][i],m1=rows[1][i];
-   return '<div class="befn-snapshot-metric">'+
+   return '<div class="befn-snapshot-metric" title="'+escapeHTML(
+      (m0.credentialAdjustment?names[0]+': +'+m0.credentialAdjustment+' NCAA prior. ':'')+
+      (m1.credentialAdjustment?names[1]+': +'+m1.credentialAdjustment+' NCAA prior. ':'')+
+      m0.description)+'">'+
     '<b>'+(m0.score===null?'—':m0.score)+'</b>'+performanceMeter(m0,true)+
-    '<span class="befn-snapshot-metric-label">'+escapeHTML(label)+'</span>'+
+    '<span class="befn-snapshot-metric-label">'+escapeHTML(label)+
+    (m0.credentialAdjustment||m1.credentialAdjustment?
+       '<small class="befn-college-bonus">NCAA '+(m0.credentialAdjustment?'← +'+m0.credentialAdjustment:'')+
+        (m1.credentialAdjustment?' → +'+m1.credentialAdjustment:'')+'</small>':'')+
+    '</span>'+
     performanceMeter(m1,false)+'<b>'+(m1.score===null?'—':m1.score)+'</b></div>';
   }).join("");
   const sides=f.map((p,i)=>
