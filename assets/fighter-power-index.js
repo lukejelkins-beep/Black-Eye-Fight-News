@@ -142,33 +142,46 @@
   ["defence","Defence","Strikes absorbed, strike/takedown defence, damage and opponent control"],
   ["form","Recent form","Recency-weighted results from up to five recorded fights, with NC excluded"]
  ];
- function evaluate(profile,history){
-  const d=advancedData(profile?.performanceEvidence)||careerData(profile);
+ function metricFrom(d,id){
+  if(!d)return null;
   const specs=metricSpecs(d);
-  const n=d?.bouts||0;
-  const scores={};
-  if(specs){
-   // Require sufficient independent dimensions, not single isolated highlights.
-   scores.striking=confidence(sumParts(specs.striking,1,.50,2),n);
-   // Grappling must include submission/reversal evidence; pure control is not enough.
-   scores.grappling=specs.grappling.slice(0,3).some(x=>x[0]!==null)?
-      confidence(sumParts(specs.grappling,1,.54,2),n):null;
-   // Wrestling must include takedown activity plus at least another signal.
-   scores.wrestling=specs.wrestling[0][0]!==null?
-      confidence(sumParts(specs.wrestling,1,.53,2),n):null;
-   // Require striking-based avoidance AND a second defensive measure.
-   scores.defence=[specs.defence[0],specs.defence[1]].some(x=>x[0]!==null)?
-      confidence(sumParts(specs.defence,1,.48,2),n):null;
-  }
+  if(!specs)return null;
+  if(id==="striking")
+   return confidence(sumParts(specs.striking,1,.50,2),d.bouts);
+  if(id==="grappling")
+   return specs.grappling.slice(0,3).some(x=>x[0]!==null)?
+    confidence(sumParts(specs.grappling,1,.54,2),d.bouts):null;
+  if(id==="wrestling")
+   return specs.wrestling[0][0]!==null?
+    confidence(sumParts(specs.wrestling,1,.53,2),d.bouts):null;
+  if(id==="defence")
+   return [specs.defence[0],specs.defence[1]].some(x=>x[0]!==null)?
+    confidence(sumParts(specs.defence,1,.48,2),d.bouts):null;
+  return null;
+ }
+ function evaluate(profile,history){
+  // Never combine small-sample round counts with unrelated career denominators.
+  // Score each self-contained sample, then select the broader verified sample
+  // that supports each metric. A better-covered round sample fills gaps.
+  const sources=[careerData(profile),advancedData(profile?.performanceEvidence)]
+   .filter(Boolean).sort((a,b)=>b.bouts-a.bouts);
   const fights=normalizeHistory(history);
-  scores.form=recentForm(fights);
-  return LABELS.map(([id,label,description])=>({
-   id,label,description,score:scores[id]??null,
-   sample:id==="form"?fights.filter(h=>!["nc","no contest"].includes(h.result)).length:n,
-   source:id==="form"?"Recorded recent fight results":d?.source||"No sourced statistics",
-   observedOn:id==="form"?null:d?.observedOn||null,
-   confidence:id==="form"?(fights.length>=5?"moderate":"limited"):n>=8?"moderate":"limited"
-  }));
+  return LABELS.map(([id,label,description])=>{
+   if(id==="form")return {id,label,description,score:recentForm(fights),
+    sample:fights.filter(h=>!["nc","no contest"].includes(h.result)).length,
+    source:"Recorded recent fight results",observedOn:null,
+    confidence:fights.length>=5?"moderate":"limited"};
+   let score=null,selected=null;
+   for(const d of sources){
+    const candidate=metricFrom(d,id);
+    if(candidate===null)continue;
+    score=candidate;selected=d;break;
+   }
+   return {id,label,description,score,sample:selected?.bouts||0,
+    source:selected?.source||"No sourced statistics",
+    observedOn:selected?.observedOn||null,
+    confidence:selected?.bouts>=8?"moderate":"limited"};
+  });
  }
  function aggregateRoundPreviews(events){
   // Consume the curated, already-loaded fight-card round previews. Each bout
