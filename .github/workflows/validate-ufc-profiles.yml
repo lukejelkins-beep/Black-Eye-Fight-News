@@ -8,6 +8,9 @@ on:
     paths:
       - 'data/ufc-*-profiles.json'
       - 'scripts/build-ufc-profile-queue.mjs'
+      - 'scripts/build-ufc-postfight-metrics.mjs'
+      - 'tests/test-ufc-postfight-metrics.mjs'
+      - 'data/ufc-postfight-metrics.json'
       - 'tests/test-ufc-profile-queue.mjs'
       - 'tests/test-ufc-profile-visual.mjs'
       - 'assets/fighter-insights.js'
@@ -46,6 +49,8 @@ jobs:
           node tests/test-fighter-power-index.cjs
       - name: Verify deterministic research queue
         run: node --test tests/test-ufc-profile-queue.mjs
+      - name: Verify post-fight event reconciliation and no double counting
+        run: node --test tests/test-ufc-postfight-metrics.mjs
       - name: Install browser test dependency (CI only)
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1

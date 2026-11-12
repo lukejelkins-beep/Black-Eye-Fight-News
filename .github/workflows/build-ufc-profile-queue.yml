@@ -8,6 +8,12 @@ on:
     branches: [main]
     paths:
       - 'scripts/build-ufc-profile-queue.mjs'
+      - 'scripts/build-ufc-postfight-metrics.mjs'
+      - 'tests/test-ufc-postfight-metrics.mjs'
+      - 'data/ufcalendar-rich-progress.json'
+      - 'data/ufc-research-archive.json'
+      - 'data/upcoming-cards.json'
+      - 'data/ufc-*-profiles.json'
       - 'tests/test-ufc-profile-queue.mjs'
       - '.github/workflows/build-ufc-profile-queue.yml'
 permissions:
@@ -27,16 +33,19 @@ jobs:
       - name: Test UFC candidate isolation and deterministic ordering
         run: |
           node --test tests/test-ufc-profile-queue.mjs
+          node --test tests/test-ufc-postfight-metrics.mjs
           node tests/test-ufc-profile-card-qa.cjs
       - name: Refresh queue from existing budgeted UFCalendar data
         run: node scripts/build-ufc-profile-queue.mjs
+      - name: Derive post-fight UFC totals with no additional API requests
+        run: node scripts/build-ufc-postfight-metrics.mjs
       - name: Save material candidate changes without rewriting live feeds
         shell: bash
         run: |
           set -euo pipefail
           git config user.name 'BEFN research queue'
           git config user.email 'research-queue-bot@users.noreply.github.com'
-          git add data/ufc-profile-research-queue.json
+          git add data/ufc-profile-research-queue.json data/ufc-postfight-metrics.json
           if git diff --cached --quiet; then
             echo 'No new research candidates; no commit'; exit 0
           fi
