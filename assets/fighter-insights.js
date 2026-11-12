@@ -79,7 +79,8 @@
   const sport=f?.sport||sportHint||"MMA";
   if(sport==="Boxing")return engine.evaluateBoxing(f);
   const record=statRecord(f);
-  return engine.evaluate(record,historyFor(f));
+  const evidence=f?.performanceEvidence;
+  return engine.evaluate(evidence?{...(record||{}),performanceEvidence:evidence}:record,historyFor(f));
  }
  function resultSymbol(outcome){
   const text=String(outcome||"").toLowerCase();
@@ -378,6 +379,18 @@
  },true);
  const mount=document.getElementById("main")||document.body;
  if(mount&&typeof MutationObserver!=="undefined")new MutationObserver(schedule).observe(mount,{subtree:true,childList:true});
+ window.addEventListener("befn:round-previews-ready",event=>{
+  const aggregate=engine.aggregateRoundPreviews?.(event.detail?.events);
+  if(!(aggregate instanceof Map))return;
+  let added=0;
+  for(const [key,observation] of aggregate){
+   const fighter=byName.get(key)||sampleEvidence.get(key);
+   if(!fighter||fighter.sport!=="MMA")continue;
+   fighter.performanceEvidence=observation;
+   added++;
+  }
+  if(added)update();
+ });
  window.BEFNFighterInsights={renderProfile,credentialsFor,ratingsFor,renderSnapshot,profileFor,hydrate};
  schedule();
 
