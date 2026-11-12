@@ -784,6 +784,12 @@
     target.reviewedUfcProfile=true;
     target.review=source.review;
     target.meta=source.meta||("UFC · individually reviewed "+source.review.checkedAt);
+    // Legacy scouting snapshots can contain past "upcoming" fights. A
+    // completed result must never remain displayed as a future booking.
+    // Only independently verified future fixtures from the reviewed profile
+    // are permitted here; otherwise make the unknown status explicit.
+    target.next=source.nextVerified===true&&typeof source.next==="string"?
+      source.next:"Not currently verified";
     target.analysis=[...source.review.notes];
     target.latest=source.latest.map(x=>({...x}));
     target.verificationNote=source.verificationNote||"Checked UFC evidence. Incomplete metrics remain unrated.";
