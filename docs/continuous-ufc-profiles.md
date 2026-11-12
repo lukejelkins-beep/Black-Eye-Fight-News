@@ -25,13 +25,35 @@ GitHub Actions cannot invoke ChatGPT's recurring research task. An autonomous AI
 - Validate with \`node --test tests/test-ufc-profile-queue.mjs\`, \`node --test tests/test-ufc-postfight-metrics.mjs\`, and the per-profile source/card + Playwright desktop/mobile QA. Screenshots and reports are saved as CI artifacts. Failed QA blocks treating an individual profile as verified.
 
 
-## Algorithmic Prospect / Contender classification — no division quota
+## Prospect and Contender algorithm v2 (12 Nov 2026)
 
-- \`assets/ufc-prospect-contender.js\` is the source-of-truth deterministic classifier. Its inputs are individually verified professional and UFC records, dated official UFC athlete biographies and individual bout results; optional UFC-only rated stats and independently sourced credentials. Legacy unsourced MMA cards stay visible as **Unassessed**, not automatically labelled prospects/contenders.
-- \`data/ufc-prospect-profiles.json\` and \`data/ufc-contender-profiles.json\` hold audited fighter records. Their storage filename does not force the final category: the live browser runs the classifier on every read. All fighters are classified individually. No \`slice(0,3)\`, division cap, or mandatory minimum number of either designation.
-- BEFN classification index (maximum 100): up to 35 for established UFC wins (full weight at 4 wins); 28 for recency-weighted UFC wins within last five decided bouts; 15 for UFC KO/TKO or submission finishes within recent sample; 10 for independently time-stamped wins over ranked opponents; up to 8 for adequately sourced UFC-only statistical skill (via the existing striking/grappling/wrestling/defence model); up to 4 for verified credentials under the fixed credential bonus schedule. Missing statistics are not treated as zero skill: they simply cannot earn the optional eight-point contribution.
-- **Contender**: dated current official top-15 UFC rank with recent UFC win OR at least 4 UFC victories, at least 70% recent win rate, a recent win and an index of 72+. **Prospect**: non-contender with a recent UFC win, at least one UFC win, a verified professional record of 5+ wins and 65%+ win percentage, age up to 30 or no more than 3 UFC appearances, plus index of 35+. All other source-reviewed active fighters are **Roster**. At least two completed sourced UFC bouts and a verified official UFC career record are mandatory; otherwise **Unassessed**. Dated champions remain **Champion**.
-- Categories are **editorial indicators, not official rankings**, are provisional while evidence is incomplete and should be re-evaluated on every confirmed post-fight UFC-only profile update. UFC rankings, prospect/contender labels and existing 0–100 skills are separate concepts. Contender status does not imply a title shot. The case studies validated from 7 November 2026 are José Souza, Austin Bashi and Lucas Fernando (prospect), and Elijah Smith (contender). Source links are embedded in the individual review records.
-- QA: \`node tests/test-ufc-prospect-contender.cjs\`, \`node tests/test-ufc-profile-card-qa.cjs\`, \`node tests/test-fighter-power-index.cjs\`, and desktop/mobile Playwright checks. The QA gate fails if a profile's declared category no longer matches the classifier. Reconcile data before publication.
+Classification is determined **individually across the complete verified UFC catalogue**. There are no top-N quotas or division caps. The source of truth is \`assets/ufc-prospect-contender.js\`, tested with \`tests/test-ufc-prospect-contender.cjs\`.
 
-Legacy reviewed UFC roster files without an audited and complete `ufcRecord` may still be displayed as **Unassessed**; they must not be silently omitted from the Fighter Profiles area nor falsely labelled Prospect or Contender. Add the official UFC-only record with dated source as part of the next individual QA audit, then the classifier automatically reassesses it.
+**Two distinct, independent editorial indices (each 0–100):**
+
+| Factor | Contender Index | Prospect Index |
+|---|---:|---:|
+| Demonstrated quality of UFC opponents | 25% | — |
+| Recent form / recency-adjusted UFC results | 25% | 30% |
+| Established UFC experience or UFC progression | 15% | 20% |
+| Independently verified UFC-only skill statistics | 20% | 15% |
+| UFC finishes (KO/TKO/submissions) | 10% | 15% |
+| Professional record / foundation | — | 15% |
+| Verified credentials (separate, capped) | 5% | 5% |
+
+The finishing share is deliberately smaller in the contender index than the prior v1: finishes are already correlated with wins and with the separate UFC skill scores. The skill component uses the **base statistics rating**, before external credentials, to prevent awarding the same credential twice. Small numerical samples have reduced influence. Missing numerical fields are NOT assumed to be zeros; the user interface shows evidence gaps separately. Relative-to-division normalisation is not claimed until sufficient comparable complete samples exist.
+
+**Opponent strength is a classification gate, not merely a bonus.** An athlete can qualify as Contender through:
+- A fresh, verified **official UFC top-15 rank** (source dated within 45 days), plus meaningful recent results and a Contender Index of at least 55; or
+- At least one **source-dated UFC win over a top-15-ranked opponent at fight time**, sufficient UFC experience and a Contender Index of at least 60; or
+- Two separately sourced wins over established UFC veterans (each with at least 4 prior UFC wins and 6 UFC fights at the bout date), sustained positive form, and a Contender Index of at least 67.
+
+An unsourced claim that an opponent was "ranked", or a modern rank projected backwards, earns zero opponent-quality credit. Four wins alone **never** automatically makes a contender. The winning form thresholds and the opponent-rank evidence must also pass; labels are editorial, not official rankings.
+
+**Prospect** is a non-contender with a developing UFC career (at most nine completed UFC appearances), verified professional experience, a meaningful recent positive trajectory, and Prospect Index at least 50. A loss does not automatically demote a prospect. A fighter who arrives at the UFC at 34 can qualify; no arbitrary age cap is used. Other fully reviewed athletes are **Roster**, and missing required UFC records produce **Unassessed**. Champions are separate dated titleholder records.
+
+**Evidence confidence:** Limited / Moderate / High, displayed independently of the two scores. Missing opponent-quality confirmation is noted explicitly; it is not proof that a fighter has never beaten ranked opposition. The two score thresholds are initial editorial heuristics, not predictive models. Validate against more examples and actual future outcomes before claiming predictive performance.
+
+**Worked source-linked November 7, 2026 examples:** José Souza, Austin Bashi, Lucas Fernando and Elijah Smith are Prospect with their currently verified evidence. The earlier automatic "Contender" label for Elijah Smith was premature: four UFC wins and three finishes are encouraging, but the supplied record does not establish a dated ranked win. This classification can change as missing opponent-quality evidence is verified.
+
+**Required QA:** rerun \`node tests/test-ufc-prospect-contender.cjs\`, \`node tests/test-ufc-profile-card-qa.cjs\`, remaining Node model tests, and the Playwright mobile/desktop screenshot workflow. Every newly sourced fighter and every post-fight update is reclassified. Profile cohort filenames are storage organisation, not labels; validation requires the published category to match the algorithm.

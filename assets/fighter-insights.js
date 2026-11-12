@@ -259,9 +259,21 @@
   if(!c)return "";
   const category=String(c.label||"Unassessed");
   const score=c.score===null?"Not scored":c.score+" / 100";
+  const fmt=n=>typeof n==="number"?n.toFixed(1)+"/100":"Not scored";
+  const v2=c.version===2&&c.eligible&&c.label!=="Champion";
+  const v2Summary=v2?'<div class="befn-classifier-indices">'+
+   '<span><b>Prospect Index</b><strong>'+fmt(c.prospectIndex)+'</strong></span>'+
+   '<span><b>Contender Index</b><strong>'+fmt(c.contenderIndex)+'</strong></span></div>'+
+   '<p class="befn-score-note"><b>Evidence confidence:</b> '+escapeHTML(c.confidence||"Limited")+
+   '. A strong prospect score does not establish contender-level opposition.</p>'+
+   (Array.isArray(c.evidenceGaps)&&c.evidenceGaps.length?
+    '<details><summary>Unverified or missing evidence</summary><ul>'+
+    c.evidenceGaps.map(s=>'<li>'+escapeHTML(s)+'</li>').join('')+
+    '</ul></details>':''):"";
   return '<section class="befn-profile-block befn-scout-classification" data-befn-classification="'+
    escapeHTML(f.id||"")+'"><h3>BEFN scouting classification</h3><div class="befn-profile-body">'+
    '<p><strong>'+escapeHTML(category)+'</strong> · '+escapeHTML(score)+'</p>'+
+   v2Summary+
    '<p class="befn-score-note">'+escapeHTML(c.reason||"Evidence review pending")+'</p>'+
    '<p class="befn-score-note">Editorial classification only, not an official UFC ranking. '+
    'No limit on the number of prospects or contenders in any division. '+

@@ -507,3 +507,14 @@
 @media(max-width:480px){.befn-postfight-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
  .befn-postfight-stat{padding:8px}.befn-postfight-stat>strong{font-size:18px}
  .befn-postfight-bout{flex-direction:column;gap:5px}}
+
+/* Independent UFC contender/prospect score comparison. */
+.befn-classifier-indices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0;min-width:0}
+.befn-classifier-indices>span{display:grid;gap:5px;border:1px solid #484946;background:#232422;
+ border-radius:8px;padding:10px;min-width:0}
+.befn-classifier-indices b{font-size:12px;color:#efe5d1;overflow-wrap:anywhere}
+.befn-classifier-indices strong{font-size:22px;color:#f2d49f;font-variant-numeric:tabular-nums}
+.befn-scout-classification details{font-size:12px;margin-top:8px}
+.befn-scout-classification summary{cursor:pointer;text-decoration:underline}
+.befn-scout-classification li{margin:3px 0}
+@media(max-width:420px){.befn-classifier-indices>span{padding:8px}.befn-classifier-indices strong{font-size:18px}}

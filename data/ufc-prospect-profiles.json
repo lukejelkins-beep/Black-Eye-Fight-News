@@ -4,70 +4,6 @@
   "reviewedOn": "2026-11-12",
   "methodology": "Individually verified official UFC bout histories, UFC-only statistical samples, optional independently verified credentials. BEFN rule-based algorithm applies across ALL divisions with no numerical cap.",
   "fighters": {
-    "jose-souza": {
-      "id": "mma-ufc--jose-souza",
-      "name": "José Souza",
-      "sport": "MMA",
-      "organisation": "UFC",
-      "division": "Welterweight",
-      "category": "Prospect",
-      "age": 24,
-      "record": "10–1–0",
-      "source": "https://www.ufc.com/athlete/jose-souza",
-      "ufcRecord": {
-        "wins": 2,
-        "losses": 0,
-        "draws": 0,
-        "complete": true,
-        "checkedAt": "2026-11-12",
-        "source": "https://www.ufc.com/athlete/jose-souza"
-      },
-      "latest": [
-        {
-          "date": "2026-11-07",
-          "opponent": "Jonny Parsons",
-          "outcome": "W",
-          "method": "KO R1 4:16",
-          "cageSec": 256,
-          "source": "https://www.ufc.com/event/ufc-fight-night-november-07-2026"
-        },
-        {
-          "date": "2026-05-30",
-          "opponent": "Ding Meng",
-          "outcome": "W",
-          "method": "Split decision R3",
-          "cageSec": 900,
-          "source": "https://www.ufc.com/athlete/jose-souza"
-        }
-      ],
-      "verifiedStats": {
-        "scope": "ufc-only",
-        "source": "https://thecagegrid.com/fighters/jose-souza",
-        "observedOn": "2026-11-12",
-        "sampleBouts": 2,
-        "slpm": 5.45,
-        "sapm": 4.05,
-        "strAcc": 54,
-        "strDef": 56,
-        "tdAvg": 0,
-        "subAvg": 0,
-        "kdAvg": 0.5,
-        "koTkoWinRate": 0.5,
-        "submissionWinRate": 0,
-        "denominatorNotes": "Two completed UFC bouts; DWCS excluded, no unverified takedown defence or control totals."
-      },
-      "credentials": [],
-      "review": {
-        "checkedAt": "2026-11-12",
-        "credentialsChecked": true,
-        "notes": [
-          "Official UFC history verifies two consecutive Octagon wins: decision over Ding Meng and first-round KO of Jonny Parsons.",
-          "DWCS 2022 result is not counted as an official UFC bout; no independently confirmed qualifying combat-sports awards were used."
-        ]
-      },
-      "meta": "UFC Welterweight · BEFN algorithm-audited scouting profile · 12 Nov 2026",
-      "verificationNote": "UFC-only results, dated statistical samples and explicit credential verification. Editorial prospect/contender status is recalculated; missing metrics remain unrated."
-    },
     "austin-bashi": {
       "id": "mma-ufc--austin-bashi",
       "name": "Austin Bashi",
@@ -157,6 +93,154 @@
         ]
       },
       "meta": "UFC Featherweight · BEFN algorithm-audited scouting profile · 12 Nov 2026",
+      "verificationNote": "UFC-only results, dated statistical samples and explicit credential verification. Editorial prospect/contender status is recalculated; missing metrics remain unrated."
+    },
+    "elijah-smith": {
+      "id": "mma-ufc--elijah-smith",
+      "name": "Elijah Smith",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "division": "Bantamweight",
+      "category": "Prospect",
+      "age": 24,
+      "record": "11–1–0",
+      "source": "https://www.ufc.com/athlete/elijah-smith",
+      "ufcRecord": {
+        "wins": 4,
+        "losses": 0,
+        "draws": 0,
+        "complete": true,
+        "checkedAt": "2026-11-12",
+        "source": "https://www.ufc.com/athlete/elijah-smith"
+      },
+      "latest": [
+        {
+          "date": "2026-11-07",
+          "opponent": "Davey Grant",
+          "outcome": "W",
+          "method": "KO R1 1:00",
+          "cageSec": 60,
+          "source": "https://www.ufc.com/event/ufc-fight-night-november-07-2026"
+        },
+        {
+          "date": "2026-03-14",
+          "opponent": "SuYoung You",
+          "outcome": "W",
+          "method": "Submission (RNC) R2 1:04",
+          "cageSec": 364,
+          "source": "https://www.ufc.com/athlete/elijah-smith"
+        },
+        {
+          "date": "2025-08-09",
+          "opponent": "Toshiomi Kazama",
+          "outcome": "W",
+          "method": "TKO R1 4:10",
+          "cageSec": 250,
+          "source": "https://www.ufc.com/athlete/elijah-smith"
+        },
+        {
+          "date": "2025-02-15",
+          "opponent": "Vince Morales",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "cageSec": 900,
+          "source": "https://www.ufc.com/athlete/elijah-smith"
+        }
+      ],
+      "verifiedStats": {
+        "scope": "ufc-only",
+        "source": "https://cagealmanac.com/fighters/elijah-smith-7478b7",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 4,
+        "slpm": 3.96,
+        "sapm": 1.94,
+        "strAcc": 55,
+        "strDef": 48,
+        "tdAvg": 1.72,
+        "tdAcc": 75,
+        "tdDef": 46,
+        "subAvg": 1.14,
+        "kdAvg": 1.14,
+        "koTkoWinRate": 0.5,
+        "submissionWinRate": 0.25,
+        "controlShare": 0.318,
+        "denominatorNotes": "Four UFC fights, 26m14s of timed action, three finishes; exclude DWCS."
+      },
+      "credentials": [],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "credentialsChecked": true,
+        "notes": [
+          "Official UFC history confirms four UFC wins, three by stoppage, including first-round KO of Davey Grant on November 7.",
+          "UFC and data provider professional records currently differ; the profile follows UFC's 11-1 statement. No unverified amateur titles or father-related credit.",
+          "Classification recalculated using BEFN v2: four UFC wins and three stoppages indicate high potential, but there is not yet independently dated opponent-ranking/strength-of-schedule evidence sufficient for contender status."
+        ]
+      },
+      "meta": "UFC Bantamweight · BEFN v2 prospect classification · reviewed 12 Nov 2026",
+      "verificationNote": "UFC-only results, dated statistical samples and explicit credential verification. Editorial prospect/contender status is recalculated; missing metrics remain unrated."
+    },
+    "jose-souza": {
+      "id": "mma-ufc--jose-souza",
+      "name": "José Souza",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "division": "Welterweight",
+      "category": "Prospect",
+      "age": 24,
+      "record": "10–1–0",
+      "source": "https://www.ufc.com/athlete/jose-souza",
+      "ufcRecord": {
+        "wins": 2,
+        "losses": 0,
+        "draws": 0,
+        "complete": true,
+        "checkedAt": "2026-11-12",
+        "source": "https://www.ufc.com/athlete/jose-souza"
+      },
+      "latest": [
+        {
+          "date": "2026-11-07",
+          "opponent": "Jonny Parsons",
+          "outcome": "W",
+          "method": "KO R1 4:16",
+          "cageSec": 256,
+          "source": "https://www.ufc.com/event/ufc-fight-night-november-07-2026"
+        },
+        {
+          "date": "2026-05-30",
+          "opponent": "Ding Meng",
+          "outcome": "W",
+          "method": "Split decision R3",
+          "cageSec": 900,
+          "source": "https://www.ufc.com/athlete/jose-souza"
+        }
+      ],
+      "verifiedStats": {
+        "scope": "ufc-only",
+        "source": "https://thecagegrid.com/fighters/jose-souza",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 2,
+        "slpm": 5.45,
+        "sapm": 4.05,
+        "strAcc": 54,
+        "strDef": 56,
+        "tdAvg": 0,
+        "subAvg": 0,
+        "kdAvg": 0.5,
+        "koTkoWinRate": 0.5,
+        "submissionWinRate": 0,
+        "denominatorNotes": "Two completed UFC bouts; DWCS excluded, no unverified takedown defence or control totals."
+      },
+      "credentials": [],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "credentialsChecked": true,
+        "notes": [
+          "Official UFC history verifies two consecutive Octagon wins: decision over Ding Meng and first-round KO of Jonny Parsons.",
+          "DWCS 2022 result is not counted as an official UFC bout; no independently confirmed qualifying combat-sports awards were used."
+        ]
+      },
+      "meta": "UFC Welterweight · BEFN algorithm-audited scouting profile · 12 Nov 2026",
       "verificationNote": "UFC-only results, dated statistical samples and explicit credential verification. Editorial prospect/contender status is recalculated; missing metrics remain unrated."
     },
     "lucas-fernando": {

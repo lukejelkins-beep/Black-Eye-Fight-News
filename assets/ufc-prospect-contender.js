@@ -104,7 +104,7 @@ function classify(f,power){
   (.65*ufcWinRate+.35*rate(streakLast2,Math.min(2,recent.length)));
  // Separate weights; each index is /100 and independently intelligible.
  const contenderParts={
-  opponentQuality:25*bounded(quality/2),
+  opponentQuality:25*bounded((quality+(officialRank===null?0:.5))/2),
   recentForm:25*weighted,
   UFCExperience:15*ufcEstablishment,
   measuredUFCPerformance:skill===null?null:20*skill*confidenceSample,
