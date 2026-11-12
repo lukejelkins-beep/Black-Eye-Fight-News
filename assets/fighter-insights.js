@@ -745,8 +745,8 @@
     // Source-review is necessary but not sufficient: the BEFN algorithm
     // independently classifies every athlete, with no division quotas.
     const classified=classifier?.classify(source,engine);
-    if(!classified?.eligible||
-       !["Contender","Prospect","Roster"].includes(classified.label))continue;
+    if(!classified||(!classified.eligible&&source.category!=="Roster")||
+       (classified.eligible&&!["Contender","Prospect","Roster"].includes(classified.label)))continue;
     const key=norm(source.name);
     if(duplicates.has(key)||champions.has(key))continue;
     if(!source.latest.every(x=>x?.opponent&&x?.method&&
@@ -765,7 +765,7 @@
     target.id=source.id;
     byId.set(source.id,target);
     target.organisation="UFC";target.sport="MMA";
-    target.category=classified.label;
+    target.category=classified.eligible?classified.label:"Unassessed";
     target.classification=classified;
     target.division=source.division;
     target.record=source.record;

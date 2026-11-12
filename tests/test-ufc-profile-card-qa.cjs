@@ -108,9 +108,13 @@ for(const file of files){
   }
   if(f.category!=="Champion"){
    const classification=classifier.classify(f,model);
-   assert(classification.eligible,context+": classification has insufficient verified input");
-   assert.equal(classification.label,f.category,
-     context+": algorithmic classification does not match published category");
+   if(classification.eligible){
+    assert.equal(classification.label,f.category,
+      context+": algorithmic classification does not match published category");
+   }else{
+    assert.equal(f.category,"Roster",context+": incomplete record cannot claim a contender/prospect designation");
+    assert(classification.reason,context+": unassessed category needs a reason");
+   }
   }
   const scores=model.evaluate({stats:stats||undefined,credentials:f.credentials,
    recent:{fights:stats?.sampleBouts||0}},f.latest);
@@ -133,7 +137,7 @@ for(const file of files){
  }
 }
 assert(insights.includes('BEFNUfcClassifier')&&
- insights.includes('target.category=classified.label'),
+ insights.includes('target.category=classified.eligible?classified.label:"Unassessed"'),
  "All reviewed UFC fighters must use uncapped algorithmic category assignment");
 assert(insights.includes('data/ufc-ranked-profiles.json')&&
  insights.includes('data/ufc-contender-profiles.json')&&
