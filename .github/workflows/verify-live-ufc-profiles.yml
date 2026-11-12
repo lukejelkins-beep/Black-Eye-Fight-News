@@ -16,7 +16,7 @@ permissions:
   contents: read
 concurrency:
   group: befn-production-ufc-profile-qa
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   production-profiles:
     if: >-
