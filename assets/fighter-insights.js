@@ -442,7 +442,9 @@
      }
      existing.credentials=current;
     }
-    if(Array.isArray(fighter.latest)&&Array.isArray(existing.latest)){
+    if(!existing.verifiedStats && Array.isArray(fighter.latest)&&Array.isArray(existing.latest)){
+     // Do not overwrite curated, source-checked cage times with earlier
+     // screenshot-derived comparison examples.
      for(const item of existing.latest){
       const same=fighter.latest.find(x=>norm(item.opponent)===norm(x.opponent)||norm(item.opponent).includes(norm(x.opponent)));
       if(same&&Number.isInteger(same.cageSec))item.cageSec=same.cageSec;
