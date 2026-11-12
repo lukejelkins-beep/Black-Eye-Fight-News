@@ -1,0 +1,44 @@
+name: Validate UFC fighter profile cards (preview)
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/responsive-sports-layout
+    paths:
+      - 'data/ufc-*-profiles.json'
+      - 'assets/fighter-insights.js'
+      - 'assets/fighter-power-index.js'
+      - 'tests/test-ufc-*.cjs'
+      - 'tests/test-fighter-power-index.cjs'
+      - '.github/workflows/validate-ufc-profiles.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'data/ufc-*-profiles.json'
+      - 'assets/fighter-insights.js'
+      - 'assets/fighter-power-index.js'
+      - 'tests/test-ufc-*.cjs'
+      - 'tests/test-fighter-power-index.cjs'
+permissions:
+  contents: read
+jobs:
+  profile-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate UFC model and browser script syntax
+        run: |
+          node --check assets/fighter-power-index.js
+          node --check assets/fighter-insights.js
+      - name: Validate all UFC profile cards and source data
+        run: node tests/test-ufc-profile-card-qa.cjs
+      - name: Verify champion cohort and evidence gates
+        run: |
+          node tests/test-ufc-champion-profiles.cjs
+          node tests/test-fighter-power-index.cjs
+      - name: Publication notice
+        run: echo 'Validation only. No production deployment or automatic merge.'
