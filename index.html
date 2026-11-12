@@ -216,6 +216,7 @@
 
 <style>.social-card[data-platform="Facebook"]{background:#fff;border:1px solid #d6dfec}.social-card[data-platform="Facebook"] .platform-letter{color:#1877f2}.social-card[data-platform="Bluesky"]{background:#fff;border:1px solid #b8d9f5}.social-card[data-platform="Bluesky"] .platform-letter{color:#1683fe}</style>
 <link rel="stylesheet" href="assets/results.css">
+<link rel="stylesheet" href="assets/fighter-power.css?v=20261112-ufc-champions-v6">
 <link rel="stylesheet" href="assets/upcoming-cards.css?v=20261112-results-parity-v1">
 <link rel="stylesheet" href="assets/fights-hub.css?v=20261111-historic-posters-v1">
 <link rel="stylesheet" href="assets/fight-film.css?v=20261108-ufc-finishes">
@@ -534,6 +535,9 @@ html,body{max-width:100%;overflow-x:clip}
 <meta name="application-version" content="1.0.4">
 <link rel="stylesheet" href="/assets/promotion-coverage.css?v=20261109-scope1">
 <script src="/assets/promotion-coverage.js?v=20261110-syntaxfix2"></script>
+<link rel="stylesheet" href="assets/responsive-layout-experiment.css?v=20261112-mobile-card-fix-v9">
+<script src="assets/news-dedupe.js?v=20261112-event-dedupe-v8"></script>
+<script defer src="assets/responsive-preview-mode.js?v=20261112-v9"></script>
 </head>
 <body>
 
@@ -712,19 +716,35 @@ function distinctNewsPoints(a){
  }
  return selected.map(p=>p.text);
 }
-function newsPointsHTML(a){
- const points=distinctNewsPoints(a);
- return points.length?'<ul class="news-strip-points" aria-label="Key facts from original reporting">'+points.map(point=>'<li>'+esc(point)+'</li>').join('')+'</ul>':
-  '<p class="news-strip-pending">Summary pending source verification</p>';
+function newsPointsHTML(a,kind='standard'){
+ const limit=kind==='feature'?2:1;
+ const points=editorialSummaryPoints(a,limit,kind==='feature'?145:115);
+ return points.length?'<ul class="news-strip-points" aria-label="Key facts from original reporting">'+points.map(point=>'<li>'+esc(point)+'</li>').join('')+'</ul>':'';
+}
+/* News metadata stays source-led: indexed dates are never presented as publisher publication times. */
+function newsDisplayMeta(a){
+ const raw=Date.parse(a.publishedAt||'');
+ const valid=Number.isFinite(raw);
+ const age=valid?Date.now()-raw:Infinity;
+ const published=valid&&age>=0&&age<=60*60*1000*24*365;
+ const indexed=Boolean(a.timeBasis);
+ const emphasis=published&&!indexed&&age<=2*60*60*1000
+   &&/\b(?:confirmed|announced|withdraws?|cancelled|postponed|injured|suspended|signs|signed|retires?|died|dies|breaking)\b/i.test(a.title||'');
+ const time=published?'<time class="befn-news-time" datetime="'+new Date(raw).toISOString()+'" title="'+esc(indexed?(a.timeBasis||'Indexed timestamp'):('Published '+displayDate(a.publishedAt)))+'">'+(indexed?'Indexed ':'')+esc(displayDate(a.publishedAt))+'</time>':'';
+ return '<span class="befn-news-meta">'
+   +(emphasis?'<span class="befn-news-breaking" aria-label="Breaking development">BREAKING</span>':'')
+   +'<span class="befn-news-publisher">'+esc(a.source||'Publisher')+'</span>'
+   +(time?'<span class="befn-news-meta-dot" aria-hidden="true">·</span>'+time:'')
+   +'</span>';
 }
 function headlineCard(a){
  const fighter=newsFighterImage(a),publisher=a.image&&/^https:\/\//.test(a.image.url||'')?a.image:null;
  const src=publisher?publisher.url:fighter?fighter.url:'';
  const alt=publisher?(publisher.alt||a.title):fighter?'File photo of '+fighter.name:a.sport+' news';
- const href=safeURL(a.url),when=a.publishedAt?'<span class="news-strip-time"> · '+(a.timeBasis?'Indexed ':'')+esc(displayDate(a.publishedAt))+'</span>':'';
+ const href=safeURL(a.url);
  const summary=newsPointsHTML(a);
  return '<article class="news-card live-news-card news-strip">'
-  +'<div class="news-strip-top"><div class="news-strip-story"><p class="news-strip-source">'+esc(a.source)+(activeSport()==='all'?' · '+esc(a.sport.toUpperCase()):'')+when+'</p>'
+  +'<div class="news-strip-top"><div class="news-strip-story"><p class="news-strip-source">'+newsDisplayMeta(a)+(activeSport()==='all'?'<span class="befn-news-sport">'+esc(a.sport.toUpperCase())+'</span>':'')+'</p>'
   +'<h3 class="news-strip-headline"><a href="'+href+'" target="_blank" rel="noopener noreferrer">'+esc(a.title)+'</a></h3></div>'
   +(src?'<a class="news-strip-thumbnail" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image" src="'+safeURL(src)+'" alt="'+esc(alt)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-news-fallback="'+(fighter?safeURL(fighter.url):'')+'" data-news-fallback-name="'+(fighter?esc(fighter.name):'')+'"></a>':'')+'</div>'
   +summary+'<a class="news-strip-original" href="'+href+'" target="_blank" rel="noopener noreferrer">Read original ↗</a></article>';
@@ -735,15 +755,17 @@ function newsFeatureCard(a){
  const src=publisher?publisher.url:fighter?fighter.url:'';
  const alt=publisher?(publisher.alt||a.title):fighter?'File photo of '+fighter.name:a.sport+' news';
  const href=safeURL(a.url);
- const summary=newsPointsHTML(a);
+ const summary=newsPointsHTML(a,'feature');
  return '<article class="live-news-card news-feature-card">'
   +(src?'<a href="'+href+'" class="news-feature-photo" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image" src="'+safeURL(src)+'" alt="'+esc(alt)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-news-fallback="'+(fighter?safeURL(fighter.url):'')+'" data-news-fallback-name="'+(fighter?esc(fighter.name):'')+'"></a>':'')
-  +'<div class="news-feature-copy"><div class="news-feature-kicker">In focus'+(activeSport()==='all'?' · '+esc(a.sport):'')+' · '+esc(a.source)+'</div>'
+  +'<div class="news-feature-copy"><div class="news-feature-kicker">'+newsDisplayMeta(a)+(activeSport()==='all'?'<span class="befn-news-sport">'+esc(a.sport.toUpperCase())+'</span>':'')+'</div>'
   +'<h3><a href="'+href+'" target="_blank" rel="noopener noreferrer">'+esc(a.title)+'</a></h3>'
   +summary+'<a class="news-strip-original" href="'+href+'" target="_blank" rel="noopener noreferrer">Read original ↗</a></div></article>';
 }
 document.addEventListener('error',event=>{
  const img=event.target;if(!img.classList?.contains('live-news-image'))return;
+ // Top Stories use their own portrait fallback; do not remove their images here.
+ if(img.closest('.top-story-full'))return;
  queueMicrotask(()=>{
   const card=img.closest('.live-news-card'),credit=card?.querySelector('.live-news-credit');
   img.classList.remove('is-error');
@@ -807,7 +829,7 @@ function headlineImportance(a,now){
 }
 function topStories(){
  const now=Date.now();
- const verified=desk.articles.filter(headlineEligible).filter(articleMatchesSport);
+ const verified=window.BEFNNewsUnique(desk.articles).filter(headlineEligible).filter(articleMatchesSport);
  const recent=verified.filter(a=>Date.parse(a.publishedAt)<=now+30*60*1000&&Date.parse(a.publishedAt)>=now-48*3600*1000);
  const candidates=recent.length?recent:verified;
  const unique=new Map();
@@ -882,35 +904,81 @@ function hydrateTopStoryPhotos(){
    if(!url)url=await findCommonsTopStoryPhoto(subject);
    if(!url){img.closest('.front-lead-image')?.classList.add('top-story-photo-unavailable');return;}
    img.alt='Photograph of '+subject;
+   img.closest('.front-lead-image')?.classList.remove('top-story-photo-unavailable');
    img.src=url;
   };
   img.addEventListener('error',fallback,{once:true});
   if(!img.getAttribute('src')||img.complete&&!img.naturalWidth)fallback();
  });
 }
-function topStoryShortPoints(a){
- const raw=distinctNewsPoints(a);
- const clean=p=>p.replace(/https?:\/\/\S+|\b(?:t\.co\/\S+|pic\.twitter\.com\/\S+)\b/gi,'').replace(/[“”"‘’]/g,'').replace(/\s+/g,' ').trim().replace(/[\s,;:–—-]+$/,'');
- const selected=[];
- for(const p of raw){
-  let q=clean(p);
-  if(!q||q.length<32||/^(?:it.s heartbreaking|read more|watch|follow us)/i.test(q))continue;
-  const words=q.split(/\s+/);
-  if(words.length>19)q=words.slice(0,19).join(' ').replace(/[\s,;:–—-]+$/,'')+'…';
-  if(selected.some(x=>x.toLowerCase()===q.toLowerCase()))continue;
-  selected.push(q);
-  if(selected.length===3)break;
+/* Editorial summary policy (see docs/news-summary-standard.md):
+   Never invent facts. Pick independent, complete, concise source sentences.
+   The card decides the bullet count; snippets never end in manufactured ellipses. */
+function editorialSummaryPoints(article,limit=2,maxChars=145){
+ const raw=distinctNewsPoints(article);
+ const titleTokens=new Set(((article.title||'').toLowerCase().match(/[a-z0-9]+/g)||[]).filter(w=>w.length>3));
+ const stop=/\b(?:read the full article|click here|read more|follow us|subscribe|advertisement|the post|in the video|as you can see|met the media)\b/i;
+ const nonEnglish=/[^\x00-\x7F]/g;
+ const termSet=text=>new Set((text.toLowerCase().match(/[a-z0-9]+/g)||[]).filter(w=>w.length>3));
+ function tidy(original){
+  let p=String(original||'').replace(/https?:\/\/\S+|(?:t\.co|pic\.twitter\.com)\/\S+/gi,'')
+   .replace(/\s+/g,' ').trim().replace(/^[-•\s]+/,'');
+  p=p.replace(/^(?:As noted in (?:the|its) release|According to (?:the|a) (?:report|release)|In (?:a|the) press release),\s*/i,'');
+  // Publisher introductions can be removed when a complete 'that' clause follows.
+  p=p.replace(/^(?:The UFC|The promotion|The organization|The organisation)\s+(?:announced|confirmed|said)\b.{0,76}?\bthat\s+(?=[A-Z])/i,'');
+  p=p.replace(/^([a-z])/,(_,c)=>c.toUpperCase());
+  if(p.length>110&&/,\s+and\s+/i.test(p)){
+   const first=p.split(/,\s+and\s+/i)[0];
+   if(first.length>=40&&first.length<=maxChars)p=first;
+  }
+  if(p.length>maxChars&&/;\s+/.test(p)){
+   const first=p.split(/;\s+/)[0];
+   if(first.length>=40&&first.length<=maxChars)p=first;
+  }
+  p=p.replace(/\s*[\u2026.]{3,}\s*$/,'').replace(/[,;:\-–—\s]+$/,'').trim();
+  if(!p||p.length<32||p.length>maxChars||stop.test(p)||/\u2026/.test(p))return '';
+  if((p.match(nonEnglish)||[]).length>4)return '';
+  if(/^(?:it|he|she|they|this|that|these|those|here)\s/i.test(p))return '';
+  if(!/[a-z][a-z]/i.test(p)||/\b(?:and|or|but|because|with|against|at|on|in|from|to|for)$/i.test(p))return '';
+  return p.replace(/[.!?]?$/,'.');
  }
- return selected;
+ const candidates=[];
+ for(const point of raw){
+  const clean=tidy(point);
+  if(!clean)continue;
+  const tokens=termSet(clean);
+  const fresh=[...tokens].filter(w=>!titleTokens.has(w)).length;
+  const overlap=[...tokens].filter(w=>titleTokens.has(w)).length;
+  const vague=/\b(?:foreseeable future|sticking around|making headlines|fans are excited|a big deal|great opportunity)\b/i.test(clean);
+  const specificity=/\b(?:\d{1,4}|since|until|through|against|defeated|signed|extension|withdrew|injured|confirmed|announced|will face|will fight)\b/i.test(clean);
+  const score=(specificity?5:0)+Math.min(5,fresh)+(overlap>0?1:0)
+     -(vague?8:0)-(fresh<2?5:0)-(clean.length>120?2:0);
+  candidates.push({text:clean,tokens,score});
+ }
+ candidates.sort((a,b)=>b.score-a.score);
+ const chosen=[];
+ for(const item of candidates){
+  if(item.score<0)continue;
+  if(chosen.some(previous=>{
+   const common=[...item.tokens].filter(t=>previous.tokens.has(t)).length;
+   return common>=3&&common/Math.min(item.tokens.size,previous.tokens.size)>=.65;
+  }))continue;
+  chosen.push(item);
+  if(chosen.length>=limit)break;
+ }
+ return chosen.map(item=>item.text);
+}
+function topStoryShortPoints(a){
+ return editorialSummaryPoints(a,2,155);
 }
 function topStoryCard(a){
  const photo=topStoryPhoto(a),points=topStoryShortPoints(a),subject=topStoryPhotoSubject(a);
  const href=safeURL(a.url);
  return '<article class="front-lead-card top-story-full">'
-  +'<a class="front-lead-image" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image front-lead-photo" data-photo-subject="'+esc(subject)+'" loading="lazy" referrerpolicy="no-referrer" decoding="async" src="'+safeURL(photo.url)+'" alt="'+esc(photo.alt)+'"></a>'
-  +'<div class="front-lead-copy"><span class="front-story-meta">IN FOCUS · '+esc(a.sport.toUpperCase())+' · '+esc(a.source)+'</span>'
+  +'<a class="front-lead-image'+(!photo.url?' top-story-photo-unavailable':'')+'" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image front-lead-photo" data-photo-subject="'+esc(subject)+'" loading="lazy" referrerpolicy="no-referrer" decoding="async" src="'+safeURL(photo.url)+'" alt="'+esc(photo.alt)+'"></a>'
+  +'<div class="front-lead-copy"><span class="front-story-meta">'+newsDisplayMeta(a)+'<span class="befn-news-sport">'+esc(a.sport.toUpperCase())+'</span></span>'
   +'<h2><a href="'+href+'" target="_blank" rel="noopener noreferrer">'+esc(a.title)+'</a></h2>'
-  +(points.length?'<ul class="top-story-points" aria-label="Three key facts">'+points.slice(0,3).map(p=>'<li>'+esc(p)+'</li>').join('')+'</ul>':'<p class="top-story-pending">Key facts pending source verification</p>')
+  +(points.length?'<ul class="top-story-points" aria-label="Key verified facts">'+points.slice(0,3).map(p=>'<li>'+esc(p)+'</li>').join('')+'</ul>':'')
   +'<a class="top-story-read" href="'+href+'" target="_blank" rel="noopener noreferrer">Read original ↗</a>'
   +'</div></article>';
 }
@@ -918,7 +986,7 @@ function topStoryCard(a){
 function newsFeedItems(){
  const promoted=new Set(topStories().slice(0,4).map(a=>a.url));
  const seen=new Set(),now=Date.now();
- return desk.articles.filter(headlineEligible).filter(a=>{
+ return window.BEFNNewsUnique(desk.articles).filter(headlineEligible).filter(a=>{
   if(promoted.has(a.url)||!articleMatchesSport(a))return false;
   const key=a.title.toLowerCase().replace(/[^a-z0-9]+/g,'');
   if(seen.has(key))return false;
@@ -965,7 +1033,7 @@ function previousReignsLine(c){
  return `<small class="reign-line">Previous (${label}): ${days.toLocaleString('en-AU')} days · ${suffix}${src}</small>`;
 }
 function champsTable(){if(state.champions==='boxing')return `<div class="champ-table-wrap"><table class="champ-table"><thead><tr><th>Division</th>${['WBA','WBC','IBF','WBO','The Ring'].map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${D.champions.boxing.map(row=>`<tr><td class="division-head">${esc(row.division)}</td>${['WBA','WBC','IBF','WBO','Ring'].map(b=>`<td>${(row.belts[b]||[]).map(c=>`<div class="champ-cell">${c.name.toLowerCase()==='vacant'?'':champThumb(c.name,c.photo)}<div><b>${c.name.toLowerCase()==='vacant'?esc(c.name):champPeek(c.name,c.photo)}</b>${c.days?`<small class="reign-line">Current: ${esc(c.days)} · ${defenceLabel(c.defences)}${c.status?` ${esc(c.status)}`:''}</small>${previousReignsLine(c)}`:(c.status?`<small>${esc(c.status)}</small>`:'')}</div></div>`).join('')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
-return `<div class="champ-table-wrap"><table class="champ-table"><thead><tr><th>Division</th><th>Titleholder</th><th>Reign began</th></tr></thead><tbody>${D.champions.mma.map(row=>`<tr><td class="division-head">${esc(row.division)}</td><td><div class="champ-cell">${champThumb(row.name,row.photo)}<div><b>${champPeek(row.name,row.photo)}</b><small class="reign-line">Current: ${esc(row.days)} days · ${defenceLabel(row.defences)}</small>${previousReignsLine(row)}</div></div></td><td>${esc(row.start)}</td></tr>`).join('')}</tbody></table></div>`;}
+return `<div class="champ-table-wrap"><table class="champ-table"><thead><tr><th>Division</th><th>Titleholder</th><th>Reign began</th></tr></thead><tbody>${D.champions.mma.map(row=>`<tr><td class="division-head">${esc(row.division)}</td><td><div class="champ-cell">${champThumb(row.name,row.photo)}<div><b>${champPeek(row.name,row.photo)}</b><button type="button" class="befn-champion-profile-link" data-fighter="mma-champion--${row.name.normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}" aria-label="Open researched fighter profile for ${esc(row.name)}">Full fighter profile</button><small class="reign-line">Current: ${esc(row.days)} days · ${defenceLabel(row.defences)}</small>${previousReignsLine(row)}</div></div></td><td>${esc(row.start)}</td></tr>`).join('')}</tbody></table></div>`;}
 function renderChampions(){
  const sport=state.champions;let listing='';
  if(sport==='grappling')listing='<div class="empty">Verified grappling championship standings are not yet available.</div>';
@@ -981,7 +1049,7 @@ const fighterCard=f=>`<button type="button" class="fighter-card" data-fighter="$
 function filteredFighters(){let result=D.fighters.filter(f=>(state.fightersSport==='All'||f.sport===state.fightersSport) && (state.fightersCategory==='All'||f.category===state.fightersCategory) && (state.fightersDivision==='All'||f.division===state.fightersDivision));const q=state.fightersQuery.trim().toLowerCase();if(q)result=result.filter(f=>[f.name,f.division,f.meta,f.record,f.next,...f.analysis].join(' ').toLowerCase().includes(q));return result;}
 function divisionFilter(){const divs=[...new Set(D.fighters.filter(x=>state.fightersSport==='All'||x.sport===state.fightersSport).map(x=>x.division))];return `<select class="field" id="divisionFilter" aria-label="Choose weight division"><option value="All">All divisions</option>${divs.map(d=>`<option value="${esc(d)}" ${d===state.fightersDivision?'selected':''}>${esc(d)}</option>`).join('')}</select>`}
 function renderFighterCards(){const list=filteredFighters();const grid=document.querySelector('#fighterGrid');const count=document.querySelector('#fighterCount');if(grid)grid.innerHTML=list.length?list.map(fighterCard).join(''):'<div class="empty">No fighters match those filters.</div>';if(count)count.textContent=`${list.length} PROFILES`}
-function renderFighters(){const count=filteredFighters().length;return renderFrame(`${viewTitle('','Fighter profiles')}<div class="filter-row">${segments('fightersCategory',['All','Prospect','Contender'],state.fightersCategory)}${divisionFilter()}<input class="field search" id="fighterSearch" placeholder="Search fighter, promotion, style, form…" aria-label="Search fighter profiles" value="${esc(state.fightersQuery)}"><span class="result-count" id="fighterCount">${count} PROFILES</span></div><details class="compact-note"><summary>About these records</summary><p>Historical roster from 7 November 2026. Some records, fixtures and notes require reconfirmation.</p></details><div class="fighters-grid" id="fighterGrid">${filteredFighters().length?filteredFighters().map(fighterCard).join(''):'<p class="empty">No verified scouting profiles are available for this selection.</p>'}</div>`)}
+function renderFighters(){const count=filteredFighters().length;return renderFrame(`${viewTitle('','Fighter profiles')}<div class="filter-row">${segments('fightersCategory',['All','Champion','Prospect','Contender'],state.fightersCategory)}${divisionFilter()}<input class="field search" id="fighterSearch" placeholder="Search fighter, promotion, style, form…" aria-label="Search fighter profiles" value="${esc(state.fightersQuery)}"><span class="result-count" id="fighterCount">${count} PROFILES</span></div><details class="compact-note"><summary>About these records</summary><p>Historical roster from 7 November 2026. Some records, fixtures and notes require reconfirmation.</p></details><div class="fighters-grid" id="fighterGrid">${filteredFighters().length?filteredFighters().map(fighterCard).join(''):'<p class="empty">No verified scouting profiles are available for this selection.</p>'}</div>`)}
 const talkPlatforms = {
  X: {mark:'𝕏', hosts:['x.com','twitter.com']},
  Instagram: {mark:'◎', hosts:['instagram.com']},
@@ -1488,8 +1556,8 @@ function fixtureCellText(value){
 }
 function tableHTML(t){return `<section class="calendar-block"><div class="subheader">${esc(t.label==='Upcoming cards'?'Fight cards & event status':t.label)}</div><div class="scroller"><table class="data-table"><thead><tr><th scope="col">Event status</th>${t.head.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${t.rows.map(row=>`<tr><td>${window.EventStatus.row(row)}</td>${row.map(v=>`<td>${esc(fixtureCellText(v))}</td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`;}
 function renderHighlights(){return window.FightFilm.render()+window.BEFNCoverage.panel(activeSport())}
-function openFighter(id){const f=D.fighters.find(x=>x.id===id);if(!f)return;const recent=f.latest||[];const img=f.photo?`<img loading="lazy" src="${safeURL(f.photo)}" alt="Published fighter photograph of ${esc(f.name)}" referrerpolicy="no-referrer">`:'<div class="placeholder" aria-label="Photo unavailable"></div>';
- document.querySelector('#fighter-dialog-content').innerHTML=`<div class="dialog-top"><div><div class="eyebrow" style="color:#b4e1d5">${esc(f.sport)} / ${esc(f.division)} / ${esc(f.category)}</div><h2>${esc(f.name)}</h2><small>${esc(f.record)} · Archive date 7 Nov 2026</small></div><button type="button" class="dialog-close" id="closeFighter" aria-label="Close fighter profile">×</button></div><div class="dialog-content"><div class="dialog-bio">${img}<div><h3 style="margin-top:0">Fighter snapshot</h3><p>${esc(f.meta)}</p><p><strong>Next event / path:</strong> ${esc(f.next||'Not currently verified')}</p>${f.verificationNote?`<p><strong>Record caution:</strong> ${esc(f.verificationNote)}</p>`:''}</div></div><h3>Five most recent results</h3>${recent.length?`<div class="scroller"><table class="data-table"><thead><tr><th>Date</th><th>Opponent</th><th>W/L</th><th>Method</th></tr></thead><tbody>${recent.map(r=>`<tr><td>${esc(r.date)}</td><td>${esc(r.opponent)}</td><td>${esc(r.outcome)}</td><td>${esc(r.method)}</td></tr>`).join('')}</tbody></table></div>`:'<p>No verifiable recent-fight table in the source archive.</p>'}<h3>Style & recent form</h3><ul>${f.analysis.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><h3>Source links</h3><div class="source-list">${f.sources.length?f.sources.map(x=>`<a href="${safeURL(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.label)} ↗</a>`).join(''):'<span>Additional source links are not currently available.</span>'}</div><p class="panel-note">Some historical material has not been independently reverified.</p></div>`;
+function openFighter(id){const f=D.fighters.find(x=>x.id===id);if(!f)return;const recent=f.latest||[];const picture=f.photo||portraitURL(f.name);const img=picture?`<img loading="lazy" src="${safeURL(picture)}" alt="Published fighter photograph of ${esc(f.name)}" referrerpolicy="no-referrer">`:'<div class="placeholder" aria-label="Photo unavailable"></div>';
+ document.querySelector('#fighter-dialog-content').innerHTML=`<div class="dialog-top"><div><div class="eyebrow" style="color:#b4e1d5">${esc(f.sport)} / ${esc(f.division)} / ${esc(f.category)}</div><h2>${esc(f.name)}</h2><small>${esc(f.record)} · ${f.review?.checkedAt?'Reviewed '+esc(f.review.checkedAt):'Archive date 7 Nov 2026'}</small></div><button type="button" class="dialog-close" id="closeFighter" aria-label="Close fighter profile">×</button></div><div class="dialog-content"><div class="dialog-bio">${img}<div><h3 style="margin-top:0">Fighter snapshot</h3><p>${esc(f.meta)}</p><p><strong>Next event / path:</strong> ${esc(f.next||'Not currently verified')}</p>${f.verificationNote?`<p><strong>Record caution:</strong> ${esc(f.verificationNote)}</p>`:''}</div></div>${window.BEFNFighterInsights?.renderProfile(f)||""}<h3>Five most recent results</h3>${recent.length?`<div class="scroller"><table class="data-table"><thead><tr><th>Date</th><th>Opponent</th><th>W/L</th><th>Method</th></tr></thead><tbody>${recent.map(r=>`<tr><td>${esc(r.date)}</td><td>${esc(r.opponent)}</td><td>${esc(r.outcome)}</td><td>${esc(r.method)}</td></tr>`).join('')}</tbody></table></div>`:'<p>No verifiable recent-fight table in the source archive.</p>'}<h3>Style & recent form</h3><ul>${f.analysis.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><h3>Source links</h3><div class="source-list">${f.sources.length?f.sources.map(x=>`<a href="${safeURL(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.label)} ↗</a>`).join(''):'<span>Additional source links are not currently available.</span>'}</div><p class="panel-note">Some historical material has not been independently reverified.</p></div>`;
  if(dialog.showModal)dialog.showModal();else dialog.setAttribute('open','');}
 function navigate(){let key=location.hash.replace('#','').split('/')[0]||'home';if(key==='news')key='home';if(key==='calendar'||key==='results'){fightDesk.view=key==='results'?'results':'upcoming';history.replaceState(null,'','#fights');key='fights';}const all=['home','champions','fighters','social','fights','highlights'];if(!all.includes(key))key='home';const pages={home:renderHome,champions:renderChampions,fighters:renderFighters,social:renderSocial,fights:renderFights,highlights:renderHighlights};main.innerHTML=pages[key]();if(key==='highlights')window.FightFilm.load();hydrateTalkEmbeds();document.querySelectorAll('[data-nav]').forEach(x=>{const yes=x.dataset.nav===key;x.classList.toggle('active',yes);if(yes)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});if(location.hash.startsWith('#fighter/')){openFighter(decodeURIComponent(location.hash.slice(9)))}window.scrollTo({top:0,behavior:'instant'});hydrateMissingPortraits().catch(()=>{});if(key==='social'&&!liveTalk.loading&&Date.now()-liveTalk.lastAttempt>10*60*1000)loadLiveTalk().catch(()=>{});}
 document.addEventListener('click',e=>{
@@ -1569,7 +1637,14 @@ document.addEventListener('error',e=>{
 document.addEventListener('load',e=>{const img=e.target;if(img.tagName!=='IMG')return;const ratio=img.naturalWidth/Math.max(1,img.naturalHeight);if(ratio<.69&&img.closest('.fighter-image,.dialog-bio,.card-photo'))img.classList.add('photo-contain');
 if(ratio<.8&&img.closest('.thumb'))img.style.objectPosition='50% 6%';},true);
 window.addEventListener('hashchange',navigate);
-if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
+if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
+ window.addEventListener('load',()=>{
+  if(location.hostname==='befn-responsive-preview.onrender.com'){
+   navigator.serviceWorker.getRegistrations().then(registrations=>registrations.forEach(reg=>reg.unregister())).catch(()=>{});
+   if('caches' in window)caches.keys().then(names=>Promise.all(names.filter(n=>n.startsWith('befn-app-shell-')).map(n=>caches.delete(n)))).catch(()=>{});
+  } else navigator.serviceWorker.register('./sw.js').catch(()=>{});
+ });
+}
 document.addEventListener('befn:sport-change',()=>{syncGlobalSport();navigate()});
 loadDesk();
 navigate();
@@ -1651,6 +1726,8 @@ window.setInterval(()=>{if(location.hash.split('/')[0]==='#social'&&!liveTalk.lo
 </script><script src="assets/fighter-hover.js?v=20261111-fighter-close" defer></script>
 <script src="assets/scout-intelligence.js?v=20261111-api1" defer></script>
 <script src="assets/ufcalendar-evidence.js?v=20261111-archive1" defer></script>
-<script src="assets/ufcalendar-fights-enrichment.js?v=20261111-paid1" defer></script>
+<script src="assets/fighter-power-index.js?v=20261112-ufc-champions-v6" defer></script>
+<script src="assets/fighter-insights.js?v=20261112-ufc-champions-v6" defer></script>
+<script src="assets/ufcalendar-fights-enrichment.js?v=20261112-round-observations-v2" defer></script>
 </body>
 </html>

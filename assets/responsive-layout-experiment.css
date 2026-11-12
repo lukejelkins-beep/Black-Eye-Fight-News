@@ -1,0 +1,655 @@
+/* BEFN responsive layout experiment — isolated feature branch only.
+   Presentation-only overrides: existing navigation links, feeds and handlers stay intact. */
+:root { --befn-gold:#cfa65b; --befn-cream:#f6f3eb; --befn-charcoal:#101719; }
+html { scroll-padding-top:76px; }
+body { background:var(--befn-cream); }
+#main { min-width:0; }
+#main > *, .shell, .page, .section-wrap, .news-grid, .fighters-grid,
+.social-grid, .video-grid, .filter-row { min-width:0; }
+img { max-width:100%; }
+:where(.news-card,.fighter-card,.social-card,.video-card,.feature-box) { min-width:0; }
+/* Editorial desktop: broad news desk, complete navigation and readable grid rhythm. */
+@media (min-width: 1025px) {
+  .topline { padding-inline:max(3vw,calc((100vw - 1600px)/2)); }
+  .masthead { padding-inline:max(3vw,calc((100vw - 1600px)/2)); }
+  .navrail { padding-inline:max(3vw,calc((100vw - 1600px)/2)); border-bottom:3px solid var(--befn-gold); }
+  .mainnav { width:100%; justify-content:space-between; gap:4px; }
+  .mainnav a { flex:1 1 auto; justify-content:center; min-height:58px; padding:16px 12px; font-size:clamp(11px,.88vw,14px); letter-spacing:.035em; }
+  .mainnav a.active { background:var(--befn-gold); color:#101719; }
+  .nav-count { display:none; }
+  .shell, .hero-grid { max-width:1600px; padding-inline:3vw; }
+  .page { padding-top:42px; padding-bottom:90px; }
+  .news-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; }
+  .news-card { min-height:440px; border-radius:5px; }
+  .news-grid > .news-card:first-child:nth-last-child(n+4) { grid-column:span 2; }
+  .news-grid > .news-card:first-child:nth-last-child(n+4) .card-photo { height:300px; }
+  .news-grid > .news-card:first-child:nth-last-child(n+4) h3 { font-size:clamp(32px,2.5vw,43px); }
+  .card-photo { height:215px; }
+  .fighters-grid,.social-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px; }
+  .video-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+  .section-heading { align-items:end; }
+  .section-pair { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .filter-row { gap:12px; }
+  .field, .segment button { min-height:44px; }
+  .card-details { padding:23px; }
+  .befn-global-sports-inner { max-width:1600px; }
+}
+@media (min-width: 1500px) {
+  .news-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+  .news-grid > .news-card:first-child:nth-last-child(n+4) { grid-column:span 2; }
+}
+/* Mid-size screens: news reader with comfortably sized controls, no clipping. */
+@media (min-width: 761px) and (max-width: 1024px) {
+  .mainnav { width:100%; justify-content:space-between; }
+  .mainnav a { padding:15px 9px; min-height:50px; font-size:11px; }
+  .nav-count { display:none; }
+  .news-grid,.video-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .fighters-grid,.social-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .shell { padding-inline:3vw; }
+  .page { padding-top:28px; }
+}
+/* App-like phones: persistent thumb navigation, feed-first stacked cards and safe-area spacing.
+   Reuse the existing six route anchors and data-nav attributes; no duplicate controls. */
+@media (max-width: 760px) {
+  html { scroll-padding-top:12px; }
+  body { background:#f5f1e9; padding-bottom:calc(72px + env(safe-area-inset-bottom,0px)); }
+  .topline { min-height:23px; padding:5px 13px; font-size:9px; letter-spacing:.055em; }
+  .topline-right { display:none; }
+  .masthead { padding:5px 14px !important; min-height:58px; background:#07090b !important; position:relative; z-index:24; }
+  .masthead .brand-logo { width:min(220px,70vw) !important; max-height:55px; object-fit:contain; }
+  .navrail { position:fixed; z-index:100; top:auto; bottom:0; left:0; right:0; width:100%; padding:0; background:#10171b;
+    border-top:2px solid var(--befn-gold); border-bottom:0; box-shadow:0 -7px 26px rgba(0,0,0,.27); }
+  .mainnav { display:grid; width:100%; min-height:64px; overflow:visible; grid-template-columns:repeat(6,minmax(0,1fr)); }
+  .mainnav a { display:flex; flex-direction:column; gap:5px; justify-content:center; text-align:center; padding:7px 2px 6px; min-width:0;
+    min-height:64px; font-size:clamp(8px,1.9vw,10px); line-height:1.15; letter-spacing:0; color:#e6ebe8; white-space:normal; text-wrap:balance; }
+  .mainnav a::before { content:'●'; display:block; font-size:17px; line-height:17px; font-weight:900; color:#a4b6b2; }
+  .mainnav a[data-nav="home"]::before { content:'▤'; }
+  .mainnav a[data-nav="champions"]::before { content:'★'; }
+  .mainnav a[data-nav="fighters"]::before { content:'♟'; }
+  .mainnav a[data-nav="social"]::before { content:'◉'; }
+  .mainnav a[data-nav="fights"]::before { content:'▣'; }
+  .mainnav a[data-nav="highlights"]::before { content:'▶'; }
+  .mainnav a.active { color:#101719; background:var(--befn-gold); }
+  .mainnav a.active::before { color:#101719; }
+  .mainnav a:focus-visible { outline-offset:-4px; }
+  .nav-count { display:none !important; }
+  .befn-global-sports { position:relative; z-index:2; }
+  .befn-global-sports-inner { max-width:100%; }
+  .shell,.hero-grid { padding-inline:14px; }
+  .page { padding-top:22px; padding-bottom:32px; }
+  .section-heading { display:block; margin-bottom:16px; padding-bottom:12px; }
+  .section-heading p { max-width:none; margin-top:10px; }
+  .section-wrap { margin-bottom:30px; }
+  .grid,.news-grid,.social-grid,.video-grid,.section-pair { display:grid; grid-template-columns:minmax(0,1fr); gap:12px; }
+  .news-grid > .news-card:first-child { grid-column:auto; }
+  .news-card { display:flex; flex-direction:column; min-height:0; border-radius:13px; border:1px solid #ddd9cf; box-shadow:0 3px 11px #182d2b0c; }
+  .news-card .card-photo { height:clamp(170px,53vw,260px); }
+  .news-card .card-details { padding:15px 16px 17px; }
+  .news-card h3 { font-size:clamp(24px,7vw,32px); line-height:1.08; }
+  .news-card p { -webkit-line-clamp:3; font-size:13px; }
+  .card-footer { padding-top:13px; }
+  .hero { min-height:0; }
+  .hero-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:18px; padding-block:23px; }
+  .hero h1 { font-size:clamp(43px,12vw,66px); margin:15px 0; }
+  .hero p { font-size:13px; line-height:1.55; }
+  .hero-feature { min-height:240px; border-radius:10px; }
+  .stats-grid { gap:9px; margin:15px 0 24px; }
+  .stat { border-radius:9px; min-height:85px; padding:13px; }
+  .stat strong { font-size:30px; }
+  .fighters-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+  .fighter-card { min-height:230px; border-radius:11px; overflow:hidden; }
+  .fighter-image { height:clamp(118px,38vw,172px); }
+  .fighter-body { padding:12px; }
+  .social-card { min-height:0; border-radius:11px; }
+  .thread-card { grid-column:auto; }
+  .video-card { min-height:0; border-radius:11px; overflow:hidden; }
+  .video-visual { height:160px; }
+  .filter-row { gap:8px; align-items:stretch; }
+  .filter-row > * { max-width:100%; }
+  .segment { max-width:100%; }
+  .segment button,.filter-row button,.pagination button,.btn { min-height:44px; }
+  .field { min-height:44px; min-width:0; max-width:100%; }
+  .field.search { min-width:100%; }
+  .result-count { margin-left:0; }
+  .scroller,.champ-table-wrap { overflow-x:auto; overscroll-behavior-x:contain; -webkit-overflow-scrolling:touch; }
+  .footer { grid-template-columns:1fr; gap:12px; padding:25px 16px calc(20px + env(safe-area-inset-bottom,0px)); }
+  .footer-meta { white-space:normal; }
+  .fighter-dialog { max-width:calc(100vw - 16px); max-height:calc(100dvh - 28px); }
+  .dialog-top { padding:18px; }
+  .dialog-close { min-width:44px; min-height:44px; }
+  .dialog-content { padding:16px; }
+  button, a, select, input { touch-action:manipulation; }
+}
+@media(max-width:360px) {
+  .mainnav a { font-size:8px; }
+  .masthead .brand-logo { width:min(195px,75vw) !important; }
+  .fighters-grid { gap:7px; }
+  .fighter-body h3 { font-size:19px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .news-card img,.fighter-card,.btn { transition:none !important; }
+}
+
+/* Desktop correction: the existing #news-feed .news-grid selector forces a
+   single-column flex list at EVERY width. Override that exact selector. */
+@media (min-width: 1025px) {
+  #news-feed .news-grid {
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    align-items:stretch;
+    gap:22px;
+  }
+  #news-feed .news-card.live-news-card {
+    display:flex;
+    flex-direction:column;
+    padding:19px !important;
+    border-radius:9px !important;
+    min-width:0;
+  }
+  #news-feed .news-strip-top {
+    display:flex;
+    flex-direction:column-reverse;
+    align-items:stretch;
+    gap:15px;
+  }
+  #news-feed .news-strip-story { flex:1; }
+  #news-feed .news-strip-thumbnail {
+    width:100%;
+    height:auto;
+    aspect-ratio:16 / 9;
+    align-self:stretch;
+    border-radius:6px;
+  }
+  #news-feed .news-strip-headline {
+    font-size:clamp(22px,1.7vw,30px) !important;
+    line-height:1.15 !important;
+  }
+  #news-feed .news-strip-points { margin-top:13px; font-size:12px; }
+  #news-feed .news-feature-card { grid-column:span 2; }
+  #news-feed .news-feature-photo { aspect-ratio:16 / 7.5; max-height:345px; }
+  .front-lead-layout { grid-template-columns:minmax(0,1.55fr) minmax(320px,.8fr); gap:24px; }
+  .front-brief-list { gap:14px; }
+  .front-lead-image { height:clamp(275px,28vw,460px); }
+  .befn-mobile-tabs,.befn-mobile-topbar { display:none !important; }
+  .navrail { position:sticky; top:0; bottom:auto; }
+  .navrail .mainnav { display:flex; }
+}
+@media (min-width: 1500px) {
+  #news-feed .news-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+}
+/* Tablet: keep an editorial grid while retaining room for headlines. */
+@media (min-width: 761px) and (max-width: 1024px) {
+  #news-feed .news-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+  #news-feed .news-card.live-news-card { padding:16px !important; }
+  #news-feed .news-strip-top { grid-template-columns:minmax(0,1fr); }
+  #news-feed .news-strip-thumbnail { grid-row:1; height:auto; aspect-ratio:16/9; }
+  #news-feed .news-feature-card { grid-column:span 2; }
+  .befn-mobile-tabs,.befn-mobile-topbar { display:none !important; }
+}
+/* Phone: use the EXISTING accessible five-tab dock and compact header,
+   rather than introducing a competing six-tab fixed rail. */
+@media (max-width:760px) {
+  .navrail { position:relative; top:auto; bottom:auto; left:auto; right:auto;
+    min-height:45px; z-index:30; padding:0 12px; border-top:0; border-bottom:2px solid var(--brand-red,#cf1824); box-shadow:none; }
+  .navrail .mainnav { display:none !important; }
+  .navrail .befn-mobile-topbar { display:flex; }
+  .befn-mobile-tabs { display:grid; }
+  #news-feed .news-grid { display:flex; flex-direction:column; }
+  #news-feed .news-feature-card { grid-column:auto; }
+}
+
+/* TOP STORIES is a separate component, not #news-feed. Its four .top-story-full
+   articles were inheriting mobile-first full-height card sizing on desktop. */
+@media (min-width:1025px) {
+  #main .front-lead-layout.top-story-stack {
+    display:grid;
+    grid-template-columns:minmax(0,1.45fr) minmax(360px,1fr);
+    grid-template-rows:repeat(3,minmax(0,auto));
+    align-items:stretch;
+    gap:14px 20px;
+    margin:0;
+  }
+  #main .top-story-stack > .top-story-full {
+    display:grid;
+    grid-template-columns:38% minmax(0,1fr);
+    grid-template-rows:1fr;
+    min-width:0;
+    min-height:0;
+    border-radius:9px;
+    overflow:hidden;
+  }
+  #main .top-story-stack > .top-story-full:first-child {
+    grid-column:1;
+    grid-row:1 / span 3;
+    display:flex;
+    flex-direction:column;
+  }
+  #main .top-story-stack > .top-story-full:not(:first-child) {
+    grid-column:2;
+  }
+  #main .top-story-stack .front-lead-image {
+    display:block;
+    width:100%;
+    height:100%;
+    min-height:170px;
+    overflow:hidden;
+  }
+  #main .top-story-stack .front-lead-image img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center 24%;
+  }
+  #main .top-story-stack > .top-story-full:first-child .front-lead-image {
+    height:clamp(310px,32vw,480px);
+    min-height:0;
+    flex:0 0 auto;
+  }
+  #main .top-story-stack .front-lead-copy {
+    min-width:0;
+    padding:17px 19px;
+    gap:7px;
+  }
+  #main .top-story-stack > .top-story-full:not(:first-child) .front-lead-copy h2 {
+    font-size:clamp(20px,1.65vw,28px);
+    line-height:1.12;
+  }
+  #main .top-story-stack > .top-story-full:not(:first-child) .top-story-points {
+    display:none;
+  }
+  #main .top-story-stack > .top-story-full:first-child .front-lead-copy {
+    padding:22px 25px 25px;
+  }
+  #main .top-story-stack > .top-story-full:first-child .front-lead-copy h2 {
+    font-size:clamp(32px,3vw,50px);
+  }
+  #main .top-story-stack .front-story-meta { font-size:10px; }
+  #main .top-story-stack .top-story-read { margin-top:auto; }
+}
+@media (min-width:761px) and (max-width:1024px) {
+  #main .front-lead-layout.top-story-stack {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+  }
+  #main .top-story-stack > .top-story-full {
+    min-width:0;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    border-radius:8px;
+    overflow:hidden;
+  }
+  #main .top-story-stack .front-lead-image {
+    width:100%;
+    height:clamp(170px,24vw,260px);
+  }
+  #main .top-story-stack .front-lead-copy {
+    padding:16px 18px;
+  }
+  #main .top-story-stack .front-lead-copy h2 {
+    font-size:clamp(25px,3vw,34px);
+  }
+}
+@media (max-width:760px) {
+  #main .front-lead-layout.top-story-stack {
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    gap:12px;
+  }
+  #main .top-story-stack > .top-story-full {
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+    min-width:0;
+  }
+  #main .top-story-stack .front-lead-image {
+    width:100%;
+    height:clamp(190px,57vw,290px);
+  }
+}
+
+/* Editorial hierarchy: one hero; the remaining lead stories are deliberately
+   compact on phones rather than four large promotional-looking cards. */
+@media (max-width:760px) {
+  #main .front-lead-layout.top-story-stack {
+    gap:0;
+    border-radius:12px;
+    overflow:hidden;
+  }
+  #main .top-story-stack > .top-story-full:first-child {
+    border-radius:12px 12px 0 0;
+    margin-bottom:4px;
+  }
+  #main .top-story-stack > .top-story-full:not(:first-child) {
+    display:grid;
+    grid-template-columns:112px minmax(0,1fr);
+    gap:0;
+    border-radius:0;
+    border-left:1px solid #ded5cb;
+    border-right:1px solid #ded5cb;
+    border-top:0;
+    border-bottom:1px solid #ded5cb;
+    background:#fffaf3;
+    color:#201619;
+    align-items:stretch;
+  }
+  #main .top-story-stack > .top-story-full:last-child {
+    border-radius:0 0 12px 12px;
+  }
+  #main .top-story-stack > .top-story-full:not(:first-child) .front-lead-image {
+    height:100%;
+    min-height:118px;
+    width:112px;
+    background:#292022;
+  }
+  #main .top-story-stack > .top-story-full:not(:first-child) .front-lead-copy {
+    padding:12px 13px;
+    min-width:0;
+    gap:6px;
+  }
+  #main .top-story-stack > .top-story-full:not(:first-child) h2 {
+    font-size:clamp(19px,5.1vw,25px);
+    line-height:1.07;
+    color:#24191b;
+  }
+  #main .top-story-stack > .top-story-full:not(:first-child) h2 a {color:inherit}
+  #main .top-story-stack > .top-story-full:not(:first-child) .top-story-points,
+  #main .top-story-stack > .top-story-full:not(:first-child) .top-story-pending,
+  #main .top-story-stack > .top-story-full:not(:first-child) .top-story-read {display:none}
+  #main .top-story-stack > .top-story-full:not(:first-child) .front-story-meta {
+    color:#a61925;
+    font-size:9px;
+    line-height:1.35;
+  }
+  #news-feed .news-grid { gap:10px; }
+  #news-feed .news-card.live-news-card { border-radius:10px !important; }
+  #news-feed .news-strip-top { grid-template-columns:minmax(0,1fr) 90px;gap:12px; }
+  #news-feed .news-strip-thumbnail { height:94px;border-radius:7px; }
+  #news-feed .news-strip-headline { font-size:clamp(19px,5.4vw,25px) !important; }
+}
+@media (max-width:370px) {
+  #main .top-story-stack > .top-story-full:not(:first-child) {grid-template-columns:94px minmax(0,1fr)}
+  #main .top-story-stack > .top-story-full:not(:first-child) .front-lead-image {width:94px}
+  #main .top-story-stack > .top-story-full:not(:first-child) h2 {font-size:19px}
+}
+
+/* Clear publisher, provenance-aware timestamps, and selective breaking indicator. */
+.befn-news-meta { display:inline-flex; flex-wrap:wrap; align-items:center; gap:5px; max-width:100%; vertical-align:middle; }
+.befn-news-publisher { font-weight:900; letter-spacing:.02em; }
+.befn-news-time { font-weight:600; letter-spacing:0; opacity:.78; white-space:nowrap; }
+.befn-news-meta-dot { opacity:.6; }
+.befn-news-sport { display:inline-block; font-weight:800; text-transform:uppercase; font-size:9px; letter-spacing:.08em; opacity:.85; margin-left:6px; }
+.befn-news-breaking { display:inline-flex; align-items:center; justify-content:center; min-height:18px; padding:2px 6px; border-radius:2px;
+  background:#be1927; border:1px solid #d33e49; color:#fff !important; font:900 9px/1.2 'DM Sans',system-ui,sans-serif !important;
+  letter-spacing:.07em; text-transform:uppercase; text-shadow:none; box-shadow:none; }
+#news-feed .news-strip-source { display:flex; align-items:center; flex-wrap:wrap; column-gap:6px; row-gap:5px; }
+#news-feed .news-strip-source .befn-news-publisher { color:#f7f0e8; }
+#news-feed .news-feature-kicker { display:flex; flex-wrap:wrap; align-items:center; gap:6px; }
+#news-feed .news-feature-kicker .befn-news-time { color:#e3d6cb; }
+#main .top-story-stack .front-story-meta { display:flex; flex-wrap:wrap; align-items:center; gap:5px; }
+#main .top-story-stack .front-story-meta .befn-news-meta { color:#f3d47a; }
+#main .top-story-stack .front-story-meta .befn-news-time { color:#ded3cd; }
+#main .top-story-stack .front-story-meta .befn-news-publisher { color:inherit; }
+#news-feed .news-strip-points { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; }
+#news-feed .news-feature-card .news-strip-points { -webkit-line-clamp:3; }
+@media(max-width:760px) {
+  #main .top-story-stack > .top-story-full:not(:first-child) .front-story-meta .befn-news-meta { color:#8c2430; }
+  #main .top-story-stack > .top-story-full:not(:first-child) .front-story-meta .befn-news-time { color:#6b5e57; }
+  #news-feed .news-strip-points { -webkit-line-clamp:2; }
+  #news-feed .news-card.live-news-card { padding:16px !important; }
+  .befn-news-meta { gap:4px; }
+}
+
+/* Revision 7: The in-app desktop browser may be narrower than 1025 CSS pixels.
+   Make the feature-and-sidebar editorial layout available from 761px, and
+   support an explicit preview-only desktop override at smaller viewport sizes. */
+@media (min-width:761px) {
+ #main .front-lead-layout.top-story-stack {
+   display:grid !important;
+   grid-template-columns:minmax(0,1.35fr) minmax(290px,1fr) !important;
+   grid-template-rows:repeat(3,minmax(0,auto)) !important;
+   gap:12px 16px !important;
+   align-items:stretch;
+ }
+ #main .top-story-stack > .top-story-full:first-child {
+   display:flex !important;
+   flex-direction:column !important;
+   grid-column:1 !important;
+   grid-row:1 / span 3 !important;
+ }
+ #main .top-story-stack > .top-story-full:not(:first-child) {
+   display:grid !important;
+   grid-template-columns:34% minmax(0,1fr) !important;
+   grid-column:2 !important;
+   grid-row:auto !important;
+   min-height:140px;
+ }
+ #main .top-story-stack > .top-story-full:not(:first-child) .front-lead-image {
+   width:100% !important;
+   height:100% !important;
+   min-height:140px;
+ }
+ #main .top-story-stack > .top-story-full:first-child .front-lead-image {
+   width:100% !important;
+   height:clamp(270px,29vw,450px) !important;
+   min-height:0 !important;
+ }
+ #main .top-story-stack > .top-story-full:not(:first-child) .top-story-points {display:none}
+ #main .top-story-stack > .top-story-full:not(:first-child) .front-lead-copy h2 {
+   font-size:clamp(19px,2vw,29px) !important;
+ }
+}
+body.befn-force-desktop #main .front-lead-layout.top-story-stack {
+ display:grid !important;
+ grid-template-columns:minmax(0,1.35fr) minmax(320px,1fr) !important;
+ grid-template-rows:repeat(3,minmax(0,auto)) !important;
+ gap:12px 16px !important;
+ min-width:850px;
+}
+body.befn-force-desktop #main .front-home { min-width:850px; }
+body.befn-force-desktop #main .top-story-stack > .top-story-full:first-child {
+ display:flex !important; flex-direction:column !important;
+ grid-column:1 !important; grid-row:1 / span 3 !important;
+}
+body.befn-force-desktop #main .top-story-stack > .top-story-full:not(:first-child) {
+ display:grid !important; grid-template-columns:34% minmax(0,1fr) !important;
+ grid-column:2 !important; grid-row:auto !important;
+}
+body.befn-force-desktop #main .top-story-stack > .top-story-full .front-lead-image {
+ width:100% !important; min-height:150px !important;
+}
+body.befn-force-desktop #main .top-story-stack > .top-story-full:not(:first-child) .front-lead-image {
+ height:100% !important;
+}
+body.befn-force-desktop #main .top-story-stack > .top-story-full:first-child .front-lead-image {
+ height:360px !important;
+}
+body.befn-force-desktop #main .top-story-stack > .top-story-full:not(:first-child) .top-story-points {
+ display:none !important;
+}
+.befn-preview-switch {
+ position:fixed; z-index:9900; top:10px; right:10px;
+ display:flex; align-items:center; gap:6px;
+ padding:7px 10px; border:1px solid #f3c332; border-radius:6px;
+ background:#191619; color:#fff;
+ font:700 12px/1.3 system-ui,sans-serif;
+ box-shadow:0 5px 18px #0005;
+}
+.befn-preview-switch button {
+ cursor:pointer; border:1px solid #f3c332;
+ background:#f3c332; color:#191619; font:800 11px system-ui;
+ border-radius:4px; padding:6px 9px;
+}
+body.befn-force-desktop {overflow-x:auto}
+@media(max-width:760px){
+ body.befn-force-desktop #main .top-story-stack > .top-story-full:not(:first-child) .front-lead-copy h2 {
+   color:#fff8f1; font-size:20px;
+ }
+ body.befn-force-desktop #main .top-story-stack > .top-story-full:not(:first-child){
+   background:#1b1216; color:#fff8f1;
+ }
+}
+
+/* Editorial bullets: readable, complete sentences; never crop the list with
+   -webkit-line-clamp or make an oversized lead card taller than necessary. */
+#main .top-story-stack > .top-story-full:first-child .top-story-points {
+ display:grid;
+ gap:9px;
+ margin:12px 0 0;
+ padding-left:20px;
+ list-style:disc;
+ font:500 clamp(13px,1vw,15px)/1.45 'DM Sans',system-ui,sans-serif;
+ color:#f2ede9;
+}
+#main .top-story-stack > .top-story-full:first-child .top-story-points li {
+ overflow-wrap:break-word;
+ max-width:100%;
+}
+#main .top-story-stack .top-story-points li::marker {color:#f3c332}
+#news-feed .news-strip-points,
+#news-feed .news-feature-card .news-strip-points {
+ display:grid !important;
+ grid-template-columns:minmax(0,1fr);
+ gap:6px;
+ -webkit-line-clamp:unset !important;
+ -webkit-box-orient:initial !important;
+ overflow:visible !important;
+ margin:11px 0 0;
+ padding-left:19px;
+ font-size:clamp(12px,.9vw,13px);
+ line-height:1.45;
+}
+#news-feed .news-strip-points li {max-width:100%;overflow-wrap:break-word}
+#main .top-story-stack > .top-story-full:first-child .front-lead-copy {flex:0 1 auto}
+@media (max-width:760px) {
+ #main .top-story-stack > .top-story-full:first-child .top-story-points {font-size:13px;gap:7px;line-height:1.42}
+ #news-feed .news-strip-points,
+ #news-feed .news-feature-card .news-strip-points {font-size:12px;line-height:1.4}
+}
+
+/* v9: mobile Top Stories clash fix. Older brand-theme CSS uses !important on
+   full-width image-first cards even on phones. Use stronger, scoped selectors.
+   Only phones change; desktop's lead-and-sidebar grid remains intact. */
+@media (max-width:760px) {
+  #main .front-home .front-lead-layout.top-story-stack {
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) !important;
+    gap:10px !important;
+    overflow:visible !important;
+    border-radius:0 !important;
+    background:transparent !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full {
+    min-width:0 !important;
+    max-width:100% !important;
+    background:#1d1519 !important;
+    color:#fff7ed !important;
+    border:1px solid #594347 !important;
+    border-radius:11px !important;
+    box-shadow:none !important;
+  }
+  /* The first card is the only full-width visual feature. */
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:first-child {
+    display:flex !important;
+    flex-direction:column !important;
+    grid-column:auto !important;
+    grid-row:auto !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:first-child .front-lead-image {
+    width:100% !important;
+    height:auto !important;
+    aspect-ratio:16/9 !important;
+    min-height:0 !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:first-child .front-lead-copy {
+    background:#1d1519 !important;
+    padding:17px 18px 18px !important;
+  }
+  /* Three slim, horizontal article rows, with no huge cream text panels. */
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) {
+    display:grid !important;
+    grid-template-columns:110px minmax(0,1fr) !important;
+    grid-template-rows:auto !important;
+    align-items:stretch !important;
+    gap:0 !important;
+    min-height:116px !important;
+    max-height:none !important;
+    background:#201719 !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-lead-image {
+    display:block !important;
+    position:relative !important;
+    grid-column:1 !important;
+    width:110px !important;
+    height:100% !important;
+    min-height:0 !important;
+    max-height:none !important;
+    aspect-ratio:auto !important;
+    background:#282024 !important;
+    overflow:hidden !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-lead-image img.front-lead-photo {
+    position:absolute !important;
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-lead-copy {
+    display:flex !important;
+    flex-direction:column !important;
+    justify-content:center !important;
+    gap:7px !important;
+    padding:12px 13px !important;
+    background:#201719 !important;
+    color:#fff7ed !important;
+    min-width:0 !important;
+    min-height:0 !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-lead-copy h2 {
+    margin:0 !important;
+    color:#fff7ed !important;
+    font-size:clamp(18px,4.7vw,22px) !important;
+    line-height:1.14 !important;
+    overflow-wrap:break-word !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-lead-copy h2 a {
+    color:#fff7ed !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-story-meta {
+    margin:0 !important;
+    color:#f2ce60 !important;
+    font-size:9px !important;
+    line-height:1.35 !important;
+    gap:3px !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-story-meta .befn-news-meta {
+    color:#e6c87a !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-story-meta .befn-news-time {
+    color:#d6c8c7 !important;
+    white-space:normal;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .top-story-points,
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .top-story-pending,
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .top-story-read {
+    display:none !important;
+  }
+  /* No full-width black placeholder if an image fails to resolve. */
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full .front-lead-image.top-story-photo-unavailable {
+    display:none !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child):has(.top-story-photo-unavailable) {
+    grid-template-columns:minmax(0,1fr) !important;
+  }
+  /* Preview-only debug toggle must not obscure phone content. */
+  .befn-preview-switch {display:none !important}
+}
+@media(max-width:370px){
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child){
+    grid-template-columns:94px minmax(0,1fr) !important;
+  }
+  #main .front-home .front-lead-layout.top-story-stack > article.top-story-full:not(:first-child) .front-lead-image{
+    width:94px !important;
+  }
+}

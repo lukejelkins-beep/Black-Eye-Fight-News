@@ -1,0 +1,1113 @@
+{
+  "schema": 1,
+  "scope": "ufc-champions",
+  "reviewedOn": "2026-11-12",
+  "sources": {
+    "champions": "https://www.ufc.com/athletes?redirect=no",
+    "stats": "Individual UFC.com fighter bios and UFCalendar UFC-only statistics"
+  },
+  "methodology": "Each stat sample covers UFC fights only. KO and submission finish rates use UFC-only fight totals, not professional career results. Only individually linked, qualifying credentials can earn bonuses. Unverified or historical ranks have zero bonuses. No synthetic statistics.",
+  "divisions": [
+    {
+      "division": "Heavyweight",
+      "fighterId": "mma-champion--ciryl-gane",
+      "name": "Ciryl Gane"
+    },
+    {
+      "division": "Light Heavyweight",
+      "fighterId": "mma-champion--carlos-ulberg",
+      "name": "Carlos Ulberg"
+    },
+    {
+      "division": "Middleweight",
+      "fighterId": "mma-champion--sean-strickland",
+      "name": "Sean Strickland"
+    },
+    {
+      "division": "Welterweight",
+      "fighterId": "mma-champion--islam-makhachev",
+      "name": "Islam Makhachev"
+    },
+    {
+      "division": "Lightweight",
+      "fighterId": "mma-champion--justin-gaethje",
+      "name": "Justin Gaethje"
+    },
+    {
+      "division": "Featherweight",
+      "fighterId": "mma-champion--alexander-volkanovski",
+      "name": "Alexander Volkanovski"
+    },
+    {
+      "division": "Bantamweight",
+      "fighterId": "mma-champion--petr-yan",
+      "name": "Petr Yan"
+    },
+    {
+      "division": "Flyweight",
+      "fighterId": "mma-champion--joshua-van",
+      "name": "Joshua Van"
+    },
+    {
+      "division": "Women's Bantamweight",
+      "fighterId": "mma-champion--kayla-harrison",
+      "name": "Kayla Harrison"
+    },
+    {
+      "division": "Women's Flyweight",
+      "fighterId": "mma-champion--natalia-silva",
+      "name": "Natália Silva"
+    },
+    {
+      "division": "Women's Strawweight",
+      "fighterId": "mma-champion--mackenzie-dern",
+      "name": "Mackenzie Dern"
+    }
+  ],
+  "fighters": {
+    "ciryl-gane": {
+      "id": "mma-champion--ciryl-gane",
+      "name": "Ciryl Gane",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "division": "Heavyweight",
+      "category": "Champion",
+      "record": "14–2 (1 NC)",
+      "source": "https://www.ufc.com/athlete/ciryl-gane",
+      "statSource": "https://www.ufcalendar.com/fighters/ciryl-gane/stats",
+      "verifiedStats": {
+        "slpm": 5.4,
+        "sapm": 2.31,
+        "strAcc": 62,
+        "strDef": 61,
+        "tdAvg": 0.66,
+        "tdAcc": 24,
+        "tdDef": 47,
+        "subAvg": 0.58,
+        "kdAvg": 0.33,
+        "controlShare": 0.09,
+        "koTkoWinRate": 0.35714285714285715,
+        "submissionWinRate": 0.14285714285714285,
+        "source": "https://www.ufcalendar.com/fighters/ciryl-gane/stats",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 14,
+        "scope": "ufc-only",
+        "denominatorNotes": "Rates and finish ratios refer to tracked UFC fights only; omissions represent unverified data."
+      },
+      "latest": [
+        {
+          "date": "2026-06-14",
+          "opponent": "Alex Pereira",
+          "outcome": "W",
+          "method": "TKO R2 1:27",
+          "source": "https://www.ufc.com/athlete/ciryl-gane",
+          "cageSec": 387
+        },
+        {
+          "date": "2025-10-25",
+          "opponent": "Tom Aspinall",
+          "outcome": "NC",
+          "method": "No contest R1 4:35",
+          "source": "https://www.ufc.com/athlete/ciryl-gane",
+          "cageSec": 275
+        },
+        {
+          "date": "2024-12-07",
+          "opponent": "Alexander Volkov",
+          "outcome": "W",
+          "method": "Split decision R3",
+          "source": "https://www.ufc.com/athlete/ciryl-gane",
+          "cageSec": 900
+        },
+        {
+          "date": "2023-09-02",
+          "opponent": "Serghei Spivac",
+          "outcome": "W",
+          "method": "TKO R2 3:44",
+          "source": "https://www.ufc.com/athlete/ciryl-gane",
+          "cageSec": 524
+        },
+        {
+          "date": "2023-03-04",
+          "opponent": "Jon Jones",
+          "outcome": "L",
+          "method": "Submission R1 2:04",
+          "source": "https://www.ufc.com/athlete/ciryl-gane",
+          "cageSec": 124
+        }
+      ],
+      "credentials": [
+        {
+          "kind": "bjj",
+          "belt": "black",
+          "verification": "reported",
+          "source": "https://bjj.tv/how-good-is-ciryl-gane-at-jiu-jitsu/",
+          "detail": "Reported black belt under Fernand Lopez; not confirmed in UFC athlete biography or an instructor promotion record. Unscored."
+        }
+      ],
+      "sourceLinks": [
+        "https://www.ufc.com/athlete/ciryl-gane",
+        "https://www.ufcalendar.com/fighters/ciryl-gane/stats"
+      ],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "championStatusSource": "https://www.ufc.com/athletes?redirect=no",
+        "statsSource": "https://www.ufcalendar.com/fighters/ciryl-gane/stats",
+        "recentHistorySource": "https://www.ufc.com/athlete/ciryl-gane",
+        "credentialsChecked": true,
+        "notes": [
+          "Official UFC bio confirms five UFC KO/TKO wins and two UFC submission wins, distinct from seven and three career totals.",
+          "BJJ promotion requires independent instructor or gym confirmation."
+        ]
+      },
+      "meta": "Reigning UFC Heavyweight champion · independently reviewed fighter profile · 2026-11-12",
+      "analysis": [],
+      "verificationNote": "UFC-only sample and separately linked source-backed credentials. Unverified awards carry zero point bonus."
+    },
+    "carlos-ulberg": {
+      "id": "mma-champion--carlos-ulberg",
+      "name": "Carlos Ulberg",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "division": "Light Heavyweight",
+      "category": "Champion",
+      "record": "15–1",
+      "source": "https://www.ufc.com/athlete/carlos-ulberg",
+      "statSource": "https://www.ufcalendar.com/fighters/carlos-ulberg/stats",
+      "verifiedStats": {
+        "slpm": 6.61,
+        "sapm": 4.04,
+        "strAcc": 56,
+        "strDef": 51,
+        "tdAvg": 0.54,
+        "tdAcc": 60,
+        "tdDef": 86,
+        "subAvg": 0.18,
+        "kdAvg": 1.4,
+        "koTkoWinRate": 0.6363636363636364,
+        "submissionWinRate": 0.09090909090909091,
+        "source": "https://www.ufcalendar.com/fighters/carlos-ulberg/stats",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 11,
+        "scope": "ufc-only",
+        "denominatorNotes": "Rates and finish ratios refer to tracked UFC fights only; omissions represent unverified data."
+      },
+      "latest": [
+        {
+          "date": "2026-04-11",
+          "opponent": "Jiří Procházka",
+          "outcome": "W",
+          "method": "TKO R1 3:45",
+          "source": "https://www.ufc.com/athlete/carlos-ulberg",
+          "cageSec": 225
+        },
+        {
+          "date": "2025-09-28",
+          "opponent": "Dominick Reyes",
+          "outcome": "W",
+          "method": "TKO R1 4:27",
+          "source": "https://www.ufc.com/athlete/carlos-ulberg",
+          "cageSec": 267
+        },
+        {
+          "date": "2025-03-22",
+          "opponent": "Jan Błachowicz",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "source": "https://www.ufc.com/athlete/carlos-ulberg",
+          "cageSec": 900
+        },
+        {
+          "date": "2024-11-23",
+          "opponent": "Volkan Oezdemir",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "source": "https://www.ufc.com/athlete/carlos-ulberg",
+          "cageSec": 900
+        },
+        {
+          "date": "2024-05-11",
+          "opponent": "Alonzo Menifield",
+          "outcome": "W",
+          "method": "TKO R1 0:12",
+          "source": "https://www.ufc.com/athlete/carlos-ulberg",
+          "cageSec": 12
+        }
+      ],
+      "credentials": [],
+      "sourceLinks": [
+        "https://www.ufc.com/athlete/carlos-ulberg",
+        "https://www.ufcalendar.com/fighters/carlos-ulberg/stats"
+      ],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "championStatusSource": "https://www.ufc.com/athletes?redirect=no",
+        "statsSource": "https://www.ufcalendar.com/fighters/carlos-ulberg/stats",
+        "recentHistorySource": "https://www.ufc.com/athlete/carlos-ulberg",
+        "credentialsChecked": true,
+        "notes": [
+          "UFCStats-only 11 bouts, excluding Dana White Contender Series; no externally verified BJJ belt, wrestling medal, or Sambo championship identified."
+        ]
+      },
+      "meta": "Reigning UFC Light Heavyweight champion · independently reviewed fighter profile · 2026-11-12",
+      "analysis": [],
+      "verificationNote": "UFC-only sample and separately linked source-backed credentials. Unverified awards carry zero point bonus."
+    },
+    "sean-strickland": {
+      "id": "mma-champion--sean-strickland",
+      "name": "Sean Strickland",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "division": "Middleweight",
+      "category": "Champion",
+      "record": "31–7",
+      "source": "https://www.ufc.com/athlete/sean-strickland",
+      "statSource": "https://www.ufcalendar.com/fighters/sean-strickland/stats",
+      "verifiedStats": {
+        "slpm": 5.98,
+        "sapm": 4.53,
+        "strAcc": 43,
+        "strDef": 61,
+        "tdAvg": 0.66,
+        "tdAcc": 62,
+        "tdDef": 69,
+        "subAvg": 0.15,
+        "kdAvg": 0.26,
+        "controlShare": 0.08,
+        "source": "https://www.ufcalendar.com/fighters/sean-strickland/stats",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 25,
+        "scope": "ufc-only",
+        "denominatorNotes": "Rates and finish ratios refer to tracked UFC fights only; omissions represent unverified data."
+      },
+      "latest": [
+        {
+          "date": "2026-05-09",
+          "opponent": "Khamzat Chimaev",
+          "outcome": "W",
+          "method": "Split decision R5",
+          "source": "https://www.ufc.com/athlete/sean-strickland",
+          "cageSec": 1500
+        },
+        {
+          "date": "2026-02-21",
+          "opponent": "Anthony Hernandez",
+          "outcome": "W",
+          "method": "TKO R3 2:23",
+          "source": "https://www.ufc.com/athlete/sean-strickland",
+          "cageSec": 743
+        },
+        {
+          "date": "2025-02-09",
+          "opponent": "Dricus Du Plessis",
+          "outcome": "L",
+          "method": "Unanimous decision R5",
+          "source": "https://www.ufc.com/athlete/sean-strickland",
+          "cageSec": 1500
+        },
+        {
+          "date": "2024-06-01",
+          "opponent": "Paulo Costa",
+          "outcome": "W",
+          "method": "Split decision R5",
+          "source": "https://www.ufc.com/athlete/sean-strickland",
+          "cageSec": 1500
+        },
+        {
+          "date": "2024-01-20",
+          "opponent": "Dricus Du Plessis",
+          "outcome": "L",
+          "method": "Split decision R5",
+          "source": "https://www.ufc.com/athlete/sean-strickland",
+          "cageSec": 1500
+        }
+      ],
+      "credentials": [],
+      "sourceLinks": [
+        "https://www.ufc.com/athlete/sean-strickland",
+        "https://www.ufcalendar.com/fighters/sean-strickland/stats"
+      ],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "championStatusSource": "https://www.ufc.com/athletes?redirect=no",
+        "statsSource": "https://www.ufcalendar.com/fighters/sean-strickland/stats",
+        "recentHistorySource": "https://www.ufc.com/athlete/sean-strickland",
+        "credentialsChecked": true,
+        "notes": [
+          "Official profile provides MMA statistics but does not establish any NCAA, ADCC, BJJ, judo or Sambo award for badge scoring.",
+          "Career KO and submission totals intentionally not divided by the UFC-only sample."
+        ]
+      },
+      "meta": "Reigning UFC Middleweight champion · independently reviewed fighter profile · 2026-11-12",
+      "analysis": [],
+      "verificationNote": "UFC-only sample and separately linked source-backed credentials. Unverified awards carry zero point bonus."
+    },
+    "islam-makhachev": {
+      "id": "mma-champion--islam-makhachev",
+      "name": "Islam Makhachev",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "division": "Welterweight",
+      "category": "Champion",
+      "record": "29–1",
+      "source": "https://www.ufc.com/athlete/islam-makhachev",
+      "statSource": "https://www.ufcalendar.com/fighters/islam-makhachev/stats",
+      "verifiedStats": {
+        "slpm": 2.27,
+        "sapm": 1.42,
+        "strAcc": 58,
+        "strDef": 61,
+        "tdAvg": 3.22,
+        "tdAcc": 55,
+        "tdDef": 91,
+        "subAvg": 0.87,
+        "kdAvg": 0.34,
+        "controlShare": 0.51,
+        "submissionWinRate": 0.42105263157894735,
+        "source": "https://www.ufcalendar.com/fighters/islam-makhachev/stats",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 19,
+        "scope": "ufc-only",
+        "denominatorNotes": "Rates and finish ratios refer to tracked UFC fights only; omissions represent unverified data."
+      },
+      "latest": [
+        {
+          "date": "2026-08-15",
+          "opponent": "Ian Machado Garry",
+          "outcome": "W",
+          "method": "Unanimous decision R5",
+          "source": "https://www.ufc.com/athlete/islam-makhachev",
+          "cageSec": 1500
+        },
+        {
+          "date": "2025-11-15",
+          "opponent": "Jack Della Maddalena",
+          "outcome": "W",
+          "method": "Unanimous decision R5",
+          "source": "https://www.ufc.com/athlete/islam-makhachev",
+          "cageSec": 1500
+        },
+        {
+          "date": "2025-01-18",
+          "opponent": "Renato Moicano",
+          "outcome": "W",
+          "method": "Submission R1 4:05",
+          "source": "https://www.ufc.com/athlete/islam-makhachev",
+          "cageSec": 245
+        },
+        {
+          "date": "2024-06-01",
+          "opponent": "Dustin Poirier",
+          "outcome": "W",
+          "method": "Submission R5 2:42",
+          "source": "https://www.ufc.com/athlete/islam-makhachev",
+          "cageSec": 1362
+        },
+        {
+          "date": "2023-10-21",
+          "opponent": "Alexander Volkanovski",
+          "outcome": "W",
+          "method": "TKO R1 3:06",
+          "source": "https://www.ufc.com/athlete/islam-makhachev",
+          "cageSec": 186
+        }
+      ],
+      "credentials": [
+        {
+          "kind": "sambo",
+          "discipline": "combat",
+          "medal": "gold",
+          "source": "https://sambo.sport/en/news/islam-makhachev-stal-zasluzhennym-masterom-sporta-rossii/",
+          "detail": "Combat Sambo world champion, confirmed by the International Sambo Federation, 3 July 2026."
+        }
+      ],
+      "sourceLinks": [
+        "https://www.ufc.com/athlete/islam-makhachev",
+        "https://www.ufcalendar.com/fighters/islam-makhachev/stats"
+      ],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "championStatusSource": "https://www.ufc.com/athletes?redirect=no",
+        "statsSource": "https://www.ufcalendar.com/fighters/islam-makhachev/stats",
+        "recentHistorySource": "https://www.ufc.com/athlete/islam-makhachev",
+        "credentialsChecked": true,
+        "notes": [
+          "FIAS officially confirms Combat Sambo world championship (not just ambassador status).",
+          "UFC-only record 19 bouts and eight UFC submission wins."
+        ]
+      },
+      "meta": "Reigning UFC Welterweight champion · independently reviewed fighter profile · 2026-11-12",
+      "analysis": [],
+      "verificationNote": "UFC-only sample and separately linked source-backed credentials. Unverified awards carry zero point bonus."
+    },
+    "justin-gaethje": {
+      "id": "mma-champion--justin-gaethje",
+      "name": "Justin Gaethje",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "division": "Lightweight",
+      "category": "Champion",
+      "record": "28–5",
+      "source": "https://www.ufc.com/athlete/justin-gaethje",
+      "statSource": "https://www.ufcalendar.com/fighters/justin-gaethje/stats",
+      "verifiedStats": {
+        "slpm": 6.29,
+        "sapm": 6.83,
+        "strAcc": 58,
+        "strDef": 51,
+        "tdAvg": 0.3,
+        "tdAcc": 27,
+        "tdDef": 73,
+        "subAvg": 0,
+        "kdAvg": 0.67,
+        "controlShare": 0.07,
+        "koTkoWinRate": 0.4375,
+        "submissionWinRate": 0,
+        "source": "https://www.ufcalendar.com/fighters/justin-gaethje/stats",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 16,
+        "scope": "ufc-only",
+        "denominatorNotes": "Rates and finish ratios refer to tracked UFC fights only; omissions represent unverified data."
+      },
+      "latest": [
+        {
+          "date": "2026-06-14",
+          "opponent": "Ilia Topuria",
+          "outcome": "W",
+          "method": "TKO R4 5:00",
+          "source": "https://www.ufc.com/athlete/justin-gaethje",
+          "cageSec": 1200
+        },
+        {
+          "date": "2026-01-24",
+          "opponent": "Paddy Pimblett",
+          "outcome": "W",
+          "method": "Unanimous decision R5",
+          "source": "https://www.ufc.com/athlete/justin-gaethje",
+          "cageSec": 1500
+        },
+        {
+          "date": "2025-03-08",
+          "opponent": "Rafael Fiziev",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "source": "https://www.ufc.com/athlete/justin-gaethje",
+          "cageSec": 900
+        },
+        {
+          "date": "2024-04-13",
+          "opponent": "Max Holloway",
+          "outcome": "L",
+          "method": "KO R5 4:59",
+          "source": "https://www.ufc.com/athlete/justin-gaethje",
+          "cageSec": 1499
+        },
+        {
+          "date": "2023-07-29",
+          "opponent": "Dustin Poirier",
+          "outcome": "W",
+          "method": "KO R2 1:00",
+          "source": "https://www.ufc.com/athlete/justin-gaethje",
+          "cageSec": 360
+        }
+      ],
+      "credentials": [
+        {
+          "kind": "ncaa",
+          "division": "I",
+          "placement": 7,
+          "year": 2010,
+          "source": "https://nwhof.org/national-wrestling-hall-of-fame/champions-database?tab=aa&wrestler=12294",
+          "detail": "Northern Colorado NCAA Division I wrestling All-American, 2010, seventh place at 157 lb. Not an NCAA medallist."
+        }
+      ],
+      "sourceLinks": [
+        "https://www.ufc.com/athlete/justin-gaethje",
+        "https://www.ufcalendar.com/fighters/justin-gaethje/stats"
+      ],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "championStatusSource": "https://www.ufc.com/athletes?redirect=no",
+        "statsSource": "https://www.ufcalendar.com/fighters/justin-gaethje/stats",
+        "recentHistorySource": "https://www.ufc.com/athlete/justin-gaethje",
+        "credentialsChecked": true,
+        "notes": [
+          "Northern Colorado Athletics and the National Wrestling Hall of Fame independently confirm Division I All-American, seventh place."
+        ]
+      },
+      "meta": "Reigning UFC Lightweight champion · independently reviewed fighter profile · 2026-11-12",
+      "analysis": [],
+      "verificationNote": "UFC-only sample and separately linked source-backed credentials. Unverified awards carry zero point bonus."
+    },
+    "alexander-volkanovski": {
+      "id": "mma-champion--alexander-volkanovski",
+      "name": "Alexander Volkanovski",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "division": "Featherweight",
+      "category": "Champion",
+      "record": "29–4",
+      "source": "https://www.ufc.com/athlete/alexander-volkanovski",
+      "statSource": "https://www.ufcalendar.com/fighters/alexander-volkanovski/stats",
+      "verifiedStats": {
+        "slpm": 5.98,
+        "sapm": 3.33,
+        "strAcc": 57,
+        "strDef": 58,
+        "tdAvg": 1.63,
+        "tdAcc": 34,
+        "tdDef": 67,
+        "subAvg": 0.19,
+        "kdAvg": 0.29,
+        "koTkoWinRate": 0.3157894736842105,
+        "submissionWinRate": 0,
+        "source": "https://www.ufcalendar.com/fighters/alexander-volkanovski/stats",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 19,
+        "scope": "ufc-only",
+        "denominatorNotes": "Rates and finish ratios refer to tracked UFC fights only; omissions represent unverified data."
+      },
+      "latest": [
+        {
+          "date": "2026-10-24",
+          "opponent": "Movsar Evloev",
+          "outcome": "W",
+          "method": "TKO R2 4:54",
+          "source": "https://www.ufc.com/athlete/alexander-volkanovski",
+          "cageSec": 594
+        },
+        {
+          "date": "2026-01-31",
+          "opponent": "Diego Lopes",
+          "outcome": "W",
+          "method": "Unanimous decision R5",
+          "source": "https://www.ufc.com/athlete/alexander-volkanovski",
+          "cageSec": 1500
+        },
+        {
+          "date": "2025-04-12",
+          "opponent": "Diego Lopes",
+          "outcome": "W",
+          "method": "Unanimous decision R5",
+          "source": "https://www.ufc.com/athlete/alexander-volkanovski",
+          "cageSec": 1500
+        },
+        {
+          "date": "2024-02-17",
+          "opponent": "Ilia Topuria",
+          "outcome": "L",
+          "method": "KO R2 3:32",
+          "source": "https://www.ufc.com/athlete/alexander-volkanovski",
+          "cageSec": 512
+        },
+        {
+          "date": "2023-10-21",
+          "opponent": "Islam Makhachev",
+          "outcome": "L",
+          "method": "KO R1 3:06",
+          "source": "https://www.ufc.com/athlete/alexander-volkanovski",
+          "cageSec": 186
+        }
+      ],
+      "credentials": [
+        {
+          "kind": "bjj",
+          "belt": "brown",
+          "verification": "reported",
+          "source": "https://www.ufc.com/athlete/alexander-volkanovski?language_content_entity=en&page=1",
+          "detail": "Older UFC athlete Q&A lists a BJJ brown belt. Current rank not independently rechecked; historical only, unscored."
+        }
+      ],
+      "sourceLinks": [
+        "https://www.ufc.com/athlete/alexander-volkanovski",
+        "https://www.ufcalendar.com/fighters/alexander-volkanovski/stats"
+      ],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "championStatusSource": "https://www.ufc.com/athletes?redirect=no",
+        "statsSource": "https://www.ufcalendar.com/fighters/alexander-volkanovski/stats",
+        "recentHistorySource": "https://www.ufc.com/athlete/alexander-volkanovski",
+        "credentialsChecked": true,
+        "notes": [
+          "UFC notes historical national wrestling gold, but its level and sanctioning body are unspecified: not represented as NCAA or Olympic medal."
+        ]
+      },
+      "meta": "Reigning UFC Featherweight champion · independently reviewed fighter profile · 2026-11-12",
+      "analysis": [],
+      "verificationNote": "UFC-only sample and separately linked source-backed credentials. Unverified awards carry zero point bonus."
+    },
+    "petr-yan": {
+      "id": "mma-champion--petr-yan",
+      "name": "Petr Yan",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "division": "Bantamweight",
+      "category": "Champion",
+      "record": "21–5",
+      "source": "https://www.ufc.com/athlete/petr-yan",
+      "statSource": "https://www.ufcalendar.com/fighters/petr-yan/stats",
+      "verifiedStats": {
+        "slpm": 5.16,
+        "sapm": 4.32,
+        "strAcc": 55,
+        "strDef": 60,
+        "tdAvg": 1.56,
+        "tdAcc": 48,
+        "tdDef": 88,
+        "subAvg": 0.1,
+        "kdAvg": 0.49,
+        "controlShare": 0.14,
+        "koTkoWinRate": 0.23529411764705882,
+        "submissionWinRate": 0,
+        "source": "https://www.ufcalendar.com/fighters/petr-yan/stats",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 17,
+        "scope": "ufc-only",
+        "denominatorNotes": "Rates and finish ratios refer to tracked UFC fights only; omissions represent unverified data."
+      },
+      "latest": [
+        {
+          "date": "2026-10-24",
+          "opponent": "Merab Dvalishvili",
+          "outcome": "W",
+          "method": "Unanimous decision R5",
+          "source": "https://www.ufc.com/athlete/petr-yan",
+          "cageSec": 1500
+        },
+        {
+          "date": "2025-12-06",
+          "opponent": "Merab Dvalishvili",
+          "outcome": "W",
+          "method": "Unanimous decision R5",
+          "source": "https://www.ufc.com/athlete/petr-yan",
+          "cageSec": 1500
+        },
+        {
+          "date": "2025-07-26",
+          "opponent": "Marcus McGhee",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "source": "https://www.ufc.com/athlete/petr-yan",
+          "cageSec": 900
+        },
+        {
+          "date": "2024-11-23",
+          "opponent": "Deiveson Figueiredo",
+          "outcome": "W",
+          "method": "Unanimous decision R5",
+          "source": "https://www.ufc.com/athlete/petr-yan",
+          "cageSec": 1500
+        },
+        {
+          "date": "2024-03-09",
+          "opponent": "Song Yadong",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "source": "https://www.ufc.com/athlete/petr-yan",
+          "cageSec": 900
+        }
+      ],
+      "credentials": [
+        {
+          "kind": "bjj",
+          "belt": "blue",
+          "verification": "reported",
+          "source": "https://www.ufc.com/athlete/petr-yan?page=1",
+          "detail": "Older UFC athlete Q&A lists BJJ blue belt; current rank is not reverified, so no score bonus."
+        }
+      ],
+      "sourceLinks": [
+        "https://www.ufc.com/athlete/petr-yan",
+        "https://www.ufcalendar.com/fighters/petr-yan/stats"
+      ],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "championStatusSource": "https://www.ufc.com/athletes?redirect=no",
+        "statsSource": "https://www.ufcalendar.com/fighters/petr-yan/stats",
+        "recentHistorySource": "https://www.ufc.com/athlete/petr-yan",
+        "credentialsChecked": true,
+        "notes": [
+          "Master of Sport in boxing documented in UFC biography; not equivalent to Golden Gloves or Olympic boxing."
+        ]
+      },
+      "meta": "Reigning UFC Bantamweight champion · independently reviewed fighter profile · 2026-11-12",
+      "analysis": [],
+      "verificationNote": "UFC-only sample and separately linked source-backed credentials. Unverified awards carry zero point bonus."
+    },
+    "joshua-van": {
+      "id": "mma-champion--joshua-van",
+      "name": "Joshua Van",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "division": "Flyweight",
+      "category": "Champion",
+      "record": "18–2",
+      "source": "https://www.ufc.com/athlete/joshua-van",
+      "statSource": "https://www.ufcalendar.com/fighters/joshua-van/stats",
+      "verifiedStats": {
+        "slpm": 8.26,
+        "sapm": 5.83,
+        "strAcc": 58,
+        "strDef": 57,
+        "tdAvg": 0.7,
+        "tdDef": 75,
+        "subAvg": 0.26,
+        "kdAvg": 0.7,
+        "controlShare": 0.08,
+        "koTkoWinRate": 0.3333333333333333,
+        "submissionWinRate": 0,
+        "source": "https://www.ufcalendar.com/fighters/joshua-van/stats",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 12,
+        "scope": "ufc-only",
+        "denominatorNotes": "Rates and finish ratios refer to tracked UFC fights only; omissions represent unverified data."
+      },
+      "latest": [
+        {
+          "date": "2026-09-19",
+          "opponent": "Alexandre Pantoja",
+          "outcome": "W",
+          "method": "Unanimous decision R5",
+          "source": "https://www.ufc.com/athlete/joshua-van",
+          "cageSec": 1500
+        },
+        {
+          "date": "2026-05-09",
+          "opponent": "Tatsuro Taira",
+          "outcome": "W",
+          "method": "TKO R5 1:32",
+          "source": "https://www.ufc.com/athlete/joshua-van",
+          "cageSec": 1292
+        },
+        {
+          "date": "2025-12-06",
+          "opponent": "Alexandre Pantoja",
+          "outcome": "W",
+          "method": "TKO (injury) R1 0:26",
+          "source": "https://www.ufc.com/athlete/joshua-van",
+          "cageSec": 26
+        },
+        {
+          "date": "2025-06-28",
+          "opponent": "Brandon Royval",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "source": "https://www.ufc.com/athlete/joshua-van",
+          "cageSec": 900
+        },
+        {
+          "date": "2025-06-07",
+          "opponent": "Bruno Silva",
+          "outcome": "W",
+          "method": "TKO R3 4:01",
+          "source": "https://www.ufc.com/athlete/joshua-van",
+          "cageSec": 841
+        }
+      ],
+      "credentials": [
+        {
+          "kind": "bjj",
+          "belt": "blue",
+          "source": "https://www.ufc.com/athlete/joshua-van?page=1",
+          "detail": "BJJ blue belt confirmed in UFC fighter Q&A."
+        }
+      ],
+      "sourceLinks": [
+        "https://www.ufc.com/athlete/joshua-van",
+        "https://www.ufcalendar.com/fighters/joshua-van/stats"
+      ],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "championStatusSource": "https://www.ufc.com/athletes?redirect=no",
+        "statsSource": "https://www.ufcalendar.com/fighters/joshua-van/stats",
+        "recentHistorySource": "https://www.ufc.com/athlete/joshua-van",
+        "credentialsChecked": true,
+        "notes": [
+          "UFC official history distinguishes injury stoppage over Pantoja from a clean knockdown; KO/TKO method is not itself a knockdown."
+        ]
+      },
+      "meta": "Reigning UFC Flyweight champion · independently reviewed fighter profile · 2026-11-12",
+      "analysis": [],
+      "verificationNote": "UFC-only sample and separately linked source-backed credentials. Unverified awards carry zero point bonus."
+    },
+    "kayla-harrison": {
+      "id": "mma-champion--kayla-harrison",
+      "name": "Kayla Harrison",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "division": "Women's Bantamweight",
+      "category": "Champion",
+      "record": "19–1",
+      "source": "https://www.ufc.com/athlete/kayla-harrison",
+      "statSource": "https://www.ufcalendar.com/fighters/kayla-harrison/stats",
+      "verifiedStats": {
+        "slpm": 4.29,
+        "sapm": 1.1,
+        "strAcc": 62,
+        "strDef": 66,
+        "tdAvg": 2.84,
+        "tdAcc": 38,
+        "tdDef": 100,
+        "subAvg": 0.95,
+        "kdAvg": 0,
+        "controlShare": 0.59,
+        "koTkoWinRate": 0,
+        "submissionWinRate": 0.6666666666666666,
+        "source": "https://www.ufcalendar.com/fighters/kayla-harrison/stats",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 3,
+        "scope": "ufc-only",
+        "denominatorNotes": "Rates and finish ratios refer to tracked UFC fights only; omissions represent unverified data."
+      },
+      "latest": [
+        {
+          "date": "2025-06-07",
+          "opponent": "Julianna Peña",
+          "outcome": "W",
+          "method": "Submission R2 4:55",
+          "source": "https://www.ufc.com/athlete/kayla-harrison",
+          "cageSec": 595
+        },
+        {
+          "date": "2024-10-05",
+          "opponent": "Ketlen Vieira",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "source": "https://www.ufc.com/athlete/kayla-harrison",
+          "cageSec": 900
+        },
+        {
+          "date": "2024-04-13",
+          "opponent": "Holly Holm",
+          "outcome": "W",
+          "method": "Submission R2 1:47",
+          "source": "https://www.ufc.com/athlete/kayla-harrison",
+          "cageSec": 407
+        }
+      ],
+      "credentials": [
+        {
+          "kind": "olympic-judo",
+          "participated": true,
+          "medal": "gold",
+          "medalCount": 2,
+          "years": [
+            2012,
+            2016
+          ],
+          "source": "https://www.ufc.com/news/olympians-who-have-competed-ufc-octagon",
+          "detail": "Olympic Judo gold medals 2012 London and 2016 Rio confirmed by UFC Olympic athlete review."
+        }
+      ],
+      "sourceLinks": [
+        "https://www.ufc.com/athlete/kayla-harrison",
+        "https://www.ufcalendar.com/fighters/kayla-harrison/stats"
+      ],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "championStatusSource": "https://www.ufc.com/athletes?redirect=no",
+        "statsSource": "https://www.ufcalendar.com/fighters/kayla-harrison/stats",
+        "recentHistorySource": "https://www.ufc.com/athlete/kayla-harrison",
+        "credentialsChecked": true,
+        "notes": [
+          "Exactly 3 UFC fights in stats denominator; PFL fights excluded from all UFC-only ratings and UFC last-five history."
+        ]
+      },
+      "meta": "Reigning UFC Women's Bantamweight champion · independently reviewed fighter profile · 2026-11-12",
+      "analysis": [],
+      "verificationNote": "UFC-only sample and separately linked source-backed credentials. Unverified awards carry zero point bonus."
+    },
+    "natalia-silva": {
+      "id": "mma-champion--natalia-silva",
+      "name": "Natália Silva",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "division": "Women's Flyweight",
+      "category": "Champion",
+      "record": "21–5–1",
+      "source": "https://www.ufc.com/athlete/natalia-silva",
+      "statSource": "https://www.ufcalendar.com/fighters/natalia-silva/stats",
+      "verifiedStats": {
+        "slpm": 4.72,
+        "sapm": 2.66,
+        "strAcc": 46,
+        "strDef": 63,
+        "tdAvg": 0.7,
+        "tdAcc": 40,
+        "tdDef": 90,
+        "subAvg": 0,
+        "kdAvg": 0.3,
+        "controlShare": 0.08,
+        "koTkoWinRate": 0.2222222222222222,
+        "submissionWinRate": 0,
+        "source": "https://www.ufcalendar.com/fighters/natalia-silva/stats",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 9,
+        "scope": "ufc-only",
+        "denominatorNotes": "Rates and finish ratios refer to tracked UFC fights only; omissions represent unverified data."
+      },
+      "latest": [
+        {
+          "date": "2026-10-03",
+          "opponent": "Wang Cong",
+          "outcome": "W",
+          "method": "Unanimous decision R5",
+          "source": "https://www.ufc.com/athlete/natalia-silva",
+          "cageSec": 1500
+        },
+        {
+          "date": "2026-01-24",
+          "opponent": "Rose Namajunas",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "source": "https://www.ufc.com/athlete/natalia-silva",
+          "cageSec": 900
+        },
+        {
+          "date": "2025-05-10",
+          "opponent": "Alexa Grasso",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "source": "https://www.ufc.com/athlete/natalia-silva",
+          "cageSec": 900
+        },
+        {
+          "date": "2024-09-07",
+          "opponent": "Jéssica Andrade",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "source": "https://www.ufc.com/athlete/natalia-silva",
+          "cageSec": 900
+        },
+        {
+          "date": "2024-02-03",
+          "opponent": "Viviane Araújo",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "source": "https://www.ufc.com/athlete/natalia-silva",
+          "cageSec": 900
+        }
+      ],
+      "credentials": [],
+      "sourceLinks": [
+        "https://www.ufc.com/athlete/natalia-silva",
+        "https://www.ufcalendar.com/fighters/natalia-silva/stats"
+      ],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "championStatusSource": "https://www.ufc.com/athletes?redirect=no",
+        "statsSource": "https://www.ufcalendar.com/fighters/natalia-silva/stats",
+        "recentHistorySource": "https://www.ufc.com/athlete/natalia-silva",
+        "credentialsChecked": true,
+        "notes": [
+          "UFC official page confirms she won vacant flyweight championship in Oct 2026. Five career KOs and seven career subs should not be entered as UFC-only finishing data; UFC record shows 2 KO and zero submissions."
+        ]
+      },
+      "meta": "Reigning UFC Women's Flyweight champion · independently reviewed fighter profile · 2026-11-12",
+      "analysis": [],
+      "verificationNote": "UFC-only sample and separately linked source-backed credentials. Unverified awards carry zero point bonus."
+    },
+    "mackenzie-dern": {
+      "id": "mma-champion--mackenzie-dern",
+      "name": "Mackenzie Dern",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "division": "Women's Strawweight",
+      "category": "Champion",
+      "record": "17–5",
+      "source": "https://www.ufc.com/athlete/mackenzie-dern",
+      "statSource": "https://www.ufcalendar.com/fighters/mackenzie-dern/stats",
+      "verifiedStats": {
+        "slpm": 3.38,
+        "sapm": 3.74,
+        "strAcc": 41,
+        "strDef": 53,
+        "tdAvg": 1.07,
+        "tdAcc": 18,
+        "tdDef": 41,
+        "subAvg": 1.01,
+        "kdAvg": 0.12,
+        "koTkoWinRate": 0,
+        "submissionWinRate": 0.29411764705882354,
+        "source": "https://www.ufcalendar.com/fighters/mackenzie-dern/stats",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 17,
+        "scope": "ufc-only",
+        "denominatorNotes": "Rates and finish ratios refer to tracked UFC fights only; omissions represent unverified data."
+      },
+      "latest": [
+        {
+          "date": "2026-08-15",
+          "opponent": "Gillian Robertson",
+          "outcome": "W",
+          "method": "Unanimous decision R5",
+          "source": "https://www.ufc.com/athlete/mackenzie-dern",
+          "cageSec": 1500
+        },
+        {
+          "date": "2025-10-25",
+          "opponent": "Virna Jandiroba",
+          "outcome": "W",
+          "method": "Unanimous decision R5",
+          "source": "https://www.ufc.com/athlete/mackenzie-dern",
+          "cageSec": 1500
+        },
+        {
+          "date": "2025-01-11",
+          "opponent": "Amanda Ribas",
+          "outcome": "W",
+          "method": "Submission R3 4:56",
+          "source": "https://www.ufc.com/athlete/mackenzie-dern",
+          "cageSec": 896
+        },
+        {
+          "date": "2024-08-03",
+          "opponent": "Loopy Godinez",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "source": "https://www.ufc.com/athlete/mackenzie-dern",
+          "cageSec": 900
+        },
+        {
+          "date": "2024-02-17",
+          "opponent": "Amanda Lemos",
+          "outcome": "L",
+          "method": "Unanimous decision R3",
+          "source": "https://www.ufc.com/athlete/mackenzie-dern",
+          "cageSec": 900
+        }
+      ],
+      "credentials": [
+        {
+          "kind": "bjj",
+          "belt": "black",
+          "source": "https://www.ufc.com/athlete/mackenzie-dern",
+          "detail": "BJJ black belt; UFC biography confirms two World Championship titles at black belt."
+        },
+        {
+          "kind": "adcc",
+          "medal": "gold",
+          "source": "https://www.ufc.com/athlete/mackenzie-dern",
+          "detail": "ADCC champion confirmed by UFC official biography."
+        }
+      ],
+      "sourceLinks": [
+        "https://www.ufc.com/athlete/mackenzie-dern",
+        "https://www.ufcalendar.com/fighters/mackenzie-dern/stats"
+      ],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "championStatusSource": "https://www.ufc.com/athletes?redirect=no",
+        "statsSource": "https://www.ufcalendar.com/fighters/mackenzie-dern/stats",
+        "recentHistorySource": "https://www.ufc.com/athlete/mackenzie-dern",
+        "credentialsChecked": true,
+        "notes": [
+          "Verified BJJ gold achievements are described in the biography; IBJJF medals are not automatically converted to ADCC awards. Five UFC submission victories among 17 tracked UFC fights."
+        ]
+      },
+      "meta": "Reigning UFC Women's Strawweight champion · independently reviewed fighter profile · 2026-11-12",
+      "analysis": [],
+      "verificationNote": "UFC-only sample and separately linked source-backed credentials. Unverified awards carry zero point bonus."
+    }
+  }
+}

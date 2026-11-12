@@ -210,7 +210,7 @@ window.UpcomingCards=(()=>{
   // Event time is already presented in the compact header. When expanded,
   // go straight to the card itself, without duplicate times, source links
   // or long editorial notes. Source URLs remain in the underlying JSON.
-  return '<details class="result-event upcoming-event" data-upcoming-card="'+esc(e.id)+'" '+(opened.has(e.id)?'open':'')+'>'+summary+
+  return '<details class="result-event upcoming-event" data-upcoming-card="'+esc(e.id)+'" data-befn-sport="'+esc(e.sport)+'" '+(opened.has(e.id)?'open':'')+'>'+summary+
    '<div class="upcoming-expanded"><div class="upcoming-card-bar"><strong>Fight card</strong><span>'+e.bouts.length+' total</span></div>'+tabs+panels+'</div></details>';
  }
  function listing(sport){

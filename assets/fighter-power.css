@@ -141,3 +141,347 @@
 @media(prefers-reduced-motion:reduce){
  .befn-power-panel *, .befn-power-panel *::before, .befn-power-panel *::after{transition:none!important;animation:none!important}
 }
+
+/* Unified fight-card and full-profile insights; credentials only in expanded views. */
+.befn-profile-insights,.befn-fight-snapshot{color:#f5f1e7;font-family:'DM Sans',system-ui,sans-serif}
+.befn-profile-insights{margin:15px 0;display:grid;gap:11px;min-width:0}
+.befn-profile-block{background:#14161c;border:1px solid #4b4440;border-radius:12px;overflow:hidden;min-width:0}
+.befn-profile-block>h3{margin:0!important;padding:11px 13px!important;background:linear-gradient(110deg,#f1d28d,#f9f3df);color:#1f1b17!important;font-size:15px!important;font-weight:900}
+.befn-profile-body{padding:13px}
+.befn-profile-body>.befn-power-bars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 15px}
+.befn-profile-insights .befn-power-metric-label{font-size:12px}
+.befn-profile-insights .befn-power-track{height:21px}
+.befn-credential-list{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.befn-credential{
+  display:inline-grid;place-items:center;position:relative;
+  width:40px;height:38px;border:1px solid #736147;border-radius:9px;
+  background:linear-gradient(145deg,#33333c,#12151a);
+  color:#f5d48a;vertical-align:middle;flex:0 0 40px;
+  font-size:24px;line-height:1;text-decoration:none;
+}
+.befn-credential[data-kind="bjj"] .befn-belt{
+ display:block;width:30px;height:11px;border:1px solid rgba(255,255,255,.55);
+ border-radius:3px;background:var(--belt,#7e42bf);
+ box-shadow:0 2px 0 #050609, inset -8px 0 0 rgba(0,0,0,.65);
+ transform:rotate(-8deg)
+}
+.befn-credential[data-kind="ncaa"]{font-size:11px;font-weight:900}
+.befn-credential .befn-credential-ncaa{display:grid;gap:1px;justify-items:center}
+.befn-credential .befn-credential-ncaa small{color:white;font-size:10px;letter-spacing:.05em}
+.befn-credential .befn-credential-ncaa b{font-size:16px;line-height:1}
+.befn-credential[data-kind="golden-gloves"]{color:#f2d26b}
+.befn-credential[title]:focus-visible{outline:3px solid #e9c15d;outline-offset:3px}
+.befn-credential-empty{font-size:11px;color:#aeb4bd}
+.befn-credential-note,.befn-score-note{margin:10px 0 0;color:#adb7c0;font-size:10px;line-height:1.5}
+.befn-profile-form{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.befn-profile-form .befn-power-result{min-width:29px;height:29px}
+.befn-fight-snapshot{
+ display:block;margin:9px 8px 10px;
+ background:#13161e;border:1px solid #a78a48;border-radius:10px;
+ overflow:hidden;
+}
+.befn-fight-snapshot>summary{
+ padding:11px 12px;min-height:44px;
+ display:flex;align-items:center;justify-content:space-between;
+ gap:8px;list-style:none;cursor:pointer;
+ background:linear-gradient(95deg,#f3d8a1,#faf5e8);
+ color:#211c15!important;font-size:12px;font-weight:900;
+}
+.befn-fight-snapshot>summary::-webkit-details-marker{display:none}
+.befn-fight-snapshot>summary::after{content:"⌄";font-size:20px;font-weight:800;line-height:1}
+.befn-fight-snapshot[open]>summary::after{content:"⌃"}
+.befn-fight-snapshot>summary:focus-visible{outline:3px solid #328fff;outline-offset:-3px}
+.befn-snapshot-body{padding:13px 10px 12px}
+.befn-snapshot-head,.befn-snapshot-side-by-side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.befn-snapshot-head{gap:13px;padding-bottom:10px}
+.befn-snapshot-head strong{display:block;color:#f9f7f2;font-size:12px;line-height:1.25;overflow-wrap:anywhere}
+.befn-snapshot-head>div:last-child{text-align:right}
+.befn-snapshot-bars{display:grid;gap:10px;border-block:1px solid #353945;padding:13px 0}
+.befn-snapshot-metric{
+ display:grid;grid-template-columns:21px minmax(0,1fr) 68px minmax(0,1fr) 21px;
+ gap:5px;align-items:center;min-width:0;
+}
+.befn-snapshot-metric b{font-size:10px;color:#f0e9dd;text-align:center;font-variant-numeric:tabular-nums}
+.befn-snapshot-metric-label{text-align:center;font-size:10px;color:#e6dfd4;font-weight:800;line-height:1.15}
+.befn-snapshot-metric .befn-power-track{height:15px}
+.befn-snapshot-metric .befn-power-track::after{background:repeating-linear-gradient(90deg,transparent 0,transparent calc(20% - 1px),rgba(18,22,25,.85) calc(20% - 1px),rgba(18,22,25,.85) 20%)}
+.befn-snapshot-metric .befn-bar-left .befn-power-fill{right:0;left:auto}
+.befn-snapshot-extra{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;padding-top:12px}
+.befn-snapshot-extra>div{min-width:0}
+.befn-snapshot-extra>div+div{border-left:1px solid #3b3e47;padding-left:10px}
+.befn-snapshot-extra h4{margin:0 0 8px!important;color:#e8cf8b!important;font-size:10px!important;line-height:1.35}
+.befn-snapshot-extra .befn-profile-form{gap:4px}
+.befn-snapshot-extra .befn-power-result{min-width:22px;height:22px;font-size:11px}
+.befn-snapshot-extra .befn-credential-list{gap:4px}
+.befn-snapshot-extra .befn-credential{width:32px;height:31px;flex-basis:32px;font-size:19px;border-radius:7px}
+.befn-snapshot-extra .befn-belt{width:23px!important;height:9px!important}
+.befn-snapshot-extra .befn-credential-ncaa small{font-size:8px}
+.befn-snapshot-extra .befn-credential-ncaa b{font-size:12px}
+.befn-snapshot-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:13px}
+.befn-snapshot-links button,.befn-snapshot-links .befn-link-unavailable{
+ display:flex;justify-content:center;align-items:center;padding:9px 5px;
+ min-height:40px;border:1px solid #77716a;border-radius:7px;
+ background:#292c33;color:#fff;font-size:11px;font-weight:750;text-align:center;
+}
+.befn-snapshot-links button:hover{border-color:#e2c479;background:#34343a}
+.befn-snapshot-links .befn-link-unavailable{opacity:.6}
+.befn-snapshot-disclaimer{font-size:9px;color:#aeb3bc;line-height:1.5;margin:11px 0 0}
+@media(max-width:580px){
+ .befn-profile-body>.befn-power-bars{grid-template-columns:minmax(0,1fr)}
+ .befn-fight-snapshot{margin:8px 5px 10px}
+ .befn-snapshot-body{padding:11px 8px}
+ .befn-snapshot-metric{grid-template-columns:20px minmax(0,1fr) 62px minmax(0,1fr) 20px;gap:4px}
+ .befn-snapshot-metric-label{font-size:9px}
+ .befn-snapshot-extra{gap:7px}
+ .befn-snapshot-extra>div+div{padding-left:7px}
+}
+@media(max-width:380px){
+ .befn-snapshot-metric{grid-template-columns:18px minmax(0,1fr) 54px minmax(0,1fr) 18px;gap:3px}
+ .befn-snapshot-metric-label{font-size:8px}
+ .befn-snapshot-links button{font-size:10px}
+}
+
+
+/* Mobile head-to-head fight history: 3 tabs, honest statistics, cage-time and tale. */
+.befn-recent-history{margin:16px 0 0;padding-top:13px;border-top:1px solid #3a404b}
+.befn-comparison-heading{margin:0 0 12px!important;color:#fff!important;font-size:16px!important;font-weight:900}
+.befn-history-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:11px}
+.befn-history-tabs button{
+ min-width:0;min-height:41px;padding:8px 4px;cursor:pointer;
+ border:1px solid #414550;border-radius:21px;background:#16171e;
+ color:#c5c7d0;font-size:11px;font-weight:850;line-height:1.18;
+ white-space:normal;overflow-wrap:break-word;
+}
+.befn-history-tabs button.is-active,
+.befn-history-tabs button[aria-selected="true"]{
+ background:#faefd6;border-color:#faefd6;color:#211b13;
+}
+.befn-history-tabs button:focus-visible{outline:3px solid #79c9ff;outline-offset:2px}
+.befn-history-panel{background:#1f212a;border:1px solid #373b47;border-radius:12px;overflow:hidden}
+.befn-history-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.befn-history-side{min-width:0}
+.befn-history-side+.befn-history-side{border-left:1px solid #3b4050}
+.befn-history-fighter{display:grid;gap:4px;padding:11px 10px;border-bottom:1px solid #39404b;text-align:left}
+.befn-history-side:last-child .befn-history-fighter{text-align:right}
+.befn-history-fighter b{color:#fff;font-size:12px;overflow-wrap:anywhere}
+.befn-history-fighter span{color:#aeb6c3;font-size:11px}
+.befn-history-fight{display:flex;align-items:flex-start;gap:7px;min-height:69px;padding:9px 8px;border-bottom:1px solid #2c3039}
+.befn-history-side:last-child .befn-history-fight{flex-direction:row-reverse;text-align:right}
+.befn-history-outcome{display:grid;align-content:center;justify-items:center;flex:0 0 28px;min-width:28px;border-radius:7px;overflow:hidden;background:#3b454e;color:#fff}
+.befn-history-outcome b{padding:4px;font-size:11px;line-height:1.3}
+.befn-history-outcome small{font-size:8px;line-height:1.6;width:100%;padding:0 2px;background:rgba(255,255,255,.16);text-align:center}
+.befn-history-outcome.is-win{background:#215333;color:#a8ffba}
+.befn-history-outcome.is-loss{background:#673335;color:#ffb9b5}
+.befn-history-outcome.is-no-contest{background:#244c6f;color:#bedffe}
+.befn-history-desc{min-width:0;display:grid;gap:2px;overflow-wrap:anywhere}
+.befn-history-desc small{font-size:10px;color:#b2b6c0}
+.befn-history-desc strong{font-size:11px;color:#f9f7f4;line-height:1.25}
+.befn-history-desc span{font-size:9px;color:#b9bfc9}
+.befn-history-empty{padding:11px 9px;color:#aeb5bd;font-size:10px;line-height:1.45}
+.befn-history-stats{padding:12px 10px}
+.befn-history-stats-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(62px,.85fr) minmax(0,1fr);gap:5px;align-items:center;margin-bottom:13px}
+.befn-history-stats-head strong{color:#fff;font-size:11px;line-height:1.3;overflow-wrap:anywhere}
+.befn-history-stats-head strong:last-child{text-align:right}
+.befn-history-stats-head>span{color:#afb5c1;font-size:9px;text-align:center}
+.befn-history-stat-heading{display:flex;align-items:center;gap:8px;color:#f7dba3!important;font-size:12px!important;font-weight:850;margin:14px 0 5px!important}
+.befn-history-stat-heading::before,.befn-history-stat-heading::after{content:"";height:1px;flex:1;background:#4a505c}
+.befn-history-stat{display:grid;grid-template-columns:minmax(0,.7fr) minmax(100px,1.7fr) minmax(0,.7fr);gap:6px;min-height:40px;align-items:center;padding:6px 0;border-bottom:1px solid #2c313b}
+.befn-history-stat b{color:#f0f0f3;font-size:14px;font-variant-numeric:tabular-nums}
+.befn-history-stat b:last-child{text-align:right}
+.befn-history-stat span{color:#c0c4cc;text-align:center;font-size:10px;font-weight:750;line-height:1.35}
+.befn-history-stats .befn-snapshot-disclaimer{margin:12px 0 2px;font-size:10px}
+.befn-cage-comparison{padding:12px 9px}
+.befn-history-caption{font-size:10px;color:#c4c7d0;text-align:center;margin:0 0 11px}
+.befn-cage-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
+.befn-cage-fighter{min-width:0;padding:0 7px}
+.befn-cage-fighter+.befn-cage-fighter{border-left:1px solid #3e4550}
+.befn-cage-head{display:grid;gap:2px;min-height:74px;border-bottom:1px solid #353b48;padding-bottom:10px}
+.befn-cage-head>span{font-size:10px;color:#e1e3e7;font-weight:800;overflow-wrap:anywhere}
+.befn-cage-head>strong{font-size:24px;color:#fff;font-weight:900;font-variant-numeric:tabular-nums}
+.befn-cage-head>small{font-size:9px;color:#b4bac5}
+.befn-cage-row{display:grid;grid-template-columns:minmax(0,1fr) 9px;gap:6px;align-items:center;min-height:68px;padding:10px 0;border-bottom:1px solid #2d323a}
+.befn-cage-fighter:last-child .befn-cage-row{grid-template-columns:9px minmax(0,1fr)}
+.befn-cage-fighter:last-child .befn-cage-row>div{grid-column:2;grid-row:1;text-align:right}
+.befn-cage-fighter:last-child .befn-cage-row>.befn-cage-track{grid-column:1;grid-row:1}
+.befn-cage-row>div{min-width:0}
+.befn-cage-row strong{display:block;color:#fff;font-size:15px;font-variant-numeric:tabular-nums}
+.befn-cage-row small{display:block;color:#b4b7c3;font-size:10px;line-height:1.35;overflow-wrap:anywhere}
+.befn-cage-track{height:37px;border-radius:4px;background:#373137;display:flex;align-items:flex-end;overflow:hidden}
+.befn-cage-fighter:last-child .befn-cage-track{background:#293e51}
+.befn-cage-track i{width:100%;height:var(--cage-fill,0%);background:#e8585c;border-radius:3px;display:block}
+.befn-cage-fighter:last-child .befn-cage-track i{background:#60b4fe}
+.befn-tale{margin:13px 0 0;background:#1f222b;border:1px solid #424753;border-radius:10px;overflow:hidden}
+.befn-tale>summary{padding:12px;cursor:pointer;color:#f5e7c7;font-weight:900;font-size:13px;min-height:44px}
+.befn-tale>summary span{display:block;color:#aeb6c3;font-weight:500;font-size:10px;margin-top:3px}
+.befn-tale[open]{padding-bottom:9px}
+.befn-tale .befn-history-stats-head,.befn-tale .befn-history-stat,.befn-tale .befn-snapshot-disclaimer{margin-left:10px;margin-right:10px}
+.befn-tale .befn-history-stats-head{padding-top:12px;border-top:1px solid #373e49}
+@media(max-width:420px){
+ .befn-history-tabs{gap:4px}
+ .befn-history-tabs button{font-size:10px;padding:8px 3px}
+ .befn-history-fight{gap:5px;padding:8px 5px;min-height:76px}
+ .befn-history-outcome{flex-basis:23px;min-width:23px}
+ .befn-history-desc strong{font-size:10px}
+ .befn-history-desc small{font-size:9px}
+ .befn-history-stats{padding:9px 7px}
+ .befn-history-stat{grid-template-columns:minmax(0,.65fr) minmax(88px,1.7fr) minmax(0,.65fr)}
+ .befn-history-stat b{font-size:12px}
+ .befn-history-stat span{font-size:9px}
+ .befn-cage-fighter{padding:0 5px}
+ .befn-cage-row strong{font-size:13px}
+ .befn-cage-row small{font-size:9px}
+}
+
+
+/* BEFN November 12: Last 5 Fights with cage-time column, mobile-first. */
+.befn-history-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+.befn-history-with-cage .befn-history-side{min-width:0}
+.befn-history-with-cage .befn-history-table-head{
+ display:grid;grid-template-columns:minmax(0,1fr) 56px;gap:6px;
+ padding:8px 9px 7px;border-bottom:1px solid #3c4250;
+ background:#292d37;color:#d6d9e1;
+ font-size:9px;font-weight:850;letter-spacing:.04em;text-transform:uppercase;
+}
+.befn-history-with-cage .befn-history-table-head span:last-child{text-align:right}
+.befn-history-with-cage .befn-history-fight,
+.befn-history-with-cage .befn-history-side:last-child .befn-history-fight{
+ display:grid;grid-template-columns:28px minmax(0,1fr) 56px;
+ grid-auto-flow:row;gap:7px;align-items:center;
+ min-height:71px;padding:9px 8px;text-align:left;
+}
+.befn-history-with-cage .befn-history-desc{min-width:0;overflow-wrap:anywhere}
+.befn-history-with-cage .befn-history-desc strong{word-break:normal}
+.befn-history-with-cage .befn-history-duration{
+ display:flex;justify-content:flex-end;align-items:center;
+ align-self:stretch;border-left:1px solid #3d414c;
+ padding-left:4px;min-width:0;
+}
+.befn-history-with-cage .befn-history-duration strong{
+ color:#ffe0a1;font-variant-numeric:tabular-nums;
+ font-size:12px;font-weight:900;white-space:nowrap;
+}
+.befn-history-cage-note{margin:0!important;padding:9px 11px;border-top:1px solid #343944}
+.befn-rating-method{
+ margin:13px 0 8px;background:#21242c;
+ border:1px solid #484b55;border-radius:8px;
+ color:#ccd3dd;font-size:11px;line-height:1.6;overflow:hidden;
+}
+.befn-rating-method>summary{
+ display:list-item;padding:11px 13px;min-height:43px;
+ color:#f3d48b;font-weight:850;cursor:pointer;
+ list-style-position:inside;
+}
+.befn-rating-method>summary:focus-visible{outline:3px solid #7dc3ff;outline-offset:-3px}
+.befn-rating-method[open]>summary{border-bottom:1px solid #454a54}
+.befn-rating-method p{margin:10px 12px!important;color:#cbd0d9!important;font-size:11px!important;line-height:1.6!important}
+.befn-rating-method ul{margin:0;padding:2px 14px 3px 30px}
+.befn-rating-method li{margin:7px 0}
+.befn-rating-method b,.befn-rating-method strong{color:#f4ddb0}
+@media(max-width:720px){
+ .befn-history-with-cage{grid-template-columns:minmax(0,1fr)}
+ .befn-history-with-cage .befn-history-side+.befn-history-side{border-left:0;border-top:2px solid #55586a}
+ .befn-history-with-cage .befn-history-side:last-child .befn-history-fighter{text-align:left}
+ .befn-history-with-cage .befn-history-fight,
+ .befn-history-with-cage .befn-history-side:last-child .befn-history-fight{
+  grid-template-columns:30px minmax(0,1fr) 62px;padding:10px 11px;gap:9px
+ }
+ .befn-history-with-cage .befn-history-table-head{grid-template-columns:minmax(0,1fr) 62px;padding:9px 11px}
+ .befn-history-with-cage .befn-history-desc strong{font-size:12px}
+ .befn-history-with-cage .befn-history-duration strong{font-size:13px}
+}
+@media(max-width:380px){
+ .befn-history-with-cage .befn-history-fight,
+ .befn-history-with-cage .befn-history-side:last-child .befn-history-fight{
+  grid-template-columns:25px minmax(0,1fr) 55px;gap:6px;padding:9px 8px
+ }
+ .befn-history-with-cage .befn-history-duration strong{font-size:12px}
+ .befn-history-with-cage .befn-history-table-head{grid-template-columns:minmax(0,1fr) 55px}
+}
+
+
+/* Nov 12 evidence-driven UFC 334 comparison and Olympic judo credential. */
+.befn-credential{isolation:isolate;position:relative}
+.befn-credential[data-kind="olympic-judo"]{
+ background:linear-gradient(135deg,#353040,#0d1a26);
+ border:1px solid #bb8c3f;
+}
+.befn-credential-judo{
+ display:flex;flex-direction:column;gap:1px;
+ align-items:center;justify-content:center;line-height:1;
+}
+.befn-credential-judo small{font-size:7px!important;letter-spacing:.06em;font-weight:900;color:#f7e8ba}
+.befn-credential-judo b{font-size:17px;line-height:1.05}
+.befn-credential-medal{
+ display:flex;align-items:center;gap:0;
+ position:absolute;bottom:-7px;right:-8px;
+ font-style:normal;font-size:13px;line-height:1;
+ border:1px solid #73674a;border-radius:50px;
+ padding:2px 1px;background:#171a1f;white-space:nowrap;
+ z-index:2;box-shadow:0 1px 5px #0008;
+}
+.befn-credential-medal small{color:#fae3a2;font-size:8px;line-height:1;font-weight:900}
+.befn-credential-list{gap:12px 11px;padding:6px 6px 8px 2px}
+.befn-snapshot-extra .befn-credential-list{gap:10px 9px}
+.befn-credential[data-kind="ncaa"] .befn-credential-medal{font-size:13px}
+.befn-rating-source-row{margin:9px 0 0}
+.befn-rating-source-note{display:block;color:#aeb7c4;font-size:10px;line-height:1.35}
+.befn-rating-source-note a{color:#f5d38f;text-decoration:underline;text-underline-offset:2px}
+.befn-snapshot-head .befn-rating-source-note{font-size:9px;margin-top:5px;line-height:1.3}
+.befn-snapshot-head>div:last-child .befn-rating-source-note{text-align:right}
+.befn-fight-snapshot .befn-snapshot-disclaimer{line-height:1.6}
+@media(max-width:580px){
+ .befn-snapshot-extra .befn-credential-list{gap:12px 10px}
+ .befn-snapshot-head strong{font-size:11px}
+ .befn-snapshot-head .befn-rating-source-note{font-size:8px;overflow-wrap:anywhere}
+}
+
+/* Verified NCAA background is a bounded Wrestling modifier, not a prediction. */
+.befn-college-prior-note{display:block;margin:7px 0 0;color:#c9d1da;font-size:10px;line-height:1.5}
+.befn-college-prior-note a{color:#f4d593;text-decoration:underline}
+.befn-college-bonus{display:block;margin-top:3px;color:#d4ad66;font-size:8px;line-height:1.2;font-weight:700}
+.befn-credential[data-credential-verification="reported"]::after{
+ content:"?";position:absolute;top:-5px;right:-5px;width:13px;height:13px;
+ background:#67512b;color:#fff6dc;border-radius:50%;display:grid;place-items:center;
+ border:1px solid #c4a05a;font-size:10px;font-weight:900;
+}
+
+
+/* 12 Nov v3: evidence-backed statistic base + fixed sourced credential points */
+.befn-credential-score-note{
+ display:grid;gap:4px;min-width:0;margin:7px 0;
+ padding:8px 10px;border:1px solid #685839;
+ border-radius:8px;background:rgba(217,167,77,.075);
+ font-size:10px;line-height:1.45;color:#e6d7b1;
+}
+.befn-credential-score-note strong{font-size:11px;font-variant-numeric:tabular-nums;color:#f4dfad}
+.befn-credential-score-note span{color:#c8ced6;overflow-wrap:anywhere}
+.befn-credential-score-note a{
+ color:#edd09b;text-decoration:underline;
+ text-underline-offset:2px;overflow-wrap:anywhere;
+}
+.befn-credential-score-note a:focus-visible{outline:2px solid #f0d094;outline-offset:2px}
+.befn-snapshot-extra .befn-credential-score-note{margin:8px 0}
+.befn-snapshot-metric .befn-college-bonus{
+ display:block;margin-top:3px;color:#f1c979;
+ font-size:9px;font-weight:800;white-space:normal;line-height:1.2;
+}
+.befn-rating-method li{overflow-wrap:anywhere}
+@media(max-width:430px){
+ .befn-snapshot-metric .befn-college-bonus{font-size:8px}
+ .befn-snapshot-extra .befn-credential-score-note{padding:7px}
+}
+
+
+/* Champion program: keep hover portrait separate from full scouting profile action. */
+.befn-champion-profile-link{
+ display:inline-flex;align-items:center;justify-content:center;
+ min-height:30px;margin:6px 0 7px;padding:5px 10px;
+ background:#f3dfb8;border:1px solid #c09a51;border-radius:7px;
+ color:#241a12;font-size:11px;font-weight:850;
+ line-height:1.2;white-space:normal;text-align:center;
+}
+.befn-champion-profile-link:hover{background:#fff1d8}
+.befn-champion-profile-link:focus-visible{outline:3px solid #6fc8ec;outline-offset:2px}
+@media(max-width:540px){
+ .befn-champion-profile-link{font-size:10px;min-height:33px;padding:6px 9px}
+}

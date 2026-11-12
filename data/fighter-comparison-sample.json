@@ -1,0 +1,273 @@
+{
+  "schema": 1,
+  "reviewedOn": "2026-11-12",
+  "purpose": "Test-branch fighter comparisons and verified credentials. Participation badges and championship medals are separate; do not infer medals from NCAA All-American status. Screenshot-only timing metrics remain unverified.",
+  "fighters": {
+    "cirylgane": {
+      "name": "Ciryl Gane",
+      "sport": "MMA",
+      "id": "mma-spotlight--ciryl-gane",
+      "category": "Contender",
+      "division": "Heavyweight",
+      "record": "14–2 (1 NC)",
+      "meta": "UFC heavyweight · MMA Factory, Paris",
+      "source": "https://www.ufc.com/athlete/ciryl-gane",
+      "tale": {
+        "age": 36,
+        "heightIn": 76,
+        "reachIn": 81,
+        "ufcRecord": "11–2 (1 NC)",
+        "source": "https://www.ufc.com/athlete/ciryl-gane"
+      },
+      "latest": [
+        {
+          "date": "14 Jun 2026",
+          "opponent": "Alex Pereira",
+          "outcome": "W",
+          "method": "TKO · R2 1:27",
+          "cageSec": 387
+        },
+        {
+          "date": "25 Oct 2025",
+          "opponent": "Tom Aspinall",
+          "outcome": "NC",
+          "method": "NC · R1 4:35",
+          "cageSec": 275
+        },
+        {
+          "date": "7 Dec 2024",
+          "opponent": "Alexander Volkov",
+          "outcome": "W",
+          "method": "Decision · R3 5:00",
+          "cageSec": 900
+        },
+        {
+          "date": "2 Sep 2023",
+          "opponent": "Serghei Spivac",
+          "outcome": "W",
+          "method": "TKO · R2 3:44",
+          "cageSec": 524
+        },
+        {
+          "date": "4 Mar 2023",
+          "opponent": "Jon Jones",
+          "outcome": "L",
+          "method": "Submission · R1 2:04",
+          "cageSec": 124
+        }
+      ],
+      "reference": {
+        "label": "Comparison screenshots supplied for design review; verify cage durations before production",
+        "sourceType": "user-screenshot"
+      },
+      "statsReference": {
+        "sigLandedPerMin": 6.57,
+        "sigAbsorbedPerMin": 2.55,
+        "sigAccuracy": 69,
+        "knockdowns": 1,
+        "controlSec": 241,
+        "takedowns": 2,
+        "takedownsDefended": 3,
+        "submissionAttempts": 2
+      },
+      "taleReference": {
+        "opponentsCombinedRecord": "108–20 (84%)",
+        "recordOutsideUFC": "3–0",
+        "ufcTitleFights": "2–2–1",
+        "totalFinishes": "10–1",
+        "koTko": "7–0",
+        "submissions": "3–1",
+        "unanimousDecisions": "3–1",
+        "splitDecisions": "1–0"
+      }
+    },
+    "joshhokit": {
+      "name": "Josh Hokit",
+      "sport": "MMA",
+      "id": "mma-spotlight--josh-hokit",
+      "category": "Contender",
+      "division": "Heavyweight",
+      "record": "10–0",
+      "meta": "UFC heavyweight · Wrestling background · Fresno State NCAA All-American (not NCAA champion)",
+      "source": "https://www.ufc.com/athlete/josh-hokit",
+      "tale": {
+        "age": 28,
+        "heightIn": 73,
+        "reachIn": 73.5,
+        "ufcRecord": "4–0",
+        "source": "https://www.ufc.com/athlete/josh-hokit"
+      },
+      "latest": [
+        {
+          "date": "14 Jun 2026",
+          "opponent": "Derrick Lewis",
+          "outcome": "W",
+          "method": "TKO · R2 4:09",
+          "cageSec": 549
+        },
+        {
+          "date": "11 Apr 2026",
+          "opponent": "Curtis Blaydes",
+          "outcome": "W",
+          "method": "Decision · R3 5:00",
+          "cageSec": 900
+        },
+        {
+          "date": "24 Jan 2026",
+          "opponent": "Denzel Freeman",
+          "outcome": "W",
+          "method": "TKO · R1 4:59",
+          "cageSec": 299
+        },
+        {
+          "date": "8 Nov 2025",
+          "opponent": "Max Gimenis",
+          "outcome": "W",
+          "method": "TKO · R1 0:56",
+          "cageSec": 56
+        },
+        {
+          "date": "19 Aug 2025",
+          "opponent": "Guilherme Uriel",
+          "outcome": "W",
+          "method": "TKO · R2 1:06",
+          "cageSec": 366
+        }
+      ],
+      "reference": {
+        "label": "Comparison screenshots supplied for design review; verify cage durations before production",
+        "sourceType": "user-screenshot"
+      },
+      "statsReference": {
+        "sigLandedPerMin": 11.18,
+        "sigAbsorbedPerMin": 6.35,
+        "sigAccuracy": 65,
+        "knockdowns": 3,
+        "controlSec": 747,
+        "takedowns": 9,
+        "takedownsDefended": 6,
+        "submissionAttempts": 1
+      },
+      "taleReference": {
+        "opponentsCombinedRecord": "67–21 (76%)",
+        "recordOutsideUFC": "6–0",
+        "ufcTitleFights": "0–0",
+        "totalFinishes": "9–0",
+        "koTko": "6–0",
+        "submissions": "3–0",
+        "unanimousDecisions": "1–0",
+        "splitDecisions": "0–0"
+      },
+      "credentials": [
+        {
+          "kind": "ncaa",
+          "division": "I",
+          "source": "https://gobulldogs.com/sports/wrestling/roster/josh-hokit/9589",
+          "detail": "NCAA Division I wrestling competitor, 2019 All-American, fifth place (197 lb); not an NCAA champion"
+        }
+      ]
+    },
+    "bonickal": {
+      "id": "mma-prospects--bo-nickal",
+      "name": "Bo Nickal",
+      "sport": "MMA",
+      "credentials": [
+        {
+          "kind": "ncaa",
+          "division": "I",
+          "medal": "gold",
+          "source": "https://nwhof.org/national-wrestling-hall-of-fame/champions-database?wrestler=3335",
+          "detail": "NCAA Division I wrestling · 3-time individual national champion (2017, 2018 and 2019); also 2016 runner-up"
+        }
+      ]
+    },
+    "dakotahope": {
+      "id": "mma-prospects--dakota-hope",
+      "name": "Dakota Hope",
+      "sport": "MMA",
+      "credentials": [
+        {
+          "kind": "ncaa",
+          "division": "II",
+          "source": "https://www.ufc.com/athlete/dakota-hope",
+          "detail": "NCAA Division II wrestling participant · New Mexico Highlands University (one season); no documented NCAA individual medal"
+        }
+      ]
+    },
+    "diegopacheco": {
+      "id": "boxing-contenders--diego-pacheco",
+      "name": "Diego Pacheco",
+      "sport": "Boxing",
+      "category": "Contender",
+      "division": "Super Middleweight",
+      "record": "26–0 (19 KOs)",
+      "source": "https://www.matchroomboxing.com/boxers/diego-pachecho/",
+      "credentials": [
+        {
+          "kind": "golden-gloves",
+          "level": "junior",
+          "source": "https://www.matchroomboxing.com/boxers/diego-pachecho/",
+          "detail": "Junior Golden Gloves, 2017, as documented by Matchroom Boxing"
+        }
+      ],
+      "tale": {
+        "age": 25,
+        "heightIn": 76,
+        "source": "https://www.matchroomboxing.com/boxers/diego-pachecho/"
+      }
+    },
+    "dariusfulghum": {
+      "id": "boxing-spotlight--darius-fulghum",
+      "name": "Darius Fulghum",
+      "sport": "Boxing",
+      "division": "Super Middleweight",
+      "category": "Contender",
+      "record": "15–1–1 (13 KOs)",
+      "meta": "Golden Boy Promotions · Houston, Texas",
+      "source": "https://www.goldenboy.com/fighter-profile/darius-fulghum/",
+      "analysis": [
+        "2018 National Golden Gloves champion; Golden Boy Promotions biography"
+      ],
+      "credentials": [
+        {
+          "kind": "golden-gloves",
+          "level": "national",
+          "source": "https://www.goldenboy.com/fighter-profile/darius-fulghum/",
+          "detail": "2018 National Golden Gloves champion, heavyweight (201 lb)"
+        }
+      ],
+      "latest": [
+        {
+          "date": "22 May 2026",
+          "opponent": "Yoanki Urrutia",
+          "outcome": "W",
+          "method": "TKO R3"
+        },
+        {
+          "date": "8 Nov 2025",
+          "opponent": "David Stevens",
+          "outcome": "D",
+          "method": "Draw"
+        },
+        {
+          "date": "30 May 2025",
+          "opponent": "Bektemir Melikuziev",
+          "outcome": "L",
+          "method": "Unanimous decision"
+        },
+        {
+          "date": "15 Feb 2025",
+          "opponent": "Winfred Harris Jr.",
+          "outcome": "W",
+          "method": "KO R4"
+        },
+        {
+          "date": "27 Jan 2024",
+          "opponent": "Alantez Fox",
+          "outcome": "W",
+          "method": "Majority decision"
+        }
+      ]
+    }
+  }
+}

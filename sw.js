@@ -1,5 +1,5 @@
 /* Offline-ready app shell. Always prioritise network for news and fight data. */
-const CACHE_NAME = 'befn-app-shell-v31-20261112-card-parity';
+const CACHE_NAME = 'befn-app-shell-v37-20261112-ufc-champions';
 const SHELL = [
   '/', '/index.html', '/manifest.webmanifest',
   '/assets/mark.svg', '/assets/site-favicon-192.png', '/assets/icon-192.png', '/assets/icon-512.png', '/assets/apple-touch-icon.png', '/assets/icon-maskable-512.png',
@@ -7,11 +7,13 @@ const SHELL = [
   '/assets/brand-theme.css', '/assets/editorial-compact.css', '/assets/news-list.css', '/assets/global-sport-v1.0.3.css', '/assets/global-sport-v1.0.3.js', '/assets/compact-discipline-logos.css', '/assets/promotion-coverage.js', '/assets/promotion-coverage.css',
   '/assets/mobile-app.css', '/assets/mobile-app.js',
   '/assets/notifications.css', '/assets/notifications.js', '/assets/push-config.js',
+  '/assets/ufcalendar-fights-enrichment.js',
+  '/data/ufc334-fighter-evidence.json',
   '/assets/fighter-hover.js', '/assets/scout-intelligence.js', '/assets/ufcalendar-evidence.js',
   '/assets/local-time.js', '/assets/upcoming-cards.js',
   '/assets/upcoming-cards.css', '/assets/fight-talk.css',
   '/assets/fight-film.css', '/assets/fight-film.js',
-  '/assets/results.css', '/assets/results.js', '/assets/fights-hub.css', '/assets/event-status.js'
+  '/assets/results.css', '/assets/results.js', '/assets/fights-hub.css', '/assets/event-status.js', '/assets/fighter-power-index.js', '/assets/fighter-insights.js', '/assets/fighter-power.css'
 ];
 const SHELL_PATHS = new Set(SHELL);
 self.addEventListener('install', event => {

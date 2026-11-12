@@ -1,0 +1,901 @@
+{
+  "schema": 1,
+  "eventId": "ufc-334-2026-11-14",
+  "reviewedOn": "2026-11-12",
+  "purpose": "Researched BEFN non-production fighter-profile and expanded comparison example. Only evidence-backed statistics; avoid implying ratings are objectively validated skill.",
+  "sourceNotes": "Statistical rates derive from the linked UFC/UFCalendar career snapshot; some samples include DWCS and earlier promotions. No unverified screenshots contribute to ratings. No data means unrated; no medals inferred from background. The reported BJJ rank for Ciryl Gane is sourced to BJJ.TV and requires direct gym/instructor confirmation; NCAA Division I wrestling prior is distinct from an NCAA championship medal.",
+  "fighters": {
+    "ciryl-gane": {
+      "name": "Ciryl Gane",
+      "id": "mma-ufc334--ciryl-gane",
+      "sport": "MMA",
+      "record": "14–2 (1 NC)",
+      "division": "UFC 334 · Heavyweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/ciryl-gane-vs-josh-hokit",
+      "verifiedStats": {
+        "slpm": 5.4,
+        "sapm": 2.31,
+        "strAcc": 62,
+        "strDef": 61,
+        "tdAvg": 0.66,
+        "tdAcc": 24,
+        "tdDef": 47,
+        "subAvg": 0.58,
+        "controlShare": 0.09,
+        "source": "https://www.ufcalendar.com/fighters/ciryl-gane/stats",
+        "sampleBouts": 14,
+        "observedOn": "2026-11-12",
+        "submissionWinRate": 0.14285714285714285,
+        "submissionWins": 2,
+        "submissionWinSource": "https://www.ufc.com/athlete/ciryl-gane?page=1",
+        "grapplingEvidenceNote": "UFC-only sample: 2 submission wins (Raphael Pessoa, Don'Tale Mayes) / 14 UFC fights with statistics. UFC athlete biography confirms both finishes; UFC-only rate is not 3 career submissions / 14 fights."
+      },
+      "latest": [
+        {
+          "date": "14 Jun 2026",
+          "opponent": "Alex Pereira",
+          "outcome": "W",
+          "method": "TKO R2 1:27",
+          "cageSec": 387
+        },
+        {
+          "date": "25 Oct 2025",
+          "opponent": "Tom Aspinall",
+          "outcome": "NC",
+          "method": "No contest R1 4:35",
+          "cageSec": 275
+        },
+        {
+          "date": "7 Dec 2024",
+          "opponent": "Alexander Volkov",
+          "outcome": "W",
+          "method": "Split decision R3",
+          "cageSec": 900
+        },
+        {
+          "date": "2 Sep 2023",
+          "opponent": "Serghei Spivac",
+          "outcome": "W",
+          "method": "TKO R2 3:44",
+          "cageSec": 524
+        },
+        {
+          "date": "4 Mar 2023",
+          "opponent": "Jon Jones",
+          "outcome": "L",
+          "method": "Submission R1 2:04",
+          "cageSec": 124
+        }
+      ],
+      "credentials": [
+        {
+          "kind": "bjj",
+          "belt": "black",
+          "source": "https://bjj.tv/how-good-is-ciryl-gane-at-jiu-jitsu/",
+          "detail": "Reported black BJJ belt under Fernand Lopez (BJJ.TV, April 2026). UFC profile does not independently confirm the promotion; other BJJ sources dispute formal belt verification.",
+          "verification": "reported"
+        }
+      ]
+    },
+    "josh-hokit": {
+      "name": "Josh Hokit",
+      "id": "mma-ufc334--josh-hokit",
+      "sport": "MMA",
+      "record": "10–0",
+      "division": "UFC 334 · Heavyweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/ciryl-gane-vs-josh-hokit",
+      "verifiedStats": {
+        "slpm": 9.29,
+        "sapm": 5.28,
+        "strAcc": 65,
+        "strDef": 49,
+        "tdAvg": 3.73,
+        "tdAcc": 47,
+        "tdDef": 78,
+        "subAvg": 0.4,
+        "controlShare": 0.34,
+        "kdAvg": 1.24,
+        "koTkoWinRate": 0.8,
+        "source": "https://www.ufcalendar.com/fighters/josh-hokit/stats",
+        "sampleBouts": 5,
+        "observedOn": "2026-11-12",
+        "submissionWinRate": 0
+      },
+      "latest": [
+        {
+          "date": "14 Jun 2026",
+          "opponent": "Derrick Lewis",
+          "outcome": "W",
+          "method": "TKO R2 4:09",
+          "cageSec": 549
+        },
+        {
+          "date": "11 Apr 2026",
+          "opponent": "Curtis Blaydes",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "cageSec": 900
+        },
+        {
+          "date": "24 Jan 2026",
+          "opponent": "Denzel Freeman",
+          "outcome": "W",
+          "method": "TKO R1 4:59",
+          "cageSec": 299
+        },
+        {
+          "date": "8 Nov 2025",
+          "opponent": "Max Gimenis",
+          "outcome": "W",
+          "method": "TKO R1 0:56",
+          "cageSec": 56
+        },
+        {
+          "date": "19 Aug 2025",
+          "opponent": "Guilherme Uriel",
+          "outcome": "W",
+          "method": "TKO R2 1:06",
+          "cageSec": 366
+        }
+      ],
+      "credentials": [
+        {
+          "kind": "ncaa",
+          "division": "I",
+          "source": "https://gobulldogs.com/news/2019/3/23/wrestling-2019-ncaa-championships-day-three",
+          "detail": "Verified NCAA Division I wrestling All-American, fifth place at 197 lb in the 2019 championships (Fresno State); no NCAA individual podium medal.",
+          "placement": 5,
+          "year": 2019,
+          "credentialType": "college-wrestling"
+        }
+      ]
+    },
+    "kayla-harrison": {
+      "name": "Kayla Harrison",
+      "id": "mma-ufc334--kayla-harrison",
+      "sport": "MMA",
+      "record": "19–1",
+      "division": "UFC 334 · Women's Bantamweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/kayla-harrison-vs-amanda-nunes",
+      "verifiedStats": {
+        "slpm": 4.29,
+        "sapm": 1.1,
+        "strAcc": 62,
+        "strDef": 66,
+        "tdAvg": 2.84,
+        "tdAcc": 38,
+        "tdDef": 100,
+        "subAvg": 0.9,
+        "controlShare": 0.59,
+        "submissionWinRate": 0.6666666666666666,
+        "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/kayla-harrison-vs-amanda-nunes",
+        "sampleBouts": 3,
+        "observedOn": "2026-11-12"
+      },
+      "latest": [
+        {
+          "date": "7 Jun 2025",
+          "opponent": "Julianna Peña",
+          "outcome": "W",
+          "method": "Submission R2 4:55",
+          "cageSec": 595
+        },
+        {
+          "date": "5 Oct 2024",
+          "opponent": "Ketlen Vieira",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "cageSec": 900
+        },
+        {
+          "date": "13 Apr 2024",
+          "opponent": "Holly Holm",
+          "outcome": "W",
+          "method": "Submission R2 1:47",
+          "cageSec": 407
+        },
+        {
+          "date": "24 Nov 2023",
+          "opponent": "Aspen Ladd",
+          "outcome": "W",
+          "method": "Decision R3",
+          "cageSec": 900
+        },
+        {
+          "date": "25 Nov 2022",
+          "opponent": "Larissa Pacheco",
+          "outcome": "L",
+          "method": "Decision R5",
+          "cageSec": 1500
+        }
+      ],
+      "credentials": [
+        {
+          "kind": "olympic-judo",
+          "participated": true,
+          "medal": "gold",
+          "medalCount": 2,
+          "years": [
+            2012,
+            2016
+          ],
+          "source": "https://www.teamusa.com/profiles/kayla-harrison",
+          "detail": "Two Olympic judo gold medals: London 2012 and Rio 2016, women's -78 kg."
+        }
+      ]
+    },
+    "amanda-nunes": {
+      "name": "Amanda Nunes",
+      "id": "mma-ufc334--amanda-nunes",
+      "sport": "MMA",
+      "record": "23–5",
+      "division": "UFC 334 · Women's Bantamweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/kayla-harrison-vs-amanda-nunes",
+      "verifiedStats": {
+        "slpm": 4.55,
+        "sapm": 2.62,
+        "strAcc": 51,
+        "strDef": 57,
+        "tdAvg": 2.73,
+        "tdAcc": 54,
+        "tdDef": 82,
+        "subAvg": 0.7,
+        "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/kayla-harrison-vs-amanda-nunes",
+        "sampleBouts": 18,
+        "observedOn": "2026-11-12"
+      },
+      "latest": [
+        {
+          "date": "10 Jun 2023",
+          "opponent": "Irene Aldana",
+          "outcome": "W",
+          "method": "Unanimous decision R5",
+          "cageSec": 1500
+        },
+        {
+          "date": "30 Jul 2022",
+          "opponent": "Julianna Peña",
+          "outcome": "W",
+          "method": "Unanimous decision R5",
+          "cageSec": 1500
+        },
+        {
+          "date": "11 Dec 2021",
+          "opponent": "Julianna Peña",
+          "outcome": "L",
+          "method": "Submission R2 3:26",
+          "cageSec": 506
+        },
+        {
+          "date": "6 Mar 2021",
+          "opponent": "Megan Anderson",
+          "outcome": "W",
+          "method": "Submission R1 2:03",
+          "cageSec": 123
+        },
+        {
+          "date": "6 Jun 2020",
+          "opponent": "Felicia Spencer",
+          "outcome": "W",
+          "method": "Unanimous decision R5",
+          "cageSec": 1500
+        }
+      ],
+      "credentials": [
+        {
+          "kind": "bjj",
+          "belt": "black",
+          "source": "https://www.ufc.com/athlete/amanda-nunes?language_content_entity=es&page=1",
+          "detail": "Brazilian jiu-jitsu black belt confirmed by UFC athlete profile."
+        }
+      ]
+    },
+    "caio-borralho": {
+      "name": "Caio Borralho",
+      "id": "mma-ufc334--caio-borralho",
+      "sport": "MMA",
+      "record": "18–2",
+      "division": "UFC 334 · Middleweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/caio-borralho-vs-yousri-belgaroui",
+      "verifiedStats": {
+        "slpm": 3.47,
+        "sapm": 2.61,
+        "strAcc": 56,
+        "strDef": 60,
+        "tdAvg": 1.25,
+        "tdAcc": 50,
+        "tdDef": 76,
+        "subAvg": 0.4,
+        "controlShare": 0.26,
+        "source": "https://www.ufcalendar.com/fighters/caio-borralho/stats",
+        "sampleBouts": 11,
+        "observedOn": "2026-11-12",
+        "submissionWinRate": 0.09090909090909091
+      },
+      "latest": [
+        {
+          "date": "7 Mar 2026",
+          "opponent": "Reinier de Ridder",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "cageSec": 900
+        },
+        {
+          "date": "6 Sep 2025",
+          "opponent": "Nassourdine Imavov",
+          "outcome": "L",
+          "method": "Unanimous decision R5",
+          "cageSec": 1500
+        },
+        {
+          "date": "24 Aug 2024",
+          "opponent": "Jared Cannonier",
+          "outcome": "W",
+          "method": "Unanimous decision R5",
+          "cageSec": 1500
+        },
+        {
+          "date": "4 May 2024",
+          "opponent": "Paul Craig",
+          "outcome": "W",
+          "method": "TKO R2 2:10",
+          "cageSec": 430
+        },
+        {
+          "date": "4 Nov 2023",
+          "opponent": "Abus Magomedov",
+          "outcome": "W",
+          "method": "Unanimous decision R3",
+          "cageSec": 900
+        }
+      ],
+      "credentials": [
+        {
+          "kind": "bjj",
+          "belt": "black",
+          "source": "https://www.ufc.com/athlete/caio-borralho?page=1",
+          "detail": "Brazilian jiu-jitsu black belt confirmed in UFC fighter biography."
+        }
+      ]
+    },
+    "yousri-belgaroui": {
+      "name": "Yousri Belgaroui",
+      "id": "mma-ufc334--yousri-belgaroui",
+      "sport": "MMA",
+      "record": "11–3",
+      "division": "UFC 334 · Middleweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/caio-borralho-vs-yousri-belgaroui",
+      "verifiedStats": {
+        "slpm": 5.8,
+        "sapm": 2.16,
+        "strAcc": 57,
+        "strDef": 66,
+        "tdAvg": 0.27,
+        "tdAcc": 100,
+        "tdDef": 64,
+        "subAvg": 0,
+        "controlShare": 0.07,
+        "source": "https://www.ufcalendar.com/fighters/yousri-belgaroui/stats",
+        "sampleBouts": 5,
+        "observedOn": "2026-11-12",
+        "submissionWinRate": 0
+      },
+      "latest": [
+        {
+          "date": "12 Sep 2026",
+          "opponent": "Djorden Santos",
+          "outcome": "W",
+          "method": "TKO R1 4:25",
+          "cageSec": 265
+        },
+        {
+          "date": "28 Mar 2026",
+          "opponent": "Mansur Abdul-Malik",
+          "outcome": "W",
+          "method": "TKO R3 3:39",
+          "cageSec": 819
+        },
+        {
+          "date": "18 Oct 2025",
+          "opponent": "Azamat Bekoev",
+          "outcome": "W",
+          "method": "TKO R3 0:55",
+          "cageSec": 655
+        },
+        {
+          "date": "10 Sep 2024",
+          "opponent": "Taiga Iwasaki",
+          "outcome": "W",
+          "method": "TKO R3 2:35",
+          "cageSec": 755
+        },
+        {
+          "date": "18 Feb 2024",
+          "opponent": "Ahmed Sami",
+          "outcome": "W",
+          "method": "Unanimous decision"
+        }
+      ]
+    },
+    "uros-medic": {
+      "name": "Uroš Medić",
+      "id": "mma-ufc334--uros-medic",
+      "sport": "MMA",
+      "record": "14–3",
+      "division": "UFC 334 · Welterweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/uros-medic-vs-kevin-holland",
+      "verifiedStats": {
+        "slpm": 5.7,
+        "sapm": 3.36,
+        "strAcc": 61,
+        "strDef": 57,
+        "tdAvg": 0.33,
+        "tdAcc": 50,
+        "tdDef": 56,
+        "subAvg": 0,
+        "source": "https://www.ufcalendar.com/fighters/uros-medic",
+        "sampleBouts": 12,
+        "observedOn": "2026-11-12",
+        "submissionWinRate": 0
+      }
+    },
+    "kevin-holland": {
+      "name": "Kevin Holland",
+      "id": "mma-ufc334--kevin-holland",
+      "sport": "MMA",
+      "record": "29–15",
+      "division": "UFC 334 · Welterweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/uros-medic-vs-kevin-holland",
+      "verifiedStats": {
+        "slpm": 4.24,
+        "sapm": 3.21,
+        "strAcc": 50,
+        "tdAvg": 0.79,
+        "tdAcc": 37,
+        "tdDef": 58,
+        "subAvg": 0.6,
+        "controlShare": 0.13,
+        "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/uros-medic-vs-kevin-holland",
+        "sampleBouts": 30,
+        "observedOn": "2026-11-12"
+      }
+    },
+    "bilal-hasan": {
+      "name": "Bilal Hasan",
+      "id": "mma-ufc334--bilal-hasan",
+      "sport": "MMA",
+      "record": "10–0",
+      "division": "UFC 334 · Flyweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/bilal-hasan-vs-luis-gurule",
+      "verifiedStats": {
+        "slpm": 9.01,
+        "sapm": 4.38,
+        "tdAvg": 1.83,
+        "tdAcc": 100,
+        "subAvg": 0,
+        "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/bilal-hasan-vs-luis-gurule",
+        "sampleBouts": 2,
+        "observedOn": "2026-11-12"
+      }
+    },
+    "luis-gurule": {
+      "name": "Luis Gurule",
+      "id": "mma-ufc334--luis-gurule",
+      "sport": "MMA",
+      "record": "11–4",
+      "division": "UFC 334 · Flyweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/bilal-hasan-vs-luis-gurule",
+      "verifiedStats": {
+        "slpm": 5.44,
+        "sapm": 5.35,
+        "strAcc": 44,
+        "strDef": 57,
+        "tdAvg": 0.64,
+        "tdAcc": 16,
+        "tdDef": 73,
+        "subAvg": 0.2,
+        "controlShare": 0.09,
+        "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/bilal-hasan-vs-luis-gurule",
+        "sampleBouts": 6,
+        "observedOn": "2026-11-12"
+      }
+    },
+    "stephen-thompson": {
+      "name": "Stephen Thompson",
+      "id": "mma-ufc334--stephen-thompson",
+      "sport": "MMA",
+      "record": "17–9–1",
+      "division": "UFC 334 · Welterweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/stephen-thompson-vs-charles-radtke",
+      "verifiedStats": {
+        "slpm": 4.05,
+        "sapm": 3,
+        "tdAvg": 0.23,
+        "tdAcc": 36,
+        "tdDef": 63,
+        "subAvg": 0,
+        "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/stephen-thompson-vs-charles-radtke",
+        "sampleBouts": 21,
+        "observedOn": "2026-11-12"
+      }
+    },
+    "charles-radtke": {
+      "name": "Charles Radtke",
+      "id": "mma-ufc334--charles-radtke",
+      "sport": "MMA",
+      "record": "12–5",
+      "division": "UFC 334 · Welterweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/stephen-thompson-vs-charles-radtke",
+      "verifiedStats": {
+        "slpm": 2.5,
+        "sapm": 2.45,
+        "strAcc": 54,
+        "strDef": 55,
+        "tdAvg": 1.99,
+        "tdAcc": 44,
+        "tdDef": 100,
+        "subAvg": 0.5,
+        "controlShare": 0.51,
+        "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/stephen-thompson-vs-charles-radtke",
+        "sampleBouts": 7,
+        "observedOn": "2026-11-12"
+      }
+    },
+    "drew-dober": {
+      "name": "Drew Dober",
+      "id": "mma-ufc334--drew-dober",
+      "sport": "MMA",
+      "record": "29–15",
+      "division": "UFC 334 · Lightweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/drew-dober-vs-chris-duncan",
+      "verifiedStats": {
+        "slpm": 4.48,
+        "sapm": 4.33,
+        "strAcc": 41,
+        "tdAvg": 0.61,
+        "tdAcc": 17,
+        "tdDef": 58,
+        "subAvg": 0.1,
+        "controlShare": 0.13,
+        "kdAvg": 0.8,
+        "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/drew-dober-vs-chris-duncan",
+        "sampleBouts": 27,
+        "observedOn": "2026-11-12"
+      }
+    },
+    "chris-duncan": {
+      "name": "Chris Duncan",
+      "id": "mma-ufc334--chris-duncan",
+      "sport": "MMA",
+      "record": "15–3",
+      "division": "UFC 334 · Lightweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/drew-dober-vs-chris-duncan",
+      "verifiedStats": {
+        "slpm": 4.83,
+        "sapm": 4.57,
+        "tdAvg": 2.92,
+        "tdAcc": 41,
+        "tdDef": 56,
+        "subAvg": 0.6,
+        "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/drew-dober-vs-chris-duncan",
+        "sampleBouts": 10,
+        "observedOn": "2026-11-12"
+      }
+    },
+    "jim-miller": {
+      "name": "Jim Miller",
+      "id": "mma-ufc334--jim-miller",
+      "sport": "MMA",
+      "record": "39–19",
+      "division": "UFC 334 · Lightweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/jim-miller-vs-terrance-mckinney",
+      "verifiedStats": {
+        "slpm": 2.92,
+        "sapm": 3.43,
+        "strAcc": 42,
+        "tdAvg": 1.49,
+        "tdAcc": 45,
+        "tdDef": 48,
+        "subAvg": 1.7,
+        "controlShare": 0.21,
+        "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/jim-miller-vs-terrance-mckinney",
+        "sampleBouts": 47,
+        "observedOn": "2026-11-12"
+      }
+    },
+    "terrance-mckinney": {
+      "name": "Terrance McKinney",
+      "id": "mma-ufc334--terrance-mckinney",
+      "sport": "MMA",
+      "record": "18–9",
+      "division": "UFC 334 · Lightweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/jim-miller-vs-terrance-mckinney",
+      "verifiedStats": {
+        "slpm": 6.83,
+        "sapm": 4.07,
+        "strAcc": 56,
+        "tdAvg": 3.27,
+        "tdAcc": 43,
+        "tdDef": 73,
+        "subAvg": 1.8,
+        "controlShare": 0.52,
+        "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/jim-miller-vs-terrance-mckinney",
+        "sampleBouts": 15,
+        "observedOn": "2026-11-12"
+      }
+    },
+    "donte-johnson": {
+      "name": "Donte Johnson",
+      "id": "mma-ufc334--donte-johnson",
+      "sport": "MMA",
+      "record": "9–0",
+      "division": "UFC 334 · MMA",
+      "category": "Featured card",
+      "source": "https://www.ufc.com/event/ufc-334",
+      "statsStatus": "No sufficiently verified UFC statistical sample; indices withheld."
+    },
+    "cesar-almeida": {
+      "name": "Cesar Almeida",
+      "id": "mma-ufc334--cesar-almeida",
+      "sport": "MMA",
+      "record": "7–3",
+      "division": "UFC 334 · MMA",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/fighters/cesar-almeida",
+      "verifiedStats": {
+        "slpm": 3.73,
+        "sapm": 2.23,
+        "strAcc": 60,
+        "strDef": 44,
+        "tdAvg": 0.2,
+        "tdAcc": 33,
+        "tdDef": 53,
+        "subAvg": 0.2,
+        "source": "https://www.ufcalendar.com/fighters/cesar-almeida",
+        "sampleBouts": 10,
+        "observedOn": "2026-11-12"
+      }
+    },
+    "jared-gordon": {
+      "name": "Jared Gordon",
+      "id": "mma-ufc334--jared-gordon",
+      "sport": "MMA",
+      "record": "21–9",
+      "division": "UFC 334 · Lightweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/jared-gordon-vs-melquizael-costa",
+      "verifiedStats": {
+        "slpm": 5.57,
+        "sapm": 4.11,
+        "tdAvg": 1.91,
+        "tdAcc": 35,
+        "tdDef": 60,
+        "subAvg": 0,
+        "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/jared-gordon-vs-melquizael-costa",
+        "sampleBouts": 18,
+        "observedOn": "2026-11-12"
+      }
+    },
+    "melquizael-costa": {
+      "name": "Melquizael Costa",
+      "id": "mma-ufc334--melquizael-costa",
+      "sport": "MMA",
+      "record": "26–7",
+      "division": "UFC 334 · Lightweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/jared-gordon-vs-melquizael-costa",
+      "verifiedStats": {
+        "slpm": 4.29,
+        "sapm": 3.19,
+        "strAcc": 47,
+        "strDef": 50,
+        "tdAvg": 1.53,
+        "tdAcc": 35,
+        "tdDef": 51,
+        "subAvg": 0.8,
+        "controlShare": 0.17,
+        "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/jared-gordon-vs-melquizael-costa",
+        "sampleBouts": 10,
+        "observedOn": "2026-11-12"
+      }
+    },
+    "macy-chiasson": {
+      "name": "Macy Chiasson",
+      "id": "mma-ufc334--macy-chiasson",
+      "sport": "MMA",
+      "record": "11–6",
+      "division": "UFC 334 · Women's Bantamweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/macy-chiasson-vs-bia-mesquita",
+      "verifiedStats": {
+        "slpm": 3.21,
+        "sapm": 2.76,
+        "strAcc": 46,
+        "strDef": 45,
+        "tdAvg": 1.87,
+        "tdAcc": 36,
+        "tdDef": 63,
+        "subAvg": 0.4,
+        "controlShare": 0.34,
+        "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/macy-chiasson-vs-bia-mesquita",
+        "sampleBouts": 14,
+        "observedOn": "2026-11-12"
+      },
+      "latest": [
+        {
+          "date": "28 Feb 2026",
+          "opponent": "Ailin Perez",
+          "outcome": "L",
+          "method": "Unanimous decision R3",
+          "cageSec": 900
+        },
+        {
+          "date": "4 Oct 2025",
+          "opponent": "Yana Santos",
+          "outcome": "L",
+          "method": "Unanimous decision R3",
+          "cageSec": 900
+        },
+        {
+          "date": "31 May 2025",
+          "opponent": "Ketlen Vieira",
+          "outcome": "L",
+          "method": "Unanimous decision R3",
+          "cageSec": 900
+        },
+        {
+          "date": "29 Jun 2024",
+          "opponent": "Mayra Bueno Silva",
+          "outcome": "W",
+          "method": "TKO R2 1:58",
+          "cageSec": 418
+        },
+        {
+          "date": "16 Mar 2024",
+          "opponent": "Pannie Kianzad",
+          "outcome": "W",
+          "method": "Submission R1 3:54",
+          "cageSec": 234
+        }
+      ]
+    },
+    "bia-mesquita": {
+      "name": "Bia Mesquita",
+      "id": "mma-ufc334--bia-mesquita",
+      "sport": "MMA",
+      "record": "8–0",
+      "division": "UFC 334 · Women's Bantamweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/macy-chiasson-vs-bia-mesquita",
+      "verifiedStats": {
+        "slpm": 4.52,
+        "sapm": 1.27,
+        "strAcc": 57,
+        "tdAvg": 3.57,
+        "tdAcc": 75,
+        "subAvg": 3.6,
+        "submissionWinRate": 1,
+        "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/macy-chiasson-vs-bia-mesquita",
+        "sampleBouts": 3,
+        "observedOn": "2026-11-12"
+      },
+      "latest": [
+        {
+          "date": "20 Jun 2026",
+          "opponent": "Melissa Mullins",
+          "outcome": "W",
+          "method": "Submission R1 3:16",
+          "cageSec": 196
+        },
+        {
+          "date": "14 Mar 2026",
+          "opponent": "Montse Rendon",
+          "outcome": "W",
+          "method": "Submission R1 2:07",
+          "cageSec": 127
+        },
+        {
+          "date": "11 Oct 2025",
+          "opponent": "Irina Alekseeva",
+          "outcome": "W",
+          "method": "Submission R2 2:14",
+          "cageSec": 434
+        },
+        {
+          "date": "20 Jun 2025",
+          "opponent": "Sierra Dinwoodie",
+          "outcome": "W",
+          "method": "TKO R2 3:05",
+          "cageSec": 485
+        },
+        {
+          "date": "6 Mar 2025",
+          "opponent": "Hope Chase",
+          "outcome": "W",
+          "method": "DQ R2 2:20",
+          "cageSec": 440
+        }
+      ],
+      "credentials": [
+        {
+          "kind": "bjj",
+          "belt": "black",
+          "source": "https://www.ufc.com/athlete/bia-mesquita",
+          "detail": "Brazilian jiu-jitsu black belt; UFC biography confirms fourth degree, while the badge displays colour only."
+        },
+        {
+          "kind": "adcc",
+          "medal": "gold",
+          "source": "https://www.ufc.com/athlete/bia-mesquita",
+          "detail": "ADCC Submission Fighting World Champion; officially documented in UFC athlete biography."
+        }
+      ]
+    },
+    "alatengheili": {
+      "name": "Alatengheili",
+      "id": "mma-ufc334--alatengheili",
+      "sport": "MMA",
+      "record": "18–10–2",
+      "division": "UFC 334 · MMA",
+      "category": "Featured card",
+      "source": "https://www.ufc.com/event/ufc-334",
+      "statsStatus": "No sufficiently verified UFC statistical sample; indices withheld."
+    },
+    "juan-diaz": {
+      "name": "Juan Diaz",
+      "id": "mma-ufc334--juan-diaz",
+      "sport": "MMA",
+      "record": "16–1–1",
+      "division": "UFC 334 · MMA",
+      "category": "Featured card",
+      "source": "https://www.ufc.com/event/ufc-334",
+      "statsStatus": "No sufficiently verified UFC statistical sample; indices withheld."
+    },
+    "evan-elder": {
+      "name": "Evan Elder",
+      "id": "mma-ufc334--evan-elder",
+      "sport": "MMA",
+      "record": "10–2",
+      "division": "UFC 334 · Lightweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/evan-elder-vs-samuel-sanches",
+      "verifiedStats": {
+        "slpm": 5.66,
+        "sapm": 4.94,
+        "strAcc": 51,
+        "tdAvg": 0.48,
+        "tdDef": 40,
+        "subAvg": 0.5,
+        "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/evan-elder-vs-samuel-sanches",
+        "sampleBouts": 5,
+        "observedOn": "2026-11-12"
+      }
+    },
+    "samuel-sanches": {
+      "name": "Samuel Sanches",
+      "id": "mma-ufc334--samuel-sanches",
+      "sport": "MMA",
+      "record": "11–1",
+      "division": "UFC 334 · Lightweight",
+      "category": "Featured card",
+      "source": "https://www.ufcalendar.com/events/ufc-2026-11-15/evan-elder-vs-samuel-sanches",
+      "statsStatus": "Only one verified statistical fight; indices withheld."
+    }
+  }
+}
