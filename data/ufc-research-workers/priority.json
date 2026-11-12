@@ -50,6 +50,36 @@
         "Run full profile Node tests, Playwright desktop/mobile visual QA, inspect artifacts and post-deployment live workflow before declaring published."
       ],
       "nextAction": "Verify official UFC event results for Alekseeva, Rendon and Mullins; independently locate IBJJF title records; then classify and validate. Do not retry unchanged blockers before 2026-11-14."
+    },
+    "donte-johnson": {
+      "name": "Donte Johnson",
+      "status": "source_research",
+      "lastCheckedOn": "2026-11-13",
+      "sourceUrls": [
+        "https://www.ufc.com/event/ufc-334",
+        "https://www.ufc.com/athlete/donte-johnson",
+        "https://www.ufc.com/event/ufc-330",
+        "https://www.ufc.com/news/ufc-330-official-scorecards",
+        "https://www.ufc.com/event/ufc-326",
+        "https://www.ufc.com/news/ufc-326-official-scorecards-holloway-vs-oliveira-2",
+        "https://www.ufc.com/event/ufc-fight-night-november-01-2025",
+        "https://www.ufc.com/news/official-judges-scorecards-ufc-fight-night-garcia-vs-onama"
+      ],
+      "verifiedFindings": [
+        "Official UFC 334 card confirms Donte Johnson vs Cesar Almeida at middleweight on 2026-11-14.",
+        "Official UFC athlete page lists active middleweight, professional record 9-0-0, age 27 and UFC debut Nov 1 2025. UFC 334 preview says first three UFC fights were wins.",
+        "Three completed UFC fights individually cross-checked with official event results/scorecards: 2026-08-15 UFC 330 defeated Eric McConico by KO (left hand), round 1 1:38; 2026-03-07 UFC 326 defeated Cody Brundage by SPLIT decision (29-28,28-29,29-28), round 3 5:00; 2025-11-01 UFC Fight Night Garcia vs Onama defeated Sedriques Dumas by guillotine submission, round 2 1:25.",
+        "Verified UFC-only completed career result from these three debut-to-current event bouts: 3 wins, 0 losses, 0 draws, 0 no contests, as of 2026-11-13; DWCS win over Darion Abbey excluded.",
+        "IMPORTANT UFC biography narrative mistakenly calls Brundage win unanimous; official UFC 326 event and official judges scorecards both explicitly say split decision. Use split.",
+        "No independently verified external credentials identified; do not award credential bonus. Current official ranking not evidenced, do not infer unranked from absence of rank."
+      ],
+      "blockers": [
+        "Check saved UFCalendar tracked per-bout metrics and coverage for exactly the three UFC bouts; do not substitute career totals or count DWCS.",
+        "Run deterministic V2 classifier with separately sourced opponent-quality checks; do not assign Contender from 3-0 record alone.",
+        "Construct source-integrity-compliant reviewed profile with UFC-only 3-0-0, professional 9-0-0, source URLs for all three bouts, empty credentials unless separately proved; run Node tests and Playwright desktop/mobile QA before public cohort commit.",
+        "After successful cohort commit verify fresh Render deployment and separate live desktop/mobile QA artifacts."
+      ],
+      "nextAction": "Build the fully sourced Donte Johnson profile from verified three-bout history, inspect saved UFC statistics denominator and V2 model requirements, then run tests. Do not retry unchanged blockers before 2026-11-14."
     }
   }
 }
