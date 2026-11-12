@@ -13,6 +13,7 @@ on:
       - 'data/ufc-postfight-metrics.json'
       - 'tests/test-ufc-profile-queue.mjs'
       - 'tests/test-ufc-profile-visual.mjs'
+      - 'tests/test-ufc-async-authority.cjs'
       - 'scripts/ufc-qa-freshness.mjs'
       - 'tests/test-ufc-qa-freshness.mjs'
       - 'data/ufc-postfight-metrics.json'
@@ -34,6 +35,7 @@ on:
     paths:
       - 'data/ufc-*-profiles.json'
       - 'assets/fighter-insights.js'
+      - 'tests/test-ufc-async-authority.cjs'
       - 'assets/fighter-power-index.js'
       - 'tests/test-ufc-*.cjs'
       - 'tests/test-fighter-power-index.cjs'
@@ -61,6 +63,8 @@ jobs:
           node tests/test-ufc-champion-profiles.cjs
           node tests/test-fighter-power-index.cjs
           node tests/test-ufc-prospect-contender.cjs
+      - name: Verify reviewed UFC facts survive reversed async response orders
+        run: node --test tests/test-ufc-async-authority.cjs
       - name: Regression-test deployed frontend freshness detection
         run: node --test tests/test-ufc-qa-freshness.mjs
       - name: Verify deterministic research queue
