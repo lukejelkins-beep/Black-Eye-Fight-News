@@ -3,7 +3,7 @@
  'use strict';
  if(location.hostname!=='befn-responsive-preview.onrender.com')return;
  const query=new URLSearchParams(location.search);
- const forced=query.get('layout')==='desktop'||query.get('desktop')==='1'||sessionStorage.getItem('befn-preview-layout')==='desktop';
+ const forced=query.get('layout')==='desktop'||query.get('desktop')==='1'||(window.innerWidth>760&&sessionStorage.getItem('befn-preview-layout')==='desktop');
  function setup(){
    if(forced)document.body.classList.add('befn-force-desktop');
    const control=document.createElement('div');
