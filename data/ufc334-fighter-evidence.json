@@ -3,7 +3,7 @@
   "eventId": "ufc-334-2026-11-14",
   "reviewedOn": "2026-11-12",
   "purpose": "Researched BEFN non-production fighter-profile and expanded comparison example. Only evidence-backed statistics; avoid implying ratings are objectively validated skill.",
-  "sourceNotes": "Statistical rates derive from the linked UFC/UFCalendar career snapshot; some samples include DWCS and earlier promotions. No unverified screenshots contribute to ratings. No data means unrated; no medals inferred from background.",
+  "sourceNotes": "Statistical rates derive from the linked UFC/UFCalendar career snapshot; some samples include DWCS and earlier promotions. No unverified screenshots contribute to ratings. No data means unrated; no medals inferred from background. The reported BJJ rank for Ciryl Gane is sourced to BJJ.TV and requires direct gym/instructor confirmation; NCAA Division I wrestling prior is distinct from an NCAA championship medal.",
   "fighters": {
     "ciryl-gane": {
       "name": "Ciryl Gane",
@@ -62,6 +62,15 @@
           "outcome": "L",
           "method": "Submission R1 2:04",
           "cageSec": 124
+        }
+      ],
+      "credentials": [
+        {
+          "kind": "bjj",
+          "belt": "black",
+          "source": "https://bjj.tv/how-good-is-ciryl-gane-at-jiu-jitsu/",
+          "detail": "Reported black BJJ belt under Fernand Lopez (BJJ.TV, April 2026). UFC profile does not independently confirm the promotion; other BJJ sources dispute formal belt verification.",
+          "verification": "reported"
         }
       ]
     },
@@ -131,8 +140,11 @@
         {
           "kind": "ncaa",
           "division": "I",
-          "source": "https://www.ufc.com/athlete/josh-hokit?page=1",
-          "detail": "Fresno State NCAA Division I wrestling competitor; 2019 NCAA All-American. No NCAA individual top-three medal documented."
+          "source": "https://gobulldogs.com/news/2019/3/23/wrestling-2019-ncaa-championships-day-three",
+          "detail": "Verified NCAA Division I wrestling All-American, fifth place at 197 lb in the 2019 championships (Fresno State); no NCAA individual podium medal.",
+          "placement": 5,
+          "year": 2019,
+          "credentialType": "college-wrestling"
         }
       ]
     },
