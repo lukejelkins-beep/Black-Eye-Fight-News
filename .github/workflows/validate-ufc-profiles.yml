@@ -1,11 +1,14 @@
-name: Validate UFC fighter profile cards (preview)
+name: Validate UFC fighter profile cards
 on:
   workflow_dispatch:
   push:
     branches:
       - feature/responsive-sports-layout
+      - main
     paths:
       - 'data/ufc-*-profiles.json'
+      - 'scripts/build-ufc-profile-queue.mjs'
+      - 'tests/test-ufc-profile-queue.mjs'
       - 'assets/fighter-insights.js'
       - 'assets/fighter-power-index.js'
       - 'tests/test-ufc-*.cjs'
@@ -40,5 +43,7 @@ jobs:
         run: |
           node tests/test-ufc-champion-profiles.cjs
           node tests/test-fighter-power-index.cjs
+      - name: Verify deterministic research queue
+        run: node --test tests/test-ufc-profile-queue.mjs
       - name: Publication notice
-        run: echo 'Validation only. No production deployment or automatic merge.'
+        run: echo 'Validation only; publish gate must pass before reviewed cohort is committed.'

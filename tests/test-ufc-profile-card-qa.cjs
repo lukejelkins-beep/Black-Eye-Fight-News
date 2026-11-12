@@ -39,8 +39,9 @@ for(const file of files){
   seen.add(norm(f.name));
   assert(source(f.source)&&f.source.includes("ufc.com/athlete/"),
     context+": individual official athlete link required");
-  assert(f.review&&f.review.checkedAt===data.reviewedOn,
-    context+": individual review must match snapshot date");
+  assert(f.review&&/^\d{4}-\d{2}-\d{2}$/.test(f.review.checkedAt||"")&&
+    f.review.checkedAt<=data.reviewedOn,
+    context+": every fighter needs a dated review at or before cohort snapshot");
   assert(f.review.credentialsChecked===true,context+": credential check required");
   assert(Array.isArray(f.review.notes)&&f.review.notes.length>0,
     context+": independent findings required");
@@ -78,8 +79,9 @@ for(const file of files){
     context+": stats must cite UFC-only evidence");
    assert(Number.isInteger(stats.sampleBouts)&&stats.sampleBouts>=2,
     context+": stats denominator too small or invalid");
-   assert(stats.observedOn===data.reviewedOn,
-    context+": stats observation date must match review date");
+   assert(/^\d{4}-\d{2}-\d{2}$/.test(stats.observedOn||"")&&
+     stats.observedOn<=f.review.checkedAt,
+     context+": stats observation must precede or match individual review");
    const ranges={
     slpm:[0,20],sapm:[0,20],strAcc:[0,100],strDef:[0,100],
     tdAvg:[0,20],tdAcc:[0,100],tdDef:[0,100],
@@ -123,6 +125,11 @@ for(const file of files){
   checked++;
  }
 }
+assert(insights.includes('data/ufc-ranked-profiles.json')&&
+ insights.includes('data/ufc-contender-profiles.json')&&
+ insights.includes('data/ufc-prospect-profiles.json')&&
+ insights.includes('data/ufc-roster-profiles.json'),
+ "Reviewed UFC cohorts must hydrate the same shared profile engine");
 assert(insights.includes('data/ufc-champion-profiles.json'),
  "Champion data must be loaded into fighter cards");
 assert(html.includes('data-fighter="mma-champion--'),

@@ -92,8 +92,12 @@
   // the older general scouting feed; keep completed-round evidence separate.
   const archival=statRecord(f);
   const verified=f?.verifiedStats;
-  const sourceRecord=verified?{...archival,stats:verified,recent:{fights:verified.sampleBouts}}:archival;
-  const evidence=f?.performanceEvidence;
+  // Reviewed UFC profiles must never fall back to other promotions'
+  // statistical samples merely because a category is missing.
+  const strictlyUfc=f?.championReview===true||f?.reviewedUfcProfile===true;
+  const sourceRecord=verified?{stats:verified,recent:{fights:verified.sampleBouts}}:
+    strictlyUfc?{stats:null,recent:{fights:0}}:archival;
+  const evidence=strictlyUfc?null:f?.performanceEvidence;
   // Source-verified credentials contribute only to matching measured skills.
   // The shared model caps stacking and never creates an absent statistic.
   const input={...(sourceRecord||{}),credentials:credentialsFor(f)};
@@ -608,6 +612,84 @@
   update();
   window.dispatchEvent(new CustomEvent("befn:champion-profiles-ready",{detail:{count:11}}));
  }).catch(()=>{});
+ // Progressive UFC-only scouting roll-out: cards are added ONLY from reviewed
+ // cohorts. The five-minute GitHub queue is never published as fighter data.
+ const reviewedFiles=["data/ufc-ranked-profiles.json",
+   "data/ufc-contender-profiles.json","data/ufc-prospect-profiles.json",
+   "data/ufc-roster-profiles.json"];
+ Promise.all(reviewedFiles.map(url=>fetch(url,{cache:"no-store"})
+   .then(r=>r.ok?r.json():null).catch(()=>null))).then(cohorts=>{
+  let count=0;
+  const duplicates=new Set();
+  const champions=new Set((window.COMBAT_DATA?.champions?.mma||[]).map(x=>norm(x.name)));
+  for(const d of cohorts){
+   if(!d||d.schema!==1||d.scope!=="ufc-only"||!d.fighters)continue;
+   for(const source of Object.values(d.fighters)){
+    if(!source?.id||!source?.name||!source?.division||!source?.record||
+       source.organisation!=="UFC"||source.sport!=="MMA"||
+       !["Contender","Prospect","Roster"].includes(source.category)||
+       !validSource(source.source)||!source.review?.credentialsChecked||
+       !Array.isArray(source.review.notes)||!source.review.notes.length||
+       !Array.isArray(source.latest)||!source.latest.length||
+       !Array.isArray(source.credentials))continue;
+    const key=norm(source.name);
+    if(duplicates.has(key)||champions.has(key))continue;
+    if(!source.latest.every(x=>x?.opponent&&x?.method&&
+       /^\d{4}-\d{2}-\d{2}$/.test(String(x.date||""))&&
+       ["W","L","D","NC"].includes(x.outcome)))continue;
+    duplicates.add(key);
+    let target=byName.get(key);
+    if(target?.championReview===true)continue;
+    if(!target){
+     target={...source,photo:"",report:"mma-contenders",analysis:[]};
+     profiles.push(target);
+     byName.set(key,target);
+    }else if(target.id!==source.id){
+     byId.delete(target.id);
+    }
+    target.id=source.id;
+    byId.set(source.id,target);
+    target.organisation="UFC";target.sport="MMA";
+    target.category=source.category;
+    target.division=source.division;
+    target.record=source.record;
+    target.reviewedUfcProfile=true;
+    target.review=source.review;
+    target.meta=source.meta||("UFC · individually reviewed "+source.review.checkedAt);
+    target.analysis=[...source.review.notes];
+    target.latest=source.latest.map(x=>({...x}));
+    target.verificationNote=source.verificationNote||"Checked UFC evidence. Incomplete metrics remain unrated.";
+    target.credentials=source.credentials.filter(c=>validSource(c?.source)).map(c=>({...c}));
+    target.sources=[
+     {label:"Official UFC fighter biography",url:source.source},
+     {label:"UFC statistical sample",url:source.verifiedStats?.source}
+    ].filter(x=>validSource(x.url));
+    for(const c of target.credentials)if(!target.sources.some(x=>x.url===c.source))
+     target.sources.push({label:"Credential: "+c.kind,url:c.source});
+    const checked=source.verifiedStats;
+    if(checked&&checked.scope==="ufc-only"&&validSource(checked.source)&&
+       Number.isInteger(checked.sampleBouts)&&checked.sampleBouts>=2)
+     target.verifiedStats={...checked};
+    else delete target.verifiedStats;
+    // Do not let partial UFC/PFL round snapshots override reviewed UFC-only rates.
+    delete target.performanceEvidence;
+    if(source.photoRightsVerified===true&&validSource(source.photo))
+      target.photo=source.photo;
+    sampleEvidence.set(key,target);
+    count++;
+   }
+  }
+  if(count){
+   update();
+   // The main page's router owns the profile grid, while this module owns
+   // shared fighter data. Re-render only when viewing the fighter grid.
+   if(document.querySelector("#fighterGrid"))
+     window.dispatchEvent(new Event("hashchange"));
+   window.dispatchEvent(new CustomEvent("befn:reviewed-ufc-profiles-ready",
+     {detail:{count}}));
+  }
+ }).catch(()=>{});
+
  fetch("data/fighter-intelligence.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{
   if(!d||!Array.isArray(d.fighters))return;
   for(const rec of d.fighters){if(rec?.organisation==="UFC"&&rec.name)stats.set(norm(rec.name),rec)}
