@@ -14,6 +14,29 @@
       "sourceUrls": [
         "https://www.ufc.com/athlete/sean-brady"
       ]
+    },
+    "sean-strickland": {
+      "name": "Sean Strickland",
+      "status": "source_research",
+      "lastCheckedOn": "2026-11-13",
+      "sourceUrls": [
+        "https://www.ufc.com/athlete/sean-strickland",
+        "https://www.ufc.com/news/sean-strickland-back-in-saddle-ufc-houston",
+        "https://statleaders.ufc.com/en/fight-comb?weight_class=MW"
+      ],
+      "findings": [
+        "Official UFC athlete biography lists 25 dated UFC bouts (2014-03-15 through 2026-05-09); manual enumeration of narrative outcomes gives 18 wins, 7 losses, zero draws/no contests, pending independent row-by-row confirmation.",
+        "Official UFC professional record is 31-7-0, not UFC-only 18-7; no DWCS bouts included in enumerated UFC history.",
+        "Five latest narrative results: 2026-05-09 W Khamzat Chimaev split decision R5 5:00; 2026-02-21 W Anthony Hernandez TKO R3 2:23; 2025-02-08 L Dricus du Plessis unanimous decision R5 5:00; 2024-06-01 W Paulo Costa split decision R5 5:00; 2024-01-20 L Dricus du Plessis split decision R5 5:00.",
+        "UFC official statistical snapshot reports significant strikes 2430/5717, but these should not be conflated with 25-bout UFC record or existing UFCalendar sampleBouts.",
+        "UFC athlete result widget labels February 2025 loss a win; official detailed narrative describes loss, requiring authoritative per-event corroboration."
+      ],
+      "blockers": [
+        "Independently reconcile each of the 25 UFC career results with official UFC event pages or UFCStats before asserting complete UFC-only record.",
+        "Independently source-check the last five fight outcomes and methods against individual UFC event results, including contradictory athlete widget.",
+        "Validate existing champion cohort statistical sample denominators and preserve independently verified credentials; run classifier and card QA tests before cohort edit."
+      ],
+      "nextAction": "Verify 25 career results against official UFC event results, prioritize last five per-event pages; then merge only sean-strickland ufcRecord and corrected sourced rows into latest champion cohort."
     }
   }
 }
