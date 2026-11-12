@@ -490,3 +490,40 @@ body.befn-force-desktop {overflow-x:auto}
    background:#1b1216; color:#fff8f1;
  }
 }
+
+/* Editorial bullets: readable, complete sentences; never crop the list with
+   -webkit-line-clamp or make an oversized lead card taller than necessary. */
+#main .top-story-stack > .top-story-full:first-child .top-story-points {
+ display:grid;
+ gap:9px;
+ margin:12px 0 0;
+ padding-left:20px;
+ list-style:disc;
+ font:500 clamp(13px,1vw,15px)/1.45 'DM Sans',system-ui,sans-serif;
+ color:#f2ede9;
+}
+#main .top-story-stack > .top-story-full:first-child .top-story-points li {
+ overflow-wrap:break-word;
+ max-width:100%;
+}
+#main .top-story-stack .top-story-points li::marker {color:#f3c332}
+#news-feed .news-strip-points,
+#news-feed .news-feature-card .news-strip-points {
+ display:grid !important;
+ grid-template-columns:minmax(0,1fr);
+ gap:6px;
+ -webkit-line-clamp:unset !important;
+ -webkit-box-orient:initial !important;
+ overflow:visible !important;
+ margin:11px 0 0;
+ padding-left:19px;
+ font-size:clamp(12px,.9vw,13px);
+ line-height:1.45;
+}
+#news-feed .news-strip-points li {max-width:100%;overflow-wrap:break-word}
+#main .top-story-stack > .top-story-full:first-child .front-lead-copy {flex:0 1 auto}
+@media (max-width:760px) {
+ #main .top-story-stack > .top-story-full:first-child .top-story-points {font-size:13px;gap:7px;line-height:1.42}
+ #news-feed .news-strip-points,
+ #news-feed .news-feature-card .news-strip-points {font-size:12px;line-height:1.4}
+}
