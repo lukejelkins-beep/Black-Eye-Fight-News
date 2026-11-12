@@ -104,6 +104,26 @@
         "Inspect successful post-deploy live QA desktop/mobile screenshots and broken-image fallback"
       ],
       "nextAction": "Verify GitHub local QA workflow, Render production commit and post-deploy live QA artifacts before marking production-verified. No further historical research unless new discrepancy appears."
+    },
+    "petr-yan": {
+      "name": "Petr Yan",
+      "status": "blocked",
+      "lastCheckedOn": "2026-11-13",
+      "sourceUrls": [
+        "https://www.ufc.com/athlete/petr-yan",
+        "https://www.ufc.com/news/petr-yan-aiming-to-secure-championship-opportunity-ufc-abu-dhabi"
+      ],
+      "verifiedFindings": {
+        "existingCohort": "data/ufc-champion-profiles.json",
+        "ufcRecord": "missing in reviewed champion profile; NOT inferred from professional record",
+        "officialNarrative": "UFC 22 July 2025 feature explicitly describes Yan's 2021-2023 UFC sequence, including a disqualification loss to Aljamain Sterling, interim-title victory over Cory Sandhagen, decision losses to Sterling and Sean O'Malley, and loss to Merab Dvalishvili; narrative is not a complete career count."
+      },
+      "remainingBlockers": [
+        "Official athlete history endpoint returned HTTP 403 during this check; cannot enumerate all lifetime UFC bouts or source-audit latest five from that endpoint.",
+        "No independent complete UFC-only W-L-D/NC count confirmed; do not infer from professional record or tracked 17-bout statistics sample.",
+        "Latest five dated result rows, full denominator reconciliation, source-integrity tests, Render deploy and live desktop/mobile QA not verified."
+      ],
+      "nextAction": "After 2026-11-14 or when new primary-source evidence is available, obtain complete official UFC bout history or individual official event result pages, enumerate all UFC-only W-L-D/NC and verify latest five. Preserve existing champion credentials and cohort until source audit and tests pass."
     }
   }
 }
