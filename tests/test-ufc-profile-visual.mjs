@@ -234,6 +234,25 @@ async function checkProfile(page,profile,screen){
   }
   await page.screenshot({path:path.join(screenshots,safe(profile.name)+"-"+screen+".png"),
    animations:"disabled",timeout:12000});
+  // Keep QA screenshots for the entire dialog, not just the visible top.
+  // This captures lower statistics, recent UFC results and credentials.
+  const scroll=await dialog.evaluate(el=>{
+   const max=Math.max(0,el.scrollHeight-el.clientHeight);
+   if(max>24)el.scrollTop=el.scrollHeight;
+   return {needed:max>24,max,top:el.scrollTop};
+  });
+  if(scroll.needed){
+   assert(scroll.top>=scroll.max-6,"fighter dialog cannot scroll to its bottom");
+   await page.screenshot({path:path.join(screenshots,safe(profile.name)+"-"+screen+"-bottom.png"),
+    animations:"disabled",timeout:12000});
+   const bottom=await dialog.evaluate(el=>({
+    reached:Math.abs(el.scrollHeight-el.clientHeight-el.scrollTop)<=6,
+    horizontalOverflow:el.scrollWidth>el.clientWidth+4
+   }));
+   assert(bottom.reached,"fighter dialog bottom is not accessible");
+   assert(!bottom.horizontalOverflow,"fighter dialog content overflows horizontally at bottom");
+   await dialog.evaluate(el=>{el.scrollTop=0});
+  }
   // Verify the close control is clickable, not merely present.
   await page.locator("#closeFighter").click({timeout:5000});
   await dialog.waitFor({state:"hidden",timeout:5000});
