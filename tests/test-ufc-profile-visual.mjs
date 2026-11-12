@@ -133,6 +133,9 @@ async function checkProfile(page,profile,screen){
    const ratingSource=ins?.querySelector(".befn-rating-source-note a");
    const postfight=ins?.querySelector(".befn-profile-block[data-befn-postfight]");
    const postfightCells=postfight?.querySelectorAll(".befn-postfight-stat")?.length??0;
+   const recentFive=postfight?.querySelector(".befn-recent-five-coverage");
+   const recentFiveCount=recentFive?.querySelectorAll("li.befn-postfight-bout").length??0;
+   const recentFiveSummary=recentFive?.querySelector("summary")?.textContent?.trim()||"";
    const coverageVisible=postfight?.textContent?.includes("tracked-sample totals, not career totals")??false;
    const rect=d?.getBoundingClientRect();
    const rootWidth=document.documentElement.clientWidth;
@@ -141,6 +144,7 @@ async function checkProfile(page,profile,screen){
    return {
     identity:!!f,title,record:f?.record,division:f?.division,category:f?.category,
     metrics,recentRows,credentialsVisible:!!credential,postfightCells,coverageVisible,
+    recentFiveCount,recentFiveSummary,
     ratingSource:ratingSource?.getAttribute("href")||"",
     ratingSourceText:ins?.querySelector(".befn-rating-source-note")?.textContent||"",
     rect:rect&&{left:rect.left,right:rect.right,width:rect.width},
@@ -194,6 +198,11 @@ async function checkProfile(page,profile,screen){
   if(expectedPostfight.has(normalized(profile.name))){
    assert.equal(details.postfightCells,11,"incomplete UFC post-fight metrics panel");
    assert(details.coverageVisible,"missing clear sample versus career totals label");
+   const latestUfcCount=Math.min((profile.latest||[]).length,5);
+   assert.equal(details.recentFiveCount,latestUfcCount,
+    "last-five UFC coverage panel must list every reviewed recent bout, including missing metrics");
+   assert(details.recentFiveSummary.includes("/"+latestUfcCount),
+    "last-five summary must use the reviewed UFC fight count, not the tracked sample size");
   }
   assert(details.closeVisible,"dialog close action missing");
   assert(!details.viewportOverflow,"document overflows horizontally");
