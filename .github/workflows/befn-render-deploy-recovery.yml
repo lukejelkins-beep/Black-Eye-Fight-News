@@ -48,6 +48,7 @@ jobs:
           )
           printf '%s\n' "${files[@]}" > /tmp/befn-watch-files
           differences=0
+          : > /tmp/befn-drift-files
           for file in "${files[@]}"; do
             if [[ ! -f "$file" ]]; then
               echo "Missing expected source file: $file" >&2
@@ -64,6 +65,7 @@ jobs:
             fi
             if ! cmp -s "$file" "$remote"; then
               echo "Not yet live: $file"
+              echo "$file" >> /tmp/befn-drift-files
               differences=$((differences + 1))
             fi
             rm -f "$remote"
@@ -96,14 +98,16 @@ jobs:
           fi
           # Grace period for Render's normal automatic Git deployments. This
           # scheduled reconciliation does not compete with fresh pushes.
-          youngest=$(date -u +%s)
-          for file in $(cat /tmp/befn-watch-files); do
+          # Compare only outstanding files; an unchanged years-old asset must
+          # not satisfy the 10-minute deploy grace period.
+          oldest_pending=$(date -u +%s)
+          while IFS= read -r file; do
             changed=$(git log -1 --format=%ct -- "$file" || true)
-            if [[ -n "$changed" && "$changed" -lt "$youngest" ]]; then
-              youngest=$changed
+            if [[ -n "$changed" && "$changed" -lt "$oldest_pending" ]]; then
+              oldest_pending=$changed
             fi
-          done
-          age=$(( $(date -u +%s) - youngest ))
+          done < /tmp/befn-drift-files
+          age=$(( $(date -u +%s) - oldest_pending ))
           if [[ "$age" -lt 600 ]]; then
             echo 'Waiting for normal auto-deploy grace period'
             exit 0
