@@ -9,11 +9,24 @@
       "status": "source_research",
       "lastCheckedOn": "2026-11-13",
       "blockers": [
-        "Bout audit and official upcoming-card confirmation"
+        "Independently reconcile lifetime UFC-only W-L-D/NC count against all official UFC event results (exclude DWCS).",
+        "Independently verify external credentials through primary organisations before any score bonus; do not award bonus from athlete self-report alone.",
+        "Reconcile UFCalendar tracked per-bout stats, denominators, opponent-quality evidence, and deterministic V2 classification.",
+        "Run complete Node and Playwright desktop/mobile QA, review artifacts, then fresh live production workflow after any profile commit."
       ],
       "sourceUrls": [
+        "https://www.ufc.com/event/ufc-334",
+        "https://www.ufc.com/news/how-watch-and-stream-ufc",
         "https://www.ufc.com/athlete/caio-borralho"
-      ]
+      ],
+      "verifiedFindings": [
+        "UFC 334 official event and UFC Nov 8 viewing guide both list Caio Borralho vs Yousri Belgaroui on Nov 14, 2026.",
+        "Official UFC athlete page identifies active middleweight, #5 ranking as observed Nov 13, 2026, and 18-2 professional record; UFC-only record must be independently reconciled.",
+        "UFC biography explicitly lists recent five completed UFC results: Mar 7 2026 W unanimous decision Reinier de Ridder (R3 5:00); Sep 6 2025 L unanimous decision Nassourdine Imavov (R5 5:00); Aug 24 2024 W unanimous decision Jared Cannonier (R5 5:00); May 4 2024 W KO Paul Craig (R2 2:10); Nov 4 2023 W unanimous decision Abus Magomedov (R3 5:00).",
+        "UFC page generic fight-history heading incorrectly labels Imavov loss Win; explicit biography says loss. DWCS 2021 bouts must be excluded.",
+        "UFC athlete biography self-reports national/regional judo championships and Future FC middleweight title, but independent primary organisational proof and fixed bonuses not yet validated."
+      ],
+      "nextAction": "Verify all nine UFC bout rows against official UFC event result pages, establish UFC-only career record and sourced opponent gate, then independent credentials and full QA. Do not repeat same blocked research before 2026-11-14 unless new evidence."
     }
   }
 }
