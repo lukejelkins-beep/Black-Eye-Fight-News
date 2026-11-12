@@ -67,6 +67,43 @@ class NewsDedupeTests(unittest.TestCase):
         joe=article('UFC announcer Joe Rogan signs long-term contract extension','https://two.example/2')
         self.assertFalse(duplicate_of(anik,joe))
 
+    def test_reworded_backup_fighter_announcement(self):
+        a=article("Brandon Royval says he's UFC 336 backup for Van vs. Kape title fight",'https://one.example/royval')
+        b=article("Brandon Royval says he's UFC 336 backup for Joshua Van vs. Manel Kape",'https://two.example/royval')
+        self.assertTrue(duplicate_of(a,b))
+
+    def test_reworded_overeem_booking(self):
+        a=article('Alistair Overeem to make boxing debut vs. Jimi Manuwa on Jake Paul card',
+                  'https://one.example/overeem',sport='boxing')
+        b=article('Alistair Overeem vs. Jimi Manuwa added to Paul vs. Doumbe fight card',
+                  'https://two.example/overeem',sport='boxing')
+        self.assertTrue(duplicate_of(a,b))
+
+    def test_matching_press_conference_video(self):
+        a=article('UFC 334 press conference video','https://one.example/press')
+        b=article("Video: UFC 334 Gane vs Hokit pre-fight press conference live stream",
+                  'https://two.example/press')
+        self.assertTrue(duplicate_of(a,b))
+
+    def test_distinct_media_day_and_press_conference(self):
+        a=article('UFC 334 press conference video','https://one.example/press')
+        b=article('UFC 334 media day video','https://two.example/media')
+        self.assertFalse(duplicate_of(a,b))
+
+    def test_distinct_headline_angles_on_same_card(self):
+        a=article('Coach Conversation | Polymarket UFC 334: Ciryl Gane vs Josh Hokit',
+                  'https://one.example/coach')
+        b=article('UFC 334 Countdown video, Ciryl Gane vs Josh Hokit heavyweight title',
+                  'https://two.example/countdown')
+        self.assertFalse(duplicate_of(a,b))
+
+    def test_declined_offer_is_new_development(self):
+        a=article('Dana White offered press secretary job by President Donald Trump',
+                  'https://one.example/offer')
+        b=article('Dana White turns down press secretary role, President Trump admits he was kidding',
+                  'https://two.example/decline')
+        self.assertFalse(duplicate_of(a,b))
+
     def test_prefer_complete_story(self):
         a=article('Champion confirms heavyweight title fight against contender in July',
                   'https://one.example/1')
