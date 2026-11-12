@@ -60,4 +60,18 @@ assert(code.includes('data/ufc334-fighter-evidence.json'),"Fighter snapshots loa
 assert(code.includes('"olympic-judo"'),"Judo Olympic credential enabled");
 assert(code.includes('c.medalCount>1'),"Double gold displays badge count");
 assert(code.includes("befn-fight-snapshot"),"Credentials appear in collapsible fight card");
+const gane=facts.fighters["ciryl-gane"];
+const reportedBjj=gane.credentials.find(c=>c.kind==="bjj"&&c.belt==="black");
+assert(reportedBjj);
+assert.equal(reportedBjj.verification,"reported");
+assert(reportedBjj.detail.includes("does not independently confirm"));
+const h=facts.fighters["josh-hokit"];
+const hCred=h.credentials.find(c=>c.kind==="ncaa"&&c.division==="I");
+assert.equal(hCred.placement,5);
+assert(!hCred.medal);
+const hRecord={recent:{fights:h.verifiedStats.sampleBouts},stats:h.verifiedStats};
+const hBase=engine.evaluate(hRecord,h.latest).find(m=>m.id==="wrestling");
+const hModified=engine.evaluate({...hRecord,credentials:[hCred]},h.latest).find(m=>m.id==="wrestling");
+assert(hModified.score>hBase.score);
+assert(hModified.credentialAdjustment>0&&hModified.credentialAdjustment<=5);
 console.log("PASS UFC 334: 13 bouts, 26 sourced profiles, five metrics, BJJ/ADCC/NCAA, Olympic judo gold x2");
