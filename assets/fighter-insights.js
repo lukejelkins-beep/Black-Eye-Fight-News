@@ -94,8 +94,8 @@
   const verified=f?.verifiedStats;
   const sourceRecord=verified?{...archival,stats:verified,recent:{fights:verified.sampleBouts}}:archival;
   const evidence=f?.performanceEvidence;
-  // Credentials accompany verified MMA statistics; only Wrestling may use
-  // the tightly bounded NCAA prior, and never for an otherwise unrated fighter.
+  // Source-verified credentials contribute only to matching measured skills.
+  // The shared model caps stacking and never creates an absent statistic.
   const input={...(sourceRecord||{}),credentials:credentialsFor(f)};
   if(evidence)input.performanceEvidence=evidence;
   return engine.evaluate(input,historyFor(f));
@@ -122,28 +122,42 @@
     'role="img" aria-label="Not rated: insufficient evidence"')+
    ' title="'+escapeHTML(m.description)+'">'+(valid?'<span class="befn-power-fill" style="--power-width:'+m.score+'%"></span>':'')+'</span>';
  }
+ function credentialScoreDetail(m){
+  if(!m?.credentialAdjustment)return '';
+  const links=(m.credentialBreakdown||[]).map(x=>
+    '<a href="'+escapeHTML(x.source)+'" target="_blank" rel="noopener noreferrer" title="'+
+    escapeHTML(x.label)+'">+'+x.points+' '+escapeHTML(x.label)+'</a>').join(' · ');
+  return '<div class="befn-credential-score-note">'+
+   '<strong>'+escapeHTML(String(m.baseScore))+' stats + '+
+     m.credentialAdjustment+' credentials = '+m.score+'</strong>'+
+   (links?'<span>'+links+'</span>':'')+'</div>';
+ }
  function profileMetric(m){
   return '<div class="befn-power-metric"><div class="befn-power-metric-label">'+
    '<span>'+escapeHTML(m.label)+'</span><b'+(m.score===null?' class="is-unrated"':'')+'>'+
    (m.score===null?'Not rated':m.score+' / 100')+'</b></div>'+
-   performanceMeter(m,false)+
-   (m.credentialAdjustment?'<small class="befn-college-prior-note">+'+m.credentialAdjustment+
-    ' NCAA '+escapeHTML(m.credentialSource?'wrestling background':'')+
-    ' · MMA-only '+escapeHTML(String(m.baseScore))+
-    ' · <a target="_blank" rel="noopener noreferrer" href="'+escapeHTML(m.credentialSource)+'">Source</a></small>':'')+
-   '</div>';
+   performanceMeter(m,false)+credentialScoreDetail(m)+'</div>';
  }
  const scoreMethodHTML=sport=>sport==="Boxing"?
-  '<p class="befn-score-note">Boxing uses a separate evidence-gated model. A recorded KO share is a finishing proxy, not direct punch power; other attributes await verified technical scouting.</p>':
-  '<details class="befn-rating-method"><summary>How MMA ratings are calculated</summary>'+
-  '<p>All scores are descriptive 0–100 indices, <strong>not ability rankings or win predictions</strong>. Each observed metric is scaled against a fixed reference range; only recorded statistics contribute. Categories need at least two independent inputs and sufficient weighted coverage.</p>'+
+  '<p class="befn-score-note">Boxing uses a separate evidence-gated model. KO share is a finishing proxy, not measured punch force. Boxing technical assessments require verified data.</p>':
+  '<details class="befn-rating-method"><summary>How are MMA scores and credential points calculated?</summary>'+
+  '<p><b>Data model:</b> A 0–100 descriptive scouting index, not objective skill or win probability. Only available verified stats contribute. Knockdown and finish rates are measured per fight or per 15 minutes, not counted without denominators. Small samples are moderated toward 50.</p>'+
   '<ul>'+
-  '<li><b>Striking:</b> 25% significant strikes landed/min, 30% landed-minus-absorbed differential/min, 17% accuracy, 17% knockdowns/15, 11% KO/TKO wins per observed bout.</li>'+
-  '<li><b>Grappling:</b> 42% submission attempts/15, 30% submission finishes, 18% reversals/15, 10% control share. Submission or reversal evidence is compulsory.</li>'+
-  '<li><b>Wrestling:</b> 34% takedowns/15, 21% accuracy, 28% control share, 12% takedown defence, 5% reversals/15. Takedown activity is compulsory. Verified collegiate NCAA competition adds a separately identified, sample-weighted prior of at most 5 points, never without an MMA statistical score. Division I participation is distinct from winning a medal.</li>'+
-  '<li><b>Defence:</b> 31% inverse strikes absorbed/min, 29% strike defence, 22% takedown defence, 12% inverse knockdowns received/15, 6% inverse opponent control.</li>'+
-  '<li><b>Recent form:</b> verified wins=1, draws=½, losses=0, no-contests omitted; last five fights weighted 5,4,3,2,1 with a neutral prior.</li>'+
-  '</ul><p>When the provider omits a statistic, its weight is redistributed among available inputs only if the category still meets evidence coverage thresholds. Ratings shrink toward 50 according to the observed bout count (n/(n+4)); insufficient samples remain unrated. Statistical sources and samples differ by promotion.</p></details>';
+  '<li><b>Striking:</b> 25% KO/TKO finishes, 20% knockdowns/15 (45% finishing combined), 22% significant-strike differential, 18% volume, 15% accuracy.</li>'+
+  '<li><b>Grappling:</b> 50% submission finishes, 30% submission attempts/15, 15% reversals/15, 5% control time. Submission evidence is compulsory.</li>'+
+  '<li><b>Wrestling:</b> 34% takedowns/15, 21% accuracy, 28% control share, 12% takedown defence, 5% reversals/15. Takedown activity is compulsory.</li>'+
+  '<li><b>Defence:</b> 31% inverse strikes absorbed, 29% strike defence, 22% takedown defence, 12% inverse knockdowns received, 6% inverse opponent control.</li>'+
+  '<li><b>Recent form:</b> Last five verified results, weighted 5–4–3–2–1; no-contests ignored.</li>'+
+  '</ul>'+
+  '<p><b>Fixed sourced credential bonuses, applied to existing stats only:</b></p>'+
+  '<ul>'+
+  '<li><b>NCAA wrestling:</b> Division I gold +11, silver +10, bronze +9; Division II gold +8, silver +7, bronze +6; Division III gold +5, silver +4, bronze +3. Division I/II/III participation: +3/+2/+1. Verified All-American top-eight without podium: up to +2 more. Wrestling only.</li>'+
+  '<li><b>Olympic judo:</b> Gold +9 Wrestling/+7 Grappling, silver +7/+5, bronze +5/+4, participant +2/+1. A repeat medal adds +1 to each (max +2).</li>'+
+  '<li><b>ADCC:</b> Gold +8, silver +6, bronze +4 Grappling. <b>BJJ:</b> Black +4, brown +3, purple +2, blue +1 Grappling. Reported or disputed ranks earn zero.</li>'+
+  '<li><b>Sambo:</b> Gold +5 Wrestling/+5 Grappling, silver +4/+4, bronze +3/+3. Verified <b>Combat</b> Sambo adds +3/+2/+1 Striking respectively; Sport Sambo adds no Striking.</li>'+
+  '<li><b>Golden Gloves:</b> National +5, state +4, regional +3, junior +2, unspecified +1 Striking.</li>'+
+  '</ul><p>The highest achievement per credential family counts; duplicate records cannot stack. Different families may combine, capped at +12 points per attribute. No credential points create a score when the MMA statistical minimum is not met. Badge sources, stat bases and bonuses are shown separately. Bonuses are editorial heuristics, <b>not scientifically validated or opponent-adjusted ratings</b>.</p></details>';
+
  function ratingsEvidence(f){
   const v=f?.verifiedStats;
   const sample=Number.isInteger(v?.sampleBouts)?v.sampleBouts:null;
@@ -310,21 +324,23 @@
   const rows=f.map(x=>ratingsFor(x,sport)),labels=rows[0].map(x=>x.label);
   const metricHTML=labels.map((label,i)=>{
    const m0=rows[0][i],m1=rows[1][i];
-   return '<div class="befn-snapshot-metric" title="'+escapeHTML(
-      (m0.credentialAdjustment?names[0]+': +'+m0.credentialAdjustment+' NCAA prior. ':'')+
-      (m1.credentialAdjustment?names[1]+': +'+m1.credentialAdjustment+' NCAA prior. ':'')+
-      m0.description)+'">'+
+   const bonus=(m,dir)=>m.credentialAdjustment?
+     (dir==='left'?'← ':'')+'+'+m.credentialAdjustment+' badges'+(dir==='right'?' →':''):'';
+   const tooltip=names[0]+': '+(m0.score===null?'Not rated':m0.baseScore+' stats +'+m0.credentialAdjustment+' badges = '+m0.score)+
+    '; '+names[1]+': '+(m1.score===null?'Not rated':m1.baseScore+' stats +'+m1.credentialAdjustment+' badges = '+m1.score);
+   return '<div class="befn-snapshot-metric" title="'+escapeHTML(tooltip)+'">'+
     '<b>'+(m0.score===null?'—':m0.score)+'</b>'+performanceMeter(m0,true)+
     '<span class="befn-snapshot-metric-label">'+escapeHTML(label)+
     (m0.credentialAdjustment||m1.credentialAdjustment?
-       '<small class="befn-college-bonus">NCAA '+(m0.credentialAdjustment?'← +'+m0.credentialAdjustment:'')+
-        (m1.credentialAdjustment?' → +'+m1.credentialAdjustment:'')+'</small>':'')+
+       '<small class="befn-college-bonus">'+escapeHTML(bonus(m0,'left'))+
+       ' '+escapeHTML(bonus(m1,'right'))+'</small>':'')+
     '</span>'+
     performanceMeter(m1,false)+'<b>'+(m1.score===null?'—':m1.score)+'</b></div>';
   }).join("");
   const sides=f.map((p,i)=>
    '<div><h4>'+escapeHTML(names[i])+' · recent form</h4>'+formHTML(p)+
-   '<h4 style="margin-top:12px!important">Credentials</h4>'+credentialsHTML(p)+'</div>'
+   '<h4 style="margin-top:12px!important">Credentials</h4>'+credentialsHTML(p)+
+   rows[i].map(m=>credentialScoreDetail(m)).join('')+'</div>'
   ).join("");
   const buttons=f.map((p,i)=>p?
    '<button type="button" data-fighter="'+escapeHTML(p.id)+'" aria-label="Open '+escapeHTML(p.name)+' full fighter profile">'+escapeHTML(p.name)+' profile</button>':
