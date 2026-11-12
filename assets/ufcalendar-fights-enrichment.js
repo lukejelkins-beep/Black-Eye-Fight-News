@@ -178,7 +178,12 @@
     fetch("data/ufcalendar-card-enhancements.json",{cache:"no-store"})
       .then(r => { if (!r.ok) throw Error("UFCalendar feed unavailable");return r.json();})
       .then(data => { if (data && data.schema===1 && data.events &&
-                      typeof data.events==="object") { index=data; schedule(); }})
+                      typeof data.events==="object") { index=data;
+                        // Reuse the already downloaded curated round preview rather than
+                        // issuing another API request for fighter ratings.
+                        window.dispatchEvent(new CustomEvent("befn:round-previews-ready",
+                          {detail:{events:data.events}}));
+                        schedule(); }})
       .catch(()=>{}).finally(()=>{loading=false;});
   }
   const root=document.getElementById("main")||document.body;
