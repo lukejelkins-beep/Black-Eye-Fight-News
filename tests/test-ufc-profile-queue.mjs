@@ -112,3 +112,11 @@ test("full owned partitions are not truncated to the 120-candidate preview",()=>
  assert(q.historicalByWorker["S-Z"].some(x=>x.name==="Zulu 001"));
  assert.equal(q.historicalByWorker["A-F"].length,q.historicalCounts["A-F"]);
 });
+
+test("non-alphabetic UFC names remain visible for priority triage",()=>{
+ const progress={bouts:{one:{org:"ufc",status:"completed",eventDate:"2026-10-01",
+  a:{name:"Жан Файтер"},b:{name:"Alpha Veteran"}}}};
+ const q=buildQueue(progress,[],{asOf:"2026-11-12"});
+ assert(q.unassignedHistoricalCandidates.some(x=>x.name==="Жан Файтер"));
+ assert(q.historicalByWorker["A-F"].some(x=>x.name==="Alpha Veteran"));
+});
