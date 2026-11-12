@@ -923,7 +923,7 @@ function editorialSummaryPoints(article,limit=2,maxChars=145){
   // Publisher introductions can be removed when a complete 'that' clause follows.
   p=p.replace(/^(?:The UFC|The promotion|The organization|The organisation)\s+(?:announced|confirmed|said)\b.{0,76}?\bthat\s+(?=[A-Z])/i,'');
   p=p.replace(/^([a-z])/,(_,c)=>c.toUpperCase());
-  if(p.length>maxChars&&/,\s+and\s+/i.test(p)){
+  if(p.length>110&&/,\s+and\s+/i.test(p)){
    const first=p.split(/,\s+and\s+/i)[0];
    if(first.length>=40&&first.length<=maxChars)p=first;
   }
