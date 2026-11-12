@@ -44,14 +44,14 @@ def published(article):
 # High-confidence event signatures catch differently worded reports about the
 # *same development*. Never merge merely because two articles mention a fighter.
 EVENT_PATTERNS={
- 'contract-extension':r'\\b(?:extension|extends?|re-signs?|renews?|renewal)\\b',
- 'fight-booking':r'\\b(?:booked|scheduled|set to face|to fight|fight announced)\\b',
- 'withdrawal':r'\\b(?:withdraws?|withdrawn|pulls? out)\\b',
- 'cancellation':r'\\b(?:cancelled|canceled|called off)\\b',
- 'postponement':r'\\b(?:postponed|delayed)\\b',
- 'retirement':r'\\b(?:retired|retires|retirement)\\b',
- 'injury':r'\\b(?:injured|injury|hospitalized|hospitalised)\\b',
- 'suspension':r'\\b(?:suspended|suspension)\\b'
+ 'contract-extension':r'\b(?:extension|extends?|re-signs?|renews?|renewal)\b',
+ 'fight-booking':r'\b(?:booked|scheduled|set to face|to fight|fight announced)\b',
+ 'withdrawal':r'\b(?:withdraws?|withdrawn|pulls? out)\b',
+ 'cancellation':r'\b(?:cancelled|canceled|called off)\b',
+ 'postponement':r'\b(?:postponed|delayed)\b',
+ 'retirement':r'\b(?:retired|retires|retirement)\b',
+ 'injury':r'\b(?:injured|injury|hospitalized|hospitalised)\b',
+ 'suspension':r'\b(?:suspended|suspension)\b'
 }
 GENERIC_SUBJECT=set(('ufc mma boxing fighter fighters announcer commentator broadcaster broadcast '
  'team long term multi year contract extension signs signed extends continue continues role '
