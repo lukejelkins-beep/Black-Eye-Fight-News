@@ -955,7 +955,7 @@
         "observedOn": "2026-11-12",
         "sampleBouts": 9,
         "scope": "ufc-only",
-        "denominatorNotes": "Rates and finish ratios refer to tracked UFC fights only; omissions represent unverified data."
+        "denominatorNotes": "Saved UFCalendar UFC-only tracked sample: 9 bouts, equal in bout count to the independently verified 9-0 official UFC career as of 13 Nov 2026. Per-metric coverage may differ; no unverified totals or zero values inferred. UFC official athlete page separately reports 611/1325 significant strikes; rates retained from existing verified snapshot."
       },
       "latest": [
         {
@@ -1002,21 +1002,35 @@
       "credentials": [],
       "sourceLinks": [
         "https://www.ufc.com/athlete/natalia-silva",
-        "https://www.ufcalendar.com/fighters/natalia-silva/stats"
+        "https://www.ufcalendar.com/fighters/natalia-silva/stats",
+        "https://www.ufc.com/athlete/natalia-silva?language_content_entity=ko&page=2",
+        "https://www.ufc.com/index.php/news/journey-flyweight-title-natalia-silva-vs-wang-cong-ufc-332",
+        "https://www.ufc.com/event/ufc-332"
       ],
       "review": {
-        "checkedAt": "2026-11-12",
+        "checkedAt": "2026-11-13",
         "championStatusSource": "https://www.ufc.com/athletes?redirect=no",
         "statsSource": "https://www.ufcalendar.com/fighters/natalia-silva/stats",
         "recentHistorySource": "https://www.ufc.com/athlete/natalia-silva",
         "credentialsChecked": true,
         "notes": [
-          "UFC official page confirms she won vacant flyweight championship in Oct 2026. Five career KOs and seven career subs should not be entered as UFC-only finishing data; UFC record shows 2 KO and zero submissions."
+          "UFC official page confirms she won vacant flyweight championship in Oct 2026. Five career KOs and seven career subs should not be entered as UFC-only finishing data; UFC record shows 2 KO and zero submissions.",
+          "13 Nov 2026 official UFC athlete biography independently confirms UFC-only 9-0 (9 completed Octagon bouts), distinct from 21-5-1 professional record; UFC's 29 Sep 2026 title preview enumerates eight pre-title opponents and UFC 332 event confirms the ninth win over Wang Cong. Latest five dated opponent/result rows retained and cross-checked against official UFC biography. No credentials or ranking points added."
         ]
       },
       "meta": "Reigning UFC Women's Flyweight champion · independently reviewed fighter profile · 2026-11-12",
       "analysis": [],
-      "verificationNote": "UFC-only sample and separately linked source-backed credentials. Unverified awards carry zero point bonus."
+      "verificationNote": "UFC-only sample and separately linked source-backed credentials. Unverified awards carry zero point bonus.",
+      "ufcRecord": {
+        "wins": 9,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0,
+        "complete": true,
+        "checkedAt": "2026-11-13",
+        "source": "https://www.ufc.com/athlete/natalia-silva?language_content_entity=ko&page=2",
+        "denominatorNotes": "Official UFC biography explicitly confirms 9-0 in the Octagon, with the nine bouts from June 2022 through UFC 332 (3 Oct 2026); excludes all pre-UFC fights. Distinct from 21-5-1 professional record and 9-bout UFCalendar tracked statistics sample."
+      }
     },
     "mackenzie-dern": {
       "id": "mma-champion--mackenzie-dern",
