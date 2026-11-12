@@ -61,6 +61,33 @@
         "Check whether priority worker claims post-fight ownership of 2026-11-07 result before any public profile edit; queue currently has no postFightRefreshCandidates but the recent bout requires ownership caution."
       ],
       "nextAction": "After 24h or new evidence, audit individual UFC event result pages and primary sambo credentials; exclude DWCS and resolve stats denominators before any cohort commit."
+    },
+    "thomas-petersen": {
+      "name": "Thomas Petersen",
+      "status": "blocked",
+      "lastCheckedOn": "2026-11-13",
+      "sourceUrls": [
+        "https://www.ufc.com/athlete/thomas-petersen",
+        "https://jp.ufc.com/athlete/thomas-petersen",
+        "https://www.ufc.com/athlete/valter-walker",
+        "https://www.ufc.com/athlete/vitor-petrino",
+        "https://www.ufc.com/news/thomas-petersen-trying-set-example-ufc-vegas-115"
+      ],
+      "findings": [
+        "UFC official English biography as checked 2026-11-13 lists active heavyweight, professional 12-5-0 and eight dated UFC appearances (2024-02-03 through 2026-11-07). Its detailed narrative indicates 4 wins and 4 losses, pending independent event-by-event verification.",
+        "Last five dated UFC narrative bouts: 2026-11-07 W Gabriel Lorenco TKO R3 4:47; 2026-07-25 L Valter Walker submission (calf slicer) R1 1:32; 2026-04-04 W Guilherme Pat decision (narrative says unanimous; abbreviated widget says majority) R3 5:00; 2025-10-11 L Vitor Petrino KO R3 0:26; 2025-05-03 W Don'Tale Mayes unanimous decision R3 5:00.",
+        "UFC English abbreviated widget incorrectly marks July 2026 Valter Walker submission as a Petersen win; official Valter Walker page independently lists Walker win, and English/Japanese UFC detailed Petersen narratives report Petersen loss.",
+        "UFC athlete page displays 304/496 significant strikes and 1/40 takedowns, but 2.81 takedowns per 15 minutes conflicts with displayed 1 landed; do not assert coherent career UFC-only statistical denominator without event-level verification.",
+        "UFC detailed biography separates 2023-08-29 DWCS submission of Chandler Cole from UFC debut 2024-02-03; exclude DWCS from UFC-only record.",
+        "UFC biography reports 2017 NJCAA national wrestling championship and LFA heavyweight championship; primary NJCAA and LFA championship evidence not independently audited; no credential scoring."
+      ],
+      "blockers": [
+        "Reconcile all eight UFC career bout outcomes and last-five methods/clocks against individual official UFC event results or UFCStats; 2026-07-25 abbreviated UFC widget outcome is demonstrably contradictory.",
+        "Resolve 2026-04-04 decision method majority versus unanimous from authoritative event result.",
+        "Validate UFC-only stats sample and takedown denominator; 1/40 displayed is incompatible with 2.81 takedowns per 15 minutes.",
+        "Independently verify NJCAA and LFA credentials from primary organisations, calculate V2 classification with dated opponent-quality gate and run required local/CI and live QA before publication."
+      ],
+      "nextAction": "After 2026-11-14 or newly available official event evidence, verify individual event results (especially Walker and Pat), source NJCAA/LFA credentials and correct statistical sample, then classify and safely merge only Thomas Petersen into current cohort if all gates pass."
     }
   }
 }
