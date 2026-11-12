@@ -96,25 +96,38 @@ jobs:
             echo "Deployment blocked: missing or failing exact-commit CI" >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
-          # Grace period for Render's normal automatic Git deployments. This
-          # scheduled reconciliation does not compete with fresh pushes.
-          # Compare only outstanding files; an unchanged years-old asset must
-          # not satisfy the 10-minute deploy grace period.
-          oldest_pending=$(date -u +%s)
-          while IFS= read -r file; do
-            changed=$(git log -1 --format=%ct -- "$file" || true)
-            if [[ -n "$changed" && "$changed" -lt "$oldest_pending" ]]; then
-              oldest_pending=$changed
-            fi
-          done < /tmp/befn-drift-files
-          age=$(( $(date -u +%s) - oldest_pending ))
-          if [[ "$age" -lt 600 ]]; then
-            echo 'Waiting for normal auto-deploy grace period'
-            exit 0
-          fi
           if [[ -z "$RENDER_DEPLOY_HOOK_URL" ]]; then
             echo 'One-time configuration required: GitHub Actions secret RENDER_DEPLOY_HOOK_URL'
             echo 'Deployment not attempted: missing RENDER_DEPLOY_HOOK_URL secret.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          # A short second observation avoids racing a normal Render auto-deploy.
+          # We deliberately do NOT require the newest data commit to be ten
+          # minutes old: regular five-minute result refreshes would starve
+          # deployment forever. The two-hour schedule is the primary debounce.
+          echo 'Allowing normal Render automatic deployment time to converge'
+          sleep 90
+          new_main=$(git ls-remote https://github.com/"$GITHUB_REPOSITORY".git refs/heads/main | cut -f1)
+          if [[ "$new_main" != "$source_sha" ]]; then
+            echo 'New HEAD during grace window; next run will validate it'
+            exit 0
+          fi
+          still_different=0
+          while IFS= read -r file; do
+            remote=$(mktemp)
+            if ! curl --fail --location --silent --show-error --max-time 35 \
+              "$BASE_URL/$file?befn_predeploy_recheck=$GITHUB_RUN_ID" -o "$remote"; then
+              echo 'Production unavailable; aborting rather than adding a deploy' >&2
+              rm -f "$remote"
+              exit 1
+            fi
+            if ! cmp -s "$file" "$remote"; then
+              still_different=$((still_different + 1))
+            fi
+            rm -f "$remote"
+          done < /tmp/befn-drift-files
+          if [[ "$still_different" -eq 0 ]]; then
+            echo 'Normal Render auto-deploy caught up; no recovery needed'
             exit 0
           fi
           echo "approved=true" >> "$GITHUB_OUTPUT"
