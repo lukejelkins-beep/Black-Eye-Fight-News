@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-12T19:30:20.643Z",
-  "checkedAt": "2026-11-12T19:30:20.643Z",
-  "updatedAt": "2026-11-12T19:04:17.023Z",
+  "attemptedAt": "2026-11-12T21:19:16.108Z",
+  "checkedAt": "2026-11-12T21:19:16.108Z",
+  "updatedAt": "2026-11-12T20:03:02Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 6,
+  "sourcesChecked": 4,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 6,
+      "checked": 4,
       "failed": 0,
-      "configured": 6,
-      "message": "6 of 6 scheduled sources checked."
+      "configured": 4,
+      "message": "4 of 4 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 27,
+      "configured": 28,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 44,
+      "configured": 40,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 2,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -53,23 +53,48 @@
   "threadsStatus": "Original public Threads links discovered from trusted fight coverage; no account-level Meta API or OAuth required.",
   "failures": [],
   "rollingScan": {
-    "directoryEntries": 442,
+    "directoryEntries": 446,
     "scheduledEntries": 84,
-    "batchIndex": 0,
+    "batchIndex": 3,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 44,
-      "Bluesky": 6,
-      "X": 27,
-      "Threads": 7
+      "Instagram": 40,
+      "X": 28,
+      "Threads": 10,
+      "Bluesky": 4,
+      "Reddit": 2
     },
-    "directlyChecked": 6,
+    "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n25bacrqr72c",
+      "cid": "bafyreiahahh5ikerfbp2qd53nkzrr54hezx3lx3wcfgamxgpthjq3dr66m",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Joe Rogan calls Usman Nurmagomedov the one non-UFC fighter who is ‘world championship caliber’",
+      "postedAt": "2026-11-12T20:03:02Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n25bacrqr72c",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n255xaot3k23",
       "cid": "bafyreih72niayxszauffaay7d4kpmfjqoutav4ccwlrjr6ubi7igwcfhh4",
@@ -92,6 +117,102 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n255x67u6a2i",
+      "cid": "bafyreibrfmn5trsiukubheifueb7n73ynddi3x3blezwhwt3yfxqmpnsbq",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Paddy Pimblett reveals why he will never follow Arman Tsarukyan and compete in RAF matches",
+      "postedAt": "2026-11-12T19:04:14Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n255x67u6a2i",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n254x6534726",
+      "cid": "bafyreie36doiw7w2f6tgo4dmkxpnr42lps4nu5j3odp45cgrjwraosgcri",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "UFC star Tommy McMillen rushed to hospital after being found unresponsive in nightclub bathroom",
+      "postedAt": "2026-11-12T18:46:20Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n254x6534726",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n252hcmmgz2i",
+      "cid": "bafyreiayiy4wyh4kx6vnqie4pnvvkhieg4nzixyfo7lhyo3hawmntv77kq",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Kayla Harrison vs. Amanda Nunes: Bloody Elbow staff predict the UFC 334 co-main event",
+      "postedAt": "2026-11-12T18:01:40Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n252hcmmgz2i",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n24ygthiny2i",
+      "cid": "bafyreifvbkiktfzqptcmdxkmqdbrzoomplgr7vur4kta7dljqv5tmiio44",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Abu Dhabi Police release statement after Usman Nurmagomedov attacked Merab Dvalishvili at RAF",
+      "postedAt": "2026-11-12T17:25:37Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n24ygthiny2i",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -119,6 +240,54 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n24x6ker5m2r",
+      "cid": "bafyreiaxyuqgdxaismob4zvf4jxyt57y6tyksxlscjwj5fut4hoidnugpu",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Joe Rogan calls for eye poke disqualifications ahead of Ciryl Gane’s UFC 334 return",
+      "postedAt": "2026-11-12T17:03:05Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n24x6ker5m2r",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n24q6cwfxf2o",
+      "cid": "bafyreihifyjkpw4xwxleuafslrgsjvxew63bmzfe35srmvhyjks634vof4",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Usman Nurmagomedov’s punishment revealed as RAF boss provides Merab Dvalishvili update",
+      "postedAt": "2026-11-12T14:57:41Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n24q6cwfxf2o",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n24nmgdwan2z",
       "cid": "bafyreigf2jntgls26qgeieqotsijfhot5lhxmtk6snd76r6vvpp45atpqy",
       "platform": "Bluesky",
@@ -140,6 +309,54 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n24joaeqkd24",
+      "cid": "bafyreietiwgdgjluwmrj6h5y35sdbwrehjx55kdc5e6mqzeuomdv757kge",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Paddy Pimblett names 112lb boxer who hit him harder than Justin Gaethje or any other opponent",
+      "postedAt": "2026-11-12T13:01:19Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n24joaeqkd24",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n24gfayrie2c",
+      "cid": "bafyreife6f73j2web45b6liofhhpc5mqa474qfwdtnowcopcrn3djrpz6e",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Sean O’Malley shares fight breakdown after Merab Dvalishvili vs Usman Nurmagomedov brawl",
+      "postedAt": "2026-11-12T12:02:37Z",
+      "date": "12 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n24gfayrie2c",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -211,31 +428,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T06:48:17.874Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n23ibxcwfs26",
-      "cid": "bafyreihygtmqbudlad4v2y67uaacccs2bdwxuxbz6ptrxavmiuxw477du4",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "UFC 336 championship fight gets a backup as ex-title challenger confirms he will weigh in",
-      "postedAt": "2026-11-12T03:03:54Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n23ibxcwfs26",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T06:48:17.874Z",
+      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -284,30 +477,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n23es25m3t2p",
-      "cid": "bafyreiepz7eaaxvea6mvrsj2ylqlootxjmdh7aa6dnkmusf7ykr3upzlia",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Paddy Pimblett insists it’s ‘bad for the sport’ if Josh Hokit wins at UFC 334",
-      "postedAt": "2026-11-12T02:01:18Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n23es25m3t2p",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T06:48:17.874Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -380,30 +549,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-12T08:21:36.784Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n236c2tm3r24",
-      "cid": "bafyreihuhu65gfyf7l5uarhupidfitruspaxjnd2eaipfcxc5rwrwic2xu",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Josh Hokit roasts Daniel Cormier, Kayla Harrison and others during strange UFC 334 media day",
-      "postedAt": "2026-11-12T00:05:00Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n236c2tm3r24",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T06:48:17.874Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -704,30 +849,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n22vq2ma262a",
-      "cid": "bafyreiexdimoy33e35f22q24z66tpjyny7r6ka7bwisshonzyfmtsxkfcm",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Josh Hokit is ‘close to a deal’ with another organization ahead of his UFC 334 title shot",
-      "postedAt": "2026-11-11T21:31:46Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n22vq2ma262a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T06:48:17.874Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "platform": "Instagram",
       "sport": "mma",
       "type": "post",
@@ -967,7 +1088,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T06:48:17.874Z",
+      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1007,30 +1128,6 @@
       "postedAt": "2026-11-11T20:02:19+0000",
       "url": "https://www.instagram.com/reel/DfnSo0kCJ9u/",
       "photo": "https://scontent-sea5-1.xx.fbcdn.net/v/t51.2885-15/272288308_1633526783646217_5727060428479636702_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=7d201b&_nc_ohc=AJGh72Jm6j4Q7kNvwHQA8ra&_nc_oc=Adoj1zIP32Z_YIVZjPMXCjdmIxG0kZiz_1d1ZAbFBqO-S5Ib5Ra0UqMY1vAmE9fmifk&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AL-3X8kEAAAA&oh=00_AQSPSQUN8eSmPpvSA1XeBMnSWB86NYqeZWqkkENlxa6MJg&oe=6AFACD7D",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n22qoyr5z42v",
-      "cid": "bafyreiaufie6txt6ourc5ewefewkfllxyuzplmdivas4tklpug5x5zufbm",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Usman Nurmagomedov’s manager shuts down recent UFC signing rumors as he provides update",
-      "postedAt": "2026-11-11T20:01:42Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n22qoyr5z42v",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T06:48:17.874Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1206,30 +1303,6 @@
       "postedAt": "2026-11-11T19:08:45+0000",
       "url": "https://www.instagram.com/reel/DfnMVFLPoBr/",
       "photo": "https://scontent-sea5-2.xx.fbcdn.net/v/t51.2885-15/189692362_1746833495510078_3007043078313645481_n.jpg?_nc_cat=101&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=47md6WaWzq8Q7kNvwEG4_2l&_nc_oc=AdqfO6CEoSgk3CCSpQW3XZsP3ikuEPmLVKX11iqggP5HbmPe8bezQzEKikkXA8c4wDA&_nc_zt=23&_nc_ht=scontent-sea5-2.xx&edm=AL-3X8kEAAAA&oh=00_AQR6GgQ8yESQWhj26noSsKPVKnaFtZIFUBdQCU8OERrouA&oe=6AFABCE2",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n22ngig6jn2h",
-      "cid": "bafyreigzylhd344f7quaywwnus6ozdoczsvwr33zsfh4zrjivjuebgf47y",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Francis Ngannou dismisses Ciryl Gane’s undisputed heavyweight champion status ahead of UFC 334",
-      "postedAt": "2026-11-11T19:03:15Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n22ngig6jn2h",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T06:48:17.874Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1996,30 +2069,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n227w66nnb2o",
-      "cid": "bafyreih53uc6eznhyme36wndtkhnl6gix3qvbcersonexn6pse74rrtch4",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Justin Gaethje’s teammate would ‘put money’ on Arman Tsarukyan fight happening in 2027",
-      "postedAt": "2026-11-11T15:01:29Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n227w66nnb2o",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T06:48:17.874Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:u6b6v2jhqpe6hfezjffq7zrh/app.bsky.feed.post/3n226rwslfk22",
       "cid": "bafyreib7nywtl6u2j5lo7xuj4uisforcstunck5clrgv4onn3ouv4w3efm",
       "platform": "Bluesky",
@@ -2101,30 +2150,6 @@
       "postedAt": "2026-11-11T14:06:13+0000",
       "url": "https://www.instagram.com/reel/Dfmp3F0FLQD/",
       "photo": "https://scontent-iad6-1.xx.fbcdn.net/v/t51.2885-15/180573385_233132915257786_8962548993235022574_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=7d201b&_nc_ohc=M-jOsRFInb8Q7kNvwEVTz8W&_nc_oc=AdrESgc6GmCMzyPW448EEFEC2RQPdXv5mkxBItsEIz7BhtRwqpYHafKB2aLWWXS6qZM&_nc_zt=23&_nc_ht=scontent-iad6-1.xx&edm=AL-3X8kEAAAA&oh=00_AQSvWaVGl5vfdOzspU-EeqVv4heeH1MDNDw_Nz6gPGduPA&oe=6AFAD07E",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n224ptesd32c",
-      "cid": "bafyreidzqattkfw4av7b4hpv5ykycq4tnrqyrgw66s3bli5e3m4hva6z5u",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "‘It was huge’… Amanda Nunes shares advice for Ronda Rousey following 17-second comeback fight",
-      "postedAt": "2026-11-11T14:04:15Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n224ptesd32c",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T06:48:17.874Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2314,30 +2339,6 @@
       "postedAt": "2026-11-11T13:04:42+0000",
       "url": "https://www.instagram.com/reel/DfmiwhOBz0j/",
       "photo": "https://scontent-sea5-1.xx.fbcdn.net/v/t51.82787-15/707632476_18595034359013832_5818817401642087151_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=7d201b&_nc_ohc=Px4AGfiH3zkQ7kNvwFoxr10&_nc_oc=AdpaNgOT7v5sw7Dux2KCcMFwCrnfvVdKtQbkR5Y3I783GlYWx_JYm8dJoO8xzvCeoqk&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AL-3X8kEAAAA&_nc_gid=_-UtFKeibQbwHOqye5rikA&oh=00_AQQ1LcCAzmWt_5Kj8xzorwRDvO_oHNVxod34PbOwizbw1Q&oe=6AFAC2D6",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3mzzz6z2pfy2o",
-      "cid": "bafyreibxeljbdk5ur7pxmxmfb2yng36xpdi2bd32pq3stbdgzv43ndimwi",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "New UFC signing leaks plans for first European event of 2027",
-      "postedAt": "2026-11-11T13:01:09Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3mzzz6z2pfy2o",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T06:48:17.874Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5068,7 +5069,7 @@
         "comments": 2,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T06:48:17.874Z",
+      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
