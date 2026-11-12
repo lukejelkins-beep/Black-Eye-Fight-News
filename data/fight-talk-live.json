@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-11T23:47:12.486Z",
+  "attemptedAt": "2026-11-12T01:59:51.945Z",
   "checkedAt": "2026-11-11T23:47:12.486Z",
   "updatedAt": "2026-11-11T23:30:04+0000",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 4,
+  "sourcesChecked": 0,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
-      "state": "connected",
-      "checked": 4,
+      "state": "not-scheduled",
+      "checked": 0,
       "failed": 0,
-      "configured": 4,
-      "message": "4 of 4 scheduled sources checked."
+      "configured": 0,
+      "message": "0 of 0 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 28,
+      "configured": 7,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -26,12 +26,11 @@
     },
     {
       "platform": "Instagram",
-      "state": "connected",
-      "checked": 38,
-      "failed": 2,
-      "configured": 40,
-      "posts": 139,
-      "message": "38 of 40 accounts checked; 139 recent posts found; 2 inaccessible."
+      "state": "unavailable",
+      "checked": 0,
+      "failed": 0,
+      "configured": 13,
+      "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
       "platform": "Facebook",
@@ -42,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 2,
+      "configured": 0,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,20 +54,18 @@
   "failures": [],
   "rollingScan": {
     "directoryEntries": 442,
-    "scheduledEntries": 84,
-    "batchIndex": 3,
+    "scheduledEntries": 22,
+    "batchIndex": 5,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 40,
-      "X": 28,
-      "Threads": 10,
-      "Bluesky": 4,
-      "Reddit": 2
+      "Instagram": 13,
+      "Threads": 2,
+      "X": 7
     },
-    "directlyChecked": 42,
+    "directlyChecked": 0,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
