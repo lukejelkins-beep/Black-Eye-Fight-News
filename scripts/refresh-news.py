@@ -2,6 +2,7 @@
 import datetime as dt, email.utils, hashlib, html, json, re, urllib.request, urllib.error, urllib.parse
 import xml.etree.ElementTree as ET
 from pathlib import Path
+from news_dedupe import deduplicate
 from html.parser import HTMLParser
 from concurrent.futures import ThreadPoolExecutor
 import time
@@ -518,9 +519,14 @@ def main():
         with ThreadPoolExecutor(max_workers=5) as pool:
             refreshed=list(pool.map(lambda a:enrich_summary(dict(a),a,now,force=True),missing))
         for a in refreshed:articles[a['url']]=a
+    clean_articles, removed_articles=deduplicate(list(articles.values()))
+    clean_reports, removed_reports=deduplicate(list(reports.values()))
     payload={'attemptedAt':now.isoformat(),'lastSuccessfulAt':now.isoformat() if success else old.get('lastSuccessfulAt'),
-             'sources':statuses,'articles':sorted(articles.values(),key=lambda a:a['publishedAt'],reverse=True)[:280],
-             'resultReports':sorted(reports.values(),key=lambda a:a['publishedAt'],reverse=True)[:120]}
+             'sources':statuses,'articles':sorted(clean_articles,key=lambda a:a['publishedAt'],reverse=True)[:280],
+             'resultReports':sorted(clean_reports,key=lambda a:a['publishedAt'],reverse=True)[:120],
+             'deduplication':{'checkedAt':now.isoformat(),'removedArticles':len(removed_articles),
+                              'removedResultReports':len(removed_reports),
+                              'examples':(removed_articles+removed_reports)[:15]}}
     path.write_text(json.dumps(payload,indent=2,ensure_ascii=False)+'\n')
     print(f'News: {success}/{len(SOURCES)} sources, {len(payload["articles"])} articles, {len(payload["resultReports"])} official result reports')
 if __name__=='__main__':main()
