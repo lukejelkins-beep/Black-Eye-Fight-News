@@ -740,8 +740,9 @@
    target.championReview=true;
    target.classification=classifier?.classify(source,engine)||{label:"Champion",score:null,
     reason:"Dated verified UFC titleholder",eligible:true};
-   const round=roundObservations.get(key);
-   if(round)target.performanceEvidence=round;
+   // Independently reviewed UFC stats must not inherit partial preview
+   // observations, even when the preview fetched before this champion cohort.
+   delete target.performanceEvidence;
    sampleEvidence.set(key,target);
   }
   update();
