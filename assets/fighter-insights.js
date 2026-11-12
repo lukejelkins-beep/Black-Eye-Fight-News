@@ -15,6 +15,7 @@
  const openSnapshots=new Set();
  const selectedTabs=new Map();
  const sampleEvidence=new Map();
+ const roundObservations=new Map();
  const levels={red:"red",orange:"orange",gold:"gold",green:"green"};
  const profileFor=name=>byName.get(norm(name))||sampleEvidence.get(norm(name))||null;
  const sourceText=f=>[f?.meta||"",...(f?.analysis||[])].join(" ");
@@ -384,6 +385,7 @@
   if(!(aggregate instanceof Map))return;
   let added=0;
   for(const [key,observation] of aggregate){
+   roundObservations.set(key,observation);
    const fighter=byName.get(key)||sampleEvidence.get(key);
    if(!fighter||fighter.sport!=="MMA")continue;
    fighter.performanceEvidence=observation;
@@ -426,7 +428,9 @@
     const p={...fighter,photo:"",report:"mma-contenders",sources:[{label:"Official UFC athlete biography",url:fighter.source}],analysis:[],verificationNote:"Biographical details from UFC; example fight-by-fight times from supplied comparison screenshot need independent verification."};
     profiles.push(p);byId.set(p.id,p);byName.set(key,p);
    }
-   sampleEvidence.set(key,byName.get(key));
+   const target=byName.get(key);
+   if(roundObservations.has(key)&&target?.sport==="MMA")target.performanceEvidence=roundObservations.get(key);
+   sampleEvidence.set(key,target);
   }
   update();
  }).catch(()=>{});
