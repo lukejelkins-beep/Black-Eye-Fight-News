@@ -59,6 +59,8 @@ jobs:
           node tests/test-ufc-champion-profiles.cjs
           node tests/test-fighter-power-index.cjs
           node tests/test-ufc-prospect-contender.cjs
+      - name: Regression-test deployed frontend freshness detection
+        run: node --test tests/test-ufc-qa-freshness.mjs
       - name: Verify deterministic research queue
         run: node --test tests/test-ufc-profile-queue.mjs
       - name: Verify post-fight event reconciliation and no double counting

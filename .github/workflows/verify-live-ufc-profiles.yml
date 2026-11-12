@@ -37,6 +37,8 @@ jobs:
           node tests/test-ufc-profile-card-qa.cjs
           node tests/test-ufc-prospect-contender.cjs
           node --check tests/test-ufc-profile-visual.mjs
+      - name: Regression-test old HTML/JS with new profile JSON
+        run: node --test tests/test-ufc-qa-freshness.mjs
       - name: Install browser test dependency (CI only)
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1

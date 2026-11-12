@@ -10,6 +10,7 @@ import path from "node:path";
 import {spawn} from "node:child_process";
 import {setTimeout as delay} from "node:timers/promises";
 import {chromium} from "playwright";
+import {checkDeploymentFreshness} from "../scripts/ufc-qa-freshness.mjs";
 
 const root=process.cwd();
 const port=Number(process.env.BEFN_PROFILE_QA_PORT||8765);
@@ -58,44 +59,26 @@ const fingerprint=f=>JSON.stringify({
 async function ready(){
  for(let i=0;i<(isLive?8:40);i++){
   try{
-   const response=await fetch(base+"/index.html?befn_qa="+Date.now(),{
-    headers:{"Cache-Control":"no-cache"},signal:AbortSignal.timeout(12000)});
-   if(!response.ok)throw Error("Site HTTP "+response.status);
-   if(!isLive)return;
-   const missing=[];
-   // An up-to-date JSON response can coexist with a stale CDN/HTML shell.
-   // Require the actual page HTML to include the current, source-scoped
-   // fight-history rendering and honest photo fallback code.
-   const pageMarkup=await response.text();
-   for(const required of ["data-befn-recent-results","fighterPortraitFallback",
-     "befn-verified-fighter-portrait-fallback-v1"]){
-    if(!pageMarkup.includes(required))missing.push("index.html missing "+required);
-   }
-   for(const cohort of cohorts){
-    const file="data/ufc-"+cohort+"-profiles.json";
-    const full=path.join(root,file);
-    if(!fs.existsSync(full))continue;
-    const local=JSON.parse(fs.readFileSync(full,"utf8"));
-    const liveResponse=await fetch(base+"/"+file+"?befn_qa="+Date.now(),{
-      headers:{"Cache-Control":"no-cache"},signal:AbortSignal.timeout(12000)});
-    if(!liveResponse.ok){missing.push(file+" (HTTP "+liveResponse.status+")");continue}
-    const published=await liveResponse.json().catch(()=>null);
-    for(const [key,f] of Object.entries(local.fighters||{})){
-     if(fingerprint(published?.fighters?.[key])!==fingerprint(f))
-      missing.push(file+"/"+key);
+   if(isLive){
+    const result=await checkDeploymentFreshness({base,root});
+    if(result.ok){
+     console.log("Production HTML, JS, CSS and cohort data are current:",
+      result.checked,"assets match this GitHub checkout");
+     return;
     }
+    throw Error("PRODUCTION OUT OF DATE: "+result.stale.map(x=>
+     x.file+" ("+x.reason+")").join("; "));
    }
-   if(!missing.length){console.log("Production cohort freshness confirmed for "+profiles.length+" fighters");return}
-   if(i===7)throw Error("PRODUCTION OUT OF DATE: "+missing.slice(0,12).join(", ")+
-    (missing.length>12?" and "+(missing.length-12)+" more":""));
-   console.log("Waiting for Render production publication: "+missing.length+" missing/stale profiles");
+   const response=await fetch(base+"/index.html");
+   if(response.ok)return;
+   throw Error("Preview HTTP "+response.status);
   }catch(err){
-   if(i===7)throw err;
-   if(i>0&&i%4===0)console.warn("Production readiness check:",String(err?.message||err));
+   if(i===(isLive?7:39))throw err;
+   if(i%4===0)console.warn("Deployment freshness pending:",String(err?.message||err).slice(0,800));
   }
   await delay(isLive?18000:250);
  }
- throw new Error("Site preview server did not start");
+ throw Error("Production readiness check did not pass");
 }
 function pushError(scope,error){failures.push(scope+": "+String(error?.message||error))}
 async function checkProfile(page,profile,screen){
@@ -264,6 +247,41 @@ try{
   await page.waitForTimeout(350);
   if(!await fighterGrid.count())pushError(screen,"Fighter Profiles grid missing");
   for(const f of profiles)await checkProfile(page,f,screen);
+  // Deterministic regression test: simulate a real broken portrait regardless
+  // of which remote CDNs happen to be reachable on this CI runner. A labelled,
+  // visible fallback must appear without replacing it with a wrong person's photo.
+  const target=profiles[0];
+  await page.evaluate(id=>{
+   const hash="#fighter/"+encodeURIComponent(id);
+   location.hash=hash;
+   window.dispatchEvent(new Event("hashchange"));
+  },target.id);
+  try{
+   await page.locator("#fighterDialog").waitFor({state:"visible",timeout:12000});
+   const injected=await page.evaluate(()=>{
+    const frame=document.querySelector("#fighterDialog .dialog-bio [data-fighter-portrait]");
+    if(!frame)return false;
+    let image=frame.querySelector("img");
+    if(!image){image=document.createElement("img");image.alt="Photograph of test fighter";frame.appendChild(image)}
+    image.src="data:image/png;base64,THIS_IS_NOT_A_VALID_IMAGE";
+    return true;
+   });
+   assert(injected,"Broken portrait test could not locate the actual fighter photo widget");
+   await page.waitForFunction(()=>{
+    const frame=document.querySelector("#fighterDialog .dialog-bio [data-fighter-portrait]");
+    const fallback=frame?.querySelector(".befn-portrait-fallback");
+    const image=frame?.querySelector("img");
+    return frame?.dataset.portraitState==="fallback"&&
+     !frame.classList.contains("is-loaded")&&
+     fallback?.textContent?.includes("Photo unavailable")&&
+     fallback.getBoundingClientRect().width>=120&&
+     fallback.getBoundingClientRect().height>=150&&
+     (!image||image.classList.contains("is-error"));
+   },null,{timeout:9000});
+   await page.screenshot({path:path.join(screenshots,"broken-photo-fallback-"+screen+".png"),
+    animations:"disabled",timeout:12000});
+  }catch(err){pushError(screen+" | deterministic broken-photo regression",err)}
+  await page.evaluate(()=>document.querySelector("#fighterDialog")?.close()).catch(()=>{});
   if(pageErrors.length)warnings.push(screen+" | console script errors: "+pageErrors.slice(0,4).join(" | "));
   await context.close();
  }
