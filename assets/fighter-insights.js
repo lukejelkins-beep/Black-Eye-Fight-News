@@ -14,53 +14,58 @@
  const stats=new Map();
  const openSnapshots=new Set();
  const levels={red:"red",orange:"orange",gold:"gold",green:"green"};
- const supported=f=>Array.isArray(f?.sources)&&f.sources.some(x=>/^https:\/\//.test(x.url||"")&&!/google\.com\/search/.test(x.url));
  const profileFor=name=>byName.get(norm(name))||null;
  const sourceText=f=>[f?.meta||"",...(f?.analysis||[])].join(" ");
- const achievement=(kind,label,content,detail)=>({kind,label,content,detail});
+ // Only source-linked, explicitly entered credentials qualify. NCAA division
+ // participation is separate from NCAA tournament medals/individual titles.
+ const permitted={
+  Boxing:new Set(["champion","golden-gloves","olympics"]),
+  MMA:new Set(["ncaa","bjj","adcc","sambo","golden-gloves"])
+ };
+ const medalIcon={gold:"🥇",silver:"🥈",bronze:"🥉"};
+ const beltColors={white:"#ececec",blue:"#2875cf",purple:"#843fc8",brown:"#89512d",black:"#181a1e"};
+ const validSource=x=>/^https:\/\//i.test(x||"")&&!/google\.com\/search/i.test(x);
  function credentialsFor(f){
-  if(!f||!supported(f))return [];
-  const text=sourceText(f);
-  const all=[];
-  const push=(kind,label,content,detail)=>{if(!all.some(x=>x.kind===kind))all.push(achievement(kind,label,content,detail))};
-  const golden=/\bGolden Gloves\b/i.test(text);
-  const level=/\b(?:national|USA)\b[^.!]{0,45}\bGolden Gloves\b|\bGolden Gloves\b[^.!]{0,45}\b(?:national|USA)\b/i.test(text)?"National":
-   /\bJunior Golden Gloves\b/i.test(text)?"Junior":"Level unspecified";
-  if(f.sport==="Boxing"){
-    const former=/\b(?:former|previous)\s+(?:(?:WBA|WBC|WBO|IBF|the ring|unified|world)\b[\w\s/-]{0,58})champion\b/i.test(text);
-    if(former)push("champion","Former world champion","♛","Previously held a recognised professional world title");
-    if(golden)push("golden-gloves","Golden Gloves","🥊","Golden Gloves · "+level);
-    const olympic=text.match(/\b(?:Olympic|Olympics)\s+(gold|silver|bronze)\s+(?:medalli?st|medal|medallist)|\b(gold|silver|bronze)\s+(?:Olympic|Olympics)\s+(?:medal|medalli?st)/i);
-    if(olympic){const medal=(olympic[1]||olympic[2]).toLowerCase();push("olympics","Olympic "+medal,medal==="gold"?"🥇":medal==="silver"?"🥈":"🥉","Olympic "+medal+" medal")}
-  }else{
-    const bjj=text.match(/\b(?:BJJ|Brazilian\s+jiu[-\s]?jitsu)\s+(black|brown|purple|blue|white)\s+belt\b|\b(?:second|third|fourth|first)[-\s]degree\s+Brazilian\s+jiu[-\s]?jitsu\s+(black|brown)\s+belt/i);
-    if(bjj){const belt=(bjj[1]||bjj[2]).toLowerCase();push("bjj","BJJ "+belt+" belt",belt,"Brazilian jiu-jitsu "+belt+" belt")}
-    const adcc=/\bADCC\b[^.!]{0,70}\b(?:world\s+)?champion\b|\bADCC\b[^.!]{0,70}\b(?:gold|winner)\b/i.test(text);
-    if(adcc)push("adcc","ADCC champion","🏆","ADCC championship gold");
-    else if(/\bADCC\b[^.!]{0,70}\b(?:runner[-\s]?up|silver)\b/i.test(text))push("adcc","ADCC silver","🥈","ADCC silver medal");
-    const ncaa=text.match(/\bNCAA\s+Division\s+(I{1,3}|[123])\b[^.!]{0,65}\b(champion|runner[-\s]?up|silver|bronze|third\s+place)\b/i);
-    if(ncaa){
-      const roman=/^[123]$/.test(ncaa[1])?["","I","II","III"][Number(ncaa[1])]:ncaa[1];
-      const medal=/champion/i.test(ncaa[2])?"🥇":/runner|silver/i.test(ncaa[2])?"🥈":"🥉";
-      push("ncaa","NCAA Division "+roman+" "+({ "🥇":"gold","🥈":"silver","🥉":"bronze"})[medal],{division:roman,medal}, "NCAA Division "+roman+" wrestling "+(medal==="🥇"?"champion":medal==="🥈"?"runner-up":"third place"));
-    }
-    const sambo=/\bsambo\b[^.!]{0,45}\bchampion\b|\bchampion\b[^.!]{0,35}\bsambo\b/i.test(text);
-    if(sambo)push("sambo","Sambo gold","⭐","Verified sambo championship; the competition level is described in the fighter’s report");
-    else if(/\bsambo\b[^.!]{0,45}\bbronze\b/i.test(text))push("sambo","Sambo bronze","🥉","Sambo bronze medal");
-    if(golden)push("golden-gloves","Golden Gloves","🥊","Golden Gloves · "+level);
+  if(!f)return [];
+  const allowed=permitted[f.sport]||permitted.MMA;
+  const out=[],seen=new Set();
+  for(const c of (Array.isArray(f.credentials)?f.credentials:[])){
+   if(!c||!allowed.has(c.kind)||!validSource(c.source)||seen.has(c.kind))continue;
+   if(c.kind==="ncaa"&&!["I","II","III"].includes(c.division))continue;
+   if(c.kind==="bjj"&&!Object.keys(beltColors).includes(c.belt))continue;
+   if(["adcc","sambo","olympics"].includes(c.kind)&&!medalIcon[c.medal])continue;
+   if(c.kind==="golden-gloves"&&!["national","junior","regional","state","unspecified"].includes(c.level))continue;
+   seen.add(c.kind);
+   out.push({...c,detail:String(c.detail||"").trim()});
   }
-  return all;
+  return out;
  }
- function badge(x){
-  const content=x.kind==="bjj"?'<span class="befn-belt" style="--belt:'+({white:"#ececec",blue:"#2875cf",purple:"#843fc8",brown:"#89512d",black:"#181a1e"}[x.content]||"#777")+'"></span>':
-   x.kind==="ncaa"?'<span class="befn-credential-ncaa"><small>NCAA '+escapeHTML(x.content.division)+'</small><b>'+escapeHTML(x.content.medal)+'</b></span>':
-   '<span aria-hidden="true">'+escapeHTML(x.content)+'</span>';
-  return '<span class="befn-credential" data-kind="'+escapeHTML(x.kind)+'" title="'+escapeHTML(x.detail)+'" role="img" aria-label="'+escapeHTML(x.detail)+'">'+content+'</span>';
+ function badge(c){
+  const detail=c.detail||({
+   bjj:"Brazilian jiu-jitsu "+c.belt+" belt",
+   ncaa:"NCAA Division "+c.division+" collegiate wrestling",
+   adcc:"ADCC "+c.medal+" medal",
+   sambo:"Sambo "+c.medal+" medal",
+   "golden-gloves":"Golden Gloves "+c.level+" achievement",
+   olympics:"Olympic boxing "+c.medal+" medal",
+   champion:"Former boxing world champion"
+  }[c.kind]||"Verified credential");
+  const content=c.kind==="bjj"?'<span class="befn-belt" style="--belt:'+beltColors[c.belt]+'"></span>':
+   c.kind==="ncaa"?'<span class="befn-credential-ncaa"><small>NCAA'+(["I","II","III"].indexOf(c.division)+1)+'</small><b>🤼</b></span>'+
+     (medalIcon[c.medal]?'<em class="befn-credential-medal">'+medalIcon[c.medal]+'</em>':''):
+   c.kind==="adcc"?'<span aria-hidden="true">🏆</span>':
+   c.kind==="sambo"?'<span aria-hidden="true">⭐</span>':
+   c.kind==="golden-gloves"?'<span aria-hidden="true">🥊</span>':
+   c.kind==="olympics"?'<span aria-hidden="true">'+medalIcon[c.medal]+'</span>':
+   '<span aria-hidden="true">♛</span>';
+  return '<button type="button" class="befn-credential" data-kind="'+escapeHTML(c.kind)+
+   '" data-credential-info="'+escapeHTML(detail)+'" data-credential-source="'+escapeHTML(c.source)+
+   '" title="'+escapeHTML(detail)+'" aria-label="'+escapeHTML(detail)+'">'+content+'</button>';
  }
  const credentialsHTML=f=>{
   const list=credentialsFor(f);
   return list.length?'<div class="befn-credential-list">'+list.map(badge).join("")+'</div>':
-   '<span class="befn-credential-empty">No supported credentials recorded in this profile.</span>';
+   '<span class="befn-credential-empty">No verified credentials from the selected categories on file.</span>';
  };
  function historyFor(f){
   return engine.normalizeHistory((f?.latest||[]).map(x=>({
@@ -127,6 +132,8 @@
  function sportFor(article,a,b){
   if(a?.sport)return a.sport;
   if(b?.sport)return b.sport;
+  const explicit=article.closest("[data-befn-sport]")?.dataset?.befnSport;
+  if(explicit)return explicit==="boxing"?"Boxing":"MMA";
   const root=article.closest("#upcoming-cards-root");
   const sport=root?.dataset?.upcomingSport ||window.BEFNSport?.get()||"";
   return sport==="boxing"?"Boxing":"MMA";
@@ -190,6 +197,26 @@
   }
   schedule();
  }
+ document.addEventListener("click",e=>{
+  const button=e.target.closest?.("[data-credential-info]");
+  if(!button)return;
+  const strip=button.closest(".befn-credential-list");
+  if(!strip)return;
+  e.stopPropagation();
+  let note=strip.nextElementSibling;
+  if(!note?.classList.contains("befn-credential-help")){
+   note=document.createElement("p");note.className="befn-credential-help";
+   strip.insertAdjacentElement("afterend",note);
+  }
+  const label=document.createElement("span");label.textContent=button.dataset.credentialInfo||"Verified credential";
+  note.replaceChildren(label);
+  const link=document.createElement("a");
+  const source=button.dataset.credentialSource||"";
+  if(/^https:\/\//.test(source)){
+   link.href=source;link.target="_blank";link.rel="noopener noreferrer";
+   link.textContent=" · Source";note.appendChild(link);
+  }
+ },true);
  document.addEventListener("toggle",event=>{
   const el=event.target;
   if(!el?.matches?.(".befn-fight-snapshot"))return;
