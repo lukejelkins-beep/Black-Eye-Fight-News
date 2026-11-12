@@ -551,7 +551,10 @@ html,body{max-width:100%;overflow-x:clip}
 .fighter-image .befn-portrait-fallback span,.dialog-bio .befn-portrait-slot .befn-portrait-fallback span{
  font:800 9px/1.35 'DM Sans',Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}
 .fighter-image > img,.dialog-bio .befn-portrait-slot > img{
- position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%;z-index:1;display:block}
+ position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%;z-index:1;display:block;
+ /* Never let a still-loading or broken image paint over the fallback. */
+ opacity:0}
+.fighter-image.is-loaded > img,.dialog-bio .befn-portrait-slot.is-loaded > img{opacity:1}
 .fighter-image.is-loaded .befn-portrait-fallback,.dialog-bio .befn-portrait-slot.is-loaded .befn-portrait-fallback{visibility:hidden}
 .dialog-bio .befn-portrait-slot{width:142px;height:170px;flex:0 0 142px}
 .dialog-bio .befn-portrait-slot > img{width:100%;height:100%;margin:0}
@@ -611,6 +614,23 @@ const personInitials=name=>String(name||'').split(/\s+/).filter(Boolean).slice(0
 /* Shared, deliberately non-photographic fallback; still visible when no
    photograph is licensed, network-capable or image-host permitted. */
 const fighterPortraitFallback=name=>`<div class="befn-portrait-fallback" role="img" aria-label="Photograph unavailable for ${esc(name)}"><strong aria-hidden="true">${esc(personInitials(name))}</strong><span aria-hidden="true">Photo unavailable</span></div>`;
+const syncFighterPortraits=root=>{
+ // Catch already-cached portraits whose load event fired before the
+ // image event listener was registered. Never invent a photo for a name.
+ root?.querySelectorAll?.('[data-fighter-portrait] img').forEach(img=>{
+  const frame=img.closest('[data-fighter-portrait]');
+  if(!frame||!img.complete)return;
+  if(img.naturalWidth>0&&!img.classList.contains('is-error')){
+   frame.classList.add('is-loaded');
+   frame.dataset.portraitState='image';
+  }else{
+   frame.classList.remove('is-loaded');
+   frame.dataset.portraitState='fallback';
+   img.classList.add('is-error');
+  }
+ });
+};
+
 
 const portraitRequests=new Map();
 async function findWikipediaPortrait(name){
@@ -1072,7 +1092,7 @@ function renderChampions(){
 const fighterCard=f=>`<button type="button" class="fighter-card" data-fighter="${esc(f.id)}" aria-label="View scouting profile for ${esc(f.name)}"><div class="fighter-image" data-fighter-portrait="${esc(f.name)}" data-portrait-state="fallback">${fighterPortraitFallback(f.name)}${f.photo?`<img src="${safeURL(f.photo)}" loading="lazy" referrerpolicy="no-referrer" alt="Photograph of ${esc(f.name)}">`:''}<span class="fighter-tag">${esc(f.category)}</span></div><div class="fighter-body"><div class="fighter-metadata">${esc(f.division)} · ${esc(f.sport)}</div><h3>${esc(f.name)}</h3><div class="fighter-metadata">${esc(f.record)}</div><p>${esc(f.analysis[0]||f.meta)}</p><div class="fighter-link">OPEN FULL SCOUTING REPORT ↗</div></div></button>`;
 function filteredFighters(){let result=D.fighters.filter(f=>(state.fightersSport==='All'||f.sport===state.fightersSport) && (state.fightersCategory==='All'||f.category===state.fightersCategory) && (state.fightersDivision==='All'||f.division===state.fightersDivision));const q=state.fightersQuery.trim().toLowerCase();if(q)result=result.filter(f=>[f.name,f.division,f.meta,f.record,f.next,...f.analysis].join(' ').toLowerCase().includes(q));return result;}
 function divisionFilter(){const divs=[...new Set(D.fighters.filter(x=>state.fightersSport==='All'||x.sport===state.fightersSport).map(x=>x.division))];return `<select class="field" id="divisionFilter" aria-label="Choose weight division"><option value="All">All divisions</option>${divs.map(d=>`<option value="${esc(d)}" ${d===state.fightersDivision?'selected':''}>${esc(d)}</option>`).join('')}</select>`}
-function renderFighterCards(){const list=filteredFighters();const grid=document.querySelector('#fighterGrid');const count=document.querySelector('#fighterCount');if(grid)grid.innerHTML=list.length?list.map(fighterCard).join(''):'<div class="empty">No fighters match those filters.</div>';if(count)count.textContent=`${list.length} PROFILES`}
+function renderFighterCards(){const list=filteredFighters();const grid=document.querySelector('#fighterGrid');const count=document.querySelector('#fighterCount');if(grid){grid.innerHTML=list.length?list.map(fighterCard).join(''):'<div class="empty">No fighters match those filters.</div>';syncFighterPortraits(grid)}if(count)count.textContent=`${list.length} PROFILES`}
 function renderFighters(){const count=filteredFighters().length;return renderFrame(`${viewTitle('','Fighter profiles')}<div class="filter-row">${segments('fightersCategory',['All','Champion','Contender','Prospect','Roster','Unassessed'],state.fightersCategory)}${divisionFilter()}<input class="field search" id="fighterSearch" placeholder="Search fighter, promotion, style, form…" aria-label="Search fighter profiles" value="${esc(state.fightersQuery)}"><span class="result-count" id="fighterCount">${count} PROFILES</span></div><details class="compact-note"><summary>About these records</summary><p>Historical roster from 7 November 2026. Some records, fixtures and notes require reconfirmation.</p></details><div class="fighters-grid" id="fighterGrid">${filteredFighters().length?filteredFighters().map(fighterCard).join(''):'<p class="empty">No verified scouting profiles are available for this selection.</p>'}</div>`)}
 const talkPlatforms = {
  X: {mark:'𝕏', hosts:['x.com','twitter.com']},
@@ -1582,8 +1602,9 @@ function tableHTML(t){return `<section class="calendar-block"><div class="subhea
 function renderHighlights(){return window.FightFilm.render()+window.BEFNCoverage.panel(activeSport())}
 function openFighter(id){const f=D.fighters.find(x=>x.id===id);if(!f)return;const recent=f.latest||[];const picture=f.photo||portraitURL(f.name);const img=`<div class="befn-portrait-slot" data-fighter-portrait="${esc(f.name)}" data-portrait-state="fallback">${fighterPortraitFallback(f.name)}${picture?`<img loading="eager" src="${safeURL(picture)}" alt="Photograph of ${esc(f.name)}" referrerpolicy="no-referrer">`:''}</div>`;
  document.querySelector('#fighter-dialog-content').innerHTML=`<div class="dialog-top"><div><div class="eyebrow" style="color:#b4e1d5">${esc(f.sport)} / ${esc(f.division)} / ${esc(f.category)}</div><h2>${esc(f.name)}</h2><small>${esc(f.record)} · ${f.review?.checkedAt?'Reviewed '+esc(f.review.checkedAt):'Archive date 7 Nov 2026'}</small></div><button type="button" class="dialog-close" id="closeFighter" aria-label="Close fighter profile">×</button></div><div class="dialog-content"><div class="dialog-bio">${img}<div><h3 style="margin-top:0">Fighter snapshot</h3><p>${esc(f.meta)}</p><p><strong>Next event / path:</strong> ${esc(f.next||'Not currently verified')}</p>${f.verificationNote?`<p><strong>Record caution:</strong> ${esc(f.verificationNote)}</p>`:''}</div></div>${window.BEFNFighterInsights?.renderProfile(f)||""}<h3>Five most recent results</h3>${recent.length?`<div class="scroller"><table class="data-table" data-befn-recent-results="${esc(f.id)}"><thead><tr><th>Date</th><th>Opponent</th><th>W/L</th><th>Method</th></tr></thead><tbody>${recent.map(r=>`<tr><td>${esc(r.date)}</td><td>${esc(r.opponent)}</td><td>${esc(r.outcome)}</td><td>${esc(r.method)}</td></tr>`).join('')}</tbody></table></div>`:'<p>No verifiable recent-fight table in the source archive.</p>'}<h3>Style & recent form</h3><ul>${f.analysis.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><h3>Source links</h3><div class="source-list">${f.sources.length?f.sources.map(x=>`<a href="${safeURL(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.label)} ↗</a>`).join(''):'<span>Additional source links are not currently available.</span>'}</div><p class="panel-note">Some historical material has not been independently reverified.</p></div>`;
+ syncFighterPortraits(dialog);
  if(dialog.showModal)dialog.showModal();else dialog.setAttribute('open','');}
-function navigate(){let key=location.hash.replace('#','').split('/')[0]||'home';if(key==='news')key='home';if(key==='calendar'||key==='results'){fightDesk.view=key==='results'?'results':'upcoming';history.replaceState(null,'','#fights');key='fights';}const all=['home','champions','fighters','social','fights','highlights'];if(!all.includes(key))key='home';const pages={home:renderHome,champions:renderChampions,fighters:renderFighters,social:renderSocial,fights:renderFights,highlights:renderHighlights};main.innerHTML=pages[key]();if(key==='highlights')window.FightFilm.load();hydrateTalkEmbeds();document.querySelectorAll('[data-nav]').forEach(x=>{const yes=x.dataset.nav===key;x.classList.toggle('active',yes);if(yes)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});if(location.hash.startsWith('#fighter/')){openFighter(decodeURIComponent(location.hash.slice(9)))}window.scrollTo({top:0,behavior:'instant'});hydrateMissingPortraits().catch(()=>{});if(key==='social'&&!liveTalk.loading&&Date.now()-liveTalk.lastAttempt>10*60*1000)loadLiveTalk().catch(()=>{});}
+function navigate(){let key=location.hash.replace('#','').split('/')[0]||'home';if(key==='news')key='home';if(key==='calendar'||key==='results'){fightDesk.view=key==='results'?'results':'upcoming';history.replaceState(null,'','#fights');key='fights';}const all=['home','champions','fighters','social','fights','highlights'];if(!all.includes(key))key='home';const pages={home:renderHome,champions:renderChampions,fighters:renderFighters,social:renderSocial,fights:renderFights,highlights:renderHighlights};main.innerHTML=pages[key]();syncFighterPortraits(main);if(key==='highlights')window.FightFilm.load();hydrateTalkEmbeds();document.querySelectorAll('[data-nav]').forEach(x=>{const yes=x.dataset.nav===key;x.classList.toggle('active',yes);if(yes)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});if(location.hash.startsWith('#fighter/')){openFighter(decodeURIComponent(location.hash.slice(9)))}window.scrollTo({top:0,behavior:'instant'});hydrateMissingPortraits().catch(()=>{});if(key==='social'&&!liveTalk.loading&&Date.now()-liveTalk.lastAttempt>10*60*1000)loadLiveTalk().catch(()=>{});}
 document.addEventListener('click',e=>{
  const fightButton=e.target.closest('button[data-fights-view],button[data-fights-promotion]');
  if(fightButton){

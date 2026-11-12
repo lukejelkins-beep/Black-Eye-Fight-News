@@ -137,10 +137,13 @@ async function checkProfile(page,profile,screen){
      const im=frame?.querySelector("img");
      const fallback=frame?.querySelector(".befn-portrait-fallback");
      const styles=fallback?getComputedStyle(fallback):null;
+     const imagePainted=!!im&&getComputedStyle(im).display!=="none"&&
+      Number(getComputedStyle(im).opacity)>.05;
      const shown=!!fallback&&styles?.display!=="none"&&styles?.visibility!=="hidden"&&
+      Number(styles?.opacity)>0.9&&!imagePainted&&
       fallback.getBoundingClientRect().width>0&&fallback.getBoundingClientRect().height>0;
      return {imgPresent:!!im,imageLoaded:!!im&&im.complete&&im.naturalWidth>0&&
-      frame.classList.contains("is-loaded"),fallbackVisible:shown,
+      frame.classList.contains("is-loaded")&&imagePainted,fallbackVisible:shown,
       fallbackLabel:fallback?.textContent?.trim()||"",
       state:frame?.dataset.portraitState||"missing",framePresent:!!frame,
       photoVerified:!!f?.photoRightsVerified};
