@@ -470,3 +470,18 @@
  .befn-snapshot-metric .befn-college-bonus{font-size:8px}
  .befn-snapshot-extra .befn-credential-score-note{padding:7px}
 }
+
+
+/* Champion program: keep hover portrait separate from full scouting profile action. */
+.befn-champion-profile-link{
+ display:inline-flex;align-items:center;justify-content:center;
+ min-height:30px;margin:6px 0 7px;padding:5px 10px;
+ background:#f3dfb8;border:1px solid #c09a51;border-radius:7px;
+ color:#241a12;font-size:11px;font-weight:850;
+ line-height:1.2;white-space:normal;text-align:center;
+}
+.befn-champion-profile-link:hover{background:#fff1d8}
+.befn-champion-profile-link:focus-visible{outline:3px solid #6fc8ec;outline-offset:2px}
+@media(max-width:540px){
+ .befn-champion-profile-link{font-size:10px;min-height:33px;padding:6px 9px}
+}
