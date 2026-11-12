@@ -16,6 +16,17 @@ const port=Number(process.env.BEFN_PROFILE_QA_PORT||8765);
 const base="http://127.0.0.1:"+port;
 const screenshots=path.join(root,"qa/ufc-profile-screenshots");
 const cohorts=["champion","ranked","contender","prospect","roster"];
+const profileStatsSource="data/ufc-postfight-metrics.json";
+const normalized=x=>String(x||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
+ .toLowerCase().replace(/[^a-z0-9]/g,"");
+const expectedPostfight=new Set();
+if(fs.existsSync(profileStatsSource)){
+ const raw=JSON.parse(fs.readFileSync(profileStatsSource,"utf8"));
+ if(raw.schema===1&&raw.scope==="ufc-only"){
+  for(const f of Object.values(raw.fighters||{}))
+   if(f?.name&&f.trackedBouts>0)expectedPostfight.add(normalized(f.name));
+ }
+}
 const profiles=[];
 for(const cohort of cohorts){
  const file=path.join(root,"data/ufc-"+cohort+"-profiles.json");
@@ -54,6 +65,11 @@ async function checkProfile(page,profile,screen){
    const d=document.querySelector("#fighterDialog");
    return !!d?.open&&!!d.querySelector(".befn-profile-insights[data-befn-profile='"+CSS.escape(id)+"']");
   },profile.id,{timeout:12000});
+  if(expectedPostfight.has(normalized(profile.name))){
+   await page.waitForFunction(id=>
+    !!document.querySelector("#fighterDialog .befn-profile-block[data-befn-postfight='"+CSS.escape(id)+"']"),
+    profile.id,{timeout:12000});
+  }
   const details=await page.evaluate(id=>{
    const d=document.querySelector("#fighterDialog"),f=window.COMBAT_DATA?.fighters?.find(x=>x.id===id);
    const ins=d?.querySelector(".befn-profile-insights");
@@ -62,13 +78,16 @@ async function checkProfile(page,profile,screen){
    const metrics=ins?.querySelectorAll(".befn-power-metric").length??0;
    const credential=ins?.querySelector(".befn-credential-list,.befn-credential-empty");
    const ratingSource=ins?.querySelector(".befn-rating-source-note a");
+   const postfight=ins?.querySelector(".befn-profile-block[data-befn-postfight]");
+   const postfightCells=postfight?.querySelectorAll(".befn-postfight-stat")?.length??0;
+   const coverageVisible=postfight?.textContent?.includes("tracked-sample totals, not career totals")??false;
    const rect=d?.getBoundingClientRect();
    const rootWidth=document.documentElement.clientWidth;
    const content=d?.querySelector(".dialog-content");
    const viewportOverflow=document.documentElement.scrollWidth>rootWidth+4;
    return {
     identity:!!f,title,record:f?.record,division:f?.division,category:f?.category,
-    metrics,recent,credentialsVisible:!!credential,
+    metrics,recent,credentialsVisible:!!credential,postfightCells,coverageVisible,
     ratingSource:ratingSource?.getAttribute("href")||"",
     ratingSourceText:ins?.querySelector(".befn-rating-source-note")?.textContent||"",
     rect:rect&&{left:rect.left,right:rect.right,width:rect.width},
@@ -88,6 +107,10 @@ async function checkProfile(page,profile,screen){
   assert.equal(details.metrics,5,"expected exactly 5 rating rows");
   assert.equal(details.recent,profile.latest.length,"recent results do not match sourced data");
   assert(details.credentialsVisible,"credentials or missing-credential statement absent");
+  if(expectedPostfight.has(normalized(profile.name))){
+   assert.equal(details.postfightCells,11,"incomplete UFC post-fight metrics panel");
+   assert(details.coverageVisible,"missing clear sample versus career totals label");
+  }
   assert(details.closeVisible,"dialog close action missing");
   assert(!details.viewportOverflow,"document overflows horizontally");
   assert(!details.dialogClip,"fighter dialog extends beyond viewport");

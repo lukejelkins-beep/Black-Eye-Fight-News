@@ -13,10 +13,15 @@ on:
       - 'data/ufc-postfight-metrics.json'
       - 'tests/test-ufc-profile-queue.mjs'
       - 'tests/test-ufc-profile-visual.mjs'
+      - 'data/ufc-postfight-metrics.json'
       - 'assets/fighter-insights.js'
+      - 'assets/fighter-power.css'
+      - 'index.html'
+      - 'sw.js'
       - 'assets/fighter-power-index.js'
       - 'tests/test-ufc-*.cjs'
       - 'tests/test-fighter-power-index.cjs'
+      - 'tests/test-ufc-postfight-metrics.mjs'
       - '.github/workflows/validate-ufc-profiles.yml'
   pull_request:
     branches: [main]
