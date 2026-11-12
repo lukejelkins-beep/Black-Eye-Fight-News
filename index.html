@@ -719,14 +719,30 @@ function newsPointsHTML(a){
  return points.length?'<ul class="news-strip-points" aria-label="Key facts from original reporting">'+points.map(point=>'<li>'+esc(point)+'</li>').join('')+'</ul>':
   '<p class="news-strip-pending">Summary pending source verification</p>';
 }
+/* News metadata stays source-led: indexed dates are never presented as publisher publication times. */
+function newsDisplayMeta(a){
+ const raw=Date.parse(a.publishedAt||'');
+ const valid=Number.isFinite(raw);
+ const age=valid?Date.now()-raw:Infinity;
+ const published=valid&&age>=0&&age<=60*60*1000*24*365;
+ const indexed=Boolean(a.timeBasis);
+ const emphasis=published&&!indexed&&age<=2*60*60*1000
+   &&/\b(?:confirmed|announced|withdraws?|cancelled|postponed|injured|suspended|signs|signed|retires?|died|dies|breaking)\b/i.test(a.title||'');
+ const time=published?'<time class="befn-news-time" datetime="'+new Date(raw).toISOString()+'" title="'+esc(indexed?(a.timeBasis||'Indexed timestamp'):('Published '+displayDate(a.publishedAt)))+'">'+(indexed?'Indexed ':'')+esc(displayDate(a.publishedAt))+'</time>':'';
+ return '<span class="befn-news-meta">'
+   +(emphasis?'<span class="befn-news-breaking" aria-label="Breaking development">BREAKING</span>':'')
+   +'<span class="befn-news-publisher">'+esc(a.source||'Publisher')+'</span>'
+   +(time?'<span class="befn-news-meta-dot" aria-hidden="true">·</span>'+time:'')
+   +'</span>';
+}
 function headlineCard(a){
  const fighter=newsFighterImage(a),publisher=a.image&&/^https:\/\//.test(a.image.url||'')?a.image:null;
  const src=publisher?publisher.url:fighter?fighter.url:'';
  const alt=publisher?(publisher.alt||a.title):fighter?'File photo of '+fighter.name:a.sport+' news';
- const href=safeURL(a.url),when=a.publishedAt?'<span class="news-strip-time"> · '+(a.timeBasis?'Indexed ':'')+esc(displayDate(a.publishedAt))+'</span>':'';
+ const href=safeURL(a.url);
  const summary=newsPointsHTML(a);
  return '<article class="news-card live-news-card news-strip">'
-  +'<div class="news-strip-top"><div class="news-strip-story"><p class="news-strip-source">'+esc(a.source)+(activeSport()==='all'?' · '+esc(a.sport.toUpperCase()):'')+when+'</p>'
+  +'<div class="news-strip-top"><div class="news-strip-story"><p class="news-strip-source">'+newsDisplayMeta(a)+(activeSport()==='all'?'<span class="befn-news-sport">'+esc(a.sport.toUpperCase())+'</span>':'')+'</p>'
   +'<h3 class="news-strip-headline"><a href="'+href+'" target="_blank" rel="noopener noreferrer">'+esc(a.title)+'</a></h3></div>'
   +(src?'<a class="news-strip-thumbnail" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image" src="'+safeURL(src)+'" alt="'+esc(alt)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-news-fallback="'+(fighter?safeURL(fighter.url):'')+'" data-news-fallback-name="'+(fighter?esc(fighter.name):'')+'"></a>':'')+'</div>'
   +summary+'<a class="news-strip-original" href="'+href+'" target="_blank" rel="noopener noreferrer">Read original ↗</a></article>';
@@ -740,7 +756,7 @@ function newsFeatureCard(a){
  const summary=newsPointsHTML(a);
  return '<article class="live-news-card news-feature-card">'
   +(src?'<a href="'+href+'" class="news-feature-photo" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image" src="'+safeURL(src)+'" alt="'+esc(alt)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-news-fallback="'+(fighter?safeURL(fighter.url):'')+'" data-news-fallback-name="'+(fighter?esc(fighter.name):'')+'"></a>':'')
-  +'<div class="news-feature-copy"><div class="news-feature-kicker">In focus'+(activeSport()==='all'?' · '+esc(a.sport):'')+' · '+esc(a.source)+'</div>'
+  +'<div class="news-feature-copy"><div class="news-feature-kicker">'+newsDisplayMeta(a)+(activeSport()==='all'?'<span class="befn-news-sport">'+esc(a.sport.toUpperCase())+'</span>':'')+'</div>'
   +'<h3><a href="'+href+'" target="_blank" rel="noopener noreferrer">'+esc(a.title)+'</a></h3>'
   +summary+'<a class="news-strip-original" href="'+href+'" target="_blank" rel="noopener noreferrer">Read original ↗</a></div></article>';
 }
@@ -910,7 +926,7 @@ function topStoryCard(a){
  const href=safeURL(a.url);
  return '<article class="front-lead-card top-story-full">'
   +'<a class="front-lead-image" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image front-lead-photo" data-photo-subject="'+esc(subject)+'" loading="lazy" referrerpolicy="no-referrer" decoding="async" src="'+safeURL(photo.url)+'" alt="'+esc(photo.alt)+'"></a>'
-  +'<div class="front-lead-copy"><span class="front-story-meta">IN FOCUS · '+esc(a.sport.toUpperCase())+' · '+esc(a.source)+'</span>'
+  +'<div class="front-lead-copy"><span class="front-story-meta">'+newsDisplayMeta(a)+'<span class="befn-news-sport">'+esc(a.sport.toUpperCase())+'</span></span>'
   +'<h2><a href="'+href+'" target="_blank" rel="noopener noreferrer">'+esc(a.title)+'</a></h2>'
   +(points.length?'<ul class="top-story-points" aria-label="Three key facts">'+points.slice(0,3).map(p=>'<li>'+esc(p)+'</li>').join('')+'</ul>':'<p class="top-story-pending">Key facts pending source verification</p>')
   +'<a class="top-story-read" href="'+href+'" target="_blank" rel="noopener noreferrer">Read original ↗</a>'
