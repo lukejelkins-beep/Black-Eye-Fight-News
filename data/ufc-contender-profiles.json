@@ -3,5 +3,129 @@
   "scope": "ufc-only",
   "reviewedOn": "2026-11-12",
   "methodology": "Individually verified official UFC bout histories, UFC-only statistical samples, optional independently verified credentials. BEFN rule-based algorithm applies across ALL divisions with no numerical cap.",
-  "fighters": {}
+  "fighters": {
+    "gabriel-bonfim": {
+      "id": "mma-ufc--gabriel-bonfim",
+      "name": "Gabriel Bonfim",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "category": "Contender",
+      "division": "Welterweight",
+      "age": 29,
+      "record": "20–1–0",
+      "source": "https://www.ufc.com/athlete/gabriel-bonfim",
+      "rosterStatus": "Active",
+      "ufcRecord": {
+        "wins": 7,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0,
+        "complete": true,
+        "checkedAt": "2026-11-12",
+        "source": "https://www.ufc.com/athlete/gabriel-bonfim"
+      },
+      "ranking": {
+        "rank": 5,
+        "checkedAt": "2026-11-12",
+        "source": "https://www.ufc.com/rankings"
+      },
+      "latest": [
+        {
+          "date": "2026-06-06",
+          "opponent": "Belal Muhammad",
+          "outcome": "W",
+          "method": "Decision - Unanimous R5 5:00",
+          "cageSec": 1500,
+          "source": "https://www.ufc.com/event/ufc-fight-night-june-06-2026",
+          "opponentRankAtFight": 5,
+          "opponentRankSource": "https://www.ufc.com/news/official-weigh-results-ufc-fight-night-muhammad-vs-bonfim",
+          "opponentRankCheckedAt": "2026-06-05"
+        },
+        {
+          "date": "2025-11-08",
+          "opponent": "Randy Brown",
+          "outcome": "W",
+          "method": "KO/TKO R2 1:40",
+          "cageSec": 400,
+          "source": "https://www.ufc.com/event/ufc-fight-night-november-08-2025"
+        },
+        {
+          "date": "2025-07-12",
+          "opponent": "Stephen Thompson",
+          "outcome": "W",
+          "method": "Decision - Split R3 5:00",
+          "cageSec": 900,
+          "source": "https://www.ufc.com/athlete/gabriel-bonfim"
+        },
+        {
+          "date": "2025-02-15",
+          "opponent": "Khaos Williams",
+          "outcome": "W",
+          "method": "Submission (brabo choke) R2 4:58",
+          "cageSec": 598,
+          "source": "https://www.ufc.com/athlete/gabriel-bonfim"
+        },
+        {
+          "date": "2024-07-13",
+          "opponent": "Ange Loosa",
+          "outcome": "W",
+          "method": "Decision - Unanimous R3 5:00",
+          "cageSec": 900,
+          "source": "https://www.ufc.com/athlete/gabriel-bonfim"
+        }
+      ],
+      "verifiedStats": {
+        "scope": "ufc-only",
+        "source": "https://www.ufc.com/athlete/gabriel-bonfim",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 8,
+        "denominatorNotes": "Official UFC athlete page UFC-only career snapshot across eight completed Octagon bouts from 21 January 2023 through 6 June 2026; DWCS excluded. Striking/takedown metrics are per minute or per 15 minutes as labeled, not career totals.",
+        "slpm": 4.76,
+        "sapm": 3.61,
+        "strAcc": 47,
+        "strDef": 65,
+        "tdAvg": 2.57,
+        "tdDef": 79,
+        "subAvg": 1.03,
+        "kdAvg": 0.17
+      },
+      "credentials": [
+        {
+          "kind": "regional-mma",
+          "detail": "UFC biography reports 2022 LFA welterweight championship; independent LFA title-result record not yet verified",
+          "verification": "reported",
+          "source": "https://www.ufc.com/athlete/gabriel-bonfim",
+          "scoringNote": "No external credential bonus pending LFA primary result verification."
+        },
+        {
+          "kind": "boxing",
+          "detail": "Athlete reports Brazilian boxing national championship; independent federation result pending",
+          "verification": "reported",
+          "source": "https://www.ufc.com/athlete/gabriel-bonfim",
+          "scoringNote": "No credential points."
+        }
+      ],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "credentialsChecked": true,
+        "notes": [
+          "UFC athlete biography records eight UFC bouts, seven wins and one defeat. Dana White's Contender Series bout against Trey Waters is excluded.",
+          "UFC official event confirms unanimous decision win over Belal Muhammad on 6 June 2026; UFC's 5 June official weigh-in article explicitly identifies Muhammad as ranked #5 before the fight, satisfying the v2 opponent-quality gate.",
+          "UFC rankings page retrieved 12 November 2026 shows Bonfim at #5 in welterweight. Rankings are a dated snapshot, not a retroactive rank for other bouts.",
+          "UFC official biography provides each of the five latest bouts, methods and finish times. US venue dates are used rather than Japanese site local-calendar dates.",
+          "UFC-only statistical rates taken from the official athlete page; no inferred career totals or unsourced knockout bonuses.",
+          "LFA title and amateur boxing claim appear in UFC biography but lack independently checked federation/promoter primary records; no fixed credential bonuses assigned.",
+          "No external portrait copied or embedded."
+        ]
+      },
+      "sourceLinks": [
+        "https://www.ufc.com/athlete/gabriel-bonfim",
+        "https://www.ufc.com/rankings",
+        "https://www.ufc.com/news/official-weigh-results-ufc-fight-night-muhammad-vs-bonfim",
+        "https://www.ufc.com/event/ufc-fight-night-june-06-2026",
+        "https://www.ufc.com/event/ufc-fight-night-november-08-2025"
+      ],
+      "verificationNote": "Official UFC welterweight ranking #5 on 12 Nov 2026; sourced win over ranked #5 Belal Muhammad. Eight UFC bouts (7–1), excluding DWCS. Regional/amateur credentials unscored pending independent verification."
+    }
+  }
 }
