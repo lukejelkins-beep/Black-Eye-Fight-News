@@ -1,0 +1,170 @@
+name: BEFN conditional Render recovery
+# Runs independently of the five UFC research automations.
+# One-time setup: add RENDER_DEPLOY_HOOK_URL as a GitHub Actions repository secret.
+on:
+  schedule:
+    # Every two hours, UTC; offset from top-of-hour GitHub scheduler congestion.
+    - cron: '31 */2 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: befn-render-recovery
+  cancel-in-progress: false
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 17
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+      BASE_URL: https://black-eye-fight-news.onrender.com
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Check production asset hashes against source
+        id: drift
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Only public-facing files: avoid redeploys for research notes,
+          # CI scripts, worker worklogs or other non-displayed source changes.
+          files=(
+            index.html sw.js
+            assets/fighter-insights.js assets/fighter-power-index.js
+            assets/fighter-power.css assets/ufc-prospect-contender.js
+            assets/upcoming-cards.js assets/upcoming-cards.css
+            assets/results.js assets/results.css assets/fight-talk.css
+            assets/fight-film.js assets/news-dedupe.js
+            data/results.json data/upcoming-cards.json
+            data/fight-talk-live.json data/news-live.json
+            data/fight-film.json data/fighter-intelligence.json
+            data/ufc-champion-profiles.json data/ufc-contender-profiles.json
+            data/ufc-prospect-profiles.json data/ufc-roster-profiles.json
+            data/ufc-postfight-metrics.json
+          )
+          printf '%s\n' "${files[@]}" > /tmp/befn-watch-files
+          differences=0
+          for file in "${files[@]}"; do
+            if [[ ! -f "$file" ]]; then
+              echo "Missing expected source file: $file" >&2
+              exit 1
+            fi
+            remote=$(mktemp)
+            if ! curl --fail --location --silent --show-error --retry 2 \
+                --connect-timeout 8 --max-time 35 \
+                -H 'Cache-Control: no-cache' \
+                "$BASE_URL/$file?befn_reconcile=$GITHUB_RUN_ID" -o "$remote"; then
+              echo "Cannot determine live asset state for $file; fail closed" >&2
+              rm -f "$remote"
+              exit 1
+            fi
+            if ! cmp -s "$file" "$remote"; then
+              echo "Not yet live: $file"
+              differences=$((differences + 1))
+            fi
+            rm -f "$remote"
+          done
+          echo "differences=$differences" >> "$GITHUB_OUTPUT"
+          {
+            echo "## BEFN two-hour deployment reconciliation"
+            echo "Source checkout: \$GITHUB_SHA"
+            echo "Public assets differing on Render: $differences"
+            echo "Only source validation and changed public assets can trigger recovery."
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Gate recovery on exact commit CI and avoid an overlapping push
+        id: gate
+        if: steps.drift.outputs.differences != '0'
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_sha=$(git rev-parse HEAD)
+          remote_sha=$(git ls-remote https://github.com/"$GITHUB_REPOSITORY".git refs/heads/main | cut -f1)
+          if [[ "$source_sha" != "$remote_sha" ]]; then
+            echo "Newer main commit appeared; next run will assess it"
+            exit 0
+          fi
+          verdict=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs?head_sha=$source_sha&per_page=100" \
+            --jq '.workflow_runs[] | select(.name == "BEFN release readiness") | .conclusion' | head -n1)
+          if [[ "$verdict" != success ]]; then
+            echo "Exact HEAD has no passing BEFN release readiness run (state: ${verdict:-none}); deployment blocked"
+            echo "Deployment blocked: missing or failing exact-commit CI" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          # Grace period for Render's normal automatic Git deployments. This
+          # scheduled reconciliation does not compete with fresh pushes.
+          youngest=$(date -u +%s)
+          for file in $(cat /tmp/befn-watch-files); do
+            changed=$(git log -1 --format=%ct -- "$file" || true)
+            if [[ -n "$changed" && "$changed" -lt "$youngest" ]]; then
+              youngest=$changed
+            fi
+          done
+          age=$(( $(date -u +%s) - youngest ))
+          if [[ "$age" -lt 600 ]]; then
+            echo 'Waiting for normal auto-deploy grace period'
+            exit 0
+          fi
+          if [[ -z "$RENDER_DEPLOY_HOOK_URL" ]]; then
+            echo 'One-time configuration required: GitHub Actions secret RENDER_DEPLOY_HOOK_URL'
+            echo 'Deployment not attempted: missing RENDER_DEPLOY_HOOK_URL secret.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          echo "approved=true" >> "$GITHUB_OUTPUT"
+          echo "sha=$source_sha" >> "$GITHUB_OUTPUT"
+      - name: Trigger exactly one fallback deployment
+        if: steps.gate.outputs.approved == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected="${{ steps.gate.outputs.sha }}"
+          latest=$(git ls-remote https://github.com/"$GITHUB_REPOSITORY".git refs/heads/main | cut -f1)
+          if [[ "$latest" != "$expected" ]]; then
+            echo 'Main changed since source validation; aborting recovery'
+            exit 0
+          fi
+          # The secret is NEVER written to logs or saved in the repository.
+          curl --fail --silent --show-error --max-time 35 \
+            --request POST "$RENDER_DEPLOY_HOOK_URL" --output /dev/null
+          echo "Recovery deploy requested for $expected" >> "$GITHUB_STEP_SUMMARY"
+      - name: Confirm public assets converge and initiate separate live QA
+        if: steps.gate.outputs.approved == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected="${{ steps.gate.outputs.sha }}"
+          # A deploy-hook HTTP response is only acceptance, NOT a live release.
+          success=false
+          for attempt in {1..12}; do
+            differences=0
+            while IFS= read -r file; do
+              remote=$(mktemp)
+              if ! curl --fail --location --silent --show-error \
+                --connect-timeout 8 --max-time 30 \
+                "$BASE_URL/$file?befn_release_qa=$GITHUB_RUN_ID-$attempt" -o "$remote" \
+                || ! cmp -s "$file" "$remote"; then
+                differences=$((differences + 1))
+              fi
+              rm -f "$remote"
+            done < /tmp/befn-watch-files
+            if [[ "$differences" -eq 0 ]]; then success=true; break; fi
+            echo "Render still catching up: $differences assets (attempt $attempt)"
+            sleep 25
+          done
+          if [[ "$success" != true ]]; then
+            echo 'Render did not converge to verified assets in the check window' >&2
+            exit 1
+          fi
+          echo 'Render hostname now matches checked public assets' >> "$GITHUB_STEP_SUMMARY"
+          latest=$(git ls-remote https://github.com/"$GITHUB_REPOSITORY".git refs/heads/main | cut -f1)
+          if [[ "$latest" == "$expected" ]]; then
+            gh api --method POST \
+              "repos/$GITHUB_REPOSITORY/actions/workflows/verify-live-ufc-profiles.yml/dispatches" \
+              -f ref=main > /dev/null
+            echo 'Started independent post-deploy UFC desktop/mobile QA. Pending result.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Newer HEAD arrived; hourly live QA will evaluate the next release' >> "$GITHUB_STEP_SUMMARY"
+          fi
