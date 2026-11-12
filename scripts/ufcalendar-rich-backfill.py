@@ -354,7 +354,7 @@ def selection(state):
 def selected_stats(rounds):
     # Derived display facts are a narrow subset; do not republish API payloads.
     return [{"round":r["round"],
-             "a":{k:v for k,v in r.get("a",{}).items() if k in ("sigLanded","sigAttempted","takedowns","takedownAttempts","controlSec","knockdowns")},
+             "a":{k:v for k,v in r.get("a",{}).items() if k in ("sigLanded","sigAttempted","takedowns","takedownAttempts","controlSec","knockdowns","subAttempts","reversals")},
              "b":{k:v for k,v in r.get("b",{}).items() if k in ("sigLanded","sigAttempted","takedowns","takedownAttempts","controlSec","knockdowns")}}
             for r in rounds]
 
