@@ -1,0 +1,143 @@
+{
+  "schema": 1,
+  "reviewedOn": "2026-11-12",
+  "purpose": "Prototype Gane–Hokit comparison on news-redesign preview. Source labels distinguish official biographical records from user-provided comparison screenshots. Do not publish screenshot-only derived metrics as verified UFC statistics.",
+  "fighters": {
+    "cirylgane": {
+      "name": "Ciryl Gane",
+      "sport": "MMA",
+      "id": "mma-spotlight--ciryl-gane",
+      "category": "Contender",
+      "division": "Heavyweight",
+      "record": "14–2 (1 NC)",
+      "meta": "UFC heavyweight · MMA Factory, Paris",
+      "source": "https://www.ufc.com/athlete/ciryl-gane",
+      "tale": {
+        "age": 36,
+        "heightIn": 76,
+        "reachIn": 81,
+        "ufcRecord": "11–2 (1 NC)",
+        "source": "https://www.ufc.com/athlete/ciryl-gane"
+      },
+      "latest": [
+        {
+          "date": "14 Jun 2026",
+          "opponent": "Alex Pereira",
+          "outcome": "W",
+          "method": "TKO · R2 1:27",
+          "cageSec": 387
+        },
+        {
+          "date": "25 Oct 2025",
+          "opponent": "Tom Aspinall",
+          "outcome": "NC",
+          "method": "NC · R1 4:35",
+          "cageSec": 275
+        },
+        {
+          "date": "7 Dec 2024",
+          "opponent": "Alexander Volkov",
+          "outcome": "W",
+          "method": "Decision · R3 5:00",
+          "cageSec": 900
+        },
+        {
+          "date": "2 Sep 2023",
+          "opponent": "Serghei Spivac",
+          "outcome": "W",
+          "method": "TKO · R2 3:44",
+          "cageSec": 524
+        },
+        {
+          "date": "4 Mar 2023",
+          "opponent": "Jon Jones",
+          "outcome": "L",
+          "method": "Submission · R1 2:04",
+          "cageSec": 124
+        }
+      ],
+      "reference": {
+        "label": "Comparison screenshots supplied for design review; verify cage durations before production",
+        "sourceType": "user-screenshot"
+      },
+      "statsReference": {
+        "sigLandedPerMin": 6.57,
+        "sigAbsorbedPerMin": 2.55,
+        "sigAccuracy": 69,
+        "knockdowns": 1,
+        "controlSec": 241,
+        "takedowns": 2,
+        "takedownsDefended": 3,
+        "submissionAttempts": 2
+      }
+    },
+    "joshhokit": {
+      "name": "Josh Hokit",
+      "sport": "MMA",
+      "id": "mma-spotlight--josh-hokit",
+      "category": "Contender",
+      "division": "Heavyweight",
+      "record": "10–0",
+      "meta": "UFC heavyweight · Wrestling background · Fresno State NCAA All-American (not NCAA champion)",
+      "source": "https://www.ufc.com/athlete/josh-hokit",
+      "tale": {
+        "age": 28,
+        "heightIn": 73,
+        "reachIn": 73.5,
+        "ufcRecord": "4–0",
+        "source": "https://www.ufc.com/athlete/josh-hokit"
+      },
+      "latest": [
+        {
+          "date": "14 Jun 2026",
+          "opponent": "Derrick Lewis",
+          "outcome": "W",
+          "method": "TKO · R2 4:09",
+          "cageSec": 549
+        },
+        {
+          "date": "11 Apr 2026",
+          "opponent": "Curtis Blaydes",
+          "outcome": "W",
+          "method": "Decision · R3 5:00",
+          "cageSec": 900
+        },
+        {
+          "date": "24 Jan 2026",
+          "opponent": "Denzel Freeman",
+          "outcome": "W",
+          "method": "TKO · R1 4:59",
+          "cageSec": 299
+        },
+        {
+          "date": "8 Nov 2025",
+          "opponent": "Max Gimenis",
+          "outcome": "W",
+          "method": "TKO · R1 0:56",
+          "cageSec": 56
+        },
+        {
+          "date": "19 Aug 2025",
+          "opponent": "Guilherme Uriel",
+          "outcome": "W",
+          "method": "TKO · R2 1:06",
+          "cageSec": 366
+        }
+      ],
+      "reference": {
+        "label": "Comparison screenshots supplied for design review; verify cage durations before production",
+        "sourceType": "user-screenshot"
+      },
+      "statsReference": {
+        "sigLandedPerMin": 11.18,
+        "sigAbsorbedPerMin": 6.35,
+        "sigAccuracy": 65,
+        "knockdowns": 3,
+        "controlSec": 747,
+        "takedowns": 9,
+        "takedownsDefended": 6,
+        "submissionAttempts": 1
+      }
+    }
+  }
+}
