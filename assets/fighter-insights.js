@@ -446,13 +446,17 @@
    if(existing){
     // Preserve canonical editorial records, photos, and citations; add only
     // reference comparison dimensions and independently supplied timing data.
-    if(Array.isArray(fighter.credentials))existing.credentials=[...(existing.credentials||[]),...fighter.credentials.filter(x=>!(existing.credentials||[]).some(y=>y.kind===x.kind&&y.source===x.source))];
+    // Do not overwrite the newer, source-checked card credentials with an
+    // older comparison sample, regardless of which fetch resolves first.
+    if(!existing.verifiedStats&&Array.isArray(fighter.credentials))
+     existing.credentials=[...(existing.credentials||[]),...fighter.credentials.filter(x=>
+      !(existing.credentials||[]).some(y=>y.kind===x.kind&&y.division===x.division))];
     if(fighter.tale)existing.tale=fighter.tale;
     existing.taleReference=fighter.taleReference;
     existing.statsReference=fighter.statsReference;
     existing.reference=fighter.reference;
-    if(Array.isArray(fighter.credentials)){
-     // Only explicitly source-linked credentials from the reviewed sample.
+    if(!existing.verifiedStats&&Array.isArray(fighter.credentials)){
+     // Source-linked preview-only credentials, deduplicated by category.
      const current=Array.isArray(existing.credentials)?existing.credentials:[];
      for(const c of fighter.credentials){
       if(!current.some(x=>x.kind===c.kind&&x.division===c.division))current.push(c);
@@ -505,8 +509,9 @@
     const original=Array.isArray(fighter.credentials)?fighter.credentials:[];
     for(const c of item.credentials){
      if(!c||!validSource(c.source))continue;
-     if(!original.some(x=>x.kind===c.kind&&x.division===c.division&&x.source===c.source))
-      original.push(c);
+     const i=original.findIndex(x=>x.kind===c.kind&&x.division===c.division);
+     // Replace older preview references with newly checked primary evidence.
+     if(i>=0)original[i]=c;else original.push(c);
     }
     fighter.credentials=original;
    }
