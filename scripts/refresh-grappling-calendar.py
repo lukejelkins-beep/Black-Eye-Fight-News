@@ -40,12 +40,14 @@ class VisibleText(HTMLParser):
   super().__init__(); self.parts=[]; self.skip=0
  def handle_starttag(self,tag,attrs):
   if tag in {"script","style","svg"}: self.skip+=1
- def handle_endtag(self,tag):
-  if tag in {"script","style","svg"}: self.skip=max(0,self.skip-1)
  def handle_data(self,data):
   if not self.skip: self.parts.append(data)
+ def handle_endtag(self,tag):
+  if tag in {"script","style","svg"}: self.skip=max(0,self.skip-1)
+  elif tag in {"p","li","article","h1","h2","h3","h4"}: self.parts.append("\n")
  def text(self):
-  return re.sub(r"\s+"," ",html.unescape(" ".join(self.parts))).strip()
+  value=html.unescape(" ".join(self.parts))
+  return re.sub(r"\n+","\n",re.sub(r"[^\S\n]+"," ",value)).strip()
 
 def visible(page):
  parser=VisibleText(); parser.feed(page); return parser.text()
@@ -73,7 +75,7 @@ def extract_raf(page,today):
  body=visible(page)
  result={}
  for m in RAF.finditer(body):
-  segment=body[m.end():m.end()+170]
+  segment=body[m.end():m.end()+170].split("\n",1)[0]
   date=DATE.search(segment)
   if not date: continue
   # Title, upcoming date and organiser must agree. Never parse a generic
