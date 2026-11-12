@@ -1,4 +1,4 @@
-/* BEFN Fighter Performance Index v2 (preview only)
+/* BEFN Fighter Performance Index v3 (preview only)
  * Descriptive, evidence-gated 0–100 activity indices. Not objective skill grades,
  * win probabilities or betting advice. Zero is valid evidence; missing is null.
  * Never mix screenshots marked unverified into scoring inputs.
@@ -107,17 +107,17 @@
   const diff=d.slpm!==null&&d.sapm!==null?d.slpm-d.sapm:null;
   return {
     striking:[
-      [between(d.slpm,.8,6.5),.25,"Output (sig strikes/min)"],
-      [between(diff,-2.0,3.0),.30,"Significant-strike differential/min"],
-      [between(d.strAcc,25,65),.17,"Striking accuracy"],
-      [between(d.kd15,0,1.0),.17,"Knockdowns/15"],
-      [between(d.koRate,0,.50),.11,"KO/TKO wins per observed fight"]
+      [between(d.slpm,.8,6.5),.18,"Significant strikes landed/min"],
+      [between(diff,-2.0,3.0),.22,"Significant-strike differential/min"],
+      [between(d.strAcc,25,65),.15,"Striking accuracy"],
+      [between(d.kd15,0,1.0),.20,"Knockdowns/15"],
+      [between(d.koRate,0,.50),.25,"KO/TKO finishes per recorded fight"]
     ],
     grappling:[
-      [between(d.sub15,0,3.0),.42,"Submission attempts/15"],
-      [between(d.subFinishRate,0,.35),.30,"Submission finishes per observed fight"],
-      [between(d.rev15,0,2),.18,"Reversals/15"],
-      [between(d.controlShare,0,.50),.10,"Control-time share (secondary context)"]
+      [between(d.sub15,0,3.0),.30,"Submission attempts/15"],
+      [between(d.subFinishRate,0,.35),.50,"Submission finishes per recorded fight"],
+      [between(d.rev15,0,2),.15,"Reversals/15"],
+      [between(d.controlShare,0,.50),.05,"Control-time share (secondary context)"]
     ],
     wrestling:[
       [between(d.td15,0,5.5),.34,"Takedowns landed/15"],
@@ -150,7 +150,7 @@
    return confidence(sumParts(specs.striking,1,.50,2),d.bouts);
   if(id==="grappling")
    return specs.grappling.slice(0,3).some(x=>x[0]!==null)?
-    confidence(sumParts(specs.grappling,1,.54,2),d.bouts):null;
+    confidence(sumParts(specs.grappling,1,.45,2),d.bouts):null;
   if(id==="wrestling")
    return specs.wrestling[0][0]!==null?
     confidence(sumParts(specs.wrestling,1,.53,2),d.bouts):null;
@@ -159,63 +159,142 @@
     confidence(sumParts(specs.defence,1,.48,2),d.bouts):null;
   return null;
  }
- function ncaaWrestlingPrior(base,profile,bouts){
-  // A published NCAA college wrestling history has limited predictive
-  // significance for current MMA grappling. This is an explicitly heuristic
-  // prior, never a replacement for fight statistics.
-  if(!Number.isInteger(base)||base<0||base>100)return null;
-  const verified=(Array.isArray(profile?.credentials)?profile.credentials:[]).filter(c=>
-   c?.kind==="ncaa"&&["I","II","III"].includes(c.division)&&
-   /^https:\/\//.test(String(c.source||""))&&
-   !/google\.com\/search/i.test(c.source));
-  if(!verified.length)return null;
-  // NCAA I competes at the highest collegiate wrestling level.
-  // Medal status is optional; fifth place All-American earns NO medal bonus.
-  const prior={I:80,II:74,III:70};
-  const medalAddition={gold:8,silver:5,bronze:3};
-  const selected=verified.map(c=>({
-   ...c,benchmark:prior[c.division]+(medalAddition[c.medal]||0)
-  })).sort((a,b)=>b.benchmark-a.benchmark)[0];
-  const n=finite(bouts,2,200)||2;
-  // At five stat-covered MMA bouts, NCAA prior weight is 15%.
-  // Prior influence shrinks as the number of observed MMA bouts increases.
-  const weight=.15*Math.min(1,5/n);
-  const shift=Math.max(0,Math.min(5,Math.round(weight*(selected.benchmark-base))));
-  return {score:Math.min(100,base+shift),adjustment:shift,
-   source:selected.source,division:selected.division,priorWeight:weight,
-   evidence:"NCAA Division "+selected.division+
-    (selected.medal?" "+selected.medal+" medal":" collegiate competition")};
+
+ // All numbers in the schedule are fixed, editorially chosen scouting bonuses,
+ // not experimentally validated predictive coefficients. No credential creates
+ // a statistical score; bonuses only augment an evidence-backed MMA baseline.
+ const CREDENTIAL_CAP=12;
+ const CREDENTIAL_SCHEDULE=Object.freeze({
+  ncaa:Object.freeze({
+   I:Object.freeze({gold:11,silver:10,bronze:9,participant:3,allAmericanExtra:2}),
+   II:Object.freeze({gold:8,silver:7,bronze:6,participant:2,allAmericanExtra:1}),
+   III:Object.freeze({gold:5,silver:4,bronze:3,participant:1,allAmericanExtra:1})
+  }),
+  "olympic-judo":Object.freeze({
+   gold:Object.freeze({grappling:7,wrestling:9}),
+   silver:Object.freeze({grappling:5,wrestling:7}),
+   bronze:Object.freeze({grappling:4,wrestling:5}),
+   participant:Object.freeze({grappling:1,wrestling:2})
+  }),
+  bjj:Object.freeze({black:4,brown:3,purple:2,blue:1,white:0}),
+  adcc:Object.freeze({gold:8,silver:6,bronze:4}),
+  sambo:Object.freeze({
+   gold:Object.freeze({striking:3,grappling:5,wrestling:5}),
+   silver:Object.freeze({striking:2,grappling:4,wrestling:4}),
+   bronze:Object.freeze({striking:1,grappling:3,wrestling:3})
+  }),
+  "golden-gloves":Object.freeze({national:5,state:4,regional:3,junior:2,unspecified:1})
+ });
+ function credentialBonuses(profile){
+  const best=new Map();
+  const input=Array.isArray(profile?.credentials)?profile.credentials:[];
+  const isSource=c=>typeof c?.source==="string"&&
+   /^https:\/\//i.test(c.source)&&!/google\.com\/search/i.test(c.source);
+  const offered=(group,c,points,label)=>{
+   if(!Object.values(points).some(n=>n>0))return;
+   const before=best.get(group);
+   if(before && Object.values(before.points).reduce((a,v)=>a+v,0)>=
+      Object.values(points).reduce((a,v)=>a+v,0))return;
+   best.set(group,{group,points,label,source:c.source});
+  };
+  for(const c of input){
+   if(!isSource(c)||["reported","pending","unverified","disputed"].includes(c.verification))continue;
+   if(c.kind==="ncaa"){
+    const tier=CREDENTIAL_SCHEDULE.ncaa[c.division];
+    if(!tier)continue;
+    const pos=Number.isInteger(c.placement)?c.placement:null;
+    const medalPlace={gold:1,silver:2,bronze:3};
+    const validMedal=c.medal&&medalPlace[c.medal]&&
+      (pos===null||pos===medalPlace[c.medal])?c.medal:null;
+    const allAmerican=pos!==null&&pos>=4&&pos<=8;
+    const points=validMedal?tier[validMedal]:
+      tier.participant+(allAmerican?tier.allAmericanExtra:0);
+    offered("ncaa",c,{wrestling:points},"NCAA Division "+c.division+
+      (validMedal?" "+validMedal+" medal":allAmerican?" All-American":" competitor"));
+   }else if(c.kind==="olympic-judo"&&c.participated===true){
+    const medal=["gold","silver","bronze"].includes(c.medal)?c.medal:"participant";
+    const points=CREDENTIAL_SCHEDULE["olympic-judo"][medal];
+    const count=medal!=="participant"&&Number.isInteger(c.medalCount)?
+      Math.max(1,Math.min(3,c.medalCount)):1;
+    // Repeat Olympic medals earn one extra point per additional medal,
+    // maximum two extra. Do not multiply the full medal bonus by count.
+    offered("olympic-judo",c,{
+     grappling:points.grappling+count-1,wrestling:points.wrestling+count-1
+    },"Olympic judo "+medal+(count>1?" ×"+count:""));
+   }else if(c.kind==="bjj"){
+    const n=CREDENTIAL_SCHEDULE.bjj[c.belt];
+    if(Number.isInteger(n))
+     offered("bjj",c,{grappling:n},"BJJ "+c.belt+" belt");
+   }else if(c.kind==="adcc"){
+    const n=CREDENTIAL_SCHEDULE.adcc[c.medal];
+    if(Number.isInteger(n))
+     offered("adcc",c,{grappling:n},"ADCC "+c.medal+" medal");
+   }else if(c.kind==="sambo"){
+    const p=CREDENTIAL_SCHEDULE.sambo[c.medal];
+    if(!p)continue;
+    // FIAS rules distinguish Combat SAMBO (strikes permitted) from
+    // Sport SAMBO. Never credit striking without a sourced Combat award.
+    offered("sambo",c,{striking:c.discipline==="combat"?p.striking:0,
+     grappling:p.grappling,wrestling:p.wrestling},
+     (c.discipline==="combat"?"Combat":"Sport")+" Sambo "+c.medal+" medal");
+   }else if(c.kind==="golden-gloves"){
+    const n=CREDENTIAL_SCHEDULE["golden-gloves"][c.level];
+    if(Number.isInteger(n))
+     offered("golden-gloves",c,{striking:n},"Golden Gloves "+c.level);
+   }
+  }
+  const result={striking:{points:0,breakdown:[]},
+    grappling:{points:0,breakdown:[]},
+    wrestling:{points:0,breakdown:[]},
+    defence:{points:0,breakdown:[]},
+    form:{points:0,breakdown:[]}};
+  for(const group of best.values()){
+   for(const [id,n] of Object.entries(group.points)){
+    if(!result[id]||!Number.isInteger(n)||n<=0)continue;
+    result[id].breakdown.push({label:group.label,points:n,source:group.source});
+   }
+  }
+  for(const entry of Object.values(result)){
+   entry.breakdown.sort((a,b)=>b.points-a.points||a.label.localeCompare(b.label));
+   entry.rawPoints=entry.breakdown.reduce((acc,x)=>acc+x.points,0);
+   entry.points=Math.min(CREDENTIAL_CAP,entry.rawPoints);
+  }
+  return result;
  }
  function evaluate(profile,history){
-  // Never combine small-sample round counts with unrelated career denominators.
-  // Score each self-contained sample, then select the broader verified sample
-  // that supports each metric. A better-covered round sample fills gaps.
+  // Preserve each provider's denominator. Never combine career means with
+  // selected-round statistics before the per-metric evidence check.
   const sources=[careerData(profile),advancedData(profile?.performanceEvidence)]
    .filter(Boolean).sort((a,b)=>b.bouts-a.bouts);
   const fights=normalizeHistory(history);
+  const credentials=credentialBonuses(profile);
   return LABELS.map(([id,label,description])=>{
    if(id==="form")return {id,label,description,score:recentForm(fights),
+    baseScore:recentForm(fights),credentialAdjustment:0,credentialBreakdown:[],
     sample:fights.filter(h=>!["nc","no contest"].includes(h.result)).length,
     source:"Recorded recent fight results",observedOn:null,
     confidence:fights.length>=5?"moderate":"limited"};
-   let score=null,selected=null;
+   let baseScore=null,selected=null;
    for(const d of sources){
     const candidate=metricFrom(d,id);
     if(candidate===null)continue;
-    score=candidate;selected=d;break;
+    baseScore=candidate;selected=d;break;
    }
-   const prior=(id==="wrestling"&&score!==null)?
-    ncaaWrestlingPrior(score,profile,selected?.bouts):null;
-   return {id,label,
-    description:prior?.adjustment?description+
-     "; includes +"+prior.adjustment+" NCAA "+prior.division+
-     " participation prior (capped at +5; never substitutes for MMA statistics)":description,
-    score:prior?.score??score,baseScore:prior?.adjustment?score:null,
-    credentialAdjustment:prior?.adjustment||0,
-    credentialSource:prior?.adjustment?prior.source:null,
+   const add=credentials[id];
+   // Award the fixed point increase exactly, unless the 100 point ceiling
+   // is reached. Keep source, base and point components visible to readers.
+   const adjustment=baseScore===null?0:Math.max(0,Math.min(add.points,100-baseScore));
+   const final=baseScore===null?null:baseScore+adjustment;
+   return {
+    id,label,description:description+
+      (adjustment?"; +"+adjustment+" verified credential points":""),
+    score:final,baseScore,credentialAdjustment:adjustment,
+    credentialBreakdown:adjustment?add.breakdown:[],
+    unusedCredentialPoints:baseScore===null?add.points:0,
     sample:selected?.bouts||0,source:selected?.source||"No sourced statistics",
     observedOn:selected?.observedOn||null,
-    confidence:selected?.bouts>=8?"moderate":"limited"};
+    confidence:selected?.bouts>=8?"moderate":"limited"
+   };
   });
  }
  function aggregateRoundPreviews(events){
@@ -293,7 +372,7 @@
   ];
  }
  function level(n){return n===null?"unrated":n<35?"red":n<55?"orange":n<75?"gold":"green"}
- const api={normalize:norm,normalizeHistory,recentForm,advancedData,careerData,aggregateRoundPreviews,ncaaWrestlingPrior,evaluate,evaluateBoxing,boxingPower,level};
+ const api={normalize:norm,normalizeHistory,recentForm,advancedData,careerData,aggregateRoundPreviews,CREDENTIAL_SCHEDULE,CREDENTIAL_CAP,credentialBonuses,evaluate,evaluateBoxing,boxingPower,level};
  scope.BEFNPowerIndex=api;
  if(typeof module==="object"&&module?.exports)module.exports=api;
 })(typeof window!=="undefined"?window:globalThis);
