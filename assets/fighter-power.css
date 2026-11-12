@@ -434,3 +434,13 @@
  .befn-snapshot-head strong{font-size:11px}
  .befn-snapshot-head .befn-rating-source-note{font-size:8px;overflow-wrap:anywhere}
 }
+
+/* Verified NCAA background is a bounded Wrestling modifier, not a prediction. */
+.befn-college-prior-note{display:block;margin:7px 0 0;color:#c9d1da;font-size:10px;line-height:1.5}
+.befn-college-prior-note a{color:#f4d593;text-decoration:underline}
+.befn-college-bonus{display:block;margin-top:3px;color:#d4ad66;font-size:8px;line-height:1.2;font-weight:700}
+.befn-credential[data-credential-verification="reported"]::after{
+ content:"?";position:absolute;top:-5px;right:-5px;width:13px;height:13px;
+ background:#67512b;color:#fff6dc;border-radius:50%;display:grid;place-items:center;
+ border:1px solid #c4a05a;font-size:10px;font-weight:900;
+}
