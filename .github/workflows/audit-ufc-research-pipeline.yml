@@ -1,0 +1,41 @@
+name: Audit UFC research pipeline
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '11 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'data/ufc-*-profiles.json'
+      - 'data/ufc-research-workers/**'
+      - 'scripts/audit-ufc-research-pipeline.mjs'
+      - 'tests/test-ufc-research-pipeline.mjs'
+      - '.github/workflows/audit-ufc-research-pipeline.yml'
+permissions:
+  contents: read
+concurrency:
+  group: befn-ufc-research-audit
+  cancel-in-progress: true
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify source history and pipeline tests
+        run: |
+          node --test tests/test-ufc-research-pipeline.mjs
+          node --test tests/test-ufc-profile-queue.mjs
+      - name: Build audit without paid APIs or browser setup
+        run: node scripts/audit-ufc-research-pipeline.mjs
+      - name: Save report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-research-report
+          path: qa/ufc-research-pipeline-report.json
+          retention-days: 14
+          if-no-files-found: warn
