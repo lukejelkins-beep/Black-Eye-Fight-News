@@ -67,6 +67,29 @@
         "Run source-integrity/classifier/card tests and post-Render live screenshot QA before production approval."
       ],
       "nextAction": "Use official UFC event result pages or official UFCStats bout archive to reconcile all 19 career results and latest five clocks; only then safe-merge champion cohort and run tests. Do not recheck without new evidence before 2026-11-14."
+    },
+    "andre-petroski": {
+      "name": "Andre Petroski",
+      "status": "source_research",
+      "lastCheckedOn": "2026-11-13",
+      "sourceUrls": [
+        "https://www.ufc.com/athlete/andre-petroski",
+        "https://www.ufc.com/index.php/athlete/andre-petroski"
+      ],
+      "findings": [
+        "Official UFC biography narrative enumerates 14 completed UFC bouts from 2021-08-28 through 2026-11-07: 9 wins, 5 losses, 0 draws, 0 NC. TUF season 29 exhibition bouts against Bryan Battle and Aaron Phillips excluded.",
+        "Official current professional record 14-7-0; active middleweight; separate from UFC-only 9-5-0.",
+        "Latest five UFC results per official narrative: 2026-11-07 W Mantas Kondratavicius KO/TKO R2 4:39; 2026-05-16 L Cody Brundage KO/TKO R2 0:44; 2025-09-27 L Cam Rowston KO/TKO R1 2:41; 2025-06-14 L Edmen Shahbazyan unanimous decision R3 5:00; 2025-02-15 W Rodolfo Vieira unanimous decision R3 5:00.",
+        "UFC athlete page statistical snapshot: significant strikes 426/836; takedowns 8/58, 2.96 SLpM, 2.95 SApM; per-metric fight sample denominator not established. The biography fight-history cards misleadingly label losses as wins; narrative governs outcomes.",
+        "UFC Q&A self-reports BJJ black belt and Art of War middleweight title; independent academy/promoter evidence not yet obtained, so credentials unscored."
+      ],
+      "blockers": [
+        "Independent primary-source event-result cross-check of all five recent UFC rows and their clocks is still required; official athlete biography narrative is a single source.",
+        "UFC-only statistical sample denominators/per-metric coverage have not been independently established; cannot treat bio summary as a complete tracked sample.",
+        "Individual external credential source validation, dated opponent-quality gate and deterministic V2 classification not completed.",
+        "Source-integrity, classifier, card tests and live production QA not executed."
+      ],
+      "nextAction": "Use official UFC event-result pages for the latest five bouts and UFCStats career list, reconcile per-metric sample denominators and credential primary sources; then run V2 classifier and source-integrity/card QA before a safe cohort merge. Do not revisit without new evidence before 2026-11-14."
     }
   }
 }
