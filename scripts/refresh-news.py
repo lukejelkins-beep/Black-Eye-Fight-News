@@ -2,7 +2,13 @@
 import datetime as dt, email.utils, hashlib, html, json, re, urllib.request, urllib.error, urllib.parse
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from news_dedupe import deduplicate
+# Resolve both direct-script execution and unittest's file-location import.
+try:
+    from news_dedupe import deduplicate
+except ModuleNotFoundError as error:
+    if error.name != "news_dedupe":
+        raise
+    from scripts.news_dedupe import deduplicate
 from html.parser import HTMLParser
 from concurrent.futures import ThreadPoolExecutor
 import time
