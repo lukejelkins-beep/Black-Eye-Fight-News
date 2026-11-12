@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-12T10:06:38.818Z",
-  "checkedAt": "2026-11-12T10:06:38.818Z",
+  "attemptedAt": "2026-11-12T11:11:24.683Z",
+  "checkedAt": "2026-11-12T11:11:24.683Z",
   "updatedAt": "2026-11-12T05:52:42Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 4,
+  "sourcesChecked": 3,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 4,
+      "checked": 3,
       "failed": 0,
-      "configured": 4,
-      "message": "4 of 4 scheduled sources checked."
+      "configured": 3,
+      "message": "3 of 3 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 17,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 53,
+      "configured": 42,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 2,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,18 +55,19 @@
   "rollingScan": {
     "directoryEntries": 442,
     "scheduledEntries": 84,
-    "batchIndex": 1,
+    "batchIndex": 2,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 53,
-      "X": 17,
-      "Bluesky": 4,
-      "Threads": 10
+      "X": 27,
+      "Threads": 10,
+      "Bluesky": 3,
+      "Instagram": 42,
+      "Reddit": 2
     },
-    "directlyChecked": 4,
+    "directlyChecked": 3,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
@@ -3383,7 +3384,7 @@
         "comments": 0,
         "shares": 2
       },
-      "engagementCheckedAt": "2026-11-12T05:44:16.679Z",
+      "engagementCheckedAt": "2026-11-12T11:11:24.683Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4809,7 +4810,7 @@
         "comments": 0,
         "shares": 1
       },
-      "engagementCheckedAt": "2026-11-12T05:44:16.679Z",
+      "engagementCheckedAt": "2026-11-12T11:11:24.683Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
