@@ -194,6 +194,26 @@ async function checkProfile(page,profile,screen){
   const sourcedRows=profile.latest.map(x=>[x.date,x.opponent,x.outcome,x.method].map(String));
   assert.deepEqual(details.recentRows,sourcedRows,
     "published fight-by-fight history differs from the individually sourced UFC results");
+  // Mobile must show the W/L result and method, not only the date/opponent.
+  // A 680px desktop-only table could otherwise pass DOM checks while hiding
+  // the final two columns beyond the phone's right edge.
+  if(screen==="mobile"&&profile.latest.length){
+   const mobileCells=await page.evaluate(()=>{
+    const table=document.querySelector("#fighterDialog table[data-befn-recent-results]");
+    const row=table?.querySelector("tbody tr");
+    const view=table?.closest(".scroller")?.getBoundingClientRect();
+    return {cells:[...(row?.cells||[])].map(cell=>{
+     const box=cell.getBoundingClientRect(),style=getComputedStyle(cell);
+     return {text:cell.textContent.trim(),visible:box.width>12&&box.height>5&&
+      style.display!=="none"&&style.visibility!=="hidden"&&
+      !!view&&box.left>=view.left-4&&box.right<=view.right+4};
+    })};
+   });
+   assert.equal(mobileCells.cells.length,4,"mobile results must keep all four source fields");
+   assert(mobileCells.cells.every(x=>x.visible),"mobile result and finish method must fit without sideways scrolling");
+   assert(mobileCells.cells[2].text&&mobileCells.cells[3].text,
+    "mobile UFC results must display outcome and method");
+  }
   assert(details.credentialsVisible,"credentials or missing-credential statement absent");
   if(expectedPostfight.has(normalized(profile.name))){
    assert.equal(details.postfightCells,11,"incomplete UFC post-fight metrics panel");
