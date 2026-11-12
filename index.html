@@ -535,6 +535,7 @@ html,body{max-width:100%;overflow-x:clip}
 <link rel="stylesheet" href="/assets/promotion-coverage.css?v=20261109-scope1">
 <script src="/assets/promotion-coverage.js?v=20261110-syntaxfix2"></script>
 <link rel="stylesheet" href="assets/responsive-layout-experiment.css?v=responsive-branch-1">
+<script src="assets/news-dedupe.js?v=responsive-news-1"></script>
 </head>
 <body>
 
@@ -808,7 +809,7 @@ function headlineImportance(a,now){
 }
 function topStories(){
  const now=Date.now();
- const verified=desk.articles.filter(headlineEligible).filter(articleMatchesSport);
+ const verified=window.BEFNNewsUnique(desk.articles).filter(headlineEligible).filter(articleMatchesSport);
  const recent=verified.filter(a=>Date.parse(a.publishedAt)<=now+30*60*1000&&Date.parse(a.publishedAt)>=now-48*3600*1000);
  const candidates=recent.length?recent:verified;
  const unique=new Map();
@@ -919,7 +920,7 @@ function topStoryCard(a){
 function newsFeedItems(){
  const promoted=new Set(topStories().slice(0,4).map(a=>a.url));
  const seen=new Set(),now=Date.now();
- return desk.articles.filter(headlineEligible).filter(a=>{
+ return window.BEFNNewsUnique(desk.articles).filter(headlineEligible).filter(a=>{
   if(promoted.has(a.url)||!articleMatchesSport(a))return false;
   const key=a.title.toLowerCase().replace(/[^a-z0-9]+/g,'');
   if(seen.has(key))return false;
