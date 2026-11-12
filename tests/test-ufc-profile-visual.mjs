@@ -13,7 +13,12 @@ import {chromium} from "playwright";
 
 const root=process.cwd();
 const port=Number(process.env.BEFN_PROFILE_QA_PORT||8765);
-const base="http://127.0.0.1:"+port;
+// Local checks are fast pre-publication QA. Supplying BEFN_PROFILE_QA_BASE
+// verifies the real public deployment, not a local clone of the repository.
+const liveBase=String(process.env.BEFN_PROFILE_QA_BASE||"").trim().replace(/\/+$/,"");
+if(liveBase&&!/^https:\/\//i.test(liveBase))throw new Error("Live QA requires HTTPS");
+const base=liveBase||"http://127.0.0.1:"+port;
+const isLive=!!liveBase;
 const screenshots=path.join(root,"qa/ufc-profile-screenshots");
 const cohorts=["champion","ranked","contender","prospect","roster"];
 const profileStatsSource="data/ufc-postfight-metrics.json";
@@ -39,16 +44,49 @@ fs.mkdirSync(screenshots,{recursive:true});
 const slug=x=>String(x||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
  .toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const safe=x=>slug(x).slice(0,90)||"unknown";
-const server=spawn("python3",["-m","http.server",String(port),"--bind","127.0.0.1"],
+const server=isLive?null:spawn("python3",["-m","http.server",String(port),"--bind","127.0.0.1"],
  {cwd:root,stdio:"ignore"});
 const failures=[],warnings=[],photos=[];
 let browser;
+const fingerprint=f=>JSON.stringify({
+ id:f?.id,name:f?.name,record:f?.record,division:f?.division,
+ category:f?.category,ufcRecord:f?.ufcRecord,latest:f?.latest,
+ verifiedStats:f?.verifiedStats,credentials:f?.credentials,
+ ranking:f?.ranking,review:f?.review
+});
 async function ready(){
- for(let i=0;i<40;i++){
-  try{const x=await fetch(base+"/index.html");if(x.ok)return}catch{}
-  await delay(250);
+ for(let i=0;i<(isLive?18:40);i++){
+  try{
+   const response=await fetch(base+"/index.html?befn_qa="+Date.now(),{
+    headers:{"Cache-Control":"no-cache"},signal:AbortSignal.timeout(12000)});
+   if(!response.ok)throw Error("Site HTTP "+response.status);
+   if(!isLive)return;
+   const missing=[];
+   for(const cohort of cohorts){
+    const file="data/ufc-"+cohort+"-profiles.json";
+    const full=path.join(root,file);
+    if(!fs.existsSync(full))continue;
+    const local=JSON.parse(fs.readFileSync(full,"utf8"));
+    const liveResponse=await fetch(base+"/"+file+"?befn_qa="+Date.now(),{
+      headers:{"Cache-Control":"no-cache"},signal:AbortSignal.timeout(12000)});
+    if(!liveResponse.ok){missing.push(file+" (HTTP "+liveResponse.status+")");continue}
+    const published=await liveResponse.json().catch(()=>null);
+    for(const [key,f] of Object.entries(local.fighters||{})){
+     if(fingerprint(published?.fighters?.[key])!==fingerprint(f))
+      missing.push(file+"/"+key);
+    }
+   }
+   if(!missing.length){console.log("Production cohort freshness confirmed for "+profiles.length+" fighters");return}
+   if(i===17)throw Error("PRODUCTION OUT OF DATE: "+missing.slice(0,12).join(", ")+
+    (missing.length>12?" and "+(missing.length-12)+" more":""));
+   console.log("Waiting for Render production publication: "+missing.length+" missing/stale profiles");
+  }catch(err){
+   if(i===17)throw err;
+   if(i>0&&i%4===0)console.warn("Production readiness check:",String(err?.message||err));
+  }
+  await delay(isLive?20000:250);
  }
- throw new Error("Local site preview server did not start");
+ throw new Error("Site preview server did not start");
 }
 function pushError(scope,error){failures.push(scope+": "+String(error?.message||error))}
 async function checkProfile(page,profile,screen){
@@ -105,7 +143,10 @@ async function checkProfile(page,profile,screen){
   assert.equal(details.division,profile.division,"division mismatch");
   // Incomplete reviewed roster entries remain visible but must NOT receive
   // an unsourced prospect/contender label. Their UI category is Unassessed.
-  const expectedCategory=profile.category==="Roster"&&!profile.ufcRecord?.complete?
+  const record=profile.ufcRecord||{};
+  const boutCount=(record.wins||0)+(record.losses||0)+(record.draws||0)+(record.noContests||0);
+  const expectedCategory=profile.category==="Roster"&&
+   (!record.complete||boutCount<2||(profile.latest||[]).length<2)?
    "Unassessed":profile.category;
   assert.equal(details.category,expectedCategory,"classification display mismatch");
   assert.equal(details.metrics,5,"expected exactly 5 rating rows");
@@ -123,7 +164,10 @@ async function checkProfile(page,profile,screen){
     "verified statistical score lacks source link");
   if(!profile.verifiedStats)assert(/insufficient verified/i.test(details.ratingSourceText),
     "missing statistics must be labelled unrated");
-  if(!details.portraitStatus?.loaded)photos.push(scope+" | image missing/not loaded in CI");
+  if(!details.portraitStatus?.loaded){
+   photos.push(scope+" | fighter portrait is not loaded");
+   if(isLive)pushError(scope,"LIVE PORTRAIT BROKEN: image absent, blocked or failed to load");
+  }
   await page.screenshot({path:path.join(screenshots,safe(profile.name)+"-"+screen+".png"),
    animations:"disabled",timeout:12000});
   // Verify the close control is clickable, not merely present.
@@ -144,7 +188,8 @@ try{
   ["mobile",{width:390,height:844}]
  ]){
   const context=await browser.newContext({
-   viewport,deviceScaleFactor:1,locale:"en-AU",timezoneId:"Australia/Melbourne"
+   viewport,deviceScaleFactor:1,locale:"en-AU",timezoneId:"Australia/Melbourne",
+   serviceWorkers:"block",extraHTTPHeaders:{"Cache-Control":"no-cache"}
   });
   const page=await context.newPage();
   page.setDefaultTimeout(12000);
@@ -166,15 +211,16 @@ try{
  }
 }finally{
  if(browser)await browser.close();
- server.kill("SIGTERM");
+ if(server)server.kill("SIGTERM");
 }
 const report={
  checkedAt:new Date().toISOString(),
- description:"Automated desktop/mobile DOM and screenshot QA, not an independent human visual approval",
+ description:isLive?"Automated checks against public production: source consistency, DOM, images, overflow and screenshots. Not independent factual or human visual approval.":"Local preview QA: DOM and screenshots, not independent human visual approval",
+ mode:isLive?"production":"local",baseUrl:base,
  fighters:profiles.length,viewports:["desktop 1366px","mobile 390px"],
  checks:profiles.length*2,failures,warnings,
  portraitNetworkWarnings:photos,
- sourceAccuracy:"Source facts and image rights require separate AI/human review"
+ sourceAccuracy:"Record matches independently audited repository data; external accuracy and image rights still require primary-source/human review"
 };
 fs.writeFileSync(path.join(screenshots,"report.json"),JSON.stringify(report,null,2)+"\n");
 console.log(JSON.stringify({checked:report.checks,errors:failures.length,photoWarnings:photos.length,
