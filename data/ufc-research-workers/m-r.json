@@ -76,6 +76,34 @@
         "Run local/CI desktop and mobile card QA, Render deployment freshness and post-deployment live QA screenshots before production approval"
       ],
       "nextAction": "Use saved UFC bout/round archive to reconcile sampleBouts and all UFC record fields, then assemble a schema:1 cohort candidate, run V2 and source-integrity tests. Do not publish until all blockers are resolved."
+    },
+    "natalia-silva": {
+      "name": "Natália Silva",
+      "status": "committed",
+      "lastCheckedOn": "2026-11-13",
+      "commit": "eec0ae373e60a6dfa3d7d6ca952b33fa5249b985",
+      "sourceUrls": [
+        "https://www.ufc.com/athlete/natalia-silva?language_content_entity=ko&page=2",
+        "https://www.ufc.com/index.php/news/journey-flyweight-title-natalia-silva-vs-wang-cong-ufc-332",
+        "https://www.ufc.com/event/ufc-332"
+      ],
+      "verifiedFindings": {
+        "ufcRecord": {
+          "wins": 9,
+          "losses": 0,
+          "draws": 0,
+          "noContests": 0
+        },
+        "professionalRecord": "21-5-1",
+        "recentFive": "Wang Cong, Rose Namajunas, Alexa Grasso, Jessica Andrade, Viviane Araujo; all official UFC biography",
+        "stats": "Existing 9-bout UFCalendar sample retained, official UFC sig strikes 611/1325; per-metric coverage not independently reaudited"
+      },
+      "remainingBlockers": [
+        "Run required Node source-integrity and classifier tests on updated main via GitHub CI",
+        "Confirm Render deploy includes cohort commit and frontend assets",
+        "Inspect successful post-deploy live QA desktop/mobile screenshots and broken-image fallback"
+      ],
+      "nextAction": "Verify GitHub local QA workflow, Render production commit and post-deploy live QA artifacts before marking production-verified. No further historical research unless new discrepancy appears."
     }
   }
 }
