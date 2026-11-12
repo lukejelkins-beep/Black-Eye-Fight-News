@@ -41,3 +41,38 @@ test("live files contain confirmed champion starting cohort and no unsupported c
  const source=fs.readFileSync("scripts/build-ufc-profile-queue.mjs","utf8");
  assert(source.includes("fullActiveRosterVerified:false"));
 });
+
+test("every newly booked UFC fighter gets queued, without requiring API collection",()=>{
+ const source={events:[{sport:"mma",promotion:"UFC",date:"2026-11-15",title:"UFC Upcoming",
+  source:"https://www.ufc.com/events",bouts:[{fighters:["New Person","Champion Ace"]}]}]};
+ const q=buildQueue({bouts:{}},[{fighters:{
+  champ:{name:"Champion Ace",latest:[{date:"2026-06-01",opponent:"Someone"}],
+   review:{credentialsChecked:true,checkedAt:"2026-11-12"}}
+ }}],{asOf:"2026-11-12",upcomingCards:source,max:1});
+ assert.equal(q.newCardEntrants.length,1);
+ assert.equal(q.newCardEntrants[0].name,"New Person");
+ assert(q.candidates.some(c=>c.name==="New Person"&&c.onCard===true));
+ assert.equal(q.postFightRefreshCandidates.length,0);
+});
+test("a newly completed UFC fight triggers a separate reviewed-profile update",()=>{
+ const source={bouts:{new:{id:"445",org:"ufc",status:"completed",
+  event:"Fight Night",eventDate:"2026-11-10",
+  a:{name:"Champion Ace"},b:{name:"Another Athlete"}}}};
+ const profiles=[{fighters:{champ:{name:"Champion Ace",
+  latest:[{date:"2026-09-01",opponent:"Old Match"}],
+  review:{credentialsChecked:true,checkedAt:"2026-11-01"}}}}];
+ const q=buildQueue(source,profiles,{asOf:"2026-11-12"});
+ assert.equal(q.postFightRefreshCandidates.length,1);
+ assert.equal(q.postFightRefreshCandidates[0].name,"Champion Ace");
+ assert(!q.candidates.some(c=>c.name==="Champion Ace"));
+});
+test("scheduled bouts cannot falsely trigger post-fight profile refreshes",()=>{
+ const source={bouts:{future:{id:"445",org:"ufc",status:"scheduled",
+  event:"Future Night",eventDate:"2026-11-20",
+  a:{name:"Champion Ace"},b:{name:"Another Athlete"}}}};
+ const profiles=[{fighters:{champ:{name:"Champion Ace",
+  latest:[{date:"2026-09-01",opponent:"Old Match"}],
+  review:{credentialsChecked:true,checkedAt:"2026-11-01"}}}}];
+ const q=buildQueue(source,profiles,{asOf:"2026-11-12"});
+ assert.equal(q.postFightRefreshCandidates.length,0);
+});
