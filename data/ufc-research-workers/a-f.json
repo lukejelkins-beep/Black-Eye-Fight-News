@@ -25,6 +25,26 @@
       "sourceUrls": [
         "https://www.ufc.com/athlete/carlos-calderon"
       ]
+    },
+    "carlos-ulberg": {
+      "name": "Carlos Ulberg",
+      "status": "committed",
+      "lastCheckedOn": "2026-11-13",
+      "sourceUrls": [
+        "https://www.ufc.com/athlete/carlos-ulberg",
+        "https://www.ufc.com/event/ufc-fight-night-september-27-2025"
+      ],
+      "commit": "a331b339e1dc0057d5bb9568e3ac89575dab60b3",
+      "findings": [
+        "Official UFC biography enumerates eleven completed UFC fights: ten wins and one loss; separate DWCS win excluded",
+        "Most recent five UFC bouts reconciled with dated UFC biography; existing independently researched credentials preserved",
+        "Professional 15-1 and UFC-only 10-1 records explicitly separated"
+      ],
+      "blockers": [
+        "Local Node source-integrity and profile-card tests not yet executed",
+        "Post-deployment live GitHub workflow and desktop/mobile screenshots not yet verified"
+      ],
+      "nextAction": "Run classifier and profile-card tests, then verify Render deployed commit and post-deploy live QA workflow with both visual artifacts."
     }
   }
 }
