@@ -104,6 +104,7 @@
   const text=String(outcome||"").toLowerCase();
   if(text==="w"||text==="win")return ["W","is-win"];
   if(text==="l"||text==="loss")return ["L","is-loss"];
+  if(text==="nc"||text==="no contest")return ["NC","is-no-contest"];
   return ["D","is-draw"];
  }
  function formHTML(f){
