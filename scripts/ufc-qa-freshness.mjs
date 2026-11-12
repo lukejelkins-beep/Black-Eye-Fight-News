@@ -8,6 +8,7 @@ import {createHash} from "node:crypto";
 
 export const CRITICAL_PRODUCTION_FILES=Object.freeze([
  "index.html",
+ "sw.js",
  "assets/fighter-insights.js",
  "assets/ufc-prospect-contender.js",
  "assets/fighter-power-index.js",
@@ -18,13 +19,24 @@ export const CRITICAL_PRODUCTION_FILES=Object.freeze([
  "data/ufc-prospect-profiles.json",
  "data/ufc-roster-profiles.json"
 ]);
+export const REQUIRED_PRODUCTION_FILES=Object.freeze([
+ "index.html","sw.js","assets/fighter-insights.js",
+ "assets/ufc-prospect-contender.js","assets/fighter-power-index.js",
+ "assets/fighter-power.css","data/ufc-champion-profiles.json",
+ "data/ufc-contender-profiles.json","data/ufc-prospect-profiles.json",
+ "data/ufc-roster-profiles.json"
+]);
 const sha=x=>createHash("sha256").update(x).digest("hex");
 export function expectedLiveFiles(root){
+ const missing=REQUIRED_PRODUCTION_FILES.filter(file=>
+  !fs.existsSync(path.join(root,file)));
+ if(missing.length)throw new Error("REQUIRED UFC RELEASE FILE MISSING FROM GITHUB CHECKOUT: "+missing.join(", "));
  return CRITICAL_PRODUCTION_FILES.filter(file=>
   fs.existsSync(path.join(root,file)));
 }
 export async function checkDeploymentFreshness({base,root,fetcher=fetch,files=expectedLiveFiles(root)}){
  if(!/^https:\/\//.test(base))throw new Error("Production QA must use HTTPS");
+ if(!Array.isArray(files)||!files.length)throw new Error("No production files were provided for QA");
  const checked=await Promise.all(files.map(async file=>{
   const local=fs.readFileSync(path.join(root,file));
   const url=base.replace(/\/+$/,"")+"/"+file+"?befn_qa="+Date.now();

@@ -12,6 +12,9 @@ on:
     paths:
       - '.github/workflows/verify-live-ufc-profiles.yml'
       - 'tests/test-ufc-profile-visual.mjs'
+      - 'scripts/ufc-qa-freshness.mjs'
+      - 'tests/test-ufc-qa-freshness.mjs'
+      - 'sw.js'
 permissions:
   contents: read
 concurrency:

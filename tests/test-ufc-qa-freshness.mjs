@@ -9,10 +9,15 @@ function fixture(){
  const root=fs.mkdtempSync(path.join(os.tmpdir(),"befn-live-qa-"));
  const contents={
   "index.html":"<html>fresh reviewed UFC profile dialog</html>",
+  "sw.js":"// network-first shell",
   "assets/fighter-insights.js":"console.log('reviewed fighters v2')",
+  "assets/fighter-power-index.js":"console.log('power index')",
   "assets/ufc-prospect-contender.js":"console.log('correct classifier')",
   "assets/fighter-power.css":".fighter { display:block }",
-  "data/ufc-prospect-profiles.json":'{"fighters":{"fighter":{"name":"Sample"}}}'
+  "data/ufc-prospect-profiles.json":'{"fighters":{"fighter":{"name":"Sample"}}}',
+  "data/ufc-champion-profiles.json":'{"fighters":{}}',
+  "data/ufc-contender-profiles.json":'{"fighters":{}}',
+  "data/ufc-roster-profiles.json":'{"fighters":{}}'
  };
  for(const [file,body] of Object.entries(contents)){
   fs.mkdirSync(path.dirname(path.join(root,file)),{recursive:true});
@@ -32,7 +37,7 @@ test("all matching deployed source assets pass",async t=>{
  const f=fixture();t.after(()=>fs.rmSync(f.root,{recursive:true,force:true}));
  const result=await checkDeploymentFreshness({base:"https://example.org",root:f.root,
   fetcher:serve(f.contents),files:expectedLiveFiles(f.root)});
- assert(result.ok);assert.equal(result.checked,5);assert.deepEqual(result.stale,[]);
+ assert(result.ok);assert.equal(result.checked,10);assert.deepEqual(result.stale,[]);
 });
 test("new JSON with old HTML is rejected before browser checks",async t=>{
  const f=fixture();t.after(()=>fs.rmSync(f.root,{recursive:true,force:true}));
@@ -59,4 +64,22 @@ test("only HTTPS production sites can qualify",async t=>{
  const f=fixture();t.after(()=>fs.rmSync(f.root,{recursive:true,force:true}));
  await assert.rejects(()=>checkDeploymentFreshness({base:"http://example.org",
   root:f.root,fetcher:serve(f.contents)}),/HTTPS/);
+});
+
+test("missing core source file cannot silently pass release QA",async t=>{
+ const f=fixture();t.after(()=>fs.rmSync(f.root,{recursive:true,force:true}));
+ fs.rmSync(path.join(f.root,"index.html"));
+ assert.throws(()=>expectedLiveFiles(f.root),/REQUIRED UFC RELEASE FILE MISSING.*index\.html/);
+});
+test("an empty file list is not a passing comparison",async t=>{
+ const f=fixture();t.after(()=>fs.rmSync(f.root,{recursive:true,force:true}));
+ await assert.rejects(()=>checkDeploymentFreshness({base:"https://example.org",root:f.root,
+  fetcher:serve(f.contents),files:[]}),/No production files/);
+});
+test("stale PWA worker is detected independently of fresh fighter data",async t=>{
+ const f=fixture();t.after(()=>fs.rmSync(f.root,{recursive:true,force:true}));
+ const published={...f.contents,"sw.js":"// stale cache-first worker"};
+ const result=await checkDeploymentFreshness({base:"https://example.org",root:f.root,
+  fetcher:serve(published),files:expectedLiveFiles(f.root)});
+ assert(!result.ok);assert.deepEqual(result.stale.map(x=>x.file),["sw.js"]);
 });
