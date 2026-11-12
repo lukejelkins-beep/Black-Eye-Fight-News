@@ -1058,7 +1058,7 @@
         "observedOn": "2026-11-12",
         "sampleBouts": 17,
         "scope": "ufc-only",
-        "denominatorNotes": "Rates and finish ratios refer to tracked UFC fights only; omissions represent unverified data."
+        "denominatorNotes": "Saved UFCalendar tracked UFC-only sample lists 17 bouts; official UFC Record Book independently lists 17 completed UFC fights (12-5-0, 0 NC) as of 2026-11-08. Per-metric round coverage has not been independently established; rates and finish fractions are retained from prior source-reviewed sample and are not assumed to have complete per-metric coverage. UFC official Record Book lists 5 UFC submission wins, 7 decision wins and 851 significant strikes landed; the official athlete bio lists 851/2057 significant strikes."
       },
       "latest": [
         {
@@ -1118,21 +1118,34 @@
       ],
       "sourceLinks": [
         "https://www.ufc.com/athlete/mackenzie-dern",
-        "https://www.ufcalendar.com/fighters/mackenzie-dern/stats"
+        "https://www.ufcalendar.com/fighters/mackenzie-dern/stats",
+        "https://statleaders.ufc.com/?fighter_status=1&weight_class=WSW",
+        "https://www.ufc.com/athlete/mackenzie-dern?language_content_entity=en&page=3"
       ],
       "review": {
-        "checkedAt": "2026-11-12",
+        "checkedAt": "2026-11-13",
         "championStatusSource": "https://www.ufc.com/athletes?redirect=no",
         "statsSource": "https://www.ufcalendar.com/fighters/mackenzie-dern/stats",
         "recentHistorySource": "https://www.ufc.com/athlete/mackenzie-dern",
         "credentialsChecked": true,
         "notes": [
-          "Verified BJJ gold achievements are described in the biography; IBJJF medals are not automatically converted to ADCC awards. Five UFC submission victories among 17 tracked UFC fights."
+          "Verified BJJ gold achievements are described in the biography; IBJJF medals are not automatically converted to ADCC awards. Five UFC submission victories among 17 tracked UFC fights.",
+          "13 Nov 2026 official UFC Record Book career audit: 17 UFC appearances, 12 wins, five losses; latest five UFC fight rows individually match the official athlete's dated history. No DWCS or non-UFC results counted. Existing credentials preserved; per-metric denominator coverage still requires independent audit."
         ]
       },
       "meta": "Reigning UFC Women's Strawweight champion · independently reviewed fighter profile · 2026-11-12",
       "analysis": [],
-      "verificationNote": "UFC-only sample and separately linked source-backed credentials. Unverified awards carry zero point bonus."
+      "verificationNote": "UFC-only sample and separately linked source-backed credentials. Unverified awards carry zero point bonus.",
+      "ufcRecord": {
+        "wins": 12,
+        "losses": 5,
+        "draws": 0,
+        "noContests": 0,
+        "complete": true,
+        "checkedAt": "2026-11-13",
+        "source": "https://statleaders.ufc.com/?fighter_status=1&weight_class=WSW",
+        "denominatorNotes": "UFC official Record Book (updated 2026-11-08) lists Mackenzie Dern with 17 UFC fights and 12 UFC wins, hence 5 losses; UFC athlete history confirms latest five and no drawn/no-contest outcomes in this record. Professional 17-5-0 includes five pre-UFC victories and is not the UFC record."
+      }
     }
   }
 }
