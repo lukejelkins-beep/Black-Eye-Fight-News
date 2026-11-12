@@ -1,5 +1,5 @@
 /* Offline-ready app shell. Always prioritise network for news and fight data. */
-const CACHE_NAME = 'befn-app-shell-v33-20261112-five-metrics-cage-history';
+const CACHE_NAME = 'befn-app-shell-v34-20261112-ufc334-judo-profile';
 const SHELL = [
   '/', '/index.html', '/manifest.webmanifest',
   '/assets/mark.svg', '/assets/site-favicon-192.png', '/assets/icon-192.png', '/assets/icon-512.png', '/assets/apple-touch-icon.png', '/assets/icon-maskable-512.png',
@@ -8,6 +8,7 @@ const SHELL = [
   '/assets/mobile-app.css', '/assets/mobile-app.js',
   '/assets/notifications.css', '/assets/notifications.js', '/assets/push-config.js',
   '/assets/ufcalendar-fights-enrichment.js',
+  '/data/ufc334-fighter-evidence.json',
   '/assets/fighter-hover.js', '/assets/scout-intelligence.js', '/assets/ufcalendar-evidence.js',
   '/assets/local-time.js', '/assets/upcoming-cards.js',
   '/assets/upcoming-cards.css', '/assets/fight-talk.css',
