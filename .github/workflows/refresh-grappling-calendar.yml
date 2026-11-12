@@ -1,0 +1,57 @@
+name: Refresh grappling and wrestling events
+on:
+  schedule:
+    # 07:12 Melbourne summer / 08:12 Melbourne winter, UTC fixed.
+    # GitHub cron is best-effort and may be delayed.
+    - cron: '12 20 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/refresh-grappling-calendar.yml'
+      - 'scripts/refresh-grappling-calendar.py'
+      - 'tests/test_grappling_calendar.py'
+permissions:
+  contents: write
+concurrency:
+  group: grappling-calendar-publication
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate stable IDs, official sources and conservative discovery
+        run: python -m unittest discover -s tests -p 'test_grappling_calendar.py' -v
+      - name: Check official organisers and derive strictly confirmed future RAF events
+        run: python scripts/refresh-grappling-calendar.py
+      - name: Publish confirmed event changes only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'BEFN grappling calendar'
+          git config user.email 'grappling-calendar-bot@users.noreply.github.com'
+          git add data/grappling-events.json
+          if git diff --cached --quiet; then
+            echo 'No newly independently verified events; no heartbeat commit'
+            exit 0
+          fi
+          git commit -m 'Update confirmed grappling calendar from official organisers'
+          for retry in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep 3
+          done
+          exit 1
+      - name: Upload organizer checks and review-needed discrepancies
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: grappling-source-audit
+          path: qa/grappling-calendar-source-audit.json
+          if-no-files-found: warn
+          retention-days: 14
