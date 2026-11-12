@@ -177,10 +177,20 @@
   const kind=f.sport==="Boxing"?"Boxing credentials":"Combat & grappling credentials";
   const metrics=ratingsFor(f);
   const medallist=credentialsFor(f).find(x=>x.kind==="champion");
-  const championshipText=medallist?"Former world champion (see linked source reports).":
+  const reviewedChampion=f.sport==="MMA"&&f.organisation==="UFC"&&
+    f.category==="Champion"&&f.championReview===true&&
+    validSource(f.review?.championStatusSource);
+  const championshipText=reviewedChampion?
+    "UFC "+String(f.division||"")+" titleholder as checked "+
+    String(f.review.checkedAt||"on the profile review date")+
+    ". Title status is a dated snapshot, not a live confirmation.":
+    medallist?"Former world champion (see linked source reports).":
     f.sport==="Boxing"?"No independently documented former world title in this profile.":
     /former\s+UFC\s+[\w\s-]{0,25}champion/i.test(sourceText(f))?"Former UFC champion (see source notes).":
     "Championship history is not confirmed in the current profile.";
+  const championshipLink=reviewedChampion?
+    ' <a href="'+escapeHTML(f.review.championStatusSource)+
+    '" target="_blank" rel="noopener noreferrer">Check UFC titleholders</a>':'';
   return '<section class="befn-profile-insights" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="Fighter performance insights">'+
    '<section class="befn-profile-block"><h3>Fighter ratings</h3><div class="befn-profile-body">'+
    '<div class="befn-power-bars">'+metrics.map(profileMetric).join("")+'</div>'+scoreMethodHTML(f.sport)+
@@ -188,7 +198,7 @@
    '<p class="befn-score-note">0–100 descriptive indices, not win probabilities. Missing statistics remain unrated. '+(f.sport==="Boxing"?'Power uses documented KO-win share as a finishing proxy.':'MMA ratings use source-backed striking, grappling, wrestling, defence and recent form data.')+'</p></div></section>'+
    '<section class="befn-profile-block"><h3>Recent form (last 5)</h3><div class="befn-profile-body">'+formHTML(f)+'</div></section>'+
    '<section class="befn-profile-block"><h3>'+escapeHTML(kind)+'</h3><div class="befn-profile-body">'+credentialsHTML(f)+'</div></section>'+
-   '<section class="befn-profile-block"><h3>Championship history</h3><div class="befn-profile-body"><p class="befn-score-note" style="margin:0">'+escapeHTML(championshipText)+'</p></div></section></section>';
+   '<section class="befn-profile-block"><h3>'+(reviewedChampion?'Championship status':'Championship history')+'</h3><div class="befn-profile-body"><p class="befn-score-note" style="margin:0">'+escapeHTML(championshipText)+championshipLink+'</p></div></section></section>';
  }
  function getName(article,side){
   const el=article.querySelectorAll(".result-contender-info > strong")[side];
