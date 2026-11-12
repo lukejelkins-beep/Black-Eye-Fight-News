@@ -1,0 +1,39 @@
+name: Boxerbook source QA
+on:
+  workflow_dispatch:
+    inputs:
+      live_check:
+        description: 'Read-only live API QA (two calls; no deployment)'
+        type: boolean
+        default: false
+  push:
+    branches: [main, 'feature/boxerbook-boxing-source']
+    paths:
+      - 'scripts/boxerbook_source.py'
+      - 'tests/test_boxerbook_source.py'
+      - '.github/workflows/boxerbook-source-qa.yml'
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test exact identity matching and no source data overwrites
+        run: python -m unittest discover -s tests -p 'test_boxerbook_source.py' -v
+      - name: Check live Boxerbook schedule and results (read-only)
+        if: github.event_name == 'workflow_dispatch' && inputs.live_check == true
+        env:
+          BOXERBOOK_API_KEY: ${{ secrets.BOXERBOOK_API_KEY }}
+        run: python scripts/boxerbook_source.py --live --report qa/boxerbook-source-review.json
+      - name: Upload one-day QA report for review
+        if: github.event_name == 'workflow_dispatch' && inputs.live_check == true
+        uses: actions/upload-artifact@v4
+        with:
+          name: boxerbook-source-qa
+          path: qa/boxerbook-source-review.json
+          retention-days: 1
