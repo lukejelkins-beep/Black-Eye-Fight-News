@@ -124,6 +124,35 @@
         "Latest five dated result rows, full denominator reconciliation, source-integrity tests, Render deploy and live desktop/mobile QA not verified."
       ],
       "nextAction": "After 2026-11-14 or when new primary-source evidence is available, obtain complete official UFC bout history or individual official event result pages, enumerate all UFC-only W-L-D/NC and verify latest five. Preserve existing champion credentials and cohort until source audit and tests pass."
+    },
+    "mackenzie-dern": {
+      "name": "Mackenzie Dern",
+      "status": "committed",
+      "lastCheckedOn": "2026-11-13",
+      "commit": "cb49e77a9ef0793a14d07c4a581a09cc8b44c575",
+      "sourceUrls": [
+        "https://statleaders.ufc.com/?fighter_status=1&weight_class=WSW",
+        "https://www.ufc.com/athlete/mackenzie-dern",
+        "https://www.ufc.com/athlete/mackenzie-dern?language_content_entity=en&page=3"
+      ],
+      "verifiedFindings": {
+        "professionalRecord": "17-5-0",
+        "ufcRecord": {
+          "wins": 12,
+          "losses": 5,
+          "draws": 0,
+          "noContests": 0,
+          "completedBouts": 17
+        },
+        "lastFive": "Gillian Robertson 2026-08-15 W decision R5; Virna Jandiroba 2025-10-25 W decision R5; Amanda Ribas 2025-01-11 W submission R3 4:56; Loopy Godinez 2024-08-03 W decision R3; Amanda Lemos 2024-02-17 L decision R3",
+        "statistics": "UFC record book: 851 significant strikes landed, 5 UFC submissions, 7 UFC decision wins; UFC bio 851/2057 significant strikes; UFCalendar saved sample 17 bouts; per-metric coverage not independently audited"
+      },
+      "remainingBlockers": [
+        "Validate per-metric tracked round denominators from saved archive before treating each rate as career-complete",
+        "Run source-integrity/classifier/card tests and inspect CI desktop/mobile artifacts",
+        "Confirm Render production deploy commit and successful later live QA with screenshots and broken-image fallback"
+      ],
+      "nextAction": "Verify CI tests and Render deploy, then run/inspect post-deploy live UFC fighter profile workflow; keep status committed, not production-verified until all gates pass."
     }
   }
 }
