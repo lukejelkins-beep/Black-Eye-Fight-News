@@ -228,7 +228,28 @@
     '<strong>'+escapeHTML(trackedMetric(entry?.value,format))+'</strong>'+
     '<small>'+covered+'/'+d.trackedBouts+' tracked UFC bouts</small></div>';
   };
-  const recent=(d.recentBouts||[]).filter(x=>x?.date&&x?.opponent).slice(0,5);
+  // Coverage must be measured against the most recent *reviewed UFC fights*,
+  // not just the subset of archived bouts that happened to have round metrics.
+  // UFCalendar dates may use the following calendar day in another timezone.
+  const latestUfc=isReviewedUfc(f)?(f.latest||[]).filter(x=>x?.date&&x?.opponent).slice(0,5):[];
+  const trackedBouts=(d.recentBouts||[]).filter(x=>x?.date&&x?.opponent);
+  const matchedBout=b=>trackedBouts.find(x=>{
+   if(norm(x.opponent)!==norm(b.opponent))return false;
+   const a=Date.parse(String(x.date)+"T00:00:00Z");
+   const z=Date.parse(String(b.date)+"T00:00:00Z");
+   return Number.isFinite(a)&&Number.isFinite(z)&&Math.abs(a-z)<=86400000;
+  });
+  const coveredLatest=latestUfc.filter(matchedBout).length;
+  const coveragePanel=latestUfc.length?
+   '<details class="befn-postfight-history befn-recent-five-coverage" data-befn-recent-five="'+
+    escapeHTML(f.id)+'"><summary>Latest UFC fights: '+coveredLatest+'/'+latestUfc.length+
+    ' with verified round data</summary><ul>'+
+    latestUfc.map(b=>'<li class="befn-postfight-bout"><span><b>'+escapeHTML(b.opponent)+
+     '</b><small>'+escapeHTML(b.date)+' · '+escapeHTML(b.method||"UFC result")+'</small></span>'+
+     '<span><small>'+(matchedBout(b)?'Round statistics available':'Round statistics pending')+
+     '</small></span></li>').join('')+
+   '</ul></details>':"";
+  const recent=trackedBouts.slice(0,5);
   const fightRows=recent.map(b=>{
    const m=b.metrics||{};
    const delta=m.totalStrikeDifferential;
@@ -246,6 +267,7 @@
    '<b>'+d.trackedBouts+' recorded bouts</b>, latest '+escapeHTML(d.lastFightDate)+
    '. These are <b>tracked-sample totals, not career totals</b>. Missing round fields are not guessed.</p>'+
    (pending?'<p class="befn-postfight-warning">New fight observed. Career record, recent form and 0–100 ratings await source review.</p>':"")+
+   coveragePanel+
    '<div class="befn-postfight-grid">'+rows.map(cell).join("")+'</div>'+
    (fightRows?'<details class="befn-postfight-history"><summary>Show per-fight strike and control observations</summary>'+
     '<ul>'+fightRows+'</ul></details>':"")+
