@@ -159,6 +159,33 @@
     confidence(sumParts(specs.defence,1,.48,2),d.bouts):null;
   return null;
  }
+ function ncaaWrestlingPrior(base,profile,bouts){
+  // A published NCAA college wrestling history has limited predictive
+  // significance for current MMA grappling. This is an explicitly heuristic
+  // prior, never a replacement for fight statistics.
+  if(!Number.isInteger(base)||base<0||base>100)return null;
+  const verified=(Array.isArray(profile?.credentials)?profile.credentials:[]).filter(c=>
+   c?.kind==="ncaa"&&["I","II","III"].includes(c.division)&&
+   /^https:\/\//.test(String(c.source||""))&&
+   !/google\.com\/search/i.test(c.source));
+  if(!verified.length)return null;
+  // NCAA I competes at the highest collegiate wrestling level.
+  // Medal status is optional; fifth place All-American earns NO medal bonus.
+  const prior={I:80,II:74,III:70};
+  const medalAddition={gold:8,silver:5,bronze:3};
+  const selected=verified.map(c=>({
+   ...c,benchmark:prior[c.division]+(medalAddition[c.medal]||0)
+  })).sort((a,b)=>b.benchmark-a.benchmark)[0];
+  const n=finite(bouts,2,200)||2;
+  // At five stat-covered MMA bouts, NCAA prior weight is 15%.
+  // Prior influence shrinks as the number of observed MMA bouts increases.
+  const weight=.15*Math.min(1,5/n);
+  const shift=Math.max(0,Math.min(5,Math.round(weight*(selected.benchmark-base))));
+  return {score:Math.min(100,base+shift),adjustment:shift,
+   source:selected.source,division:selected.division,priorWeight:weight,
+   evidence:"NCAA Division "+selected.division+
+    (selected.medal?" "+selected.medal+" medal":" collegiate competition")};
+ }
  function evaluate(profile,history){
   // Never combine small-sample round counts with unrelated career denominators.
   // Score each self-contained sample, then select the broader verified sample
@@ -177,8 +204,16 @@
     if(candidate===null)continue;
     score=candidate;selected=d;break;
    }
-   return {id,label,description,score,sample:selected?.bouts||0,
-    source:selected?.source||"No sourced statistics",
+   const prior=(id==="wrestling"&&score!==null)?
+    ncaaWrestlingPrior(score,profile,selected?.bouts):null;
+   return {id,label,
+    description:prior?.adjustment?description+
+     "; includes +"+prior.adjustment+" NCAA "+prior.division+
+     " participation prior (capped at +5; never substitutes for MMA statistics)":description,
+    score:prior?.score??score,baseScore:prior?.adjustment?score:null,
+    credentialAdjustment:prior?.adjustment||0,
+    credentialSource:prior?.adjustment?prior.source:null,
+    sample:selected?.bouts||0,source:selected?.source||"No sourced statistics",
     observedOn:selected?.observedOn||null,
     confidence:selected?.bouts>=8?"moderate":"limited"};
   });
@@ -258,7 +293,7 @@
   ];
  }
  function level(n){return n===null?"unrated":n<35?"red":n<55?"orange":n<75?"gold":"green"}
- const api={normalize:norm,normalizeHistory,recentForm,advancedData,careerData,aggregateRoundPreviews,evaluate,evaluateBoxing,boxingPower,level};
+ const api={normalize:norm,normalizeHistory,recentForm,advancedData,careerData,aggregateRoundPreviews,ncaaWrestlingPrior,evaluate,evaluateBoxing,boxingPower,level};
  scope.BEFNPowerIndex=api;
  if(typeof module==="object"&&module?.exports)module.exports=api;
 })(typeof window!=="undefined"?window:globalThis);
