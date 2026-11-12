@@ -4,6 +4,116 @@
   "reviewedOn": "2026-11-12",
   "methodology": "Individually verified official UFC bout histories, UFC-only statistical samples, optional independently verified credentials. BEFN rule-based algorithm applies across ALL divisions with no numerical cap.",
   "fighters": {
+    "bia-mesquita": {
+      "id": "mma-ufc--bia-mesquita",
+      "name": "Bia Mesquita",
+      "sport": "MMA",
+      "organisation": "UFC",
+      "category": "Contender",
+      "division": "Women's Bantamweight",
+      "age": 35,
+      "record": "8–0–0",
+      "source": "https://www.ufc.com/athlete/bia-mesquita",
+      "rosterStatus": "Active",
+      "ufcRecord": {
+        "wins": 3,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0,
+        "complete": true,
+        "checkedAt": "2026-11-12",
+        "source": "https://www.ufc.com/athlete/bia-mesquita"
+      },
+      "ranking": {
+        "rank": 11,
+        "checkedAt": "2026-11-12",
+        "source": "https://www.ufc.com/rankings"
+      },
+      "latest": [
+        {
+          "date": "2026-06-20",
+          "opponent": "Melissa Mullins",
+          "outcome": "W",
+          "method": "Submission (armbar) R1 3:16",
+          "cageSec": 196,
+          "source": "https://www.ufc.com/athlete/bia-mesquita"
+        },
+        {
+          "date": "2026-03-14",
+          "opponent": "Montse Rendon",
+          "outcome": "W",
+          "method": "Submission (rear-naked choke) R1 2:07",
+          "cageSec": 127,
+          "source": "https://www.ufc.com/athlete/bia-mesquita"
+        },
+        {
+          "date": "2025-10-11",
+          "opponent": "Irina Alekseeva",
+          "outcome": "W",
+          "method": "Submission (rear-naked choke) R2 2:14",
+          "cageSec": 434,
+          "source": "https://www.ufc.com/athlete/bia-mesquita"
+        }
+      ],
+      "verifiedStats": {
+        "scope": "ufc-only",
+        "source": "https://www.ufc.com/athlete/bia-mesquita",
+        "observedOn": "2026-11-12",
+        "sampleBouts": 3,
+        "slpm": 4.52,
+        "sapm": 1.27,
+        "strAcc": 57,
+        "strDef": 71,
+        "tdAvg": 3.57,
+        "subAvg": 3.57,
+        "kdAvg": 0,
+        "denominatorNotes": "Official UFC athlete page, three UFC Octagon bouts (October 2025–June 2026), total 12m37s of completed cage time. UFC significant strikes landed 57/100 attempts and takedowns 2/4 attempts; no defence or career strike total inferred. The 8-0 professional record includes five non-UFC fights."
+      },
+      "credentials": [
+        {
+          "kind": "adcc",
+          "medal": "gold",
+          "verification": "verified",
+          "source": "https://adcombat.com/adcc-worlds-2017-complete-results-and-brackets/",
+          "detail": "ADCC 2017 women's under 60 kg world champion, Beatriz Mesquita"
+        },
+        {
+          "kind": "bjj",
+          "belt": "black",
+          "verification": "reported",
+          "source": "https://www.ufc.com/athlete/bia-mesquita",
+          "detail": "UFC athlete Q&A reports fourth-degree Brazilian jiu-jitsu black belt; belt degree not independently validated, no belt bonus"
+        },
+        {
+          "kind": "ibjjf",
+          "verification": "verified",
+          "source": "https://ibjjf.com/news/grand-slam-glory-tainan-dalpra-gabi-pessanha",
+          "detail": "IBJJF retrospectively identifies Bia Mesquita as ten-time women's black-belt World Champion; no additional IBJJF title points are defined in the current fixed-bonus schedule"
+        }
+      ],
+      "review": {
+        "checkedAt": "2026-11-12",
+        "credentialsChecked": true,
+        "notes": [
+          "UFC athlete page lists active women's bantamweight, age 35, professional record 8-0-0 and three UFC bouts, all submission victories; non-UFC bouts excluded from UFC record.",
+          "US event dates and exact elapsed fight clocks verified individually against UFC's athlete fight-history and UFC event results: Mullins 2026-06-20 R1 3:16 armbar; Rendon 2026-03-14 R1 2:07 RNC; Alekseeva 2025-10-11 R2 2:14 RNC.",
+          "UFC official rankings page on 2026-11-12 lists Mesquita #11 women's bantamweight. This is a current dated ranking, not an inferred historical opponent ranking.",
+          "UFC 334 official card and athlete page confirm upcoming Macy Chiasson pairing for 2026-11-14. No future bout counted.",
+          "2017 ADCC women's -60 kg gold independently confirmed in ADCC federation results. IBJJF primary retrospective identifies ten World Championships; IBJJF titles do not receive an invented fixed-score bonus.",
+          "UFC-only three-bout statistical snapshot uses UFC athlete page career rate fields; no tracked-round subset is mistaken for full professional career totals. No knockout or knockdown credited for the three UFC submission victories.",
+          "Black-belt degree reported by UFC athlete Q&A but lacks separately verified awarding source, so no belt bonus.",
+          "No portrait downloaded or copied; external image availability requires live QA."
+        ]
+      },
+      "sourceLinks": [
+        "https://www.ufc.com/athlete/bia-mesquita",
+        "https://www.ufc.com/rankings",
+        "https://www.ufc.com/event/ufc-334",
+        "https://adcombat.com/adcc-worlds-2017-complete-results-and-brackets/",
+        "https://ibjjf.com/news/grand-slam-glory-tainan-dalpra-gabi-pessanha"
+      ],
+      "verificationNote": "Official UFC #11 bantamweight on 12 Nov 2026; 3–0 UFC-only with three submissions, separately verified ADCC 2017 gold. Professional 8–0 includes non-UFC contests. V2 contender ranking gate applies."
+    },
     "gabriel-bonfim": {
       "id": "mma-ufc--gabriel-bonfim",
       "name": "Gabriel Bonfim",
