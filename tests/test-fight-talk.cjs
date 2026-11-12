@@ -10,6 +10,11 @@ assert(html.includes("memes:'Meme pages'"),'Fight Talk shows an explicit Meme pa
 assert(html.includes("state.talkRole==='memes'?p.role==='meme'"),'Fight Talk isolates meme sources in their own filter');
 assert(html.includes('fight-talk.css?v=20261111-instagram-embed-height'),'The updated Fight Talk stylesheet must bypass stale mobile caches');
 assert(!html.includes('id="original-talk-posts"'),'Remove legacy mobile embed styles with zoom and fixed iframe heights');
+
+assert(html.includes("const xApiFeed='data/fight-talk-x-api.json';"),'Read original verified X API posts from own dataset');
+assert(html.includes('remoteXApiFeed.then(remote=>{'),'Refresh original X posts when GitHub is newer than Render');
+assert(html.includes('liveTalk.paidXPosts'),'Combine original X API posts with existing native embed data');
+
 for(const m of fightTalkCSS.matchAll(/([^{}]+)\{([^{}]*)\}/g)){
  const selector=m[1],body=m[2];
  if(selector.includes('.talk-original')&&selector.includes('iframe')){
