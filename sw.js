@@ -1,5 +1,5 @@
 /* Offline-ready app shell. Always prioritise network for news and fight data. */
-const CACHE_NAME = 'befn-app-shell-v34-20261112-ufc334-judo-profile';
+const CACHE_NAME = 'befn-app-shell-v35-20261112-ncaa-wrestling';
 const SHELL = [
   '/', '/index.html', '/manifest.webmanifest',
   '/assets/mark.svg', '/assets/site-favicon-192.png', '/assets/icon-192.png', '/assets/icon-512.png', '/assets/apple-touch-icon.png', '/assets/icon-maskable-512.png',
