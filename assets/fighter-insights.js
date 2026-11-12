@@ -165,7 +165,7 @@
   const src=validSource(v?.source)?v.source:null;
   if(!src)return '<span class="befn-rating-source-note">Insufficient verified statistical coverage.</span>';
   return '<span class="befn-rating-source-note">'+
-   (sample!==null?escapeHTML(String(sample))+' recorded bouts · ':'')+
+   (sample!==null?escapeHTML(String(sample))+(v.scope==="ufc-only"?' UFC bouts · ':' recorded bouts · '):'')+
    (v.observedOn?'Checked '+escapeHTML(v.observedOn)+' · ':'')+
    '<a href="'+escapeHTML(src)+'" target="_blank" rel="noopener noreferrer">View stats source</a>'+
    (validSource(v.submissionWinSource)?' · <a href="'+escapeHTML(v.submissionWinSource)+
