@@ -63,6 +63,14 @@ async function ready(){
    if(!response.ok)throw Error("Site HTTP "+response.status);
    if(!isLive)return;
    const missing=[];
+   // An up-to-date JSON response can coexist with a stale CDN/HTML shell.
+   // Require the actual page HTML to include the current, source-scoped
+   // fight-history rendering and honest photo fallback code.
+   const pageMarkup=await response.text();
+   for(const required of ["data-befn-recent-results","fighterPortraitFallback",
+     "befn-verified-fighter-portrait-fallback-v1"]){
+    if(!pageMarkup.includes(required))missing.push("index.html missing "+required);
+   }
    for(const cohort of cohorts){
     const file="data/ufc-"+cohort+"-profiles.json";
     const full=path.join(root,file);
@@ -242,7 +250,10 @@ try{
   page.setDefaultTimeout(12000);
   const pageErrors=[];
   page.on("pageerror",e=>pageErrors.push(e.message));
-  await page.goto(base+"/#fighters",{waitUntil:"domcontentloaded",timeout:30000});
+  // Cache-bust the HTML itself, not only the JSON fetches. This is critical
+  // on Render's CDN: old HTML and fresh fighter JSON can otherwise mix.
+  const freshEntry=base+"/?befn_profile_qa="+Date.now()+"#fighters";
+  await page.goto(freshEntry,{waitUntil:"domcontentloaded",timeout:30000});
   await page.waitForFunction(ids=>
    ids.every(id=>window.COMBAT_DATA?.fighters?.some(f=>f.id===id)),
    profiles.map(x=>x.id),{timeout:30000});
