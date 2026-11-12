@@ -45,6 +45,28 @@
         "Post-deployment live GitHub workflow and desktop/mobile screenshots not yet verified"
       ],
       "nextAction": "Run classifier and profile-card tests, then verify Render deployed commit and post-deploy live QA workflow with both visual artifacts."
+    },
+    "alexander-volkanovski": {
+      "name": "Alexander Volkanovski",
+      "status": "blocked",
+      "lastCheckedOn": "2026-11-13",
+      "sourceUrls": [
+        "https://www.ufc.com/athlete/alexander-volkanovski?language_content_entity=en&page=1",
+        "https://jp.ufc.com/athlete/alexander-volkanovski",
+        "https://www.reuters.com/sports/volkanovski-keeps-promise-with-quick-win-over-evloev-ufc-333-2026-10-24/",
+        "https://themmalab.com/fighters/alexander-volkanovski"
+      ],
+      "findings": [
+        "UFC official biography confirms active featherweight title holder and professional 29-4 record; official indexed athlete history confirms three latest wins over Movsar Evloev and twice Diego Lopes.",
+        "Independent full UFC fight log enumerates 19 UFC bouts (16-3), but an authoritative official UFC career-wide bout-by-bout count was not fully retrievable during this run. Treat 16-3 as provisional, not a verified UFC-only career count.",
+        "Latest five reported UFC opponents are Movsar Evloev, Diego Lopes, Diego Lopes, Ilia Topuria and Islam Makhachev; official individual event-result reconciliation of all five remains necessary. UFC biography page directly returned HTTP 403 during detailed retrieval."
+      ],
+      "blockers": [
+        "Primary-source official UFC result verification of all 19 career UFC bouts (16-3 provisional); ensure no non-UFC bouts counted.",
+        "Individually verify latest five official event result rows and clocks, statistical denominator coverage, and preserve independently verified credentials.",
+        "Run source-integrity/classifier/card tests and post-Render live screenshot QA before production approval."
+      ],
+      "nextAction": "Use official UFC event result pages or official UFCStats bout archive to reconcile all 19 career results and latest five clocks; only then safe-merge champion cohort and run tests. Do not recheck without new evidence before 2026-11-14."
     }
   }
 }
