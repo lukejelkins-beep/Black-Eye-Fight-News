@@ -2,8 +2,10 @@ name: Build UFC profile research queue
 on:
   workflow_dispatch:
   schedule:
-    # GitHub scheduling is best-effort; runs may be delayed or dropped.
-    - cron: '*/5 * * * *'
+    # Half-hour fallback: the UFCalendar collector already builds and commits
+    # this queue on each data batch, so 5-minute duplicate audits waste CI.
+    # GitHub scheduling is best-effort and may be delayed.
+    - cron: '13,43 * * * *'
   push:
     branches: [main]
     paths:
