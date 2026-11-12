@@ -152,7 +152,11 @@
   return '<span class="befn-rating-source-note">'+
    (sample!==null?escapeHTML(String(sample))+' recorded bouts · ':'')+
    (v.observedOn?'Checked '+escapeHTML(v.observedOn)+' · ':'')+
-   '<a href="'+escapeHTML(src)+'" target="_blank" rel="noopener noreferrer">View stats source</a></span>';
+   '<a href="'+escapeHTML(src)+'" target="_blank" rel="noopener noreferrer">View stats source</a>'+
+   (validSource(v.submissionWinSource)?' · <a href="'+escapeHTML(v.submissionWinSource)+
+    '" target="_blank" rel="noopener noreferrer" title="'+
+    escapeHTML(v.grapplingEvidenceNote||'Verified submission finish evidence')+
+    '">Submission finishes</a>':'')+'</span>';
  }
  function renderProfile(f){
   const kind=f.sport==="Boxing"?"Boxing credentials":"Combat & grappling credentials";
