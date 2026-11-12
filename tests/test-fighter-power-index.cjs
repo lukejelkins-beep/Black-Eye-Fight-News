@@ -41,4 +41,31 @@ assert(insights.includes('befn-history-duration'),"Each fight needs a duration c
 assert(insights.includes("secTime(h.cageSec)"),"Use per-fight durations rather than an inferred average");
 assert(css.includes(".befn-history-with-cage"),"Responsive fight-and-time styling");
 assert(html.includes("fighter-insights.js"),"Insights must load on preview");
+// Verify the optional curated round-preview adapter: only fully timed bouts
+// with continuous round coverage qualify; incomplete sources stay unrated.
+const round=(n,a,b)=>({round:n,a:{sigLanded:a[0],sigAttempted:a[1],
+ takedowns:a[2],takedownAttempts:a[3],controlSec:a[4],knockdowns:a[5],
+ subAttempts:a[6],reversals:a[7]},b:{sigLanded:b[0],sigAttempted:b[1],
+ takedowns:b[2],takedownAttempts:b[3],controlSec:b[4],knockdowns:b[5],
+ subAttempts:b[6],reversals:b[7]}});
+const events={a:{org:"ufc",date:"2026-11-08",bouts:[
+ {a:"Person A",b:"Person B",result:{round:3,time:"5:00"},roundPreview:[
+ round(1,[34,70,1,3,125,0,1,1],[19,45,0,2,30,0,0,0]),
+ round(2,[32,68,2,4,100,0,1,0],[22,51,1,2,70,0,0,0]),
+ round(3,[36,68,0,2,20,1,2,0],[18,42,1,3,50,0,1,0])
+ ]},
+ {a:"Person A",b:"Person C",result:{round:2,time:"2:30"},roundPreview:[
+ round(1,[28,60,1,2,80,1,1,0],[22,48,0,1,10,0,0,1]),
+ round(2,[15,34,1,3,60,0,1,1],[8,20,0,1,25,0,0,0])
+ ]}
+]}};
+const extracted=model.aggregateRoundPreviews(events).get(model.normalize("Person A"));
+assert.equal(extracted.sampleBouts,2);
+assert.equal(extracted.observedSeconds,1350);
+assert.equal(extracted.submissionAttempts,6);
+assert.equal(extracted.reversals,2);
+assert(model.evaluate({performanceEvidence:extracted},last5).filter(x=>x.score!==null).length>=4);
+events.a.bouts[1].result.time="unconfirmed";
+assert.equal(model.aggregateRoundPreviews(events).size,0,"One timed fight alone is insufficient evidence");
+assert(insights.includes("befn:round-previews-ready"),"Round observations must reach the rating model");
 console.log("PASS: 5 MMA dimensions, evidence gating, form, no cardio, merged cage-time history");
