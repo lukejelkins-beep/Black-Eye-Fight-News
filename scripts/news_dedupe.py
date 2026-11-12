@@ -81,6 +81,49 @@ def same_event(a,b):
     # Other incidents need a high subject overlap; protect follow-up angles.
     return len(shared)>=3 and len(shared)/min(len(left),len(right))>=.85
 
+# High-confidence editorial rewrite matching. Keep different developments and
+# different editorial formats, even when they mention the same UFC event.
+BOILERPLATE=set(('ufc mma boxing pfl one rizin raf fight fights fighter fighters bout card '
+ 'title champion championship world heavyweight lightweight bantamweight featherweight '
+ 'middleweight welterweight event match vs versus news video live stream report reports '
+ 'official preview previews prediction predictions interview reaction recap highlights '
+ 'countdown conference press media day updates update coach conversation polymarket').split())
+
+def distinctive(title):
+    return set(title_terms(title))-BOILERPLATE-{w for w in title_terms(title) if w.isdigit()}
+
+def headline_stage(title):
+    t=str(title or '').lower()
+    rules=[
+      ('declined',r'\\b(?:turns? down|declines?|rejects?)\\b'),
+      ('offered',r'\\b(?:offered?|offer)\\b'),
+      ('meeting',r'\\b(?:meeting|met with)\\b'),
+      ('withdrawal',r'\\b(?:withdrawn|withdraws?|out of|pulls? out)\\b'),
+      ('cancelled',r'\\b(?:cancelled|canceled|called off)\\b'),
+      ('postponed',r'\\b(?:postponed|delayed)\\b'),
+      ('result',r'\\b(?:knocked out|knockout|wins?|defeats?|stops?|submits?)\\b'),
+      ('unconfirmed',r'\\b(?:rumou?rs?|reportedly|possible|could|may)\\b')]
+    return next((kind for kind,pattern in rules if re.search(pattern,t)),'')
+
+def reworded_headline(a,b):
+    left,right=distinctive(a.get('title')),distinctive(b.get('title'))
+    common=len(left&right)
+    if common<4 or min(len(left),len(right))<4:return False
+    if headline_stage(a.get('title'))!=headline_stage(b.get('title')):return False
+    return common/min(len(left),len(right))>=.78 and common/len(left|right)>=.50
+
+def matching_event_media(a,b):
+    def card(t):
+        m=re.search(r'\\b(?:ufc|pfl|raf|rizin)\\s*[- ]?\\d+\\b',str(t or ''),re.I)
+        return re.sub(r'[- ]+','',m.group(0).lower()) if m else ''
+    def kind(t):
+        t=str(t or '')
+        return 'press-conference' if re.search(r'press[ -]?conference',t,re.I) else 'media-day' if re.search(r'media[ -]?day',t,re.I) else ''
+    x,y=a.get('title',''),b.get('title','')
+    return bool(card(x) and card(x)==card(y) and kind(x) and kind(x)==kind(y) and
+                re.search(r'\\b(?:video|stream|watch|live)\\b',x,re.I) and
+                re.search(r'\\b(?:video|stream|watch|live)\\b',y,re.I))
+
 def duplicate_of(a,b):
     if canonical_url(a.get('url')) and canonical_url(a.get('url'))==canonical_url(b.get('url')):
         return True
@@ -92,7 +135,7 @@ def duplicate_of(a,b):
     x,y=title_terms(a.get('title')),title_terms(b.get('title'))
     if not x or not y:return False
     if x==y:return True
-    if same_event(a,b):return True
+    if same_event(a,b) or reworded_headline(a,b) or matching_event_media(a,b):return True
     sa,sb=set(x),set(y)
     if min(len(sa),len(sb))<6:return False
     if (sa & UPDATES)!=(sb & UPDATES):return False
