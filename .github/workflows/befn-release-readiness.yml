@@ -1,0 +1,49 @@
+name: BEFN release readiness
+# This is the *pre-deployment* gate. It must not fetch the live Render site.
+# The separate production browser workflow checks the deployed release later.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  release-preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reject invalid frontend JavaScript
+        run: |
+          node --check assets/fighter-power-index.js
+          node --check assets/fighter-insights.js
+          node --check assets/ufc-prospect-contender.js
+          node --check assets/upcoming-cards.js
+      - name: Verify reviewed UFC profile integrity and scoring
+        run: |
+          node tests/test-ufc-profile-card-qa.cjs
+          node tests/test-ufc-prospect-contender.cjs
+          node tests/test-fighter-power-index.cjs
+          node --test tests/test-ufc-async-authority.cjs
+          node --test tests/test-ufc-profile-queue.mjs
+          node --test tests/test-ufc-postfight-metrics.mjs
+          node --test tests/test-ufc-qa-freshness.mjs
+      - name: Validate fight cards and results without API calls
+        run: |
+          node tests/test-upcoming-ui.cjs
+          node tests/test-upcoming-merge.cjs
+          python -m unittest discover -s tests -p 'test_results.py'
+          python -m unittest discover -s tests -p 'test_fighter_records.py'
+          python -m unittest discover -s tests -p 'test_upcoming_cards.py'
+      - name: Record validated source revision
+        if: success()
+        run: |
+          echo "## BEFN pre-deployment approval" >> "$GITHUB_STEP_SUMMARY"
+          echo "Validated source commit: \$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
+          echo "Only source integrity passed. Production deployment and live UI QA are separate." >> "$GITHUB_STEP_SUMMARY"
