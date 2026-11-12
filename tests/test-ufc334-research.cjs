@@ -74,4 +74,19 @@ const hBase=engine.evaluate(hRecord,h.latest).find(m=>m.id==="wrestling");
 const hModified=engine.evaluate({...hRecord,credentials:[hCred]},h.latest).find(m=>m.id==="wrestling");
 assert(hModified.score>hBase.score);
 assert(hModified.credentialAdjustment>0&&hModified.credentialAdjustment<=5);
+// Gane's UFC-only submission wins complete grappling evidence; the 3
+// professional submission victories on the UFC profile include pre-UFC bouts.
+const ganeStats=gane.verifiedStats;
+assert.equal(ganeStats.sampleBouts,14);
+assert.equal(ganeStats.submissionWins,2);
+assert.equal(ganeStats.submissionWinRate,2/14);
+assert(ganeStats.submissionWinSource.includes("ufc.com/athlete/ciryl-gane"));
+const ganeRecord={recent:{fights:ganeStats.sampleBouts},stats:ganeStats};
+const ganeRatings=engine.evaluate(ganeRecord,gane.latest);
+assert.equal(ganeRatings.find(m=>m.id==="grappling").score,32);
+assert.equal(ganeRatings.length,5);
+const missingFinish=engine.evaluate({recent:ganeRecord.recent,
+ stats:{...ganeStats,submissionWinRate:null}},gane.latest);
+assert.equal(missingFinish.find(m=>m.id==="grappling").score,null);
+assert(code.includes('Submission finishes'),"Official submission source should be visible");
 console.log("PASS UFC 334: 13 bouts, 26 sourced profiles, five metrics, BJJ/ADCC/NCAA, Olympic judo gold x2");
