@@ -54,6 +54,19 @@ class NewsDedupeTests(unittest.TestCase):
                   'https://two.example/2',when='2026-11-18T01:00:00+00:00')
         self.assertFalse(duplicate_of(a,b))
 
+    def test_anik_extension_across_publishers(self):
+        mma=article('UFC announcer Jon Anik signs long-term contract extension',
+                    'https://www.mmafighting.com/ufc/520497/ufc-announcer-jon-anik-signs-long-term-contract-extension')
+        ufc=article('JON ANIK SIGNS MULTI-YEAR EXTENSION TO CONTINUE ROLE ON UFC BROADCAST TEAM',
+                    'https://www.ufc.com/news/jon-anik-signs-multi-year-extension-continue-role-ufc-broadcast-team')
+        self.assertTrue(duplicate_of(mma,ufc))
+        self.assertEqual(len(deduplicate([mma,ufc])[0]),1)
+
+    def test_different_contract_people_stay_separate(self):
+        anik=article('UFC announcer Jon Anik signs long-term contract extension','https://one.example/1')
+        joe=article('UFC announcer Joe Rogan signs long-term contract extension','https://two.example/2')
+        self.assertFalse(duplicate_of(anik,joe))
+
     def test_prefer_complete_story(self):
         a=article('Champion confirms heavyweight title fight against contender in July',
                   'https://one.example/1')
