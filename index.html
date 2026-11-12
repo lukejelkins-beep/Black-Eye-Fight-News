@@ -534,7 +534,7 @@ html,body{max-width:100%;overflow-x:clip}
 <meta name="application-version" content="1.0.4">
 <link rel="stylesheet" href="/assets/promotion-coverage.css?v=20261109-scope1">
 <script src="/assets/promotion-coverage.js?v=20261110-syntaxfix2"></script>
-<link rel="stylesheet" href="assets/responsive-layout-experiment.css?v=20261112-editorial-summary-v8">
+<link rel="stylesheet" href="assets/responsive-layout-experiment.css?v=20261112-mobile-card-fix-v9">
 <script src="assets/news-dedupe.js?v=20261112-event-dedupe-v8"></script>
 <script defer src="assets/responsive-preview-mode.js?v=20261112-v7"></script>
 </head>
@@ -763,6 +763,8 @@ function newsFeatureCard(a){
 }
 document.addEventListener('error',event=>{
  const img=event.target;if(!img.classList?.contains('live-news-image'))return;
+ // Top Stories use their own portrait fallback; do not remove their images here.
+ if(img.closest('.top-story-full'))return;
  queueMicrotask(()=>{
   const card=img.closest('.live-news-card'),credit=card?.querySelector('.live-news-credit');
   img.classList.remove('is-error');
@@ -901,6 +903,7 @@ function hydrateTopStoryPhotos(){
    if(!url)url=await findCommonsTopStoryPhoto(subject);
    if(!url){img.closest('.front-lead-image')?.classList.add('top-story-photo-unavailable');return;}
    img.alt='Photograph of '+subject;
+   img.closest('.front-lead-image')?.classList.remove('top-story-photo-unavailable');
    img.src=url;
   };
   img.addEventListener('error',fallback,{once:true});
@@ -971,7 +974,7 @@ function topStoryCard(a){
  const photo=topStoryPhoto(a),points=topStoryShortPoints(a),subject=topStoryPhotoSubject(a);
  const href=safeURL(a.url);
  return '<article class="front-lead-card top-story-full">'
-  +'<a class="front-lead-image" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image front-lead-photo" data-photo-subject="'+esc(subject)+'" loading="lazy" referrerpolicy="no-referrer" decoding="async" src="'+safeURL(photo.url)+'" alt="'+esc(photo.alt)+'"></a>'
+  +'<a class="front-lead-image'+(!photo.url?' top-story-photo-unavailable':'')+'" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Read '+esc(a.title)+'"><img class="live-news-image front-lead-photo" data-photo-subject="'+esc(subject)+'" loading="lazy" referrerpolicy="no-referrer" decoding="async" src="'+safeURL(photo.url)+'" alt="'+esc(photo.alt)+'"></a>'
   +'<div class="front-lead-copy"><span class="front-story-meta">'+newsDisplayMeta(a)+'<span class="befn-news-sport">'+esc(a.sport.toUpperCase())+'</span></span>'
   +'<h2><a href="'+href+'" target="_blank" rel="noopener noreferrer">'+esc(a.title)+'</a></h2>'
   +(points.length?'<ul class="top-story-points" aria-label="Key verified facts">'+points.slice(0,3).map(p=>'<li>'+esc(p)+'</li>').join('')+'</ul>':'')
