@@ -170,6 +170,65 @@
    confidence:id==="form"?(fights.length>=5?"moderate":"limited"):n>=8?"moderate":"limited"
   }));
  }
+ function aggregateRoundPreviews(events){
+  // Consume the curated, already-loaded fight-card round previews. Each bout
+  // must have a confirmed round, clock, and continuous first-through-final
+  // round stats; never assume a finish occurred at the end of its round.
+  const buckets=new Map(),all=Object.values(events||{});
+  for(const event of all){
+   if(!event||!["ufc","pfl"].includes(String(event.org||"").toLowerCase())||!Array.isArray(event.bouts))continue;
+   for(const fight of event.bouts){
+    const result=fight?.result,rounds=fight?.roundPreview;
+    if(!result||!Array.isArray(rounds)||!rounds.length||typeof fight.a!=="string"||typeof fight.b!=="string")continue;
+    const round=Number(result.round);
+    const match=String(result.time||"").trim().match(/^(\d{1,2}):(\d{2})$/);
+    if(!Number.isInteger(round)||round<1||round>5||!match||Number(match[1])>5||Number(match[2])>=60)continue;
+    const elapsed=(round-1)*300+Number(match[1])*60+Number(match[2]);
+    if(elapsed<30||elapsed>1500||rounds.length!==round||!rounds.every((x,i)=>Number(x.round)===i+1))continue;
+    const sum=(c,field)=>{
+     const values=rounds.map(x=>x?.[c]?.[field]);
+     return values.every(n=>Number.isInteger(n)&&n>=0)?values.reduce((a,n)=>a+n,0):null;
+    };
+    [["a","b"],["b","a"]].forEach(([corner,opposite])=>{
+     const name=fight[corner],key=norm(name);
+     if(!key)return;
+     const stats={
+      sigLanded:sum(corner,"sigLanded"),sigAttempted:sum(corner,"sigAttempted"),
+      sigAbsorbed:sum(opposite,"sigLanded"),oppSigAttempted:sum(opposite,"sigAttempted"),
+      takedowns:sum(corner,"takedowns"),takedownAttempts:sum(corner,"takedownAttempts"),
+      opponentTakedowns:sum(opposite,"takedowns"),opponentTakedownAttempts:sum(opposite,"takedownAttempts"),
+      controlSec:sum(corner,"controlSec"),opponentControlSec:sum(opposite,"controlSec"),
+      submissionAttempts:sum(corner,"subAttempts"),reversals:sum(corner,"reversals"),
+      knockdowns:sum(corner,"knockdowns"),knockdownsAbsorbed:sum(opposite,"knockdowns")
+     };
+     // Basic validity: no landed strikes/takedowns can exceed attempts.
+     if(stats.sigLanded===null||stats.sigAttempted===null||
+       stats.sigAbsorbed===null||stats.oppSigAttempted===null||
+       stats.sigLanded>stats.sigAttempted||stats.sigAbsorbed>stats.oppSigAttempted||
+       (stats.takedowns!==null&&stats.takedownAttempts!==null&&stats.takedowns>stats.takedownAttempts))return;
+     if(stats.controlSec!==null&&stats.controlSec>elapsed)return;
+     const id=String(event.date||"")+":"+norm(fight.a)+":"+norm(fight.b);
+     if(!buckets.has(key))buckets.set(key,new Map());
+     buckets.get(key).set(id,{date:String(event.date||""),seconds:elapsed,stats});
+    });
+   }
+  }
+  const out=new Map();
+  for(const [key,rowsMap] of buckets){
+   const rows=[...rowsMap.values()].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,5);
+   if(rows.length<2)continue;
+   const combined={source:"https://www.ufcalendar.com/",verified:true,
+     observedOn:rows[0].date||null,sampleBouts:rows.length,
+     observedSeconds:rows.reduce((a,x)=>a+x.seconds,0)};
+   for(const k of ["sigLanded","sigAttempted","sigAbsorbed","oppSigAttempted",
+    "takedowns","takedownAttempts","opponentTakedowns","opponentTakedownAttempts",
+    "controlSec","opponentControlSec","submissionAttempts","reversals","knockdowns","knockdownsAbsorbed"]){
+    if(rows.every(x=>x.stats[k]!==null))combined[k]=rows.reduce((a,x)=>a+x.stats[k],0);
+   }
+   out.set(key,combined);
+  }
+  return out;
+ }
  function boxingPower(profile){
   const m=String(profile?.record||"").match(/^(\d{1,3})\s*[-–]\s*(\d{1,3})(?:\s*[-–]\s*\d{1,3})?\s*\((\d{1,3})\s*KOs?\)/i);
   if(!m)return null;
@@ -186,7 +245,7 @@
   ];
  }
  function level(n){return n===null?"unrated":n<35?"red":n<55?"orange":n<75?"gold":"green"}
- const api={normalize:norm,normalizeHistory,recentForm,advancedData,careerData,evaluate,evaluateBoxing,boxingPower,level};
+ const api={normalize:norm,normalizeHistory,recentForm,advancedData,careerData,aggregateRoundPreviews,evaluate,evaluateBoxing,boxingPower,level};
  scope.BEFNPowerIndex=api;
  if(typeof module==="object"&&module?.exports)module.exports=api;
 })(typeof window!=="undefined"?window:globalThis);
