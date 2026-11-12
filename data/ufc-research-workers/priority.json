@@ -27,6 +27,29 @@
         "UFC athlete biography self-reports national/regional judo championships and Future FC middleweight title, but independent primary organisational proof and fixed bonuses not yet validated."
       ],
       "nextAction": "Verify all nine UFC bout rows against official UFC event result pages, establish UFC-only career record and sourced opponent gate, then independent credentials and full QA. Do not repeat same blocked research before 2026-11-14 unless new evidence."
+    },
+    "bia-mesquita": {
+      "name": "Bia Mesquita",
+      "status": "source_research",
+      "lastCheckedOn": "2026-11-13",
+      "sourceUrls": [
+        "https://www.ufc.com/event/ufc-334",
+        "https://www.ufc.com/athlete/bia-mesquita",
+        "https://www.ufc.com/news/fight-fight-preview-polymarket-ufc-334-gane-vs-hokit"
+      ],
+      "verifiedFindings": [
+        "UFC 334 official card lists Bia Mesquita vs Macy Chiasson on 14 Nov 2026; official athlete page labels her active, women's bantamweight #11 on 13 Nov 2026, professional record 8-0.",
+        "Official UFC athlete page lists three UFC results: 11 Oct 2025 submission win vs Irina Alekseeva round 2 at 2:14; 14 Mar 2026 submission win vs Montserrat Rendon round 1 at 2:07; 20 Jun 2026 submission win vs Melissa Mullins round 1 at 3:16. Must confirm each result against event results before publishing.",
+        "UFC 334 fight preview independently says 3-0 in UFC with three finishes; candidate UFC-only 3-0-0 pending full reconciliation and bout source validation.",
+        "UFC feature describes 10 Brazilian jiu-jitsu world championships; no IBJJF primary-event documentation individually checked yet, so no credential bonus."
+      ],
+      "blockers": [
+        "Cross-check three UFC results, methods, elapsed cage clocks and 3-0 UFC-only record against official event result pages; exclude non-UFC fights.",
+        "Individually verify BJJ championships through IBJJF or other relevant primary competition records before adding any fixed credential bonuses.",
+        "Reconcile lawful saved UFCalendar stats with unique bout denominators and historical ranked-opponent evidence; calculate V2 classification and source confidence.",
+        "Run full profile Node tests, Playwright desktop/mobile visual QA, inspect artifacts and post-deployment live workflow before declaring published."
+      ],
+      "nextAction": "Verify official UFC event results for Alekseeva, Rendon and Mullins; independently locate IBJJF title records; then classify and validate. Do not retry unchanged blockers before 2026-11-14."
     }
   }
 }
