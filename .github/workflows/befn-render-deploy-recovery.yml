@@ -120,6 +120,7 @@ jobs:
           echo "approved=true" >> "$GITHUB_OUTPUT"
           echo "sha=$source_sha" >> "$GITHUB_OUTPUT"
       - name: Trigger exactly one fallback deployment
+        id: deploy
         if: steps.gate.outputs.approved == 'true'
         shell: bash
         run: |
@@ -133,9 +134,10 @@ jobs:
           # The secret is NEVER written to logs or saved in the repository.
           curl --fail --silent --show-error --max-time 35 \
             --request POST "$RENDER_DEPLOY_HOOK_URL" --output /dev/null
+          echo 'triggered=true' >> "$GITHUB_OUTPUT"
           echo "Recovery deploy requested for $expected" >> "$GITHUB_STEP_SUMMARY"
       - name: Confirm public assets converge and initiate separate live QA
-        if: steps.gate.outputs.approved == 'true'
+        if: steps.deploy.outputs.triggered == 'true'
         shell: bash
         run: |
           set -euo pipefail
