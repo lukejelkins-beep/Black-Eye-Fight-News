@@ -83,10 +83,29 @@ assert.equal(ganeStats.submissionWinRate,2/14);
 assert(ganeStats.submissionWinSource.includes("ufc.com/athlete/ciryl-gane"));
 const ganeRecord={recent:{fights:ganeStats.sampleBouts},stats:ganeStats};
 const ganeRatings=engine.evaluate(ganeRecord,gane.latest);
-assert.equal(ganeRatings.find(m=>m.id==="grappling").score,32);
+assert.equal(ganeRatings.find(m=>m.id==="grappling").score,36);
 assert.equal(ganeRatings.length,5);
 const missingFinish=engine.evaluate({recent:ganeRecord.recent,
  stats:{...ganeStats,submissionWinRate:null}},gane.latest);
 assert.equal(missingFinish.find(m=>m.id==="grappling").score,null);
 assert(code.includes('Submission finishes'),"Official submission source should be visible");
+// Verified medals and ranks modify only appropriate domains, while
+// unsupported reported credentials earn no points.
+const withGaneBelt=engine.evaluate({...ganeRecord,
+ credentials:gane.credentials},gane.latest);
+assert.equal(withGaneBelt.find(m=>m.id==="grappling").score,36,
+ "Reported Gane belt must not change score");
+const newH=engine.evaluate({...hRecord,credentials:h.credentials},h.latest);
+assert.equal(newH.find(m=>m.id==="wrestling").credentialAdjustment,5);
+const kayla=facts.fighters["kayla-harrison"];
+const kRate=engine.evaluate({stats:kayla.verifiedStats,
+ recent:{fights:kayla.verifiedStats.sampleBouts},
+ credentials:kayla.credentials},kayla.latest);
+assert.equal(kRate.find(m=>m.id==="wrestling").credentialAdjustment,10);
+assert.equal(kRate.find(m=>m.id==="grappling").credentialAdjustment,8);
+const bia=facts.fighters["bia-mesquita"];
+const biaRate=engine.evaluate({stats:bia.verifiedStats,
+ recent:{fights:bia.verifiedStats.sampleBouts},
+ credentials:bia.credentials},bia.latest);
+assert.equal(biaRate.find(m=>m.id==="grappling").credentialAdjustment,12);
 console.log("PASS UFC 334: 13 bouts, 26 sourced profiles, five metrics, BJJ/ADCC/NCAA, Olympic judo gold x2");
