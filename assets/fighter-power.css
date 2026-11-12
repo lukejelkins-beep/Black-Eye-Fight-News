@@ -518,3 +518,82 @@
 .befn-scout-classification summary{cursor:pointer;text-decoration:underline}
 .befn-scout-classification li{margin:3px 0}
 @media(max-width:420px){.befn-classifier-indices>span{padding:8px}.befn-classifier-indices strong{font-size:18px}}
+
+/* BEFN UFC history mobile cards: don't hide the fight result and finish method
+ * beyond the right edge of a horizontally scrolling 680px desktop table.
+ * Keep the original four semantic table cells for desktop and assistive tech.
+ */
+@media (max-width:640px) {
+  #fighterDialog .scroller:has(table[data-befn-recent-results]) {
+    overflow-x:visible;
+  }
+  #fighterDialog table[data-befn-recent-results] {
+    display:block;
+    width:100%;
+    min-width:0;
+  }
+  #fighterDialog table[data-befn-recent-results] thead {
+    position:absolute;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+    white-space:nowrap;
+    clip-path:inset(50%);
+  }
+  #fighterDialog table[data-befn-recent-results] tbody {
+    display:grid;
+    gap:10px;
+  }
+  #fighterDialog table[data-befn-recent-results] tbody tr {
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:5px 12px;
+    padding:12px;
+    border:1px solid #d9d4c8;
+    border-radius:7px;
+    background:#fffdf7;
+    min-width:0;
+  }
+  #fighterDialog table[data-befn-recent-results] tbody td {
+    display:block;
+    min-width:0;
+    padding:0;
+    border:0;
+    line-height:1.4;
+    overflow-wrap:anywhere;
+  }
+  #fighterDialog table[data-befn-recent-results] tbody td:nth-child(1) {
+    grid-column:1;
+    grid-row:1;
+    font-size:11px;
+    color:#68746e;
+  }
+  #fighterDialog table[data-befn-recent-results] tbody td:nth-child(2) {
+    grid-column:1 / -1;
+    grid-row:2;
+    font-size:14px;
+    font-weight:800;
+    color:#193b3b;
+  }
+  #fighterDialog table[data-befn-recent-results] tbody td:nth-child(3) {
+    grid-column:2;
+    grid-row:1;
+    padding:2px 9px;
+    border-radius:4px;
+    background:#dbe9dd;
+    color:#173b34;
+    font-weight:900;
+    text-align:center;
+  }
+  #fighterDialog table[data-befn-recent-results] tbody td:nth-child(4) {
+    grid-column:1 / -1;
+    grid-row:3;
+    font-size:12px;
+    color:#44544e;
+  }
+  #fighterDialog table[data-befn-recent-results] tbody td:nth-child(4)::before {
+    content:"Method: ";
+    font-weight:850;
+    color:#263e39;
+  }
+}
