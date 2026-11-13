@@ -27,7 +27,7 @@ export function auditLastFiveCoverage({coverage={},progress={},postfight={},v3={
   const ids=recent.filter(b=>b.boutId);
   const outcomes=recent.filter(b=>["W","L","D","NC"].includes(b.outcome));
   if(recent.length===5)sum.withFiveKnown++;
-  if(recent.length===5&&ids.length===5)sum.withFiveUfcBoutIds++;
+  if(recent.length===5&&ids.length===5&&new Set(ids.map(x=>String(x.boutId))).size===5)sum.withFiveUfcBoutIds++;
   if(recent.length===5&&outcomes.length===5)sum.withFiveRecordedOutcomes++;
   if(f.measuredCount>=3)sum.withThreeMeasured++;
   if(f.needsHistoryCheck)sum.needHistoryCheck++;
