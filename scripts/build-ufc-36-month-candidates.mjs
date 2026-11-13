@@ -29,10 +29,20 @@ export function candidateManifest(progress,research,postfight,champions,opts){
  const supplement=opts?.evidenceReview?.asOf&&opts.evidenceReview.asOf<=opts.asOf?
    opts.evidenceReview:{};
  const originalValid=original.asOf&&original.asOf<=opts.asOf;
+ // Only a directly verified, dated *official UFC* active-status record
+ // can clear the old one-time 18–24m "check roster" flag. This never
+ // dismisses a newer unknown bout, confirmed later MMA, or exit.
+ const confirmedCurrent=new Set((supplement.confirmedCurrentRoster||[])
+   .filter(e=>e?.status==="active"&&e.slug&&e.lastUfcFight&&
+     /^https:\/\/www\.ufc\.com\/athlete\/[a-z0-9-]+$/.test(e.source||"")&&
+     /^\d{4}-\d{2}-\d{2}$/.test(e.checkedAt||"")&&
+     e.checkedAt<=opts.asOf&&e.lastUfcFight<=opts.asOf)
+   .map(e=>e.slug+"|"+e.lastUfcFight));
  const rosterReview={
    asOf:opts.asOf,
    excluded:[...(originalValid?original.excluded||[]:[]),...(supplement.departures||[])],
-   reviewCandidates:originalValid?original.reviewCandidates||[]:[]
+   reviewCandidates:originalValid?(original.reviewCandidates||[])
+      .filter(row=>!confirmedCurrent.has(row.slug+"|"+row.lastUfcFight)):[]
  };
  const audit=auditUfcLastFive(progress,research,postfight,champions,
    {...opts,activityMonths:36,rosterReview,
