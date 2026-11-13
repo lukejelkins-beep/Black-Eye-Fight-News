@@ -42,6 +42,7 @@ test("five measured UFC bouts qualify for later leaderboard computation",()=>{
   {divisions:[]},{asOf:"2026-11-13"});
  const p=d.fighters.find(x=>x.slug==="fighter");
  assert.equal(p.recentCount,5);
+ assert.equal(d.summary.withFiveLinkedIds,1);
  assert.equal(p.measuredCount,5);
  assert.equal(p.needsStats,false);
  assert.equal(p.needsHistoryCheck,false);
@@ -109,6 +110,7 @@ test("UTC/local one-day shift links a text-only UFC history row to its confirmed
  assert.equal(a.recent[0].boutId,"501");
  assert.equal(a.measuredCount,1);
  assert.equal(d.summary.shiftedDateAliasesJoined,1);
+ assert.equal(d.summary.withFiveLinkedIds,0);
 });
 test("distinct confirmed IDs are never merged across one-day date shifts",()=>{
  const bout=(id,date)=>({id,org:"ufc",eventDate:date,status:"completed",
