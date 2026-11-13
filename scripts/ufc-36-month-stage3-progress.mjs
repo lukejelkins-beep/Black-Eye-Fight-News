@@ -128,6 +128,25 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
   }
   const withUnindexed=cohorts.filter(c=>c.nativeFightIds>c.indexedNativeIds).length;
   const allIndexedMissingRounds=sorted(missingRounds);
+  const checks=progress?.ufcCareerBoutChecks||{};
+  // Only audit native IDs referenced by the approved roster. A saved
+  // retry date is data, not permission to assume a failed lookup succeeded.
+  const missingDiagnostics=[...missingIndex].map(id=>{
+    const check=checks[id]||{};
+    const retryAfter=date(check.retryAfter);
+    const manual=check.status==='requires_manual_review';
+    const cooling=!!retryAfter&&retryAfter>census.asOf;
+    const action=manual?'manual_review':cooling?'cooldown':
+      (check.checkedAt?'retry_eligible':'not_yet_attempted');
+    return {id,priorityTier:missingTier.get(id)||0,action,
+      retryAfter:retryAfter||null};
+  }).sort((a,b)=>(b.priorityTier-a.priorityTier)||
+    (a.action==='not_yet_attempted'?-1:0)-(b.action==='not_yet_attempted'?-1:0)||
+    a.id.localeCompare(b.id));
+  const blockedCount=type=>missingDiagnostics.filter(x=>x.action===type).length;
+  const readyCount=tier=>missingDiagnostics.filter(x=>
+    (tier===null||x.priorityTier===tier)&&
+    (x.action==='not_yet_attempted'||x.action==='retry_eligible')).length;
   const summary={
     asOf:census.asOf,approvedSnapshotAsOf:approval.rosterAsOf,
     approvalHash:approval.approvedRosterSha256||null,
@@ -153,6 +172,13 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     missingKnownFightIdsInRecentFive:[...missingTier.values()].filter(v=>v===6).length,
     missingKnownFightIdsInFightsSixToTen:[...missingTier.values()].filter(v=>v===5).length,
     missingKnownFightIdsBeyondTen:[...missingTier.values()].filter(v=>v===3).length,
+    missingKnownNativeIdsNotYetAttempted:blockedCount('not_yet_attempted'),
+    missingKnownNativeIdsOnRetryCooldown:blockedCount('cooldown'),
+    missingKnownNativeIdsFlaggedManualReview:blockedCount('manual_review'),
+    missingKnownNativeIdsRetryEligible:blockedCount('retry_eligible'),
+    missingKnownNativeIdsReadyForLookup:readyCount(null),
+    recentFiveMissingIdsReadyForLookup:readyCount(6),
+    sixToTenMissingIdsReadyForLookup:readyCount(5),
     distinctIndexedFightsWithPairedSignificantStrikes:pairedMetricFights.sigLanded.size,
     distinctIndexedFightsWithPairedControlTime:pairedMetricFights.controlSec.size,
     distinctIndexedFightsWithPairedKnockdowns:pairedMetricFights.knockdowns.size,
@@ -179,6 +205,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
       .sort((a,b)=>(b.nativeFightIds-b.indexedNativeIds)-(a.nativeFightIds-a.indexedNativeIds))
       .slice(0,30),
     savedKnownIdsAwaitingIndex:sorted(missingIndex).slice(0,30),
+    priorityMissingIdDiagnostics:missingDiagnostics.slice(0,40),
     unmeasuredIndexedIds:allIndexedMissingRounds.slice(0,30),
     approvedMissingHistory:missingHistory.slice(0,30),
     approvedNoLongerEligible:blockedByEligibility.slice(0,30),
@@ -205,6 +232,13 @@ export function markdownReport(report){
    missingKnownFightIdsInRecentFive:'Unindexed native fight IDs in approved fighters’ latest five',
    missingKnownFightIdsInFightsSixToTen:'Unindexed native fight IDs in positions six to ten',
    missingKnownFightIdsBeyondTen:'Unindexed native fight IDs beyond the latest ten',
+   missingKnownNativeIdsNotYetAttempted:'Known UFC native fight IDs never looked up individually',
+   missingKnownNativeIdsOnRetryCooldown:'Known UFC native fight IDs waiting for safe retry date',
+   missingKnownNativeIdsFlaggedManualReview:'Known UFC fight IDs flagged for identity/manual review',
+   missingKnownNativeIdsRetryEligible:'Known UFC native fight IDs eligible for retry',
+   missingKnownNativeIdsReadyForLookup:'Known UFC native fight IDs ready for a safe lookup',
+   recentFiveMissingIdsReadyForLookup:'Latest-five missing UFC IDs currently ready to look up',
+   sixToTenMissingIdsReadyForLookup:'Fights six-to-ten UFC IDs currently ready to look up',
    indexedFightsWithMeasuredRoundMetrics:'Indexed fights with independently matched round metrics',
    distinctIndexedFightsWithPairedSignificantStrikes:'Fights with both fighters’ significant strikes measured',
    distinctIndexedFightsWithPairedControlTime:'Fights with both fighters’ control time measured',
