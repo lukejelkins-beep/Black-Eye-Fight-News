@@ -324,6 +324,7 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
   read("data/ufc-champion-profiles.json",{}),{
    asOf,
    upcoming:read("data/upcoming-cards.json",{}),
+   verifiedMixedMma:read("data/ufc-verified-mixed-rules-mma.json",{}),
    ranked:[
     read("data/ufc-ranked-profiles.json",{}),
     read("data/ufc-contender-profiles.json",{}),
