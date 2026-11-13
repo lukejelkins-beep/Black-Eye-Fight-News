@@ -84,6 +84,30 @@ test('Full-career identity checks are tracked separately from full career certif
  assert.equal(s.fullyProviderCertifiedTimelines,0);
 });
 
+test('missing UFC fight IDs are classified from saved retry evidence without any provider requests',()=>{
+ const p={...progress,ufcCareerBoutChecks:{
+   '43':{checkedAt:'2026-11-13',retryAfter:'2026-11-19'},
+   '44':{checkedAt:'2026-11-13',status:'requires_manual_review',retryAfter:'2026-11-27'},
+   '45':{checkedAt:'2026-11-12',retryAfter:'2026-11-13'}
+ }};
+ const r={profiles:{'fighter-1':{recentHistory:[
+   history(41,'Opponent A'),history(42,'Opponent B'),
+   history(43,'Opponent C'),history(44,'Opponent D'),history(45,'Opponent E')
+ ]}}};
+ const out=auditApprovedStage3(approval,census,p,r,archive);
+ const s=out.summary;
+ assert.equal(s.uniqueNativeFightIdsAwaitingIndex,5);
+ assert.equal(s.missingKnownNativeIdsNotYetAttempted,2);
+ assert.equal(s.missingKnownNativeIdsOnRetryCooldown,1);
+ assert.equal(s.missingKnownNativeIdsFlaggedManualReview,1);
+ assert.equal(s.missingKnownNativeIdsRetryEligible,1);
+ assert.equal(s.missingKnownNativeIdsReadyForLookup,3);
+ assert.equal(s.recentFiveMissingIdsReadyForLookup,3);
+ assert.equal(out.priorityMissingIdDiagnostics.length,5);
+ assert.equal(out.priorityMissingIdDiagnostics.find(x=>x.id==='44').action,'manual_review');
+ assert.equal(out.priorityMissingIdDiagnostics.find(x=>x.id==='43').retryAfter,'2026-11-19');
+});
+
 test('A single metric does not imply complete statistics; all-known indexing does not certify a full career',()=>{
  const p={...progress,bouts:{'41':fight(41,'Opponent A'),'42':fight(42,'Opponent B')}};
  const r={profiles:{'fighter-1':{
