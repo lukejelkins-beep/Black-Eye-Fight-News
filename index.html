@@ -1618,21 +1618,23 @@ function fixtureCellText(value){
 }
 function tableHTML(t){return `<section class="calendar-block"><div class="subheader">${esc(t.label==='Upcoming cards'?'Fight cards & event status':t.label)}</div><div class="scroller"><table class="data-table"><thead><tr><th scope="col">Event status</th>${t.head.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${t.rows.map(row=>`<tr><td>${window.EventStatus.row(row)}</td>${row.map(v=>`<td>${esc(fixtureCellText(v))}</td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`;}
 function renderHighlights(){return window.FightFilm.render()+window.BEFNCoverage.panel(activeSport())}
+function befnDivisionKey(s){return String(s||'').normalize('NFKD').toLowerCase().replace(/[^a-z0-9]/g,'')}
 function befnTitleBelts(f){
  if(f.sport!=='MMA')return '';
  // Draw one belt for a documented current UFC title. Never infer titles in
  // other divisions from credentials or a previous reign in the same division.
- const current=(D.champions?.mma||[]).filter(x=>x.name===f.name&&x.division===f.division);
+ const current=(D.champions?.mma||[]).filter(x=>x.name===f.name&&befnDivisionKey(x.division)===befnDivisionKey(f.division));
  const verified=Array.isArray(f.ufcTitleDivisions)?f.ufcTitleDivisions.filter(x=>
   typeof x==='object'&&x?.verified===true&&x?.source&&x?.division):[];
- const divisions=[...new Set([...current.map(x=>x.division),...verified.map(x=>x.division)])];
+ const named=[...current.map(x=>x.division),...verified.map(x=>x.division)];
+ const divisions=named.filter((d,i)=>named.findIndex(x=>befnDivisionKey(x)===befnDivisionKey(d))===i);
  if(!divisions.length)return '';
  const belt='<svg aria-hidden="true" viewBox="0 0 50 26" width="39" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 8 13 5 18 8 32 8 37 5 48 8 48 18 37 21 32 18 18 18 13 21 2 18Z" fill="#40301C" stroke="#D0A450" stroke-width="1.5"/><path d="M18 5 32 5 37 13 32 21 18 21 13 13Z" fill="#DBB663" stroke="#FFF0B3" stroke-width="1.2"/><path d="M22 10H28L30 13 28 16H22L20 13Z" fill="#6D4B23"/></svg>';
  return '<div class="befn-title-belts" aria-label="Documented UFC championships">'+
  divisions.map(div=>'<span class="befn-title-belt" title="UFC '+esc(div)+' title" aria-label="UFC '+esc(div)+' title">'+belt+'<small>'+esc(div)+'</small></span>').join('')+'</div>';
 }
 function befnReign(f){
-const r=(D.champions?.mma||[]).find(x=>x.name===f.name&&x.division===f.division);
+const r=(D.champions?.mma||[]).find(x=>x.name===f.name&&befnDivisionKey(x.division)===befnDivisionKey(f.division));
 if(!r||f.sport!=='MMA'||f.category!=='Champion')return '';
 const parts=[];
 if(r.start)parts.push('<span><b>Reign began</b>'+esc(r.start)+'</span>');
