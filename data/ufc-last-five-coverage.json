@@ -18,10 +18,10 @@
     "withFiveLinkedIds": 435,
     "withThreeMeasured": 546,
     "withShortUfcTimelineReconciled": 3,
-    "withUfcHistoryLinkedAndMeasured": 374,
+    "withUfcHistoryLinkedAndMeasured": 375,
     "evidenceStages": {
-      "fiveLinkedMeasured": 374,
-      "fiveLinkedStatsGap": 61,
+      "fiveLinkedMeasured": 375,
+      "fiveLinkedStatsGap": 60,
       "fiveUnlinked": 0,
       "shortLinkedMeasuredDepthConfirmed": 0,
       "shortLinkedMeasuredDepthUnconfirmed": 251,
@@ -30,8 +30,8 @@
       "shortUnlinked": 0
     },
     "needHistoryCheck": 281,
-    "needStats": 94,
-    "shiftedDateAliasesJoined": 1423,
+    "needStats": 93,
+    "shiftedDateAliasesJoined": 1411,
     "uniqueKnownBoutIds": 1731
   },
   "eligibilityExcluded": [
@@ -23025,11 +23025,11 @@
       "upcoming": false,
       "ranked": false,
       "recentCount": 5,
-      "measuredCount": 4,
-      "evidenceStage": "fiveLinkedStatsGap",
+      "measuredCount": 5,
+      "evidenceStage": "fiveLinkedMeasured",
       "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": false,
-      "needsStats": true,
+      "needsStats": false,
       "recent": [
         {
           "date": "2026-09-26",
@@ -23072,9 +23072,9 @@
           "opponent": "Jimmy Crute",
           "boutId": "60982",
           "method": "draw",
-          "outcome": "D",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
+          "outcome": null,
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
         }
       ]
     },
@@ -38338,7 +38338,7 @@
       "upcoming": false,
       "ranked": false,
       "recentCount": 5,
-      "measuredCount": 3,
+      "measuredCount": 4,
       "evidenceStage": "fiveLinkedStatsGap",
       "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": false,
@@ -38367,9 +38367,9 @@
           "opponent": "Rodolfo Bellato",
           "boutId": "60982",
           "method": "draw",
-          "outcome": "D",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
+          "outcome": null,
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
         },
         {
           "date": "2023-07-08",
