@@ -79,6 +79,20 @@ class FullCareerCacheTests(unittest.TestCase):
           client,state,research,candidate,dt.date(2026,11,13),self.approval()),0)
         self.assertEqual(len(client.paths),1,"Never re-request an indexed career fight")
 
+    def test_melbourne_snapshot_date_can_activate_before_utc_midnight(self):
+        state,research,candidate=self.fixture()
+        candidate["asOf"]="2026-11-14"
+        manifest={**self.approval(),"rosterAsOf":"2026-11-14",
+                  "approvedAt":"2026-11-14"}
+        early=Fake()
+        self.assertEqual(m.collect_ufc_career_bouts(
+          early,state,research,candidate,dt.date(2026,11,13),manifest),0)
+        self.assertEqual(early.paths,[])
+        client=Fake()
+        self.assertEqual(m.collect_ufc_career_bouts(
+          client,state,research,candidate,dt.date(2026,11,14),manifest),1)
+        self.assertEqual(client.paths,["/fights/800"])
+
     def test_unverified_scope_cannot_trigger_paid_career_hydration(self):
         state,research,candidate=self.fixture()
         candidate["indexCompleteness"]="36_month_event_scan_incomplete"
