@@ -26,6 +26,11 @@ const mmaPromotions=new Set([
 ]);
 const nonMmaPromotions=new Set(["bkfc","ufc-bjj","ibjjf","adcc",
  "raf","flograppling","ncaa","freestyle","greco","wwe","boxing"]);
+// Combat disciplines that must not change *professional MMA* eligibility.
+// Reuse the same set for provider-tagged and independently reviewed bouts,
+// otherwise a saved kickboxing result can be incorrectly marked unverified.
+const nonMmaRulesets=new Set(["boxing","kickboxing","muay-thai","grappling",
+ "submission-grappling","bjj","wrestling","bare-knuckle-boxing"]);
 const promotionKey=x=>String(x||"").trim().toLowerCase().replace(/_/g,"-");
 const normalOutcome=o=>{const x=String(o||"").toLowerCase();return x==="win"||x==="w"?"W":x==="loss"||x==="l"?"L":x==="draw"||x==="d"?"D":x==="no_contest"||x==="nc"?"NC":null;};
 const priorityNames=data=>new Set((data.divisions||[]).map(x=>nameKey(x.name)).filter(Boolean));
@@ -59,9 +64,7 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
  const noteOther=(f,{date,promotion,opponent="",sport="",source=""})=>{
   if(!f?.active||!validDate(date)||date>asOf||date<f.lastActive)return;
   const org=promotionKey(promotion),rules=promotionKey(sport);
-  if(org==="ufc"||nonMmaPromotions.has(org)||
-   ["boxing","kickboxing","muay-thai","grappling",
-    "submission-grappling","bjj","wrestling","bare-knuckle-boxing"].includes(rules))return;
+  if(org==="ufc"||nonMmaPromotions.has(org)||nonMmaRulesets.has(rules))return;
   // Separately verified later combat sport results: exact fighter, opponent,
   // date and URL required. This cannot influence the public 18-month roster.
   const verified=(activityMonths===36?
@@ -71,8 +74,8 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
     /^https:\/\/\S+/.test(e.source||"")&&
     (!e.promotion||!org||promotionKey(e.promotion)===org));
   const verifiedSport=promotionKey(verified?.ruleset);
-  if(["boxing","grappling","wrestling"].includes(verifiedSport)&&
-     !mmaPromotions.has(org)&&!["mma","mixed-martial-arts"].includes(rules))
+  if(nonMmaRulesets.has(verifiedSport)&&!mmaPromotions.has(org)&&
+     !["mma","mixed-martial-arts"].includes(rules))
     return;
   const manuallyVerified=(verifiedMixedMma?.fighters?.[f.slug]||[]).some(e=>
    e?.date===date&&promotionKey(e.promotion)===org&&
