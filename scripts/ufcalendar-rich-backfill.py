@@ -556,9 +556,75 @@ def summarize_history(payload):
                         "titleFight":bool(row.get("is_title")),
                         "source":"native" if native else "history",
                         "boutId":positive(row.get("fight_id")) if native else None})
-        if len(history)>=20:break
-    return history
+    # Keep up to five UFC bouts even when an athlete had many more recent
+    # fights outside UFC. The public/scouting summary remains at 20 rows.
+    if len(history)<=20:return history
+    chosen=[]
+    fingerprints=set()
+    def select(row):
+        key=(row["date"],row["opponent"].casefold(),row["promotion"])
+        if key in fingerprints:return
+        fingerprints.add(key)
+        chosen.append(row)
+    for row in history:
+        if row["promotion"].lower()=="ufc":
+            select(row)
+        if sum(r["promotion"].lower()=="ufc" for r in chosen)>=5:break
+    for row in history:
+        if len(chosen)>=20:break
+        select(row)
+    chosen.sort(key=lambda row:row["date"],reverse=True)
+    return chosen[:20]
 
+
+def ufc_timeline_evidence(payload,today):
+    """Require an explicitly untruncated full timeline before certifying depth."""
+    rows=response_rows(payload)
+    meta=payload.get("meta") if isinstance(payload,dict) else None
+    complete=isinstance(meta,dict) and meta.get("truncated") is False
+    count=0
+    seen=set()
+    for row in rows:
+        if not isinstance(row,dict):
+            complete=False
+            continue
+        org=safe(row.get("org_slug") or row.get("org"),24).lower()
+        status=safe(row.get("status"),18).lower()
+        if not org:
+            if status in ("win","loss","draw","no_contest","unknown"):
+                complete=False
+            continue
+        if org!="ufc":continue
+        if status in ("upcoming","cancelled"):continue
+        if status not in ("win","loss","draw","no_contest"):
+            complete=False
+            continue
+        opp=row.get("opponent") if isinstance(row.get("opponent"),dict) else {}
+        opponent=safe(opp.get("name") or row.get("opponent_name"))
+        when=date_str(row.get("date") or row.get("fought_at") or row.get("starts_at"))
+        if not when or when>today.isoformat() or not opponent:
+            complete=False
+            continue
+        key=(when,opponent.casefold(),status)
+        if key in seen:
+            complete=False
+            continue
+        seen.add(key)
+        count+=1
+    return {"settledCount":count,"complete":bool(complete),
+            "observedOn":today.isoformat()}
+
+
+def save_ufc_timeline(profile,payload,today):
+    history=summarize_history(payload)
+    previous=profile.get("recentHistory") or []
+    old_ufc=sum(row.get("promotion","").lower()=="ufc" for row in previous
+                if isinstance(row,dict))
+    new_ufc=sum(row.get("promotion","").lower()=="ufc" for row in history)
+    if history and new_ufc>=old_ufc:
+        profile["recentHistory"]=history
+    profile["ufcTimeline"]=ufc_timeline_evidence(payload,today)
+    return history
 
 
 def refresh_unlinked_ufc_native_ids(client,state,research,coverage,today):
@@ -601,15 +667,10 @@ def refresh_unlinked_ufc_native_ids(client,state,research,coverage,today):
             checks[slugval]={"status":"retry","checkedAt":today.isoformat(),
                              "retryAfter":(today+dt.timedelta(days=7)).isoformat()}
             continue
-        history=summarize_history(payload)
-        old=profiles[slugval].get("recentHistory") or []
-        old_ufc=sum(row.get("promotion","").lower()=="ufc" for row in old if isinstance(row,dict))
-        new_ufc=sum(row.get("promotion","").lower()=="ufc" for row in history)
-        if history and new_ufc>=old_ufc:
-            profiles[slugval]["recentHistory"]=history
-            state.setdefault("historyDone",{})[slugval]=len(history)
-            recovered+=sum(row.get("promotion")=="ufc" and row.get("boutId") is not None
-                           for row in history)
+        history=save_ufc_timeline(profiles[slugval],payload,today)
+        state.setdefault("historyDone",{})[slugval]=len(history)
+        recovered+=sum(row.get("promotion")=="ufc" and row.get("boutId") is not None
+                       for row in history)
         checks[slugval]={"status":"checked","checkedAt":today.isoformat(),
                          "nativeUfcIds":sum(row.get("promotion")=="ufc" and
                             row.get("boutId") is not None for row in history)}
@@ -763,10 +824,53 @@ def collect_careers(client,state,research):
         if slugval in state.setdefault("historyDone",{}):continue
         payload=client.call("/fighters/"+slugval+"/history")
         if payload is None:continue
-        history=summarize_history(payload)
+        history=save_ufc_timeline(profile,payload,client.today)
         state["historyDone"][slugval]=len(history)
-        if history:profile["recentHistory"]=history
         done+=1
+
+
+def verify_short_ufc_careers(client,state,research,coverage,today):
+    """One-time full timelines for fighters with fewer than five UFC fights."""
+    if coverage.get("schema")!=1 or coverage.get("scope")!="ufc":return 0
+    stamp=date_str(coverage.get("asOf"))
+    if not stamp or not (today-dt.timedelta(days=7)).isoformat()<=stamp<=today.isoformat():
+        return 0
+    checks=state.setdefault("ufcShortTimelineChecks",{})
+    profiles=research.get("profiles",{})
+    cap=max(0,min(40,int(client.max_calls*.09)))
+    attempted=0
+    for fighter in coverage.get("fighters",[]):
+        if attempted>=cap or client.remaining<=0 or client.stopped or client.calls>=client.max_calls-10:
+            break
+        if not isinstance(fighter,dict) or not fighter.get("needsHistoryCheck"):
+            continue
+        recent=fighter.get("recent") or []
+        if not (0<len(recent)<5) or any(not isinstance(r,dict) or not r.get("boutId") for r in recent):
+            continue
+        slugval=slug(fighter.get("slug"))
+        if not slugval or slugval not in profiles:continue
+        profile=profiles[slugval]
+        evidence=profile.get("ufcTimeline") or {}
+        if evidence.get("complete") is True and type(evidence.get("settledCount")) is int:
+            continue
+        prior=checks.get(slugval,{})
+        if isinstance(prior,dict) and (prior.get("status")=="checked" or
+                str(prior.get("retryAfter") or "")>today.isoformat()):
+            continue
+        stable_id=stable_indexed_fighter_id(state,slugval)
+        attempted+=1
+        payload=client.call("/fighters/"+(stable_id or slugval)+"/history")
+        if payload is None:
+            checks[slugval]={"status":"retry","checkedAt":today.isoformat(),
+                             "retryAfter":(today+dt.timedelta(days=7)).isoformat()}
+            continue
+        history=save_ufc_timeline(profile,payload,today)
+        state.setdefault("historyDone",{})[slugval]=len(history)
+        checks[slugval]={"status":"checked","checkedAt":today.isoformat(),
+                         "complete":profile["ufcTimeline"]["complete"],
+                         "settledCount":profile["ufcTimeline"]["settledCount"]}
+    if attempted:print("UFCalendar short UFC career timeline checks:",attempted)
+    return attempted
 
 def collect_championship_history(client,state,research):
     maximum=max(0,min(36,int(client.max_calls*.09)))
@@ -890,6 +994,7 @@ def main():
         collect_judging(client,state,cards,judging)
         collect_profiles(client,state,cards,research,today)
         collect_careers(client,state,research)
+        verify_short_ufc_careers(client,state,research,coverage,today)
         collect_championship_history(client,state,research)
         recover_previews(cards,archive,pfl_archive,judging)
         public=public_events(cards,research.get("profiles",{}),today)

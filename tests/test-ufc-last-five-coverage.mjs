@@ -226,3 +226,57 @@ test("native history ID on a local-date alias cannot duplicate an indexed UFC fi
  assert.equal(f.recent[0].boutId,"30");
  assert.equal(d.summary.shiftedDateAliasesJoined,1);
 });
+
+test("an untruncated, reconciled UFC timeline certifies an actual short career",()=>{
+ const progress={bouts:{"100":{id:"100",org:"ufc",eventDate:"2026-10-01",status:"completed",
+  a:{id:"71",slug:"athlete",name:"Athlete"},
+  b:{id:"72",slug:"challenger",name:"Challenger"},
+  result:{winnerId:"71",round:3,time:"5:00"}}}};
+ const research={profiles:{athlete:{
+  ufcTimeline:{complete:true,settledCount:1,observedOn:"2026-11-13"},
+  recentHistory:[{source:"native",boutId:"100",date:"2026-10-01",
+   opponent:"Challenger",promotion:"ufc",result:"win"}]}}};
+ const postfight={fighters:{athlete:{name:"Athlete",scope:"ufc-only",
+  recentBouts:[{boutId:"100",metrics:{sigLanded:0}}]}}};
+ const audit=auditUfcLastFive(progress,research,postfight,{divisions:[]},
+  {asOf:"2026-11-13"});
+ const a=audit.fighters.find(f=>f.slug==="athlete");
+ assert.equal(a.recentCount,1);
+ assert.equal(a.ufcTimelineDepthConfirmed,true);
+ assert.equal(a.needsHistoryCheck,false);
+ assert.equal(a.evidenceStage,"shortLinkedMeasuredDepthConfirmed");
+ assert.equal(audit.summary.withShortUfcTimelineReconciled,1);
+ assert.equal(audit.summary.withUfcHistoryLinkedAndMeasured,1);
+ assert.equal(Object.values(audit.summary.evidenceStages).reduce((a,b)=>a+b,0),
+  audit.summary.activeFighters);
+});
+
+test("truncation, stale observations, unlinked IDs and inconsistent timeline counts cannot certify a short UFC career",()=>{
+ const progress={bouts:{"100":{id:"100",org:"ufc",eventDate:"2026-10-01",status:"completed",
+  a:{id:"71",slug:"athlete",name:"Athlete"},
+  b:{id:"72",slug:"challenger",name:"Challenger"},
+  result:{winnerId:"71"}}}};
+ const timeline={complete:true,settledCount:1,observedOn:"2026-11-13"};
+ const research={profiles:{athlete:{ufcTimeline:timeline,
+  recentHistory:[{source:"native",boutId:"100",date:"2026-10-01",
+   opponent:"Challenger",promotion:"ufc",result:"win"}]}}};
+ const audit=(payload)=>auditUfcLastFive(progress,payload,{fighters:{}},
+  {divisions:[]},{asOf:"2026-11-13"}).fighters.find(f=>f.slug==="athlete");
+ const inconsistent=structuredClone(research);
+ inconsistent.profiles.athlete.ufcTimeline.settledCount=2;
+ assert.equal(audit(inconsistent).ufcTimelineDepthConfirmed,false);
+ const truncated=structuredClone(research);
+ truncated.profiles.athlete.ufcTimeline.complete=false;
+ assert.equal(audit(truncated).needsHistoryCheck,true);
+ const stale=structuredClone(research);
+ stale.profiles.athlete.ufcTimeline.observedOn="2026-09-01";
+ assert.equal(audit(stale).ufcTimelineDepthConfirmed,false);
+ const unlinked=structuredClone(research);
+ unlinked.profiles.athlete.recentHistory[0].source="history";
+ delete unlinked.profiles.athlete.recentHistory[0].boutId;
+ // The indexed fight remains linked, so add a second UFC history row.
+ unlinked.profiles.athlete.recentHistory.push({date:"2024-02-01",
+  opponent:"Earlier Challenger",promotion:"ufc",result:"loss",source:"history"});
+ unlinked.profiles.athlete.ufcTimeline.settledCount=2;
+ assert.equal(audit(unlinked).ufcTimelineDepthConfirmed,false);
+});

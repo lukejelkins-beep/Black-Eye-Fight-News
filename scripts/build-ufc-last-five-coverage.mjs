@@ -23,14 +23,16 @@ const priorityNames=data=>new Set((data.divisions||[]).map(x=>nameKey(x.name)).f
 // cannot establish that the fighter has fewer than five UFC appearances.
 const evidenceStages=[
  "fiveLinkedMeasured","fiveLinkedStatsGap","fiveUnlinked",
- "shortLinkedMeasuredDepthUnconfirmed","shortLinkedStatsGap","shortUnlinked"
+ "shortLinkedMeasuredDepthConfirmed","shortLinkedMeasuredDepthUnconfirmed",
+ "shortLinkedStatsGapDepthConfirmed","shortLinkedStatsGap","shortUnlinked"
 ];
-function evidenceStage(recent){
+function evidenceStage(recent,depthConfirmed=false){
  const five=recent.length===5;
  if(recent.some(b=>!b.boutId))return five?"fiveUnlinked":"shortUnlinked";
  if(recent.some(b=>!b.hasMeasuredTotals))return five?
-  "fiveLinkedStatsGap":"shortLinkedStatsGap";
- return five?"fiveLinkedMeasured":"shortLinkedMeasuredDepthUnconfirmed";
+  "fiveLinkedStatsGap":depthConfirmed?"shortLinkedStatsGapDepthConfirmed":"shortLinkedStatsGap";
+ return five?"fiveLinkedMeasured":depthConfirmed?
+  "shortLinkedMeasuredDepthConfirmed":"shortLinkedMeasuredDepthUnconfirmed";
 }
 export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upcoming={},ranked=[]}){
  if(!validDate(asOf))throw Error("asOf must be YYYY-MM-DD");
@@ -98,6 +100,14 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
  }
  for(const [slug,record] of Object.entries(research?.profiles||{})){
   const athlete=registry.get(slugify(slug));if(!athlete)continue;
+  // The full career endpoint explicitly declares whether its result is
+  // truncated. Only complete, internally consistent saved timelines can
+  // certify that an athlete genuinely has fewer than five UFC bouts.
+  athlete.ufcTimeline=record?.ufcTimeline||null;
+  const sourceUfcRows=(record?.recentHistory||[]).filter(row=>
+   row&&String(row.promotion||row.org||"").toLowerCase()==="ufc"&&
+   normalOutcome(row.result||row.outcome||row.status)&&validDate(row.date)&&row.opponent);
+  athlete.sourceUfcRowCount=new Set(sourceUfcRows.map(row=>row.date+":"+nameKey(row.opponent))).size;
   for(const row of record?.recentHistory||[]){
    if(!row||String(row.promotion||row.org||"").toLowerCase()!=="ufc")continue;
    const outcome=normalOutcome(row.result||row.outcome||row.status);
@@ -137,14 +147,21 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
   const entries=recent.map(row=>({...row,hasMeasuredTotals:!!row.boutId&&measured.has(row.boutId)}));
   const measuredCount=entries.filter(row=>row.hasMeasuredTotals).length;
   const unknownIds=entries.filter(row=>!row.boutId).length;
-  const historyNeeded=recent.length<5||unknownIds>0;
-  const stage=evidenceStage(entries);
+  const timeline=f.ufcTimeline;
+  const depthConfirmed=recent.length>0&&recent.length<5&&unknownIds===0&&
+   new Set(entries.map(row=>String(row.boutId))).size===recent.length&&
+   timeline?.complete===true&&Number.isInteger(timeline.settledCount)&&
+   timeline.settledCount===recent.length&&
+   f.sourceUfcRowCount===recent.length&&validDate(timeline.observedOn)&&
+   timeline.observedOn>=f.lastActive&&timeline.observedOn<=asOf;
+  const historyNeeded=(recent.length<5&&!depthConfirmed)||unknownIds>0;
+  const stage=evidenceStage(entries,depthConfirmed);
   return {name:f.name,slug:f.slug,lastUfcFight:f.lastActive,
    champion:championsSet.has(nameKey(f.name)),
    upcoming:upcomingNames.has(nameKey(f.name)),
    ranked:rankedNames.has(nameKey(f.name)),
    recentCount:recent.length,
-   measuredCount,evidenceStage:stage,
+   measuredCount,evidenceStage:stage,ufcTimelineDepthConfirmed:depthConfirmed,
    needsHistoryCheck:historyNeeded,needsStats:entries.some(x=>!x.hasMeasuredTotals),
    recent:entries};
  }).sort((a,b)=>Number(b.champion)-Number(a.champion)||
@@ -158,6 +175,9 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
    f.recent.every(x=>x.boutId)&&
    new Set(f.recent.map(x=>String(x.boutId))).size===5).length,
   withThreeMeasured:fighters.filter(f=>f.measuredCount>=3).length,
+  withShortUfcTimelineReconciled:fighters.filter(f=>f.ufcTimelineDepthConfirmed).length,
+  withUfcHistoryLinkedAndMeasured:fighters.filter(f=>f.evidenceStage==="fiveLinkedMeasured"||
+   f.evidenceStage==="shortLinkedMeasuredDepthConfirmed").length,
   // Mutually exclusive stages: counts always sum to activeFighters.
   // "Measured" means at least one non-null field per bout, not every metric.
   evidenceStages:Object.fromEntries(evidenceStages.map(stage=>[
