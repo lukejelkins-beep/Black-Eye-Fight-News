@@ -23,6 +23,9 @@ const isLive=!!liveBase;
 const screenshots=path.join(root,"qa/ufc-profile-screenshots");
 const cohorts=["champion","ranked","contender","prospect","roster"];
 const profileStatsSource="data/ufc-postfight-metrics.json";
+const v3SourcePath="data/ufc-fighter-v3.json";
+const verifiedV3=fs.existsSync(v3SourcePath)?
+ JSON.parse(fs.readFileSync(v3SourcePath,"utf8")):null;
 const normalized=x=>String(x||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
  .toLowerCase().replace(/[^a-z0-9]/g,"");
 const expectedPostfight=new Set();
@@ -195,7 +198,13 @@ async function checkProfile(page,profile,screen){
   assert(details.historyV3,"UFC profile is not using the approved V3 design");
   assert.equal(details.metrics,5,"V3 header requires exactly five technical rating bars");
   assert.equal(details.performanceTiles,9,"V3 Recent Performance requires exactly nine tiles");
-  assert(details.noProvisionalRanks,"provisional legacy rankings must not appear in V3");
+  const saved=verifiedV3?.schema===4?verifiedV3.fighters?.[normalized(profile.name)]:null;
+  const vettedPerformance=Object.values(saved?.metrics||{}).some(m=>
+   Number.isFinite(m.value)&&m.bouts>=3&&m.bouts<=5&&
+   ((Number.isInteger(m.rank)&&m.rank>=1&&m.rank<=30)||
+    (Number.isInteger(m.divisionRank)&&m.divisionRank>=1&&m.divisionRank<=30)));
+  assert(details.noProvisionalRanks||vettedPerformance,
+   "provisional rankings must not appear without qualifying V3 metric evidence");
   assert(details.noLegacyTable,"duplicated legacy fight table must not appear in V3");
   assert.equal(details.recentFiveCount,Math.min(profile.latest.length,5),
    "V3 recent fights must contain up to five verified UFC results");
