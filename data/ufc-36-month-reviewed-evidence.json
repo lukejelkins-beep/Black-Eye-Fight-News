@@ -1,0 +1,154 @@
+{
+  "schema": 1,
+  "scope": "ufc-36-month-independent-ruleset-and-exit-review",
+  "asOf": "2026-11-13",
+  "note": "Only evidence-backed, dated UFC-specific eligibility decisions. Professional MMA elsewhere excludes; boxing, grappling and wrestling alone do not. Independent departures are tied to the precise last UFC fight and never override a later official UFC return. This is a research record, not proof of all current contracts.",
+  "fighters": {
+    "caio-machado": [
+      {
+        "date": "2026-03-28",
+        "opponent": "Magomed Tuchalov",
+        "promotion": "uae-warriors",
+        "ruleset": "mma",
+        "source": "https://app.uaewarriors.com/App/AppEventMainView?EventId=67",
+        "checkedAt": "2026-11-13"
+      }
+    ],
+    "devin-clark": [
+      {
+        "date": "2025-08-15",
+        "opponent": "Bevon Lewis",
+        "promotion": "lfa",
+        "ruleset": "mma",
+        "source": "https://www.lfa.com/fernando-takes-the-light-heavyweight-title-in-lfa-214/",
+        "checkedAt": "2026-11-13"
+      }
+    ],
+    "cody-stamann": [
+      {
+        "date": "2025-10-25",
+        "opponent": "Shawn Tarlton",
+        "promotion": "legends-of-combat",
+        "ruleset": "mma",
+        "source": "https://www.sherdog.com/events/Legends-of-Combat-5-At-Trinity-Health-Arena-109493",
+        "checkedAt": "2026-11-13"
+      }
+    ],
+    "pannie-kianzad": [
+      {
+        "date": "2026-08-07",
+        "opponent": "Hope Chase",
+        "promotion": "fusion-fight-league",
+        "ruleset": "mma",
+        "source": "https://www.sherdog.com/events/Fusion-Fight-League-Fights-Under-the-Lights-113822",
+        "checkedAt": "2026-11-13"
+      }
+    ],
+    "philipe-lins": [
+      {
+        "date": "2026-05-16",
+        "opponent": "Francis Ngannou",
+        "promotion": "most-valuable-promotions",
+        "ruleset": "mma",
+        "source": "https://www.netflix.com/tudum/articles/francis-ngannou-philipe-lins-co-main-rousey-carano",
+        "checkedAt": "2026-11-13"
+      }
+    ],
+    "daniel-lacerda": [
+      {
+        "date": "2026-10-24",
+        "opponent": "Vince Morales",
+        "promotion": "tuff-n-uff",
+        "ruleset": "mma",
+        "source": "https://www.sherdog.com/events/TuffNUff-TuffNUff-158-114831",
+        "checkedAt": "2026-11-13"
+      }
+    ],
+    "bryce-mitchell": [
+      {
+        "date": "2026-09-24",
+        "opponent": "Mikey Musumeci",
+        "promotion": "ufc-bjj",
+        "ruleset": "grappling",
+        "source": "https://www.ufc.com/news/ufc-bjj-11-musumeci-vs-mitchell-results",
+        "checkedAt": "2026-11-13"
+      }
+    ],
+    "tony-ferguson": [
+      {
+        "date": "2026-09-26",
+        "opponent": "Mahmoud Fawzy Sebie",
+        "promotion": "misfits-boxing",
+        "ruleset": "boxing",
+        "source": "https://www.mmafighting.com/boxing/512769/tony-ferguson-defends-misfits-boxing-middleweight-title-with-second-round-knockout-of-mahmood-sebie",
+        "checkedAt": "2026-11-13"
+      }
+    ],
+    "holly-holm": [
+      {
+        "date": "2026-05-30",
+        "opponent": "Stephanie Han",
+        "promotion": "most-valuable-promotions",
+        "ruleset": "boxing",
+        "source": "https://www.wbaboxing.com/wba-scores-analysis?id=52965",
+        "checkedAt": "2026-11-13"
+      }
+    ],
+    "colby-covington": [
+      {
+        "date": "2026-07-18",
+        "opponent": "Arman Tsarukyan",
+        "promotion": "raf",
+        "ruleset": "wrestling",
+        "source": "https://rafwrestling.org/results/",
+        "checkedAt": "2026-11-13"
+      }
+    ]
+  },
+  "departures": [
+    {
+      "slug": "andrei-arlovski",
+      "name": "Andrei Arlovski",
+      "lastUfcFight": "2024-06-29",
+      "reason": "confirmed_left_ufc",
+      "evidence": {
+        "source": "https://www.sherdog.com/news/news/Andrei-Arlovski-Scores-Brutal-Knockout-in-Misfits-Boxing-Debut-198990",
+        "date": "2025-11-10",
+        "note": "Contract not renewed after June 2024 UFC fight"
+      }
+    },
+    {
+      "slug": "holly-holm",
+      "name": "Holly Holm",
+      "lastUfcFight": "2024-04-13",
+      "reason": "confirmed_left_ufc",
+      "evidence": {
+        "source": "https://www.mmafighting.com/2025/1/13/24343233/holly-holm-exits-ufc-roster-after-requesting-release-from-promotion",
+        "date": "2025-01-13",
+        "note": "UFC release confirmed by longtime manager"
+      }
+    },
+    {
+      "slug": "colby-covington",
+      "name": "Colby Covington",
+      "lastUfcFight": "2024-12-15",
+      "reason": "confirmed_retired",
+      "evidence": {
+        "source": "https://www.mmafighting.com/ufc/489314/colby-covington-notifies-ufc-of-retirement",
+        "date": "2026-05-18",
+        "note": "UFC officials confirmed retired status; RAF bouts are wrestling"
+      }
+    },
+    {
+      "slug": "tony-ferguson",
+      "name": "Tony Ferguson",
+      "lastUfcFight": "2024-08-03",
+      "reason": "confirmed_left_ufc",
+      "evidence": {
+        "source": "https://sports.yahoo.com/tony-ferguson-parts-ways-ufc-203040664.html",
+        "date": "2025-01-24",
+        "note": "Departure reported after UFC split and GFL deal; later bouts are boxing/wrestling"
+      }
+    }
+  ]
+}

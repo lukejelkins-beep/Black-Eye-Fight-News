@@ -95,3 +95,59 @@ test("completed historical detail is still required if UFC event-list pagination
   {asOf:"2026-11-13"});
  assert.equal(x.indexCompleteness,"36_month_event_scan_incomplete");
 });
+
+test("source-backed MMA disqualifies but a verified later BJJ match does not",()=>{
+ const progress={bouts:{
+  "1":bout(1,"2024-11-02","Fighter A","fighter-a","UFC Opp A","ufc-opp-a"),
+  "2":bout(2,"2026-06-06","Fighter B","fighter-b","UFC Opp B","ufc-opp-b"),
+  "3":bout(3,"2025-01-01","Fighter C","fighter-c","UFC Opp C","ufc-opp-c")
+ }};
+ const research={profiles:{
+  "fighter-a":{recentHistory:[{date:"2026-03-28",opponent:"New MMA Rival",result:"loss",promotion:""}]},
+  "fighter-b":{recentHistory:[{date:"2026-09-24",opponent:"Grappling Rival",result:"loss",promotion:""}]},
+  "fighter-c":{recentHistory:[{date:"2026-07-01",opponent:"Unknown Rival",result:"loss",promotion:""}]}
+ }};
+ const evidenceReview={asOf:"2026-11-13",fighters:{
+  "fighter-a":[{date:"2026-03-28",opponent:"New MMA Rival",ruleset:"mma",
+   checkedAt:"2026-11-13",source:"https://example.org/mma"}],
+  "fighter-b":[{date:"2026-09-24",opponent:"Grappling Rival",ruleset:"grappling",
+   checkedAt:"2026-11-13",source:"https://example.org/bjj"}],
+  "fighter-c":[{date:"2026-07-01",opponent:"Unknown Rival",ruleset:"mma",
+   checkedAt:"2026-11-14",source:"not-a-url"}]
+ }};
+ const args=[progress,research,{fighters:{}},{divisions:[]}];
+ const checked=candidateManifest(...args,{asOf:"2026-11-13",evidenceReview});
+ assert(!checked.fighters.some(f=>f.slug==="fighter-a"));
+ assert.equal(checked.fighters.find(f=>f.slug==="fighter-b").eligibilityStatus,
+  "latest_observed_mma_ufc");
+ assert.equal(checked.fighters.find(f=>f.slug==="fighter-c").eligibilityStatus,
+  "review_required");
+ assert.equal(checked.eligibilityExcluded.find(f=>f.slug==="fighter-a").evidence.source,
+  "https://example.org/mma");
+ const existing=auditUfcLastFive(...args,
+  {asOf:"2026-11-13",verifiedOtherBoutRulesets:evidenceReview});
+ assert.equal(existing.activityMonths,18);
+ assert.equal(existing.fighters.find(f=>f.slug==="fighter-b").eligibilityStatus,
+  "review_required");
+});
+test("dated departure is ignored after a verified later UFC return",()=>{
+ const progress={bouts:{
+  "11":bout(11,"2024-04-13","Fighter X","fighter-x","X Opp","x-opp"),
+  "12":bout(12,"2024-04-13","Fighter Y","fighter-y","Y Opp","y-opp"),
+  "13":bout(13,"2026-09-01","Fighter Y","fighter-y","Z Opp","z-opp")
+ }};
+ const evidenceReview={asOf:"2026-11-13",departures:[
+  {slug:"fighter-x",lastUfcFight:"2024-04-13",reason:"confirmed_left_ufc",
+   evidence:{source:"https://example.org/exit"}},
+  {slug:"fighter-y",lastUfcFight:"2024-04-13",reason:"confirmed_left_ufc",
+   evidence:{source:"https://example.org/old-exit"}}
+ ]};
+ const args=[progress,{profiles:{}},{fighters:{}},{divisions:[]}];
+ const checked=candidateManifest(...args,{asOf:"2026-11-13",evidenceReview});
+ assert(!checked.fighters.some(f=>f.slug==="fighter-x"));
+ assert(checked.fighters.some(f=>f.slug==="fighter-y"));
+ assert.equal(checked.summary.excludedConfirmedUfcExit,1);
+ const futureReview=candidateManifest(...args,{asOf:"2026-11-13",
+   evidenceReview:{...evidenceReview,asOf:"2026-11-14"}});
+ assert(futureReview.fighters.some(f=>f.slug==="fighter-x"));
+});

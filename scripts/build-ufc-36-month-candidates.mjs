@@ -16,8 +16,18 @@ function read(name,fallback){
  catch(e){if(e.code==="ENOENT")return fallback;throw e;}
 }
 export function candidateManifest(progress,research,postfight,champions,opts){
+ const original=opts?.rosterReview||{};
+ const supplement=opts?.evidenceReview?.asOf&&opts.evidenceReview.asOf<=opts.asOf?
+   opts.evidenceReview:{};
+ const originalValid=original.asOf&&original.asOf<=opts.asOf;
+ const rosterReview={
+   asOf:opts.asOf,
+   excluded:[...(originalValid?original.excluded||[]:[]),...(supplement.departures||[])],
+   reviewCandidates:originalValid?original.reviewCandidates||[]:[]
+ };
  const audit=auditUfcLastFive(progress,research,postfight,champions,
-   {...opts,activityMonths:36});
+   {...opts,activityMonths:36,rosterReview,
+    verifiedOtherBoutRulesets:supplement});
  // A complete event-list cursor does NOT establish that all fights were
  // indexed: cards discovered during the widened search can still lack details.
  // Fail closed until every completed official UFC event in this window has
@@ -50,6 +60,7 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
     upcoming:read("data/upcoming-cards.json",{}),
     verifiedMixedMma:read("data/ufc-verified-mixed-rules-mma.json",{}),
     rosterReview:read("data/ufc-18-to-24-month-review-2026-11-13.json",{}),
+    evidenceReview:read("data/ufc-36-month-reviewed-evidence.json",{}),
     ranked:[
       read("data/ufc-ranked-profiles.json",{}),
       read("data/ufc-contender-profiles.json",{}),
