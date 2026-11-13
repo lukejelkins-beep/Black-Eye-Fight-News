@@ -29,3 +29,10 @@ test("new verified source assets missing on Render count as drift rather than fa
  assert.match(file,/Unexpected HTTP \$status.*fail closed/);
  assert.match(file,/Cannot determine live asset state/);
 });
+
+test("recheck allows absent new files without suppressing real outages",()=>{
+ assert.match(file,/still_different=\$\(\(still_different \+ 1\)\)/);
+ assert.match(file,/Unexpected HTTP \$status on recheck; fail closed/);
+ assert.match(file,/Production transport unavailable/);
+ assert.match(file,/New public file still missing after the grace period/);
+});
