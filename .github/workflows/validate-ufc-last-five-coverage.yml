@@ -37,6 +37,14 @@ jobs:
           node --test tests/test-ufc-last-five-coverage.mjs
           node --test tests/test-ufc-36-month-candidates.mjs
           node --test tests/test-ufc-pipeline-order.mjs
+      - name: Verify downstream V3, profile, leaderboard and post-fight compatibility
+        run: |
+          node --test tests/test-ufc-fighter-v3.mjs
+          node --test tests/test-ufc-leaderboards-page.mjs
+          node --test tests/test-ufc-profile-queue.mjs
+          node --test tests/test-ufc-postfight-metrics.mjs
+          node --test tests/test-ufc-research-pipeline.mjs
+          node tests/test-ufc-prospect-contender.cjs
       - name: Build inventory from saved UFCalendar data without API requests
         run: |
           node scripts/build-ufc-last-five-coverage.mjs
