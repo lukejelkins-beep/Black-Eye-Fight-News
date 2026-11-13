@@ -34,8 +34,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Reproduce original as-of-14-Nov audit without paid API requests
-        run: node .approval-snapshot/scripts/ufc-36-month-review-report.mjs
+      - name: Reproduce exact audit workflow candidate rebuild without paid API requests
+        run: |
+          cd .approval-snapshot
+          node scripts/build-ufc-last-five-coverage.mjs
+          node scripts/build-ufc-36-month-candidates.mjs
+          node scripts/ufc-36-month-review-report.mjs
       - name: Validate current census and write the exact signed-off slug allowlist
         run: |
           node scripts/ufc-36-month-review-report.mjs
