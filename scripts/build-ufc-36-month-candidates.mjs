@@ -15,6 +15,15 @@ function read(name,fallback){
  try{return JSON.parse(fs.readFileSync(path.join(root,name),"utf8"));}
  catch(e){if(e.code==="ENOENT")return fallback;throw e;}
 }
+/** Research review dates are authored in Melbourne local time.
+ * Use that same calendar day for the rolling census and evidence cut-off,
+ * including the UTC hours before Melbourne midnight. */
+export function melbourneResearchDay(now=new Date()){
+ const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Australia/Melbourne',
+   year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now);
+ const part=name=>parts.find(x=>x.type===name)?.value;
+ return part('year')+'-'+part('month')+'-'+part('day');
+}
 export function candidateManifest(progress,research,postfight,champions,opts){
  const original=opts?.rosterReview||{};
  const supplement=opts?.evidenceReview?.asOf&&opts.evidenceReview.asOf<=opts.asOf?
@@ -50,7 +59,7 @@ export function candidateManifest(progress,research,postfight,champions,opts){
    note:"Candidates have recent official UFC bouts and no newer confirmed non-UFC MMA fight in available cached observations. Unknown history, retirement and promotion affiliation require independent checks. Do not automatically publish or claim 36-month completeness."};
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
- const asOf=process.argv[2]||new Date().toISOString().slice(0,10);
+ const asOf=process.argv[2]||melbourneResearchDay();
  const data=candidateManifest(
   read("data/ufcalendar-rich-progress.json",{}),
   read("data/ufcalendar-fighter-research.json",{}),
