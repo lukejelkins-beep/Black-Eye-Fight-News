@@ -1186,12 +1186,11 @@ def reconcile_approved_ufc_full_career_timelines(client,state,research,coverage,
         newfound=len(after-before)
         added+=newfound
         full=profile.get("ufcTimeline",{}).get("complete") is True
-        if full and last and not any(
+        if last and not any(
             str(row.get("promotion") or "").lower()=="ufc" and
             date_str(row.get("date"))==last for row in incoming):
-            # Retaining an older cached row does NOT make a truncated or
-            # inconsistent provider response complete. The actual provider
-            # payload itself must contain the roster-confirmed latest fight.
+            # Record a contradiction regardless of previous completeness
+            # flags: older saved rows cannot 'repair' the provider timeline.
             profile["ufcTimeline"]["complete"]=False
             profile["ufcTimeline"]["missingRosterLastUfcFight"]=last
             full=False
