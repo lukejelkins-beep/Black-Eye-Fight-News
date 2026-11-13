@@ -131,6 +131,75 @@ class FullCareerCacheTests(unittest.TestCase):
           client,state,research,candidate,dt.date(2026,11,13),self.approval()),0)
         self.assertEqual(len(client.paths),100,"Already indexed fights never refetched")
 
+    def test_approved_round_priority_uses_latest_five_then_ten_then_career(self):
+        state,research,candidate=self.fixture()
+        today=dt.date(2026,11,14)
+        candidate["asOf"]=today.isoformat()
+        entries=[]
+        for i in range(12):
+            entries.append({
+              "promotion":"ufc","source":"native",
+              "boutId":str(1000+i),"date":(today-dt.timedelta(days=i*30)).isoformat(),
+              "result":"win","opponent":"Opponent "+str(i)})
+        research["profiles"]["veteran"]["recentHistory"]=entries
+        approval={**self.approval(),"rosterAsOf":"2026-11-14",
+                  "approvedAt":"2026-11-14"}
+        levels=m.approved_ufc_round_priority(approval,candidate,research,today)
+        self.assertEqual(len(levels),12)
+        self.assertEqual([levels[str(1000+i)] for i in range(12)],
+                         [6]*5+[5]*5+[3]*2)
+        self.assertEqual(m.approved_ufc_round_priority(
+          {**approval,"status":"pending_review"},candidate,research,today),{})
+        candidate["fighters"][0]["eligibilityStatus"]="review_required"
+        self.assertEqual(m.approved_ufc_round_priority(
+          approval,candidate,research,today),{})
+        candidate["fighters"][0]["eligibilityStatus"]="latest_observed_mma_ufc"
+        candidate["asOf"]="2026-10-01"
+        self.assertEqual(m.approved_ufc_round_priority(
+          approval,candidate,research,today),{})
+
+    def test_approved_history_rounds_win_priority_without_duplicate_fetches(self):
+        today=dt.date(2026,11,14)
+        state=m.default_progress()
+        for ident,day in (("41","2010-01-01"),("42","2011-01-01"),
+                          ("99","2026-11-12")):
+            state["bouts"][ident]={
+              "id":ident,"org":"ufc","eventDate":day,"event":"UFC Example",
+              "eventId":"7","status":"completed",
+              "a":{"name":"One"},"b":{"name":"Two"},
+              "result":{"round":3}}
+        calls=[]
+        client=m.Client("secret",state,today,
+          fetch=lambda p:(calls.append(p) or {"data":[]}),max_calls=80)
+        client.remaining=100
+        cards={"events":{}}
+        archive={"schema":1,"fights":{},"events":{}}
+        approved_priority={"41":6,"42":5}
+        result=m.collect_rounds(client,state,cards,archive,archive,today,
+                                approved_priority=approved_priority)
+        self.assertEqual(result,{"requests":3,"retried":0})
+        self.assertEqual(calls,[
+          "/fights/41/rounds","/fights/42/rounds","/fights/99/rounds"])
+        self.assertEqual(m.collect_rounds(
+          client,state,cards,archive,archive,today,
+          approved_priority=approved_priority),{"requests":0,"retried":0})
+        self.assertEqual(len(calls),3)
+
+    def test_two_approved_fighters_sharing_native_fight_are_single_round_target(self):
+        today=dt.date(2026,11,14)
+        state,research,candidate=self.fixture()
+        candidate["asOf"]=today.isoformat()
+        candidate["fighters"].append({
+          "slug":"opponent","eligibilityStatus":"latest_observed_mma_ufc"})
+        research["profiles"]["opponent"]={
+          "recentHistory":[{"source":"native","promotion":"ufc",
+          "boutId":"800","date":"2008-05-01","result":"loss",
+          "opponent":"Veteran"}]}
+        approval={**self.approval(["veteran","opponent"]),
+                  "rosterAsOf":"2026-11-14","approvedAt":"2026-11-14"}
+        priority=m.approved_ufc_round_priority(approval,candidate,research,today)
+        self.assertEqual(priority,{"800":6})
+
     def test_unverified_scope_cannot_trigger_paid_career_hydration(self):
         state,research,candidate=self.fixture()
         candidate["indexCompleteness"]="36_month_event_scan_incomplete"
