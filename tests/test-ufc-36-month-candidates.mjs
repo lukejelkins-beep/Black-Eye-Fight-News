@@ -158,7 +158,7 @@ test("verified kickboxing, Muay Thai and other non-MMA disciplines do not disqua
  const bouts={},profiles={},fighters={};
  for(let i=0;i<sports.length;i++){
   const slug="fighter-"+i,opp="Later Opponent "+i;
-  bouts[String(100+i)]=bout(100+i,"2024-03-16","Fighter "+i,slug,"UFC Rival "+i,"ufc-rival-"+i);
+  bouts[String(100+i)]=bout(100+i,"2025-06-16","Fighter "+i,slug,"UFC Rival "+i,"ufc-rival-"+i);
   profiles[slug]={recentHistory:[{date:"2026-07-27",opponent:opp,
    promotion:"",result:"loss"}]};
   fighters[slug]=[{date:"2026-07-27",opponent:opp,ruleset:sports[i],
