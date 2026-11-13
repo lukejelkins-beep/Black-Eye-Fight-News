@@ -66,6 +66,28 @@ export function auditIndependentEvidence(ledger,research,progress){
     indexedLatest.set(slug,bout.eventDate);
   }
  }
+ // Positive roster status never waives a separate later MMA bout or exit.
+ // Confirmations require a current official athlete page and exact indexed UFC date.
+ const confirmations=ledger?.confirmedCurrentRoster||[];
+ const seenCurrent=new Set();
+ for(const item of confirmations){
+  const slug=item?.slug||"";
+  if(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) || seenCurrent.has(slug))
+    add("duplicate_or_invalid_active_slug",slug,"Missing/duplicate slug");
+  seenCurrent.add(slug);
+  if(item?.status!=="active")add("invalid_active_status",slug,String(item?.status));
+  if(!validDate(item?.lastUfcFight)||item.lastUfcFight>today)
+    add("invalid_active_last_ufc",slug,String(item?.lastUfcFight));
+  if(!validDate(item?.checkedAt)||item.checkedAt>today)
+    add("invalid_active_checked_at",slug,String(item?.checkedAt));
+  if(!/^https:\/\/www\.ufc\.com\/athlete\/[a-z0-9-]+$/.test(item?.source||""))
+    add("invalid_active_official_source",slug,String(item?.source));
+  if(indexedLatest.get(slug)!==item.lastUfcFight)
+    add("stale_active_last_ufc",slug,"verified="+String(item.lastUfcFight)+
+      " indexed="+String(indexedLatest.get(slug)));
+  if((ledger?.departures||[]).some(d=>d.slug===slug&&d.lastUfcFight===item.lastUfcFight))
+    add("conflicting_active_departure",slug,item.lastUfcFight);
+ }
  const exits=ledger?.departures||[];
  for(const item of exits){
   if(!item?.slug||!validDate(item.lastUfcFight))
@@ -79,7 +101,8 @@ export function auditIndependentEvidence(ledger,research,progress){
     "saved="+String(item.lastUfcFight)+" indexed="+String(indexedLatest.get(item.slug)));
  }
  return {errors,summary:{fighters:Object.keys(fighters).length,bouts:count,
-  exactHistoryMatches:matched,departures:exits.length,rulesets:byRule,
+  exactHistoryMatches:matched,departures:exits.length,
+  currentOfficialActive:confirmations.length,rulesets:byRule,
   indexedOfficialUfcAthletes:indexedLatest.size}};
 }
 
@@ -115,4 +138,23 @@ test("independent evidence audit fails closed for duplicate, mismatched and unve
  for(const required of ["duplicate","invalid_source","invalid_fight_date",
   "invalid_checked_at","unmatched_source","unknown_ruleset","stale_departure_fight"])
   assert(codes.has(required),"Expected "+required);
+});
+
+test("official status evidence must be current, exact-match and noncontradictory",()=>{
+ const progress={bouts:{"11":{org:"ufc",status:"completed",event:"UFC Fight Night: Test",
+  eventDate:"2025-01-01",a:{slug:"a"},b:{slug:"opponent"}}}};
+ const base={schema:1,asOf:"2026-11-14",fighters:{},departures:[],
+  confirmedCurrentRoster:[{slug:"a",lastUfcFight:"2025-01-01",status:"active",
+   checkedAt:"2026-11-14",source:"https://www.ufc.com/athlete/valid"}]};
+ assert.deepEqual(auditIndependentEvidence(base,{profiles:{}},progress).errors,[]);
+ const bad=structuredClone(base);
+ bad.confirmedCurrentRoster.push({...base.confirmedCurrentRoster[0],
+  source:"https://example.org/fake",checkedAt:"2026-11-15",
+  lastUfcFight:"2025-02-01"});
+ bad.departures=[{slug:"a",lastUfcFight:"2025-01-01",reason:"confirmed_retired",
+  evidence:{source:"https://example.org/retirement"}}];
+ const codes=new Set(auditIndependentEvidence(bad,{profiles:{}},progress).errors.map(x=>x.code));
+ for(const code of ["duplicate_or_invalid_active_slug","invalid_active_checked_at",
+  "invalid_active_official_source","stale_active_last_ufc",
+  "conflicting_active_departure"])assert(codes.has(code),code);
 });
