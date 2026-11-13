@@ -120,3 +120,20 @@ test("non-alphabetic UFC names remain visible for priority triage",()=>{
  assert(q.unassignedHistoricalCandidates.some(x=>x.name==="Жан Файтер"));
  assert(q.historicalByWorker["A-F"].some(x=>x.name==="Alpha Veteran"));
 });
+
+test("contender-series and Road-to-UFC entrants do not fill UFC official-roster candidate queue",()=>{
+ const mk=(event,name)=>({org:"ufc",status:"completed",
+  eventDate:"2026-09-01",event,
+  a:{slug:name.toLowerCase().replaceAll(" ","-"),name},
+  b:{slug:"other-"+name.toLowerCase().replaceAll(" ","-"),name:"Other "+name},
+  result:{winnerId:"1"}});
+ const q=buildQueue({bouts:{
+  a:mk("Dana White's Contender Series 97","DWCS Entrant"),
+  b:mk("Road To UFC: Example","Road Entrant"),
+  c:mk("UFC Fight Night: Example","Official Entrant")
+ }},[],{asOf:"2026-11-13",upcomingCards:{events:[]}});
+ assert.equal(q.candidateCount,2);
+ assert(q.candidates.some(x=>x.name==="Official Entrant"));
+ assert.equal(q.candidates.some(x=>x.name==="DWCS Entrant"),false);
+ assert.equal(q.candidates.some(x=>x.name==="Road Entrant"),false);
+});
