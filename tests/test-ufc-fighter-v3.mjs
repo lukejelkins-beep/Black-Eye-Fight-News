@@ -263,6 +263,13 @@ test("offline V3 snapshot refresh follows a changed five-fight coverage file",()
  assert.match(workflow,/node scripts\/build-ufc-fighter-v3\.mjs/);
  assert.doesNotMatch(workflow,/UFCALENDAR_API_KEY|api\.ufcalendar/);
 });
+test("desktop/mobile UFC QA reads rebuilt coverage before generating V3 results",()=>{
+ const yml=fs.readFileSync(".github/workflows/validate-ufc-profiles.yml","utf8");
+ const first=yml.indexOf("node scripts/build-ufc-last-five-coverage.mjs");
+ const second=yml.indexOf("node scripts/build-ufc-fighter-v3.mjs");
+ const browser=yml.indexOf("run: node tests/test-ufc-profile-visual.mjs");
+ assert(first>=0&&second>first&&browser>second);
+});
 test("schema four cannot overwrite independently reviewed UFC classifications",()=>{
  const js=fs.readFileSync("assets/fighter-insights.js","utf8");
  assert.match(js,/if\(record&&!isReviewedUfc\(f\)\)/);
