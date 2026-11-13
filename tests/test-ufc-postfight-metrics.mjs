@@ -65,3 +65,30 @@ test("missing complete round rows are excluded instead of guessed",()=>{
  assert.equal(out.metricBouts,1);
  assert(out.pending.some(x=>x.reason==="round_coverage_incomplete"));
 });
+
+test("unique one-day UFC calendar/archive shift recovers saved statistics",()=>{
+ const shifted=structuredClone(archive);
+ shifted.fights.a.date="2026-11-09";
+ const out=buildPostfightMetrics(progress,shifted,{asOf:"2026-11-12"});
+ assert.equal(out.metricBouts,2);
+ assert.equal(out.fighters["fighter-alpha"].totals.sigLanded.value,25);
+ assert.equal(out.fighters["fighter-beta"].recentBouts[0].boutId,"100");
+});
+test("the exact dated archive entry wins over nearby alternatives",()=>{
+ const shifted=structuredClone(archive);
+ shifted.fights.c=structuredClone(shifted.fights.a);
+ shifted.fights.c.date="2026-11-09";
+ shifted.fights.c.rounds[0].a.sigLanded=99;
+ const out=buildPostfightMetrics(progress,shifted,{asOf:"2026-11-12"});
+ assert.equal(out.metricBouts,2);
+ assert.equal(out.fighters["fighter-alpha"].totals.sigLanded.value,25);
+});
+test("two nearby archive dates are ambiguous and must not inherit statistics",()=>{
+ const shifted=structuredClone(archive);
+ shifted.fights.a.date="2026-11-09";
+ shifted.fights.c=structuredClone(shifted.fights.a);
+ shifted.fights.c.date="2026-11-11";
+ const out=buildPostfightMetrics(progress,shifted,{asOf:"2026-11-12"});
+ assert.equal(out.metricBouts,1);
+ assert(out.pending.some(x=>x.boutId==="100"&&x.reason==="archive_date_ambiguous"));
+});
