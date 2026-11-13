@@ -23,6 +23,10 @@ concurrency:
 
 jobs:
   collect:
+    # Provider webhook monitoring is billable even for empty checks. Never
+    # simultaneously pay for these scheduled search requests after cutover.
+    # Set BEFN_X_WEBHOOK_ACTIVE=true only after receipt/storage + balance checks.
+    if: ${{ vars.BEFN_X_WEBHOOK_ACTIVE != 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
