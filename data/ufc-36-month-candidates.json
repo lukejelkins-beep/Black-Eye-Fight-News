@@ -15,24 +15,24 @@
     "noKnownLaterMmaOrUnknown": 744,
     "activeFighters": 856,
     "withFiveKnown": 523,
-    "withFiveLinkedIds": 468,
-    "withThreeMeasured": 628,
+    "withFiveLinkedIds": 470,
+    "withThreeMeasured": 631,
     "withShortUfcTimelineReconciled": 3,
-    "withUfcHistoryLinkedAndMeasured": 399,
+    "withUfcHistoryLinkedAndMeasured": 400,
     "evidenceStages": {
-      "fiveLinkedMeasured": 399,
-      "fiveLinkedStatsGap": 69,
-      "fiveUnlinked": 55,
+      "fiveLinkedMeasured": 400,
+      "fiveLinkedStatsGap": 70,
+      "fiveUnlinked": 53,
       "shortLinkedMeasuredDepthConfirmed": 0,
-      "shortLinkedMeasuredDepthUnconfirmed": 278,
+      "shortLinkedMeasuredDepthUnconfirmed": 279,
       "shortLinkedStatsGapDepthConfirmed": 3,
       "shortLinkedStatsGap": 36,
-      "shortUnlinked": 16
+      "shortUnlinked": 15
     },
-    "needHistoryCheck": 385,
-    "needStats": 179,
-    "shiftedDateAliasesJoined": 1188,
-    "uniqueKnownBoutIds": 1971
+    "needHistoryCheck": 383,
+    "needStats": 177,
+    "shiftedDateAliasesJoined": 1170,
+    "uniqueKnownBoutIds": 1977
   },
   "eligibilityExcluded": [
     {
@@ -5391,68 +5391,6 @@
       ]
     },
     {
-      "name": "Evan Elder",
-      "slug": "evan-elder",
-      "lastUfcFight": "2025-04-26",
-      "eligibilityStatus": "review_required",
-      "champion": false,
-      "upcoming": true,
-      "ranked": false,
-      "recentCount": 5,
-      "measuredCount": 3,
-      "evidenceStage": "fiveUnlinked",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": true,
-      "needsStats": true,
-      "recent": [
-        {
-          "date": "2025-04-26",
-          "opponent": "Gauge Young",
-          "boutId": "60881",
-          "method": "decision_unanimous",
-          "outcome": "W",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2024-07-13",
-          "opponent": "Darrius Flowers",
-          "boutId": "61076",
-          "method": "submission",
-          "outcome": "W",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2023-07-16",
-          "opponent": "Genaro Valdez",
-          "boutId": null,
-          "method": "decision_unanimous",
-          "outcome": "W",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
-        },
-        {
-          "date": "2023-02-18",
-          "opponent": "Nazim Sadykhov",
-          "boutId": "59699",
-          "method": "ko_tko",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2022-04-24",
-          "opponent": "Preston Parsons",
-          "boutId": null,
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
-        }
-      ]
-    },
-    {
       "name": "Joanderson Brito",
       "slug": "joanderson-brito",
       "lastUfcFight": "2026-09-19",
@@ -8363,6 +8301,68 @@
           "outcome": "L",
           "origin": "ufc-bout-index",
           "hasMeasuredTotals": true
+        }
+      ]
+    },
+    {
+      "name": "Evan Elder",
+      "slug": "evan-elder",
+      "lastUfcFight": "2025-04-26",
+      "eligibilityStatus": "review_required",
+      "champion": false,
+      "upcoming": true,
+      "ranked": false,
+      "recentCount": 5,
+      "measuredCount": 3,
+      "evidenceStage": "fiveLinkedStatsGap",
+      "ufcTimelineDepthConfirmed": false,
+      "needsHistoryCheck": false,
+      "needsStats": true,
+      "recent": [
+        {
+          "date": "2025-04-26",
+          "opponent": "Gauge Young",
+          "boutId": "60881",
+          "method": "decision_unanimous",
+          "outcome": "W",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2024-07-13",
+          "opponent": "Darrius Flowers",
+          "boutId": "61076",
+          "method": "submission",
+          "outcome": "W",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2023-07-15",
+          "opponent": "Genaro Valdez",
+          "boutId": "60124",
+          "method": "decision_unanimous",
+          "outcome": "W",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        },
+        {
+          "date": "2023-02-18",
+          "opponent": "Nazim Sadykhov",
+          "boutId": "59699",
+          "method": "ko_tko",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2022-04-23",
+          "opponent": "Preston Parsons",
+          "boutId": "66211",
+          "method": "decision_unanimous",
+          "outcome": "L",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
         }
       ]
     },
@@ -20161,7 +20161,7 @@
       "upcoming": false,
       "ranked": false,
       "recentCount": 5,
-      "measuredCount": 2,
+      "measuredCount": 3,
       "evidenceStage": "fiveUnlinked",
       "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": true,
@@ -20192,7 +20192,7 @@
           "method": "decision_unanimous",
           "outcome": "W",
           "origin": "ufc-bout-index",
-          "hasMeasuredTotals": false
+          "hasMeasuredTotals": true
         },
         {
           "date": "2019-07-06",
@@ -21771,7 +21771,7 @@
       "ranked": false,
       "recentCount": 4,
       "measuredCount": 2,
-      "evidenceStage": "shortUnlinked",
+      "evidenceStage": "shortLinkedStatsGap",
       "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": true,
       "needsStats": true,
@@ -21806,10 +21806,10 @@
         {
           "date": "2023-03-04",
           "opponent": "Esteban Ribovics",
-          "boutId": null,
+          "boutId": "59693",
           "method": "decision_unanimous",
           "outcome": "W",
-          "origin": "ufc-history",
+          "origin": "ufc-bout-index",
           "hasMeasuredTotals": false
         }
       ]
@@ -22268,68 +22268,6 @@
           "opponent": "Takashi Sato",
           "boutId": null,
           "method": "submission",
-          "outcome": "W",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
-        }
-      ]
-    },
-    {
-      "name": "Emily Ducote",
-      "slug": "emily-ducote",
-      "lastUfcFight": "2024-05-18",
-      "eligibilityStatus": "review_required",
-      "champion": false,
-      "upcoming": false,
-      "ranked": false,
-      "recentCount": 5,
-      "measuredCount": 2,
-      "evidenceStage": "fiveUnlinked",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": true,
-      "needsStats": true,
-      "recent": [
-        {
-          "date": "2024-05-18",
-          "opponent": "Vanessa Demopoulos",
-          "boutId": "61026",
-          "method": "decision_split",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2023-10-14",
-          "opponent": "Ashley Yoder",
-          "boutId": null,
-          "method": "decision_unanimous",
-          "outcome": "W",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
-        },
-        {
-          "date": "2023-05-20",
-          "opponent": "Loopy Godinez",
-          "boutId": null,
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
-        },
-        {
-          "date": "2022-12-04",
-          "opponent": "Angela Hill",
-          "boutId": "59772",
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2022-07-16",
-          "opponent": "Jessica Penne",
-          "boutId": null,
-          "method": "decision_unanimous",
           "outcome": "W",
           "origin": "ufc-history",
           "hasMeasuredTotals": false
@@ -23185,7 +23123,7 @@
       "upcoming": false,
       "ranked": false,
       "recentCount": 5,
-      "measuredCount": 3,
+      "measuredCount": 4,
       "evidenceStage": "fiveUnlinked",
       "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": true,
@@ -23225,7 +23163,7 @@
           "method": "ko_tko",
           "outcome": "L",
           "origin": "ufc-bout-index",
-          "hasMeasuredTotals": false
+          "hasMeasuredTotals": true
         },
         {
           "date": "2022-02-19",
@@ -23247,11 +23185,11 @@
       "upcoming": false,
       "ranked": false,
       "recentCount": 3,
-      "measuredCount": 2,
-      "evidenceStage": "shortLinkedStatsGap",
+      "measuredCount": 3,
+      "evidenceStage": "shortLinkedMeasuredDepthUnconfirmed",
       "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": true,
-      "needsStats": true,
+      "needsStats": false,
       "recent": [
         {
           "date": "2024-02-25",
@@ -23278,7 +23216,7 @@
           "method": "ko_tko",
           "outcome": "L",
           "origin": "ufc-bout-index",
-          "hasMeasuredTotals": false
+          "hasMeasuredTotals": true
         }
       ]
     },
@@ -23732,7 +23670,7 @@
       "upcoming": false,
       "ranked": false,
       "recentCount": 5,
-      "measuredCount": 1,
+      "measuredCount": 2,
       "evidenceStage": "fiveUnlinked",
       "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": true,
@@ -23772,7 +23710,7 @@
           "method": "ko_tko",
           "outcome": "W",
           "origin": "ufc-bout-index",
-          "hasMeasuredTotals": false
+          "hasMeasuredTotals": true
         },
         {
           "date": "2021-07-17",
@@ -48769,7 +48707,7 @@
       "upcoming": false,
       "ranked": false,
       "recentCount": 5,
-      "measuredCount": 2,
+      "measuredCount": 3,
       "evidenceStage": "fiveLinkedStatsGap",
       "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": false,
@@ -48809,7 +48747,7 @@
           "method": "ko_tko",
           "outcome": "L",
           "origin": "ufc-bout-index",
-          "hasMeasuredTotals": false
+          "hasMeasuredTotals": true
         },
         {
           "date": "2021-11-13",
@@ -48831,11 +48769,11 @@
       "upcoming": false,
       "ranked": false,
       "recentCount": 5,
-      "measuredCount": 4,
-      "evidenceStage": "fiveLinkedStatsGap",
+      "measuredCount": 5,
+      "evidenceStage": "fiveLinkedMeasured",
       "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": false,
-      "needsStats": true,
+      "needsStats": false,
       "recent": [
         {
           "date": "2024-08-03",
@@ -48880,7 +48818,7 @@
           "method": "ko_tko",
           "outcome": "W",
           "origin": "ufc-bout-index",
-          "hasMeasuredTotals": false
+          "hasMeasuredTotals": true
         }
       ]
     },
@@ -49064,6 +49002,68 @@
           "opponent": "Jake Collier",
           "boutId": "59606",
           "method": "decision_split",
+          "outcome": "W",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        }
+      ]
+    },
+    {
+      "name": "Emily Ducote",
+      "slug": "emily-ducote",
+      "lastUfcFight": "2024-05-18",
+      "eligibilityStatus": "review_required",
+      "champion": false,
+      "upcoming": false,
+      "ranked": false,
+      "recentCount": 5,
+      "measuredCount": 2,
+      "evidenceStage": "fiveLinkedStatsGap",
+      "ufcTimelineDepthConfirmed": false,
+      "needsHistoryCheck": false,
+      "needsStats": true,
+      "recent": [
+        {
+          "date": "2024-05-18",
+          "opponent": "Vanessa Demopoulos",
+          "boutId": "61026",
+          "method": "decision_split",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2023-10-14",
+          "opponent": "Ashley Yoder",
+          "boutId": "60020",
+          "method": "decision_unanimous",
+          "outcome": "W",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        },
+        {
+          "date": "2023-05-20",
+          "opponent": "Loopy Godinez",
+          "boutId": "61322",
+          "method": "decision_unanimous",
+          "outcome": "L",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        },
+        {
+          "date": "2022-12-04",
+          "opponent": "Angela Hill",
+          "boutId": "59772",
+          "method": "decision_unanimous",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2022-07-16",
+          "opponent": "Jessica Penne",
+          "boutId": "61514",
+          "method": "decision_unanimous",
           "outcome": "W",
           "origin": "ufc-history",
           "hasMeasuredTotals": false
