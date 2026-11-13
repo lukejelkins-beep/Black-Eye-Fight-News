@@ -359,35 +359,86 @@ def selected_stats(rounds):
              "b":{k:v for k,v in r.get("b",{}).items() if k in ("sigLanded","sigAttempted","takedowns","takedownAttempts","controlSec","knockdowns")}}
             for r in rounds]
 
-def collect_rounds(client,state,cards,archive,pfl_archive,today):
+def should_collect_rounds(state,bout,today):
+    """Reuse complete round observations; cautiously retry only incomplete UFC bouts.
+
+    Legacy roundDone entries are integer counts, including zero when no rounds
+    were provided. Such entries must not be treated as permanent successes.
+    """
+    bid=str(bout.get("id") or "")
+    done=state.setdefault("roundDone",{})
+    if bid not in done:return True
+    if bout.get("org")!="ufc":return False
+    expected=(bout.get("result") or {}).get("round")
+    observed=done[bid]
+    if type(observed) is not int:return False
+    if observed>0 and (type(expected) is not int or observed>=expected):return False
+    retry=state.setdefault("roundRetry",{}).get(bid,{})
+    if type(retry) is not dict:return False
+    attempts=retry.get("attempts",0)
+    if type(attempts) is not int or attempts>=2:return False
+    checked=date_str(retry.get("checkedAt"))
+    if checked and dt.date.fromisoformat(checked)+dt.timedelta(days=14)>today:return False
+    return True
+
+
+def collect_rounds(client,state,cards,archive,pfl_archive,today,coverage=None):
     pairs=selection(state)
-    # Reuse the coverage inventory's champion/upcoming/ranked priorities.
-    # Already completed ids never cost another API call.
+    # Prioritize known missing samples in the rolling active UFC cohort before
+    # historical or PFL enrichment; never spend calls on already complete rows.
+    gap_priority={}
+    if isinstance(coverage,dict) and coverage.get("schema")==1 and coverage.get("scope")=="ufc":
+        stamp=date_str(coverage.get("asOf"))
+        if stamp and (today-dt.timedelta(days=7)).isoformat()<=stamp<=today.isoformat():
+            for f in coverage.get("fighters",[]):
+                if not isinstance(f,dict) or not f.get("needsStats"):continue
+                weight=4 if f.get("champion") else 3 if f.get("upcoming") else 2 if f.get("ranked") else 1
+                for entry in f.get("recent",[]):
+                    if not isinstance(entry,dict) or entry.get("hasMeasuredTotals"):continue
+                    bid=str(entry.get("boutId") or "")
+                    if bid:gap_priority[bid]=max(weight,gap_priority.get(bid,0))
     priority=state.get("ufcHistoricalPriority",{})
     pairs.sort(key=lambda b:(b.get("org")=="ufc",
-                            int(priority.get(b.get("id"),-1)),
+                            gap_priority.get(str(b.get("id")),0),
+                            int(priority.get(str(b.get("id")),-1)),
                             b.get("eventDate") or ""),reverse=True)
-    count=0
+    count,retries=0,0
     cap=max(0,min(195,int(client.max_calls*.45),client.max_calls-client.calls-15))
+    retry_cap=max(0,min(40,int(client.max_calls*.12)))
     for bout in pairs:
         if client.remaining<=0 or client.stopped or count>=cap:break
-        bid=bout["id"]
-        if bid in state["roundDone"]:continue
+        bid=str(bout["id"])
+        was_checked=bid in state["roundDone"]
+        if not should_collect_rounds(state,bout,today):continue
+        if was_checked and retries>=retry_cap:continue
+        if was_checked:retries+=1
         payload=client.call("/fights/"+bid+"/rounds")
-        if payload is None:continue
+        if was_checked:
+            previous=state.setdefault("roundRetry",{}).get(bid,{})
+            state["roundRetry"][bid]={
+                "attempts":int(previous.get("attempts",0))+1,
+                "checkedAt":today.isoformat()}
+        if payload is None:
+            # A failure must not overwrite previously sourced round evidence.
+            count+=1
+            continue
         rounds=convert_rounds(payload)
-        state["roundDone"][bid]=len(rounds)
+        if was_checked:
+            state["roundDone"][bid]=max(state["roundDone"][bid],len(rounds))
+        else:
+            state["roundDone"][bid]=len(rounds)
         if rounds:
             event={"date":bout["eventDate"],"title":bout["event"],"org":bout["org"]}
             target=archive if bout["org"]=="ufc" else pfl_archive
             merge_archive(target,event,bout,rounds,dt.datetime.now(dt.timezone.utc).isoformat())
-            ui_event=cards["events"].get(bout["org"]+":"+bout["eventId"]) or cards["events"].get(bout["eventId"])
+            ui_event=cards["events"].get(bout["org"]+":"+str(bout["eventId"])) or cards["events"].get(str(bout["eventId"]))
             if ui_event:
                 for ui_bout in ui_event.get("bouts",[]):
-                    if ui_bout["id"]==bid:
+                    if str(ui_bout["id"])==bid:
                         ui_bout["roundPreview"]=selected_stats(rounds)
                         break
         count+=1
+    return {"requests":count,"retried":retries}
 
 def short_scorecards(payload):
     obj=(payload or {}).get("data")
@@ -756,9 +807,12 @@ def main():
     if client.bootstrap():
         read_events(client,state,today)
         visible=collect_cards(client,state,cards,today)
-        searched=collect_targeted_ufc_history(client,state,read(COVERAGE,{}),today)
+        coverage=read(COVERAGE,{})
+        searched=collect_targeted_ufc_history(client,state,coverage,today)
         if searched:print("UFCalendar targeted UFC history lookups:",searched)
-        collect_rounds(client,state,cards,archive,pfl_archive,today)
+        recovery=collect_rounds(client,state,cards,archive,pfl_archive,today,coverage)
+        if recovery["retried"]:
+            print("UFCalendar incomplete UFC round rechecks:",recovery["retried"])
         collect_judging(client,state,cards,judging)
         collect_profiles(client,state,cards,research,today)
         collect_careers(client,state,research)
