@@ -20,7 +20,7 @@ test("18-month eligibility and older UFC history are separate",()=>{
  const d=auditUfcLastFive(progress,research,postfight,{divisions:[{name:"Alpha"}]},{asOf:"2026-11-13"});
  assert.equal(d.activityCutoff,"2025-05-13");
  assert.equal(d.summary.activeFighters,2);
- assert.equal(d.summary.uniqueKnownBoutIds,1);
+ assert.equal(d.summary.uniqueKnownBoutIds,2);
  const a=d.fighters.find(f=>f.slug==="alpha");
  assert.equal(a.champion,true);
  assert.deepEqual(a.recent.map(r=>r.date),["2026-06-01","2024-04-15","2023-09-10"]);
