@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {candidateManifest} from "../scripts/build-ufc-36-month-candidates.mjs";
+import {candidateManifest,melbourneResearchDay} from "../scripts/build-ufc-36-month-candidates.mjs";
 import {auditUfcLastFive} from "../scripts/build-ufc-last-five-coverage.mjs";
 
 const bout=(id,date,a,as,b,bs)=>({
@@ -243,4 +243,10 @@ test("later Road-to-UFC MMA is not an official UFC roster fight; UFC BJJ remains
   "UFC BJJ alone does not disqualify a fighter with a recent official UFC bout");
  assert.equal(out.eligibilityExcluded.find(f=>f.slug==="victor-example").evidence.source,
   "https://www.ufc.com/video/157154");
+});
+
+test("default roster research day respects Melbourne midnight, not UTC midnight",()=>{
+ assert.equal(melbourneResearchDay(new Date("2026-11-13T21:45:00Z")),"2026-11-14");
+ assert.equal(melbourneResearchDay(new Date("2026-11-13T10:00:00Z")),"2026-11-13");
+ assert.equal(melbourneResearchDay(new Date("2026-11-14T13:30:00Z")),"2026-11-15");
 });
