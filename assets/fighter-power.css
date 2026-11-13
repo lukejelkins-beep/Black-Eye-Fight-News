@@ -919,3 +919,44 @@
  font-size:8px;
  line-height:9px;
 }
+
+/* NCAA verified medal colours (gold/silver/bronze); stay inside badge. */
+.befn-credential[data-kind="ncaa"] .befn-credential-medal {
+ display:grid;
+ place-items:center;
+ position:absolute;
+ top:auto;
+ left:auto;
+ right:1px;
+ bottom:1px;
+ width:11px;
+ height:11px;
+ padding:0;
+ border:1px solid rgba(255,255,255,.3);
+ border-radius:50%;
+ font:900 8px/1 system-ui,sans-serif;
+ font-style:normal;
+ box-shadow:0 1px 2px rgba(0,0,0,.5);
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-medal.is-gold {
+ color:#342405;
+ background:linear-gradient(145deg,#fff2a1,#d5a32c);
+ border-color:#fbe18a;
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-medal.is-silver {
+ color:#273039;
+ background:linear-gradient(145deg,#f4f7fc,#a3abb6);
+ border-color:#ebedf0;
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-medal.is-bronze {
+ color:#2c170d;
+ background:linear-gradient(145deg,#efba85,#a86030);
+ border-color:#e5a875;
+}
+.befn-snapshot-extra .befn-credential[data-kind="ncaa"] .befn-credential-medal {
+ width:9px;
+ height:9px;
+ font-size:7px;
+ right:0;
+ bottom:0;
+}
