@@ -88,9 +88,12 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
         if(measured)linkedMetrics.add(r.id);
       }
       for(const metric of coreMetrics){
-        const aObserved=rounds.some(round=>Number.isFinite(round?.a?.[metric]));
-        const bObserved=rounds.some(round=>Number.isFinite(round?.b?.[metric]));
-        if(aObserved&&bObserved)pairedMetricFights[metric].add(r.id);
+        // Require both corners in the same measured round; values from
+        // unrelated rounds cannot be combined into a false comparison.
+        const paired=rounds.some(round=>
+          Number.isFinite(round?.a?.[metric])&&
+          Number.isFinite(round?.b?.[metric]));
+        if(paired)pairedMetricFights[metric].add(r.id);
       }
       if(coreMetrics.every(metric=>pairedMetricFights[metric].has(r.id)))
         allPairedCoreFights.add(r.id);
