@@ -344,15 +344,14 @@
    tiles.push([value,label,metric.bouts+' fights']);
   }
   return '<section class="befn-profile-insights befn-v3" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC Fighter V3">'+
-   '<div class="befn-v3-hero"><div><p>BEFN Power Rating</p><strong class="befn-v3-score is-'+tier+'">'+
+   '<div class="befn-v3-hero" aria-label="Overall fighter rating"><div class="befn-overall-main"><span class="befn-overall-label">Overall</span><strong class="befn-v3-score is-'+tier+'">'+
    (score===null?'Unrated':score+'<small> / 100</small>')+'</strong>'+
-   (tier==='legendary'?'<p class="befn-v3-legendary">Legendary Gold</p>':'')+
-   (score===null?'<small>More opponent or technical evidence needed</small>':'')+'</div>'+
+   '<span class="befn-overall-meter" aria-hidden="true"><span class="is-'+tier+'" style="width:'+(score===null?0:Math.max(0,Math.min(100,score)))+'%"></span></span></div>'+
    '<div class="befn-v3-status befn-scout-classification">'+
    (v3.category!=='Champion'?'<span>'+escapeHTML(v3.category)+'</span>':'')+
    (v3.officialRank?'<small>UFC division #'+v3.officialRank+'</small>':'')+
    '</div></div>'+
-   '<section class="befn-profile-block"><h3>Technical ratings</h3><div class="befn-profile-body"><div class="befn-power-bars">'+
+   '<section class="befn-profile-block befn-v3-technical"><h3>Technical ratings</h3><div class="befn-profile-body"><div class="befn-power-bars">'+
    ratings.map(([id,label])=>{
     const m=v3.technical[id];
     return profileMetric({label,score:m.score},scoreTier(m.score));
@@ -605,6 +604,18 @@
   if(timer!==null)return;
   timer=requestAnimationFrame(()=>{timer=null;hydrate()});
  }
+ function layoutV3Dialog(){
+  const dialog=document.querySelector('#fighterDialog.befn-v3-dialog');
+  const profile=dialog?.querySelector('.befn-profile-insights.befn-v3');
+  const bio=dialog?.querySelector('.dialog-bio');
+  const meta=bio?.querySelector('.befn-bio-meta');
+  if(!profile||!bio||!meta)return;
+  const hero=profile.querySelector(':scope > .befn-v3-hero');
+  const technical=profile.querySelector(':scope > .befn-v3-technical');
+  // Async profile refreshes rebuild the profile. Remove stale moved panels.
+  if(hero){meta.querySelectorAll(':scope > .befn-v3-hero').forEach(el=>el.remove());meta.append(hero);}
+  if(technical){bio.querySelectorAll(':scope > .befn-v3-technical').forEach(el=>el.remove());bio.append(technical);}
+ }
  function update(){
   renderV3Boards();
   const top=document.querySelector("#fighterDialog [data-befn-top-credentials]");
@@ -623,6 +634,7 @@
    const article=el.closest("article.result-bout-compact");
    if(article){const html=renderSnapshot(article);if(html)el.outerHTML=html}
   }
+  layoutV3Dialog();
   schedule();
  }
 
@@ -682,7 +694,7 @@
   }
   if(added)update();
  });
- window.BEFNFighterInsights={renderProfile,credentialsFor,ratingsFor,renderSnapshot,profileFor,hydrate,topCredentials:f=>credentialsFor(f).length?credentialsHTML(f):"",hasV3:f=>!!v3For(f)};
+ window.BEFNFighterInsights={renderProfile,credentialsFor,ratingsFor,renderSnapshot,profileFor,hydrate,layoutV3Dialog,topCredentials:f=>credentialsFor(f).length?credentialsHTML(f):"",hasV3:f=>!!v3For(f)};
  schedule();
 
  fetch("data/fighter-comparison-sample.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(data=>{
@@ -952,7 +964,7 @@
   }).catch(()=>{});
 
  fetch("data/ufc-fighter-v3.json").then(r=>r.ok?r.json():null).then(data=>{
-  if(data?.schema!==3||!Array.isArray(data.boards)||!data.fighters)return;
+  if(![3,4].includes(data?.schema)||!Array.isArray(data.boards)||!data.fighters)return;
   ufcV3=data;
   for(const f of profiles)applyV3(f);
   if(document.querySelector('#fighterGrid'))window.dispatchEvent(new Event('hashchange'));
