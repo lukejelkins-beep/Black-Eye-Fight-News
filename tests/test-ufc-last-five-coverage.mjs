@@ -338,8 +338,8 @@ test("unknown promotion or mixed-ruleset RIZIN results require review rather tha
  for(const promotion of ["","rizin","one","rkena"]){
   const audit=auditUfcLastFive({bouts},profile(promotion),
    {fighters:{}},{divisions:[]},{asOf:"2026-11-13"});
-  assert.equal(audit.summary.recentUfcCandidates,1);
-  assert.equal(audit.summary.activeFighters,0);
+  assert.equal(audit.summary.recentUfcCandidates,2);
+  assert.equal(audit.summary.activeFighters,1);
   assert.equal(audit.summary.eligibilityReviewRequired,1);
   assert.equal(audit.summary.excludedAfterNonUfcMma,0);
   assert.equal(audit.eligibilityReview[0].evidence.promotion,promotion||null);
@@ -356,7 +356,7 @@ test("non-MMA BKFC bouts and prior MMA results cannot expel a latest UFC fighter
  ]}}};
  const audit=auditUfcLastFive({bouts},research,{fighters:{}},{divisions:[]},
   {asOf:"2026-11-13"});
- assert.equal(audit.summary.activeFighters,1);
+ assert.equal(audit.summary.activeFighters,2);
  assert.equal(audit.summary.eligibilityReviewRequired,0);
  assert.equal(audit.summary.excludedAfterNonUfcMma,0);
 });
@@ -384,6 +384,6 @@ test("a UTC/local one-day alias for the UFC opponent is not evidence of a second
   {date:"2026-06-02",opponent:"Same Opponent",promotion:"",result:"win"}]}}};
  const audit=auditUfcLastFive({bouts},research,{fighters:{}},{divisions:[]},
   {asOf:"2026-11-13"});
- assert.equal(audit.summary.activeFighters,1);
+ assert.equal(audit.summary.activeFighters,2);
  assert.equal(audit.summary.eligibilityReviewRequired,0);
 });
