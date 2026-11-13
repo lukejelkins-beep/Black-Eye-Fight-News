@@ -10,30 +10,30 @@
     "excludedWithoutRecentOfficialUfc": 193,
     "excludedLaterNonUfcMma": 106,
     "excludedConfirmedRetired": 11,
-    "excludedConfirmedUfcExit": 12,
+    "excludedConfirmedUfcExit": 13,
     "excludedOfficialNotFighting": 10,
-    "latestPromotionReviewRequired": 2,
-    "noKnownLaterMmaOrUnknown": 782,
-    "activeFighters": 784,
-    "withFiveKnown": 488,
-    "withFiveLinkedIds": 479,
-    "withThreeMeasured": 593,
+    "latestPromotionReviewRequired": 0,
+    "noKnownLaterMmaOrUnknown": 783,
+    "activeFighters": 783,
+    "withFiveKnown": 487,
+    "withFiveLinkedIds": 480,
+    "withThreeMeasured": 592,
     "withShortUfcTimelineReconciled": 3,
     "withUfcHistoryLinkedAndMeasured": 402,
     "evidenceStages": {
       "fiveLinkedMeasured": 402,
-      "fiveLinkedStatsGap": 77,
-      "fiveUnlinked": 9,
+      "fiveLinkedStatsGap": 78,
+      "fiveUnlinked": 7,
       "shortLinkedMeasuredDepthConfirmed": 0,
       "shortLinkedMeasuredDepthUnconfirmed": 253,
       "shortLinkedStatsGapDepthConfirmed": 3,
-      "shortLinkedStatsGap": 38,
-      "shortUnlinked": 2
+      "shortLinkedStatsGap": 39,
+      "shortUnlinked": 1
     },
-    "needHistoryCheck": 302,
-    "needStats": 129,
-    "shiftedDateAliasesJoined": 565,
-    "uniqueKnownBoutIds": 1932
+    "needHistoryCheck": 300,
+    "needStats": 128,
+    "shiftedDateAliasesJoined": 530,
+    "uniqueKnownBoutIds": 1934
   },
   "eligibilityExcluded": [
     {
@@ -3392,6 +3392,18 @@
       }
     },
     {
+      "name": "SeungWoo Choi",
+      "slug": "seungwoo-choi",
+      "lastUfcFight": "2025-03-15",
+      "evidence": {
+        "source": "https://www.mmamania.com/2025/4/9/24404967/latest-round-of-ufc-roster-cuts-prompts-quit-mma-seung-woo-choi-diana-belbita-istela-nunes",
+        "date": "2025-04-09",
+        "note": "MMA Mania's April 9, 2025 contemporaneous roster report identifies Seung Woo Choi as released or not renewed after his March 2025 UFC fight; no later UFC return verified as of 2026-11-14"
+      },
+      "reason": "confirmed_left_ufc",
+      "reviewAsOf": "2026-11-14"
+    },
+    {
       "name": "Shannon Clark",
       "slug": "shannon-clark",
       "lastUfcFight": null,
@@ -3937,7 +3949,8 @@
         "opponent": "Alex Nicholson",
         "source": "https://xfc.global/media_press/xfc51-evolution/"
       },
-      "reason": "later_professional_mma_outside_official_ufc"
+      "reason": "later_professional_mma_outside_official_ufc",
+      "reviewAsOf": "2026-11-14"
     },
     {
       "name": "Zachary Scroggin",
@@ -3988,24 +4001,7 @@
       "reason": "later_professional_mma_outside_official_ufc"
     }
   ],
-  "eligibilityReview": [
-    {
-      "name": "Danny Barlow",
-      "slug": "danny-barlow",
-      "lastUfcFight": "2025-10-18",
-      "evidence": {
-        "date": "2026-10-29",
-        "promotion": null,
-        "opponent": "Demonte Cherry",
-        "source": "fighter-career-history"
-      }
-    },
-    {
-      "name": "SeungWoo Choi",
-      "slug": "seungwoo-choi",
-      "lastUfcFight": "2025-03-15"
-    }
-  ],
+  "eligibilityReview": [],
   "fighters": [
     {
       "name": "Kayla Harrison",
@@ -16935,7 +16931,7 @@
       "name": "Danny Barlow",
       "slug": "danny-barlow",
       "lastUfcFight": "2025-10-18",
-      "eligibilityStatus": "review_required",
+      "eligibilityStatus": "latest_observed_mma_ufc",
       "champion": false,
       "upcoming": false,
       "ranked": false,
@@ -18102,7 +18098,7 @@
       "ranked": false,
       "recentCount": 4,
       "measuredCount": 3,
-      "evidenceStage": "shortUnlinked",
+      "evidenceStage": "shortLinkedStatsGap",
       "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": true,
       "needsStats": true,
@@ -18137,7 +18133,7 @@
         {
           "date": "2020-08-04",
           "opponent": "Jerome Rivera",
-          "boutId": null,
+          "boutId": "83940",
           "method": "decision_unanimous",
           "outcome": "L",
           "origin": "ufc-history",
@@ -18174,68 +18170,6 @@
           "opponent": "Rinya Nakamura",
           "boutId": "59895",
           "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        }
-      ]
-    },
-    {
-      "name": "SeungWoo Choi",
-      "slug": "seungwoo-choi",
-      "lastUfcFight": "2025-03-15",
-      "eligibilityStatus": "review_required",
-      "champion": false,
-      "upcoming": false,
-      "ranked": false,
-      "recentCount": 5,
-      "measuredCount": 3,
-      "evidenceStage": "fiveUnlinked",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": true,
-      "needsStats": true,
-      "recent": [
-        {
-          "date": "2025-03-15",
-          "opponent": "Kevin Vallejos",
-          "boutId": "60360",
-          "method": "ko_tko",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2024-07-20",
-          "opponent": "Steve Garcia",
-          "boutId": "65924",
-          "method": "ko_tko",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2023-08-26",
-          "opponent": "Jarno Errens",
-          "boutId": null,
-          "method": "decision_unanimous",
-          "outcome": "W",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
-        },
-        {
-          "date": "2022-11-12",
-          "opponent": "Michael Trizano",
-          "boutId": null,
-          "method": "ko_tko",
-          "outcome": "L",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
-        },
-        {
-          "date": "2022-06-11",
-          "opponent": "Josh Culibao",
-          "boutId": "59588",
-          "method": "decision_split",
           "outcome": "L",
           "origin": "ufc-bout-index",
           "hasMeasuredTotals": true
@@ -18724,68 +18658,6 @@
           "outcome": "L",
           "origin": "ufc-bout-index",
           "hasMeasuredTotals": true
-        }
-      ]
-    },
-    {
-      "name": "Roosevelt Roberts",
-      "slug": "roosevelt-roberts",
-      "lastUfcFight": "2024-09-28",
-      "eligibilityStatus": "latest_observed_mma_ufc",
-      "champion": false,
-      "upcoming": false,
-      "ranked": false,
-      "recentCount": 5,
-      "measuredCount": 4,
-      "evidenceStage": "fiveUnlinked",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": true,
-      "needsStats": true,
-      "recent": [
-        {
-          "date": "2024-09-28",
-          "opponent": "Ludovit Klein",
-          "boutId": "38708",
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2023-11-11",
-          "opponent": "Mateusz Rębecki",
-          "boutId": "59967",
-          "method": "submission",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2021-08-21",
-          "opponent": "Ignacio Bahamondes",
-          "boutId": "59424",
-          "method": "ko_tko",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2020-06-20",
-          "opponent": "Jim Miller",
-          "boutId": "66347",
-          "method": "submission",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2020-05-30",
-          "opponent": "Brok Weaver",
-          "boutId": null,
-          "method": "submission",
-          "outcome": "W",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
         }
       ]
     },
@@ -43847,6 +43719,68 @@
           "outcome": "W",
           "origin": "ufc-bout-index",
           "hasMeasuredTotals": true
+        }
+      ]
+    },
+    {
+      "name": "Roosevelt Roberts",
+      "slug": "roosevelt-roberts",
+      "lastUfcFight": "2024-09-28",
+      "eligibilityStatus": "latest_observed_mma_ufc",
+      "champion": false,
+      "upcoming": false,
+      "ranked": false,
+      "recentCount": 5,
+      "measuredCount": 4,
+      "evidenceStage": "fiveLinkedStatsGap",
+      "ufcTimelineDepthConfirmed": false,
+      "needsHistoryCheck": false,
+      "needsStats": true,
+      "recent": [
+        {
+          "date": "2024-09-28",
+          "opponent": "Ludovit Klein",
+          "boutId": "38708",
+          "method": "decision_unanimous",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2023-11-11",
+          "opponent": "Mateusz Rębecki",
+          "boutId": "59967",
+          "method": "submission",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2021-08-21",
+          "opponent": "Ignacio Bahamondes",
+          "boutId": "59424",
+          "method": "ko_tko",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2020-06-20",
+          "opponent": "Jim Miller",
+          "boutId": "66347",
+          "method": "submission",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2020-05-30",
+          "opponent": "Brok Weaver",
+          "boutId": "66185",
+          "method": "submission",
+          "outcome": "W",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
         }
       ]
     },
