@@ -894,6 +894,81 @@ def collect_careers(client,state,research):
         done+=1
 
 
+
+def collect_full_ufc_careers(client,state,research,coverage,today):
+    """Bounded incremental complete-UFC-history backfill for the 36-month cohort.
+
+    A separate state key permits one full-history refresh per eligible fighter
+    even when the legacy recent-five career endpoint was previously marked done.
+    Never call the API for review-required/excluded roster candidates.
+    """
+    if coverage.get("schema")!=1 or coverage.get("scope")!="ufc":
+        return 0
+    stamp=date_str(coverage.get("asOf"))
+    if not stamp or not (today-dt.timedelta(days=7)).isoformat()<=stamp<=today.isoformat():
+        return 0
+    try:
+        cutoff=months_before(dt.date.fromisoformat(stamp),36).isoformat()
+    except ValueError:
+        return 0
+    if coverage.get("activityCutoff")!=cutoff:
+        # An old 18/24-month snapshot cannot drive the full-career worker.
+        return 0
+    done=state.setdefault("ufcFullCareerDone",{})
+    profiles=research.setdefault("profiles",{})
+    cap=max(0,min(45,int(client.max_calls*.10)))
+    attempts=0
+    for athlete in coverage.get("fighters",[]):
+        if attempts>=cap or client.remaining<=0 or client.stopped or client.calls>=client.max_calls-12:
+            break
+        if not isinstance(athlete,dict) or athlete.get("eligibilityStatus")!="latest_observed_mma_ufc":
+            continue
+        slugval=slug(athlete.get("slug"))
+        recent_date=date_str(athlete.get("lastUfcFight"))
+        if not slugval or not recent_date or recent_date>today.isoformat():
+            continue
+        prior=done.get(slugval,{})
+        if (isinstance(prior,dict) and prior.get("status")=="checked"
+            and prior.get("lastUfcFight")==recent_date):
+            continue
+        if isinstance(prior,dict) and str(prior.get("retryAfter") or "")>today.isoformat():
+            continue
+        profile=profiles.setdefault(slugval,{
+            "name":safe(athlete.get("name"),110),"slug":slugval})
+        # Avoid fetching again when already captured by another valid
+        # career-history operation during the present collection batch.
+        cached=profile.get("ufcCareerHistory")
+        if (isinstance(cached,dict) and cached.get("complete") is True
+            and cached.get("observedOn")==today.isoformat()):
+            done[slugval]={"status":"checked","checkedAt":today.isoformat(),
+                           "lastUfcFight":recent_date,"count":cached.get("count",0)}
+            continue
+        stable=stable_indexed_fighter_id(state,slugval)
+        attempts+=1
+        payload=client.call("/fighters/"+(stable or slugval)+"/history")
+        if payload is None:
+            done[slugval]={"status":"retry","checkedAt":today.isoformat(),
+                           "lastUfcFight":recent_date,
+                           "retryAfter":(today+dt.timedelta(days=7)).isoformat()}
+            continue
+        saved=save_ufc_timeline(profile,payload,today)
+        state.setdefault("historyDone",{})[slugval]=len(saved)
+        full=profile.get("ufcCareerHistory") or {}
+        complete=full.get("complete") is True
+        done[slugval]={"status":"checked" if complete else "partial",
+                       "checkedAt":today.isoformat(),
+                       "lastUfcFight":recent_date,
+                       "count":full.get("count",0),
+                       "nativeLinkedCount":full.get("nativeLinkedCount",0),
+                       **({} if complete else {
+                            "retryAfter":(today+dt.timedelta(days=30)).isoformat()})}
+    if attempts:
+        complete=sum(x.get("status")=="checked" for x in done.values()
+                     if isinstance(x,dict))
+        print("UFCalendar full UFC career histories checked:",attempts,
+              "complete cached:",complete)
+    return attempts
+
 def verify_short_ufc_careers(client,state,research,coverage,today):
     """One-time full timelines for fighters with fewer than five UFC fights."""
     if coverage.get("schema")!=1 or coverage.get("scope")!="ufc":return 0
@@ -1058,6 +1133,7 @@ def main():
             print("UFCalendar incomplete UFC round rechecks:",recovery["retried"])
         collect_judging(client,state,cards,judging)
         collect_profiles(client,state,cards,research,today)
+        collect_full_ufc_careers(client,state,research,coverage,today)
         collect_careers(client,state,research)
         verify_short_ufc_careers(client,state,research,coverage,today)
         collect_championship_history(client,state,research)
@@ -1079,6 +1155,7 @@ def main():
     state["fighterProfilesDone"]=len(state["fighterDone"])
     state["scorecardsDone"]=len(state["scorecardDone"])
     state["careerHistoriesDone"]=len(state.get("historyDone",{}))
+    state["fullUfcCareerHistoriesDone"]=sum(x.get("status")=="checked" for x in state.get("ufcFullCareerDone",{}).values() if isinstance(x,dict))
     state["rankingHistoriesDone"]=len(state.get("rankingDone",{}))
     state["publicEvents"]=len(cards.get("events",{}))
     write(PROGRESS,state)
