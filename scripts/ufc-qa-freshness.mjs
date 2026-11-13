@@ -17,14 +17,15 @@ export const CRITICAL_PRODUCTION_FILES=Object.freeze([
  "data/ufc-ranked-profiles.json",
  "data/ufc-contender-profiles.json",
  "data/ufc-prospect-profiles.json",
- "data/ufc-roster-profiles.json"
+ "data/ufc-roster-profiles.json",
+ "data/ufc-fighter-v3.json"
 ]);
 export const REQUIRED_PRODUCTION_FILES=Object.freeze([
  "index.html","sw.js","assets/fighter-insights.js",
  "assets/ufc-prospect-contender.js","assets/fighter-power-index.js",
  "assets/fighter-power.css","data/ufc-champion-profiles.json",
  "data/ufc-contender-profiles.json","data/ufc-prospect-profiles.json",
- "data/ufc-roster-profiles.json"
+ "data/ufc-roster-profiles.json","data/ufc-fighter-v3.json"
 ]);
 const sha=x=>createHash("sha256").update(x).digest("hex");
 export function expectedLiveFiles(root){
