@@ -1,6 +1,6 @@
 {
-  "attemptedAt": "2026-11-13T19:20:14.632328+00:00",
-  "lastSuccessfulAt": "2026-11-13T19:20:14.632328+00:00",
+  "attemptedAt": "2026-11-13T20:17:43.128725+00:00",
+  "lastSuccessfulAt": "2026-11-13T20:17:43.128725+00:00",
   "sources": [
     {
       "name": "World Boxing News",
@@ -8,15 +8,15 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.worldboxingnews.net/feed/",
-      "lastSuccessfulAt": "2026-11-13T19:20:14.632328+00:00"
+      "lastSuccessfulAt": "2026-11-13T20:17:43.128725+00:00"
     },
     {
       "name": "MMA Fighting",
       "sport": "mma",
       "ok": true,
-      "items": 10,
+      "items": 9,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-13T19:20:14.632328+00:00"
+      "lastSuccessfulAt": "2026-11-13T20:17:43.128725+00:00"
     },
     {
       "name": "MMA Junkie",
@@ -24,7 +24,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-13T19:20:14.632328+00:00"
+      "lastSuccessfulAt": "2026-11-13T20:17:43.128725+00:00"
     },
     {
       "name": "Sherdog",
@@ -32,7 +32,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.sherdog.com/rss/news.xml",
-      "lastSuccessfulAt": "2026-11-13T19:20:14.632328+00:00"
+      "lastSuccessfulAt": "2026-11-13T20:17:43.128725+00:00"
     },
     {
       "name": "UFC",
@@ -40,7 +40,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-13T19:20:14.632328+00:00"
+      "lastSuccessfulAt": "2026-11-13T20:17:43.128725+00:00"
     },
     {
       "name": "ONE MMA",
@@ -55,7 +55,7 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/feed/",
-      "lastSuccessfulAt": "2026-11-13T19:20:14.632328+00:00"
+      "lastSuccessfulAt": "2026-11-13T20:17:43.128725+00:00"
     },
     {
       "name": "Cage Warriors",
@@ -63,15 +63,14 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Acagewarriors.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-13T19:20:14.632328+00:00"
+      "lastSuccessfulAt": "2026-11-13T20:17:43.128725+00:00"
     },
     {
       "name": "RIZIN",
       "sport": "mma",
-      "ok": true,
-      "items": 6,
-      "feedUrl": "https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-13T19:20:14.632328+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-13T19:20:14.632328+00:00",
+      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "KSW",
@@ -113,29 +112,29 @@
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "www.bing.com: No recent, source-verified articles"
+      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "FloGrappling",
       "sport": "grappling",
       "ok": true,
-      "items": 3,
+      "items": 4,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Aflograppling.com%2Farticles&format=rss",
-      "lastSuccessfulAt": "2026-11-13T19:20:14.632328+00:00"
+      "lastSuccessfulAt": "2026-11-13T20:17:43.128725+00:00"
     },
     {
       "name": "Real American Freestyle",
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "www.bing.com: No recent, source-verified articles"
+      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "United World Wrestling",
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "www.bing.com: No recent, source-verified articles"
+      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "ONE Live Results",
@@ -143,10 +142,110 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/category/live-results/feed/",
-      "lastSuccessfulAt": "2026-11-13T19:20:14.632328+00:00"
+      "lastSuccessfulAt": "2026-11-13T20:17:43.128725+00:00"
     }
   ],
   "articles": [
+    {
+      "id": "aa4042a6375e831183e3",
+      "title": "Mike Perry re-signs with UFC",
+      "url": "https://www.mmafighting.com/ufc/520949/mike-perry-re-signs-with-ufc",
+      "source": "MMA Fighting",
+      "sport": "mma",
+      "publishedAt": "2026-11-13T20:02:19+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2276637534.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "alt": "Mike Perry",
+        "credit": "Getty Images for Netflix",
+        "sourceUrl": "https://www.mmafighting.com/ufc/520949/mike-perry-re-signs-with-ufc",
+        "kind": "publisher",
+        "checkedAt": "2026-11-13T20:17:43.128725+00:00"
+      },
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Mike Perry is returning to the UFC octagon.",
+        "“Platinum” officially announced that he’s re-signed with the UFC on Friday.",
+        "Perry hasn’t competed for the promotion since losing a unanimous decision to Daniel Rodriguez at UFC Vegas 23 in April 2021."
+      ],
+      "firstSeenAt": "2026-11-13T20:17:43.128725+00:00"
+    },
+    {
+      "id": "793ccf56e44ec9f1109d",
+      "title": "Boxing Coach Arrested, Gym Shut Over Felony Child Sex Charges",
+      "url": "https://www.worldboxingnews.com/boxing-coach-arrested-child-sex-charges/",
+      "source": "World Boxing News",
+      "sport": "boxing",
+      "publishedAt": "2026-11-13T19:40:56+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://www.worldboxingnews.com/wp-content/uploads/2026/11/garland-boxing-gym-1.jpg",
+        "alt": "Boxing Coach Arrested, Gym Shut Over Felony Child Sex Charges",
+        "credit": "",
+        "sourceUrl": "https://www.worldboxingnews.com/boxing-coach-arrested-child-sex-charges/",
+        "kind": "publisher",
+        "checkedAt": "2026-11-13T20:17:43.128725+00:00"
+      },
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Agenis Apdul Santos, 42, was arrested at his home in Garland on November 11 following allegations involving a 15-year-old student.",
+        "A Garland Police Boxing Gym coach faces felony child sex charges in Texas.",
+        "The gym has closed as police appeal to parents for information."
+      ],
+      "firstSeenAt": "2026-11-13T20:17:43.128725+00:00"
+    },
+    {
+      "id": "c219d9eb41029326e104",
+      "title": "Vadim Nemkov sees ‘really good’ chance Fedor Emelianenko beats Francis Ngannou in boxing",
+      "url": "https://www.mmafighting.com/pfl/520659/vadim-nemkov-sees-really-good-chance-fedor-emelianenko-beats-francis-ngannou-in-boxing",
+      "source": "MMA Fighting",
+      "sport": "mma",
+      "publishedAt": "2026-11-13T19:30:00+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/10/20251213231911-_85A3396-JP.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "alt": "Vadim Nemkov and Fedor Emelianenko.",
+        "credit": "PFL",
+        "sourceUrl": "https://www.mmafighting.com/pfl/520659/vadim-nemkov-sees-really-good-chance-fedor-emelianenko-beats-francis-ngannou-in-boxing",
+        "kind": "publisher",
+        "checkedAt": "2026-11-13T20:17:43.128725+00:00"
+      },
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Emelianenko hasn’t fought in nearly four years, when he lost to Ryan Bader for the Bellator championship.",
+        "The PRIDE legend is now 50 years of age, and five years removed from his most recent MMA victory, a quick knockout over Tim Johnson.",
+        "He still puts the gloves on in the gym to help Nemkov prepare for his upcoming PFL title defense, battling Sergey Bilostennyi on Saturday in Dubai."
+      ],
+      "firstSeenAt": "2026-11-13T20:17:43.128725+00:00"
+    },
+    {
+      "id": "bd966a59479de5785724",
+      "title": "Tommy McMillen releases first statement since reported possible overdose",
+      "url": "https://www.mmafighting.com/ufc/520837/tommy-mcmillen-releases-first-statement-since-reported-possible-overdose",
+      "source": "MMA Fighting",
+      "sport": "mma",
+      "publishedAt": "2026-11-13T19:00:00+00:00",
+      "score": 0,
+      "image": {
+        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/09/gettyimages-2294954178.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "alt": "Tommy McMillen",
+        "credit": "Jeff Bottari, Zuffa LLC",
+        "sourceUrl": "https://www.mmafighting.com/ufc/520837/tommy-mcmillen-releases-first-statement-since-reported-possible-overdose",
+        "kind": "publisher",
+        "checkedAt": "2026-11-13T20:17:43.128725+00:00"
+      },
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Tommy McMillen is already focusing on his next fight following a scary report that the popular UFC prospect was reportedly hospitalized due to a drug overdose.",
+        "On Thursday, TMZ reported that McMillen was taken to a hospital Sunday after officers responded to call at a nightclub in Scottsdale, Ariz.",
+        "The 28-year-old featherweight was reportedly found on the ground with a white, powdery substance around him, prompting the officers to administer Narcan, an opioid antagonist."
+      ],
+      "firstSeenAt": "2026-11-13T20:17:43.128725+00:00"
+    },
     {
       "id": "0dd2263cc6ed8faa1cbd",
       "title": "Report: 8 sentenced to prison after Nurmagomedov-Dvalishvili hotel brawl",
@@ -163,13 +262,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-13T19:20:14.632328+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T19:20:14.632328+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "According to ESPN , eight people were sentenced to six months in prison Friday following a hotel brawl involving mixed martial arts stars Usman Nurmagomedov and Merab Dvalishvili , authorities said.",
         "10 ?????? ?? ?????? ???? ???? ????? ?????? ??????",
         "300 ??? ???? ??? ???? ?? ??????? ???? ??????"
       ],
+      "summaryCheckedAt": "2026-11-13T19:20:14.632328+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-13T19:20:14.632328+00:00"
     },
     {
@@ -188,13 +287,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-13T18:08:51.795308+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T18:08:51.795308+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Matt Brown was already an 11-fight UFC veteran when he got the call to face Stephen “Wonderboy” Thompson in his second appearance in the octagon.",
         "In many ways it felt like Brown was being set up as a stepping stone to help build Thompson’s career but the fight played out much differently than expected.",
         "Brown scored numerous takedowns and ultimately won a unanimous decision after three hard-fought rounds."
       ],
+      "summaryCheckedAt": "2026-11-13T18:08:51.795308+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-13T18:08:51.795308+00:00"
     },
     {
@@ -238,13 +337,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-13T18:08:51.795308+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T18:08:51.795308+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "A third fight has been added to the Christmas Eve boxing event headlined by Jake Paul and Cedric Doumbe.",
         "24 card in Dubai is a unified super welterweight championship rematch between Chantelle Cameron and Mikaela Mayer.",
         "The bout is slated to be contested over 10 rounds."
       ],
+      "summaryCheckedAt": "2026-11-13T18:08:51.795308+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-13T18:08:51.795308+00:00"
     },
     {
@@ -313,13 +412,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-13T19:20:14.632328+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T19:20:14.632328+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "See Where You Can Catch Zuffa Boxing Events From Your Country Read the Full Article Here",
         "Riyadh Season Zuffa Boxing 13 takes place Saturday, November 14 at The Venue, with the first bout at 7:15 AM ET.",
         "The nine-fight card is headlined by a 10-round super middleweight bout between Carlos Adames of the Dominican Republic and Gerome Warburton of Wales."
       ],
+      "summaryCheckedAt": "2026-11-13T19:20:14.632328+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-13T19:20:14.632328+00:00"
     },
     {
@@ -346,6 +445,32 @@
       "summaryCheckedAt": "2026-11-13T17:17:46.539651+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-13T17:17:46.539651+00:00"
+    },
+    {
+      "id": "d0e69aca74c510e920aa",
+      "title": "UFC 334 weigh-in video: Gane vs. Hokit",
+      "url": "https://www.mmafighting.com/ufc/520796/ufc-334-weigh-in-video-gane-vs-hokit",
+      "source": "MMA Fighting",
+      "sport": "mma",
+      "publishedAt": "2026-11-13T16:52:42+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2281407595.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "alt": "Ciryl Gane",
+        "credit": "Getty Images",
+        "sourceUrl": "https://www.mmafighting.com/ufc/520796/ufc-334-weigh-in-video-gane-vs-hokit",
+        "kind": "publisher",
+        "checkedAt": "2026-11-13T14:27:28.115292+00:00"
+      },
+      "summaryPoints": [
+        "At the UFC 334 weigh-ins, all 26 fighters on Saturday’s UFC fight card step on the scale Friday morning in New York City.",
+        "Watch the ceremonial weigh-ins above and highlights of the main and co-main event fighters below.",
+        "In the main event, Ciryl Gane defends his heavyweight title against Josh Hokit."
+      ],
+      "summaryCheckedAt": "2026-11-13T16:18:20.918097+00:00",
+      "summaryQualityVersion": 3,
+      "firstSeenAt": "2026-11-13T14:27:28.115292+00:00",
+      "updatedAt": "2026-11-13T16:18:20.918097+00:00"
     },
     {
       "id": "86c1d9dda80cb0254db9",
@@ -396,32 +521,6 @@
       "summaryCheckedAt": "2026-11-13T17:17:46.539651+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-13T17:17:46.539651+00:00"
-    },
-    {
-      "id": "d0e69aca74c510e920aa",
-      "title": "UFC 334 weigh-in video: Gane vs. Hokit",
-      "url": "https://www.mmafighting.com/ufc/520796/ufc-334-weigh-in-video-gane-vs-hokit",
-      "source": "MMA Fighting",
-      "sport": "mma",
-      "publishedAt": "2026-11-13T16:11:24+00:00",
-      "score": 1,
-      "image": {
-        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2281407595.jpg?quality=90&strip=all&crop=0,0,100,100",
-        "alt": "Ciryl Gane",
-        "credit": "Getty Images",
-        "sourceUrl": "https://www.mmafighting.com/ufc/520796/ufc-334-weigh-in-video-gane-vs-hokit",
-        "kind": "publisher",
-        "checkedAt": "2026-11-13T14:27:28.115292+00:00"
-      },
-      "summaryPoints": [
-        "At the UFC 334 weigh-ins, all 26 fighters on Saturday’s UFC fight card step on the scale Friday morning in New York City.",
-        "Watch the ceremonial weigh-ins above and highlights of the main and co-main event fighters below.",
-        "In the main event, Ciryl Gane defends his heavyweight title against Josh Hokit."
-      ],
-      "summaryCheckedAt": "2026-11-13T16:18:20.918097+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-13T14:27:28.115292+00:00",
-      "updatedAt": "2026-11-13T16:18:20.918097+00:00"
     },
     {
       "id": "0856540625b36ff33d4d",
@@ -649,6 +748,21 @@
       "firstSeenAt": "2026-11-13T13:07:24.223239+00:00"
     },
     {
+      "id": "c764e9c608e7c02eed31",
+      "title": "Usman Nurmagomedov, team members get Abu Dhabi prison sentences after brawl",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/13/usman-nurmagomedov-team-members-abu-dhabi-prison-sentence-brawl-merab-dvalishvili-ufc-pfl-mma/92756350007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-13T10:31:00+00:00",
+      "score": 0,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryCheckedAt": "2026-11-13T14:27:28.115292+00:00",
+      "summaryQualityVersion": 3,
+      "firstSeenAt": "2026-11-13T14:27:28.115292+00:00"
+    },
+    {
       "id": "eb9e530a9c9d321fae2d",
       "title": "Daniel Cormier: Usman Nurmagomedov will be in real big trouble – and deservedly so",
       "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/13/daniel-cormier-condemns-usman-nurmagomedovs-attack-on-dvalishvili/92755078007/",
@@ -659,11 +773,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-13T19:20:14.632328+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Daniel Cormier finds teammate Usman Nurmagomedov's attack on Merab Dvalishvili completely unacceptable."
       ],
+      "summaryCheckedAt": "2026-11-13T19:20:14.632328+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-13T19:20:14.632328+00:00"
     },
     {
@@ -683,6 +797,24 @@
       "summaryCheckedAt": "2026-11-13T17:17:46.539651+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-13T17:17:46.539651+00:00"
+    },
+    {
+      "id": "05618cbe028e17122820",
+      "title": "Rooting for Josh Hokit in UFC 344 title fight requires careful consideration | Opinion",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/13/josh-hokit-ufc-334-rooting-consideration-opinion/92751038007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-13T08:30:00+00:00",
+      "score": 4,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryPoints": [
+        "14, you need to familiarize yourself with Joaquin Buckley."
+      ],
+      "summaryCheckedAt": "2026-11-13T16:18:20.918097+00:00",
+      "summaryQualityVersion": 3,
+      "firstSeenAt": "2026-11-13T16:18:20.918097+00:00"
     },
     {
       "id": "24f31c295918db244f93",
@@ -728,24 +860,6 @@
       "firstSeenAt": "2026-11-13T08:59:03.232934+00:00"
     },
     {
-      "id": "05618cbe028e17122820",
-      "title": "Rooting for Josh Hokit in UFC 344 title fight requires careful consideration | Opinion",
-      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/13/josh-hokit-ufc-334-rooting-consideration-opinion/92751038007/",
-      "source": "MMA Junkie",
-      "sport": "mma",
-      "publishedAt": "2026-11-13T07:31:00+00:00",
-      "score": 4,
-      "sourceMethod": "Bing News indexed MMA Junkie original",
-      "timeBasis": "Bing News feed timestamp",
-      "image": null,
-      "summaryPoints": [
-        "14, you need to familiarize yourself with Joaquin Buckley."
-      ],
-      "summaryCheckedAt": "2026-11-13T16:18:20.918097+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-13T16:18:20.918097+00:00"
-    },
-    {
       "id": "55876d64457e142be1e8",
       "title": "UFC 334 weigh-in video: Kayla Harrison, Amanda Nunes hit marks for for super fight",
       "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/13/ufc-334-weigh-in-video-kayla-harrison-amanda-nunes-hit-marks/92752965007/",
@@ -777,21 +891,6 @@
       "summaryCheckedAt": "2026-11-13T16:18:20.918097+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-13T16:18:20.918097+00:00"
-    },
-    {
-      "id": "c764e9c608e7c02eed31",
-      "title": "Usman Nurmagomedov, team members get Abu Dhabi prison sentences after brawl",
-      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/13/usman-nurmagomedov-team-members-abu-dhabi-prison-sentence-brawl-merab-dvalishvili-ufc-pfl-mma/92756350007/",
-      "source": "MMA Junkie",
-      "sport": "mma",
-      "publishedAt": "2026-11-13T05:29:00+00:00",
-      "score": 0,
-      "sourceMethod": "Bing News indexed MMA Junkie original",
-      "timeBasis": "Bing News feed timestamp",
-      "image": null,
-      "summaryCheckedAt": "2026-11-13T14:27:28.115292+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-13T14:27:28.115292+00:00"
     },
     {
       "id": "e6e9f3b958ec5aff51a5",
@@ -1092,13 +1191,13 @@
         "credit": "",
         "sourceUrl": "https://www.sherdog.com/news/news/Report-UFC-fighter-Tommy-McMillen-hospitalized-after-being-found-unresponsive-203600",
         "kind": "publisher",
-        "checkedAt": "2026-11-12T19:35:49.929158+00:00"
+        "checkedAt": "2026-11-13T20:17:43.128725+00:00"
       },
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Ultimate Fighting Championship featherweight Tommy McMillen was allegedly taken to a hospital Sunday after he was found unresponsive at a nightclub in Scottsdale, Arizona, TMZ reported ."
       ],
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-12T19:35:49.929158+00:00"
     },
     {
@@ -1265,13 +1364,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-12T19:35:49.929158+00:00"
       },
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
+      "summaryQualityVersion": 3,
+      "firstSeenAt": "2026-11-12T19:35:49.929158+00:00",
       "summaryPoints": [
         "Welsh Middleweight Gerome Warburton Is Ready For The Biggest Opportunity Of His Career In The Main Event Of Zuffa Boxing 13.",
         "It proved that Warburton had the nerve and the temperament for the big occasion, and led to his latest assignment, which comes this weekend in Riyadh, Saudi Arabia."
-      ],
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-12T19:35:49.929158+00:00"
+      ]
     },
     {
       "id": "900910bda7073ea39a9b",
@@ -1289,7 +1388,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-12T19:35:49.929158+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-12T19:35:49.929158+00:00",
       "summaryPoints": [
@@ -1312,7 +1411,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-12T19:35:49.929158+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-12T19:35:49.929158+00:00",
       "summaryPoints": [
@@ -1360,7 +1459,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-12T19:35:49.929158+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-12T19:35:49.929158+00:00",
       "summaryPoints": [
@@ -1929,12 +2028,12 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
+      "summaryQualityVersion": 3,
+      "firstSeenAt": "2026-11-12T19:35:49.929158+00:00",
       "summaryPoints": [
         "NEW YORK – Ciryl Gane didn't mean to call Tom Aspinall mentally fragile after he struggled with recovery."
-      ],
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-12T19:35:49.929158+00:00"
+      ]
     },
     {
       "id": "46fa378cb91619935d7d",
@@ -1947,12 +2046,12 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
+      "summaryQualityVersion": 3,
+      "firstSeenAt": "2026-11-12T19:35:49.929158+00:00",
       "summaryPoints": [
         "Former UFC dual-champion Nunes is coming out of retirement after hanging up her gloves in June 2023."
-      ],
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-12T19:35:49.929158+00:00"
+      ]
     },
     {
       "id": "cf2c2a99b7975371d881",
@@ -2624,7 +2723,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-11T18:27:39.794175+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-11T18:27:39.794175+00:00",
       "summaryPoints": [
@@ -3333,7 +3432,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-11T18:27:39.794175+00:00",
       "summaryPoints": [
@@ -4189,7 +4288,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-10T17:33:43.352232+00:00"
     },
@@ -4204,7 +4303,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-10T16:38:00.624614+00:00",
       "summaryPoints": [
@@ -4282,7 +4381,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-11T04:33:09.587654+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-10T04:28:44.624846+00:00",
       "summaryPoints": [
@@ -4306,7 +4405,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-11T04:33:09.587654+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-10T04:28:44.624846+00:00",
       "summaryPoints": [
@@ -4930,7 +5029,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-10T04:28:44.624846+00:00",
       "summaryPoints": [
@@ -5435,7 +5534,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-09T17:10:57.896125+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T17:10:57.896125+00:00",
       "summaryPoints": [
@@ -5453,7 +5552,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T17:10:57.896125+00:00",
       "summaryPoints": [
@@ -5471,7 +5570,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
+      "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-09T16:02:34.418349+00:00",
       "summaryPoints": [
@@ -6395,86 +6494,6 @@
       "summaryCheckedAt": "2026-11-09T08:52:53.237618+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-08T20:11:16.304826+00:00"
-    },
-    {
-      "id": "2e06020dd5c325de07ec",
-      "title": "Conor McGregor: ‘It has to be Max Holloway’ for final UFC fight, issues profane warning to lower level fighters",
-      "url": "https://www.mmafighting.com/ufc/519891/conor-mcgregor-it-has-to-be-max-holloway-for-final-ufc-fight-issues-profane-warning-to-lower-level-fighters",
-      "source": "MMA Fighting",
-      "sport": "mma",
-      "publishedAt": "2026-11-08T13:00:00+00:00",
-      "score": 1,
-      "image": {
-        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/07/gettyimages-2285711529.jpg?quality=90&strip=all&crop=0,0,100,100",
-        "alt": "Conor McGregor and Max Holloway",
-        "credit": "Jeff Bottari, Zuffa LLC",
-        "sourceUrl": "https://www.mmafighting.com/ufc/519891/conor-mcgregor-it-has-to-be-max-holloway-for-final-ufc-fight-issues-profane-warning-to-lower-level-fighters",
-        "kind": "publisher",
-        "checkedAt": "2026-11-10T06:30:36.700519+00:00"
-      },
-      "summaryPoints": [
-        "Conor McGregor has some unfinished business with Max Holloway.",
-        "In fact, McGregor expects his comeback to happen sooner than later and he doesn’t see any option as appealing as running it back with Holloway again.",
-        "“It has to be Holloway,” McGregor said at the BKFC Glasgow post-fight press conference ."
-      ],
-      "summaryCheckedAt": "2026-11-09T09:17:09.442957+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-08T20:11:16.304826+00:00"
-    },
-    {
-      "id": "3c638d22a1a5586c4a8b",
-      "title": "UFC Fight Night 295: Israel Adesanya vs. Shara Magomedov odds, what to know",
-      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-saudi-arabia-israel-adesanya-vs-shara-magomedov-betting-odds-details-info/92679084007/",
-      "source": "MMA Junkie",
-      "sport": "mma",
-      "publishedAt": "2026-11-08T12:30:00+00:00",
-      "score": 1,
-      "sourceMethod": "Bing News indexed MMA Junkie original",
-      "timeBasis": "Bing News feed timestamp",
-      "image": null,
-      "summaryCheckedAt": "2026-11-13T13:07:24.223239+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-09T09:17:09.442957+00:00"
-    },
-    {
-      "id": "d079965711a912635ce1",
-      "title": "Mayweather Ringside as Perez, Taduran, Oberlton and Taylor Win",
-      "url": "https://www.worldboxingnews.com/mayweather-perez-taduran-oberlton-results/",
-      "source": "World Boxing News",
-      "sport": "boxing",
-      "publishedAt": "2026-11-08T12:29:17+00:00",
-      "score": 0,
-      "image": {
-        "url": "https://www.worldboxingnews.com/wp-content/uploads/2026/11/PEREZ-VS-RIVER.jpg",
-        "alt": "Mayweather Ringside as Perez, Taduran, Oberlton and Taylor Win",
-        "credit": "",
-        "sourceUrl": "https://www.worldboxingnews.com/mayweather-perez-taduran-oberlton-results/",
-        "kind": "publisher",
-        "checkedAt": "2026-11-09T20:13:11.550778+00:00"
-      },
-      "summaryPoints": [
-        "Floyd Mayweather watches ringside as Abraham Perez, Pedro Taduran, Atif Oberlton and Pryce Taylor claim victories in Albuquerque.",
-        "Fighting in front of his hometown supporters at Kiva Auditorium, Perez dropped Rivera in the second round and controlled the contest on his way to a unanimous decision.",
-        "The unbeaten champion improved to 16-0 with seven knockouts, winning by scores of 118-109, 120-107 and 119-109."
-      ],
-      "summaryCheckedAt": "2026-11-09T08:52:53.237618+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-08T20:11:16.304826+00:00"
-    },
-    {
-      "id": "d4c9dc7a145e813c7603",
-      "title": "Johnny Walker: Alexander Volkov deserves UFC heavyweight title shot",
-      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-334-johnny-walker-prediction-alexander-volkov-heavyweight-title-shot/92677771007/",
-      "source": "MMA Junkie",
-      "sport": "mma",
-      "publishedAt": "2026-11-08T11:40:00+00:00",
-      "score": 4,
-      "sourceMethod": "Bing News indexed MMA Junkie original",
-      "timeBasis": "Bing News feed timestamp",
-      "image": null,
-      "summaryCheckedAt": "2026-11-13T13:07:24.223239+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-09T06:54:38.438866+00:00"
     }
   ],
   "resultReports": [
@@ -6498,6 +6517,25 @@
       "firstSeenAt": "2026-11-13T19:20:14.632328+00:00"
     },
     {
+      "id": "b15cde1d135034696341",
+      "title": "UFC 334 weigh-in results: 1 fighter misses weight by over 4 pounds, championship bouts set",
+      "url": "https://www.mmafighting.com/ufc/520891/ufc-334-weigh-in-results-1-fighter-misses-weight-by-over-4-pounds-championship-bouts-set",
+      "source": "MMA Fighting",
+      "sport": "mma",
+      "publishedAt": "2026-11-13T16:55:28+00:00",
+      "score": 8,
+      "_summaryText": "Terrance McKinney is lucky to still be fighting at UFC 334. Saturday’s event is headlined by a pair of title fights featuring Ciryl Gane and Josh Hokit, and Kayla Harrison and Amanda Nunes, but McKinney caused a stir at Friday’s official weigh-ins for the wrong reasons. The all-action lightweight registered at 160.2 pounds on the [&#8230;] \n\t\t\t\t\t\t\t\t\t\t\t\n\n\t\t\t\t\t\t\n<figure>\n\n<img alt=\"Terrance McKinney\" data-caption=\"Terrance McKinney badly missed weight for UFC 334 | Jeff Bottari, Zuffa LLC\" data-portal-copyright=\"Jeff Bottari, Zuffa LLC\" data-has-syndication-rights=\"1\" src=\"https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2304958049.jpg?quality=90&#038;strip=all&#038;crop=0,0,100,100\" />\n\t<figcaption>\n\tTerrance McKinney badly missed weight for UFC 334 | Jeff Bottari, Zuffa LLC\t</figcaption>\n</figure>\n<p class=\"wp-block-paragraph\">Terrance McKinney is lucky to still be fighting at UFC 334.</p>\n\n<p class=\"wp-block-paragraph\">Saturday’s event is headlined by a pair of title fights featuring Ciryl Gane and Josh Hokit, and Kayla Harrison and Amanda Nunes, but McKinney caused a stir at Friday’s official weigh-ins for the wrong reasons. The all-action lightweight registered at 160.2 pounds on the scale, more than four pounds over the limit for his preliminary bout with Jim Miller (155.6).</p>\n\n<p class=\"wp-block-paragraph\">Fortunately for McKinney, Miller has agreed to proceed with the bout at a catchweight with McKinney forfeiting 30 percent of his purse.</p>\n\n<p class=\"wp-block-paragraph\">McKinney was quick to release a statement to social media apologizing to Miller and declaring that he will soon move up to the 170-pound division. See McKinney’s comments and watch his weigh-in below.</p>\n\n<figure class=\"wp-block-embed is-type-rich is-provider-instagram wp-block-embed-instagram\"><div class=\"wp-block-embed__wrapper\">\n<blockquote class=\"instagram-media\" data-instgrm-captioned data-instgrm-permalink=\"https://www.instagram.com/p/Dfr62N6IK1L/?utm_source=ig_embed&amp;utm_campaign=loading\" data-instgrm-version=\"14\"><div> <a href=\"https://www.instagram.com/p/Dfr62N6IK1L/?utm_source=ig_embed&amp;utm_campaign=loading\" target=\"_blank\"> <div> <div></div> <div> <div></div> <div></div></div></div><div></div> <div></div><div> <div>View this post on Instagram</div></div><div></div> <div><div> <div></div> <div></div> <div></div></div><div> <div></div> <div></div></div><div> <div></div> <div></div> <div></div></div></div> <div> <div></div> <div></div></div></a></div></blockquote>\n</div></figure>\n\n<p class=\"wp-block-paragraph\">“I want to apologize to everyone and UFC for missing weight,” McKinney wrote. “I’ve never missed weight in my life and I’m sorry, but ship has sailed for 155. It’s official, my last bout at lightweight. I’m trusting in God will make sure I’m ready for whatever comes at welterweight.”</p>\n\n<p class=\"wp-block-paragraph\">“I want to thank Jim Miller personally for still taking the fight. He’s a real gangster and also want to apologize to him for failing to make. Jim f*cking Miller GOATed, appreciate you for letting dream still be a reality fighting at MSG.”</p>\n\n<p class=\"wp-block-paragraph\">One other preliminary fighter, Juan Diaz, also missed weight, coming in 0.4 pounds over the 135-pound limit (including one-pound allowance for a non-title fight). His bout with Alatengheili proceeds as a catchweight with Diaz forfeiting 20 percent of his purse as penalty.</p>\n\n<p class=\"wp-block-paragraph\">Gane and Hokit both took their time arriving at Friday’s weigh-ins, but had no issues making weight for the heavyweight title main event, coming in well under the 265-pounds limit with Gane at 242.6 and Hokit at 231.4.</p>\n\n<p class=\"wp-block-paragraph\">The first two fighters to weigh in were Harrison and Nunes, who both hit championship weight at 135 pounds on the dot. Harrison defends her bantamweight championship for the first time, while Nunes, a former two-division champion, competes in her first bout since announcing a retirement in June 2023.</p>\n\n<p class=\"wp-block-paragraph\">Check out UFC 334 weigh-in results below.</p>\n\n<p class=\"wp-block-paragraph\"><strong>Main Card (Paramount+ 9 p.m. ET)</strong></p>\n\n<p class=\"wp-block-paragraph\">Ciryl Gane (242.6) vs. Josh Hokit (231.4)</p>\n\n<p class=\"wp-block-paragraph\">Kayla Harrison (135.0) vs. Amanda Nunes (135.0)</p>\n\n<p class=\"wp-block-paragraph\"><strong>Backup fighter: </strong>Joselyne Edwards (134.8)</p>\n\n<p class=\"wp-block-paragraph\">Caio Borralho (185.4) vs. Yousri Belgaroui (186)</p>\n\n<p class=\"wp-block-paragraph\">Uros Medic (171) vs. Kevin Holland (170.4)</p>\n\n<p class=\"wp-block-paragraph\">Bilal Hasan (125.4) vs. Luis Gurule (125.2)</p>\n\n<p class=\"wp-block-paragraph\"><strong>Preliminary Card (Paramount+ at 7 p.m. ET)</strong></p>\n\n<p class=\"wp-block-paragraph\">Stephen Thompson (170.6) vs. Charles Radtke (170.8)</p>\n\n<p class=\"wp-block-paragraph\">Drew Dober (155.4) vs. Chris Duncan (155.4)</p>\n\n<p class=\"wp-block-paragraph\">Jim Miller (155.6) vs. Terrance McKinney (160.2)*</p>\n\n<p class=\"wp-block-paragraph\">Donte Johnson (189.0) vs. Cesar Almeida (189.6) — 190-pound catchweight</p>\n\n<p class=\"wp-block-paragraph\"><strong>Early Prelims (Paramount+ or UFC Fight Pass at 5 p.m. ET)</strong></p>\n\n<p class=\"wp-block-paragraph\">Jared Gordon (155.6) vs. Melquizael Costa (155.4)</p>\n\n<p class=\"wp-block-paragraph\">Macy Chiasson (134.8) vs. Bia Mesquita (135.8)</p>\n\n<p class=\"wp-block-paragraph\">Alatengheili (135.6) vs. Juan Diaz (136.4)**</p>\n\n<p class=\"wp-block-paragraph\">Evan Elder (156.0) vs. Samuel Sanches (153.6)</p>\n\n<p class=\"wp-block-paragraph\">*McKinney missed weight. His bout with Jim Miller proceeds as a catchweight with McKinney forfeiting 30 percent of his purse as penalty</p>\n\n<p class=\"wp-block-paragraph\">**Diaz missed weight. His bout with Alatengheili proceeds as a catchweight with Diaz forfeiting 20 percent of his purse as penalty</p>\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t",
+      "image": {
+        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2304958049.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "alt": "Terrance McKinney",
+        "credit": "Jeff Bottari, Zuffa LLC",
+        "sourceUrl": "https://www.mmafighting.com/ufc/520891/ufc-334-weigh-in-results-1-fighter-misses-weight-by-over-4-pounds-championship-bouts-set",
+        "kind": "publisher",
+        "checkedAt": "2026-11-13T17:17:46.539651+00:00"
+      },
+      "firstSeenAt": "2026-11-13T17:17:46.539651+00:00"
+    },
+    {
       "id": "a1ccbfab826ba1a2d2cc",
       "title": "UFC 334 weigh-in results: 2 title fights set; 2 fighters heavy",
       "url": "https://www.sherdog.com/news/news/UFC-334-weighin-results-2-title-fights-set-2-fighters-heavy-203617",
@@ -6511,25 +6549,6 @@
         "alt": "Article image: UFC 334 weigh-in results: 2 title fights set; 2 fighters heavy",
         "credit": "",
         "sourceUrl": "https://www.sherdog.com/news/news/UFC-334-weighin-results-2-title-fights-set-2-fighters-heavy-203617",
-        "kind": "publisher",
-        "checkedAt": "2026-11-13T17:17:46.539651+00:00"
-      },
-      "firstSeenAt": "2026-11-13T17:17:46.539651+00:00"
-    },
-    {
-      "id": "b15cde1d135034696341",
-      "title": "UFC 334 weigh-in results: 1 fighter misses weight by over 4 pounds, championship bouts set",
-      "url": "https://www.mmafighting.com/ufc/520891/ufc-334-weigh-in-results-1-fighter-misses-weight-by-over-4-pounds-championship-bouts-set",
-      "source": "MMA Fighting",
-      "sport": "mma",
-      "publishedAt": "2026-11-13T16:19:20+00:00",
-      "score": 8,
-      "_summaryText": "Terrance McKinney is lucky to still be fighting at UFC 334. Saturday’s event is headlined by a pair of title fights featuring Ciryl Gane and Josh Hokit, and Kayla Harrison and Amanda Nunes, but McKinney caused a stir at Friday’s official weigh-ins for the wrong reasons. The all-action lightweight registered at 160.2 pounds on the [&#8230;] \n\t\t\t\t\t\t\t\t\t\t\t\n\n\t\t\t\t\t\t\n<figure>\n\n<img alt=\"Terrance McKinney\" data-caption=\"Terrance McKinney badly missed weight for UFC 334 | Jeff Bottari, Zuffa LLC\" data-portal-copyright=\"Jeff Bottari, Zuffa LLC\" data-has-syndication-rights=\"1\" src=\"https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2304958049.jpg?quality=90&#038;strip=all&#038;crop=0,0,100,100\" />\n\t<figcaption>\n\tTerrance McKinney badly missed weight for UFC 334 | Jeff Bottari, Zuffa LLC\t</figcaption>\n</figure>\n<p class=\"wp-block-paragraph\">Terrance McKinney is lucky to still be fighting at UFC 334.</p>\n\n<p class=\"wp-block-paragraph\">Saturday’s event is headlined by a pair of title fights featuring Ciryl Gane and Josh Hokit, and Kayla Harrison and Amanda Nunes, but McKinney caused a stir at Friday’s official weigh-ins for the wrong reasons. The all-action lightweight registered at 160.2 pounds on the scale, more than four pounds over the limit for his preliminary bout with Jim Miller (155.6).</p>\n\n<p class=\"wp-block-paragraph\">Fortunately for McKinney, Miller has agreed to proceed with the bout at a catchweight with McKinney forfeiting 30 percent of his purse.</p>\n\n<p class=\"wp-block-paragraph\">McKinney was quick to release a statement to social media apologizing to Miller and declaring that he will soon move up to the 170-pound division. See McKinney’s comments and watch his weigh-in below.</p>\n\n<figure class=\"wp-block-embed is-type-rich is-provider-instagram wp-block-embed-instagram\"><div class=\"wp-block-embed__wrapper\">\n<blockquote class=\"instagram-media\" data-instgrm-captioned data-instgrm-permalink=\"https://www.instagram.com/p/Dfr62N6IK1L/?utm_source=ig_embed&amp;utm_campaign=loading\" data-instgrm-version=\"14\"><div> <a href=\"https://www.instagram.com/p/Dfr62N6IK1L/?utm_source=ig_embed&amp;utm_campaign=loading\" target=\"_blank\"> <div> <div></div> <div> <div></div> <div></div></div></div><div></div> <div></div><div> <div>View this post on Instagram</div></div><div></div> <div><div> <div></div> <div></div> <div></div></div><div> <div></div> <div></div></div><div> <div></div> <div></div> <div></div></div></div> <div> <div></div> <div></div></div></a></div></blockquote>\n</div></figure>\n\n<p class=\"wp-block-paragraph\">“I want to apologize to everyone and UFC for missing weight,” McKinney wrote. “I’ve never missed weight in my life and I’m sorry, but ship has sailed for 155. It’s official, my last bout at lightweight. I’m trusting in God will make sure I’m ready for whatever comes at welterweight.”</p>\n\n<p class=\"wp-block-paragraph\">“I want to thank Jim Miller personally for still taking the fight. He’s a real gangster and also want to apologize to him for failing to make. Jim f*cking Miller GOATed, appreciate you for letting dream still be a reality fighting at MSG.”</p>\n\n<p class=\"wp-block-paragraph\">One other preliminary fighter, Juan Diaz, also missed weight, coming in 0.4 pounds over the 135-pound limit (including one-pound allowance for a non-title fight). The status of his bout against Alatengheili is still to be determined.</p>\n\n<p class=\"wp-block-paragraph\">Gane and Hokit both took their time arriving at Friday’s weigh-ins, but had no issues making weight for the heavyweight title main event, coming in well under the 265-pounds limit with Gane at 242.6 and Hokit at 231.4.</p>\n\n<p class=\"wp-block-paragraph\">The first two fighters to weigh in were Harrison and Nunes, who both hit championship weight at 135 pounds on the dot. Harrison defends her bantamweight championship for the first time, while Nunes, a former two-division champion, competes in her first bout since announcing a retirement in June 2023.</p>\n\n<p class=\"wp-block-paragraph\">Check out UFC 334 weigh-in results below.</p>\n\n<p class=\"wp-block-paragraph\"><strong>Main Card (Paramount+ 9 p.m. ET)</strong></p>\n\n<p class=\"wp-block-paragraph\">Ciryl Gane vs. Josh Hokit</p>\n\n<p class=\"wp-block-paragraph\">Kayla Harrison (135.0) vs. Amanda Nunes (135.0)</p>\n\n<p class=\"wp-block-paragraph\"><strong>Backup fighter: </strong>Joselyne Edwards (134.8)</p>\n\n<p class=\"wp-block-paragraph\">Caio Borralho (185.4) vs. Yousri Belgaroui (186)</p>\n\n<p class=\"wp-block-paragraph\">Uros Medic (171) vs. Kevin Holland (170.4)</p>\n\n<p class=\"wp-block-paragraph\">Bilal Hasan (125.4) vs. Luis Gurule (125.2)</p>\n\n<p class=\"wp-block-paragraph\"><strong>Preliminary Card (Paramount+ at 7 p.m. ET)</strong></p>\n\n<p class=\"wp-block-paragraph\">Stephen Thompson (170.6) vs. Charles Radtke (170.8)</p>\n\n<p class=\"wp-block-paragraph\">Drew Dober (155.4) vs. Chris Duncan (155.4)</p>\n\n<p class=\"wp-block-paragraph\">Jim Miller (155.6) vs. Terrance McKinney (160.2)*</p>\n\n<p class=\"wp-block-paragraph\">Donte Johnson (189.0) vs. Cesar Almeida (189.6) — 190-pound catchweight</p>\n\n<p class=\"wp-block-paragraph\"><strong>Early Prelims (Paramount+ or UFC Fight Pass at 5 p.m. ET)</strong></p>\n\n<p class=\"wp-block-paragraph\">Jared Gordon (155.6) vs. Melquizael Costa (155.4)</p>\n\n<p class=\"wp-block-paragraph\">Macy Chiasson (134.8) vs. Bia Mesquita (135.8)</p>\n\n<p class=\"wp-block-paragraph\">Alatengheili (135.6) vs. Juan Diaz (136.4)**</p>\n\n<p class=\"wp-block-paragraph\">Evan Elder (156.0) vs. Samuel Sanches (153.6)</p>\n\n<p class=\"wp-block-paragraph\">*McKinney missed weight. His bout with Jim Miller proceeds as a catchweight with McKinney forfeiting 30 percent of his purse as penalty</p>\n\n<p class=\"wp-block-paragraph\">**missed weight</p>\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t",
-      "image": {
-        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2304958049.jpg?quality=90&strip=all&crop=0,0,100,100",
-        "alt": "Terrance McKinney",
-        "credit": "Jeff Bottari, Zuffa LLC",
-        "sourceUrl": "https://www.mmafighting.com/ufc/520891/ufc-334-weigh-in-results-1-fighter-misses-weight-by-over-4-pounds-championship-bouts-set",
         "kind": "publisher",
         "checkedAt": "2026-11-13T17:17:46.539651+00:00"
       },
@@ -6827,26 +6846,14 @@
     }
   ],
   "deduplication": {
-    "checkedAt": "2026-11-13T19:20:14.632328+00:00",
-    "removedArticles": 3,
+    "checkedAt": "2026-11-13T20:17:43.128725+00:00",
+    "removedArticles": 1,
     "removedResultReports": 0,
     "examples": [
       {
-        "url": "https://jp.rizinff.com/_ct/17874942",
-        "title": "『abc presents RIZIN.55』試合結果一覧",
-        "keptUrl": "https://jp.rizinff.com/_ct/17874934",
-        "reason": "same story"
-      },
-      {
-        "url": "https://jp.rizinff.com/_ct/17874427",
-        "title": "abc presents RIZIN.55 計量結果／フェイスオフ、身長差、リーチ差も掲載中",
-        "keptUrl": "https://jp.rizinff.com/_ct/17874934",
-        "reason": "same story"
-      },
-      {
-        "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/12/ufc-334-josh-hokit-tom-aspinall-doesnt-want/92739156007/",
-        "title": "Josh Hokit: I don't think Tom Aspinall wants to come back",
-        "keptUrl": "https://www.mmafighting.com/ufc/520549/josh-hokit-open-to-fight-tom-aspinall-after-ufc-334-but-i-dont-think-he-wants-to-come-back",
+        "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/12/video-ufc-334-pre-fight-press-conference-live-stream/92634285007/",
+        "title": "Video: 'UFC 334: Gane vs. Hokit' pre-fight press conference replay",
+        "keptUrl": "https://www.mmafighting.com/ufc/520720/ufc-334-press-conference-video",
         "reason": "same story"
       }
     ]
