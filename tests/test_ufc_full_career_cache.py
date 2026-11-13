@@ -38,16 +38,45 @@ class FullCareerCacheTests(unittest.TestCase):
                    "fighters":[{"slug":"veteran","eligibilityStatus":"latest_observed_mma_ufc"}]}
         return state,research,candidate
 
+    def approval(self,slugs=None):
+        return {"schema":1,"scope":"ufc-36-month-roster","status":"approved",
+                "approvedBy":"user","rosterAsOf":"2026-11-13",
+                "approvedAt":"2026-11-13",
+                "approvedFighters":slugs if slugs is not None else ["veteran"]}
+
+    def test_no_signoff_no_full_career_calls(self):
+        state,research,candidate=self.fixture()
+        client=Fake()
+        self.assertEqual(m.collect_ufc_career_bouts(
+          client,state,research,candidate,dt.date(2026,11,13)),0)
+        self.assertEqual(client.paths,[])
+        self.assertEqual(m.collect_ufc_career_bouts(
+          client,state,research,candidate,dt.date(2026,11,13),
+          {"status":"pending_review"}),0)
+        self.assertEqual(client.paths,[])
+
+    def test_signed_off_cohort_is_strict_allowlist(self):
+        state,research,candidate=self.fixture()
+        client=Fake()
+        self.assertEqual(m.collect_ufc_career_bouts(
+          client,state,research,candidate,dt.date(2026,11,13),
+          self.approval(["someone-else"])),0)
+        self.assertEqual(client.paths,[])
+        self.assertEqual(m.collect_ufc_career_bouts(
+          client,state,research,candidate,dt.date(2026,11,13),
+          {**self.approval(),"approvedAt":"2026-11-14"}),0)
+        self.assertEqual(client.paths,[])
+
     def test_cached_career_id_can_be_older_than_activity_window(self):
         state,research,candidate=self.fixture()
         client=Fake()
         self.assertEqual(m.collect_ufc_career_bouts(
-          client,state,research,candidate,dt.date(2026,11,13)),1)
+          client,state,research,candidate,dt.date(2026,11,13),self.approval()),1)
         self.assertEqual(client.paths,["/fights/800"])
         self.assertEqual(state["bouts"]["800"]["eventDate"],"2008-05-01")
         self.assertEqual(state["bouts"]["800"]["org"],"ufc")
         self.assertEqual(m.collect_ufc_career_bouts(
-          client,state,research,candidate,dt.date(2026,11,13)),0)
+          client,state,research,candidate,dt.date(2026,11,13),self.approval()),0)
         self.assertEqual(len(client.paths),1,"Never re-request an indexed career fight")
 
     def test_unverified_scope_cannot_trigger_paid_career_hydration(self):
@@ -55,14 +84,14 @@ class FullCareerCacheTests(unittest.TestCase):
         candidate["indexCompleteness"]="36_month_event_scan_incomplete"
         client=Fake()
         self.assertEqual(m.collect_ufc_career_bouts(
-          client,state,research,candidate,dt.date(2026,11,13)),0)
+          client,state,research,candidate,dt.date(2026,11,13),self.approval()),0)
         self.assertEqual(client.paths,[])
 
     def test_feeder_bouts_are_not_cached_as_official_ufc_fights(self):
         state,research,candidate=self.fixture()
         client=Fake("Dana White's Contender Series 99")
         self.assertEqual(m.collect_ufc_career_bouts(
-          client,state,research,candidate,dt.date(2026,11,13)),0)
+          client,state,research,candidate,dt.date(2026,11,13),self.approval()),0)
         self.assertNotIn("800",state["bouts"])
         self.assertEqual(state["ufcCareerBoutChecks"]["800"]["status"],
                          "requires_manual_review")

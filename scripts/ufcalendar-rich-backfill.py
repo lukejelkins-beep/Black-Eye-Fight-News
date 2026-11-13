@@ -26,6 +26,7 @@ PFL_ARCHIVE = ROOT / "data/pfl-research-archive.json"
 FIGHTERS = ROOT / "data/ufcalendar-fighter-research.json"
 COVERAGE = ROOT / "data/ufc-last-five-coverage.json"
 COVERAGE36 = ROOT / "data/ufc-36-month-candidates.json"
+ROSTER_APPROVAL = ROOT / "data/ufc-36-month-roster-approval.json"
 JUDGING = ROOT / "data/ufcalendar-judging-research.json"
 BASE = "https://api.ufcalendar.com/v1"
 MAX_SPEND_PER_MONTH = 27000  # 90% of Hobby; reserve 3,000 for live BEFN integrations.
@@ -822,7 +823,36 @@ def collect_careers(client,state,research):
 
 
 
-def collect_ufc_career_bouts(client,state,research,coverage,today):
+def approved_ufc_career_cohort(approval,coverage,today):
+    """Only manually approved fighters can enter the new full-career stage.
+
+    A signed-off snapshot is an explicit slug allowlist, not a broad boolean
+    that could accidentally include newly discovered unreviewed candidates.
+    Existing cached research is retained for roster evidence and normal cards.
+    """
+    if not isinstance(approval,dict) or not isinstance(coverage,dict):
+        return set()
+    if (approval.get("schema")!=1 or approval.get("scope")!="ufc-36-month-roster"
+        or approval.get("status")!="approved"
+        or approval.get("approvedBy")!="user"
+        or coverage.get("indexCompleteness")!="36_month_event_scan_complete"):
+        return set()
+    snapshot=date_str(approval.get("rosterAsOf"))
+    approved_at=date_str(approval.get("approvedAt"))
+    current=date_str(coverage.get("asOf"))
+    if (not snapshot or not approved_at or not current or
+        snapshot>approved_at or approved_at>today.isoformat() or
+        not snapshot<=current<=today.isoformat()):
+        return set()
+    names=approval.get("approvedFighters")
+    if not isinstance(names,list) or not names or len(names)!=len(set(map(str,names))):
+        return set()
+    if any(not isinstance(item,str) or slug(item)!=item for item in names):
+        return set()
+    return set(names)
+
+
+def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None):
     """Hydrate native UFC career IDs once, then share each fight's round cache.
 
     Only the completed 36-month event audit can enable this separate stage.
@@ -836,9 +866,12 @@ def collect_ufc_career_bouts(client,state,research,coverage,today):
     stamp=date_str(coverage.get("asOf"))
     if not stamp or not (today-dt.timedelta(days=7)).isoformat()<=stamp<=today.isoformat():
         return 0
+    approved=approved_ufc_career_cohort(approval,coverage,today)
+    if not approved:return 0
     eligible={slug(row.get("slug")) for row in coverage.get("fighters",[])
               if isinstance(row,dict) and row.get("eligibilityStatus")=="latest_observed_mma_ufc"}
     eligible.discard(None)
+    eligible.intersection_update(approved)
     if not eligible:return 0
     pending={}
     for slugval,profile in research.get("profiles",{}).items():
@@ -1066,7 +1099,7 @@ def main():
         collect_judging(client,state,cards,judging)
         collect_profiles(client,state,cards,research,today)
         collect_careers(client,state,research)
-        collect_ufc_career_bouts(client,state,research,read(COVERAGE36,{}),today)
+        collect_ufc_career_bouts(client,state,research,read(COVERAGE36,{}),today,read(ROSTER_APPROVAL,{}))
         verify_short_ufc_careers(client,state,research,coverage,today)
         collect_championship_history(client,state,research)
         recover_previews(cards,archive,pfl_archive,judging)
