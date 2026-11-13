@@ -25,6 +25,7 @@ ARCHIVE = ROOT / "data/ufc-research-archive.json"
 PFL_ARCHIVE = ROOT / "data/pfl-research-archive.json"
 FIGHTERS = ROOT / "data/ufcalendar-fighter-research.json"
 COVERAGE = ROOT / "data/ufc-last-five-coverage.json"
+COVERAGE36 = ROOT / "data/ufc-36-month-candidates.json"
 JUDGING = ROOT / "data/ufcalendar-judging-research.json"
 BASE = "https://api.ufcalendar.com/v1"
 MAX_SPEND_PER_MONTH = 27000  # 90% of Hobby; reserve 3,000 for live BEFN integrations.
@@ -215,7 +216,7 @@ def read_events(client,state,today):
     for org in ORGS:
         if client.remaining<=0 or client.stopped or state["historicalComplete"].get(org):continue
         for n in range(4):
-            after=months_before(today,18 if org=="ufc" else 6).isoformat()
+            after=months_before(today,36 if org=="ufc" else 6).isoformat()
             cursor=state["historicalCursor"].get(org)
             route="/events"+param(org=org,**{"from":after,"to":today.isoformat()},
                                    order="desc",limit=50,cursor=cursor)
@@ -556,25 +557,16 @@ def summarize_history(payload):
                         "titleFight":bool(row.get("is_title")),
                         "source":"native" if native else "history",
                         "boutId":positive(row.get("fight_id")) if native else None})
-    # Keep up to five UFC bouts even when an athlete had many more recent
-    # fights outside UFC. The public/scouting summary remains at 20 rows.
-    if len(history)<=20:return history
-    chosen=[]
-    fingerprints=set()
-    def select(row):
-        key=(row["date"],row["opponent"].casefold(),row["promotion"])
-        if key in fingerprints:return
-        fingerprints.add(key)
-        chosen.append(row)
+    # Store the complete available career, including all historical UFC bouts.
+    # Older non-UFC MMA contests remain useful for last-promotion eligibility.
+    # Deduplicate native/public records but NEVER apply a last-five/20-row cap.
+    unique={}
     for row in history:
-        if row["promotion"].lower()=="ufc":
-            select(row)
-        if sum(r["promotion"].lower()=="ufc" for r in chosen)>=5:break
-    for row in history:
-        if len(chosen)>=20:break
-        select(row)
-    chosen.sort(key=lambda row:row["date"],reverse=True)
-    return chosen[:20]
+        key=(row["date"],row["opponent"].casefold(),row["promotion"].casefold())
+        old=unique.get(key)
+        if old is None or (row["source"]=="native" and old["source"]!="native"):
+            unique[key]=row
+    return sorted(unique.values(),key=lambda row:(row["date"],row["opponent"]),reverse=True)
 
 
 def ufc_timeline_evidence(payload,today):
@@ -829,6 +821,74 @@ def collect_careers(client,state,research):
         done+=1
 
 
+
+def collect_ufc_career_bouts(client,state,research,coverage,today):
+    """Hydrate native UFC career IDs once, then share each fight's round cache.
+
+    Only the completed 36-month event audit can enable this separate stage.
+    The candidate list is not itself proof of contract/retirement status and
+    must never be used to auto-publish public fighter profiles.
+    """
+    if (coverage.get("schema")!=1 or coverage.get("scope")!="ufc" or
+        coverage.get("activityMonths")!=36 or
+        coverage.get("indexCompleteness")!="36_month_event_scan_complete"):
+        return 0
+    stamp=date_str(coverage.get("asOf"))
+    if not stamp or not (today-dt.timedelta(days=7)).isoformat()<=stamp<=today.isoformat():
+        return 0
+    eligible={slug(row.get("slug")) for row in coverage.get("fighters",[])
+              if isinstance(row,dict) and row.get("eligibilityStatus")=="latest_observed_mma_ufc"}
+    eligible.discard(None)
+    if not eligible:return 0
+    pending={}
+    for slugval,profile in research.get("profiles",{}).items():
+        if slugval not in eligible:continue
+        for row in profile.get("recentHistory",[]):
+            if not isinstance(row,dict) or row.get("source")!="native" or \
+               str(row.get("promotion") or "").lower()!="ufc":continue
+            bid=str(row.get("boutId") or "")
+            if not re.fullmatch(r"[1-9][0-9]{0,11}",bid) or bid in state["bouts"]:continue
+            when=date_str(row.get("date"))
+            if when and when<=today.isoformat():pending[bid]=max(when,pending.get(bid,""))
+    checks=state.setdefault("ufcCareerBoutChecks",{})
+    cap=max(1,min(50,int(client.max_calls*.12)))
+    attempts=0
+    indexed=0
+    for bid,_ in sorted(pending.items(),key=lambda row:(row[1],row[0]),reverse=True):
+        if attempts>=cap or client.remaining<=0 or client.stopped or client.calls>=client.max_calls-10:
+            break
+        prior=checks.get(bid,{})
+        if str(prior.get("retryAfter") or "")>today.isoformat():continue
+        attempts+=1
+        payload=client.call("/fights/"+bid)
+        data=(payload or {}).get("data")
+        if not isinstance(data,dict):
+            checks[bid]={"checkedAt":today.isoformat(),
+                         "retryAfter":(today+dt.timedelta(days=7)).isoformat()}
+            continue
+        event=data.get("event")
+        bout=summary_bout(data)
+        title=safe(event.get("title"),150) if isinstance(event,dict) else ""
+        event_date=date_str(event.get("starts_at")) if isinstance(event,dict) else None
+        is_feeder=bool(re.search(r"(?:contender\s+series|road\s+to\s+ufc|\bdwcs\b)",title,re.I))
+        if (not bout or not event_date or event_date>today.isoformat() or
+            not title or not re.search(r"\bufc\b",title,re.I) or is_feeder or
+            event.get("org") not in ("ufc",None) or
+            bout["status"] not in ("completed","draw","no_contest")):
+            checks[bid]={"checkedAt":today.isoformat(),
+                         "retryAfter":(today+dt.timedelta(days=14)).isoformat(),
+                         "status":"requires_manual_review"}
+            continue
+        state["bouts"][bid]={
+            "id":bid,"a":bout["a"],"b":bout["b"],"event":title,
+            "eventDate":event_date,"org":"ufc","eventId":positive(event.get("id")),
+            "status":bout["status"],"main":bout["main"],
+            "titleFight":bout["titleFight"],"result":bout["result"]}
+        checks.pop(bid,None)
+        indexed+=1
+    if attempts:print("UFCalendar full UFC career IDs indexed:",indexed,"of",attempts,"lookups")
+    return indexed
+
 def verify_short_ufc_careers(client,state,research,coverage,today):
     """One-time full timelines for fighters with fewer than five UFC fights."""
     if coverage.get("schema")!=1 or coverage.get("scope")!="ufc":return 0
@@ -965,6 +1025,18 @@ def main():
     pfl_archive=read(PFL_ARCHIVE,{"schema":1,"fights":{},"events":{}})
     if archive.get("schema")!=1 or pfl_archive.get("schema")!=1:
         raise RuntimeError("Unknown archive version")
+    # Existing progress can be marked complete after scanning only 18 months.
+    # A one-time 36-month migration must reopen the event cursor, while keeping
+    # all fetched bouts and statistics permanently cached in the archive.
+    if int(state.get("historicalWindowMonthsUfc") or 18)<36:
+        state.setdefault("historicalComplete",{}).pop("ufc",None)
+        state.setdefault("historicalCursor",{}).pop("ufc",None)
+        state["historicalWindowMonthsUfc"]=36
+    # Earlier versions stored only up to 20 career rows. Rehydrate once,
+    # preserving existing research until a fuller provider response is saved.
+    if int(state.get("ufcHistorySchema") or 1)<2:
+        state["historyDone"]={}
+        state["ufcHistorySchema"]=2
     if not state.get("pflArchiveMigrated"):
         # One-time migration: previously collected PFL rounds were only held as
         # short-lived card previews, so recollect them for lasting storage.
@@ -994,6 +1066,7 @@ def main():
         collect_judging(client,state,cards,judging)
         collect_profiles(client,state,cards,research,today)
         collect_careers(client,state,research)
+        collect_ufc_career_bouts(client,state,research,read(COVERAGE36,{}),today)
         verify_short_ufc_careers(client,state,research,coverage,today)
         collect_championship_history(client,state,research)
         recover_previews(cards,archive,pfl_archive,judging)

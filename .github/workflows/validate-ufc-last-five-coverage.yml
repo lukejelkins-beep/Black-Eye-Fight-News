@@ -4,6 +4,11 @@ on:
     branches: [main]
     paths:
       - 'scripts/build-ufc-last-five-coverage.mjs'
+      - 'scripts/build-ufc-36-month-candidates.mjs'
+      - 'scripts/ufcalendar-rich-backfill.py'
+      - 'tests/test-ufc-36-month-candidates.mjs'
+      - 'tests/test_ufcalendar_rich_backfill.py'
+      - 'tests/test_ufc_full_career_cache.py'
       - 'tests/test-ufc-last-five-coverage.mjs'
       - '.github/workflows/build-ufc-profile-queue.yml'
       - '.github/workflows/validate-ufc-last-five-coverage.yml'
@@ -19,13 +24,31 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test historical career retention and idempotent native fight caching (offline)
+        run: |
+          python -m unittest discover -s tests -p 'test_ufcalendar_rich_backfill.py' -v
+          python -m unittest discover -s tests -p 'test_ufc_full_career_cache.py' -v
       - name: Verify source joining, dedupe and eligibility rules
         run: |
           node --check scripts/build-ufc-last-five-coverage.mjs
           node --test tests/test-ufc-last-five-coverage.mjs
+          node --test tests/test-ufc-36-month-candidates.mjs
           node --test tests/test-ufc-pipeline-order.mjs
+      - name: Verify downstream V3, profile, leaderboard and post-fight compatibility
+        run: |
+          node --test tests/test-ufc-fighter-v3.mjs
+          node --test tests/test-ufc-leaderboards-page.mjs
+          node --test tests/test-ufc-profile-queue.mjs
+          node --test tests/test-ufc-postfight-metrics.mjs
+          node --test tests/test-ufc-research-pipeline.mjs
+          node tests/test-ufc-prospect-contender.cjs
       - name: Build inventory from saved UFCalendar data without API requests
-        run: node scripts/build-ufc-last-five-coverage.mjs
+        run: |
+          node scripts/build-ufc-last-five-coverage.mjs
+          node scripts/build-ufc-36-month-candidates.mjs
       - name: Verify output contains no external credential or unverified rank claims
         run: |
           node --input-type=module -e "import fs from 'node:fs';const d=JSON.parse(fs.readFileSync('data/ufc-last-five-coverage.json'));if(d.schema!==1||d.scope!=='ufc'||!Array.isArray(d.fighters))process.exit(1);console.log(d.summary)"
