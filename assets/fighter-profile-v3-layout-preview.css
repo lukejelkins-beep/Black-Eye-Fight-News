@@ -87,3 +87,26 @@
  .befn-v3-dialog .dialog-bio{grid-template-columns:minmax(90px,35%) minmax(0,1fr)}
  .befn-v3-dialog .befn-v3-technical .befn-power-bars{grid-template-columns:1fr}
 }
+
+/* V3 portrait framing: preserve the fighter's face and shoulders across viewports. */
+.befn-v3-dialog .dialog-bio>.befn-portrait-slot{
+ position:relative;align-self:center;isolation:isolate;
+ aspect-ratio:4/5;width:100%;height:auto!important;min-height:0!important;max-height:none!important;
+ overflow:hidden;border-radius:9px;border:1px solid #756650;
+ background:radial-gradient(ellipse 85% 65% at 50% 38%,#4b7373 0%,#315453 72%,transparent 100%),
+  linear-gradient(155deg,#2b5050,#1d3339);
+}
+.befn-v3-dialog .dialog-bio>.befn-portrait-slot img{
+ position:absolute;inset:0;display:block;width:100%;height:100%;
+ object-fit:contain!important;object-position:center bottom!important;
+ box-sizing:border-box;padding:5px 2px 0;
+ background:transparent!important;
+}
+.befn-v3-dialog .dialog-bio>.befn-portrait-slot .placeholder{
+ position:absolute;inset:0;width:100%;height:100%;display:grid;place-items:center;
+}
+@media(max-width:560px){
+ .befn-v3-dialog .dialog-bio>.befn-portrait-slot{
+  align-self:start;aspect-ratio:4/5;min-height:0!important;max-height:none!important;
+ }
+}
