@@ -282,8 +282,7 @@
    '<div class="befn-v3-hero"><div><p>BEFN Power Rating</p><strong class="befn-v3-score is-'+tier+'">'+
    (score===null?'Unrated':score+'<small> / 100</small>')+'</strong>'+
    (tier==='legendary'?'<p class="befn-v3-legendary">Legendary Gold</p>':'')+
-   '<small>'+ (score===null?'More opponent or technical evidence needed':
-    v3.powerCoverage+'% of component weight supported · '+v3.opponentEvidence+' opponent assessments')+'</small></div>'+
+   (score===null?'<small>More opponent or technical evidence needed</small>':'')+'</div>'+
    '<div class="befn-v3-status befn-scout-classification"><span class="'+(v3.category==='Champion'?'is-champion':'')+'">'+escapeHTML(v3.category)+'</span>'+
    (v3.officialRank?'<small>UFC division rank #'+v3.officialRank+'</small>':'')+
    '</div></div>'+

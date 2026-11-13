@@ -646,3 +646,14 @@
 .befn-v3-boards:empty { display: none; }
 .befn-v3-boards summary, .befn-v3-statistics summary { cursor: pointer; font-weight: 750; }
 .befn-v3-boards select { max-width: 100%; margin: 4px; padding: 6px; background: #2b2926; color: #f4f1e9; }
+
+/* V3 rating presentation */
+.befn-v3-hero { position: relative; display: block; text-align: center; background: #322518; border-color: #ad8132; }
+.befn-v3-hero > div:first-child > p:first-child { color: #f5ca6d; text-transform: uppercase; font-size: 12px; }
+.befn-v3-status { position: absolute; right: 12px; top: 12px; text-align: left; }
+.befn-v3 .befn-profile-body > .befn-power-bars { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+.befn-v3 .befn-power-track { height: 11px; border: 0; border-radius: 8px; box-shadow: none; background: #4a4345; }
+.befn-v3 .befn-power-track::after { display: none; }
+.befn-v3 .befn-power-fill { border: 0; border-radius: 8px; box-shadow: none; background: var(--v3-tier); }
+.befn-v3 .befn-power-track.is-legendary .befn-power-fill { background: linear-gradient(90deg, #896121, #ffe28a); }
+@media (max-width: 500px) { .befn-v3-status { position: static; justify-items: center; margin-top: 10px; } }
