@@ -303,9 +303,6 @@
     const m=v3.technical[id];
     return profileMetric({label,score:m.score},scoreTier(m.score));
    }).join('')+'</div></div></section>'+
-   '<section class="befn-profile-block"><h3>Recent Performance</h3><div class="befn-profile-body">'+
-   '<div class="befn-v3-tiles">'+tiles.map(([value,label,sample])=>'<div><strong>'+escapeHTML(value)+'</strong><span>'+escapeHTML(label)+'</span><small>'+escapeHTML(sample)+'</small></div>').join('')+'</div>'+
-   '</div></section>'+
    '<div class="befn-v3-bottom-grid">'+
    '<details class="befn-v3-history" open><summary>Recent fights <small>Up to five documented UFC fights</small></summary>'+
    '<ul class="befn-v3-fights">'+v3.recent.map(b=>{
@@ -315,7 +312,10 @@
      '<span class="befn-v3-method">'+escapeHTML((b.method||'Method unavailable').replaceAll('_',' '))+'</span>'+
      '<time class="befn-v3-date">'+escapeHTML(b.date||'Date unavailable')+'</time></li>';
    }).join('')+'</ul></details>'+
-   (statRows?'<details class="befn-v3-statistics" open><summary>Leaderboard rankings <small>Verified UFC statistics</small></summary><ul>'+statRows+'</ul></details>':'')+
+   '<div class="befn-v3-data-side">'+
+   (tiles.length?'<section class="befn-v3-stat-panel"><h3>Recent Performance</h3><div class="befn-v3-tiles">'+tiles.map(([value,label,sample])=>'<div><strong>'+escapeHTML(value)+'</strong><span>'+escapeHTML(label)+'</span><small>'+escapeHTML(sample)+'</small></div>').join('')+'</div></section>':'')+
+   (statRows?'<details class="befn-v3-statistics" open><summary>Stats & leaderboard ranks</summary><ul class="befn-v3-rank-tiles">'+statRows+'</ul></details>':'')+
+   '</div>'+
    '</div><section class="befn-profile-block"><h3>'+escapeHTML(kind)+'</h3><div class="befn-profile-body">'+
    credentialsHTML(f)+'</div></section></section>';
  }
