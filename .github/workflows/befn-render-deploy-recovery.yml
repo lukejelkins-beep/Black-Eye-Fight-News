@@ -67,11 +67,26 @@ jobs:
               exit 1
             fi
             remote=$(mktemp)
-            if ! curl --fail --location --silent --show-error --retry 2 \
-                --connect-timeout 8 --max-time 35 \
+            # An undeployed new asset legitimately returns 404. Treat that as
+            # source drift, not a transport failure, so recovery can publish it.
+            # Any other non-200 response or network failure still fails closed.
+            if ! status=$(curl --location --silent --show-error --retry 2 \
+                --connect-timeout 8 --max-time 35 -w '%{http_code}' \
                 -H 'Cache-Control: no-cache' \
-                "$BASE_URL/$file?befn_reconcile=$GITHUB_RUN_ID" -o "$remote"; then
+                "$BASE_URL/$file?befn_reconcile=$GITHUB_RUN_ID" -o "$remote"); then
               echo "Cannot determine live asset state for $file; fail closed" >&2
+              rm -f "$remote"
+              exit 1
+            fi
+            if [[ "$status" == 404 ]]; then
+              echo "New asset not yet deployed: $file"
+              echo "$file" >> /tmp/befn-drift-files
+              differences=$((differences + 1))
+              rm -f "$remote"
+              continue
+            fi
+            if [[ "$status" != 200 ]]; then
+              echo "Unexpected HTTP $status for $file; fail closed" >&2
               rm -f "$remote"
               exit 1
             fi
