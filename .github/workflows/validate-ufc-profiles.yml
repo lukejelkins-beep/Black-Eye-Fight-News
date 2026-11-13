@@ -80,8 +80,10 @@ jobs:
           node --test tests/test-ufc-research-pipeline.mjs
       - name: Verify post-fight event reconciliation and no double counting
         run: node --test tests/test-ufc-postfight-metrics.mjs
-      - name: Regenerate the V3 source snapshot before browser checks
+      - name: Reconcile the five-fight coverage before V3 and browser checks
         run: |
+          node --test tests/test-ufc-last-five-coverage.mjs
+          node scripts/build-ufc-last-five-coverage.mjs
           node --test tests/test-ufc-fighter-v3.mjs
           node scripts/build-ufc-fighter-v3.mjs
       - name: Install browser test dependency (CI only)
