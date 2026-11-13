@@ -425,5 +425,79 @@ class RichBackfillTests(unittest.TestCase):
         m.save_ufc_timeline(profile,incomplete,today)
         self.assertEqual(profile["ufcCareerHistory"],first)
 
+
+    def test_full_career_linker_indexes_older_ufc_bouts_only_once(self):
+        today=dt.date(2026,11,13)
+        base={"id":"11","org":"ufc","event":"UFC Fight Night: Recent",
+              "eventDate":"2026-06-01","status":"completed",
+              "a":{"id":"1","slug":"alpha","name":"Alpha"},
+              "b":{"id":"2","slug":"beta","name":"Beta"}}
+        state=m.default_progress()
+        state["bouts"]={"11":base}
+        research={"profiles":{"alpha":{"ufcCareerHistory":{"count":2,"complete":True,
+                 "fights":[
+                 {"boutId":"11","source":"native","date":"2026-06-01"},
+                 {"boutId":"12","source":"native","date":"2008-12-01"}]}}}}
+        roster={"schema":1,"scope":"ufc","asOf":"2026-11-13",
+                "activityCutoff":"2023-11-13","fighters":[{
+                    "slug":"alpha","name":"Alpha",
+                    "eligibilityStatus":"latest_observed_mma_ufc",
+                    "lastUfcFight":"2026-06-01"}]}
+        class C:
+            max_calls=500
+            calls=0
+            stopped=False
+            remaining=20
+            def __init__(self):self.paths=[]
+            def call(self,path):
+                self.paths.append(path)
+                self.calls+=1
+                self.remaining-=1
+                return {"data":[
+                    {"id":12,"status":"completed",
+                     "fighter_a":{"id":1,"slug":"alpha","name":"Alpha"},
+                     "fighter_b":{"id":2,"slug":"beta","name":"Beta"},
+                     "event":{"id":5,"org":"ufc","title":"UFC 2008",
+                              "starts_at":"2008-12-01"},
+                     "result":{"winner_fighter_id":1,"round":1,"time":"1:59"}},
+                    {"id":13,"status":"completed",
+                     "fighter_a":{"id":1,"slug":"alpha","name":"Alpha"},
+                     "fighter_b":{"id":2,"slug":"beta","name":"Beta"},
+                     "event":{"id":6,"org":"ufc","title":"UFC Road to UFC",
+                              "starts_at":"2008-11-01"},
+                     "result":{"winner_fighter_id":1}}]}
+        client=C()
+        self.assertEqual(m.collect_full_ufc_event_links(
+            client,state,research,roster,today),1)
+        self.assertEqual(len(client.paths),1)
+        self.assertIn("fighter=1",client.paths[0])
+        self.assertIn("limit=75",client.paths[0])
+        self.assertIn("12",state["bouts"])
+        self.assertNotIn("13",state["bouts"],"feeder event must stay outside UFC career")
+        self.assertIn("12",state["ufcHistoricalPriority"])
+        self.assertEqual(state["ufcFullCareerIndexDone"]["alpha"]["status"],"checked")
+        self.assertEqual(m.collect_full_ufc_event_links(
+            client,state,research,roster,today),0)
+        self.assertEqual(client.calls,1)
+
+    def test_full_career_event_linker_ignores_old_18_month_roster(self):
+        state=m.default_progress()
+        research={"profiles":{"alpha":{"ufcCareerHistory":{"count":1,
+                  "fights":[{"boutId":"9","source":"native","date":"2008-10-01"}]}}}}
+        coverage={"schema":1,"scope":"ufc","asOf":"2026-11-13",
+                  "activityCutoff":"2025-05-13",
+                  "fighters":[{"slug":"alpha","name":"Alpha",
+                   "lastUfcFight":"2026-01-01",
+                   "eligibilityStatus":"latest_observed_mma_ufc"}]}
+        class C:
+            max_calls=500
+            calls=0
+            stopped=False
+            remaining=20
+            def call(self,path):
+                raise AssertionError("old roster must not trigger this API request")
+        self.assertEqual(m.collect_full_ufc_event_links(
+            C(),state,research,coverage,dt.date(2026,11,13)),0)
+
 if __name__=="__main__":
     unittest.main()
