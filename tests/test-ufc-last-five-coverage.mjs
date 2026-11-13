@@ -74,3 +74,22 @@ test("backfill queue prioritises champions, booked athletes and verified ranked 
  assert.equal(chosen[2].ranked,true);
  assert.equal(chosen[3].upcoming,false);
 });
+
+test("a metrics object containing only unavailable values is not measured",()=>{
+ const bouts={"1":{id:"1",org:"ufc",eventDate:"2026-06-01",status:"completed",
+  a:{id:"11",slug:"fighter",name:"Fighter"},
+  b:{id:"12",slug:"opponent",name:"Opponent"},
+  result:{winnerId:"11",method:"decision"}}};
+ const d=auditUfcLastFive({bouts},{profiles:{}},{
+  fighters:{fighter:{name:"Fighter",scope:"ufc-only",
+   recentBouts:[{boutId:"1",metrics:{sigLanded:null,controlSec:null,knockdowns:null}}]}}
+ },{divisions:[]},{asOf:"2026-11-13"});
+ const f=d.fighters.find(x=>x.slug==="fighter");
+ assert.equal(f.measuredCount,0);
+ assert.equal(f.needsStats,true);
+ const valid=auditUfcLastFive({bouts},{profiles:{}},{
+  fighters:{fighter:{name:"Fighter",scope:"ufc-only",
+   recentBouts:[{boutId:"1",metrics:{sigLanded:0,controlSec:null}}]}}
+ },{divisions:[]},{asOf:"2026-11-13"});
+ assert.equal(valid.fighters.find(x=>x.slug==="fighter").measuredCount,1);
+});
