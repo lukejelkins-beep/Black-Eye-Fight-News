@@ -22,3 +22,10 @@ test("only drift and checked source permit existing private hook",()=>{
  assert.match(file,/\$RENDER_DEPLOY_HOOK_URL/);
  assert.match(file,/Custom-domain CDN/);
 });
+
+test("new verified source assets missing on Render count as drift rather than fatal errors",()=>{
+ assert.match(file,/status" == 404/);
+ assert.match(file,/New asset not yet deployed/);
+ assert.match(file,/Unexpected HTTP \$status.*fail closed/);
+ assert.match(file,/Cannot determine live asset state/);
+});
