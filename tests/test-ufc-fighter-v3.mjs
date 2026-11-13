@@ -202,6 +202,7 @@ test("individually reviewed UFC results override conflicting provisional index r
 test("a uniquely linked UFC bout one calendar day away keeps reviewed results authoritative",()=>{
  const shifted=structuredClone(coverage);
  shifted.fighters[0].recent[0].date="2026-06-13";
+ shifted.fighters[0].recent[1].opponent="Different UFC opponent";
  const vetted={schema:1,scope:"ufc-champions",fighters:{
   a:{name:"A One",organisation:"UFC",sport:"MMA",category:"Champion",
    division:"Light Heavyweight",review:{credentialsChecked:true},
