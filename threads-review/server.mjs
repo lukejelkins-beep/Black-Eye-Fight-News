@@ -6,6 +6,7 @@
 import http from 'node:http';
 import { readFileSync } from 'node:fs';
 import { randomBytes, timingSafeEqual } from 'node:crypto';
+import {handleTwitterWebhook} from './twitterapi-webhook.mjs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -145,6 +146,10 @@ export function makeServer() {
     const url = new URL(req.url || '/', 'http://localhost');
     const pathname=url.pathname;
     const isRead=req.method==='GET';
+    // Isolated, disabled-by-default pilot receiver. Existing Threads OAuth
+    // routes are unchanged and the webhook is not exposed without secrets.
+    if (pathname==='/webhooks/twitterapi'||pathname==='/webhooks/twitterapi/status')
+      return handleTwitterWebhook(req,res);
     if (pathname==='/health' && isRead) {
       return json(res,200,{service:'BEFN Threads discovery',status:'ok',oauthConfigured:configured()});
     }
