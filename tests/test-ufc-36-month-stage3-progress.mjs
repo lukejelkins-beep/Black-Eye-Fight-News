@@ -38,6 +38,14 @@ test('Count cached fights once globally and distinguish round statistics from re
  assert.equal(s.fightersWithAtLeastFiveObservedUfcFights,1);
  assert.equal(s.fightersWithMeasuredFiveOfFive,0);
  assert.equal(s.profilesWithoutSavedUfcHistory,781);
+ assert.equal(s.profilesWithAllKnownUfcBoutsIndexed,0);
+ assert.equal(s.profilesWithAllKnownUfcBoutsMeasured,0);
+ assert.equal(s.missingKnownFightIdsInRecentFive,3);
+ assert.equal(s.missingKnownFightIdsInFightsSixToTen,0);
+ assert.equal(s.missingKnownFightIdsBeyondTen,0);
+ assert.equal(s.distinctIndexedFightsWithPairedSignificantStrikes,1);
+ assert.equal(s.distinctIndexedFightsWithPairedControlTime,0);
+ assert.equal(s.distinctIndexedFightsWithAllFivePairedCoreMetrics,0);
  assert.match(markdownReport(result),/Stage 3/);
 });
 test('An approved fighter that becomes ineligible is counted but never silently replaced',()=>{
@@ -60,4 +68,30 @@ test('the existing paid collector reports offline Stage 3 progress without a sec
   assert.match(yaml,/node scripts\/ufc-36-month-stage3-progress\.mjs/);
   assert.match(yaml,/concurrency:\n  group: befn-ufc-research-archive/);
   assert.match(yaml,/Offline Stage 3 audit unavailable; preserve newly fetched records/);
+});
+
+test('A single metric does not imply complete statistics; all-known indexing does not certify a full career',()=>{
+ const p={...progress,bouts:{'41':fight(41,'Opponent A'),'42':fight(42,'Opponent B')}};
+ const r={profiles:{'fighter-1':{
+   recentHistory:[history(41,'Opponent A'),history(42,'Opponent B')],
+   ufcTimeline:{complete:false}},
+   'fighter-2':{recentHistory:[history(41,'Fighter 1')],ufcTimeline:{complete:true}}}};
+ const a={fights:{
+   '2015-01-01:fighter1:opponenta':{rounds:[
+     {round:1,a:{sigLanded:4,controlSec:50,knockdowns:0,subAttempts:0,takedowns:0},
+              b:{sigLanded:3,controlSec:0,knockdowns:0,subAttempts:0,takedowns:0}}]},
+   '2015-01-01:fighter1:opponentb':{rounds:[
+     {round:1,a:{sigLanded:5},b:{sigLanded:1}}]}
+ }};
+ const x=auditApprovedStage3(approval,census,p,r,a).summary;
+ assert.equal(x.profilesWithAllKnownUfcBoutsIndexed,2);
+ assert.equal(x.profilesWithAllKnownUfcBoutsMeasured,2);
+ assert.equal(x.providerCertifiedProfilesWithAllKnownBoutsIndexed,1);
+ assert.equal(x.distinctIndexedFightsWithPairedSignificantStrikes,2);
+ assert.equal(x.distinctIndexedFightsWithPairedControlTime,1);
+ assert.equal(x.distinctIndexedFightsWithPairedSubmissionAttempts,1);
+ assert.equal(x.distinctIndexedFightsWithAllFivePairedCoreMetrics,1);
+ // A missing control metric cannot be conflated with an observed zero.
+ assert.equal(x.distinctIndexedFightsWithPairedKnockdowns,1);
+ assert.equal(x.missingKnownFightIdsInRecentFive,0);
 });
