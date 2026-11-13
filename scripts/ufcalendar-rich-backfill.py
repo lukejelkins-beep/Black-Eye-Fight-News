@@ -215,7 +215,7 @@ def read_events(client,state,today):
     for org in ORGS:
         if client.remaining<=0 or client.stopped or state["historicalComplete"].get(org):continue
         for n in range(4):
-            after=months_before(today,18 if org=="ufc" else 6).isoformat()
+            after=months_before(today,36 if org=="ufc" else 6).isoformat()
             cursor=state["historicalCursor"].get(org)
             route="/events"+param(org=org,**{"from":after,"to":today.isoformat()},
                                    order="desc",limit=50,cursor=cursor)
@@ -556,25 +556,16 @@ def summarize_history(payload):
                         "titleFight":bool(row.get("is_title")),
                         "source":"native" if native else "history",
                         "boutId":positive(row.get("fight_id")) if native else None})
-    # Keep up to five UFC bouts even when an athlete had many more recent
-    # fights outside UFC. The public/scouting summary remains at 20 rows.
-    if len(history)<=20:return history
-    chosen=[]
-    fingerprints=set()
-    def select(row):
-        key=(row["date"],row["opponent"].casefold(),row["promotion"])
-        if key in fingerprints:return
-        fingerprints.add(key)
-        chosen.append(row)
+    # Store the complete available career, including all historical UFC bouts.
+    # Older non-UFC MMA contests remain useful for last-promotion eligibility.
+    # Deduplicate native/public records but NEVER apply a last-five/20-row cap.
+    unique={}
     for row in history:
-        if row["promotion"].lower()=="ufc":
-            select(row)
-        if sum(r["promotion"].lower()=="ufc" for r in chosen)>=5:break
-    for row in history:
-        if len(chosen)>=20:break
-        select(row)
-    chosen.sort(key=lambda row:row["date"],reverse=True)
-    return chosen[:20]
+        key=(row["date"],row["opponent"].casefold(),row["promotion"].casefold())
+        old=unique.get(key)
+        if old is None or (row["source"]=="native" and old["source"]!="native"):
+            unique[key]=row
+    return sorted(unique.values(),key=lambda row:(row["date"],row["opponent"]),reverse=True)
 
 
 def ufc_timeline_evidence(payload,today):
@@ -965,6 +956,18 @@ def main():
     pfl_archive=read(PFL_ARCHIVE,{"schema":1,"fights":{},"events":{}})
     if archive.get("schema")!=1 or pfl_archive.get("schema")!=1:
         raise RuntimeError("Unknown archive version")
+    # Existing progress can be marked complete after scanning only 18 months.
+    # A one-time 36-month migration must reopen the event cursor, while keeping
+    # all fetched bouts and statistics permanently cached in the archive.
+    if int(state.get("historicalWindowMonthsUfc") or 18)<36:
+        state.setdefault("historicalComplete",{}).pop("ufc",None)
+        state.setdefault("historicalCursor",{}).pop("ufc",None)
+        state["historicalWindowMonthsUfc"]=36
+    # Earlier versions stored only up to 20 career rows. Rehydrate once,
+    # preserving existing research until a fuller provider response is saved.
+    if int(state.get("ufcHistorySchema") or 1)<2:
+        state["historyDone"]={}
+        state["ufcHistorySchema"]=2
     if not state.get("pflArchiveMigrated"):
         # One-time migration: previously collected PFL rounds were only held as
         # short-lived card previews, so recollect them for lasting storage.
