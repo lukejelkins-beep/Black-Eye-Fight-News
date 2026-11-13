@@ -7,7 +7,7 @@ const insights=fs.readFileSync("assets/fighter-insights.js","utf8");
 const modal=html.slice(html.indexOf("function openFighter(id){"),html.indexOf("function navigate(){"));
 const section=(start,end)=>{const a=insights.indexOf(start),z=insights.indexOf(end,a);assert(a>=0&&z>a,"Missing frontend rendering boundary: "+start);return insights.slice(a,z)};
 const profile=section("function renderProfile(f){","function scoreTier(");
-const v3Profile=section("function renderV3Profile(f,v3,kind){","function renderProfile(f){");
+const v3Profile=section("function renderV3Profile(f,v3,kind){","function renderV3Boards(){");
 const boards=section("function renderV3Boards(){","function applyV3(f){");
 const snapshot=insights.slice(insights.indexOf("function renderSnapshot(article){"),insights.indexOf("let timer=null;"));
 const tracked=insights.slice(insights.indexOf("function trackedMetricHTML(f){"),insights.indexOf("function classificationHTML(f){"));
