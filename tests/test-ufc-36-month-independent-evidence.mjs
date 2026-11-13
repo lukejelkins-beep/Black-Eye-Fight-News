@@ -15,7 +15,7 @@ const validDate=x=>{if(typeof x!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(x))retur
 const https=x=>{try{const u=new URL(x);return u.protocol==="https:"&&!!u.hostname}
  catch{return false}};
 const sports=new Set(["mma","boxing","kickboxing","muay-thai","grappling",
- "submission-grappling","bjj","wrestling","bare-knuckle-boxing","custom-striking"]);
+ "submission-grappling","bjj","wrestling","bare-knuckle-boxing","custom-striking","karate"]);
 const ended=new Set(["completed","draw","no_contest"]);
 
 export function auditIndependentEvidence(ledger,research,progress){
