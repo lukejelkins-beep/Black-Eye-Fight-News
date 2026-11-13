@@ -154,7 +154,7 @@ test("dated departure is ignored after a verified later UFC return",()=>{
 
 test("verified kickboxing, Muay Thai and other non-MMA disciplines do not disqualify",()=>{
  const sports=["kickboxing","muay-thai","boxing","grappling",
-  "submission-grappling","bjj","wrestling","bare-knuckle-boxing","custom-striking"];
+  "submission-grappling","bjj","wrestling","bare-knuckle-boxing","custom-striking","karate"];
  const bouts={},profiles={},fighters={};
  for(let i=0;i<sports.length;i++){
   const slug="fighter-"+i,opp="Later Opponent "+i;
