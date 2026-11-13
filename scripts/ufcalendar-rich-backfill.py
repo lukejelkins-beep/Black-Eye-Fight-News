@@ -388,7 +388,52 @@ def should_collect_rounds(state,bout,today):
     return True
 
 
-def collect_rounds(client,state,cards,archive,pfl_archive,today,coverage=None):
+def approved_ufc_round_priority(approval,coverage,research,today):
+    """Prioritise the signed-off UFC cohort's cached fights without API calls.
+
+    Latest five fights are most useful for the public Recent Performance card,
+    followed by fights six to ten, then older UFC career metrics. Sharing a
+    fight ID across two athletes never duplicates the /rounds request. The
+    immutable approved allowlist is intersected with current eligibility.
+    """
+    approved=approved_ufc_career_cohort(approval,coverage,today)
+    if (not approved or coverage.get("scope")!="ufc" or
+        coverage.get("activityMonths")!=36 or
+        coverage.get("indexCompleteness")!="36_month_event_scan_complete"):
+        return {}
+    current=date_str(coverage.get("asOf"))
+    if not current or not (today-dt.timedelta(days=7)).isoformat()<=current<=today.isoformat():
+        return {}
+    eligible={slug(row.get("slug")) for row in coverage.get("fighters",[])
+              if isinstance(row,dict) and row.get("eligibilityStatus")=="latest_observed_mma_ufc"}
+    wanted=approved.intersection(eligible)
+    if not wanted:return {}
+    priority={}
+    for fighter in wanted:
+        profile=research.get("profiles",{}).get(fighter,{})
+        ordered=[]
+        seen=set()
+        for row in profile.get("recentHistory",[]):
+            if (not isinstance(row,dict) or row.get("source")!="native" or
+                str(row.get("promotion") or "").lower()!="ufc" or
+                str(row.get("result") or "").lower() not in
+                ("win","loss","draw","no_contest","w","l","d","nc")):
+                continue
+            bid=str(row.get("boutId") or "")
+            day=date_str(row.get("date"))
+            if (not re.fullmatch(r"[1-9][0-9]{0,11}",bid) or
+                not day or day>today.isoformat() or bid in seen):
+                continue
+            seen.add(bid)
+            ordered.append((day,bid))
+        ordered.sort(reverse=True)
+        for position,(_,bid) in enumerate(ordered):
+            tier=6 if position<5 else 5 if position<10 else 3
+            priority[bid]=max(tier,priority.get(bid,0))
+    return priority
+
+
+def collect_rounds(client,state,cards,archive,pfl_archive,today,coverage=None,approved_priority=None):
     pairs=selection(state)
     # Prioritize known missing samples in the rolling active UFC cohort before
     # historical or PFL enrichment; never spend calls on already complete rows.
@@ -404,7 +449,12 @@ def collect_rounds(client,state,cards,archive,pfl_archive,today,coverage=None):
                     bid=str(entry.get("boutId") or "")
                     if bid:gap_priority[bid]=max(weight,gap_priority.get(bid,0))
     priority=state.get("ufcHistoricalPriority",{})
+    approved_priority=approved_priority or {}
+    # A verified recent/career UFC fight for an approved fighter outranks
+    # unrelated old observations. Existing 18-month championship/recent
+    # priorities remain the tiebreaker. Only the search order changes.
     pairs.sort(key=lambda b:(b.get("org")=="ufc",
+                            approved_priority.get(str(b.get("id")),0),
                             gap_priority.get(str(b.get("id")),0),
                             int(priority.get(str(b.get("id")),-1)),
                             b.get("eventDate") or ""),reverse=True)
@@ -1109,8 +1159,12 @@ def main():
         # The roster census and user approval are dated in Melbourne, not UTC.
         # Keep UTC for monthly API budgeting and cache observation timestamps.
         roster_today=dt.datetime.now(ZoneInfo("Australia/Melbourne")).date()
-        collect_ufc_career_bouts(client,state,research,read(COVERAGE36,{}),roster_today,read(ROSTER_APPROVAL,{}))
-        recovery=collect_rounds(client,state,cards,archive,pfl_archive,today,coverage)
+        approved36=read(COVERAGE36,{})
+        approval=read(ROSTER_APPROVAL,{})
+        collect_ufc_career_bouts(client,state,research,approved36,roster_today,approval)
+        round_priority=approved_ufc_round_priority(approval,approved36,research,roster_today)
+        recovery=collect_rounds(client,state,cards,archive,pfl_archive,today,coverage,
+                                approved_priority=round_priority)
         if recovery["retried"]:
             print("UFCalendar incomplete UFC round rechecks:",recovery["retried"])
         collect_judging(client,state,cards,judging)
