@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import fs from "node:fs";
 import {buildSnapshot} from "../scripts/build-ufc-fighter-v3.mjs";
 const date="2026-11-13";
 const recent=(other,outcomes)=>["m1","m2","m3"].map((id,i)=>({
@@ -145,6 +146,42 @@ test("one UFC bout ID counts at most once even if repeated in imported history",
  assert.equal(d.fighters.aone.recent.length,2);
  assert.equal(d.fighters.aone.metrics.slpm.bouts,2);
  assert.equal(d.fighters.aone.metrics.slpm.rank,undefined);
+});
+test("individually reviewed UFC results override conflicting provisional index results",()=>{
+ const trusted={schema:1,scope:"ufc-only",fighters:{
+  athlete:{name:"A One",organisation:"UFC",sport:"MMA",division:"Light heavyweight",
+   category:"Champion",review:{credentialsChecked:true},
+   latest:[
+    {date:"2026-06-12",opponent:"B Two",outcome:"L",method:"Submission R2"},
+    {date:"2026-06-11",opponent:"Different verified opponent",outcome:"W",method:"Decision R3"}
+   ]}
+ }};
+ const d=buildSnapshot(coverage,postfight,[trusted]);
+ const a=d.fighters.aone;
+ assert.equal(a.recent.length,2);
+ assert.deepEqual(a.recent.map(x=>[x.date,x.opponent,x.outcome,x.method]),[
+  ["2026-06-12","B Two","L","Submission R2"],
+  ["2026-06-11","Different verified opponent","W","Decision R3"]
+ ]);
+ assert.equal(a.recent[0].boutId,"m1","matching dated opponent retains observed UFC bout");
+ assert.equal(a.recent[1].boutId,null,"unmatched provider result cannot receive another bout's statistics");
+ assert.equal(a.metrics.slpm.bouts,1);
+ assert.equal(a.metrics.slpm.rank,undefined);
+});
+test("incomplete reviewed UFC roster stays Unassessed, not an invented contender",()=>{
+ const vetted={schema:1,scope:"ufc-only",fighters:{
+  c:{name:"C Unknown",organisation:"UFC",sport:"MMA",division:"Flyweight",
+   category:"Roster",review:{credentialsChecked:true},
+   ufcRecord:{wins:1,losses:0,draws:0,noContests:0,complete:true},
+   latest:[{date:"2026-05-21",opponent:"B Two",outcome:"W",method:"Decision R3"}]}
+ }};
+ const d=buildSnapshot(coverage,postfight,[vetted]);
+ assert.equal(d.fighters.cunknown.category,"Unassessed");
+ assert.equal(d.fighters.cunknown.recent.length,1);
+});
+test("schema four cannot overwrite independently reviewed UFC classifications",()=>{
+ const js=fs.readFileSync("assets/fighter-insights.js","utf8");
+ assert.match(js,/if\(record&&!isReviewedUfc\(f\)\)/);
 });
 test("source mismatch and inconsistent snapshot dates stop publication",()=>{
  assert.throws(()=>buildSnapshot({},postfight),/Required saved/);
