@@ -90,6 +90,24 @@ class TargetedHistoryTests(unittest.TestCase):
         self.assertEqual(client.paths,[])
 
 
+    def test_failing_lookups_are_capped_even_if_none_succeed(self):
+        class AlwaysNotFound(StubClient):
+            def call(self,path):
+                self.paths.append(path)
+                self.errors.append("HTTP_404")
+                self.remaining-=1
+                return None
+        today=dt.date(2026,11,13)
+        coverage={"schema":1,"scope":"ufc","asOf":today.isoformat(),
+                  "fighters":[{"slug":f"missing-{i}","needsHistoryCheck":True}
+                              for i in range(100)]}
+        client=AlwaysNotFound({})
+        client.max_calls=50
+        state=collector.default_progress()
+        self.assertEqual(collector.collect_targeted_ufc_history(client,state,coverage,today),0)
+        self.assertEqual(len(client.paths),7)  # 14% of the run limit
+        self.assertEqual(len(state["ufcHistoricalSearchDone"]),7)
+
     def test_unknown_slug_negative_cache_expires_after_one_week(self):
         class NotFoundClient(StubClient):
             def call(self,path):
