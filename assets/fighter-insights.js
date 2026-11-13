@@ -288,19 +288,12 @@
   for(const x of choices){if(selected.length>=4)break;if((counts[x.group]||0)>=2)continue;selected.push(x);counts[x.group]=(counts[x.group]||0)+1}
   if(!selected.length)return '';
   return '<section class="befn-performance-highlights" aria-label="Performance highlights"><header><h3>Performance Highlights</h3><small>Top 30 · Recent UFC performance</small></header>'+
-   '<div class="befn-highlight-grid">'+selected.map((x,i)=>'<div class="befn-highlight-slot '+(i>=2?'is-extra':'')+'"><div class="befn-highlight-card '+(x.best<=3?'is-podium':x.best<=10?'is-elite':'')+'">'+
+   '<div class="befn-highlight-grid">'+selected.map(x=>'<div class="befn-highlight-slot"><div class="befn-highlight-card '+(x.best<=3?'is-podium':x.best<=10?'is-elite':'')+'">'+
     '<span>'+escapeHTML(x.label)+'</span><strong>'+escapeHTML(x.value)+'</strong><footer>'+
     (x.division&&x.division<=30?'<b class="'+(x.division<=10?'is-gold':'')+'">#'+x.division+' Division</b>':'')+
     (x.all&&x.all<=30?'<b class="'+(x.all<=10?'is-gold':'')+'">#'+x.all+' All UFC</b>':'')+
-    '</footer></div></div>').join('')+'</div>'+
-    (selected.length>2?'<button type="button" data-befn-highlights-toggle aria-expanded="false">Show all '+selected.length+' highlights</button>':'')+'</section>';
+    '</footer></div></div>').join('')+'</div></section>';
  }
- document.addEventListener('click',e=>{
-  const btn=e.target.closest?.('[data-befn-highlights-toggle]');if(!btn)return;
-  const root=btn.closest('.befn-performance-highlights');const on=!root.classList.contains('is-expanded');
-  root.classList.toggle('is-expanded',on);btn.setAttribute('aria-expanded',String(on));
-  btn.textContent=on?'Show fewer highlights':'Show all '+root.querySelectorAll('.befn-highlight-slot').length+' highlights';
- },true);
  function renderV3Profile(f,v3,kind){
   const score=v3.power;
   const tier=scoreTier(score);
@@ -329,19 +322,27 @@
   }).join('');
   const decided=v3.recent.filter(b=>['W','L','D'].includes(b.outcome));
   const record=['W','L','D'].map(x=>decided.filter(b=>b.outcome===x).length);
-  const tiles=[];
-  if(decided.length)tiles.push([record[0]+'–'+record[1]+(record[2]?'–'+record[2]:''),'Record',decided.length+' fights']);
+  // Fixed nine-tile Recent Performance layout. Never invent missing metrics.
+  const tiles=[[decided.length?record[0]+'–'+record[1]+(record[2]?'–'+record[2]:''):'—',
+   'Record',decided.length?decided.length+' fights':'Results unavailable']];
   for(const [id,label] of [
    ['ko','KO/TKO wins'],['submission','Submission wins'],
    ['slpm','Sig. strikes/min'],['acc','Strike accuracy'],
    ['kd','Knockdowns/15 min'],['td','Takedowns/15 min'],
    ['tdDef','TD defence'],['control','Control/15 min']
   ]){
-   const metric=v3.metrics[id];
-   if(!metric)continue;
-   const value=id==='control'?Math.floor(metric.value/60)+':'+String(Math.round(metric.value)%60).padStart(2,'0'):
-    metricValue(metric,id==='ko'||id==='submission'?'count':id==='tdDef'||id==='acc'?'pct':'rate');
-   tiles.push([value,label,metric.bouts+' fights']);
+   const metric=v3.metrics?.[id];
+   const measured=metric&&Number.isFinite(metric.value)&&
+    Number.isInteger(metric.bouts)&&metric.bouts>=1&&metric.bouts<=5;
+   let value='—';
+   if(measured){
+    value=id==='control'?(metric.value<0?'−':'')+
+     Math.floor(Math.abs(metric.value)/60)+':'+
+     String(Math.round(Math.abs(metric.value)%60)).padStart(2,'0'):
+     metricValue(metric,id==='ko'||id==='submission'?'count':
+      id==='tdDef'||id==='acc'?'pct':'rate');
+   }
+   tiles.push([value,label,measured?metric.bouts+' '+(metric.bouts===1?'fight':'fights'):'Not measured']);
   }
   return '<section class="befn-profile-insights befn-v3" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC Fighter V3">'+
    '<div class="befn-v3-hero" aria-label="Overall fighter rating"><div class="befn-overall-main"><span class="befn-overall-label">Overall</span><strong class="befn-v3-score is-'+tier+'">'+
