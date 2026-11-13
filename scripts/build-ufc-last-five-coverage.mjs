@@ -71,7 +71,11 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
  for(const f of Object.values(postfight?.fighters||{})){
   if(f?.scope!=="ufc-only")continue;
   const key=nameKey(f.name);if(!key)continue;
-  const ids=new Set((f.recentBouts||[]).filter(b=>b.boutId&&b.metrics).map(b=>String(b.boutId)));
+  // The postfight builder can emit a metrics object with every value null.
+  // An empty observation is NOT a measured bout; real zeroes are valid.
+  const ids=new Set((f.recentBouts||[]).filter(b=>b.boutId&&
+   b.metrics&&Object.values(b.metrics).some(value=>Number.isFinite(value)))
+   .map(b=>String(b.boutId)));
   metrics.set(key,ids);
  }
  const fighters=[...registry.values()].filter(f=>f.active).map(f=>{
