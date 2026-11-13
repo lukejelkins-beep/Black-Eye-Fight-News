@@ -40,12 +40,12 @@ jobs:
           node --test tests/test-ufc-postfight-metrics.mjs
           node --test tests/test-ufc-last-five-coverage.mjs
           node tests/test-ufc-profile-card-qa.cjs
-      - name: Refresh queue from existing budgeted UFCalendar data
+      - name: Derive post-fight UFC totals from the newest saved archive first
+        run: node scripts/build-ufc-postfight-metrics.mjs
+      - name: Refresh queue and last-five coverage using current measured bouts
         run: |
           node scripts/build-ufc-profile-queue.mjs
           node scripts/build-ufc-last-five-coverage.mjs
-      - name: Derive post-fight UFC totals with no additional API requests
-        run: node scripts/build-ufc-postfight-metrics.mjs
       - name: Save material candidate changes without rewriting live feeds
         shell: bash
         run: |
