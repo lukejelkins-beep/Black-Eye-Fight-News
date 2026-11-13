@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {auditUfcLastFive} from "../scripts/build-ufc-last-five-coverage.mjs";
-test("18-month eligibility and older UFC history are separate",()=>{
+test("24-month eligibility and older UFC history are separate",()=>{
  const progress={bouts:{
   "10":{id:"10",org:"ufc",eventDate:"2026-06-01",status:"completed",
    a:{id:"1",slug:"alpha",name:"Alpha"},b:{id:"2",slug:"beta",name:"Beta"},
@@ -18,7 +18,7 @@ test("18-month eligibility and older UFC history are separate",()=>{
   {date:"2023-02-10",opponent:"X",result:"win",promotion:"pfl"}]}}};
  const postfight={fighters:{alpha:{name:"Alpha",scope:"ufc-only",recentBouts:[{boutId:"10",metrics:{sigLanded:10}}]}}};
  const d=auditUfcLastFive(progress,research,postfight,{divisions:[{name:"Alpha"}]},{asOf:"2026-11-13"});
- assert.equal(d.activityCutoff,"2025-05-13");
+ assert.equal(d.activityCutoff,"2024-11-13");
  assert.equal(d.summary.activeFighters,2);
  assert.equal(d.summary.uniqueKnownBoutIds,2);
  const a=d.fighters.find(f=>f.slug==="alpha");
@@ -356,4 +356,26 @@ test("unconfirmed fight rulesets are held for review, not treated as UFC departu
  assert.equal(f.eligibilityStatus,"review_required");
  assert.equal(d.summary.excludedLaterNonUfcMma,0);
  assert.equal(d.eligibilityReview.find(x=>x.slug==="fighter").evidence.promotion,"rkena");
+});
+
+test("24-month boundary includes the extra 18-to-24-month UFC cohort without truncating older UFC history",()=>{
+ const mk=(id,slug,date)=>({id,org:"ufc",eventDate:date,status:"completed",
+  a:{id:"1",slug,name:slug},b:{id:String(Number(id)+100),slug:"opponent-"+id,name:"Opponent "+id},
+  result:{winnerId:"1",method:"decision"}});
+ const d=auditUfcLastFive({bouts:{
+  "400":mk("400","new-window","2025-02-01"),
+  "401":mk("401","window-boundary","2024-11-13"),
+  "402":mk("402","too-old","2024-11-12"),
+  "403":mk("403","newer","2026-08-01")
+ }},{profiles:{"new-window":{recentHistory:[
+  {date:"2020-01-01",promotion:"ufc",opponent:"Earlier Opponent",result:"win"}
+ ]}}},{fighters:{}},{divisions:[]},{asOf:"2026-11-13"});
+ assert.equal(d.activityCutoff,"2024-11-13");
+ const set=new Set(d.fighters.map(x=>x.slug));
+ assert(set.has("new-window"));
+ assert(set.has("window-boundary"));
+ assert(set.has("newer"));
+ assert(!set.has("too-old"));
+ assert(d.fighters.find(x=>x.slug==="new-window").recent.some(x=>x.date==="2020-01-01"),
+  "historical UFC bouts older than 24 months must still appear");
 });
