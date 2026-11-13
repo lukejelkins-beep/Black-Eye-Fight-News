@@ -283,7 +283,8 @@ test("truncation, stale observations, unlinked IDs and inconsistent timeline cou
 
 test("only a latest UFC professional MMA fight counts as active; later PFL and Cage Warriors disqualify",()=>{
  const indexed=(id,org,date,slug,opponent="Opponent")=>({id,org,eventDate:date,
-  status:"completed",a:{id:"51",slug,name:"Fighter"},b:{id:"22",slug:"opponent",name:opponent},
+  status:"completed",a:{id:"51",slug,name:"Fighter"},
+  b:{id:org==="ufc"?"22":"77",slug:org==="ufc"?"opponent":"outside-"+id,name:opponent},
   result:{winnerId:"51"}});
  const progress={bouts:{
   "10":indexed("10","ufc","2026-02-02","fighter"),
@@ -291,9 +292,9 @@ test("only a latest UFC professional MMA fight counts as active; later PFL and C
  }};
  const audit=auditUfcLastFive(progress,{profiles:{}},{fighters:{}},{divisions:[]},
   {asOf:"2026-11-13"});
- assert.equal(audit.summary.recentUfcCandidates,1);
+ assert.equal(audit.summary.recentUfcCandidates,2);
  assert.equal(audit.summary.excludedAfterNonUfcMma,1);
- assert.equal(audit.summary.activeFighters,0);
+ assert.equal(audit.summary.activeFighters,1);
  assert.equal(audit.excluded[0].slug,"fighter");
  assert.equal(audit.excluded[0].evidence.promotion,"pfl");
  const other=structuredClone(progress);
@@ -301,7 +302,7 @@ test("only a latest UFC professional MMA fight counts as active; later PFL and C
  other.bouts["12"]=indexed("12","cage-warriors","2026-10-09","fighter","CW Opponent");
  const second=auditUfcLastFive(other,{profiles:{}},{fighters:{}},{divisions:[]},
   {asOf:"2026-11-13"});
- assert.equal(second.summary.activeFighters,0);
+ assert.equal(second.summary.activeFighters,1);
  assert.equal(second.excluded[0].evidence.promotion,"cage-warriors");
 });
 
@@ -321,7 +322,7 @@ test("latest UFC bout retains fighter after earlier non-UFC professional MMA bou
   {asOf:"2026-11-13"});
  const p=audit.fighters.find(f=>f.slug==="mma-veteran");
  assert(p);
- assert.equal(audit.summary.activeFighters,1);
+ assert.equal(audit.summary.activeFighters,2);
  assert.equal(p.eligibilityStatus,"eligible");
  assert.equal(p.recentCount,5);
  assert.deepEqual(p.recent.map(b=>b.date),
