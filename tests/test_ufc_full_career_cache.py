@@ -93,6 +93,44 @@ class FullCareerCacheTests(unittest.TestCase):
           client,state,research,candidate,dt.date(2026,11,14),manifest),1)
         self.assertEqual(client.paths,["/fights/800"])
 
+    def test_mismatched_provider_fight_id_is_never_indexed(self):
+        state,research,candidate=self.fixture()
+        research["profiles"]["veteran"]["recentHistory"][0]["boutId"]="999"
+        client=Fake()
+        self.assertEqual(m.collect_ufc_career_bouts(
+          client,state,research,candidate,dt.date(2026,11,13),self.approval()),0)
+        self.assertEqual(client.paths,["/fights/999"])
+        self.assertNotIn("999",state["bouts"])
+        self.assertEqual(state["ufcCareerBoutChecks"]["999"]["status"],
+                         "requires_manual_review")
+        before=len(client.paths)
+        self.assertEqual(m.collect_ufc_career_bouts(
+          client,state,research,candidate,dt.date(2026,11,13),self.approval()),0)
+        self.assertEqual(len(client.paths),before,"Bad response must not be re-fetched")
+
+    def test_approved_cohort_hydration_is_bounded_to_ninety_unique_ids(self):
+        state,research,candidate=self.fixture()
+        research["profiles"]["veteran"]["recentHistory"]=[
+            {"promotion":"ufc","source":"native","boutId":str(i),
+             "date":"2008-05-01","result":"win","opponent":"Opponent"}
+            for i in range(800,900)]
+        class Distinct(Fake):
+            def call(self,path):
+                payload=super().call(path)
+                payload["data"]["id"]=int(path.rsplit("/",1)[-1])
+                return payload
+        client=Distinct()
+        self.assertEqual(m.collect_ufc_career_bouts(
+          client,state,research,candidate,dt.date(2026,11,13),self.approval()),90)
+        self.assertEqual(len(client.paths),90)
+        self.assertEqual(len(state["bouts"]),90)
+        self.assertEqual(m.collect_ufc_career_bouts(
+          client,state,research,candidate,dt.date(2026,11,13),self.approval()),10)
+        self.assertEqual(len(client.paths),100)
+        self.assertEqual(m.collect_ufc_career_bouts(
+          client,state,research,candidate,dt.date(2026,11,13),self.approval()),0)
+        self.assertEqual(len(client.paths),100,"Already indexed fights never refetched")
+
     def test_unverified_scope_cannot_trigger_paid_career_hydration(self):
         state,research,candidate=self.fixture()
         candidate["indexCompleteness"]="36_month_event_scan_incomplete"
