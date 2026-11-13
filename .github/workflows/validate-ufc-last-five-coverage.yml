@@ -7,6 +7,7 @@ on:
       - 'scripts/build-ufc-36-month-candidates.mjs'
       - 'scripts/ufcalendar-rich-backfill.py'
       - 'tests/test-ufc-36-month-candidates.mjs'
+      - 'tests/test-ufc-36-month-independent-evidence.mjs'
       - 'data/ufc-36-month-reviewed-evidence.json'
       - 'tests/test_ufcalendar_rich_backfill.py'
       - 'tests/test_ufc_full_career_cache.py'
@@ -46,6 +47,8 @@ jobs:
           node --test tests/test-ufc-postfight-metrics.mjs
           node --test tests/test-ufc-research-pipeline.mjs
           node tests/test-ufc-prospect-contender.cjs
+      - name: Verify reviewed 36-month fighter evidence against cached bouts and official UFC history
+        run: node --test tests/test-ufc-36-month-independent-evidence.mjs
       - name: Build inventory from saved UFCalendar data without API requests
         run: |
           node scripts/build-ufc-last-five-coverage.mjs
