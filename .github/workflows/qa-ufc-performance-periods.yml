@@ -1,0 +1,30 @@
+name: QA UFC V3 period analytics (preview only)
+on:
+  push:
+    branches:
+      - feature/ufc-v3-period-analytics-design-20261113
+    paths:
+      - scripts/ufc-performance-periods.mjs
+      - tests/test-ufc-performance-periods.mjs
+      - .github/workflows/qa-ufc-performance-periods.yml
+  pull_request:
+    branches: [main]
+    paths:
+      - scripts/ufc-performance-periods.mjs
+      - tests/test-ufc-performance-periods.mjs
+      - .github/workflows/qa-ufc-performance-periods.yml
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax check
+        run: node --check scripts/ufc-performance-periods.mjs
+      - name: Test last five, last ten, career and missing-metric safeguards
+        run: node --test tests/test-ufc-performance-periods.mjs
