@@ -1,7 +1,7 @@
 {
-  "attemptedAt": "2026-11-13T14:51:55.520Z",
-  "checkedAt": "2026-11-13T14:51:55.520Z",
-  "updatedAt": "2026-11-13T14:07:52Z",
+  "attemptedAt": "2026-11-13T16:34:44.473Z",
+  "checkedAt": "2026-11-13T16:34:44.473Z",
+  "updatedAt": "2026-11-13T15:47:41Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
   "sourcesChecked": 6,
@@ -18,7 +18,7 @@
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 33,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 37,
+      "configured": 43,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 1,
+      "configured": 0,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,22 +55,45 @@
   "rollingScan": {
     "directoryEntries": 447,
     "scheduledEntries": 84,
-    "batchIndex": 4,
+    "batchIndex": 0,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "X": 33,
-      "Instagram": 37,
+      "Instagram": 43,
       "Bluesky": 6,
-      "Threads": 7,
-      "Reddit": 1
+      "X": 27,
+      "Threads": 8
     },
     "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n27dgngpxw23",
+      "cid": "bafyreifieusos2spbtatl3tjdrqfigwbpadyd4ctia6ulml6zbhj6ecjty",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Katie Taylor: Claressa Shields So Far Ahead, Needs 50-50 Rival #boxing #boxingnews",
+      "postedAt": "2026-11-13T15:47:41Z",
+      "date": "14 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n27dgngpxw23",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n275u5dm5p2y",
       "cid": "bafyreifbqzf7alvnrdtryizkazcbcjgiuekmxas3y7dmrk2ews2bizvdza",
@@ -288,6 +311,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n26zkjrkft23",
+      "cid": "bafyreigqi4p5tbvwrrsbunq3epajyzd5mb6fhepjbbdd3r4zjephn4kuaa",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Heavyweight, 61, Ranks 86 Places Above Tyson Fury’s Last Foe #boxing #boxingnews",
+      "postedAt": "2026-11-13T12:50:54Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n26zkjrkft23",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n26p36p5x72c",
       "cid": "bafyreiglmr55ct56fsvi7hz4meca722ourcarwsddpg3maqae7o5xizfae",
       "platform": "Bluesky",
@@ -380,7 +427,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -668,7 +715,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -764,7 +811,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -884,7 +931,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -908,7 +955,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -932,7 +979,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -956,7 +1003,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -980,7 +1027,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2962,7 +3009,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3185,7 +3232,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3597,7 +3644,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3926,7 +3973,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4116,7 +4163,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4507,7 +4554,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4608,7 +4655,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4700,30 +4747,6 @@
       "postedAt": "2026-11-09T12:35:16+0000",
       "url": "https://www.instagram.com/p/DfhWA99toOH/",
       "photo": "https://scontent-sea5-1.xx.fbcdn.net/v/t51.2885-15/405233468_1719516008528885_2610818053193051726_n.jpg?_nc_cat=101&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=0N6ryMmmK6AQ7kNvwGdZ7zv&_nc_oc=AdpSig0CsHMV27tWtuuCuSGpg6dnZjWm6CrGpfvrmwYbWGIN_6snTWtTqVc2H1NnV9U&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AL-3X8kEAAAA&oh=00_AQS1i3HWLuBv12PUxHKZ3NW0Qbtw-Mx3dm85VCcBk7jTSA&oe=6AFACBF2",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3mzuudm5oh22b",
-      "cid": "bafyreigguu5tn5qe5mj26u26edkc7v54ctay6i2yyd4wt64mfvfageswfe",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Floyd Mayweather Names Stunning Rematch on Four-Fight Hit List \n\nMy WBN Story: https://www.worldbox...",
-      "postedAt": "2026-11-09T11:50:56Z",
-      "date": "9 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3mzuudm5oh22b",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4838,7 +4861,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5289,30 +5312,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3mzs5nogfio2f",
-      "cid": "bafyreielmnw4lc4h3jg2l5bhjmikisig4fioqpvjlugd6vm2wa7xt7ofdm",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Doctor Stops Title Fight as Boxer ‘Looks Like Elephant Man’ \n\nMy WBN Story: https://www.worldbox...",
-      "postedAt": "2026-11-08T09:59:38Z",
-      "date": "8 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3mzs5nogfio2f",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3mzryrdsdgc22",
       "cid": "bafyreif4iikugmsefvyugjt7jmj3jkzuy72bzmvuhs6qoxdfrrbhaogwwe",
       "platform": "Bluesky",
@@ -5333,7 +5332,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
