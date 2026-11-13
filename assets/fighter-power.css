@@ -597,3 +597,531 @@
     color:#263e39;
   }
 }
+
+/* Reviewed UFC Fighter V3 */
+.befn-v3, .befn-v3-boards { color: #f4f1e9; }
+.befn-v3-hero, .befn-v3 .befn-profile-block, .befn-v3-boards {
+  background: #202022;
+  border: 1px solid #514635;
+  border-radius: 12px;
+}
+.befn-v3-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: clamp(14px, 3vw, 22px);
+}
+.befn-v3-hero p { margin: 0 0 4px; }
+.befn-v3-hero small, .befn-v3 li small, .befn-v3-boards li small { color: #c8c0b2; }
+.befn-v3-score { color: var(--v3-tier, #f4f1e9); font-size: clamp(28px, 6vw, 46px); line-height: 1.12; }
+.befn-v3-score small { font-size: 14px; }
+.befn-v3-status { display: grid; justify-items: start; gap: 6px; }
+.befn-v3-status span { border: 1px solid #8e806a; border-radius: 5px; padding: 3px 9px; font-weight: 750; }
+.befn-v3-status .is-champion { background: #e8bd59; color: #201709; }
+.befn-v3-legendary, .befn-v3-boards summary { color: #f5ca6d; }
+.befn-v3 .befn-profile-block h3 { background: #2b2926; color: #f5ca6d !important; border-color: #514635; }
+.befn-v3 .befn-profile-body, .befn-v3 .befn-power-metric-label,
+.befn-v3 .befn-power-metric-label b, .befn-v3 .befn-credential-empty { color: #f4f1e9; }
+.befn-v3 .befn-power-track { background: #38383b; }
+.befn-v3 .befn-power-fill { background: var(--v3-tier); }
+.befn-v3 .is-legendary { --v3-tier: #f5ca6d; }
+.befn-v3 .is-emerald { --v3-tier: #51dfa1; }
+.befn-v3 .is-lime { --v3-tier: #b7db60; }
+.befn-v3 .is-amber { --v3-tier: #ffb55e; }
+.befn-v3 .is-red { --v3-tier: #ff828b; }
+.befn-v3-fights, .befn-v3-statistics ul, .befn-v3-boards ul { padding: 0; list-style: none; }
+.befn-v3-fights li, .befn-v3-statistics li, .befn-v3-boards li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid #514635;
+}
+.befn-v3-fights li { grid-template-columns: auto minmax(0, 1fr); align-items: center; }
+.befn-v3-fights small, .befn-v3-statistics li small, .befn-v3-boards li small { display: block; }
+.befn-v3-boards { max-width: 720px; margin: 0 0 16px; padding: 12px 16px; }
+.befn-v3-boards:empty { display: none; }
+.befn-v3-boards summary, .befn-v3-statistics summary { cursor: pointer; font-weight: 750; }
+.befn-v3-boards select { max-width: 100%; margin: 4px; padding: 6px; background: #2b2926; color: #f4f1e9; }
+
+/* V3 rating presentation */
+.befn-v3-hero { position: relative; display: block; text-align: center; background: #322518; border-color: #ad8132; }
+.befn-v3-hero > div:first-child > p:first-child { color: #f5ca6d; text-transform: uppercase; font-size: 12px; }
+.befn-v3-status { position: absolute; right: 12px; top: 12px; text-align: left; }
+.befn-v3 .befn-profile-body > .befn-power-bars { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+.befn-v3 .befn-power-track { height: 11px; border: 0; border-radius: 8px; box-shadow: none; background: #4a4345; }
+.befn-v3 .befn-power-track::after { display: none; }
+.befn-v3 .befn-power-fill { border: 0; border-radius: 8px; box-shadow: none; background: var(--v3-tier); }
+.befn-v3 .befn-power-track.is-legendary .befn-power-fill { background: linear-gradient(90deg, #896121, #ffe28a); }
+@media (max-width: 500px) { .befn-v3-status { position: static; justify-items: center; margin-top: 10px; } }
+.befn-v3-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.befn-v3-tiles > div { display: grid; gap: 2px; padding: 10px 4px; text-align: center; background: #302b2c; border-radius: 8px; }
+.befn-v3-tiles strong { color: #fff; font-size: 23px; line-height: 1.1; }
+.befn-v3-tiles span, .befn-v3-tiles small { font-size: 10px; color: #c8c0b2; }
+.befn-v3-history, .befn-v3-statistics { margin-top: 14px; }
+.befn-v3-history summary { cursor: pointer; font-weight: 750; }
+
+/* Recent UFC results and rankings */
+.befn-v3-history, .befn-v3-statistics {
+  padding: 0 14px;
+  border: 1px solid #554738;
+  border-radius: 10px;
+  background: #282426;
+}
+.befn-v3-history summary, .befn-v3-statistics summary {
+  padding: 13px 0;
+  color: #f5ca6d;
+  font-size: 13px;
+}
+.befn-v3-history[open] summary, .befn-v3-statistics[open] summary { border-bottom: 1px solid #554738; }
+.befn-v3-fights, .befn-v3-statistics ul { margin: 0; }
+.befn-v3-fights li, .befn-v3-statistics li { padding: 12px 0; border-color: #514635; }
+.befn-v3-fights li:last-child, .befn-v3-statistics li:last-child { border: 0; }
+.befn-v3-fights li > span:nth-child(2), .befn-v3-statistics li > span { color: #f4f1e9; font-weight: 700; }
+.befn-v3-fights .fighter-mention { color: #f4f1e9; text-decoration-color: #aa843c; }
+.befn-v3-fights small, .befn-v3-statistics small { margin-top: 3px; color: #c8c0b2; font-weight: 400; }
+.befn-v3-statistics li strong { color: #f5ca6d; font-size: 16px; }
+
+.befn-top-credentials { margin-top: 14px; }
+.befn-top-credentials:empty { display: none; }
+.befn-top-credentials .befn-credential-help { color: #40342d; font-size: 12px; line-height: 1.4; margin: 8px 0 0; }
+
+/* BEFN V3 Option 1: efficient desktop fight/rank panel, mobile-first stacking.
+   Only the V3 profile is targeted; legacy profiles are unchanged. */
+.befn-v3-bottom-grid {
+ display:grid;
+ grid-template-columns:minmax(0,3fr) minmax(0,2fr);
+ align-items:stretch;
+ gap:14px;
+ margin:14px 0;
+}
+.befn-v3-bottom-grid > details {
+ min-width:0;
+ margin:0;
+ padding:0 14px 5px;
+}
+.befn-v3-bottom-grid > details > summary {
+ min-height:46px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ font-weight:800;
+}
+.befn-v3-bottom-grid summary small {
+ font-size:10px;
+ font-weight:500;
+ color:#c8c0b2;
+ text-align:right;
+}
+.befn-v3-bottom-grid details:not([open]) { align-self:start; }
+.befn-v3-bottom-grid .befn-v3-fights li {
+ display:grid;
+ grid-template-columns:28px minmax(0,1.2fr) minmax(0,1.25fr) minmax(80px,.8fr);
+ align-items:center;
+ gap:8px;
+ padding:11px 0;
+ font-size:12px;
+}
+.befn-v3-bottom-grid .befn-v3-fights .befn-v3-opponent {
+ color:#f4f1e9;
+ font-size:12px;
+ line-height:1.35;
+ overflow-wrap:anywhere;
+}
+.befn-v3-bottom-grid .befn-v3-fights .befn-v3-method {
+ color:#d6cec0;
+ font-weight:500;
+ line-height:1.35;
+ overflow-wrap:anywhere;
+}
+.befn-v3-bottom-grid .befn-v3-fights .befn-v3-date {
+ color:#bcb5aa;
+ font-size:11px;
+ text-align:right;
+ white-space:normal;
+ line-height:1.35;
+}
+.befn-v3-bottom-grid .befn-v3-statistics li {
+ grid-template-columns:minmax(0,1fr) auto;
+ gap:2px 8px;
+ padding:9px 0;
+}
+.befn-v3-bottom-grid .befn-v3-statistics li small {
+ grid-column:1/-1;
+ margin:0;
+ font-size:10px;
+}
+.befn-v3-bottom-grid .befn-v3-statistics li strong {
+ font-variant-numeric:tabular-nums;
+}
+.befn-v3 .befn-v3-tiles > div {min-width:0}
+@media(max-width:900px) {
+ .befn-v3-bottom-grid {grid-template-columns:minmax(0,1fr)}
+ .befn-v3-bottom-grid .befn-v3-fights li {
+  grid-template-columns:28px minmax(0,1.2fr) minmax(0,1fr) minmax(75px,.75fr);
+ }
+}
+@media(max-width:560px) {
+ .befn-v3-bottom-grid {gap:10px;margin:12px 0}
+ .befn-v3-bottom-grid > details {padding:0 10px 4px}
+ .befn-v3-bottom-grid > details > summary {font-size:13px}
+ .befn-v3-bottom-grid summary small {font-size:9px}
+ .befn-v3-bottom-grid .befn-v3-fights li {
+  grid-template-columns:28px minmax(0,1fr) auto;
+  grid-template-rows:auto auto;
+  gap:3px 8px;
+  padding:10px 0;
+ }
+ .befn-v3-bottom-grid .befn-v3-fights .befn-power-result {grid-row:1/3}
+ .befn-v3-bottom-grid .befn-v3-fights .befn-v3-opponent {grid-column:2/4;grid-row:1}
+ .befn-v3-bottom-grid .befn-v3-fights .befn-v3-method {grid-column:2;grid-row:2;font-size:11px}
+ .befn-v3-bottom-grid .befn-v3-fights .befn-v3-date {grid-column:3;grid-row:2;font-size:10px}
+ .befn-v3 .befn-v3-tiles {grid-template-columns:repeat(2,minmax(0,1fr))}
+ .befn-v3-tiles strong {font-size:20px}
+}
+
+/* NCAA credential sizing: contain label, wrestling symbol and medal in the
+   existing badge at both full-profile and compact fight-card sizes. */
+.befn-credential[data-kind="ncaa"] {
+ box-sizing:border-box;
+ padding:2px 3px;
+ line-height:1;
+ overflow:hidden;
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-ncaa {
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ gap:1px;
+ width:100%;
+ min-width:0;
+ max-height:100%;
+ line-height:1;
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-ncaa small {
+ display:block;
+ max-width:100%;
+ color:#fff;
+ font-size:8px;
+ line-height:10px;
+ letter-spacing:0;
+ white-space:nowrap;
+ font-weight:800;
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-ncaa b {
+ display:block;
+ font-size:14px;
+ line-height:16px;
+ font-weight:600;
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-medal {
+ bottom:1px;
+ right:1px;
+ padding:0;
+ border:0;
+ background:#171a1fd9;
+ font-size:9px;
+ line-height:1;
+ box-shadow:none;
+}
+.befn-snapshot-extra .befn-credential[data-kind="ncaa"] {
+ padding:1px 2px;
+}
+.befn-snapshot-extra .befn-credential[data-kind="ncaa"] .befn-credential-ncaa small {
+ font-size:7px;
+ line-height:8px;
+}
+.befn-snapshot-extra .befn-credential[data-kind="ncaa"] .befn-credential-ncaa b {
+ font-size:11px;
+ line-height:13px;
+}
+
+/* NCAA credential redesign: text-first badge, no emoji crowding. */
+.befn-credential[data-kind="ncaa"] {
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ box-sizing:border-box;
+ width:40px;
+ height:38px;
+ min-width:40px;
+ padding:3px 2px;
+ flex:0 0 40px;
+ border:1px solid #a88a50;
+ border-radius:9px;
+ background:linear-gradient(145deg,#27292f,#101216);
+ overflow:hidden;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-ncaa {
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ width:100%;
+ max-height:100%;
+ min-width:0;
+ gap:2px;
+ text-align:center;
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-ncaa small {
+ display:block;
+ width:auto;
+ margin:0;
+ padding:0;
+ color:#f3e4bc;
+ font:800 9px/10px system-ui,sans-serif;
+ letter-spacing:0;
+ white-space:nowrap;
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-ncaa b {
+ display:block;
+ margin:0;
+ padding:0;
+ color:#fff;
+ font:800 10px/11px system-ui,sans-serif;
+ letter-spacing:0;
+ white-space:nowrap;
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-medal {
+ position:absolute;
+ right:1px;
+ bottom:0;
+ font-size:9px;
+ line-height:1;
+ padding:0;
+ border:0;
+ border-radius:2px;
+ background:#181a20;
+ box-shadow:none;
+}
+.befn-snapshot-extra .befn-credential[data-kind="ncaa"] {
+ width:32px;
+ height:31px;
+ min-width:32px;
+ flex-basis:32px;
+ padding:2px 1px;
+ border-radius:7px;
+}
+.befn-snapshot-extra .befn-credential[data-kind="ncaa"] .befn-credential-ncaa {
+ gap:1px;
+}
+.befn-snapshot-extra .befn-credential[data-kind="ncaa"] .befn-credential-ncaa small {
+ font-size:8px;
+ line-height:9px;
+}
+.befn-snapshot-extra .befn-credential[data-kind="ncaa"] .befn-credential-ncaa b {
+ font-size:8px;
+ line-height:9px;
+}
+
+/* NCAA verified medal colours (gold/silver/bronze); stay inside badge. */
+.befn-credential[data-kind="ncaa"] .befn-credential-medal {
+ display:grid;
+ place-items:center;
+ position:absolute;
+ top:auto;
+ left:auto;
+ right:1px;
+ bottom:1px;
+ width:11px;
+ height:11px;
+ padding:0;
+ border:1px solid rgba(255,255,255,.3);
+ border-radius:50%;
+ font:900 8px/1 system-ui,sans-serif;
+ font-style:normal;
+ box-shadow:0 1px 2px rgba(0,0,0,.5);
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-medal.is-gold {
+ color:#342405;
+ background:linear-gradient(145deg,#fff2a1,#d5a32c);
+ border-color:#fbe18a;
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-medal.is-silver {
+ color:#273039;
+ background:linear-gradient(145deg,#f4f7fc,#a3abb6);
+ border-color:#ebedf0;
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-medal.is-bronze {
+ color:#2c170d;
+ background:linear-gradient(145deg,#efba85,#a86030);
+ border-color:#e5a875;
+}
+.befn-snapshot-extra .befn-credential[data-kind="ncaa"] .befn-credential-medal {
+ width:9px;
+ height:9px;
+ font-size:7px;
+ right:0;
+ bottom:0;
+}
+
+/* V3 compact unified profile header and two-column fight analytics */
+#fighterDialog.befn-v3-dialog{width:min(1080px,96vw);background:#1c1c20;color:#f7f1e8}
+.befn-v3-dialog .dialog-top{padding:14px 20px;background:#201a1b}
+.befn-v3-dialog .dialog-top h2{font-size:clamp(30px,4vw,42px);margin:5px 0}
+.befn-v3-dialog .dialog-content{background:#1c1c20;padding:12px}
+.befn-v3-dialog .dialog-bio{display:grid;grid-template-columns:minmax(150px,220px) minmax(0,1fr);align-items:stretch;gap:14px;padding:12px;background:#272528;border:1px solid #574632;border-radius:12px}
+.befn-v3-dialog .dialog-bio .befn-portrait-slot{width:100%;height:100%;min-height:220px;max-height:290px;background:#273638;overflow:hidden;border-radius:8px}
+.befn-v3-dialog .dialog-bio .befn-portrait-slot img{display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom}
+.befn-v3-dialog .dialog-bio .befn-portrait-slot .placeholder{width:100%;height:100%}
+.befn-v3-dialog .befn-bio-meta{min-width:0;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.befn-v3-dialog .befn-bio-meta p{margin:0;color:#e2d8c8}
+.befn-v3-dialog .befn-top-credentials{margin:0}
+.befn-v3-dialog .befn-v3-hero{position:static;text-align:left;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px;padding:10px;background:#30271e;border:1px solid #a57d37}
+.befn-v3-dialog .befn-v3-hero>div:first-child{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.befn-v3-dialog .befn-v3-hero>div:first-child>p:first-child{margin:0}
+.befn-v3-dialog .befn-v3-score{font-size:clamp(30px,4vw,44px)}
+.befn-v3-dialog .befn-v3-status{position:static;justify-items:start;margin:0}
+.befn-reign{font-size:11px;color:#f5d58e}
+.befn-reign>div{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.befn-reign span{display:grid;gap:2px;padding:6px 8px;border-radius:5px;background:#363136;color:#fff;font-weight:800}
+.befn-reign span b{font-size:9px;color:#c7b494}
+.befn-v3-dialog .befn-profile-insights{margin:0;gap:10px}
+.befn-v3-dialog .befn-v3-bottom-grid{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:10px;margin:0}
+.befn-v3-dialog .befn-v3-data-side{min-width:0;display:grid;align-content:start;gap:10px}
+.befn-v3-dialog .befn-v3-stat-panel{border:1px solid #554738;border-radius:10px;background:#282426;padding:11px}
+.befn-v3-dialog .befn-v3-stat-panel h3{font-size:13px!important;color:#f5ca6d!important;background:transparent!important;padding:0 0 8px!important;margin:0!important}
+.befn-v3-dialog .befn-v3-tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.befn-v3-dialog .befn-v3-tiles strong{font-size:19px}
+.befn-v3-dialog .befn-v3-tiles>div{min-width:0;padding:8px 3px}
+.befn-v3-dialog .befn-v3-tiles span{overflow-wrap:anywhere}
+.befn-v3-dialog .befn-v3-statistics{margin:0;padding:0 10px 9px}
+.befn-v3-dialog .befn-v3-rank-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:8px 0 0}
+.befn-v3-dialog .befn-v3-rank-tiles li{display:grid;min-width:0;grid-template-columns:1fr;gap:3px;padding:8px;border:1px solid #514635;border-radius:7px;background:#323034}
+.befn-v3-dialog .befn-v3-rank-tiles li span{font-size:11px;overflow-wrap:anywhere}
+.befn-v3-dialog .befn-v3-rank-tiles li strong{font-size:18px}
+.befn-v3-dialog .befn-v3-rank-tiles li small{grid-column:1;font-size:10px}
+@media(max-width:760px){#fighterDialog.befn-v3-dialog{width:calc(100vw - 12px)}.befn-v3-dialog .dialog-content{padding:8px}.befn-v3-dialog .dialog-bio{grid-template-columns:minmax(105px,36%) minmax(0,1fr);gap:8px;padding:8px}.befn-v3-dialog .dialog-bio .befn-portrait-slot{min-height:175px;max-height:260px}.befn-v3-dialog .befn-v3-bottom-grid{grid-template-columns:minmax(0,1fr)}.befn-v3-dialog .befn-v3-hero{padding:7px}.befn-v3-dialog .befn-v3-score{font-size:29px}.befn-v3-dialog .befn-v3-rank-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:430px){.befn-v3-dialog .dialog-bio{grid-template-columns:minmax(96px,34%) minmax(0,1fr)}.befn-v3-dialog .dialog-bio .befn-portrait-slot{min-height:155px;max-height:225px}.befn-v3-dialog .befn-v3-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.befn-v3-dialog .befn-v3-hero>div:first-child{gap:4px}.befn-v3-dialog .befn-v3-score{font-size:26px}.befn-reign span{padding:4px 5px}}
+
+/* V3 identity, documented title belts, and balanced performance grid */
+.befn-v3-dialog .dialog-top{min-height:42px;padding:6px 12px;justify-content:flex-end}
+.befn-v3-dialog .dialog-top .befn-legacy-identity{display:none}
+.befn-v3-dialog .dialog-bio{grid-template-columns:minmax(175px,245px) minmax(0,1fr)}
+.befn-v3-dialog .befn-bio-meta{justify-content:flex-start;gap:7px}
+.befn-v3-dialog .befn-v3-identity small{color:#d0c4b6;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.befn-v3-dialog .befn-v3-identity h2{font:900 clamp(25px,3.2vw,39px)/1.1 'Barlow Condensed',Impact,sans-serif;color:#fff;text-transform:uppercase;margin:3px 0 5px;overflow-wrap:anywhere}
+.befn-v3-dialog .befn-v3-career-record{display:flex;align-items:baseline;gap:9px;color:#f3d387;font-size:clamp(23px,3vw,31px);line-height:1.1;font-variant-numeric:tabular-nums}
+.befn-v3-dialog .befn-v3-career-record span{font-size:10px;color:#c9bfb4;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.befn-v3-dialog .befn-title-belts{display:flex;flex-wrap:wrap;gap:7px}
+.befn-v3-dialog .befn-title-belt{display:inline-flex;align-items:center;gap:5px;padding:3px 7px;border:1px solid #9e7939;border-radius:7px;background:#352c21;color:#f3d387}
+.befn-v3-dialog .befn-title-belt small{font-size:10px;color:#f3d387;font-weight:800}
+.befn-v3-dialog .befn-v3-hero{padding:7px 10px;align-items:center;margin-top:2px}
+.befn-v3-dialog .befn-v3-hero>div:first-child{gap:6px}
+.befn-v3-dialog .befn-v3-hero>div:first-child>p:first-child{font-size:10px;letter-spacing:.02em}
+.befn-v3-dialog .befn-v3-score{font-size:clamp(25px,3vw,33px)}
+.befn-v3-dialog .befn-v3-score small{font-size:10px}
+.befn-v3-dialog .befn-v3-status:empty{display:none}
+.befn-v3-dialog .befn-v3-bottom-grid{grid-template-columns:minmax(0,1.35fr) minmax(250px,.85fr);align-items:start}
+.befn-v3-dialog .befn-v3-stat-panel{align-self:start}
+.befn-v3-dialog .befn-v3-rank-full{margin:0;padding:0 10px 10px}
+.befn-v3-dialog .befn-v3-rank-full .befn-v3-rank-tiles{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.befn-v3-dialog .befn-v3-rank-full .befn-v3-rank-tiles li{min-height:90px}
+@media(max-width:850px){
+ .befn-v3-dialog .befn-v3-rank-full .befn-v3-rank-tiles{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:760px){
+ .befn-v3-dialog .dialog-bio{grid-template-columns:minmax(115px,35%) minmax(0,1fr)}
+ .befn-v3-dialog .befn-v3-bottom-grid{grid-template-columns:minmax(0,1fr)}
+ .befn-v3-dialog .befn-v3-identity h2{font-size:clamp(20px,5vw,30px)}
+ .befn-v3-dialog .befn-v3-career-record{font-size:23px}
+}
+@media(max-width:500px){
+ .befn-v3-dialog .befn-v3-rank-full .befn-v3-rank-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .befn-v3-dialog .dialog-bio{grid-template-columns:minmax(100px,36%) minmax(0,1fr)}
+ .befn-v3-dialog .befn-v3-identity h2{font-size:23px}
+ .befn-v3-dialog .befn-title-belt small{font-size:9px}
+ .befn-v3-dialog .befn-v3-career-record span{font-size:9px}
+}
+
+/* Clear UFC-wide leaderboard interpretation and readable top-ten markers. */
+.befn-v3-dialog .befn-v3-rank-full .befn-v3-rank-tiles li.is-top-ten {
+ border-color:#d3ac57;
+ background:linear-gradient(145deg,#3b3325,#29292d);
+ box-shadow:inset 0 0 0 1px rgba(240,194,93,.16);
+}
+.befn-v3-dialog .befn-v3-rank-tiles .befn-v3-top-ten {
+ display:inline-block;
+ width:max-content;
+ max-width:100%;
+ margin:3px 0;
+ padding:3px 6px;
+ border:1px solid #d6b265;
+ border-radius:5px;
+ color:#f1cf83;
+ background:#292216;
+ font-size:9px;
+ font-weight:900;
+ letter-spacing:.02em;
+ line-height:1.3;
+}
+.befn-v3-dialog .befn-v3-rank-tiles li small {line-height:1.35;color:#d0c7bb}
+.befn-v3-dialog .befn-v3-rank-tiles li span {line-height:1.35}
+
+/* Expanded recent-performance tiles: desktop 3x3, phone 2 columns.
+   Incomplete data creates fewer tiles, never blank placeholders. */
+.befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles {
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ align-content:start;
+}
+.befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles>div {
+ min-height:74px;
+ align-content:center;
+}
+@media(max-width:480px){
+ .befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+ }
+ .befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles>div{min-height:67px}
+}
+
+/* V3 narrow-phone safeguards: preserve readable tiles and controls. */
+@media(max-width:560px){
+ #fighterDialog.befn-v3-dialog {max-width:calc(100vw - 8px);overflow-x:hidden}
+ .befn-v3-dialog .dialog-top{padding:4px 8px}
+ .befn-v3-dialog .dialog-close{min-width:44px;min-height:44px}
+ .befn-v3-dialog .dialog-content{padding:7px}
+ .befn-v3-dialog .dialog-bio{
+  grid-template-columns:minmax(92px,35%) minmax(0,1fr);
+  gap:8px;padding:8px;min-width:0;
+ }
+ .befn-v3-dialog .befn-bio-meta{min-width:0;overflow-wrap:anywhere}
+ .befn-v3-dialog .befn-v3-career-record{flex-wrap:wrap;gap:3px 7px}
+ .befn-v3-dialog .befn-v3-hero{max-width:100%;min-width:0;gap:5px}
+ .befn-v3-dialog .befn-v3-hero>div:first-child{min-width:0}
+ .befn-v3-dialog .befn-v3-score{font-size:27px}
+ .befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:7px;
+ }
+ .befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles>div{
+  min-height:72px;
+  padding:9px 5px;
+ }
+ .befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles span,
+ .befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles small{
+  font-size:11px;
+  line-height:1.35;
+  overflow-wrap:anywhere;
+ }
+ .befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles strong{font-size:20px}
+ .befn-v3-dialog .befn-v3-rank-full .befn-v3-rank-tiles{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+ }
+ .befn-v3-dialog .befn-v3-rank-tiles li{min-width:0}
+ .befn-v3-dialog .befn-v3-fights li{min-width:0}
+ .befn-v3-dialog .befn-v3-history>summary,
+ .befn-v3-dialog .befn-v3-statistics>summary{min-height:44px}
+}
+@media(max-width:360px){
+ .befn-v3-dialog .dialog-bio{grid-template-columns:minmax(88px,34%) minmax(0,1fr);padding:6px;gap:6px}
+ .befn-v3-dialog .befn-v3-identity h2{font-size:20px}
+ .befn-v3-dialog .befn-v3-career-record{font-size:21px}
+ .befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles>div{min-height:78px}
+}
