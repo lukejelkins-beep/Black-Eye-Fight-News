@@ -23,7 +23,7 @@ for(const [name,markup] of [["modal",modal],["ratings",profile],["V3 ratings",v3
 // but must never expose methodology, research reports or external source URLs.
 assert(/<a href="#fighter\//.test(boards),
  "UFC rankings should use verified internal profile navigation");
-assert(!/<a\\s+href=["'](?:https?:|\\/\\/)/i.test(boards),
+assert(!/<a\s+href=["'](?:https?:|\/\/)/i.test(boards),
  "Leaderboard cannot expose external source or research links");
 assert(!/ratingSource|ratingsEvidence|scoreMethodHTML|View stats source|Source: saved/i.test(boards),
  "Leaderboard must not reveal calculation or research internals");
