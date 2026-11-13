@@ -663,3 +663,24 @@
 .befn-v3-tiles span, .befn-v3-tiles small { font-size: 10px; color: #c8c0b2; }
 .befn-v3-history, .befn-v3-statistics { margin-top: 14px; }
 .befn-v3-history summary { cursor: pointer; font-weight: 750; }
+
+/* Recent UFC results and rankings */
+.befn-v3-history, .befn-v3-statistics {
+  padding: 0 14px;
+  border: 1px solid #554738;
+  border-radius: 10px;
+  background: #282426;
+}
+.befn-v3-history summary, .befn-v3-statistics summary {
+  padding: 13px 0;
+  color: #f5ca6d;
+  font-size: 13px;
+}
+.befn-v3-history[open] summary, .befn-v3-statistics[open] summary { border-bottom: 1px solid #554738; }
+.befn-v3-fights, .befn-v3-statistics ul { margin: 0; }
+.befn-v3-fights li, .befn-v3-statistics li { padding: 12px 0; border-color: #514635; }
+.befn-v3-fights li:last-child, .befn-v3-statistics li:last-child { border: 0; }
+.befn-v3-fights li > span:nth-child(2), .befn-v3-statistics li > span { color: #f4f1e9; font-weight: 700; }
+.befn-v3-fights .fighter-mention { color: #f4f1e9; text-decoration-color: #aa843c; }
+.befn-v3-fights small, .befn-v3-statistics small { margin-top: 3px; color: #c8c0b2; font-weight: 400; }
+.befn-v3-statistics li strong { color: #f5ca6d; font-size: 16px; }

@@ -538,7 +538,10 @@
   renderV3Boards();
   for(const el of document.querySelectorAll(".befn-profile-insights[data-befn-profile]")){
    const f=byId.get(el.dataset.befnProfile);
-   if(f)el.outerHTML=renderProfile(f);
+   if(f){
+    if(v3For(f))el.closest(".dialog-content")?.querySelector("[data-befn-legacy-results]")?.remove();
+    el.outerHTML=renderProfile(f);
+   }
   }
   for(const el of document.querySelectorAll(".befn-fight-snapshot")){
    if(el.open)openSnapshots.add(el.dataset.snapshotKey);
@@ -604,7 +607,7 @@
   }
   if(added)update();
  });
- window.BEFNFighterInsights={renderProfile,credentialsFor,ratingsFor,renderSnapshot,profileFor,hydrate};
+ window.BEFNFighterInsights={renderProfile,credentialsFor,ratingsFor,renderSnapshot,profileFor,hydrate,hasV3:f=>!!v3For(f)};
  schedule();
 
  fetch("data/fighter-comparison-sample.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(data=>{
