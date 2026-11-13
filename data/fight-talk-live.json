@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-13T01:44:39.908Z",
-  "checkedAt": "2026-11-13T01:44:39.908Z",
+  "attemptedAt": "2026-11-13T02:30:38.635Z",
+  "checkedAt": "2026-11-13T02:30:38.635Z",
   "updatedAt": "2026-11-12T22:04:51.902302Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 4,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 4,
+      "checked": 6,
       "failed": 0,
-      "configured": 4,
-      "message": "4 of 4 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 26,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 42,
+      "configured": 43,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 2,
+      "configured": 0,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -53,21 +53,20 @@
   "threadsStatus": "Original public Threads links discovered from trusted fight coverage; no account-level Meta API or OAuth required.",
   "failures": [],
   "rollingScan": {
-    "directoryEntries": 446,
+    "directoryEntries": 447,
     "scheduledEntries": 84,
-    "batchIndex": 2,
+    "batchIndex": 0,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 42,
-      "Bluesky": 4,
-      "X": 26,
-      "Threads": 10,
-      "Reddit": 2
+      "Instagram": 43,
+      "Bluesky": 6,
+      "X": 27,
+      "Threads": 8
     },
-    "directlyChecked": 4,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
@@ -141,6 +140,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n25bfb7j6n2v",
+      "cid": "bafyreifsilfzetodphlycpwuj6moblp6bviwpvzt4b7cwwhcxsiol7pvse",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Heavyweight KO’d 14 Times in 14 Minutes, Never Sees Round 2 #boxing #boxingnews",
+      "postedAt": "2026-11-12T20:05:48Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n25bfb7j6n2v",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -236,7 +259,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -404,7 +427,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -668,7 +691,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -788,7 +811,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -884,7 +907,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -932,7 +955,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2185,7 +2208,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2914,7 +2937,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3137,7 +3160,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3549,7 +3572,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3878,7 +3901,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4068,7 +4091,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4459,7 +4482,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4560,7 +4583,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4675,7 +4698,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4790,7 +4813,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5261,7 +5284,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5285,7 +5308,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5370,22 +5393,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T19:30:20.643Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "platform": "Instagram",
-      "sport": "mma",
-      "type": "post",
-      "name": "Kayla Harrison",
-      "handle": "@kaylaharrisonofficial",
-      "role": "fighter",
-      "source": "Instagram original author API",
-      "id": "18171101074475205",
-      "quote": "“With man this is impossible, but with God all things are possible.” - Matthew 19:26 \n\nUFC 334 | Saturday, Nov. 14 on paramountplus \n\n#kaylaharrision #ufc #ufc334",
-      "postedAt": "2026-11-08T03:00:06+0000",
-      "url": "https://www.instagram.com/reel/Dfdvdr-hoJd/",
-      "photo": "https://scontent-iad6-1.xx.fbcdn.net/v/t51.2885-15/448026757_957767332812053_2539398052466278408_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=7d201b&_nc_ohc=MoJWqMx-Bb0Q7kNvwF_IWWT&_nc_oc=AdpFuDe9_e2OgBziJlGWItfgdc8bs8Wxd8NtJc6FRS6butlpONCFG1PrqED7AtXZcCU&_nc_zt=23&_nc_ht=scontent-iad6-1.xx&edm=AL-3X8kEAAAA&oh=00_AQToa-uieqyjiNVjNQ3fs9jkKC0ghbOY2xa2zIVDkTaWyQ&oe=6AFABEEA",
+      "engagementCheckedAt": "2026-11-13T02:30:38.635Z",
       "topic": "Original source post · claims may need confirmation"
     }
   ],
