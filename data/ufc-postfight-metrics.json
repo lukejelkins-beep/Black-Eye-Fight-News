@@ -4,7 +4,7 @@
   "source": "Saved UFCalendar-derived UFC research observations with completed bout IDs",
   "note": "Tracked UFC bouts ONLY, not career totals. Per-metric sample counts differ when upstream round fields are absent. Fights with missing rounds, conflicting sources or unverifiable clocks are excluded rather than estimated.",
   "processedCompletedBouts": 2705,
-  "metricBouts": 2652,
+  "metricBouts": 2654,
   "pending": [
     {
       "boutId": "59836",
@@ -69,16 +69,6 @@
     {
       "boutId": "83242",
       "date": "2025-05-17",
-      "reason": "round_data_not_available"
-    },
-    {
-      "boutId": "88280",
-      "date": "2025-09-16",
-      "reason": "round_data_not_available"
-    },
-    {
-      "boutId": "88293",
-      "date": "2025-10-07",
       "reason": "round_data_not_available"
     },
     {
@@ -2633,68 +2623,68 @@
       "name": "Adrian Luna Martinetti",
       "slug": "adrian-luna-martinetti",
       "scope": "ufc-only",
-      "trackedBouts": 1,
+      "trackedBouts": 2,
       "lastFightDate": "2026-04-25",
       "totals": {
         "totalLanded": {
-          "value": 100,
-          "coveredBouts": 1
+          "value": 323,
+          "coveredBouts": 2
         },
         "totalAttempted": {
-          "value": 199,
-          "coveredBouts": 1
+          "value": 528,
+          "coveredBouts": 2
         },
         "sigLanded": {
-          "value": 99,
-          "coveredBouts": 1
+          "value": 264,
+          "coveredBouts": 2
         },
         "sigAttempted": {
-          "value": 196,
-          "coveredBouts": 1
+          "value": 448,
+          "coveredBouts": 2
         },
         "controlSec": {
-          "value": 43,
-          "coveredBouts": 1
+          "value": 270,
+          "coveredBouts": 2
         },
         "knockdowns": {
           "value": 0,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "takedowns": {
-          "value": 1,
-          "coveredBouts": 1
+          "value": 4,
+          "coveredBouts": 2
         },
         "takedownAttempts": {
-          "value": 5,
-          "coveredBouts": 1
+          "value": 12,
+          "coveredBouts": 2
         },
         "subAttempts": {
           "value": 0,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "reversals": {
           "value": 0,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "totalStrikeDifferential": {
-          "value": -64,
-          "coveredBouts": 1
+          "value": -33,
+          "coveredBouts": 2
         },
         "sigStrikeDifferential": {
-          "value": -63,
-          "coveredBouts": 1
+          "value": -15,
+          "coveredBouts": 2
         },
         "controlDifferentialSec": {
-          "value": 41,
-          "coveredBouts": 1
+          "value": 268,
+          "coveredBouts": 2
         },
         "sigAbsorbed": {
-          "value": 162,
-          "coveredBouts": 1
+          "value": 279,
+          "coveredBouts": 2
         },
         "totalAbsorbed": {
-          "value": 164,
-          "coveredBouts": 1
+          "value": 356,
+          "coveredBouts": 2
         }
       },
       "recentBouts": [
@@ -2722,6 +2712,32 @@
             "controlDifferentialSec": 41,
             "sigAbsorbed": 162,
             "totalAbsorbed": 164
+          }
+        },
+        {
+          "boutId": "88293",
+          "date": "2025-10-07",
+          "event": "Dana White's Contender Series 85",
+          "opponent": "Mark Vologdin",
+          "cageSec": 900,
+          "outcome": "W",
+          "finishMethod": "decision_unanimous",
+          "metrics": {
+            "totalLanded": 223,
+            "totalAttempted": 329,
+            "sigLanded": 165,
+            "sigAttempted": 252,
+            "controlSec": 227,
+            "knockdowns": 0,
+            "takedowns": 3,
+            "takedownAttempts": 7,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": 31,
+            "sigStrikeDifferential": 48,
+            "controlDifferentialSec": 227,
+            "sigAbsorbed": 117,
+            "totalAbsorbed": 192
           }
         }
       ]
@@ -72664,6 +72680,103 @@
         }
       ]
     },
+    "hwang-in-su": {
+      "name": "Hwang In-su",
+      "slug": "hwang-in-su",
+      "scope": "ufc-only",
+      "trackedBouts": 1,
+      "lastFightDate": "2025-09-16",
+      "totals": {
+        "totalLanded": {
+          "value": 44,
+          "coveredBouts": 1
+        },
+        "totalAttempted": {
+          "value": 89,
+          "coveredBouts": 1
+        },
+        "sigLanded": {
+          "value": 37,
+          "coveredBouts": 1
+        },
+        "sigAttempted": {
+          "value": 80,
+          "coveredBouts": 1
+        },
+        "controlSec": {
+          "value": 3,
+          "coveredBouts": 1
+        },
+        "knockdowns": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "takedowns": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "takedownAttempts": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "subAttempts": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "reversals": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "totalStrikeDifferential": {
+          "value": -51,
+          "coveredBouts": 1
+        },
+        "sigStrikeDifferential": {
+          "value": -56,
+          "coveredBouts": 1
+        },
+        "controlDifferentialSec": {
+          "value": -102,
+          "coveredBouts": 1
+        },
+        "sigAbsorbed": {
+          "value": 93,
+          "coveredBouts": 1
+        },
+        "totalAbsorbed": {
+          "value": 95,
+          "coveredBouts": 1
+        }
+      },
+      "recentBouts": [
+        {
+          "boutId": "88280",
+          "date": "2025-09-16",
+          "event": "Dana White's Contender Series 82",
+          "opponent": "Paddy McCorry",
+          "cageSec": 900,
+          "outcome": "L",
+          "finishMethod": "decision_unanimous",
+          "metrics": {
+            "totalLanded": 44,
+            "totalAttempted": 89,
+            "sigLanded": 37,
+            "sigAttempted": 80,
+            "controlSec": 3,
+            "knockdowns": 0,
+            "takedowns": 0,
+            "takedownAttempts": 0,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": -51,
+            "sigStrikeDifferential": -56,
+            "controlDifferentialSec": -102,
+            "sigAbsorbed": 93,
+            "totalAbsorbed": 95
+          }
+        }
+      ]
+    },
     "hyder-amil": {
       "name": "Hyder Amil",
       "slug": "hyder-amil",
@@ -125073,68 +125186,68 @@
       "name": "Mark Vologdin",
       "slug": "mark-vologdin",
       "scope": "ufc-only",
-      "trackedBouts": 2,
+      "trackedBouts": 3,
       "lastFightDate": "2026-08-01",
       "totals": {
         "totalLanded": {
-          "value": 139,
-          "coveredBouts": 2
+          "value": 331,
+          "coveredBouts": 3
         },
         "totalAttempted": {
-          "value": 325,
-          "coveredBouts": 2
+          "value": 628,
+          "coveredBouts": 3
         },
         "sigLanded": {
-          "value": 133,
-          "coveredBouts": 2
+          "value": 250,
+          "coveredBouts": 3
         },
         "sigAttempted": {
-          "value": 319,
-          "coveredBouts": 2
+          "value": 544,
+          "coveredBouts": 3
         },
         "controlSec": {
           "value": 102,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "knockdowns": {
           "value": 1,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "takedowns": {
           "value": 4,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "takedownAttempts": {
-          "value": 14,
-          "coveredBouts": 2
+          "value": 15,
+          "coveredBouts": 3
         },
         "subAttempts": {
           "value": 0,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "reversals": {
           "value": 0,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "totalStrikeDifferential": {
-          "value": -108,
-          "coveredBouts": 2
+          "value": -139,
+          "coveredBouts": 3
         },
         "sigStrikeDifferential": {
-          "value": -59,
-          "coveredBouts": 2
+          "value": -107,
+          "coveredBouts": 3
         },
         "controlDifferentialSec": {
-          "value": -218,
-          "coveredBouts": 2
+          "value": -445,
+          "coveredBouts": 3
         },
         "sigAbsorbed": {
-          "value": 192,
-          "coveredBouts": 2
+          "value": 357,
+          "coveredBouts": 3
         },
         "totalAbsorbed": {
-          "value": 247,
-          "coveredBouts": 2
+          "value": 470,
+          "coveredBouts": 3
         }
       },
       "recentBouts": [
@@ -125188,6 +125301,32 @@
             "controlDifferentialSec": -44,
             "sigAbsorbed": 135,
             "totalAbsorbed": 160
+          }
+        },
+        {
+          "boutId": "88293",
+          "date": "2025-10-07",
+          "event": "Dana White's Contender Series 85",
+          "opponent": "Adrian Luna Martinetti",
+          "cageSec": 900,
+          "outcome": "L",
+          "finishMethod": "decision_unanimous",
+          "metrics": {
+            "totalLanded": 192,
+            "totalAttempted": 303,
+            "sigLanded": 117,
+            "sigAttempted": 225,
+            "controlSec": 0,
+            "knockdowns": 0,
+            "takedowns": 0,
+            "takedownAttempts": 1,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": -31,
+            "sigStrikeDifferential": -48,
+            "controlDifferentialSec": -227,
+            "sigAbsorbed": 165,
+            "totalAbsorbed": 223
           }
         }
       ]
@@ -148784,6 +148923,103 @@
             "controlDifferentialSec": 4,
             "sigAbsorbed": 19,
             "totalAbsorbed": 19
+          }
+        }
+      ]
+    },
+    "paddy-mccorry": {
+      "name": "Paddy McCorry",
+      "slug": "paddy-mccorry",
+      "scope": "ufc-only",
+      "trackedBouts": 1,
+      "lastFightDate": "2025-09-16",
+      "totals": {
+        "totalLanded": {
+          "value": 95,
+          "coveredBouts": 1
+        },
+        "totalAttempted": {
+          "value": 170,
+          "coveredBouts": 1
+        },
+        "sigLanded": {
+          "value": 93,
+          "coveredBouts": 1
+        },
+        "sigAttempted": {
+          "value": 168,
+          "coveredBouts": 1
+        },
+        "controlSec": {
+          "value": 105,
+          "coveredBouts": 1
+        },
+        "knockdowns": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "takedowns": {
+          "value": 1,
+          "coveredBouts": 1
+        },
+        "takedownAttempts": {
+          "value": 2,
+          "coveredBouts": 1
+        },
+        "subAttempts": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "reversals": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "totalStrikeDifferential": {
+          "value": 51,
+          "coveredBouts": 1
+        },
+        "sigStrikeDifferential": {
+          "value": 56,
+          "coveredBouts": 1
+        },
+        "controlDifferentialSec": {
+          "value": 102,
+          "coveredBouts": 1
+        },
+        "sigAbsorbed": {
+          "value": 37,
+          "coveredBouts": 1
+        },
+        "totalAbsorbed": {
+          "value": 44,
+          "coveredBouts": 1
+        }
+      },
+      "recentBouts": [
+        {
+          "boutId": "88280",
+          "date": "2025-09-16",
+          "event": "Dana White's Contender Series 82",
+          "opponent": "Hwang In-su",
+          "cageSec": 900,
+          "outcome": "W",
+          "finishMethod": "decision_unanimous",
+          "metrics": {
+            "totalLanded": 95,
+            "totalAttempted": 170,
+            "sigLanded": 93,
+            "sigAttempted": 168,
+            "controlSec": 105,
+            "knockdowns": 0,
+            "takedowns": 1,
+            "takedownAttempts": 2,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": 51,
+            "sigStrikeDifferential": 56,
+            "controlDifferentialSec": 102,
+            "sigAbsorbed": 37,
+            "totalAbsorbed": 44
           }
         }
       ]
