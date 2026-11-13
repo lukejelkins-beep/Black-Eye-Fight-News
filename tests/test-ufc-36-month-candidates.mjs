@@ -151,3 +151,63 @@ test("dated departure is ignored after a verified later UFC return",()=>{
    evidenceReview:{...evidenceReview,asOf:"2026-11-14"}});
  assert(futureReview.fighters.some(f=>f.slug==="fighter-x"));
 });
+
+test("verified kickboxing, Muay Thai and other non-MMA disciplines do not disqualify",()=>{
+ const sports=["kickboxing","muay-thai","boxing","grappling",
+  "submission-grappling","bjj","wrestling","bare-knuckle-boxing"];
+ const bouts={},profiles={},fighters={};
+ for(let i=0;i<sports.length;i++){
+  const slug="fighter-"+i,opp="Later Opponent "+i;
+  bouts[String(100+i)]=bout(100+i,"2024-03-16","Fighter "+i,slug,"UFC Rival "+i,"ufc-rival-"+i);
+  profiles[slug]={recentHistory:[{date:"2026-07-27",opponent:opp,
+   promotion:"",result:"loss"}]};
+  fighters[slug]=[{date:"2026-07-27",opponent:opp,ruleset:sports[i],
+   checkedAt:"2026-11-13",source:"https://example.org/verified-"+i}];
+ }
+ const reviewed={asOf:"2026-11-13",fighters};
+ const args=[{bouts},{profiles},{fighters:{}},{divisions:[]}];
+ const a=candidateManifest(...args,{asOf:"2026-11-13",evidenceReview:reviewed});
+ for(let i=0;i<sports.length;i++){
+  const row=a.fighters.find(x=>x.slug==="fighter-"+i);
+  assert(row,"non-MMA cannot exclude "+sports[i]);
+  assert.equal(row.eligibilityStatus,"latest_observed_mma_ufc",
+   "the independently verified "+sports[i]+" contest is not an MMA departure");
+ }
+ const old=auditUfcLastFive(...args,{asOf:"2026-11-13",
+  verifiedOtherBoutRulesets:reviewed});
+ assert.equal(old.activityMonths,18);
+ assert.equal(old.fighters.find(x=>x.slug==="fighter-0").eligibilityStatus,
+  "review_required","36-month evidence cannot affect public 18-month processing");
+});
+
+test("verified non-MMA cannot suppress actual MMA or mismatched opponent records",()=>{
+ const bouts={
+  "1":bout(1,"2025-03-01","Mixed Fighter","mixed-fighter","Rival 1","rival-1"),
+  "2":bout(2,"2025-03-01","Wrong Opponent","wrong-opponent","Rival 2","rival-2"),
+  "3":bout(3,"2025-03-01","Verified MMA","verified-mma","Rival 3","rival-3")
+ };
+ const profiles={
+  "mixed-fighter":{recentHistory:[{date:"2026-07-27",
+   opponent:"Later Opponent",promotion:"",sport:"mma",result:"loss"}]},
+  "wrong-opponent":{recentHistory:[{date:"2026-07-27",
+   opponent:"Actual Opponent",promotion:"",result:"loss"}]},
+  "verified-mma":{recentHistory:[{date:"2026-07-27",
+   opponent:"Verified Opponent",promotion:"",result:"loss"}]}
+ };
+ const evidence={asOf:"2026-11-13",fighters:{
+  "mixed-fighter":[{date:"2026-07-27",opponent:"Later Opponent",
+   ruleset:"kickboxing",checkedAt:"2026-11-13",source:"https://example.org/one"}],
+  "wrong-opponent":[{date:"2026-07-27",opponent:"Different Opponent",
+   ruleset:"muay-thai",checkedAt:"2026-11-13",source:"https://example.org/two"}],
+  "verified-mma":[{date:"2026-07-27",opponent:"Verified Opponent",
+   ruleset:"mma",checkedAt:"2026-11-13",source:"https://example.org/three"}]
+ }};
+ const out=candidateManifest({bouts},{profiles},{fighters:{}},{divisions:[]},
+  {asOf:"2026-11-13",evidenceReview:evidence});
+ assert(!out.fighters.some(f=>f.slug==="mixed-fighter"),
+  "a provider-tagged MMA fight remains MMA despite contradictory later evidence");
+ assert.equal(out.fighters.find(f=>f.slug==="wrong-opponent").eligibilityStatus,
+  "review_required","mismatched opponent cannot clear an unrelated mystery fight");
+ assert(!out.fighters.some(f=>f.slug==="verified-mma"),
+  "independently verified later professional MMA must exclude");
+});
