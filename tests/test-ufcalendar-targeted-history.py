@@ -18,6 +18,7 @@ class StubClient:
         self.max_calls=500
         self.stopped=False
         self.paths=[]
+        self.errors=[]
 
     def call(self,path):
         self.paths.append(path)
@@ -87,6 +88,32 @@ class TargetedHistoryTests(unittest.TestCase):
         coverage["asOf"]="2026-10-01"
         self.assertEqual(collector.collect_targeted_ufc_history(client,state,coverage,today),0)
         self.assertEqual(client.paths,[])
+
+
+    def test_unknown_slug_negative_cache_expires_after_one_week(self):
+        class NotFoundClient(StubClient):
+            def call(self,path):
+                self.paths.append(path)
+                self.errors.append("HTTP_404")
+                self.remaining-=1
+                return None
+        today=dt.date(2026,11,13)
+        coverage={"schema":1,"scope":"ufc","asOf":today.isoformat(),
+                  "fighters":[{"slug":"renamed-athlete","needsHistoryCheck":True}]}
+        state=collector.default_progress()
+        client=NotFoundClient({})
+        self.assertEqual(collector.collect_targeted_ufc_history(client,state,coverage,today),0)
+        self.assertEqual(len(client.paths),1)
+        marker=state["ufcHistoricalSearchDone"]["renamed-athlete"]
+        self.assertEqual(marker["status"],"unresolved_slug_404")
+        self.assertEqual(marker["retryAfter"],"2026-11-20")
+        self.assertEqual(collector.collect_targeted_ufc_history(client,state,coverage,today),0)
+        self.assertEqual(len(client.paths),1)
+        future=today+dt.timedelta(days=7)
+        coverage["asOf"]=future.isoformat()
+        self.assertEqual(collector.collect_targeted_ufc_history(client,state,coverage,future),0)
+        self.assertEqual(len(client.paths),2)
+
 
 
 if __name__=="__main__":
