@@ -546,13 +546,76 @@ def summarize_history(payload):
         status=safe(row.get("status"),18)
         when=date_str(row.get("date") or row.get("fought_at") or row.get("starts_at"))
         if not opponent or not when or status not in ("win","loss","draw","no_contest"):continue
+        # A native UFCalendar career row carries its canonical fight_id.
+        # Preserve it so a historical UFC fight can link to saved statistics.
+        # Historical/public-record rows do not independently prove a fight ID.
+        native=row.get("source")=="native"
         history.append({"date":when,"opponent":opponent,"result":status,
                         "method":safe(row.get("method_normalized") or row.get("method"),50),
                         "promotion":safe(row.get("org_slug") or row.get("org"),24),
-                        "titleFight":bool(row.get("is_title"))})
+                        "titleFight":bool(row.get("is_title")),
+                        "source":"native" if native else "history",
+                        "boutId":positive(row.get("fight_id")) if native else None})
         if len(history)>=20:break
     return history
 
+
+
+def refresh_unlinked_ufc_native_ids(client,state,research,coverage,today):
+    """Recover native fight IDs once from already researched UFC career histories.
+
+    Old saved career rows discarded `fight_id`, so the coverage audit may list
+    unlinked UFC bouts despite the provider supplying verified native IDs.
+    Only re-read athletes with an actual text-only UFC fight, in priority order;
+    do not spam the API to recheck otherwise complete fighter histories.
+    """
+    if coverage.get("schema")!=1 or coverage.get("scope")!="ufc":return 0
+    stamp=date_str(coverage.get("asOf"))
+    if not stamp or not (today-dt.timedelta(days=7)).isoformat()<=stamp<=today.isoformat():
+        return 0
+    checks=state.setdefault("ufcNativeHistoryIdChecks",{})
+    profiles=research.get("profiles",{})
+    cap=max(0,min(24,int(client.max_calls*.06)))
+    attempted=0
+    recovered=0
+    for fighter in coverage.get("fighters",[]):
+        if attempted>=cap or client.stopped or client.remaining<=0 or client.calls>=client.max_calls-15:
+            break
+        if not isinstance(fighter,dict):continue
+        recent=fighter.get("recent",[])
+        if not any(isinstance(row,dict) and row.get("origin")=="ufc-history"
+                   and not row.get("boutId") for row in recent):
+            continue
+        slugval=slug(fighter.get("slug"))
+        if not slugval or slugval not in profiles:continue
+        prior=checks.get(slugval,{})
+        if isinstance(prior,dict) and (prior.get("status")=="checked" or
+                str(prior.get("retryAfter") or "")>today.isoformat()):
+            continue
+        stable_id=stable_indexed_fighter_id(state,slugval)
+        attempted+=1
+        payload=client.call("/fighters/"+(stable_id or slugval)+"/history")
+        if payload is None:
+            # A failed lookup is not a completed investigation, but repeated
+            # transient 404s should not dominate the five-minute relay.
+            checks[slugval]={"status":"retry","checkedAt":today.isoformat(),
+                             "retryAfter":(today+dt.timedelta(days=7)).isoformat()}
+            continue
+        history=summarize_history(payload)
+        old=profiles[slugval].get("recentHistory") or []
+        old_ufc=sum(row.get("promotion","").lower()=="ufc" for row in old if isinstance(row,dict))
+        new_ufc=sum(row.get("promotion","").lower()=="ufc" for row in history)
+        if history and new_ufc>=old_ufc:
+            profiles[slugval]["recentHistory"]=history
+            state.setdefault("historyDone",{})[slugval]=len(history)
+            recovered+=sum(row.get("promotion")=="ufc" and row.get("boutId") is not None
+                           for row in history)
+        checks[slugval]={"status":"checked","checkedAt":today.isoformat(),
+                         "nativeUfcIds":sum(row.get("promotion")=="ufc" and
+                            row.get("boutId") is not None for row in history)}
+    if attempted:print("UFCalendar native UFC history ID checks:",attempted,
+                        "native rows recovered:",recovered)
+    return attempted
 
 def stable_indexed_fighter_id(state,fighter_slug):
     """Use a numeric UFC identity only when all locally indexed IDs agree.
@@ -820,6 +883,7 @@ def main():
         coverage=read(COVERAGE,{})
         searched=collect_targeted_ufc_history(client,state,coverage,today)
         if searched:print("UFCalendar targeted UFC history lookups:",searched)
+        refresh_unlinked_ufc_native_ids(client,state,research,coverage,today)
         recovery=collect_rounds(client,state,cards,archive,pfl_archive,today,coverage)
         if recovery["retried"]:
             print("UFCalendar incomplete UFC round rechecks:",recovery["retried"])
