@@ -171,8 +171,44 @@ jobs:
           sleep 90
           new_main=$(git ls-remote https://github.com/"$GITHUB_REPOSITORY".git refs/heads/main | cut -f1)
           if [[ "$new_main" != "$source_sha" ]]; then
-            echo 'New HEAD during grace window; next run will validate it'
-            exit 0
+            # An ongoing archive collector can update *only cached data* while
+            # the grace check sleeps. Establish and verify that narrow case
+            # instead of starving every UI fix or re-deploying old source.
+            transition=$(mktemp)
+            if ! gh api "repos/$GITHUB_REPOSITORY/compare/$source_sha...$new_main" > "$transition"; then
+              echo 'Cannot verify source advance during grace; blocked'
+              rm -f "$transition"; exit 0
+            fi
+            transition_status=$(jq -r '.status // ""' "$transition")
+            transition_count=$(jq -r '.files | length' "$transition")
+            if [[ "$transition_status" != ahead || "$transition_count" -ge 300 ]]; then
+              echo 'Non-linear or truncated source advance during grace; blocked'
+              rm -f "$transition"; exit 0
+            fi
+            while IFS= read -r changed; do
+              case "$changed" in
+                data/ufcalendar-rich-progress.json|data/ufcalendar-card-enhancements.json|\
+                data/ufc-research-archive.json|data/pfl-research-archive.json|\
+                data/ufcalendar-fighter-research.json|data/ufcalendar-judging-research.json|\
+                data/ufc-last-five-coverage.json|data/ufc-profile-research-queue.json|\
+                data/ufc-postfight-metrics.json|data/news-live.json|data/results.json|\
+                data/upcoming-cards.json|data/fight-film.json|data/fight-talk-live.json|\
+                data/fight-talk-embedded.json|data/fight-talk-x-api.json|data/fight-talk-x-budget.json)
+                  ;;
+                *)
+                  echo "Code or unvalidated data changed during grace: $changed; blocked"
+                  rm -f "$transition"; exit 0 ;;
+              esac
+            done < <(jq -r '.files[].filename' "$transition")
+            rm -f "$transition"
+            git fetch --quiet --no-tags origin main
+            if [[ "$(git rev-parse FETCH_HEAD)" != "$new_main" ]]; then
+              echo 'Main advanced again while verifying: abort this recovery'
+              exit 0
+            fi
+            git reset --hard "$new_main"
+            source_sha="$new_main"
+            echo "Using validated source plus verified data-only advance $source_sha"
           fi
           still_different=0
           while IFS= read -r file; do
