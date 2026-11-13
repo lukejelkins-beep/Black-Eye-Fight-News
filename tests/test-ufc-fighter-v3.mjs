@@ -14,7 +14,8 @@ const fighters=[
  {name:"C Unknown",slug:"c-unknown",lastUfcFight:"2026-05-21",
   recent:[{boutId:"m4",date:"2026-05-21",opponent:"B Two",outcome:"W",method:null}]},
  {name:"D Inactive",slug:"d-inactive",lastUfcFight:"2024-01-01",
-  recent:recent("A One",["W","W","W"])}
+  recent:recent("A One",["W","W","W"])},
+ {name:"E Active NoHistory",slug:"e-active",lastUfcFight:"2026-06-03",recent:[]}
 ];
 const coverage={schema:1,scope:"ufc",asOf:date,activityCutoff:"2025-05-13",fighters};
 function samples(name,landed,absorbed,takedowns,takedownAttempts){
@@ -39,7 +40,7 @@ const snapshot=()=>buildSnapshot(coverage,postfight,cohorts);
 test("recent UFC bout samples are measured only from matching unique bout IDs",()=>{
  const d=snapshot(),a=d.fighters.aone,b=d.fighters.btwo;
  assert.equal(d.schema,4);
- assert.equal(d.population,3);
+ assert.equal(d.population,4);
  assert.equal(Object.hasOwn(d.fighters,"dinactive"),false);
  assert.equal(a.recent.length,3);
  assert.equal(a.metrics.slpm.bouts,3);
@@ -85,6 +86,16 @@ test("partial or zero denominator is not a fabricated rank or 100% accuracy",()=
  assert.equal(a.metrics.slpm.rank,undefined);
  assert.equal(a.metrics.tdDef,undefined);
  assert.equal(d.boards.find(x=>x.id==="slpm").eligible,1);
+});
+test("unconfirmed bout IDs cannot qualify knockout or submission leaderboards",()=>{
+ const gap=structuredClone(coverage);
+ gap.fighters[0].recent[1].boutId=null;
+ const d=buildSnapshot(gap,postfight,cohorts);
+ assert.equal(d.fighters.aone.metrics.ko.bouts,2);
+ assert.equal(d.fighters.aone.metrics.ko.rank,undefined);
+ assert.equal(d.fighters.aone.metrics.submission.rank,undefined);
+ assert.deepEqual(d.fighters.eactivenohistory.recent,[]);
+ assert.equal(d.fighters.eactivenohistory.power,null);
 });
 test("source mismatch and inconsistent snapshot dates stop publication",()=>{
  assert.throws(()=>buildSnapshot({},postfight),/Required saved/);
