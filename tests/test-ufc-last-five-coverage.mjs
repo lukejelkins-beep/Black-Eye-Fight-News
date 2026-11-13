@@ -296,9 +296,9 @@ test("DWCS and Road-to-UFC are separate MMA feeders, not UFC roster bouts",()=>{
  };
  const out=auditUfcLastFive({bouts},{profiles:{}},{fighters:{}},{divisions:[]},{asOf:"2026-11-13"});
  assert.equal(out.summary.recentUfcLabeledCandidates,10);
- assert.equal(out.summary.activeFighters,2,"only Active and their official UFC opponent qualify");
+ assert.equal(out.summary.activeFighters,3,"Active, their opponent and Returning’s old official opponent qualify");
  assert.equal(out.summary.excludedWithoutRecentOfficialUfc,6);
- assert.equal(out.summary.excludedLaterNonUfcProfessionalMma,2);
+ assert.equal(out.summary.excludedLaterNonUfcProfessionalMma,1);
  assert.equal(out.fighters.find(f=>f.slug==="active").recentCount,1,
   "a pre-UFC DWCS fight must not become one of their latest five UFC fights");
  assert.equal(out.fighters.some(f=>f.slug==="returning"),false);
@@ -308,7 +308,8 @@ test("DWCS and Road-to-UFC are separate MMA feeders, not UFC roster bouts",()=>{
 test("a newer recorded PFL professional MMA result overrides recent UFC activity",()=>{
  const bout=(id,org,event,date)=>({id,org,event,eventDate:date,status:"completed",
   a:{id:"1",slug:"athlete",name:"Athlete"},
-  b:{id:"2",slug:"opponent",name:"Opponent"},result:{winnerId:"1"}});
+  b:{id:"2",slug:org==="pfl"?"pfl-rival":"opponent",
+   name:org==="pfl"?"PFL Rival":"Opponent"},result:{winnerId:"1"}});
  const out=auditUfcLastFive({bouts:{
   "10":bout("10","ufc","UFC Fight Night: Test","2026-05-01"),
   "20":bout("20","pfl","PFL World Championship","2026-09-01")
