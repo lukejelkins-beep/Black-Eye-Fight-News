@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-13T08:52:45.357Z",
-  "checkedAt": "2026-11-13T08:52:45.357Z",
-  "updatedAt": "2026-11-13T04:43:53.350Z",
+  "attemptedAt": "2026-11-13T09:49:28.469Z",
+  "checkedAt": "2026-11-13T09:49:28.469Z",
+  "updatedAt": "2026-11-13T09:29:37Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 6,
+  "sourcesChecked": 4,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 6,
+      "checked": 4,
       "failed": 0,
-      "configured": 6,
-      "message": "6 of 6 scheduled sources checked."
+      "configured": 4,
+      "message": "4 of 4 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 33,
+      "configured": 28,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 37,
+      "configured": 40,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 1,
+      "configured": 2,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,22 +55,70 @@
   "rollingScan": {
     "directoryEntries": 447,
     "scheduledEntries": 84,
-    "batchIndex": 4,
+    "batchIndex": 3,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "X": 33,
-      "Instagram": 37,
-      "Bluesky": 6,
-      "Threads": 7,
-      "Reddit": 1
+      "X": 28,
+      "Instagram": 40,
+      "Threads": 10,
+      "Bluesky": 4,
+      "Reddit": 2
     },
-    "directlyChecked": 6,
+    "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n26ocmdoiy2y",
+      "cid": "bafyreiewilpk23ruqrtfpyiv5hyd7zj4ggmumt7bi2ph646lxg7wm43azi",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Tom Aspinall shares prediction for Ciryl Gane vs. Josh Hokit fight at UFC 334",
+      "postedAt": "2026-11-13T09:29:37Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n26ocmdoiy2y",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T09:49:28.469Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n26crhh55h2r",
+      "cid": "bafyreicnpdlafv3wf3c54vs5euse2423r4b65uocm7pul3u6ehvy24vl5y",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Arman Tsarukyan believes the UFC will ‘love’ Usman Nurmagomedov’s recent brawl with Merab Dvalishvili",
+      "postedAt": "2026-11-13T06:03:11Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n26crhh55h2r",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T09:49:28.469Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n266dny4vk27",
       "cid": "bafyreidfw642ppyh6jiiqxbkqpax6fng4gdlbexww3ili764uf7avqexmy",
@@ -93,6 +141,54 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n25yt5ij6j2f",
+      "cid": "bafyreiavgg4arnohwzwszjris7fzyhumyxgh2l6ebweijhekog7knjtxxa",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Ciryl Gane vs. Josh Hokit: Bloody Elbow staff divided by the UFC 334 main event",
+      "postedAt": "2026-11-13T03:05:10Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n25yt5ij6j2f",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T09:49:28.469Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n25vcy2dd62f",
+      "cid": "bafyreig6knybkwuhkdn62i7h4hxesv2w2oj5kwd3c4vklkrcdbw5qlde7m",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Israel Adesanya reveals who will corner him for UFC Saudi Arabia fight after leaving City Kickboxing",
+      "postedAt": "2026-11-13T02:02:26Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n25vcy2dd62f",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T09:49:28.469Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -141,6 +237,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n25qclwai62y",
+      "cid": "bafyreiezcxjkgycdd42cjdkmjca7v5ioezhhpdqf6ddj3zxf5axb37lfmi",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Watch Josh Hokit target Ciryl Gane and Alex Pereira’s mothers in UFC 334 presser tirade",
+      "postedAt": "2026-11-13T00:32:45Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n25qclwai62y",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T09:49:28.469Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -380,7 +500,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
+      "engagementCheckedAt": "2026-11-13T09:49:28.469Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -452,7 +572,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
+      "engagementCheckedAt": "2026-11-13T09:49:28.469Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -500,7 +620,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
+      "engagementCheckedAt": "2026-11-13T09:49:28.469Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -548,7 +668,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
+      "engagementCheckedAt": "2026-11-13T09:49:28.469Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -572,7 +692,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
+      "engagementCheckedAt": "2026-11-13T09:49:28.469Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -621,30 +741,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n24x6ker5m2r",
-      "cid": "bafyreiaxyuqgdxaismob4zvf4jxyt57y6tyksxlscjwj5fut4hoidnugpu",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Joe Rogan calls for eye poke disqualifications ahead of Ciryl Gane’s UFC 334 return",
-      "postedAt": "2026-11-12T17:03:05Z",
-      "date": "13 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n24x6ker5m2r",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -720,30 +816,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n24q6cwfxf2o",
-      "cid": "bafyreihifyjkpw4xwxleuafslrgsjvxew63bmzfe35srmvhyjks634vof4",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Usman Nurmagomedov’s punishment revealed as RAF boss provides Merab Dvalishvili update",
-      "postedAt": "2026-11-12T14:57:41Z",
-      "date": "13 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n24q6cwfxf2o",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n24nmgoyq526",
       "cid": "bafyreicoqgqwvnm5732gkk5qqb7ouk4typejoktup67kz7p3bhfz3vcu2e",
       "platform": "Bluesky",
@@ -816,54 +888,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n24joaeqkd24",
-      "cid": "bafyreietiwgdgjluwmrj6h5y35sdbwrehjx55kdc5e6mqzeuomdv757kge",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Paddy Pimblett names 112lb boxer who hit him harder than Justin Gaethje or any other opponent",
-      "postedAt": "2026-11-12T13:01:19Z",
-      "date": "13 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n24joaeqkd24",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n24gfayrie2c",
-      "cid": "bafyreife6f73j2web45b6liofhhpc5mqa474qfwdtnowcopcrn3djrpz6e",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Sean O’Malley shares fight breakdown after Merab Dvalishvili vs Usman Nurmagomedov brawl",
-      "postedAt": "2026-11-12T12:02:37Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n24gfayrie2c",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n244qojkc22x",
       "cid": "bafyreidngsa2oey6sysbbxwn7ltck6baxixyulssxyo4e3ybl6546fjzym",
       "platform": "Bluesky",
@@ -909,30 +933,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n23lkscxty2a",
-      "cid": "bafyreieafn54oxazbsslpk3tbjdrfy3lqvx5a7acp4i7gxp4olzjlnzxda",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Ben Stiller gets rare glimpse of Josh Hokit outside of his persona ahead of UFC 334 title fight",
-      "postedAt": "2026-11-12T04:02:31Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n23lkscxty2a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1424,7 +1424,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
+      "engagementCheckedAt": "2026-11-13T09:49:28.469Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5117,7 +5117,7 @@
         "comments": 2,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T21:19:16.108Z",
+      "engagementCheckedAt": "2026-11-13T09:49:28.469Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
