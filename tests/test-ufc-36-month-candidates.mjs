@@ -250,3 +250,36 @@ test("default roster research day respects Melbourne midnight, not UTC midnight"
  assert.equal(melbourneResearchDay(new Date("2026-11-13T10:00:00Z")),"2026-11-13");
  assert.equal(melbourneResearchDay(new Date("2026-11-14T13:30:00Z")),"2026-11-15");
 });
+
+test("official UFC active confirmation clears only matching legacy roster flag",()=>{
+ const bout=(id,date,slug,opponent)=>({id:String(id),org:"ufc",
+  event:"UFC Fight Night: Example",eventDate:date,status:"completed",
+  a:{name:slug,slug,id:11},b:{name:opponent,slug:opponent,id:12},
+  result:{winnerId:"11",round:3,time:"5:00"}});
+ const progress={bouts:{"100":bout(100,"2025-03-01","fighter-a","rival-a"),
+  "101":bout(101,"2025-03-01","fighter-b","rival-b")}};
+ const review={asOf:"2026-11-13",excluded:[],
+  reviewCandidates:[{slug:"fighter-a",lastUfcFight:"2025-03-01"},
+   {slug:"fighter-b",lastUfcFight:"2025-03-01"}]};
+ const confirmed=slug=>({slug,lastUfcFight:"2025-03-01",status:"active",
+  checkedAt:"2026-11-14",source:"https://www.ufc.com/athlete/"+slug});
+ const evidence={asOf:"2026-11-14",confirmedCurrentRoster:[
+  confirmed("fighter-a"),confirmed("fighter-b")]};
+ const args=[progress,{profiles:{}},{fighters:{}},{divisions:[]}];
+ const out=candidateManifest(...args,{asOf:"2026-11-14",rosterReview:review,
+  evidenceReview:evidence});
+ assert.equal(out.fighters.find(f=>f.slug==="fighter-a").eligibilityStatus,
+  "latest_observed_mma_ufc");
+ assert.equal(out.fighters.find(f=>f.slug==="fighter-b").eligibilityStatus,
+  "latest_observed_mma_ufc");
+ const unknown=candidateManifest(progress,{profiles:{"fighter-a":{recentHistory:[
+  {date:"2026-01-01",opponent:"Another",result:"win",promotion:""}]}}},
+  {fighters:{}},{divisions:[]},{asOf:"2026-11-14",rosterReview:review,evidenceReview:evidence});
+ assert.equal(unknown.fighters.find(f=>f.slug==="fighter-a").eligibilityStatus,
+  "review_required","a later unknown ruleset is still an exception");
+ const wrong=candidateManifest(...args,{asOf:"2026-11-14",rosterReview:review,
+  evidenceReview:{...evidence,confirmedCurrentRoster:[
+   {...confirmed("fighter-a"),lastUfcFight:"2024-01-01"},
+   {...confirmed("fighter-b"),source:"https://example.org/athlete/fighter-b"}]}});
+ assert.equal(wrong.summary.latestPromotionReviewRequired,2);
+});
