@@ -11,28 +11,28 @@
     "excludedLaterNonUfcMma": 100,
     "excludedConfirmedRetired": 11,
     "excludedConfirmedUfcExit": 12,
-    "latestPromotionReviewRequired": 40,
-    "noKnownLaterMmaOrUnknown": 760,
+    "latestPromotionReviewRequired": 26,
+    "noKnownLaterMmaOrUnknown": 774,
     "activeFighters": 800,
     "withFiveKnown": 499,
-    "withFiveLinkedIds": 478,
+    "withFiveLinkedIds": 481,
     "withThreeMeasured": 606,
     "withShortUfcTimelineReconciled": 3,
     "withUfcHistoryLinkedAndMeasured": 407,
     "evidenceStages": {
       "fiveLinkedMeasured": 407,
-      "fiveLinkedStatsGap": 71,
-      "fiveUnlinked": 21,
+      "fiveLinkedStatsGap": 74,
+      "fiveUnlinked": 18,
       "shortLinkedMeasuredDepthConfirmed": 0,
       "shortLinkedMeasuredDepthUnconfirmed": 258,
       "shortLinkedStatsGapDepthConfirmed": 3,
       "shortLinkedStatsGap": 36,
       "shortUnlinked": 4
     },
-    "needHistoryCheck": 319,
+    "needHistoryCheck": 316,
     "needStats": 135,
-    "shiftedDateAliasesJoined": 732,
-    "uniqueKnownBoutIds": 1946
+    "shiftedDateAliasesJoined": 684,
+    "uniqueKnownBoutIds": 1952
   },
   "eligibilityExcluded": [
     {
@@ -3828,16 +3828,6 @@
       }
     },
     {
-      "name": "Cameron Saaiman",
-      "slug": "cameron-saaiman",
-      "lastUfcFight": "2025-04-26"
-    },
-    {
-      "name": "Carlos Vera",
-      "slug": "carlos-vera",
-      "lastUfcFight": "2025-03-15"
-    },
-    {
       "name": "CJ Vergara",
       "slug": "cj-vergara",
       "lastUfcFight": "2025-03-29"
@@ -3875,26 +3865,6 @@
       }
     },
     {
-      "name": "Evan Elder",
-      "slug": "evan-elder",
-      "lastUfcFight": "2025-04-26"
-    },
-    {
-      "name": "Fernando Padilla",
-      "slug": "fernando-padilla",
-      "lastUfcFight": "2024-12-15"
-    },
-    {
-      "name": "Gabriel Santos",
-      "slug": "gabriel-santos",
-      "lastUfcFight": "2025-02-08"
-    },
-    {
-      "name": "Gunnar Nelson",
-      "slug": "gunnar-nelson",
-      "lastUfcFight": "2025-03-22"
-    },
-    {
       "name": "Istela Nunes",
       "slug": "istela-nunes",
       "lastUfcFight": "2025-04-05"
@@ -3909,11 +3879,6 @@
         "opponent": "Jimi Natividad",
         "source": "fighter-career-history"
       }
-    },
-    {
-      "name": "Jonathan Martinez",
-      "slug": "jonathan-martinez",
-      "lastUfcFight": "2024-11-16"
     },
     {
       "name": "Jose Daniel Medina",
@@ -3964,16 +3929,6 @@
       }
     },
     {
-      "name": "Miesha Tate",
-      "slug": "miesha-tate",
-      "lastUfcFight": "2025-05-03"
-    },
-    {
-      "name": "Ottman Azaitar",
-      "slug": "ottman-azaitar",
-      "lastUfcFight": "2024-12-15"
-    },
-    {
       "name": "Phil Rowe",
       "slug": "phil-rowe",
       "lastUfcFight": "2026-02-21",
@@ -3990,29 +3945,9 @@
       "lastUfcFight": "2025-01-11"
     },
     {
-      "name": "Roberto Romero",
-      "slug": "roberto-romero",
-      "lastUfcFight": "2025-04-26"
-    },
-    {
-      "name": "Ronaldo Rodriguez",
-      "slug": "ronaldo-rodriguez",
-      "lastUfcFight": "2025-03-29"
-    },
-    {
-      "name": "Serhiy Sidey",
-      "slug": "serhiy-sidey",
-      "lastUfcFight": "2025-05-03"
-    },
-    {
       "name": "SeungWoo Choi",
       "slug": "seungwoo-choi",
       "lastUfcFight": "2025-03-15"
-    },
-    {
-      "name": "Shavkat Rakhmonov",
-      "slug": "shavkat-rakhmonov",
-      "lastUfcFight": "2024-12-07"
     },
     {
       "name": "Shayilan Nuerdanbieke",
@@ -4051,11 +3986,6 @@
         "opponent": "Amelia Moore",
         "source": "fighter-career-history"
       }
-    },
-    {
-      "name": "Yair Rodriguez",
-      "slug": "yair-rodriguez",
-      "lastUfcFight": "2025-04-12"
     },
     {
       "name": "Zac Pauga",
@@ -8188,7 +8118,7 @@
       "name": "Evan Elder",
       "slug": "evan-elder",
       "lastUfcFight": "2025-04-26",
-      "eligibilityStatus": "review_required",
+      "eligibilityStatus": "latest_observed_mma_ufc",
       "champion": false,
       "upcoming": true,
       "ranked": false,
@@ -18068,72 +17998,10 @@
       ]
     },
     {
-      "name": "Miesha Tate",
-      "slug": "miesha-tate",
-      "lastUfcFight": "2025-05-03",
-      "eligibilityStatus": "review_required",
-      "champion": false,
-      "upcoming": false,
-      "ranked": false,
-      "recentCount": 5,
-      "measuredCount": 4,
-      "evidenceStage": "fiveUnlinked",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": true,
-      "needsStats": true,
-      "recent": [
-        {
-          "date": "2025-05-03",
-          "opponent": "Yana Santos",
-          "boutId": "60797",
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2023-12-02",
-          "opponent": "Julia Avila",
-          "boutId": "59954",
-          "method": "submission",
-          "outcome": "W",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2022-07-16",
-          "opponent": "Lauren Murphy",
-          "boutId": "61508",
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2021-11-20",
-          "opponent": "Ketlen Vieira",
-          "boutId": "61669",
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2021-07-17",
-          "opponent": "Marion Reneau",
-          "boutId": null,
-          "method": "ko_tko",
-          "outcome": "W",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
-        }
-      ]
-    },
-    {
       "name": "Serhiy Sidey",
       "slug": "serhiy-sidey",
       "lastUfcFight": "2025-05-03",
-      "eligibilityStatus": "review_required",
+      "eligibilityStatus": "latest_observed_mma_ufc",
       "champion": false,
       "upcoming": false,
       "ranked": false,
@@ -18177,7 +18045,7 @@
       "name": "Roberto Romero",
       "slug": "roberto-romero",
       "lastUfcFight": "2025-04-26",
-      "eligibilityStatus": "review_required",
+      "eligibilityStatus": "latest_observed_mma_ufc",
       "champion": false,
       "upcoming": false,
       "ranked": false,
@@ -18344,7 +18212,7 @@
       "name": "Ronaldo Rodriguez",
       "slug": "ronaldo-rodriguez",
       "lastUfcFight": "2025-03-29",
-      "eligibilityStatus": "review_required",
+      "eligibilityStatus": "latest_observed_mma_ufc",
       "champion": false,
       "upcoming": false,
       "ranked": false,
@@ -18397,7 +18265,7 @@
       "name": "Carlos Vera",
       "slug": "carlos-vera",
       "lastUfcFight": "2025-03-15",
-      "eligibilityStatus": "review_required",
+      "eligibilityStatus": "latest_observed_mma_ufc",
       "champion": false,
       "upcoming": false,
       "ranked": false,
@@ -18538,7 +18406,7 @@
       "name": "Gabriel Santos",
       "slug": "gabriel-santos",
       "lastUfcFight": "2025-02-08",
-      "eligibilityStatus": "review_required",
+      "eligibilityStatus": "latest_observed_mma_ufc",
       "champion": false,
       "upcoming": false,
       "ranked": false,
@@ -18653,7 +18521,7 @@
       "name": "Fernando Padilla",
       "slug": "fernando-padilla",
       "lastUfcFight": "2024-12-15",
-      "eligibilityStatus": "review_required",
+      "eligibilityStatus": "latest_observed_mma_ufc",
       "champion": false,
       "upcoming": false,
       "ranked": false,
@@ -18706,7 +18574,7 @@
       "name": "Ottman Azaitar",
       "slug": "ottman-azaitar",
       "lastUfcFight": "2024-12-15",
-      "eligibilityStatus": "review_required",
+      "eligibilityStatus": "latest_observed_mma_ufc",
       "champion": false,
       "upcoming": false,
       "ranked": false,
@@ -18821,7 +18689,7 @@
       "name": "Shavkat Rakhmonov",
       "slug": "shavkat-rakhmonov",
       "lastUfcFight": "2024-12-07",
-      "eligibilityStatus": "review_required",
+      "eligibilityStatus": "latest_observed_mma_ufc",
       "champion": false,
       "upcoming": false,
       "ranked": false,
@@ -19692,68 +19560,6 @@
       ]
     },
     {
-      "name": "Michelle Waterson-Gomez",
-      "slug": "michelle-waterson-gomez",
-      "lastUfcFight": "2024-06-29",
-      "eligibilityStatus": "latest_observed_mma_ufc",
-      "champion": false,
-      "upcoming": false,
-      "ranked": false,
-      "recentCount": 5,
-      "measuredCount": 3,
-      "evidenceStage": "fiveUnlinked",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": true,
-      "needsStats": true,
-      "recent": [
-        {
-          "date": "2024-06-29",
-          "opponent": "Gillian Robertson",
-          "boutId": "61050",
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2023-09-23",
-          "opponent": "Marina Rodriguez",
-          "boutId": null,
-          "method": "ko_tko",
-          "outcome": "L",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
-        },
-        {
-          "date": "2023-04-08",
-          "opponent": "Luana Pinheiro",
-          "boutId": "53832",
-          "method": "decision_split",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2022-07-16",
-          "opponent": "Amanda Lemos",
-          "boutId": "61504",
-          "method": "submission",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2021-05-08",
-          "opponent": "Marina Rodriguez",
-          "boutId": null,
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
-        }
-      ]
-    },
-    {
       "name": "Nate Maness",
       "slug": "nate-maness",
       "lastUfcFight": "2024-06-15",
@@ -19871,68 +19677,6 @@
           "opponent": "Sean Soriano",
           "boutId": null,
           "method": "decision_unanimous",
-          "outcome": "W",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
-        }
-      ]
-    },
-    {
-      "name": "Miguel Baeza",
-      "slug": "miguel-baeza",
-      "lastUfcFight": "2024-06-08",
-      "eligibilityStatus": "latest_observed_mma_ufc",
-      "champion": false,
-      "upcoming": false,
-      "ranked": false,
-      "recentCount": 5,
-      "measuredCount": 2,
-      "evidenceStage": "fiveUnlinked",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": true,
-      "needsStats": true,
-      "recent": [
-        {
-          "date": "2024-06-08",
-          "opponent": "Punahele Soriano",
-          "boutId": "61032",
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2022-04-16",
-          "opponent": "Andre Fialho",
-          "boutId": null,
-          "method": "ko_tko",
-          "outcome": "L",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
-        },
-        {
-          "date": "2021-11-13",
-          "opponent": "Khaos Williams",
-          "boutId": "61648",
-          "method": "ko_tko",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2021-06-05",
-          "opponent": "Santiago Ponzinibbio",
-          "boutId": null,
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
-        },
-        {
-          "date": "2020-11-29",
-          "opponent": "Takashi Sato",
-          "boutId": null,
-          "method": "submission",
           "outcome": "W",
           "origin": "ufc-history",
           "hasMeasuredTotals": false
@@ -43523,10 +43267,72 @@
       ]
     },
     {
+      "name": "Miesha Tate",
+      "slug": "miesha-tate",
+      "lastUfcFight": "2025-05-03",
+      "eligibilityStatus": "latest_observed_mma_ufc",
+      "champion": false,
+      "upcoming": false,
+      "ranked": false,
+      "recentCount": 5,
+      "measuredCount": 4,
+      "evidenceStage": "fiveLinkedStatsGap",
+      "ufcTimelineDepthConfirmed": false,
+      "needsHistoryCheck": false,
+      "needsStats": true,
+      "recent": [
+        {
+          "date": "2025-05-03",
+          "opponent": "Yana Santos",
+          "boutId": "60797",
+          "method": "decision_unanimous",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2023-12-02",
+          "opponent": "Julia Avila",
+          "boutId": "59954",
+          "method": "submission",
+          "outcome": "W",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2022-07-16",
+          "opponent": "Lauren Murphy",
+          "boutId": "61508",
+          "method": "decision_unanimous",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2021-11-20",
+          "opponent": "Ketlen Vieira",
+          "boutId": "61669",
+          "method": "decision_unanimous",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2021-07-17",
+          "opponent": "Marion Reneau",
+          "boutId": "59462",
+          "method": "ko_tko",
+          "outcome": "W",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        }
+      ]
+    },
+    {
       "name": "Cameron Saaiman",
       "slug": "cameron-saaiman",
       "lastUfcFight": "2025-04-26",
-      "eligibilityStatus": "review_required",
+      "eligibilityStatus": "latest_observed_mma_ufc",
       "champion": false,
       "upcoming": false,
       "ranked": false,
@@ -43650,7 +43456,7 @@
       "name": "Yair Rodriguez",
       "slug": "yair-rodriguez",
       "lastUfcFight": "2025-04-12",
-      "eligibilityStatus": "review_required",
+      "eligibilityStatus": "latest_observed_mma_ufc",
       "champion": false,
       "upcoming": false,
       "ranked": false,
@@ -43836,7 +43642,7 @@
       "name": "Gunnar Nelson",
       "slug": "gunnar-nelson",
       "lastUfcFight": "2025-03-22",
-      "eligibilityStatus": "review_required",
+      "eligibilityStatus": "latest_observed_mma_ufc",
       "champion": false,
       "upcoming": false,
       "ranked": false,
@@ -44518,7 +44324,7 @@
       "name": "Jonathan Martinez",
       "slug": "jonathan-martinez",
       "lastUfcFight": "2024-11-16",
-      "eligibilityStatus": "review_required",
+      "eligibilityStatus": "latest_observed_mma_ufc",
       "champion": false,
       "upcoming": false,
       "ranked": false,
@@ -45693,6 +45499,68 @@
       ]
     },
     {
+      "name": "Michelle Waterson-Gomez",
+      "slug": "michelle-waterson-gomez",
+      "lastUfcFight": "2024-06-29",
+      "eligibilityStatus": "latest_observed_mma_ufc",
+      "champion": false,
+      "upcoming": false,
+      "ranked": false,
+      "recentCount": 5,
+      "measuredCount": 3,
+      "evidenceStage": "fiveLinkedStatsGap",
+      "ufcTimelineDepthConfirmed": false,
+      "needsHistoryCheck": false,
+      "needsStats": true,
+      "recent": [
+        {
+          "date": "2024-06-29",
+          "opponent": "Gillian Robertson",
+          "boutId": "61050",
+          "method": "decision_unanimous",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2023-09-23",
+          "opponent": "Marina Rodriguez",
+          "boutId": "60033",
+          "method": "ko_tko",
+          "outcome": "L",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        },
+        {
+          "date": "2023-04-08",
+          "opponent": "Luana Pinheiro",
+          "boutId": "53832",
+          "method": "decision_split",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2022-07-16",
+          "opponent": "Amanda Lemos",
+          "boutId": "61504",
+          "method": "submission",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2021-05-08",
+          "opponent": "Marina Rodriguez",
+          "boutId": "61573",
+          "method": "decision_unanimous",
+          "outcome": "L",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        }
+      ]
+    },
+    {
       "name": "Kyung Ho Kang",
       "slug": "kyung-ho-kang",
       "lastUfcFight": "2024-06-22",
@@ -45749,6 +45617,68 @@
           "boutId": "61672",
           "method": "decision_unanimous",
           "outcome": "L",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        }
+      ]
+    },
+    {
+      "name": "Miguel Baeza",
+      "slug": "miguel-baeza",
+      "lastUfcFight": "2024-06-08",
+      "eligibilityStatus": "latest_observed_mma_ufc",
+      "champion": false,
+      "upcoming": false,
+      "ranked": false,
+      "recentCount": 5,
+      "measuredCount": 2,
+      "evidenceStage": "fiveLinkedStatsGap",
+      "ufcTimelineDepthConfirmed": false,
+      "needsHistoryCheck": false,
+      "needsStats": true,
+      "recent": [
+        {
+          "date": "2024-06-08",
+          "opponent": "Punahele Soriano",
+          "boutId": "61032",
+          "method": "decision_unanimous",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2022-04-16",
+          "opponent": "Andre Fialho",
+          "boutId": "61517",
+          "method": "ko_tko",
+          "outcome": "L",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        },
+        {
+          "date": "2021-11-13",
+          "opponent": "Khaos Williams",
+          "boutId": "61648",
+          "method": "ko_tko",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2021-06-05",
+          "opponent": "Santiago Ponzinibbio",
+          "boutId": "59499",
+          "method": "decision_unanimous",
+          "outcome": "L",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        },
+        {
+          "date": "2020-11-29",
+          "opponent": "Takashi Sato",
+          "boutId": "66356",
+          "method": "submission",
+          "outcome": "W",
           "origin": "ufc-history",
           "hasMeasuredTotals": false
         }
