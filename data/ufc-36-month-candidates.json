@@ -17,7 +17,7 @@
     "activeFighters": 783,
     "withFiveKnown": 488,
     "withFiveLinkedIds": 488,
-    "withThreeMeasured": 604,
+    "withThreeMeasured": 605,
     "withShortUfcTimelineReconciled": 3,
     "withUfcHistoryLinkedAndMeasured": 433,
     "evidenceStages": {
@@ -25,13 +25,13 @@
       "fiveLinkedStatsGap": 55,
       "fiveUnlinked": 0,
       "shortLinkedMeasuredDepthConfirmed": 0,
-      "shortLinkedMeasuredDepthUnconfirmed": 253,
+      "shortLinkedMeasuredDepthUnconfirmed": 254,
       "shortLinkedStatsGapDepthConfirmed": 3,
-      "shortLinkedStatsGap": 39,
+      "shortLinkedStatsGap": 38,
       "shortUnlinked": 0
     },
     "needHistoryCheck": 292,
-    "needStats": 97,
+    "needStats": 96,
     "shiftedDateAliasesJoined": 346,
     "uniqueKnownBoutIds": 1951
   },
@@ -18431,11 +18431,11 @@
       "upcoming": false,
       "ranked": false,
       "recentCount": 3,
-      "measuredCount": 2,
-      "evidenceStage": "shortLinkedStatsGap",
+      "measuredCount": 3,
+      "evidenceStage": "shortLinkedMeasuredDepthUnconfirmed",
       "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": true,
-      "needsStats": true,
+      "needsStats": false,
       "recent": [
         {
           "date": "2024-08-17",
@@ -18461,8 +18461,8 @@
           "boutId": "58567",
           "method": "ko_tko",
           "outcome": "L",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
         }
       ]
     },
