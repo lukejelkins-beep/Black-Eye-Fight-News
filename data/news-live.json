@@ -1,6 +1,6 @@
 {
-  "attemptedAt": "2026-11-13T22:05:45.187953+00:00",
-  "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00",
+  "attemptedAt": "2026-11-13T22:49:14.545622+00:00",
+  "lastSuccessfulAt": "2026-11-13T22:49:14.545622+00:00",
   "sources": [
     {
       "name": "World Boxing News",
@@ -8,7 +8,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.worldboxingnews.net/feed/",
-      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00"
+      "lastSuccessfulAt": "2026-11-13T22:49:14.545622+00:00"
     },
     {
       "name": "MMA Fighting",
@@ -16,14 +16,15 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00"
+      "lastSuccessfulAt": "2026-11-13T22:49:14.545622+00:00"
     },
     {
       "name": "MMA Junkie",
       "sport": "mma",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-13T21:11:53.153534+00:00",
-      "error": "mmajunkie.usatoday.com: HTTP Error 402: Payment Required | mmajunkie.com: HTTP Error 402: Payment Required | api.gdeltproject.org: HTTP Error 429: Too Many Requ"
+      "ok": true,
+      "items": 10,
+      "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
+      "lastSuccessfulAt": "2026-11-13T22:49:14.545622+00:00"
     },
     {
       "name": "Sherdog",
@@ -31,7 +32,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.sherdog.com/rss/news.xml",
-      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00"
+      "lastSuccessfulAt": "2026-11-13T22:49:14.545622+00:00"
     },
     {
       "name": "UFC",
@@ -39,7 +40,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00"
+      "lastSuccessfulAt": "2026-11-13T22:49:14.545622+00:00"
     },
     {
       "name": "ONE MMA",
@@ -54,37 +55,35 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/feed/",
-      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00"
+      "lastSuccessfulAt": "2026-11-13T22:49:14.545622+00:00"
     },
     {
       "name": "Cage Warriors",
       "sport": "mma",
-      "ok": true,
-      "items": 1,
-      "feedUrl": "https://www.bing.com/news/search?q=site%3Acagewarriors.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00",
+      "error": "cagewarriors.com: HTTP Error 403: Forbidden | www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "RIZIN",
       "sport": "mma",
-      "ok": true,
-      "items": 8,
-      "feedUrl": "https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00",
+      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "KSW",
       "sport": "mma",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
+      "error": "www.bing.com: No recent, source-verified articles"
     },
     {
       "name": "ADCC",
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "adcombat.com: No recent, source-verified articles | www.bing.com: No recent, source-verified articles"
+      "error": "adcombat.com: No recent, source-verified articles | www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "NCAA Division I Wrestling",
@@ -105,7 +104,7 @@
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "www.bing.com: No recent, source-verified articles"
+      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "IBJJF",
@@ -126,7 +125,7 @@
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "www.bing.com: No recent, source-verified articles"
+      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "United World Wrestling",
@@ -141,10 +140,35 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/category/live-results/feed/",
-      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00"
+      "lastSuccessfulAt": "2026-11-13T22:49:14.545622+00:00"
     }
   ],
   "articles": [
+    {
+      "id": "0a017ea9c95a74612aa1",
+      "title": "Video: Carlos Prates and Michael Morales have intense first faceoff at UFC 335 and UFC 336 press conference",
+      "url": "https://www.mmafighting.com/ufc/520992/video-carlos-prates-and-michael-morales-have-intense-first-faceoff-at-ufc-335-and-ufc-336-press-conference",
+      "source": "MMA Fighting",
+      "sport": "mma",
+      "publishedAt": "2026-11-13T22:22:33+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2305011528.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "alt": "Carlos Prates and Michael Morales face off",
+        "credit": "﻿(Photo by Jeff Bottari/Zuffa LLC)",
+        "sourceUrl": "https://www.mmafighting.com/ufc/520992/video-carlos-prates-and-michael-morales-have-intense-first-faceoff-at-ufc-335-and-ufc-336-press-conference",
+        "kind": "publisher",
+        "checkedAt": "2026-11-13T22:49:14.545622+00:00"
+      },
+      "summaryCheckedAt": "2026-11-13T22:49:14.545622+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Carlos Prates and Michael Morales are already champing at the bit to fight.",
+        "30, Prates and Morales fight each other for the interim welterweight title in the co-main event of UFC 336 at Scotiabank Arena in Toronto.",
+        "Oliveira and Lopes hugged it out before their faceoff, while “Poatan” and Pavlovich had a cordial, uneventful faceoff."
+      ],
+      "firstSeenAt": "2026-11-13T22:49:14.545622+00:00"
+    },
     {
       "id": "edad1e28d7e0313f1b2f",
       "title": "UFC 334 Preview Show: Has Josh Hokit gotten over with fans ahead of his fight with Ciryl Gane?",
@@ -161,40 +185,14 @@
         "kind": "publisher",
         "checkedAt": "2026-11-13T22:05:45.187953+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T22:05:45.187953+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Josh Hokit is on a historic rise up the heavyweight ranks, but can Ciryl Gane stop him and solidify his new title?",
         "Join MMA Fighting’s Jed Meshew and Alexander K.",
         "Lee as they preview UFC 334 and talk about the biggest storylines, the best matchups, and more for this weekend in MMA action."
       ],
-      "firstSeenAt": "2026-11-13T22:05:45.187953+00:00"
-    },
-    {
-      "id": "dbf4ba1b2d3a4d51a0a7",
-      "title": "LIVE! UFC 335 and UFC 336 press conference video",
-      "url": "https://www.mmafighting.com/ufc/520942/ufc-335-and-ufc-336-press-conference-video",
-      "source": "MMA Fighting",
-      "sport": "mma",
-      "publishedAt": "2026-11-13T20:30:00+00:00",
-      "score": 1,
-      "image": {
-        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/07/gettyimages-2288456634.jpg?quality=90&strip=all&crop=0,0,100,100",
-        "alt": "Alex Pereira",
-        "credit": "Ed Mulholland, Zuffa LLC",
-        "sourceUrl": "https://www.mmafighting.com/ufc/520942/ufc-335-and-ufc-336-press-conference-video",
-        "kind": "publisher",
-        "checkedAt": "2026-11-13T21:11:53.153534+00:00"
-      },
       "summaryCheckedAt": "2026-11-13T22:05:45.187953+00:00",
       "summaryQualityVersion": 3,
-      "summaryPoints": [
-        "Ahead of UFC 334 ceremonial weigh-ins Friday, a press conference is being held in New York for the stars of the upcoming UFC 335 and UFC 336 events.",
-        "Watch a live stream above beginning at 4 p.m.",
-        "Flyweight champion Joshua Van, “BMF” champion Charles Oliveira, and former two-division champion Alex Pereira will take the stage to answer questions."
-      ],
-      "firstSeenAt": "2026-11-13T21:11:53.153534+00:00",
-      "updatedAt": "2026-11-13T22:05:45.187953+00:00"
+      "firstSeenAt": "2026-11-13T22:05:45.187953+00:00"
     },
     {
       "id": "aa4042a6375e831183e3",
@@ -748,6 +746,24 @@
       "firstSeenAt": "2026-11-13T16:18:20.918097+00:00"
     },
     {
+      "id": "7ae96d347b87ca99a2eb",
+      "title": "Ciryl Gane vs. Josh Hokit prediction, pick: Can underdog finish fast rise?",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/13/ciryl-gane-vs-josh-hokit-pick-prediction-time-odds-ufc-334/92763385007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-13T14:10:00+00:00",
+      "score": 0,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryCheckedAt": "2026-11-13T22:49:14.545622+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "MMA Junkie analyst Dan Tom dives into the UFC 334 main event heavyweight title fight between champ Ciryl Gane and the fast-rising Josh Hokit."
+      ],
+      "firstSeenAt": "2026-11-13T22:49:14.545622+00:00"
+    },
+    {
       "id": "445a3505fd96fb0abdbd",
       "title": "Usman Nurmagomedov, 7 others reportedly sentenced to 6 months in jail for attack on Merab Dvalishvili",
       "url": "https://www.mmafighting.com/raf-wrestling/520831/usman-nurmagomedov-7-others-reportedly-sentenced-to-6-months-in-jail-for-attack-on-merab-dvalishvili",
@@ -798,6 +814,43 @@
       "firstSeenAt": "2026-11-13T14:27:28.115292+00:00"
     },
     {
+      "id": "5c7d367e4c89cad34c8c",
+      "title": "UFC signs Mike Perry after five-year split",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/13/ufc-news-mike-perry-signs-return/92765419007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-13T13:28:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryCheckedAt": "2026-11-13T22:49:14.545622+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Perry (15-9 MMA, 7-8 UFC) has not competed in the UFC since April 2021.",
+        "The promotion parted ways after Perry lost back-to-back fights to Tim Means and Daniel Rodriguez."
+      ],
+      "firstSeenAt": "2026-11-13T22:49:14.545622+00:00"
+    },
+    {
+      "id": "baf5033262e814b35347",
+      "title": "Sean O'Malley suggests 'crazy' first UFC fight for Usman Nurmagomedov after brawl",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/13/ufc-sean-omalley-topuria-vs-nurmagomedov-makes-sense-brawl/92740278007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-13T13:20:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryCheckedAt": "2026-11-13T22:49:14.545622+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Sean O'Malley says the hype around a potential UFC signing of PFL champion Usman Nurmagomedov only got bigger."
+      ],
+      "firstSeenAt": "2026-11-13T22:49:14.545622+00:00"
+    },
+    {
       "id": "a8e788dd22467f269bc0",
       "title": "Morning Report: Daniel Cormier condemns Usman Nurmagomedov’s attack on Merab Dvalishvili",
       "url": "https://www.mmafighting.com/ufc/520225/morning-report-daniel-cormier-condemns-usman-nurmagomedovs-attack-on-merab-dvalishvili",
@@ -823,6 +876,24 @@
       "firstSeenAt": "2026-11-13T14:27:28.115292+00:00"
     },
     {
+      "id": "ecda691584842b08442b",
+      "title": "Merab Dvalishvili advocates for release of imprisoned hotel brawlers: 'I would not press charges'",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/13/merab-dvalishvili-custody-abu-dhabi-statement/92764147007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-13T12:58:00+00:00",
+      "score": 0,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryCheckedAt": "2026-11-13T22:49:14.545622+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Dvalishvili and friend Saba Lazishvili were released Friday after being handed fines."
+      ],
+      "firstSeenAt": "2026-11-13T22:49:14.545622+00:00"
+    },
+    {
       "id": "d0710000552b1e2d4c5a",
       "title": "Video: UFC 334 ceremonial weigh-ins, final faceoffs live stream",
       "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/13/video-ufc-334-ceremonial-weigh-ins-final-faceoffs-live-stream/92633931007/",
@@ -833,11 +904,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-13T21:11:53.153534+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Joe Rogan hosts UFC 334 ceremonial weigh-ins where the entire 13-fight card will have staredowns for the final time in New York."
       ],
+      "summaryCheckedAt": "2026-11-13T21:11:53.153534+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-13T21:11:53.153534+00:00"
     },
     {
@@ -1299,7 +1370,7 @@
         "credit": "",
         "sourceUrl": "https://www.sherdog.com/news/news/Usman-Nurmagomedov-barred-from-RAF-Abu-Dhabi-following-hotel-brawl-203605",
         "kind": "publisher",
-        "checkedAt": "2026-11-12T22:24:33.296723+00:00"
+        "checkedAt": "2026-11-13T22:49:14.545622+00:00"
       },
       "summaryPoints": [
         "A post shared by Abu Dhabi Police شرطة أبوظبي (@adpolicehq)"
@@ -3037,7 +3108,7 @@
         "credit": "",
         "sourceUrl": "https://www.worldboxingnews.com/gervonta-davis-mayweather-878-days/",
         "kind": "publisher",
-        "checkedAt": "2026-11-12T22:24:33.296723+00:00"
+        "checkedAt": "2026-11-13T22:49:14.545622+00:00"
       },
       "summaryPoints": [
         "Gervonta Davis has dismissed concerns over his lengthy absence from boxing by pointing to ex-mentor Floyd Mayweather, despite going 878 days without a victory.",
@@ -6392,114 +6463,6 @@
       "summaryCheckedAt": "2026-11-12T03:26:30.365251+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-11T15:22:37.837995+00:00"
-    },
-    {
-      "id": "994e8dc621ddee8b086f",
-      "title": "【試合結果】『abc presents RIZIN.55』第10試合／鹿志村仁之介 vs. 太田忍",
-      "url": "https://jp.rizinff.com/_ct/17874862",
-      "source": "RIZIN",
-      "sport": "mma",
-      "publishedAt": "2026-11-08T16:00:00+00:00",
-      "timeBasis": "Bing News index timestamp",
-      "sourceMethod": "Original official domain indexed by Bing News",
-      "score": 1,
-      "image": {
-        "url": "https://d1uzk9o9cg136f.cloudfront.net/f/16782696/rc/2026/11/08/810ea7e81c8ce5b534c53a3228371482a3233f40_xlarge.jpg",
-        "alt": "Article image: 【試合結果】『abc presents RIZIN.55』第10試合／鹿志村仁之介 vs. 太田忍",
-        "credit": "",
-        "sourceUrl": "https://jp.rizinff.com/_ct/17874862",
-        "kind": "publisher",
-        "checkedAt": "2026-11-13T17:17:46.539651+00:00"
-      },
-      "summaryPoints": [
-        "≫ RIZINオフィシャルグッズ ≫ デジタルカード「RIZIN CARD COLLECTION（ライコレ）」サービス開始！ ≫ 業務拡大につき、RIZIN FFスタッフ募集！ ≫【企業様向け】大会、RIZINファイターへのスポンサー / 企業タイアップ募集中！",
-        "This article is a sponsored article by ' '.",
-        "This article is a sponsored article by ' '."
-      ],
-      "summaryCheckedAt": "2026-11-12T03:26:30.365251+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-11T15:22:37.837995+00:00"
-    },
-    {
-      "id": "29b9ea1a489011eb6006",
-      "title": "【試合結果】『abc presents RIZIN.55』OPENING FIGHT 第3試合／ジェイク・ウィルキンス vs. 山 弥十朗",
-      "url": "https://jp.rizinff.com/_ct/17874848",
-      "source": "RIZIN",
-      "sport": "mma",
-      "publishedAt": "2026-11-08T16:00:00+00:00",
-      "timeBasis": "Bing News index timestamp",
-      "sourceMethod": "Original official domain indexed by Bing News",
-      "score": 1,
-      "image": {
-        "url": "https://d1uzk9o9cg136f.cloudfront.net/f/16782696/rc/2026/11/08/24155f13592848b5f81c02e1955c92f5fd6db088_xlarge.jpg",
-        "alt": "Article image: 【試合結果】『abc presents RIZIN.55』OPENING FIGHT 第3試合／ジェイク・ウィルキンス vs. 山 弥十朗",
-        "credit": "",
-        "sourceUrl": "https://jp.rizinff.com/_ct/17874848",
-        "kind": "publisher",
-        "checkedAt": "2026-11-13T17:17:46.539651+00:00"
-      },
-      "summaryPoints": [
-        "≫ RIZINオフィシャルグッズ ≫ デジタルカード「RIZIN CARD COLLECTION（ライコレ）」サービス開始！ ≫ 業務拡大につき、RIZIN FFスタッフ募集！ ≫【企業様向け】大会、RIZINファイターへのスポンサー / 企業タイアップ募集中！",
-        "This article is a sponsored article by ' '.",
-        "This article is a sponsored article by ' '."
-      ],
-      "summaryCheckedAt": "2026-11-12T03:26:30.365251+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-11T15:22:37.837995+00:00"
-    },
-    {
-      "id": "4d93d24b63cab252476e",
-      "title": "【試合結果】『abc presents RIZIN.55』第2試合／濱田巧 vs. 関原翔",
-      "url": "https://jp.rizinff.com/_ct/17874850",
-      "source": "RIZIN",
-      "sport": "mma",
-      "publishedAt": "2026-11-08T16:00:00+00:00",
-      "timeBasis": "Bing News index timestamp",
-      "sourceMethod": "Original official domain indexed by Bing News",
-      "score": 1,
-      "image": {
-        "url": "https://d1uzk9o9cg136f.cloudfront.net/f/16782696/rc/2026/11/08/095bb2a6b32447f3b2c4d6bcca0a29e0a9fcd018_xlarge.jpg",
-        "alt": "Article image: 【試合結果】『abc presents RIZIN.55』第2試合／濱田巧 vs. 関原翔",
-        "credit": "",
-        "sourceUrl": "https://jp.rizinff.com/_ct/17874850",
-        "kind": "publisher",
-        "checkedAt": "2026-11-13T18:08:51.795308+00:00"
-      },
-      "summaryPoints": [
-        "≫ RIZINオフィシャルグッズ ≫ デジタルカード「RIZIN CARD COLLECTION（ライコレ）」サービス開始！ ≫ 業務拡大につき、RIZIN FFスタッフ募集！ ≫【企業様向け】大会、RIZINファイターへのスポンサー / 企業タイアップ募集中！",
-        "This article is a sponsored article by ' '.",
-        "This article is a sponsored article by ' '."
-      ],
-      "summaryCheckedAt": "2026-11-12T03:26:30.365251+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-11T15:22:37.837995+00:00"
-    },
-    {
-      "id": "cf5461ee329829deb421",
-      "title": "【試合結果】『abc presents RIZIN.55』第8試合／牛久絢太郎 vs. リー・カイウェン",
-      "url": "https://jp.rizinff.com/_ct/17874860",
-      "source": "RIZIN",
-      "sport": "mma",
-      "publishedAt": "2026-11-08T16:00:00+00:00",
-      "timeBasis": "Bing News index timestamp",
-      "sourceMethod": "Original official domain indexed by Bing News",
-      "score": 1,
-      "image": {
-        "url": "https://d1uzk9o9cg136f.cloudfront.net/f/16782696/rc/2026/11/08/c19e68dcb9df9daec7f82b844bd0217e664b1450_xlarge.jpg",
-        "alt": "Article image: 【試合結果】『abc presents RIZIN.55』第8試合／牛久絢太郎 vs. リー・カイウェン",
-        "credit": "",
-        "sourceUrl": "https://jp.rizinff.com/_ct/17874860",
-        "kind": "publisher",
-        "checkedAt": "2026-11-13T18:08:51.795308+00:00"
-      },
-      "summaryPoints": [
-        "≫ RIZINオフィシャルグッズ ≫ デジタルカード「RIZIN CARD COLLECTION（ライコレ）」サービス開始！ ≫ 業務拡大につき、RIZIN FFスタッフ募集！ ≫【企業様向け】大会、RIZINファイターへのスポンサー / 企業タイアップ募集中！",
-        "This article is a sponsored article by ' '.",
-        "This article is a sponsored article by ' '."
-      ],
-      "summaryCheckedAt": "2026-11-12T03:26:30.365251+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-11T15:22:37.837995+00:00"
     }
   ],
   "resultReports": [
@@ -6852,20 +6815,26 @@
     }
   ],
   "deduplication": {
-    "checkedAt": "2026-11-13T22:05:45.187953+00:00",
-    "removedArticles": 2,
+    "checkedAt": "2026-11-13T22:49:14.545622+00:00",
+    "removedArticles": 3,
     "removedResultReports": 0,
     "examples": [
       {
-        "url": "https://jp.rizinff.com/_ct/17874942",
-        "title": "『abc presents RIZIN.55』試合結果一覧",
-        "keptUrl": "https://jp.rizinff.com/_ct/17874934",
+        "url": "https://www.mmafighting.com/ufc/520942/ufc-335-and-ufc-336-press-conference-video",
+        "title": "UFC 335 and UFC 336 press conference video",
+        "keptUrl": "https://www.mmafighting.com/ufc/520992/video-carlos-prates-and-michael-morales-have-intense-first-faceoff-at-ufc-335-and-ufc-336-press-conference",
         "reason": "same story"
       },
       {
-        "url": "https://jp.rizinff.com/_ct/17874427",
-        "title": "abc presents RIZIN.55 計量結果／フェイスオフ、身長差、リーチ差も掲載中",
-        "keptUrl": "https://jp.rizinff.com/_ct/17874934",
+        "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/13/video-ufc-335-ufc-336-press-conference-live-stream/92654986007/",
+        "title": "Video: UFC 335 & UFC 336 press conference live stream",
+        "keptUrl": "https://www.mmafighting.com/ufc/520992/video-carlos-prates-and-michael-morales-have-intense-first-faceoff-at-ufc-335-and-ufc-336-press-conference",
+        "reason": "same story"
+      },
+      {
+        "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/12/video-ufc-334-pre-fight-press-conference-live-stream/92634285007/",
+        "title": "Video: 'UFC 334: Gane vs. Hokit' pre-fight press conference replay",
+        "keptUrl": "https://www.mmafighting.com/ufc/520720/ufc-334-press-conference-video",
         "reason": "same story"
       }
     ]
