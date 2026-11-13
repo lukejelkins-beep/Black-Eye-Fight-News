@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-13T19:25:10.390Z",
-  "checkedAt": "2026-11-13T18:23:51.465Z",
-  "updatedAt": "2026-11-13T18:04:52.400511Z",
+  "attemptedAt": "2026-11-13T20:23:53.373Z",
+  "checkedAt": "2026-11-13T20:23:53.373Z",
+  "updatedAt": "2026-11-13T20:07:29.701177Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 0,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
-      "state": "not-scheduled",
-      "checked": 0,
+      "state": "connected",
+      "checked": 6,
       "failed": 0,
-      "configured": 0,
-      "message": "0 of 0 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 9,
+      "configured": 33,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 15,
+      "configured": 37,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 1,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -54,21 +54,167 @@
   "failures": [],
   "rollingScan": {
     "directoryEntries": 447,
-    "scheduledEntries": 27,
-    "batchIndex": 5,
+    "scheduledEntries": 84,
+    "batchIndex": 4,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "X": 9,
-      "Threads": 3,
-      "Instagram": 15
+      "X": 33,
+      "Instagram": 37,
+      "Bluesky": 6,
+      "Threads": 7,
+      "Reddit": 1
     },
-    "directlyChecked": 0,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n27rxar57w2v",
+      "cid": "bafyreifxlmymbldrr4c24xrriduc54tummamasbvozhwubtsqmjdn2j4ai",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "🚨 Guess who's back in the #UFC??? 👀 \n\nMike Perry has re-signed with the promotion to compete in the octagon for the first time since April 2021. \n\nWho should he face first? 🤔",
+      "postedAt": "2026-11-13T20:07:29.701177Z",
+      "date": "14 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n27rxar57w2v",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n27rqfrtpz2k",
+      "cid": "bafyreibhaazjrn4kk2dw6yg4qahj5muugfxieentcteevdbrja24rk3pzq",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "UFC 334 Paths to Victory: Kayla Harrison vs. Amanda Nunes www.mmafighting.com/ufc/520744/u...",
+      "postedAt": "2026-11-13T20:03:40.119900Z",
+      "date": "14 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n27rqfrtpz2k",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n27pxpd6pm2a",
+      "cid": "bafyreiflg6v5atc2q7nnr2iwyxa55zn3rxywy2qgoui2mtvjvsmyjigh6e",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Vadim Nemkov sees ‘really good’ chance Fedor Emelianenko beats Francis Ngannou in boxing www.mmafighting.com/pfl/520659/v...",
+      "postedAt": "2026-11-13T19:31:57.573614Z",
+      "date": "14 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n27pxpd6pm2a",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n27of3u4w62k",
+      "cid": "bafyreieldkv4n2xp4saidmldf2nl37jzt3qzqm4vumduex3fenb3wp4gpu",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Tommy McMillen releases first statement since reported possible overdose www.mmafighting.com/ufc/520837/t...",
+      "postedAt": "2026-11-13T19:03:39.429902Z",
+      "date": "14 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n27of3u4w62k",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 1,
+        "comments": 1,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n27nxdxh2t2m",
+      "cid": "bafyreiafnm5nvhkqvt5phya3yflwn6d2k5tho6dpri6gn2kdtn3utxrohe",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "The Pryce is Right — and now he's a title holder! 🏆 \n\nUnbeaten Brooklyn heavyweight Pryce Taylor (14-0) defeats Tsotne Rogava by split decision to capture the NABF heavyweight championship. 🥊🇺🇸",
+      "postedAt": "2026-11-13T18:55:59Z",
+      "date": "14 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n27nxdxh2t2m",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n27nd5tdcz2m",
+      "cid": "bafyreic43nkvtk5r2khebswp3jkiftrgdwz3wezpnxdy2u6xrxenhqwn5y",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Winless Heavyweight KO’d 14 Times in Round 1 Is 0-18 in MMA #boxing #boxingnews",
+      "postedAt": "2026-11-13T18:44:42Z",
+      "date": "14 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n27nd5tdcz2m",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n27l3yajyg2y",
       "cid": "bafyreiequh6qruttrhersnqf3w6e72l67koid7cl3ielajmxwyowuio5wq",
@@ -90,7 +236,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -114,7 +260,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -134,11 +280,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
       "engagement": {
-        "likes": 0,
+        "likes": 1,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -162,7 +308,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -186,7 +332,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -210,7 +356,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -258,7 +404,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -282,31 +428,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n275q3pw552l",
-      "cid": "bafyreibparlvplnop6bjwcgssi5bth6q3zfsiy6zlaot6h6vehqdtezywm",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "LIVE! UFC 334 weigh-in video: Gane vs. Hokit www.mmafighting.com/ufc/520796/u...",
-      "postedAt": "2026-11-13T14:05:33.850365Z",
-      "date": "14 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n275q3pw552l",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -330,7 +452,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -354,79 +476,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n273yn7yz32d",
-      "cid": "bafyreihitsaceeapkffc5cd4njq6ajoxyljhpr5z3b7zov6p3gkktk4ewe",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Usman Nurmagomedov, 7 others reportedly sentenced to 6 months in jail for attack on Merab Dvalishvili www.mmafighting.com/raf-wrestlin...",
-      "postedAt": "2026-11-13T13:34:33.937164Z",
-      "date": "14 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n273yn7yz32d",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n273ppbnlf2i",
-      "cid": "bafyreigwab4qyxad2mwlwmlvdso6a4cjo67ucfetisqkdjlg6fyaejdgfa",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "RAF releases update on Merab Dvalishvili’s status following hotel brawl with Usman Nurmagomedov www.mmafighting.com/raf-wrestlin...",
-      "postedAt": "2026-11-13T13:29:34.273191Z",
-      "date": "14 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n273ppbnlf2i",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n273bafidx2y",
-      "cid": "bafyreibj4ahj22vwr2pypfwxcl2fkn5i7lonfo5p5avv6inwp3i56mghrq",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "RAF officials say Merab Dvalishvili is \"back with them\" after his brawl with Usman Nurmagomedov and his team in Abu Dhabi ",
-      "postedAt": "2026-11-13T13:21:28.848046Z",
-      "date": "14 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n273bafidx2y",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -446,11 +496,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
       "engagement": {
-        "likes": 0,
+        "likes": 1,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -498,7 +548,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -666,7 +716,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -690,31 +740,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n25gha3iqb2x",
-      "cid": "bafyreiehfjl3udazhq7iw4gtar6ciq2snbxj5t7qkqakuqudff6t7fll7i",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Time flies. Ten years ago, WBN reported Golden Boy's signing of 18-year-old Ryan Garcia, a 15-time national amateur champion with a 215-15 record. \n\nA decade later, he's a world champion and one of boxing's biggest names. 🥊",
-      "postedAt": "2026-11-12T21:36:22Z",
-      "date": "13 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n25gha3iqb2x",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
+      "engagementCheckedAt": "2026-11-13T20:23:53.373Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -739,30 +765,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-13T16:34:44.473Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n25bf6p4sp22",
-      "cid": "bafyreibruhybj4ik66mprziprqendmribgvjt4ogqeg2ar3zgoipv66egq",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Heavyweight KO’d 14 Times in 14 Minutes, Never Sees Round 2 #boxing #boxingnews",
-      "postedAt": "2026-11-12T20:05:45Z",
-      "date": "13 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n25bf6p4sp22",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-13T18:23:51.465Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
