@@ -537,6 +537,7 @@ html,body{max-width:100%;overflow-x:clip}
 <script src="/assets/promotion-coverage.js?v=20261110-syntaxfix2"></script>
 <link rel="stylesheet" href="assets/responsive-layout-experiment.css?v=20261112-mobile-card-fix-v9">
 <link rel="stylesheet" href="assets/performance-highlights-preview.css?v=20261113-release">
+<link rel="stylesheet" href="assets/ufc-stat-leaderboards.css?v=20261113-preview1">
 <link rel="stylesheet" href="assets/fighter-profile-v3-layout-preview.css?v=20261113-release">
 <script src="assets/news-dedupe.js?v=20261113-headline-dedupe-v9"></script>
 <script defer src="assets/responsive-preview-mode.js?v=20261112-v9"></script>
@@ -575,7 +576,7 @@ html,body{max-width:100%;overflow-x:clip}
 </header>
 <div class="navrail">
   <nav class="mainnav" aria-label="Primary navigation">
-    <a href="#home" data-nav="home">News</a><a href="#champions" data-nav="champions">Champions</a><a href="#fighters" data-nav="fighters">Fighter scout</a><a href="#social" data-nav="social">The conversation</a><a href="#fights" data-nav="fights">Fights</a><a href="#highlights" data-nav="highlights">Fight film</a>
+    <a href="#home" data-nav="home">News</a><a href="#champions" data-nav="champions">Champions</a><a href="#fighters" data-nav="fighters">Fighter scout</a><a href="#leaderboards" data-nav="leaderboards">UFC stats</a><a href="#social" data-nav="social">The conversation</a><a href="#fights" data-nav="fights">Fights</a><a href="#highlights" data-nav="highlights">Fight film</a>
   </nav>
   <span class="nav-count">EST. 2026</span>
 </div>
@@ -1096,6 +1097,7 @@ function filteredFighters(){let result=D.fighters.filter(f=>(state.fightersSport
 function divisionFilter(){const divs=[...new Set(D.fighters.filter(x=>state.fightersSport==='All'||x.sport===state.fightersSport).map(x=>x.division))];return `<select class="field" id="divisionFilter" aria-label="Choose weight division"><option value="All">All divisions</option>${divs.map(d=>`<option value="${esc(d)}" ${d===state.fightersDivision?'selected':''}>${esc(d)}</option>`).join('')}</select>`}
 function renderFighterCards(){const list=filteredFighters();const grid=document.querySelector('#fighterGrid');const count=document.querySelector('#fighterCount');if(grid){grid.innerHTML=list.length?list.map(fighterCard).join(''):'<div class="empty">No fighters match those filters.</div>';syncFighterPortraits(grid)}if(count)count.textContent=`${list.length} PROFILES`}
 function renderFighters(){const count=filteredFighters().length;return renderFrame(`${viewTitle('','Fighter profiles')}<div class="filter-row">${segments('fightersCategory',['All','Champion','Contender','Prospect','Roster','Unassessed'],state.fightersCategory)}${divisionFilter()}<input class="field search" id="fighterSearch" placeholder="Search fighter, promotion, style, form…" aria-label="Search fighter profiles" value="${esc(state.fightersQuery)}"><span class="result-count" id="fighterCount">${count} PROFILES</span></div><details class="compact-note"><summary>About these records</summary><p>Historical roster from 7 November 2026. Some records, fixtures and notes require reconfirmation.</p></details><div class="fighters-grid" id="fighterGrid">${filteredFighters().length?filteredFighters().map(fighterCard).join(''):'<p class="empty">No verified scouting profiles are available for this selection.</p>'}</div>`)}
+function renderLeaderboards(){return renderFrame(`<div class="befn-board-intro">${viewTitle('','UFC statistical leaderboards')}<p>Recent UFC performance across qualifying active fighters. Each leaderboard requires at least three bouts with the relevant statistic recorded.</p></div><section class="befn-stat-board-page" data-befn-v3-leaderboards aria-live="polite"><p class="befn-board-placeholder">Loading verified UFC statistics. Rankings will appear when the independent data snapshot has passed validation.</p></section>`)}
 const talkPlatforms = {
  X: {mark:'𝕏', hosts:['x.com','twitter.com']},
  Instagram: {mark:'◎', hosts:['instagram.com']},
@@ -1650,7 +1652,7 @@ function openFighter(id){const f=D.fighters.find(x=>x.id===id);if(!f)return;cons
  if(isV3)window.BEFNFighterInsights?.layoutV3Dialog?.();
  syncFighterPortraits(dialog);
  if(dialog.showModal)dialog.showModal();else dialog.setAttribute('open','');}
-function navigate(){let key=location.hash.replace('#','').split('/')[0]||'home';if(key==='news')key='home';if(key==='calendar'||key==='results'){fightDesk.view=key==='results'?'results':'upcoming';history.replaceState(null,'','#fights');key='fights';}const all=['home','champions','fighters','social','fights','highlights'];if(!all.includes(key))key='home';const pages={home:renderHome,champions:renderChampions,fighters:renderFighters,social:renderSocial,fights:renderFights,highlights:renderHighlights};main.innerHTML=pages[key]();syncFighterPortraits(main);if(key==='highlights')window.FightFilm.load();hydrateTalkEmbeds();document.querySelectorAll('[data-nav]').forEach(x=>{const yes=x.dataset.nav===key;x.classList.toggle('active',yes);if(yes)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});if(location.hash.startsWith('#fighter/')){openFighter(decodeURIComponent(location.hash.slice(9)))}window.scrollTo({top:0,behavior:'instant'});hydrateMissingPortraits().catch(()=>{});if(key==='social'&&!liveTalk.loading&&Date.now()-liveTalk.lastAttempt>10*60*1000)loadLiveTalk().catch(()=>{});}
+function navigate(){let key=location.hash.replace('#','').split('/')[0]||'home';if(key==='news')key='home';if(key==='calendar'||key==='results'){fightDesk.view=key==='results'?'results':'upcoming';history.replaceState(null,'','#fights');key='fights';}const all=['home','champions','fighters','leaderboards','social','fights','highlights'];if(!all.includes(key))key='home';const pages={home:renderHome,champions:renderChampions,fighters:renderFighters,leaderboards:renderLeaderboards,social:renderSocial,fights:renderFights,highlights:renderHighlights};main.innerHTML=pages[key]();syncFighterPortraits(main);if(key==='highlights')window.FightFilm.load();hydrateTalkEmbeds();document.querySelectorAll('[data-nav]').forEach(x=>{const yes=x.dataset.nav===key;x.classList.toggle('active',yes);if(yes)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});if(location.hash.startsWith('#fighter/')){openFighter(decodeURIComponent(location.hash.slice(9)))}window.scrollTo({top:0,behavior:'instant'});hydrateMissingPortraits().catch(()=>{});if(key==='social'&&!liveTalk.loading&&Date.now()-liveTalk.lastAttempt>10*60*1000)loadLiveTalk().catch(()=>{});}
 document.addEventListener('click',e=>{
  const fightButton=e.target.closest('button[data-fights-view],button[data-fights-promotion]');
  if(fightButton){
