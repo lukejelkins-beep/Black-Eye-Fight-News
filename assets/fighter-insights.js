@@ -342,7 +342,7 @@
      metricValue(metric,id==='ko'||id==='submission'?'count':
       id==='tdDef'||id==='acc'?'pct':'rate');
    }
-   tiles.push([value,label,measured?metric.bouts+' '+(metric.bouts===1?'fight':'fights'):'Not measured']);
+   tiles.push([value,label,measured?metric.bouts+' of '+Math.min(5,v3.recent.length)+' fights':'Stats unavailable']);
   }
   return '<section class="befn-profile-insights befn-v3" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC Fighter V3">'+
    '<div class="befn-v3-hero" aria-label="Overall fighter rating"><div class="befn-overall-main"><span class="befn-overall-label">Overall</span><strong class="befn-v3-score is-'+tier+'">'+
