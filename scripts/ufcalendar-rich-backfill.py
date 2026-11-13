@@ -493,6 +493,26 @@ def summarize_history(payload):
     return history
 
 
+def stable_indexed_fighter_id(state,fighter_slug):
+    """Use a numeric UFC identity only when all locally indexed IDs agree.
+
+    A slug can be renamed or reused by a source; never infer identity when
+    saved UFC event records disagree about the underlying fighter ID.
+    """
+    ids=set()
+    for bout in state.get("bouts",{}).values():
+        if not isinstance(bout,dict) or bout.get("org")!="ufc":
+            continue
+        for side in ("a","b"):
+            athlete=bout.get(side)
+            if not isinstance(athlete,dict) or athlete.get("slug")!=fighter_slug:
+                continue
+            fighter_id=str(athlete.get("id") or "")
+            if re.fullmatch(r"[1-9][0-9]{0,11}",fighter_id):
+                ids.add(fighter_id)
+    return next(iter(ids)) if len(ids)==1 else None
+
+
 def collect_targeted_ufc_history(client,state,coverage,today):
     """Find missing last-five UFC fight IDs once per athlete, from saved audit order.
 
@@ -525,23 +545,35 @@ def collect_targeted_ufc_history(client,state,coverage,today):
         if not slugval:
             continue
         prior=done.get(slugval)
+        stable_id=None
         if prior:
-            # A stale/renamed fighter slug might 404. Avoid burning quota on
-            # the same rejected lookup every scheduled collector run.
-            if not isinstance(prior,dict) or prior.get("status")!="unresolved_slug_404":
-                continue
-            if str(prior.get("retryAfter") or "9999-12-31")>today.isoformat():
-                continue
-        # At most eight most recent completed wins/losses. Existing event-index
-        # draw/NC records remain in the dataset rather than treated as losses.
+            # A successful slug search is normally final. A fighter who still
+            # has a history gap may instead have older bouts indexed under a
+            # different slug. Cross-check by the UNIQUE cached numeric ID once.
+            # Never repeat it on each five-minute relay.
+            if isinstance(prior,dict) and not prior.get("fighterIdChecked"):
+                stable_id=stable_indexed_fighter_id(state,slugval)
+            if not stable_id:
+                # Unknown slug 404s retain their existing seven-day backoff.
+                if not isinstance(prior,dict) or prior.get("status")!="unresolved_slug_404":
+                    continue
+                if str(prior.get("retryAfter") or "9999-12-31")>today.isoformat():
+                    continue
+        # Search supports stable UFC fighter IDs as well as current slugs.
+        # A first search uses the slug; a still-open gap receives one ID check.
+        # Draw/NC records remain anchored to the separate event index.
         before_errors=len(client.errors)
         attempted+=1
-        payload=client.call("/fights/search"+param(org="ufc",fighter=slugval,limit=8))
+        lookup=stable_id or slugval
+        payload=client.call("/fights/search"+param(org="ufc",fighter=lookup,limit=8))
         if payload is None:
             if len(client.errors)>before_errors and client.errors[-1]=="HTTP_404":
-                done[slugval]={"status":"unresolved_slug_404",
+                done[slugval]={**(prior if isinstance(prior,dict) else {}),
+                              "status":"unresolved_slug_404",
                               "checkedAt":today.isoformat(),
-                              "retryAfter":(today+dt.timedelta(days=7)).isoformat()}
+                              "retryAfter":(today+dt.timedelta(days=7)).isoformat(),
+                              "fighterIdChecked":bool(stable_id) or
+                                  bool(isinstance(prior,dict) and prior.get("fighterIdChecked"))}
             continue
         searched+=1
         new=0
@@ -557,8 +589,19 @@ def collect_targeted_ufc_history(client,state,coverage,today):
             bout=summary_bout(raw)
             if not date or date>today.isoformat() or not bout or bout.get("status")!="completed":
                 continue
-            if not (bout["a"].get("slug")==slugval or bout["b"].get("slug")==slugval):
+            matched_sides=[side for side in ("a","b")
+                           if bout[side].get("slug")==slugval or
+                           (stable_id and bout[side].get("id")==stable_id)]
+            if not matched_sides:
                 continue
+            if stable_id:
+                # Canonicalize only the fighter anchored by a verified numeric
+                # ID, never the opponent, and never overwrite existing bouts.
+                for side in matched_sides:
+                    if bout[side].get("id")==stable_id:
+                        bout[side]["slug"]=slugval
+                        if f.get("name"):
+                            bout[side]["name"]=safe(f["name"],110)
             matches+=1
             bid=bout["id"]
             old=state["bouts"].get(bid)
@@ -581,7 +624,10 @@ def collect_targeted_ufc_history(client,state,coverage,today):
                 priority[bid]=max(rank,priority.get(bid,-1))
         done[slugval]={"checkedAt":today.isoformat(),
                        "matchedWinnerBouts":matches,"newIndexedBouts":new,
-                       "drawsAndNoContests":"retain_event_index"}
+                       "drawsAndNoContests":"retain_event_index",
+                       "searchMode":"fighter_id" if stable_id else "slug",
+                       "fighterIdChecked":bool(stable_id) or
+                           bool(isinstance(prior,dict) and prior.get("fighterIdChecked"))}
     return searched
 
 def collect_careers(client,state,research):
