@@ -5,6 +5,8 @@ on:
       - feature/ufc-v3-period-analytics-design-20261113
     paths:
       - scripts/ufc-performance-periods.mjs
+      - assets/fighter-insights.js
+      - assets/fighter-profile-v3-layout-preview.css
       - scripts/audit-ufc-career-period-cache.mjs
       - scripts/build-ufc-postfight-metrics.mjs
       - tests/test-ufc-career-period-cache.mjs
@@ -29,6 +31,7 @@ jobs:
           node-version: '22'
       - name: Syntax check
         run: |
+          node --check assets/fighter-insights.js
           node --check scripts/ufc-performance-periods.mjs
           node --check scripts/audit-ufc-career-period-cache.mjs
           node --check scripts/build-ufc-postfight-metrics.mjs
