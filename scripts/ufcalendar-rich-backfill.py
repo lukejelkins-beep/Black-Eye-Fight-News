@@ -17,6 +17,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 PROGRESS = ROOT / "data/ufcalendar-rich-progress.json"
@@ -1099,7 +1100,11 @@ def main():
         collect_judging(client,state,cards,judging)
         collect_profiles(client,state,cards,research,today)
         collect_careers(client,state,research)
-        collect_ufc_career_bouts(client,state,research,read(COVERAGE36,{}),today,read(ROSTER_APPROVAL,{}))
+        # The roster census and user approval are dated in Melbourne, not UTC.
+        # Retain UTC for monthly API budgeting, but assess Stage 3 gates using
+        # the same local calendar day as the approved as-of snapshot.
+        roster_today=dt.datetime.now(ZoneInfo("Australia/Melbourne")).date()
+        collect_ufc_career_bouts(client,state,research,read(COVERAGE36,{}),roster_today,read(ROSTER_APPROVAL,{}))
         verify_short_ufc_careers(client,state,research,coverage,today)
         collect_championship_history(client,state,research)
         recover_previews(cards,archive,pfl_archive,judging)
