@@ -7,6 +7,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
+import {isOfficialUfcEvent} from "./ufc-official-event-scope.mjs";
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const INPUT="data/ufcalendar-rich-progress.json";
 const CARDS="data/upcoming-cards.json";
@@ -62,7 +63,8 @@ export function buildQueue(progress,profileFiles,{
     rosterStatus:"unverified",rankingStatus:"unverified"});
  }
  for(const b of sourceBouts){
-  if(String(b?.org||"").toLowerCase()!=="ufc")continue;
+  if(String(b?.org||"").toLowerCase()!=="ufc"||
+     !isOfficialUfcEvent(b.event))continue;
   const when=date(b.eventDate);
   if(!validDate(when)||days(when,asOf)< -580||days(when,asOf)>180)continue;
   for(const side of ["a","b"]){
@@ -101,7 +103,8 @@ export function buildQueue(progress,profileFiles,{
  // newly booked fighters enter the AI review queue before their stats exist.
  for(const event of upcomingCards?.events||[]){
   if(!event||String(event.sport||"").toLowerCase()!=="mma"||
-     !/\bufc\b/i.test(String(event.promotion||"")))continue;
+     !/\bufc\b/i.test(String(event.promotion||""))||
+     !isOfficialUfcEvent(event.title))continue;
   const when=date(event.date);
   if(!validDate(when)||days(when,asOf)< -7||days(when,asOf)>60)continue;
   for(const fight of event.bouts||[]){
