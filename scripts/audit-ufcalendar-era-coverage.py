@@ -94,7 +94,7 @@ print("Field-level spot checks (up to 2 fights/year; 1 API round call/fight):")
 for year in YEARS:
     found = get("/fights/search", {
         "org": "ufc", "from": f"{year}-01-01", "to": f"{year}-12-31",
-        "order": "asc", "limit": 20
+        "order": "oldest", "limit": 20
     })
     bouts = as_rows(found)
     ids = []
