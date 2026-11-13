@@ -65,6 +65,9 @@ function metricOn(rows,id){
   return bouts?{value:sum,bouts}:null;
  }
  for(const row of rows){
+  // No-contests, unresolved outcomes and data-only notes cannot
+  // qualify a UFC statistic or increase its measured-bout denominator.
+  if(!row.result?.boutId||!eligibleOutcome(row.result.outcome))continue;
   const a=row.stats?.metrics;
   const b=row.opponent?.metrics;
   const seconds=integer(row.stats?.cageSec);
@@ -163,10 +166,17 @@ export function buildSnapshot(coverage,postfight,cohorts=[],options={}){
   const verifiedCategory=f.champion===true||source?.category==="Champion"?"Champion":
    source?.review?.credentialsChecked===true&&
    ["Prospect","Contender","Roster"].includes(source.category)?source.category:"Unassessed";
-  const next=(f.recent||[]).slice(0,5).map(x=>({
-   boutId:x.boutId?String(x.boutId):null,date:x.date,
-   opponent:x.opponent,outcome:x.outcome||null,method:x.method||null
-  }));
+  const ids=new Set();
+  const next=[];
+  for(const x of f.recent||[]){
+   const id=x.boutId?String(x.boutId):null;
+   // A unique UFC bout cannot appear twice in the five-fight window.
+   if(id&&ids.has(id))continue;
+   if(id)ids.add(id);
+   next.push({boutId:id,date:x.date,opponent:x.opponent,
+    outcome:x.outcome||null,method:x.method||null});
+   if(next.length>=5)break;
+  }
   const observed=next.map(result=>{
    const id=result.boutId,matched=(samples.get(key)?.recentBouts||[])
      .find(x=>String(x.boutId||"")===id);
