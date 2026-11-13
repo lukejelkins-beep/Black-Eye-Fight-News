@@ -164,7 +164,7 @@ class Client:
 def default_progress():
     return {"schema":1,"status":"pending","provider":{},"lastRun":"",
             "historicalCursor":{},"historicalComplete":{},
-            "eventIndex":{},"eventDetails":{},"bouts":{},"roundDone":{},
+            "eventIndex":{},"eventDetails":{},"bouts":{},"roundDone":{},"roundRetry":{},
             "scorecardDone":{},"fighterDone":{},"historyDone":{},"rankingDone":{},"errors":[]}
 
 def quota_guard_reached(state,today):
@@ -377,8 +377,11 @@ def should_collect_rounds(state,bout,today):
     if type(retry) is not dict:return False
     attempts=retry.get("attempts",0)
     if type(attempts) is not int or attempts>=2:return False
+    retry_after=date_str(retry.get("retryAfter"))
+    if retry_after and retry_after>today.isoformat():return False
     checked=date_str(retry.get("checkedAt"))
-    if checked and dt.date.fromisoformat(checked)+dt.timedelta(days=14)>today:return False
+    if not retry_after and checked and dt.date.fromisoformat(checked)+dt.timedelta(days=14)>today:
+        return False
     return True
 
 
@@ -413,20 +416,27 @@ def collect_rounds(client,state,cards,archive,pfl_archive,today,coverage=None):
         if was_checked and retries>=retry_cap:continue
         if was_checked:retries+=1
         payload=client.call("/fights/"+bid+"/rounds")
-        if was_checked:
-            previous=state.setdefault("roundRetry",{}).get(bid,{})
-            state["roundRetry"][bid]={
-                "attempts":int(previous.get("attempts",0))+1,
-                "checkedAt":today.isoformat()}
+        # Persist a cooldown even after an initial network/404 failure; otherwise
+        # the five-minute relay repeatedly spends quota on the same missing bout.
+        previous=state.setdefault("roundRetry",{}).get(bid,{})
+        attempts=int(previous.get("attempts",0))+(1 if was_checked else 0)
         if payload is None:
-            # A failure must not overwrite previously sourced round evidence.
+            if not was_checked:state["roundDone"][bid]=0
+            state["roundRetry"][bid]={
+                "attempts":attempts,"checkedAt":today.isoformat(),
+                "retryAfter":(today+dt.timedelta(days=1)).isoformat()}
             count+=1
             continue
         rounds=convert_rounds(payload)
-        if was_checked:
-            state["roundDone"][bid]=max(state["roundDone"][bid],len(rounds))
+        state["roundDone"][bid]=max(state["roundDone"].get(bid,0),len(rounds))
+        expected=(bout.get("result") or {}).get("round")
+        incomplete=not rounds or (type(expected) is int and len(rounds)<expected)
+        if incomplete and bout.get("org")=="ufc":
+            state["roundRetry"][bid]={
+                "attempts":attempts,"checkedAt":today.isoformat(),
+                "retryAfter":(today+dt.timedelta(days=14)).isoformat()}
         else:
-            state["roundDone"][bid]=len(rounds)
+            state["roundRetry"].pop(bid,None)
         if rounds:
             event={"date":bout["eventDate"],"title":bout["event"],"org":bout["org"]}
             target=archive if bout["org"]=="ufc" else pfl_archive
