@@ -42,7 +42,7 @@ jobs:
       - name: Reserve budget on GitHub main before any paid call
         id: reserve
         env:
-          TWITTERAPI_IO_API_KEY: ${{ secrets.TWITTERAPI_IO_API_KEY }}
+          TWITTERAPI_IO_API_KEY: ${{ secrets.TWITTERAPI_IO_API_KEY || secrets.WITTERAPI_IO_API_KEY }}
         run: |
           set -eu
           git config user.name 'github-actions[bot]'
@@ -69,7 +69,7 @@ jobs:
       - name: Collect one original X search page (no retries)
         if: steps.reserve.outputs.go == 'true'
         env:
-          TWITTERAPI_IO_API_KEY: ${{ secrets.TWITTERAPI_IO_API_KEY }}
+          TWITTERAPI_IO_API_KEY: ${{ secrets.TWITTERAPI_IO_API_KEY || secrets.WITTERAPI_IO_API_KEY }}
         run: |
           set -eu
           node scripts/refresh-twitterapi-io.mjs collect
