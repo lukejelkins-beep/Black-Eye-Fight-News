@@ -783,3 +783,60 @@
  .befn-v3 .befn-v3-tiles {grid-template-columns:repeat(2,minmax(0,1fr))}
  .befn-v3-tiles strong {font-size:20px}
 }
+
+/* NCAA credential sizing: contain label, wrestling symbol and medal in the
+   existing badge at both full-profile and compact fight-card sizes. */
+.befn-credential[data-kind="ncaa"] {
+ box-sizing:border-box;
+ padding:2px 3px;
+ line-height:1;
+ overflow:hidden;
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-ncaa {
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ gap:1px;
+ width:100%;
+ min-width:0;
+ max-height:100%;
+ line-height:1;
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-ncaa small {
+ display:block;
+ max-width:100%;
+ color:#fff;
+ font-size:8px;
+ line-height:10px;
+ letter-spacing:0;
+ white-space:nowrap;
+ font-weight:800;
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-ncaa b {
+ display:block;
+ font-size:14px;
+ line-height:16px;
+ font-weight:600;
+}
+.befn-credential[data-kind="ncaa"] .befn-credential-medal {
+ bottom:1px;
+ right:1px;
+ padding:0;
+ border:0;
+ background:#171a1fd9;
+ font-size:9px;
+ line-height:1;
+ box-shadow:none;
+}
+.befn-snapshot-extra .befn-credential[data-kind="ncaa"] {
+ padding:1px 2px;
+}
+.befn-snapshot-extra .befn-credential[data-kind="ncaa"] .befn-credential-ncaa small {
+ font-size:7px;
+ line-height:8px;
+}
+.befn-snapshot-extra .befn-credential[data-kind="ncaa"] .befn-credential-ncaa b {
+ font-size:11px;
+ line-height:13px;
+}
