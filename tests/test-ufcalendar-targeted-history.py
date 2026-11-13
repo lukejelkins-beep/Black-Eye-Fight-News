@@ -51,6 +51,7 @@ class TargetedHistoryTests(unittest.TestCase):
         self.assertEqual(state["bouts"]["27123"]["result"]["winnerId"],"71")
         self.assertEqual(state["ufcHistoricalPriority"]["27123"],3)
         self.assertEqual(state["bouts"]["27124"]["status"],"no_contest")
+        coverage["fighters"][0]["needsHistoryCheck"]=False
         self.assertEqual(collector.collect_targeted_ufc_history(client,state,coverage,date),0)
         self.assertEqual(len(client.paths),1)
 
@@ -132,6 +133,52 @@ class TargetedHistoryTests(unittest.TestCase):
         self.assertEqual(collector.collect_targeted_ufc_history(client,state,coverage,future),0)
         self.assertEqual(len(client.paths),2)
 
+
+    def test_unresolved_history_gets_one_stable_id_crosscheck(self):
+        today=dt.date(2026,11,13)
+        slug="champion-a"
+        by_id="/fights/search?org=ufc&fighter=71&limit=8"
+        old_fight={
+            "id":101,"status":"completed",
+            "fighter_a":{"id":71,"slug":"former-champion-slug","name":"Old Name"},
+            "fighter_b":{"id":73,"slug":"opponent-c","name":"Opponent C"},
+            "result":{"winner_fighter_id":71,"method":"decision","round":3,"time":"5:00"},
+            "event":{"id":12,"org":"ufc","title":"Earlier UFC Event",
+                     "starts_at":"2024-05-20T00:00:00Z"}}
+        state=collector.default_progress()
+        state["bouts"]={"200":{"id":"200","org":"ufc",
+            "a":{"id":"71","slug":slug,"name":"Champion A"},
+            "b":{"id":"72","slug":"contender-b","name":"Contender B"},
+            "status":"completed","eventDate":"2026-10-03"}}
+        state["ufcHistoricalSearchDone"]={slug:{"checkedAt":"2026-11-12",
+            "matchedWinnerBouts":1,"newIndexedBouts":0}}
+        coverage={"schema":1,"scope":"ufc","asOf":today.isoformat(),
+                  "fighters":[{"slug":slug,"name":"Champion A",
+                               "needsHistoryCheck":True,"champion":True}]}
+        client=StubClient({by_id:[old_fight]})
+        self.assertEqual(collector.collect_targeted_ufc_history(client,state,coverage,today),1)
+        self.assertEqual(client.paths,[by_id])
+        self.assertEqual(state["bouts"]["101"]["a"]["slug"],slug)
+        self.assertEqual(state["bouts"]["101"]["a"]["name"],"Champion A")
+        self.assertEqual(state["ufcHistoricalPriority"]["101"],3)
+        self.assertTrue(state["ufcHistoricalSearchDone"][slug]["fighterIdChecked"])
+        self.assertEqual(collector.collect_targeted_ufc_history(client,state,coverage,today),0)
+        self.assertEqual(client.paths,[by_id])
+
+    def test_conflicting_index_ids_prohibit_recovery_and_extra_calls(self):
+        today=dt.date(2026,11,13)
+        state=collector.default_progress()
+        state["bouts"]={
+            "1":{"org":"ufc","a":{"id":"71","slug":"athlete","name":"Athlete"}},
+            "2":{"org":"ufc","b":{"id":"999","slug":"athlete","name":"Athlete"}}}
+        state["ufcHistoricalSearchDone"]={"athlete":{
+            "checkedAt":"2026-11-12","matchedWinnerBouts":2}}
+        coverage={"schema":1,"scope":"ufc","asOf":today.isoformat(),
+                  "fighters":[{"slug":"athlete","needsHistoryCheck":True}]}
+        client=StubClient({})
+        self.assertIsNone(collector.stable_indexed_fighter_id(state,"athlete"))
+        self.assertEqual(collector.collect_targeted_ufc_history(client,state,coverage,today),0)
+        self.assertEqual(client.paths,[])
 
 
 if __name__=="__main__":
