@@ -295,8 +295,9 @@
    (score===null?'Unrated':score+'<small> / 100</small>')+'</strong>'+
    (tier==='legendary'?'<p class="befn-v3-legendary">Legendary Gold</p>':'')+
    (score===null?'<small>More opponent or technical evidence needed</small>':'')+'</div>'+
-   '<div class="befn-v3-status befn-scout-classification"><span class="'+(v3.category==='Champion'?'is-champion':'')+'">'+escapeHTML(v3.category)+'</span>'+
-   (v3.officialRank?'<small>UFC division rank #'+v3.officialRank+'</small>':'')+
+   '<div class="befn-v3-status befn-scout-classification">'+
+   (v3.category!=='Champion'?'<span>'+escapeHTML(v3.category)+'</span>':'')+
+   (v3.officialRank?'<small>UFC division #'+v3.officialRank+'</small>':'')+
    '</div></div>'+
    '<section class="befn-profile-block"><h3>Technical ratings</h3><div class="befn-profile-body"><div class="befn-power-bars">'+
    ratings.map(([id,label])=>{
@@ -314,9 +315,10 @@
    }).join('')+'</ul></details>'+
    '<div class="befn-v3-data-side">'+
    (tiles.length?'<section class="befn-v3-stat-panel"><h3>Recent Performance</h3><div class="befn-v3-tiles">'+tiles.map(([value,label,sample])=>'<div><strong>'+escapeHTML(value)+'</strong><span>'+escapeHTML(label)+'</span><small>'+escapeHTML(sample)+'</small></div>').join('')+'</div></section>':'')+
-   (statRows?'<details class="befn-v3-statistics" open><summary>Stats & leaderboard ranks</summary><ul class="befn-v3-rank-tiles">'+statRows+'</ul></details>':'')+
    '</div>'+
-   '</div><section class="befn-profile-block"><h3>'+escapeHTML(kind)+'</h3><div class="befn-profile-body">'+
+   '</div>'+
+   (statRows?'<details class="befn-v3-statistics befn-v3-rank-full" open><summary>Stats & leaderboard ranks</summary><ul class="befn-v3-rank-tiles">'+statRows+'</ul></details>':'')+
+   '<section class="befn-profile-block"><h3>'+escapeHTML(kind)+'</h3><div class="befn-profile-body">'+
    credentialsHTML(f)+'</div></section></section>';
  }
  function renderV3Boards(){
