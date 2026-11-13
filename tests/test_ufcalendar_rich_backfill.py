@@ -174,5 +174,66 @@ class RichBackfillTests(unittest.TestCase):
         public=m.public_events({"events":{"200":event}},profile,dt.date(2026,11,11))
         self.assertNotIn("aRecord",public["events"]["200"]["bouts"][0])
 
+    def test_round_recovery_rechecks_legacy_missing_but_never_complete_bouts(self):
+        today=dt.date(2026,11,13)
+        bout={"id":"42","org":"ufc","result":{"round":3}}
+        state=m.default_progress()
+        state["roundDone"]["42"]=0
+        self.assertTrue(m.should_collect_rounds(state,bout,today))
+        state["roundRetry"]["42"]={"attempts":1,"checkedAt":today.isoformat(),
+                                   "retryAfter":"2026-11-27"}
+        self.assertFalse(m.should_collect_rounds(state,bout,today))
+        self.assertTrue(m.should_collect_rounds(state,bout,today+dt.timedelta(days=14)))
+        state["roundRetry"]["42"]["attempts"]=2
+        self.assertFalse(m.should_collect_rounds(state,bout,today+dt.timedelta(days=30)))
+        state["roundDone"]["42"]=3
+        self.assertFalse(m.should_collect_rounds(state,bout,today+dt.timedelta(days=30)))
+        state["roundDone"]["42"]=2
+        state["roundRetry"].pop("42")
+        self.assertTrue(m.should_collect_rounds(state,bout,today))
+
+    def test_missing_active_stats_are_prioritised_without_repeated_paid_reads(self):
+        today=dt.date(2026,11,13)
+        state=m.default_progress()
+        def bout(ident,day):
+            return {"id":ident,"org":"ufc","eventDate":day,"event":"Test",
+                    "eventId":"7","status":"completed",
+                    "a":{"name":"Alpha"},"b":{"name":"Beta"},
+                    "result":{"round":3,"time":"5:00"}}
+        state["bouts"]={"99":bout("99","2025-11-13"),
+                        "42":bout("42","2026-11-12")}
+        state["roundDone"]["99"]=0
+        calls=[]
+        client=m.Client("secret",state,today,fetch=lambda p:(calls.append(p) or {"data":[]}),
+                        max_calls=80)
+        client.remaining=100
+        coverage={"schema":1,"scope":"ufc","asOf":today.isoformat(),
+                  "fighters":[{"needsStats":True,"champion":True,
+                               "recent":[{"boutId":"99","hasMeasuredTotals":False}]}]}
+        cards={"events":{}}
+        archive={"schema":1,"fights":{},"events":{}}
+        result=m.collect_rounds(client,state,cards,archive,archive,today,coverage)
+        self.assertEqual(result,{"requests":2,"retried":1})
+        self.assertEqual(calls,["/fights/99/rounds","/fights/42/rounds"])
+        self.assertEqual(state["roundRetry"]["99"]["retryAfter"],"2026-11-27")
+        self.assertEqual(state["roundDone"]["42"],0)
+        self.assertEqual(m.collect_rounds(client,state,cards,archive,archive,today,coverage),
+                         {"requests":0,"retried":0})
+        self.assertEqual(len(calls),2)
+
+    def test_failed_first_round_request_receives_backoff(self):
+        today=dt.date(2026,11,13)
+        state=m.default_progress()
+        state["bouts"]={"42":{"id":"42","org":"ufc","eventDate":"2026-11-10",
+                              "status":"completed","eventId":"7",
+                              "result":{"round":3}}}
+        client=m.Client("secret",state,today,fetch=lambda p:None,max_calls=80)
+        client.remaining=100
+        empty={"events":{}}
+        m.collect_rounds(client,state,empty,{"fights":{}},{"fights":{}},today)
+        self.assertEqual(state["roundDone"]["42"],0)
+        self.assertEqual(state["roundRetry"]["42"]["retryAfter"],"2026-11-14")
+        self.assertFalse(m.should_collect_rounds(state,state["bouts"]["42"],today))
+
 if __name__=="__main__":
     unittest.main()
