@@ -885,7 +885,10 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None)
             when=date_str(row.get("date"))
             if when and when<=today.isoformat():pending[bid]=max(when,pending.get(bid,""))
     checks=state.setdefault("ufcCareerBoutChecks",{})
-    cap=max(1,min(50,int(client.max_calls*.12)))
+    # The signed-off cohort has a large, known cache gap. Bound career
+    # hydration to 90 unique IDs per run while keeping the central provider
+    # quota, per-run safety ceiling and other maintenance tasks intact.
+    cap=max(1,min(90,int(client.max_calls*.20)))
     attempts=0
     indexed=0
     for bid,_ in sorted(pending.items(),key=lambda row:(row[1],row[0]),reverse=True):
@@ -905,7 +908,12 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None)
         title=safe(event.get("title"),150) if isinstance(event,dict) else ""
         event_date=date_str(event.get("starts_at")) if isinstance(event,dict) else None
         is_feeder=bool(re.search(r"(?:contender\s+series|road\s+to\s+ufc|\bdwcs\b)",title,re.I))
-        if (not bout or not event_date or event_date>today.isoformat() or
+        # Fail closed on a mismatched provider response: a retrieved bout
+        # must have the *same native ID* requested from the cached UFC history.
+        # A 200 response with a different fight must never poison this ID's
+        # career chronology or round statistics cache.
+        if (not bout or str(bout.get("id") or "")!=bid or
+            not event_date or event_date>today.isoformat() or
             not title or not re.search(r"\bufc\b",title,re.I) or is_feeder or
             event.get("org") not in ("ufc",None) or
             bout["status"] not in ("completed","draw","no_contest")):
@@ -1094,17 +1102,18 @@ def main():
         searched=collect_targeted_ufc_history(client,state,coverage,today)
         if searched:print("UFCalendar targeted UFC history lookups:",searched)
         refresh_unlinked_ufc_native_ids(client,state,research,coverage,today)
+        collect_profiles(client,state,cards,research,today)
+        collect_careers(client,state,research)
+        # Reuse persisted native career IDs before the round-statistics pass:
+        # both fighters share each indexed fight and its single round fetch.
+        # The roster census and user approval are dated in Melbourne, not UTC.
+        # Keep UTC for monthly API budgeting and cache observation timestamps.
+        roster_today=dt.datetime.now(ZoneInfo("Australia/Melbourne")).date()
+        collect_ufc_career_bouts(client,state,research,read(COVERAGE36,{}),roster_today,read(ROSTER_APPROVAL,{}))
         recovery=collect_rounds(client,state,cards,archive,pfl_archive,today,coverage)
         if recovery["retried"]:
             print("UFCalendar incomplete UFC round rechecks:",recovery["retried"])
         collect_judging(client,state,cards,judging)
-        collect_profiles(client,state,cards,research,today)
-        collect_careers(client,state,research)
-        # The roster census and user approval are dated in Melbourne, not UTC.
-        # Retain UTC for monthly API budgeting, but assess Stage 3 gates using
-        # the same local calendar day as the approved as-of snapshot.
-        roster_today=dt.datetime.now(ZoneInfo("Australia/Melbourne")).date()
-        collect_ufc_career_bouts(client,state,research,read(COVERAGE36,{}),roster_today,read(ROSTER_APPROVAL,{}))
         verify_short_ufc_careers(client,state,research,coverage,today)
         collect_championship_history(client,state,research)
         recover_previews(cards,archive,pfl_archive,judging)
