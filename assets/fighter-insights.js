@@ -424,33 +424,48 @@
  }
  function renderV3Boards(){
   const root=document.querySelector('[data-befn-v3-leaderboards]');
-  // Do not publish schema-3 provisional leaderboard ordering.
-  if(!root||root.dataset.ready||!ufcV3||ufcV3.schema<4)return;
+  if(!root||root.dataset.ready)return;
+  if(!ufcV3||ufcV3.schema<4){
+   if(root.dataset.status!=='pending'){
+    root.dataset.status='pending';
+    root.innerHTML='<p class="befn-board-placeholder">The validated UFC statistics snapshot is not published yet. Leaderboards will appear when the records are ready.</p>';
+   }
+   return;
+  }
   root.dataset.ready='true';
-  root.innerHTML='<summary>UFC statistical leaderboards</summary><p>'+ufcV3.population+
-   ' fighters with documented UFC activity since '+escapeHTML(ufcV3.cutoff)+'. Snapshot '+escapeHTML(ufcV3.asOf)+
-   '. Rankings require at least three measured UFC bouts; five recent fights are the target. Incomplete snapshots do not display stale ranks.</p>'+
-   '<label>Statistic <select aria-label="UFC leaderboard statistic">'+ufcV3.boards.map(b=>
+  root.innerHTML='<header class="befn-board-head"><div><p class="befn-board-eyebrow">UFC · Recent performance</p><h2>Statistical rankings</h2>'+
+   '<p>'+ufcV3.population+' active fighters in this snapshot. Rankings require at least three UFC bouts with that statistic recorded.</p></div>'+
+   '<span class="befn-board-date">Updated '+escapeHTML(ufcV3.asOf)+'</span></header>'+
+   '<div class="befn-board-controls"><label for="befn-board-metric">Choose a statistic</label>'+
+   '<select id="befn-board-metric" aria-label="Choose UFC leaderboard statistic">'+ufcV3.boards.map(b=>
     '<option value="'+escapeHTML(b.id)+'">'+escapeHTML(b.label)+'</option>').join('')+
-   '</select></label><div class="befn-v3-board-results"></div>';
-  const select=root.querySelector('select'), results=root.querySelector('.befn-v3-board-results');
+   '</select></div><div class="befn-v3-board-results" aria-live="polite"></div>';
+  const select=root.querySelector('select'),results=root.querySelector('.befn-v3-board-results');
   const show=()=>{
    const board=ufcV3.boards.find(b=>b.id===select.value);
-   // Legacy snapshots include 2-bout athletes and ranks based on that old
-   // pool. Do not display either until a schema 4 rebuild recalculates ranks.
-   const fresh=ufcV3.schema>=4;
-   const qualifying=board.leaders.filter(row=>row.bouts>=3);
-   const display=qualifying.slice(0,10);
-   const summary=fresh?board.eligible+' eligible fighters · minimum 3 recorded UFC bouts':
-    'Minimum 3 recorded UFC bouts · previous rankings are being recalculated';
-   results.innerHTML='<p>'+summary+
-    (board.id==='sapm'?' · lower is better':'')+'</p>'+
-    (display.length?'<ul>'+display.map(row=>
-    '<li><span>'+(fresh?'#'+row.rank+' · ':'')+escapeHTML(row.name)+'</span><strong>'+
-    metricValue(row,board.type==='def'?'pct':board.type)+'</strong><small>'+
-    row.bouts+' recorded UFC bouts'+(fresh?'':' · provisional top-performer sample')+
-    '</small></li>').join('')+'</ul>':
-    '<p>No qualifying fighters in this leaderboard snapshot. A full rebuild is required.</p>');
+   if(!board){results.innerHTML='<p class="befn-board-placeholder">No data available for this statistic.</p>';return;}
+   const eligible=board.leaders.filter(row=>row.bouts>=3&&row.bouts<=5&&
+    Number.isFinite(row.value)&&Number.isInteger(row.rank)&&row.rank>=1);
+   const display=eligible.slice(0,30);
+   const heading=board.label+' · '+board.eligible+' qualifying UFC fighters';
+   const direction=board.id==='sapm'?' · Lower is better':'';
+   results.innerHTML='<div class="befn-board-result-head"><h3>'+escapeHTML(heading)+
+    '</h3><p>Top 30 · Minimum three measured bouts'+direction+'</p></div>'+
+    (display.length?'<ol class="befn-board-list">'+display.map(row=>{
+     const name=escapeHTML(row.name);
+     const f=byName.get(norm(row.name));
+     const athlete=f&&isReviewedUfc(f)&&f.id?
+      '<a href="#fighter/'+encodeURIComponent(f.id)+'">'+name+'</a>':'<span>'+name+'</span>';
+     const value=['control','net'].includes(board.id)?
+      (row.value<0?'−':'')+Math.floor(Math.abs(row.value)/60)+':'+
+       String(Math.round(Math.abs(row.value)%60)).padStart(2,'0'):
+       metricValue(row,board.type==='def'?'pct':board.type);
+     return '<li class="'+(row.rank<=3?'befn-board-podium':row.rank<=10?'befn-board-topten':'')+'">'+
+      '<span class="befn-board-place">#'+row.rank+'</span>'+
+      '<span class="befn-board-name">'+athlete+'<small>'+row.bouts+' recorded UFC bouts</small></span>'+
+      '<strong class="befn-board-value">'+escapeHTML(value)+'</strong></li>';
+    }).join('')+'</ol>':
+    '<p class="befn-board-placeholder">No athletes yet qualify for this category.</p>');
   };
   select.addEventListener('change',show);
   show();
