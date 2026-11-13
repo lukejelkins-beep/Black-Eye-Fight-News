@@ -181,5 +181,49 @@ class TargetedHistoryTests(unittest.TestCase):
         self.assertEqual(client.paths,[])
 
 
+    def test_native_history_returns_confirmed_ids_and_one_time_refresh(self):
+        today=dt.date(2026,11,13)
+        state=collector.default_progress()
+        state["bouts"]={"100":{"id":"100","org":"ufc","status":"completed",
+           "a":{"id":"71","slug":"athlete","name":"Athlete"},
+           "b":{"id":"72","slug":"opponent","name":"Opponent"},
+           "eventDate":"2026-08-01"}}
+        state["historyDone"]={"athlete":2}
+        research={"profiles":{"athlete":{"name":"Athlete","slug":"athlete",
+           "recentHistory":[{"date":"2026-08-01","opponent":"Opponent","result":"win",
+             "promotion":"ufc"},{"date":"2024-01-01","opponent":"Veteran",
+             "result":"loss","promotion":"ufc"}]}}}
+        coverage={"schema":1,"scope":"ufc","asOf":today.isoformat(),
+          "fighters":[{"slug":"athlete","recent":[{"origin":"ufc-history",
+                           "date":"2024-01-01","opponent":"Veteran","boutId":None}]}]}
+        route="/fighters/71/history"
+        rows=[{"source":"native","fight_id":100,"date":"2026-08-01",
+               "opponent":{"name":"Opponent"},"status":"win","org_slug":"ufc"},
+              {"source":"native","fight_id":50,"date":"2024-01-01",
+               "opponent":{"name":"Veteran"},"status":"loss","org_slug":"ufc"}]
+        client=StubClient({route:rows})
+        self.assertEqual(collector.refresh_unlinked_ufc_native_ids(
+            client,state,research,coverage,today),1)
+        self.assertEqual(client.paths,[route])
+        history=research["profiles"]["athlete"]["recentHistory"]
+        self.assertEqual([r["boutId"] for r in history],["100","50"])
+        self.assertEqual(state["ufcNativeHistoryIdChecks"]["athlete"]["nativeUfcIds"],2)
+        self.assertEqual(collector.refresh_unlinked_ufc_native_ids(
+            client,state,research,coverage,today),0)
+        self.assertEqual(client.paths,[route])
+
+    def test_public_record_id_is_not_mistaken_for_native_ufc_id(self):
+        rows=collector.summarize_history({"data":[
+           {"source":"history","fight_id":400,"date":"2024-05-01",
+            "opponent_name":"Historical Opponent","status":"loss","org_slug":"ufc"},
+           {"source":"native","fight_id":400,"date":"2026-01-01",
+            "opponent_name":"Tracked Opponent","status":"win","org_slug":"ufc"},
+           {"source":"native","fight_id":-1,"date":"2026-02-01",
+            "opponent_name":"Invalid Opponent","status":"win","org_slug":"ufc"}]})
+        self.assertIsNone(rows[0]["boutId"])
+        self.assertEqual(rows[1]["boutId"],"400")
+        self.assertIsNone(rows[2]["boutId"])
+
+
 if __name__=="__main__":
     unittest.main()
