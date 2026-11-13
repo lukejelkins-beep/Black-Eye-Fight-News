@@ -1154,6 +1154,30 @@ def reconcile_approved_ufc_full_career_timelines(client,state,research,coverage,
                        "lastUfcFight":last,"numericFighterId":fid,
                        "retryAfter":(today+dt.timedelta(days=days)).isoformat()}
             continue
+        # A numeric-ID endpoint may be unsupported or route to a different
+        # fighter. Do not merge foreign UFC results merely because they share
+        # the organisation. Require a confirmed overlap with our saved career:
+        # either a native UFC fight ID on the same date, or date + opponent.
+        incoming=summarize_history(payload)
+        def match_key(row):
+            day=date_str(row.get("date"))
+            opponent=re.sub(r"[^a-z0-9]","",safe(row.get("opponent"),110).casefold())
+            return (day,opponent) if day and opponent else None
+        prior_keys={match_key(r) for r in history if match_key(r)}
+        prior_ids={(str(r.get("boutId")),date_str(r.get("date")))
+                   for r in history if r.get("source")=="native" and
+                   re.fullmatch(r"[1-9][0-9]{0,11}",str(r.get("boutId") or ""))}
+        anchored=any(
+            match_key(r) in prior_keys or
+            (str(r.get("boutId")),date_str(r.get("date"))) in prior_ids
+            for r in incoming if str(r.get("promotion") or "").lower()=="ufc")
+        if not anchored:
+            checks[s]={"status":"requires_manual_review",
+                       "checkedAt":today.isoformat(),"lastUfcFight":last,
+                       "numericFighterId":fid,
+                       "reason":"numeric_history_no_overlap_with_saved_ufc_bouts",
+                       "retryAfter":(today+dt.timedelta(days=30)).isoformat()}
+            continue
         profile=profiles[s]
         old_complete=profile.get("ufcTimeline",{}).get("complete") is True
         merged=save_ufc_timeline(profile,payload,today)
@@ -1164,9 +1188,10 @@ def reconcile_approved_ufc_full_career_timelines(client,state,research,coverage,
         full=profile.get("ufcTimeline",{}).get("complete") is True
         if full and last and not any(
             str(row.get("promotion") or "").lower()=="ufc" and
-            date_str(row.get("date"))==last for row in merged):
-            # An explicit 'untruncated' provider result that omits the
-            # roster-confirmed most recent UFC bout cannot certify a career.
+            date_str(row.get("date"))==last for row in incoming):
+            # Retaining an older cached row does NOT make a truncated or
+            # inconsistent provider response complete. The actual provider
+            # payload itself must contain the roster-confirmed latest fight.
             profile["ufcTimeline"]["complete"]=False
             profile["ufcTimeline"]["missingRosterLastUfcFight"]=last
             full=False
