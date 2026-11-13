@@ -111,6 +111,31 @@ export function auditIndependentEvidence(ledger,research,progress){
   if(confirmations.some(e=>e.slug===athlete&&e.lastUfcFight===item.lastUfcFight))
    add("contradictory_active_not_fighting_status",athlete,item.lastUfcFight);
  }
+ // Exclusions independent of provider history require complete dated proof,
+ // and must point at the most recently indexed completed official UFC fight.
+ const independent=ledger?.independentLaterMma||[];
+ const independentSeen=new Set();
+ for(const item of independent){
+  const fighter=item?.slug||"";
+  if(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(fighter)||independentSeen.has(fighter))
+   add("duplicate_or_invalid_external_mma_slug",fighter,"Unknown or duplicate fighter");
+  independentSeen.add(fighter);
+  if(item?.reason!=="later_professional_mma_outside_ufc")
+   add("invalid_external_mma_reason",fighter,String(item?.reason));
+  if(!validDate(item?.lastUfcFight)||!validDate(item?.evidence?.date)||
+      item.evidence.date<=item.lastUfcFight||item.evidence.date>today)
+   add("invalid_external_mma_date",fighter,String(item?.evidence?.date));
+  if(!validDate(item?.checkedAt)||item.checkedAt>today)
+   add("invalid_external_mma_checked_at",fighter,String(item?.checkedAt));
+  if(!https(item?.evidence?.source))add("invalid_external_mma_source",fighter,String(item?.evidence?.source));
+  if(!item?.evidence?.opponent?.trim())add("missing_external_mma_opponent",fighter,"Missing opponent");
+  if(!item?.evidence?.promotion?.trim()||
+    ["ufc","road-to-ufc","dwcs"].includes(item.evidence.promotion.toLowerCase()))
+   add("invalid_external_mma_promotion",fighter,String(item?.evidence?.promotion));
+  if(indexedLatest.get(fighter)!==item.lastUfcFight)
+   add("stale_external_mma_ufc_anchor",fighter,"Last UFC index="+String(indexedLatest.get(fighter)));
+ }
+
  const exits=ledger?.departures||[];
  for(const item of exits){
   if(!item?.slug||!validDate(item.lastUfcFight))
@@ -125,7 +150,7 @@ export function auditIndependentEvidence(ledger,research,progress){
  }
  return {errors,summary:{fighters:Object.keys(fighters).length,bouts:count,
   exactHistoryMatches:matched,departures:exits.length,
-  currentOfficialActive:confirmations.length,officialNotFighting:notFighting.length,rulesets:byRule,
+  currentOfficialActive:confirmations.length,independentLaterMma:independent.length,officialNotFighting:notFighting.length,rulesets:byRule,
   indexedOfficialUfcAthletes:indexedLatest.size}};
 }
 
@@ -200,4 +225,24 @@ test("Not Fighting audit rejects stale, contradictory, nonofficial evidence",()=
  for(const c of ["duplicate_or_invalid_not_fighting_slug","invalid_not_fighting_checked_at",
   "invalid_not_fighting_source","stale_not_fighting_last_ufc",
   "contradictory_active_not_fighting_status"])assert(errs.has(c),c);
+});
+
+test("independent later professional MMA excludes only with dated official UFC anchor",()=>{
+ const progress={bouts:{"1":{org:"ufc",event:"UFC Fight Night: Test",
+  status:"completed",eventDate:"2024-02-10",
+  a:{slug:"pauga"},b:{slug:"other"}}}};
+ const good={schema:1,asOf:"2026-11-14",fighters:{},departures:[],
+  independentLaterMma:[{slug:"pauga",lastUfcFight:"2024-02-10",
+    reason:"later_professional_mma_outside_ufc",checkedAt:"2026-11-14",
+    evidence:{date:"2024-09-27",opponent:"Nicholson",promotion:"xfc",
+      source:"https://xfc.global/proof"}}]};
+ assert.deepEqual(auditIndependentEvidence(good,{profiles:{}},progress).errors,[]);
+ const bad=structuredClone(good);
+ bad.independentLaterMma.push({...bad.independentLaterMma[0],
+  evidence:{...bad.independentLaterMma[0].evidence,date:"2023-12-01",
+    source:"invalid"},lastUfcFight:"2024-01-01",checkedAt:"2026-11-15"});
+ const codes=new Set(auditIndependentEvidence(bad,{profiles:{}},progress).errors.map(e=>e.code));
+ for(const code of ["duplicate_or_invalid_external_mma_slug","invalid_external_mma_date",
+   "invalid_external_mma_checked_at","invalid_external_mma_source",
+   "stale_external_mma_ufc_anchor"])assert(codes.has(code));
 });

@@ -318,3 +318,28 @@ test("direct official UFC Not Fighting status excludes from confirmed active ros
  assert.deepEqual(public18,baseline18,
    "36-month classification must not modify public 18-month roster");
 });
+
+test("valid independent later MMA exclusion blocks candidate even if provider omitted bout",()=>{
+ const progress={bouts:{"100":{id:"100",org:"ufc",event:"UFC Fight Night: Example",
+  eventDate:"2024-02-10",status:"completed",
+  a:{name:"Pauga",slug:"pauga",id:1},
+  b:{name:"Rival",slug:"rival",id:2},
+  result:{winnerId:"2",round:1,time:"4:00"}}}};
+ const review={asOf:"2026-11-14",independentLaterMma:[{slug:"pauga",
+   lastUfcFight:"2024-02-10",reason:"later_professional_mma_outside_ufc",
+   checkedAt:"2026-11-14",evidence:{date:"2024-09-27",opponent:"Nicholson",
+   promotion:"xfc",source:"https://xfc.global/example"}}]};
+ const args=[progress,{profiles:{}},{fighters:{}},{divisions:[]}];
+ const withEvidence=candidateManifest(...args,{asOf:"2026-11-14",evidenceReview:review});
+ assert(!withEvidence.fighters.some(f=>f.slug==="pauga"));
+ assert.equal(withEvidence.summary.excludedLaterNonUfcMma,1);
+ const stale={...review,independentLaterMma:[{...review.independentLaterMma[0],
+  lastUfcFight:"2024-01-01"}]};
+ const without=candidateManifest(...args,{asOf:"2026-11-14",evidenceReview:stale});
+ assert(without.fighters.some(f=>f.slug==="pauga"),
+  "a stale last-fight proof cannot disqualify after a newer official UFC bout");
+ const future=candidateManifest(...args,{asOf:"2026-11-14",
+  evidenceReview:{...review,asOf:"2026-11-15"}});
+ assert(future.fighters.some(f=>f.slug==="pauga"),
+  "future-dated evidence ledger is not imported");
+});
