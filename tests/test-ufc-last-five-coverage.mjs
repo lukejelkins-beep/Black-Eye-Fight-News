@@ -191,7 +191,7 @@ test("the six evidence stages partition every active fighter without asserting s
 test("native career history fight ID links older UFC fights without an indexed card",()=>{
  const progress={bouts:{"501":{id:"501",org:"ufc",eventDate:"2026-06-08",status:"completed",
   a:{id:"1",slug:"alpha",name:"Alpha"},b:{id:"2",slug:"beta",name:"Beta"},
-  result:{winnerId:"1",round:3,time:"5:00"}}};
+  result:{winnerId:"1",round:3,time:"5:00"}}}};
  const research={profiles:{alpha:{recentHistory:[
   {source:"native",boutId:"501",date:"2026-06-09",opponent:"Beta",
    result:"win",promotion:"ufc"},
