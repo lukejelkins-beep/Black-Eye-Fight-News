@@ -45,7 +45,7 @@ function evidenceStage(recent,depthConfirmed=false){
  return five?"fiveLinkedMeasured":depthConfirmed?
   "shortLinkedMeasuredDepthConfirmed":"shortLinkedMeasuredDepthUnconfirmed";
 }
-export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upcoming={},ranked=[],verifiedMixedMma={},activityMonths=18,rosterReview={}}){
+export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upcoming={},ranked=[],verifiedMixedMma={},verifiedOtherBoutRulesets={},activityMonths=18,rosterReview={}}){
  if(!validDate(asOf))throw Error("asOf must be YYYY-MM-DD");
  if(![18,36].includes(activityMonths))throw Error("activityMonths must be 18 or 36");
  const cutoff=cutoffFrom(asOf,activityMonths),registry=new Map();
@@ -62,17 +62,30 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
   if(org==="ufc"||nonMmaPromotions.has(org)||
    ["boxing","kickboxing","muay-thai","grappling",
     "submission-grappling","bjj","wrestling","bare-knuckle-boxing"].includes(rules))return;
+  // Separately verified later combat sport results: exact fighter, opponent,
+  // date and URL required. This cannot influence the public 18-month roster.
+  const verified=(activityMonths===36?
+    (verifiedOtherBoutRulesets?.fighters?.[f.slug]||[]):[]).find(e=>
+    e?.date===date&&nameKey(e.opponent)===nameKey(opponent)&&
+    validDate(e.checkedAt)&&e.checkedAt<=asOf&&
+    /^https:\/\/\S+/.test(e.source||"")&&
+    (!e.promotion||!org||promotionKey(e.promotion)===org));
+  const verifiedSport=promotionKey(verified?.ruleset);
+  if(["boxing","grappling","wrestling"].includes(verifiedSport)&&
+     !mmaPromotions.has(org)&&!["mma","mixed-martial-arts"].includes(rules))
+    return;
   const manuallyVerified=(verifiedMixedMma?.fighters?.[f.slug]||[]).some(e=>
    e?.date===date&&promotionKey(e.promotion)===org&&
    nameKey(e.opponent)===nameKey(opponent)&&e.ruleset==="mma"&&
    validDate(e.checkedAt)&&e.checkedAt<=asOf&&/^https:\/\/\S+/.test(e.source||""));
   const confirmed=mmaPromotions.has(org)||rules==="mma"||
-   rules==="mixed-martial-arts"||manuallyVerified;
+   rules==="mixed-martial-arts"||manuallyVerified||verifiedSport==="mma";
   // Blank-promotion rows on the same date often duplicate the indexed UFC
   // result with another spelling of the opponent; not proof of a newer bout.
   if(date===f.lastActive&&!confirmed)return;
   const field=confirmed?"latestOtherMma":"latestUnverifiedPromotion";
-  const row={date,promotion:org||null,opponent,source};
+  const row={date,promotion:org||promotionKey(verified?.promotion)||null,
+   opponent,source:verified?.source||source};
   if(!f[field]||f[field].date<date)f[field]=row;
  };
  const put=(fighter,date,opponent,{boutId=null,method=null,outcome=null,origin}={})=>{
