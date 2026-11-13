@@ -7,6 +7,8 @@ on:
     branches: [main]
     paths:
       - 'scripts/audit-ufc-research-pipeline.mjs'
+      - 'scripts/ufc-36-month-review-report.mjs'
+      - 'tests/test-ufc-36-month-review-report.mjs'
       - 'tests/test-ufc-research-pipeline.mjs'
       - '.github/workflows/audit-ufc-research-pipeline.yml'
   push:
@@ -43,11 +45,17 @@ jobs:
           node scripts/check-ufc-worker-retention.mjs
       - name: Build last-five coverage and paid-search yield audit without API calls
         run: node scripts/audit-ufc-research-pipeline.mjs
+      - name: Summarise 36-month roster exceptions and existing career cache offline
+        if: always()
+        run: node scripts/ufc-36-month-review-report.mjs
       - name: Save report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: befn-ufc-research-report
-          path: qa/ufc-research-pipeline-report.json
+          path: |
+            qa/ufc-research-pipeline-report.json
+            qa/ufc-36-month-roster-review.json
+            qa/ufc-36-month-roster-review.md
           retention-days: 14
           if-no-files-found: warn
