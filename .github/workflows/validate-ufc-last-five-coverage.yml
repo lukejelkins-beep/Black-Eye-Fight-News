@@ -7,6 +7,8 @@ on:
       - 'scripts/build-ufc-36-month-candidates.mjs'
       - 'scripts/ufcalendar-rich-backfill.py'
       - 'tests/test-ufc-36-month-candidates.mjs'
+      - 'scripts/ufc-36-month-review-report.mjs'
+      - 'tests/test-ufc-36-month-review-report.mjs'
       - 'tests/test-ufc-36-month-independent-evidence.mjs'
       - 'data/ufc-36-month-reviewed-evidence.json'
       - 'tests/test_ufcalendar_rich_backfill.py'
@@ -38,6 +40,7 @@ jobs:
           node --check scripts/build-ufc-last-five-coverage.mjs
           node --test tests/test-ufc-last-five-coverage.mjs
           node --test tests/test-ufc-36-month-candidates.mjs
+          node --test tests/test-ufc-36-month-review-report.mjs
           node --test tests/test-ufc-pipeline-order.mjs
       - name: Verify downstream V3, profile, leaderboard and post-fight compatibility
         run: |
@@ -53,6 +56,16 @@ jobs:
         run: |
           node scripts/build-ufc-last-five-coverage.mjs
           node scripts/build-ufc-36-month-candidates.mjs
+      - name: Prepare roster-wide exception and cached-career inventory without API calls
+        run: node scripts/ufc-36-month-review-report.mjs
+      - name: Upload roster review for consolidated user sign-off
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-36-month-roster-review
+          path: |
+            qa/ufc-36-month-roster-review.json
+            qa/ufc-36-month-roster-review.md
+          retention-days: 30
       - name: Verify output contains no external credential or unverified rank claims
         run: |
           node --input-type=module -e "import fs from 'node:fs';const d=JSON.parse(fs.readFileSync('data/ufc-last-five-coverage.json'));if(d.schema!==1||d.scope!=='ufc'||!Array.isArray(d.fighters))process.exit(1);console.log(d.summary)"
