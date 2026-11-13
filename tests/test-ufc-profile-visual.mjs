@@ -220,7 +220,12 @@ async function checkProfile(page,profile,screen){
    assert(mobile.every(x=>x.visible&&x.outcome&&x.method),
     "mobile UFC recent fight outcomes and methods must fit without sideways scrolling");
   }
-  if((profile.credentials||[]).some(x=>x?.source?.startsWith("https://")))
+  // A source URL by itself is not a verified credential. Athlete-reported
+  // achievements, including unsupported credential kinds, earn no badge.
+  const supportedCredentialKinds=new Set(["ncaa","bjj","adcc","sambo",
+   "golden-gloves","olympic-judo"]);
+  if((profile.credentials||[]).some(x=>supportedCredentialKinds.has(x?.kind)&&
+    x?.verification!=="reported"&&x?.source?.startsWith("https://")))
    assert(details.credentialsVisible,"verified top credentials were not displayed");
   assert(details.closeVisible,"dialog close action missing");
   assert(!details.viewportOverflow,"document overflows horizontally");
