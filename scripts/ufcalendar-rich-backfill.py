@@ -846,8 +846,8 @@ def collect_ufc_career_bouts(client,state,research,coverage,today):
         for row in profile.get("recentHistory",[]):
             if not isinstance(row,dict) or row.get("source")!="native" or \
                str(row.get("promotion") or "").lower()!="ufc":continue
-            bid=positive(row.get("boutId"))
-            if not bid or bid in state["bouts"]:continue
+            bid=str(row.get("boutId") or "")
+            if not re.fullmatch(r"[1-9][0-9]{0,11}",bid) or bid in state["bouts"]:continue
             when=date_str(row.get("date"))
             if when and when<=today.isoformat():pending[bid]=max(when,pending.get(bid,""))
     checks=state.setdefault("ufcCareerBoutChecks",{})
@@ -870,9 +870,9 @@ def collect_ufc_career_bouts(client,state,research,coverage,today):
         bout=summary_bout(data)
         title=safe(event.get("title"),150) if isinstance(event,dict) else ""
         event_date=date_str(event.get("starts_at")) if isinstance(event,dict) else None
-        is_feeder=bool(re.search(r"(?:contender\\s+series|road\\s+to\\s+ufc|\\bdwcs\\b)",title,re.I))
+        is_feeder=bool(re.search(r"(?:contender\s+series|road\s+to\s+ufc|\bdwcs\b)",title,re.I))
         if (not bout or not event_date or event_date>today.isoformat() or
-            not title or not re.search(r"\\bufc\\b",title,re.I) or is_feeder or
+            not title or not re.search(r"\bufc\b",title,re.I) or is_feeder or
             event.get("org") not in ("ufc",None) or
             bout["status"] not in ("completed","draw","no_contest")):
             checks[bid]={"checkedAt":today.isoformat(),
