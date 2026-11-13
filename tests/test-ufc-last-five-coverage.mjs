@@ -187,3 +187,42 @@ test("the six evidence stages partition every active fighter without asserting s
  assert.equal(d.fighters.find(f=>f.slug==="short-measured").needsHistoryCheck,true,
   "one fully measured known fight cannot prove the fighter only has one UFC fight");
 });
+
+test("native career history fight ID links older UFC fights without an indexed card",()=>{
+ const progress={bouts:{"501":{id:"501",org:"ufc",eventDate:"2026-06-08",status:"completed",
+  a:{id:"1",slug:"alpha",name:"Alpha"},b:{id:"2",slug:"beta",name:"Beta"},
+  result:{winnerId:"1",round:3,time:"5:00"}}}};
+ const research={profiles:{alpha:{recentHistory:[
+  {source:"native",boutId:"501",date:"2026-06-09",opponent:"Beta",
+   result:"win",promotion:"ufc"},
+  {source:"native",boutId:"499",date:"2024-06-01",opponent:"Old Opponent",
+   result:"loss",promotion:"ufc"},
+  {source:"history",boutId:"777",date:"2023-02-01",opponent:"Other",
+   result:"win",promotion:"ufc"}]}}};
+ const postfight={fighters:{alpha:{name:"Alpha",scope:"ufc-only",
+  recentBouts:[{boutId:"501",metrics:{sigLanded:22}}]}}};
+ const d=auditUfcLastFive(progress,research,postfight,{divisions:[]},
+  {asOf:"2026-11-13"});
+ const f=d.fighters.find(x=>x.slug==="alpha");
+ assert.equal(f.recentCount,3,"the UTC/local native fight ID must deduplicate");
+ assert.deepEqual(f.recent.map(x=>x.boutId),["501","499",null]);
+ assert.equal(f.measuredCount,1);
+ assert.equal(d.summary.shiftedDateAliasesJoined,1);
+ assert.equal(f.evidenceStage,"shortUnlinked",
+  "unverified public-record ID cannot be promoted into confirmed UFC stats");
+});
+
+test("native history ID on a local-date alias cannot duplicate an indexed UFC fight",()=>{
+ const progress={bouts:{"30":{id:"30",org:"ufc",eventDate:"2026-06-08",status:"completed",
+  a:{id:"1",slug:"athlete",name:"Athlete"},b:{id:"2",slug:"challenger",name:"Challenger"},
+  result:{winnerId:"1"}}}};
+ const history={profiles:{athlete:{recentHistory:[
+  {date:"2026-06-07",opponent:"Challenger",promotion:"ufc",result:"win",
+   boutId:"30",source:"native"}]}}};
+ const d=auditUfcLastFive(progress,history,{fighters:{}},{divisions:[]},
+  {asOf:"2026-11-13"});
+ const f=d.fighters.find(x=>x.slug==="athlete");
+ assert.equal(f.recentCount,1);
+ assert.equal(f.recent[0].boutId,"30");
+ assert.equal(d.summary.shiftedDateAliasesJoined,1);
+});
