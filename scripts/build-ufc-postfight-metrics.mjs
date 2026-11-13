@@ -7,6 +7,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
+import {isOfficialUfcEvent} from "./ufc-official-event-scope.mjs";
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const progressPath="data/ufcalendar-rich-progress.json";
 const archivePath="data/ufc-research-archive.json";
@@ -72,7 +73,8 @@ function rollup(parts,field){
 }
 export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12"}={}){
  const complete=Object.values(progress?.bouts||{})
-  .filter(b=>b?.org==="ufc"&&["completed","draw","no_contest"].includes(b.status)&&
+  .filter(b=>b?.org==="ufc"&&isOfficialUfcEvent(b.event)&&
+   ["completed","draw","no_contest"].includes(b.status)&&
    /^\d{4}-\d\d-\d\d$/.test(b.eventDate||"")&&b.eventDate<=asOf&&
    b.a?.name&&b.b?.name);
  const archiveFights=new Map();
