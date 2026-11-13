@@ -1,0 +1,30 @@
+name: Validate UFC last-five coverage inventory
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/build-ufc-last-five-coverage.mjs'
+      - 'tests/test-ufc-last-five-coverage.mjs'
+      - '.github/workflows/build-ufc-profile-queue.yml'
+      - '.github/workflows/validate-ufc-last-five-coverage.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify source joining, dedupe and eligibility rules
+        run: |
+          node --check scripts/build-ufc-last-five-coverage.mjs
+          node --test tests/test-ufc-last-five-coverage.mjs
+      - name: Build inventory from saved UFCalendar data without API requests
+        run: node scripts/build-ufc-last-five-coverage.mjs
+      - name: Verify output contains no external credential or unverified rank claims
+        run: |
+          node --input-type=module -e "import fs from 'node:fs';const d=JSON.parse(fs.readFileSync('data/ufc-last-five-coverage.json'));if(d.schema!==1||d.scope!=='ufc'||!Array.isArray(d.fighters))process.exit(1);console.log(d.summary)"
