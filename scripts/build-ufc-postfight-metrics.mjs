@@ -20,9 +20,11 @@ const METRICS=["totalLanded","totalAttempted","sigLanded","sigAttempted",
 const paired={totalLanded:"totalStrikeDifferential",
  sigLanded:"sigStrikeDifferential",controlSec:"controlDifferentialSec"};
 const sortDate=(a,b)=>b.date.localeCompare(a.date)||String(a.boutId).localeCompare(String(b.boutId));
+function pairKey(a,b){
+ return [norm(a),norm(b)].sort().join(":");
+}
 function key(day,a,b){
- const names=[norm(a),norm(b)].sort();
- return day+":"+names.join(":");
+ return day+":"+pairKey(a,b);
 }
 function elapsed(result){
  if(!result||!Number.isInteger(result.round)||result.round<1||result.round>5)return null;
@@ -58,12 +60,15 @@ export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12"}={}){
   .filter(b=>b?.org==="ufc"&&["completed","draw","no_contest"].includes(b.status)&&
    /^\d{4}-\d\d-\d\d$/.test(b.eventDate||"")&&b.eventDate<=asOf&&
    b.a?.name&&b.b?.name);
- const archiveFights=new Map();
+ const archiveFights=new Map(),archiveByPair=new Map();
  for(const f of Object.values(archive?.fights||{})){
   if(String(f?.promotion||"").toUpperCase()!=="UFC"||
      !/^\d{4}-\d\d-\d\d$/.test(f.date||"")||!f.fighterA||!f.fighterB)continue;
   const k=key(f.date,f.fighterA,f.fighterB);
   if(!archiveFights.has(k))archiveFights.set(k,f);
+  const pair=pairKey(f.fighterA,f.fighterB);
+  if(!archiveByPair.has(pair))archiveByPair.set(pair,[]);
+  archiveByPair.get(pair).push(f);
  }
  const fighters=new Map(),matchedBouts=new Set(),pending=[];
  function entry(name,slug){
@@ -78,8 +83,19 @@ export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12"}={}){
   matchedBouts.add(id);
   const sides=["a","b"];
   const a=entry(b.a.name,b.a.slug),c=entry(b.b.name,b.b.slug);
-  const observed=archiveFights.get(key(b.eventDate,b.a.name,b.b.name));
-  if(!observed){pending.push({boutId:id,date:b.eventDate,reason:"round_data_not_available"});continue;}
+  // UFC event feeds can stamp midnight in UTC while archive sources retain
+  // the venue-local date. Never match a different opponent or a shift >1 day.
+  // The exact date always wins; shifted matches must be unique.
+  const exact=archiveFights.get(key(b.eventDate,b.a.name,b.b.name));
+  const baseDate=Date.parse(b.eventDate+"T00:00:00Z");
+  const shifted=exact?[]:(archiveByPair.get(pairKey(b.a.name,b.b.name))||[])
+   .filter(f=>Math.abs(Date.parse(f.date+"T00:00:00Z")-baseDate)===86400000);
+  const observed=exact||(shifted.length===1?shifted[0]:null);
+  if(!observed){
+   pending.push({boutId:id,date:b.eventDate,
+    reason:shifted.length>1?"archive_date_ambiguous":"round_data_not_available"});
+   continue;
+  }
   if(Array.isArray(observed.conflicts)&&observed.conflicts.length){
    pending.push({boutId:id,date:b.eventDate,reason:"cross_source_metric_conflict"});continue;
   }
