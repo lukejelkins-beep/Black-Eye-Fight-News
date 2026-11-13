@@ -16,7 +16,7 @@ const slugify=s=>String(s||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
  .toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const nameKey=s=>slugify(s).replace(/-/g,"");
 const validDate=s=>/^\d{4}-\d{2}-\d{2}$/.test(s||"")&&!Number.isNaN(Date.parse(s));
-const cutoffFrom=(day)=>{const [y,m,d]=day.split("-").map(Number);let p=(y*12+m-1)-24;let py=Math.floor(p/12),pm=p%12+1;
+const cutoffFrom=(day)=>{const [y,m,d]=day.split("-").map(Number);let p=(y*12+m-1)-36;let py=Math.floor(p/12),pm=p%12+1;
  const max=new Date(Date.UTC(py,pm,0)).getUTCDate();return [py,String(pm).padStart(2,"0"),String(Math.min(d,max)).padStart(2,"0")].join("-");};
 const normalOutcome=o=>{const x=String(o||"").toLowerCase();return x==="win"||x==="w"?"W":x==="loss"||x==="l"?"L":x==="draw"||x==="d"?"D":x==="no_contest"||x==="nc"?"NC":null;};
 const priorityNames=data=>new Set((data.divisions||[]).map(x=>nameKey(x.name)).filter(Boolean));
@@ -36,7 +36,7 @@ function evidenceStage(recent,depthConfirmed=false){
  return five?"fiveLinkedMeasured":depthConfirmed?
   "shortLinkedMeasuredDepthConfirmed":"shortLinkedMeasuredDepthUnconfirmed";
 }
-export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upcoming={},ranked=[],verifiedMixedMma={}}){
+export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upcoming={},ranked=[],verifiedMixedMma={},rosterReview={}}){
  if(!validDate(asOf))throw Error("asOf must be YYYY-MM-DD");
  const cutoff=cutoffFrom(asOf),registry=new Map();
  const ensure=(s,name)=>{const slug=slugify(s);if(!slug)return null;
@@ -217,11 +217,28 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
   metrics.set(key,ids);
  }
  const recentUfcCandidates=[...registry.values()].filter(f=>f.recentUfcLabel);
+ // Dated individual roster evidence is independent of elapsed activity.
+ // Match the confirmed final UFC fight from the review snapshot: a later
+ // official UFC return invalidates a historical retirement/departure flag.
+ const historicalExclusions=new Map();
+ if(validDate(rosterReview?.asOf)&&rosterReview.asOf<=asOf){
+  for(const item of rosterReview?.excluded||[]){
+   if(!item?.slug||!validDate(item.lastUfcFight))continue;
+   const evidence=item.evidence||{};
+   const officialSource=/^https:\/\/\S+/.test(evidence.source||"");
+   const statusKnown=["confirmed_retired","confirmed_left_ufc"].includes(item.reason);
+   const outsideKnown=["later_professional_mma_outside_ufc",
+    "later_professional_bareknuckle_mma_outside_ufc"].includes(item.reason)&&
+    validDate(evidence.date)&&evidence.date<=asOf;
+   if((statusKnown&&officialSource)||outsideKnown)
+    historicalExclusions.set(slugify(item.slug),item);
+  }
+ }
  const exclusion=new Map(),pending=[];
  for(const f of recentUfcCandidates){
   if(!f.active||!f.lastActive){
    exclusion.set(f.slug,{name:f.name,slug:f.slug,
-    reason:"no_official_ufc_fight_in_24_months",
+    reason:"no_official_ufc_fight_in_36_months",
     latestOfficialUfc:f.lastMainUfcFight||null});
    continue;
   }
@@ -232,6 +249,22 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
     reason:"later_professional_mma_outside_ufc",
     latestOfficialUfc:f.lastActive,latestOtherMma:newer[0]});
    continue;
+  }
+  const datedStatus=historicalExclusions.get(f.slug);
+  if(datedStatus?.lastUfcFight===f.lastActive){
+   if(["confirmed_retired","confirmed_left_ufc"].includes(datedStatus.reason)){
+    exclusion.set(f.slug,{name:f.name,slug:f.slug,reason:datedStatus.reason,
+     latestOfficialUfc:f.lastActive,evidence:datedStatus.evidence,
+     reviewAsOf:rosterReview.asOf});
+    continue;
+   }
+   if(datedStatus.evidence?.date>f.lastActive){
+    exclusion.set(f.slug,{name:f.name,slug:f.slug,
+     reason:"later_professional_mma_outside_ufc",
+     latestOfficialUfc:f.lastActive,latestOtherMma:datedStatus.evidence,
+     reviewAsOf:rosterReview.asOf});
+    continue;
+   }
   }
   const unresolved=f.promotionReview.filter(row=>row.date>f.lastActive)
    .sort((a,b)=>b.date.localeCompare(a.date));
@@ -272,8 +305,10 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
  const removed=[...exclusion.values()].sort((a,b)=>a.slug.localeCompare(b.slug));
  const totals={activeFighters:fighters.length,
   recentUfcLabeledCandidates:recentUfcCandidates.length,
-  excludedWithoutRecentOfficialUfc:removed.filter(x=>x.reason==="no_official_ufc_fight_in_24_months").length,
+  excludedWithoutRecentOfficialUfc:removed.filter(x=>x.reason==="no_official_ufc_fight_in_36_months").length,
   excludedLaterNonUfcProfessionalMma:removed.filter(x=>x.reason==="later_professional_mma_outside_ufc").length,
+  excludedConfirmedRetired:removed.filter(x=>x.reason==="confirmed_retired").length,
+  excludedConfirmedUfcExit:removed.filter(x=>x.reason==="confirmed_left_ufc").length,
   needsLatestMmaVerification:pending.length,
   withFiveKnown:fighters.filter(f=>f.recentCount===5).length,
   withFiveLinkedIds:fighters.filter(f=>f.recentCount===5&&
@@ -294,7 +329,7 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
    .reduce((sum,f)=>sum+f.shiftedAliasesJoined,0),
   uniqueKnownBoutIds:new Set(fighters.flatMap(f=>f.recent.map(b=>b.boutId).filter(Boolean))).size};
  return {schema:1,scope:"ufc",asOf,activityCutoff:cutoff,
-  eligibilityRule:"Latest completed professional MMA fight must be on an official UFC card within the preceding 24 months; DWCS/Road-to-UFC are separate feeder events. Unknown sports are held for review, not excluded.",
+  eligibilityRule:"Latest completed professional MMA fight must be on an official UFC card within the preceding 36 months; DWCS/Road-to-UFC do not qualify. Dated confirmed retirements, departures, and later outside-UFC MMA are excluded. Unknown later sport or affiliation requires independent review.",
   summary:totals,excluded:removed,pendingEligibility:pending,fighters};
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
@@ -307,6 +342,7 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
    asOf,
    upcoming:read("data/upcoming-cards.json",{}),
    verifiedMixedMma:read("data/ufc-verified-mixed-rules-mma.json",{}),
+   rosterReview:read("data/ufc-18-to-24-month-review-2026-11-13.json",{}),
    ranked:[
     read("data/ufc-ranked-profiles.json",{}),
     read("data/ufc-contender-profiles.json",{}),

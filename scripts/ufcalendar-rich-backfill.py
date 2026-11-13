@@ -212,17 +212,17 @@ def read_events(client,state,today):
         if payload is not None:
             add_index(state,org,response_rows(payload),True)
             last_checked[org]=now.isoformat()
-    # On the one-time move from an 18- to a 24-month UFC window, invalidate
+    # On the one-time move from a prior window to 36 months, invalidate
     # the old "complete" marker and cursor. Otherwise earlier UFC events
     # would never be requested even after widening the date parameter.
-    if state.setdefault("historicalWindowMonths",{}).get("ufc",18)<24:
+    if state.setdefault("historicalWindowMonths",{}).get("ufc",18)<36:
         state.setdefault("historicalComplete",{})["ufc"]=False
         state.setdefault("historicalCursor",{}).pop("ufc",None)
-        state["historicalWindowMonths"]["ufc"]=24
+        state["historicalWindowMonths"]["ufc"]=36
     for org in ORGS:
         if client.remaining<=0 or client.stopped or state["historicalComplete"].get(org):continue
         for n in range(4):
-            after=months_before(today,24 if org=="ufc" else 6).isoformat()
+            after=months_before(today,36 if org=="ufc" else 6).isoformat()
             cursor=state["historicalCursor"].get(org)
             route="/events"+param(org=org,**{"from":after,"to":today.isoformat()},
                                    order="desc",limit=50,cursor=cursor)

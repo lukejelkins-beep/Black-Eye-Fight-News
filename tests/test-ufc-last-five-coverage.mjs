@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {auditUfcLastFive} from "../scripts/build-ufc-last-five-coverage.mjs";
-test("24-month eligibility and older UFC history are separate",()=>{
+test("36-month eligibility and older UFC history are separate",()=>{
  const progress={bouts:{
   "10":{id:"10",org:"ufc",event:"UFC Fight Night: Fixture",eventDate:"2026-06-01",status:"completed",
    a:{id:"1",slug:"alpha",name:"Alpha"},b:{id:"2",slug:"beta",name:"Beta"},
@@ -18,7 +18,7 @@ test("24-month eligibility and older UFC history are separate",()=>{
   {date:"2023-02-10",opponent:"X",result:"win",promotion:"pfl"}]}}};
  const postfight={fighters:{alpha:{name:"Alpha",scope:"ufc-only",recentBouts:[{boutId:"10",metrics:{sigLanded:10}}]}}};
  const d=auditUfcLastFive(progress,research,postfight,{divisions:[{name:"Alpha"}]},{asOf:"2026-11-13"});
- assert.equal(d.activityCutoff,"2024-11-13");
+ assert.equal(d.activityCutoff,"2023-11-13");
  assert.equal(d.summary.activeFighters,2);
  assert.equal(d.summary.uniqueKnownBoutIds,2);
  const a=d.fighters.find(f=>f.slug==="alpha");
@@ -365,7 +365,7 @@ test("RIZIN and ONE require exact MMA ruleset evidence, not promotion-wide assum
  assert.equal(withEvidence.fighters.find(f=>f.slug==="one-fighter").needsLatestMmaVerification,true);
 });
 
-test("old legitimate UFC bouts remain in the five-fight window without a 24-month history cutoff",()=>{
+test("old legitimate UFC bouts remain in the five-fight window without a 36-month history cutoff",()=>{
  const athlete={id:"71",slug:"veteran",name:"Veteran"};
  const bout=(id,date)=>({id,org:"ufc",event:"UFC Fight Night: Test",eventDate:date,
   status:"completed",a:athlete,b:{id:id+"op",slug:"old-op-"+id,name:"Old Opp "+id},
@@ -379,20 +379,20 @@ test("old legitimate UFC bouts remain in the five-fight window without a 24-mont
   ["2026-05-01","2021-03-05","2020-02-20","2019-01-01"]);
 });
 
-test("24-month cutoff includes the 18-to-24-month cohort and retains older UFC bouts",()=>{
+test("36-month cutoff includes the 24-to-36-month cohort and retains older UFC bouts",()=>{
  const mk=(id,slug,date)=>({id,org:"ufc",event:"UFC Fight Night: Audit fixture",
   eventDate:date,status:"completed",a:{id:"1",slug,name:slug},
   b:{id:String(Number(id)+100),slug:"opponent-"+id,name:"Opponent "+id},
   result:{winnerId:"1",method:"decision"}});
  const audit=auditUfcLastFive({bouts:{
-  "400":mk("400","new-window","2025-02-01"),
-  "401":mk("401","boundary","2024-11-13"),
-  "402":mk("402","too-old","2024-11-12"),
+  "400":mk("400","new-window","2024-02-01"),
+  "401":mk("401","boundary","2023-11-13"),
+  "402":mk("402","too-old","2023-11-12"),
   "403":mk("403","newer","2026-08-01")
  }},{profiles:{"new-window":{recentHistory:[
   {date:"2020-01-01",promotion:"ufc",opponent:"Earlier Opponent",result:"win"}
  ]}}},{fighters:{}},{divisions:[]},{asOf:"2026-11-13"});
- assert.equal(audit.activityCutoff,"2024-11-13");
+ assert.equal(audit.activityCutoff,"2023-11-13");
  const names=new Set(audit.fighters.map(f=>f.slug));
  assert(names.has("new-window"));
  assert(names.has("boundary"));
@@ -400,7 +400,7 @@ test("24-month cutoff includes the 18-to-24-month cohort and retains older UFC b
  assert(!names.has("too-old"));
  assert(audit.fighters.find(f=>f.slug==="new-window").recent.some(f=>f.date==="2020-01-01"));
 });
-test("24-month cohort is removed when more recent professional PFL MMA exists",()=>{
+test("36-month cohort is removed when more recent professional PFL MMA exists",()=>{
  const mk=(id,org,date,event)=>({id,org,event,eventDate:date,status:"completed",
   a:{id:"1",slug:"departed",name:"Departed"},
   b:{id:"2",slug:"other",name:"Other"},result:{winnerId:"1"}});
@@ -410,4 +410,46 @@ test("24-month cohort is removed when more recent professional PFL MMA exists",(
  }},{profiles:{}},{fighters:{}},{divisions:[]},{asOf:"2026-11-13"});
  assert(!result.fighters.some(f=>f.slug==="departed"));
  assert.equal(result.excluded.find(f=>f.slug==="departed").reason,"later_professional_mma_outside_ufc");
+});
+
+test("documented retirement and UFC departure exclude matching inactive roster snapshots",()=>{
+ const mk=(id,slug,date)=>({id,org:"ufc",event:"UFC Fight Night: Scope fixture",eventDate:date,
+  status:"completed",a:{id,slug,name:slug},b:{id:"other-"+id,slug:"opponent-"+id,name:"Opponent "+id},
+  result:{winnerId:id}});
+ const archive={asOf:"2026-11-13",excluded:[
+  {slug:"retired",reason:"confirmed_retired",lastUfcFight:"2025-01-11",
+   evidence:{source:"https://example.org/verified-retirement"}},
+  {slug:"departed",reason:"confirmed_left_ufc",lastUfcFight:"2025-01-11",
+   evidence:{source:"https://example.org/verified-departure"}},
+  {slug:"returned",reason:"confirmed_retired",lastUfcFight:"2025-01-11",
+   evidence:{source:"https://example.org/old-retirement"}},
+  {slug:"unverified",reason:"confirmed_retired",lastUfcFight:"2025-01-11",
+   evidence:{source:"unverified report"}}
+ ]};
+ const r=auditUfcLastFive({bouts:{
+  "1":mk("1","retired","2025-01-11"),
+  "2":mk("2","departed","2025-01-11"),
+  "3":mk("3","returned","2025-01-11"),
+  "4":mk("4","returned","2026-08-01"),
+  "5":mk("5","unverified","2025-01-11")
+ }},{profiles:{}},{fighters:{}},{divisions:[]},
+ {asOf:"2026-11-13",rosterReview:archive});
+ assert.equal(r.summary.excludedConfirmedRetired,1);
+ assert.equal(r.summary.excludedConfirmedUfcExit,1);
+ assert(r.excluded.some(f=>f.slug==="retired"&&f.reason==="confirmed_retired"));
+ assert(r.excluded.some(f=>f.slug==="departed"&&f.reason==="confirmed_left_ufc"));
+ assert(r.fighters.some(f=>f.slug==="returned"),"a later UFC return overrides stale exit evidence");
+ assert(r.fighters.some(f=>f.slug==="unverified"),"an unsourced retirement cannot delete an athlete");
+});
+test("dated outside-UFC MMA evidence excludes the historical cohort without recent indexed PFL data",()=>{
+ const row={id:"700",org:"ufc",event:"UFC Fight Night: Fixture",eventDate:"2024-05-01",
+  status:"completed",a:{id:"1",slug:"outside",name:"Outside"},b:{id:"2",slug:"rival",name:"Rival"}};
+ const review={asOf:"2026-11-13",excluded:[{
+  slug:"outside",reason:"later_professional_mma_outside_ufc",lastUfcFight:"2024-05-01",
+  evidence:{date:"2026-07-01",promotion:"pfl",source:"saved UFCalendar fighter history"}
+ }]};
+ const r=auditUfcLastFive({bouts:{"700":row}},{profiles:{}},{fighters:{}},{divisions:[]},
+ {asOf:"2026-11-13",rosterReview:review});
+ assert(!r.fighters.some(f=>f.slug==="outside"));
+ assert.equal(r.excluded.find(f=>f.slug==="outside").reason,"later_professional_mma_outside_ufc");
 });
