@@ -1,15 +1,15 @@
 {
-  "attemptedAt": "2026-11-13T20:29:58.040Z",
-  "checkedAt": "2026-11-13T20:29:58.040Z",
+  "attemptedAt": "2026-11-13T21:25:41.160Z",
+  "checkedAt": "2026-11-13T21:25:41.160Z",
   "windowDays": 28,
   "articlesChecked": 31,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 47,
   "publisherSourcesConfigured": 32,
-  "linksFound": 16,
+  "linksFound": 14,
   "newEmbedsVerified": 1,
-  "newPublisherLinksDiscovered": 0,
+  "newPublisherLinksDiscovered": 2,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
   "xApiEstimatedSpendUsd": 0,
@@ -18,6 +18,28 @@
   "curatedRejected": 0,
   "curatedPublisherLinked": 2,
   "posts": [
+    {
+      "type": "post",
+      "platform": "X",
+      "sport": "mma",
+      "name": "Ilia Topuria",
+      "role": "fighter",
+      "handle": "@topuriailia",
+      "fighterTier": "contender",
+      "nativeEmbed": true,
+      "originalDateUnverified": false,
+      "postedAt": "2026-11-11T17:04:55.198Z",
+      "sourceLinkedAt": "2026-11-13T08:19:00+00:00",
+      "discoveredAt": "2026-11-13T21:25:41.160Z",
+      "sourcePublisher": "MMA Junkie",
+      "evidenceUrl": "https://mmajunkie.usatoday.com/story/sports/mma/2026/11/13/umar-nurmagomedov-replaced-by-dvalishvili-teammate-at-raf-abu-dhabi/92758648007/",
+      "summary": "Original social post linked in MMA Junkie coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Trusted publisher permalink (embed unconfirmed)",
+      "verification": "trusted-publisher-link",
+      "embedVerified": false,
+      "linkPriority": 69,
+      "url": "https://x.com/topuriailia/status/2120563432793739640"
+    },
     {
       "type": "post",
       "platform": "Threads",
@@ -152,6 +174,44 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://x.com/DAZNBoxing/status/2120365902671532476"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-13T08:19:00+00:00",
+      "discoveredAt": "2026-11-13T21:25:41.160Z",
+      "sourcePublisher": "MMA Junkie",
+      "evidenceUrl": "https://mmajunkie.usatoday.com/story/sports/mma/2026/11/13/umar-nurmagomedov-replaced-by-dvalishvili-teammate-at-raf-abu-dhabi/92758648007/",
+      "summary": "Original social post linked in MMA Junkie coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Trusted publisher permalink (embed unconfirmed)",
+      "verification": "trusted-publisher-link",
+      "embedVerified": false,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/Dfr5Zf7ESpmembed/"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-13T08:19:00+00:00",
+      "discoveredAt": "2026-11-13T21:25:41.160Z",
+      "sourcePublisher": "MMA Junkie",
+      "evidenceUrl": "https://mmajunkie.usatoday.com/story/sports/mma/2026/11/13/umar-nurmagomedov-replaced-by-dvalishvili-teammate-at-raf-abu-dhabi/92758648007/",
+      "summary": "Original social post linked in MMA Junkie coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/Dfr5Zf7ESpm/"
     },
     {
       "type": "post",
@@ -2220,6 +2280,18 @@
     {
       "url": "https://www.instagram.com/p/Dfq3I8WGwj6/",
       "firstSeen": "2026-11-13T20:29:58.040Z"
+    },
+    {
+      "url": "https://x.com/topuriailia/status/2120563432793739640",
+      "firstSeen": "2026-11-13T21:25:41.160Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/Dfr5Zf7ESpmembed/",
+      "firstSeen": "2026-11-13T21:25:41.160Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/Dfr5Zf7ESpm/",
+      "firstSeen": "2026-11-13T21:25:41.160Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
