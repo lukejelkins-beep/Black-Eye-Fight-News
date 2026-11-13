@@ -1,15 +1,29 @@
 {
   "schemaVersion": 1,
-  "month": null,
-  "reservedMicroUsd": 0,
+  "month": "2026-11",
+  "reservedMicroUsd": 3400,
   "verifiedEstimateMicroUsd": 0,
-  "attempts": 0,
+  "attempts": 1,
   "completed": 0,
-  "lastReservedAt": null,
+  "lastReservedAt": "2026-11-13T00:28:22.326Z",
   "lastCompletedAt": null,
-  "nextGroupIndex": 0,
+  "nextGroupIndex": 1,
   "paused": false,
-  "pending": null,
-  "error": null,
-  "notice": "Internal request reservations only. Provider prepaid balance and auto-recharge off are required to cap actual charges."
+  "pending": {
+    "id": "2026-11-0001",
+    "groupIndex": 0,
+    "handles": [
+      "antoc6",
+      "boxxer",
+      "Canelo",
+      "aaronbronsteter",
+      "JoshuaVanBT",
+      "AliAbdelaziz00",
+      "kingryang",
+      "Ben_Damon"
+    ],
+    "reservedAt": "2026-11-13T00:28:22.326Z",
+    "maxReservedMicroUsd": 3400
+  },
+  "error": null
 }
