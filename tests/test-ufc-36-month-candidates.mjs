@@ -66,3 +66,32 @@ test("36-month archived exclusions and stale UFC returns are correctly handled",
  assert.equal(existing.activityMonths,18);
  assert.equal(existing.summary.excludedConfirmedRetired,0);
 });
+
+test("completed official UFC event detail must be cached before certifying the 36-month scan",()=>{
+ const base={historicalWindowMonthsUfc:36,historicalComplete:{ufc:true},bouts:{},
+  eventIndex:{
+   "ufc:647":{org:"ufc",date:"2023-11-18",status:"completed",title:"UFC Fight Night: Allen vs Craig"},
+   "ufc:feeder":{org:"ufc",date:"2024-01-01",status:"completed",title:"Road to UFC: Asia"},
+   "ufc:upcoming":{org:"ufc",date:"2026-12-01",status:"scheduled",title:"UFC Fight Night: Future"},
+   "ufc:old":{org:"ufc",date:"2023-10-20",status:"completed",title:"UFC 294"}
+  },eventDetails:{}};
+ const args=[{profiles:{}},{fighters:{}},{divisions:[]},{asOf:"2026-11-13"}];
+ const pending=candidateManifest(base,...args);
+ assert.equal(pending.indexCompleteness,"36_month_event_scan_incomplete");
+ assert.equal(pending.officialCompletedEventsIndexed,1);
+ assert.equal(pending.missingOfficialUfcEventDetails,1);
+ assert.deepEqual(pending.missingOfficialEventKeys,["ufc:647"]);
+ base.eventDetails["ufc:647"]="2026-11-13T20:28:00Z";
+ const complete=candidateManifest(base,...args);
+ assert.equal(complete.indexCompleteness,"36_month_event_scan_complete");
+ assert.equal(complete.missingOfficialUfcEventDetails,0);
+ assert.deepEqual(complete.missingOfficialEventKeys,[]);
+});
+test("completed historical detail is still required if UFC event-list pagination finished",()=>{
+ const progress={historicalWindowMonthsUfc:36,historicalComplete:{ufc:true},
+  eventIndex:{"ufc:651":{org:"ufc",date:"2024-01-20",status:"completed",title:"UFC 297"}},
+  eventDetails:{},bouts:{}};
+ const x=candidateManifest(progress,{profiles:{}},{fighters:{}},{divisions:[]},
+  {asOf:"2026-11-13"});
+ assert.equal(x.indexCompleteness,"36_month_event_scan_incomplete");
+});
