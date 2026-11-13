@@ -16,24 +16,24 @@
     "noKnownLaterMmaOrUnknown": 783,
     "activeFighters": 783,
     "withFiveKnown": 488,
-    "withFiveLinkedIds": 483,
+    "withFiveLinkedIds": 485,
     "withThreeMeasured": 592,
     "withShortUfcTimelineReconciled": 3,
     "withUfcHistoryLinkedAndMeasured": 402,
     "evidenceStages": {
       "fiveLinkedMeasured": 402,
-      "fiveLinkedStatsGap": 81,
-      "fiveUnlinked": 5,
+      "fiveLinkedStatsGap": 83,
+      "fiveUnlinked": 3,
       "shortLinkedMeasuredDepthConfirmed": 0,
       "shortLinkedMeasuredDepthUnconfirmed": 252,
       "shortLinkedStatsGapDepthConfirmed": 3,
       "shortLinkedStatsGap": 40,
       "shortUnlinked": 0
     },
-    "needHistoryCheck": 297,
+    "needHistoryCheck": 295,
     "needStats": 129,
-    "shiftedDateAliasesJoined": 444,
-    "uniqueKnownBoutIds": 1943
+    "shiftedDateAliasesJoined": 400,
+    "uniqueKnownBoutIds": 1946
   },
   "eligibilityExcluded": [
     {
@@ -18397,68 +18397,6 @@
       ]
     },
     {
-      "name": "Trevin Giles",
-      "slug": "trevin-giles",
-      "lastUfcFight": "2024-11-02",
-      "eligibilityStatus": "latest_observed_mma_ufc",
-      "champion": false,
-      "upcoming": false,
-      "ranked": false,
-      "recentCount": 5,
-      "measuredCount": 3,
-      "evidenceStage": "fiveUnlinked",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": true,
-      "needsStats": true,
-      "recent": [
-        {
-          "date": "2024-11-02",
-          "opponent": "Mike Malott",
-          "boutId": "61133",
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2024-02-10",
-          "opponent": "Carlos Prates",
-          "boutId": "59906",
-          "method": "ko_tko",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2023-07-29",
-          "opponent": "Gabriel Bonfim",
-          "boutId": "60094",
-          "method": "submission",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2023-03-25",
-          "opponent": "Preston Parsons",
-          "boutId": null,
-          "method": "decision_split",
-          "outcome": "W",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
-        },
-        {
-          "date": "2022-09-17",
-          "opponent": "Louis Cosce",
-          "boutId": null,
-          "method": "decision_unanimous",
-          "outcome": "W",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
-        }
-      ]
-    },
-    {
       "name": "Dan Argueta",
       "slug": "dan-argueta",
       "lastUfcFight": "2024-10-12",
@@ -18505,68 +18443,6 @@
           "opponent": "Damon Jackson",
           "boutId": "61474",
           "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        }
-      ]
-    },
-    {
-      "name": "Tim Means",
-      "slug": "tim-means",
-      "lastUfcFight": "2024-10-05",
-      "eligibilityStatus": "latest_observed_mma_ufc",
-      "champion": false,
-      "upcoming": false,
-      "ranked": false,
-      "recentCount": 5,
-      "measuredCount": 4,
-      "evidenceStage": "fiveUnlinked",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": true,
-      "needsStats": true,
-      "recent": [
-        {
-          "date": "2024-10-05",
-          "opponent": "Court McGee",
-          "boutId": "60202",
-          "method": "submission",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2024-04-27",
-          "opponent": "Uros Medic",
-          "boutId": "65839",
-          "method": "ko_tko",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2023-09-23",
-          "opponent": "Andre Fialho",
-          "boutId": null,
-          "method": "ko_tko",
-          "outcome": "W",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
-        },
-        {
-          "date": "2023-05-13",
-          "opponent": "Alex Morono",
-          "boutId": "61300",
-          "method": "submission",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2022-10-29",
-          "opponent": "Max Griffin",
-          "boutId": "59816",
-          "method": "decision_split",
           "outcome": "L",
           "origin": "ufc-bout-index",
           "hasMeasuredTotals": true
@@ -43201,6 +43077,68 @@
       ]
     },
     {
+      "name": "Trevin Giles",
+      "slug": "trevin-giles",
+      "lastUfcFight": "2024-11-02",
+      "eligibilityStatus": "latest_observed_mma_ufc",
+      "champion": false,
+      "upcoming": false,
+      "ranked": false,
+      "recentCount": 5,
+      "measuredCount": 3,
+      "evidenceStage": "fiveLinkedStatsGap",
+      "ufcTimelineDepthConfirmed": false,
+      "needsHistoryCheck": false,
+      "needsStats": true,
+      "recent": [
+        {
+          "date": "2024-11-02",
+          "opponent": "Mike Malott",
+          "boutId": "61133",
+          "method": "decision_unanimous",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2024-02-10",
+          "opponent": "Carlos Prates",
+          "boutId": "59906",
+          "method": "ko_tko",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2023-07-29",
+          "opponent": "Gabriel Bonfim",
+          "boutId": "60094",
+          "method": "submission",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2023-03-25",
+          "opponent": "Preston Parsons",
+          "boutId": "59649",
+          "method": "decision_split",
+          "outcome": "W",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        },
+        {
+          "date": "2022-09-17",
+          "opponent": "Louis Cosce",
+          "boutId": "61184",
+          "method": "decision_unanimous",
+          "outcome": "W",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        }
+      ]
+    },
+    {
       "name": "Daniel Pineda",
       "slug": "daniel-pineda",
       "lastUfcFight": "2024-10-19",
@@ -43691,6 +43629,68 @@
           "boutId": "61353",
           "method": "submission",
           "outcome": "W",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        }
+      ]
+    },
+    {
+      "name": "Tim Means",
+      "slug": "tim-means",
+      "lastUfcFight": "2024-10-05",
+      "eligibilityStatus": "latest_observed_mma_ufc",
+      "champion": false,
+      "upcoming": false,
+      "ranked": false,
+      "recentCount": 5,
+      "measuredCount": 4,
+      "evidenceStage": "fiveLinkedStatsGap",
+      "ufcTimelineDepthConfirmed": false,
+      "needsHistoryCheck": false,
+      "needsStats": true,
+      "recent": [
+        {
+          "date": "2024-10-05",
+          "opponent": "Court McGee",
+          "boutId": "60202",
+          "method": "submission",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2024-04-27",
+          "opponent": "Uros Medic",
+          "boutId": "65839",
+          "method": "ko_tko",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2023-09-23",
+          "opponent": "Andre Fialho",
+          "boutId": "60037",
+          "method": "ko_tko",
+          "outcome": "W",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        },
+        {
+          "date": "2023-05-13",
+          "opponent": "Alex Morono",
+          "boutId": "61300",
+          "method": "submission",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2022-10-29",
+          "opponent": "Max Griffin",
+          "boutId": "59816",
+          "method": "decision_split",
+          "outcome": "L",
           "origin": "ufc-bout-index",
           "hasMeasuredTotals": true
         }
