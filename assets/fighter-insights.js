@@ -348,17 +348,28 @@
   root.dataset.ready='true';
   root.innerHTML='<summary>UFC statistical leaderboards</summary><p>'+ufcV3.population+
    ' fighters with documented UFC activity since '+escapeHTML(ufcV3.cutoff)+'. Snapshot '+escapeHTML(ufcV3.asOf)+
-   '. Rankings use up to five recent UFC bouts and show the sample for each metric.</p>'+
+   '. Rankings require at least three measured UFC bouts; five recent fights are the target. Incomplete snapshots do not display stale ranks.</p>'+
    '<label>Statistic <select aria-label="UFC leaderboard statistic">'+ufcV3.boards.map(b=>
     '<option value="'+escapeHTML(b.id)+'">'+escapeHTML(b.label)+'</option>').join('')+
    '</select></label><div class="befn-v3-board-results"></div>';
   const select=root.querySelector('select'), results=root.querySelector('.befn-v3-board-results');
   const show=()=>{
    const board=ufcV3.boards.find(b=>b.id===select.value);
-   results.innerHTML='<p>'+board.eligible+' fighters with qualifying evidence'+
-    (board.id==='sapm'?' · lower is better':'')+'</p><ul>'+board.leaders.map(row=>
-    '<li><span>#'+row.rank+' · '+escapeHTML(row.name)+'</span><strong>'+metricValue(row,board.type)+
-    '</strong><small>'+row.bouts+' bouts</small></li>').join('')+'</ul>';
+   // Legacy snapshots include 2-bout athletes and ranks based on that old
+   // pool. Do not display either until a schema 4 rebuild recalculates ranks.
+   const fresh=ufcV3.schema>=4;
+   const qualifying=board.leaders.filter(row=>row.bouts>=3);
+   const display=qualifying.slice(0,10);
+   const summary=fresh?board.eligible+' eligible fighters · minimum 3 recorded UFC bouts':
+    'Minimum 3 recorded UFC bouts · previous rankings are being recalculated';
+   results.innerHTML='<p>'+summary+
+    (board.id==='sapm'?' · lower is better':'')+'</p>'+
+    (display.length?'<ul>'+display.map(row=>
+    '<li><span>'+(fresh?'#'+row.rank+' · ':'')+escapeHTML(row.name)+'</span><strong>'+
+    metricValue(row,board.type==='def'?'pct':board.type)+'</strong><small>'+
+    row.bouts+' recorded UFC bouts'+(fresh?'':' · provisional top-performer sample')+
+    '</small></li>').join('')+'</ul>':
+    '<p>No qualifying fighters in this leaderboard snapshot. A full rebuild is required.</p>');
   };
   select.addEventListener('change',show);
   show();
