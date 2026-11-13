@@ -204,7 +204,8 @@ export function buildV3({ progress, postfight, research = {}, profiles, asOf }) 
   }
 
   const boards = fields.filter(([, label]) => label).map(([id, label, type, , , reverse]) => {
-    const eligible = population.filter(x => x.metrics[id] && (type !== 'count' || x.metrics[id].value > 0));
+    const eligible = population.filter(x => x.recent.filter(b => b.outcome !== 'NC').length >= 3 &&
+      x.metrics[id]?.bouts >= 3 && (type !== 'count' || x.metrics[id].value > 0));
     eligible.sort((a, b) => (reverse ? 1 : -1) * (a.metrics[id].value - b.metrics[id].value) ||
       b.metrics[id].bouts - a.metrics[id].bouts || a.name.localeCompare(b.name));
     const positions = new Map();
@@ -317,7 +318,7 @@ export function buildV3({ progress, postfight, research = {}, profiles, asOf }) 
       opponentEvidence: qualified.length,
     };
   }
-  return { schema: 3, asOf, cutoff, population: population.length, fighters,
+  return { schema: 4, asOf, cutoff, population: population.length, fighters,
     boards: boards.map(({ positions, ...board }) => board) };
 }
 
