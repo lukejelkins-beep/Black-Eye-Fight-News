@@ -251,6 +251,100 @@ class FullCareerCacheTests(unittest.TestCase):
           client,state,research,candidate,dt.date(2026,11,13),self.approval()),0)
         self.assertEqual(client.paths,[])
 
+    def test_full_career_numeric_id_check_recovers_old_ufc_bout_once(self):
+        state,research,candidate=self.fixture()
+        today=dt.date(2026,11,14)
+        candidate["asOf"]=today.isoformat()
+        candidate["fighters"][0]["lastUfcFight"]="2026-09-01"
+        research["profiles"]["veteran"]["recentHistory"]=[
+            {"promotion":"ufc","source":"native","boutId":"800",
+             "date":"2008-05-01","result":"win","opponent":"Opponent"}]
+        state["bouts"]["800"]={
+            "id":"800","org":"ufc","event":"UFC Test","eventDate":"2008-05-01",
+            "a":{"id":"10","slug":"veteran","name":"Veteran"},
+            "b":{"id":"11","slug":"opponent","name":"Opponent"}}
+        class Timeline:
+            max_calls=500
+            remaining=100
+            stopped=False
+            calls=0
+            paths=[]
+            def call(self,path):
+                self.paths.append(path)
+                self.calls+=1
+                return {"meta":{"truncated":False},"data":[
+                    {"source":"native","fight_id":800,"date":"2008-05-01",
+                     "opponent_name":"Opponent","status":"win","org_slug":"ufc"},
+                    {"source":"native","fight_id":123,"date":"2006-04-01",
+                     "opponent_name":"Earlier Rival","status":"loss","org_slug":"ufc"}]}
+        c=Timeline()
+        a={**self.approval(),"rosterAsOf":today.isoformat(),
+           "approvedAt":today.isoformat()}
+        result=m.reconcile_approved_ufc_full_career_timelines(
+            c,state,research,candidate,today,a)
+        self.assertEqual(result,{"attempts":1,"added":1,"certified":1})
+        self.assertEqual(c.paths,["/fighters/10/history"])
+        self.assertEqual(len(research["profiles"]["veteran"]["recentHistory"]),2)
+        self.assertTrue(research["profiles"]["veteran"]["ufcTimeline"]["complete"])
+        self.assertEqual(m.reconcile_approved_ufc_full_career_timelines(
+            c,state,research,candidate,today,a),
+            {"attempts":0,"added":0,"certified":0})
+        self.assertEqual(c.paths,["/fighters/10/history"])
+
+    def test_full_career_crosscheck_without_numeric_identity_or_signoff_uses_no_calls(self):
+        state,research,candidate=self.fixture()
+        today=dt.date(2026,11,14)
+        candidate["asOf"]=today.isoformat()
+        a={**self.approval(),"rosterAsOf":today.isoformat(),"approvedAt":today.isoformat()}
+        c=Fake()
+        self.assertEqual(m.reconcile_approved_ufc_full_career_timelines(
+            c,state,research,candidate,today,a)["attempts"],0)
+        state["bouts"]["800"]={
+            "id":"800","org":"ufc","event":"UFC Official",
+            "a":{"id":"10","slug":"veteran","name":"Veteran"},
+            "b":{"id":"11","slug":"opponent","name":"Opponent"}}
+        self.assertEqual(m.reconcile_approved_ufc_full_career_timelines(
+            c,state,research,candidate,today,{**a,"status":"unapproved"})["attempts"],0)
+        state["bouts"]["801"]={
+            "id":"801","org":"ufc","event":"UFC Official",
+            "a":{"id":"20","slug":"veteran","name":"Veteran"},
+            "b":{"id":"21","slug":"opponent","name":"Opponent"}}
+        self.assertEqual(m.reconcile_approved_ufc_full_career_timelines(
+            c,state,research,candidate,today,a)["attempts"],0)
+        self.assertEqual(c.paths,[])
+
+    def test_full_career_crosscheck_partial_response_does_not_certify_or_repeat(self):
+        state,research,candidate=self.fixture()
+        today=dt.date(2026,11,14)
+        candidate["asOf"]=today.isoformat()
+        candidate["fighters"][0]["lastUfcFight"]="2026-08-01"
+        state["bouts"]["800"]={
+            "id":"800","org":"ufc","event":"UFC Event",
+            "a":{"id":"10","slug":"veteran","name":"Veteran"},
+            "b":{"id":"11","slug":"opponent","name":"Opponent"}}
+        class ShortHistory:
+            max_calls=500
+            remaining=100
+            stopped=False
+            calls=0
+            paths=[]
+            def call(self,path):
+                self.paths.append(path)
+                self.calls+=1
+                return {"data":[
+                    {"source":"native","fight_id":800,"date":"2008-05-01",
+                     "opponent_name":"Opponent","org_slug":"ufc","status":"win"}]}
+        c=ShortHistory()
+        a={**self.approval(),"rosterAsOf":today.isoformat(),"approvedAt":today.isoformat()}
+        result=m.reconcile_approved_ufc_full_career_timelines(
+            c,state,research,candidate,today,a)
+        self.assertEqual(result,{"attempts":1,"added":0,"certified":0})
+        self.assertFalse(research["profiles"]["veteran"]["ufcTimeline"]["complete"])
+        self.assertEqual(len(c.paths),1)
+        self.assertEqual(m.reconcile_approved_ufc_full_career_timelines(
+            c,state,research,candidate,today,a)["attempts"],0)
+        self.assertEqual(len(c.paths),1)
+
     def test_feeder_bouts_are_not_cached_as_official_ufc_fights(self):
         state,research,candidate=self.fixture()
         client=Fake("Dana White's Contender Series 99")
