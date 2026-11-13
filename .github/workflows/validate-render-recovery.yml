@@ -1,0 +1,24 @@
+name: Validate conditional Render recovery gate
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/befn-render-deploy-recovery.yml'
+      - '.github/workflows/validate-render-recovery.yml'
+      - 'tests/test-render-recovery-contract.mjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  recovery-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate workflow YAML and gating assertions
+        run: |
+          ruby -e "require 'yaml'; YAML.load_file('.github/workflows/befn-render-deploy-recovery.yml')"
+          node --test tests/test-render-recovery-contract.mjs

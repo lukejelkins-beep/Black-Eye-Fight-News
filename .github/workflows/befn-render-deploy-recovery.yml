@@ -6,6 +6,10 @@ on:
     # Every two hours, UTC; offset from top-of-hour GitHub scheduler congestion.
     - cron: '31 */2 * * *'
   workflow_dispatch:
+  workflow_run:
+    workflows: ["BEFN release readiness"]
+    types: [completed]
+    branches: [main]
   # Exercise the controller when its implementation changes.
   push:
     branches: [main]
@@ -19,6 +23,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   reconcile:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 17
     env:
@@ -41,6 +46,8 @@ jobs:
             index.html sw.js
             assets/fighter-insights.js assets/fighter-power-index.js
             assets/fighter-power.css assets/ufc-prospect-contender.js
+            assets/fighter-profile-v3-layout-preview.css
+            assets/performance-highlights-preview.css
             assets/upcoming-cards.js assets/upcoming-cards.css
             assets/results.js assets/results.css assets/fight-talk.css
             assets/fight-film.js assets/news-dedupe.js
@@ -94,13 +101,48 @@ jobs:
             echo "Newer main commit appeared; next run will assess it"
             exit 0
           fi
-          verdict=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs?head_sha=$source_sha&per_page=100" \
-            --jq '.workflow_runs[] | select(.name == "BEFN release readiness") | .conclusion' | head -n1)
-          if [[ "$verdict" != success ]]; then
-            echo "Exact HEAD has no passing BEFN release readiness run (state: ${verdict:-none}); deployment blocked"
-            echo "Deployment blocked: missing or failing exact-commit CI" >> "$GITHUB_STEP_SUMMARY"
+          # GitHub Actions commits made with GITHUB_TOKEN do not cause a
+          # second push workflow run. The checked release commit may therefore
+          # be followed by strictly machine-generated data revisions.
+          validated_sha=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/befn-release-readiness.yml/runs?branch=main&status=success&per_page=10" \
+            --jq '.workflow_runs[0].head_sha // ""')
+          if [[ -z "$validated_sha" ]]; then
+            echo 'No successful release-readiness commit; deployment blocked'
             exit 0
           fi
+          if [[ "$source_sha" != "$validated_sha" ]]; then
+            comparison=$(mktemp)
+            if ! gh api "repos/$GITHUB_REPOSITORY/compare/$validated_sha...$source_sha" > "$comparison"; then
+              echo 'Cannot establish history from the last checked commit; blocked'
+              rm -f "$comparison"; exit 0
+            fi
+            relationship=$(jq -r '.status // ""' "$comparison")
+            file_count=$(jq '.files | length' "$comparison")
+            # GitHub's compare endpoint may truncate file lists at 300.
+            # An incomplete diff MUST NOT be interpreted as safe.
+            if [[ "$relationship" != ahead || "$file_count" -ge 300 ]]; then
+              echo 'Unchecked or truncated commit comparison; blocked'
+              rm -f "$comparison"; exit 0
+            fi
+            while IFS= read -r changed; do
+              case "$changed" in
+                data/ufcalendar-rich-progress.json|data/ufcalendar-card-enhancements.json|\
+                data/ufc-research-archive.json|data/pfl-research-archive.json|\
+                data/ufcalendar-fighter-research.json|data/ufcalendar-judging-research.json|\
+                data/ufc-last-five-coverage.json|data/ufc-profile-research-queue.json|\
+                data/ufc-postfight-metrics.json|data/news-live.json|data/results.json|\
+                data/upcoming-cards.json|data/fight-film.json|data/fight-talk-live.json|\
+                data/fight-talk-embedded.json|data/fight-talk-x-api.json|data/fight-talk-x-budget.json)
+                  ;;
+                *)
+                  echo "Unvalidated non-collector change: $changed; deployment blocked"
+                  rm -f "$comparison"; exit 0 ;;
+              esac
+            done < <(jq -r '.files[].filename' "$comparison")
+            rm -f "$comparison"
+            echo "Using successful release-readiness $validated_sha plus verified collector-only changes"
+          fi
+          echo "GitHub source validated: $validated_sha" >> "$GITHUB_STEP_SUMMARY"
           if [[ -z "$RENDER_DEPLOY_HOOK_URL" ]]; then
             echo 'One-time configuration required: GitHub Actions secret RENDER_DEPLOY_HOOK_URL'
             echo 'Deployment not attempted: missing RENDER_DEPLOY_HOOK_URL secret.' >> "$GITHUB_STEP_SUMMARY"
