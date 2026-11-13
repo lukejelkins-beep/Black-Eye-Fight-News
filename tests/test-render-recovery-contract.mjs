@@ -36,3 +36,13 @@ test("recheck allows absent new files without suppressing real outages",()=>{
  assert.match(file,/Production transport unavailable/);
  assert.match(file,/new public file still missing after the grace period/i);
 });
+
+test("new commits during the grace window are strictly data-only before using their assets",()=>{
+ assert.match(file,/compare\/\$source_sha\.\.\.\$new_main/);
+ assert.match(file,/transition_status" != ahead \|\| "\$transition_count" -ge 300/);
+ assert.match(file,/Code or unvalidated data changed during grace/);
+ assert.match(file,/git fetch --quiet --no-tags origin main/);
+ assert.match(file,/git reset --hard "\$new_main"/);
+ assert.match(file,/source_sha="\$new_main"/);
+ assert.match(file,/Main advanced again while verifying/);
+});
