@@ -25,7 +25,7 @@
  const byName=new Map();
  for(const f of profiles){const k=norm(f.name);if(!byName.has(k))byName.set(k,f)}
  let ufcV3=null;
- const isUfcProfile=f=>f?.sport==="MMA"&&(f?.organisation==="UFC"||f?.organization==="UFC"||f?.championReview===true||f?.reviewedUfcProfile===true||["mma-prospects","mma-contenders"].includes(f?.report)||(typeof f?.meta==="string"&&/\bUFC\s*:/.test(f.meta)));
+ const isUfcProfile=f=>f?.sport==="MMA"&&(f?.organisation==="UFC"||f?.organization==="UFC"||f?.championReview===true||f?.reviewedUfcProfile===true||(typeof f?.meta==="string"&&/\bUFC\s*:/.test(f.meta)));
  const v3For=f=>isUfcProfile(f)&&ufcV3?.schema>=4?ufcV3.fighters[norm(f.name)]:null;
  const stats=new Map();
  const trackedUfcStats=new Map();
@@ -247,6 +247,8 @@
  function renderUfcStructure(f){
   const fights=latestRows(f);
   const reviewed=isReviewedUfc(f);
+  const verifiedTag=reviewed&&["Contender","Prospect"].includes(f.category)&&f.classification?.label===f.category?
+   '<div class="befn-v3-status befn-scout-classification"><span>'+escapeHTML(f.category)+'</span></div>':'';
   const decided=fights.filter(x=>!['NC','NO CONTEST'].includes(String(x.outcome||x.result||'').toUpperCase()));
   const win=decided.filter(x=>['W','WIN'].includes(String(x.outcome||x.result||'').toUpperCase())).length;
   const loss=decided.filter(x=>['L','LOSS'].includes(String(x.outcome||x.result||'').toUpperCase())).length;
@@ -275,7 +277,7 @@
   return '<section class="befn-profile-insights befn-v3 befn-v3-pending" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC fighter profile">'+
    '<div class="befn-v3-hero" aria-label="Overall fighter rating"><div class="befn-overall-main">'+
    '<span class="befn-overall-label">Overall</span><strong class="befn-v3-score">Unrated</strong>'+
-   '<span class="befn-overall-meter" aria-hidden="true"><span style="width:0%"></span></span></div></div>'+
+   '<span class="befn-overall-meter" aria-hidden="true"><span style="width:0%"></span></span></div>'+verifiedTag+'</div>'+
    '<section class="befn-profile-block befn-v3-technical"><h3>Technical ratings</h3><div class="befn-profile-body"><div class="befn-power-bars">'+
    known.map(profileMetric).join('')+'</div></div></section>'+
    '<div class="befn-v3-bottom-grid"><details class="befn-v3-history" open><summary>Recent fights <small>Up to five recorded UFC fights</small></summary>'+
@@ -422,7 +424,8 @@
  }
  function renderV3Boards(){
   const root=document.querySelector('[data-befn-v3-leaderboards]');
-  if(!root||root.dataset.ready||!ufcV3)return;
+  // Do not publish schema-3 provisional leaderboard ordering.
+  if(!root||root.dataset.ready||!ufcV3||ufcV3.schema<4)return;
   root.dataset.ready='true';
   root.innerHTML='<summary>UFC statistical leaderboards</summary><p>'+ufcV3.population+
    ' fighters with documented UFC activity since '+escapeHTML(ufcV3.cutoff)+'. Snapshot '+escapeHTML(ufcV3.asOf)+
