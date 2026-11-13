@@ -88,6 +88,29 @@
         "Independently verify NJCAA and LFA credentials from primary organisations, calculate V2 classification with dated opponent-quality gate and run required local/CI and live QA before publication."
       ],
       "nextAction": "After 2026-11-14 or newly available official event evidence, verify individual event results (especially Walker and Pat), source NJCAA/LFA credentials and correct statistical sample, then classify and safely merge only Thomas Petersen into current cohort if all gates pass."
+    },
+    "tainara-lisboa": {
+      "name": "Tainara Lisboa",
+      "status": "blocked",
+      "lastCheckedOn": "2026-11-13",
+      "sourceUrls": [
+        "https://www.ufc.com/athlete/tainara-lisboa",
+        "https://jp.ufc.com/athlete/tainara-lisboa",
+        "https://www.ufc.com/athlete/lucia-szabova"
+      ],
+      "findings": [
+        "UFC official English and Japanese biographies list five completed UFC bouts: 2026-10-31 loss to Lucia Szabova by TKO R3 3:20; 2025-10-18 loss to Melissa Croden by TKO R3 4:32; 2025-05-17 loss to Luana Santos by americana submission R2 4:59; 2023-10-14 win over Ravena Oliveira by unanimous decision R3 5:00; 2023-05-13 win over Jessica-Rose Clark by rear naked choke R3 4:20. Provisional UFC-only 2-3, professional 7-5; confirm each official event before publication.",
+        "Official UFC athlete abbreviated widget incorrectly marks all three recent defeats as wins, whereas its detailed narrative calls them losses. Opponent Lucia Szabova official UFC biography independently corroborates October 2026 TKO win.",
+        "UFC displays 122/270 significant strikes and 1/28 takedowns but a takedown average of 1.56 per 15 min, inconsistent with one landed takedown over five fights. Do not treat rate and totals as reconciled UFC-only denominators.",
+        "UFC athlete Q&A self-reports two Muay Thai world championships and CBJJE no-gi world championship; no independent federation event results yet obtained, so credential points must remain zero. English and Japanese athlete biographies disagree on BJJ belt level."
+      ],
+      "blockers": [
+        "Independently cross-check all five UFC outcomes, dates and clocks against official individual event pages, not the contradictory athlete result widget.",
+        "Reconcile UFC-only takedown and significant-strike sample denominators with official event-level statistics; retain unverified fields as null.",
+        "Find primary federation results for reported Muay Thai and CBJJE credentials, or leave awards unscored; independently validate current belt claim if used.",
+        "Apply V2 opponent-quality gate with dated evidence and execute classifier, card and source-integrity tests before a safe cohort commit."
+      ],
+      "nextAction": "On a later run, independently audit all five official UFC event result pages and statistical sample, then classify and publish only after source-integrity QA; do not recheck this blocked fighter within 24 hours absent new evidence."
     }
   }
 }
