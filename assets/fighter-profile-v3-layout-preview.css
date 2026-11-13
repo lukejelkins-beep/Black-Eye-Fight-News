@@ -54,6 +54,12 @@
  display:block;height:7px;border:0;border-radius:7px;box-shadow:none;background:#464145}
 .befn-v3-dialog .befn-v3-technical .befn-power-track::after{display:none}
 .befn-v3-dialog .befn-v3-technical .befn-power-fill{border:0;box-shadow:none;border-radius:7px}
+.befn-v3-dialog .befn-v3-technical .befn-power-track.is-red .befn-power-fill{background:linear-gradient(90deg,#bd505d,#ff8791)}
+.befn-v3-dialog .befn-v3-technical .befn-power-track.is-amber .befn-power-fill{background:linear-gradient(90deg,#bd7548,#f3bb73)}
+.befn-v3-dialog .befn-v3-technical .befn-power-track.is-lime .befn-power-fill{background:linear-gradient(90deg,#91ad4e,#c4de70)}
+.befn-v3-dialog .befn-v3-technical .befn-power-track.is-emerald .befn-power-fill{background:linear-gradient(90deg,#388d7a,#66d6ac)}
+.befn-v3-dialog .befn-v3-technical .befn-power-track.is-legendary .befn-power-fill{background:linear-gradient(90deg,#9d762e,#f7d978)}
+
 .befn-v3-dialog .befn-performance-highlights{margin:4px 0 12px;max-width:100%}
 .befn-v3-dialog .befn-v3-rank-full{margin-top:8px}
 @media(max-width:900px){
