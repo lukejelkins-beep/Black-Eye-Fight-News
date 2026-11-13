@@ -131,6 +131,49 @@ class FullCareerCacheTests(unittest.TestCase):
           client,state,research,candidate,dt.date(2026,11,13),self.approval()),0)
         self.assertEqual(len(client.paths),100,"Already indexed fights never refetched")
 
+    def test_career_hydration_prioritizes_five_and_ten_before_newer_old_career(self):
+        state,research,candidate=self.fixture()
+        candidate["fighters"].append({
+          "slug":"active","eligibilityStatus":"latest_observed_mma_ufc"})
+        research["profiles"]["active"]={"recentHistory":[
+          {"promotion":"ufc","source":"native","boutId":str(1000+i),
+           "date":(dt.date(2026,10,30)-dt.timedelta(days=i*22)).isoformat(),
+           "result":"win","opponent":"Other "+str(i)}
+           for i in range(12)]}
+        # Veteran has one old UFC fight: critical for their recent-five view.
+        # The 12th recent fight for active is much newer but less urgent.
+        class Distinct(Fake):
+            def call(self,path):
+                payload=super().call(path)
+                payload["data"]["id"]=int(path.rsplit("/",1)[-1])
+                return payload
+        client=Distinct()
+        approved=self.approval(["veteran","active"])
+        count=m.collect_ufc_career_bouts(
+            client,state,research,candidate,dt.date(2026,11,13),approved)
+        self.assertEqual(count,13)
+        self.assertLess(client.paths.index("/fights/800"),
+                        client.paths.index("/fights/1011"))
+        self.assertLess(client.paths.index("/fights/1009"),
+                        client.paths.index("/fights/1011"))
+        self.assertEqual(len(client.paths),len(set(client.paths)))
+        self.assertEqual(m.collect_ufc_career_bouts(
+            client,state,research,candidate,dt.date(2026,11,13),approved),0)
+        self.assertEqual(len(client.paths),13)
+
+    def test_shared_native_fight_uses_one_lookup_and_benefits_both_profiles(self):
+        state,research,candidate=self.fixture()
+        candidate["fighters"].append({
+          "slug":"opponent","eligibilityStatus":"latest_observed_mma_ufc"})
+        research["profiles"]["opponent"]={"recentHistory":[
+          {"promotion":"ufc","source":"native","boutId":"800",
+           "date":"2008-05-01","result":"loss","opponent":"Veteran"}]}
+        client=Fake()
+        self.assertEqual(m.collect_ufc_career_bouts(
+            client,state,research,candidate,dt.date(2026,11,13),
+            self.approval(["veteran","opponent"])),1)
+        self.assertEqual(client.paths,["/fights/800"])
+
     def test_approved_round_priority_uses_latest_five_then_ten_then_career(self):
         state,research,candidate=self.fixture()
         today=dt.date(2026,11,14)
