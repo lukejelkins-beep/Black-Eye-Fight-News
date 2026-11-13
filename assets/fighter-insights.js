@@ -278,6 +278,17 @@
    return '<li><span>'+escapeHTML(b.label)+'</span><strong>'+metricValue(m,b.type)+'</strong><small>'+
     (m.rank?'#'+m.rank+' of '+b.eligible+' · ':'')+m.bouts+' bouts</small></li>';
   }).join('');
+  const decided=v3.recent.filter(b=>['W','L','D'].includes(b.outcome));
+  const record=['W','L','D'].map(x=>decided.filter(b=>b.outcome===x).length);
+  const tiles=[];
+  if(decided.length)tiles.push([record[0]+'–'+record[1]+(record[2]?'–'+record[2]:''),'Record',decided.length+' fights']);
+  for(const [id,label] of [['ko','KO/TKO wins'],['submission','Sub wins'],['slpm','Sig. strikes/min'],['tdDef','TD defence'],['control','Control/15']]){
+   const metric=v3.metrics[id];
+   if(!metric)continue;
+   const value=id==='control'?Math.floor(metric.value/60)+':'+String(Math.round(metric.value)%60).padStart(2,'0'):
+    metricValue(metric,id==='ko'||id==='submission'?'count':id==='tdDef'?'pct':'rate');
+   tiles.push([value,label,metric.bouts+' fights']);
+  }
   return '<section class="befn-profile-insights befn-v3" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC Fighter V3">'+
    '<div class="befn-v3-hero"><div><p>BEFN Power Rating</p><strong class="befn-v3-score is-'+tier+'">'+
    (score===null?'Unrated':score+'<small> / 100</small>')+'</strong>'+
@@ -292,12 +303,13 @@
     return profileMetric({label,score:m.score},scoreTier(m.score));
    }).join('')+'</div></div></section>'+
    '<section class="befn-profile-block"><h3>Recent Performance</h3><div class="befn-profile-body">'+
-   '<p>'+v3.recent.filter(b=>b.hasStats).length+' of '+v3.recent.length+' documented UFC bouts have round statistics</p>'+
+   '<div class="befn-v3-tiles">'+tiles.map(([value,label,sample])=>'<div><strong>'+escapeHTML(value)+'</strong><span>'+escapeHTML(label)+'</span><small>'+escapeHTML(sample)+'</small></div>').join('')+'</div>'+
+   '<details class="befn-v3-history"><summary>Recent fights</summary>'+
    '<ul class="befn-v3-fights">'+v3.recent.map(b=>{
     const [symbol,klass]=resultSymbol(b.outcome);
     return '<li><span class="befn-power-result '+klass+'">'+symbol+'</span><span>'+escapeHTML(b.opponent)+
      '<small>'+escapeHTML(b.date+(b.method?' · '+b.method.replaceAll('_',' '):''))+'</small></span></li>';
-   }).join('')+'</ul>'+
+   }).join('')+'</ul></details>'+
    (statRows?'<details class="befn-v3-statistics"><summary>Recent UFC statistics and leaderboard ranks</summary><ul>'+statRows+'</ul></details>':'')+
    '</div></section><section class="befn-profile-block"><h3>'+escapeHTML(kind)+'</h3><div class="befn-profile-body">'+
    credentialsHTML(f)+'</div></section></section>';

@@ -657,3 +657,9 @@
 .befn-v3 .befn-power-fill { border: 0; border-radius: 8px; box-shadow: none; background: var(--v3-tier); }
 .befn-v3 .befn-power-track.is-legendary .befn-power-fill { background: linear-gradient(90deg, #896121, #ffe28a); }
 @media (max-width: 500px) { .befn-v3-status { position: static; justify-items: center; margin-top: 10px; } }
+.befn-v3-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.befn-v3-tiles > div { display: grid; gap: 2px; padding: 10px 4px; text-align: center; background: #302b2c; border-radius: 8px; }
+.befn-v3-tiles strong { color: #fff; font-size: 23px; line-height: 1.1; }
+.befn-v3-tiles span, .befn-v3-tiles small { font-size: 10px; color: #c8c0b2; }
+.befn-v3-history, .befn-v3-statistics { margin-top: 14px; }
+.befn-v3-history summary { cursor: pointer; font-weight: 750; }
