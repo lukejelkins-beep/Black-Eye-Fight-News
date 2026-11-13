@@ -28,7 +28,7 @@
 
 Position-time availability in the sample was **0% each year 2008–2021**, **33.3% in 2022**, **100% in 2023–24**, **66.7% in 2025**, **100% in 2026**. These are *sample* measurements; 2025 remains uneven. Per-fight totals quality flags (`has_totals`, `has_rounds`, `has_position_data`, `rounds_sum_matches_totals`) were positive for one sampled fight each year; this does not prove whole-year completeness.
 
-## Approved research implications to implement safely
+## Recommended research rules (not yet deployed)
 
 1. **Finish the 36-month roster eligibility audit first.** Retired, departed, or later non-UFC professional MMA fighters do not qualify. The roster cutoff does not truncate historical fights.
 2. **No field-based cutoff in 2015, 2016 or 2020 for the main UFC statistical metrics.** Sampled detailed UFC round fields were available even in 2008. Use **2008 as a provisional expected earliest fight year**, but derive the true research floor from each verified eligible fighter's earliest UFC bout. Do not silently omit qualifying older UFC bouts.
