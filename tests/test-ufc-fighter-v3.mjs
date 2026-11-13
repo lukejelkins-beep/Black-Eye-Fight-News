@@ -97,6 +97,36 @@ test("unconfirmed bout IDs cannot qualify knockout or submission leaderboards",(
  assert.deepEqual(d.fighters.eactivenohistory.recent,[]);
  assert.equal(d.fighters.eactivenohistory.power,null);
 });
+test("provider aliases for the same UFC bout are preserved without double-ranked stats",()=>{
+ const dup=structuredClone(coverage);
+ dup.fighters.push(
+  {name:"Carlos Hernandez",slug:"carlos-hernandez",
+   lastUfcFight:"2025-05-17",recent:[
+    {date:"2025-05-17",opponent:"HyunSung Park",boutId:"60850",
+     outcome:"L",method:"submission"}]},
+  {name:"Carlos Hernandez",slug:"carlos-hernandez-7",
+   lastUfcFight:"2025-05-17",recent:[
+    {date:"2025-05-17",opponent:"Park Hyun-sung",boutId:"83242",
+     outcome:"L",method:"submission"}]}
+ );
+ const d=buildSnapshot(dup,postfight,cohorts);
+ assert.equal(d.population,5);
+ assert.equal(d.identityReviewPending.length,1);
+ assert.deepEqual(d.identityReviewPending[0].slugs,[
+  "carlos-hernandez","carlos-hernandez-7"]);
+ assert.deepEqual(d.fighters.carloshernandez.metrics,{});
+ assert.equal(d.fighters.carloshernandez.recent.length,1);
+});
+test("same display names without overlapping dated opponents fail closed",()=>{
+ const dup=structuredClone(coverage);
+ dup.fighters.push(
+  {name:"Carlos Hernandez",slug:"carlos-hernandez",lastUfcFight:"2025-05-17",
+   recent:[{date:"2025-05-17",opponent:"HyunSung Park",boutId:"60850"}]},
+  {name:"Carlos Hernandez",slug:"carlos-hernandez-7",lastUfcFight:"2026-08-17",
+   recent:[{date:"2026-08-17",opponent:"Another Opponent",boutId:"83242"}]}
+ );
+ assert.throws(()=>buildSnapshot(dup,postfight,cohorts),/identity collision requires manual source review/);
+});
 test("source mismatch and inconsistent snapshot dates stop publication",()=>{
  assert.throws(()=>buildSnapshot({},postfight),/Required saved/);
  assert.throws(()=>buildSnapshot(coverage,{schema:1,scope:"all"}),/Required saved/);
