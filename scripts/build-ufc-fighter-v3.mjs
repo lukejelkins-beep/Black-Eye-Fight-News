@@ -37,7 +37,7 @@ const eligibleOutcome=o=>["W","L","D"].includes(o);
 function reviewedMap(sources){
  const map=new Map();
  for(const cohort of sources){
-  if(cohort?.scope!=="ufc-only"||cohort.schema!==1)continue;
+  if(cohort?.schema!==1||!["ufc-only","ufc-champions"].includes(cohort.scope))continue;
   const records=Object.values(cohort.fighters||{});
   for(const row of records){
    if(!row?.name||row.organisation!=="UFC"||row.sport!=="MMA"||!row.division)continue;
@@ -163,14 +163,28 @@ export function buildSnapshot(coverage,postfight,cohorts=[],options={}){
   }
   const source=reviewed.get(key);
   const division=source?.division||null;
+  const ufcRecord=source?.ufcRecord||{};
+  const counted=(ufcRecord.wins||0)+(ufcRecord.losses||0)+
+   (ufcRecord.draws||0)+(ufcRecord.noContests||0);
+  const incompleteRoster=source?.category==="Roster"&&
+   (!ufcRecord.complete||counted<2||(source?.latest||[]).length<2);
   const verifiedCategory=f.champion===true||source?.category==="Champion"?"Champion":
-   source?.review?.credentialsChecked===true&&
+   !incompleteRoster&&source?.review?.credentialsChecked===true&&
    ["Prospect","Contender","Roster"].includes(source.category)?source.category:"Unassessed";
+  const trustedRows=source?.review?.credentialsChecked===true&&
+   Array.isArray(source.latest)&&source.latest.length?source.latest:null;
+  // Each reviewed athlete's dated UFC result is authoritative. Provider
+  // aliases and provisional index rows can supply IDs/statistics only when
+  // they identify the *same* fight by calendar day and opponent.
+  const history=trustedRows||f.recent||[];
+  const indexed=f.recent||[];
   const ids=new Set();
   const next=[];
-  for(const x of f.recent||[]){
-   const id=x.boutId?String(x.boutId):null;
-   // A unique UFC bout cannot appear twice in the five-fight window.
+  for(const x of history){
+   const candidates=trustedRows?indexed.filter(row=>row.date===x.date&&
+    norm(row.opponent)===norm(x.opponent)&&row.boutId):[];
+   const id=trustedRows?(candidates.length===1?String(candidates[0].boutId):null):
+    x.boutId?String(x.boutId):null;
    if(id&&ids.has(id))continue;
    if(id)ids.add(id);
    next.push({boutId:id,date:x.date,opponent:x.opponent,

@@ -457,7 +457,9 @@
  }
  function applyV3(f){
   const record=v3For(f);
-  if(record){
+  // A schema-4 statistical snapshot never supersedes an independently
+  // reviewed fighter's source-verified classification or UFC record.
+  if(record&&!isReviewedUfc(f)){
    f.category=record.category;
    f.classification={...f.classification,label:record.category,score:record.trajectory,version:3};
   }

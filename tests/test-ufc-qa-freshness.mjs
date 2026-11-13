@@ -17,7 +17,8 @@ function fixture(){
   "data/ufc-prospect-profiles.json":'{"fighters":{"fighter":{"name":"Sample"}}}',
   "data/ufc-champion-profiles.json":'{"fighters":{}}',
   "data/ufc-contender-profiles.json":'{"fighters":{}}',
-  "data/ufc-roster-profiles.json":'{"fighters":{}}'
+  "data/ufc-roster-profiles.json":'{"fighters":{}}',
+  "data/ufc-fighter-v3.json":'{"schema":4,"scope":"ufc-only","fighters":{}}'
  };
  for(const [file,body] of Object.entries(contents)){
   fs.mkdirSync(path.dirname(path.join(root,file)),{recursive:true});
@@ -37,7 +38,7 @@ test("all matching deployed source assets pass",async t=>{
  const f=fixture();t.after(()=>fs.rmSync(f.root,{recursive:true,force:true}));
  const result=await checkDeploymentFreshness({base:"https://example.org",root:f.root,
   fetcher:serve(f.contents),files:expectedLiveFiles(f.root)});
- assert(result.ok);assert.equal(result.checked,10);assert.deepEqual(result.stale,[]);
+ assert(result.ok);assert.equal(result.checked,11);assert.deepEqual(result.stale,[]);
 });
 test("new JSON with old HTML is rejected before browser checks",async t=>{
  const f=fixture();t.after(()=>fs.rmSync(f.root,{recursive:true,force:true}));
@@ -45,6 +46,14 @@ test("new JSON with old HTML is rejected before browser checks",async t=>{
  const result=await checkDeploymentFreshness({base:"https://example.org",root:f.root,
   fetcher:serve(published),files:expectedLiveFiles(f.root)});
  assert(!result.ok);assert.deepEqual(result.stale.map(x=>x.file),["index.html"]);
+});
+test("old UFC V3 performance JSON fails closed even if HTML and reviewed cohorts are current",async t=>{
+ const f=fixture();t.after(()=>fs.rmSync(f.root,{recursive:true,force:true}));
+ const stale={...f.contents,"data/ufc-fighter-v3.json":'{"schema":3,"fighters":{}}'};
+ const result=await checkDeploymentFreshness({base:"https://example.org",root:f.root,
+  fetcher:serve(stale),files:expectedLiveFiles(f.root)});
+ assert(!result.ok);
+ assert.deepEqual(result.stale.map(x=>x.file),["data/ufc-fighter-v3.json"]);
 });
 test("old classifier JS while JSON and HTML are current is rejected",async t=>{
  const f=fixture();t.after(()=>fs.rmSync(f.root,{recursive:true,force:true}));
