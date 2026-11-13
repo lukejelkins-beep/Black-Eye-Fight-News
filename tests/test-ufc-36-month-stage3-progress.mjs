@@ -38,8 +38,8 @@ test('Count cached fights once globally and distinguish round statistics from re
  assert.equal(s.fightersWithAtLeastFiveObservedUfcFights,1);
  assert.equal(s.fightersWithMeasuredFiveOfFive,0);
  assert.equal(s.profilesWithoutSavedUfcHistory,781);
- assert.equal(s.profilesWithAllKnownUfcBoutsIndexed,0);
- assert.equal(s.profilesWithAllKnownUfcBoutsMeasured,0);
+ assert.equal(s.profilesWithAllKnownUfcBoutsIndexed,1);
+ assert.equal(s.profilesWithAllKnownUfcBoutsMeasured,1);
  assert.equal(s.missingKnownFightIdsInRecentFive,3);
  assert.equal(s.missingKnownFightIdsInFightsSixToTen,0);
  assert.equal(s.missingKnownFightIdsBeyondTen,0);
