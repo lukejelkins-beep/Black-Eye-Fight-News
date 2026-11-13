@@ -321,10 +321,13 @@
  }
 
  const highlightGroups={slpm:'Striking',sapm:'Defence',diff:'Striking',kd:'Power',td:'Wrestling',control:'Control',net:'Control',sub:'Grappling',acc:'Striking',tdDef:'Defence',ko:'Power',submission:'Grappling'};
- function renderPerformanceHighlights(f,v3){
+ function renderPerformanceHighlights(f,v3,periodId="5"){
   if(!ufcV3||ufcV3.schema<4||v3.recent.filter(b=>b.outcome!=='NC').length<3)return '';
-  const choices=ufcV3.boards.flatMap(b=>{
-   const m=v3.metrics?.[b.id];if(!m||m.bouts<3||m.bouts>5||!Number.isFinite(m.value))return [];
+  const periodMax=periodId==="career"?Infinity:periodId==="10"?10:5;
+  const periodBoards=ufcV3.schema>=5&&ufcV3.periodBoards?
+    ufcV3.periodBoards[periodId]||[]:ufcV3.boards;
+  const choices=periodBoards.flatMap(b=>{
+   const m=v3.metrics?.[b.id];if(!m||m.bouts<3||m.bouts>periodMax||!Number.isFinite(m.value))return [];
    const division=Number.isInteger(m.divisionRank)?m.divisionRank:Number.isInteger(m.divisionalRank)?m.divisionalRank:null;
    const all=Number.isInteger(m.rank)?m.rank:null;
    if(![division,all].some(n=>n!==null&&n>=1&&n<=30))return [];
@@ -336,7 +339,7 @@
   const selected=[],counts={};
   for(const x of choices){if(selected.length>=4)break;if((counts[x.group]||0)>=2)continue;selected.push(x);counts[x.group]=(counts[x.group]||0)+1}
   if(!selected.length)return '';
-  return '<section class="befn-performance-highlights" aria-label="Performance highlights"><header><h3>Performance Highlights</h3><small>Top 30 · Recent UFC performance</small></header>'+
+  return '<section class="befn-performance-highlights" aria-label="Performance highlights"><header><h3>Performance Highlights</h3><small>Top 30 · '+(periodId==='career'?'UFC career':periodId==='10'?'Last 10 UFC':'Last 5 UFC')+' performance</small></header>'+
    '<div class="befn-highlight-grid">'+selected.map(x=>'<div class="befn-highlight-slot"><div class="befn-highlight-card '+(x.best<=3?'is-podium':x.best<=10?'is-elite':'')+'">'+
     '<span>'+escapeHTML(x.label)+'</span><strong>'+escapeHTML(x.value)+'</strong><footer>'+
     (x.division&&x.division<=30?'<b class="'+(x.division<=10?'is-gold':'')+'">#'+x.division+' Division</b>':'')+
@@ -347,7 +350,10 @@
   // Only expose the selector after a verified period-aware snapshot exists.
   // Until then the approved schema-4 last-five UI remains functional.
   const choices=[["5","Last 5"],["10","Last 10"],["career","Career"]];
-  const periodData=ufcV3?.schema>=5&&v3.periods&&ufcV3.periodBoards?v3.periods:null;
+  const periodData=ufcV3?.schema>=5&&v3.periods&&ufcV3.periodBoards&&
+   choices.every(([id])=>v3.periods[id]?.available!==true||
+    (v3.periods[id].rankedMetrics&&typeof v3.periods[id].rankedMetrics==="object"))?
+   v3.periods:null;
   const available=periodData?choices.filter(([id])=>periodData[id]?.available===true):[];
   const saved=selectedUfcPeriods.get(norm(f.name));
   const currentPeriod=available.some(([id])=>id===saved)?saved:
@@ -360,6 +366,7 @@
       ' aria-pressed="'+String(currentPeriod===id)+'" class="'+
       (currentPeriod===id?'is-active':'')+'">'+label+'</button>').join('')+
     '</div>':'';
+  const rankedV3=period?.rankedMetrics?{...v3,metrics:period.rankedMetrics}:v3;
   const score=v3.power;
   const tier=scoreTier(score);
   const ratings=[['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['defence','Defence'],['form','Recent Form']];
@@ -371,8 +378,9 @@
    acc:'Significant strike accuracy',tdDef:'Takedown defence',
    ko:'KO/TKO wins',submission:'Submission wins'
   };
-  const statRows=ufcV3.boards.filter(b=>v3.metrics[b.id]).map(b=>{
-   const m=v3.metrics[b.id];
+  const rankBoards=period?ufcV3.periodBoards?.[currentPeriod]||[]:ufcV3.boards;
+  const statRows=rankBoards.filter(b=>rankedV3.metrics[b.id]).map(b=>{
+   const m=rankedV3.metrics[b.id];
    const qualified=v3.recent.filter(f=>f.outcome!=='NC').length>=3&&m.bouts>=3;
    const rank=qualified&&ufcV3.schema>=4?m.rank:null;
    const topTen=Number.isInteger(rank)&&rank>=1&&rank<=10;
@@ -440,8 +448,8 @@
    '</div>'+
    '</div>'+
    (period&&!ufcV3.periodBoards?.[currentPeriod]?'':
-     renderPerformanceHighlights(f,v3))+
-   (statRows&&!period?'<details class="befn-v3-statistics befn-v3-rank-full"><summary>All recent statistics</summary><ul class="befn-v3-rank-tiles">'+statRows+'</ul></details>':'')+
+     renderPerformanceHighlights(f,rankedV3,currentPeriod||"5"))+
+   (statRows?'<details class="befn-v3-statistics befn-v3-rank-full"><summary>All recent statistics</summary><ul class="befn-v3-rank-tiles">'+statRows+'</ul></details>':'')+
    '</section>';
  }
  function renderV3Boards(){
