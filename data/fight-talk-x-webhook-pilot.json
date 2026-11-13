@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "project": "Black Eye Fight News",
+  "mode": "staged-inactive",
+  "monthlyBudgetUsd": 2,
+  "activationRequirements": {
+    "secureWebhookReceiver": true,
+    "durableStorage": true,
+    "webhookAuth": true,
+    "providerPrepaidAutoTopUpDisabled": true,
+    "disableOverlappingPaidPolling": true
+  },
+  "notes": "Pilot rules are deliberately inactive. No billing starts from this file. Activate only after a fast, authenticated, durable webhook endpoint and a separate provider spending guard are confirmed.",
+  "rules": [
+    {
+      "tag": "BEFN-PILOT-MMA-01",
+      "value": "from:SStricklandMMA OR from:KChimaev OR from:AspinallMMA OR from:MerabDvalishvil OR from:TheNotoriousMMA OR from:ufc OR from:PFLMMA OR from:AliAbdelaziz00 OR from:MikeCoppinger OR from:MMARoasted",
+      "intervalSeconds": 3600,
+      "active": false,
+      "accounts": [
+        "SStricklandMMA",
+        "KChimaev",
+        "AspinallMMA",
+        "MerabDvalishvil",
+        "TheNotoriousMMA",
+        "ufc",
+        "PFLMMA",
+        "AliAbdelaziz00",
+        "MikeCoppinger",
+        "MMARoasted"
+      ]
+    },
+    {
+      "tag": "BEFN-PILOT-BOX-01",
+      "value": "from:Canelo OR from:kingryang OR from:blessedmma OR from:KaylaH OR from:shakurstevenson OR from:jakepaul OR from:MatchroomBoxing OR from:trboxing OR from:DanRafael1 OR from:UFCMayhem_",
+      "intervalSeconds": 3600,
+      "active": false,
+      "accounts": [
+        "Canelo",
+        "kingryang",
+        "blessedmma",
+        "KaylaH",
+        "shakurstevenson",
+        "jakepaul",
+        "MatchroomBoxing",
+        "trboxing",
+        "DanRafael1",
+        "UFCMayhem_"
+      ]
+    }
+  ]
+}
