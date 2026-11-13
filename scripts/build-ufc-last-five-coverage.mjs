@@ -56,6 +56,18 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
    Math.abs(Date.parse(prior.date+"T00:00:00Z")-
     Date.parse(date+"T00:00:00Z"))===86400000&&
    Boolean(prior.boutId)!==Boolean(boutId));
+  // Native history can now carry the same confirmed fight ID as the index.
+  // Do not turn the same fight into two entries solely because the source
+  // displays the local date and the event index displays UTC.
+  const sameIdCandidates=boutId?[...fighter.history.values()].filter(prior=>
+   String(prior.boutId||"")===String(boutId)&&
+   nameKey(prior.opponent)===opponentKey&&
+   Math.abs(Date.parse(prior.date+"T00:00:00Z")-
+    Date.parse(date+"T00:00:00Z"))===86400000):[];
+  if(sameIdCandidates.length===1){
+   fighter.shiftedAliasesJoined++;
+   return;
+  }
   if(candidates.length===1){
    fighter.shiftedAliasesJoined++;
    const [priorKey,prior]=candidates[0];
@@ -90,7 +102,12 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
    if(!row||String(row.promotion||row.org||"").toLowerCase()!=="ufc")continue;
    const outcome=normalOutcome(row.result||row.outcome||row.status);
    if(!outcome||!validDate(row.date)||!row.opponent)continue;
-   put(athlete,row.date,row.opponent,{method:row.method||null,outcome,origin:"ufc-history"});
+   // A fight ID is trustworthy only for the provider's native tracked row;
+   // public-records career notes may share an opponent/date but no linked ID.
+   const nativeId=row.source==="native"&&/^[1-9][0-9]{0,11}$/.test(String(row.boutId||""))?
+    String(row.boutId):null;
+   put(athlete,row.date,row.opponent,{boutId:nativeId,
+    method:row.method||null,outcome,origin:"ufc-history"});
   }
  }
  const championsSet=priorityNames(champions);
