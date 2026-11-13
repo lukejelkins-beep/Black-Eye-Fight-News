@@ -173,3 +173,32 @@
  .befn-v3-dialog{--v3-section-gap:10px}
  .befn-v3-dialog .befn-v3-tiles small{font-size:9px}
 }
+
+
+/* Approved V3 period selector: preserve existing nine-stat tile geometry. */
+.befn-v3-dialog .befn-v3-period-controls{
+ display:flex;align-items:stretch;gap:5px;
+ padding:7px 10px;border-bottom:1px solid #645241;background:#292629;
+}
+.befn-v3-dialog .befn-v3-period-controls button{
+ flex:1;min-width:0;min-height:35px;padding:6px 8px;
+ border:1px solid #665744;border-radius:7px;
+ background:#352f31;color:#eee1d1;
+ font:800 12px/1.1 'DM Sans',Arial,sans-serif;
+ cursor:pointer;
+}
+.befn-v3-dialog .befn-v3-period-controls button.is-active{
+ background:#b28a4b;color:#211b16;border-color:#e4bc78;
+}
+.befn-v3-dialog .befn-v3-period-controls button:disabled{
+ opacity:.38;cursor:not-allowed;
+}
+.befn-v3-dialog .befn-v3-period-controls button:focus-visible{
+ outline:2px solid #f5d396;outline-offset:2px;
+}
+@media(max-width:560px){
+ .befn-v3-dialog .befn-v3-period-controls{padding:6px;gap:4px}
+ .befn-v3-dialog .befn-v3-period-controls button{
+  font-size:11px;min-height:34px;padding:6px 3px;
+ }
+}
