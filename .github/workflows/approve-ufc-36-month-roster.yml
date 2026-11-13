@@ -13,6 +13,7 @@ on:
       - 'tests/test-ufc36-approved-snapshot.mjs'
 permissions:
   contents: write
+  actions: read
 jobs:
   approve-frozen-roster:
     runs-on: ubuntu-latest
@@ -40,11 +41,36 @@ jobs:
           node scripts/build-ufc-last-five-coverage.mjs
           node scripts/build-ufc-36-month-candidates.mjs
           node scripts/ufc-36-month-review-report.mjs
+      - name: Retrieve the exact saved GitHub Actions sign-off artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          digest=$(gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/14081822686" --jq '.digest')
+          test "$digest" = 'sha256:b075e262f358b5d18a3721864d0e6c7ffbcec59cd4001154004c5f827e6b4323'
+          mkdir -p .approval-artifact
+          gh run download 43519481276 --repo "${GITHUB_REPOSITORY}" --name befn-ufc-36-month-roster-review --dir .approval-artifact
+      - name: Verify independent reproducibility of the user-reviewed artifact
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import assert from 'node:assert/strict';
+          const original=JSON.parse(fs.readFileSync('.approval-artifact/ufc-36-month-roster-review.json'));
+          const repeat=JSON.parse(fs.readFileSync('.approval-snapshot/qa/ufc-36-month-roster-review.json'));
+          assert.deepEqual(
+            original.proposedRoster.map(f=>f.slug).sort(),
+            repeat.proposedRoster.map(f=>f.slug).sort(),
+            'Frozen source and exact sign-off artifact must have identical approved fighters'
+          );
+          assert.equal(original.summary.proposedWithoutExceptions,783);
+          assert.equal(original.summary.openExceptions,0);
+          console.log('Original signed-off 783-fighter artifact and offline reproduction match exactly');
+          NODE
       - name: Validate current census and write the exact signed-off slug allowlist
         run: |
           node scripts/ufc-36-month-review-report.mjs
           node scripts/approve-ufc-36-month-snapshot.mjs \
-            .approval-snapshot/qa/ufc-36-month-roster-review.json \
+            .approval-artifact/ufc-36-month-roster-review.json \
             qa/ufc-36-month-roster-review.json
       - name: Test approval isolation, career cache reuse and roster evidence
         run: |
