@@ -1,0 +1,771 @@
+{
+  "schema": 1,
+  "scope": "ufc-18-to-24-month-activity-review",
+  "asOf": "2026-11-13",
+  "fromInclusive": "2024-11-13",
+  "toExclusive": "2025-05-13",
+  "sourceCommit": "58d5c77963ed749190e721c9bfd7d4e0e73ce948",
+  "note": "Separate historical review cohort; no candidate is automatically verified as currently signed to UFC. UFC last-bout dates are from the indexed UFCalendar UFC archive, professional MMA cross-promotion history from saved UFCalendar research and confirmed retirements/departures from attributed external reports. Unclassified later bouts and contract status require research. This snapshot is not a complete independent 24-month census until the upgraded API backfill finishes.",
+  "summary": {
+    "originalCandidates": 66,
+    "reviewCandidates": 42,
+    "excludedRetired": 8,
+    "excludedOtherPromotion": 8,
+    "excludedLeftUfc": 8,
+    "reviewCandidatesWithUnknownLaterBouts": 14
+  },
+  "reviewCandidates": [
+    {
+      "name": "Brad Katona",
+      "slug": "brad-katona",
+      "lastUfcFight": "2025-05-11",
+      "lastUfcBoutId": "60899",
+      "sourceHistoryCheckedAt": "2026-11-11",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Bruno Silva",
+      "slug": "bruno-silva-blindado",
+      "lastUfcFight": "2025-05-11",
+      "lastUfcBoutId": "60897",
+      "sourceHistoryCheckedAt": "2026-11-11",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 3,
+      "latestUnclassifiedBout": {
+        "date": "2026-09-19",
+        "opponent": "Alexandre Arrais"
+      }
+    },
+    {
+      "name": "Don'Tale Mayes",
+      "slug": "don-tale-mayes",
+      "lastUfcFight": "2025-05-03",
+      "lastUfcBoutId": "60801",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 1,
+      "latestUnclassifiedBout": {
+        "date": "2026-09-18",
+        "opponent": "Jake Craig"
+      }
+    },
+    {
+      "name": "Miesha Tate",
+      "slug": "miesha-tate",
+      "lastUfcFight": "2025-05-03",
+      "lastUfcBoutId": "60797",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Serhiy Sidey",
+      "slug": "serhiy-sidey",
+      "lastUfcFight": "2025-05-03",
+      "lastUfcBoutId": "60795",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Cameron Saaiman",
+      "slug": "cameron-saaiman",
+      "lastUfcFight": "2025-04-26",
+      "lastUfcBoutId": "60884",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Evan Elder",
+      "slug": "evan-elder",
+      "lastUfcFight": "2025-04-26",
+      "lastUfcBoutId": "60881",
+      "sourceHistoryCheckedAt": "2026-11-11",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Jimmy Flick",
+      "slug": "jimmy-flick",
+      "lastUfcFight": "2025-04-26",
+      "lastUfcBoutId": "60880",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 3,
+      "latestUnclassifiedBout": {
+        "date": "2025-08-08",
+        "opponent": "Jimi Natividad"
+      }
+    },
+    {
+      "name": "Roberto Romero",
+      "slug": "roberto-romero",
+      "lastUfcFight": "2025-04-26",
+      "lastUfcBoutId": "60886",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Yair Rodriguez",
+      "slug": "yair-rodriguez",
+      "lastUfcFight": "2025-04-12",
+      "lastUfcBoutId": "60968",
+      "sourceHistoryCheckedAt": "2026-11-11",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Cortavious Romious",
+      "slug": "cortavious-romious",
+      "lastUfcFight": "2025-04-05",
+      "lastUfcBoutId": "60298",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Istela Nunes",
+      "slug": "istela-nunes",
+      "lastUfcFight": "2025-04-05",
+      "lastUfcBoutId": "60304",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "CJ Vergara",
+      "slug": "cj-vergara",
+      "lastUfcFight": "2025-03-29",
+      "lastUfcBoutId": "61005",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Gabriel Miranda",
+      "slug": "gabriel-miranda",
+      "lastUfcFight": "2025-03-29",
+      "lastUfcBoutId": "61013",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 3,
+      "latestUnclassifiedBout": {
+        "date": "2026-10-24",
+        "opponent": "Bobby Poulter"
+      }
+    },
+    {
+      "name": "Ronaldo Rodriguez",
+      "slug": "ronaldo-rodriguez",
+      "lastUfcFight": "2025-03-29",
+      "lastUfcBoutId": "61008",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Felipe dos Santos",
+      "slug": "felipe-dos-santos",
+      "lastUfcFight": "2025-03-22",
+      "lastUfcBoutId": "60315",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 3,
+      "latestUnclassifiedBout": {
+        "date": "2026-08-21",
+        "opponent": "Igor Siqueira"
+      }
+    },
+    {
+      "name": "Gunnar Nelson",
+      "slug": "gunnar-nelson",
+      "lastUfcFight": "2025-03-22",
+      "lastUfcBoutId": "60310",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Puja Tomar",
+      "slug": "puja-tomar",
+      "lastUfcFight": "2025-03-22",
+      "lastUfcBoutId": "60318",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 1,
+      "latestUnclassifiedBout": {
+        "date": "2026-05-29",
+        "opponent": "Ming Shi"
+      }
+    },
+    {
+      "name": "AJ Cunningham",
+      "slug": "aj-cunningham",
+      "lastUfcFight": "2025-03-15",
+      "lastUfcBoutId": "60362",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 2,
+      "latestUnclassifiedBout": {
+        "date": "2026-08-29",
+        "opponent": "Joe Penafiel"
+      }
+    },
+    {
+      "name": "Carlos Vera",
+      "slug": "carlos-vera",
+      "lastUfcFight": "2025-03-15",
+      "lastUfcBoutId": "60363",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Josiane Nunes",
+      "slug": "josiane-nunes",
+      "lastUfcFight": "2025-03-15",
+      "lastUfcBoutId": "60366",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "SeungWoo Choi",
+      "slug": "seungwoo-choi",
+      "lastUfcFight": "2025-03-15",
+      "lastUfcBoutId": "60360",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Andrea Lee",
+      "slug": "andrea-lee",
+      "lastUfcFight": "2025-03-01",
+      "lastUfcBoutId": "60339",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Dylan Budka",
+      "slug": "dylan-budka",
+      "lastUfcFight": "2025-02-15",
+      "lastUfcBoutId": "60993",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 7,
+      "latestUnclassifiedBout": {
+        "date": "2026-08-15",
+        "opponent": "Davis Oracio Jr."
+      }
+    },
+    {
+      "name": "Gabriel Santos",
+      "slug": "gabriel-santos",
+      "lastUfcFight": "2025-02-08",
+      "lastUfcBoutId": "60984",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Justin Tafa",
+      "slug": "justin-tafa",
+      "lastUfcFight": "2025-02-08",
+      "lastUfcBoutId": "60981",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Damir Hadzovic",
+      "slug": "damir-hadzovic",
+      "lastUfcFight": "2025-02-01",
+      "lastUfcBoutId": "38559",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Lucas Alexander",
+      "slug": "lucas-alexander",
+      "lastUfcFight": "2025-02-01",
+      "lastUfcBoutId": "38561",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 2,
+      "latestUnclassifiedBout": {
+        "date": "2026-05-02",
+        "opponent": "Jeremiah Scott"
+      }
+    },
+    {
+      "name": "Abdul Razak Alhassan",
+      "slug": "abdul-razak-alhassan",
+      "lastUfcFight": "2025-01-11",
+      "lastUfcBoutId": "60343",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Preston Parsons",
+      "slug": "preston-parsons",
+      "lastUfcFight": "2025-01-11",
+      "lastUfcBoutId": "60350",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Trey Ogden",
+      "slug": "trey-ogden",
+      "lastUfcFight": "2025-01-11",
+      "lastUfcBoutId": "60349",
+      "sourceHistoryCheckedAt": "2026-11-11",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 2,
+      "latestUnclassifiedBout": {
+        "date": "2025-11-15",
+        "opponent": "Kevin Beuhring"
+      }
+    },
+    {
+      "name": "Colby Covington",
+      "slug": "colby-covington",
+      "lastUfcFight": "2024-12-15",
+      "lastUfcBoutId": "60368",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 4,
+      "latestUnclassifiedBout": {
+        "date": "2026-07-18",
+        "opponent": "Arman Tsarukyan"
+      }
+    },
+    {
+      "name": "Fernando Padilla",
+      "slug": "fernando-padilla",
+      "lastUfcFight": "2024-12-15",
+      "lastUfcBoutId": "60376",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Ottman Azaitar",
+      "slug": "ottman-azaitar",
+      "lastUfcFight": "2024-12-15",
+      "lastUfcBoutId": "60374",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Kron Gracie",
+      "slug": "kron-gracie",
+      "lastUfcFight": "2024-12-07",
+      "lastUfcBoutId": "60780",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Shavkat Rakhmonov",
+      "slug": "shavkat-rakhmonov",
+      "lastUfcFight": "2024-12-07",
+      "lastUfcBoutId": "60778",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Baergeng Jieleyisi",
+      "slug": "baergeng-jieleyisi",
+      "lastUfcFight": "2024-11-23",
+      "lastUfcBoutId": "38591",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 4,
+      "latestUnclassifiedBout": {
+        "date": "2026-08-08",
+        "opponent": "Valeri Gusarov"
+      }
+    },
+    {
+      "name": "Feng Xiaocan",
+      "slug": "feng-xiaocan",
+      "lastUfcFight": "2024-11-23",
+      "lastUfcBoutId": "38593",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 3,
+      "latestUnclassifiedBout": {
+        "date": "2026-05-29",
+        "opponent": "Farida Abdueva"
+      }
+    },
+    {
+      "name": "Song Kenan",
+      "slug": "song-kenan",
+      "lastUfcFight": "2024-11-23",
+      "lastUfcBoutId": "38587",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Bassil Hafez",
+      "slug": "bassil-hafez",
+      "lastUfcFight": "2024-11-16",
+      "lastUfcBoutId": "60391",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    },
+    {
+      "name": "Damon Jackson",
+      "slug": "damon-jackson",
+      "lastUfcFight": "2024-11-16",
+      "lastUfcBoutId": "60387",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 1,
+      "latestUnclassifiedBout": {
+        "date": "2026-05-17",
+        "opponent": "Carlos Calderon"
+      }
+    },
+    {
+      "name": "Jonathan Martinez",
+      "slug": "jonathan-martinez",
+      "lastUfcFight": "2024-11-16",
+      "lastUfcBoutId": "60386",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "status": "needs_current_ufc_roster_confirmation",
+      "possibleLaterUnknownPromotionFights": 0,
+      "latestUnclassifiedBout": null
+    }
+  ],
+  "excluded": [
+    {
+      "name": "Clay Guida",
+      "slug": "clay-guida",
+      "lastUfcFight": "2024-12-07",
+      "lastUfcBoutId": "60789",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "confirmed_left_ufc",
+      "evidence": {
+        "source": "https://www.roster.watch/log.html"
+      }
+    },
+    {
+      "name": "Ihor Potieria",
+      "slug": "ihor-potieria",
+      "lastUfcFight": "2025-01-11",
+      "lastUfcBoutId": "60348",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "confirmed_left_ufc",
+      "evidence": {
+        "source": "https://www.mmamania.com/2025/1/26/24352171/cut-ufc-parts-ways-with-five-contender-series-veterans-ihor-potieria-viktoriia-dudakova-jose-johnson"
+      }
+    },
+    {
+      "name": "Jairzinho Rozenstruik",
+      "slug": "jairzinho-rozenstruik",
+      "lastUfcFight": "2025-02-01",
+      "lastUfcBoutId": "38554",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "confirmed_left_ufc",
+      "evidence": {
+        "source": "https://www.sherdog.com/news/news/Jairzinho-Rozenstruik-ends-twoyear-MMA-hiatus-with-FNC-37-debut-203227"
+      }
+    },
+    {
+      "name": "Jamal Pogues",
+      "slug": "jamal-pogues",
+      "lastUfcFight": "2025-02-01",
+      "lastUfcBoutId": "38562",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "confirmed_left_ufc",
+      "evidence": {
+        "source": "https://www.mmafighting.com/2025/2/3/24358428/jairzinho-rozenstruik-jamal-pogues-removed-from-roster-after-losses-at-ufc-saudi-arabia"
+      }
+    },
+    {
+      "name": "James Llontop",
+      "slug": "james-llontop",
+      "lastUfcFight": "2024-11-16",
+      "lastUfcBoutId": "60385",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "confirmed_left_ufc",
+      "evidence": {
+        "source": "https://www.roster.watch/log.html"
+      }
+    },
+    {
+      "name": "Jose Johnson",
+      "slug": "jose-johnson",
+      "lastUfcFight": "2025-01-11",
+      "lastUfcBoutId": "60347",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "confirmed_left_ufc",
+      "evidence": {
+        "source": "https://www.mmamania.com/2025/1/26/24352171/cut-ufc-parts-ways-with-five-contender-series-veterans-ihor-potieria-viktoriia-dudakova-jose-johnson"
+      }
+    },
+    {
+      "name": "Magomed Gadzhiyasulov",
+      "slug": "magomed-gadzhiyasulov",
+      "lastUfcFight": "2025-01-11",
+      "lastUfcBoutId": "60352",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "confirmed_left_ufc",
+      "evidence": {
+        "source": "https://www.mmamania.com/2025/1/26/24352171/cut-ufc-parts-ways-with-five-contender-series-veterans-ihor-potieria-viktoriia-dudakova-jose-johnson"
+      }
+    },
+    {
+      "name": "Viktoriia Dudakova",
+      "slug": "viktoriia-dudakova",
+      "lastUfcFight": "2025-01-11",
+      "lastUfcBoutId": "60353",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "confirmed_left_ufc",
+      "evidence": {
+        "source": "https://www.mmamania.com/2025/1/26/24352171/cut-ufc-parts-ways-with-five-contender-series-veterans-ihor-potieria-viktoriia-dudakova-jose-johnson"
+      }
+    },
+    {
+      "name": "Chris Weidman",
+      "slug": "chris-weidman",
+      "lastUfcFight": "2024-12-07",
+      "lastUfcBoutId": "60786",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "confirmed_retired",
+      "evidence": {
+        "source": "https://www.mmafighting.com/2025/1/17/24346138/chris-weidman-announces-retirement"
+      }
+    },
+    {
+      "name": "Diana Belbita",
+      "slug": "diana-belbita",
+      "lastUfcFight": "2025-04-05",
+      "lastUfcBoutId": "60302",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "confirmed_retired",
+      "evidence": {
+        "source": "https://www.sportsnet.ca/ufc/article/ufc-fighter-diana-belbita-announces-retirement/"
+      }
+    },
+    {
+      "name": "Joe Solecki",
+      "slug": "joe-solecki",
+      "lastUfcFight": "2025-01-11",
+      "lastUfcBoutId": "60354",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "confirmed_retired",
+      "evidence": {
+        "source": "https://www.mmafighting.com/2025/2/17/24367356/joe-solecki-retires-from-mma"
+      }
+    },
+    {
+      "name": "Jose Aldo",
+      "slug": "jose-aldo",
+      "lastUfcFight": "2025-05-11",
+      "lastUfcBoutId": "60890",
+      "sourceHistoryCheckedAt": "2026-11-11",
+      "reason": "confirmed_retired",
+      "evidence": {
+        "source": "https://www.ufc.com/news/jose-aldo-retirement-long-live-king-rio"
+      }
+    },
+    {
+      "name": "Julia Avila",
+      "slug": "julia-avila",
+      "lastUfcFight": "2025-02-15",
+      "lastUfcBoutId": "61002",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "confirmed_retired",
+      "evidence": {
+        "source": "https://www.mmafighting.com/2025/2/15/24366404/julia-avila-announces-retirement-following-ufc-vegas-102-loss-to-jacqueline-cavalcanti"
+      }
+    },
+    {
+      "name": "Marina Rodriguez",
+      "slug": "marina-rodriguez",
+      "lastUfcFight": "2025-05-03",
+      "lastUfcBoutId": "60799",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "confirmed_retired",
+      "evidence": {
+        "source": "https://www.ufc.com/athlete/marina-rodriguez"
+      }
+    },
+    {
+      "name": "Molly McCann",
+      "slug": "molly-mccann",
+      "lastUfcFight": "2025-03-22",
+      "lastUfcBoutId": "60311",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "confirmed_retired",
+      "evidence": {
+        "source": "https://www.bbc.co.uk/sport/mixed-martial-arts/articles/cn89e7yzg49o"
+      }
+    },
+    {
+      "name": "Vinc Pichel",
+      "slug": "vinc-pichel",
+      "lastUfcFight": "2025-03-29",
+      "lastUfcBoutId": "61012",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "confirmed_retired",
+      "evidence": {
+        "source": "https://www.mmafighting.com/2025/4/28/24419759/12-fight-ufc-vet-vinc-pichel-announces-mma-retirement"
+      }
+    },
+    {
+      "name": "Anthony Smith",
+      "slug": "anthony-smith",
+      "lastUfcFight": "2025-04-26",
+      "lastUfcBoutId": "60875",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "later_professional_bareknuckle_mma_outside_ufc",
+      "evidence": {
+        "date": "2026-10-02",
+        "promotion": "gamebred-fc",
+        "opponent": "Jordan Heiderman",
+        "source": "https://www.sherdog.com/events/GFC-12-Gamebred-BareKnuckle-MMA-12-114419"
+      }
+    },
+    {
+      "name": "Bryan Battle",
+      "slug": "bryan-battle",
+      "lastUfcFight": "2024-12-07",
+      "lastUfcBoutId": "60785",
+      "sourceHistoryCheckedAt": "2026-11-11",
+      "reason": "later_professional_mma_outside_ufc",
+      "evidence": {
+        "date": "2026-08-07",
+        "promotion": "pfl",
+        "opponent": "Dalton Rosta",
+        "source": "saved UFCalendar fighter history"
+      }
+    },
+    {
+      "name": "Caolan Loughran",
+      "slug": "caolan-loughran",
+      "lastUfcFight": "2025-03-22",
+      "lastUfcBoutId": "60319",
+      "sourceHistoryCheckedAt": "2026-11-11",
+      "reason": "later_professional_mma_outside_ufc",
+      "evidence": {
+        "date": "2026-07-18",
+        "promotion": "pfl",
+        "opponent": "Julio Arce",
+        "source": "saved UFCalendar fighter history"
+      }
+    },
+    {
+      "name": "Guram Kutateladze",
+      "slug": "guram-kutateladze",
+      "lastUfcFight": "2025-03-22",
+      "lastUfcBoutId": "60320",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "later_professional_mma_outside_ufc",
+      "evidence": {
+        "date": "2025-10-23",
+        "promotion": "aca",
+        "opponent": "Victor Hugo",
+        "source": "saved UFCalendar fighter history"
+      }
+    },
+    {
+      "name": "Ivana Petrovic",
+      "slug": "ivana-petrovic",
+      "lastUfcFight": "2025-05-03",
+      "lastUfcBoutId": "60802",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "later_professional_mma_outside_ufc",
+      "evidence": {
+        "date": "2026-05-16",
+        "promotion": "oktagon",
+        "opponent": "Danielle Misteli",
+        "source": "saved UFCalendar fighter history"
+      }
+    },
+    {
+      "name": "Jordan Vucenic",
+      "slug": "jordan-vucenic",
+      "lastUfcFight": "2025-03-22",
+      "lastUfcBoutId": "60312",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "later_professional_mma_outside_ufc",
+      "evidence": {
+        "date": "2026-06-27",
+        "promotion": "cage-warriors",
+        "opponent": "Nonato Junior",
+        "source": "saved UFCalendar fighter history"
+      }
+    },
+    {
+      "name": "Josefine Lindgren Knutsson",
+      "slug": "josefine-lindgren-knutsson",
+      "lastUfcFight": "2024-12-15",
+      "lastUfcBoutId": "60380",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "later_professional_mma_outside_ufc",
+      "evidence": {
+        "date": "2026-11-07",
+        "promotion": "oktagon",
+        "opponent": "Yasmin Guimaraes",
+        "source": "saved UFCalendar fighter history"
+      }
+    },
+    {
+      "name": "Kevin Jousset",
+      "slug": "kevin-jousset",
+      "lastUfcFight": "2025-02-08",
+      "lastUfcBoutId": "60989",
+      "sourceHistoryCheckedAt": "2026-11-13",
+      "reason": "later_professional_mma_outside_ufc",
+      "evidence": {
+        "date": "2025-12-13",
+        "promotion": "pfl",
+        "opponent": "Patrick Habirora",
+        "source": "saved UFCalendar fighter history"
+      }
+    }
+  ]
+}

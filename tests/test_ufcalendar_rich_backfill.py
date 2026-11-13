@@ -57,6 +57,7 @@ class RichBackfillTests(unittest.TestCase):
     def test_fast_runs_do_not_repeat_recent_event_discovery(self):
         state=m.default_progress()
         state["historicalComplete"]={"ufc":True,"pfl":True}
+        state["historicalWindowMonths"]={"ufc":24}
         now=dt.datetime.now(dt.timezone.utc)
         state["upcomingCheckedAt"]={"ufc":now.isoformat(),"pfl":now.isoformat()}
         calls=[]
@@ -70,6 +71,25 @@ class RichBackfillTests(unittest.TestCase):
         m.read_events(client,state,dt.date(2026,11,11))
         self.assertEqual(len(calls),1)
         self.assertIn("org=ufc",calls[0])
+
+    def test_widening_ufc_window_reopens_history_exactly_once(self):
+        state=m.default_progress()
+        state["historicalComplete"]={"ufc":True,"pfl":True}
+        now=dt.datetime.now(dt.timezone.utc)
+        state["upcomingCheckedAt"]={"ufc":now.isoformat(),"pfl":now.isoformat()}
+        calls=[]
+        client=m.Client("fake",state,dt.date(2026,11,13),
+                        fetch=lambda route:(calls.append(route) or {"data":[]}),
+                        max_calls=20)
+        client.remaining=100
+        m.read_events(client,state,dt.date(2026,11,13))
+        self.assertEqual(len(calls),1,"only the UFC historic query should reopen")
+        self.assertIn("org=ufc",calls[0])
+        self.assertIn("from=2024-11-13",calls[0])
+        self.assertEqual(state["historicalWindowMonths"]["ufc"],24)
+        self.assertTrue(state["historicalComplete"]["ufc"])
+        m.read_events(client,state,dt.date(2026,11,13))
+        self.assertEqual(len(calls),1,"the completed 24-month history must not repeatedly fetch")
 
     def test_paid_tier_unlocks_only_when_verified(self):
         for limit,expected in ((100,False),(30000,True)):
