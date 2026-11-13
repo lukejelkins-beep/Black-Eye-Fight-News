@@ -21,6 +21,7 @@ export function auditLastFiveCoverage({coverage={},progress={},postfight={},v3={
  const sum={activeFighters:athletes.length,withFiveKnown:0,withFiveUfcBoutIds:0,
   withFiveRecordedOutcomes:0,withThreeMeasured:0,needHistoryCheck:0,
   needStats:0,knownBoutsMissingIds:0,recordedOutcomesMissing:0,
+  shiftedDateAliasesJoined:Number.isInteger(coverage?.summary?.shiftedDateAliasesJoined)?coverage.summary.shiftedDateAliasesJoined:null,
   researchedCurrentGaps:0,unsearchedCurrentGaps:0};
  for(const f of athletes){
   const recent=Array.isArray(f?.recent)?f.recent.slice(0,5):[];
@@ -159,6 +160,7 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
   ["Active fighters in saved coverage",u.coverage.activeFighters],
   ["Five recorded UFC results",u.coverage.withFiveKnown],
   ["Five results with known unique bout IDs",u.coverage.withFiveUfcBoutIds],
+  ["UTC/local-day UFC history aliases safely reconciled",u.coverage.shiftedDateAliasesJoined],
   ["Three or more measured UFC bouts",u.coverage.withThreeMeasured],
   ["History enquiries still needed",u.coverage.needHistoryCheck],
   ["Active fighters yet to receive targeted history search",u.targetedSearch.unsearched],
