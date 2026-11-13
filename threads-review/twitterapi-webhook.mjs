@@ -64,7 +64,7 @@ function respond(res,status,obj){
  res.end(JSON.stringify(obj));
 }
 const GITHUB_CONTENT_URL='https://api.github.com/repos/lukejelkins-beep/Black-Eye-Fight-News/contents/data/fight-talk-x-api.json';
-async function persistGithub(posts,tag,token,fetchImpl=fetch){
+export async function persistGithub(posts,tag,token,fetchImpl=fetch){
  if(!posts.length)return;
  for(let attempt=0;attempt<3;attempt++){
   const headers={Authorization:'Bearer '+token,Accept:'application/vnd.github+json',
