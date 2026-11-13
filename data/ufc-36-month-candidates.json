@@ -19,10 +19,10 @@
     "withFiveLinkedIds": 488,
     "withThreeMeasured": 604,
     "withShortUfcTimelineReconciled": 3,
-    "withUfcHistoryLinkedAndMeasured": 432,
+    "withUfcHistoryLinkedAndMeasured": 433,
     "evidenceStages": {
-      "fiveLinkedMeasured": 432,
-      "fiveLinkedStatsGap": 56,
+      "fiveLinkedMeasured": 433,
+      "fiveLinkedStatsGap": 55,
       "fiveUnlinked": 0,
       "shortLinkedMeasuredDepthConfirmed": 0,
       "shortLinkedMeasuredDepthUnconfirmed": 253,
@@ -31,7 +31,7 @@
       "shortUnlinked": 0
     },
     "needHistoryCheck": 292,
-    "needStats": 98,
+    "needStats": 97,
     "shiftedDateAliasesJoined": 346,
     "uniqueKnownBoutIds": 1951
   },
@@ -42651,11 +42651,11 @@
       "upcoming": false,
       "ranked": false,
       "recentCount": 5,
-      "measuredCount": 4,
-      "evidenceStage": "fiveLinkedStatsGap",
+      "measuredCount": 5,
+      "evidenceStage": "fiveLinkedMeasured",
       "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": false,
-      "needsStats": true,
+      "needsStats": false,
       "recent": [
         {
           "date": "2024-11-16",
@@ -42699,8 +42699,8 @@
           "boutId": "65493",
           "method": "ko_tko",
           "outcome": "L",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
         }
       ]
     },
