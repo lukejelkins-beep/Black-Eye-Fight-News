@@ -536,6 +536,10 @@
  }
  function update(){
   renderV3Boards();
+  const top=document.querySelector("#fighterDialog [data-befn-top-credentials]");
+  const current=document.querySelector("#fighterDialog .befn-profile-insights[data-befn-profile]");
+  const fighter=current&&byId.get(current.dataset.befnProfile);
+  if(top&&fighter)top.innerHTML=credentialsFor(fighter).length?credentialsHTML(fighter):"";
   for(const el of document.querySelectorAll(".befn-profile-insights[data-befn-profile]")){
    const f=byId.get(el.dataset.befnProfile);
    if(f){
@@ -607,7 +611,7 @@
   }
   if(added)update();
  });
- window.BEFNFighterInsights={renderProfile,credentialsFor,ratingsFor,renderSnapshot,profileFor,hydrate,hasV3:f=>!!v3For(f)};
+ window.BEFNFighterInsights={renderProfile,credentialsFor,ratingsFor,renderSnapshot,profileFor,hydrate,topCredentials:f=>credentialsFor(f).length?credentialsHTML(f):"",hasV3:f=>!!v3For(f)};
  schedule();
 
  fetch("data/fighter-comparison-sample.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(data=>{
