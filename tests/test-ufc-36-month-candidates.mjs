@@ -283,3 +283,38 @@ test("official UFC active confirmation clears only matching legacy roster flag",
    {...confirmed("fighter-b"),source:"https://example.org/athlete/fighter-b"}]}});
  assert.equal(wrong.summary.latestPromotionReviewRequired,2);
 });
+
+test("direct official UFC Not Fighting status excludes from confirmed active roster only",()=>{
+ const ufc=(id,date,slug)=>({id:String(id),org:"ufc",
+  event:"UFC Fight Night: Test",eventDate:date,status:"completed",
+  a:{slug,name:slug,id:11},b:{slug:"opponent",name:"Opponent",id:12},
+  result:{winnerId:"11",round:3}});
+ const opts={asOf:"2026-11-14",rosterReview:{asOf:"2026-11-13",
+  reviewCandidates:[{slug:"f-a",lastUfcFight:"2025-03-01"}]}};
+ const not=slug=>({slug,lastUfcFight:"2025-03-01",status:"not_fighting",
+  checkedAt:"2026-11-14",source:"https://www.ufc.com/athlete/"+slug});
+ const args=[{bouts:{"1":ufc(1,"2025-03-01","f-a")}},
+   {profiles:{}},{fighters:{}},{divisions:[]}];
+ const x=candidateManifest(...args,{...opts,evidenceReview:{
+   asOf:"2026-11-14",confirmedNotFighting:[not("f-a")]}});
+ assert.ok(!x.fighters.some(f=>f.slug==="f-a"));
+ assert.equal(x.summary.excludedOfficialNotFighting,1);
+ assert.equal(x.eligibilityExcluded.find(e=>e.slug==="f-a").reason,
+   "official_ufc_status_not_fighting");
+ const stale=candidateManifest({bouts:{...args[0].bouts,"2":ufc(2,"2026-10-01","f-a")}},
+   ...args.slice(1),{...opts,evidenceReview:{asOf:"2026-11-14",
+     confirmedNotFighting:[not("f-a")]}});
+ assert.ok(stale.fighters.some(f=>f.slug==="f-a"),
+   "a fresh official UFC return overrides historical Not Fighting");
+ const untrusted=candidateManifest(...args,{...opts,evidenceReview:{
+   asOf:"2026-11-14",confirmedNotFighting:[
+    {...not("f-a"),source:"https://example.org/fake"}]}});
+ assert.equal(untrusted.fighters.find(f=>f.slug==="f-a").eligibilityStatus,
+   "review_required");
+ const public18=auditUfcLastFive(...args,{asOf:"2026-11-14",
+   activityMonths:18,rosterReview:opts.rosterReview});
+ const baseline18=auditUfcLastFive(...args,{asOf:"2026-11-14",
+   activityMonths:18});
+ assert.deepEqual(public18,baseline18,
+   "36-month classification must not modify public 18-month roster");
+});
