@@ -131,8 +131,12 @@ export function buildSnapshot(coverage,postfight,cohorts=[],options={}){
    // The frontend addresses V3 fighters by canonical display name, so two
    // distinct roster slugs must never be silently collapsed into one record.
    if(fighters[key].sourceSlug!==f.slug)
-    throw Error("UFC identity collision: "+fighters[key].name+" ["+fighters[key].sourceSlug+
-     "] and "+f.name+" ["+f.slug+"]");
+    throw Error("UFC identity collision: "+JSON.stringify({
+     previous:{name:fighters[key].name,slug:fighters[key].sourceSlug,
+      recent:fighters[key].recent.map(b=>({date:b.date,opponent:b.opponent,boutId:b.boutId}))},
+     incoming:{name:f.name,slug:f.slug,
+      recent:f.recent.slice(0,5).map(b=>({date:b.date,opponent:b.opponent,boutId:b.boutId}))}
+    }));
    continue;
   }
   const source=reviewed.get(key);
