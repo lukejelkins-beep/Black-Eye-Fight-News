@@ -1,14 +1,13 @@
 {
-  "attemptedAt": "2026-11-13T07:54:25.056634+00:00",
-  "lastSuccessfulAt": "2026-11-13T07:54:25.056634+00:00",
+  "attemptedAt": "2026-11-13T08:59:03.232934+00:00",
+  "lastSuccessfulAt": "2026-11-13T08:59:03.232934+00:00",
   "sources": [
     {
       "name": "World Boxing News",
       "sport": "boxing",
-      "ok": true,
-      "items": 10,
-      "feedUrl": "https://www.worldboxingnews.net/feed/",
-      "lastSuccessfulAt": "2026-11-13T07:54:25.056634+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-13T07:54:25.056634+00:00",
+      "error": "www.worldboxingnews.net: mismatched tag: line 93, column 2"
     },
     {
       "name": "MMA Fighting",
@@ -16,7 +15,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-13T07:54:25.056634+00:00"
+      "lastSuccessfulAt": "2026-11-13T08:59:03.232934+00:00"
     },
     {
       "name": "MMA Junkie",
@@ -24,7 +23,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-13T07:54:25.056634+00:00"
+      "lastSuccessfulAt": "2026-11-13T08:59:03.232934+00:00"
     },
     {
       "name": "Sherdog",
@@ -32,7 +31,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.sherdog.com/rss/news.xml",
-      "lastSuccessfulAt": "2026-11-13T07:54:25.056634+00:00"
+      "lastSuccessfulAt": "2026-11-13T08:59:03.232934+00:00"
     },
     {
       "name": "UFC",
@@ -40,7 +39,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-13T07:54:25.056634+00:00"
+      "lastSuccessfulAt": "2026-11-13T08:59:03.232934+00:00"
     },
     {
       "name": "ONE MMA",
@@ -52,9 +51,10 @@
     {
       "name": "ONE Submission Grappling",
       "sport": "grappling",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-11T05:33:58.727841+00:00",
-      "error": "No dated, source-verified articles in the current feed"
+      "ok": true,
+      "items": 1,
+      "feedUrl": "https://www.onefc.com/feed/",
+      "lastSuccessfulAt": "2026-11-13T08:59:03.232934+00:00"
     },
     {
       "name": "Cage Warriors",
@@ -62,7 +62,7 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Acagewarriors.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-13T07:54:25.056634+00:00"
+      "lastSuccessfulAt": "2026-11-13T08:59:03.232934+00:00"
     },
     {
       "name": "RIZIN",
@@ -70,7 +70,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-13T07:54:25.056634+00:00"
+      "lastSuccessfulAt": "2026-11-13T08:59:03.232934+00:00"
     },
     {
       "name": "KSW",
@@ -84,7 +84,7 @@
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "adcombat.com: No recent, source-verified articles | www.bing.com: No recent, source-verified articles"
+      "error": "adcombat.com: mismatched tag: line 93, column 2 | www.bing.com: No recent, source-verified articles"
     },
     {
       "name": "NCAA Division I Wrestling",
@@ -120,7 +120,7 @@
       "ok": true,
       "items": 3,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Aflograppling.com%2Farticles&format=rss",
-      "lastSuccessfulAt": "2026-11-13T07:54:25.056634+00:00"
+      "lastSuccessfulAt": "2026-11-13T08:59:03.232934+00:00"
     },
     {
       "name": "Real American Freestyle",
@@ -142,10 +142,35 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/category/live-results/feed/",
-      "lastSuccessfulAt": "2026-11-13T07:54:25.056634+00:00"
+      "lastSuccessfulAt": "2026-11-13T08:59:03.232934+00:00"
     }
   ],
   "articles": [
+    {
+      "id": "22c1a3fb1cd5b48046a1",
+      "title": "Helena Crevar And Kendall Reusing Collide For Inaugural Women’s Openweight Submission Grappling Crown At ONE Fight Night 51",
+      "url": "https://www.onefc.com/news/helena-crevar-and-kendall-reusing-collide-for-inaugural-womens-openweight-submission-grappling-crown-at-one-fight-night-51/",
+      "source": "ONE Submission Grappling",
+      "sport": "grappling",
+      "publishedAt": "2026-11-13T08:13:12+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://cdn.onefc.com/wp-content/uploads/2026/07/Helena-Crevar-Paige-Ivette-Clymer-The-Inner-Circle-22-11-1-1200x800.jpg",
+        "alt": "Helena Crevar defeats Paige Ivette Clymer via unanimous decision",
+        "credit": "",
+        "sourceUrl": "https://www.onefc.com/news/helena-crevar-and-kendall-reusing-collide-for-inaugural-womens-openweight-submission-grappling-crown-at-one-fight-night-51/",
+        "kind": "publisher",
+        "checkedAt": "2026-11-13T08:59:03.232934+00:00"
+      },
+      "summaryCheckedAt": "2026-11-13T08:59:03.232934+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "The 19-year-old grappling phenom takes on an eight-time BJJ World Champion on January 8.",
+        "ONE Championship’s women’s openweight submission grappling will crown its first-ever queen, as a teenage prodigy and a highly decorated veteran are ready to wage war for the throne.",
+        "The 10-minute World Championship bout goes down live in U.S. primetime on Friday, January 8, from the iconic Lumpinee Stadium in Bangkok, Thailand."
+      ],
+      "firstSeenAt": "2026-11-13T08:59:03.232934+00:00"
+    },
     {
       "id": "057c2128558561b45755",
       "title": "Israel Adesanya says CKB insults prepared him for UFC press conferences",
@@ -429,11 +454,11 @@
         "kind": "publisher",
         "checkedAt": "2026-11-12T19:35:49.929158+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Ultimate Fighting Championship featherweight Tommy McMillen was allegedly taken to a hospital Sunday after he was found unresponsive at a nightclub in Scottsdale, Arizona, TMZ reported ."
       ],
+      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-12T19:35:49.929158+00:00"
     },
     {
@@ -552,11 +577,11 @@
         "kind": "publisher",
         "checkedAt": "2026-11-12T20:27:34.484903+00:00"
       },
+      "summaryCheckedAt": "2026-11-13T08:59:03.232934+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "30, 2027, at Scotiabank Arena in Toronto."
       ],
-      "summaryCheckedAt": "2026-11-12T20:27:34.484903+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-12T20:27:34.484903+00:00"
     },
     {
@@ -600,12 +625,12 @@
         "kind": "publisher",
         "checkedAt": "2026-11-12T19:35:49.929158+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Welsh Middleweight Gerome Warburton Is Ready For The Biggest Opportunity Of His Career In The Main Event Of Zuffa Boxing 13.",
         "It proved that Warburton had the nerve and the temperament for the big occasion, and led to his latest assignment, which comes this weekend in Riyadh, Saudi Arabia."
       ],
+      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-12T19:35:49.929158+00:00"
     },
     {
@@ -1228,11 +1253,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
+      "summaryCheckedAt": "2026-11-13T08:59:03.232934+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Police said they found undefeated UFC featherweight Tommy McMillen unresponsive inside a bathroom with a white, powdery substance near him."
       ],
-      "summaryCheckedAt": "2026-11-12T20:27:34.484903+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-12T20:27:34.484903+00:00"
     },
     {
@@ -1246,12 +1271,12 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
+      "summaryCheckedAt": "2026-11-13T08:59:03.232934+00:00",
+      "summaryQualityVersion": 3,
+      "firstSeenAt": "2026-11-12T20:27:34.484903+00:00",
       "summaryPoints": [
         "Stephen \"Wonderboy\" Thompson will hang up his gloves at UFC 334 after nearly 15 years in the promotion and two title shots."
-      ],
-      "summaryCheckedAt": "2026-11-12T20:27:34.484903+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-12T20:27:34.484903+00:00"
+      ]
     },
     {
       "id": "af01ea62784b68c5daf6",
@@ -1264,11 +1289,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "NEW YORK – Ciryl Gane didn't mean to call Tom Aspinall mentally fragile after he struggled with recovery."
       ],
+      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-12T19:35:49.929158+00:00"
     },
     {
@@ -1282,11 +1307,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Former UFC dual-champion Nunes is coming out of retirement after hanging up her gloves in June 2023."
       ],
+      "summaryCheckedAt": "2026-11-13T07:54:25.056634+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-12T19:35:49.929158+00:00"
     },
     {
@@ -1864,7 +1889,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-11T19:37:09.653755+00:00"
       },
-      "summaryCheckedAt": "2026-11-12T20:27:34.484903+00:00",
+      "summaryCheckedAt": "2026-11-13T08:59:03.232934+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-11T19:37:09.653755+00:00",
       "summaryPoints": [
@@ -1911,7 +1936,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-11T19:37:09.653755+00:00"
       },
-      "summaryCheckedAt": "2026-11-12T20:27:34.484903+00:00",
+      "summaryCheckedAt": "2026-11-13T08:59:03.232934+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-11T19:37:09.653755+00:00",
       "summaryPoints": [
@@ -1982,7 +2007,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-11T19:37:09.653755+00:00"
       },
-      "summaryCheckedAt": "2026-11-12T20:27:34.484903+00:00",
+      "summaryCheckedAt": "2026-11-13T08:59:03.232934+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-11T19:37:09.653755+00:00"
     },
@@ -2596,7 +2621,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-12T20:27:34.484903+00:00",
+      "summaryCheckedAt": "2026-11-13T08:59:03.232934+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-11T19:37:09.653755+00:00",
       "summaryPoints": [
@@ -3506,7 +3531,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-12T20:27:34.484903+00:00",
+      "summaryCheckedAt": "2026-11-13T08:59:03.232934+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-10T18:20:55.510193+00:00",
       "summaryPoints": [
@@ -6453,31 +6478,6 @@
         "Is Tatiana Suarez next to challenge champion Mackenzie Dern if she can beat Virna Jandiroba?",
         "Waldo Cortes-Acosta and Johnny Walker headline UFC Vegas 124 and it’s kind of strange here we got here."
       ]
-    },
-    {
-      "id": "0b70cbaf575f36a36e5a",
-      "title": "Dana White’s Heavyweight Goes From 151lb Kid to 231lb KO Monster",
-      "url": "https://www.worldboxingnews.com/dana-white-vanhouter-151lb-231lb/",
-      "source": "World Boxing News",
-      "sport": "boxing",
-      "publishedAt": "2026-11-07T11:07:15+00:00",
-      "score": 0,
-      "image": {
-        "url": "https://www.worldboxingnews.com/wp-content/uploads/2026/11/DaMazion-Vanhouter-2026-full.jpg",
-        "alt": "Dana White’s Heavyweight Goes From 151lb Kid to 231lb KO Monster",
-        "credit": "",
-        "sourceUrl": "https://www.worldboxingnews.com/dana-white-vanhouter-151lb-231lb/",
-        "kind": "publisher",
-        "checkedAt": "2026-11-09T02:42:57.090980+00:00"
-      },
-      "summaryPoints": [
-        "Dana White believes he has found America’s next great heavyweight in a 21-year-old who has gained almost 80 pounds in four years to become a 231-pound knockout machine.",
-        "The Zuffa Boxing founder has backed undefeated Da’Mazion Vanhouter to become a major name in the division, despite the American having just 13 professional fights.",
-        "Dana White backs 21-year-old Da'Mazion Vanhouter, who has gained almost 80 pounds since 2022 and scored seven stoppages in a row."
-      ],
-      "summaryCheckedAt": "2026-11-09T08:49:36.741236+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-07T23:16:32.636295+00:00"
     }
   ],
   "resultReports": [
@@ -6765,7 +6765,7 @@
     }
   ],
   "deduplication": {
-    "checkedAt": "2026-11-13T07:54:25.056634+00:00",
+    "checkedAt": "2026-11-13T08:59:03.232934+00:00",
     "removedArticles": 4,
     "removedResultReports": 0,
     "examples": [
@@ -6782,9 +6782,9 @@
         "reason": "same story"
       },
       {
-        "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/12/video-ufc-334-full-pre-fight-press-conference-faceoffs/92741579007/",
-        "title": "Video: UFC 334 full pre-fight press conference faceoffs with two title fights, more",
-        "keptUrl": "https://www.mmafighting.com/ufc/520720/ufc-334-press-conference-video",
+        "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/12/ufc-336-brandon-royval-backup-fighter-van-vs-kape/92739606007/",
+        "title": "Brandon Royval says he's UFC 336 backup for Joshua Van vs. Manel Kape",
+        "keptUrl": "https://www.sherdog.com/news/news/Brandon-Royval-says-hes-UFC-336-backup-for-Van-vs-Kape-title-fight-203604",
         "reason": "same story"
       },
       {
