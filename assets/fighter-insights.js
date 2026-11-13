@@ -274,10 +274,25 @@
   const score=v3.power;
   const tier=scoreTier(score);
   const ratings=[['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['defence','Defence'],['form','Recent Form']];
+  const readableLabels={
+   slpm:'Significant strikes landed per minute',sapm:'Significant strikes absorbed per minute',
+   diff:'Net significant strikes per 15 min',kd:'Knockdowns per 15 min',
+   td:'Takedowns per 15 min',control:'Control time per 15 min',
+   net:'Net control time per 15 min',sub:'Submission attempts per 15 min',
+   acc:'Significant strike accuracy',tdDef:'Takedown defence',
+   ko:'KO/TKO wins',submission:'Submission wins'
+  };
   const statRows=ufcV3.boards.filter(b=>v3.metrics[b.id]).map(b=>{
    const m=v3.metrics[b.id];
-   return '<li><span>'+escapeHTML(b.label)+'</span><strong>'+metricValue(m,b.type)+'</strong><small>'+
-    (m.rank?'#'+m.rank+' of '+b.eligible+' · ':'')+m.bouts+' bouts</small></li>';
+   const topTen=Number.isInteger(m.rank)&&m.rank>=1&&m.rank<=10;
+   const label=readableLabels[b.id]||b.label;
+   const value=b.id==='control'||b.id==='net'
+    ?(m.value<0?'−':'')+Math.floor(Math.abs(m.value)/60)+':'+String(Math.round(Math.abs(m.value)%60)).padStart(2,'0')
+    :metricValue(m,b.type==='def'?'pct':b.type);
+   return '<li class="'+(topTen?'is-top-ten':'')+'"><span>'+escapeHTML(label)+'</span><strong>'+escapeHTML(value)+'</strong>'+
+    (topTen?'<b class="befn-v3-top-ten">TOP 10 · UFC-WIDE</b>':'')+
+    '<small>'+(m.rank?'UFC-wide rank #'+m.rank+' of '+b.eligible+' eligible':'No UFC-wide rank')+
+    ' · '+m.bouts+' recorded '+(m.bouts===1?'fight':'fights')+'</small></li>';
   }).join('');
   const decided=v3.recent.filter(b=>['W','L','D'].includes(b.outcome));
   const record=['W','L','D'].map(x=>decided.filter(b=>b.outcome===x).length);
