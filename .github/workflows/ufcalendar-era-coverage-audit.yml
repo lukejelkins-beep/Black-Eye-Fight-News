@@ -1,0 +1,22 @@
+name: Audit UFCalendar historical UFC field availability
+on:
+  push:
+    branches:
+      - audit/ufcalendar-era-coverage-20261113
+    paths:
+      - scripts/audit-ufcalendar-era-coverage.py
+      - .github/workflows/ufcalendar-era-coverage-audit.yml
+permissions:
+  contents: read
+jobs:
+  ufcalendar-era-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check audit code syntax
+        run: python3 -m py_compile scripts/audit-ufcalendar-era-coverage.py
+      - name: Query UFCalendar annual UFC coverage and limited field samples
+        env:
+          UFCALENDAR_API_KEY: ${{ secrets.UFCALENDAR_API_KEY }}
+        run: python3 scripts/audit-ufcalendar-era-coverage.py
