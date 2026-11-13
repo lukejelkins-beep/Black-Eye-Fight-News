@@ -969,6 +969,119 @@ def collect_full_ufc_careers(client,state,research,coverage,today):
               "complete cached:",complete)
     return attempts
 
+
+def collect_full_ufc_event_links(client,state,research,coverage,today):
+    """One fighter-search pass to resolve older UFC fight IDs into round targets.
+
+    /fighters/{id}/history gives entire UFC timelines. Search returns native
+    official event/bout IDs, and each unique /fights/{id}/rounds request will
+    later capture both corners. Never infer historic draw/NC from missing search.
+    """
+    if coverage.get("schema")!=1 or coverage.get("scope")!="ufc":
+        return 0
+    stamp=date_str(coverage.get("asOf"))
+    if not stamp or not (today-dt.timedelta(days=7)).isoformat()<=stamp<=today.isoformat():
+        return 0
+    if coverage.get("activityCutoff")!=months_before(
+            dt.date.fromisoformat(stamp),36).isoformat():
+        return 0
+    done=state.setdefault("ufcFullCareerIndexDone",{})
+    priorities=state.setdefault("ufcHistoricalPriority",{})
+    profiles=research.get("profiles",{})
+    maximum=max(0,min(40,int(client.max_calls*.10)))
+    attempts=0
+    for fighter in coverage.get("fighters",[]):
+        if attempts>=maximum or client.stopped or client.remaining<=0 or client.calls>=client.max_calls-10:
+            break
+        if not isinstance(fighter,dict) or fighter.get("eligibilityStatus")!="latest_observed_mma_ufc":
+            continue
+        slugval=slug(fighter.get("slug"))
+        if not slugval:continue
+        profile=profiles.get(slugval) or {}
+        full=profile.get("ufcCareerHistory") or {}
+        rows=full.get("fights") or []
+        if not isinstance(rows,list) or not rows:continue
+        # A native-ID gap is evidence that searching full UFC fight history
+        # might add round-stat targets. A history-only row is still preserved
+        # for review, but cannot be assigned an invented UFC bout ID.
+        native={str(x["boutId"]) for x in rows if isinstance(x,dict)
+                and x.get("source")=="native" and x.get("boutId")}
+        unmatched=native-set(state.get("bouts",{}))
+        prior=done.get(slugval,{})
+        changed=(prior.get("lastUfcFight")!=fighter.get("lastUfcFight")
+                 or prior.get("careerCount")!=len(rows))
+        if isinstance(prior,dict) and not changed and prior.get("status")=="checked":
+            continue
+        if isinstance(prior,dict) and not changed and str(prior.get("retryAfter") or "")>today.isoformat():
+            continue
+        if not unmatched:
+            done[slugval]={"status":"checked","checkedAt":today.isoformat(),
+                           "lastUfcFight":fighter.get("lastUfcFight"),
+                           "careerCount":len(rows),"unmatchedNativeIds":0,
+                           "historyOnlyIdsMissing":sum(not x.get("boutId") for x in rows)}
+            continue
+        stable=stable_indexed_fighter_id(state,slugval)
+        attempted_lookup=stable or slugval
+        attempts+=1
+        payload=client.call("/fights/search"+param(org="ufc",fighter=attempted_lookup,
+                                                    limit=75))
+        if payload is None:
+            done[slugval]={"status":"retry","checkedAt":today.isoformat(),
+                           "lastUfcFight":fighter.get("lastUfcFight"),
+                           "careerCount":len(rows),
+                           "retryAfter":(today+dt.timedelta(days=7)).isoformat()}
+            continue
+        new=0
+        for raw in response_rows(payload):
+            if not isinstance(raw,dict):continue
+            event=raw.get("event")
+            if not isinstance(event,dict) or event.get("org") not in ("ufc",None):
+                continue
+            title=safe(event.get("title"),150)
+            # Do not count DWCS/Road to UFC as official UFC events even when
+            # a provider labels the source "ufc".
+            if not title or not re.search(r"\bufc\b",title,re.I) or re.search(
+                    r"\b(?:dwcs|contender\s+series|road\s+to\s+ufc)\b",title,re.I):
+                continue
+            when=date_str(event.get("starts_at"))
+            item=summary_bout(raw)
+            if not when or when>today.isoformat() or not item or item.get("status") not in (
+                    "completed","draw","no_contest"):
+                continue
+            sides=[side for side in ("a","b") if
+                   item[side].get("slug")==slugval or
+                   (stable and item[side].get("id")==stable)]
+            if not sides:continue
+            bid=item["id"]
+            if bid in state["bouts"]:
+                if state["bouts"][bid].get("org")!="ufc":continue
+            else:
+                state["bouts"][bid]={
+                    "id":bid,"a":item["a"],"b":item["b"],"event":title,
+                    "eventDate":when,"org":"ufc",
+                    "eventId":positive(event.get("id")),
+                    "status":item["status"],"main":item["main"],
+                    "titleFight":item["titleFight"],"result":item["result"]}
+                new+=1
+            if bid not in state.setdefault("roundDone",{}):
+                rank=3 if fighter.get("champion") else 2 if fighter.get("ranked") else 1
+                priorities[bid]=max(rank,int(priorities.get(bid,0)))
+        outstanding=native-set(state.get("bouts",{}))
+        # A query returning many results may be truncated. Do not claim a
+        # complete career index solely from this endpoint's first page.
+        more=bool(cursor_of(payload))
+        pending=bool(outstanding) or more
+        done[slugval]={"status":"partial" if pending else "checked",
+                       "checkedAt":today.isoformat(),
+                       "lastUfcFight":fighter.get("lastUfcFight"),
+                       "careerCount":len(rows),"newIndexedBouts":new,
+                       "unmatchedNativeIds":len(outstanding),
+                       "historyOnlyIdsMissing":sum(not x.get("boutId") for x in rows),
+                       **({"retryAfter":(today+dt.timedelta(days=14)).isoformat()}
+                          if pending else {})}
+    if attempts:print("UFCalendar full UFC career indexed searches:",attempts)
+    return attempts
+
 def verify_short_ufc_careers(client,state,research,coverage,today):
     """One-time full timelines for fighters with fewer than five UFC fights."""
     if coverage.get("schema")!=1 or coverage.get("scope")!="ufc":return 0
@@ -1134,6 +1247,7 @@ def main():
         collect_judging(client,state,cards,judging)
         collect_profiles(client,state,cards,research,today)
         collect_full_ufc_careers(client,state,research,coverage,today)
+        collect_full_ufc_event_links(client,state,research,coverage,today)
         collect_careers(client,state,research)
         verify_short_ufc_careers(client,state,research,coverage,today)
         collect_championship_history(client,state,research)
