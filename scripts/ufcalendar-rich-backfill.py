@@ -1067,6 +1067,121 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None)
     if attempts:print("UFCalendar full UFC career IDs indexed:",indexed,"of",attempts,"lookups")
     return indexed
 
+def reconcile_approved_ufc_full_career_timelines(client,state,research,coverage,today,approval=None):
+    """One bounded, identity-verified crosscheck of cached UFC career histories.
+
+    Slug lookups are already cached by collect_careers. Use the distinct numeric
+    UFC fighter ID from previously saved official fight corners to make a
+    genuinely different identity-based history check, once per eligible fighter.
+    This may recover older UFC bouts or explicit provider completeness evidence.
+    It never calls the provider without a verified ID or interprets an absent
+    'truncated' flag as complete.
+    """
+    if (not isinstance(coverage,dict) or coverage.get("schema")!=1 or
+        coverage.get("scope")!="ufc" or coverage.get("activityMonths")!=36 or
+        coverage.get("indexCompleteness")!="36_month_event_scan_complete"):
+        return {"attempts":0,"added":0,"certified":0}
+    stamp=date_str(coverage.get("asOf"))
+    if not stamp or not (today-dt.timedelta(days=7)).isoformat()<=stamp<=today.isoformat():
+        return {"attempts":0,"added":0,"certified":0}
+    approved=approved_ufc_career_cohort(approval,coverage,today)
+    if not approved:return {"attempts":0,"added":0,"certified":0}
+    eligible={slug(row.get("slug")):row for row in coverage.get("fighters",[])
+              if isinstance(row,dict) and row.get("eligibilityStatus")=="latest_observed_mma_ufc"
+              and slug(row.get("slug")) in approved}
+    if not eligible:return {"attempts":0,"added":0,"certified":0}
+    profiles=research.get("profiles",{})
+    # Index identities once rather than scanning every bout for every fighter.
+    identity_ids={}
+    for bout in state.get("bouts",{}).values():
+        if not isinstance(bout,dict) or bout.get("org")!="ufc":continue
+        name=safe(bout.get("event"),150)
+        if re.search(r"(?:contender\s+series|road\s+to\s+ufc|\bdwcs\b)",name,re.I):
+            continue
+        for side in ("a","b"):
+            athlete=bout.get(side)
+            if not isinstance(athlete,dict):continue
+            s=slug(athlete.get("slug"))
+            if s not in eligible:continue
+            fid=str(athlete.get("id") or "")
+            if re.fullmatch(r"[1-9][0-9]{0,11}",fid):
+                identity_ids.setdefault(s,set()).add(fid)
+    # Different approved slugs claiming one numeric ID are ambiguous; do
+    # not connect them or request a potentially wrong person's career data.
+    id_owners={}
+    for s,ids in identity_ids.items():
+        if len(ids)==1:
+            fid=next(iter(ids))
+            id_owners.setdefault(fid,set()).add(s)
+    checks=state.setdefault("ufcFullCareerHistoryChecks",{})
+    # A small fraction of each run, after recent-five fight and round requests.
+    cap=max(0,min(12,int(client.max_calls*.03)))
+    candidates=[]
+    for s,entry in eligible.items():
+        profile=profiles.get(s)
+        if not isinstance(profile,dict) or profile.get("ufcTimeline",{}).get("complete") is True:
+            continue
+        ids=identity_ids.get(s,set())
+        if len(ids)!=1:continue
+        fid=next(iter(ids))
+        if len(id_owners.get(fid,set()))!=1:continue
+        history=[r for r in profile.get("recentHistory",[])
+                 if isinstance(r,dict) and str(r.get("promotion") or "").lower()=="ufc"]
+        prior=checks.get(s,{})
+        last=date_str(entry.get("lastUfcFight"))
+        if isinstance(prior,dict):
+            if str(prior.get("retryAfter") or "")>today.isoformat():continue
+            if prior.get("status")=="checked" and prior.get("lastUfcFight")==last:continue
+        # The longest known careers offer the highest chance of rescuing old
+        # bouts that were truncated by an earlier slug-based history lookup.
+        candidates.append((-len(history),s,fid,history,last))
+    candidates.sort()
+    attempts=added=certified=0
+    for _,s,fid,history,last in candidates:
+        if (attempts>=cap or client.stopped or client.remaining<=0 or
+            client.calls>=client.max_calls-12):
+            break
+        attempts+=1
+        before={((r.get("date") or ""),safe(r.get("opponent"),110).casefold())
+                for r in history}
+        payload=client.call("/fighters/"+fid+"/history")
+        rows=response_rows(payload)
+        if not rows or not any(isinstance(r,dict) and
+                 str(r.get("org_slug") or r.get("org") or "").lower()=="ufc"
+                 for r in rows):
+            days=30 if payload is not None else 7
+            checks[s]={"status":"retry","checkedAt":today.isoformat(),
+                       "lastUfcFight":last,"numericFighterId":fid,
+                       "retryAfter":(today+dt.timedelta(days=days)).isoformat()}
+            continue
+        profile=profiles[s]
+        old_complete=profile.get("ufcTimeline",{}).get("complete") is True
+        merged=save_ufc_timeline(profile,payload,today)
+        after={((r.get("date") or ""),safe(r.get("opponent"),110).casefold())
+               for r in merged if str(r.get("promotion") or "").lower()=="ufc"}
+        newfound=len(after-before)
+        added+=newfound
+        full=profile.get("ufcTimeline",{}).get("complete") is True
+        if full and last and not any(
+            str(row.get("promotion") or "").lower()=="ufc" and
+            date_str(row.get("date"))==last for row in merged):
+            # An explicit 'untruncated' provider result that omits the
+            # roster-confirmed most recent UFC bout cannot certify a career.
+            profile["ufcTimeline"]["complete"]=False
+            profile["ufcTimeline"]["missingRosterLastUfcFight"]=last
+            full=False
+        if full and not old_complete:certified+=1
+        checks[s]={"status":"checked","checkedAt":today.isoformat(),
+                   "lastUfcFight":last,"numericFighterId":fid,
+                   "ufcHistoryRowsBefore":len(history),"ufcHistoryRowsAfter":len(after),
+                   "newUfcBoutsRecovered":newfound,
+                   "explicitFullProviderTimeline":full}
+    if attempts:
+        print("UFCalendar approved UFC career ID crosschecks:",
+              attempts,"older UFC bouts newly recovered:",added,
+              "provider-complete careers newly certified:",certified)
+    return {"attempts":attempts,"added":added,"certified":certified}
+
 def verify_short_ufc_careers(client,state,research,coverage,today):
     """One-time full timelines for fighters with fewer than five UFC fights."""
     if coverage.get("schema")!=1 or coverage.get("scope")!="ufc":return 0
@@ -1255,6 +1370,8 @@ def main():
             print("UFCalendar incomplete UFC round rechecks:",recovery["retried"])
         collect_judging(client,state,cards,judging)
         verify_short_ufc_careers(client,state,research,coverage,today)
+        reconcile_approved_ufc_full_career_timelines(
+            client,state,research,approved36,roster_today,approval)
         collect_championship_history(client,state,research)
         recover_previews(cards,archive,pfl_archive,judging)
         public=public_events(cards,research.get("profiles",{}),today)
