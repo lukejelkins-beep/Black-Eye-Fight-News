@@ -47,7 +47,7 @@ export function verifiedUfcBouts(bouts){
     if(!item||typeof item!=="object")continue;
     const id=String(item.boutId??"").trim();
     const outcome=normalizeOutcome(item.outcome??item.result);
-    const promotion=String(item.promotion??item.org??"UFC").toUpperCase();
+    const promotion=String(item.promotion??item.org??"").trim().toUpperCase();
     if(!id||!isDate(item.date)||promotion!=="UFC"||
       !["W","L","D","NC"].includes(outcome)||seen.has(id))continue;
     seen.add(id);
