@@ -49,7 +49,9 @@ function metricOn(rows,id){
  if(id==="ko"||id==="submission"){
   for(const row of rows){
    const result=row.result;
-   if(!eligibleOutcome(result?.outcome))continue;
+   // Only confirmed unique UFC bout IDs can qualify finish leaderboards.
+   // A research-note-only result is useful context, not a measured bout.
+   if(!result?.boutId||!eligibleOutcome(result?.outcome))continue;
    const method=String(result.method||"").trim().toLowerCase();
    if(result.outcome==="W"&&!method)continue;
    bouts++;
@@ -119,7 +121,9 @@ export function buildSnapshot(coverage,postfight,cohorts=[],options={}){
  }
  const reviewed=reviewedMap(cohorts),fighters={},divisions=new Map();
  const current=coverage.fighters.filter(f=>f&&f.lastUfcFight>=coverage.activityCutoff&&
-   f.lastUfcFight<=asOf&&Array.isArray(f.recent)&&f.recent.length);
+   f.lastUfcFight<=asOf&&Array.isArray(f.recent));
+ // Keep a profile even when all five historical fights are still unresolved.
+ // Absence of reliable fight rows must never silently remove an active athlete.
  for(const f of current){
   const key=norm(f.name);
   if(!key||fighters[key])continue;
