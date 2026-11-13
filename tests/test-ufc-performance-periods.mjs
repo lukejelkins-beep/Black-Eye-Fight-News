@@ -118,3 +118,14 @@ test("invalid recorded event dates fail closed without crashing or entering sele
   const malformed=[fight("bad",0,{date:"2026-13-99"}),fight("bad2",0,{date:"2026-02-31"}),sample[0]];
   assert.deepEqual(verifiedUfcBouts(malformed).map(x=>x.boutId),["1"]);
 });
+
+test("missing promotion metadata never defaults to UFC or unlocks Last 5",()=>{
+  const noPromotion=fight("missing",0,{promotion:undefined,org:undefined});
+  const blankPromotion=fight("blank",1,{promotion:"  ",org:undefined});
+  const explicitOrg=fight("org",2,{promotion:undefined,org:" ufc "});
+  const nonUfc=fight("feeder",3,{promotion:undefined,org:"DWCS"});
+  const list=[...sample.slice(0,4),noPromotion,blankPromotion,nonUfc,explicitOrg];
+  assert.deepEqual(verifiedUfcBouts(list).map(b=>b.boutId),["1","2","3","org","4"]);
+  assert.equal(periodOptions([...sample.slice(0,4),noPromotion])[0].enabled,false);
+  assert.equal(computeUfcPeriod([...sample.slice(0,4),noPromotion],"5").available,false);
+});
