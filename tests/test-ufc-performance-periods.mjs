@@ -138,3 +138,11 @@ test("feeder-event metadata overrides a UFC promotion label",()=>{
   const official=fight("official",6,{promotion:"UFC",eventName:"UFC Fight Night: London"});
   assert.deepEqual(verifiedUfcBouts([...feeder,nested,official]).map(x=>x.boutId),["official"]);
 });
+
+test("nested event.title and event.eventName feeder aliases cannot bypass UFC-only admission",()=>{
+  const title=fight("nested-title",0,{event:{title:"Road to UFC: Season 4"}});
+  const name=fight("nested-eventName",1,{event:{eventName:"Dana White’s Contender Series"}});
+  const mixed=fight("mixed",2,{eventName:"UFC",event:{title:"Road to UFC: Season 5"}});
+  const official=fight("real-ufc",3,{event:{title:"UFC Fight Night: London"}});
+  assert.deepEqual(verifiedUfcBouts([title,name,mixed,official]).map(x=>x.boutId),["real-ufc"]);
+});
