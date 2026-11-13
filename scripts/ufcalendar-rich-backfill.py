@@ -24,6 +24,7 @@ CARDS = ROOT / "data/ufcalendar-card-enhancements.json"
 ARCHIVE = ROOT / "data/ufc-research-archive.json"
 PFL_ARCHIVE = ROOT / "data/pfl-research-archive.json"
 FIGHTERS = ROOT / "data/ufcalendar-fighter-research.json"
+COVERAGE = ROOT / "data/ufc-last-five-coverage.json"
 JUDGING = ROOT / "data/ufcalendar-judging-research.json"
 BASE = "https://api.ufcalendar.com/v1"
 MAX_SPEND_PER_MONTH = 27000  # 90% of Hobby; reserve 3,000 for live BEFN integrations.
@@ -360,6 +361,12 @@ def selected_stats(rounds):
 
 def collect_rounds(client,state,cards,archive,pfl_archive,today):
     pairs=selection(state)
+    # Reuse the coverage inventory's champion/upcoming/ranked priorities.
+    # Already completed ids never cost another API call.
+    priority=state.get("ufcHistoricalPriority",{})
+    pairs.sort(key=lambda b:(b.get("org")=="ufc",
+                            int(priority.get(b.get("id"),-1)),
+                            b.get("eventDate") or ""),reverse=True)
     count=0
     cap=max(0,min(195,int(client.max_calls*.45),client.max_calls-client.calls-15))
     for bout in pairs:
@@ -484,6 +491,98 @@ def summarize_history(payload):
                         "titleFight":bool(row.get("is_title"))})
         if len(history)>=20:break
     return history
+
+
+def collect_targeted_ufc_history(client,state,coverage,today):
+    """Find missing last-five UFC fight IDs once per athlete, from saved audit order.
+
+    /fights/search returns completed bouts with a winner, so it does NOT prove
+    draw/NC histories complete. The earlier event index preserves those bouts.
+    This never fetches statistics directly; collect_rounds fetches one unique
+    bout once and stores both corners in the existing archive.
+    """
+    if coverage.get("schema") != 1 or coverage.get("scope") != "ufc":
+        return 0
+    stamp=date_str(coverage.get("asOf"))
+    # A stale audit cannot silently define today's active roster.
+    if not stamp or not (today-dt.timedelta(days=7)).isoformat() <= stamp <= today.isoformat():
+        return 0
+    done=state.setdefault("ufcHistoricalSearchDone",{})
+    priority=state.setdefault("ufcHistoricalPriority",{})
+    # A small bounded fraction of requests per run; the central Client enforces
+    # the monthly 27k ceiling, the 3k reserve and the provider RPM.
+    cap=max(0,min(55,int(client.max_calls*.14)))
+    searched=0
+    attempted=0
+    for f in coverage.get("fighters",[]):
+        # Count attempted lookups, including 404s and transient failures.
+        # Otherwise an all-missing batch could consume the entire run budget.
+        if attempted>=cap or client.remaining<=0 or client.stopped:
+            break
+        if not isinstance(f,dict) or not f.get("needsHistoryCheck"):
+            continue
+        slugval=slug(f.get("slug"))
+        if not slugval:
+            continue
+        prior=done.get(slugval)
+        if prior:
+            # A stale/renamed fighter slug might 404. Avoid burning quota on
+            # the same rejected lookup every scheduled collector run.
+            if not isinstance(prior,dict) or prior.get("status")!="unresolved_slug_404":
+                continue
+            if str(prior.get("retryAfter") or "9999-12-31")>today.isoformat():
+                continue
+        # At most eight most recent completed wins/losses. Existing event-index
+        # draw/NC records remain in the dataset rather than treated as losses.
+        before_errors=len(client.errors)
+        attempted+=1
+        payload=client.call("/fights/search"+param(org="ufc",fighter=slugval,limit=8))
+        if payload is None:
+            if len(client.errors)>before_errors and client.errors[-1]=="HTTP_404":
+                done[slugval]={"status":"unresolved_slug_404",
+                              "checkedAt":today.isoformat(),
+                              "retryAfter":(today+dt.timedelta(days=7)).isoformat()}
+            continue
+        searched+=1
+        new=0
+        matches=0
+        rank=3 if f.get("champion") else 2 if f.get("upcoming") else 1 if f.get("ranked") else 0
+        for raw in response_rows(payload):
+            if not isinstance(raw,dict):
+                continue
+            event=raw.get("event")
+            if not isinstance(event,dict) or event.get("org") not in ("ufc",None):
+                continue
+            date=date_str(event.get("starts_at"))
+            bout=summary_bout(raw)
+            if not date or date>today.isoformat() or not bout or bout.get("status")!="completed":
+                continue
+            if not (bout["a"].get("slug")==slugval or bout["b"].get("slug")==slugval):
+                continue
+            matches+=1
+            bid=bout["id"]
+            old=state["bouts"].get(bid)
+            if old and old.get("org")!="ufc":
+                continue
+            # Reuse all previously indexed bouts, never overwrite verified
+            # event/result facts with an incomplete search response.
+            if not old:
+                state["bouts"][bid]={
+                    "id":bid,"a":bout["a"],"b":bout["b"],
+                    "event":safe(event.get("title"),150),
+                    "eventDate":date,"org":"ufc",
+                    "eventId":positive(event.get("id")),
+                    "status":"completed","main":bout["main"],
+                    "titleFight":bout["titleFight"],"result":bout["result"]}
+                new+=1
+            # Only the first five completed results are immediate round targets.
+            # Ranking weights do not represent actual statistical standings.
+            if matches<=5 and bid not in state["roundDone"]:
+                priority[bid]=max(rank,priority.get(bid,-1))
+        done[slugval]={"checkedAt":today.isoformat(),
+                       "matchedWinnerBouts":matches,"newIndexedBouts":new,
+                       "drawsAndNoContests":"retain_event_index"}
+    return searched
 
 def collect_careers(client,state,research):
     # Previously researched fighters remain in the cache after cancellation.
@@ -611,6 +710,8 @@ def main():
     if client.bootstrap():
         read_events(client,state,today)
         visible=collect_cards(client,state,cards,today)
+        searched=collect_targeted_ufc_history(client,state,read(COVERAGE,{}),today)
+        if searched:print("UFCalendar targeted UFC history lookups:",searched)
         collect_rounds(client,state,cards,archive,pfl_archive,today)
         collect_judging(client,state,cards,judging)
         collect_profiles(client,state,cards,research,today)

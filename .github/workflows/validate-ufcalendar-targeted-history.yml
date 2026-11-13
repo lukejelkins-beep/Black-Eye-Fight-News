@@ -1,0 +1,30 @@
+name: Validate targeted UFCalendar UFC historical backfill
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/ufcalendar-rich-backfill.py'
+      - 'tests/test-ufcalendar-targeted-history.py'
+      - 'scripts/build-ufc-last-five-coverage.mjs'
+      - '.github/workflows/validate-ufcalendar-targeted-history.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  targeted-history:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate historical collector and deduplicated local fixtures
+        run: |
+          python3 -m py_compile scripts/ufcalendar-rich-backfill.py
+          python3 tests/test-ufcalendar-targeted-history.py
+      - name: Validate last-five inventory contract without API calls
+        run: node --test tests/test-ufc-last-five-coverage.mjs
