@@ -313,6 +313,8 @@ test("direct official UFC Not Fighting status excludes from confirmed active ros
    "review_required");
  const public18=auditUfcLastFive(...args,{asOf:"2026-11-14",
    activityMonths:18,rosterReview:opts.rosterReview});
- assert.ok(public18.fighters.some(f=>f.slug==="f-a"),
+ const baseline18=auditUfcLastFive(...args,{asOf:"2026-11-14",
+   activityMonths:18});
+ assert.deepEqual(public18,baseline18,
    "36-month classification must not modify public 18-month roster");
 });
