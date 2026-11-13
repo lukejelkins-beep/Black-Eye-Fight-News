@@ -23,6 +23,7 @@ jobs:
         run: |
           node --check scripts/build-ufc-last-five-coverage.mjs
           node --test tests/test-ufc-last-five-coverage.mjs
+          node --test tests/test-ufc-pipeline-order.mjs
       - name: Build inventory from saved UFCalendar data without API requests
         run: node scripts/build-ufc-last-five-coverage.mjs
       - name: Verify output contains no external credential or unverified rank claims
