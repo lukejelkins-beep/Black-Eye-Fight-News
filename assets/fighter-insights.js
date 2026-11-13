@@ -50,7 +50,7 @@
   const out=[],seen=new Set();
   for(const c of (Array.isArray(f.credentials)?f.credentials:[])){
    if(!c||!allowed.has(c.kind)||!validSource(c.source)||seen.has(c.kind==="ncaa"?c.kind+":"+c.division:c.kind))continue;
-   if(c.kind==="ncaa"&&!["I","II","III"].includes(c.division))continue;
+   if(c.kind==="ncaa"&&(!["I","II","III"].includes(c.division)||(c.medal&&!medalIcon[c.medal])))continue;
    if(c.kind==="olympic-judo"&&(c.participated!==true||
       (c.medal&&!medalIcon[c.medal])||
       (c.medalCount!==undefined&&(!Number.isInteger(c.medalCount)||c.medalCount<1||c.medalCount>15))||
@@ -76,7 +76,8 @@
   }[c.kind]||"Verified credential");
   const content=c.kind==="bjj"?'<span class="befn-belt" style="--belt:'+beltColors[c.belt]+'"></span>':
    c.kind==="ncaa"?'<span class="befn-credential-ncaa"><small>NCAA</small><b>DIV '+escapeHTML(c.division)+'</b></span>'+
-     (medalIcon[c.medal]?'<em class="befn-credential-medal">'+medalIcon[c.medal]+'</em>':''):
+     (medalIcon[c.medal]?'<em class="befn-credential-medal is-'+c.medal+'" aria-hidden="true">'+
+      ({gold:"1",silver:"2",bronze:"3"}[c.medal])+'</em>':''):
    c.kind==="olympic-judo"?'<span class="befn-credential-judo"><small>JUDO</small><b>🥋</b><small>OG</small></span>'+
      (c.medal&&medalIcon[c.medal]?'<em class="befn-credential-medal">'+medalIcon[c.medal]+
        (c.medalCount>1?'<small>×'+c.medalCount+'</small>':'')+'</em>':''):
