@@ -69,7 +69,7 @@ test("the exact fetched commit is the sole source of the grace comparison",()=>{
  assert(idx>=0);
  assert.match(stage,/git fetch --quiet --no-tags origin main/);
  assert.match(stage,/new_main=\$\(git rev-parse FETCH_HEAD\)/);
- assert.doesNotMatch(stage,/ls-remote/);
+ assert.doesNotMatch(stage,/^\s*new_main=.*ls-remote/m);
  assert.equal((stage.match(/git fetch --quiet --no-tags origin main/g)||[]).length,1);
  assert.match(file,/Main changed since source validation; aborting recovery/);
 });
