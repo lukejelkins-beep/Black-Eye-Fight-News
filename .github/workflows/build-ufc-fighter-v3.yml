@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'data/ufc-last-five-coverage.json'
       - 'scripts/build-ufc-fighter-v3.mjs'
       - 'tests/test-ufc-fighter-v3.mjs'
       - '.github/workflows/build-ufc-fighter-v3.yml'

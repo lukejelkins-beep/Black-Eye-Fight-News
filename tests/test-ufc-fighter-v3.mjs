@@ -199,6 +199,52 @@ test("individually reviewed UFC results override conflicting provisional index r
  assert.equal(a.metrics.slpm.bouts,1);
  assert.equal(a.metrics.slpm.rank,undefined);
 });
+test("a uniquely linked UFC bout one calendar day away keeps reviewed results authoritative",()=>{
+ const shifted=structuredClone(coverage);
+ shifted.fighters[0].recent[0].date="2026-06-13";
+ shifted.fighters[0].recent[1].opponent="Different UFC opponent";
+ const vetted={schema:1,scope:"ufc-champions",fighters:{
+  a:{name:"A One",organisation:"UFC",sport:"MMA",category:"Champion",
+   division:"Light Heavyweight",review:{credentialsChecked:true},
+   latest:[{date:"2026-06-12",opponent:"B Two",outcome:"L",
+    method:"Submission R1"}]}
+ }};
+ const d=buildSnapshot(shifted,postfight,[vetted]),f=d.fighters.aone;
+ assert.equal(f.recent[0].date,"2026-06-12","keep the independently reviewed event-local date");
+ assert.equal(f.recent[0].outcome,"L","never infer the outcome from the cached provider");
+ assert.equal(f.recent[0].method,"Submission R1");
+ assert.equal(f.recent[0].boutId,"m1","join only one unambiguous one-day-shifted bout");
+ assert.equal(f.metrics.slpm.value,6);
+ assert.equal(f.metrics.slpm.bouts,1);
+});
+test("two adjacent same-opponent UFC bout IDs cannot be assigned to one verified result",()=>{
+ const ambiguous=structuredClone(coverage);
+ ambiguous.fighters[0].recent[0].date="2026-06-13";
+ ambiguous.fighters[0].recent[1].date="2026-06-11";
+ ambiguous.fighters[0].recent[1].opponent="B Two";
+ const vetted={schema:1,scope:"ufc-only",fighters:{
+  a:{name:"A One",organisation:"UFC",sport:"MMA",category:"Champion",
+   division:"Light Heavyweight",review:{credentialsChecked:true},
+   latest:[{date:"2026-06-12",opponent:"B Two",outcome:"L",
+    method:"Submission R1"}]}
+ }};
+ const d=buildSnapshot(ambiguous,postfight,[vetted]),f=d.fighters.aone;
+ assert.equal(f.recent[0].boutId,null);
+ assert.equal(f.metrics.slpm,undefined);
+});
+test("exact dated UFC result takes priority over a different one-day-offset bout",()=>{
+ const ambiguous=structuredClone(coverage);
+ ambiguous.fighters[0].recent[1].date="2026-06-13";
+ ambiguous.fighters[0].recent[1].opponent="B Two";
+ const vetted={schema:1,scope:"ufc-only",fighters:{
+  a:{name:"A One",organisation:"UFC",sport:"MMA",category:"Champion",
+   division:"Light Heavyweight",review:{credentialsChecked:true},
+   latest:[{date:"2026-06-12",opponent:"B Two",outcome:"L",
+    method:"Submission R1"}]}
+ }};
+ const d=buildSnapshot(ambiguous,postfight,[vetted]);
+ assert.equal(d.fighters.aone.recent[0].boutId,"m1");
+});
 test("incomplete reviewed UFC roster stays Unassessed, not an invented contender",()=>{
  const vetted={schema:1,scope:"ufc-only",fighters:{
   c:{name:"C Unknown",organisation:"UFC",sport:"MMA",division:"Flyweight",
@@ -209,6 +255,20 @@ test("incomplete reviewed UFC roster stays Unassessed, not an invented contender
  const d=buildSnapshot(coverage,postfight,[vetted]);
  assert.equal(d.fighters.cunknown.category,"Unassessed");
  assert.equal(d.fighters.cunknown.recent.length,1);
+});
+test("offline V3 snapshot refresh follows a changed five-fight coverage file",()=>{
+ const workflow=fs.readFileSync(".github/workflows/build-ufc-fighter-v3.yml","utf8");
+ const push=workflow.slice(workflow.indexOf("  push:"),workflow.indexOf("  schedule:"));
+ assert.match(push,/data\/ufc-last-five-coverage\.json/);
+ assert.match(workflow,/node scripts\/build-ufc-fighter-v3\.mjs/);
+ assert.doesNotMatch(workflow,/UFCALENDAR_API_KEY|api\.ufcalendar/);
+});
+test("desktop/mobile UFC QA reads rebuilt coverage before generating V3 results",()=>{
+ const yml=fs.readFileSync(".github/workflows/validate-ufc-profiles.yml","utf8");
+ const first=yml.indexOf("node scripts/build-ufc-last-five-coverage.mjs");
+ const second=yml.indexOf("node scripts/build-ufc-fighter-v3.mjs");
+ const browser=yml.indexOf("run: node tests/test-ufc-profile-visual.mjs");
+ assert(first>=0&&second>first&&browser>second);
 });
 test("schema four cannot overwrite independently reviewed UFC classifications",()=>{
  const js=fs.readFileSync("assets/fighter-insights.js","utf8");

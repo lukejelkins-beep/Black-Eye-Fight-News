@@ -22,15 +22,37 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
  if(!validDate(asOf))throw Error("asOf must be YYYY-MM-DD");
  const cutoff=cutoffFrom(asOf),registry=new Map();
  const ensure=(s,name)=>{const slug=slugify(s);if(!slug)return null;
-  if(!registry.has(slug))registry.set(slug,{slug,name:name||slug,lastActive:null,history:new Map(),active:false});
+  if(!registry.has(slug))registry.set(slug,{slug,name:name||slug,lastActive:null,history:new Map(),active:false,shiftedAliasesJoined:0});
   const x=registry.get(slug);if(name)x.name=name;return x;};
  const put=(fighter,date,opponent,{boutId=null,method=null,outcome=null,origin}={})=>{
   if(!fighter||!validDate(date)||date>asOf||!opponent)return;
   const k=date+":"+nameKey(opponent);
   const existing=fighter.history.get(k);
-  if(!existing||(!existing.boutId&&boutId)){
-   fighter.history.set(k,{date,opponent,boutId,method,outcome,origin});
+  if(existing){
+   if(!existing.boutId&&boutId)
+    fighter.history.set(k,{date,opponent,boutId,method,outcome,origin});
+   return;
   }
+  // Official bout calendars may use UTC where athlete history uses local day.
+  // Join only the same opponent shifted by EXACTLY one day, when one record
+  // has a unique provider UFC bout ID and the other is text-only history.
+  const opponentKey=nameKey(opponent);
+  const candidates=[...fighter.history.entries()].filter(([_,prior])=>
+   nameKey(prior.opponent)===opponentKey&&
+   Math.abs(Date.parse(prior.date+"T00:00:00Z")-
+    Date.parse(date+"T00:00:00Z"))===86400000&&
+   Boolean(prior.boutId)!==Boolean(boutId));
+  if(candidates.length===1){
+   fighter.shiftedAliasesJoined++;
+   const [priorKey,prior]=candidates[0];
+   if(boutId&&!prior.boutId){
+    fighter.history.delete(priorKey);
+    fighter.history.set(k,{date,opponent,boutId,method,outcome,origin});
+   }
+   // Retain the indexed date/status and confirmed ID if already present.
+   return;
+  }
+  fighter.history.set(k,{date,opponent,boutId,method,outcome,origin});
  };
  const bouts=Object.values(progress?.bouts||{}).filter(b=>b?.org==="ufc"&&settled.has(b.status)&&validDate(b.eventDate)&&b.eventDate<=asOf);
  for(const bout of bouts){
@@ -99,9 +121,14 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
    b.lastUfcFight.localeCompare(a.lastUfcFight)||a.slug.localeCompare(b.slug));
  const totals={activeFighters:fighters.length,
   withFiveKnown:fighters.filter(f=>f.recentCount===5).length,
+  withFiveLinkedIds:fighters.filter(f=>f.recentCount===5&&
+   f.recent.every(x=>x.boutId)&&
+   new Set(f.recent.map(x=>String(x.boutId))).size===5).length,
   withThreeMeasured:fighters.filter(f=>f.measuredCount>=3).length,
   needHistoryCheck:fighters.filter(f=>f.needsHistoryCheck).length,
   needStats:fighters.filter(f=>f.needsStats).length,
+  shiftedDateAliasesJoined:[...registry.values()].filter(f=>f.active)
+   .reduce((sum,f)=>sum+f.shiftedAliasesJoined,0),
   uniqueKnownBoutIds:new Set(fighters.flatMap(f=>f.recent.map(b=>b.boutId).filter(Boolean))).size};
  return {schema:1,scope:"ufc",asOf,activityCutoff:cutoff,summary:totals,fighters};
 }
