@@ -1,3 +1,4 @@
+import {readFileSync} from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {auditApprovedStage3,markdownReport} from '../scripts/ufc-36-month-stage3-progress.mjs';
@@ -51,4 +52,12 @@ test('Reject unauthorised or changed census and never claim missing rounds are m
  assert.throws(()=>auditApprovedStage3({...approval,approvedFighters:slugs.slice(0,782)},census,progress,research,archive),/Invalid immutable/);
  assert.throws(()=>auditApprovedStage3({...approval,status:'pending_review'},census,progress,research,archive),/not approved/);
  assert.throws(()=>auditApprovedStage3(approval,{...census,indexCompleteness:'incomplete'},progress,research,archive),/Invalid cached/);
+});
+
+test('the existing paid collector reports offline Stage 3 progress without a second worker',()=>{
+  const yaml=readFileSync(new URL('../.github/workflows/ufcalendar-rich-backfill.yml',import.meta.url),'utf8');
+  assert.match(yaml,/name: Report verified approved Stage 3 coverage from saved data/);
+  assert.match(yaml,/node scripts\/ufc-36-month-stage3-progress\.mjs/);
+  assert.match(yaml,/concurrency:\n  group: befn-ufc-research-archive/);
+  assert.match(yaml,/Offline Stage 3 audit unavailable; preserve newly fetched records/);
 });
