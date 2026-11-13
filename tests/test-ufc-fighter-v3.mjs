@@ -199,6 +199,51 @@ test("individually reviewed UFC results override conflicting provisional index r
  assert.equal(a.metrics.slpm.bouts,1);
  assert.equal(a.metrics.slpm.rank,undefined);
 });
+test("a uniquely linked UFC bout one calendar day away keeps reviewed results authoritative",()=>{
+ const shifted=structuredClone(coverage);
+ shifted.fighters[0].recent[0].date="2026-06-13";
+ const vetted={schema:1,scope:"ufc-champions",fighters:{
+  a:{name:"A One",organisation:"UFC",sport:"MMA",category:"Champion",
+   division:"Light Heavyweight",review:{credentialsChecked:true},
+   latest:[{date:"2026-06-12",opponent:"B Two",outcome:"L",
+    method:"Submission R1"}]}
+ }};
+ const d=buildSnapshot(shifted,postfight,[vetted]),f=d.fighters.aone;
+ assert.equal(f.recent[0].date,"2026-06-12","keep the independently reviewed event-local date");
+ assert.equal(f.recent[0].outcome,"L","never infer the outcome from the cached provider");
+ assert.equal(f.recent[0].method,"Submission R1");
+ assert.equal(f.recent[0].boutId,"m1","join only one unambiguous one-day-shifted bout");
+ assert.equal(f.metrics.slpm.value,6);
+ assert.equal(f.metrics.slpm.bouts,1);
+});
+test("two adjacent same-opponent UFC bout IDs cannot be assigned to one verified result",()=>{
+ const ambiguous=structuredClone(coverage);
+ ambiguous.fighters[0].recent[0].date="2026-06-13";
+ ambiguous.fighters[0].recent[1].date="2026-06-11";
+ ambiguous.fighters[0].recent[1].opponent="B Two";
+ const vetted={schema:1,scope:"ufc-only",fighters:{
+  a:{name:"A One",organisation:"UFC",sport:"MMA",category:"Champion",
+   division:"Light Heavyweight",review:{credentialsChecked:true},
+   latest:[{date:"2026-06-12",opponent:"B Two",outcome:"L",
+    method:"Submission R1"}]}
+ }};
+ const d=buildSnapshot(ambiguous,postfight,[vetted]),f=d.fighters.aone;
+ assert.equal(f.recent[0].boutId,null);
+ assert.equal(f.metrics.slpm,undefined);
+});
+test("exact dated UFC result takes priority over a different one-day-offset bout",()=>{
+ const ambiguous=structuredClone(coverage);
+ ambiguous.fighters[0].recent[1].date="2026-06-13";
+ ambiguous.fighters[0].recent[1].opponent="B Two";
+ const vetted={schema:1,scope:"ufc-only",fighters:{
+  a:{name:"A One",organisation:"UFC",sport:"MMA",category:"Champion",
+   division:"Light Heavyweight",review:{credentialsChecked:true},
+   latest:[{date:"2026-06-12",opponent:"B Two",outcome:"L",
+    method:"Submission R1"}]}
+ }};
+ const d=buildSnapshot(ambiguous,postfight,[vetted]);
+ assert.equal(d.fighters.aone.recent[0].boutId,"m1");
+});
 test("incomplete reviewed UFC roster stays Unassessed, not an invented contender",()=>{
  const vetted={schema:1,scope:"ufc-only",fighters:{
   c:{name:"C Unknown",organisation:"UFC",sport:"MMA",division:"Flyweight",
