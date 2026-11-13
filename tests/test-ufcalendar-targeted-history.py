@@ -19,9 +19,11 @@ class StubClient:
         self.stopped=False
         self.paths=[]
         self.errors=[]
+        self.calls=0
 
     def call(self,path):
         self.paths.append(path)
+        self.calls+=1
         self.remaining-=1
         return {"data":self.rows.get(path,[])}
 
