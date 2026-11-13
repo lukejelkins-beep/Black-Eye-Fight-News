@@ -26,6 +26,7 @@ test("18-month eligibility and older UFC history are separate",()=>{
  assert.deepEqual(a.recent.map(r=>r.date),["2026-06-01","2024-04-15","2023-09-10"]);
  assert.equal(a.measuredCount,1);
  assert.equal(a.needsHistoryCheck,true);
+ assert.equal(a.evidenceStage,"shortUnlinked");
  assert.ok(a.recent.every(x=>x.origin==="ufc-bout-index"||x.origin==="ufc-history"));
  assert.equal(d.fighters.some(f=>f.slug==="gamma"||f.slug==="pfl-fighter"),false);
 });
@@ -46,6 +47,8 @@ test("five measured UFC bouts qualify for later leaderboard computation",()=>{
  assert.equal(p.measuredCount,5);
  assert.equal(p.needsStats,false);
  assert.equal(p.needsHistoryCheck,false);
+ assert.equal(p.evidenceStage,"fiveLinkedMeasured");
+ assert.equal(d.summary.evidenceStages.fiveLinkedMeasured,1);
  assert.equal(d.summary.withThreeMeasured,1);
  assert.equal(d.summary.uniqueKnownBoutIds,5);
 });
@@ -88,6 +91,7 @@ test("a metrics object containing only unavailable values is not measured",()=>{
  const f=d.fighters.find(x=>x.slug==="fighter");
  assert.equal(f.measuredCount,0);
  assert.equal(f.needsStats,true);
+ assert.equal(f.evidenceStage,"shortLinkedStatsGap");
  const valid=auditUfcLastFive({bouts},{profiles:{}},{
   fighters:{fighter:{name:"Fighter",scope:"ufc-only",
    recentBouts:[{boutId:"1",metrics:{sigLanded:0,controlSec:null}}]}}
@@ -109,6 +113,7 @@ test("UTC/local one-day shift links a text-only UFC history row to its confirmed
  assert.equal(a.recentCount,1,"the one fight must not appear twice");
  assert.equal(a.recent[0].boutId,"501");
  assert.equal(a.measuredCount,1);
+ assert.equal(a.evidenceStage,"shortLinkedMeasuredDepthUnconfirmed");
  assert.equal(d.summary.shiftedDateAliasesJoined,1);
  assert.equal(d.summary.withFiveLinkedIds,0);
 });
@@ -136,4 +141,49 @@ test("one-day date alias is not enough without a confirmed UFC bout ID",()=>{
   {fighters:{}},{divisions:[]},{asOf:"2026-11-13"});
  assert.equal(d.fighters.find(x=>x.slug==="alpha").recentCount,2);
  assert.equal(d.summary.shiftedDateAliasesJoined,0);
+});
+
+test("the six evidence stages partition every active fighter without asserting short-career completion",()=>{
+ const bouts={},measured=[];
+ for(let i=1;i<=5;i++){
+  const id=String(i);
+  bouts[id]={id,org:"ufc",eventDate:"2026-0"+i+"-02",status:"completed",
+   a:{id:"20",slug:"five-stats-gap",name:"Five Stats Gap"},
+   b:{id:String(40+i),slug:"opponent-"+i,name:"Opponent "+i},
+   result:{winnerId:"20",method:"decision"}};
+  if(i<5)measured.push({boutId:id,metrics:{sigLanded:i}});
+ }
+ bouts["100"]={id:"100",org:"ufc",eventDate:"2026-07-01",status:"completed",
+  a:{id:"22",slug:"short-measured",name:"Short Measured"},
+  b:{id:"90",slug:"another-opponent",name:"Another Opponent"},
+  result:{winnerId:"22",method:"decision"}};
+ bouts["200"]={id:"200",org:"ufc",eventDate:"2026-08-01",status:"completed",
+  a:{id:"23",slug:"five-unlinked",name:"Five Unlinked"},
+  b:{id:"91",slug:"third-opponent",name:"Third Opponent"},
+  result:{winnerId:"23",method:"decision"}};
+ const research={profiles:{"five-unlinked":{recentHistory:[
+  {date:"2026-07-01",opponent:"Older One",promotion:"ufc",result:"win"},
+  {date:"2026-06-01",opponent:"Older Two",promotion:"ufc",result:"win"},
+  {date:"2026-05-01",opponent:"Older Three",promotion:"ufc",result:"loss"},
+  {date:"2026-04-01",opponent:"Older Four",promotion:"ufc",result:"win"}]}}};
+ const postfight={fighters:{
+  first:{name:"Five Stats Gap",scope:"ufc-only",recentBouts:measured},
+  second:{name:"Short Measured",scope:"ufc-only",recentBouts:[
+   {boutId:"100",metrics:{sigLanded:0}}]}
+ }};
+ const d=auditUfcLastFive({bouts},research,postfight,{divisions:[]},
+  {asOf:"2026-11-13"});
+ assert.equal(d.fighters.find(f=>f.slug==="five-stats-gap").evidenceStage,
+  "fiveLinkedStatsGap");
+ assert.equal(d.fighters.find(f=>f.slug==="short-measured").evidenceStage,
+  "shortLinkedMeasuredDepthUnconfirmed");
+ assert.equal(d.fighters.find(f=>f.slug==="five-unlinked").evidenceStage,
+  "fiveUnlinked");
+ assert.equal(Object.values(d.summary.evidenceStages).reduce((a,b)=>a+b,0),
+  d.summary.activeFighters);
+ assert.equal(d.summary.evidenceStages.fiveLinkedStatsGap,1);
+ assert.equal(d.summary.evidenceStages.fiveUnlinked,1);
+ assert.equal(d.summary.evidenceStages.shortLinkedMeasuredDepthUnconfirmed,1);
+ assert.equal(d.fighters.find(f=>f.slug==="short-measured").needsHistoryCheck,true,
+  "one fully measured known fight cannot prove the fighter only has one UFC fight");
 });
