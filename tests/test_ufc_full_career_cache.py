@@ -324,6 +324,71 @@ class FullCareerCacheTests(unittest.TestCase):
                          "2026-08-01")
         self.assertEqual(client.calls,1)
 
+    def test_crosscheck_rejects_foreign_numeric_id_history_without_saved_fight_overlap(self):
+        state,research,candidate=self.fixture()
+        today=dt.date(2026,11,14)
+        candidate["asOf"]=today.isoformat()
+        state["bouts"]["800"]={
+            "id":"800","org":"ufc","event":"UFC Official",
+            "a":{"id":"10","slug":"veteran","name":"Veteran"},
+            "b":{"id":"11","slug":"opponent","name":"Opponent"}}
+        class Foreign:
+            max_calls=500
+            remaining=100
+            stopped=False
+            calls=0
+            def call(self,path):
+                self.calls+=1
+                return {"meta":{"truncated":False},"data":[
+                  {"source":"native","fight_id":999,"date":"2026-02-01",
+                   "opponent_name":"Unrelated Fighter","org_slug":"ufc","status":"win"}]}
+        client=Foreign()
+        approval={**self.approval(),"rosterAsOf":today.isoformat(),
+                  "approvedAt":today.isoformat()}
+        before=list(research["profiles"]["veteran"]["recentHistory"])
+        result=m.reconcile_approved_ufc_full_career_timelines(
+            client,state,research,candidate,today,approval)
+        self.assertEqual(result,{"attempts":1,"added":0,"certified":0})
+        self.assertEqual(research["profiles"]["veteran"]["recentHistory"],before)
+        self.assertEqual(state["ufcFullCareerHistoryChecks"]["veteran"]["status"],
+                         "requires_manual_review")
+        self.assertEqual(client.calls,1)
+        self.assertEqual(m.reconcile_approved_ufc_full_career_timelines(
+            client,state,research,candidate,today,approval)["attempts"],0)
+
+    def test_crosscheck_untruncated_provider_omitting_latest_fight_is_incomplete(self):
+        state,research,candidate=self.fixture()
+        today=dt.date(2026,11,14)
+        candidate["asOf"]=today.isoformat()
+        candidate["fighters"][0]["lastUfcFight"]="2026-08-01"
+        research["profiles"]["veteran"]["recentHistory"].append({
+            "promotion":"ufc","source":"native","boutId":"901",
+            "date":"2026-08-01","result":"win","opponent":"Recent Fighter"})
+        state["bouts"]["800"]={
+            "id":"800","org":"ufc","event":"UFC Official",
+            "a":{"id":"10","slug":"veteran","name":"Veteran"},
+            "b":{"id":"11","slug":"opponent","name":"Opponent"}}
+        class Omitted:
+            max_calls=500
+            remaining=100
+            stopped=False
+            calls=0
+            def call(self,path):
+                self.calls+=1
+                return {"meta":{"truncated":False},"data":[
+                  {"source":"native","fight_id":800,"date":"2008-05-01",
+                   "opponent_name":"Opponent","org_slug":"ufc","status":"win"}]}
+        client=Omitted()
+        approval={**self.approval(),"rosterAsOf":today.isoformat(),
+                  "approvedAt":today.isoformat()}
+        result=m.reconcile_approved_ufc_full_career_timelines(
+            client,state,research,candidate,today,approval)
+        self.assertEqual(result,{"attempts":1,"added":0,"certified":0})
+        self.assertFalse(research["profiles"]["veteran"]["ufcTimeline"]["complete"])
+        self.assertEqual(research["profiles"]["veteran"]["ufcTimeline"]["missingRosterLastUfcFight"],
+                         "2026-08-01")
+        self.assertEqual(len(research["profiles"]["veteran"]["recentHistory"]),2)
+
     def test_full_career_crosscheck_without_numeric_identity_or_signoff_uses_no_calls(self):
         state,research,candidate=self.fixture()
         today=dt.date(2026,11,14)
