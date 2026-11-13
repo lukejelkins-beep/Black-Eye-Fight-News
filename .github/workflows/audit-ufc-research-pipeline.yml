@@ -3,6 +3,12 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '11 * * * *'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/audit-ufc-research-pipeline.mjs'
+      - 'tests/test-ufc-research-pipeline.mjs'
+      - '.github/workflows/audit-ufc-research-pipeline.yml'
   push:
     branches: [main]
     paths:
@@ -35,7 +41,7 @@ jobs:
         run: |
           node --test tests/test-ufc-worker-retention.mjs
           node scripts/check-ufc-worker-retention.mjs
-      - name: Build audit without paid APIs or browser setup
+      - name: Build last-five coverage and paid-search yield audit without API calls
         run: node scripts/audit-ufc-research-pipeline.mjs
       - name: Save report
         if: always()
