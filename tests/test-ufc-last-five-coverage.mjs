@@ -280,3 +280,80 @@ test("truncation, stale observations, unlinked IDs and inconsistent timeline cou
  unlinked.profiles.athlete.ufcTimeline.settledCount=2;
  assert.equal(audit(unlinked).ufcTimelineDepthConfirmed,false);
 });
+
+test("latest completed professional MMA promotion controls activity, not oldest UFC results",()=>{
+ const bouts={},profiles={};
+ const ufc=(name,slug,id,date)=>{bouts[id]={id,org:"ufc",status:"completed",eventDate:date,
+  a:{id:"101",slug,name},b:{id:"202",slug:"other-"+slug,name:"Opponent "+slug},
+  result:{winnerId:"101",round:3,time:"5:00"}}};
+ const hist=(slug,history)=>{profiles[slug]={recentHistory:history}};
+ const h=(date,promotion,opponent,sport)=>({date,promotion,opponent,sport,
+  result:"win",method:"decision"});
+ ufc("Moved To PFL","moved-pfl","11","2026-06-01");
+ ufc("Moved To PFL","moved-pfl","12","2020-07-01");
+ hist("moved-pfl",[h("2026-10-01","pfl","New Opponent"),
+   h("2020-07-01","ufc","Old UFC Opponent")]);
+ ufc("Back At UFC","returned-ufc","13","2026-09-01");
+ hist("returned-ufc",[h("2026-02-01","pfl","Old PFL Opponent")]);
+ ufc("Bareknuckle Later","bkfc-later","14","2026-07-01");
+ hist("bkfc-later",[h("2026-09-01","bkfc","Boxing Opponent")]);
+ ufc("Unknown Sport","unknown-after","15","2026-06-01");
+ hist("unknown-after",[h("2026-08-01","","Unclassified Opponent")]);
+ ufc("Same Day Alias","same-day","16","2026-06-01");
+ hist("same-day",[h("2026-06-01","","Opponent same-day")]);
+ ufc("Mixed Promotion","mixed-sport","17","2026-06-01");
+ hist("mixed-sport",[h("2026-08-01","one","ONE Athlete"),
+  h("2026-09-01","one","Grappler","grappling")]);
+ ufc("ONE MMA","one-mma","18","2026-06-01");
+ hist("one-mma",[h("2026-08-01","one","MMA Opponent","mma")]);
+ ufc("Indexed PFL","indexed-pfl","19","2026-06-01");
+ bouts["20"]={id:"20",org:"pfl",status:"completed",eventDate:"2026-10-01",
+  a:{id:"101",slug:"indexed-pfl",name:"Indexed PFL"},
+  b:{id:"205",slug:"new-pfl-opponent",name:"New PFL Opponent"}};
+ ufc("Outside Window","outside-window","21","2024-05-01");
+ const d=auditUfcLastFive({bouts},{profiles},{fighters:{}},{divisions:[]},
+  {asOf:"2026-11-13"});
+ const bySlug=slug=>d.fighters.find(x=>x.slug===slug);
+ assert.equal(bySlug("moved-pfl"),undefined);
+ assert.equal(bySlug("indexed-pfl"),undefined);
+ assert.equal(bySlug("one-mma"),undefined);
+ assert.equal(bySlug("outside-window"),undefined);
+ assert(bySlug("returned-ufc"));
+ assert(bySlug("bkfc-later"));
+ assert(bySlug("same-day"));
+ assert.equal(bySlug("same-day").eligibilityStatus,"latest_observed_mma_ufc");
+ assert.equal(bySlug("mixed-sport").eligibilityStatus,"review_required",
+  "ONE's unlabelled bout cannot be presumed professional MMA");
+ assert.equal(bySlug("unknown-after").eligibilityStatus,"review_required");
+ assert.deepEqual(d.eligibilityExcluded.map(x=>x.slug).sort(),
+  ["indexed-pfl","moved-pfl","one-mma"]);
+ assert.equal(d.summary.excludedLaterNonUfcMma,3);
+ assert.equal(d.summary.latestPromotionReviewRequired,2);
+ assert.equal(d.summary.recentUfcActivityCandidates,
+  d.summary.activeFighters+d.summary.excludedLaterNonUfcMma);
+ assert.equal(d.summary.activeFighters,
+  d.summary.noKnownLaterMmaOrUnknown+d.summary.latestPromotionReviewRequired);
+ const box=d.fighters.find(x=>x.slug==="bkfc-later");
+ assert.equal(box.lastUfcFight,"2026-07-01");
+ const allKnown=d.fighters.flatMap(f=>f.recent);
+ assert(allKnown.every(b=>b.origin==="ufc-bout-index"||b.origin==="ufc-history"),
+  "a non-UFC performance must never be substituted into a UFC last-five");
+});
+
+test("unconfirmed fight rulesets are held for review, not treated as UFC departures",()=>{
+ const bouts={"1":{id:"1",org:"ufc",status:"completed",eventDate:"2026-06-01",
+  a:{id:"1",slug:"fighter",name:"Fighter"},
+  b:{id:"2",slug:"opponent",name:"Opponent"},result:{winnerId:"1"}}};
+ const records={profiles:{fighter:{recentHistory:[
+  {date:"2026-07-01",promotion:"rizin",opponent:"Mixed-sport contender",result:"win"},
+  {date:"2026-08-01",promotion:"rkena",opponent:"Unknown ruleset",result:"win"},
+  {date:"2026-09-01",promotion:"one",sport:"grappling",
+   opponent:"Grappling contender",result:"win"}]}}};
+ const d=auditUfcLastFive({bouts},records,{fighters:{}},{divisions:[]},
+  {asOf:"2026-11-13"});
+ const f=d.fighters.find(x=>x.slug==="fighter");
+ assert(f);
+ assert.equal(f.eligibilityStatus,"review_required");
+ assert.equal(d.summary.excludedLaterNonUfcMma,0);
+ assert.equal(d.eligibilityReview.find(x=>x.slug==="fighter").evidence.promotion,"rkena");
+});
