@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-13T19:32:50.904Z",
-  "checkedAt": "2026-11-13T19:32:50.904Z",
+  "attemptedAt": "2026-11-13T20:29:58.040Z",
+  "checkedAt": "2026-11-13T20:29:58.040Z",
   "windowDays": 28,
   "articlesChecked": 31,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
-  "rssArticleCandidates": 46,
+  "rssArticleCandidates": 47,
   "publisherSourcesConfigured": 32,
-  "linksFound": 11,
-  "newEmbedsVerified": 0,
+  "linksFound": 16,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -112,6 +112,25 @@
       "embedVerified": true,
       "linkPriority": 12,
       "url": "https://www.threads.com/t/DfnmUFVm25S/"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-13T19:00:00+00:00",
+      "discoveredAt": "2026-11-13T20:29:58.040Z",
+      "sourcePublisher": "MMA Fighting",
+      "evidenceUrl": "https://www.mmafighting.com/ufc/520837/tommy-mcmillen-releases-first-statement-since-reported-possible-overdose",
+      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/Dfq3I8WGwj6/"
     },
     {
       "type": "post",
@@ -2197,6 +2216,10 @@
     {
       "url": "https://x.com/DAZNBoxing/status/2120365902671532476",
       "firstSeen": "2026-11-13T18:30:35.082Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/Dfq3I8WGwj6/",
+      "firstSeen": "2026-11-13T20:29:58.040Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
