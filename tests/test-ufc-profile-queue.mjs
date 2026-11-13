@@ -56,7 +56,7 @@ test("every newly booked UFC fighter gets queued, without requiring API collecti
 });
 test("a newly completed UFC fight triggers a separate reviewed-profile update",()=>{
  const source={bouts:{new:{id:"445",org:"ufc",status:"completed",
-  event:"Fight Night",eventDate:"2026-11-10",
+  event:"UFC Fight Night",eventDate:"2026-11-10",
   a:{name:"Champion Ace"},b:{name:"Another Athlete"}}}};
  const profiles=[{fighters:{champ:{name:"Champion Ace",
   latest:[{date:"2026-09-01",opponent:"Old Match"}],
@@ -104,7 +104,7 @@ test("full owned partitions are not truncated to the 120-candidate preview",()=>
    a:{name},b:{name:"Zulu "+String(i).padStart(3,"0")}};
  }
  const cards={events:[{sport:"mma",promotion:"UFC",date:"2026-11-15",
-  title:"Priority Card",bouts:[{fighters:["Alpha 001"]}]}]};
+  title:"UFC Priority Card",bouts:[{fighters:["Alpha 001"]}]}]};
  const q=buildQueue({bouts},[],{asOf:"2026-11-12",upcomingCards:cards});
  assert.equal(q.candidates.length,120);
  assert(q.historicalCounts["A-F"]>120);
@@ -114,7 +114,7 @@ test("full owned partitions are not truncated to the 120-candidate preview",()=>
 });
 
 test("non-alphabetic UFC names remain visible for priority triage",()=>{
- const progress={bouts:{one:{org:"ufc",status:"completed",eventDate:"2026-10-01",
+ const progress={bouts:{one:{org:"ufc",event:"UFC Fight Night: Example",status:"completed",eventDate:"2026-10-01",
   a:{name:"Жан Файтер"},b:{name:"Alpha Veteran"}}}};
  const q=buildQueue(progress,[],{asOf:"2026-11-12"});
  assert(q.unassignedHistoricalCandidates.some(x=>x.name==="Жан Файтер"));
