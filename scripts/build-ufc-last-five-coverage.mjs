@@ -18,7 +18,7 @@ const cutoffFrom=(day)=>{const [y,m,d]=day.split("-").map(Number);let p=(y*12+m-
 const settled=new Set(["completed","draw","no_contest"]);
 const normalOutcome=o=>{const x=String(o||"").toLowerCase();return x==="win"||x==="w"?"W":x==="loss"||x==="l"?"L":x==="draw"||x==="d"?"D":x==="no_contest"||x==="nc"?"NC":null;};
 const priorityNames=data=>new Set((data.divisions||[]).map(x=>nameKey(x.name)).filter(Boolean));
-export function auditUfcLastFive(progress,research,postfight,champions,{asOf}){
+export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upcoming={},ranked=[]}){
  if(!validDate(asOf))throw Error("asOf must be YYYY-MM-DD");
  const cutoff=cutoffFrom(asOf),registry=new Map();
  const ensure=(s,name)=>{const slug=slugify(s);if(!slug)return null;
@@ -58,6 +58,15 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf}){
   }
  }
  const championsSet=priorityNames(champions);
+ // Upcoming is editorial only: it affects research order, not activity eligibility.
+ const upcomingNames=new Set((upcoming.events||[]).filter(e=>
+  String(e.promotion||"").toLowerCase()==="ufc"&&e.date>=asOf)
+  .flatMap(e=>(e.bouts||[]).filter(b=>!["reported","provisional"].includes(b.status))
+   .flatMap(b=>b.fighters||[])).map(nameKey).filter(Boolean));
+ const rankedNames=new Set(ranked.flatMap(d=>Object.values(d?.fighters||{}))
+  .filter(f=>Number.isInteger(f.ranking?.rank)&&f.ranking.rank>=1&&
+   f.ranking.rank<=15&&f.ranking.source&&f.ranking.checkedAt)
+  .map(f=>nameKey(f.name)).filter(Boolean));
  const metrics=new Map();
  for(const f of Object.values(postfight?.fighters||{})){
   if(f?.scope!=="ufc-only")continue;
@@ -73,10 +82,15 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf}){
   const unknownIds=entries.filter(row=>!row.boutId).length;
   const historyNeeded=recent.length<5||unknownIds>0;
   return {name:f.name,slug:f.slug,lastUfcFight:f.lastActive,
-   champion:championsSet.has(nameKey(f.name)),recentCount:recent.length,
+   champion:championsSet.has(nameKey(f.name)),
+   upcoming:upcomingNames.has(nameKey(f.name)),
+   ranked:rankedNames.has(nameKey(f.name)),
+   recentCount:recent.length,
    measuredCount,needsHistoryCheck:historyNeeded,needsStats:entries.some(x=>!x.hasMeasuredTotals),
    recent:entries};
  }).sort((a,b)=>Number(b.champion)-Number(a.champion)||
+   Number(b.upcoming)-Number(a.upcoming)||
+   Number(b.ranked)-Number(a.ranked)||
    Number(b.needsHistoryCheck)-Number(a.needsHistoryCheck)||
    b.lastUfcFight.localeCompare(a.lastUfcFight)||a.slug.localeCompare(b.slug));
  const totals={activeFighters:fighters.length,
@@ -93,7 +107,15 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
   read("data/ufcalendar-rich-progress.json",{}),
   read("data/ufcalendar-fighter-research.json",{}),
   read("data/ufc-postfight-metrics.json",{}),
-  read("data/ufc-champion-profiles.json",{}),{asOf});
+  read("data/ufc-champion-profiles.json",{}),{
+   asOf,
+   upcoming:read("data/upcoming-cards.json",{}),
+   ranked:[
+    read("data/ufc-ranked-profiles.json",{}),
+    read("data/ufc-contender-profiles.json",{}),
+    read("data/ufc-prospect-profiles.json",{})
+   ]
+  });
  const out=path.join(root,"data/ufc-last-five-coverage.json");
  fs.writeFileSync(out,JSON.stringify(result,null,2)+"\n","utf8");
  console.log("UFC last-five coverage",JSON.stringify(result.summary));
