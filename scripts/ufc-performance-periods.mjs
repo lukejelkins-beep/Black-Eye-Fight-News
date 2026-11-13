@@ -26,8 +26,11 @@ export const UFC_V3_HEADLINE_TILES = Object.freeze([
 const isNumber=x=>typeof x==="number"&&Number.isFinite(x)&&x>=0;
 const isSigned=x=>typeof x==="number"&&Number.isFinite(x);
 const clean=x=>Math.round(x*1e6)/1e6;
-const isDate=x=>typeof x==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(x)&&
-  new Date(x+"T00:00:00Z").toISOString().slice(0,10)===x;
+const isDate=x=>{
+  if(typeof x!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(x))return false;
+  const d=new Date(x+"T00:00:00Z");
+  return Number.isFinite(d.getTime())&&d.toISOString().slice(0,10)===x;
+};
 const normalizeOutcome=x=>{
   const s=String(x||"").trim().toUpperCase().replaceAll("_"," ");
   return ({WIN:"W",LOSS:"L",DRAW:"D","NO CONTEST":"NC"}[s]||s);
