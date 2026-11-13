@@ -197,7 +197,7 @@ test("independent later professional MMA excludes only with dated official UFC a
  assert.deepEqual(auditIndependentEvidence(good,{profiles:{}},progress).errors,[]);
  const bad=structuredClone(good);
  bad.independentLaterMma.push({...bad.independentLaterMma[0],
-  evidence:{...bad.independentLaterMma[0].evidence,date:"2024-02-01",
+  evidence:{...bad.independentLaterMma[0].evidence,date:"2023-12-01",
     source:"invalid"},lastUfcFight:"2024-01-01",checkedAt:"2026-11-15"});
  const codes=new Set(auditIndependentEvidence(bad,{profiles:{}},progress).errors.map(e=>e.code));
  for(const code of ["duplicate_or_invalid_external_mma_slug","invalid_external_mma_date",
