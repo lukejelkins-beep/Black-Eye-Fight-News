@@ -38,9 +38,23 @@ export function candidateManifest(progress,research,postfight,champions,opts){
      /^\d{4}-\d{2}-\d{2}$/.test(e.checkedAt||"")&&
      e.checkedAt<=opts.asOf&&e.lastUfcFight<=opts.asOf)
    .map(e=>e.slug+"|"+e.lastUfcFight));
+ // Some verified non-UFC professional MMA outcomes are absent from the
+ // UFCalendar career cache. Preserve them as a dated, source-backed exclusion
+ // tied to the fighter's *exact* last official UFC bout. This is NOT used for
+ // the public 18-month cohort and does not fabricate a cached provider bout.
+ const independentlyVerifiedMma=(supplement.independentLaterMma||[])
+   .filter(e=>e&&e.slug&&e.reason==="later_professional_mma_outside_ufc"&&
+     /^https:\/\/\S+/.test(e?.evidence?.source||"")&&
+     /^\d{4}-\d{2}-\d{2}$/.test(e.lastUfcFight||"")&&
+     /^\d{4}-\d{2}-\d{2}$/.test(e.evidence?.date||"")&&
+     e.evidence.date>e.lastUfcFight&&e.evidence.date<=opts.asOf&&
+     /^\d{4}-\d{2}-\d{2}$/.test(e.checkedAt||"")&&e.checkedAt<=opts.asOf&&
+     typeof e.evidence.opponent==="string"&&e.evidence.opponent.trim()&&
+     typeof e.evidence.promotion==="string"&&e.evidence.promotion!=="ufc");
  const rosterReview={
    asOf:opts.asOf,
-   excluded:[...(originalValid?original.excluded||[]:[]),...(supplement.departures||[])],
+   excluded:[...(originalValid?original.excluded||[]:[]),
+      ...(supplement.departures||[]),...independentlyVerifiedMma],
    reviewCandidates:originalValid?(original.reviewCandidates||[])
       .filter(row=>!confirmedCurrent.has(row.slug+"|"+row.lastUfcFight)):[]
  };
