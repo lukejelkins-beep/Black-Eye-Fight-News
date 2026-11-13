@@ -126,7 +126,15 @@ export function buildSnapshot(coverage,postfight,cohorts=[],options={}){
  // Absence of reliable fight rows must never silently remove an active athlete.
  for(const f of current){
   const key=norm(f.name);
-  if(!key||fighters[key])continue;
+  if(!key)continue;
+  if(fighters[key]){
+   // The frontend addresses V3 fighters by canonical display name, so two
+   // distinct roster slugs must never be silently collapsed into one record.
+   if(fighters[key].sourceSlug!==f.slug)
+    throw Error("UFC identity collision: "+fighters[key].name+" ["+fighters[key].sourceSlug+
+     "] and "+f.name+" ["+f.slug+"]");
+   continue;
+  }
   const source=reviewed.get(key);
   const division=source?.division||null;
   const verifiedCategory=f.champion===true||source?.category==="Champion"?"Champion":
@@ -150,7 +158,7 @@ export function buildSnapshot(coverage,postfight,cohorts=[],options={}){
    typeof rank.checkedAt==="string"&&rank.checkedAt<=asOf&&
    (new Date(asOf)-new Date(rank.checkedAt))<=60*86400000;
   fighters[key]={
-   name:f.name,division,category:verifiedCategory,
+   name:f.name,sourceSlug:f.slug,division,category:verifiedCategory,
    officialRank:rankValid?rank.rank:null,
    power:null,trajectory:null,technical:Object.fromEntries(techniques.map(id=>[id,{score:null}])),
    recent:next,metrics
