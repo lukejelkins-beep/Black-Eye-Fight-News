@@ -584,6 +584,56 @@ def summarize_history(payload):
     return chosen[:20]
 
 
+
+def summarize_full_ufc_career(payload,today):
+    """Preserve every available UFC career result, not just latest five/ten.
+
+    Never infer missing numeric fight IDs; non-UFC bouts remain in the existing
+    recentHistory for MMA latest-fight eligibility and public card context.
+    A career is only certified complete when the provider says untruncated.
+    """
+    evidence=ufc_timeline_evidence(payload,today)
+    seen=set()
+    entries=[]
+    uncertain=[]
+    for raw in response_rows(payload):
+        if not isinstance(raw,dict):continue
+        org=safe(raw.get("org_slug") or raw.get("org"),24).lower()
+        if org!="ufc":continue
+        result=safe(raw.get("status"),18).lower()
+        if result not in ("win","loss","draw","no_contest"):continue
+        when=date_str(raw.get("date") or raw.get("fought_at") or raw.get("starts_at"))
+        opp=raw.get("opponent") if isinstance(raw.get("opponent"),dict) else {}
+        opponent=safe(opp.get("name") or raw.get("opponent_name"),110)
+        if not when or when>today.isoformat() or not opponent:continue
+        event=raw.get("event") if isinstance(raw.get("event"),dict) else {}
+        title=safe(raw.get("event_title") or event.get("title") or event.get("name"),150)
+        if re.search(r"\b(?:dwcs|contender\s+series|road\s+to\s+ufc)\b",title,re.I):
+            continue
+        source="native" if raw.get("source")=="native" else "history"
+        native_id=positive(raw.get("fight_id")) if source=="native" else None
+        fingerprint=(when,opponent.casefold(),result)
+        if fingerprint in seen:
+            uncertain.append({"date":when,"opponent":opponent,"reason":"duplicate_history_row"})
+            continue
+        seen.add(fingerprint)
+        entries.append({"date":when,"opponent":opponent,
+            "result":result,"method":safe(raw.get("method_normalized") or
+                                          raw.get("method"),50),
+            "boutId":native_id,"source":source,
+            "event":title or None,
+            "eventVerified":bool(title and re.search(r"\bufc\b",title,re.I))})
+    entries.sort(key=lambda x:(x["date"],x["opponent"].casefold()),reverse=True)
+    return {"schema":1,"scope":"ufc-labelled-career",
+            "fights":entries,"count":len(entries),
+            "complete":bool(evidence.get("complete") and
+                            evidence.get("settledCount")==len(entries) and
+                            not uncertain),
+            "observedOn":today.isoformat(),
+            "earliestUfcFight":entries[-1]["date"] if entries else None,
+            "nativeLinkedCount":sum(bool(r["boutId"]) for r in entries),
+            "uncertainties":uncertain[:20]}
+
 def ufc_timeline_evidence(payload,today):
     """Require an explicitly untruncated full timeline before certifying depth."""
     rows=response_rows(payload)
@@ -631,6 +681,14 @@ def save_ufc_timeline(profile,payload,today):
     if history and new_ufc>=old_ufc:
         profile["recentHistory"]=history
     profile["ufcTimeline"]=ufc_timeline_evidence(payload,today)
+    full=summarize_full_ufc_career(payload,today)
+    previous_full=profile.get("ufcCareerHistory") or {}
+    # Never replace a previously complete full UFC career with a truncated
+    # response. Save a newly complete timeline or strictly greater evidence.
+    if (not previous_full or full["complete"] or
+        (not previous_full.get("complete") and
+         full["count"]>int(previous_full.get("count",0)))):
+        profile["ufcCareerHistory"]=full
     return history
 
 
