@@ -48,3 +48,29 @@ test("five measured UFC bouts qualify for later leaderboard computation",()=>{
  assert.equal(d.summary.withThreeMeasured,1);
  assert.equal(d.summary.uniqueKnownBoutIds,5);
 });
+
+test("backfill queue prioritises champions, booked athletes and verified ranked athletes",()=>{
+ const bouts={};
+ for(const [id,name] of [["1","Roster Athlete"],["2","Booked Athlete"],
+  ["3","Ranked Athlete"],["4","Champion Athlete"]]){
+  bouts[id]={id,org:"ufc",eventDate:"2026-06-01",status:"completed",
+   a:{id,slug:name.toLowerCase().replaceAll(" ","-"),name},
+   b:{id:"99",slug:"common-opponent",name:"Common Opponent"},
+   result:{winnerId:id,method:"decision"}};
+ }
+ const results=auditUfcLastFive({bouts},{profiles:{}},{fighters:{}},
+  {divisions:[{name:"Champion Athlete"}]},{
+   asOf:"2026-11-13",
+   upcoming:{events:[{date:"2026-11-14",promotion:"UFC",
+    bouts:[{fighters:["Booked Athlete","Other"],status:"confirmed"}]}]},
+   ranked:[{fighters:{ranked:{name:"Ranked Athlete",
+    ranking:{rank:6,source:"https://www.ufc.com/rankings",checkedAt:"2026-11-12"}}}}]
+  });
+ const chosen=results.fighters.filter(f=>f.slug!=="common-opponent");
+ assert.deepEqual(chosen.map(f=>f.name),[
+  "Champion Athlete","Booked Athlete","Ranked Athlete","Roster Athlete"]);
+ assert.equal(chosen[0].champion,true);
+ assert.equal(chosen[1].upcoming,true);
+ assert.equal(chosen[2].ranked,true);
+ assert.equal(chosen[3].upcoming,false);
+});
