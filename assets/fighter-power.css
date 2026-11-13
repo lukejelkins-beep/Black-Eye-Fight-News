@@ -1080,3 +1080,48 @@
  }
  .befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles>div{min-height:67px}
 }
+
+/* V3 narrow-phone safeguards: preserve readable tiles and controls. */
+@media(max-width:560px){
+ #fighterDialog.befn-v3-dialog {max-width:calc(100vw - 8px);overflow-x:hidden}
+ .befn-v3-dialog .dialog-top{padding:4px 8px}
+ .befn-v3-dialog .dialog-close{min-width:44px;min-height:44px}
+ .befn-v3-dialog .dialog-content{padding:7px}
+ .befn-v3-dialog .dialog-bio{
+  grid-template-columns:minmax(92px,35%) minmax(0,1fr);
+  gap:8px;padding:8px;min-width:0;
+ }
+ .befn-v3-dialog .befn-bio-meta{min-width:0;overflow-wrap:anywhere}
+ .befn-v3-dialog .befn-v3-career-record{flex-wrap:wrap;gap:3px 7px}
+ .befn-v3-dialog .befn-v3-hero{max-width:100%;min-width:0;gap:5px}
+ .befn-v3-dialog .befn-v3-hero>div:first-child{min-width:0}
+ .befn-v3-dialog .befn-v3-score{font-size:27px}
+ .befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:7px;
+ }
+ .befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles>div{
+  min-height:72px;
+  padding:9px 5px;
+ }
+ .befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles span,
+ .befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles small{
+  font-size:11px;
+  line-height:1.35;
+  overflow-wrap:anywhere;
+ }
+ .befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles strong{font-size:20px}
+ .befn-v3-dialog .befn-v3-rank-full .befn-v3-rank-tiles{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+ }
+ .befn-v3-dialog .befn-v3-rank-tiles li{min-width:0}
+ .befn-v3-dialog .befn-v3-fights li{min-width:0}
+ .befn-v3-dialog .befn-v3-history>summary,
+ .befn-v3-dialog .befn-v3-statistics>summary{min-height:44px}
+}
+@media(max-width:360px){
+ .befn-v3-dialog .dialog-bio{grid-template-columns:minmax(88px,34%) minmax(0,1fr);padding:6px;gap:6px}
+ .befn-v3-dialog .befn-v3-identity h2{font-size:20px}
+ .befn-v3-dialog .befn-v3-career-record{font-size:21px}
+ .befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles>div{min-height:78px}
+}
