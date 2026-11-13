@@ -8,6 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {auditUfcLastFive} from "./build-ufc-last-five-coverage.mjs";
+import {isOfficialUfcEvent} from "./ufc-official-event-scope.mjs";
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 function read(name,fallback){
@@ -17,10 +18,24 @@ function read(name,fallback){
 export function candidateManifest(progress,research,postfight,champions,opts){
  const audit=auditUfcLastFive(progress,research,postfight,champions,
    {...opts,activityMonths:36});
+ // A complete event-list cursor does NOT establish that all fights were
+ // indexed: cards discovered during the widened search can still lack details.
+ // Fail closed until every completed official UFC event in this window has
+ // its event-detail response cached. Exclude feeder events and future cards.
+ const allOfficialEvents=Object.entries(progress?.eventIndex||{}).filter(([key,event])=>
+   event?.org==="ufc"&&event.date>=audit.activityCutoff&&
+   event.date<=opts.asOf&&
+   ["completed","finished","final","ended"].includes(event.status)&&
+   isOfficialUfcEvent(event.title));
+ const missingDetails=allOfficialEvents.filter(([key])=>!progress?.eventDetails?.[key]);
  const indexed36=Number(progress?.historicalWindowMonthsUfc)>=36&&
    progress?.historicalComplete?.ufc===true;
+ const complete=indexed36&&missingDetails.length===0;
  return {...audit,
-   indexCompleteness:indexed36?"36_month_event_scan_complete":"36_month_event_scan_incomplete",
+   indexCompleteness:complete?"36_month_event_scan_complete":"36_month_event_scan_incomplete",
+   officialCompletedEventsIndexed:allOfficialEvents.length,
+   missingOfficialUfcEventDetails:missingDetails.length,
+   missingOfficialEventKeys:missingDetails.slice(0,50).map(([key])=>key),
    verification:"candidate_list_only_contract_and_retirement_checks_pending",
    note:"Candidates have recent official UFC bouts and no newer confirmed non-UFC MMA fight in available cached observations. Unknown history, retirement and promotion affiliation require independent checks. Do not automatically publish or claim 36-month completeness."};
 }
@@ -47,6 +62,7 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
    indexCompleteness:data.indexCompleteness,
    candidates:data.summary.activeFighters,
    toReview:data.summary.latestPromotionReviewRequired,
-   excludedLaterNonUfcMma:data.summary.excludedLaterNonUfcMma
+   excludedLaterNonUfcMma:data.summary.excludedLaterNonUfcMma,
+   missingOfficialUfcEventDetails:data.missingOfficialUfcEventDetails
  }));
 }
