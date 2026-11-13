@@ -44,7 +44,8 @@ test("new commits during the grace window are strictly data-only before using th
  assert.match(file,/git fetch --quiet --no-tags origin main/);
  assert.match(file,/git reset --hard "\$new_main"/);
  assert.match(file,/source_sha="\$new_main"/);
- assert.match(file,/Main advanced again while verifying/);
+ assert.match(file,/new_main=\$\(git rev-parse FETCH_HEAD\)/);
+ assert.doesNotMatch(file,/Main advanced again while verifying/);
 });
 
 test("UFC V3 offline snapshot is guarded at both release gates and monitored only once created",()=>{
@@ -60,4 +61,15 @@ test("the offline V3 builder requests guarded recovery only for successfully pub
  assert.match(builder,/echo "wrote=true" >> "\$GITHUB_OUTPUT"/);
  assert.match(builder,/if: steps\.publish\.outputs\.wrote == 'true'/);
  assert.match(builder,/befn-render-deploy-recovery\.yml\/dispatches/);
+});
+
+test("the exact fetched commit is the sole source of the grace comparison",()=>{
+ const idx=file.indexOf("sleep 90");
+ const stage=file.slice(idx,file.indexOf("still_different=0",idx));
+ assert(idx>=0);
+ assert.match(stage,/git fetch --quiet --no-tags origin main/);
+ assert.match(stage,/new_main=\$\(git rev-parse FETCH_HEAD\)/);
+ assert.doesNotMatch(stage,/^\s*new_main=.*ls-remote/m);
+ assert.equal((stage.match(/git fetch --quiet --no-tags origin main/g)||[]).length,1);
+ assert.match(file,/Main changed since source validation; aborting recovery/);
 });

@@ -174,7 +174,10 @@ jobs:
           # deployment forever. The two-hour schedule is the primary debounce.
           echo 'Allowing normal Render automatic deployment time to converge'
           sleep 90
-          new_main=$(git ls-remote https://github.com/"$GITHUB_REPOSITORY".git refs/heads/main | cut -f1)
+          # Fetch once and verify that precise fetched commit. A separate
+          # ls-remote followed by fetch can race the five-minute data workers.
+          git fetch --quiet --no-tags origin main
+          new_main=$(git rev-parse FETCH_HEAD)
           if [[ "$new_main" != "$source_sha" ]]; then
             # An ongoing archive collector can update *only cached data* while
             # the grace check sleeps. Establish and verify that narrow case
@@ -206,11 +209,9 @@ jobs:
               esac
             done < <(jq -r '.files[].filename' "$transition")
             rm -f "$transition"
-            git fetch --quiet --no-tags origin main
-            if [[ "$(git rev-parse FETCH_HEAD)" != "$new_main" ]]; then
-              echo 'Main advanced again while verifying: abort this recovery'
-              exit 0
-            fi
+            # The snapshot under review is exactly FETCH_HEAD; future pushes
+            # are checked independently by the immediately following deploy
+            # stage, which still refuses any unvalidated intervening commit.
             git reset --hard "$new_main"
             source_sha="$new_main"
             echo "Using validated source plus verified data-only advance $source_sha"
