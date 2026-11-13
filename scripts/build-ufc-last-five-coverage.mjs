@@ -116,7 +116,37 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
   }
   fighter.history.set(k,{date,opponent,boutId,method,outcome,origin});
  };
- const bouts=Object.values(progress?.bouts||{}).filter(b=>b?.org==="ufc"&&settled.has(b.status)&&validDate(b.eventDate)&&b.eventDate<=asOf);
+ const labelledUfcBouts=Object.values(progress?.bouts||{}).filter(b=>
+  b?.org==="ufc"&&settled.has(b.status)&&validDate(b.eventDate)&&b.eventDate<=asOf);
+ const feeders=labelledUfcBouts.filter(b=>isFeederUfcEvent(b.event));
+ const feederIds=new Set(feeders.map(b=>String(b.id||"")));
+ const feederByFighter=new Map();
+ // Preserve old UFC-labeled denominator while distinguishing official cards.
+ for(const bout of labelledUfcBouts){
+  for(const side of ["a","b"]){
+   const own=bout[side],opp=bout[side==="a"?"b":"a"];
+   if(!own?.slug||!opp?.name)continue;
+   const person=ensure(own.slug,own.name);
+   if(bout.eventDate>=cutoff)person.recentUfcLabel=true;
+   if(isFeederUfcEvent(bout.event)){
+    if(!person.latestFeeder||person.latestFeeder.date<bout.eventDate)
+     person.latestFeeder={date:bout.eventDate,opponent:opp.name,
+      event:bout.event,source:"ufcalendar-feeder-event"};
+    const items=feederByFighter.get(person.slug)||[];
+    items.push({date:bout.eventDate,opponent:opp.name});
+    feederByFighter.set(person.slug,items);
+   }
+  }
+ }
+ const isHistoricalFeeder=(athlete,row)=>{
+  if(row.boutId&&feederIds.has(String(row.boutId)))return true;
+  if(!validDate(row.date)||!row.opponent)return false;
+  return (feederByFighter.get(athlete.slug)||[]).some(f=>
+   nameKey(f.opponent)===nameKey(row.opponent)&&
+   Math.abs(Date.parse(f.date+"T00:00:00Z")-
+    Date.parse(row.date+"T00:00:00Z"))<=86400000);
+ };
+ const bouts=labelledUfcBouts.filter(b=>isOfficialUfcEvent(b.event));
  for(const bout of bouts){
   for(const side of ["a","b"]){
    const own=bout[side],opp=bout[side==="a"?"b":"a"];
@@ -130,6 +160,17 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
     winId?String(own.id)===winId?"W":"L":null;
    put(person,bout.eventDate,opp.name,{boutId:String(bout.id||"")||null,
     method:bout.result?.method||null,outcome:result,origin:"ufc-bout-index"});
+  }
+ }
+ // DWCS and Road-to-UFC are professional MMA but not official UFC.
+ // They disqualify a UFC-roster candidate if they happened more recently.
+ for(const bout of feeders){
+  for(const side of ["a","b"]){
+   const own=bout[side],opp=bout[side==="a"?"b":"a"];
+   noteOther(registry.get(slugify(own?.slug)),{
+    date:bout.eventDate,opponent:opp?.name||"",
+    promotion:/road\s+to\s+ufc/i.test(bout.event)?"road-to-ufc":"dwcs",
+    sport:"mma",source:"ufcalendar-feeder-event"});
   }
  }
  // A saved PFL/other MMA bout index is decisive even if a fighter's career
