@@ -1,0 +1,54 @@
+name: Build UFC V3 statistical snapshot from local cache
+on:
+  workflow_dispatch:
+  schedule:
+    # Offsets from the source collector: no extra API requests.
+    - cron: '19 * * * *'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/build-ufc-fighter-v3.mjs'
+      - 'tests/test-ufc-fighter-v3.mjs'
+      - '.github/workflows/build-ufc-fighter-v3.yml'
+      - '.github/workflows/befn-render-deploy-recovery.yml'
+permissions:
+  contents: write
+concurrency:
+  group: befn-ufc-v3-deterministic-snapshot
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Reject invented statistics, short samples and inaccurate rankings
+        run: node --test tests/test-ufc-fighter-v3.mjs
+      - name: Build cached UFC V3 profiles and eligible leaderboards
+        if: github.event_name != 'pull_request'
+        run: node scripts/build-ufc-fighter-v3.mjs
+      - name: Commit only changed public V3 data
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'BEFN V3 offline calculator'
+          git config user.email 'befn-v3-calculator@users.noreply.github.com'
+          git add data/ufc-fighter-v3.json
+          if git diff --cached --quiet; then
+            echo 'No updated UFC V3 statistics to publish'
+            exit 0
+          fi
+          git commit -m 'Refresh evidence-backed UFC V3 statistics and leaderboards'
+          for i in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              echo 'Saved UFC V3 data without a new UFCalendar request'
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep 3
+          done
+          exit 1
