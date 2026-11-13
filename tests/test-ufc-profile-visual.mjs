@@ -297,7 +297,7 @@ try{
   ["mobile",{width:390,height:844}]
  ]){
   const context=await browser.newContext({
-   viewport,deviceScaleFactor:1,locale:"en-AU",timezoneId:"Australia/Melbourne",
+   viewport,hasTouch:screen==="mobile",deviceScaleFactor:1,locale:"en-AU",timezoneId:"Australia/Melbourne",
    serviceWorkers:"block",extraHTTPHeaders:{"Cache-Control":"no-cache"}
   });
   const page=await context.newPage();
@@ -330,7 +330,7 @@ try{
    await page.evaluate(()=>{location.hash='#champions'});
    const fighter=page.locator('.fighter-hover-name').first();
    if(screen==='desktop')await fighter.hover();
-   else await fighter.click();
+   else await fighter.tap();
    const popup=page.locator('#fighter-photo-preview');
    await popup.waitFor({state:'visible'});
    const close=popup.getByRole('button',{name:'Close fighter photo'});
