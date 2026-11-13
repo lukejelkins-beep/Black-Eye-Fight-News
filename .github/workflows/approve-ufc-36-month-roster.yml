@@ -1,0 +1,62 @@
+name: Activate user-approved UFC 36-month Stage 3 snapshot
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/approve-ufc-36-month-roster.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  approve-frozen-roster:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - name: Checkout current repository and existing cached data
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Checkout immutable successful zero-exception audit commit
+        uses: actions/checkout@v4
+        with:
+          ref: 65d66aa3d6d0d8e91e7c96858d000253163a9892
+          path: .approval-snapshot
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reproduce original as-of-14-Nov audit without paid API requests
+        run: node .approval-snapshot/scripts/ufc-36-month-review-report.mjs
+      - name: Validate current census and write the exact signed-off slug allowlist
+        run: |
+          node scripts/ufc-36-month-review-report.mjs
+          node scripts/approve-ufc-36-month-snapshot.mjs \
+            .approval-snapshot/qa/ufc-36-month-roster-review.json \
+            qa/ufc-36-month-roster-review.json
+      - name: Test approval isolation, career cache reuse and roster evidence
+        run: |
+          node --test tests/test-ufc36-approved-snapshot.mjs
+          node --test tests/test-ufc-36-month-review-report.mjs
+          node --test tests/test-ufc-36-month-independent-evidence.mjs
+          python -m unittest discover -s tests -p 'test_ufc_full_career_cache.py' -v
+      - name: Commit snapshot to main for the existing five-minute collector
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "BEFN approved cohort"
+          git config user.email "befn-cohort@users.noreply.github.com"
+          git add data/ufc-36-month-roster-approval.json
+          if git diff --cached --quiet; then echo "Approved roster already recorded"; exit 0; fi
+          git commit -m "Approve immutable 783-fighter UFC cohort for cache-first Stage 3"
+          for i in 1 2 3 4 5 6; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              echo "Stage 3 cohort gate enabled on main"; exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep 3
+          done
+          echo "Could not safely publish approved cohort; approval remains gated" >&2
+          exit 1
