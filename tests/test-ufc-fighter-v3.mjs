@@ -256,6 +256,13 @@ test("incomplete reviewed UFC roster stays Unassessed, not an invented contender
  assert.equal(d.fighters.cunknown.category,"Unassessed");
  assert.equal(d.fighters.cunknown.recent.length,1);
 });
+test("offline V3 snapshot refresh follows a changed five-fight coverage file",()=>{
+ const workflow=fs.readFileSync(".github/workflows/build-ufc-fighter-v3.yml","utf8");
+ const push=workflow.slice(workflow.indexOf("  push:"),workflow.indexOf("  schedule:"));
+ assert.match(push,/data\/ufc-last-five-coverage\.json/);
+ assert.match(workflow,/node scripts\/build-ufc-fighter-v3\.mjs/);
+ assert.doesNotMatch(workflow,/UFCALENDAR_API_KEY|api\.ufcalendar/);
+});
 test("schema four cannot overwrite independently reviewed UFC classifications",()=>{
  const js=fs.readFileSync("assets/fighter-insights.js","utf8");
  assert.match(js,/if\(record&&!isReviewedUfc\(f\)\)/);
