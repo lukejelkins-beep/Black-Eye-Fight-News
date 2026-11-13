@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-13T07:55:48.883Z",
-  "checkedAt": "2026-11-13T06:35:33.075Z",
+  "attemptedAt": "2026-11-13T08:52:45.357Z",
+  "checkedAt": "2026-11-13T08:52:45.357Z",
   "updatedAt": "2026-11-13T04:43:53.350Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 0,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
-      "state": "not-scheduled",
-      "checked": 0,
+      "state": "connected",
+      "checked": 6,
       "failed": 0,
-      "configured": 0,
-      "message": "0 of 0 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 9,
+      "configured": 33,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 15,
+      "configured": 37,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 1,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -54,18 +54,20 @@
   "failures": [],
   "rollingScan": {
     "directoryEntries": 447,
-    "scheduledEntries": 27,
-    "batchIndex": 5,
+    "scheduledEntries": 84,
+    "batchIndex": 4,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "X": 9,
-      "Threads": 3,
-      "Instagram": 15
+      "X": 33,
+      "Instagram": 37,
+      "Bluesky": 6,
+      "Threads": 7,
+      "Reddit": 1
     },
-    "directlyChecked": 0,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
@@ -94,6 +96,150 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n25s4567an23",
+      "cid": "bafyreigcozqxls4gxg7dxljhsabxtm4cbspu2o6v6fbgmksx2z6mi2wxk4",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "‘How’s your mom doing?’: Josh Hokit takes aim at Ciryl Gane, flips off Alex Pereira ahead of UFC 334 www.mmafighting.com/ufc/520760/h...",
+      "postedAt": "2026-11-13T01:04:54.343525Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n25s4567an23",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n25s454z6b2v",
+      "cid": "bafyreidgmmmalkyevilbrgfjeu4vrq4w6nuw6vepuwrp5vombp6pl5kkti",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "No Bets Barred | Can Josh Hokit upset Ciryl Gane and complete one of the fastest rises in UFC History? www.mmafighting.com/ufc/520726/n...",
+      "postedAt": "2026-11-13T01:04:54.210829Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n25s454z6b2v",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n25q5ignix2d",
+      "cid": "bafyreig32ropfp2d77lik2aoidhe2o2xx4eom4ajdgmwbwpmegpj7u5dxm",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "‘What a bunch of f*cking idiots’: Dana White reacts to Usman Nurmagomedov attacking Merab Dvalishvili www.mmafighting.com/ufc/520756/w...",
+      "postedAt": "2026-11-13T00:29:52.015010Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n25q5ignix2d",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n25pcp2mi723",
+      "cid": "bafyreifmjpbvkecbj7idsmnkohqp4kipah4bin75i33sfcx7mbmavvwf5y",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Josh Hokit wears goggles to his faceoff with Ciryl Gane ahead of UFC 334 www.mmafighting.com/ufc/520751/j...",
+      "postedAt": "2026-11-13T00:14:52.065808Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n25pcp2mi723",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n25jyih3hr2i",
+      "cid": "bafyreia3d3wazxhlyxoo2jgenhlnfqph72sujlgwihfjtp5jdijbbfje6e",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Terence Crawford has hit back at reports he's returning to boxing for the money. 🥊\n\nBud showed a bank deposit of more than $100k, claiming it represents just one sources of income.\n\nThe former undisputed champion is making it clear that money isn't driving a potential comeback.",
+      "postedAt": "2026-11-12T22:39:43Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n25jyih3hr2i",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n25izxovfd2n",
+      "cid": "bafyreie6mmvbe63jrv2pmkrhwrm7b5cbjfzqdbhlrg5dfi2hrhashi6ete",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "BY THE NUMBERS! 📊🥊\n\nArnold Barboza Jr. and Oscar Duarte collide for the WBC Silver welterweight title on January 23, 2027—Duarte's 31st birthday. \n\nBarboza holds a one-inch reach edge, while Duarte brings a 74% KO rate into Anaheim.",
+      "postedAt": "2026-11-12T22:22:39Z",
+      "date": "13 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n25izxovfd2n",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n25i2aoeyp2l",
       "cid": "bafyreiai4y7ysxwu5tqleedwgkaocjmqpqom5diwpv436unw5gxuykuyxm",
       "platform": "Bluesky",
@@ -114,7 +260,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -138,7 +284,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -162,7 +308,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -210,7 +356,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -258,7 +404,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -330,7 +476,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -378,7 +524,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -474,7 +620,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -522,7 +668,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -546,31 +692,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n24vi2bxvj2l",
-      "cid": "bafyreieph3z477dg6zgedtra5tb2vpvtk56rkhedsm6bi2p2d5hnremdoe",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Between the Links: UFC 334, Gane vs. Hokit, Usman Nurmagomedov attacks Merab Dvalishvili www.mmafighting.com/ufc/520618/b...",
-      "postedAt": "2026-11-12T16:32:35.159952Z",
-      "date": "13 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n24vi2bxvj2l",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -594,55 +716,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n24royr4iz2o",
-      "cid": "bafyreig5vsyj34kzzdvuvurzfgirpqammyluokmazwrywdcbf6d765vmcq",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Alistair Overeem fights Jimi Manuwa in a 6-round fight on the #PaulDoumbe card in Dubai!\n\nWho ya got??",
-      "postedAt": "2026-11-12T15:24:53.666292Z",
-      "date": "13 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n24royr4iz2o",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n24qj4di7p2l",
-      "cid": "bafyreihnuro5inscttgpradoa7kzhno565rkb33krjpbhkoyknp33gokmu",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Anything but Fighting: Stephen Thompson loves anime www.mmafighting.com/ufc/520492/a...",
-      "postedAt": "2026-11-12T15:03:42.294460Z",
-      "date": "13 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n24qj4di7p2l",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 2,
-        "comments": 0,
-        "shares": 1
-      },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -690,7 +764,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -718,30 +792,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n24n4i7j5q2s",
-      "cid": "bafyreihtt54brhwvutgnlt4stm2n2yt7ptrbz27jur7h4jcgw2bgq3ibly",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Cain Velasquez compares Josh Hokit to Conor McGregor, predicts UFC 334 main event www.mmafighting.com/ufc/520482/c...",
-      "postedAt": "2026-11-12T14:02:57.609059Z",
-      "date": "13 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n24n4i7j5q2s",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n24mf6xgml2c",
       "cid": "bafyreibohtd447wvlq6z52um4qnoidafldulk3ozh6imhgegjkurhwrnji",
       "platform": "Bluesky",
@@ -762,7 +812,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -858,7 +908,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
+      "engagementCheckedAt": "2026-11-13T08:52:45.357Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -886,30 +936,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n23fulgzer2e",
-      "cid": "bafyreif3zwxanqyxzisfmq3orsvetzedi3g6gr5hdukw6ozgyiimnz6fye",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Julio César Chávez says Canelo Alvarez’s legacy will not be affected if he never fights Terence Crawford again. 🥊\n\nSpeaking at the WBC Convention, Chávez was adamant that Canelo remains a Mexican boxing legend, just like himself, regardless of whether a rematch happens.",
-      "postedAt": "2026-11-12T02:20:37Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n23fulgzer2e",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:u6b6v2jhqpe6hfezjffq7zrh/app.bsky.feed.post/3n23f6gzzxk2k",
       "cid": "bafyreifj2juciq56mceyokhl5xptfg6qqt6r4ew7b6qdvuapftnia3jbiy",
       "platform": "Bluesky",
@@ -931,30 +957,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-13T05:32:33.939Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n236pqsapq2i",
-      "cid": "bafyreihybojmwa2retydzadfeoox73f7a242aaioj4ck2gebjzo4e3w6nm",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Devin Haney has made his intentions clear. 🥊\n\nSpeaking at the press conference for his fight with Liam Paro, Haney revealed that the fight he wants most is a rematch with Ryan Garcia.\n\nThe unfinished business with Garcia remains firmly on his mind.",
-      "postedAt": "2026-11-12T00:12:39Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n236pqsapq2i",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-12T22:22:01.277Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
