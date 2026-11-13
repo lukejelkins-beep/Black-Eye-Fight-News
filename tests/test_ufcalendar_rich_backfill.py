@@ -276,7 +276,7 @@ class RichBackfillTests(unittest.TestCase):
                "opponent_name":"UFC Veteran "+str(n),"status":"loss",
                "org_slug":"ufc"})
         history=m.summarize_history({"data":rows})
-        self.assertEqual(len(history),20)
+        self.assertEqual(len(history),28)
         self.assertEqual(sum(r["promotion"]=="ufc" for r in history),3)
         self.assertEqual(history[0]["promotion"],"pfl")
         self.assertEqual(history[-1]["promotion"],"ufc")
