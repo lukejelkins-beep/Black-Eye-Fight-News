@@ -129,3 +129,12 @@ test("missing promotion metadata never defaults to UFC or unlocks Last 5",()=>{
   assert.equal(periodOptions([...sample.slice(0,4),noPromotion])[0].enabled,false);
   assert.equal(computeUfcPeriod([...sample.slice(0,4),noPromotion],"5").available,false);
 });
+
+
+test("feeder-event metadata overrides a UFC promotion label",()=>{
+  const feederNames=["Dana White’s Contender Series 2026","DWCS 2026 Week 4","Road to UFC Season 5","Road-to-UFC Finale"];
+  const feeder=feederNames.map((eventName,i)=>fight("feeder-"+i,i,{promotion:"UFC",eventName}));
+  const nested=fight("nested",5,{promotion:"UFC",event:{name:"Road to UFC: Shanghai"}});
+  const official=fight("official",6,{promotion:"UFC",eventName:"UFC Fight Night: London"});
+  assert.deepEqual(verifiedUfcBouts([...feeder,nested,official]).map(x=>x.boutId),["official"]);
+});
