@@ -148,6 +148,36 @@ test("one UFC bout ID counts at most once even if repeated in imported history",
  assert.equal(d.fighters.aone.metrics.slpm.bouts,2);
  assert.equal(d.fighters.aone.metrics.slpm.rank,undefined);
 });
+test("the separately scoped reviewed UFC champions catalogue is authoritative",()=>{
+ const champions={schema:1,scope:"ufc-champions",fighters:{
+  "a-one":{name:"A One",organisation:"UFC",sport:"MMA",
+   category:"Champion",division:"Light heavyweight",
+   review:{credentialsChecked:true},
+   latest:[
+    {date:"2026-06-12",opponent:"B Two",outcome:"L",method:"Submission R2"},
+    {date:"2025-05-30",opponent:"UFC veteran",outcome:"W",method:"KO R1"}
+   ]}
+ }};
+ const d=buildSnapshot(coverage,postfight,[champions]);
+ assert.equal(d.fighters.aone.category,"Champion");
+ assert.deepEqual(d.fighters.aone.recent.map(x=>x.opponent),
+  ["B Two","UFC veteran"]);
+ assert.equal(d.fighters.aone.recent[0].outcome,"L");
+ assert.equal(d.fighters.aone.recent[1].boutId,null);
+ assert.equal(d.fighters.aone.metrics.slpm.bouts,1);
+});
+test("the actual UFC champion source format remains recognised",()=>{
+ const champions=JSON.parse(fs.readFileSync("data/ufc-champion-profiles.json","utf8"));
+ assert.equal(champions.scope,"ufc-champions");
+ assert.equal(champions.schema,1);
+ const reviewed=Object.values(champions.fighters||{});
+ assert(reviewed.length>=11);
+ for(const f of reviewed){
+  assert.equal(f.organisation,"UFC");
+  assert.equal(f.sport,"MMA");
+  assert.equal(f.review?.credentialsChecked,true);
+ }
+});
 test("individually reviewed UFC results override conflicting provisional index results",()=>{
  const trusted={schema:1,scope:"ufc-only",fighters:{
   athlete:{name:"A One",organisation:"UFC",sport:"MMA",division:"Light heavyweight",
