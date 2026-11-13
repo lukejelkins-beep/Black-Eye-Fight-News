@@ -38,9 +38,20 @@ export function candidateManifest(progress,research,postfight,champions,opts){
      /^\d{4}-\d{2}-\d{2}$/.test(e.checkedAt||"")&&
      e.checkedAt<=opts.asOf&&e.lastUfcFight<=opts.asOf)
    .map(e=>e.slug+"|"+e.lastUfcFight));
+ // A direct UFC 'Not Fighting' roster status is a separate *current active*
+ // exclusion, never a claim of retirement, contract termination or later MMA.
+ // A subsequent official UFC return automatically supersedes this dated record.
+ const notFighting=(supplement.confirmedNotFighting||[])
+   .filter(e=>e?.status==="not_fighting"&&e.slug&&e.lastUfcFight&&
+     /^https:\/\/www\.ufc\.com\/athlete\/[a-z0-9-]+$/.test(e.source||"")&&
+     /^\d{4}-\d{2}-\d{2}$/.test(e.checkedAt||"")&&
+     e.checkedAt<=opts.asOf&&e.lastUfcFight<=opts.asOf)
+   .map(e=>({slug:e.slug,lastUfcFight:e.lastUfcFight,
+     reason:"official_ufc_status_not_fighting",
+     evidence:{source:e.source,status:"not_fighting",checkedAt:e.checkedAt}}));
  const rosterReview={
    asOf:opts.asOf,
-   excluded:[...(originalValid?original.excluded||[]:[]),...(supplement.departures||[])],
+   excluded:[...(originalValid?original.excluded||[]:[]),...(supplement.departures||[]),...notFighting],
    reviewCandidates:originalValid?(original.reviewCandidates||[])
       .filter(row=>!confirmedCurrent.has(row.slug+"|"+row.lastUfcFight)):[]
  };
