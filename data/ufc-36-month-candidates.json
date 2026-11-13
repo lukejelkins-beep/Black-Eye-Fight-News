@@ -15,25 +15,25 @@
     "latestPromotionReviewRequired": 0,
     "noKnownLaterMmaOrUnknown": 783,
     "activeFighters": 783,
-    "withFiveKnown": 487,
-    "withFiveLinkedIds": 482,
+    "withFiveKnown": 488,
+    "withFiveLinkedIds": 483,
     "withThreeMeasured": 592,
     "withShortUfcTimelineReconciled": 3,
     "withUfcHistoryLinkedAndMeasured": 402,
     "evidenceStages": {
       "fiveLinkedMeasured": 402,
-      "fiveLinkedStatsGap": 80,
+      "fiveLinkedStatsGap": 81,
       "fiveUnlinked": 5,
       "shortLinkedMeasuredDepthConfirmed": 0,
-      "shortLinkedMeasuredDepthUnconfirmed": 253,
+      "shortLinkedMeasuredDepthUnconfirmed": 252,
       "shortLinkedStatsGapDepthConfirmed": 3,
       "shortLinkedStatsGap": 40,
       "shortUnlinked": 0
     },
-    "needHistoryCheck": 298,
-    "needStats": 128,
-    "shiftedDateAliasesJoined": 494,
-    "uniqueKnownBoutIds": 1939
+    "needHistoryCheck": 297,
+    "needStats": 129,
+    "shiftedDateAliasesJoined": 444,
+    "uniqueKnownBoutIds": 1943
   },
   "eligibilityExcluded": [
     {
@@ -18390,32 +18390,6 @@
           "opponent": "Jack Della Maddalena",
           "boutId": "60116",
           "method": "decision_split",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        }
-      ]
-    },
-    {
-      "name": "Stipe Miocic",
-      "slug": "stipe-miocic",
-      "lastUfcFight": "2024-11-16",
-      "eligibilityStatus": "latest_observed_mma_ufc",
-      "champion": false,
-      "upcoming": false,
-      "ranked": false,
-      "recentCount": 1,
-      "measuredCount": 1,
-      "evidenceStage": "shortLinkedMeasuredDepthUnconfirmed",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": true,
-      "needsStats": false,
-      "recent": [
-        {
-          "date": "2024-11-16",
-          "opponent": "Jon Jones",
-          "boutId": "60381",
-          "method": "ko_tko",
           "outcome": "L",
           "origin": "ufc-bout-index",
           "hasMeasuredTotals": true
@@ -42913,6 +42887,68 @@
           "outcome": "W",
           "origin": "ufc-bout-index",
           "hasMeasuredTotals": true
+        }
+      ]
+    },
+    {
+      "name": "Stipe Miocic",
+      "slug": "stipe-miocic",
+      "lastUfcFight": "2024-11-16",
+      "eligibilityStatus": "latest_observed_mma_ufc",
+      "champion": false,
+      "upcoming": false,
+      "ranked": false,
+      "recentCount": 5,
+      "measuredCount": 1,
+      "evidenceStage": "fiveLinkedStatsGap",
+      "ufcTimelineDepthConfirmed": false,
+      "needsHistoryCheck": false,
+      "needsStats": true,
+      "recent": [
+        {
+          "date": "2024-11-16",
+          "opponent": "Jon Jones",
+          "boutId": "60381",
+          "method": "ko_tko",
+          "outcome": "L",
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2021-03-27",
+          "opponent": "Francis Ngannou",
+          "boutId": "61951",
+          "method": "ko_tko",
+          "outcome": "L",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        },
+        {
+          "date": "2020-08-16",
+          "opponent": "Daniel Cormier",
+          "boutId": "59371",
+          "method": "decision_unanimous",
+          "outcome": "W",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        },
+        {
+          "date": "2019-08-17",
+          "opponent": "Daniel Cormier",
+          "boutId": "62258",
+          "method": "ko_tko",
+          "outcome": "W",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        },
+        {
+          "date": "2018-07-07",
+          "opponent": "Daniel Cormier",
+          "boutId": "65493",
+          "method": "ko_tko",
+          "outcome": "L",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
         }
       ]
     },
