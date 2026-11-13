@@ -37,6 +37,10 @@ on:
       - 'tests/test-ufc-title-match.cjs'
       - 'data/ufc-*-profiles.json'
       - 'assets/fighter-insights.js'
+      - 'scripts/build-ufc-fighter-v3.mjs'
+      - 'tests/test-ufc-fighter-v3.mjs'
+      - 'tests/test-ufc-profile-visual.mjs'
+      - '.github/workflows/validate-ufc-profiles.yml'
       - 'tests/test-ufc-async-authority.cjs'
       - 'assets/fighter-power-index.js'
       - 'tests/test-ufc-*.cjs'
@@ -76,6 +80,10 @@ jobs:
           node --test tests/test-ufc-research-pipeline.mjs
       - name: Verify post-fight event reconciliation and no double counting
         run: node --test tests/test-ufc-postfight-metrics.mjs
+      - name: Regenerate the V3 source snapshot before browser checks
+        run: |
+          node --test tests/test-ufc-fighter-v3.mjs
+          node scripts/build-ufc-fighter-v3.mjs
       - name: Install browser test dependency (CI only)
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1
