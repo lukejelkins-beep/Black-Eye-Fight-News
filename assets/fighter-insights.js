@@ -25,7 +25,7 @@
  const byName=new Map();
  for(const f of profiles){const k=norm(f.name);if(!byName.has(k))byName.set(k,f)}
  let ufcV3=null;
- const isUfcProfile=f=>f?.sport==="MMA"&&(f?.organisation==="UFC"||f?.championReview===true||f?.reviewedUfcProfile===true);
+ const isUfcProfile=f=>f?.sport==="MMA"&&(f?.organisation==="UFC"||f?.organization==="UFC"||f?.championReview===true||f?.reviewedUfcProfile===true||["mma-prospects","mma-contenders"].includes(f?.report)||(typeof f?.meta==="string"&&/\bUFC\s*:/.test(f.meta)));
  const v3For=f=>isUfcProfile(f)&&ufcV3?.schema>=4?ufcV3.fighters[norm(f.name)]:null;
  const stats=new Map();
  const trackedUfcStats=new Map();
