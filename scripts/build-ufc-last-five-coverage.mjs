@@ -13,7 +13,7 @@ const slugify=s=>String(s||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
  .toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const nameKey=s=>slugify(s).replace(/-/g,"");
 const validDate=s=>/^\d{4}-\d{2}-\d{2}$/.test(s||"")&&!Number.isNaN(Date.parse(s));
-const cutoffFrom=(day)=>{const [y,m,d]=day.split("-").map(Number);let p=(y*12+m-1)-18;let py=Math.floor(p/12),pm=p%12+1;
+const cutoffFrom=(day)=>{const [y,m,d]=day.split("-").map(Number);let p=(y*12+m-1)-24;let py=Math.floor(p/12),pm=p%12+1;
  const max=new Date(Date.UTC(py,pm,0)).getUTCDate();return [py,String(pm).padStart(2,"0"),String(Math.min(d,max)).padStart(2,"0")].join("-");};
 const settled=new Set(["completed","draw","no_contest"]);
 // Only confirmed professional MMA matters for latest-fight eligibility.
@@ -250,7 +250,7 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
    f.latestUnverifiedPromotion?.date>f.lastActive?
     f.latestUnverifiedPromotion:f.latestOtherMma});
  return {schema:1,scope:"ufc",asOf,activityCutoff:cutoff,
-  eligibilityNote:"A later confirmed professional MMA fight outside the UFC excludes. Unknown promotions or rulesets require review. UFC contract status is not independently verified.",
+  eligibilityNote:"Activity requires the latest professional MMA fight to be a UFC bout within the rolling 24 months. A later confirmed professional MMA bout outside the UFC excludes; unknown promotions/rulesets and current UFC contract status require independent review.",
   summary:totals,
   eligibilityExcluded:excluded.map(toItem).sort((a,b)=>a.slug.localeCompare(b.slug)),
   eligibilityReview:review.map(toItem).sort((a,b)=>a.slug.localeCompare(b.slug)),
