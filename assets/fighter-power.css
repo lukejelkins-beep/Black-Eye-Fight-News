@@ -597,3 +597,52 @@
     color:#263e39;
   }
 }
+
+/* Reviewed UFC Fighter V3 */
+.befn-v3, .befn-v3-boards { color: #f4f1e9; }
+.befn-v3-hero, .befn-v3 .befn-profile-block, .befn-v3-boards {
+  background: #202022;
+  border: 1px solid #514635;
+  border-radius: 12px;
+}
+.befn-v3-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: clamp(14px, 3vw, 22px);
+}
+.befn-v3-hero p { margin: 0 0 4px; }
+.befn-v3-hero small, .befn-v3 li small, .befn-v3-boards li small { color: #c8c0b2; }
+.befn-v3-score { color: var(--v3-tier, #f4f1e9); font-size: clamp(28px, 6vw, 46px); line-height: 1.12; }
+.befn-v3-score small { font-size: 14px; }
+.befn-v3-status { display: grid; justify-items: start; gap: 6px; }
+.befn-v3-status span { border: 1px solid #8e806a; border-radius: 5px; padding: 3px 9px; font-weight: 750; }
+.befn-v3-status .is-champion { background: #e8bd59; color: #201709; }
+.befn-v3-legendary, .befn-v3-boards summary { color: #f5ca6d; }
+.befn-v3 .befn-profile-block h3 { background: #2b2926; color: #f5ca6d !important; border-color: #514635; }
+.befn-v3 .befn-profile-body, .befn-v3 .befn-power-metric-label,
+.befn-v3 .befn-power-metric-label b, .befn-v3 .befn-credential-empty { color: #f4f1e9; }
+.befn-v3 .befn-power-track { background: #38383b; }
+.befn-v3 .befn-power-fill { background: var(--v3-tier); }
+.befn-v3 .is-legendary { --v3-tier: #f5ca6d; }
+.befn-v3 .is-emerald { --v3-tier: #51dfa1; }
+.befn-v3 .is-lime { --v3-tier: #b7db60; }
+.befn-v3 .is-amber { --v3-tier: #ffb55e; }
+.befn-v3 .is-red { --v3-tier: #ff828b; }
+.befn-v3-fights, .befn-v3-statistics ul, .befn-v3-boards ul { padding: 0; list-style: none; }
+.befn-v3-fights li, .befn-v3-statistics li, .befn-v3-boards li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid #514635;
+}
+.befn-v3-fights li { grid-template-columns: auto minmax(0, 1fr); align-items: center; }
+.befn-v3-fights small, .befn-v3-statistics li small, .befn-v3-boards li small { display: block; }
+.befn-v3-boards { max-width: 720px; margin: 0 0 16px; padding: 12px 16px; }
+.befn-v3-boards:empty { display: none; }
+.befn-v3-boards summary, .befn-v3-statistics summary { cursor: pointer; font-weight: 750; }
+.befn-v3-boards select { max-width: 100%; margin: 4px; padding: 6px; background: #2b2926; color: #f4f1e9; }

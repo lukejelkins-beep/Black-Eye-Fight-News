@@ -25,6 +25,8 @@ const cohorts=["champion","ranked","contender","prospect","roster"];
 const profileStatsSource="data/ufc-postfight-metrics.json";
 const normalized=x=>String(x||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
  .toLowerCase().replace(/[^a-z0-9]/g,"");
+const v3Path=path.join(root,"data/ufc-fighter-v3.json");
+const v3=fs.existsSync(v3Path)?JSON.parse(fs.readFileSync(v3Path,"utf8")):null;
 const expectedPostfight=new Set();
 if(fs.existsSync(profileStatsSource)){
  const raw=JSON.parse(fs.readFileSync(profileStatsSource,"utf8"));
@@ -45,8 +47,8 @@ fs.mkdirSync(screenshots,{recursive:true});
 const slug=x=>String(x||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
  .toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const safe=x=>slug(x).slice(0,90)||"unknown";
-const server=isLive?null:spawn("python3",["-m","http.server",String(port),"--bind","127.0.0.1"],
- {cwd:root,stdio:"ignore"});
+const server=isLive?null:spawn(process.execPath,["scripts/responsive-preview-server.mjs"],
+ {cwd:root,stdio:"ignore",env:{...process.env,PORT:String(port)}});
 const failures=[],warnings=[],photos=[];
 let checkedCount=0,readyForBrowser=false;
 let browser;
@@ -83,6 +85,7 @@ async function ready(){
 function pushError(scope,error){failures.push(scope+": "+String(error?.message||error))}
 async function checkProfile(page,profile,screen){
  const scope=screen+" | "+profile.name;
+ const expectedV3=v3?.fighters[normalized(profile.name)];
  checkedCount++;
  try{
   // The initial HTML contains legacy fighter cards. Reviewed UFC cohorts
@@ -92,14 +95,14 @@ async function checkProfile(page,profile,screen){
    const f=window.COMBAT_DATA?.fighters?.find(x=>x.id===expected.id);
    const ur=expected.ufcRecord||{};
    const bouts=(ur.wins||0)+(ur.losses||0)+(ur.draws||0)+(ur.noContests||0);
-   const category=expected.category==="Roster"&&
+   const category=expected.v3Category??(expected.category==="Roster"&&
     (!ur.complete||bouts<2||(expected.latest||[]).length<2)?
-    "Unassessed":expected.category;
+    "Unassessed":expected.category);
    return !!(f?.reviewedUfcProfile||f?.championReview)&&f.record===expected.record&&
     f.division===expected.division&&f.category===category&&
     JSON.stringify((f.latest||[]).map(x=>[x.date,x.opponent,x.outcome,x.method]))===
     JSON.stringify(expected.latest.map(x=>[x.date,x.opponent,x.outcome,x.method]));
-  },profile,{timeout:18000});
+  },{...profile,v3Category:expectedV3?.category},{timeout:18000});
   await page.evaluate(id=>{
    const hash="#fighter/"+encodeURIComponent(id);
    if(location.hash!==hash)location.hash=hash;
@@ -111,10 +114,17 @@ async function checkProfile(page,profile,screen){
    const d=document.querySelector("#fighterDialog");
    return !!d?.open&&!!d.querySelector(".befn-profile-insights[data-befn-profile='"+CSS.escape(id)+"']");
   },profile.id,{timeout:12000});
-  if(expectedPostfight.has(normalized(profile.name))){
+  if(!expectedV3&&expectedPostfight.has(normalized(profile.name))){
    await page.waitForFunction(id=>
     !!document.querySelector("#fighterDialog .befn-profile-block[data-befn-postfight='"+CSS.escape(id)+"']"),
     profile.id,{timeout:12000});
+  }
+  if(expectedV3){
+   const rendered=dialog.locator('.befn-v3');
+   await rendered.waitFor();
+   assert.equal(await rendered.locator('.befn-v3-fights li').count(),expectedV3.recent.length);
+   assert((await rendered.locator('.befn-v3-score').textContent()).startsWith(String(expectedV3.power??'Unrated')));
+   assert((await rendered.locator('.befn-v3-status').textContent()).includes(expectedV3.category));
   }
   // Wait briefly for portrait requests to settle. A cached or slow image
   // must not be declared broken just because it was read instantly.
@@ -182,9 +192,9 @@ async function checkProfile(page,profile,screen){
   // an unsourced prospect/contender label. Their UI category is Unassessed.
   const record=profile.ufcRecord||{};
   const boutCount=(record.wins||0)+(record.losses||0)+(record.draws||0)+(record.noContests||0);
-  const expectedCategory=profile.category==="Roster"&&
+  const expectedCategory=expectedV3?.category??(profile.category==="Roster"&&
    (!record.complete||boutCount<2||(profile.latest||[]).length<2)?
-   "Unassessed":profile.category;
+   "Unassessed":profile.category);
   assert.equal(details.category,expectedCategory,"classification display mismatch");
   assert.equal(details.metrics,5,"expected exactly 5 rating rows");
   // Profile details may contain OTHER tables (including post-fight metrics).
@@ -213,7 +223,7 @@ async function checkProfile(page,profile,screen){
     "mobile UFC results must display outcome and method");
   }
   assert(details.credentialsVisible,"credentials or missing-credential statement absent");
-  if(expectedPostfight.has(normalized(profile.name))){
+  if(!expectedV3&&expectedPostfight.has(normalized(profile.name))){
    assert.equal(details.postfightCells,11,"incomplete UFC post-fight metrics panel");
    assert(details.coverageVisible,"missing clear sample versus career totals label");
    const latestUfcCount=Math.min((profile.latest||[]).length,5);
@@ -281,7 +291,7 @@ async function checkProfile(page,profile,screen){
 try{
  await ready();
  readyForBrowser=true;
- browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+ browser=await chromium.launch({executablePath:process.env.BEFN_QA_CHROME,headless:true,args:["--no-sandbox"]});
  for(const [screen,viewport] of [
   ["desktop",{width:1366,height:900}],
   ["mobile",{width:390,height:844}]
@@ -303,11 +313,30 @@ try{
    profiles.map(x=>x.id),{timeout:30000});
   const fighterGrid=page.locator("#fighterGrid");
   await fighterGrid.waitFor({state:"visible",timeout:12000});
+  if(v3){
+   const boards=page.locator('[data-befn-v3-leaderboards]');
+   await boards.locator('summary').click();
+   await boards.locator('select').selectOption('submission');
+   assert((await boards.innerText()).includes(v3.boards.find(b=>b.id==='submission').leaders[0].name));
+   await boards.locator('select').selectOption('sapm');
+   assert((await boards.innerText()).includes('lower is better'));
+  }
   // Open a reviewed card through the live Fighter Profiles interface.
   await page.evaluate(()=>{document.querySelector('[data-nav="fighters"]')?.click()});
   await page.waitForTimeout(350);
   if(!await fighterGrid.count())pushError(screen,"Fighter Profiles grid missing");
   for(const f of profiles)await checkProfile(page,f,screen);
+  if(v3){
+   await page.evaluate(()=>{location.hash='#champions'});
+   const fighter=page.locator('.fighter-hover-name').first();
+   if(screen==='desktop')await fighter.hover();
+   else await fighter.click();
+   const popup=page.locator('#fighter-photo-preview');
+   await popup.waitFor({state:'visible'});
+   const close=popup.getByRole('button',{name:'Close fighter photo'});
+   await close.click();
+   await popup.waitFor({state:'hidden'});
+  }
   // Deterministic regression test: simulate a real broken portrait regardless
   // of which remote CDNs happen to be reachable on this CI runner. A labelled,
   // visible fallback must appear without replacing it with a wrong person's photo.

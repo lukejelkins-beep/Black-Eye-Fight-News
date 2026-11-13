@@ -15,6 +15,7 @@ export const CRITICAL_PRODUCTION_FILES=Object.freeze([
  "assets/fighter-power.css",
  "data/ufc-champion-profiles.json",
  "data/ufc-ranked-profiles.json",
+ "data/ufc-fighter-v3.json",
  "data/ufc-contender-profiles.json",
  "data/ufc-prospect-profiles.json",
  "data/ufc-roster-profiles.json"

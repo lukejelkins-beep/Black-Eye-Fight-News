@@ -49,7 +49,7 @@ jobs:
             data/fight-film.json data/fighter-intelligence.json
             data/ufc-champion-profiles.json data/ufc-contender-profiles.json
             data/ufc-prospect-profiles.json data/ufc-roster-profiles.json
-            data/ufc-postfight-metrics.json
+            data/ufc-postfight-metrics.json data/ufc-fighter-v3.json
           )
           printf '%s\n' "${files[@]}" > /tmp/befn-watch-files
           differences=0

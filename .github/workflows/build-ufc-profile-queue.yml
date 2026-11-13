@@ -11,6 +11,7 @@ on:
     paths:
       - 'scripts/build-ufc-profile-queue.mjs'
       - 'scripts/build-ufc-postfight-metrics.mjs'
+      - 'scripts/build-ufc-fighter-v3.mjs'
       - 'tests/test-ufc-postfight-metrics.mjs'
       - 'data/ufcalendar-rich-progress.json'
       - 'data/ufc-research-archive.json'
@@ -40,14 +41,16 @@ jobs:
       - name: Refresh queue from existing budgeted UFCalendar data
         run: node scripts/build-ufc-profile-queue.mjs
       - name: Derive post-fight UFC totals with no additional API requests
-        run: node scripts/build-ufc-postfight-metrics.mjs
+        run: |
+          node scripts/build-ufc-postfight-metrics.mjs
+          node scripts/build-ufc-fighter-v3.mjs
       - name: Save material candidate changes without rewriting live feeds
         shell: bash
         run: |
           set -euo pipefail
           git config user.name 'BEFN research queue'
           git config user.email 'research-queue-bot@users.noreply.github.com'
-          git add data/ufc-profile-research-queue.json data/ufc-postfight-metrics.json
+          git add data/ufc-profile-research-queue.json data/ufc-postfight-metrics.json data/ufc-fighter-v3.json
           if git diff --cached --quiet; then
             echo 'No new research candidates; no commit'; exit 0
           fi

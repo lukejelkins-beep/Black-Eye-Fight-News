@@ -105,7 +105,7 @@
 .fighter-hover-name:hover,.fighter-hover-name:focus-visible,.fighter-hover-name[aria-expanded="true"]{color:#087b83;text-decoration-color:currentColor;text-decoration-style:solid}
 .fighter-hover-name:focus-visible{outline:3px solid #d58f4f;outline-offset:3px;border-radius:2px}
 #fighter-photo-preview{position:fixed;z-index:2147483000;left:0;top:0;width:min(440px,calc(100vw - 24px));background:#0f222c;color:#eef7f6;border:1px solid #456675;border-radius:12px;box-shadow:0 24px 72px rgba(2,15,22,.36);pointer-events:none;opacity:0;visibility:hidden;transition:opacity .15s ease;overflow:hidden}
-#fighter-photo-preview.is-open{visibility:visible;opacity:1}
+#fighter-photo-preview.is-open{visibility:visible;opacity:1;pointer-events:auto}
 #fighter-photo-preview.is-open.is-pinned{pointer-events:auto}
 #fighter-photo-preview .fighter-preview-close{position:absolute;top:10px;right:10px;z-index:5;width:46px;height:46px;display:grid;place-items:center;border:2px solid #ffffffdb;border-radius:50%;background:#16181de8;color:white;font:800 30px/1 system-ui,sans-serif;box-shadow:0 3px 12px #0009;cursor:pointer;touch-action:manipulation}
 #fighter-photo-preview .fighter-preview-close:focus-visible{outline:3px solid #f3c332;outline-offset:3px}
@@ -216,7 +216,7 @@
 
 <style>.social-card[data-platform="Facebook"]{background:#fff;border:1px solid #d6dfec}.social-card[data-platform="Facebook"] .platform-letter{color:#1877f2}.social-card[data-platform="Bluesky"]{background:#fff;border:1px solid #b8d9f5}.social-card[data-platform="Bluesky"] .platform-letter{color:#1683fe}</style>
 <link rel="stylesheet" href="assets/results.css">
-<link rel="stylesheet" href="assets/fighter-power.css?v=20261112-uc2">
+<link rel="stylesheet" href="assets/fighter-power.css?v=ufc-v3">
 <link rel="stylesheet" href="assets/upcoming-cards.css?v=20261112-results-parity-v1">
 <link rel="stylesheet" href="assets/fights-hub.css?v=20261111-historic-posters-v1">
 <link rel="stylesheet" href="assets/fight-film.css?v=20261108-ufc-finishes">
@@ -1093,7 +1093,7 @@ const fighterCard=f=>`<button type="button" class="fighter-card" data-fighter="$
 function filteredFighters(){let result=D.fighters.filter(f=>(state.fightersSport==='All'||f.sport===state.fightersSport) && (state.fightersCategory==='All'||f.category===state.fightersCategory) && (state.fightersDivision==='All'||f.division===state.fightersDivision));const q=state.fightersQuery.trim().toLowerCase();if(q)result=result.filter(f=>[f.name,f.division,f.meta,f.record,f.next,...f.analysis].join(' ').toLowerCase().includes(q));return result;}
 function divisionFilter(){const divs=[...new Set(D.fighters.filter(x=>state.fightersSport==='All'||x.sport===state.fightersSport).map(x=>x.division))];return `<select class="field" id="divisionFilter" aria-label="Choose weight division"><option value="All">All divisions</option>${divs.map(d=>`<option value="${esc(d)}" ${d===state.fightersDivision?'selected':''}>${esc(d)}</option>`).join('')}</select>`}
 function renderFighterCards(){const list=filteredFighters();const grid=document.querySelector('#fighterGrid');const count=document.querySelector('#fighterCount');if(grid){grid.innerHTML=list.length?list.map(fighterCard).join(''):'<div class="empty">No fighters match those filters.</div>';syncFighterPortraits(grid)}if(count)count.textContent=`${list.length} PROFILES`}
-function renderFighters(){const count=filteredFighters().length;return renderFrame(`${viewTitle('','Fighter profiles')}<div class="filter-row">${segments('fightersCategory',['All','Champion','Contender','Prospect','Roster','Unassessed'],state.fightersCategory)}${divisionFilter()}<input class="field search" id="fighterSearch" placeholder="Search fighter, promotion, style, form…" aria-label="Search fighter profiles" value="${esc(state.fightersQuery)}"><span class="result-count" id="fighterCount">${count} PROFILES</span></div><details class="compact-note"><summary>About these records</summary><p>Historical roster from 7 November 2026. Some records, fixtures and notes require reconfirmation.</p></details><div class="fighters-grid" id="fighterGrid">${filteredFighters().length?filteredFighters().map(fighterCard).join(''):'<p class="empty">No verified scouting profiles are available for this selection.</p>'}</div>`)}
+function renderFighters(){const count=filteredFighters().length;return renderFrame(`${viewTitle('','Fighter profiles')}<div class="filter-row">${segments('fightersCategory',['All','Champion','Contender','Prospect','Roster','Unassessed'],state.fightersCategory)}${divisionFilter()}<input class="field search" id="fighterSearch" placeholder="Search fighter, promotion, style, form…" aria-label="Search fighter profiles" value="${esc(state.fightersQuery)}"><span class="result-count" id="fighterCount">${count} PROFILES</span></div><details class="compact-note"><summary>About these records</summary><p>Historical roster from 7 November 2026. Some records, fixtures and notes require reconfirmation.</p></details><details class="befn-v3-boards" data-befn-v3-leaderboards></details><div class="fighters-grid" id="fighterGrid">${filteredFighters().length?filteredFighters().map(fighterCard).join(''):'<p class="empty">No verified scouting profiles are available for this selection.</p>'}</div>`)}
 const talkPlatforms = {
  X: {mark:'𝕏', hosts:['x.com','twitter.com']},
  Instagram: {mark:'◎', hosts:['instagram.com']},
@@ -1732,7 +1732,7 @@ window.setInterval(()=>{if(location.hash.split('/')[0]==='#social'&&!liveTalk.lo
  const imageBox=popup.querySelector('.fighter-preview-image');
  const label=popup.querySelector('.fighter-preview-name');
  const closeButton=popup.querySelector('.fighter-preview-close');
- let active=null,seq=0,pinned=false,loaded='';
+ let active=null,seq=0,pinned=false,loaded='',leaveTimer;
  const target=e=>e&&e.closest?e.closest('.fighter-hover-name,.champ-preview-trigger'):null;
  function position(button){
   const rect=button.getBoundingClientRect();const w=popup.offsetWidth||440,h=popup.offsetHeight||375,gap=18,margin=12;
@@ -1746,6 +1746,7 @@ window.setInterval(()=>{if(location.hash.split('/')[0]==='#social'&&!liveTalk.lo
  }
  function show(button,locked){
   if(!button)return;
+  clearTimeout(leaveTimer);
   const same=active===button&&popup.classList.contains('is-open');
   if(!same){if(active)active.removeAttribute('aria-expanded');active=button;seq++;loaded='';}
   pinned=!!locked;popup.classList.toggle('is-pinned',pinned);popup.setAttribute('role',pinned?'dialog':'tooltip');button.setAttribute('aria-expanded','true');
@@ -1780,12 +1781,15 @@ window.setInterval(()=>{if(location.hash.split('/')[0]==='#social'&&!liveTalk.lo
  }
  function hide(force){
   if(pinned&&!force)return;
+  clearTimeout(leaveTimer);
   seq++;if(active){active.removeAttribute('aria-expanded');active=null;}
   pinned=false;popup.classList.remove('is-open','is-pinned');popup.setAttribute('role','tooltip');popup.setAttribute('aria-hidden','true');imageBox.replaceChildren();
  }
+ popup.addEventListener('pointerenter',()=>clearTimeout(leaveTimer));
+ popup.addEventListener('pointerleave',e=>{if(!active?.contains(e.relatedTarget))hide(false)});
  closeButton.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();hide(true)});
  document.addEventListener('pointerover',e=>{if(e.pointerType==='touch')return;const b=target(e.target);if(b&&b!==active)show(b,false)});
- document.addEventListener('pointerout',e=>{if(e.pointerType==='touch')return;const b=target(e.target);if(b&&b===active&&!pinned&&(!e.relatedTarget||!b.contains(e.relatedTarget)))hide(true)});
+ document.addEventListener('pointerout',e=>{if(e.pointerType==='touch')return;const b=target(e.target);if(b&&b===active&&!pinned&&(!e.relatedTarget||!b.contains(e.relatedTarget)))leaveTimer=setTimeout(()=>hide(false),240)});
  document.addEventListener('focusin',e=>{const b=target(e.target);if(b)show(b,false)});
  document.addEventListener('focusout',e=>{const b=target(e.target);if(b&&b===active&&!pinned)hide(true)});
  document.addEventListener('click',e=>{if(e.target.closest?.('#fighter-photo-preview'))return;const b=target(e.target);if(b){if(pinned&&active===b){hide(true)}else show(b,true);return;}if(active)hide(true)});
@@ -1796,12 +1800,12 @@ window.setInterval(()=>{if(location.hash.split('/')[0]==='#social'&&!liveTalk.lo
 })();
 
 })();
-</script><script src="assets/fighter-hover.js?v=20261111-fighter-close" defer></script>
+</script><script src="assets/fighter-hover.js?v=ufc-v3" defer></script>
 <script src="assets/scout-intelligence.js?v=20261111-api1" defer></script>
 <script src="assets/ufcalendar-evidence.js?v=20261111-archive1" defer></script>
 <script src="assets/fighter-power-index.js?v=20261112-ufc-champions-v6" defer></script>
 <script src="assets/ufc-prospect-contender.js?v=20261112-uc2" defer></script>
-<script src="assets/fighter-insights.js?v=20261112-uc2" defer></script>
+<script src="assets/fighter-insights.js?v=ufc-v3" defer></script>
 <script src="assets/ufcalendar-fights-enrichment.js?v=20261112-round-observations-v2" defer></script>
 </body>
 </html>
