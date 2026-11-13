@@ -24,15 +24,15 @@
       "fiveLinkedStatsGap": 76,
       "fiveUnlinked": 31,
       "shortLinkedMeasuredDepthConfirmed": 0,
-      "shortLinkedMeasuredDepthUnconfirmed": 278,
+      "shortLinkedMeasuredDepthUnconfirmed": 277,
       "shortLinkedStatsGapDepthConfirmed": 3,
-      "shortLinkedStatsGap": 41,
-      "shortUnlinked": 9
+      "shortLinkedStatsGap": 43,
+      "shortUnlinked": 8
     },
     "needHistoryCheck": 359,
-    "needStats": 160,
-    "shiftedDateAliasesJoined": 858,
-    "uniqueKnownBoutIds": 2029
+    "needStats": 161,
+    "shiftedDateAliasesJoined": 824,
+    "uniqueKnownBoutIds": 2031
   },
   "eligibilityExcluded": [
     {
@@ -19336,7 +19336,7 @@
       "ranked": false,
       "recentCount": 4,
       "measuredCount": 3,
-      "evidenceStage": "shortUnlinked",
+      "evidenceStage": "shortLinkedStatsGap",
       "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": true,
       "needsStats": true,
@@ -19362,7 +19362,7 @@
         {
           "date": "2023-03-25",
           "opponent": "Steven Peterson",
-          "boutId": null,
+          "boutId": "59648",
           "method": "decision_unanimous",
           "outcome": "W",
           "origin": "ufc-history",
@@ -21621,12 +21621,12 @@
       "champion": false,
       "upcoming": false,
       "ranked": false,
-      "recentCount": 1,
+      "recentCount": 2,
       "measuredCount": 1,
-      "evidenceStage": "shortLinkedMeasuredDepthUnconfirmed",
+      "evidenceStage": "shortLinkedStatsGap",
       "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": true,
-      "needsStats": false,
+      "needsStats": true,
       "recent": [
         {
           "date": "2024-03-23",
@@ -21636,6 +21636,15 @@
           "outcome": "L",
           "origin": "ufc-bout-index",
           "hasMeasuredTotals": true
+        },
+        {
+          "date": "2023-08-22",
+          "opponent": "Robbie Ring",
+          "boutId": "83831",
+          "method": "ko_tko",
+          "outcome": "W",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
         }
       ]
     },
