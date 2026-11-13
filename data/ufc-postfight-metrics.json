@@ -3,8 +3,8 @@
   "scope": "ufc-only",
   "source": "Saved UFCalendar-derived UFC research observations with completed bout IDs",
   "note": "Tracked UFC bouts ONLY, not career totals. Per-metric sample counts differ when upstream round fields are absent. Fights with missing rounds, conflicting sources or unverifiable clocks are excluded rather than estimated.",
-  "processedCompletedBouts": 2462,
-  "metricBouts": 2414,
+  "processedCompletedBouts": 2476,
+  "metricBouts": 2428,
   "pending": [
     {
       "boutId": "59836",
@@ -4656,71 +4656,97 @@
       "name": "Alexander Romanov",
       "slug": "alexander-romanov",
       "scope": "ufc-only",
-      "trackedBouts": 2,
-      "lastFightDate": "2024-06-01",
+      "trackedBouts": 3,
+      "lastFightDate": "2024-11-02",
       "totals": {
         "totalLanded": {
-          "value": 1,
-          "coveredBouts": 2
+          "value": 88,
+          "coveredBouts": 3
         },
         "totalAttempted": {
-          "value": 2,
-          "coveredBouts": 2
+          "value": 137,
+          "coveredBouts": 3
         },
         "sigLanded": {
-          "value": 1,
-          "coveredBouts": 2
+          "value": 46,
+          "coveredBouts": 3
         },
         "sigAttempted": {
-          "value": 2,
-          "coveredBouts": 2
+          "value": 94,
+          "coveredBouts": 3
         },
         "controlSec": {
-          "value": 38,
-          "coveredBouts": 2
+          "value": 491,
+          "coveredBouts": 3
         },
         "knockdowns": {
           "value": 0,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "takedowns": {
-          "value": 0,
-          "coveredBouts": 2
+          "value": 6,
+          "coveredBouts": 3
         },
         "takedownAttempts": {
-          "value": 5,
-          "coveredBouts": 2
+          "value": 15,
+          "coveredBouts": 3
         },
         "subAttempts": {
-          "value": 0,
-          "coveredBouts": 2
+          "value": 1,
+          "coveredBouts": 3
         },
         "reversals": {
           "value": 0,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "totalStrikeDifferential": {
-          "value": -28,
-          "coveredBouts": 2
+          "value": 11,
+          "coveredBouts": 3
         },
         "sigStrikeDifferential": {
-          "value": -12,
-          "coveredBouts": 2
+          "value": 2,
+          "coveredBouts": 3
         },
         "controlDifferentialSec": {
-          "value": -152,
-          "coveredBouts": 2
+          "value": 301,
+          "coveredBouts": 3
         },
         "sigAbsorbed": {
-          "value": 13,
-          "coveredBouts": 2
+          "value": 44,
+          "coveredBouts": 3
         },
         "totalAbsorbed": {
-          "value": 29,
-          "coveredBouts": 2
+          "value": 77,
+          "coveredBouts": 3
         }
       },
       "recentBouts": [
+        {
+          "boutId": "61137",
+          "date": "2024-11-02",
+          "event": "UFC Fight Night: Moreno vs Albazi",
+          "opponent": "Rodrigo Nascimento",
+          "cageSec": 900,
+          "outcome": "W",
+          "finishMethod": "decision_unanimous",
+          "metrics": {
+            "totalLanded": 87,
+            "totalAttempted": 135,
+            "sigLanded": 45,
+            "sigAttempted": 92,
+            "controlSec": 453,
+            "knockdowns": 0,
+            "takedowns": 6,
+            "takedownAttempts": 10,
+            "subAttempts": 1,
+            "reversals": 0,
+            "totalStrikeDifferential": 39,
+            "sigStrikeDifferential": 14,
+            "controlDifferentialSec": 453,
+            "sigAbsorbed": 31,
+            "totalAbsorbed": 48
+          }
+        },
         {
           "boutId": "60254",
           "date": "2024-06-01",
@@ -11188,71 +11214,97 @@
       "name": "Anshul Jubli",
       "slug": "anshul-jubli",
       "scope": "ufc-only",
-      "trackedBouts": 1,
-      "lastFightDate": "2023-02-05",
+      "trackedBouts": 2,
+      "lastFightDate": "2025-02-08",
       "totals": {
         "totalLanded": {
           "value": 74,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "totalAttempted": {
-          "value": 99,
-          "coveredBouts": 1
+          "value": 100,
+          "coveredBouts": 2
         },
         "sigLanded": {
           "value": 38,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "sigAttempted": {
-          "value": 51,
-          "coveredBouts": 1
+          "value": 52,
+          "coveredBouts": 2
         },
         "controlSec": {
           "value": 427,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "knockdowns": {
           "value": 0,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "takedowns": {
           "value": 2,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "takedownAttempts": {
           "value": 5,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "subAttempts": {
           "value": 1,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "reversals": {
           "value": 0,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "totalStrikeDifferential": {
-          "value": 54,
-          "coveredBouts": 1
+          "value": 48,
+          "coveredBouts": 2
         },
         "sigStrikeDifferential": {
-          "value": 24,
-          "coveredBouts": 1
+          "value": 18,
+          "coveredBouts": 2
         },
         "controlDifferentialSec": {
-          "value": 418,
-          "coveredBouts": 1
+          "value": 417,
+          "coveredBouts": 2
         },
         "sigAbsorbed": {
-          "value": 14,
-          "coveredBouts": 1
+          "value": 20,
+          "coveredBouts": 2
         },
         "totalAbsorbed": {
-          "value": 20,
-          "coveredBouts": 1
+          "value": 26,
+          "coveredBouts": 2
         }
       },
       "recentBouts": [
+        {
+          "boutId": "60990",
+          "date": "2025-02-08",
+          "event": "UFC 312: Du Plessis vs Strickland 2",
+          "opponent": "Quillan Salkilld",
+          "cageSec": 19,
+          "outcome": "L",
+          "finishMethod": "ko_tko",
+          "metrics": {
+            "totalLanded": 0,
+            "totalAttempted": 1,
+            "sigLanded": 0,
+            "sigAttempted": 1,
+            "controlSec": 0,
+            "knockdowns": 0,
+            "takedowns": 0,
+            "takedownAttempts": 0,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": -6,
+            "sigStrikeDifferential": -6,
+            "controlDifferentialSec": -1,
+            "sigAbsorbed": 6,
+            "totalAbsorbed": 6
+          }
+        },
         {
           "boutId": "59748",
           "date": "2023-02-05",
@@ -13229,71 +13281,97 @@
       "name": "Armen Petrosyan",
       "slug": "armen-petrosyan",
       "scope": "ufc-only",
-      "trackedBouts": 3,
-      "lastFightDate": "2024-10-26",
+      "trackedBouts": 4,
+      "lastFightDate": "2025-03-08",
       "totals": {
         "totalLanded": {
-          "value": 163,
-          "coveredBouts": 3
+          "value": 210,
+          "coveredBouts": 4
         },
         "totalAttempted": {
-          "value": 298,
-          "coveredBouts": 3
+          "value": 382,
+          "coveredBouts": 4
         },
         "sigLanded": {
-          "value": 117,
-          "coveredBouts": 3
+          "value": 163,
+          "coveredBouts": 4
         },
         "sigAttempted": {
-          "value": 221,
-          "coveredBouts": 3
+          "value": 304,
+          "coveredBouts": 4
         },
         "controlSec": {
           "value": 100,
-          "coveredBouts": 3
+          "coveredBouts": 4
         },
         "knockdowns": {
           "value": 0,
-          "coveredBouts": 3
+          "coveredBouts": 4
         },
         "takedowns": {
           "value": 0,
-          "coveredBouts": 3
+          "coveredBouts": 4
         },
         "takedownAttempts": {
           "value": 0,
-          "coveredBouts": 3
+          "coveredBouts": 4
         },
         "subAttempts": {
           "value": 0,
-          "coveredBouts": 3
+          "coveredBouts": 4
         },
         "reversals": {
           "value": 1,
-          "coveredBouts": 3
+          "coveredBouts": 4
         },
         "totalStrikeDifferential": {
-          "value": 33,
-          "coveredBouts": 3
+          "value": 49,
+          "coveredBouts": 4
         },
         "sigStrikeDifferential": {
-          "value": 34,
-          "coveredBouts": 3
+          "value": 53,
+          "coveredBouts": 4
         },
         "controlDifferentialSec": {
-          "value": -677,
-          "coveredBouts": 3
+          "value": -749,
+          "coveredBouts": 4
         },
         "sigAbsorbed": {
-          "value": 83,
-          "coveredBouts": 3
+          "value": 110,
+          "coveredBouts": 4
         },
         "totalAbsorbed": {
-          "value": 130,
-          "coveredBouts": 3
+          "value": 161,
+          "coveredBouts": 4
         }
       },
       "recentBouts": [
+        {
+          "boutId": "60327",
+          "date": "2025-03-08",
+          "event": "UFC 313: Pereira vs Ankalaev",
+          "opponent": "Brunno Ferreira",
+          "cageSec": 567,
+          "outcome": "L",
+          "finishMethod": "submission",
+          "metrics": {
+            "totalLanded": 47,
+            "totalAttempted": 84,
+            "sigLanded": 46,
+            "sigAttempted": 83,
+            "controlSec": 0,
+            "knockdowns": 0,
+            "takedowns": 0,
+            "takedownAttempts": 0,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": 16,
+            "sigStrikeDifferential": 19,
+            "controlDifferentialSec": -72,
+            "sigAbsorbed": 27,
+            "totalAbsorbed": 31
+          }
+        },
         {
           "boutId": "60182",
           "date": "2024-10-26",
@@ -21445,68 +21523,68 @@
       "name": "Brendson Ribeiro",
       "slug": "brendson-ribeiro",
       "scope": "ufc-only",
-      "trackedBouts": 7,
+      "trackedBouts": 8,
       "lastFightDate": "2026-10-10",
       "totals": {
         "totalLanded": {
-          "value": 125,
-          "coveredBouts": 7
+          "value": 174,
+          "coveredBouts": 8
         },
         "totalAttempted": {
-          "value": 293,
-          "coveredBouts": 7
+          "value": 424,
+          "coveredBouts": 8
         },
         "sigLanded": {
-          "value": 108,
-          "coveredBouts": 7
+          "value": 157,
+          "coveredBouts": 8
         },
         "sigAttempted": {
-          "value": 271,
-          "coveredBouts": 7
+          "value": 402,
+          "coveredBouts": 8
         },
         "controlSec": {
           "value": 37,
-          "coveredBouts": 7
+          "coveredBouts": 8
         },
         "knockdowns": {
           "value": 1,
-          "coveredBouts": 7
+          "coveredBouts": 8
         },
         "takedowns": {
           "value": 0,
-          "coveredBouts": 7
+          "coveredBouts": 8
         },
         "takedownAttempts": {
           "value": 2,
-          "coveredBouts": 7
+          "coveredBouts": 8
         },
         "subAttempts": {
           "value": 2,
-          "coveredBouts": 7
+          "coveredBouts": 8
         },
         "reversals": {
           "value": 2,
-          "coveredBouts": 7
+          "coveredBouts": 8
         },
         "totalStrikeDifferential": {
-          "value": -43,
-          "coveredBouts": 7
+          "value": -73,
+          "coveredBouts": 8
         },
         "sigStrikeDifferential": {
-          "value": -13,
-          "coveredBouts": 7
+          "value": -40,
+          "coveredBouts": 8
         },
         "controlDifferentialSec": {
-          "value": -628,
-          "coveredBouts": 7
+          "value": -630,
+          "coveredBouts": 8
         },
         "sigAbsorbed": {
-          "value": 121,
-          "coveredBouts": 7
+          "value": 197,
+          "coveredBouts": 8
         },
         "totalAbsorbed": {
-          "value": 168,
-          "coveredBouts": 7
+          "value": 247,
+          "coveredBouts": 8
         }
       },
       "recentBouts": [
@@ -22514,68 +22592,68 @@
       "name": "Brunno Ferreira",
       "slug": "brunno-ferreira",
       "scope": "ufc-only",
-      "trackedBouts": 8,
+      "trackedBouts": 9,
       "lastFightDate": "2026-09-19",
       "totals": {
         "totalLanded": {
-          "value": 210,
-          "coveredBouts": 8
+          "value": 241,
+          "coveredBouts": 9
         },
         "totalAttempted": {
-          "value": 463,
-          "coveredBouts": 8
+          "value": 526,
+          "coveredBouts": 9
         },
         "sigLanded": {
-          "value": 193,
-          "coveredBouts": 8
+          "value": 220,
+          "coveredBouts": 9
         },
         "sigAttempted": {
-          "value": 438,
-          "coveredBouts": 8
+          "value": 494,
+          "coveredBouts": 9
         },
         "controlSec": {
-          "value": 102,
-          "coveredBouts": 8
+          "value": 174,
+          "coveredBouts": 9
         },
         "knockdowns": {
           "value": 1,
-          "coveredBouts": 8
+          "coveredBouts": 9
         },
         "takedowns": {
-          "value": 2,
-          "coveredBouts": 8
+          "value": 4,
+          "coveredBouts": 9
         },
         "takedownAttempts": {
-          "value": 9,
-          "coveredBouts": 8
+          "value": 16,
+          "coveredBouts": 9
         },
         "subAttempts": {
-          "value": 2,
-          "coveredBouts": 8
+          "value": 3,
+          "coveredBouts": 9
         },
         "reversals": {
           "value": 1,
-          "coveredBouts": 8
+          "coveredBouts": 9
         },
         "totalStrikeDifferential": {
-          "value": -134,
-          "coveredBouts": 8
+          "value": -150,
+          "coveredBouts": 9
         },
         "sigStrikeDifferential": {
-          "value": -59,
-          "coveredBouts": 8
+          "value": -78,
+          "coveredBouts": 9
         },
         "controlDifferentialSec": {
-          "value": -872,
-          "coveredBouts": 8
+          "value": -800,
+          "coveredBouts": 9
         },
         "sigAbsorbed": {
-          "value": 252,
-          "coveredBouts": 8
+          "value": 298,
+          "coveredBouts": 9
         },
         "totalAbsorbed": {
-          "value": 344,
-          "coveredBouts": 8
+          "value": 391,
+          "coveredBouts": 9
         }
       },
       "recentBouts": [
@@ -23311,68 +23389,68 @@
       "name": "Bryan Battle",
       "slug": "bryan-battle",
       "scope": "ufc-only",
-      "trackedBouts": 5,
+      "trackedBouts": 6,
       "lastFightDate": "2024-12-07",
       "totals": {
         "totalLanded": {
-          "value": 310,
-          "coveredBouts": 5
+          "value": 428,
+          "coveredBouts": 6
         },
         "totalAttempted": {
-          "value": 525,
-          "coveredBouts": 5
+          "value": 719,
+          "coveredBouts": 6
         },
         "sigLanded": {
-          "value": 221,
-          "coveredBouts": 5
+          "value": 318,
+          "coveredBouts": 6
         },
         "sigAttempted": {
-          "value": 415,
-          "coveredBouts": 5
+          "value": 585,
+          "coveredBouts": 6
         },
         "controlSec": {
-          "value": 730,
-          "coveredBouts": 5
+          "value": 941,
+          "coveredBouts": 6
         },
         "knockdowns": {
           "value": 1,
-          "coveredBouts": 5
+          "coveredBouts": 6
         },
         "takedowns": {
           "value": 2,
-          "coveredBouts": 5
+          "coveredBouts": 6
         },
         "takedownAttempts": {
-          "value": 16,
-          "coveredBouts": 5
+          "value": 19,
+          "coveredBouts": 6
         },
         "subAttempts": {
           "value": 1,
-          "coveredBouts": 5
+          "coveredBouts": 6
         },
         "reversals": {
           "value": 0,
-          "coveredBouts": 5
+          "coveredBouts": 6
         },
         "totalStrikeDifferential": {
-          "value": -27,
-          "coveredBouts": 5
+          "value": 28,
+          "coveredBouts": 6
         },
         "sigStrikeDifferential": {
-          "value": 10,
-          "coveredBouts": 5
+          "value": 49,
+          "coveredBouts": 6
         },
         "controlDifferentialSec": {
-          "value": -463,
-          "coveredBouts": 5
+          "value": -264,
+          "coveredBouts": 6
         },
         "sigAbsorbed": {
-          "value": 211,
-          "coveredBouts": 5
+          "value": 269,
+          "coveredBouts": 6
         },
         "totalAbsorbed": {
-          "value": 337,
-          "coveredBouts": 5
+          "value": 400,
+          "coveredBouts": 6
         }
       },
       "recentBouts": [
@@ -23400,6 +23478,32 @@
             "controlDifferentialSec": 339,
             "sigAbsorbed": 60,
             "totalAbsorbed": 80
+          }
+        },
+        {
+          "boutId": "38703",
+          "date": "2024-09-28",
+          "event": "UFC Paris: Moicano vs Saint Denis",
+          "opponent": "Kevin Jousset",
+          "cageSec": 527,
+          "outcome": "W",
+          "finishMethod": "ko_tko",
+          "metrics": {
+            "totalLanded": 118,
+            "totalAttempted": 194,
+            "sigLanded": 97,
+            "sigAttempted": 170,
+            "controlSec": 211,
+            "knockdowns": 0,
+            "takedowns": 0,
+            "takedownAttempts": 3,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": 55,
+            "sigStrikeDifferential": 39,
+            "controlDifferentialSec": 199,
+            "sigAbsorbed": 58,
+            "totalAbsorbed": 63
           }
         },
         {
@@ -23478,32 +23582,6 @@
             "controlDifferentialSec": 124,
             "sigAbsorbed": 57,
             "totalAbsorbed": 86
-          }
-        },
-        {
-          "boutId": "66291",
-          "date": "2021-08-28",
-          "event": "UFC Fight Night: Barboza vs Chikadze",
-          "opponent": "Gilbert Urbina",
-          "cageSec": 435,
-          "outcome": "W",
-          "finishMethod": "submission",
-          "metrics": {
-            "totalLanded": 54,
-            "totalAttempted": 96,
-            "sigLanded": 46,
-            "sigAttempted": 87,
-            "controlSec": 82,
-            "knockdowns": 0,
-            "takedowns": 1,
-            "takedownAttempts": 1,
-            "subAttempts": 1,
-            "reversals": 0,
-            "totalStrikeDifferential": -9,
-            "sigStrikeDifferential": 1,
-            "controlDifferentialSec": -78,
-            "sigAbsorbed": 45,
-            "totalAbsorbed": 63
           }
         }
       ]
@@ -23914,71 +23992,97 @@
       "name": "Caio Machado",
       "slug": "caio-machado",
       "scope": "ufc-only",
-      "trackedBouts": 1,
-      "lastFightDate": "2023-11-18",
+      "trackedBouts": 2,
+      "lastFightDate": "2024-11-02",
       "totals": {
         "totalLanded": {
-          "value": 103,
-          "coveredBouts": 1
+          "value": 182,
+          "coveredBouts": 2
         },
         "totalAttempted": {
-          "value": 164,
-          "coveredBouts": 1
+          "value": 351,
+          "coveredBouts": 2
         },
         "sigLanded": {
-          "value": 76,
-          "coveredBouts": 1
+          "value": 152,
+          "coveredBouts": 2
         },
         "sigAttempted": {
-          "value": 132,
-          "coveredBouts": 1
+          "value": 316,
+          "coveredBouts": 2
         },
         "controlSec": {
-          "value": 20,
-          "coveredBouts": 1
+          "value": 22,
+          "coveredBouts": 2
         },
         "knockdowns": {
           "value": 0,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "takedowns": {
           "value": 0,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "takedownAttempts": {
           "value": 1,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "subAttempts": {
           "value": 0,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "reversals": {
           "value": 0,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "totalStrikeDifferential": {
-          "value": 34,
-          "coveredBouts": 1
+          "value": 64,
+          "coveredBouts": 2
         },
         "sigStrikeDifferential": {
-          "value": 37,
-          "coveredBouts": 1
+          "value": 64,
+          "coveredBouts": 2
         },
         "controlDifferentialSec": {
-          "value": -363,
-          "coveredBouts": 1
+          "value": -361,
+          "coveredBouts": 2
         },
         "sigAbsorbed": {
-          "value": 39,
-          "coveredBouts": 1
+          "value": 88,
+          "coveredBouts": 2
         },
         "totalAbsorbed": {
-          "value": 69,
-          "coveredBouts": 1
+          "value": 118,
+          "coveredBouts": 2
         }
       },
       "recentBouts": [
+        {
+          "boutId": "61130",
+          "date": "2024-11-02",
+          "event": "UFC Fight Night: Moreno vs Albazi",
+          "opponent": "Brendson Ribeiro",
+          "cageSec": 900,
+          "outcome": "L",
+          "finishMethod": "decision_split",
+          "metrics": {
+            "totalLanded": 79,
+            "totalAttempted": 187,
+            "sigLanded": 76,
+            "sigAttempted": 184,
+            "controlSec": 2,
+            "knockdowns": 0,
+            "takedowns": 0,
+            "takedownAttempts": 0,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": 30,
+            "sigStrikeDifferential": 27,
+            "controlDifferentialSec": 2,
+            "sigAbsorbed": 49,
+            "totalAbsorbed": 49
+          }
+        },
         {
           "boutId": "59982",
           "date": "2023-11-18",
@@ -33400,68 +33504,68 @@
       "name": "Cody Brundage",
       "slug": "cody-brundage",
       "scope": "ufc-only",
-      "trackedBouts": 10,
+      "trackedBouts": 11,
       "lastFightDate": "2026-05-16",
       "totals": {
         "totalLanded": {
-          "value": 313,
-          "coveredBouts": 10
+          "value": 381,
+          "coveredBouts": 11
         },
         "totalAttempted": {
-          "value": 551,
-          "coveredBouts": 10
+          "value": 657,
+          "coveredBouts": 11
         },
         "sigLanded": {
-          "value": 208,
-          "coveredBouts": 10
+          "value": 252,
+          "coveredBouts": 11
         },
         "sigAttempted": {
-          "value": 434,
-          "coveredBouts": 10
+          "value": 513,
+          "coveredBouts": 11
         },
         "controlSec": {
-          "value": 928,
-          "coveredBouts": 10
+          "value": 976,
+          "coveredBouts": 11
         },
         "knockdowns": {
-          "value": 3,
-          "coveredBouts": 10
+          "value": 4,
+          "coveredBouts": 11
         },
         "takedowns": {
           "value": 9,
-          "coveredBouts": 10
+          "coveredBouts": 11
         },
         "takedownAttempts": {
-          "value": 22,
-          "coveredBouts": 10
+          "value": 23,
+          "coveredBouts": 11
         },
         "subAttempts": {
           "value": 2,
-          "coveredBouts": 10
+          "coveredBouts": 11
         },
         "reversals": {
           "value": 1,
-          "coveredBouts": 10
+          "coveredBouts": 11
         },
         "totalStrikeDifferential": {
-          "value": -148,
-          "coveredBouts": 10
+          "value": -133,
+          "coveredBouts": 11
         },
         "sigStrikeDifferential": {
-          "value": -24,
-          "coveredBouts": 10
+          "value": -17,
+          "coveredBouts": 11
         },
         "controlDifferentialSec": {
-          "value": -1314,
-          "coveredBouts": 10
+          "value": -1296,
+          "coveredBouts": 11
         },
         "sigAbsorbed": {
-          "value": 232,
-          "coveredBouts": 10
+          "value": 269,
+          "coveredBouts": 11
         },
         "totalAbsorbed": {
-          "value": 461,
-          "coveredBouts": 10
+          "value": 514,
+          "coveredBouts": 11
         }
       },
       "recentBouts": [
@@ -33601,68 +33705,68 @@
       "name": "Cody Durden",
       "slug": "cody-durden",
       "scope": "ufc-only",
-      "trackedBouts": 7,
+      "trackedBouts": 8,
       "lastFightDate": "2026-07-11",
       "totals": {
         "totalLanded": {
-          "value": 336,
-          "coveredBouts": 7
+          "value": 410,
+          "coveredBouts": 8
         },
         "totalAttempted": {
-          "value": 603,
-          "coveredBouts": 7
+          "value": 826,
+          "coveredBouts": 8
         },
         "sigLanded": {
-          "value": 202,
-          "coveredBouts": 7
+          "value": 272,
+          "coveredBouts": 8
         },
         "sigAttempted": {
-          "value": 456,
-          "coveredBouts": 7
+          "value": 673,
+          "coveredBouts": 8
         },
         "controlSec": {
-          "value": 769,
-          "coveredBouts": 7
+          "value": 963,
+          "coveredBouts": 8
         },
         "knockdowns": {
           "value": 0,
-          "coveredBouts": 7
+          "coveredBouts": 8
         },
         "takedowns": {
-          "value": 11,
-          "coveredBouts": 7
+          "value": 13,
+          "coveredBouts": 8
         },
         "takedownAttempts": {
-          "value": 22,
-          "coveredBouts": 7
+          "value": 30,
+          "coveredBouts": 8
         },
         "subAttempts": {
           "value": 2,
-          "coveredBouts": 7
+          "coveredBouts": 8
         },
         "reversals": {
           "value": 3,
-          "coveredBouts": 7
+          "coveredBouts": 8
         },
         "totalStrikeDifferential": {
-          "value": 29,
-          "coveredBouts": 7
+          "value": -81,
+          "coveredBouts": 8
         },
         "sigStrikeDifferential": {
-          "value": -13,
-          "coveredBouts": 7
+          "value": -108,
+          "coveredBouts": 8
         },
         "controlDifferentialSec": {
-          "value": -289,
-          "coveredBouts": 7
+          "value": -115,
+          "coveredBouts": 8
         },
         "sigAbsorbed": {
-          "value": 215,
-          "coveredBouts": 7
+          "value": 380,
+          "coveredBouts": 8
         },
         "totalAbsorbed": {
-          "value": 307,
-          "coveredBouts": 7
+          "value": 491,
+          "coveredBouts": 8
         }
       },
       "recentBouts": [
@@ -45538,6 +45642,103 @@
         }
       ]
     },
+    "donghun-choi": {
+      "name": "DongHun Choi",
+      "slug": "donghun-choi",
+      "scope": "ufc-only",
+      "trackedBouts": 1,
+      "lastFightDate": "2024-11-23",
+      "totals": {
+        "totalLanded": {
+          "value": 12,
+          "coveredBouts": 1
+        },
+        "totalAttempted": {
+          "value": 19,
+          "coveredBouts": 1
+        },
+        "sigLanded": {
+          "value": 12,
+          "coveredBouts": 1
+        },
+        "sigAttempted": {
+          "value": 19,
+          "coveredBouts": 1
+        },
+        "controlSec": {
+          "value": 1,
+          "coveredBouts": 1
+        },
+        "knockdowns": {
+          "value": 1,
+          "coveredBouts": 1
+        },
+        "takedowns": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "takedownAttempts": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "subAttempts": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "reversals": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "totalStrikeDifferential": {
+          "value": 7,
+          "coveredBouts": 1
+        },
+        "sigStrikeDifferential": {
+          "value": 10,
+          "coveredBouts": 1
+        },
+        "controlDifferentialSec": {
+          "value": 1,
+          "coveredBouts": 1
+        },
+        "sigAbsorbed": {
+          "value": 2,
+          "coveredBouts": 1
+        },
+        "totalAbsorbed": {
+          "value": 5,
+          "coveredBouts": 1
+        }
+      },
+      "recentBouts": [
+        {
+          "boutId": "38592",
+          "date": "2024-11-23",
+          "event": "UFC Macau: Yan vs Figueiredo",
+          "opponent": "Kiru Sahota",
+          "cageSec": 156,
+          "outcome": "W",
+          "finishMethod": "ko_tko",
+          "metrics": {
+            "totalLanded": 12,
+            "totalAttempted": 19,
+            "sigLanded": 12,
+            "sigAttempted": 19,
+            "controlSec": 1,
+            "knockdowns": 1,
+            "takedowns": 0,
+            "takedownAttempts": 0,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": 7,
+            "sigStrikeDifferential": 10,
+            "controlDifferentialSec": 1,
+            "sigAbsorbed": 2,
+            "totalAbsorbed": 5
+          }
+        }
+      ]
+    },
     "don-shainis": {
       "name": "Don Shainis",
       "slug": "don-shainis",
@@ -56537,71 +56738,97 @@
       "name": "Garrett Armfield",
       "slug": "garrett-armfield",
       "scope": "ufc-only",
-      "trackedBouts": 3,
-      "lastFightDate": "2024-06-15",
+      "trackedBouts": 4,
+      "lastFightDate": "2024-11-02",
       "totals": {
         "totalLanded": {
-          "value": 133,
-          "coveredBouts": 3
+          "value": 210,
+          "coveredBouts": 4
         },
         "totalAttempted": {
-          "value": 254,
-          "coveredBouts": 3
+          "value": 402,
+          "coveredBouts": 4
         },
         "sigLanded": {
-          "value": 115,
-          "coveredBouts": 3
+          "value": 186,
+          "coveredBouts": 4
         },
         "sigAttempted": {
-          "value": 232,
-          "coveredBouts": 3
+          "value": 374,
+          "coveredBouts": 4
         },
         "controlSec": {
-          "value": 315,
-          "coveredBouts": 3
+          "value": 608,
+          "coveredBouts": 4
         },
         "knockdowns": {
           "value": 2,
-          "coveredBouts": 3
+          "coveredBouts": 4
         },
         "takedowns": {
-          "value": 0,
-          "coveredBouts": 3
+          "value": 4,
+          "coveredBouts": 4
         },
         "takedownAttempts": {
-          "value": 2,
-          "coveredBouts": 3
+          "value": 7,
+          "coveredBouts": 4
         },
         "subAttempts": {
-          "value": 1,
-          "coveredBouts": 3
+          "value": 2,
+          "coveredBouts": 4
         },
         "reversals": {
           "value": 1,
-          "coveredBouts": 3
+          "coveredBouts": 4
         },
         "totalStrikeDifferential": {
-          "value": 30,
-          "coveredBouts": 3
+          "value": 32,
+          "coveredBouts": 4
         },
         "sigStrikeDifferential": {
-          "value": 49,
-          "coveredBouts": 3
+          "value": 52,
+          "coveredBouts": 4
         },
         "controlDifferentialSec": {
-          "value": -176,
-          "coveredBouts": 3
+          "value": 70,
+          "coveredBouts": 4
         },
         "sigAbsorbed": {
-          "value": 66,
-          "coveredBouts": 3
+          "value": 134,
+          "coveredBouts": 4
         },
         "totalAbsorbed": {
-          "value": 103,
-          "coveredBouts": 3
+          "value": 178,
+          "coveredBouts": 4
         }
       },
       "recentBouts": [
+        {
+          "boutId": "61138",
+          "date": "2024-11-02",
+          "event": "UFC Fight Night: Moreno vs Albazi",
+          "opponent": "Serhiy Sidey",
+          "cageSec": 900,
+          "outcome": "L",
+          "finishMethod": "decision_split",
+          "metrics": {
+            "totalLanded": 77,
+            "totalAttempted": 148,
+            "sigLanded": 71,
+            "sigAttempted": 142,
+            "controlSec": 293,
+            "knockdowns": 0,
+            "takedowns": 4,
+            "takedownAttempts": 5,
+            "subAttempts": 1,
+            "reversals": 0,
+            "totalStrikeDifferential": 2,
+            "sigStrikeDifferential": 3,
+            "controlDifferentialSec": 246,
+            "sigAbsorbed": 68,
+            "totalAbsorbed": 75
+          }
+        },
         {
           "boutId": "61057",
           "date": "2024-06-15",
@@ -59919,68 +60146,68 @@
       "name": "Guram Kutateladze",
       "slug": "guram-kutateladze",
       "scope": "ufc-only",
-      "trackedBouts": 2,
+      "trackedBouts": 3,
       "lastFightDate": "2025-03-22",
       "totals": {
         "totalLanded": {
-          "value": 135,
-          "coveredBouts": 2
+          "value": 222,
+          "coveredBouts": 3
         },
         "totalAttempted": {
-          "value": 258,
-          "coveredBouts": 2
+          "value": 410,
+          "coveredBouts": 3
         },
         "sigLanded": {
-          "value": 114,
-          "coveredBouts": 2
+          "value": 144,
+          "coveredBouts": 3
         },
         "sigAttempted": {
-          "value": 234,
-          "coveredBouts": 2
+          "value": 302,
+          "coveredBouts": 3
         },
         "controlSec": {
-          "value": 148,
-          "coveredBouts": 2
+          "value": 393,
+          "coveredBouts": 3
         },
         "knockdowns": {
           "value": 0,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "takedowns": {
-          "value": 1,
-          "coveredBouts": 2
+          "value": 2,
+          "coveredBouts": 3
         },
         "takedownAttempts": {
-          "value": 8,
-          "coveredBouts": 2
+          "value": 12,
+          "coveredBouts": 3
         },
         "subAttempts": {
           "value": 0,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "reversals": {
           "value": 0,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "totalStrikeDifferential": {
-          "value": -37,
-          "coveredBouts": 2
+          "value": -31,
+          "coveredBouts": 3
         },
         "sigStrikeDifferential": {
-          "value": -30,
-          "coveredBouts": 2
+          "value": -34,
+          "coveredBouts": 3
         },
         "controlDifferentialSec": {
-          "value": -123,
-          "coveredBouts": 2
+          "value": -150,
+          "coveredBouts": 3
         },
         "sigAbsorbed": {
-          "value": 144,
-          "coveredBouts": 2
+          "value": 178,
+          "coveredBouts": 3
         },
         "totalAbsorbed": {
-          "value": 172,
-          "coveredBouts": 2
+          "value": 253,
+          "coveredBouts": 3
         }
       },
       "recentBouts": [
@@ -60008,6 +60235,32 @@
             "controlDifferentialSec": -98,
             "sigAbsorbed": 79,
             "totalAbsorbed": 79
+          }
+        },
+        {
+          "boutId": "61100",
+          "date": "2024-08-03",
+          "event": "UFC Fight Night: Sandhagen vs Nurmagomedov",
+          "opponent": "Jordan Vucenic",
+          "cageSec": 900,
+          "outcome": "W",
+          "finishMethod": "decision_unanimous",
+          "metrics": {
+            "totalLanded": 87,
+            "totalAttempted": 152,
+            "sigLanded": 30,
+            "sigAttempted": 68,
+            "controlSec": 245,
+            "knockdowns": 0,
+            "takedowns": 1,
+            "takedownAttempts": 4,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": 6,
+            "sigStrikeDifferential": -4,
+            "controlDifferentialSec": -27,
+            "sigAbsorbed": 34,
+            "totalAbsorbed": 81
           }
         },
         {
@@ -75944,68 +76197,68 @@
       "name": "Jimmy Crute",
       "slug": "jimmy-crute",
       "scope": "ufc-only",
-      "trackedBouts": 8,
+      "trackedBouts": 9,
       "lastFightDate": "2025-09-28",
       "totals": {
         "totalLanded": {
-          "value": 154,
-          "coveredBouts": 8
+          "value": 293,
+          "coveredBouts": 9
         },
         "totalAttempted": {
-          "value": 264,
-          "coveredBouts": 8
+          "value": 511,
+          "coveredBouts": 9
         },
         "sigLanded": {
-          "value": 107,
-          "coveredBouts": 8
+          "value": 213,
+          "coveredBouts": 9
         },
         "sigAttempted": {
-          "value": 201,
-          "coveredBouts": 8
+          "value": 410,
+          "coveredBouts": 9
         },
         "controlSec": {
-          "value": 644,
-          "coveredBouts": 8
+          "value": 876,
+          "coveredBouts": 9
         },
         "knockdowns": {
-          "value": 2,
-          "coveredBouts": 8
+          "value": 3,
+          "coveredBouts": 9
         },
         "takedowns": {
           "value": 17,
-          "coveredBouts": 8
+          "coveredBouts": 9
         },
         "takedownAttempts": {
-          "value": 30,
-          "coveredBouts": 8
+          "value": 33,
+          "coveredBouts": 9
         },
         "subAttempts": {
           "value": 4,
-          "coveredBouts": 8
+          "coveredBouts": 9
         },
         "reversals": {
           "value": 2,
-          "coveredBouts": 8
+          "coveredBouts": 9
         },
         "totalStrikeDifferential": {
-          "value": 15,
-          "coveredBouts": 8
+          "value": 59,
+          "coveredBouts": 9
         },
         "sigStrikeDifferential": {
-          "value": 9,
-          "coveredBouts": 8
+          "value": 26,
+          "coveredBouts": 9
         },
         "controlDifferentialSec": {
-          "value": 375,
-          "coveredBouts": 8
+          "value": 578,
+          "coveredBouts": 9
         },
         "sigAbsorbed": {
-          "value": 98,
-          "coveredBouts": 8
+          "value": 187,
+          "coveredBouts": 9
         },
         "totalAbsorbed": {
-          "value": 139,
-          "coveredBouts": 8
+          "value": 234,
+          "coveredBouts": 9
         }
       },
       "recentBouts": [
@@ -76062,6 +76315,32 @@
           }
         },
         {
+          "boutId": "60982",
+          "date": "2025-02-08",
+          "event": "UFC 312: Du Plessis vs Strickland 2",
+          "opponent": "Rodolfo Bellato",
+          "cageSec": 900,
+          "outcome": null,
+          "finishMethod": "draw",
+          "metrics": {
+            "totalLanded": 139,
+            "totalAttempted": 247,
+            "sigLanded": 106,
+            "sigAttempted": 209,
+            "controlSec": 232,
+            "knockdowns": 1,
+            "takedowns": 0,
+            "takedownAttempts": 3,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": 44,
+            "sigStrikeDifferential": 17,
+            "controlDifferentialSec": 203,
+            "sigAbsorbed": 89,
+            "totalAbsorbed": 95
+          }
+        },
+        {
           "boutId": "60136",
           "date": "2023-07-08",
           "event": "UFC 290: Volkanovski vs Rodriguez",
@@ -76111,32 +76390,6 @@
             "controlDifferentialSec": -1,
             "sigAbsorbed": 4,
             "totalAbsorbed": 4
-          }
-        },
-        {
-          "boutId": "61746",
-          "date": "2021-04-24",
-          "event": "UFC 261: Usman vs Masvidal 2",
-          "opponent": "Anthony Smith",
-          "cageSec": 300,
-          "outcome": "L",
-          "finishMethod": "ko_tko",
-          "metrics": {
-            "totalLanded": 34,
-            "totalAttempted": 57,
-            "sigLanded": 18,
-            "sigAttempted": 35,
-            "controlSec": 57,
-            "knockdowns": 0,
-            "takedowns": 3,
-            "takedownAttempts": 3,
-            "subAttempts": 0,
-            "reversals": 0,
-            "totalStrikeDifferential": 7,
-            "sigStrikeDifferential": -8,
-            "controlDifferentialSec": 55,
-            "sigAbsorbed": 26,
-            "totalAbsorbed": 27
           }
         }
       ]
@@ -79664,71 +79917,97 @@
       "name": "Jon Jones",
       "slug": "jon-jones",
       "scope": "ufc-only",
-      "trackedBouts": 1,
-      "lastFightDate": "2023-03-04",
+      "trackedBouts": 2,
+      "lastFightDate": "2024-11-16",
       "totals": {
         "totalLanded": {
-          "value": 8,
-          "coveredBouts": 1
+          "value": 112,
+          "coveredBouts": 2
         },
         "totalAttempted": {
-          "value": 14,
-          "coveredBouts": 1
+          "value": 142,
+          "coveredBouts": 2
         },
         "sigLanded": {
-          "value": 5,
-          "coveredBouts": 1
+          "value": 101,
+          "coveredBouts": 2
         },
         "sigAttempted": {
-          "value": 10,
-          "coveredBouts": 1
+          "value": 129,
+          "coveredBouts": 2
         },
         "controlSec": {
-          "value": 57,
-          "coveredBouts": 1
+          "value": 288,
+          "coveredBouts": 2
         },
         "knockdowns": {
-          "value": 0,
-          "coveredBouts": 1
+          "value": 1,
+          "coveredBouts": 2
         },
         "takedowns": {
-          "value": 2,
-          "coveredBouts": 1
+          "value": 3,
+          "coveredBouts": 2
         },
         "takedownAttempts": {
-          "value": 2,
-          "coveredBouts": 1
+          "value": 3,
+          "coveredBouts": 2
         },
         "subAttempts": {
           "value": 1,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "reversals": {
           "value": 0,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "totalStrikeDifferential": {
-          "value": 1,
-          "coveredBouts": 1
+          "value": 63,
+          "coveredBouts": 2
         },
         "sigStrikeDifferential": {
-          "value": -1,
-          "coveredBouts": 1
+          "value": 58,
+          "coveredBouts": 2
         },
         "controlDifferentialSec": {
-          "value": 57,
-          "coveredBouts": 1
+          "value": 288,
+          "coveredBouts": 2
         },
         "sigAbsorbed": {
-          "value": 6,
-          "coveredBouts": 1
+          "value": 43,
+          "coveredBouts": 2
         },
         "totalAbsorbed": {
-          "value": 7,
-          "coveredBouts": 1
+          "value": 49,
+          "coveredBouts": 2
         }
       },
       "recentBouts": [
+        {
+          "boutId": "60381",
+          "date": "2024-11-16",
+          "event": "UFC 309: Jones vs Miocic",
+          "opponent": "Stipe Miocic",
+          "cageSec": 869,
+          "outcome": "W",
+          "finishMethod": "ko_tko",
+          "metrics": {
+            "totalLanded": 104,
+            "totalAttempted": 128,
+            "sigLanded": 96,
+            "sigAttempted": 119,
+            "controlSec": 231,
+            "knockdowns": 1,
+            "takedowns": 1,
+            "takedownAttempts": 1,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": 62,
+            "sigStrikeDifferential": 59,
+            "controlDifferentialSec": 231,
+            "sigAbsorbed": 37,
+            "totalAbsorbed": 42
+          }
+        },
         {
           "boutId": "59680",
           "date": "2023-03-04",
@@ -80234,68 +80513,68 @@
       "name": "Jordan Vucenic",
       "slug": "jordan-vucenic",
       "scope": "ufc-only",
-      "trackedBouts": 1,
+      "trackedBouts": 2,
       "lastFightDate": "2025-03-22",
       "totals": {
         "totalLanded": {
-          "value": 22,
-          "coveredBouts": 1
+          "value": 103,
+          "coveredBouts": 2
         },
         "totalAttempted": {
-          "value": 32,
-          "coveredBouts": 1
+          "value": 171,
+          "coveredBouts": 2
         },
         "sigLanded": {
-          "value": 16,
-          "coveredBouts": 1
+          "value": 50,
+          "coveredBouts": 2
         },
         "sigAttempted": {
-          "value": 26,
-          "coveredBouts": 1
+          "value": 111,
+          "coveredBouts": 2
         },
         "controlSec": {
-          "value": 12,
-          "coveredBouts": 1
+          "value": 284,
+          "coveredBouts": 2
         },
         "knockdowns": {
-          "value": 0,
-          "coveredBouts": 1
+          "value": 1,
+          "coveredBouts": 2
         },
         "takedowns": {
           "value": 1,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "takedownAttempts": {
-          "value": 2,
-          "coveredBouts": 1
+          "value": 7,
+          "coveredBouts": 2
         },
         "subAttempts": {
           "value": 0,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "reversals": {
           "value": 0,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "totalStrikeDifferential": {
-          "value": -2,
-          "coveredBouts": 1
+          "value": -8,
+          "coveredBouts": 2
         },
         "sigStrikeDifferential": {
-          "value": 1,
-          "coveredBouts": 1
+          "value": 5,
+          "coveredBouts": 2
         },
         "controlDifferentialSec": {
-          "value": -325,
-          "coveredBouts": 1
+          "value": -298,
+          "coveredBouts": 2
         },
         "sigAbsorbed": {
-          "value": 15,
-          "coveredBouts": 1
+          "value": 45,
+          "coveredBouts": 2
         },
         "totalAbsorbed": {
-          "value": 24,
-          "coveredBouts": 1
+          "value": 111,
+          "coveredBouts": 2
         }
       },
       "recentBouts": [
@@ -80323,6 +80602,32 @@
             "controlDifferentialSec": -325,
             "sigAbsorbed": 15,
             "totalAbsorbed": 24
+          }
+        },
+        {
+          "boutId": "61100",
+          "date": "2024-08-03",
+          "event": "UFC Fight Night: Sandhagen vs Nurmagomedov",
+          "opponent": "Guram Kutateladze",
+          "cageSec": 900,
+          "outcome": "L",
+          "finishMethod": "decision_unanimous",
+          "metrics": {
+            "totalLanded": 81,
+            "totalAttempted": 139,
+            "sigLanded": 34,
+            "sigAttempted": 85,
+            "controlSec": 272,
+            "knockdowns": 1,
+            "takedowns": 0,
+            "takedownAttempts": 5,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": -6,
+            "sigStrikeDifferential": 4,
+            "controlDifferentialSec": 27,
+            "sigAbsorbed": 30,
+            "totalAbsorbed": 87
           }
         }
       ]
@@ -83557,68 +83862,68 @@
       "name": "Joshua Van",
       "slug": "joshua-van",
       "scope": "ufc-only",
-      "trackedBouts": 9,
+      "trackedBouts": 10,
       "lastFightDate": "2026-09-19",
       "totals": {
         "totalLanded": {
-          "value": 1438,
-          "coveredBouts": 9
+          "value": 1622,
+          "coveredBouts": 10
         },
         "totalAttempted": {
-          "value": 2195,
-          "coveredBouts": 9
+          "value": 2518,
+          "coveredBouts": 10
         },
         "sigLanded": {
-          "value": 1059,
-          "coveredBouts": 9
+          "value": 1224,
+          "coveredBouts": 10
         },
         "sigAttempted": {
-          "value": 1778,
-          "coveredBouts": 9
+          "value": 2082,
+          "coveredBouts": 10
         },
         "controlSec": {
-          "value": 737,
-          "coveredBouts": 9
+          "value": 757,
+          "coveredBouts": 10
         },
         "knockdowns": {
           "value": 8,
-          "coveredBouts": 9
+          "coveredBouts": 10
         },
         "takedowns": {
           "value": 7,
-          "coveredBouts": 9
+          "coveredBouts": 10
         },
         "takedownAttempts": {
           "value": 10,
-          "coveredBouts": 9
+          "coveredBouts": 10
         },
         "subAttempts": {
           "value": 3,
-          "coveredBouts": 9
+          "coveredBouts": 10
         },
         "reversals": {
           "value": 1,
-          "coveredBouts": 9
+          "coveredBouts": 10
         },
         "totalStrikeDifferential": {
-          "value": 611,
-          "coveredBouts": 9
+          "value": 721,
+          "coveredBouts": 10
         },
         "sigStrikeDifferential": {
-          "value": 324,
-          "coveredBouts": 9
+          "value": 419,
+          "coveredBouts": 10
         },
         "controlDifferentialSec": {
-          "value": -860,
-          "coveredBouts": 9
+          "value": -1034,
+          "coveredBouts": 10
         },
         "sigAbsorbed": {
-          "value": 735,
-          "coveredBouts": 9
+          "value": 805,
+          "coveredBouts": 10
         },
         "totalAbsorbed": {
-          "value": 827,
-          "coveredBouts": 9
+          "value": 901,
+          "coveredBouts": 10
         }
       },
       "recentBouts": [
@@ -85181,6 +85486,103 @@
             "controlDifferentialSec": -87,
             "sigAbsorbed": 7,
             "totalAbsorbed": 12
+          }
+        }
+      ]
+    },
+    "julian-marquez": {
+      "name": "Julian Marquez",
+      "slug": "julian-marquez",
+      "scope": "ufc-only",
+      "trackedBouts": 1,
+      "lastFightDate": "2025-03-01",
+      "totals": {
+        "totalLanded": {
+          "value": 53,
+          "coveredBouts": 1
+        },
+        "totalAttempted": {
+          "value": 96,
+          "coveredBouts": 1
+        },
+        "sigLanded": {
+          "value": 37,
+          "coveredBouts": 1
+        },
+        "sigAttempted": {
+          "value": 73,
+          "coveredBouts": 1
+        },
+        "controlSec": {
+          "value": 30,
+          "coveredBouts": 1
+        },
+        "knockdowns": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "takedowns": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "takedownAttempts": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "subAttempts": {
+          "value": 1,
+          "coveredBouts": 1
+        },
+        "reversals": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "totalStrikeDifferential": {
+          "value": -15,
+          "coveredBouts": 1
+        },
+        "sigStrikeDifferential": {
+          "value": -7,
+          "coveredBouts": 1
+        },
+        "controlDifferentialSec": {
+          "value": -18,
+          "coveredBouts": 1
+        },
+        "sigAbsorbed": {
+          "value": 44,
+          "coveredBouts": 1
+        },
+        "totalAbsorbed": {
+          "value": 68,
+          "coveredBouts": 1
+        }
+      },
+      "recentBouts": [
+        {
+          "boutId": "60332",
+          "date": "2025-03-01",
+          "event": "UFC Fight Night: Kape vs Almabayev",
+          "opponent": "Cody Brundage",
+          "cageSec": 285,
+          "outcome": "L",
+          "finishMethod": "ko_tko",
+          "metrics": {
+            "totalLanded": 53,
+            "totalAttempted": 96,
+            "sigLanded": 37,
+            "sigAttempted": 73,
+            "controlSec": 30,
+            "knockdowns": 0,
+            "takedowns": 0,
+            "takedownAttempts": 0,
+            "subAttempts": 1,
+            "reversals": 0,
+            "totalStrikeDifferential": -15,
+            "sigStrikeDifferential": -7,
+            "controlDifferentialSec": -18,
+            "sigAbsorbed": 44,
+            "totalAbsorbed": 68
           }
         }
       ]
@@ -91449,68 +91851,68 @@
       "name": "Kevin Jousset",
       "slug": "kevin-jousset",
       "scope": "ufc-only",
-      "trackedBouts": 2,
+      "trackedBouts": 3,
       "lastFightDate": "2025-02-08",
       "totals": {
         "totalLanded": {
-          "value": 110,
-          "coveredBouts": 2
+          "value": 173,
+          "coveredBouts": 3
         },
         "totalAttempted": {
-          "value": 242,
-          "coveredBouts": 2
+          "value": 349,
+          "coveredBouts": 3
         },
         "sigLanded": {
-          "value": 96,
-          "coveredBouts": 2
+          "value": 154,
+          "coveredBouts": 3
         },
         "sigAttempted": {
-          "value": 226,
-          "coveredBouts": 2
+          "value": 323,
+          "coveredBouts": 3
         },
         "controlSec": {
-          "value": 45,
-          "coveredBouts": 2
+          "value": 57,
+          "coveredBouts": 3
         },
         "knockdowns": {
           "value": 0,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "takedowns": {
           "value": 1,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "takedownAttempts": {
-          "value": 1,
-          "coveredBouts": 2
+          "value": 3,
+          "coveredBouts": 3
         },
         "subAttempts": {
           "value": 1,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "reversals": {
           "value": 0,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "totalStrikeDifferential": {
-          "value": -24,
-          "coveredBouts": 2
+          "value": -79,
+          "coveredBouts": 3
         },
         "sigStrikeDifferential": {
-          "value": -28,
-          "coveredBouts": 2
+          "value": -67,
+          "coveredBouts": 3
         },
         "controlDifferentialSec": {
-          "value": 36,
-          "coveredBouts": 2
+          "value": -163,
+          "coveredBouts": 3
         },
         "sigAbsorbed": {
-          "value": 124,
-          "coveredBouts": 2
+          "value": 221,
+          "coveredBouts": 3
         },
         "totalAbsorbed": {
-          "value": 134,
-          "coveredBouts": 2
+          "value": 252,
+          "coveredBouts": 3
         }
       },
       "recentBouts": [
@@ -91538,6 +91940,32 @@
             "controlDifferentialSec": -9,
             "sigAbsorbed": 85,
             "totalAbsorbed": 89
+          }
+        },
+        {
+          "boutId": "38703",
+          "date": "2024-09-28",
+          "event": "UFC Paris: Moicano vs Saint Denis",
+          "opponent": "Bryan Battle",
+          "cageSec": 527,
+          "outcome": "L",
+          "finishMethod": "ko_tko",
+          "metrics": {
+            "totalLanded": 63,
+            "totalAttempted": 107,
+            "sigLanded": 58,
+            "sigAttempted": 97,
+            "controlSec": 12,
+            "knockdowns": 0,
+            "takedowns": 0,
+            "takedownAttempts": 2,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": -55,
+            "sigStrikeDifferential": -39,
+            "controlDifferentialSec": -199,
+            "sigAbsorbed": 97,
+            "totalAbsorbed": 118
           }
         },
         {
@@ -93274,6 +93702,103 @@
             "controlDifferentialSec": -26,
             "sigAbsorbed": 30,
             "totalAbsorbed": 35
+          }
+        }
+      ]
+    },
+    "kiru-sahota": {
+      "name": "Kiru Sahota",
+      "slug": "kiru-sahota",
+      "scope": "ufc-only",
+      "trackedBouts": 1,
+      "lastFightDate": "2024-11-23",
+      "totals": {
+        "totalLanded": {
+          "value": 5,
+          "coveredBouts": 1
+        },
+        "totalAttempted": {
+          "value": 26,
+          "coveredBouts": 1
+        },
+        "sigLanded": {
+          "value": 2,
+          "coveredBouts": 1
+        },
+        "sigAttempted": {
+          "value": 23,
+          "coveredBouts": 1
+        },
+        "controlSec": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "knockdowns": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "takedowns": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "takedownAttempts": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "subAttempts": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "reversals": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "totalStrikeDifferential": {
+          "value": -7,
+          "coveredBouts": 1
+        },
+        "sigStrikeDifferential": {
+          "value": -10,
+          "coveredBouts": 1
+        },
+        "controlDifferentialSec": {
+          "value": -1,
+          "coveredBouts": 1
+        },
+        "sigAbsorbed": {
+          "value": 12,
+          "coveredBouts": 1
+        },
+        "totalAbsorbed": {
+          "value": 12,
+          "coveredBouts": 1
+        }
+      },
+      "recentBouts": [
+        {
+          "boutId": "38592",
+          "date": "2024-11-23",
+          "event": "UFC Macau: Yan vs Figueiredo",
+          "opponent": "DongHun Choi",
+          "cageSec": 156,
+          "outcome": "L",
+          "finishMethod": "ko_tko",
+          "metrics": {
+            "totalLanded": 5,
+            "totalAttempted": 26,
+            "sigLanded": 2,
+            "sigAttempted": 23,
+            "controlSec": 0,
+            "knockdowns": 0,
+            "takedowns": 0,
+            "takedownAttempts": 0,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": -7,
+            "sigStrikeDifferential": -10,
+            "controlDifferentialSec": -1,
+            "sigAbsorbed": 12,
+            "totalAbsorbed": 12
           }
         }
       ]
@@ -131362,6 +131887,103 @@
         }
       ]
     },
+    "pedro-falcao": {
+      "name": "Pedro Falcao",
+      "slug": "pedro-falcao",
+      "scope": "ufc-only",
+      "trackedBouts": 1,
+      "lastFightDate": "2025-04-05",
+      "totals": {
+        "totalLanded": {
+          "value": 69,
+          "coveredBouts": 1
+        },
+        "totalAttempted": {
+          "value": 133,
+          "coveredBouts": 1
+        },
+        "sigLanded": {
+          "value": 57,
+          "coveredBouts": 1
+        },
+        "sigAttempted": {
+          "value": 117,
+          "coveredBouts": 1
+        },
+        "controlSec": {
+          "value": 178,
+          "coveredBouts": 1
+        },
+        "knockdowns": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "takedowns": {
+          "value": 4,
+          "coveredBouts": 1
+        },
+        "takedownAttempts": {
+          "value": 13,
+          "coveredBouts": 1
+        },
+        "subAttempts": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "reversals": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "totalStrikeDifferential": {
+          "value": -70,
+          "coveredBouts": 1
+        },
+        "sigStrikeDifferential": {
+          "value": -16,
+          "coveredBouts": 1
+        },
+        "controlDifferentialSec": {
+          "value": -72,
+          "coveredBouts": 1
+        },
+        "sigAbsorbed": {
+          "value": 73,
+          "coveredBouts": 1
+        },
+        "totalAbsorbed": {
+          "value": 139,
+          "coveredBouts": 1
+        }
+      },
+      "recentBouts": [
+        {
+          "boutId": "60305",
+          "date": "2025-04-05",
+          "event": "UFC Fight Night: Emmett vs Murphy",
+          "opponent": "Victor Henry",
+          "cageSec": 900,
+          "outcome": "L",
+          "finishMethod": "decision_unanimous",
+          "metrics": {
+            "totalLanded": 69,
+            "totalAttempted": 133,
+            "sigLanded": 57,
+            "sigAttempted": 117,
+            "controlSec": 178,
+            "knockdowns": 0,
+            "takedowns": 4,
+            "takedownAttempts": 13,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": -70,
+            "sigStrikeDifferential": -16,
+            "controlDifferentialSec": -72,
+            "sigAbsorbed": 73,
+            "totalAbsorbed": 139
+          }
+        }
+      ]
+    },
     "pedro-munhoz": {
       "name": "Pedro Munhoz",
       "slug": "pedro-munhoz",
@@ -133608,68 +134230,68 @@
       "name": "Quillan Salkilld",
       "slug": "quillan-salkilld",
       "scope": "ufc-only",
-      "trackedBouts": 5,
+      "trackedBouts": 6,
       "lastFightDate": "2026-08-08",
       "totals": {
         "totalLanded": {
-          "value": 156,
-          "coveredBouts": 5
+          "value": 162,
+          "coveredBouts": 6
         },
         "totalAttempted": {
-          "value": 251,
-          "coveredBouts": 5
+          "value": 258,
+          "coveredBouts": 6
         },
         "sigLanded": {
-          "value": 120,
-          "coveredBouts": 5
+          "value": 126,
+          "coveredBouts": 6
         },
         "sigAttempted": {
-          "value": 211,
-          "coveredBouts": 5
+          "value": 218,
+          "coveredBouts": 6
         },
         "controlSec": {
-          "value": 636,
-          "coveredBouts": 5
+          "value": 637,
+          "coveredBouts": 6
         },
         "knockdowns": {
-          "value": 2,
-          "coveredBouts": 5
+          "value": 3,
+          "coveredBouts": 6
         },
         "takedowns": {
           "value": 11,
-          "coveredBouts": 5
+          "coveredBouts": 6
         },
         "takedownAttempts": {
           "value": 33,
-          "coveredBouts": 5
+          "coveredBouts": 6
         },
         "subAttempts": {
           "value": 2,
-          "coveredBouts": 5
+          "coveredBouts": 6
         },
         "reversals": {
           "value": 0,
-          "coveredBouts": 5
+          "coveredBouts": 6
         },
         "totalStrikeDifferential": {
-          "value": 68,
-          "coveredBouts": 5
+          "value": 74,
+          "coveredBouts": 6
         },
         "sigStrikeDifferential": {
-          "value": 62,
-          "coveredBouts": 5
+          "value": 68,
+          "coveredBouts": 6
         },
         "controlDifferentialSec": {
-          "value": 262,
-          "coveredBouts": 5
+          "value": 263,
+          "coveredBouts": 6
         },
         "sigAbsorbed": {
           "value": 58,
-          "coveredBouts": 5
+          "coveredBouts": 6
         },
         "totalAbsorbed": {
           "value": 88,
-          "coveredBouts": 5
+          "coveredBouts": 6
         }
       },
       "recentBouts": [
@@ -138390,71 +139012,97 @@
       "name": "Ricky Glenn",
       "slug": "ricky-glenn",
       "scope": "ufc-only",
-      "trackedBouts": 2,
-      "lastFightDate": "2023-10-07",
+      "trackedBouts": 3,
+      "lastFightDate": "2024-08-17",
       "totals": {
         "totalLanded": {
-          "value": 19,
-          "coveredBouts": 2
+          "value": 86,
+          "coveredBouts": 3
         },
         "totalAttempted": {
-          "value": 44,
-          "coveredBouts": 2
+          "value": 171,
+          "coveredBouts": 3
         },
         "sigLanded": {
-          "value": 15,
-          "coveredBouts": 2
+          "value": 55,
+          "coveredBouts": 3
         },
         "sigAttempted": {
-          "value": 39,
-          "coveredBouts": 2
+          "value": 138,
+          "coveredBouts": 3
         },
         "controlSec": {
-          "value": 8,
-          "coveredBouts": 2
+          "value": 220,
+          "coveredBouts": 3
         },
         "knockdowns": {
           "value": 2,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "takedowns": {
-          "value": 0,
-          "coveredBouts": 2
+          "value": 2,
+          "coveredBouts": 3
         },
         "takedownAttempts": {
-          "value": 1,
-          "coveredBouts": 2
+          "value": 16,
+          "coveredBouts": 3
         },
         "subAttempts": {
           "value": 0,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "reversals": {
           "value": 0,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "totalStrikeDifferential": {
-          "value": -12,
-          "coveredBouts": 2
+          "value": -58,
+          "coveredBouts": 3
         },
         "sigStrikeDifferential": {
-          "value": -16,
-          "coveredBouts": 2
+          "value": -63,
+          "coveredBouts": 3
         },
         "controlDifferentialSec": {
-          "value": -23,
-          "coveredBouts": 2
+          "value": 141,
+          "coveredBouts": 3
         },
         "sigAbsorbed": {
-          "value": 31,
-          "coveredBouts": 2
+          "value": 118,
+          "coveredBouts": 3
         },
         "totalAbsorbed": {
-          "value": 31,
-          "coveredBouts": 2
+          "value": 144,
+          "coveredBouts": 3
         }
       },
       "recentBouts": [
+        {
+          "boutId": "65955",
+          "date": "2024-08-17",
+          "event": "UFC 305: Du Plessis vs Adesanya",
+          "opponent": "Song Kenan",
+          "cageSec": 900,
+          "outcome": "L",
+          "finishMethod": "decision_unanimous",
+          "metrics": {
+            "totalLanded": 67,
+            "totalAttempted": 127,
+            "sigLanded": 40,
+            "sigAttempted": 99,
+            "controlSec": 212,
+            "knockdowns": 0,
+            "takedowns": 2,
+            "takedownAttempts": 15,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": -46,
+            "sigStrikeDifferential": -47,
+            "controlDifferentialSec": 164,
+            "sigAbsorbed": 87,
+            "totalAbsorbed": 113
+          }
+        },
         {
           "boutId": "60024",
           "date": "2023-10-07",
@@ -141079,68 +141727,68 @@
       "name": "Rodolfo Bellato",
       "slug": "rodolfo-bellato",
       "scope": "ufc-only",
-      "trackedBouts": 5,
+      "trackedBouts": 6,
       "lastFightDate": "2026-09-26",
       "totals": {
         "totalLanded": {
-          "value": 282,
-          "coveredBouts": 5
+          "value": 377,
+          "coveredBouts": 6
         },
         "totalAttempted": {
-          "value": 450,
-          "coveredBouts": 5
+          "value": 598,
+          "coveredBouts": 6
         },
         "sigLanded": {
-          "value": 193,
-          "coveredBouts": 5
+          "value": 282,
+          "coveredBouts": 6
         },
         "sigAttempted": {
-          "value": 343,
-          "coveredBouts": 5
+          "value": 484,
+          "coveredBouts": 6
         },
         "controlSec": {
-          "value": 630,
-          "coveredBouts": 5
+          "value": 659,
+          "coveredBouts": 6
         },
         "knockdowns": {
           "value": 2,
-          "coveredBouts": 5
+          "coveredBouts": 6
         },
         "takedowns": {
-          "value": 4,
-          "coveredBouts": 5
+          "value": 5,
+          "coveredBouts": 6
         },
         "takedownAttempts": {
-          "value": 11,
-          "coveredBouts": 5
+          "value": 13,
+          "coveredBouts": 6
         },
         "subAttempts": {
           "value": 0,
-          "coveredBouts": 5
+          "coveredBouts": 6
         },
         "reversals": {
           "value": 0,
-          "coveredBouts": 5
+          "coveredBouts": 6
         },
         "totalStrikeDifferential": {
-          "value": -62,
-          "coveredBouts": 5
+          "value": -106,
+          "coveredBouts": 6
         },
         "sigStrikeDifferential": {
-          "value": -53,
-          "coveredBouts": 5
+          "value": -70,
+          "coveredBouts": 6
         },
         "controlDifferentialSec": {
-          "value": 78,
-          "coveredBouts": 5
+          "value": -125,
+          "coveredBouts": 6
         },
         "sigAbsorbed": {
-          "value": 246,
-          "coveredBouts": 5
+          "value": 352,
+          "coveredBouts": 6
         },
         "totalAbsorbed": {
-          "value": 344,
-          "coveredBouts": 5
+          "value": 483,
+          "coveredBouts": 6
         }
       },
       "recentBouts": [
@@ -141249,29 +141897,29 @@
           }
         },
         {
-          "boutId": "59957",
-          "date": "2023-12-02",
-          "event": "UFC Fight Night: Dariush vs Tsarukyan",
-          "opponent": "Ihor Potieria",
-          "cageSec": 557,
-          "outcome": "W",
-          "finishMethod": "ko_tko",
+          "boutId": "60982",
+          "date": "2025-02-08",
+          "event": "UFC 312: Du Plessis vs Strickland 2",
+          "opponent": "Jimmy Crute",
+          "cageSec": 900,
+          "outcome": null,
+          "finishMethod": "draw",
           "metrics": {
-            "totalLanded": 99,
-            "totalAttempted": 160,
-            "sigLanded": 80,
-            "sigAttempted": 131,
-            "controlSec": 169,
+            "totalLanded": 95,
+            "totalAttempted": 148,
+            "sigLanded": 89,
+            "sigAttempted": 141,
+            "controlSec": 29,
             "knockdowns": 0,
             "takedowns": 1,
-            "takedownAttempts": 4,
+            "takedownAttempts": 2,
             "subAttempts": 0,
             "reversals": 0,
-            "totalStrikeDifferential": 7,
-            "sigStrikeDifferential": 7,
-            "controlDifferentialSec": 68,
-            "sigAbsorbed": 73,
-            "totalAbsorbed": 92
+            "totalStrikeDifferential": -44,
+            "sigStrikeDifferential": -17,
+            "controlDifferentialSec": -203,
+            "sigAbsorbed": 106,
+            "totalAbsorbed": 139
           }
         }
       ]
@@ -141481,71 +142129,97 @@
       "name": "Rodrigo Nascimento",
       "slug": "rodrigo-nascimento",
       "scope": "ufc-only",
-      "trackedBouts": 2,
-      "lastFightDate": "2024-05-11",
+      "trackedBouts": 3,
+      "lastFightDate": "2024-11-02",
       "totals": {
         "totalLanded": {
-          "value": 163,
-          "coveredBouts": 2
+          "value": 211,
+          "coveredBouts": 3
         },
         "totalAttempted": {
-          "value": 241,
-          "coveredBouts": 2
+          "value": 349,
+          "coveredBouts": 3
         },
         "sigLanded": {
-          "value": 63,
-          "coveredBouts": 2
+          "value": 94,
+          "coveredBouts": 3
         },
         "sigAttempted": {
-          "value": 127,
-          "coveredBouts": 2
+          "value": 218,
+          "coveredBouts": 3
         },
         "controlSec": {
           "value": 767,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "knockdowns": {
           "value": 0,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "takedowns": {
           "value": 4,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "takedownAttempts": {
           "value": 8,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "subAttempts": {
           "value": 1,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "reversals": {
           "value": 0,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "totalStrikeDifferential": {
-          "value": -47,
-          "coveredBouts": 2
+          "value": -86,
+          "coveredBouts": 3
         },
         "sigStrikeDifferential": {
-          "value": -40,
-          "coveredBouts": 2
+          "value": -54,
+          "coveredBouts": 3
         },
         "controlDifferentialSec": {
-          "value": 506,
-          "coveredBouts": 2
+          "value": 53,
+          "coveredBouts": 3
         },
         "sigAbsorbed": {
-          "value": 103,
-          "coveredBouts": 2
+          "value": 148,
+          "coveredBouts": 3
         },
         "totalAbsorbed": {
-          "value": 210,
-          "coveredBouts": 2
+          "value": 297,
+          "coveredBouts": 3
         }
       },
       "recentBouts": [
+        {
+          "boutId": "61137",
+          "date": "2024-11-02",
+          "event": "UFC Fight Night: Moreno vs Albazi",
+          "opponent": "Alexander Romanov",
+          "cageSec": 900,
+          "outcome": "L",
+          "finishMethod": "decision_unanimous",
+          "metrics": {
+            "totalLanded": 48,
+            "totalAttempted": 108,
+            "sigLanded": 31,
+            "sigAttempted": 91,
+            "controlSec": 0,
+            "knockdowns": 0,
+            "takedowns": 0,
+            "takedownAttempts": 0,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": -39,
+            "sigStrikeDifferential": -14,
+            "controlDifferentialSec": -453,
+            "sigAbsorbed": 45,
+            "totalAbsorbed": 87
+          }
+        },
         {
           "boutId": "60929",
           "date": "2024-05-11",
@@ -147985,68 +148659,68 @@
       "name": "Serhiy Sidey",
       "slug": "serhiy-sidey",
       "scope": "ufc-only",
-      "trackedBouts": 2,
+      "trackedBouts": 3,
       "lastFightDate": "2025-05-03",
       "totals": {
         "totalLanded": {
-          "value": 147,
-          "coveredBouts": 2
+          "value": 222,
+          "coveredBouts": 3
         },
         "totalAttempted": {
-          "value": 378,
-          "coveredBouts": 2
+          "value": 529,
+          "coveredBouts": 3
         },
         "sigLanded": {
-          "value": 134,
-          "coveredBouts": 2
+          "value": 202,
+          "coveredBouts": 3
         },
         "sigAttempted": {
-          "value": 358,
-          "coveredBouts": 2
+          "value": 502,
+          "coveredBouts": 3
         },
         "controlSec": {
-          "value": 276,
-          "coveredBouts": 2
+          "value": 323,
+          "coveredBouts": 3
         },
         "knockdowns": {
           "value": 0,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "takedowns": {
           "value": 5,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "takedownAttempts": {
-          "value": 16,
-          "coveredBouts": 2
+          "value": 20,
+          "coveredBouts": 3
         },
         "subAttempts": {
-          "value": 1,
-          "coveredBouts": 2
+          "value": 4,
+          "coveredBouts": 3
         },
         "reversals": {
-          "value": 0,
-          "coveredBouts": 2
+          "value": 1,
+          "coveredBouts": 3
         },
         "totalStrikeDifferential": {
-          "value": 24,
-          "coveredBouts": 2
+          "value": 22,
+          "coveredBouts": 3
         },
         "sigStrikeDifferential": {
-          "value": 14,
-          "coveredBouts": 2
+          "value": 11,
+          "coveredBouts": 3
         },
         "controlDifferentialSec": {
-          "value": 270,
-          "coveredBouts": 2
+          "value": 24,
+          "coveredBouts": 3
         },
         "sigAbsorbed": {
-          "value": 120,
-          "coveredBouts": 2
+          "value": 191,
+          "coveredBouts": 3
         },
         "totalAbsorbed": {
-          "value": 123,
-          "coveredBouts": 2
+          "value": 200,
+          "coveredBouts": 3
         }
       },
       "recentBouts": [
@@ -148074,6 +148748,32 @@
             "controlDifferentialSec": 252,
             "sigAbsorbed": 58,
             "totalAbsorbed": 61
+          }
+        },
+        {
+          "boutId": "61138",
+          "date": "2024-11-02",
+          "event": "UFC Fight Night: Moreno vs Albazi",
+          "opponent": "Garrett Armfield",
+          "cageSec": 900,
+          "outcome": "W",
+          "finishMethod": "decision_split",
+          "metrics": {
+            "totalLanded": 75,
+            "totalAttempted": 151,
+            "sigLanded": 68,
+            "sigAttempted": 144,
+            "controlSec": 47,
+            "knockdowns": 0,
+            "takedowns": 0,
+            "takedownAttempts": 4,
+            "subAttempts": 3,
+            "reversals": 1,
+            "totalStrikeDifferential": -2,
+            "sigStrikeDifferential": -3,
+            "controlDifferentialSec": -246,
+            "sigAbsorbed": 71,
+            "totalAbsorbed": 77
           }
         },
         {
@@ -150724,68 +151424,68 @@
       "name": "Song Kenan",
       "slug": "song-kenan",
       "scope": "ufc-only",
-      "trackedBouts": 2,
+      "trackedBouts": 3,
       "lastFightDate": "2024-11-23",
       "totals": {
         "totalLanded": {
-          "value": 96,
-          "coveredBouts": 2
+          "value": 209,
+          "coveredBouts": 3
         },
         "totalAttempted": {
-          "value": 184,
-          "coveredBouts": 2
+          "value": 383,
+          "coveredBouts": 3
         },
         "sigLanded": {
-          "value": 84,
-          "coveredBouts": 2
+          "value": 171,
+          "coveredBouts": 3
         },
         "sigAttempted": {
-          "value": 170,
-          "coveredBouts": 2
+          "value": 340,
+          "coveredBouts": 3
         },
         "controlSec": {
-          "value": 59,
-          "coveredBouts": 2
+          "value": 107,
+          "coveredBouts": 3
         },
         "knockdowns": {
           "value": 1,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "takedowns": {
-          "value": 0,
-          "coveredBouts": 2
+          "value": 1,
+          "coveredBouts": 3
         },
         "takedownAttempts": {
-          "value": 1,
-          "coveredBouts": 2
+          "value": 6,
+          "coveredBouts": 3
         },
         "subAttempts": {
           "value": 0,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "reversals": {
           "value": 0,
-          "coveredBouts": 2
+          "coveredBouts": 3
         },
         "totalStrikeDifferential": {
-          "value": -36,
-          "coveredBouts": 2
+          "value": 10,
+          "coveredBouts": 3
         },
         "sigStrikeDifferential": {
-          "value": -48,
-          "coveredBouts": 2
+          "value": -1,
+          "coveredBouts": 3
         },
         "controlDifferentialSec": {
-          "value": 24,
-          "coveredBouts": 2
+          "value": -140,
+          "coveredBouts": 3
         },
         "sigAbsorbed": {
-          "value": 132,
-          "coveredBouts": 2
+          "value": 172,
+          "coveredBouts": 3
         },
         "totalAbsorbed": {
-          "value": 132,
-          "coveredBouts": 2
+          "value": 199,
+          "coveredBouts": 3
         }
       },
       "recentBouts": [
@@ -150813,6 +151513,32 @@
             "controlDifferentialSec": 17,
             "sigAbsorbed": 20,
             "totalAbsorbed": 20
+          }
+        },
+        {
+          "boutId": "65955",
+          "date": "2024-08-17",
+          "event": "UFC 305: Du Plessis vs Adesanya",
+          "opponent": "Ricky Glenn",
+          "cageSec": 900,
+          "outcome": "W",
+          "finishMethod": "decision_unanimous",
+          "metrics": {
+            "totalLanded": 113,
+            "totalAttempted": 199,
+            "sigLanded": 87,
+            "sigAttempted": 170,
+            "controlSec": 48,
+            "knockdowns": 0,
+            "takedowns": 1,
+            "takedownAttempts": 5,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": 46,
+            "sigStrikeDifferential": 47,
+            "controlDifferentialSec": -164,
+            "sigAbsorbed": 40,
+            "totalAbsorbed": 67
           }
         },
         {
@@ -152660,6 +153386,103 @@
             "controlDifferentialSec": 108,
             "sigAbsorbed": 3,
             "totalAbsorbed": 3
+          }
+        }
+      ]
+    },
+    "stipe-miocic": {
+      "name": "Stipe Miocic",
+      "slug": "stipe-miocic",
+      "scope": "ufc-only",
+      "trackedBouts": 1,
+      "lastFightDate": "2024-11-16",
+      "totals": {
+        "totalLanded": {
+          "value": 42,
+          "coveredBouts": 1
+        },
+        "totalAttempted": {
+          "value": 94,
+          "coveredBouts": 1
+        },
+        "sigLanded": {
+          "value": 37,
+          "coveredBouts": 1
+        },
+        "sigAttempted": {
+          "value": 89,
+          "coveredBouts": 1
+        },
+        "controlSec": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "knockdowns": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "takedowns": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "takedownAttempts": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "subAttempts": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "reversals": {
+          "value": 0,
+          "coveredBouts": 1
+        },
+        "totalStrikeDifferential": {
+          "value": -62,
+          "coveredBouts": 1
+        },
+        "sigStrikeDifferential": {
+          "value": -59,
+          "coveredBouts": 1
+        },
+        "controlDifferentialSec": {
+          "value": -231,
+          "coveredBouts": 1
+        },
+        "sigAbsorbed": {
+          "value": 96,
+          "coveredBouts": 1
+        },
+        "totalAbsorbed": {
+          "value": 104,
+          "coveredBouts": 1
+        }
+      },
+      "recentBouts": [
+        {
+          "boutId": "60381",
+          "date": "2024-11-16",
+          "event": "UFC 309: Jones vs Miocic",
+          "opponent": "Jon Jones",
+          "cageSec": 869,
+          "outcome": "L",
+          "finishMethod": "ko_tko",
+          "metrics": {
+            "totalLanded": 42,
+            "totalAttempted": 94,
+            "sigLanded": 37,
+            "sigAttempted": 89,
+            "controlSec": 0,
+            "knockdowns": 0,
+            "takedowns": 0,
+            "takedownAttempts": 0,
+            "subAttempts": 0,
+            "reversals": 0,
+            "totalStrikeDifferential": -62,
+            "sigStrikeDifferential": -59,
+            "controlDifferentialSec": -231,
+            "sigAbsorbed": 96,
+            "totalAbsorbed": 104
           }
         }
       ]
@@ -164266,71 +165089,97 @@
       "name": "Victor Henry",
       "slug": "victor-henry",
       "scope": "ufc-only",
-      "trackedBouts": 1,
-      "lastFightDate": "2024-11-02",
+      "trackedBouts": 2,
+      "lastFightDate": "2025-04-05",
       "totals": {
         "totalLanded": {
-          "value": 39,
-          "coveredBouts": 1
+          "value": 178,
+          "coveredBouts": 2
         },
         "totalAttempted": {
-          "value": 75,
-          "coveredBouts": 1
+          "value": 302,
+          "coveredBouts": 2
         },
         "sigLanded": {
-          "value": 24,
-          "coveredBouts": 1
+          "value": 97,
+          "coveredBouts": 2
         },
         "sigAttempted": {
-          "value": 54,
-          "coveredBouts": 1
+          "value": 205,
+          "coveredBouts": 2
         },
         "controlSec": {
-          "value": 229,
-          "coveredBouts": 1
+          "value": 479,
+          "coveredBouts": 2
         },
         "knockdowns": {
-          "value": 0,
-          "coveredBouts": 1
+          "value": 1,
+          "coveredBouts": 2
         },
         "takedowns": {
-          "value": 4,
-          "coveredBouts": 1
+          "value": 6,
+          "coveredBouts": 2
         },
         "takedownAttempts": {
-          "value": 6,
-          "coveredBouts": 1
+          "value": 9,
+          "coveredBouts": 2
         },
         "subAttempts": {
           "value": 0,
-          "coveredBouts": 1
+          "coveredBouts": 2
         },
         "reversals": {
-          "value": 0,
-          "coveredBouts": 1
+          "value": 3,
+          "coveredBouts": 2
         },
         "totalStrikeDifferential": {
-          "value": -11,
-          "coveredBouts": 1
+          "value": 59,
+          "coveredBouts": 2
         },
         "sigStrikeDifferential": {
-          "value": -15,
-          "coveredBouts": 1
+          "value": 1,
+          "coveredBouts": 2
         },
         "controlDifferentialSec": {
-          "value": 212,
-          "coveredBouts": 1
+          "value": 284,
+          "coveredBouts": 2
         },
         "sigAbsorbed": {
-          "value": 39,
-          "coveredBouts": 1
+          "value": 96,
+          "coveredBouts": 2
         },
         "totalAbsorbed": {
-          "value": 50,
-          "coveredBouts": 1
+          "value": 119,
+          "coveredBouts": 2
         }
       },
       "recentBouts": [
+        {
+          "boutId": "60305",
+          "date": "2025-04-05",
+          "event": "UFC Fight Night: Emmett vs Murphy",
+          "opponent": "Pedro Falcao",
+          "cageSec": 900,
+          "outcome": "W",
+          "finishMethod": "decision_unanimous",
+          "metrics": {
+            "totalLanded": 139,
+            "totalAttempted": 227,
+            "sigLanded": 73,
+            "sigAttempted": 151,
+            "controlSec": 250,
+            "knockdowns": 1,
+            "takedowns": 2,
+            "takedownAttempts": 3,
+            "subAttempts": 0,
+            "reversals": 3,
+            "totalStrikeDifferential": 70,
+            "sigStrikeDifferential": 16,
+            "controlDifferentialSec": 72,
+            "sigAbsorbed": 57,
+            "totalAbsorbed": 69
+          }
+        },
         {
           "boutId": "61135",
           "date": "2024-11-02",
