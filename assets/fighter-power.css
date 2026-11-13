@@ -1039,3 +1039,27 @@
  .befn-v3-dialog .befn-title-belt small{font-size:9px}
  .befn-v3-dialog .befn-v3-career-record span{font-size:9px}
 }
+
+/* Clear UFC-wide leaderboard interpretation and readable top-ten markers. */
+.befn-v3-dialog .befn-v3-rank-full .befn-v3-rank-tiles li.is-top-ten {
+ border-color:#d3ac57;
+ background:linear-gradient(145deg,#3b3325,#29292d);
+ box-shadow:inset 0 0 0 1px rgba(240,194,93,.16);
+}
+.befn-v3-dialog .befn-v3-rank-tiles .befn-v3-top-ten {
+ display:inline-block;
+ width:max-content;
+ max-width:100%;
+ margin:3px 0;
+ padding:3px 6px;
+ border:1px solid #d6b265;
+ border-radius:5px;
+ color:#f1cf83;
+ background:#292216;
+ font-size:9px;
+ font-weight:900;
+ letter-spacing:.02em;
+ line-height:1.3;
+}
+.befn-v3-dialog .befn-v3-rank-tiles li small {line-height:1.35;color:#d0c7bb}
+.befn-v3-dialog .befn-v3-rank-tiles li span {line-height:1.35}
