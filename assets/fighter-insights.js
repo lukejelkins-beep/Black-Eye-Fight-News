@@ -75,7 +75,7 @@
    champion:"Former boxing world champion"
   }[c.kind]||"Verified credential");
   const content=c.kind==="bjj"?'<span class="befn-belt" style="--belt:'+beltColors[c.belt]+'"></span>':
-   c.kind==="ncaa"?'<span class="befn-credential-ncaa"><small>NCAA'+(["I","II","III"].indexOf(c.division)+1)+'</small><b>🤼</b></span>'+
+   c.kind==="ncaa"?'<span class="befn-credential-ncaa"><small>NCAA</small><b>DIV '+escapeHTML(c.division)+'</b></span>'+
      (medalIcon[c.medal]?'<em class="befn-credential-medal">'+medalIcon[c.medal]+'</em>':''):
    c.kind==="olympic-judo"?'<span class="befn-credential-judo"><small>JUDO</small><b>🥋</b><small>OG</small></span>'+
      (c.medal&&medalIcon[c.medal]?'<em class="befn-credential-medal">'+medalIcon[c.medal]+
