@@ -113,3 +113,8 @@ test("unavailable statistics stay null, not fabricated zeroes",()=>{
 test("an unknown period fails closed",()=>{
   assert.throws(()=>selectUfcPeriod(sample,"all-promotions"),/Unknown UFC/);
 });
+
+test("invalid recorded event dates fail closed without crashing or entering selection",()=>{
+  const malformed=[fight("bad",0,{date:"2026-13-99"}),fight("bad2",0,{date:"2026-02-31"}),sample[0]];
+  assert.deepEqual(verifiedUfcBouts(malformed).map(x=>x.boutId),["1"]);
+});
