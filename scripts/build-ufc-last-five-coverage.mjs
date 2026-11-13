@@ -155,7 +155,6 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
      opponent:row.opponent||"",sport:row.sport||row.ruleset||"",
      source:"fighter-career-history"});
    if(String(row.promotion||row.org||"").toLowerCase()!=="ufc")continue;
-   const outcome=normalOutcome(row.result||row.outcome||row.status);
    if(!outcome||!validDate(row.date)||!row.opponent)continue;
    // A fight ID is trustworthy only for the provider's native tracked row;
    // public-records career notes may share an opponent/date but no linked ID.
