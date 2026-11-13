@@ -25,6 +25,7 @@ on:
       - 'scripts/build-ufc-36-month-candidates.mjs'
       - 'scripts/build-ufc-last-five-coverage.mjs'
       - 'tests/test-ufc-36-month-candidates.mjs'
+      - 'tests/test_ufc_full_career_cache.py'
       - 'tests/test-ufcalendar-relay.mjs'
       - 'tests/test_ufcalendar_rich_backfill.py'
       - '.github/workflows/ufcalendar-rich-backfill.yml'
@@ -52,6 +53,7 @@ jobs:
         run: |
           node --test tests/test-ufcalendar-relay.mjs
           python -m unittest discover -s tests -p 'test_ufcalendar_rich_backfill.py' -v
+          python -m unittest discover -s tests -p 'test_ufc_full_career_cache.py' -v
           python -m unittest discover -s tests -p 'test_ufc_research_archive.py' -v
           node --test tests/test-ufc-profile-queue.mjs
           node --test tests/test-ufc-36-month-candidates.mjs
