@@ -70,7 +70,8 @@ test("minimum three measured bouts governs UFC-wide and divisional rankings",()=
  assert.equal(d.fighters.btwo.metrics.slpm.divisionRank,2);
  assert.equal(sapm.leaders[0].name,"A One","lower absorption is better");
  assert.equal(d.fighters.aone.category,"Champion");
- assert.equal(d.fighters.btwo.category,"Roster");
+ assert.equal(d.fighters.btwo.category,"Unassessed",
+  "a roster entry missing a complete UFC career review cannot be classified");
  assert.equal(d.fighters.cunknown.category,"Unassessed");
 });
 test("partial or zero denominator is not a fabricated rank or 100% accuracy",()=>{
