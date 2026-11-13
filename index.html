@@ -537,6 +537,7 @@ html,body{max-width:100%;overflow-x:clip}
 <link rel="stylesheet" href="/assets/promotion-coverage.css?v=20261109-scope1">
 <script src="/assets/promotion-coverage.js?v=20261110-syntaxfix2"></script>
 <link rel="stylesheet" href="assets/responsive-layout-experiment.css?v=20261112-mobile-card-fix-v9">
+<link rel="stylesheet" href="assets/fighter-profile-v3-layout-preview.css?v=20261113-unified-v1">
 <script src="assets/news-dedupe.js?v=20261113-headline-dedupe-v9"></script>
 <script defer src="assets/responsive-preview-mode.js?v=20261112-v9"></script>
 
@@ -1645,7 +1646,7 @@ function openFighter(id){const f=D.fighters.find(x=>x.id===id);if(!f)return;cons
  document.querySelector('#fighter-dialog-content').innerHTML=`<div class="dialog-top"><div class="befn-legacy-identity"><div class="eyebrow" style="color:#b4e1d5">${esc(f.sport)} / ${esc(f.division)} / ${esc(f.category)}</div><h2>${esc(f.name)}</h2><small>${esc(f.record)}</small></div><button type="button" class="dialog-close" id="closeFighter" aria-label="Close fighter profile">×</button></div><div class="dialog-content"><div class="dialog-bio">${img}<div class="befn-bio-meta"><div class="befn-v3-identity"><small>${esc(f.sport)} · ${esc(f.division)}</small><h2>${esc(f.name)}</h2><strong class="befn-v3-career-record">${esc(f.record)}<span>Pro record</span></strong></div>${befnTitleBelts(f)}<p><strong>Next fight:</strong> ${f.nextVerified===true?esc(f.next||'To be announced'):'To be announced'}</p>${befnReign(f)}<div class="befn-top-credentials" data-befn-top-credentials>${window.BEFNFighterInsights?.topCredentials(f)||''}</div></div></div>${window.BEFNFighterInsights?.renderProfile(f)||""}${!window.BEFNFighterInsights?.hasV3(f)?`<div data-befn-legacy-results><h3>Five most recent results</h3>${recent.length?`<div class="scroller"><table class="data-table" data-befn-recent-results="${esc(f.id)}"><thead><tr><th>Date</th><th>Opponent</th><th>W/L</th><th>Method</th></tr></thead><tbody>${recent.map(r=>`<tr><td>${esc(r.date)}</td><td>${esc(r.opponent)}</td><td>${esc(r.outcome)}</td><td>${esc(r.method)}</td></tr>`).join('')}</tbody></table></div>` :'<p>Recent results unavailable.</p>'}</div>`:''}</div>`;
  const isV3=!!window.BEFNFighterInsights?.hasV3(f);
  dialog.classList.toggle('befn-v3-dialog',isV3);
- if(isV3){const hero=dialog.querySelector('.befn-v3-hero');const meta=dialog.querySelector('.befn-bio-meta');if(hero&&meta)meta.append(hero);}
+ if(isV3)window.BEFNFighterInsights?.layoutV3Dialog?.();
  syncFighterPortraits(dialog);
  if(dialog.showModal)dialog.showModal();else dialog.setAttribute('open','');}
 function navigate(){let key=location.hash.replace('#','').split('/')[0]||'home';if(key==='news')key='home';if(key==='calendar'||key==='results'){fightDesk.view=key==='results'?'results':'upcoming';history.replaceState(null,'','#fights');key='fights';}const all=['home','champions','fighters','social','fights','highlights'];if(!all.includes(key))key='home';const pages={home:renderHome,champions:renderChampions,fighters:renderFighters,social:renderSocial,fights:renderFights,highlights:renderHighlights};main.innerHTML=pages[key]();syncFighterPortraits(main);if(key==='highlights')window.FightFilm.load();hydrateTalkEmbeds();document.querySelectorAll('[data-nav]').forEach(x=>{const yes=x.dataset.nav===key;x.classList.toggle('active',yes);if(yes)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});if(location.hash.startsWith('#fighter/')){openFighter(decodeURIComponent(location.hash.slice(9)))}window.scrollTo({top:0,behavior:'instant'});hydrateMissingPortraits().catch(()=>{});if(key==='social'&&!liveTalk.loading&&Date.now()-liveTalk.lastAttempt>10*60*1000)loadLiveTalk().catch(()=>{});}
@@ -1833,7 +1834,7 @@ window.setInterval(()=>{if(location.hash.split('/')[0]==='#social'&&!liveTalk.lo
 <script src="assets/ufcalendar-evidence.js?v=20261111-archive1" defer></script>
 <script src="assets/fighter-power-index.js?v=20261112-ufc-champions-v6" defer></script>
 <script src="assets/ufc-prospect-contender.js?v=20261112-uc2" defer></script>
-<script src="assets/fighter-insights.js?v=ufc-v3-eligible-three" defer></script>
+<script src="assets/fighter-insights.js?v=20261113-unified-profile-v1" defer></script>
 <script src="assets/ufcalendar-fights-enrichment.js?v=20261112-round-observations-v2" defer></script>
 </body>
 </html>
