@@ -1162,6 +1162,14 @@ def reconcile_approved_ufc_full_career_timelines(client,state,research,coverage,
         newfound=len(after-before)
         added+=newfound
         full=profile.get("ufcTimeline",{}).get("complete") is True
+        if full and last and not any(
+            str(row.get("promotion") or "").lower()=="ufc" and
+            date_str(row.get("date"))==last for row in merged):
+            # An explicit 'untruncated' provider result that omits the
+            # roster-confirmed most recent UFC bout cannot certify a career.
+            profile["ufcTimeline"]["complete"]=False
+            profile["ufcTimeline"]["missingRosterLastUfcFight"]=last
+            full=False
         if full and not old_complete:certified+=1
         checks[s]={"status":"checked","checkedAt":today.isoformat(),
                    "lastUfcFight":last,"numericFighterId":fid,
