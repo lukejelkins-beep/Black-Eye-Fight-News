@@ -688,8 +688,17 @@ def save_ufc_timeline(profile,payload,today):
         if old is None:
             combined[key]=dict(row)
             continue
-        old_id=positive(old.get("boutId"))
-        new_id=positive(row.get("boutId"))
+        # Existing persisted bout IDs are canonical numeric *strings*.
+        # positive() accepts provider integer IDs only, so using it on
+        # cached rows would silently treat every saved native ID as absent.
+        def native_id(value):
+            if type(value) is int and 0<value<=999999999999:
+                return str(value)
+            if isinstance(value,str) and re.fullmatch(r"[1-9][0-9]{0,11}",value):
+                return value
+            return None
+        old_id=native_id(old.get("boutId"))
+        new_id=native_id(row.get("boutId"))
         old_native=old.get("source")=="native" and old_id is not None
         new_native=row.get("source")=="native" and new_id is not None
         if old_native and new_native and old_id!=new_id:
