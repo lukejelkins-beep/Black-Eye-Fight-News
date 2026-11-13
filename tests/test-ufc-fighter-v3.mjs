@@ -127,6 +127,25 @@ test("same display names without overlapping dated opponents fail closed",()=>{
  );
  assert.throws(()=>buildSnapshot(dup,postfight,cohorts),/identity collision requires manual source review/);
 });
+test("no contests and unresolved outcomes cannot qualify measured UFC metrics",()=>{
+ const c=structuredClone(coverage);
+ c.fighters[0].recent[1].outcome="NC";
+ const d=buildSnapshot(c,postfight,cohorts);
+ assert.equal(d.fighters.aone.metrics.slpm.bouts,2);
+ assert.equal(d.fighters.aone.metrics.slpm.rank,undefined);
+ assert.equal(d.fighters.aone.metrics.ko.bouts,2);
+ const c2=structuredClone(c);
+ c2.fighters[0].recent[1].outcome=null;
+ assert.equal(buildSnapshot(c2,postfight,cohorts).fighters.aone.metrics.slpm.bouts,2);
+});
+test("one UFC bout ID counts at most once even if repeated in imported history",()=>{
+ const c=structuredClone(coverage);
+ c.fighters[0].recent[1].boutId=c.fighters[0].recent[0].boutId;
+ const d=buildSnapshot(c,postfight,cohorts);
+ assert.equal(d.fighters.aone.recent.length,2);
+ assert.equal(d.fighters.aone.metrics.slpm.bouts,2);
+ assert.equal(d.fighters.aone.metrics.slpm.rank,undefined);
+});
 test("source mismatch and inconsistent snapshot dates stop publication",()=>{
  assert.throws(()=>buildSnapshot({},postfight),/Required saved/);
  assert.throws(()=>buildSnapshot(coverage,{schema:1,scope:"all"}),/Required saved/);
