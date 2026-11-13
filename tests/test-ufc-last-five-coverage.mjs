@@ -93,3 +93,45 @@ test("a metrics object containing only unavailable values is not measured",()=>{
  },{divisions:[]},{asOf:"2026-11-13"});
  assert.equal(valid.fighters.find(x=>x.slug==="fighter").measuredCount,1);
 });
+
+test("UTC/local one-day shift links a text-only UFC history row to its confirmed bout ID",()=>{
+ const bout={id:"501",org:"ufc",eventDate:"2026-06-08",status:"completed",
+  a:{id:"1",slug:"alpha",name:"Alpha"},b:{id:"2",slug:"beta",name:"Beta"},
+  result:{winnerId:"1",method:"decision"}};
+ const research={profiles:{alpha:{recentHistory:[
+  {date:"2026-06-09",opponent:"Beta",result:"win",promotion:"ufc",method:"decision"}]}}};
+ const d=auditUfcLastFive({bouts:{"501":bout}},research,
+  {fighters:{alpha:{name:"Alpha",scope:"ufc-only",recentBouts:[
+   {boutId:"501",metrics:{sigLanded:10}}]}}},
+  {divisions:[]},{asOf:"2026-11-13"});
+ const a=d.fighters.find(f=>f.slug==="alpha");
+ assert.equal(a.recentCount,1,"the one fight must not appear twice");
+ assert.equal(a.recent[0].boutId,"501");
+ assert.equal(a.measuredCount,1);
+ assert.equal(d.summary.shiftedDateAliasesJoined,1);
+});
+test("distinct confirmed IDs are never merged across one-day date shifts",()=>{
+ const bout=(id,date)=>({id,org:"ufc",eventDate:date,status:"completed",
+  a:{id:"1",slug:"alpha",name:"Alpha"},b:{id:"2",slug:"beta",name:"Beta"},
+  result:{winnerId:"1",method:"decision"}});
+ const d=auditUfcLastFive({bouts:{
+  "501":bout("501","2026-06-08"),
+  "502":bout("502","2026-06-10")}},
+  {profiles:{alpha:{recentHistory:[
+   {date:"2026-06-09",opponent:"Beta",result:"win",promotion:"ufc",method:"decision"}]}}},
+  {fighters:{}},{divisions:[]},{asOf:"2026-11-13"});
+ const a=d.fighters.find(f=>f.slug==="alpha");
+ assert.equal(a.recentCount,3,"ambiguous neighbouring fights stay separate");
+ assert.deepEqual(new Set(a.recent.map(x=>x.boutId).filter(Boolean)),new Set(["501","502"]));
+ assert.equal(d.summary.shiftedDateAliasesJoined,0);
+});
+test("one-day date alias is not enough without a confirmed UFC bout ID",()=>{
+ const progress={bouts:{"501":{id:"501",org:"ufc",eventDate:"2026-06-08",
+  status:"completed",a:{id:"1",slug:"alpha",name:"Alpha"},
+  b:{id:"2",slug:"beta",name:"Beta"},result:{winnerId:"1"}}}};
+ const d=auditUfcLastFive(progress,{profiles:{alpha:{recentHistory:[
+  {date:"2026-06-09",opponent:"Different Athlete",result:"win",promotion:"ufc"}]}}},
+  {fighters:{}},{divisions:[]},{asOf:"2026-11-13"});
+ assert.equal(d.fighters.find(x=>x.slug==="alpha").recentCount,2);
+ assert.equal(d.summary.shiftedDateAliasesJoined,0);
+});
