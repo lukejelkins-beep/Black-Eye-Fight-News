@@ -173,17 +173,29 @@ export function buildSnapshot(coverage,postfight,cohorts=[],options={}){
    ["Prospect","Contender","Roster"].includes(source.category)?source.category:"Unassessed";
   const trustedRows=source?.review?.credentialsChecked===true&&
    Array.isArray(source.latest)&&source.latest.length?source.latest:null;
-  // Each reviewed athlete's dated UFC result is authoritative. Provider
-  // aliases and provisional index rows can supply IDs/statistics only when
-  // they identify the *same* fight by calendar day and opponent.
+  // Each reviewed athlete's dated UFC result is authoritative. Provisional
+  // provider IDs/statistics may join only when the opponent matches and the
+  // date is identical or uniquely shifted by one UTC/event-local day.
+  // An ambiguous pair of bouts never inherits an arbitrary ID.
   const history=trustedRows||f.recent||[];
   const indexed=f.recent||[];
+  const matchingId=x=>{
+   const same=indexed.filter(row=>row.boutId&&
+    norm(row.opponent)===norm(x.opponent));
+   const exact=same.filter(row=>row.date===x.date);
+   if(exact.length)return exact.length===1?String(exact[0].boutId):null;
+   const when=Date.parse(String(x.date||"")+"T00:00:00Z");
+   if(!Number.isFinite(when))return null;
+   const adjacent=same.filter(row=>{
+    const date=Date.parse(String(row.date||"")+"T00:00:00Z");
+    return Number.isFinite(date)&&Math.abs(date-when)===86400000;
+   });
+   return adjacent.length===1?String(adjacent[0].boutId):null;
+  };
   const ids=new Set();
   const next=[];
   for(const x of history){
-   const candidates=trustedRows?indexed.filter(row=>row.date===x.date&&
-    norm(row.opponent)===norm(x.opponent)&&row.boutId):[];
-   const id=trustedRows?(candidates.length===1?String(candidates[0].boutId):null):
+   const id=trustedRows?matchingId(x):
     x.boutId?String(x.boutId):null;
    if(id&&ids.has(id))continue;
    if(id)ids.add(id);
