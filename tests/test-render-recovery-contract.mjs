@@ -46,3 +46,18 @@ test("new commits during the grace window are strictly data-only before using th
  assert.match(file,/source_sha="\$new_main"/);
  assert.match(file,/Main advanced again while verifying/);
 });
+
+test("UFC V3 offline snapshot is guarded at both release gates and monitored only once created",()=>{
+ const marker="data/ufc-postfight-metrics.json|data/ufc-fighter-v3.json|data/news-live.json";
+ assert.equal(file.split(marker).length-1,2,"source and grace gates both restrict V3 snapshot changes");
+ assert.match(file,/if \[\[ -f data\/ufc-fighter-v3\.json \]\]; then/);
+ assert.match(file,/files\+=\(data\/ufc-fighter-v3\.json\)/);
+ assert.doesNotMatch(file,/data\/ufc-fighter-v3\.json\|data\/\*/);
+});
+test("the offline V3 builder requests guarded recovery only for successfully published changes",()=>{
+ const builder=fs.readFileSync(".github/workflows/build-ufc-fighter-v3.yml","utf8");
+ assert.match(builder,/actions: write/);
+ assert.match(builder,/echo "wrote=true" >> "\$GITHUB_OUTPUT"/);
+ assert.match(builder,/if: steps\.publish\.outputs\.wrote == 'true'/);
+ assert.match(builder,/befn-render-deploy-recovery\.yml\/dispatches/);
+});

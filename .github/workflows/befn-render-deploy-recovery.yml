@@ -58,6 +58,11 @@ jobs:
             data/ufc-prospect-profiles.json data/ufc-roster-profiles.json
             data/ufc-postfight-metrics.json
           )
+          # The V3 file is created by the offline calculator after this source
+          # release. Monitor it once present; never fail a pre-build deployment.
+          if [[ -f data/ufc-fighter-v3.json ]]; then
+            files+=(data/ufc-fighter-v3.json)
+          fi
           printf '%s\n' "${files[@]}" > /tmp/befn-watch-files
           differences=0
           : > /tmp/befn-drift-files
@@ -145,7 +150,7 @@ jobs:
                 data/ufc-research-archive.json|data/pfl-research-archive.json|\
                 data/ufcalendar-fighter-research.json|data/ufcalendar-judging-research.json|\
                 data/ufc-last-five-coverage.json|data/ufc-profile-research-queue.json|\
-                data/ufc-postfight-metrics.json|data/news-live.json|data/results.json|\
+                data/ufc-postfight-metrics.json|data/ufc-fighter-v3.json|data/news-live.json|data/results.json|\
                 data/upcoming-cards.json|data/fight-film.json|data/fight-talk-live.json|\
                 data/fight-talk-embedded.json|data/fight-talk-x-api.json|data/fight-talk-x-budget.json)
                   ;;
@@ -191,7 +196,7 @@ jobs:
                 data/ufc-research-archive.json|data/pfl-research-archive.json|\
                 data/ufcalendar-fighter-research.json|data/ufcalendar-judging-research.json|\
                 data/ufc-last-five-coverage.json|data/ufc-profile-research-queue.json|\
-                data/ufc-postfight-metrics.json|data/news-live.json|data/results.json|\
+                data/ufc-postfight-metrics.json|data/ufc-fighter-v3.json|data/news-live.json|data/results.json|\
                 data/upcoming-cards.json|data/fight-film.json|data/fight-talk-live.json|\
                 data/fight-talk-embedded.json|data/fight-talk-x-api.json|data/fight-talk-x-budget.json)
                   ;;
