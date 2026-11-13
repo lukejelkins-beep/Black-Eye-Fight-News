@@ -1063,3 +1063,20 @@
 }
 .befn-v3-dialog .befn-v3-rank-tiles li small {line-height:1.35;color:#d0c7bb}
 .befn-v3-dialog .befn-v3-rank-tiles li span {line-height:1.35}
+
+/* Expanded recent-performance tiles: desktop 3x3, phone 2 columns.
+   Incomplete data creates fewer tiles, never blank placeholders. */
+.befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles {
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ align-content:start;
+}
+.befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles>div {
+ min-height:74px;
+ align-content:center;
+}
+@media(max-width:480px){
+ .befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+ }
+ .befn-v3-dialog .befn-v3-stat-panel .befn-v3-tiles>div{min-height:67px}
+}
