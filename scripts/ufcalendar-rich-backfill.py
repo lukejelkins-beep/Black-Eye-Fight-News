@@ -513,8 +513,11 @@ def collect_targeted_ufc_history(client,state,coverage,today):
     # the monthly 27k ceiling, the 3k reserve and the provider RPM.
     cap=max(0,min(55,int(client.max_calls*.14)))
     searched=0
+    attempted=0
     for f in coverage.get("fighters",[]):
-        if searched>=cap or client.remaining<=0 or client.stopped:
+        # Count attempted lookups, including 404s and transient failures.
+        # Otherwise an all-missing batch could consume the entire run budget.
+        if attempted>=cap or client.remaining<=0 or client.stopped:
             break
         if not isinstance(f,dict) or not f.get("needsHistoryCheck"):
             continue
@@ -532,6 +535,7 @@ def collect_targeted_ufc_history(client,state,coverage,today):
         # At most eight most recent completed wins/losses. Existing event-index
         # draw/NC records remain in the dataset rather than treated as losses.
         before_errors=len(client.errors)
+        attempted+=1
         payload=client.call("/fights/search"+param(org="ufc",fighter=slugval,limit=8))
         if payload is None:
             if len(client.errors)>before_errors and client.errors[-1]=="HTTP_404":
