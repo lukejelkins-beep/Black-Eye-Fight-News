@@ -30,7 +30,7 @@ const nonMmaPromotions=new Set(["bkfc","ufc-bjj","ibjjf","adcc",
 // Reuse the same set for provider-tagged and independently reviewed bouts,
 // otherwise a saved kickboxing result can be incorrectly marked unverified.
 const nonMmaRulesets=new Set(["boxing","kickboxing","muay-thai","grappling",
- "submission-grappling","bjj","wrestling","bare-knuckle-boxing"]);
+ "submission-grappling","bjj","wrestling","bare-knuckle-boxing","custom-striking"]);
 const promotionKey=x=>String(x||"").trim().toLowerCase().replace(/_/g,"-");
 const normalOutcome=o=>{const x=String(o||"").toLowerCase();return x==="win"||x==="w"?"W":x==="loss"||x==="l"?"L":x==="draw"||x==="d"?"D":x==="no_contest"||x==="nc"?"NC":null;};
 const priorityNames=data=>new Set((data.divisions||[]).map(x=>nameKey(x.name)).filter(Boolean));
