@@ -27,6 +27,7 @@ jobs:
           node --check assets/upcoming-cards.js
       - name: Verify reviewed UFC profile integrity and scoring
         run: |
+          node --test tests/test-ufc-leaderboards-page.mjs
           node tests/test-ufc-title-match.cjs
           node tests/test-ufc-profile-card-qa.cjs
           node tests/test-ufc-public-profile-clean.cjs
