@@ -57,7 +57,6 @@ class RichBackfillTests(unittest.TestCase):
     def test_fast_runs_do_not_repeat_recent_event_discovery(self):
         state=m.default_progress()
         state["historicalComplete"]={"ufc":True,"pfl":True}
-        state["historicalWindowMonths"]={"ufc":36}
         now=dt.datetime.now(dt.timezone.utc)
         state["upcomingCheckedAt"]={"ufc":now.isoformat(),"pfl":now.isoformat()}
         calls=[]
@@ -71,26 +70,6 @@ class RichBackfillTests(unittest.TestCase):
         m.read_events(client,state,dt.date(2026,11,11))
         self.assertEqual(len(calls),1)
         self.assertIn("org=ufc",calls[0])
-
-    def test_widening_ufc_window_reopens_history_exactly_once(self):
-        state=m.default_progress()
-        state["historicalComplete"]={"ufc":True,"pfl":True}
-        state["historicalWindowMonths"]={"ufc":24}
-        now=dt.datetime.now(dt.timezone.utc)
-        state["upcomingCheckedAt"]={"ufc":now.isoformat(),"pfl":now.isoformat()}
-        calls=[]
-        client=m.Client("fake",state,dt.date(2026,11,13),
-                        fetch=lambda route:(calls.append(route) or {"data":[]}),
-                        max_calls=20)
-        client.remaining=100
-        m.read_events(client,state,dt.date(2026,11,13))
-        self.assertEqual(len(calls),1,"only the UFC historic query should reopen")
-        self.assertIn("org=ufc",calls[0])
-        self.assertIn("from=2023-11-13",calls[0])
-        self.assertEqual(state["historicalWindowMonths"]["ufc"],36)
-        self.assertTrue(state["historicalComplete"]["ufc"])
-        m.read_events(client,state,dt.date(2026,11,13))
-        self.assertEqual(len(calls),1,"the completed 36-month history must not repeatedly fetch")
 
     def test_paid_tier_unlocks_only_when_verified(self):
         for limit,expected in ((100,False),(30000,True)):
@@ -297,7 +276,7 @@ class RichBackfillTests(unittest.TestCase):
                "opponent_name":"UFC Veteran "+str(n),"status":"loss",
                "org_slug":"ufc"})
         history=m.summarize_history({"data":rows})
-        self.assertEqual(len(history),20)
+        self.assertEqual(len(history),28)
         self.assertEqual(sum(r["promotion"]=="ufc" for r in history),3)
         self.assertEqual(history[0]["promotion"],"pfl")
         self.assertEqual(history[-1]["promotion"],"ufc")
@@ -336,168 +315,6 @@ class RichBackfillTests(unittest.TestCase):
         self.assertEqual(m.verify_short_ufc_careers(
             client,state,research,coverage,today),0)
         self.assertEqual(client.calls,1)
-
-
-    def test_complete_ufc_career_preserves_all_older_fights_not_just_five(self):
-        today=dt.date(2026,11,13)
-        rows=[]
-        for n in range(15):
-            rows.append({"source":"native","fight_id":100+n,
-                         "date":(dt.date(2026,10,1)-dt.timedelta(days=n*370)).isoformat(),
-                         "opponent_name":"UFC opponent "+str(n),
-                         "org_slug":"ufc","status":"win",
-                         "event_title":"UFC Fight Night: Historical"})
-        for n in range(26):
-            rows.append({"source":"history","date":"2025-02-01",
-                         "opponent_name":"PFL opponent "+str(n),"org_slug":"pfl","status":"loss"})
-        payload={"data":rows,"meta":{"truncated":False}}
-        profile={"name":"Veteran"}
-        latest=m.save_ufc_timeline(profile,payload,today)
-        self.assertEqual(len(latest),20,"legacy site summary stays compact")
-        career=profile["ufcCareerHistory"]
-        self.assertEqual(career["count"],15,"full UFC history must not stop at 5 or 10")
-        self.assertTrue(career["complete"])
-        self.assertEqual(career["nativeLinkedCount"],15)
-        self.assertEqual(career["fights"][0]["boutId"],"100")
-        self.assertEqual(career["earliestUfcFight"],rows[14]["date"])
-
-    def test_full_career_staging_rejects_old_roster_and_skips_review(self):
-        class Client:
-            max_calls=500
-            calls=0
-            remaining=50
-            stopped=False
-            today=dt.date(2026,11,13)
-            def __init__(self):
-                self.paths=[]
-            def call(self,path):
-                self.paths.append(path)
-                self.calls+=1
-                self.remaining-=1
-                return {"meta":{"truncated":False},"data":[
-                    {"org_slug":"ufc","status":"win","source":"native",
-                     "fight_id":7,"date":"2026-06-01","opponent_name":"Other",
-                     "event_title":"UFC Fight Night: Example"},
-                    {"org_slug":"ufc","status":"loss","source":"native",
-                     "fight_id":8,"date":"2008-07-04","opponent_name":"Older",
-                     "event_title":"UFC 86"}]}
-        state=m.default_progress()
-        research={"profiles":{}}
-        roster={"schema":1,"scope":"ufc","asOf":"2026-11-13",
-                "activityCutoff":"2025-05-13","fighters":[
-                    {"slug":"eligible","name":"Eligible",
-                     "lastUfcFight":"2026-06-01",
-                     "eligibilityStatus":"latest_observed_mma_ufc"},
-                    {"slug":"pending","name":"Pending",
-                     "lastUfcFight":"2026-06-01",
-                     "eligibilityStatus":"review_required"}]}
-        client=Client()
-        self.assertEqual(m.collect_full_ufc_careers(
-            client,state,research,roster,client.today),0)
-        self.assertEqual(client.paths,[],"must not query on 18-month roster")
-        roster["activityCutoff"]="2023-11-13"
-        self.assertEqual(m.collect_full_ufc_careers(
-            client,state,research,roster,client.today),1)
-        self.assertEqual(client.paths,["/fighters/eligible/history"])
-        career=research["profiles"]["eligible"]["ufcCareerHistory"]
-        self.assertTrue(career["complete"])
-        self.assertEqual(career["count"],2)
-        self.assertEqual(career["earliestUfcFight"],"2008-07-04")
-        self.assertNotIn("pending",research["profiles"])
-        self.assertEqual(m.collect_full_ufc_careers(
-            client,state,research,roster,client.today),0,
-            "cached complete career must not be re-requested every relay")
-        self.assertEqual(client.calls,1)
-
-    def test_truncated_career_cannot_overwrite_previous_complete_ufc_history(self):
-        today=dt.date(2026,11,13)
-        complete={"data":[{"org_slug":"ufc","status":"win",
-            "opponent_name":"Early","date":"2008-10-01","source":"native",
-            "fight_id":101,"event_title":"UFC 89"}],
-            "meta":{"truncated":False}}
-        profile={}
-        m.save_ufc_timeline(profile,complete,today)
-        first=profile["ufcCareerHistory"]
-        self.assertTrue(first["complete"])
-        incomplete={"data":[{"org_slug":"ufc","status":"win",
-            "opponent_name":"Latest","date":"2026-10-01"}],
-            "meta":{"truncated":True}}
-        m.save_ufc_timeline(profile,incomplete,today)
-        self.assertEqual(profile["ufcCareerHistory"],first)
-
-
-    def test_full_career_linker_indexes_older_ufc_bouts_only_once(self):
-        today=dt.date(2026,11,13)
-        base={"id":"11","org":"ufc","event":"UFC Fight Night: Recent",
-              "eventDate":"2026-06-01","status":"completed",
-              "a":{"id":"1","slug":"alpha","name":"Alpha"},
-              "b":{"id":"2","slug":"beta","name":"Beta"}}
-        state=m.default_progress()
-        state["bouts"]={"11":base}
-        research={"profiles":{"alpha":{"ufcCareerHistory":{"count":2,"complete":True,
-                 "fights":[
-                 {"boutId":"11","source":"native","date":"2026-06-01"},
-                 {"boutId":"12","source":"native","date":"2008-12-01"}]}}}}
-        roster={"schema":1,"scope":"ufc","asOf":"2026-11-13",
-                "activityCutoff":"2023-11-13","fighters":[{
-                    "slug":"alpha","name":"Alpha",
-                    "eligibilityStatus":"latest_observed_mma_ufc",
-                    "lastUfcFight":"2026-06-01"}]}
-        class C:
-            max_calls=500
-            calls=0
-            stopped=False
-            remaining=20
-            def __init__(self):self.paths=[]
-            def call(self,path):
-                self.paths.append(path)
-                self.calls+=1
-                self.remaining-=1
-                return {"data":[
-                    {"id":12,"status":"completed",
-                     "fighter_a":{"id":1,"slug":"alpha","name":"Alpha"},
-                     "fighter_b":{"id":2,"slug":"beta","name":"Beta"},
-                     "event":{"id":5,"org":"ufc","title":"UFC 2008",
-                              "starts_at":"2008-12-01"},
-                     "result":{"winner_fighter_id":1,"round":1,"time":"1:59"}},
-                    {"id":13,"status":"completed",
-                     "fighter_a":{"id":1,"slug":"alpha","name":"Alpha"},
-                     "fighter_b":{"id":2,"slug":"beta","name":"Beta"},
-                     "event":{"id":6,"org":"ufc","title":"UFC Road to UFC",
-                              "starts_at":"2008-11-01"},
-                     "result":{"winner_fighter_id":1}}]}
-        client=C()
-        self.assertEqual(m.collect_full_ufc_event_links(
-            client,state,research,roster,today),1)
-        self.assertEqual(len(client.paths),1)
-        self.assertIn("fighter=1",client.paths[0])
-        self.assertIn("limit=75",client.paths[0])
-        self.assertIn("12",state["bouts"])
-        self.assertNotIn("13",state["bouts"],"feeder event must stay outside UFC career")
-        self.assertIn("12",state["ufcHistoricalPriority"])
-        self.assertEqual(state["ufcFullCareerIndexDone"]["alpha"]["status"],"checked")
-        self.assertEqual(m.collect_full_ufc_event_links(
-            client,state,research,roster,today),0)
-        self.assertEqual(client.calls,1)
-
-    def test_full_career_event_linker_ignores_old_18_month_roster(self):
-        state=m.default_progress()
-        research={"profiles":{"alpha":{"ufcCareerHistory":{"count":1,
-                  "fights":[{"boutId":"9","source":"native","date":"2008-10-01"}]}}}}
-        coverage={"schema":1,"scope":"ufc","asOf":"2026-11-13",
-                  "activityCutoff":"2025-05-13",
-                  "fighters":[{"slug":"alpha","name":"Alpha",
-                   "lastUfcFight":"2026-01-01",
-                   "eligibilityStatus":"latest_observed_mma_ufc"}]}
-        class C:
-            max_calls=500
-            calls=0
-            stopped=False
-            remaining=20
-            def call(self,path):
-                raise AssertionError("old roster must not trigger this API request")
-        self.assertEqual(m.collect_full_ufc_event_links(
-            C(),state,research,coverage,dt.date(2026,11,13)),0)
 
 if __name__=="__main__":
     unittest.main()

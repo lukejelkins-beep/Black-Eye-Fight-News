@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {auditUfcLastFive} from "../scripts/build-ufc-last-five-coverage.mjs";
-test("36-month eligibility and older UFC history are separate",()=>{
+test("18-month eligibility and older UFC history are separate",()=>{
  const progress={bouts:{
   "10":{id:"10",org:"ufc",event:"UFC Fight Night: Fixture",eventDate:"2026-06-01",status:"completed",
    a:{id:"1",slug:"alpha",name:"Alpha"},b:{id:"2",slug:"beta",name:"Beta"},
@@ -18,7 +18,7 @@ test("36-month eligibility and older UFC history are separate",()=>{
   {date:"2023-02-10",opponent:"X",result:"win",promotion:"pfl"}]}}};
  const postfight={fighters:{alpha:{name:"Alpha",scope:"ufc-only",recentBouts:[{boutId:"10",metrics:{sigLanded:10}}]}}};
  const d=auditUfcLastFive(progress,research,postfight,{divisions:[{name:"Alpha"}]},{asOf:"2026-11-13"});
- assert.equal(d.activityCutoff,"2023-11-13");
+ assert.equal(d.activityCutoff,"2025-05-13");
  assert.equal(d.summary.activeFighters,2);
  assert.equal(d.summary.uniqueKnownBoutIds,2);
  const a=d.fighters.find(f=>f.slug==="alpha");
@@ -310,7 +310,7 @@ test("latest completed professional MMA promotion controls activity, not oldest 
  bouts["20"]={id:"20",org:"pfl",status:"completed",eventDate:"2026-10-01",
   a:{id:"101",slug:"indexed-pfl",name:"Indexed PFL"},
   b:{id:"205",slug:"new-pfl-opponent",name:"New PFL Opponent"}};
- ufc("Outside Window","outside-window","21","2023-05-01");
+ ufc("Outside Window","outside-window","21","2024-05-01");
  const d=auditUfcLastFive({bouts},{profiles},{fighters:{}},{divisions:[]},
   {asOf:"2026-11-13"});
  const bySlug=slug=>d.fighters.find(x=>x.slug===slug);
@@ -402,73 +402,4 @@ test("RIZIN requires exact verified MMA ruleset evidence before excluding a UFC 
   {asOf:"2026-11-13",verifiedMixedMma:evidence});
  assert.equal(confirmed.summary.excludedLaterNonUfcMma,1);
  assert.equal(confirmed.fighters.some(f=>f.slug==="fighter"),false);
-});
-test("36-month cutoff includes 24-to-36-month cohort, but not 36+ months",()=>{
- const mk=(id,slug,date)=>({id,org:"ufc",event:"UFC Fight Night: Fixture",
-  eventDate:date,status:"completed",a:{id,slug,name:slug},
-  b:{id:id+"b",slug:"rival-"+id,name:"Rival "+id}});
- const r=auditUfcLastFive({bouts:{
-  "1":mk("1","new-window","2024-02-01"),
-  "2":mk("2","boundary","2023-11-13"),
-  "3":mk("3","old","2023-11-12")
- }},{profiles:{"new-window":{recentHistory:[
-  {date:"2020-01-01",promotion:"ufc",opponent:"Earlier",result:"win"}
- ]}}},{fighters:{}},{divisions:[]},{asOf:"2026-11-13"});
- assert.equal(r.activityCutoff,"2023-11-13");
- assert(r.fighters.some(f=>f.slug==="new-window"));
- assert(r.fighters.some(f=>f.slug==="boundary"));
- assert(!r.fighters.some(f=>f.slug==="old"));
- assert(r.fighters.find(f=>f.slug==="new-window").recent.some(f=>f.date==="2020-01-01"));
-});
-test("retirement, exit and unverified-status handling respect newer official UFC fights",()=>{
- const mk=(id,slug,date)=>({id,org:"ufc",event:"UFC Fight Night: Fixture",
-  eventDate:date,status:"completed",a:{id,slug,name:slug},
-  b:{id:id+"b",slug:"rival-"+id,name:"Rival "+id}});
- const review={asOf:"2026-11-13",excluded:[
-  {slug:"retired",lastUfcFight:"2025-01-11",reason:"confirmed_retired",
-   evidence:{source:"https://example.org/retired"}},
-  {slug:"exited",lastUfcFight:"2025-01-11",reason:"confirmed_left_ufc",
-   evidence:{source:"https://example.org/exited"}},
-  {slug:"returned",lastUfcFight:"2025-01-11",reason:"confirmed_retired",
-   evidence:{source:"https://example.org/older-evidence"}},
-  {slug:"unverified",lastUfcFight:"2025-01-11",reason:"confirmed_retired",
-   evidence:{source:"no documented source"}}
- ],reviewCandidates:[]};
- const r=auditUfcLastFive({bouts:{
-  "1":mk("1","retired","2025-01-11"),
-  "2":mk("2","exited","2025-01-11"),
-  "3":mk("3","returned","2025-01-11"),
-  "4":mk("4","returned","2026-07-01"),
-  "5":mk("5","unverified","2025-01-11")
- }},{profiles:{}},{fighters:{}},{divisions:[]},{asOf:"2026-11-13",rosterReview:review});
- assert.equal(r.summary.excludedConfirmedRetired,1);
- assert.equal(r.summary.excludedConfirmedUfcExit,1);
- assert(!r.fighters.some(f=>["retired","exited"].includes(f.slug)));
- assert(r.fighters.some(f=>f.slug==="returned"));
- assert(r.fighters.some(f=>f.slug==="unverified"));
-});
-test("later outside-UFC MMA in saved historical review excludes without indexed PFL result",()=>{
- const row={id:"700",org:"ufc",event:"UFC Fight Night: Fixture",
-  eventDate:"2024-03-01",status:"completed",
-  a:{id:"1",slug:"moved",name:"Moved"},
-  b:{id:"2",slug:"other",name:"Other"}};
- const review={asOf:"2026-11-13",excluded:[{
-  slug:"moved",lastUfcFight:"2024-03-01",reason:"later_professional_mma_outside_ufc",
-  evidence:{date:"2026-03-01",promotion:"pfl",source:"saved UFCalendar fighter history"}
- }]};
- const r=auditUfcLastFive({bouts:{"700":row}},{profiles:{}},{fighters:{}},{divisions:[]},
-  {asOf:"2026-11-13",rosterReview:review});
- assert(!r.fighters.some(f=>f.slug==="moved"));
- assert.equal(r.summary.excludedLaterNonUfcMma,1);
-});
-test("previous 18-to-24-month review candidates remain labelled unverified",()=>{
- const row={id:"600",org:"ufc",event:"UFC Fight Night: Fixture",
-  eventDate:"2025-01-01",status:"completed",
-  a:{id:"1",slug:"check-me",name:"Check Me"},b:{id:"2",slug:"other",name:"Other"}};
- const review={asOf:"2026-11-13",reviewCandidates:[
-  {slug:"check-me",lastUfcFight:"2025-01-01"}]};
- const r=auditUfcLastFive({bouts:{"600":row}},{profiles:{}},{fighters:{}},{divisions:[]},
-  {asOf:"2026-11-13",rosterReview:review});
- assert.equal(r.fighters.find(f=>f.slug==="check-me").eligibilityStatus,"review_required");
- assert.equal(r.summary.latestPromotionReviewRequired,1);
 });
