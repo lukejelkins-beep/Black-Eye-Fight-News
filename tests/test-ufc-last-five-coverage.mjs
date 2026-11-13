@@ -3,10 +3,10 @@ import assert from "node:assert/strict";
 import {auditUfcLastFive} from "../scripts/build-ufc-last-five-coverage.mjs";
 test("18-month eligibility and older UFC history are separate",()=>{
  const progress={bouts:{
-  "10":{id:"10",org:"ufc",eventDate:"2026-06-01",status:"completed",
+  "10":{id:"10",org:"ufc",event:"UFC Fight Night: Fixture",eventDate:"2026-06-01",status:"completed",
    a:{id:"1",slug:"alpha",name:"Alpha"},b:{id:"2",slug:"beta",name:"Beta"},
    result:{winnerId:"1",method:"decision"}},
-  "11":{id:"11",org:"ufc",eventDate:"2024-04-15",status:"completed",
+  "11":{id:"11",org:"ufc",event:"UFC Fight Night: Fixture",eventDate:"2024-04-15",status:"completed",
    a:{id:"1",slug:"alpha",name:"Alpha"},b:{id:"3",slug:"gamma",name:"Gamma"},
    result:{winnerId:"3",method:"ko_tko"}},
   "12":{id:"12",org:"pfl",eventDate:"2026-07-10",status:"completed",
@@ -33,7 +33,7 @@ test("18-month eligibility and older UFC history are separate",()=>{
 test("five measured UFC bouts qualify for later leaderboard computation",()=>{
  const bouts={},recentBouts=[];
  for(let i=1;i<=5;i++){
-  const id=String(i);bouts[id]={id,org:"ufc",eventDate:"2026-0"+i+"-02",status:"completed",
+  const id=String(i);bouts[id]={id,org:"ufc",event:"UFC Fight Night: Fixture",eventDate:"2026-0"+i+"-02",status:"completed",
    a:{id:"1",slug:"fighter",name:"Fighter"},b:{id:String(i+1),slug:"opponent-"+i,name:"Opponent "+i},
    result:{winnerId:"1",method:"decision"}};
   recentBouts.push({boutId:id,metrics:{sigLanded:i}});
@@ -57,7 +57,7 @@ test("backfill queue prioritises champions, booked athletes and verified ranked 
  const bouts={};
  for(const [id,name] of [["1","Roster Athlete"],["2","Booked Athlete"],
   ["3","Ranked Athlete"],["4","Champion Athlete"]]){
-  bouts[id]={id,org:"ufc",eventDate:"2026-06-01",status:"completed",
+  bouts[id]={id,org:"ufc",event:"UFC Fight Night: Fixture",eventDate:"2026-06-01",status:"completed",
    a:{id,slug:name.toLowerCase().replaceAll(" ","-"),name},
    b:{id:"99",slug:"common-opponent",name:"Common Opponent"},
    result:{winnerId:id,method:"decision"}};
@@ -80,7 +80,7 @@ test("backfill queue prioritises champions, booked athletes and verified ranked 
 });
 
 test("a metrics object containing only unavailable values is not measured",()=>{
- const bouts={"1":{id:"1",org:"ufc",eventDate:"2026-06-01",status:"completed",
+ const bouts={"1":{id:"1",org:"ufc",event:"UFC Fight Night: Fixture",eventDate:"2026-06-01",status:"completed",
   a:{id:"11",slug:"fighter",name:"Fighter"},
   b:{id:"12",slug:"opponent",name:"Opponent"},
   result:{winnerId:"11",method:"decision"}}};
@@ -100,7 +100,7 @@ test("a metrics object containing only unavailable values is not measured",()=>{
 });
 
 test("UTC/local one-day shift links a text-only UFC history row to its confirmed bout ID",()=>{
- const bout={id:"501",org:"ufc",eventDate:"2026-06-08",status:"completed",
+ const bout={id:"501",org:"ufc",event:"UFC Fight Night: Fixture",eventDate:"2026-06-08",status:"completed",
   a:{id:"1",slug:"alpha",name:"Alpha"},b:{id:"2",slug:"beta",name:"Beta"},
   result:{winnerId:"1",method:"decision"}};
  const research={profiles:{alpha:{recentHistory:[
@@ -118,7 +118,7 @@ test("UTC/local one-day shift links a text-only UFC history row to its confirmed
  assert.equal(d.summary.withFiveLinkedIds,0);
 });
 test("distinct confirmed IDs are never merged across one-day date shifts",()=>{
- const bout=(id,date)=>({id,org:"ufc",eventDate:date,status:"completed",
+ const bout=(id,date)=>({id,org:"ufc",event:"UFC Fight Night: Fixture",eventDate:date,status:"completed",
   a:{id:"1",slug:"alpha",name:"Alpha"},b:{id:"2",slug:"beta",name:"Beta"},
   result:{winnerId:"1",method:"decision"}});
  const d=auditUfcLastFive({bouts:{
@@ -133,7 +133,7 @@ test("distinct confirmed IDs are never merged across one-day date shifts",()=>{
  assert.equal(d.summary.shiftedDateAliasesJoined,0);
 });
 test("one-day date alias is not enough without a confirmed UFC bout ID",()=>{
- const progress={bouts:{"501":{id:"501",org:"ufc",eventDate:"2026-06-08",
+ const progress={bouts:{"501":{id:"501",org:"ufc",event:"UFC Fight Night: Fixture",eventDate:"2026-06-08",
   status:"completed",a:{id:"1",slug:"alpha",name:"Alpha"},
   b:{id:"2",slug:"beta",name:"Beta"},result:{winnerId:"1"}}}};
  const d=auditUfcLastFive(progress,{profiles:{alpha:{recentHistory:[
@@ -147,17 +147,17 @@ test("the six evidence stages partition every active fighter without asserting s
  const bouts={},measured=[];
  for(let i=1;i<=5;i++){
   const id=String(i);
-  bouts[id]={id,org:"ufc",eventDate:"2026-0"+i+"-02",status:"completed",
+  bouts[id]={id,org:"ufc",event:"UFC Fight Night: Fixture",eventDate:"2026-0"+i+"-02",status:"completed",
    a:{id:"20",slug:"five-stats-gap",name:"Five Stats Gap"},
    b:{id:String(40+i),slug:"opponent-"+i,name:"Opponent "+i},
    result:{winnerId:"20",method:"decision"}};
   if(i<5)measured.push({boutId:id,metrics:{sigLanded:i}});
  }
- bouts["100"]={id:"100",org:"ufc",eventDate:"2026-07-01",status:"completed",
+ bouts["100"]={id:"100",org:"ufc",event:"UFC Fight Night: Fixture",eventDate:"2026-07-01",status:"completed",
   a:{id:"22",slug:"short-measured",name:"Short Measured"},
   b:{id:"90",slug:"another-opponent",name:"Another Opponent"},
   result:{winnerId:"22",method:"decision"}};
- bouts["200"]={id:"200",org:"ufc",eventDate:"2026-08-01",status:"completed",
+ bouts["200"]={id:"200",org:"ufc",event:"UFC Fight Night: Fixture",eventDate:"2026-08-01",status:"completed",
   a:{id:"23",slug:"five-unlinked",name:"Five Unlinked"},
   b:{id:"91",slug:"third-opponent",name:"Third Opponent"},
   result:{winnerId:"23",method:"decision"}};
@@ -189,7 +189,7 @@ test("the six evidence stages partition every active fighter without asserting s
 });
 
 test("native career history fight ID links older UFC fights without an indexed card",()=>{
- const progress={bouts:{"501":{id:"501",org:"ufc",eventDate:"2026-06-08",status:"completed",
+ const progress={bouts:{"501":{id:"501",org:"ufc",event:"UFC Fight Night: Fixture",eventDate:"2026-06-08",status:"completed",
   a:{id:"1",slug:"alpha",name:"Alpha"},b:{id:"2",slug:"beta",name:"Beta"},
   result:{winnerId:"1",round:3,time:"5:00"}}}};
  const research={profiles:{alpha:{recentHistory:[
@@ -213,7 +213,7 @@ test("native career history fight ID links older UFC fights without an indexed c
 });
 
 test("native history ID on a local-date alias cannot duplicate an indexed UFC fight",()=>{
- const progress={bouts:{"30":{id:"30",org:"ufc",eventDate:"2026-06-08",status:"completed",
+ const progress={bouts:{"30":{id:"30",org:"ufc",event:"UFC Fight Night: Fixture",eventDate:"2026-06-08",status:"completed",
   a:{id:"1",slug:"athlete",name:"Athlete"},b:{id:"2",slug:"challenger",name:"Challenger"},
   result:{winnerId:"1"}}}};
  const history={profiles:{athlete:{recentHistory:[
@@ -228,7 +228,7 @@ test("native history ID on a local-date alias cannot duplicate an indexed UFC fi
 });
 
 test("an untruncated, reconciled UFC timeline certifies an actual short career",()=>{
- const progress={bouts:{"100":{id:"100",org:"ufc",eventDate:"2026-10-01",status:"completed",
+ const progress={bouts:{"100":{id:"100",org:"ufc",event:"UFC Fight Night: Fixture",eventDate:"2026-10-01",status:"completed",
   a:{id:"71",slug:"athlete",name:"Athlete"},
   b:{id:"72",slug:"challenger",name:"Challenger"},
   result:{winnerId:"71",round:3,time:"5:00"}}}};
@@ -252,7 +252,7 @@ test("an untruncated, reconciled UFC timeline certifies an actual short career",
 });
 
 test("truncation, stale observations, unlinked IDs and inconsistent timeline counts cannot certify a short UFC career",()=>{
- const progress={bouts:{"100":{id:"100",org:"ufc",eventDate:"2026-10-01",status:"completed",
+ const progress={bouts:{"100":{id:"100",org:"ufc",event:"UFC Fight Night: Fixture",eventDate:"2026-10-01",status:"completed",
   a:{id:"71",slug:"athlete",name:"Athlete"},
   b:{id:"72",slug:"challenger",name:"Challenger"},
   result:{winnerId:"71"}}}};
@@ -283,7 +283,7 @@ test("truncation, stale observations, unlinked IDs and inconsistent timeline cou
 
 test("latest completed professional MMA promotion controls activity, not oldest UFC results",()=>{
  const bouts={},profiles={};
- const ufc=(name,slug,id,date)=>{bouts[id]={id,org:"ufc",status:"completed",eventDate:date,
+ const ufc=(name,slug,id,date)=>{bouts[id]={id,org:"ufc",event:"UFC Fight Night: Fixture",status:"completed",eventDate:date,
   a:{id:"101",slug,name},b:{id:"202",slug:"other-"+slug,name:"Opponent "+slug},
   result:{winnerId:"101",round:3,time:"5:00"}}};
  const hist=(slug,history)=>{profiles[slug]={recentHistory:history}};
@@ -341,12 +341,12 @@ test("latest completed professional MMA promotion controls activity, not oldest 
 });
 
 test("unconfirmed fight rulesets are held for review, not treated as UFC departures",()=>{
- const bouts={"1":{id:"1",org:"ufc",status:"completed",eventDate:"2026-06-01",
+ const bouts={"1":{id:"1",org:"ufc",event:"UFC Fight Night: Fixture",status:"completed",eventDate:"2026-06-01",
   a:{id:"1",slug:"fighter",name:"Fighter"},
   b:{id:"2",slug:"opponent",name:"Opponent"},result:{winnerId:"1"}}};
  const records={profiles:{fighter:{recentHistory:[
   {date:"2026-07-01",promotion:"rizin",opponent:"Mixed-sport contender",result:"win"},
-  {date:"2026-08-01",promotion:"rkena",opponent:"Unknown ruleset",result:"win"},
+  {date:"2026-08-01",promotion:"ambiguous-fc",opponent:"Unknown ruleset",result:"win"},
   {date:"2026-09-01",promotion:"one",sport:"grappling",
    opponent:"Grappling contender",result:"win"}]}}};
  const d=auditUfcLastFive({bouts},records,{fighters:{}},{divisions:[]},
@@ -355,5 +355,51 @@ test("unconfirmed fight rulesets are held for review, not treated as UFC departu
  assert(f);
  assert.equal(f.eligibilityStatus,"review_required");
  assert.equal(d.summary.excludedLaterNonUfcMma,0);
- assert.equal(d.eligibilityReview.find(x=>x.slug==="fighter").evidence.promotion,"rkena");
+ assert.equal(d.eligibilityReview.find(x=>x.slug==="fighter").evidence.promotion,"ambiguous-fc");
+});
+
+test("recent DWCS or Road-to-UFC alone does not qualify as an official UFC roster fight",()=>{
+ const mk=(id,name,slug,date,event,opp)=>({id,org:"ufc",status:"completed",
+  eventDate:date,event,a:{id,slug,name},
+  b:{id:"opp"+id,slug:"opponent-"+id,name:opp},result:{winnerId:id}});
+ const bouts={
+  "10":mk("10","Active","active","2026-07-01","UFC Fight Night: Test","First"),
+  "11":mk("11","Active","active","2025-06-01","Dana White's Contender Series 88","Second"),
+  "20":mk("20","DWCS Only","dwcs-only","2026-10-20","Dana White's Contender Series 96","Third"),
+  "30":mk("30","Road Only","road-only","2026-09-01","Road To UFC: Test","Fourth"),
+  "40":mk("40","Returning","returning","2026-02-12","UFC Fight Night: Test","Fifth"),
+  "41":mk("41","Returning","returning","2026-09-03","Road to UFC: Test","Sixth")
+ };
+ const result=auditUfcLastFive({bouts},{profiles:{}},{fighters:{}},{divisions:[]},
+  {asOf:"2026-11-13"});
+ assert.equal(result.summary.recentUfcActivityCandidates,10);
+ assert.equal(result.summary.excludedWithoutRecentOfficialUfc,6);
+ assert.equal(result.summary.excludedLaterNonUfcMma,1);
+ assert.equal(result.summary.activeFighters,3);
+ assert.equal(result.fighters.find(f=>f.slug==="active").recentCount,1,
+  "earlier DWCS contest cannot count as a UFC last-five bout");
+ assert.equal(result.fighters.some(f=>f.slug==="returning"),false);
+ assert.equal(result.eligibilityExcluded.find(f=>f.slug==="returning").evidence.promotion,
+  "road-to-ufc");
+ assert.equal(result.eligibilityExcluded.length,7);
+});
+
+test("RIZIN requires exact verified MMA ruleset evidence before excluding a UFC athlete",()=>{
+ const progress={bouts:{"1":{id:"1",org:"ufc",event:"UFC 320: Example",
+  eventDate:"2025-10-01",status:"completed",
+  a:{id:"1",slug:"fighter",name:"Fighter"},
+  b:{id:"2",slug:"opponent",name:"Opponent"},result:{winnerId:"1"}}}};
+ const career={profiles:{fighter:{recentHistory:[{date:"2026-08-11",
+  promotion:"rizin",opponent:"Shoko Sato",result:"loss"}]}}};
+ const without=auditUfcLastFive(progress,career,{fighters:{}},{divisions:[]},
+  {asOf:"2026-11-13"});
+ assert.equal(without.summary.activeFighters,2);
+ assert.equal(without.fighters.find(f=>f.slug==="fighter").eligibilityStatus,"review_required");
+ const evidence={fighters:{fighter:[{date:"2026-08-11",promotion:"rizin",
+  opponent:"Shoko Sato",ruleset:"mma",checkedAt:"2026-11-13",
+  source:"https://www.fightmatrix.com/fighter-profile/Shoko%20Sato/28830/"}]}};
+ const confirmed=auditUfcLastFive(progress,career,{fighters:{}},{divisions:[]},
+  {asOf:"2026-11-13",verifiedMixedMma:evidence});
+ assert.equal(confirmed.summary.excludedLaterNonUfcMma,1);
+ assert.equal(confirmed.fighters.some(f=>f.slug==="fighter"),false);
 });
