@@ -33,10 +33,16 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
   let profilesWithHistory=0,fullyCertified=0,historyRows=0,nativeLinks=0,
     fightersWithFive=0,fightersWithTen=0,withMeasuredRecent=0,
     fullFiveMeasured=0,fullTenMeasured=0,unlinkedCareerRows=0,
-    linkedArchiveRounds=0,linkedArchiveMetrics=0;
+    allKnownIndexed=0,allKnownMeasured=0,certifiedAndIndexed=0;
   const missingIndex=new Set(),allKnownNativeIds=new Set(),indexedNative=new Set(),
     linkedRounds=new Set(),linkedMetrics=new Set(),missingRounds=new Set(),
     missingHistory=[],blockedByEligibility=[],certified=[];
+  const missingTier=new Map();
+  // Both corners must have an actual measured value for a metric to support
+  // fighter-versus-opponent comparison. A missing value is never assumed zero.
+  const coreMetrics=['sigLanded','controlSec','knockdowns','subAttempts','takedowns'];
+  const pairedMetricFights=Object.fromEntries(coreMetrics.map(metric=>[metric,new Set()]));
+  const allPairedCoreFights=new Set();
   const cohorts=[];
   for(const slug of approved){
     const eligible=currentEligible.has(slug);
@@ -63,8 +69,14 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     }
     nativeLinks+=nativeForFighter.size;
     observed.sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
-    const samples=observed.map(r=>{
-      if(!r.id||bouts[r.id]?.org!=='ufc')return {indexed:false,measured:false};
+    const samples=observed.map((r,position)=>{
+      if(!r.id||bouts[r.id]?.org!=='ufc'){
+        if(r.id){
+          const tier=position<5?6:position<10?5:3;
+          missingTier.set(r.id,Math.max(missingTier.get(r.id)||0,tier));
+        }
+        return {indexed:false,measured:false};
+      }
       const fight=bouts[r.id];
       const eventDate=date(fight.eventDate),a=fight.a?.name,b=fight.b?.name;
       const entry=fights[key(eventDate,a,b)]||null;
@@ -75,9 +87,24 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
         linkedRounds.add(r.id);
         if(measured)linkedMetrics.add(r.id);
       }
+      for(const metric of coreMetrics){
+        // Require both corners in the same measured round; values from
+        // unrelated rounds cannot be combined into a false comparison.
+        const paired=rounds.some(round=>
+          Number.isFinite(round?.a?.[metric])&&
+          Number.isFinite(round?.b?.[metric]));
+        if(paired)pairedMetricFights[metric].add(r.id);
+      }
+      if(coreMetrics.every(metric=>pairedMetricFights[metric].has(r.id)))
+        allPairedCoreFights.add(r.id);
       if(!measured)missingRounds.add(r.id);
       return {indexed:true,measured};
     });
+    if(observed.length>0&&samples.every(r=>r.indexed)){
+      allKnownIndexed++;
+      if(profile.ufcTimeline?.complete===true)certifiedAndIndexed++;
+    }
+    if(observed.length>0&&samples.every(r=>r.measured))allKnownMeasured++;
     const latestFive=samples.slice(0,5),latestTen=samples.slice(0,10);
     if(observed.length>=5)fightersWithFive++;
     if(observed.length>=10)fightersWithTen++;
@@ -114,6 +141,18 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     indexedFightsWithArchivedRounds:linkedRounds.size,
     indexedFightsWithMeasuredRoundMetrics:linkedMetrics.size,
     indexedNativeFightsWithoutConfirmedMeasuredRounds:indexedNative.size-linkedMetrics.size,
+    profilesWithAllKnownUfcBoutsIndexed:allKnownIndexed,
+    profilesWithAllKnownUfcBoutsMeasured:allKnownMeasured,
+    providerCertifiedProfilesWithAllKnownBoutsIndexed:certifiedAndIndexed,
+    missingKnownFightIdsInRecentFive:[...missingTier.values()].filter(v=>v===6).length,
+    missingKnownFightIdsInFightsSixToTen:[...missingTier.values()].filter(v=>v===5).length,
+    missingKnownFightIdsBeyondTen:[...missingTier.values()].filter(v=>v===3).length,
+    distinctIndexedFightsWithPairedSignificantStrikes:pairedMetricFights.sigLanded.size,
+    distinctIndexedFightsWithPairedControlTime:pairedMetricFights.controlSec.size,
+    distinctIndexedFightsWithPairedKnockdowns:pairedMetricFights.knockdowns.size,
+    distinctIndexedFightsWithPairedSubmissionAttempts:pairedMetricFights.subAttempts.size,
+    distinctIndexedFightsWithPairedTakedowns:pairedMetricFights.takedowns.size,
+    distinctIndexedFightsWithAllFivePairedCoreMetrics:allPairedCoreFights.size,
     fightersWithAtLeastFiveObservedUfcFights:fightersWithFive,
     fightersWithAtLeastTenObservedUfcFights:fightersWithTen,
     fightersWithAnyMeasuredRecentFight:withMeasuredRecent,
@@ -134,7 +173,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     unmeasuredIndexedIds:allIndexedMissingRounds.slice(0,30),
     approvedMissingHistory:missingHistory.slice(0,30),
     approvedNoLongerEligible:blockedByEligibility.slice(0,30),
-    note:'This report reads saved caches only. Measured round metrics require a matching native bout ID and actual archived round values. History rows do not prove complete UFC careers; only provider-explicit completeness is certified. Unlinked historical bouts and missing provider round statistics are not invented.'
+    note:'This report reads saved caches only. Any measured metric is distinct from two-sided metric coverage. All-known UFC bouts indexed is not proof of complete UFC careers; only provider-explicit completeness is certified. Missing values are not imputed as zero.'
   };
 }
 export function markdownReport(report){
@@ -151,7 +190,19 @@ export function markdownReport(report){
    uniquelyIndexedNativeFightIds:'Distinct native fight IDs indexed as official UFC',
    uniqueNativeFightIdsAwaitingIndex:'Native fight IDs awaiting indexing',
    unlinkedCareerHistoryRows:'UFC history rows without native fight IDs',
+   profilesWithAllKnownUfcBoutsIndexed:'Profiles with every currently known UFC bout indexed (not career-certified)',
+   profilesWithAllKnownUfcBoutsMeasured:'Profiles with measured rounds for every currently known UFC bout',
+   providerCertifiedProfilesWithAllKnownBoutsIndexed:'Provider-certified careers with all known bouts indexed',
+   missingKnownFightIdsInRecentFive:'Unindexed native fight IDs in approved fighters’ latest five',
+   missingKnownFightIdsInFightsSixToTen:'Unindexed native fight IDs in positions six to ten',
+   missingKnownFightIdsBeyondTen:'Unindexed native fight IDs beyond the latest ten',
    indexedFightsWithMeasuredRoundMetrics:'Indexed fights with independently matched round metrics',
+   distinctIndexedFightsWithPairedSignificantStrikes:'Fights with both fighters’ significant strikes measured',
+   distinctIndexedFightsWithPairedControlTime:'Fights with both fighters’ control time measured',
+   distinctIndexedFightsWithPairedKnockdowns:'Fights with both fighters’ knockdowns measured',
+   distinctIndexedFightsWithPairedSubmissionAttempts:'Fights with both fighters’ submission attempts measured',
+   distinctIndexedFightsWithPairedTakedowns:'Fights with both fighters’ takedowns measured',
+   distinctIndexedFightsWithAllFivePairedCoreMetrics:'Fights with all five two-sided core metrics measured',
    indexedNativeFightsWithoutConfirmedMeasuredRounds:'Indexed native fights without confirmed measured round values',
    fightersWithAtLeastFiveObservedUfcFights:'Fighters with ≥5 observed UFC fights',
    fightersWithMeasuredFiveOfFive:'Fighters with measured statistics for all 5 most recent',
