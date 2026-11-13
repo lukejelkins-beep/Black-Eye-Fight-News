@@ -5,6 +5,7 @@ on:
     paths:
       - 'scripts/ufcalendar-rich-backfill.py'
       - 'tests/test-ufcalendar-targeted-history.py'
+      - 'tests/test_ufcalendar_rich_backfill.py'
       - 'scripts/build-ufc-last-five-coverage.mjs'
       - '.github/workflows/validate-ufcalendar-targeted-history.yml'
   workflow_dispatch:
@@ -26,5 +27,6 @@ jobs:
         run: |
           python3 -m py_compile scripts/ufcalendar-rich-backfill.py
           python3 tests/test-ufcalendar-targeted-history.py
+          python3 -m unittest discover -s tests -p 'test_ufcalendar_rich_backfill.py' -v
       - name: Validate last-five inventory contract without API calls
         run: node --test tests/test-ufc-last-five-coverage.mjs
