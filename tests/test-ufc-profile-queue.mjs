@@ -100,7 +100,7 @@ test("full owned partitions are not truncated to the 120-candidate preview",()=>
  const bouts={};
  for(let i=0;i<160;i++){
   const name="Alpha "+String(i).padStart(3,"0");
-  bouts[i]={org:"ufc",status:"completed",eventDate:"2026-10-01",event:"Example",
+  bouts[i]={org:"ufc",status:"completed",eventDate:"2026-10-01",event:"UFC Fight Night: Example",
    a:{name},b:{name:"Zulu "+String(i).padStart(3,"0")}};
  }
  const cards={events:[{sport:"mma",promotion:"UFC",date:"2026-11-15",
@@ -119,4 +119,20 @@ test("non-alphabetic UFC names remain visible for priority triage",()=>{
  const q=buildQueue(progress,[],{asOf:"2026-11-12"});
  assert(q.unassignedHistoricalCandidates.some(x=>x.name==="Жан Файтер"));
  assert(q.historicalByWorker["A-F"].some(x=>x.name==="Alpha Veteran"));
+});
+
+test("Contender Series and Road-to-UFC entrants are not added to official UFC fighter research",()=>{
+ const mk=(event,name)=>({org:"ufc",status:"completed",
+  eventDate:"2026-09-01",event,
+  a:{slug:name.toLowerCase().replaceAll(" ","-"),name},
+  b:{slug:"other-"+name.toLowerCase().replaceAll(" ","-"),name:"Other "+name}});
+ const q=buildQueue({bouts:{
+  a:mk("Dana White's Contender Series 97","DWCS Entrant"),
+  b:mk("Road To UFC: Example","Road Entrant"),
+  c:mk("UFC Fight Night: Example","Official Entrant")
+ }},[],{asOf:"2026-11-13",upcomingCards:{events:[]}});
+ assert.equal(q.candidateCount,2);
+ assert(q.candidates.some(x=>x.name==="Official Entrant"));
+ assert.equal(q.candidates.some(x=>x.name==="DWCS Entrant"),false);
+ assert.equal(q.candidates.some(x=>x.name==="Road Entrant"),false);
 });
