@@ -31,7 +31,7 @@ tip.addEventListener('pointerleave',e=>{if(!active?.contains(e.relatedTarget))hi
 closeTip.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();hide(true)});
 document.addEventListener('pointerover',e=>{if(e.pointerType==='touch')return;var el=hit(e);if(el&&el!==active)show(el,false)});
 document.addEventListener('pointerout',e=>{if(e.pointerType==='touch')return;var el=hit(e);if(el&&el===active&&!locked&&(!e.relatedTarget||!el.contains(e.relatedTarget)))leaveTimer=setTimeout(()=>hide(false),240)});
-document.addEventListener('focusin',e=>{var el=hit(e);if(el)show(el,false)});
+document.addEventListener('focusin',e=>{var el=hit(e);if(el?.matches(':focus-visible'))show(el,false)});
 document.addEventListener('focusout',e=>{var el=hit(e);if(el===active&&!locked)hide(true)});
 document.addEventListener('click',e=>{if(e.target.closest?.('#all-fighter-preview'))return;var el=hit(e);if(!el){if(locked)hide(true);return}if(el.closest('a,button'))return;if(el===active&&locked)hide(true);else show(el,true)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){hide(true);return}var el=hit(e);if(el&&!el.closest('a,button')&&(e.key==='Enter'||e.key===' ')){e.preventDefault();if(el===active&&locked)hide(true);else show(el,true)}});

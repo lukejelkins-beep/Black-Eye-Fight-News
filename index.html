@@ -1790,7 +1790,7 @@ window.setInterval(()=>{if(location.hash.split('/')[0]==='#social'&&!liveTalk.lo
  closeButton.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();hide(true)});
  document.addEventListener('pointerover',e=>{if(e.pointerType==='touch')return;const b=target(e.target);if(b&&b!==active)show(b,false)});
  document.addEventListener('pointerout',e=>{if(e.pointerType==='touch')return;const b=target(e.target);if(b&&b===active&&!pinned&&(!e.relatedTarget||!b.contains(e.relatedTarget)))leaveTimer=setTimeout(()=>hide(false),240)});
- document.addEventListener('focusin',e=>{const b=target(e.target);if(b)show(b,false)});
+ document.addEventListener('focusin',e=>{const b=target(e.target);if(b?.matches(':focus-visible'))show(b,false)});
  document.addEventListener('focusout',e=>{const b=target(e.target);if(b&&b===active&&!pinned)hide(true)});
  document.addEventListener('click',e=>{if(e.target.closest?.('#fighter-photo-preview'))return;const b=target(e.target);if(b){if(pinned&&active===b){hide(true)}else show(b,true);return;}if(active)hide(true)});
  document.addEventListener('keydown',e=>{if(e.key==='Escape')hide(true)});
