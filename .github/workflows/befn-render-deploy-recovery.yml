@@ -177,9 +177,21 @@ jobs:
           still_different=0
           while IFS= read -r file; do
             remote=$(mktemp)
-            if ! curl --fail --location --silent --show-error --max-time 35 \
-              "$BASE_URL/$file?befn_predeploy_recheck=$GITHUB_RUN_ID" -o "$remote"; then
-              echo 'Production unavailable; aborting rather than adding a deploy' >&2
+            if ! status=$(curl --location --silent --show-error --max-time 35 \
+              -w '%{http_code}' "$BASE_URL/$file?befn_predeploy_recheck=$GITHUB_RUN_ID" -o "$remote"); then
+              echo 'Production transport unavailable; aborting rather than adding a deploy' >&2
+              rm -f "$remote"
+              exit 1
+            fi
+            if [[ "$status" == 404 ]]; then
+              # A new public file still missing after the grace period IS
+              # continued drift, not a site outage. Recovery may proceed.
+              still_different=$((still_different + 1))
+              rm -f "$remote"
+              continue
+            fi
+            if [[ "$status" != 200 ]]; then
+              echo "Unexpected HTTP $status on recheck; fail closed" >&2
               rm -f "$remote"
               exit 1
             fi
