@@ -304,14 +304,18 @@
    }).join('')+'</div></div></section>'+
    '<section class="befn-profile-block"><h3>Recent Performance</h3><div class="befn-profile-body">'+
    '<div class="befn-v3-tiles">'+tiles.map(([value,label,sample])=>'<div><strong>'+escapeHTML(value)+'</strong><span>'+escapeHTML(label)+'</span><small>'+escapeHTML(sample)+'</small></div>').join('')+'</div>'+
-   '<details class="befn-v3-history"><summary>Recent fights</summary>'+
+   '</div></section>'+
+   '<div class="befn-v3-bottom-grid">'+
+   '<details class="befn-v3-history" open><summary>Recent fights <small>Up to five documented UFC fights</small></summary>'+
    '<ul class="befn-v3-fights">'+v3.recent.map(b=>{
     const [symbol,klass]=resultSymbol(b.outcome);
-    return '<li><span class="befn-power-result '+klass+'">'+symbol+'</span><span>'+escapeHTML(b.opponent)+
-     '<small>'+escapeHTML(b.date+(b.method?' · '+b.method.replaceAll('_',' '):''))+'</small></span></li>';
+    return '<li><span class="befn-power-result '+klass+'">'+symbol+'</span>'+
+     '<strong class="befn-v3-opponent">'+escapeHTML(b.opponent)+'</strong>'+
+     '<span class="befn-v3-method">'+escapeHTML((b.method||'Method unavailable').replaceAll('_',' '))+'</span>'+
+     '<time class="befn-v3-date">'+escapeHTML(b.date||'Date unavailable')+'</time></li>';
    }).join('')+'</ul></details>'+
-   (statRows?'<details class="befn-v3-statistics"><summary>Recent UFC statistics and leaderboard ranks</summary><ul>'+statRows+'</ul></details>':'')+
-   '</div></section><section class="befn-profile-block"><h3>'+escapeHTML(kind)+'</h3><div class="befn-profile-body">'+
+   (statRows?'<details class="befn-v3-statistics" open><summary>Leaderboard rankings <small>Verified UFC statistics</small></summary><ul>'+statRows+'</ul></details>':'')+
+   '</div><section class="befn-profile-block"><h3>'+escapeHTML(kind)+'</h3><div class="befn-profile-body">'+
    credentialsHTML(f)+'</div></section></section>';
  }
  function renderV3Boards(){
