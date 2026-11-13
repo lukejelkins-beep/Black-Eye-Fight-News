@@ -519,12 +519,25 @@ def collect_targeted_ufc_history(client,state,coverage,today):
         if not isinstance(f,dict) or not f.get("needsHistoryCheck"):
             continue
         slugval=slug(f.get("slug"))
-        if not slugval or slugval in done:
+        if not slugval:
             continue
+        prior=done.get(slugval)
+        if prior:
+            # A stale/renamed fighter slug might 404. Avoid burning quota on
+            # the same rejected lookup every scheduled collector run.
+            if not isinstance(prior,dict) or prior.get("status")!="unresolved_slug_404":
+                continue
+            if str(prior.get("retryAfter") or "9999-12-31")>today.isoformat():
+                continue
         # At most eight most recent completed wins/losses. Existing event-index
         # draw/NC records remain in the dataset rather than treated as losses.
+        before_errors=len(client.errors)
         payload=client.call("/fights/search"+param(org="ufc",fighter=slugval,limit=8))
         if payload is None:
+            if len(client.errors)>before_errors and client.errors[-1]=="HTTP_404":
+                done[slugval]={"status":"unresolved_slug_404",
+                              "checkedAt":today.isoformat(),
+                              "retryAfter":(today+dt.timedelta(days=7)).isoformat()}
             continue
         searched+=1
         new=0
