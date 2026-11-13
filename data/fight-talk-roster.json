@@ -1,5 +1,5 @@
 {
-  "revisedAt": "2026-11-12",
+  "revisedAt": "2026-11-13",
   "purpose": "Full combat-sports site champion, contender and prospect roster; null profiles mean no sufficiently supported account was found, not that an account does not exist.",
   "fighters": [
     {
@@ -442,9 +442,13 @@
       "tier": "prospect",
       "profiles": {
         "X": null,
-        "Instagram": null
+        "Instagram": {
+          "username": "billytheindoninja",
+          "url": "https://www.instagram.com/billytheindoninja/",
+          "identityBasis": "Wikidata P2003 for Bilal Hasan (American-Indonesian mixed martial artist)"
+        }
       },
-      "status": "identity-research-needed"
+      "status": "tracked"
     },
     {
       "name": "Billy Elekana",
@@ -3274,10 +3278,10 @@
   ],
   "counts": {
     "total": 215,
-    "tracked": 159,
-    "missingBoth": 56,
+    "tracked": 160,
+    "missingBoth": 55,
     "withX": 74,
-    "withInstagram": 157,
+    "withInstagram": 158,
     "withThreads": 39
   }
 }
