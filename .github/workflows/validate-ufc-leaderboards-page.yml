@@ -1,0 +1,25 @@
+name: Validate UFC statistical leaderboard page
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'assets/fighter-insights.js'
+      - 'assets/ufc-stat-leaderboards.css'
+      - 'tests/test-ufc-leaderboards-page.mjs'
+      - '.github/workflows/validate-ufc-leaderboards-page.yml'
+permissions:
+  contents: read
+jobs:
+  leaderboard-ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test leaderboards page, eligibility guards and mobile layout
+        run: |
+          node --check assets/fighter-insights.js
+          node --test tests/test-ufc-leaderboards-page.mjs
