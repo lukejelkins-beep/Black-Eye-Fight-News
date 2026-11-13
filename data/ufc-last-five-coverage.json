@@ -18,10 +18,10 @@
     "withFiveLinkedIds": 435,
     "withThreeMeasured": 546,
     "withShortUfcTimelineReconciled": 3,
-    "withUfcHistoryLinkedAndMeasured": 382,
+    "withUfcHistoryLinkedAndMeasured": 384,
     "evidenceStages": {
-      "fiveLinkedMeasured": 382,
-      "fiveLinkedStatsGap": 53,
+      "fiveLinkedMeasured": 384,
+      "fiveLinkedStatsGap": 51,
       "fiveUnlinked": 0,
       "shortLinkedMeasuredDepthConfirmed": 0,
       "shortLinkedMeasuredDepthUnconfirmed": 251,
@@ -30,8 +30,8 @@
       "shortUnlinked": 0
     },
     "needHistoryCheck": 281,
-    "needStats": 86,
-    "shiftedDateAliasesJoined": 1050,
+    "needStats": 84,
+    "shiftedDateAliasesJoined": 666,
     "uniqueKnownBoutIds": 1731
   },
   "eligibilityExcluded": [
@@ -38710,11 +38710,11 @@
       "upcoming": false,
       "ranked": false,
       "recentCount": 5,
-      "measuredCount": 4,
-      "evidenceStage": "fiveLinkedStatsGap",
+      "measuredCount": 5,
+      "evidenceStage": "fiveLinkedMeasured",
       "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": false,
-      "needsStats": true,
+      "needsStats": false,
       "recent": [
         {
           "date": "2025-09-06",
@@ -38748,9 +38748,9 @@
           "opponent": "Elizeu Zaleski dos Santos",
           "boutId": "59992",
           "method": "draw",
-          "outcome": "D",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
+          "outcome": null,
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
         },
         {
           "date": "2023-07-01",
@@ -38958,11 +38958,11 @@
       "upcoming": false,
       "ranked": false,
       "recentCount": 5,
-      "measuredCount": 4,
-      "evidenceStage": "fiveLinkedStatsGap",
+      "measuredCount": 5,
+      "evidenceStage": "fiveLinkedMeasured",
       "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": false,
-      "needsStats": true,
+      "needsStats": false,
       "recent": [
         {
           "date": "2025-08-03",
@@ -39005,9 +39005,9 @@
           "opponent": "Rinat Fakhretdinov",
           "boutId": "59992",
           "method": "draw",
-          "outcome": "D",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
+          "outcome": null,
+          "origin": "ufc-bout-index",
+          "hasMeasuredTotals": true
         }
       ]
     },
