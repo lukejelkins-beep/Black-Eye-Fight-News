@@ -688,3 +688,98 @@
 .befn-top-credentials { margin-top: 14px; }
 .befn-top-credentials:empty { display: none; }
 .befn-top-credentials .befn-credential-help { color: #40342d; font-size: 12px; line-height: 1.4; margin: 8px 0 0; }
+
+/* BEFN V3 Option 1: efficient desktop fight/rank panel, mobile-first stacking.
+   Only the V3 profile is targeted; legacy profiles are unchanged. */
+.befn-v3-bottom-grid {
+ display:grid;
+ grid-template-columns:minmax(0,3fr) minmax(0,2fr);
+ align-items:stretch;
+ gap:14px;
+ margin:14px 0;
+}
+.befn-v3-bottom-grid > details {
+ min-width:0;
+ margin:0;
+ padding:0 14px 5px;
+}
+.befn-v3-bottom-grid > details > summary {
+ min-height:46px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ font-weight:800;
+}
+.befn-v3-bottom-grid summary small {
+ font-size:10px;
+ font-weight:500;
+ color:#c8c0b2;
+ text-align:right;
+}
+.befn-v3-bottom-grid details:not([open]) { align-self:start; }
+.befn-v3-bottom-grid .befn-v3-fights li {
+ display:grid;
+ grid-template-columns:28px minmax(0,1.2fr) minmax(0,1.25fr) minmax(80px,.8fr);
+ align-items:center;
+ gap:8px;
+ padding:11px 0;
+ font-size:12px;
+}
+.befn-v3-bottom-grid .befn-v3-fights .befn-v3-opponent {
+ color:#f4f1e9;
+ font-size:12px;
+ line-height:1.35;
+ overflow-wrap:anywhere;
+}
+.befn-v3-bottom-grid .befn-v3-fights .befn-v3-method {
+ color:#d6cec0;
+ font-weight:500;
+ line-height:1.35;
+ overflow-wrap:anywhere;
+}
+.befn-v3-bottom-grid .befn-v3-fights .befn-v3-date {
+ color:#bcb5aa;
+ font-size:11px;
+ text-align:right;
+ white-space:normal;
+ line-height:1.35;
+}
+.befn-v3-bottom-grid .befn-v3-statistics li {
+ grid-template-columns:minmax(0,1fr) auto;
+ gap:2px 8px;
+ padding:9px 0;
+}
+.befn-v3-bottom-grid .befn-v3-statistics li small {
+ grid-column:1/-1;
+ margin:0;
+ font-size:10px;
+}
+.befn-v3-bottom-grid .befn-v3-statistics li strong {
+ font-variant-numeric:tabular-nums;
+}
+.befn-v3 .befn-v3-tiles > div {min-width:0}
+@media(max-width:900px) {
+ .befn-v3-bottom-grid {grid-template-columns:minmax(0,1fr)}
+ .befn-v3-bottom-grid .befn-v3-fights li {
+  grid-template-columns:28px minmax(0,1.2fr) minmax(0,1fr) minmax(75px,.75fr);
+ }
+}
+@media(max-width:560px) {
+ .befn-v3-bottom-grid {gap:10px;margin:12px 0}
+ .befn-v3-bottom-grid > details {padding:0 10px 4px}
+ .befn-v3-bottom-grid > details > summary {font-size:13px}
+ .befn-v3-bottom-grid summary small {font-size:9px}
+ .befn-v3-bottom-grid .befn-v3-fights li {
+  grid-template-columns:28px minmax(0,1fr) auto;
+  grid-template-rows:auto auto;
+  gap:3px 8px;
+  padding:10px 0;
+ }
+ .befn-v3-bottom-grid .befn-v3-fights .befn-power-result {grid-row:1/3}
+ .befn-v3-bottom-grid .befn-v3-fights .befn-v3-opponent {grid-column:2/4;grid-row:1}
+ .befn-v3-bottom-grid .befn-v3-fights .befn-v3-method {grid-column:2;grid-row:2;font-size:11px}
+ .befn-v3-bottom-grid .befn-v3-fights .befn-v3-date {grid-column:3;grid-row:2;font-size:10px}
+ .befn-v3 .befn-v3-tiles {grid-template-columns:repeat(2,minmax(0,1fr))}
+ .befn-v3-tiles strong {font-size:20px}
+}
