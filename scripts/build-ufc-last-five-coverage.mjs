@@ -16,6 +16,31 @@ const validDate=s=>/^\d{4}-\d{2}-\d{2}$/.test(s||"")&&!Number.isNaN(Date.parse(s
 const cutoffFrom=(day)=>{const [y,m,d]=day.split("-").map(Number);let p=(y*12+m-1)-18;let py=Math.floor(p/12),pm=p%12+1;
  const max=new Date(Date.UTC(py,pm,0)).getUTCDate();return [py,String(pm).padStart(2,"0"),String(Math.min(d,max)).padStart(2,"0")].join("-");};
 const settled=new Set(["completed","draw","no_contest"]);
+// Use ONLY unambiguously professional-MMA promotions as negative evidence.
+// ONE and RIZIN stage multiple combat rulesets: without a bout's verified
+// ruleset their results cannot establish that a later fight was MMA.
+// An unlabelled entry may be grappling or boxing, not MMA.
+// The provider's research record is preserved for every status.
+const mmaOnlyPromotions=new Set([
+ "pfl","bellator","aca","cage-warriors","cwfc","fnc","jungle-fight",
+ "oktagon","ksw","lfa","invicta","brave-cf","combate-global","ares-fc",
+ "efc","cffc","shogun-fights","a1-combat"
+]);
+const nonMmaPromotions=new Set([
+ "bkfc","raf","ufc-bjj","ibjjf","adcc","ncaa","wwe","wbc","wba","glory"
+]);
+function promotionType(promotion,sport){
+ const named=slugify(promotion);
+ const style=slugify(sport);
+ if(style&&style!=="mma"&&style!=="mixed-martial-arts")return "non-mma";
+ if(named==="ufc")return "ufc";
+ if(nonMmaPromotions.has(named))return "non-mma";
+ if(mmaOnlyPromotions.has(named))return "mma";
+ // Unrecognised promotions and multi-ruleset organisations need human
+ // bout/ruleset verification before removing anyone from an UFC roster.
+ return "unverified";
+}
+const dayDiff=(a,b)=>(Date.parse(a+"T00:00:00Z")-Date.parse(b+"T00:00:00Z"))/86400000;
 const normalOutcome=o=>{const x=String(o||"").toLowerCase();return x==="win"||x==="w"?"W":x==="loss"||x==="l"?"L":x==="draw"||x==="d"?"D":x==="no_contest"||x==="nc"?"NC":null;};
 const priorityNames=data=>new Set((data.divisions||[]).map(x=>nameKey(x.name)).filter(Boolean));
 // Evidence tiers are deliberately NOT "complete fighter profiles": a provider
@@ -38,7 +63,8 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
  if(!validDate(asOf))throw Error("asOf must be YYYY-MM-DD");
  const cutoff=cutoffFrom(asOf),registry=new Map();
  const ensure=(s,name)=>{const slug=slugify(s);if(!slug)return null;
-  if(!registry.has(slug))registry.set(slug,{slug,name:name||slug,lastActive:null,history:new Map(),active:false,shiftedAliasesJoined:0});
+  if(!registry.has(slug))registry.set(slug,{slug,name:name||slug,lastActive:null,
+   history:new Map(),outside:[],ufcIds:new Set(),active:false,shiftedAliasesJoined:0});
   const x=registry.get(slug);if(name)x.name=name;return x;};
  const put=(fighter,date,opponent,{boutId=null,method=null,outcome=null,origin}={})=>{
   if(!fighter||!validDate(date)||date>asOf||!opponent)return;
@@ -88,6 +114,7 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
    const own=bout[side],opp=bout[side==="a"?"b":"a"];
    if(!own?.slug||!opp?.name)continue;
    const person=ensure(own.slug,own.name);
+   if(own.id)person.ufcIds.add(String(own.id));
    if(bout.eventDate>=cutoff){
     person.active=true;if(!person.lastActive||person.lastActive<bout.eventDate)person.lastActive=bout.eventDate;
    }
@@ -96,6 +123,22 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
     winId?String(own.id)===winId?"W":"L":null;
    put(person,bout.eventDate,opp.name,{boutId:String(bout.id||"")||null,
     method:bout.result?.method||null,outcome:result,origin:"ufc-bout-index"});
+  }
+ }
+ // Cross-check current UFC candidates against other promotions already
+ // indexed by UFCalendar; no additional provider/API requests.
+ for(const bout of Object.values(progress?.bouts||{})){
+  if(!bout||bout.org==="ufc"||!settled.has(bout.status)||
+   !validDate(bout.eventDate)||bout.eventDate>asOf)continue;
+  for(const side of ["a","b"]){
+   const own=bout[side],opp=bout[side==="a"?"b":"a"];
+   const athlete=registry.get(slugify(own?.slug));
+   if(!athlete||!opp?.name)continue;
+   const identityConflict=!!own.id&&athlete.ufcIds.size>0&&
+    !athlete.ufcIds.has(String(own.id));
+   athlete.outside.push({date:bout.eventDate,opponent:opp.name,
+    promotion:String(bout.org||""),sport:bout.sport||null,
+    origin:"provider-bout-index",identityConflict});
   }
  }
  for(const [slug,record] of Object.entries(research?.profiles||{})){
@@ -109,8 +152,16 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
    normalOutcome(row.result||row.outcome||row.status)&&validDate(row.date)&&row.opponent);
   athlete.sourceUfcRowCount=new Set(sourceUfcRows.map(row=>row.date+":"+nameKey(row.opponent))).size;
   for(const row of record?.recentHistory||[]){
-   if(!row||String(row.promotion||row.org||"").toLowerCase()!=="ufc")continue;
+   if(!row)continue;
+   const promotion=String(row.promotion||row.org||"").toLowerCase();
    const outcome=normalOutcome(row.result||row.outcome||row.status);
+   if(outcome&&validDate(row.date)&&row.date<=asOf&&row.opponent&&
+    promotion!=="ufc"){
+    athlete.outside.push({date:row.date,opponent:row.opponent,
+     promotion,sport:row.sport||null,origin:"provider-career-history",
+     identityConflict:false});
+   }
+   if(promotion!=="ufc")continue;
    if(!outcome||!validDate(row.date)||!row.opponent)continue;
    // A fight ID is trustworthy only for the provider's native tracked row;
    // public-records career notes may share an opponent/date but no linked ID.
@@ -141,7 +192,7 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
    .map(b=>String(b.boutId)));
   metrics.set(key,ids);
  }
- const fighters=[...registry.values()].filter(f=>f.active).map(f=>{
+ const candidates=[...registry.values()].filter(f=>f.active).map(f=>{
   const recent=[...f.history.values()].sort((a,b)=>b.date.localeCompare(a.date)||a.opponent.localeCompare(b.opponent)).slice(0,5);
   const measured=metrics.get(nameKey(f.name))||new Set();
   const entries=recent.map(row=>({...row,hasMeasuredTotals:!!row.boutId&&measured.has(row.boutId)}));
@@ -156,7 +207,33 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
    timeline.observedOn>=f.lastActive&&timeline.observedOn<=asOf;
   const historyNeeded=(recent.length<5&&!depthConfirmed)||unknownIds>0;
   const stage=evidenceStage(entries,depthConfirmed);
+  const latestUfc=entries[0];
+  const latestUfcOpponent=latestUfc?.date===f.lastActive?
+   nameKey(latestUfc.opponent):null;
+  // UTC/event-local calendar shifts must not turn a second rendition of
+  // the same UFC bout into a false post-UFC professional MMA appearance.
+  const later=f.outside.filter(row=>{
+   const diff=dayDiff(row.date,f.lastActive);
+   if(diff<0)return false;
+   if(diff<=1&&latestUfcOpponent&&
+    nameKey(row.opponent)===latestUfcOpponent)return false;
+   return diff>=1;
+  }).sort((a,b)=>b.date.localeCompare(a.date));
+  const confirmedLater=later.find(row=>promotionType(row.promotion,row.sport)==="mma"&&
+   !row.identityConflict&&dayDiff(row.date,f.lastActive)>1);
+  const uncertainLater=later.find(row=>
+   row.identityConflict||
+   promotionType(row.promotion,row.sport)==="unverified"||
+   (promotionType(row.promotion,row.sport)==="mma"&&
+    dayDiff(row.date,f.lastActive)<=1));
+  const eligibilityStatus=confirmedLater?"excluded":
+   uncertainLater?"review_required":"eligible";
+  const latestOutside=confirmedLater||uncertainLater||null;
+  const eligibilityEvidence=latestOutside?{date:latestOutside.date,
+   promotion:latestOutside.promotion||null,opponent:latestOutside.opponent,
+   source:latestOutside.origin}:null;
   return {name:f.name,slug:f.slug,lastUfcFight:f.lastActive,
+   eligibilityStatus,eligibilityEvidence,
    champion:championsSet.has(nameKey(f.name)),
    upcoming:upcomingNames.has(nameKey(f.name)),
    ranked:rankedNames.has(nameKey(f.name)),
@@ -169,7 +246,20 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
    Number(b.ranked)-Number(a.ranked)||
    Number(b.needsHistoryCheck)-Number(a.needsHistoryCheck)||
    b.lastUfcFight.localeCompare(a.lastUfcFight)||a.slug.localeCompare(b.slug));
- const totals={activeFighters:fighters.length,
+ // Preserve all candidates and verified UFC bouts in the audit. Only
+ // positive UFC-latest candidates enter the public active UFC population.
+ // Fighters with uncertain recent non-UFC records remain in a review queue;
+ // clearly later pro-MMA fights are excluded without deleting their history.
+ const fighters=candidates.filter(f=>f.eligibilityStatus==="eligible");
+ const eligibilityReview=candidates.filter(f=>f.eligibilityStatus==="review_required")
+  .map(f=>({slug:f.slug,name:f.name,lastUfcFight:f.lastUfcFight,
+   evidence:f.eligibilityEvidence}));
+ const excluded=candidates.filter(f=>f.eligibilityStatus==="excluded")
+  .map(f=>({slug:f.slug,name:f.name,lastUfcFight:f.lastUfcFight,
+   evidence:f.eligibilityEvidence}));
+ const totals={recentUfcCandidates:candidates.length,activeFighters:fighters.length,
+  eligibilityReviewRequired:eligibilityReview.length,
+  excludedAfterNonUfcMma:excluded.length,
   withFiveKnown:fighters.filter(f=>f.recentCount===5).length,
   withFiveLinkedIds:fighters.filter(f=>f.recentCount===5&&
    f.recent.every(x=>x.boutId)&&
@@ -188,7 +278,8 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
   shiftedDateAliasesJoined:[...registry.values()].filter(f=>f.active)
    .reduce((sum,f)=>sum+f.shiftedAliasesJoined,0),
   uniqueKnownBoutIds:new Set(fighters.flatMap(f=>f.recent.map(b=>b.boutId).filter(Boolean))).size};
- return {schema:1,scope:"ufc",asOf,activityCutoff:cutoff,summary:totals,fighters};
+ return {schema:1,scope:"ufc",asOf,activityCutoff:cutoff,summary:totals,
+  fighters,eligibilityReview,excluded};
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  const asOf=process.argv[2]||new Date().toISOString().slice(0,10);
