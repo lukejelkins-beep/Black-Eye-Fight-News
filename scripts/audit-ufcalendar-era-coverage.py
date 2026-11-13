@@ -15,8 +15,7 @@ import urllib.parse
 import urllib.request
 
 BASE = "https://api.ufcalendar.com/v1"
-YEARS = [1993, 1998, 2000, 2002, 2004, 2006, 2008, 2010,
-         2012, 2014, 2015, 2016, 2017, 2019, 2022, 2026]
+YEARS = list(range(1993, 2003))
 FIELDS = ["sig_strikes_landed", "sig_strikes_attempted", "knockdowns",
           "takedowns_landed", "takedowns_attempted", "submission_attempts",
           "control_time_sec", "total_strikes_landed", "head_landed",
@@ -90,7 +89,7 @@ for year in sorted(annual):
 if not annual:
     print("COVERAGE_SCHEMA_NEEDS_REVIEW:", list(data.keys()) if isinstance(data, dict) else type(data).__name__)
 
-print("Field-level spot checks (up to 2 fights/year; 1 API round call/fight):")
+print("Early-era field-value spot checks (up to 4 fights/year; 1 round call/fight, 1 quality check/year):")
 for year in YEARS:
     found = get("/fights/search", {
         "org": "ufc", "from": f"{year}-01-01", "to": f"{year}-12-31",
@@ -102,11 +101,16 @@ for year in YEARS:
         bid = b.get("id") if isinstance(b, dict) else None
         if isinstance(bid, int) and bid not in ids:
             ids.append(bid)
-        if len(ids) >= 2:
+        if len(ids) >= 4:
             break
     counts = collections.Counter()
+    positives = collections.Counter()
     nrows, nwithrounds = 0, 0
-    for bid in ids:
+    qualities = []
+    for k, bid in enumerate(ids):
+        if k == 0:
+            quality_doc = get(f"/fights/{bid}/stats")
+            qualities.append((quality_doc.get("meta") or {}).get("quality"))
         doc = get(f"/fights/{bid}/rounds")
         rows = as_rows(doc)
         if rows:
@@ -118,11 +122,13 @@ for year in YEARS:
             for key in FIELDS:
                 if row.get(key) is not None and isinstance(row.get(key), (int,float)):
                     counts[key] += 1
+                    if row[key] > 0:
+                        positives[key] += 1
     result = {"year": year, "bouts_found": len(bouts),
               "bouts_sampled": len(ids), "bouts_with_rounds": nwithrounds,
-              "fighter_round_rows": nrows}
+              "fighter_round_rows": nrows, "sample_quality": qualities}
     for field in FIELDS:
-        result[field] = f"{counts[field]}/{nrows}" if nrows else "not_observed"
+        result[field] = f"{counts[field]}/{nrows} present; {positives[field]} positive" if nrows else "not_observed"
     print(json.dumps(result, sort_keys=True))
 print("TOTAL_API_REQUESTS", calls)
 print("AUDIT_NOTE: field sampling is indicative only; use complete /coverage annual rates for research policy.")
