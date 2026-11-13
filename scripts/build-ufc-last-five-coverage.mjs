@@ -121,6 +121,9 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
    b.lastUfcFight.localeCompare(a.lastUfcFight)||a.slug.localeCompare(b.slug));
  const totals={activeFighters:fighters.length,
   withFiveKnown:fighters.filter(f=>f.recentCount===5).length,
+  withFiveLinkedIds:fighters.filter(f=>f.recentCount===5&&
+   f.recent.every(x=>x.boutId)&&
+   new Set(f.recent.map(x=>String(x.boutId))).size===5).length,
   withThreeMeasured:fighters.filter(f=>f.measuredCount>=3).length,
   needHistoryCheck:fighters.filter(f=>f.needsHistoryCheck).length,
   needStats:fighters.filter(f=>f.needsStats).length,
