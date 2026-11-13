@@ -37,6 +37,12 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
   const missingIndex=new Set(),allKnownNativeIds=new Set(),indexedNative=new Set(),
     linkedRounds=new Set(),linkedMetrics=new Set(),missingRounds=new Set(),
     missingHistory=[],blockedByEligibility=[],certified=[];
+  const idCheckEntries=Object.entries(progress?.ufcFullCareerHistoryChecks||{})
+    .filter(([s,r])=>approved.includes(s)&&r&&typeof r==='object');
+  const identityChecksCompleted=idCheckEntries.filter(([,r])=>r.status==='checked');
+  const identityChecksRetry=idCheckEntries.filter(([,r])=>r.status==='retry');
+  const identityCheckDiscoveredUfcBouts=identityChecksCompleted.reduce((n,[,r])=>
+    n+(Number.isInteger(r.newUfcBoutsRecovered)?Math.max(0,r.newUfcBoutsRecovered):0),0);
   const missingTier=new Map();
   // Both corners must have an actual measured value for a metric to support
   // fighter-versus-opponent comparison. A missing value is never assumed zero.
@@ -159,6 +165,9 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     fightersWithMeasuredFiveOfFive:fullFiveMeasured,
     fightersWithMeasuredTenOfTen:fullTenMeasured,
     proportionIndexedNativeFightIds:ratio(indexedNative.size,allKnownNativeIds.size),
+    approvedFullCareerIdentityChecksCompleted:identityChecksCompleted.length,
+    approvedFullCareerIdentityChecksOnRetry:identityChecksRetry.length,
+    approvedFullCareerIdentityChecksRecoveredUfcBouts:identityCheckDiscoveredUfcBouts,
     providerCallsLastRun:progress.lastCalls??null,
     providerStatus:progress.status||null,
     providerUsedAtStart:progress?.provider?.usedAtStart??null,
@@ -208,6 +217,9 @@ export function markdownReport(report){
    fightersWithMeasuredFiveOfFive:'Fighters with measured statistics for all 5 most recent',
    fightersWithAtLeastTenObservedUfcFights:'Fighters with ≥10 observed UFC fights',
    fightersWithMeasuredTenOfTen:'Fighters with measured statistics for all 10 most recent',
+   approvedFullCareerIdentityChecksCompleted:'Approved full-career numeric-ID crosschecks completed',
+   approvedFullCareerIdentityChecksOnRetry:'Numeric-ID crosschecks in provider retry cooldown',
+   approvedFullCareerIdentityChecksRecoveredUfcBouts:'Previously missing UFC history bouts recovered by numeric-ID crosschecks',
    providerCallsLastRun:'Provider requests in last collector run',
    lastCollectorRun:'Last saved collector run'
  };
