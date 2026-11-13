@@ -235,5 +235,86 @@ class RichBackfillTests(unittest.TestCase):
         self.assertEqual(state["roundRetry"]["42"]["retryAfter"],"2026-11-14")
         self.assertFalse(m.should_collect_rounds(state,state["bouts"]["42"],today))
 
+
+    def test_full_ufc_career_timeline_counts_settled_and_flags_uncertainty(self):
+        today=dt.date(2026,11,13)
+        rows=[
+          {"source":"native","fight_id":17,"date":"2026-06-01",
+           "opponent_name":"One","org_slug":"ufc","status":"win"},
+          {"source":"history","date":"2024-01-01",
+           "opponent_name":"Two","org_slug":"ufc","status":"loss"},
+          {"source":"native","date":"2026-08-10",
+           "opponent_name":"Three","org_slug":"pfl","status":"win"},
+          {"source":"history","date":"2026-12-01",
+           "opponent_name":"Scheduled","org_slug":"ufc","status":"upcoming"}]
+        valid=m.ufc_timeline_evidence({"data":rows,"meta":{"truncated":False}},today)
+        self.assertEqual(valid["settledCount"],2)
+        self.assertTrue(valid["complete"])
+        self.assertEqual(valid["observedOn"],"2026-11-13")
+        self.assertFalse(m.ufc_timeline_evidence(
+          {"data":rows,"meta":{"truncated":True}},today)["complete"])
+        self.assertFalse(m.ufc_timeline_evidence(
+          {"data":rows,"meta":{}},today)["complete"])
+        duplicate=m.ufc_timeline_evidence(
+          {"data":rows+[dict(rows[0])],"meta":{"truncated":False}},today)
+        self.assertFalse(duplicate["complete"])
+        self.assertEqual(duplicate["settledCount"],2)
+        bad=m.ufc_timeline_evidence(
+          {"data":rows+[{"date":"2025-01-01","opponent_name":"Unknown",
+                         "status":"unknown","org_slug":"ufc"}],
+           "meta":{"truncated":False}},today)
+        self.assertFalse(bad["complete"])
+
+    def test_keep_old_ufc_bouts_when_many_newer_non_ufc_fights(self):
+        rows=[]
+        for n in range(25):
+            day=(dt.date(2026,11,1)-dt.timedelta(days=n)).isoformat()
+            rows.append({"source":"native","fight_id":100+n,"date":day,
+               "opponent_name":"PFL Opponent "+str(n),"status":"win","org_slug":"pfl"})
+        for n in range(3):
+            rows.append({"source":"history","date":f"2023-0{n+1}-01",
+               "opponent_name":"UFC Veteran "+str(n),"status":"loss",
+               "org_slug":"ufc"})
+        history=m.summarize_history({"data":rows})
+        self.assertEqual(len(history),20)
+        self.assertEqual(sum(r["promotion"]=="ufc" for r in history),3)
+        self.assertEqual(history[0]["promotion"],"pfl")
+        self.assertEqual(history[-1]["promotion"],"ufc")
+
+    def test_short_fighter_gets_one_bounded_full_timeline_check(self):
+        class Client:
+            max_calls=500
+            calls=0
+            stopped=False
+            remaining=100
+            def __init__(self):
+                self.paths=[]
+            def call(self,path):
+                self.paths.append(path)
+                self.calls+=1
+                self.remaining-=1
+                return {"data":[
+                    {"source":"native","fight_id":100,"date":"2026-10-01",
+                     "opponent_name":"Challenger","status":"win","org_slug":"ufc"}],
+                    "meta":{"truncated":False}}
+        today=dt.date(2026,11,13)
+        state=m.default_progress()
+        state["bouts"]={"100":{"id":"100","org":"ufc","eventDate":"2026-10-01",
+          "a":{"slug":"athlete","id":"71","name":"Athlete"},
+          "b":{"slug":"challenger","id":"72","name":"Challenger"}}}
+        research={"profiles":{"athlete":{"name":"Athlete","slug":"athlete"}}}
+        coverage={"schema":1,"scope":"ufc","asOf":"2026-11-13",
+            "fighters":[{"slug":"athlete","needsHistoryCheck":True,"recentCount":1,
+               "recent":[{"boutId":"100","date":"2026-10-01"}]}]}
+        client=Client()
+        self.assertEqual(m.verify_short_ufc_careers(
+            client,state,research,coverage,today),1)
+        self.assertEqual(client.paths,["/fighters/71/history"])
+        self.assertEqual(research["profiles"]["athlete"]["ufcTimeline"]["settledCount"],1)
+        self.assertTrue(research["profiles"]["athlete"]["ufcTimeline"]["complete"])
+        self.assertEqual(m.verify_short_ufc_careers(
+            client,state,research,coverage,today),0)
+        self.assertEqual(client.calls,1)
+
 if __name__=="__main__":
     unittest.main()
