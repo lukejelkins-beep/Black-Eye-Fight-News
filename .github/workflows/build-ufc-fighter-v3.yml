@@ -27,9 +27,10 @@ jobs:
           node-version: '22'
       - name: Reject invented statistics, short samples and inaccurate rankings
         run: node --test tests/test-ufc-fighter-v3.mjs
-      - name: Build cached UFC V3 profiles and eligible leaderboards
-        if: github.event_name != 'pull_request'
-        run: node scripts/build-ufc-fighter-v3.mjs
+      - name: Build and validate actual cached UFC V3 snapshot
+        run: |
+          node scripts/build-ufc-fighter-v3.mjs
+          node -e 'const d=require("./data/ufc-fighter-v3.json"); if(d.schema!==4 || d.population<1 || !Array.isArray(d.boards) || d.boards.length!==12 || !Object.values(d.fighters).every(f=>f.recent.length<=5 && f.power===null && Object.values(f.metrics).every(m=>m.bouts>=1 && m.bouts<=5 && Number.isFinite(m.value) && (!m.rank || m.bouts>=3))))process.exit(1)'
       - name: Commit only changed public V3 data
         if: github.event_name != 'pull_request'
         shell: bash
