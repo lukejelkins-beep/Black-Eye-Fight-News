@@ -960,3 +960,42 @@
  right:0;
  bottom:0;
 }
+
+/* V3 compact unified profile header and two-column fight analytics */
+#fighterDialog.befn-v3-dialog{width:min(1080px,96vw);background:#1c1c20;color:#f7f1e8}
+.befn-v3-dialog .dialog-top{padding:14px 20px;background:#201a1b}
+.befn-v3-dialog .dialog-top h2{font-size:clamp(30px,4vw,42px);margin:5px 0}
+.befn-v3-dialog .dialog-content{background:#1c1c20;padding:12px}
+.befn-v3-dialog .dialog-bio{display:grid;grid-template-columns:minmax(150px,220px) minmax(0,1fr);align-items:stretch;gap:14px;padding:12px;background:#272528;border:1px solid #574632;border-radius:12px}
+.befn-v3-dialog .dialog-bio .befn-portrait-slot{width:100%;height:100%;min-height:220px;max-height:290px;background:#273638;overflow:hidden;border-radius:8px}
+.befn-v3-dialog .dialog-bio .befn-portrait-slot img{display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom}
+.befn-v3-dialog .dialog-bio .befn-portrait-slot .placeholder{width:100%;height:100%}
+.befn-v3-dialog .befn-bio-meta{min-width:0;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.befn-v3-dialog .befn-bio-meta p{margin:0;color:#e2d8c8}
+.befn-v3-dialog .befn-top-credentials{margin:0}
+.befn-v3-dialog .befn-v3-hero{position:static;text-align:left;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px;padding:10px;background:#30271e;border:1px solid #a57d37}
+.befn-v3-dialog .befn-v3-hero>div:first-child{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.befn-v3-dialog .befn-v3-hero>div:first-child>p:first-child{margin:0}
+.befn-v3-dialog .befn-v3-score{font-size:clamp(30px,4vw,44px)}
+.befn-v3-dialog .befn-v3-status{position:static;justify-items:start;margin:0}
+.befn-reign{font-size:11px;color:#f5d58e}
+.befn-reign>div{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.befn-reign span{display:grid;gap:2px;padding:6px 8px;border-radius:5px;background:#363136;color:#fff;font-weight:800}
+.befn-reign span b{font-size:9px;color:#c7b494}
+.befn-v3-dialog .befn-profile-insights{margin:0;gap:10px}
+.befn-v3-dialog .befn-v3-bottom-grid{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:10px;margin:0}
+.befn-v3-dialog .befn-v3-data-side{min-width:0;display:grid;align-content:start;gap:10px}
+.befn-v3-dialog .befn-v3-stat-panel{border:1px solid #554738;border-radius:10px;background:#282426;padding:11px}
+.befn-v3-dialog .befn-v3-stat-panel h3{font-size:13px!important;color:#f5ca6d!important;background:transparent!important;padding:0 0 8px!important;margin:0!important}
+.befn-v3-dialog .befn-v3-tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.befn-v3-dialog .befn-v3-tiles strong{font-size:19px}
+.befn-v3-dialog .befn-v3-tiles>div{min-width:0;padding:8px 3px}
+.befn-v3-dialog .befn-v3-tiles span{overflow-wrap:anywhere}
+.befn-v3-dialog .befn-v3-statistics{margin:0;padding:0 10px 9px}
+.befn-v3-dialog .befn-v3-rank-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:8px 0 0}
+.befn-v3-dialog .befn-v3-rank-tiles li{display:grid;min-width:0;grid-template-columns:1fr;gap:3px;padding:8px;border:1px solid #514635;border-radius:7px;background:#323034}
+.befn-v3-dialog .befn-v3-rank-tiles li span{font-size:11px;overflow-wrap:anywhere}
+.befn-v3-dialog .befn-v3-rank-tiles li strong{font-size:18px}
+.befn-v3-dialog .befn-v3-rank-tiles li small{grid-column:1;font-size:10px}
+@media(max-width:760px){#fighterDialog.befn-v3-dialog{width:calc(100vw - 12px)}.befn-v3-dialog .dialog-content{padding:8px}.befn-v3-dialog .dialog-bio{grid-template-columns:minmax(105px,36%) minmax(0,1fr);gap:8px;padding:8px}.befn-v3-dialog .dialog-bio .befn-portrait-slot{min-height:175px;max-height:260px}.befn-v3-dialog .befn-v3-bottom-grid{grid-template-columns:minmax(0,1fr)}.befn-v3-dialog .befn-v3-hero{padding:7px}.befn-v3-dialog .befn-v3-score{font-size:29px}.befn-v3-dialog .befn-v3-rank-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:430px){.befn-v3-dialog .dialog-bio{grid-template-columns:minmax(96px,34%) minmax(0,1fr)}.befn-v3-dialog .dialog-bio .befn-portrait-slot{min-height:155px;max-height:225px}.befn-v3-dialog .befn-v3-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.befn-v3-dialog .befn-v3-hero>div:first-child{gap:4px}.befn-v3-dialog .befn-v3-score{font-size:26px}.befn-reign span{padding:4px 5px}}
