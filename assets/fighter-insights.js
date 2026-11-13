@@ -270,6 +270,37 @@
   if(type==='count')return String(row.value);
   return type==='pct'?Math.round(row.value)+'%':row.value.toFixed(1);
  }
+
+ const highlightGroups={slpm:'Striking',sapm:'Defence',diff:'Striking',kd:'Power',td:'Wrestling',control:'Control',net:'Control',sub:'Grappling',acc:'Striking',tdDef:'Defence',ko:'Power',submission:'Grappling'};
+ function renderPerformanceHighlights(f,v3){
+  if(!ufcV3||ufcV3.schema<4||v3.recent.filter(b=>b.outcome!=='NC').length<3)return '';
+  const choices=ufcV3.boards.flatMap(b=>{
+   const m=v3.metrics?.[b.id];if(!m||m.bouts<3||m.bouts>5||!Number.isFinite(m.value))return [];
+   const division=Number.isInteger(m.divisionRank)?m.divisionRank:Number.isInteger(m.divisionalRank)?m.divisionalRank:null;
+   const all=Number.isInteger(m.rank)?m.rank:null;
+   if(![division,all].some(n=>n!==null&&n>=1&&n<=30))return [];
+   const divisionSize=m.divisionEligible||m.divisionalEligible||0;
+   const strength=Math.min(division&&divisionSize>=3?division/divisionSize:Infinity,all&&b.eligible>=3?all/b.eligible:Infinity);
+   const value=['control','net'].includes(b.id)?(m.value<0?'−':'')+Math.floor(Math.abs(m.value)/60)+':'+String(Math.round(Math.abs(m.value)%60)).padStart(2,'0'):metricValue(m,b.type==='def'?'pct':b.type);
+   return [{id:b.id,label:b.label,group:highlightGroups[b.id]||'Other',value,division,all,strength,best:Math.min(division||Infinity,all||Infinity)}];
+  }).sort((a,b)=>a.strength-b.strength||a.best-b.best);
+  const selected=[],counts={};
+  for(const x of choices){if(selected.length>=4)break;if((counts[x.group]||0)>=2)continue;selected.push(x);counts[x.group]=(counts[x.group]||0)+1}
+  if(!selected.length)return '';
+  return '<section class="befn-performance-highlights" aria-label="Performance highlights"><header><h3>Performance Highlights</h3><small>Top 30 · Recent UFC performance</small></header>'+
+   '<div class="befn-highlight-grid">'+selected.map((x,i)=>'<div class="befn-highlight-slot '+(i>=2?'is-extra':'')+'"><div class="befn-highlight-card '+(x.best<=3?'is-podium':x.best<=10?'is-elite':'')+'">'+
+    '<span>'+escapeHTML(x.label)+'</span><strong>'+escapeHTML(x.value)+'</strong><footer>'+
+    (x.division&&x.division<=30?'<b class="'+(x.division<=10?'is-gold':'')+'">#'+x.division+' Division</b>':'')+
+    (x.all&&x.all<=30?'<b class="'+(x.all<=10?'is-gold':'')+'">#'+x.all+' All UFC</b>':'')+
+    '</footer></div></div>').join('')+'</div>'+
+    (selected.length>2?'<button type="button" data-befn-highlights-toggle aria-expanded="false">Show all '+selected.length+' highlights</button>':'')+'</section>';
+ }
+ document.addEventListener('click',e=>{
+  const btn=e.target.closest?.('[data-befn-highlights-toggle]');if(!btn)return;
+  const root=btn.closest('.befn-performance-highlights');const on=!root.classList.contains('is-expanded');
+  root.classList.toggle('is-expanded',on);btn.setAttribute('aria-expanded',String(on));
+  btn.textContent=on?'Show fewer highlights':'Show all '+root.querySelectorAll('.befn-highlight-slot').length+' highlights';
+ },true);
  function renderV3Profile(f,v3,kind){
   const score=v3.power;
   const tier=scoreTier(score);
@@ -339,7 +370,8 @@
    (tiles.length?'<section class="befn-v3-stat-panel"><h3>Recent Performance</h3><div class="befn-v3-tiles">'+tiles.map(([value,label,sample])=>'<div><strong>'+escapeHTML(value)+'</strong><span>'+escapeHTML(label)+'</span><small>'+escapeHTML(sample)+'</small></div>').join('')+'</div></section>':'')+
    '</div>'+
    '</div>'+
-   (statRows?'<details class="befn-v3-statistics befn-v3-rank-full" open><summary>Stats & leaderboard ranks</summary><ul class="befn-v3-rank-tiles">'+statRows+'</ul></details>':'')+
+   renderPerformanceHighlights(f,v3)+
+   (statRows?'<details class="befn-v3-statistics befn-v3-rank-full"><summary>All recent statistics</summary><ul class="befn-v3-rank-tiles">'+statRows+'</ul></details>':'')+
    '</section>';
  }
  function renderV3Boards(){
