@@ -22,6 +22,9 @@ on:
     paths:
       - 'scripts/ufcalendar-rich-backfill.py'
       - 'scripts/ufcalendar-relay.mjs'
+      - 'scripts/build-ufc-36-month-candidates.mjs'
+      - 'scripts/build-ufc-last-five-coverage.mjs'
+      - 'tests/test-ufc-36-month-candidates.mjs'
       - 'tests/test-ufcalendar-relay.mjs'
       - 'tests/test_ufcalendar_rich_backfill.py'
       - '.github/workflows/ufcalendar-rich-backfill.yml'
@@ -51,6 +54,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_ufcalendar_rich_backfill.py' -v
           python -m unittest discover -s tests -p 'test_ufc_research_archive.py' -v
           node --test tests/test-ufc-profile-queue.mjs
+          node --test tests/test-ufc-36-month-candidates.mjs
           node --test tests/test-ufc-postfight-metrics.mjs
       - name: Build resumable UFC/PFL fight history and current card insights
         env:
@@ -61,13 +65,14 @@ jobs:
         run: |
           node scripts/build-ufc-profile-queue.mjs
           node scripts/build-ufc-postfight-metrics.mjs
+          node scripts/build-ufc-36-month-candidates.mjs
       - name: Commit sourced observations without exposing credentials
         shell: bash
         run: |
           set -euo pipefail
           git config user.name 'BEFN UFCalendar archive'
           git config user.email 'ufcalendar-archive-bot@users.noreply.github.com'
-          git add data/ufcalendar-rich-progress.json data/ufcalendar-card-enhancements.json data/ufcalendar-fighter-research.json data/ufcalendar-judging-research.json data/ufc-research-archive.json data/pfl-research-archive.json data/ufc-profile-research-queue.json data/ufc-postfight-metrics.json
+          git add data/ufcalendar-rich-progress.json data/ufcalendar-card-enhancements.json data/ufcalendar-fighter-research.json data/ufcalendar-judging-research.json data/ufc-research-archive.json data/pfl-research-archive.json data/ufc-profile-research-queue.json data/ufc-postfight-metrics.json data/ufc-36-month-candidates.json
           if git diff --cached --quiet; then echo 'No research updates'; exit 0; fi
           git commit -m 'Refresh expanded UFCalendar fight history, scouting and schedule intelligence'
           for i in 1 2 3 4 5 6; do
