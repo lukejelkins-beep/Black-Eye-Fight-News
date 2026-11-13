@@ -24,6 +24,23 @@ function key(day,a,b){
  const names=[norm(a),norm(b)].sort();
  return day+":"+names.join(":");
 }
+function adjacentDate(day,offset){
+ const stamp=Date.parse(String(day)+"T00:00:00Z");
+ return Number.isFinite(stamp)?new Date(stamp+offset*86400000).toISOString().slice(0,10):null;
+}
+function archivedBoutFor(archiveFights,bout){
+ const exact=archiveFights.get(key(bout.eventDate,bout.a.name,bout.b.name));
+ if(exact)return exact;
+ // A venue-local card date and the UTC provider date can disagree by a day.
+ // Accept only ONE same-opponent candidate on an adjacent date, and reject
+ // conflicting event titles where both datasets supply them.
+ const matches=[-1,1].map(offset=>{
+  const date=adjacentDate(bout.eventDate,offset);
+  return date?archiveFights.get(key(date,bout.a.name,bout.b.name)):null;
+ }).filter(row=>row&&(!row.event||!bout.event||
+   norm(row.event)===norm(bout.event)));
+ return matches.length===1?matches[0]:null;
+}
 function elapsed(result){
  if(!result||!Number.isInteger(result.round)||result.round<1||result.round>5)return null;
  const m=/^(\d{1,2}):([0-5]\d)$/.exec(String(result.time||""));
@@ -78,7 +95,7 @@ export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12"}={}){
   matchedBouts.add(id);
   const sides=["a","b"];
   const a=entry(b.a.name,b.a.slug),c=entry(b.b.name,b.b.slug);
-  const observed=archiveFights.get(key(b.eventDate,b.a.name,b.b.name));
+  const observed=archivedBoutFor(archiveFights,b);
   if(!observed){pending.push({boutId:id,date:b.eventDate,reason:"round_data_not_available"});continue;}
   if(Array.isArray(observed.conflicts)&&observed.conflicts.length){
    pending.push({boutId:id,date:b.eventDate,reason:"cross_source_metric_conflict"});continue;
