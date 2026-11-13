@@ -19,6 +19,7 @@ on:
       - '.github/workflows/befn-render-deploy-recovery.yml'
 permissions:
   contents: write
+  actions: write
 concurrency:
   group: befn-ufc-v3-deterministic-snapshot
   cancel-in-progress: false
@@ -38,6 +39,7 @@ jobs:
           node scripts/build-ufc-fighter-v3.mjs
           node -e 'const d=require("./data/ufc-fighter-v3.json"); if(d.schema!==4 || d.population<1 || !Array.isArray(d.boards) || d.boards.length!==12 || !Object.values(d.fighters).every(f=>f.recent.length<=5 && f.power===null && Object.values(f.metrics).every(m=>m.bouts>=1 && m.bouts<=5 && Number.isFinite(m.value) && (!m.rank || m.bouts>=3))))process.exit(1)'
       - name: Commit only changed public V3 data
+        id: publish
         if: github.event_name != 'pull_request'
         shell: bash
         run: |
@@ -53,9 +55,17 @@ jobs:
           for i in 1 2 3; do
             if git pull --rebase origin main && git push origin HEAD:main; then
               echo 'Saved UFC V3 data without a new UFCalendar request'
+              echo "wrote=true" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             git rebase --abort 2>/dev/null || true
             sleep 3
           done
           exit 1
+      - name: Request guarded Render recovery only after a new verified data snapshot
+        if: steps.publish.outputs.wrote == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPOSITORY: ${{ github.repository }}
+        run: |
+          gh api --method POST "repos/$GH_REPOSITORY/actions/workflows/befn-render-deploy-recovery.yml/dispatches" -f ref=main > /dev/null
