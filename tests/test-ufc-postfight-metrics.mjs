@@ -58,6 +58,32 @@ test("no false zeros for missing rounds, source conflicts or absent fields",()=>
  assert.equal(out.metricBouts,1);
  assert(out.pending.some(x=>x.reason==="cross_source_metric_conflict"));
 });
+test("one-day UTC and event-local shift joins exactly one verified UFC bout",()=>{
+ const shifted=structuredClone(archive);
+ shifted.fights.a.date="2026-11-09";
+ shifted.fights.a.event="UFC Test";
+ const m=buildPostfightMetrics(progress,shifted,{asOf:"2026-11-12"});
+ assert.equal(m.metricBouts,2);
+ assert.equal(m.fighters["fighter-alpha"].trackedBouts,2);
+ assert.equal(m.fighters["fighter-alpha"].totals.sigLanded.value,25);
+});
+test("ambiguous adjacent-date pairs do not gain statistics",()=>{
+ const ambiguous=structuredClone(archive);
+ ambiguous.fights.a.date="2026-11-09";
+ ambiguous.fights.extra=structuredClone(ambiguous.fights.a);
+ ambiguous.fights.extra.date="2026-11-11";
+ const m=buildPostfightMetrics(progress,ambiguous,{asOf:"2026-11-12"});
+ assert.equal(m.metricBouts,1);
+ assert(m.pending.some(x=>x.boutId==="100"&&x.reason==="round_data_not_available"));
+});
+test("adjacent archived bout with a conflicting event is excluded",()=>{
+ const mismatch=structuredClone(archive);
+ mismatch.fights.a.date="2026-11-09";
+ mismatch.fights.a.event="Different UFC Event";
+ const m=buildPostfightMetrics(progress,mismatch,{asOf:"2026-11-12"});
+ assert.equal(m.metricBouts,1);
+ assert(m.pending.some(x=>x.boutId==="100"&&x.reason==="round_data_not_available"));
+});
 test("missing complete round rows are excluded instead of guessed",()=>{
  const partial=structuredClone(archive);
  partial.fights.a.rounds.pop();
