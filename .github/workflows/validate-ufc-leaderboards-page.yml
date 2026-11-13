@@ -7,6 +7,7 @@ on:
       - 'assets/fighter-insights.js'
       - 'assets/ufc-stat-leaderboards.css'
       - 'tests/test-ufc-leaderboards-page.mjs'
+      - 'tests/test-ufc-public-profile-clean.cjs'
       - '.github/workflows/validate-ufc-leaderboards-page.yml'
 permissions:
   contents: read
@@ -23,3 +24,4 @@ jobs:
         run: |
           node --check assets/fighter-insights.js
           node --test tests/test-ufc-leaderboards-page.mjs
+          node tests/test-ufc-public-profile-clean.cjs
