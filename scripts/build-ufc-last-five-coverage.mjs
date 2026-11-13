@@ -7,6 +7,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
+import {isOfficialUfcEvent,isFeederUfcEvent} from "./ufc-official-event-scope.mjs";
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const read=(name,fallback)=>{try{return JSON.parse(fs.readFileSync(path.join(root,name),"utf8"));}catch(e){if(e.code==="ENOENT")return fallback;throw e;}};
 const slugify=s=>String(s||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
@@ -19,7 +20,7 @@ const settled=new Set(["completed","draw","no_contest"]);
 // Only confirmed professional MMA matters for latest-fight eligibility.
 // Mixed-sport promotions and unlabeled histories require bout-level evidence.
 const mmaPromotions=new Set([
- "ufc","pfl","bellator","aca","cage-warriors","fnc","jungle-fight",
+ "ufc","pfl","bellator","aca","cage-warriors","fnc","jungle-fight","rkena",
  "oktagon","ksw","lfa","invicta","brave","brave-cf","road-fc",
  "pancrase","deep","cffc","titan-fc","m-1","m-1-global","eagle-fc"
 ]);
@@ -44,11 +45,13 @@ function evidenceStage(recent,depthConfirmed=false){
  return five?"fiveLinkedMeasured":depthConfirmed?
   "shortLinkedMeasuredDepthConfirmed":"shortLinkedMeasuredDepthUnconfirmed";
 }
-export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upcoming={},ranked=[]}){
+export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upcoming={},ranked=[],verifiedMixedMma={}}){
  if(!validDate(asOf))throw Error("asOf must be YYYY-MM-DD");
  const cutoff=cutoffFrom(asOf),registry=new Map();
  const ensure=(s,name)=>{const slug=slugify(s);if(!slug)return null;
-  if(!registry.has(slug))registry.set(slug,{slug,name:name||slug,lastActive:null,history:new Map(),active:false,shiftedAliasesJoined:0});
+  if(!registry.has(slug))registry.set(slug,{slug,name:name||slug,lastActive:null,
+   history:new Map(),active:false,recentUfcLabel:false,latestFeeder:null,
+   shiftedAliasesJoined:0});
   const x=registry.get(slug);if(name)x.name=name;return x;};
  // A later verified MMA bout elsewhere disqualifies an active UFC roster
  // candidate. Unidentified bout rulesets are for review, not automatic removal.
@@ -58,8 +61,12 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
   if(org==="ufc"||nonMmaPromotions.has(org)||
    ["boxing","kickboxing","muay-thai","grappling",
     "submission-grappling","bjj","wrestling","bare-knuckle-boxing"].includes(rules))return;
+  const manuallyVerified=(verifiedMixedMma?.fighters?.[f.slug]||[]).some(e=>
+   e?.date===date&&promotionKey(e.promotion)===org&&
+   nameKey(e.opponent)===nameKey(opponent)&&e.ruleset==="mma"&&
+   validDate(e.checkedAt)&&e.checkedAt<=asOf&&/^https:\/\/\S+/.test(e.source||""));
   const confirmed=mmaPromotions.has(org)||rules==="mma"||
-   rules==="mixed-martial-arts";
+   rules==="mixed-martial-arts"||manuallyVerified;
   // Blank-promotion rows on the same date often duplicate the indexed UFC
   // result with another spelling of the opponent; not proof of a newer bout.
   if(date===f.lastActive&&!confirmed)return;
