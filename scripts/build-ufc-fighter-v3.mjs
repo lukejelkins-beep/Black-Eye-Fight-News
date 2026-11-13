@@ -37,7 +37,7 @@ const eligibleOutcome=o=>["W","L","D"].includes(o);
 function reviewedMap(sources){
  const map=new Map();
  for(const cohort of sources){
-  if(cohort?.scope!=="ufc-only"||cohort.schema!==1)continue;
+  if(cohort?.schema!==1||!["ufc-only","ufc-champions"].includes(cohort.scope))continue;
   const records=Object.values(cohort.fighters||{});
   for(const row of records){
    if(!row?.name||row.organisation!=="UFC"||row.sport!=="MMA"||!row.division)continue;
