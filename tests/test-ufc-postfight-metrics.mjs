@@ -92,11 +92,11 @@ test("missing complete round rows are excluded instead of guessed",()=>{
  assert(out.pending.some(x=>x.reason==="round_coverage_incomplete"));
 });
 
-test("Contender Series tracked rounds do not contaminate official UFC-only statistics",()=>{
+test("DWCS round samples do not contaminate real UFC-only statistics",()=>{
  const source=structuredClone(progress);
  source.bouts["100"].event="Dana White's Contender Series 91";
- const out=buildPostfightMetrics(source,archive,{asOf:"2026-11-12"});
- assert.equal(out.metricBouts,1);
- assert.equal(out.fighters["fighter-alpha"].trackedBouts,1);
- assert.equal(out.fighters["fighter-alpha"].totals.sigLanded.value,8);
+ const result=buildPostfightMetrics(source,archive,{asOf:"2026-11-12"});
+ assert.equal(result.metricBouts,1);
+ assert.equal(result.fighters["fighter-alpha"].trackedBouts,1);
+ assert.equal(result.fighters["fighter-alpha"].totals.sigLanded.value,8);
 });
