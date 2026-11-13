@@ -18,6 +18,20 @@ const cutoffFrom=(day)=>{const [y,m,d]=day.split("-").map(Number);let p=(y*12+m-
 const settled=new Set(["completed","draw","no_contest"]);
 const normalOutcome=o=>{const x=String(o||"").toLowerCase();return x==="win"||x==="w"?"W":x==="loss"||x==="l"?"L":x==="draw"||x==="d"?"D":x==="no_contest"||x==="nc"?"NC":null;};
 const priorityNames=data=>new Set((data.divisions||[]).map(x=>nameKey(x.name)).filter(Boolean));
+// Evidence tiers are deliberately NOT "complete fighter profiles": a provider
+// fight row can have only a few measured fields, and an under-five history
+// cannot establish that the fighter has fewer than five UFC appearances.
+const evidenceStages=[
+ "fiveLinkedMeasured","fiveLinkedStatsGap","fiveUnlinked",
+ "shortLinkedMeasuredDepthUnconfirmed","shortLinkedStatsGap","shortUnlinked"
+];
+function evidenceStage(recent){
+ const five=recent.length===5;
+ if(recent.some(b=>!b.boutId))return five?"fiveUnlinked":"shortUnlinked";
+ if(recent.some(b=>!b.hasMeasuredTotals))return five?
+  "fiveLinkedStatsGap":"shortLinkedStatsGap";
+ return five?"fiveLinkedMeasured":"shortLinkedMeasuredDepthUnconfirmed";
+}
 export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upcoming={},ranked=[]}){
  if(!validDate(asOf))throw Error("asOf must be YYYY-MM-DD");
  const cutoff=cutoffFrom(asOf),registry=new Map();
@@ -107,12 +121,14 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
   const measuredCount=entries.filter(row=>row.hasMeasuredTotals).length;
   const unknownIds=entries.filter(row=>!row.boutId).length;
   const historyNeeded=recent.length<5||unknownIds>0;
+  const stage=evidenceStage(entries);
   return {name:f.name,slug:f.slug,lastUfcFight:f.lastActive,
    champion:championsSet.has(nameKey(f.name)),
    upcoming:upcomingNames.has(nameKey(f.name)),
    ranked:rankedNames.has(nameKey(f.name)),
    recentCount:recent.length,
-   measuredCount,needsHistoryCheck:historyNeeded,needsStats:entries.some(x=>!x.hasMeasuredTotals),
+   measuredCount,evidenceStage:stage,
+   needsHistoryCheck:historyNeeded,needsStats:entries.some(x=>!x.hasMeasuredTotals),
    recent:entries};
  }).sort((a,b)=>Number(b.champion)-Number(a.champion)||
    Number(b.upcoming)-Number(a.upcoming)||
@@ -125,6 +141,11 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
    f.recent.every(x=>x.boutId)&&
    new Set(f.recent.map(x=>String(x.boutId))).size===5).length,
   withThreeMeasured:fighters.filter(f=>f.measuredCount>=3).length,
+  // Mutually exclusive stages: counts always sum to activeFighters.
+  // "Measured" means at least one non-null field per bout, not every metric.
+  evidenceStages:Object.fromEntries(evidenceStages.map(stage=>[
+   stage,fighters.filter(f=>f.evidenceStage===stage).length
+  ])),
   needHistoryCheck:fighters.filter(f=>f.needsHistoryCheck).length,
   needStats:fighters.filter(f=>f.needsStats).length,
   shiftedDateAliasesJoined:[...registry.values()].filter(f=>f.active)
