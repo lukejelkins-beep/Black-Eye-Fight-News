@@ -111,11 +111,13 @@ async function checkProfile(page,profile,screen){
    const d=document.querySelector("#fighterDialog");
    return !!d?.open&&!!d.querySelector(".befn-profile-insights[data-befn-profile='"+CSS.escape(id)+"']");
   },profile.id,{timeout:12000});
-  if(expectedPostfight.has(normalized(profile.name))){
-   await page.waitForFunction(id=>
-    !!document.querySelector("#fighterDialog .befn-profile-block[data-befn-postfight='"+CSS.escape(id)+"']"),
-    profile.id,{timeout:12000});
-  }
+  // V3 deliberately replaces the legacy post-fight widget with nine Recent
+  // Performance tiles. Wait for its moved technical panel and tiles instead.
+  await page.waitForFunction(()=>{
+   const d=document.querySelector("#fighterDialog.befn-v3-dialog");
+   return !!d?.querySelector(".dialog-bio .befn-v3-technical")&&
+    !!d?.querySelector(".befn-v3-stat-panel .befn-v3-tiles");
+  },null,{timeout:12000});
   // Wait briefly for portrait requests to settle. A cached or slow image
   // must not be declared broken just because it was read instantly.
   if(isLive)await page.waitForFunction(()=>{
@@ -126,24 +128,27 @@ async function checkProfile(page,profile,screen){
    const d=document.querySelector("#fighterDialog"),f=window.COMBAT_DATA?.fighters?.find(x=>x.id===id);
    const ins=d?.querySelector(".befn-profile-insights");
    const title=d?.querySelector(".dialog-top h2")?.textContent?.trim();
-   const recentRows=[...(d?.querySelectorAll("table[data-befn-recent-results] tbody tr")||[])]
-    .map(tr=>[...tr.querySelectorAll("td")].map(td=>td.textContent.trim()));
-   const metrics=ins?.querySelectorAll(".befn-power-metric").length??0;
-   const credential=ins?.querySelector(".befn-credential-list,.befn-credential-empty");
-   const postfight=ins?.querySelector(".befn-profile-block[data-befn-postfight]");
-   const postfightCells=postfight?.querySelectorAll(".befn-postfight-stat")?.length??0;
-   const recentFive=postfight?.querySelector(".befn-recent-five-coverage");
-   const recentFiveCount=recentFive?.querySelectorAll("li.befn-postfight-bout").length??0;
-   const recentFiveSummary=recentFive?.querySelector("summary")?.textContent?.trim()||"";
-   const coverageVisible=postfight?.textContent?.includes("not career totals")??false;
+   const recentRows=[...(d?.querySelectorAll(".befn-v3-fights li")||[])]
+    .map(row=>[
+     row.querySelector("time")?.textContent?.trim()||"",
+     row.querySelector(".befn-v3-opponent")?.textContent?.trim()||"",
+     row.querySelector(".befn-power-result")?.textContent?.trim()||"",
+     row.querySelector(".befn-v3-method")?.textContent?.trim()||""
+    ]);
+   const metrics=d?.querySelectorAll(".dialog-bio .befn-v3-technical .befn-power-metric").length??0;
+   const credential=d?.querySelector(".befn-top-credentials .befn-credential-list");
+   const tiles=[...(d?.querySelectorAll(".befn-v3-stat-panel .befn-v3-tiles > div")||[])];
+   const historyRows=[...(d?.querySelectorAll(".befn-v3-fights li")||[])];
    const rect=d?.getBoundingClientRect();
    const rootWidth=document.documentElement.clientWidth;
    const content=d?.querySelector(".dialog-content");
    const viewportOverflow=document.documentElement.scrollWidth>rootWidth+4;
    return {
     identity:!!f,title,record:f?.record,division:f?.division,category:f?.category,
-    metrics,recentRows,credentialsVisible:!!credential,postfightCells,coverageVisible,
-    recentFiveCount,recentFiveSummary,
+    metrics,recentRows,credentialsVisible:!!credential,performanceTiles:tiles.length,
+    recentFiveCount:historyRows.length,historyV3:!!ins?.classList.contains("befn-v3"),
+    noProvisionalRanks:!d?.querySelector(".befn-performance-highlights,.befn-v3-top-ten"),
+    noLegacyTable:!d?.querySelector("table[data-befn-recent-results]"),
     publicLinks:[...(d?.querySelectorAll("a[href]")||[])].map(a=>a.getAttribute("href")),
     provenanceText:d?.querySelector(".dialog-content")?.textContent||"",
     rect:rect&&{left:rect.left,right:rect.right,width:rect.width},
@@ -167,7 +172,8 @@ async function checkProfile(page,profile,screen){
       photoVerified:!!f?.photoRightsVerified};
     })(),
     closeVisible:!!d?.querySelector("button#closeFighter"),
-    renderedClassification:ins?.querySelector(".befn-scout-classification")?.textContent||"",
+    renderedClassification:d?.querySelector(".befn-v3-status")?.textContent||"",
+    championshipBelt:!!d?.querySelector(".befn-title-belts"),
     clippedElements:[...(ins?.querySelectorAll(".befn-profile-block h3,.befn-classifier-indices strong,.dialog-content > h3")||[])]
       .filter(x=>{const c=getComputedStyle(x);return (x.scrollWidth>x.clientWidth+5&&c.overflowX==="hidden")||
        (x.scrollHeight>x.clientHeight+5&&c.overflowY==="hidden")})
@@ -186,42 +192,36 @@ async function checkProfile(page,profile,screen){
    (!record.complete||boutCount<2||(profile.latest||[]).length<2)?
    "Unassessed":profile.category;
   assert.equal(details.category,expectedCategory,"classification display mismatch");
-  assert.equal(details.metrics,5,"expected exactly 5 rating rows");
-  // Profile details may contain OTHER tables (including post-fight metrics).
-  // Only the uniquely annotated fight-history table may be counted and audited.
-  const sourcedRows=profile.latest.map(x=>[x.date,x.opponent,x.outcome,x.method].map(String));
+  assert(details.historyV3,"UFC profile is not using the approved V3 design");
+  assert.equal(details.metrics,5,"V3 header requires exactly five technical rating bars");
+  assert.equal(details.performanceTiles,9,"V3 Recent Performance requires exactly nine tiles");
+  assert(details.noProvisionalRanks,"provisional legacy rankings must not appear in V3");
+  assert(details.noLegacyTable,"duplicated legacy fight table must not appear in V3");
+  assert.equal(details.recentFiveCount,Math.min(profile.latest.length,5),
+   "V3 recent fights must contain up to five verified UFC results");
+  const sourcedRows=profile.latest.slice(0,5).map(x=>[x.date,x.opponent,x.outcome,x.method].map(String));
   assert.deepEqual(details.recentRows,sourcedRows,
-    "published fight-by-fight history differs from the individually sourced UFC results");
-  // Mobile must show the W/L result and method, not only the date/opponent.
-  // A 680px desktop-only table could otherwise pass DOM checks while hiding
-  // the final two columns beyond the phone's right edge.
+   "V3 fight rows differ from the individually reviewed UFC results");
+  // On mobile all outcome/method fields must fit within the dialog itself,
+  // not merely exist in the DOM beyond the right-hand edge of the viewport.
   if(screen==="mobile"&&profile.latest.length){
-   const mobileCells=await page.evaluate(()=>{
-    const table=document.querySelector("#fighterDialog table[data-befn-recent-results]");
-    const row=table?.querySelector("tbody tr");
-    const view=table?.closest(".scroller")?.getBoundingClientRect();
-    return {cells:[...(row?.cells||[])].map(cell=>{
-     const box=cell.getBoundingClientRect(),style=getComputedStyle(cell);
-     return {text:cell.textContent.trim(),visible:box.width>12&&box.height>5&&
-      style.display!=="none"&&style.visibility!=="hidden"&&
-      !!view&&box.left>=view.left-4&&box.right<=view.right+4};
-    })};
+   const mobile=await page.evaluate(()=>{
+    const dialog=document.querySelector("#fighterDialog");
+    const edge=dialog.getBoundingClientRect();
+    return [...dialog.querySelectorAll(".befn-v3-fights li")].map(row=>{
+     const item=row.getBoundingClientRect();
+     const result=row.querySelector(".befn-power-result");
+     const method=row.querySelector(".befn-v3-method");
+     return {outcome:result?.textContent?.trim(),method:method?.textContent?.trim(),
+      visible:[item,result?.getBoundingClientRect(),method?.getBoundingClientRect()]
+       .every(r=>r&&r.width>4&&r.left>=edge.left-5&&r.right<=edge.right+5)};
+    });
    });
-   assert.equal(mobileCells.cells.length,4,"mobile results must keep all four source fields");
-   assert(mobileCells.cells.every(x=>x.visible),"mobile result and finish method must fit without sideways scrolling");
-   assert(mobileCells.cells[2].text&&mobileCells.cells[3].text,
-    "mobile UFC results must display outcome and method");
+   assert(mobile.every(x=>x.visible&&x.outcome&&x.method),
+    "mobile UFC recent fight outcomes and methods must fit without sideways scrolling");
   }
-  assert(details.credentialsVisible,"credentials or missing-credential statement absent");
-  if(expectedPostfight.has(normalized(profile.name))){
-   assert.equal(details.postfightCells,11,"incomplete UFC post-fight metrics panel");
-   assert(details.coverageVisible,"missing clear sample versus career totals label");
-   const latestUfcCount=Math.min((profile.latest||[]).length,5);
-   assert.equal(details.recentFiveCount,latestUfcCount,
-    "last-five UFC coverage panel must list every reviewed recent bout, including missing metrics");
-   assert(details.recentFiveSummary.includes("/"+latestUfcCount),
-    "last-five summary must use the reviewed UFC fight count, not the tracked sample size");
-  }
+  if((profile.credentials||[]).some(x=>x?.source?.startsWith("https://")))
+   assert(details.credentialsVisible,"verified top credentials were not displayed");
   assert(details.closeVisible,"dialog close action missing");
   assert(!details.viewportOverflow,"document overflows horizontally");
   assert(!details.dialogClip,"fighter dialog extends beyond viewport");
@@ -229,8 +229,11 @@ async function checkProfile(page,profile,screen){
   if(isLive){
    assert.deepEqual(details.clippedElements,[],"important profile labels visibly clipped");
    assert.deepEqual(details.publicLinks,[],"fighter dialog must not show external research links");
-   assert(details.renderedClassification.includes(expectedCategory),
-    "scouting classification missing in live profile dialog");
+   if(expectedCategory==="Champion")
+    assert(details.championshipBelt,"verified UFC champion belt missing");
+   else if(["Contender","Prospect"].includes(expectedCategory))
+    assert(details.renderedClassification.includes(expectedCategory),
+     "algorithmically assigned contender/prospect label missing");
   }
   assert(!/(?:source links|view stats source|how are .* calculated|evidence confidence|credential points|record caution|research snapshot|independently reviewed)/i.test(details.provenanceText),
    "public fighter dialog contains research or calculation commentary");
