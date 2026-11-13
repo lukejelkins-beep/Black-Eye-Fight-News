@@ -1,6 +1,6 @@
 {
-  "attemptedAt": "2026-11-13T21:11:53.153534+00:00",
-  "lastSuccessfulAt": "2026-11-13T21:11:53.153534+00:00",
+  "attemptedAt": "2026-11-13T22:05:45.187953+00:00",
+  "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00",
   "sources": [
     {
       "name": "World Boxing News",
@@ -8,7 +8,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.worldboxingnews.net/feed/",
-      "lastSuccessfulAt": "2026-11-13T21:11:53.153534+00:00"
+      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00"
     },
     {
       "name": "MMA Fighting",
@@ -16,15 +16,14 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-13T21:11:53.153534+00:00"
+      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00"
     },
     {
       "name": "MMA Junkie",
       "sport": "mma",
-      "ok": true,
-      "items": 10,
-      "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-13T21:11:53.153534+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-13T21:11:53.153534+00:00",
+      "error": "mmajunkie.usatoday.com: HTTP Error 402: Payment Required | mmajunkie.com: HTTP Error 402: Payment Required | api.gdeltproject.org: HTTP Error 429: Too Many Requ"
     },
     {
       "name": "Sherdog",
@@ -32,7 +31,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.sherdog.com/rss/news.xml",
-      "lastSuccessfulAt": "2026-11-13T21:11:53.153534+00:00"
+      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00"
     },
     {
       "name": "UFC",
@@ -40,7 +39,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-13T21:11:53.153534+00:00"
+      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00"
     },
     {
       "name": "ONE MMA",
@@ -55,7 +54,7 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/feed/",
-      "lastSuccessfulAt": "2026-11-13T21:11:53.153534+00:00"
+      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00"
     },
     {
       "name": "Cage Warriors",
@@ -63,7 +62,7 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Acagewarriors.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-13T21:11:53.153534+00:00"
+      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00"
     },
     {
       "name": "RIZIN",
@@ -71,14 +70,14 @@
       "ok": true,
       "items": 8,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-13T21:11:53.153534+00:00"
+      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00"
     },
     {
       "name": "KSW",
       "sport": "mma",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "www.bing.com: No recent, source-verified articles"
+      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "ADCC",
@@ -118,10 +117,9 @@
     {
       "name": "FloGrappling",
       "sport": "grappling",
-      "ok": true,
-      "items": 3,
-      "feedUrl": "https://www.bing.com/news/search?q=site%3Aflograppling.com%2Farticles&format=rss",
-      "lastSuccessfulAt": "2026-11-13T21:11:53.153534+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-13T21:11:53.153534+00:00",
+      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "Real American Freestyle",
@@ -143,13 +141,38 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/category/live-results/feed/",
-      "lastSuccessfulAt": "2026-11-13T21:11:53.153534+00:00"
+      "lastSuccessfulAt": "2026-11-13T22:05:45.187953+00:00"
     }
   ],
   "articles": [
     {
+      "id": "edad1e28d7e0313f1b2f",
+      "title": "UFC 334 Preview Show: Has Josh Hokit gotten over with fans ahead of his fight with Ciryl Gane?",
+      "url": "https://www.mmafighting.com/ufc/520982/ufc-334-preview-show-has-josh-hokit-gotten-over-with-fans-ahead-of-his-fight-with-ciryl-gane",
+      "source": "MMA Fighting",
+      "sport": "mma",
+      "publishedAt": "2026-11-13T22:00:00+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/UFC-334-CLEAN.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "alt": "Ciryl Gane, Josh Hokit, Kayla Harrison, and Amanda Nunes",
+        "credit": "José Youngs",
+        "sourceUrl": "https://www.mmafighting.com/ufc/520982/ufc-334-preview-show-has-josh-hokit-gotten-over-with-fans-ahead-of-his-fight-with-ciryl-gane",
+        "kind": "publisher",
+        "checkedAt": "2026-11-13T22:05:45.187953+00:00"
+      },
+      "summaryCheckedAt": "2026-11-13T22:05:45.187953+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Josh Hokit is on a historic rise up the heavyweight ranks, but can Ciryl Gane stop him and solidify his new title?",
+        "Join MMA Fighting’s Jed Meshew and Alexander K.",
+        "Lee as they preview UFC 334 and talk about the biggest storylines, the best matchups, and more for this weekend in MMA action."
+      ],
+      "firstSeenAt": "2026-11-13T22:05:45.187953+00:00"
+    },
+    {
       "id": "dbf4ba1b2d3a4d51a0a7",
-      "title": "UFC 335 and UFC 336 press conference video",
+      "title": "LIVE! UFC 335 and UFC 336 press conference video",
       "url": "https://www.mmafighting.com/ufc/520942/ufc-335-and-ufc-336-press-conference-video",
       "source": "MMA Fighting",
       "sport": "mma",
@@ -163,14 +186,15 @@
         "kind": "publisher",
         "checkedAt": "2026-11-13T21:11:53.153534+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T21:11:53.153534+00:00",
+      "summaryCheckedAt": "2026-11-13T22:05:45.187953+00:00",
       "summaryQualityVersion": 3,
       "summaryPoints": [
         "Ahead of UFC 334 ceremonial weigh-ins Friday, a press conference is being held in New York for the stars of the upcoming UFC 335 and UFC 336 events.",
         "Watch a live stream above beginning at 4 p.m.",
         "Flyweight champion Joshua Van, “BMF” champion Charles Oliveira, and former two-division champion Alex Pereira will take the stage to answer questions."
       ],
-      "firstSeenAt": "2026-11-13T21:11:53.153534+00:00"
+      "firstSeenAt": "2026-11-13T21:11:53.153534+00:00",
+      "updatedAt": "2026-11-13T22:05:45.187953+00:00"
     },
     {
       "id": "aa4042a6375e831183e3",
@@ -213,13 +237,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-13T21:11:53.153534+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T21:11:53.153534+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Mexican Bantamweight Andres Teran Has Demonstrated His Fight-Altering Punch Power.",
         "Now He Plans To Add A Former World Champion’s Name To His Resumé.",
         "Five rounds into his 10-round Zuffa Boxing debut at the Cosmopolitan in Las Vegas, things weren’t looking great for Andres Teran."
       ],
+      "summaryCheckedAt": "2026-11-13T21:11:53.153534+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-13T21:11:53.153534+00:00"
     },
     {
@@ -238,13 +262,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-13T21:11:53.153534+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T21:11:53.153534+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Australia’s Former Bantamweight World Champion Jason Moloney Is Eyeing A Route Back To Championship Glory With Zuffa Boxing.",
         "Jason “Mayhem” Moloney is all set for his Zuffa Boxing debut as he looks to force his way back to the top of the bantamweight division.",
         "Australia’s Moloney has been operating at a world-class level for the last decade, and knows exactly what it takes to earn, and win, world title fights."
       ],
+      "summaryCheckedAt": "2026-11-13T21:11:53.153534+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-13T21:11:53.153534+00:00"
     },
     {
@@ -1448,11 +1472,11 @@
         "kind": "publisher",
         "checkedAt": "2026-11-13T21:11:53.153534+00:00"
       },
-      "summaryCheckedAt": "2026-11-13T21:11:53.153534+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "30, 2027, at Scotiabank Arena in Toronto."
       ],
+      "summaryCheckedAt": "2026-11-13T21:11:53.153534+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-12T20:27:34.484903+00:00"
     },
     {
@@ -6476,33 +6500,6 @@
       "summaryCheckedAt": "2026-11-12T03:26:30.365251+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-11T15:22:37.837995+00:00"
-    },
-    {
-      "id": "6f2da3e822c4e5069067",
-      "title": "【試合結果】『abc presents RIZIN.55』OPENING FIGHT 第2試合／井上舜矢 vs. マイティ・saw",
-      "url": "https://jp.rizinff.com/_ct/17874847",
-      "source": "RIZIN",
-      "sport": "mma",
-      "publishedAt": "2026-11-08T16:00:00+00:00",
-      "timeBasis": "Bing News index timestamp",
-      "sourceMethod": "Original official domain indexed by Bing News",
-      "score": 1,
-      "image": {
-        "url": "https://d1uzk9o9cg136f.cloudfront.net/f/16782696/rc/2026/11/08/7d573088156ce2157cf8d64e77075db58313fb85_xlarge.jpg",
-        "alt": "Article image: 【試合結果】『abc presents RIZIN.55』OPENING FIGHT 第2試合／井上舜矢 vs. マイティ・saw",
-        "credit": "",
-        "sourceUrl": "https://jp.rizinff.com/_ct/17874847",
-        "kind": "publisher",
-        "checkedAt": "2026-11-13T05:24:28.417440+00:00"
-      },
-      "summaryCheckedAt": "2026-11-13T18:08:51.795308+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-13T05:24:28.417440+00:00",
-      "summaryPoints": [
-        "≫ RIZINオフィシャルグッズ ≫ デジタルカード「RIZIN CARD COLLECTION（ライコレ）」サービス開始！ ≫ 業務拡大につき、RIZIN FFスタッフ募集！ ≫【企業様向け】大会、RIZINファイターへのスポンサー / 企業タイアップ募集中！",
-        "This article is a sponsored article by ' '.",
-        "This article is a sponsored article by ' '."
-      ]
     }
   ],
   "resultReports": [
@@ -6855,26 +6852,20 @@
     }
   ],
   "deduplication": {
-    "checkedAt": "2026-11-13T21:11:53.153534+00:00",
-    "removedArticles": 3,
+    "checkedAt": "2026-11-13T22:05:45.187953+00:00",
+    "removedArticles": 2,
     "removedResultReports": 0,
     "examples": [
       {
-        "url": "https://jp.rizinff.com/_ct/17874427",
-        "title": "abc presents RIZIN.55 計量結果／フェイスオフ、身長差、リーチ差も掲載中",
+        "url": "https://jp.rizinff.com/_ct/17874942",
+        "title": "『abc presents RIZIN.55』試合結果一覧",
         "keptUrl": "https://jp.rizinff.com/_ct/17874934",
         "reason": "same story"
       },
       {
-        "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/13/video-ufc-335-ufc-336-press-conference-live-stream/92654986007/",
-        "title": "Video: UFC 335 & UFC 336 press conference live stream",
-        "keptUrl": "https://www.mmafighting.com/ufc/520942/ufc-335-and-ufc-336-press-conference-video",
-        "reason": "same story"
-      },
-      {
-        "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/12/video-ufc-334-pre-fight-press-conference-live-stream/92634285007/",
-        "title": "Video: 'UFC 334: Gane vs. Hokit' pre-fight press conference replay",
-        "keptUrl": "https://www.mmafighting.com/ufc/520720/ufc-334-press-conference-video",
+        "url": "https://jp.rizinff.com/_ct/17874427",
+        "title": "abc presents RIZIN.55 計量結果／フェイスオフ、身長差、リーチ差も掲載中",
+        "keptUrl": "https://jp.rizinff.com/_ct/17874934",
         "reason": "same story"
       }
     ]
