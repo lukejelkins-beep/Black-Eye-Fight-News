@@ -48,8 +48,11 @@ export function verifiedUfcBouts(bouts){
     const id=String(item.boutId??"").trim();
     const outcome=normalizeOutcome(item.outcome??item.result);
     const promotion=String(item.promotion??item.org??"").trim().toUpperCase();
+    // Provider org=UFC is not sufficient: DWCS/Road to UFC are feeder events.
+    const eventName=String(item.eventName??item.event?.name??item.eventTitle??item.cardName??"").trim();
+    const feeder=/(?:dana white.?s contender series|\bDWCS\b|road to ufc|road-to-ufc)/i.test(eventName);
     if(!id||!isDate(item.date)||promotion!=="UFC"||
-      !["W","L","D","NC"].includes(outcome)||seen.has(id))continue;
+      !["W","L","D","NC"].includes(outcome)||feeder||seen.has(id))continue;
     seen.add(id);
     out.push({...item,boutId:id,outcome});
   }
