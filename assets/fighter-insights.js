@@ -462,19 +462,32 @@
    }
    return;
   }
+  const periodChoices=[["5","Last 5"],["10","Last 10"],["career","Career"]];
+  const periodBoardsAvailable=ufcV3.schema>=5&&ufcV3.periodBoards&&
+    periodChoices.some(([id])=>Array.isArray(ufcV3.periodBoards[id])&&ufcV3.periodBoards[id].length>0);
+  let boardPeriod=periodBoardsAvailable&&ufcV3.periodBoards["5"]?.length?"5":
+    periodBoardsAvailable&&ufcV3.periodBoards.career?.length?"career":null;
+  const boardPeriodControls=periodBoardsAvailable?'<div class="befn-board-period-controls" role="group" aria-label="UFC leaderboard period">'+
+    periodChoices.map(([id,label])=>'<button type="button" data-befn-board-period="'+id+'"'+
+      (ufcV3.periodBoards[id]?.length?'':' disabled')+
+      ' aria-pressed="'+String(boardPeriod===id)+'" class="'+
+      (boardPeriod===id?'is-active':'')+'">'+label+'</button>').join('')+
+    '</div>':'';
   root.dataset.ready='true';
   root.innerHTML='<header class="befn-board-head"><div><p class="befn-board-eyebrow">UFC · Recent performance</p><h2>Statistical rankings</h2>'+
    '<p>'+ufcV3.population+' active fighters in this snapshot. Rankings require at least three UFC bouts with that statistic recorded.</p></div>'+
    '<span class="befn-board-date">Updated '+escapeHTML(ufcV3.asOf)+'</span></header>'+
-   '<div class="befn-board-controls"><label for="befn-board-metric">Choose a statistic</label>'+
+   '<div class="befn-board-controls">'+boardPeriodControls+'<label for="befn-board-metric">Choose a statistic</label>'+
    '<select id="befn-board-metric" aria-label="Choose UFC leaderboard statistic">'+ufcV3.boards.map(b=>
     '<option value="'+escapeHTML(b.id)+'">'+escapeHTML(b.label)+'</option>').join('')+
    '</select></div><div class="befn-v3-board-results" aria-live="polite"></div>';
   const select=root.querySelector('select'),results=root.querySelector('.befn-v3-board-results');
   const show=()=>{
-   const board=ufcV3.boards.find(b=>b.id===select.value);
+   const boards=boardPeriod?ufcV3.periodBoards?.[boardPeriod]||[]:ufcV3.boards;
+   const board=boards.find(b=>b.id===select.value);
    if(!board){results.innerHTML='<p class="befn-board-placeholder">No data available for this statistic.</p>';return;}
-   const eligible=board.leaders.filter(row=>row.bouts>=3&&row.bouts<=5&&
+   const maxBouts=boardPeriod==="career"?Infinity:boardPeriod==="10"?10:5;
+   const eligible=board.leaders.filter(row=>row.bouts>=3&&row.bouts<=maxBouts&&
     Number.isFinite(row.value)&&Number.isInteger(row.rank)&&row.rank>=1);
    const display=eligible.slice(0,30);
    const heading=board.label+' · '+board.eligible+' qualifying UFC fighters';
@@ -498,6 +511,20 @@
     '<p class="befn-board-placeholder">No athletes yet qualify for this category.</p>');
   };
   select.addEventListener('change',show);
+  root.querySelectorAll('[data-befn-board-period]').forEach(button=>{
+   button.addEventListener('click',()=>{
+    if(button.disabled)return;
+    const chosen=button.dataset.befnBoardPeriod;
+    if(!ufcV3.periodBoards?.[chosen]?.length)return;
+    boardPeriod=chosen;
+    for(const b of root.querySelectorAll('[data-befn-board-period]')){
+     const active=b.dataset.befnBoardPeriod===chosen;
+     b.classList.toggle('is-active',active);
+     b.setAttribute('aria-pressed',String(active));
+    }
+    show();
+   });
+  });
   show();
  }
  function applyV3(f){
