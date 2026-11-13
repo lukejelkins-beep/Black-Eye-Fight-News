@@ -996,7 +996,12 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None)
     eligible.discard(None)
     eligible.intersection_update(approved)
     if not eligible:return 0
+    # Rank *missing* native UFC fight IDs by their impact on the approved
+    # five-fight, ten-fight and career views. Read only saved histories; an ID
+    # shared by two approved fighters is still requested precisely once.
     pending={}
+    references={}
+    tiers=approved_ufc_round_priority(approval,coverage,research,today)
     for slugval,profile in research.get("profiles",{}).items():
         if slugval not in eligible:continue
         for row in profile.get("recentHistory",[]):
@@ -1005,7 +1010,9 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None)
             bid=str(row.get("boutId") or "")
             if not re.fullmatch(r"[1-9][0-9]{0,11}",bid) or bid in state["bouts"]:continue
             when=date_str(row.get("date"))
-            if when and when<=today.isoformat():pending[bid]=max(when,pending.get(bid,""))
+            if when and when<=today.isoformat():
+                pending[bid]=max(when,pending.get(bid,""))
+                references.setdefault(bid,set()).add(slugval)
     checks=state.setdefault("ufcCareerBoutChecks",{})
     # The signed-off cohort has a large, known cache gap. Bound career
     # hydration to 90 unique IDs per run while keeping the central provider
@@ -1013,7 +1020,14 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None)
     cap=max(1,min(90,int(client.max_calls*.20)))
     attempts=0
     indexed=0
-    for bid,_ in sorted(pending.items(),key=lambda row:(row[1],row[0]),reverse=True):
+    # Prioritise the most useful profile gaps, then fights covering two
+    # approved fighters, before the latest available UFC career date.
+    order=sorted(pending.items(),
+                 key=lambda item:(tiers.get(item[0],0),
+                                  len(references.get(item[0],())),
+                                  item[1],item[0]),
+                 reverse=True)
+    for bid,_ in order:
         if attempts>=cap or client.remaining<=0 or client.stopped or client.calls>=client.max_calls-10:
             break
         prior=checks.get(bid,{})
