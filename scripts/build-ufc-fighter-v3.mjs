@@ -11,6 +11,10 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const norm=s=>String(s||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
  .toLowerCase().replace(/[^a-z0-9]/g,"");
 const divkey=norm;
+const opponentIdentity=s=>String(s||"").normalize("NFKD")
+ .replace(/([a-z])([A-Z])/g,"$1 $2").toLowerCase()
+ .split(/[^a-z0-9]+/).filter(Boolean).sort().join(":");
+
 const integer=x=>Number.isInteger(x)&&x>=0?x:null;
 const signed=x=>Number.isInteger(x)?x:null;
 const fixed=x=>Number.isFinite(x)?Math.round(x*1e6)/1e6:null;
@@ -128,16 +132,31 @@ export function buildSnapshot(coverage,postfight,cohorts=[],options={}){
   const key=norm(f.name);
   if(!key)continue;
   if(fighters[key]){
-   // The frontend addresses V3 fighters by canonical display name, so two
-   // distinct roster slugs must never be silently collapsed into one record.
-   if(fighters[key].sourceSlug!==f.slug)
-    throw Error("UFC identity collision: "+JSON.stringify({
-     previous:{name:fighters[key].name,slug:fighters[key].sourceSlug,
-      recent:fighters[key].recent.map(b=>({date:b.date,opponent:b.opponent,boutId:b.boutId}))},
-     incoming:{name:f.name,slug:f.slug,
-      recent:f.recent.slice(0,5).map(b=>({date:b.date,opponent:b.opponent,boutId:b.boutId}))}
-    }));
-   continue;
+   const prior=fighters[key];
+   if(prior.sourceSlug===f.slug)continue;
+   // UFC provider slug aliases can duplicate one athlete and one fight with
+   // different bout IDs or transliterated name orders. A dated same-opponent
+   // overlap is a strict alias signal; otherwise stop, never conflate athletes.
+   const overlapping=f.recent.some(next=>prior.recent.some(prev=>
+    prev.date===next.date&&opponentIdentity(prev.opponent)===
+     opponentIdentity(next.opponent)&&opponentIdentity(prev.opponent)));
+   if(prior.name===f.name&&overlapping){
+    prior.sourceAliases=[...new Set([...(prior.sourceAliases||[prior.sourceSlug]),f.slug])];
+    prior.identityReviewPending=true;
+    // The bout IDs disagree. Never publish combined fighter statistics or
+    // rankings until the original provider identities are reconciled.
+    prior.metrics={};
+    if(f.recent.length>prior.recent.length){
+     prior.recent=f.recent.slice(0,5).map(x=>({
+      boutId:x.boutId?String(x.boutId):null,date:x.date,opponent:x.opponent,
+      outcome:x.outcome||null,method:x.method||null
+     }));
+    }
+    continue;
+   }
+   throw Error("UFC identity collision requires manual source review: "+
+    JSON.stringify({previous:{name:prior.name,slug:prior.sourceSlug,
+      recent:prior.recent},incoming:{name:f.name,slug:f.slug,recent:f.recent}}));
   }
   const source=reviewed.get(key);
   const division=source?.division||null;
@@ -204,7 +223,10 @@ export function buildSnapshot(coverage,postfight,cohorts=[],options={}){
    }))};
  });
  return {schema:4,scope:"ufc-only",asOf,cutoff:coverage.activityCutoff,
-  population:Object.keys(fighters).length,boards:resultBoards,fighters};
+  population:Object.keys(fighters).length,
+  identityReviewPending:Object.values(fighters).filter(x=>x.identityReviewPending).map(x=>({
+   name:x.name,slugs:x.sourceAliases})),
+  boards:resultBoards,fighters};
 }
 const read=(name,fallback)=>{try{return JSON.parse(fs.readFileSync(path.join(root,name),"utf8"))}
  catch(e){if(e.code==="ENOENT")return fallback;throw e}};
