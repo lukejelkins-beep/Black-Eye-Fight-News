@@ -284,25 +284,32 @@
   };
   const statRows=ufcV3.boards.filter(b=>v3.metrics[b.id]).map(b=>{
    const m=v3.metrics[b.id];
-   const topTen=Number.isInteger(m.rank)&&m.rank>=1&&m.rank<=10;
+   const qualified=v3.recent.filter(f=>f.outcome!=='NC').length>=3&&m.bouts>=3;
+   const rank=qualified&&ufcV3.schema>=4?m.rank:null;
+   const topTen=Number.isInteger(rank)&&rank>=1&&rank<=10;
    const label=readableLabels[b.id]||b.label;
    const value=b.id==='control'||b.id==='net'
     ?(m.value<0?'−':'')+Math.floor(Math.abs(m.value)/60)+':'+String(Math.round(Math.abs(m.value)%60)).padStart(2,'0')
     :metricValue(m,b.type==='def'?'pct':b.type);
    return '<li class="'+(topTen?'is-top-ten':'')+'"><span>'+escapeHTML(label)+'</span><strong>'+escapeHTML(value)+'</strong>'+
     (topTen?'<b class="befn-v3-top-ten">TOP 10 · UFC-WIDE</b>':'')+
-    '<small>'+(m.rank?'UFC-wide rank #'+m.rank+' of '+b.eligible+' eligible':'No UFC-wide rank')+
+    '<small>'+(rank?'UFC-wide rank #'+rank+' of '+b.eligible+' eligible':'Ranking requires at least 3 measured UFC fights and recalculation')+
     ' · '+m.bouts+' recorded '+(m.bouts===1?'fight':'fights')+'</small></li>';
   }).join('');
   const decided=v3.recent.filter(b=>['W','L','D'].includes(b.outcome));
   const record=['W','L','D'].map(x=>decided.filter(b=>b.outcome===x).length);
   const tiles=[];
   if(decided.length)tiles.push([record[0]+'–'+record[1]+(record[2]?'–'+record[2]:''),'Record',decided.length+' fights']);
-  for(const [id,label] of [['ko','KO/TKO wins'],['submission','Sub wins'],['slpm','Sig. strikes/min'],['tdDef','TD defence'],['control','Control/15']]){
+  for(const [id,label] of [
+   ['ko','KO/TKO wins'],['submission','Submission wins'],
+   ['slpm','Sig. strikes/min'],['acc','Strike accuracy'],
+   ['kd','Knockdowns/15 min'],['td','Takedowns/15 min'],
+   ['tdDef','TD defence'],['control','Control/15 min']
+  ]){
    const metric=v3.metrics[id];
    if(!metric)continue;
    const value=id==='control'?Math.floor(metric.value/60)+':'+String(Math.round(metric.value)%60).padStart(2,'0'):
-    metricValue(metric,id==='ko'||id==='submission'?'count':id==='tdDef'?'pct':'rate');
+    metricValue(metric,id==='ko'||id==='submission'?'count':id==='tdDef'||id==='acc'?'pct':'rate');
    tiles.push([value,label,metric.bouts+' fights']);
   }
   return '<section class="befn-profile-insights befn-v3" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC Fighter V3">'+
@@ -333,8 +340,7 @@
    '</div>'+
    '</div>'+
    (statRows?'<details class="befn-v3-statistics befn-v3-rank-full" open><summary>Stats & leaderboard ranks</summary><ul class="befn-v3-rank-tiles">'+statRows+'</ul></details>':'')+
-   '<section class="befn-profile-block"><h3>'+escapeHTML(kind)+'</h3><div class="befn-profile-body">'+
-   credentialsHTML(f)+'</div></section></section>';
+   '</section>';
  }
  function renderV3Boards(){
   const root=document.querySelector('[data-befn-v3-leaderboards]');
