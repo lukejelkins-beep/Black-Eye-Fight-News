@@ -262,7 +262,7 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
   for(const item of rosterReview?.excluded||[]){
    if(!item?.slug||!validDate(item.lastUfcFight))continue;
    const evidence=item.evidence||{};
-   const status=["confirmed_retired","confirmed_left_ufc"].includes(item.reason)&&
+   const status=["confirmed_retired","confirmed_left_ufc","official_ufc_status_not_fighting"].includes(item.reason)&&
     /^https:\/\/\S+/.test(evidence.source||"");
    const later=["later_professional_mma_outside_ufc",
     "later_professional_bareknuckle_mma_outside_ufc"].includes(item.reason)&&
@@ -280,7 +280,7 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
   return row?.lastUfcFight===f.lastActive?row:null;};
  const isOutside=f=>f.latestOtherMma?.date>f.lastActive||
   Boolean(statusFor(f)?.reason?.startsWith("later_professional_"));
- const isExited=f=>["confirmed_retired","confirmed_left_ufc"].includes(statusFor(f)?.reason);
+ const isExited=f=>["confirmed_retired","confirmed_left_ufc","official_ufc_status_not_fighting"].includes(statusFor(f)?.reason);
  const excluded=candidates.filter(f=>isOutside(f)||isExited(f));
  const eligible=candidates.filter(f=>!isOutside(f)&&!isExited(f));
  const review=eligible.filter(f=>f.latestUnverifiedPromotion?.date>f.lastActive||
@@ -321,6 +321,7 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
   excludedLaterNonUfcMma:excluded.filter(isOutside).length,
    excludedConfirmedRetired:excluded.filter(f=>statusFor(f)?.reason==="confirmed_retired").length,
    excludedConfirmedUfcExit:excluded.filter(f=>statusFor(f)?.reason==="confirmed_left_ufc").length,
+   excludedOfficialNotFighting:excluded.filter(f=>statusFor(f)?.reason==="official_ufc_status_not_fighting").length,
   latestPromotionReviewRequired:review.length,
   noKnownLaterMmaOrUnknown:eligible.length-review.length,
   activeFighters:fighters.length,
