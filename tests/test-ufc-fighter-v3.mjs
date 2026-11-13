@@ -279,3 +279,20 @@ test("source mismatch and inconsistent snapshot dates stop publication",()=>{
  assert.throws(()=>buildSnapshot(coverage,{schema:1,scope:"all"}),/Required saved/);
  assert.throws(()=>buildSnapshot(coverage,postfight,cohorts,{asOf:"2026-11-14"}),/date must match/);
 });
+
+test("latest MMA eligibility export excludes departures and prevents stale V3 population",()=>{
+ const scoped=structuredClone(coverage);
+ scoped.fighters[0].eligibilityStatus="latest_observed_mma_ufc";
+ scoped.fighters[1].eligibilityStatus="review_required";
+ scoped.fighters[2].eligibilityStatus="latest_professional_mma_not_ufc";
+ scoped.fighters[3].eligibilityStatus="latest_observed_mma_ufc";
+ scoped.fighters[4].eligibilityStatus="latest_observed_mma_ufc";
+ scoped.summary={activeFighters:scoped.fighters.length};
+ const a=buildSnapshot(scoped,postfight,cohorts);
+ assert.equal(a.population,3);
+ assert.equal(a.fighters.cunknown,undefined);
+ assert.equal(a.boards.find(x=>x.id==="slpm").eligible,2);
+ scoped.summary.activeFighters+=1;
+ assert.throws(()=>buildSnapshot(scoped,postfight,cohorts),
+  /population disagrees with eligibility audit/);
+});
