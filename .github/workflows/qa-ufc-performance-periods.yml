@@ -5,6 +5,9 @@ on:
       - feature/ufc-v3-period-analytics-design-20261113
     paths:
       - scripts/ufc-performance-periods.mjs
+      - scripts/audit-ufc-career-period-cache.mjs
+      - scripts/build-ufc-postfight-metrics.mjs
+      - tests/test-ufc-career-period-cache.mjs
       - tests/test-ufc-performance-periods.mjs
       - .github/workflows/qa-ufc-performance-periods.yml
   pull_request:
@@ -25,6 +28,13 @@ jobs:
         with:
           node-version: '22'
       - name: Syntax check
-        run: node --check scripts/ufc-performance-periods.mjs
+        run: |
+          node --check scripts/ufc-performance-periods.mjs
+          node --check scripts/audit-ufc-career-period-cache.mjs
+          node --check scripts/build-ufc-postfight-metrics.mjs
       - name: Test last five, last ten, career and missing-metric safeguards
-        run: node --test tests/test-ufc-performance-periods.mjs
+        run: |
+          node --test tests/test-ufc-performance-periods.mjs
+          node --test tests/test-ufc-career-period-cache.mjs
+      - name: Audit real cached UFC career histories without source API or public writes
+        run: node scripts/audit-ufc-career-period-cache.mjs
