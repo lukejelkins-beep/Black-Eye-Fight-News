@@ -5,6 +5,12 @@ on:
     paths:
       - '.github/workflows/approve-ufc-36-month-roster.yml'
   workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/approve-ufc-36-month-roster.yml'
+      - 'scripts/approve-ufc-36-month-snapshot.mjs'
+      - 'tests/test-ufc36-approved-snapshot.mjs'
 permissions:
   contents: write
 jobs:
@@ -43,6 +49,7 @@ jobs:
           node --test tests/test-ufc-36-month-independent-evidence.mjs
           python -m unittest discover -s tests -p 'test_ufc_full_career_cache.py' -v
       - name: Commit snapshot to main for the existing five-minute collector
+        if: github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
