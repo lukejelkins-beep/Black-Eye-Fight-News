@@ -127,8 +127,16 @@ export function buildSnapshot(coverage,postfight,cohorts=[],options={}){
   }
  }
  const reviewed=reviewedMap(cohorts),fighters={},divisions=new Map();
+ // Fail closed on corrupt or stale eligibility exports. The publication
+ // snapshot MUST use the reviewed current-roster membership calculated by
+ // the source audit, never recreate eligibility from old UFC-labelled dates.
+ if(coverage.summary?.activeFighters!==undefined&&
+    coverage.summary.activeFighters!==coverage.fighters.length)
+  throw Error("UFC source population disagrees with eligibility audit");
+ const included=new Set(["latest_observed_mma_ufc","review_required"]);
  const current=coverage.fighters.filter(f=>f&&f.lastUfcFight>=coverage.activityCutoff&&
-   f.lastUfcFight<=asOf&&Array.isArray(f.recent));
+   f.lastUfcFight<=asOf&&Array.isArray(f.recent)&&
+   (!f.eligibilityStatus||included.has(f.eligibilityStatus)));
  // Keep a profile even when all five historical fights are still unresolved.
  // Absence of reliable fight rows must never silently remove an active athlete.
  for(const f of current){
