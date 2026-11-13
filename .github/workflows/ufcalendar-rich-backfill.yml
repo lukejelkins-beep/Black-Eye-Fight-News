@@ -68,6 +68,17 @@ jobs:
           node scripts/build-ufc-profile-queue.mjs
           node scripts/build-ufc-postfight-metrics.mjs
           node scripts/build-ufc-36-month-candidates.mjs
+      - name: Report verified approved Stage 3 coverage from saved data (no API calls)
+        if: success()
+        shell: bash
+        run: |
+          # This is an offline snapshot of the *same* cached data just collected.
+          # Do not jeopardize saving new research if an audit precondition fails.
+          if node scripts/ufc-36-month-stage3-progress.mjs; then
+            echo "Approved UFC Stage 3 coverage audited; see BEFN_STAGE3_PROGRESS above."
+          else
+            echo "::warning::Offline Stage 3 audit unavailable; preserve newly fetched records and continue."
+          fi
       - name: Commit sourced observations without exposing credentials
         shell: bash
         run: |
