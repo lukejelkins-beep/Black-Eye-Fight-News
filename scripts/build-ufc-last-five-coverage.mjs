@@ -55,10 +55,11 @@ export function auditUfcLastFive(progress,research,postfight,champions,{asOf,upc
  const noteOther=(f,{date,promotion,opponent="",sport="",source=""})=>{
   if(!f?.active||!validDate(date)||date>asOf||date<f.lastActive)return;
   const org=promotionKey(promotion),rules=promotionKey(sport);
-  if(org==="ufc"||nonMmaPromotions.has(org))return;
-  const confirmed=(mmaPromotions.has(org)||rules==="mma"||
-   rules==="mixed-martial-arts")&&
-   !["boxing","kickboxing","muay-thai","grappling","submission-grappling"].includes(rules);
+  if(org==="ufc"||nonMmaPromotions.has(org)||
+   ["boxing","kickboxing","muay-thai","grappling",
+    "submission-grappling","bjj","wrestling","bare-knuckle-boxing"].includes(rules))return;
+  const confirmed=mmaPromotions.has(org)||rules==="mma"||
+   rules==="mixed-martial-arts";
   // Blank-promotion rows on the same date often duplicate the indexed UFC
   // result with another spelling of the opponent; not proof of a newer bout.
   if(date===f.lastActive&&!confirmed)return;
