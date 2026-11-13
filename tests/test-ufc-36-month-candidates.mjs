@@ -211,3 +211,36 @@ test("verified non-MMA cannot suppress actual MMA or mismatched opponent records
  assert(!out.fighters.some(f=>f.slug==="verified-mma"),
   "independently verified later professional MMA must exclude");
 });
+
+test("later Road-to-UFC MMA is not an official UFC roster fight; UFC BJJ remains non-MMA",()=>{
+ const progress={bouts:{
+  "11":bout(11,"2024-05-18","Victor Example","victor-example","UFC Rival","ufc-rival"),
+  "12":bout(12,"2025-06-01","Grappler Example","grappler-example","UFC Rival 2","ufc-rival-2"),
+  "13":{...bout(13,"2026-05-28","Feeder Only","feeder-only",
+    "Road Rival","road-rival"),event:"Road To UFC Season 5: Opening Rounds"}
+ }};
+ const research={profiles:{
+  "victor-example":{recentHistory:[{date:"2026-05-28",opponent:"Rongzhu",
+   promotion:"",result:"loss"}]},
+  "grappler-example":{recentHistory:[{date:"2026-05-28",opponent:"BJJ Rival",
+   promotion:"",result:"loss"}]}
+ }};
+ const review={asOf:"2026-11-13",fighters:{
+  "victor-example":[{date:"2026-05-28",opponent:"Rongzhu",ruleset:"mma",
+   promotion:"road-to-ufc",checkedAt:"2026-11-13",
+   source:"https://www.ufc.com/video/157154"}],
+  "grappler-example":[{date:"2026-05-28",opponent:"BJJ Rival",ruleset:"grappling",
+   promotion:"ufc-bjj",checkedAt:"2026-11-13",
+   source:"https://www.ufc.com/news/ufc-bjj"}]
+ }};
+ const out=candidateManifest(progress,research,{fighters:{}},{divisions:[]},
+  {asOf:"2026-11-13",evidenceReview:review});
+ assert(!out.fighters.some(f=>f.slug==="victor-example"),
+  "completed professional MMA on a feeder show is not an official UFC match");
+ assert(!out.fighters.some(f=>f.slug==="feeder-only"),
+  "a feeder bout alone cannot establish UFC roster activity");
+ assert(out.fighters.some(f=>f.slug==="grappler-example"),
+  "UFC BJJ alone does not disqualify a fighter with a recent official UFC bout");
+ assert.equal(out.eligibilityExcluded.find(f=>f.slug==="victor-example").evidence.source,
+  "https://www.ufc.com/video/157154");
+});
