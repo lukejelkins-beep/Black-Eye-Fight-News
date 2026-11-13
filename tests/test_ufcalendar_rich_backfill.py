@@ -142,6 +142,59 @@ class RichBackfillTests(unittest.TestCase):
         self.assertEqual(rows[1]["promotion"],"pfl")
         self.assertTrue(rows[1]["titleFight"])
 
+    def test_shorter_history_response_preserves_old_ufc_and_non_ufc_results(self):
+        today=dt.date(2026,11,14)
+        saved=[
+          {"date":"2009-01-01","opponent":"Old UFC Rival","promotion":"ufc",
+           "result":"loss","source":"native","boutId":"9","method":"decision"},
+          {"date":"2015-01-01","opponent":"Old PFL Rival","promotion":"pfl",
+           "result":"win","source":"history","boutId":None,"method":"ko_tko"}]
+        profile={"recentHistory":saved}
+        payload={"meta":{"truncated":False},"data":[
+          {"date":"2026-05-01","opponent_name":"New Rival","org_slug":"ufc",
+           "status":"win","source":"native","fight_id":101,"method":"decision"}]}
+        merged=m.save_ufc_timeline(profile,payload,today)
+        self.assertEqual(len(merged),3)
+        self.assertEqual(len(profile["recentHistory"]),3)
+        self.assertEqual(next(r["boutId"] for r in merged if r["opponent"]=="Old UFC Rival"),"9")
+        self.assertEqual(next(r["promotion"] for r in merged if r["opponent"]=="Old PFL Rival"),"pfl")
+        self.assertFalse(profile["ufcTimeline"]["complete"])
+        self.assertTrue(profile["ufcTimeline"]["savedHistoryHasAdditionalUfcBouts"])
+        before=list(profile["recentHistory"])
+        m.save_ufc_timeline(profile,payload,today)
+        self.assertEqual(profile["recentHistory"],before,"Identical follow-up cannot erase history")
+
+    def test_native_id_upgrade_retains_rich_existing_method_without_duplicate(self):
+        today=dt.date(2026,11,14)
+        profile={"recentHistory":[
+          {"date":"2024-05-01","opponent":"Champion","promotion":"ufc",
+           "result":"win","source":"history","method":"ko_tko","boutId":None}]}
+        payload={"meta":{"truncated":False},"data":[
+          {"date":"2024-05-01","opponent_name":"Champion","org_slug":"ufc",
+           "status":"win","source":"native","fight_id":42}]}
+        merged=m.save_ufc_timeline(profile,payload,today)
+        self.assertEqual(len(merged),1)
+        self.assertEqual(merged[0]["boutId"],"42")
+        self.assertEqual(merged[0]["source"],"native")
+        self.assertEqual(merged[0]["method"],"ko_tko")
+        self.assertTrue(profile["ufcTimeline"]["complete"])
+
+    def test_mismatched_native_ids_are_quarantined_and_uncertified(self):
+        today=dt.date(2026,11,14)
+        profile={"recentHistory":[
+          {"date":"2024-05-01","opponent":"Champion","promotion":"ufc",
+           "result":"loss","source":"native","boutId":"42","method":"decision"}]}
+        payload={"meta":{"truncated":False},"data":[
+          {"date":"2024-05-01","opponent_name":"Champion","org_slug":"ufc",
+           "status":"loss","source":"native","fight_id":73}]}
+        merged=m.save_ufc_timeline(profile,payload,today)
+        self.assertEqual(len(merged),1)
+        self.assertEqual(merged[0]["boutId"],"42")
+        self.assertEqual(len(profile["ufcHistoryIdConflicts"]),1)
+        self.assertFalse(profile["ufcTimeline"]["complete"])
+        m.save_ufc_timeline(profile,payload,today)
+        self.assertEqual(len(profile["ufcHistoryIdConflicts"]),1)
+
     def test_current_career_record_requires_valid_format(self):
         self.assertIsNone(m.read_fighter_profile({"name":"A","slug":"a",
             "records":{"pro_mma":{"value":"unverified"}}})["record"])
