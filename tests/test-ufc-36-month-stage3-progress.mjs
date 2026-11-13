@@ -70,6 +70,20 @@ test('the existing paid collector reports offline Stage 3 progress without a sec
   assert.match(yaml,/Offline Stage 3 audit unavailable; preserve newly fetched records/);
 });
 
+test('Full-career identity checks are tracked separately from full career certification',()=>{
+ const p={...progress,ufcFullCareerHistoryChecks:{
+   'fighter-1':{status:'checked',newUfcBoutsRecovered:2},
+   'fighter-2':{status:'checked',newUfcBoutsRecovered:0},
+   'fighter-3':{status:'retry',retryAfter:'2026-11-21'},
+   'not-approved':{status:'checked',newUfcBoutsRecovered:1000}
+ }};
+ const s=auditApprovedStage3(approval,census,p,research,archive).summary;
+ assert.equal(s.approvedFullCareerIdentityChecksCompleted,2);
+ assert.equal(s.approvedFullCareerIdentityChecksOnRetry,1);
+ assert.equal(s.approvedFullCareerIdentityChecksRecoveredUfcBouts,2);
+ assert.equal(s.fullyProviderCertifiedTimelines,0);
+});
+
 test('A single metric does not imply complete statistics; all-known indexing does not certify a full career',()=>{
  const p={...progress,bouts:{'41':fight(41,'Opponent A'),'42':fight(42,'Opponent B')}};
  const r={profiles:{'fighter-1':{
