@@ -660,15 +660,87 @@ def ufc_timeline_evidence(payload,today):
 
 
 def save_ufc_timeline(profile,payload,today):
-    history=summarize_history(payload)
-    previous=profile.get("recentHistory") or []
-    old_ufc=sum(row.get("promotion","").lower()=="ufc" for row in previous
-                if isinstance(row,dict))
-    new_ufc=sum(row.get("promotion","").lower()=="ufc" for row in history)
-    if history and new_ufc>=old_ufc:
-        profile["recentHistory"]=history
-    profile["ufcTimeline"]=ufc_timeline_evidence(payload,today)
-    return history
+    """Merge provider history into the permanent cache without deleting older bouts.
+
+    A shorter /history response cannot erase saved UFC or non-UFC results.
+    Prefer sourced native fight IDs and richer old fields; never invent a
+    missing native ID or silently replace a conflicting linked ID.
+    """
+    incoming=summarize_history(payload)
+    previous=[row for row in profile.get("recentHistory",[])
+              if isinstance(row,dict)]
+    def identity(row):
+        day=date_str(row.get("date"))
+        opponent=safe(row.get("opponent"),110).casefold()
+        org=safe(row.get("promotion"),24).casefold()
+        return (day,opponent,org) if day and opponent and org else None
+
+    combined={}
+    unmatched=[]
+    for row in previous+incoming:
+        key=identity(row)
+        if key is None:
+            # Keep a legacy incomplete entry rather than deleting information
+            # that another research process may still need to reconcile.
+            if row not in unmatched:unmatched.append(row)
+            continue
+        old=combined.get(key)
+        if old is None:
+            combined[key]=dict(row)
+            continue
+        # Existing persisted bout IDs are canonical numeric *strings*.
+        # positive() accepts provider integer IDs only, so using it on
+        # cached rows would silently treat every saved native ID as absent.
+        def native_id(value):
+            if type(value) is int and 0<value<=999999999999:
+                return str(value)
+            if isinstance(value,str) and re.fullmatch(r"[1-9][0-9]{0,11}",value):
+                return value
+            return None
+        old_id=native_id(old.get("boutId"))
+        new_id=native_id(row.get("boutId"))
+        old_native=old.get("source")=="native" and old_id is not None
+        new_native=row.get("source")=="native" and new_id is not None
+        if old_native and new_native and old_id!=new_id:
+            # Preserve old linked evidence until the fight-ID conflict is
+            # independently checked; do not pollute the round cache.
+            profile.setdefault("ufcHistoryIdConflicts",[])
+            conflict={"date":key[0],"opponent":key[1],
+                      "promotion":key[2],"oldId":old_id,"newId":new_id}
+            if conflict not in profile["ufcHistoryIdConflicts"]:
+                profile["ufcHistoryIdConflicts"].append(conflict)
+            continue
+        if new_native and not old_native:
+            winner,other=dict(row),old
+        else:
+            winner,other=dict(old),row
+        # Fill blanks only; retain existing nonempty verified details.
+        for field,value in other.items():
+            if (field not in winner or winner[field] in (None,"")) and value not in (None,""):
+                winner[field]=value
+        combined[key]=winner
+
+    merged=sorted(list(combined.values())+unmatched,
+                  key=lambda row:(row.get("date") or "",row.get("opponent") or ""),
+                  reverse=True)
+    if merged:profile["recentHistory"]=merged
+    evidence=ufc_timeline_evidence(payload,today)
+    previous_ufc={identity(row) for row in previous
+                  if identity(row) and str(row.get("promotion") or "").lower()=="ufc"
+                  and str(row.get("result") or "").lower() in
+                  ("win","loss","draw","no_contest")}
+    incoming_ufc={identity(row) for row in incoming
+                  if identity(row) and str(row.get("promotion") or "").lower()=="ufc"}
+    if not previous_ufc.issubset(incoming_ufc):
+        # Even an apparently complete provider response is not complete
+        # relative to stronger already saved evidence.
+        evidence["complete"]=False
+        evidence["savedHistoryHasAdditionalUfcBouts"]=True
+    if profile.get("ufcHistoryIdConflicts"):
+        evidence["complete"]=False
+        evidence["conflictingNativeFightIds"]=len(profile["ufcHistoryIdConflicts"])
+    profile["ufcTimeline"]=evidence
+    return merged
 
 
 def refresh_unlinked_ufc_native_ids(client,state,research,coverage,today):
