@@ -25,7 +25,7 @@ test('Stage3 preserves strict certified careers across midnight without fabricat
  assert.equal(afterMidnight.certificationEvidenceCutoff,'2026-11-14');
  for(const slug of ['saygid-izagakhmaev','shem-rock','shannon-ross','sean-sharaf']){
   const prof=research.profiles[slug],historic=prof.recentHistory.filter(x=>x.promotion==='ufc');
-  const entry=independentlyVerified.fighters[slug],date=census.fighters.find(x=>x.slug===slug).lastUfcFight;
+  const entry=independentlyVerified.fighters[slug],date=census.fighters.find(x=>x.slug===slug)?.lastUfcFight;
   const trial=evaluateCareerEvidence(prof,historic,date,approval.rosterAsOf,entry,cache.bouts);
   const all=historic.map(b=>({id:b.boutId,date:b.date,opponent:b.opponent,result:b.result,src:b.source}));
   console.log('BEFN_CERT_DIRECT_EVIDENCE_DIAGNOSTIC='+JSON.stringify({slug,trial,all,proofBouts:entry?.bouts}));
