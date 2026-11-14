@@ -44,6 +44,89 @@ class FullCareerCacheTests(unittest.TestCase):
                 "approvedAt":"2026-11-13",
                 "approvedFighters":slugs if slugs is not None else ["veteran"]}
 
+    def legacy_evidence(self):
+        return {"schema":1,"scope":"ufc-official-legacy-evidence","bouts":[{
+            "fightId":"800","fighterSlug":"veteran","date":"2008-05-01",
+            "opponent":"Opponent","event":"The Ultimate Fighter 18 Finale",
+            "sourceUrl":"https://www.ufc.com/event/test"}]}
+
+    def legacy_client(self,returned_id=800,opponent="Opponent",
+                      event_title="The Ultimate Fighter 18 Finale"):
+        class Search:
+            max_calls=500
+            remaining=100
+            stopped=False
+            calls=0
+            paths=[]
+            def call(self,path):
+                self.calls+=1
+                self.paths.append(path)
+                return {"data":[{
+                    "id":returned_id,"status":"completed",
+                    "fighter_a":{"id":1,"slug":"veteran","name":"Veteran"},
+                    "fighter_b":{"id":2,"slug":"opponent","name":opponent},
+                    "event":{"id":500,"org":"ufc","title":event_title,
+                             "starts_at":"2008-05-01T00:00:00Z"},
+                    "result":{"winner_fighter_id":1,"round":3,
+                              "method":"decision","time":"5:00"}}]}
+        return Search()
+
+    def test_legacy_date_search_exact_id_indexes_once_and_reuses_provider_match(self):
+        state,research,coverage=self.fixture()
+        research["profiles"]["veteran"]["name"]="Veteran"
+        state["ufcCareerBoutChecks"]={"800":{"status":"requires_manual_review"}}
+        client=self.legacy_client()
+        outcome=m.reconcile_legacy_ufc_by_event_date(
+            client,state,research,coverage,dt.date(2026,11,13),
+            self.approval(),self.legacy_evidence())
+        self.assertEqual(outcome,{"calls":1,"indexed":1,"alternative":0})
+        self.assertEqual(state["bouts"]["800"]["event"],"The Ultimate Fighter 18 Finale")
+        self.assertEqual(client.paths,[
+            "/fights/search?org=ufc&from=2008-04-30&to=2008-05-03&limit=25"])
+        self.assertNotIn("800",state["ufcCareerBoutChecks"])
+        self.assertEqual(m.reconcile_legacy_ufc_by_event_date(
+            client,state,research,coverage,dt.date(2026,11,13),
+            self.approval(),self.legacy_evidence())["calls"],0)
+
+    def test_legacy_date_search_alternative_id_never_rewrites_native_history(self):
+        state,research,coverage=self.fixture()
+        research["profiles"]["veteran"]["name"]="Veteran"
+        client=self.legacy_client(returned_id=801)
+        outcome=m.reconcile_legacy_ufc_by_event_date(
+            client,state,research,coverage,dt.date(2026,11,13),
+            self.approval(),self.legacy_evidence())
+        self.assertEqual(outcome,{"calls":1,"indexed":0,"alternative":1})
+        self.assertNotIn("800",state["bouts"])
+        self.assertNotIn("801",state["bouts"])
+        self.assertEqual(research["profiles"]["veteran"]["recentHistory"][0]["boutId"],"800")
+        self.assertEqual(state["ufcLegacyDateSearchChecks"]["800"]["status"],
+                         "alternative_id_manual_review")
+        self.assertEqual(state["ufcLegacyDateSearchChecks"]["800"]["candidateId"],"801")
+        self.assertEqual(m.reconcile_legacy_ufc_by_event_date(
+            client,state,research,coverage,dt.date(2026,11,13),
+            self.approval(),self.legacy_evidence())["calls"],0)
+
+    def test_legacy_search_rejects_feeder_other_opponent_or_unsigned_cohort(self):
+        for title,opponent in [
+            ("Dana White's Contender Series","Opponent"),
+            ("The Ultimate Fighter 18 Finale","Different Opponent")]:
+            state,research,coverage=self.fixture()
+            research["profiles"]["veteran"]["name"]="Veteran"
+            client=self.legacy_client(event_title=title,opponent=opponent)
+            outcome=m.reconcile_legacy_ufc_by_event_date(
+                client,state,research,coverage,dt.date(2026,11,13),
+                self.approval(),self.legacy_evidence())
+            self.assertEqual(outcome,{"calls":1,"indexed":0,"alternative":0})
+            self.assertNotIn("800",state["bouts"])
+            self.assertEqual(state["ufcLegacyDateSearchChecks"]["800"]["status"],"no_match")
+        state,research,coverage=self.fixture()
+        client=self.legacy_client()
+        result=m.reconcile_legacy_ufc_by_event_date(
+            client,state,research,coverage,dt.date(2026,11,13),
+            self.approval(["unapproved"]),self.legacy_evidence())
+        self.assertEqual(result["calls"],0)
+        self.assertEqual(client.calls,0)
+
     def test_no_signoff_no_full_career_calls(self):
         state,research,candidate=self.fixture()
         client=Fake()
