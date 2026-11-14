@@ -1,7 +1,7 @@
 import {readFileSync} from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {auditApprovedStage3,markdownReport,evaluateCareerEvidence,auditOfficialCareerInventory} from '../scripts/ufc-36-month-stage3-progress.mjs';
+import {auditApprovedStage3,markdownReport,evaluateCareerEvidence,auditOfficialCareerInventory,isAttestedOfficialUfcShowcase} from '../scripts/ufc-36-month-stage3-progress.mjs';
 const slugs=Array.from({length:783},(_,i)=>'fighter-'+(i+1));
 const approval={schema:1,scope:'ufc-36-month-roster',status:'approved',
   approvedBy:'user',rosterAsOf:'2026-11-14',approvedFighters:slugs};
@@ -891,4 +891,64 @@ test('Official UFC drawn bout uses explicit native draw method with no winner, n
    'a win cannot be converted to a draw merely by the method string');
  assert.equal(verify(native,{...proof,bouts:[{...proof.bouts[0],result:'win'}]}),false,
    'an independently sourced win contradicts the archived drawn result');
+});
+
+test('an independently sourced exact UFC showcase can survive a feeder-labelled card but cannot grant blanket RTU inclusion',()=>{
+ const fighter={name:'Bruna Brasil'};
+ const nativeRow={date:'2025-08-22',opponent:'Shi Ming',result:'win',
+   promotion:'ufc',source:'native',boutId:'60900'};
+ const officialBout={date:'2025-08-22',opponent:'Shi Ming',result:'win',
+   fightUrl:'https://ufcstats.com/fight-details/abf5f4d6f777cf7b',
+   nativeBoutId:'60900',nativeFighterId:'93'};
+ const showcase={independentlyOfficial:true,nativeBoutId:'60900',date:'2025-08-22',
+   opponent:'Shi Ming',fightUrl:officialBout.fightUrl,
+   officialUfcSourceUrl:'https://www.ufc.com/news/road-to-ufc-live-results-season-4-semifinals-shi-vs-brasil-recaps-official-scorecards-interviews-shanghai'};
+ const evidence={
+   fighterName:'Bruna Brasil',sourceCoverageAttested:true,
+   verificationMethod:'full_official_ufc_fight_listing_crosscheck',
+   verifiedAt:'2026-11-14',fighterUrl:'https://ufcstats.com/fighter-details/aaaaaaaaaaaaaaaa',
+   officialFighterUrl:'https://www.ufc.com/athlete/bruna-brasil',
+   sourceSnapshot:{fightResultsBlobSha:'a'.repeat(40),fighterDetailsBlobSha:'b'.repeat(40)},
+   verifiedNumericFighterIds:['93'],bouts:[officialBout],
+   officialShowcaseBouts:[showcase]
+ };
+ const cached={id:'60900',org:'ufc',event:'Road to UFC Season 4 Semifinals',
+   eventDate:'2025-08-22',status:'completed',result:{winnerId:'93',method:'decision'},
+   a:{id:'93',name:'Bruna Brasil'},b:{id:'10',name:'Shi Ming'}};
+ const certified=(e=evidence,b=cached)=>evaluateCareerEvidence(
+   fighter,[nativeRow],'2025-08-22','2026-11-14',e,{'60900':b}).independentlyVerified;
+ assert.equal(isAttestedOfficialUfcShowcase(evidence,nativeRow),true);
+ assert.equal(certified(),true);
+ assert.equal(certified({...evidence,officialShowcaseBouts:[]}),false);
+ assert.equal(certified({...evidence,officialShowcaseBouts:[{...showcase,nativeBoutId:'60901'}]}),false);
+ assert.equal(certified({...evidence,officialShowcaseBouts:[{...showcase,officialUfcSourceUrl:'https://example.com/not-ufc'}]}),false);
+ assert.equal(certified(evidence,{...cached,result:{winnerId:'10',method:'decision'}}),false,
+   'the UFC source result must still match the original native winning corner');
+});
+
+test('a source-confirmed alternate native fighter name needs the exact pinned UFCStats fighter identity',()=>{
+ const p={name:'Heili Alateng'};
+ const saved={date:'2026-09-26',opponent:'John Castaneda',result:'win',
+   promotion:'ufc',source:'native',boutId:'85944'};
+ const evidence={fighterName:'Alatengheili',sourceCoverageAttested:true,
+   verifiedAt:'2026-11-14',verificationMethod:'full_official_ufc_fight_listing_crosscheck',
+   fighterUrl:'https://ufcstats.com/fighter-details/1897b7b913736a7c',
+   officialFighterUrl:'https://www.ufc.com/athlete/heili-alateng',
+   sourceSnapshot:{fightResultsBlobSha:'a'.repeat(40),fighterDetailsBlobSha:'b'.repeat(40)},
+   verifiedNumericFighterIds:['7566'],
+   sourceVerifiedNativeNameAliases:['Heili Alateng'],
+   disambiguation:{verifiedUfcStatsFighterId:'1897b7b913736a7c'},
+   bouts:[{date:'2026-09-26',opponent:'John Castaneda',result:'win',
+    fightUrl:'https://ufcstats.com/fight-details/aaaaaaaaaaaaaaaa',
+    nativeBoutId:'85944',nativeFighterId:'7566'}]
+ };
+ const native={id:'85944',org:'ufc',event:'UFC Fight Night',eventDate:'2026-09-26',
+   status:'completed',result:{winnerId:'7566',method:'decision'},
+   a:{id:'7566',name:'Heili Alateng'},b:{id:'99',name:'John Castaneda'}};
+ const verify=e=>evaluateCareerEvidence(p,[saved],'2026-09-26',
+   '2026-11-14',e,{'85944':native}).independentlyVerified;
+ assert.equal(verify(evidence),true);
+ assert.equal(verify({...evidence,disambiguation:{verifiedUfcStatsFighterId:'ffffffffffffffff'}}),false);
+ assert.equal(verify({...evidence,sourceVerifiedNativeNameAliases:[]}),false);
+ assert.equal(verify({...evidence,sourceVerifiedNativeNameAliases:['An unrelated fighter']}),false);
 });
