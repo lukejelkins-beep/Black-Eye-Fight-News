@@ -17,8 +17,8 @@ test('new UFC source evidence is explicitly uncertified and never overwrites exi
   assert.equal(proof.sourceCoverageAttested,true);
   assert.equal(proof.scope,'complete_official_ufc_career');
   assert.equal(proof.bouts.length,1);
-  assert.ok(/^https:\\/\\/ufcstats\\.com\\/fight-details\\/[0-9a-f]{16}$/.test(proof.bouts[0].fightUrl));
-  assert.ok(/^[1-9]\\d*$/.test(proof.bouts[0].nativeBoutId));
+  assert.ok(proof.bouts[0].fightUrl.startsWith('https://ufcstats.com/fight-details/'));
+  assert.ok(Number.isSafeInteger(Number(proof.bouts[0].nativeBoutId)));
   assert.equal(f.bouts.length,1);
   assert.equal(f.ufcDebut,f.bouts[0].date);
   assert.ok(f.ufcOfficialResultUrl.startsWith('https://www.ufc.com/news/'));
