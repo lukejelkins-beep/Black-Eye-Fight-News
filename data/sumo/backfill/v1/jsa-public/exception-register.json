@@ -2,13 +2,33 @@
   "schemaVersion": 1,
   "scope": "Research-only official tournament result and parser exception register; never full-career certification",
   "cohortSize": 190,
-  "capturedProfiles": 67,
-  "pendingProfiles": 123,
-  "historicalTournamentsCompared": 3944,
+  "capturedProfiles": 75,
+  "pendingProfiles": 115,
+  "historicalTournamentsCompared": 4348,
   "historicalTournamentsDisagree": 0,
   "historicalCases": [],
-  "profileReviewCases": 0,
-  "cases": [],
+  "profileReviewCases": 1,
+  "cases": [
+    {
+      "sourceId": 118,
+      "name": "Ikawasakura",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3379/",
+      "asOf": null,
+      "publicProfileStatus": "parse-review",
+      "publicFieldDisagreements": [],
+      "tournamentRowsCompared": 84,
+      "tournamentRowsAgreed": 84,
+      "unreconciledTournamentCount": 0,
+      "discrepancies": [],
+      "missingApiTournamentRows": [
+        "202103",
+        "202309",
+        "202311",
+        "202401"
+      ],
+      "certification": "not-started"
+    }
+  ],
   "sourceBashoResultsIndependentlyCertified": 0,
   "certifiedCareers": 0,
   "note": "Current partially completed November 2026 basho is excluded by the source reconciler; absence-only tournaments may have no individual bout rows."
