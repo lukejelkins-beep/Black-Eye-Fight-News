@@ -114,7 +114,10 @@ async function main(){
  const roster=await read('data/sumo/rikishi-index.json');
  if(roster?.count!==190||roster.rikishi?.length!==190)throw Error('Frozen cohort mismatch');
  const interval=Math.max(12000,Math.ceil(60000/Number(p.allowedRequestsPerMinute)));
- const limit=Math.min(8,Math.max(1,Number(process.env.SUMODB_MAX_PER_RUN||8)));
+ const limit=Math.min(10,Math.max(1,Number(process.env.SUMODB_MAX_PER_RUN||10)));
+ // GitHub Actions has a four-minute job limit; keep enough time for QA,
+ // JSA checks, a final JSON summary and the research-branch git checkpoint.
+ const workerDeadline=Date.now()+160000;
  let lastAt=0;
  if(!cooldown){
   for(const w of roster.rikishi){
@@ -125,6 +128,7 @@ async function main(){
    // Do not repeatedly request an already-known irreconcilable identity/page.
    if((prior.reviewCases||[]).some(x=>x.sourceId===w.sourceId&&x.permanent))continue;
    const delay=Math.max(0,lastAt+interval-Date.now());
+   if(Date.now()+delay+19000>workerDeadline)break;
    if(delay)await sleep(delay);
    lastAt=Date.now();requests++;
    try{
