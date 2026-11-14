@@ -9,7 +9,7 @@ import {createHash} from 'node:crypto';
 import {parseSumoDbDatedMeasurements,reconcileWeightHistory} from './sumo-weight-history-190.mjs';
 const ROOT='data/sumo/backfill/v1';
 const POLICY=join(ROOT,'sumodb-use-policy.json');
-const URL='https://sumodb.sumogames.de/Rikishi.aspx?r=';
+const SUMODB_PAGE_URL='https://sumodb.sumogames.de/Rikishi.aspx?r=';
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const read=async p=>JSON.parse(await readFile(p,'utf8'));
 const optional=async p=>{try{return await read(p)}catch(e){if(e.code==='ENOENT')return null;throw e;}};
@@ -87,7 +87,7 @@ async function main(){
   const delay=Math.max(0,lastStarted+cadence-Date.now());if(delay)await sleep(delay);
   lastStarted=Date.now();requests++;
   try{
-   const html=await checkedFetch(URL+w.sumoDbId);
+   const html=await checkedFetch(SUMODB_PAGE_URL+w.sumoDbId);
    if(html.length<400||html.length>2_000_000)throw Error('Unexpected source response length');
    const plain=html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,' ')
        .replace(/<[^>]*>/g,' ').replace(/\s+/g,' ');
@@ -97,12 +97,12 @@ async function main(){
      throw Error('Source identity not supported by page content');
    const rows=parseSumoDbDatedMeasurements(html);
    const raw=await read(join(ROOT,'rikishi',w.sourceId+'.json'));
-   const datedEvidence=rows.map(x=>({...x,sourceUrl:URL+w.sumoDbId,independentlyCertified:false}));
+   const datedEvidence=rows.map(x=>({...x,sourceUrl:SUMODB_PAGE_URL+w.sumoDbId,independentlyCertified:false}));
    const coverage=reconcileWeightHistory(raw.data.measurements,datedEvidence,Number(w.sumoDbId));
    const doc={schemaVersion:1,scope:'SumoDB independent dated weight history, research only',
      sourceId:w.sourceId,officialNskId:w.officialNskId,sumoDbId:Number(w.sumoDbId),
      rikishi:w.shikonaEn,reviewedAt:new Date().toISOString(),
-     sourcePageUrl:URL+w.sumoDbId,rawHtmlSha256:createHash('sha256').update(html).digest('hex'),
+     sourcePageUrl:SUMODB_PAGE_URL+w.sumoDbId,rawHtmlSha256:createHash('sha256').update(html).digest('hex'),
      datedEvidence,
      coverage:{datedApiPoints:coverage.apiDatedPoints,datedIndependentPoints:coverage.independentDatedPoints,
        additionalDatedPoints:coverage.additionalDatedPoints,matchingOverlaps:coverage.matchingOverlaps,
