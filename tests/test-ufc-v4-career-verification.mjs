@@ -92,8 +92,11 @@ test("contradictory outcomes for the same UFC bout are flagged, not silently ded
   {promotion:"UFC",date:"2025-01-01",opponent:"Test Opponent",result:"win"},
   {promotion:"UFC",date:"2025-01-01",opponent:"Test Opponent",result:"no_contest"}
  ]};
+ v[1].fighters[slug].independentlyCertifiedCareer=true;
  const r=auditCareerVerification(...v);
  assert.equal(r.summary.conflictingSavedOutcomes,1);
+ assert.equal(r.summary.independentlyCertified,0);
+ assert.equal(r.summary.pendingCertification,783);
  assert.equal(r.priorityQueue[0].slug,slug);
  assert.deepEqual(r.priorityQueue[0].contradictorySavedOutcomes[0].outcomes,["win","no_contest"]);
 });
