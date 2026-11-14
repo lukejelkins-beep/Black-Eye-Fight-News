@@ -2,7 +2,7 @@
   "schema": 1,
   "scope": "ufc-independent-full-career-verification",
   "rosterAsOf": "2026-11-14",
-  "status": "evidence_collection_pending",
+  "status": "certification_in_progress",
   "description": "Separate from provider UFCalendar metadata. Only independently checked complete UFC fight listings with source-linked bout-by-bout identities may establish full-career verification. No fighter is independently certified merely because every currently known UFC fight is indexed and measured. Minimum-count evidence may prove historical omissions but cannot certify full-career completeness, even if its minimum is met.",
   "fighters": {
     "bruno-gustavo-da-silva": {
@@ -121,6 +121,215 @@
       "fighterUrl": "https://www.ufc.com/athlete/hyunsung-park",
       "verifiedAt": "2026-11-14",
       "note": "Official UFC history shows five UFC fights across 2023-2025. Two 2022 Road to UFC qualifying bouts are excluded from UFC-only count. Only two UFC bouts currently saved."
+    },
+    "maryna-moroz": {
+      "fighterName": "Maryna Moroz",
+      "rosterAsOf": "2026-11-14",
+      "certificationStatus": "independently_verified_full_career",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/b4192a975027aab6",
+      "officialUfcFighterUrl": "https://www.ufc.com/athlete/maryna-moroz",
+      "firstOfficialUfcFight": "2015-04-11",
+      "lastOfficialUfcFight": "2024-03-09",
+      "verifiedOfficialUfcBoutCount": 12,
+      "verifiedUfcRecord": {
+        "wins": 6,
+        "losses": 6,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNativeFighterIds": [
+        "1113"
+      ],
+      "sourceCoverage": {
+        "method": "Manual crosscheck of complete Greco UFCStats-derived historical fight-results index, independently identifiable UFCStats fighter ID and fight-detail URLs, UFC.com dated biography from UFC debut through latest fight, and a separately compiled full UFC fight-history listing; exact native corner IDs, opponents, outcomes and all twelve measured bouts audited in V4 CI.",
+        "sourceSnapshotLatestUfcEvent": "2026-11-07",
+        "sourceSnapshotRows": 9015,
+        "grecoRepository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "grecoFighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "grecoEventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "grecoFightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "independentFullHistoryUrl": "https://thefightalgorithm.com/fighters/maryna-moroz",
+        "ufcOfficialBiographyUrl": "https://www.ufc.com/athlete/maryna-moroz",
+        "sourceRowsForFighter": 12,
+        "independentlyLinkedUfcStatsFightUrls": 12,
+        "ufcOfficialDatedBouts": 12,
+        "savedNativeBoutIds": 12,
+        "allSourceAndSavedBoutsOneToOne": true,
+        "allNativeOutcomesMatched": true,
+        "allNativeCornersMatched": true,
+        "allMeasuredStatsMatched": true,
+        "postSourceSnapshotCheck": "Official UFC athlete biography checked 2026-11-14, most recent fight Mar 9 2024; status Not Fighting. No subsequent UFC fight reported as of roster freeze.",
+        "aliasesReviewed": [
+          {
+            "earlierName": "Joanne Calderwood",
+            "currentName": "Joanne Wood",
+            "note": "Same opponent for 2015 debut; source UFCStats names Joanne Wood; separate 2024 rematch distinguished by date and native ID."
+          }
+        ],
+        "directUfcStatsSiteAccess": "unavailable_502; historical UFCStats-derived source data and exact fight URLs audited without claiming direct inspection of live UFCStats page"
+      },
+      "bouts": [
+        {
+          "date": "2024-03-09",
+          "opponent": "Joanne Wood",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3677ce6c1ee06a83",
+          "eventUrl": "https://ufcstats.com/event-details/a9df5ae20a97b090",
+          "nativeFightId": "60915",
+          "nativeFighterId": "1113",
+          "event": "UFC 299: O'Malley vs Vera 2",
+          "sourceMethod": "Decision - Split",
+          "verifiedAgainstSavedNativeFight": true,
+          "measuredRoundStatsVerified": true
+        },
+        {
+          "date": "2023-08-19",
+          "opponent": "Karine Silva",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f329bd89e375d6df",
+          "eventUrl": "https://ufcstats.com/event-details/2719f300b0439039",
+          "nativeFightId": "61164",
+          "nativeFighterId": "1113",
+          "event": "UFC 292: Sterling vs O'Malley",
+          "sourceMethod": "Submission",
+          "verifiedAgainstSavedNativeFight": true,
+          "measuredRoundStatsVerified": true
+        },
+        {
+          "date": "2022-11-19",
+          "opponent": "Jennifer Maia",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/144443d4dbf43990",
+          "eventUrl": "https://ufcstats.com/event-details/012fc7cd0779c09a",
+          "nativeFightId": "59784",
+          "nativeFighterId": "1113",
+          "event": "UFC Fight Night: Lewis vs Spivac",
+          "sourceMethod": "Decision - Unanimous",
+          "verifiedAgainstSavedNativeFight": true,
+          "measuredRoundStatsVerified": true
+        },
+        {
+          "date": "2022-03-05",
+          "opponent": "Mariya Agapova",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c6fc43c351b08bda",
+          "eventUrl": "https://ufcstats.com/event-details/75e0d3cc2262b732",
+          "nativeFightId": "61401",
+          "nativeFighterId": "1113",
+          "event": "UFC 272: Covington vs Masvidal",
+          "sourceMethod": "Submission",
+          "verifiedAgainstSavedNativeFight": true,
+          "measuredRoundStatsVerified": true
+        },
+        {
+          "date": "2020-03-14",
+          "opponent": "Mayra Bueno Silva",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2a1826612a7d739c",
+          "eventUrl": "https://ufcstats.com/event-details/53278852bcd91e11",
+          "nativeFightId": "59150",
+          "nativeFighterId": "1113",
+          "event": "UFC Fight Night: Lee vs Oliveira",
+          "sourceMethod": "Decision - Unanimous",
+          "verifiedAgainstSavedNativeFight": true,
+          "measuredRoundStatsVerified": true
+        },
+        {
+          "date": "2019-03-30",
+          "opponent": "Sabina Mazo",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b695fc80bd538172",
+          "eventUrl": "https://ufcstats.com/event-details/9649d75defe0dedb",
+          "nativeFightId": "59102",
+          "nativeFighterId": "1113",
+          "event": "UFC Fight Night: Barboza vs Gaethje",
+          "sourceMethod": "Decision - Unanimous",
+          "verifiedAgainstSavedNativeFight": true,
+          "measuredRoundStatsVerified": true
+        },
+        {
+          "date": "2018-02-24",
+          "opponent": "Angela Hill",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/037c68d03c970609",
+          "eventUrl": "https://ufcstats.com/event-details/daa89f01e1c0f42a",
+          "nativeFightId": "58807",
+          "nativeFighterId": "1113",
+          "event": "UFC Fight Night: Emmett vs Stephens",
+          "sourceMethod": "Decision - Unanimous",
+          "verifiedAgainstSavedNativeFight": true,
+          "measuredRoundStatsVerified": true
+        },
+        {
+          "date": "2017-06-25",
+          "opponent": "Carla Esparza",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1bd52b0c01018f4a",
+          "eventUrl": "https://ufcstats.com/event-details/99bf06f20491cb54",
+          "nativeFightId": "58619",
+          "nativeFighterId": "1113",
+          "event": "UFC Fight Night: Chiesa vs Lee",
+          "sourceMethod": "Decision - Unanimous",
+          "verifiedAgainstSavedNativeFight": true,
+          "measuredRoundStatsVerified": true
+        },
+        {
+          "date": "2016-08-06",
+          "opponent": "Danielle Taylor",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/58c73a9562adcfe5",
+          "eventUrl": "https://ufcstats.com/event-details/232c582f29f8f65e",
+          "nativeFightId": "62694",
+          "nativeFighterId": "1113",
+          "event": "UFC Fight Night: Rodriguez vs Caceres",
+          "sourceMethod": "Decision - Split",
+          "verifiedAgainstSavedNativeFight": true,
+          "measuredRoundStatsVerified": true
+        },
+        {
+          "date": "2016-04-10",
+          "opponent": "Cristina Stanciu",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1a0bf11582ae518b",
+          "eventUrl": "https://ufcstats.com/event-details/4887e5bc4dbb73ff",
+          "nativeFightId": "50959",
+          "nativeFighterId": "1113",
+          "event": "UFC Fight Night: Rothwell vs Dos Santos",
+          "sourceMethod": "Decision - Unanimous",
+          "verifiedAgainstSavedNativeFight": true,
+          "measuredRoundStatsVerified": true
+        },
+        {
+          "date": "2015-08-23",
+          "opponent": "Valerie Letourneau",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/20b70a226f1c13fb",
+          "eventUrl": "https://ufcstats.com/event-details/2ce6541127b0e232",
+          "nativeFightId": "50745",
+          "nativeFighterId": "1113",
+          "event": "UFC Fight Night: Holloway vs Oliveira",
+          "sourceMethod": "Decision - Unanimous",
+          "verifiedAgainstSavedNativeFight": true,
+          "measuredRoundStatsVerified": true
+        },
+        {
+          "date": "2015-04-11",
+          "opponent": "Joanne Wood",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fe9a58e79d54695b",
+          "eventUrl": "https://ufcstats.com/event-details/5de61b03868035ff",
+          "nativeFightId": "56917",
+          "nativeFighterId": "1113",
+          "event": "UFC Fight Night: Gonzaga vs Cro Cop 2",
+          "sourceMethod": "Submission",
+          "verifiedAgainstSavedNativeFight": true,
+          "measuredRoundStatsVerified": true
+        }
+      ]
     }
   }
 }
