@@ -116,7 +116,9 @@ export function combinePage(doc,stage,result,id){
   if(more!=null&&typeof more!=='boolean')throw Error('Invalid '+stage+' has_more');
   if(items.length===0&&more===true)throw Error('Empty '+stage+' page despite more records');
   if(stage==='matches'&&total===null)throw Error('Missing pagination metadata for '+stage);
-  if(total===null&&more===null)throw Error('Missing pagination metadata for '+stage);
+  if((total===null&&more===null)||
+     (stage==='matches'&&!direct&&total===null&&result.has_more==null&&result.hasMore==null))
+    throw Error('Missing pagination metadata for '+stage);
   if(total!==null&&more===false&&next<total)throw Error('Truncated '+stage+' page');
   if(total!==null&&more===true&&next>=total&&stage!=='matches')throw Error('Inconsistent '+stage+' pagination');
   const existing=doc.data[stage];
