@@ -777,3 +777,32 @@ test('Carlos Hernandez complete 7-fight UFC source listing is independently tied
   i?b:{...b,opponent:'Unknown person'})}),false);
  assert.equal(proof(evidence,{}),false);
 });
+
+
+test('Maryna Moroz 2015 Joanne Calderwood/Wood alias has exact source-linked native ID scope',()=>{
+ const load=p=>JSON.parse(readFileSync(new URL('../data/'+p,import.meta.url),'utf8'));
+ const entry=load('ufc-independent-full-career-verification.json').fighters['maryna-moroz'];
+ const profile=load('ufcalendar-fighter-research.json').profiles['maryna-moroz'];
+ const native=load('ufcalendar-rich-progress.json').bouts;
+ const history=profile.recentHistory.filter(r=>r.promotion==='ufc');
+ assert.equal(history.length,12);
+ assert.equal(entry?.bouts?.length,12);
+ const gate=(e,b=native)=>evaluateCareerEvidence(profile,history,
+  '2024-03-09','2026-11-14',e,b).independentlyVerified;
+ assert.equal(gate(entry),true,'source-linked complete Maryna record must pass strict Stage 3 gate');
+ assert.equal(gate({...entry,sourceCoverageAttested:false}),false,
+  'alias cannot substitute for independent completeness');
+ const aliasBout=entry.bouts.find(x=>x.nativeBoutId==='56917');
+ assert.ok(aliasBout);
+ const changed=(patch)=>({...entry,bouts:entry.bouts.map(x=>
+   x.nativeBoutId==='56917'?{...x,...patch}:x)});
+ assert.equal(gate(changed({nativeBoutId:'999999'})),false,
+  'alias cannot apply to unverified native fight');
+ assert.equal(gate(changed({date:'2015-04-18'})),false,
+  'alias cannot apply to different event date');
+ assert.equal(gate(changed({opponent:'Joanne Unknown'})),false,
+  'alias cannot turn another athlete into Wood/Calderwood');
+ assert.equal(gate(changed({fightUrl:'https://ufcstats.com/fight-details/1234567890abcdef'})),false,
+  'alias cannot apply to unrelated source bout URL');
+ assert.equal(gate({...entry,verifiedNumericFighterIds:['99999']}),false);
+});
