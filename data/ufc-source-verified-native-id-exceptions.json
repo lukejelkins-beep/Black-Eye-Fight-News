@@ -3,7 +3,7 @@
   "scope": "ufc-exact-official-native-fighter-id-exceptions",
   "rosterAsOf": "2026-11-14",
   "reviewedOn": "2026-11-14",
-  "note": "One-to-one approved athlete linkage for EXACT UFC-source corroborated historical native bout IDs. Numeric fighter IDs remain unchanged in the original archive. Do not use this as a global provider ID alias or a certificate of complete UFC history.",
+  "note": "One-to-one approved athlete linkage for EXACT UFC-source corroborated historical native bout IDs. Numeric fighter IDs remain unchanged in the original archive. Do not use this as a global provider ID alias or a certificate of complete UFC history. Bruno Gustavo da Silva's ten older wins/losses additionally crosschecked against UFC.com dated opponents/outcomes and cached reciprocal opponent/native event/ID/winner evidence on 14 Nov 2026. Bruno's 2019 Khalid Taha no-contest is NOT covered by this winner-only exception; handle separately.",
   "athletes": {
     "carlos-hernandez-7": {
       "sourceUrl": "https://www.ufc.com/athlete/carlos-hernandez",
@@ -75,6 +75,73 @@
           "nativeFightId": "38150",
           "date": "2025-10-18",
           "opponent": "Bruno Silva",
+          "result": "loss"
+        }
+      ]
+    },
+    "bruno-gustavo-da-silva": {
+      "sourceUrl": "https://www.ufc.com/athlete/bruno-silva",
+      "canonicalNumericId": "87",
+      "historicalNumericId": "158",
+      "bouts": [
+        {
+          "nativeFightId": "59151",
+          "date": "2020-03-14",
+          "opponent": "David Dvorak",
+          "result": "loss"
+        },
+        {
+          "nativeFightId": "61805",
+          "date": "2020-10-10",
+          "opponent": "Tagir Ulanbekov",
+          "result": "loss"
+        },
+        {
+          "nativeFightId": "66321",
+          "date": "2021-03-20",
+          "opponent": "JP Buys",
+          "result": "win"
+        },
+        {
+          "nativeFightId": "61763",
+          "date": "2021-05-22",
+          "opponent": "Victor Rodriguez",
+          "result": "win"
+        },
+        {
+          "nativeFightId": "59678",
+          "date": "2023-03-11",
+          "opponent": "Tyson Nam",
+          "result": "win"
+        },
+        {
+          "nativeFightId": "65926",
+          "date": "2024-07-20",
+          "opponent": "Cody Durden",
+          "result": "win"
+        },
+        {
+          "nativeFightId": "60370",
+          "date": "2024-12-14",
+          "opponent": "Manel Kape",
+          "result": "loss"
+        },
+        {
+          "nativeFightId": "60866",
+          "date": "2025-06-07",
+          "opponent": "Joshua Van",
+          "result": "loss"
+        },
+        {
+          "nativeFightId": "60716",
+          "date": "2026-03-14",
+          "opponent": "Charles Johnson",
+          "result": "loss"
+        },
+        {
+          "nativeFightId": "66015",
+          "date": "2026-06-06",
+          "opponent": "Edgar Chairez",
           "result": "loss"
         }
       ]
