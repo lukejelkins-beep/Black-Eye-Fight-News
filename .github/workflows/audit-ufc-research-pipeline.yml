@@ -20,6 +20,7 @@ on:
       - 'tests/test-ufc-unified-wave41-elekana-del-valle-20261115.mjs'
       - 'tests/test-ufc-unified-wave42-hiestand-urbina-carpenter-20261115.mjs'
       - 'tests/test-ufc-unified-wave43-walker-fernandes-gurule-20261115.mjs'
+      - 'tests/test-ufc-unified-wave44-luciano-mullins-conejo-20261115.mjs'
       - 'data/ufc-approved-cohort-frozen-census-20261114.json'
       - 'data/ufc-unified-wave17-dulatov-choinski-gimenis-official-source-review-20261114.json'
       - 'data/ufc-unified-josias-musasa-official-source-review-20261114.json'
@@ -233,6 +234,7 @@ jobs:
           node --test tests/test-ufc-unified-wave41-elekana-del-valle-20261115.mjs
           node --test tests/test-ufc-unified-wave42-hiestand-urbina-carpenter-20261115.mjs
           node --test tests/test-ufc-unified-wave43-walker-fernandes-gurule-20261115.mjs
+          node --test tests/test-ufc-unified-wave44-luciano-mullins-conejo-20261115.mjs
           node --test tests/test-ufc-unified-wave29-yakhyaev-quinonez-20261115.mjs
           node --test tests/test-ufc-unified-stewart-bedoya-ashmouz-20261115.mjs
           node --test tests/test-ufc-unified-wave10-evidence.mjs
