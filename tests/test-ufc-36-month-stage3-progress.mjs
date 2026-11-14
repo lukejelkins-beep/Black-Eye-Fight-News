@@ -409,7 +409,17 @@ test('Career completion proof fails closed on missing metadata, stale timing and
    {...base,ufcHistoryIdConflicts:[{date:'2026-11-10'}]}
  ])assert.equal(evaluateCareerEvidence(p,h,'2026-11-10','2026-11-14').providerCertified,
    false,'Provider certification needs fresh, explicit, contradiction-free evidence');
- assert.equal(evaluateCareerEvidence(base,h,'2026-11-11','2026-11-14').providerCertified,false);
+ assert.equal(evaluateCareerEvidence(base,h,'2026-11-11','2026-11-14').providerCertified,true,
+   'A one-calendar-day offset is valid when the newest saved official fight is aligned');
+ assert.equal(evaluateCareerEvidence(base,h,'2026-11-11','2026-11-14').utcDateShift,true);
+ assert.equal(evaluateCareerEvidence(base,h,'2026-11-12','2026-11-14').providerCertified,false,
+   'A larger date gap cannot be normalized away');
+ const shiftedProvider={ufcTimeline:{...base.ufcTimeline,
+   missingRosterLastUfcFight:'2026-11-11'}};
+ const normalized=evaluateCareerEvidence(shiftedProvider,h,'2026-11-11','2026-11-14');
+ assert.equal(normalized.providerCertified,true);
+ assert.equal(normalized.providerDiscrepancy,false);
+ assert.equal(normalized.utcDateShift,true);
 });
 
 test('Independent full-career certification requires exact full official fight listing',()=>{
