@@ -23,7 +23,27 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 4
     steps:
+      - name: Skip expensive scheduled work after all 190 API histories are collected
+        id: preflight
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_EVENT_NAME" != "schedule" ]]; then
+            echo 'run=true' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if json=$(gh api "repos/${GITHUB_REPOSITORY}/contents/data/sumo/backfill/v1/summary.json?ref=research/sumo-190-career-cache-20261114" --jq '.content' | tr -d '\n' | base64 -d); then
+            if printf '%s' "$json" | jq -e '.cohortSize==190 and .counts.collected==190 and .counts.pending==0 and .counts.partial==0 and .counts.exception==0' > /dev/null; then
+              echo 'run=false' >> "$GITHUB_OUTPUT"
+              echo 'All 190 cached histories collected: skipping redundant API requests, QA checkout and commit.'
+              exit 0
+            fi
+          fi
+          echo 'run=true' >> "$GITHUB_OUTPUT"
       - name: Check out research branch, never main or the Render test branch
+        if: steps.preflight.outputs.run == 'true'
         uses: actions/checkout@v4
         with:
           ref: research/sumo-190-career-cache-20261114
@@ -32,10 +52,12 @@ jobs:
           fetch-depth: 5
           persist-credentials: true
       - name: Install Node 22
+        if: steps.preflight.outputs.run == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: Validate bounded source backfill
+        if: steps.preflight.outputs.run == 'true'
         run: |
           node --check scripts/sumo-backfill-190.mjs
           node --check scripts/sumo-verify-190.mjs
@@ -43,6 +65,7 @@ jobs:
           node --check scripts/sumo-build-profile-cache.mjs
           node --test tests/test-sumo-backfill-190.mjs tests/test-sumo-verify-190.mjs tests/test-sumo-jsa-reconcile.mjs tests/test-sumo-build-profile-cache.mjs
       - name: Collect only missing research data
+        if: steps.preflight.outputs.run == 'true'
         env:
           # One coordinated worker uses the available GitHub runner window,
           # not an arbitrary fixed API-call budget.
@@ -50,12 +73,16 @@ jobs:
           SUMO_REQUEST_INTERVAL_MS: '200'
         run: node scripts/sumo-backfill-190.mjs
       - name: Audit collected history before any future JSA certification
+        if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-verify-190.mjs
       - name: Reconcile public JSA spotchecks without certifying careers
+        if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-jsa-reconcile.mjs
       - name: Build complete research-only profile projections
+        if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-build-profile-cache.mjs
       - name: Checkpoint cached results on research branch only
+        if: steps.preflight.outputs.run == 'true'
         env:
           TARGET_BRANCH: research/sumo-190-career-cache-20261114
         shell: bash
