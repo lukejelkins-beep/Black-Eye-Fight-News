@@ -28120,6 +28120,154 @@
         }
       ],
       "sourceVerifiedExcludedFeederBouts": []
+    },
+    "alice-ardelean": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Alice Ardelean",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/87f8699fdcc2c404",
+      "officialFighterUrl": "https://www.ufc.com/athlete/alice-ardelean",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived dataset, not direct UFCStats scrape",
+        "method": "Full official UFC.com dated athlete biography, pinned historical Greco UFCStats fight ID/results, exact original UFCalendar saved UFC numeric fighter/bout ID and opposing corners/results and measured rounds. Official UFC event-day UTC shifts handled without altering cached native data; non-UFC feeders and future bookings excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "45"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "Complete official five-bout UFC career from July 2024 to May 2026. UFC.com dated biography confirms losses to Shauna Bannon and Melissa Martinez and wins over Rayanne dos Santos, Montserrat Conejo Ruiz and Polyana Viana. Original UFC Fight Night Blanchfield vs Barber (May 31, 2025) was retitled Gamrot vs Klein when the main event was medically cancelled; saved native title and next-UTC-day date remain intact, backed by the UFC official Rayanne/Ardelean scorecard, identical native fighters/outcome and pinned Greco fight URL. No other UFC or feeder bout claimed.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/alice-ardelean",
+        "https://www.ufc.com/news/official-judges-scorecards-ufc-fight-night-blanchfield-vs-barber-apex-ufc-tonight",
+        "https://www.ufc.com/news/main-card-results-highlights-winner-interviews-ufc-fight-night-blanchfield-vs-barber-apex-ufc-tonight",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2024-07-27",
+          "opponent": "Shauna Bannon",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/dff2ef8fdde8c502",
+          "nativeBoutId": "61090",
+          "nativeFighterId": "45"
+        },
+        {
+          "date": "2024-10-19",
+          "opponent": "Melissa Martinez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/4277b02a4dadac40",
+          "nativeBoutId": "65943",
+          "nativeFighterId": "45"
+        },
+        {
+          "date": "2025-05-31",
+          "opponent": "Rayanne dos Santos",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/73240bea13ed5e71",
+          "nativeBoutId": "38405",
+          "nativeFighterId": "45"
+        },
+        {
+          "date": "2025-11-01",
+          "opponent": "Montserrat Conejo Ruiz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/32927d50acedb507",
+          "nativeBoutId": "60428",
+          "nativeFighterId": "45"
+        },
+        {
+          "date": "2026-05-16",
+          "opponent": "Polyana Viana",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b98ead4eff6bf872",
+          "nativeBoutId": "66124",
+          "nativeFighterId": "45"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    },
+    "kaan-ofli": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Kaan Ofli",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/7facc9c45d792985",
+      "officialFighterUrl": "https://www.ufc.com/athlete/kaan-ofli",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived dataset, not direct UFCStats scrape",
+        "method": "Full official UFC.com dated athlete biography, pinned historical Greco UFCStats fight ID/results, exact original UFCalendar saved UFC numeric fighter/bout ID and opposing corners/results and measured rounds. Official UFC event-day UTC shifts handled without altering cached native data; non-UFC feeders and future bookings excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "171"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "Five complete UFC fights from TUF 32 televised UFC Fight Night finale (August 24, 2024) to June 27, 2026, exactly matching official UFC.com full biography and pinned Greco UFCStats historical bouts. TUF finale knockout loss to Mairon Santos at UFC Fight Night Cannonier vs Borralho is independently confirmed by official UFC judges' scorecard; TUF house quarterfinal and semifinal are not official UFC bouts and are excluded. Later loss to Muhammad Naimov and wins over Ricardo Ramos, Yizha and Javier Reyes all preserve original native paired-corner winners, measured rounds and source IDs. Future Ofli/Brito booking excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/kaan-ofli",
+        "https://www.ufc.com/news/official-judges-scorecards-ufc-fight-night-cannonier-vs-borralho-vegas-96",
+        "https://www.ufc.com/news/main-card-results-highlights-winner-interviews-ufc-fight-night-cannonier-vs-borralho-vegas-96",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2024-08-24",
+          "opponent": "Mairon Santos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/bad06a5380d762b8",
+          "nativeBoutId": "60230",
+          "nativeFighterId": "171"
+        },
+        {
+          "date": "2025-02-01",
+          "opponent": "Muhammad Naimov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/940f586104bf8bc8",
+          "nativeBoutId": "38557",
+          "nativeFighterId": "171"
+        },
+        {
+          "date": "2025-10-11",
+          "opponent": "Ricardo Ramos",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2aef1a91d26dde42",
+          "nativeBoutId": "65891",
+          "nativeFighterId": "171"
+        },
+        {
+          "date": "2026-01-31",
+          "opponent": "Yizha",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/4c1e7e1765a5438a",
+          "nativeBoutId": "65856",
+          "nativeFighterId": "171"
+        },
+        {
+          "date": "2026-06-27",
+          "opponent": "Javier Reyes",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1a7119f3996b5635",
+          "nativeBoutId": "82670",
+          "nativeFighterId": "171"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
     }
   }
 }
