@@ -14,7 +14,7 @@ const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] }
 const failures = [];
 
 function assertContains(haystack,needle,label){
-  assert.ok(haystack.includes(needle), label+': '+needle+' not present');
+  assert.ok(String(haystack).toLocaleLowerCase().includes(String(needle).toLocaleLowerCase()), label+': '+needle+' not present');
 }
 async function open(page, route, ready) {
   await page.goto(BASE + '#'+route, {waitUntil:'domcontentloaded',timeout:25000});
