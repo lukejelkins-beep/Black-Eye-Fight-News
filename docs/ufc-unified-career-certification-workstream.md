@@ -1,6 +1,6 @@
 # BEFN UFC fighter certification — one evidence register, one verification workflow
 
-Date: 14 November 2026. Research-only. **Do not merge/release until the full Stage 3 audit and the preservation tests pass and the owner authorises any production-impacting change.**
+Date: 14 November 2026. Research-only. **Latest full strict Stage 3 and preservation tests have PASSED in nonproduction. Do not merge/release until owner expressly authorises the auto-deploying main-branch change.**
 
 ## Scope and authority
 - The **783 approved UFC fighters** in `data/ufc-36-month-roster-approval.json` are immutable.
@@ -13,8 +13,13 @@ Date: 14 November 2026. Research-only. **Do not merge/release until the full Sta
 - At source comparison: 66 main Stage 3 evidence entries, 147 V4 nonproduction source-proved entries, **60 shared**, **6 only on main**, **87 only on V4**.
 - Exactly **87 V4-only source proofs** were imported into the single Stage 3 source-evidence register; **all 66** previously present Stage 3 proofs are preserved unchanged (including Bruno Gustavo da Silva, Carlos Hernandez-7, Park Hyun-sung, Ange Loosa, Adrian Luna Martinetti and Alexander Poppeck).
 - Result: **153 DISTINCT fighters with source-evidence entries, not 153 certified fighters**. Every V4-only transfer is tagged `requires_independent_main_stage3_gate`.
-- GitHub Actions [V4 strict run 43563947389](https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43563947389) reported **147 prior V4 certifications**, but that is a different head/validator. This transfer **does not automatically certify 87 in Stage 3** and the counts must never be added together.
+- GitHub Actions [V4 strict run 43563947389](https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43563947389) reported **147 prior V4 certifications**, but that was a different head/validator. All 87 V4-only imports and original 66 now separately pass the main strict Stage 3 validator on the research branch in [CI run 43567897945](https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567897945): **153 certified / 373 fastLane / 257 exceptions = 783**, with **zero evidence cross-gate failures**. Counts must never be added together.
 - Exact original V4 and main blob SHA provenance, the 87 transferred slugs, preserved 66 original fingerprints, and 60 overlaps are recorded once in `data/ufc-stage3-v4-consolidation-manifest-20261114.json`. There is no second duplicate full-copy of the evidence register.
+
+## Latest nonproduction checkpoint
+- **153 of 783 independent official UFC full-career certifications passed** on PR #189's branch; **630 require further evidence**. The approved cohort is unchanged, and the 153 are individually deduplicated: 60 both sources, 6 original main only, 87 imported V4 only.
+- Six result-draw normalization cases, six independently verified opponent-name cases and two final own-name/event-scope cases were reconciled without bypassing original native identity, outcome, statistics or feeder checks. See strict CI artifact for exact fighter decisions.
+- All certificates are **staged research only** until a separately approved merge. The public website remains V3 under the existing release plan.
 
 ## Strict per-fighter decision
 1. Reuse existing saved UFCalendar fight IDs, paired corners, results, dates, and measured statistics. Check independently sourced full UFC.com fighter histories and pinned Greco UFCStats-derived complete source links, from debut through 14 Nov 2026.
