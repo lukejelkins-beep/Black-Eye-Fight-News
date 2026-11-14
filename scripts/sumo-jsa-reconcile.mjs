@@ -39,7 +39,7 @@ export function compareOfficialSpotcheck(official,cached,cutoff=null){
   const resolvedBout=apiBout.length===1?apiBout[0]:null;
   const result=resolvedBout?(Number(resolvedBout.winnerId)===expectedId?'win':'loss'):null;
   const subset=fields.filter(x=>x.state==='discrepancy').map(x=>x.field);
-  const expectedDifference=Object.entries(cutoff?.expectedDelta||{});
+  const expectedDifference=Object.entries(cutoff?.expectedDelta||{}).filter(([_,n])=>Number(n)!==0);
   const validCutoff=!!cutoff&&
     Number(cutoff.sumoApiId)===expectedId&&Number(cutoff.officialNskId)===jId&&
     cutoff.sourceUrl===official.officialProfileUrl&&cutoff.officialDay7ResultStatus==='not yet recorded'&&
