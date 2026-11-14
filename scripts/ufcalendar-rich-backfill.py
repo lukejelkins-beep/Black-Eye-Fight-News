@@ -1805,7 +1805,9 @@ def collect_approved_full_ufc_fight_search(client,state,research,coverage,today,
         if next_cursor and (not isinstance(next_cursor,str) or len(next_cursor)>300):
             next_cursor=None
             invalid+=1
-        if next_cursor==cursor:next_cursor=None;invalid+=1
+        if next_cursor is not None and next_cursor==cursor:
+            next_cursor=None
+            invalid+=1
         cumulative=int(prior.get("scannedRows") or 0)+len(rows)
         updated_history=(profiles.get(f) or {}).get("recentHistory",[])
         updated_native_count=sum(1 for h in updated_history
