@@ -52,24 +52,29 @@ export function reconcileStage3V4(approval,stage3,evidence,manifest){
    return {evidenceEntries:slugs.length,stage3Certified:certified.length,
      stage3Blocked:blocked.length,certified,blocked};
  };
+ const subsequent=Object.keys(evidence.fighters).filter(slug=>
+  !originalSet.has(slug)&&!importSet.has(slug));
  const groups={
   priorMainShared:group(overlap),
   priorMainOnly:group(originalOnly),
-  importedV4Only:group(imported)
+  importedV4Only:group(imported),
+  subsequentStage3Evidence:group(subsequent)
  };
  const allCertified=rows.filter(x=>x.independentlyVerifiedFullCareer===true).length;
  invariant(allCertified===stage3.summary.independentlyVerifiedFullCareerTimelines,
    'audited_certified_count_disagreement');
  const sourceGroupCertified=groups.priorMainShared.stage3Certified+
-  groups.priorMainOnly.stage3Certified+groups.importedV4Only.stage3Certified;
+  groups.priorMainOnly.stage3Certified+groups.importedV4Only.stage3Certified+
+  groups.subsequentStage3Evidence.stage3Certified;
  const unionSize=originalSet.size+importSet.size;
  invariant(unionSize===153&&
    sourceGroupCertified===allCertified,
    'unaccounted_certification_outside_reconciled_source_records');
+ const sourceCount=unionSize+subsequent.length;
  const triage={
   certified:allCertified,
-  knownUncertifiedFromEvidence:153-allCertified,
-  withoutConsolidatedSourceEvidence:783-153,
+  knownUncertifiedFromEvidence:sourceCount-allCertified,
+  withoutConsolidatedSourceEvidence:783-sourceCount,
   total:783
  };
  invariant(triage.certified+triage.knownUncertifiedFromEvidence+
@@ -103,6 +108,7 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
   shared:result.sourceReconciliation.priorMainShared,
   mainOnly:result.sourceReconciliation.priorMainOnly,
   imported:result.sourceReconciliation.importedV4Only,
+  subsequent:result.sourceReconciliation.subsequentStage3Evidence,
   proofCoverage:result.proofCoverage
  }));
 }
