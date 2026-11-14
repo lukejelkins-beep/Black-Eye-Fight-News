@@ -127,6 +127,8 @@ test('Ryan documented DWCS feeder excluded exactly once; Marcus Buchecha alias, 
  }
  const marcus=reg.fighters['marcus-almeida'];
  assert.deepEqual(marcus.sourceVerifiedNativeNameAliases,['Marcus Almeida']);
+ assert.equal(marcus.disambiguation.verifiedUfcStatsFighterId,'095854a135e6db55');
+ assert.equal(marcus.disambiguation.verifiedNumericNativeFighterId,'7324');
  assert.equal(marcus.fighterName,'Marcus Buchecha');
  assert.equal(marcus.bouts.find(x=>x.nativeBoutId==='60651').result,'draw');
  assert.equal(native.bouts['60651'].result.winnerId,null);
