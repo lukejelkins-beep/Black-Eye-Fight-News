@@ -1173,6 +1173,174 @@
           "measuredRoundStatsVerifiedInV4": true
         }
       ]
+    },
+    "aoriqileng": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "certificationStatus": "independently_verified_full_career",
+      "fighterName": "Aoriqileng",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/7d420039bbfe7c1a",
+      "officialFighterUrl": "https://www.ufc.com/athlete/aoriqileng",
+      "earliestOfficialUfcBout": "2021-04-24",
+      "latestCompletedOfficialUfcBout": "2026-08-29",
+      "verifiedUfcRecord": {
+        "wins": 4,
+        "losses": 6,
+        "draws": 0,
+        "noContests": 1
+      },
+      "verifiedNumericFighterIds": [
+        "147"
+      ],
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-14",
+        "latestIndexedSourceEvent": "2026-11-07",
+        "independentFullHistoryUrl": "https://thefightalgorithm.com/fighters/aoriqileng",
+        "method": "Full Greco UFCStats-derived event and results index crosschecked against all 11 dated official UFC.com athlete bouts, including Feb 2024 no-contest and current 2026 status, plus separately complete 11-fight source. All saved native IDs, numeric corners, status, winner and round statistics checked. Live UFCStats page blocked (502)."
+      },
+      "mononymIdentityProof": {
+        "fighterDetailsCsvFirst": "",
+        "fighterDetailsCsvLast": "Aoriqileng",
+        "fighterDetailsCsvUrl": "https://ufcstats.com/fighter-details/7d420039bbfe7c1a",
+        "note": "Official UFC fighter uses single name Aoriqileng; CSV records that name in LAST with empty FIRST. Unique within full UFCStats fighter-details snapshot; native name and numeric fighter ID 147 match all 11 bouts."
+      },
+      "sourceCoverageSummary": {
+        "sourceRows": 11,
+        "officialBioRows": 11,
+        "oneToOneNativeMatches": 11,
+        "measured": 11,
+        "sourceOrNativeContradictions": 0,
+        "noContestsIncluded": 1
+      },
+      "bouts": [
+        {
+          "date": "2026-08-29",
+          "opponent": "Kai Asakura",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/4af8cb715ac0d459",
+          "eventUrl": "https://ufcstats.com/event-details/9d61d8cb1c354867",
+          "nativeBoutId": "83052",
+          "nativeFighterId": "147",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2026-05-30",
+          "opponent": "Cody Haddon",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3bc0190fb17ba42f",
+          "eventUrl": "https://ufcstats.com/event-details/1e75e6c9de99fa76",
+          "nativeBoutId": "66110",
+          "nativeFighterId": "147",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2025-10-18",
+          "opponent": "Cody Gibson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/970f083af8368f57",
+          "eventUrl": "https://ufcstats.com/event-details/38e5d9dcb0fddc42",
+          "nativeBoutId": "38149",
+          "nativeFighterId": "147",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2024-09-14",
+          "opponent": "Raul Rosas Jr.",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3cdc6fea724be133",
+          "eventUrl": "https://ufcstats.com/event-details/0c01568b1ac77bff",
+          "nativeBoutId": "60226",
+          "nativeFighterId": "147",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2024-02-10",
+          "opponent": "Daniel Marcos",
+          "result": "no_contest",
+          "fightUrl": "https://ufcstats.com/fight-details/6cd542650d886c22",
+          "eventUrl": "https://ufcstats.com/event-details/eaea0fc7b76525a8",
+          "nativeBoutId": "59913",
+          "nativeFighterId": "147",
+          "sourceMethod": "Could Not Continue",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2023-10-07",
+          "opponent": "Johnny Munoz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/df146b0592259e5d",
+          "eventUrl": "https://ufcstats.com/event-details/c8a49ff2acb6f3c5",
+          "nativeBoutId": "60029",
+          "nativeFighterId": "147",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2023-06-10",
+          "opponent": "Aiemann Zahabi",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e24b65cd8721349a",
+          "eventUrl": "https://ufcstats.com/event-details/b6c6d1731ff00eeb",
+          "nativeBoutId": "61339",
+          "nativeFighterId": "147",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2022-08-20",
+          "opponent": "Jay Perrin",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d497d74a0df9e35e",
+          "eventUrl": "https://ufcstats.com/event-details/4f853e98886283cf",
+          "nativeBoutId": "59849",
+          "nativeFighterId": "147",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2022-04-23",
+          "opponent": "Cameron Else",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/926977ec3ed0ebe1",
+          "eventUrl": "https://ufcstats.com/event-details/236a37d96d476164",
+          "nativeBoutId": "66210",
+          "nativeFighterId": "147",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2021-11-20",
+          "opponent": "Cody Durden",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/84c68c4c387d2e32",
+          "eventUrl": "https://ufcstats.com/event-details/c95fbc085e17a532",
+          "nativeBoutId": "61677",
+          "nativeFighterId": "147",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2021-04-24",
+          "opponent": "Jeff Molina",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b5a8323de18f7e95",
+          "eventUrl": "https://ufcstats.com/event-details/27541033b97c076d",
+          "nativeBoutId": "61753",
+          "nativeFighterId": "147",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        }
+      ]
     }
   }
 }
