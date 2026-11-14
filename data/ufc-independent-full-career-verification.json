@@ -2487,6 +2487,122 @@
         "sharedFightInOtherApprovedCareer": true,
         "doNotTreatUnlinkedSourceHistoryAsCertified": true
       }
+    },
+    "ilimbek-akylbek-uulu": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Ilimbek Akylbek Uulu",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/130b65b53f30f33c",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ilimbek-akylbek",
+      "firstOfficialUfcFight": "2026-09-26",
+      "lastOfficialUfcFight": "2026-09-26",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "8281"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Read whole official UFC athlete biography from debut through Nov 14 2026, official UFC 2026 TUF season34 bantamweight final DQ written results and weigh-in confirmation; independently indexed pinned Greco UFCStats-derived fighter and fight result URLs through 7 November 2026. One final officially recognized and measured, separate TUF quarterfinal/semifinal nonofficial UFC fights excluded. Native historic identity 8281 / 34990 and result adjudication fully reconciled.",
+        "officialDebut": "2026-09-26",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "Official UFC athlete 'Ilimbek Akylbek' and Greco UFCStats fighter listing omit native/provider surname suffix 'Uulu', but official 26 Sept 2026 TUF Season 34 finale date, unique 8281 fighter numeric ID, opponent and illegal-knee DQ all align. Exclude separately listed 2026 TUF semifinal vs Xavier Franklin and quarterfinal vs Sean Mora; the televised TUF FINAL is included as official UFC fight.",
+        "officialResultsUrl": "https://www.ufc.com/news/ufc-fight-night-rosas-jr-vs-barcelos-results",
+        "ufcTufFinaleUrl": "https://www.ufc.com/news/official-weigh-in-results-fight-night-rosas-barcelos-vegas-121",
+        "directUfcStatsSiteAccess": "not directly accessible; fighter URL and linked fight URL confirmed from pinned independently sourced Greco UFCStats snapshot, not live UFCStats page"
+      },
+      "bouts": [
+        {
+          "date": "2026-09-26",
+          "opponent": "Mehemmedeli Osmanli",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3a70ed81e5611d24",
+          "nativeBoutId": "93174",
+          "nativeFightId": "93174",
+          "nativeFighterId": "8281",
+          "event": "UFC Fight Night: Rosas Jr. vs Barcelos",
+          "method": "dq",
+          "round": 1,
+          "time": "2:19",
+          "eventScope": "official_tuf34_bantamweight_final",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-september-26-2026"
+        }
+      ],
+      "note": "Full official UFC history through 14 Nov 2026: TUF season 34 finale on UFC main card, 139 sec and disqualification, separate excluded nonofficial TUF preliminary bouts; both results supported by UFC written official sources and independent numeric source fighter records. Single native 93174 measured for two separate fighter histories."
+    },
+    "mehemmedeli-osmanli": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Mehemmedeli Osmanli",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/2bbdbc925f4323ac",
+      "officialFighterUrl": "https://www.ufc.com/athlete/mahammadali-osmanli",
+      "firstOfficialUfcFight": "2026-09-26",
+      "lastOfficialUfcFight": "2026-09-26",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "34990"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Read whole official UFC athlete biography from debut through Nov 14 2026, official UFC 2026 TUF season34 bantamweight final DQ written results and weigh-in confirmation; independently indexed pinned Greco UFCStats-derived fighter and fight result URLs through 7 November 2026. One final officially recognized and measured, separate TUF quarterfinal/semifinal nonofficial UFC fights excluded. Native historic identity 8281 / 34990 and result adjudication fully reconciled.",
+        "officialDebut": "2026-09-26",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "UFC athlete lists 'Mahammadali Osmanli'; original provider saved 'Mehemmedeli Osmanli', Greco source says 'Mahammadali Osmanli', UFC event article alternates Mahammadali/Mahammadeli. Verified this is same individual through UFC 26 Sept TUF 34 FINAL, numeric native ID 34990, exact two-corner result; UFC bio Last fight panel erroneously states Win while official event says illegal-knee DQ loss. Upcoming 5 Dec 2026 is not a completed official UFC fight.",
+        "officialResultsUrl": "https://www.ufc.com/news/ufc-fight-night-rosas-jr-vs-barcelos-results",
+        "ufcTufFinaleUrl": "https://www.ufc.com/news/official-weigh-in-results-fight-night-rosas-barcelos-vegas-121",
+        "directUfcStatsSiteAccess": "not directly accessible; fighter URL and linked fight URL confirmed from pinned independently sourced Greco UFCStats snapshot, not live UFCStats page"
+      },
+      "bouts": [
+        {
+          "date": "2026-09-26",
+          "opponent": "Ilimbek Akylbek Uulu",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3a70ed81e5611d24",
+          "nativeBoutId": "93174",
+          "nativeFightId": "93174",
+          "nativeFighterId": "34990",
+          "event": "UFC Fight Night: Rosas Jr. vs Barcelos",
+          "method": "dq",
+          "round": 1,
+          "time": "2:19",
+          "eventScope": "official_tuf34_bantamweight_final",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-september-26-2026"
+        }
+      ],
+      "note": "Full official UFC history through 14 Nov 2026: TUF season 34 finale on UFC main card, 139 sec and disqualification, separate excluded nonofficial TUF preliminary bouts; both results supported by UFC written official sources and independent numeric source fighter records. Single native 93174 measured for two separate fighter histories."
     }
   }
 }
