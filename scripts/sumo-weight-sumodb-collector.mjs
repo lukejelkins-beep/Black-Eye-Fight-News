@@ -56,6 +56,22 @@ export function conservativeRobotsAllow(robots,path='/Rikishi.aspx'){
  }
  return true;
 }
+/**
+ * Source profiles may show a historical ring name (e.g. Senshoho) while
+ * the current roster uses a later name (Izumifuji). Validate only against
+ * API-backed current and recorded historical shikonas, never fuzzy identity.
+ */
+export function sourceIdentityEvidence(html,w,raw){
+ const plain=String(html).replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,' ')
+   .replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').toLowerCase();
+ const names=[w?.shikonaEn,raw?.data?.profile?.shikonaEn,
+   ...(raw?.data?.shikonas||[]).map(x=>x.shikonaEn)]
+   .filter(x=>typeof x==='string'&&x.trim().length>=4);
+ const matching=names.find(x=>plain.includes(x.trim().toLowerCase()))||null;
+ return {valid:!!matching&&/\brikishi\b/i.test(plain),matchedShikona:matching,
+  matchedCurrentName:matching!=null&&matching===w.shikonaEn,
+  recordedAliasCount:new Set(names).size};
+}
 export function recoveryCooldown(error){
  const s=String(error||'');
  if(/robots|HTTP (403|429|451)/i.test(s))return 24*3600;
@@ -114,20 +130,19 @@ async function main(){
    try{
     const html=await fetchHtml(SOURCE_URL+w.sumoDbId);
     if(html.length<400||html.length>2_000_000)throw Error('Unexpected source HTML length');
-    const clean=html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,' ')
-      .replace(/<[^>]*>/g,' ').replace(/\s+/g,' ');
-    const name=String(w.shikonaEn||'').toLowerCase();
-    if(!clean.toLowerCase().includes(name)||!/\bRikishi\b/i.test(clean))
-      throw Error('Wrestler identity not evidenced in source page');
+    const raw=await read(join(ROOT,'rikishi',w.sourceId+'.json'));
+    const identity=sourceIdentityEvidence(html,w,raw);
+    if(!identity.valid)
+      throw Error('Source page name not evidenced by current or recorded historical shikonas');
     const rows=parseSumoDbDatedMeasurements(html);
     if(!rows.length)throw Error('No dated measurement rows found (parser/source review)');
-    const raw=await read(join(ROOT,'rikishi',w.sourceId+'.json'));
     const datedEvidence=rows.map(x=>({...x,sourceUrl:SOURCE_URL+w.sumoDbId,independentlyCertified:false}));
     const check=reconcileWeightHistory(raw.data.measurements,datedEvidence,Number(w.sumoDbId));
     const doc={
      schemaVersion:1,scope:'Authorised research-only SumoDB historical weight evidence',
      sourceId:w.sourceId,officialNskId:w.officialNskId,sumoDbId:Number(w.sumoDbId),
      rikishi:w.shikonaEn,reviewedAt:now(),sourcePageUrl:SOURCE_URL+w.sumoDbId,
+     identityEvidence:identity,
      rawHtmlSha256:createHash('sha256').update(html).digest('hex'),
      datedEvidence,coverage:{
        datedApiPoints:check.apiDatedPoints,datedIndependentPoints:check.independentDatedPoints,
