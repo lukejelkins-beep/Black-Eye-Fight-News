@@ -31,23 +31,24 @@ export function parseOfficialProfile(html,roster){
  const num=(label,unit)=>{const m=basic.match(new RegExp('\\b'+label+'\\s+([0-9]+(?:\\.[0-9]+)?)\\s*'+unit,'i'));return m?Number(m[1]):null;};
  const nameMatch=basic.match(/\bRikishi Profile\s+Basic Information\s+(.+?)\s+Stable\s+/i);
  const stableMatch=basic.match(/\bStable\s+([A-Za-z][A-Za-z' -]{1,40}?)\s+(?:Name|Ring Name|Current Rank)\s+/i);
- const rankMatch=basic.match(/\bCurrent Rank\s+([A-Za-z-]+)\s+#?\s*(\d{1,3})\b/i);
+ const rankMatch=basic.match(/\bCurrent Rank\s+(Yokozuna|Ozeki|Sekiwake|Komusubi|Maegashira|Juryo|Makushita|Sandanme|Jonidan|Jonokuchi)(?:\s+#?\s*(\d{1,3}))?/i);
  const asOf=text.match(/\bas\s+of\s+([A-Za-z]+\s+\d{4})\s*:\s*Day\s*(\d{1,2})/i);
  const announcedName=short(nameMatch?.[1]);
  const expectedName=String(roster.shikonaEn||'');
  const nameMatchOk=announcedName!=null&&announcedName.toLowerCase().startsWith(expectedName.toLowerCase());
- const rank=rankMatch?{division:rankMatch[1],position:Number(rankMatch[2])}:null;
+ const rank=rankMatch?{division:rankMatch[1],position:rankMatch[2]==null?null:Number(rankMatch[2])}:null;
  const expected=String(roster.currentRank||'').match(/^([A-Za-z-]+)\s+(\d+)\s+(East|West)$/i);
  const comparisons={
   name: nameMatchOk,
   stable: stableMatch?.[1]!=null?stableMatch[1].trim()===roster.heya:null,
-  rankGrade:rank&&expected?rank.division.toLowerCase()===expected[1].toLowerCase()&&rank.position===Number(expected[2]):null,
+  rankGrade:rank&&expected?rank.division.toLowerCase()===expected[1].toLowerCase()&&
+    (rank.position===null||rank.position===Number(expected[2])):null,
   height: num('Height','cm')!=null?num('Height','cm')===Number(roster.heightCm):null,
   weight: num('Weight','kg')!=null?num('Weight','kg')===Number(roster.weightKg):null
  };
  const completeness=!!career&&!!rank&&!!stableMatch&&num('Height','cm')!=null&&num('Weight','kg')!=null;
  return {
-  schemaVersion:1,source:'Japan Sumo Association official public Rikishi Profile',
+  schemaVersion:1,parserVersion:2,source:'Japan Sumo Association official public Rikishi Profile',
   sourceId:roster.sourceId,officialNskId:roster.officialNskId,
   url:'https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+roster.officialNskId+'/',
   profileName:announcedName,stable:short(stableMatch?.[1]),rank,heightCm:num('Height','cm'),
@@ -74,7 +75,8 @@ async function main(){
  for(const w of cases){
   if(requested>=MAX_REQUESTS)break;
   const path=join(ROOT,'profiles',w.sourceId+'.json');
-  if(await load(path))continue;
+  const cached=await load(path);
+  if(cached&&(cached.status==='basic-fields-parsed'||cached.parserVersion>=2))continue;
   requested++;
   const url='https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+w.officialNskId+'/';
   try{
