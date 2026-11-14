@@ -94,3 +94,36 @@ test("secondary dispute without retained provider originals is never silently ac
  assert.equal(out.metricBouts,0);
  assert(out.pending.some(x=>x.reason==="cross_source_conflict_provenance_missing"));
 });
+
+test("early-finish UFC fights may drop only empty future-round placeholders",()=>{
+ const b=bout(9551,"2024-09-28","UFC Paris: Example",
+  "athlete-one","Opponent Two","opponent-two",6);
+ b.result.round=2;b.result.time="2:30";
+ const a=archiveFight(b);
+ a.rounds.push({round:2,a:{sigLanded:4,sigAttempted:9},
+  b:{sigLanded:2,sigAttempted:6}});
+ a.rounds.push({round:3,a:{sigLanded:0,sigAttempted:0,controlSec:0},
+  b:{sigLanded:0,sigAttempted:0,controlSec:0}});
+ a.sources={ufcalendar:{rounds:structuredClone(a.rounds)}};
+ const out=buildPostfightMetrics({bouts:{"9551":b}},
+  {fights:{one:a}},{asOf:"2026-11-14"});
+ assert.equal(out.metricBouts,1);
+ assert.equal(out.recoveredZeroOnlyTrailingRoundBouts,1);
+ assert.equal(out.fighters["athlete-one"].careerBouts[0].cageSec,450);
+ assert.equal(out.fighters["athlete-one"].careerBouts[0].metrics.sigLanded,10);
+});
+test("a positive after-finish stat in any provider source blocks the entire fight",()=>{
+ const b=bout(9552,"2024-09-28","UFC Paris: Example",
+  "athlete-one","Opponent Two","opponent-two",6);
+ b.result.round=2;b.result.time="2:30";
+ const a=archiveFight(b);
+ a.rounds.push({round:2,a:{sigLanded:4},b:{sigLanded:2}});
+ a.rounds.push({round:3,a:{sigLanded:0},b:{sigLanded:0}});
+ a.sources={ufcalendar:{rounds:[
+  ...a.rounds.slice(0,2),
+  {round:3,a:{sigLanded:1},b:{sigLanded:0}}]}};
+ const out=buildPostfightMetrics({bouts:{"9552":b}},
+  {fights:{one:a}},{asOf:"2026-11-14"});
+ assert.equal(out.metricBouts,0);
+ assert(out.pending.some(x=>x.boutId==="9552"&&x.reason==="trailing_round_stat_conflict"));
+});
