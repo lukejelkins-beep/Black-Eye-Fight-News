@@ -1,0 +1,50 @@
+name: BEFN boxing profile foundation (research branch)
+
+on:
+  push:
+    branches:
+      - research/boxing-2026-11-cohort
+    paths:
+      - '.github/workflows/boxing-profile-foundation.yml'
+      - 'scripts/boxing/build-profile-foundation.js'
+      - 'research/boxing/2026-11-14-cohort-preview.json'
+      - 'research/boxing/compubox/bouts/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: boxing-profile-foundation-research
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/research/boxing-2026-11-cohort'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout research branch
+        uses: actions/checkout@v4
+        with:
+          ref: research/boxing-2026-11-cohort
+          persist-credentials: true
+      - name: Prepare Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Regenerate profiles and run strict inventory checks
+        run: node scripts/boxing/build-profile-foundation.js
+      - name: Commit generated research assets only
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/boxing/generated/
+          if ! git diff --cached --quiet; then
+            git commit -m 'data(boxing): regenerate provisional profiles with independent QA'
+            git pull --rebase origin research/boxing-2026-11-cohort
+            git push origin HEAD:research/boxing-2026-11-cohort
+          else
+            echo 'No changes in profile foundation.'
+          fi
