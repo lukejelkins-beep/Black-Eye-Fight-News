@@ -18616,6 +18616,74 @@
           "nativeFighterId": "97"
         }
       ]
+    },
+    "jonny-parsons": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Jonny Parsons",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/2975297f505e9447",
+      "officialFighterUrl": "https://www.ufc.com/athlete/jonny-parsons",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived historical source, not a direct UFCStats scrape",
+        "method": "Independently reviewed exhaustive UFC.com dated biography and certified pin of Greco UFCStats-derived fight chronology, saved paired native fighter/bout IDs, real winner, dated result. UFC.com itself calls Souza 'José Henrique' and independent historical source calls him Souza; verified original cached opponent id 286 anchors exact alias."
+      },
+      "verifiedNumericFighterIds": [
+        "2818"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Exactly two completed official UFC bouts (2023 Danny Roberts win, 2026 José Souza loss); independent UFC.com primary biographies, Greco pinned full fighter and bout chronology, and native cached identity/winner/rounds. José Souza = original native José Henrique (opponent ID 286) for exact Nov 7 fight 93282; verified as one fighter by official UFC.com biography referring to 'José Henrique'. The source-attested Oct 2021 DWCS bout 83899 with Solomon Renfro is excluded separately. Full 783-person strict Stage3 gate mandatory before counting certificate.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/jonny-parsons",
+        "https://www.ufc.com/athlete/jose-souza",
+        "https://www.ufc.com.br/index.php/news/conheca-lutadores-brasileiros-ufc-macau-2026",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43576212690",
+      "nativeAliasReviewRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43576773509",
+      "disambiguation": {
+        "sourceOpponentName": "Jose Souza",
+        "savedOpponentName": "Jose Henrique",
+        "originalNumericOpponentFighterId": "286",
+        "sourceAliasOfficialFighterUrl": "https://www.ufc.com/athlete/jose-souza",
+        "sourceAliasOfficialExplanation": "José Souza official UFC biography labels its owner José Henrique, same 2026-11-07 Jonny Parsons victory",
+        "nativeSourceOnlyNoProfileCacheRewrite": true
+      },
+      "separatelySourceExcludedFeederNativeBoutIds": [
+        "83899"
+      ],
+      "bouts": [
+        {
+          "date": "2023-07-22",
+          "opponent": "Danny Roberts",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d54ebd2a3435a357",
+          "nativeBoutId": "60107",
+          "nativeFighterId": "2818"
+        },
+        {
+          "date": "2026-11-07",
+          "opponent": "Jose Souza",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e2cd8521c8ba55b2",
+          "nativeBoutId": "93282",
+          "nativeFighterId": "2818",
+          "sourceVerifiedNativeOpponentAliases": [
+            "Jose Henrique"
+          ],
+          "verifiedOpponentNativeFighterIds": [
+            "286"
+          ]
+        }
+      ]
     }
   }
 }
