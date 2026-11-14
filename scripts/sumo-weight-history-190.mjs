@@ -123,6 +123,11 @@ async function main(){
   if(independent)crosschecks.set(r.sourceId,independent);
  }
  const report=summarizeWeightCoverage(cohort,docs,crosschecks);
+ const policy=await optional(join(ROOT,'sumodb-use-policy.json'));
+ report.sourceReusePermissionConfirmed=policy?.approvedForAutomatedCollection===true;
+ report.publicDisplayPermissionConfirmed=policy?.approvedForPublicDisplay===true;
+ report.permissionEvidenceBasis=policy?.approvalEvidenceType||null;
+ report.note+=' Permission status reflects the owner’s confirmation, not independent review of the original grant.';
  const path=join(ROOT,'weight-source-coverage.json'),before=await optional(path);
  if(JSON.stringify(before)!==JSON.stringify(report)){
   await mkdir(ROOT,{recursive:true});const temp=path+'.tmp';
