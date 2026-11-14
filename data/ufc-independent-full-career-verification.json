@@ -15272,6 +15272,101 @@
         "revalidateOnCurrentBranch": true,
         "note": "This source proof is imported without changing bout IDs, dates, outcomes, opponents or evidence links. Count only after latest main Stage3 strict CI passes on unified research branch."
       }
+    },
+    "trey-ogden": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Trey Ogden",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/cfc3e7bb44685289",
+      "officialFighterUrl": "https://www.ufc.com/athlete/trey-ogden",
+      "earliestOfficialUfcBout": "2022-04-16",
+      "latestCompletedOfficialUfcBout": "2025-01-11",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "method": "Exhaustive seven-result Greco UFCStats-derived fighter-specific chronology reconciled against the seven detailed official UFC.com athlete career narratives and cached exact native corner/winner outcomes. Source CSV URL references retained; direct UFCStats HTML not rendered.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "39"
+      ],
+      "bouts": [
+        {
+          "date": "2022-04-16",
+          "opponent": "Jordan Leavitt",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/eac46cfead228e11",
+          "nativeBoutId": "61526",
+          "nativeFighterId": "39",
+          "event": "UFC Fight Night: Luque vs Muhammad 2"
+        },
+        {
+          "date": "2022-09-17",
+          "opponent": "Daniel Zellhuber",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/35d06627d91b840d",
+          "nativeBoutId": "61186",
+          "nativeFighterId": "39",
+          "event": "UFC Fight Night: Sandhagen vs Song"
+        },
+        {
+          "date": "2023-04-08",
+          "opponent": "Ignacio Bahamondes",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d7022b6058dbb26b",
+          "nativeBoutId": "53835",
+          "nativeFighterId": "39",
+          "event": "UFC 287: Pereira vs Adesanya 2"
+        },
+        {
+          "date": "2023-11-18",
+          "opponent": "Nikolas Motta",
+          "result": "no_contest",
+          "fightUrl": "https://ufcstats.com/fight-details/6e5a3d6b6ed84ac3",
+          "nativeBoutId": "59985",
+          "nativeFighterId": "39",
+          "event": "UFC Fight Night: Allen vs Craig"
+        },
+        {
+          "date": "2024-03-23",
+          "opponent": "Kurt Holobaugh",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/de7cb625bdec0f91",
+          "nativeBoutId": "38998",
+          "nativeFighterId": "39",
+          "event": "UFC Fight Night: Ribas vs Namajunas"
+        },
+        {
+          "date": "2024-07-20",
+          "opponent": "Loik Radzhabov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b3f1253d0a991791",
+          "nativeBoutId": "65931",
+          "nativeFighterId": "39",
+          "event": "UFC Fight Night: Lemos vs Jandiroba"
+        },
+        {
+          "date": "2025-01-11",
+          "opponent": "Thiago Moises",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/54fa6e32330a8cca",
+          "nativeBoutId": "60349",
+          "nativeFighterId": "39",
+          "event": "UFC Fight Night: Dern vs Ribas 2"
+        }
+      ],
+      "note": "The 2023-11-18 Nikolas Motta bout is official no contest, not a submission win. The 2025-01-11 Thiago Moises decision is a loss despite the UFC.com athlete page's graphical Win label; the detailed official text and UFCStats-derived W/L result agree. All seven source UFC fights match measured native IDs. A 2026-05-16 Thomas Gantt scheduled record without completed result is excluded.",
+      "unifiedEvidenceProvenance": {
+        "sourcePullRequest": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/179",
+        "sourceBlobSha": "00bdc6da4fa54dc88e68baa1d7e263dcd9010733",
+        "originalAuditRun": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562945403",
+        "sourcePreviouslyPassedStrictStage3": true,
+        "revalidateOnUnifiedBranch": true
+      }
     }
   }
 }
