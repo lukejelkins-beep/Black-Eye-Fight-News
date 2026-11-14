@@ -416,6 +416,30 @@ def feeder_event_title(title):
                           title or "",re.I))
 
 
+def confirmed_feeder_native_fight(row,evidence):
+    """A verified native fight ID and date identify *both* fight corners.
+
+    Exact athlete/opponent verification is required to add an ID to the
+    curated primary-source manifest. Once verified, the identical source ID
+    and date are sufficient for the other athlete's historical result too.
+    This does not remove either row from professional MMA history.
+    """
+    if (not isinstance(row,dict) or row.get("source")!="native" or
+        not isinstance(evidence,dict) or evidence.get("schema")!=1):
+        return False
+    bid=str(row.get("boutId") or "")
+    day=date_str(row.get("date"))
+    if not re.fullmatch(r"[1-9][0-9]{0,11}",bid) or not day:return False
+    matches=[e for e in evidence.get("bouts",[]) if isinstance(e,dict)
+             and str(e.get("boutId") or "")==bid]
+    if len(matches)!=1:return False
+    e=matches[0]
+    return bool(e.get("date")==day and slug(e.get("fighterSlug")) and
+                safe(e.get("opponent"),110) and
+                feeder_event_title(safe(e.get("event"),150)) and
+                str(e.get("sourceUrl") or "").startswith("https://www.ufc.com/"))
+
+
 def official_ufc_event_title(title):
     """TUF Finals count as UFC; TV exhibition/qualifier bouts do not."""
     if not title or feeder_event_title(title):return False
@@ -470,7 +494,7 @@ def approved_ufc_round_priority(approval,coverage,research,today,state=None):
         seen=set()
         for row in profile.get("recentHistory",[]):
             if (not isinstance(row,dict) or row.get("source")!="native" or
-                confirmed_feeder_bout(row,fighter,feeder_proof) or
+                confirmed_feeder_native_fight(row,feeder_proof) or
                 str(row.get("promotion") or "").lower()!="ufc" or
                 str(row.get("result") or "").lower() not in
                 ("win","loss","draw","no_contest","w","l","d","nc")):
@@ -1095,7 +1119,7 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None,
         for row in profile.get("recentHistory",[]):
             if not isinstance(row,dict) or row.get("source")!="native" or \
                str(row.get("promotion") or "").lower()!="ufc":continue
-            if confirmed_feeder_bout(row,slugval,feeder_proof):continue
+            if confirmed_feeder_native_fight(row,feeder_proof):continue
             bid=str(row.get("boutId") or "")
             if not re.fullmatch(r"[1-9][0-9]{0,11}",bid) or bid in state["bouts"]:continue
             when=date_str(row.get("date"))

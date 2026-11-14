@@ -254,7 +254,7 @@ class FullCareerCacheTests(unittest.TestCase):
     def test_ufc_verified_contender_series_bouts_are_not_retryable_ufc_fights(self):
         evidence=m.read(m.FEEDER_EVIDENCE,{})
         self.assertEqual(evidence["schema"],1)
-        self.assertEqual(len(evidence["bouts"]),3)
+        self.assertGreaterEqual(len(evidence["bouts"]),17)
         for row in evidence["bouts"]:
             saved={"boutId":row["boutId"],"date":row["date"],
                    "opponent":row["opponent"],"source":"native",
@@ -281,6 +281,53 @@ class FullCareerCacheTests(unittest.TestCase):
             self.assertEqual(m.approved_ufc_round_priority(
                 manifest,census,research,dt.date(2026,11,14),state),{})
             self.assertEqual(len(research["profiles"][row["fighterSlug"]]["recentHistory"]),1)
+
+    def test_verified_feeder_native_id_excludes_both_approved_fight_corners(self):
+        evidence=m.read(m.FEEDER_EVIDENCE,{})
+        for bid,fighter,other,day,opp in (
+            ("84037","joe-pyfer","dustin-stoltzfus","2020-08-11","Joe Pyfer"),
+            ("88200","phil-hawes","julian-marquez","2017-08-01","Phil Hawes"),
+            ("83929","punahele-soriano","jamie-pickett","2019-06-18","Jamie Pickett")
+        ):
+            mirrored={"boutId":bid,"date":day,"opponent":opp,"source":"native",
+                      "promotion":"ufc","result":"win"}
+            self.assertTrue(m.confirmed_feeder_native_fight(mirrored,evidence))
+            self.assertFalse(m.confirmed_feeder_native_fight(
+                {**mirrored,"date":"2000-01-01"},evidence))
+            self.assertFalse(m.confirmed_feeder_native_fight(
+                {**mirrored,"source":"history"},evidence))
+            state=m.default_progress()
+            research={"profiles":{fighter:{"recentHistory":[mirrored]}}}
+            coverage={"schema":1,"scope":"ufc","activityMonths":36,
+                      "asOf":"2026-11-14",
+                      "indexCompleteness":"36_month_event_scan_complete",
+                      "fighters":[{"slug":fighter,
+                       "eligibilityStatus":"latest_observed_mma_ufc"}]}
+            approval={**self.approval([fighter]),
+                      "rosterAsOf":"2026-11-14","approvedAt":"2026-11-14"}
+            client=Fake()
+            self.assertEqual(m.collect_ufc_career_bouts(
+                client,state,research,coverage,dt.date(2026,11,14),approval),0)
+            self.assertEqual(client.paths,[])
+            self.assertEqual(m.approved_ufc_round_priority(
+                approval,coverage,research,dt.date(2026,11,14),state),{})
+            self.assertEqual(len(research["profiles"][fighter]["recentHistory"]),1)
+
+    def test_duplicate_or_incomplete_source_proof_cannot_exclude_shared_native_id(self):
+        evidence={"schema":1,"bouts":[
+          {"boutId":"83929","date":"2019-06-18","fighterSlug":"jamie-pickett",
+           "opponent":"Punahele Soriano","event":"Dana White's Contender Series",
+           "sourceUrl":"https://www.ufc.com/news/results"}]}
+        row={"boutId":"83929","date":"2019-06-18","opponent":"Jamie Pickett",
+             "source":"native","promotion":"ufc"}
+        self.assertTrue(m.confirmed_feeder_native_fight(row,evidence))
+        self.assertFalse(m.confirmed_feeder_native_fight(
+            row,{"schema":1,"bouts":evidence["bouts"]*2}))
+        for invalid in ({"event":"UFC Fight Night"},
+                        {"sourceUrl":"https://example.invalid"},
+                        {"fighterSlug":""}):
+            proof={"schema":1,"bouts":[{**evidence["bouts"][0],**invalid}]}
+            self.assertFalse(m.confirmed_feeder_native_fight(row,proof))
 
     def test_cached_contender_series_event_prevents_repeating_false_ufc_lookup(self):
         state,research,candidate=self.fixture()
