@@ -16,7 +16,7 @@ on:
       - 'tests/test-ufc-stage3-v4-reconciliation.mjs'
       - 'scripts/ufc-reconcile-stage3-v4-certifications.mjs'
       - 'scripts/diagnose-ufc-v4-stage3-blockers.mjs'
-      - 'scripts/ufc-unified-next8-source-review.mjs'
+      - 'scripts/ufc-unified-next8b-source-review.mjs'
       - 'data/ufc-stage3-v4-consolidation-manifest-20261114.json'
       - 'tests/test-ufc-36-month-stage3-progress.mjs'
       - 'tests/test-ufc-36-month-review-report.mjs'
@@ -79,10 +79,10 @@ jobs:
           node --test tests/test-ufc-v4-certification-queue.mjs
           test -s qa/ufc-36-month-stage3-progress.json
           node scripts/ufc-v4-certification-queue.mjs
-      - name: Research eight unclaimed UFC fighters against pinned historical source (read-only)
+      - name: Research next eight unclaimed UFC fighters against pinned historical source (read-only)
         if: always()
         continue-on-error: true
-        run: node scripts/ufc-unified-next8-source-review.mjs
+        run: node scripts/ufc-unified-next8b-source-review.mjs
       - name: Save report
         if: always()
         uses: actions/upload-artifact@v4
@@ -97,6 +97,6 @@ jobs:
             qa/ufc-v4-certification-queue.json
             qa/ufc-stage3-v4-reconciliation.json
             qa/ufc-v4-stage3-blocker-diagnostics.json
-            qa/ufc-unified-next8-source-review.json
+            qa/ufc-unified-next8b-source-review.json
           retention-days: 14
           if-no-files-found: warn
