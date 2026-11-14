@@ -9,8 +9,9 @@ import { TRACKED_DIVISIONS, trackedBanzukeCohort } from '../assets/sumo-data.mjs
 
 const PICKS = ['Onosato', 'Wakatakakage', 'Nishikigi'];
 const CURRENT_BASHO = '202611';
+const PREVIOUS_BASHO = '202609';
 const capturedAt = new Date().toISOString();
-const client = createSumoClient({ maxCalls: 16, timeoutMs: 15000 });
+const client = createSumoClient({ maxCalls: 28, timeoutMs: 15000 });
 const note = 'Developer preview; third-party source; cross-check results against the Japan Sumo Association before production.';
 
 async function collectOptional(fn, label) {
@@ -43,6 +44,27 @@ const banzuke = {};
 for (const div of TRACKED_DIVISIONS) {
   banzuke[div] = await collectOptional(() => client.banzuke(CURRENT_BASHO, div), div + ' banzuke');
 }
+// Development-only historic movement baseline. No timed polling or bulk career scraping.
+const previousBanzuke = {};
+for (const div of TRACKED_DIVISIONS) {
+  previousBanzuke[div] = await collectOptional(() => client.banzuke(PREVIOUS_BASHO, div), div + ' previous banzuke');
+}
+const featuredExtras = [];
+for (const fighter of featured) {
+  const rich = await collectOptional(() => client.rikishi(fighter.id), 'fighter detail '+fighter.shikonaEn);
+  const sample=availableOpponent(fighter.id, banzuke);
+  const h2h=sample ? await collectOptional(() => client.headToHead(fighter.id,sample.opponentId), 'head-to-head '+fighter.shikonaEn) : {status:'unavailable',data:null,reason:'No recorded source opponent'};
+  featuredExtras.push({id:fighter.id, shikonaEn:fighter.shikonaEn, rikishi:rich, headToHead:sample?{opponentId:sample.opponentId, record:h2h}:null});
+}
+function availableOpponent(id, sections) {
+  for (const item of Object.values(sections)) {
+    const list=[...(item?.data?.east||[]),...(item?.data?.west||[])];
+    const row=list.find(r => Number(r.rikishiID)===Number(id));
+    const opponentId=Number((row?.record||[]).find(r=>['win','loss'].includes(r?.result) && Number(r.opponentID)>0)?.opponentID);
+    if(Number.isSafeInteger(opponentId)&&opponentId>0) return {opponentId};
+  }
+  return null;
+}
 const availableBanzuke = {};
 for (const division of TRACKED_DIVISIONS) {
   if (banzuke[division]?.status !== 'available') {
@@ -72,14 +94,20 @@ const details = {
   bashoId: CURRENT_BASHO,
   trackedDivisions: TRACKED_DIVISIONS,
   featured,
+  featuredExtras,
   basho,
-  banzuke
+  banzuke,
+  previousBashoId: PREVIOUS_BASHO,
+  previousBanzuke
 };
 await save('data/sumo/rikishi-index.json', roster);
 await save('data/sumo/preview-details.json', details);
 console.log(JSON.stringify({
   status: 'ok', count: roster.count, divisions: counts, featured: featured.map(f => f.shikonaEn), basho: basho.status,
-  banzuke: Object.fromEntries(Object.entries(banzuke).map(([key,value]) => [key,value.status])), apiCalls: client.callCount,
+  banzuke: Object.fromEntries(Object.entries(banzuke).map(([key,value]) => [key,value.status])),
+  previousBanzuke: Object.fromEntries(Object.entries(previousBanzuke).map(([key,value]) => [key,value.status])),
+  exampleExtras: featuredExtras.map(x=>({name:x.shikonaEn,richKeys:Object.keys(x.rikishi?.data||{}).slice(0,25),h2hKeys:Object.keys(x.headToHead?.record?.data||{}).slice(0,25)})),
+  apiCalls: client.callCount,
   exampleStatsKeys: Object.keys(featured[0]?.stats?.data ?? {}).slice(0, 30),
   exampleMatchKeys: Object.keys(featured[0]?.matches?.data ?? {}).slice(0, 30)
 }));
