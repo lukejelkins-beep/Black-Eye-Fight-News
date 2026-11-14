@@ -9,6 +9,7 @@ on:
       - 'scripts/build-ufc-v4-stat-foundation.mjs'
       - 'scripts/certify-ufc-v4-independent-full-careers.mjs'
       - 'scripts/ufc-v4-targeted-greco-evidence.mjs'
+      - 'scripts/audit-ufc-v4-eight-candidate-native-evidence.mjs'
       - 'data/ufc-v4-targeted-greco-fight-links-20261114.json'
       - 'data/ufc-v4-independent-full-career-certification-batch-20261114.json'
       - 'tests/test-ufc-postfight-metrics.mjs'
@@ -67,6 +68,8 @@ jobs:
         run: node scripts/ufc-v4-targeted-greco-evidence.mjs
       - name: Rebuild the complete measured career cache without API calls
         run: node scripts/build-ufc-postfight-metrics.mjs
+      - name: Audit next eight independent source-linked careers against native data
+        run: node scripts/audit-ufc-v4-eight-candidate-native-evidence.mjs
       - name: Audit the approved 783-fighter Last 5 / Last 10 / Career windows
         run: node scripts/build-ufc-v4-stat-foundation.mjs
       - name: Classify saved-data gaps without provider calls
@@ -100,6 +103,7 @@ jobs:
             qa/ufc-v4-first-two-certification-attempt.json
             qa/ufc-v4-independent-full-career-certifications.json
             qa/ufc-v4-targeted-greco-fight-links-20261114.json
+            qa/ufc-v4-eight-candidate-native-evidence.json
             qa/ufc-v4-shadow-ratings.json
             qa/ufc-v4-release-readiness.json
           retention-days: 14
