@@ -12,6 +12,7 @@ on:
       - 'scripts/ufc-v4-certification-queue.mjs'
       - 'scripts/ufc-certification-consolidation-preflight.mjs'
       - 'data/ufc-independent-full-career-verification.json'
+      - 'tests/test-ufc-unified-daria-zhelezniakova-20261115.mjs'
       - 'data/ufc-approved-cohort-frozen-census-20261114.json'
       - 'data/ufc-unified-wave17-dulatov-choinski-gimenis-official-source-review-20261114.json'
       - 'data/ufc-unified-josias-musasa-official-source-review-20261114.json'
@@ -217,6 +218,7 @@ jobs:
           node --test tests/test-ufc-unified-wave34-luan-mario-20261115.mjs
           node --test tests/test-ufc-unified-wave35-four-careers-20261115.mjs
           node --test tests/test-ufc-unified-wave36-seven-four-bout-careers-20261115.mjs
+          node --test tests/test-ufc-unified-daria-zhelezniakova-20261115.mjs
           node --test tests/test-ufc-unified-wave29-yakhyaev-quinonez-20261115.mjs
           node --test tests/test-ufc-unified-stewart-bedoya-ashmouz-20261115.mjs
           node --test tests/test-ufc-unified-wave10-evidence.mjs
