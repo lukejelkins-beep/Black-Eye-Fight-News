@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "parserVersion": 3,
+  "parserVersion": 4,
   "source": "Japan Sumo Association official public Rikishi Profile",
   "sourceId": 88,
   "officialNskId": 4123,
@@ -13,7 +13,12 @@
   },
   "heightCm": 189.6,
   "weightKg": 148,
-  "career": null,
+  "career": {
+    "wins": 114,
+    "losses": 87,
+    "absences": null
+  },
+  "careerAbsencesPublished": false,
   "officialAsOf": {
     "monthYear": "November 2026",
     "day": 8
@@ -25,7 +30,7 @@
     "height": true,
     "weight": true
   },
-  "status": "parse-review",
+  "status": "basic-fields-parsed",
   "certification": "not-started",
   "notice": "Basic current public fields only. Does NOT verify complete historical bouts, official historical weigh-ins, image rights, or career certification.",
   "officialBashoRecords": [
@@ -243,8 +248,12 @@
     "excludedCurrentBasho": "202611",
     "status": "historical-tournaments-agree",
     "certified": false,
-    "note": "Only completed prior tournaments compared. Agreement cannot by itself certify an entire rikishi career."
+    "note": "Only completed prior tournaments compared. Agreement cannot by itself certify an entire rikishi career.",
+    "ledgerProvenance": "unaltered-sumo-api-bouts",
+    "officialOutcomeOverlays": [],
+    "rawSourceMatchesChanged": false,
+    "careerCertified": false
   },
-  "capturedAt": "2026-11-14T23:20:08.427Z",
+  "capturedAt": "2026-11-14T23:42:00.313Z",
   "rawHtmlSha256": "b3afaf64b8a12d120567c65dbc569e95d94a62f150bb0e18daab79327d0c4352"
 }
