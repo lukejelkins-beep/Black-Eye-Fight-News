@@ -1,11 +1,34 @@
 {
   "snapshot_date": "2026-11-14",
-  "status": "DRAFT_NOT_APPROVED",
-  "ranking_sources": "WBA/WBC/IBF/WBO via BoxingScene, The Ring via Box.live",
-  "total_unique_candidate_fighters": 266,
-  "divisions_all_five_sources": 5,
-  "divisions_ring_only": 8,
+  "status": "DRAFT_COMPLETE_AWAITING_IDENTITY_AND_COHORT_REVIEW",
+  "population": "Men's bantamweight to heavyweight, 13 divisions",
+  "sources": {
+    "RING": "https://box.live/external-feeds/ring-feed-03062020/",
+    "IBF": "https://www.boxingscene.com/rankings",
+    "WBA": "https://www.boxingscene.com/rankings",
+    "WBC": "https://www.boxingscene.com/rankings",
+    "WBO": "https://www.boxingscene.com/rankings"
+  },
+  "sources_as_of": {
+    "RING": "2026-11-13",
+    "IBF": "2026-10-31",
+    "WBA": "2026-10-31",
+    "WBC": "2026-11-11",
+    "WBO": "2026-10-28"
+  },
+  "unique_fighter_candidates": 499,
+  "ranked_slots_total": 910,
+  "ranked_slots_filled": 894,
+  "unfilled_slots": 16,
+  "champion_labels_count": 66,
   "cross_division_fighters": [
+    {
+      "fighter": "Alberto Puello",
+      "divisions": [
+        "Super Lightweight",
+        "Welterweight"
+      ]
+    },
     {
       "fighter": "Carl Martin",
       "divisions": [
@@ -14,10 +37,52 @@
       ]
     },
     {
+      "fighter": "Hebert Conceicao Sousa",
+      "divisions": [
+        "Super Middleweight",
+        "Middleweight"
+      ]
+    },
+    {
+      "fighter": "Ismael Flores",
+      "divisions": [
+        "Middleweight",
+        "Super Welterweight"
+      ]
+    },
+    {
+      "fighter": "Jack Rafferty",
+      "divisions": [
+        "Welterweight",
+        "Super Lightweight"
+      ]
+    },
+    {
+      "fighter": "Jan Paul Rivera-Pizarro",
+      "divisions": [
+        "Featherweight",
+        "Super Featherweight"
+      ]
+    },
+    {
       "fighter": "John Riel Casimero",
       "divisions": [
         "Featherweight",
         "Super Bantamweight"
+      ]
+    },
+    {
+      "fighter": "Nick Ball",
+      "divisions": [
+        "Featherweight",
+        "Super Featherweight"
+      ]
+    },
+    {
+      "fighter": "Oscar Duarte",
+      "divisions": [
+        "Welterweight",
+        "Super Lightweight"
       ]
     },
     {
@@ -42,6 +107,20 @@
       ]
     },
     {
+      "fighter": "Vergil Ortiz Jr",
+      "divisions": [
+        "Super Welterweight",
+        "Middleweight"
+      ]
+    },
+    {
+      "fighter": "Xander Zayas",
+      "divisions": [
+        "Super Welterweight",
+        "Middleweight"
+      ]
+    },
+    {
       "fighter": "Yoshiki Takei",
       "divisions": [
         "Super Bantamweight",
@@ -53,135 +132,129 @@
     {
       "division": "Heavyweight",
       "ranking_sources": 5,
-      "ranked_positions_used": 69,
-      "ranked_positions_possible": 70,
+      "ranking_positions_filled": 69,
+      "ranking_positions_possible": 70,
       "unique_fighters": 39,
       "unique_ranked_fighters": 39,
-      "unique_champions": 5,
-      "complete_five_sources": true
+      "unique_champions": 5
     },
     {
       "division": "Cruiserweight",
       "ranking_sources": 5,
-      "ranked_positions_used": 70,
-      "ranked_positions_possible": 70,
+      "ranking_positions_filled": 70,
+      "ranking_positions_possible": 70,
       "unique_fighters": 36,
       "unique_ranked_fighters": 36,
-      "unique_champions": 3,
-      "complete_five_sources": true
+      "unique_champions": 3
     },
     {
       "division": "Light Heavyweight",
-      "ranking_sources": 1,
-      "ranked_positions_used": 10,
-      "ranked_positions_possible": 10,
-      "unique_fighters": 11,
-      "unique_ranked_fighters": 10,
-      "unique_champions": 1,
-      "complete_five_sources": false
+      "ranking_sources": 5,
+      "ranking_positions_filled": 69,
+      "ranking_positions_possible": 70,
+      "unique_fighters": 37,
+      "unique_ranked_fighters": 36,
+      "unique_champions": 4
     },
     {
       "division": "Super Middleweight",
-      "ranking_sources": 1,
-      "ranked_positions_used": 10,
-      "ranked_positions_possible": 10,
-      "unique_fighters": 10,
-      "unique_ranked_fighters": 10,
-      "unique_champions": 0,
-      "complete_five_sources": false
+      "ranking_sources": 5,
+      "ranking_positions_filled": 68,
+      "ranking_positions_possible": 70,
+      "unique_fighters": 37,
+      "unique_ranked_fighters": 37,
+      "unique_champions": 4
     },
     {
       "division": "Middleweight",
-      "ranking_sources": 1,
-      "ranked_positions_used": 10,
-      "ranked_positions_possible": 10,
-      "unique_fighters": 10,
-      "unique_ranked_fighters": 10,
-      "unique_champions": 0,
-      "complete_five_sources": false
+      "ranking_sources": 5,
+      "ranking_positions_filled": 69,
+      "ranking_positions_possible": 70,
+      "unique_fighters": 45,
+      "unique_ranked_fighters": 45,
+      "unique_champions": 4
     },
     {
       "division": "Super Welterweight",
-      "ranking_sources": 1,
-      "ranked_positions_used": 10,
-      "ranked_positions_possible": 10,
-      "unique_fighters": 10,
-      "unique_ranked_fighters": 10,
-      "unique_champions": 0,
-      "complete_five_sources": false
+      "ranking_sources": 5,
+      "ranking_positions_filled": 68,
+      "ranking_positions_possible": 70,
+      "unique_fighters": 42,
+      "unique_ranked_fighters": 42,
+      "unique_champions": 3
     },
     {
       "division": "Welterweight",
-      "ranking_sources": 1,
-      "ranked_positions_used": 10,
-      "ranked_positions_possible": 10,
-      "unique_fighters": 10,
-      "unique_ranked_fighters": 10,
-      "unique_champions": 0,
-      "complete_five_sources": false
+      "ranking_sources": 5,
+      "ranking_positions_filled": 69,
+      "ranking_positions_possible": 70,
+      "unique_fighters": 42,
+      "unique_ranked_fighters": 41,
+      "unique_champions": 5
     },
     {
       "division": "Super Lightweight",
-      "ranking_sources": 1,
-      "ranked_positions_used": 10,
-      "ranked_positions_possible": 10,
-      "unique_fighters": 11,
-      "unique_ranked_fighters": 10,
-      "unique_champions": 1,
-      "complete_five_sources": false
+      "ranking_sources": 5,
+      "ranking_positions_filled": 68,
+      "ranking_positions_possible": 70,
+      "unique_fighters": 42,
+      "unique_ranked_fighters": 39,
+      "unique_champions": 5
     },
     {
       "division": "Lightweight",
-      "ranking_sources": 1,
-      "ranked_positions_used": 10,
-      "ranked_positions_possible": 10,
-      "unique_fighters": 10,
-      "unique_ranked_fighters": 10,
-      "unique_champions": 0,
-      "complete_five_sources": false
+      "ranking_sources": 5,
+      "ranking_positions_filled": 69,
+      "ranking_positions_possible": 70,
+      "unique_fighters": 42,
+      "unique_ranked_fighters": 42,
+      "unique_champions": 4
     },
     {
       "division": "Super Featherweight",
-      "ranking_sources": 1,
-      "ranked_positions_used": 10,
-      "ranked_positions_possible": 10,
-      "unique_fighters": 11,
-      "unique_ranked_fighters": 10,
-      "unique_champions": 1,
-      "complete_five_sources": false
+      "ranking_sources": 5,
+      "ranking_positions_filled": 69,
+      "ranking_positions_possible": 70,
+      "unique_fighters": 38,
+      "unique_ranked_fighters": 36,
+      "unique_champions": 4
     },
     {
       "division": "Featherweight",
       "ranking_sources": 5,
-      "ranked_positions_used": 69,
-      "ranked_positions_possible": 70,
+      "ranking_positions_filled": 69,
+      "ranking_positions_possible": 70,
       "unique_fighters": 39,
       "unique_ranked_fighters": 38,
-      "unique_champions": 3,
-      "complete_five_sources": true
+      "unique_champions": 3
     },
     {
       "division": "Super Bantamweight",
       "ranking_sources": 5,
-      "ranked_positions_used": 68,
-      "ranked_positions_possible": 70,
+      "ranking_positions_filled": 68,
+      "ranking_positions_possible": 70,
       "unique_fighters": 37,
       "unique_ranked_fighters": 35,
-      "unique_champions": 3,
-      "complete_five_sources": true
+      "unique_champions": 3
     },
     {
       "division": "Bantamweight",
       "ranking_sources": 5,
-      "ranked_positions_used": 69,
-      "ranked_positions_possible": 70,
+      "ranking_positions_filled": 69,
+      "ranking_positions_possible": 70,
       "unique_fighters": 38,
       "unique_ranked_fighters": 38,
-      "unique_champions": 5,
-      "complete_five_sources": true
+      "unique_champions": 5
     }
   ],
-  "candidates": [
+  "unresolved_identity_review": [
+    "Ali Ismailov and Ali Izmailov are retained as separate athletes pending independent verification.",
+    "Paulo Aokuso and Austin Aokuso are separate Australian boxers, do not merge.",
+    "Gary Antonio Russell (122lb) and Gary Antuanne Russell (140lb) must remain separate.",
+    "Many fighters appear in multiple divisions; select one primary division only after checking current activity.",
+    "Champion status and same-day changes must be checked against official organisation publications."
+  ],
+  "fighters": [
     {
       "fighter": "Aaron McKenna",
       "divisions": [
@@ -193,6 +266,12 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 3
+        },
+        {
+          "division": "Middleweight",
+          "organization": "IBF",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
@@ -210,6 +289,30 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 8
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 9
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 1
         }
       ],
       "name_variants": [
@@ -227,10 +330,50 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 2
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBO",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
         "Abdullah Mason"
+      ]
+    },
+    {
+      "fighter": "Abel Mendoza",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Abel Mendoza"
+      ]
+    },
+    {
+      "fighter": "Abel Ramos",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Abel Ramos"
       ]
     },
     {
@@ -244,10 +387,45 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 5
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 4
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 2
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 5
         }
       ],
       "name_variants": [
         "Adam Azim"
+      ]
+    },
+    {
+      "fighter": "Adam Deines",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 7
+        }
+      ],
+      "name_variants": [
+        "Adam Deines"
       ]
     },
     {
@@ -291,6 +469,47 @@
       ]
     },
     {
+      "fighter": "Alan Chaves",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 14
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 6
+        }
+      ],
+      "name_variants": [
+        "Alan Chaves",
+        "Alan Abel Chaves"
+      ]
+    },
+    {
+      "fighter": "Alan Graves",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Alan Graves"
+      ]
+    },
+    {
       "fighter": "Alan Picasso",
       "divisions": [
         "Featherweight"
@@ -305,6 +524,29 @@
       ],
       "name_variants": [
         "Alan David Picasso"
+      ]
+    },
+    {
+      "fighter": "Albert Bell",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 11
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 8
+        }
+      ],
+      "name_variants": [
+        "Albert Bell"
       ]
     },
     {
@@ -353,21 +595,52 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 9
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBA",
+          "type": "champion",
+          "title_classification": "interim"
         }
       ],
       "name_variants": [
-        "Albert Ramirez"
+        "Albert Ramirez",
+        "Albert Ramirez (interim)"
+      ]
+    },
+    {
+      "fighter": "Alberto Mora",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 8
+        }
+      ],
+      "name_variants": [
+        "Alberto Mora"
       ]
     },
     {
       "fighter": "Alberto Puello",
       "divisions": [
-        "Super Lightweight"
+        "Super Lightweight",
+        "Welterweight"
       ],
       "appearances": [
         {
           "division": "Super Lightweight",
           "organization": "RING",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBC",
           "type": "ranking",
           "rank": 3
         }
@@ -397,6 +670,46 @@
       ],
       "name_variants": [
         "Alejandro Jair Gonzalez"
+      ]
+    },
+    {
+      "fighter": "Alejandro Silva",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Alejandro Silva"
+      ]
+    },
+    {
+      "fighter": "Alex Bray",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 9
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Alex Bray"
       ]
     },
     {
@@ -480,10 +793,56 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 9
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 9
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 5
         }
       ],
       "name_variants": [
         "Alexis Rocha"
+      ]
+    },
+    {
+      "fighter": "Ali Ismailov",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 8
+        }
+      ],
+      "name_variants": [
+        "Ali Ismailov"
+      ]
+    },
+    {
+      "fighter": "Ali Izmailov",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Ali Izmailov"
       ]
     },
     {
@@ -514,10 +873,39 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 6
+        },
+        {
+          "division": "Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 1
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 7
         }
       ],
       "name_variants": [
         "Amari Jones"
+      ]
+    },
+    {
+      "fighter": "Andreas Katzourakis",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 4
+        }
+      ],
+      "name_variants": [
+        "Andreas Katzourakis"
       ]
     },
     {
@@ -531,6 +919,24 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 7
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 11
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 6
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 9
         }
       ],
       "name_variants": [
@@ -640,10 +1046,33 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 4
+        },
+        {
+          "division": "Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 3
         }
       ],
       "name_variants": [
         "Andy Cruz"
+      ]
+    },
+    {
+      "fighter": "Andy Hiraoka",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 4
+        }
+      ],
+      "name_variants": [
+        "Andy Hiraoka"
       ]
     },
     {
@@ -714,6 +1143,12 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 2
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBA",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
@@ -760,6 +1195,12 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 2
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 9
         }
       ],
       "name_variants": [
@@ -796,6 +1237,103 @@
       ]
     },
     {
+      "fighter": "Aram Faniian",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Aram Faniian"
+      ]
+    },
+    {
+      "fighter": "Ardian Krasniqi",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 14
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 5
+        }
+      ],
+      "name_variants": [
+        "Ardian Krasniqi"
+      ]
+    },
+    {
+      "fighter": "Arlen Lopez",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 2
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Arlen Lopez"
+      ]
+    },
+    {
+      "fighter": "Armando Martinez Rabi",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 2
+        }
+      ],
+      "name_variants": [
+        "Armando Rabi"
+      ]
+    },
+    {
+      "fighter": "Armat Armanuly",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Armat Armanuly"
+      ]
+    },
+    {
       "fighter": "Armend Xhoxhaj",
       "divisions": [
         "Cruiserweight"
@@ -813,6 +1351,35 @@
       ]
     },
     {
+      "fighter": "Arnold Barboza",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 7
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 8
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 3
+        }
+      ],
+      "name_variants": [
+        "Arnold Barboza"
+      ]
+    },
+    {
       "fighter": "Artem Suslenkov",
       "divisions": [
         "Heavyweight"
@@ -827,6 +1394,57 @@
       ],
       "name_variants": [
         "Artem Suslenkov"
+      ]
+    },
+    {
+      "fighter": "Artur Beterbiev",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 1
+        }
+      ],
+      "name_variants": [
+        "Artur Beterbiev"
+      ]
+    },
+    {
+      "fighter": "Artur Reis",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 8
+        }
+      ],
+      "name_variants": [
+        "Artur Reis"
+      ]
+    },
+    {
+      "fighter": "Artur Subkhankulov",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 2
+        }
+      ],
+      "name_variants": [
+        "Artur Subkhankulov"
       ]
     },
     {
@@ -850,6 +1468,75 @@
       ],
       "name_variants": [
         "Arturo Cardenas"
+      ]
+    },
+    {
+      "fighter": "Atif Oberlton",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 6
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 10
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Atif Oberlton"
+      ]
+    },
+    {
+      "fighter": "Austin Aokuso",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Austin Aokuso"
+      ]
+    },
+    {
+      "fighter": "Ayrton Osmar Gimenez",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Ayrton Osmar Gimenez"
       ]
     },
     {
@@ -893,6 +1580,40 @@
       ]
     },
     {
+      "fighter": "Bakari Diallo",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 11
+        }
+      ],
+      "name_variants": [
+        "Bakari Diallo"
+      ]
+    },
+    {
+      "fighter": "Bakary Samake",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 4
+        }
+      ],
+      "name_variants": [
+        "Bakary Samake"
+      ]
+    },
+    {
       "fighter": "Bakhodir Jalolov",
       "divisions": [
         "Heavyweight"
@@ -932,10 +1653,85 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 7
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 2
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 4
         }
       ],
       "name_variants": [
         "Bakhram Murtazaliev"
+      ]
+    },
+    {
+      "fighter": "Balihenbieke Balihenbieke",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Balihenbieke Balihenbieke"
+      ]
+    },
+    {
+      "fighter": "Baltazar Noria",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Baltazar Noria"
+      ]
+    },
+    {
+      "fighter": "Bek Nurmaganbet",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 9
+        }
+      ],
+      "name_variants": [
+        "Bek Nurmaganbet"
       ]
     },
     {
@@ -949,10 +1745,251 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 10
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 6
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 1
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 7
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 6
         }
       ],
       "name_variants": [
         "Bektemir Melikuziev"
+      ]
+    },
+    {
+      "fighter": "Ben Crocker",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 11
+        }
+      ],
+      "name_variants": [
+        "Ben Crocker"
+      ]
+    },
+    {
+      "fighter": "Ben Mahoney",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 7
+        }
+      ],
+      "name_variants": [
+        "Ben Mahoney"
+      ]
+    },
+    {
+      "fighter": "Ben Whittaker",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 1
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 2
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 1
+        }
+      ],
+      "name_variants": [
+        "Ben Whittaker"
+      ]
+    },
+    {
+      "fighter": "Benjamin Mendes",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 10
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 7
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Benjamin Mendes"
+      ]
+    },
+    {
+      "fighter": "Bernardin Jakaj",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 11
+        }
+      ],
+      "name_variants": [
+        "Bernardin Jakaj"
+      ]
+    },
+    {
+      "fighter": "Bilal Fawaz",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Bilal Fawaz"
+      ]
+    },
+    {
+      "fighter": "Bilel Jkitou",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 13
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Bilel Jkitou"
+      ]
+    },
+    {
+      "fighter": "Brad Pauls",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Brad Pauls"
+      ]
+    },
+    {
+      "fighter": "Bradley Goldsmith",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Bradley Goldsmith"
+      ]
+    },
+    {
+      "fighter": "Bradley Rea",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 8
+        }
+      ],
+      "name_variants": [
+        "Bradley Rea"
+      ]
+    },
+    {
+      "fighter": "Brandon Adams",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 1
+        }
+      ],
+      "name_variants": [
+        "Brandon Adams"
       ]
     },
     {
@@ -1029,10 +2066,35 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 5
+        },
+        {
+          "division": "Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 6
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 4
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 1
         }
       ],
       "name_variants": [
-        "Brian Norman Jr"
+        "Brian Norman Jr",
+        "Brian Norman Jr."
       ]
     },
     {
@@ -1056,6 +2118,29 @@
       ],
       "name_variants": [
         "Bruce Carrington"
+      ]
+    },
+    {
+      "fighter": "Bryan Flores",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 15
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 8
+        }
+      ],
+      "name_variants": [
+        "Bryan Flores"
       ]
     },
     {
@@ -1083,6 +2168,52 @@
       ]
     },
     {
+      "fighter": "Callum Peters",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Callum Peters"
+      ]
+    },
+    {
+      "fighter": "Callum Simpson",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 10
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 8
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Callum Simpson"
+      ]
+    },
+    {
       "fighter": "Callum Smith",
       "divisions": [
         "Light Heavyweight"
@@ -1093,10 +2224,74 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 1
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBO",
+          "type": "champion",
+          "title_classification": "interim"
         }
       ],
       "name_variants": [
-        "Callum Smith"
+        "Callum Smith",
+        "Callum Smith (interim)"
+      ]
+    },
+    {
+      "fighter": "Callum Walsh",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 7
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Callum Walsh"
+      ]
+    },
+    {
+      "fighter": "Cameron Vuong",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Cameron Vuong"
+      ]
+    },
+    {
+      "fighter": "Caoimhin Agyarko",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Caoimhin Agyarko"
       ]
     },
     {
@@ -1140,10 +2335,56 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 1
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBC",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
         "Carlos Adames"
+      ]
+    },
+    {
+      "fighter": "Carlos Sinisterra",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Carlos Sinisterra"
+      ]
+    },
+    {
+      "fighter": "Carlos Utria",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 14
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Carlos Utria"
       ]
     },
     {
@@ -1157,10 +2398,39 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 9
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 12
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 12
         }
       ],
       "name_variants": [
         "Charles Conwell"
+      ]
+    },
+    {
+      "fighter": "Charles Shinima",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Charles Shinima"
       ]
     },
     {
@@ -1191,6 +2461,18 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 3
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 10
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 1
         }
       ],
       "name_variants": [
@@ -1289,6 +2571,12 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 4
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 3
         }
       ],
       "name_variants": [
@@ -1316,6 +2604,104 @@
       ],
       "name_variants": [
         "Christian Medina"
+      ]
+    },
+    {
+      "fighter": "Chriztian Pitt Laurente",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Chriztian Pitt Laurente"
+      ]
+    },
+    {
+      "fighter": "Conah Walker",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 6
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Conah Walker"
+      ]
+    },
+    {
+      "fighter": "Conor Wallace",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 11
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 11
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 9
+        }
+      ],
+      "name_variants": [
+        "Conor Wallace"
+      ]
+    },
+    {
+      "fighter": "Corey Marksman",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 6
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 4
+        }
+      ],
+      "name_variants": [
+        "Corey Marksman"
       ]
     },
     {
@@ -1416,10 +2802,33 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 1
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBC",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
         "Dalton Smith"
+      ]
+    },
+    {
+      "fighter": "Daniel Blancas",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 11
+        }
+      ],
+      "name_variants": [
+        "Daniel Blancas"
       ]
     },
     {
@@ -1443,6 +2852,40 @@
       ],
       "name_variants": [
         "Daniel Dubois"
+      ]
+    },
+    {
+      "fighter": "Darius Fulghum",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 4
+        }
+      ],
+      "name_variants": [
+        "Darius Fulghum"
+      ]
+    },
+    {
+      "fighter": "Daud Alaev",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 7
+        }
+      ],
+      "name_variants": [
+        "Daud Alaev"
       ]
     },
     {
@@ -1504,6 +2947,69 @@
       ]
     },
     {
+      "fighter": "David Papot",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 9
+        }
+      ],
+      "name_variants": [
+        "David Papot"
+      ]
+    },
+    {
+      "fighter": "Delante Johnson",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 8
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 15
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 7
+        }
+      ],
+      "name_variants": [
+        "Delante Johnson"
+      ]
+    },
+    {
+      "fighter": "Denzel Bentley",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 5
+        }
+      ],
+      "name_variants": [
+        "Denzel Bentley"
+      ]
+    },
+    {
       "fighter": "Deontay Wilder",
       "divisions": [
         "Heavyweight"
@@ -1533,6 +3039,23 @@
       ]
     },
     {
+      "fighter": "Deonte Brown",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Deonte Brown"
+      ]
+    },
+    {
       "fighter": "Devin Haney",
       "divisions": [
         "Welterweight"
@@ -1543,6 +3066,12 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 1
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBO",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
@@ -1560,6 +3089,30 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 6
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 11
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 1
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 2
         }
       ],
       "name_variants": [
@@ -1576,6 +3129,24 @@
           "division": "Light Heavyweight",
           "organization": "RING",
           "type": "champion"
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "IBF",
+          "type": "champion",
+          "title_classification": "world"
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBA",
+          "type": "champion",
+          "title_classification": "world"
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBO",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
@@ -1600,6 +3171,40 @@
       ]
     },
     {
+      "fighter": "Dylan Biggs",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 9
+        }
+      ],
+      "name_variants": [
+        "Dylan Biggs"
+      ]
+    },
+    {
+      "fighter": "Dzhambulat Bizamov",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Dzhambulat Bizamov"
+      ]
+    },
+    {
       "fighter": "Dzmitry Asanau",
       "divisions": [
         "Lightweight"
@@ -1610,10 +3215,74 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 10
+        },
+        {
+          "division": "Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 4
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 1
         }
       ],
       "name_variants": [
         "Dzmitry Asanau"
+      ]
+    },
+    {
+      "fighter": "Edgar Berlanga",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 6
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 13
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 7
+        }
+      ],
+      "name_variants": [
+        "Edgar Berlanga"
+      ]
+    },
+    {
+      "fighter": "Edin Avdic",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 8
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 8
+        }
+      ],
+      "name_variants": [
+        "Edin Avdic"
       ]
     },
     {
@@ -1627,10 +3296,45 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 6
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 8
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 6
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 15
         }
       ],
       "name_variants": [
         "Eduardo Nunez"
+      ]
+    },
+    {
+      "fighter": "Eduardo Zuleta",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Eduardo Zuleta"
       ]
     },
     {
@@ -1703,6 +3407,40 @@
       ]
     },
     {
+      "fighter": "Elnur Samedov",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "WBA",
+          "type": "champion",
+          "title_classification": "regular"
+        }
+      ],
+      "name_variants": [
+        "Elnur Samedov (regular)"
+      ]
+    },
+    {
+      "fighter": "Elvis Rodriguez",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Elvis Rodriguez"
+      ]
+    },
+    {
       "fighter": "Emanuel Navarrete",
       "divisions": [
         "Super Featherweight"
@@ -1713,10 +3451,57 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 1
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 6
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 1
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 4
         }
       ],
       "name_variants": [
         "Emanuel Navarrete"
+      ]
+    },
+    {
+      "fighter": "Emiliano Vargas",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 8
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 9
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 2
+        }
+      ],
+      "name_variants": [
+        "Emiliano Vargas"
       ]
     },
     {
@@ -1749,6 +3534,41 @@
       ]
     },
     {
+      "fighter": "Eridson Garcia",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 11
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 12
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 5
+        }
+      ],
+      "name_variants": [
+        "Eridson Garcia"
+      ]
+    },
+    {
       "fighter": "Erislandy Lara",
       "divisions": [
         "Middleweight"
@@ -1759,10 +3579,33 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 4
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBA",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
         "Erislandy Lara"
+      ]
+    },
+    {
+      "fighter": "Ermal Hadribeaj",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 3
+        }
+      ],
+      "name_variants": [
+        "Ermal Hadribeaj"
       ]
     },
     {
@@ -1776,10 +3619,56 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 9
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 4
         }
       ],
       "name_variants": [
         "Ernesto Mercado"
+      ]
+    },
+    {
+      "fighter": "Etinosa Oliha",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 11
+        }
+      ],
+      "name_variants": [
+        "Etinosa Oliha"
+      ]
+    },
+    {
+      "fighter": "Euri Cedeño",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 11
+        }
+      ],
+      "name_variants": [
+        "Euri Cedeño"
       ]
     },
     {
@@ -1820,6 +3709,23 @@
       ],
       "name_variants": [
         "Felix Parrilla"
+      ]
+    },
+    {
+      "fighter": "Feudri Franco",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Feudri Franco"
       ]
     },
     {
@@ -1869,6 +3775,29 @@
       ]
     },
     {
+      "fighter": "Fiodor Czerkaszyn",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 4
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 5
+        }
+      ],
+      "name_variants": [
+        "Fiodor Czerkaszyn"
+      ]
+    },
+    {
       "fighter": "Floyd Masson",
       "divisions": [
         "Cruiserweight"
@@ -1896,6 +3825,12 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 3
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBA",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
@@ -1917,6 +3852,86 @@
       ],
       "name_variants": [
         "Francesco De Rosa"
+      ]
+    },
+    {
+      "fighter": "Francis Hogan",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Francis Hogan"
+      ]
+    },
+    {
+      "fighter": "Francisco Fonseca",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Francisco Fonseca"
+      ]
+    },
+    {
+      "fighter": "Francisco Veron",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 9
+        }
+      ],
+      "name_variants": [
+        "Francisco Veron"
+      ]
+    },
+    {
+      "fighter": "Frank Martin",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 8
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 10
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 3
+        }
+      ],
+      "name_variants": [
+        "Frank Martin"
       ]
     },
     {
@@ -1949,6 +3964,23 @@
       ]
     },
     {
+      "fighter": "Freddy Kiwitt",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 8
+        }
+      ],
+      "name_variants": [
+        "Freddy Kiwitt"
+      ]
+    },
+    {
       "fighter": "Gabriel Santisima",
       "divisions": [
         "Super Bantamweight"
@@ -1963,6 +3995,23 @@
       ],
       "name_variants": [
         "Gabriel Santisima"
+      ]
+    },
+    {
+      "fighter": "Gabriel Valenzuela",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 6
+        }
+      ],
+      "name_variants": [
+        "Gabriel Valenzuela"
       ]
     },
     {
@@ -1983,7 +4032,7 @@
       ]
     },
     {
-      "fighter": "Gary Russell",
+      "fighter": "Gary Antuanne Russell",
       "divisions": [
         "Super Lightweight"
       ],
@@ -1993,10 +4042,51 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 4
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBA",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
-        "Gary Russell"
+        "Gary Russell",
+        "Gary Antuanne Russell"
+      ]
+    },
+    {
+      "fighter": "Gary Russell Jr.",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 8
+        }
+      ],
+      "name_variants": [
+        "Gary Russell Jr."
+      ]
+    },
+    {
+      "fighter": "Gavin Gwynne",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 11
+        }
+      ],
+      "name_variants": [
+        "Gavin Gwynne"
       ]
     },
     {
@@ -2010,10 +4100,45 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 10
+        },
+        {
+          "division": "Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 11
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 15
         }
       ],
       "name_variants": [
         "George Liddard"
+      ]
+    },
+    {
+      "fighter": "Gerome Warburton",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 7
+        }
+      ],
+      "name_variants": [
+        "Gerome Warburton"
       ]
     },
     {
@@ -2055,6 +4180,80 @@
       ],
       "name_variants": [
         "Gilberto Ramirez"
+      ]
+    },
+    {
+      "fighter": "Giovani Santillan",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 6
+        }
+      ],
+      "name_variants": [
+        "Giovani Santillan"
+      ]
+    },
+    {
+      "fighter": "Giovanni Sarchioto",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 8
+        }
+      ],
+      "name_variants": [
+        "Giovanni Sarchioto"
+      ]
+    },
+    {
+      "fighter": "Gradus Kraus",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 9
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Gradus Kraus"
+      ]
+    },
+    {
+      "fighter": "Greg Outlaw",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Greg Outlaw"
       ]
     },
     {
@@ -2119,6 +4318,24 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 9
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 7
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 2
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 2
         }
       ],
       "name_variants": [
@@ -2136,10 +4353,195 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 8
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 4
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 8
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 12
         }
       ],
       "name_variants": [
         "Hayato Tsutsumi"
+      ]
+    },
+    {
+      "fighter": "Hebert Conceicao Sousa",
+      "divisions": [
+        "Super Middleweight",
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 8
+        },
+        {
+          "division": "Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Hebert Conceicao Sousa"
+      ]
+    },
+    {
+      "fighter": "Henry Lebron",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 14
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 14
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 6
+        }
+      ],
+      "name_variants": [
+        "Henry Lebron"
+      ]
+    },
+    {
+      "fighter": "Horiki Horiike",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Horiki Horiike"
+      ]
+    },
+    {
+      "fighter": "Hovhannes Bachkov",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 7
+        }
+      ],
+      "name_variants": [
+        "Hovhannes Bachkov"
+      ]
+    },
+    {
+      "fighter": "Ibrahima Diallo",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Ibrahima Diallo"
+      ]
+    },
+    {
+      "fighter": "Ignacio David Iribarren",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Ignacio David Iribarren"
+      ]
+    },
+    {
+      "fighter": "Ihovsany Rafael Garcia",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Ihovsany Rafael Garcia"
+      ]
+    },
+    {
+      "fighter": "Ilyas Can Kali",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Ilyas Can Kali"
       ]
     },
     {
@@ -2153,10 +4555,92 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 3
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 4
         }
       ],
       "name_variants": [
         "Imam Khataev"
+      ]
+    },
+    {
+      "fighter": "Isaac Cruz",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBC",
+          "type": "champion",
+          "title_classification": "interim"
+        }
+      ],
+      "name_variants": [
+        "Isaac Cruz (interim)"
+      ]
+    },
+    {
+      "fighter": "Ismael Flores",
+      "divisions": [
+        "Middleweight",
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 9
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 6
+        }
+      ],
+      "name_variants": [
+        "Ismael Flores"
+      ]
+    },
+    {
+      "fighter": "Israel Mercado",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 9
+        }
+      ],
+      "name_variants": [
+        "Israel Mercado"
       ]
     },
     {
@@ -2170,6 +4654,30 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 4
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 6
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 7
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 7
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 5
         }
       ],
       "name_variants": [
@@ -2194,6 +4702,40 @@
       ]
     },
     {
+      "fighter": "Ivan Kozlovsky",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Ivan Kozlovsky"
+      ]
+    },
+    {
+      "fighter": "Jack Bowen",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Jack Bowen"
+      ]
+    },
+    {
       "fighter": "Jack Catterall",
       "divisions": [
         "Welterweight"
@@ -2204,10 +4746,64 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 4
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBA",
+          "type": "champion",
+          "title_classification": "regular"
         }
       ],
       "name_variants": [
-        "Jack Catterall"
+        "Jack Catterall",
+        "Jack Catterall (regular)"
+      ]
+    },
+    {
+      "fighter": "Jack Rafferty",
+      "divisions": [
+        "Welterweight",
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 13
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 11
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 7
+        }
+      ],
+      "name_variants": [
+        "Jack Rafferty"
+      ]
+    },
+    {
+      "fighter": "Jackson Jon England",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 9
+        }
+      ],
+      "name_variants": [
+        "Jackson Jon England"
       ]
     },
     {
@@ -2221,6 +4817,18 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 8
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 9
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 3
         }
       ],
       "name_variants": [
@@ -2238,10 +4846,17 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 6
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBC",
+          "type": "champion",
+          "title_classification": "interim"
         }
       ],
       "name_variants": [
-        "Jadier Herrera"
+        "Jadier Herrera",
+        "Jadier Herrera (interim)"
       ]
     },
     {
@@ -2255,6 +4870,24 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 9
+        },
+        {
+          "division": "Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 14
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 7
         }
       ],
       "name_variants": [
@@ -2306,10 +4939,50 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 5
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBA",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
         "Jaime Munguia"
+      ]
+    },
+    {
+      "fighter": "Jalil Hackett",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 8
+        }
+      ],
+      "name_variants": [
+        "Jalil Hackett"
+      ]
+    },
+    {
+      "fighter": "Jamaine Ortiz",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Jamaine Ortiz"
       ]
     },
     {
@@ -2323,16 +4996,30 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 7
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 2
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 5
         }
       ],
       "name_variants": [
-        "James Dickens"
+        "James Dickens",
+        "Jazza Dickens"
       ]
     },
     {
       "fighter": "Jan Paul Rivera-Pizarro",
       "divisions": [
-        "Featherweight"
+        "Featherweight",
+        "Super Featherweight"
       ],
       "appearances": [
         {
@@ -2340,10 +5027,33 @@
           "organization": "WBA",
           "type": "ranking",
           "rank": 11
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 13
         }
       ],
       "name_variants": [
         "Jan Paul Rivera-Pizarro"
+      ]
+    },
+    {
+      "fighter": "Janibek Alimkhanuly",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 1
+        }
+      ],
+      "name_variants": [
+        "Janibek Alimkhanuly"
       ]
     },
     {
@@ -2357,6 +5067,18 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 1
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBA",
+          "type": "champion",
+          "title_classification": "world"
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBO",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
@@ -2422,6 +5144,40 @@
       ]
     },
     {
+      "fighter": "Jeremy Alvarez",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Jeremy Alvarez"
+      ]
+    },
+    {
+      "fighter": "Jermall Charlo",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 7
+        }
+      ],
+      "name_variants": [
+        "Jermall Charlo"
+      ]
+    },
+    {
       "fighter": "Jesse Rodriguez",
       "divisions": [
         "Bantamweight"
@@ -2455,10 +5211,34 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 8
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBC",
+          "type": "champion",
+          "title_classification": "interim"
         }
       ],
       "name_variants": [
-        "Jesus Ramos"
+        "Jesus Ramos",
+        "Jesus Ramos (interim)"
+      ]
+    },
+    {
+      "fighter": "Jevgenijs Aleksejevs",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Jevgenijs Aleksejevs"
       ]
     },
     {
@@ -2479,6 +5259,99 @@
       ]
     },
     {
+      "fighter": "Jhon Orobio",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 12
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 6
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Jhon Orobio"
+      ]
+    },
+    {
+      "fighter": "Jin Sasaki",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 14
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 10
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Jin Sasaki"
+      ]
+    },
+    {
+      "fighter": "Joe Cordina",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 6
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 8
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 1
+        }
+      ],
+      "name_variants": [
+        "Joe Cordina"
+      ]
+    },
+    {
       "fighter": "Joe McGrail",
       "divisions": [
         "Super Bantamweight"
@@ -2493,6 +5366,57 @@
       ],
       "name_variants": [
         "Joe McGrail"
+      ]
+    },
+    {
+      "fighter": "Joel Camilleri",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Joel Camilleri"
+      ]
+    },
+    {
+      "fighter": "Joel Iriarte",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Joel Iriarte"
+      ]
+    },
+    {
+      "fighter": "Joey Spencer",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Joey Spencer"
       ]
     },
     {
@@ -2577,6 +5501,23 @@
       ]
     },
     {
+      "fighter": "Jong Seon Kang",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Jong Seon Kang"
+      ]
+    },
+    {
       "fighter": "Jordan Orozco Hernandez",
       "divisions": [
         "Bantamweight"
@@ -2597,6 +5538,29 @@
       ],
       "name_variants": [
         "Jordan Orozco Hernandez"
+      ]
+    },
+    {
+      "fighter": "Jordan White",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 7
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 4
+        }
+      ],
+      "name_variants": [
+        "Jordan White"
       ]
     },
     {
@@ -2634,6 +5598,65 @@
       ]
     },
     {
+      "fighter": "Jose Angel Rosa",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Jose Angel Rosa"
+      ]
+    },
+    {
+      "fighter": "Jose Armando Resendiz",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "RING",
+          "type": "ranking",
+          "rank": 7
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 14
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 10
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 5
+        }
+      ],
+      "name_variants": [
+        "Jose Resendiz",
+        "Jose Armando Resendiz"
+      ]
+    },
+    {
       "fighter": "Jose Calderon Cervantes",
       "divisions": [
         "Bantamweight"
@@ -2651,6 +5674,46 @@
       ]
     },
     {
+      "fighter": "Jose Luis Navarro",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 11
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Jose Luis Navarro"
+      ]
+    },
+    {
+      "fighter": "Jose Nunez",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 5
+        }
+      ],
+      "name_variants": [
+        "Jose Nunez"
+      ]
+    },
+    {
       "fighter": "Jose Ramirez Maciel",
       "divisions": [
         "Super Bantamweight"
@@ -2665,23 +5728,6 @@
       ],
       "name_variants": [
         "Jose Ramirez Maciel"
-      ]
-    },
-    {
-      "fighter": "Jose Resendiz",
-      "divisions": [
-        "Super Middleweight"
-      ],
-      "appearances": [
-        {
-          "division": "Super Middleweight",
-          "organization": "RING",
-          "type": "ranking",
-          "rank": 7
-        }
-      ],
-      "name_variants": [
-        "Jose Resendiz"
       ]
     },
     {
@@ -2761,6 +5807,12 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 9
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 1
         }
       ],
       "name_variants": [
@@ -2801,6 +5853,12 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 6
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "IBF",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
@@ -2808,20 +5866,26 @@
       ]
     },
     {
-      "fighter": "Joshua Anton",
+      "fighter": "Josh Padley",
       "divisions": [
-        "Super Welterweight"
+        "Super Featherweight"
       ],
       "appearances": [
         {
-          "division": "Super Welterweight",
-          "organization": "RING",
+          "division": "Super Featherweight",
+          "organization": "IBF",
           "type": "ranking",
           "rank": 10
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 7
         }
       ],
       "name_variants": [
-        "Joshua Anton"
+        "Josh Padley"
       ]
     },
     {
@@ -2835,10 +5899,74 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 6
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 7
         }
       ],
       "name_variants": [
         "Joshua Buatsi"
+      ]
+    },
+    {
+      "fighter": "Joshua Kevin Anton",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "RING",
+          "type": "ranking",
+          "rank": 10
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 8
+        }
+      ],
+      "name_variants": [
+        "Joshua Anton",
+        "Joshua Kevin Anton"
+      ]
+    },
+    {
+      "fighter": "Joshua Pagan",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 3
+        }
+      ],
+      "name_variants": [
+        "Joshua Pagan"
+      ]
+    },
+    {
+      "fighter": "Josue Francisco Aguero",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 6
+        }
+      ],
+      "name_variants": [
+        "Josue Francisco Aguero"
       ]
     },
     {
@@ -2873,6 +6001,23 @@
       ],
       "name_variants": [
         "Juergen Uldedaj"
+      ]
+    },
+    {
+      "fighter": "Julian Rodriguez",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 5
+        }
+      ],
+      "name_variants": [
+        "Julian Rodriguez"
       ]
     },
     {
@@ -2956,6 +6101,23 @@
       ]
     },
     {
+      "fighter": "Junior Younan",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Junior Younan"
+      ]
+    },
+    {
       "fighter": "Junto Nakatani",
       "divisions": [
         "Super Bantamweight"
@@ -2994,6 +6156,29 @@
       ],
       "name_variants": [
         "Junto Nakatani"
+      ]
+    },
+    {
+      "fighter": "Justin Pauldo",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Justin Pauldo"
       ]
     },
     {
@@ -3052,6 +6237,57 @@
       ],
       "name_variants": [
         "Kacper Meyna"
+      ]
+    },
+    {
+      "fighter": "Kaipo Gallegos",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 8
+        }
+      ],
+      "name_variants": [
+        "Kaipo Gallegos"
+      ]
+    },
+    {
+      "fighter": "Karen Chukhadzhian",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 11
+        }
+      ],
+      "name_variants": [
+        "Karen Chukhadzhian"
+      ]
+    },
+    {
+      "fighter": "Karol Welter",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Karol Welter"
       ]
     },
     {
@@ -3130,6 +6366,23 @@
       ]
     },
     {
+      "fighter": "Keisuke Matsumoto",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Keisuke Matsumoto"
+      ]
+    },
+    {
       "fighter": "Keita Nakayama",
       "divisions": [
         "Bantamweight"
@@ -3164,6 +6417,29 @@
       ]
     },
     {
+      "fighter": "Kenichi Ogawa",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 9
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 3
+        }
+      ],
+      "name_variants": [
+        "Kenichi Ogawa"
+      ]
+    },
+    {
       "fighter": "Kenneth Llover",
       "divisions": [
         "Super Bantamweight"
@@ -3181,6 +6457,23 @@
       ]
     },
     {
+      "fighter": "Kevin Brown",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 2
+        }
+      ],
+      "name_variants": [
+        "Kevin Brown"
+      ]
+    },
+    {
       "fighter": "Kevin Gonzalez",
       "divisions": [
         "Super Bantamweight"
@@ -3195,6 +6488,41 @@
       ],
       "name_variants": [
         "Kevin Gonzalez"
+      ]
+    },
+    {
+      "fighter": "Kevin Lele Sadjo",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 9
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 4
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 4
+        }
+      ],
+      "name_variants": [
+        "Kevin Lele Sadjo"
       ]
     },
     {
@@ -3265,10 +6593,67 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 2
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 9
         }
       ],
       "name_variants": [
         "Keyshawn Davis"
+      ]
+    },
+    {
+      "fighter": "Khalil El Hadri",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 2
+        }
+      ],
+      "name_variants": [
+        "Khalil El Hadri"
+      ]
+    },
+    {
+      "fighter": "Khariton Agrba",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBA",
+          "type": "champion",
+          "title_classification": "interim"
+        }
+      ],
+      "name_variants": [
+        "Khariton Agrba (interim)"
+      ]
+    },
+    {
+      "fighter": "Kieran Molloy",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Kieran Molloy"
       ]
     },
     {
@@ -3292,6 +6677,46 @@
       ],
       "name_variants": [
         "Kingsley Ibeh"
+      ]
+    },
+    {
+      "fighter": "Kirra Ruston",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Kirra Ruston"
+      ]
+    },
+    {
+      "fighter": "Kuntae Lee",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 11
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 11
+        }
+      ],
+      "name_variants": [
+        "Kuntae Lee"
       ]
     },
     {
@@ -3329,6 +6754,23 @@
       ]
     },
     {
+      "fighter": "Lamont Roach Jr.",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 2
+        }
+      ],
+      "name_variants": [
+        "Lamont Roach Jr."
+      ]
+    },
+    {
       "fighter": "Landi Ngxeke",
       "divisions": [
         "Bantamweight"
@@ -3360,6 +6802,29 @@
       ],
       "name_variants": [
         "Lawrence Okolie"
+      ]
+    },
+    {
+      "fighter": "Lazaro Alvarez",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Lazaro Alvarez"
       ]
     },
     {
@@ -3456,6 +6921,23 @@
       ]
     },
     {
+      "fighter": "Leonardo Sanchez",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 11
+        }
+      ],
+      "name_variants": [
+        "Leonardo Sanchez"
+      ]
+    },
+    {
       "fighter": "Lerrone Richards",
       "divisions": [
         "Light Heavyweight"
@@ -3466,6 +6948,12 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 8
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 6
         }
       ],
       "name_variants": [
@@ -3483,10 +6971,63 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 3
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBC",
+          "type": "champion",
+          "title_classification": "interim"
         }
       ],
       "name_variants": [
-        "Lester Martinez"
+        "Lester Martinez",
+        "Lester Martinez (interim)"
+      ]
+    },
+    {
+      "fighter": "Lewis Crocker",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 4
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Lewis Crocker"
+      ]
+    },
+    {
+      "fighter": "Lewis Edmondson",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 9
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Lewis Edmondson"
       ]
     },
     {
@@ -3525,6 +7066,46 @@
       ]
     },
     {
+      "fighter": "Liam Paro",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "IBF",
+          "type": "champion",
+          "title_classification": "world"
+        }
+      ],
+      "name_variants": [
+        "Liam Paro"
+      ]
+    },
+    {
+      "fighter": "Liam Wilson",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 2
+        }
+      ],
+      "name_variants": [
+        "Liam Wilson"
+      ]
+    },
+    {
       "fighter": "Lienard Sarcon",
       "divisions": [
         "Featherweight"
@@ -3539,6 +7120,29 @@
       ],
       "name_variants": [
         "Lienard Sarcon"
+      ]
+    },
+    {
+      "fighter": "Lindolfo Delgado",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 1
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Lindolfo Delgado"
       ]
     },
     {
@@ -3571,6 +7175,23 @@
       ]
     },
     {
+      "fighter": "Luca D'Ortenzi",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Luca D'Ortenzi"
+      ]
+    },
+    {
       "fighter": "Lucas Bahdi",
       "divisions": [
         "Lightweight"
@@ -3581,10 +7202,39 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 8
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 4
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 14
         }
       ],
       "name_variants": [
         "Lucas Bahdi"
+      ]
+    },
+    {
+      "fighter": "Lucas Bastida",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 9
+        }
+      ],
+      "name_variants": [
+        "Lucas Bastida"
       ]
     },
     {
@@ -3611,6 +7261,29 @@
       ]
     },
     {
+      "fighter": "Luis Alberto Lopez",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 12
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 11
+        }
+      ],
+      "name_variants": [
+        "Luis Alberto Lopez"
+      ]
+    },
+    {
       "fighter": "Luis Reynaldo Nunez",
       "divisions": [
         "Featherweight"
@@ -3631,6 +7304,23 @@
       ],
       "name_variants": [
         "Luis Reynaldo Nunez"
+      ]
+    },
+    {
+      "fighter": "Luka Plantic",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 5
+        }
+      ],
+      "name_variants": [
+        "Luka Plantic"
       ]
     },
     {
@@ -3657,6 +7347,74 @@
       ]
     },
     {
+      "fighter": "Magomed Kurbanov",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 8
+        }
+      ],
+      "name_variants": [
+        "Magomed Kurbanov"
+      ]
+    },
+    {
+      "fighter": "Malik Zinad",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 4
+        }
+      ],
+      "name_variants": [
+        "Malik Zinad"
+      ]
+    },
+    {
+      "fighter": "Marco Romero",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Marco Romero"
+      ]
+    },
+    {
+      "fighter": "Mario Barrios",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 11
+        }
+      ],
+      "name_variants": [
+        "Mario Barrios"
+      ]
+    },
+    {
       "fighter": "Mark Chamberlain",
       "divisions": [
         "Super Lightweight"
@@ -3667,10 +7425,39 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 8
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 11
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 6
         }
       ],
       "name_variants": [
         "Mark Chamberlain"
+      ]
+    },
+    {
+      "fighter": "Mark Magsayo",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Mark Magsayo"
       ]
     },
     {
@@ -3688,6 +7475,29 @@
       ],
       "name_variants": [
         "Marlon Tapales"
+      ]
+    },
+    {
+      "fighter": "Masanori Rikiishi",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 7
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 4
+        }
+      ],
+      "name_variants": [
+        "Masanori Rikiishi"
       ]
     },
     {
@@ -3722,6 +7532,103 @@
       ],
       "name_variants": [
         "Mateusz Masternak"
+      ]
+    },
+    {
+      "fighter": "Matias Rueda",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Matias Rueda"
+      ]
+    },
+    {
+      "fighter": "Mauricio Lara",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 11
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Mauricio Lara"
+      ]
+    },
+    {
+      "fighter": "Max Reeves",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Max Reeves"
+      ]
+    },
+    {
+      "fighter": "Mehmet Nadir Unal",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 10
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 8
+        }
+      ],
+      "name_variants": [
+        "Mehmet Nadir Unal"
+      ]
+    },
+    {
+      "fighter": "Meiirim Nursultanov",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 1
+        }
+      ],
+      "name_variants": [
+        "Meiirim Nursultanov"
       ]
     },
     {
@@ -3760,6 +7667,63 @@
       ]
     },
     {
+      "fighter": "Michael Magnesi",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Michael Magnesi"
+      ]
+    },
+    {
+      "fighter": "Michael Ramirez Santos",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Michael Ramirez Santos"
+      ]
+    },
+    {
+      "fighter": "Michael Zerafa",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 4
+        }
+      ],
+      "name_variants": [
+        "Michael Zerafa"
+      ]
+    },
+    {
       "fighter": "Michal Cieslak",
       "divisions": [
         "Cruiserweight"
@@ -3783,6 +7747,23 @@
       ]
     },
     {
+      "fighter": "Michel Soro",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 9
+        }
+      ],
+      "name_variants": [
+        "Michel Soro"
+      ]
+    },
+    {
       "fighter": "Mike Perez",
       "divisions": [
         "Cruiserweight"
@@ -3803,6 +7784,23 @@
       ],
       "name_variants": [
         "Mike Perez"
+      ]
+    },
+    {
+      "fighter": "Mikhail Grigoryan",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Mikhail Grigoryan"
       ]
     },
     {
@@ -3841,6 +7839,46 @@
       ]
     },
     {
+      "fighter": "Milan Prat",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 4
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Milan Prat"
+      ]
+    },
+    {
+      "fighter": "Milorad Zizic",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 9
+        }
+      ],
+      "name_variants": [
+        "Milorad Zizic"
+      ]
+    },
+    {
       "fighter": "Mirazizbek Mirzakhalilov",
       "divisions": [
         "Super Bantamweight"
@@ -3875,6 +7913,23 @@
       ]
     },
     {
+      "fighter": "Mitchell Smith",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Mitchell Smith"
+      ]
+    },
+    {
       "fighter": "Mitsuro Brandon Tajima",
       "divisions": [
         "Cruiserweight"
@@ -3889,6 +7944,23 @@
       ],
       "name_variants": [
         "Mitsuro Brandon Tajima"
+      ]
+    },
+    {
+      "fighter": "Moreno Fendero",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Moreno Fendero"
       ]
     },
     {
@@ -3960,6 +8032,18 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 10
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 13
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 1
         }
       ],
       "name_variants": [
@@ -3977,10 +8061,46 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 10
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 7
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 8
         }
       ],
       "name_variants": [
-        "Movladdin Biyarslanov"
+        "Movladdin Biyarslanov",
+        "Arthur Biyarslanov"
+      ]
+    },
+    {
+      "fighter": "Muhammadkhuja Yaqubov",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 7
+        }
+      ],
+      "name_variants": [
+        "Muhammadkhuja Yaqubov"
       ]
     },
     {
@@ -4100,6 +8220,46 @@
       ]
     },
     {
+      "fighter": "Mykal Fox",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 11
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Mykal Fox"
+      ]
+    },
+    {
+      "fighter": "Nahuel Alexander Espindola",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Nahuel Alexander Espindola"
+      ]
+    },
+    {
       "fighter": "Najee Lopez",
       "divisions": [
         "Light Heavyweight"
@@ -4110,6 +8270,30 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 5
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 6
         }
       ],
       "name_variants": [
@@ -4176,7 +8360,8 @@
     {
       "fighter": "Nick Ball",
       "divisions": [
-        "Featherweight"
+        "Featherweight",
+        "Super Featherweight"
       ],
       "appearances": [
         {
@@ -4190,10 +8375,90 @@
           "organization": "WBO",
           "type": "ranking",
           "rank": 10
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 13
         }
       ],
       "name_variants": [
         "Nick Ball"
+      ]
+    },
+    {
+      "fighter": "Nicky Tejada",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Nicky Tejada"
+      ]
+    },
+    {
+      "fighter": "Nikita Kuzmin",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Nikita Kuzmin"
+      ]
+    },
+    {
+      "fighter": "Nikita Tszyu",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 2
+        }
+      ],
+      "name_variants": [
+        "Nikita Tszyu"
+      ]
+    },
+    {
+      "fighter": "Nikita Zon",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Nikita Zon"
       ]
     },
     {
@@ -4264,10 +8529,45 @@
           "division": "Super Featherweight",
           "organization": "RING",
           "type": "champion"
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "IBF",
+          "type": "champion",
+          "title_classification": "world"
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBC",
+          "type": "champion",
+          "title_classification": "world"
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBO",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
         "O'Shaquie Foster"
+      ]
+    },
+    {
+      "fighter": "Oleksandr Khyzhniak",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Oleksandr Khyzhniak"
       ]
     },
     {
@@ -4334,6 +8634,53 @@
       ]
     },
     {
+      "fighter": "Orlando Gonzalez",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Orlando Gonzalez"
+      ]
+    },
+    {
+      "fighter": "Oscar Duarte",
+      "divisions": [
+        "Welterweight",
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 4
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 13
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 3
+        }
+      ],
+      "name_variants": [
+        "Oscar Duarte"
+      ]
+    },
+    {
       "fighter": "Osleys Iglesias",
       "divisions": [
         "Super Middleweight"
@@ -4344,10 +8691,73 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 2
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "IBF",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
         "Osleys Iglesias"
+      ]
+    },
+    {
+      "fighter": "Otar Eranosyan",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 9
+        }
+      ],
+      "name_variants": [
+        "Otar Eranosyan"
+      ]
+    },
+    {
+      "fighter": "Pablo Ezequiel Corzo",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Pablo Ezequiel Corzo"
+      ]
+    },
+    {
+      "fighter": "Paddy Donovan",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 1
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 9
+        }
+      ],
+      "name_variants": [
+        "Paddy Donovan"
       ]
     },
     {
@@ -4374,6 +8784,52 @@
       ]
     },
     {
+      "fighter": "Paulo Aokuso",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 7
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Paulo Aokuso"
+      ]
+    },
+    {
+      "fighter": "Pavel Sosulin",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 11
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 1
+        }
+      ],
+      "name_variants": [
+        "Pavel Sosulin"
+      ]
+    },
+    {
       "fighter": "Petar Milas",
       "divisions": [
         "Heavyweight"
@@ -4391,6 +8847,40 @@
       ]
     },
     {
+      "fighter": "Pete Apolinar",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 9
+        }
+      ],
+      "name_variants": [
+        "Pete Apolinar"
+      ]
+    },
+    {
+      "fighter": "Piergiulio Ruhe",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 4
+        }
+      ],
+      "name_variants": [
+        "Piergiulio Ruhe"
+      ]
+    },
+    {
       "fighter": "Radivoje Kalajdzic",
       "divisions": [
         "Light Heavyweight"
@@ -4401,6 +8891,24 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 7
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 4
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 4
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 2
         }
       ],
       "name_variants": [
@@ -4489,6 +8997,23 @@
       ]
     },
     {
+      "fighter": "Rashidi Ellis",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 7
+        }
+      ],
+      "name_variants": [
+        "Rashidi Ellis"
+      ]
+    },
+    {
       "fighter": "Raul Curiel",
       "divisions": [
         "Welterweight"
@@ -4497,6 +9022,24 @@
         {
           "division": "Welterweight",
           "organization": "RING",
+          "type": "ranking",
+          "rank": 8
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 1
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 2
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBO",
           "type": "ranking",
           "rank": 8
         }
@@ -4516,10 +9059,86 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 4
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 7
         }
       ],
       "name_variants": [
         "Raymond Ford"
+      ]
+    },
+    {
+      "fighter": "Raymond Muratalla",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 7
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 4
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 1
+        }
+      ],
+      "name_variants": [
+        "Raymond Muratalla"
+      ]
+    },
+    {
+      "fighter": "Reito Takahashi",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 8
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 9
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 7
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 7
+        }
+      ],
+      "name_variants": [
+        "Reito Takahashi"
       ]
     },
     {
@@ -4557,6 +9176,23 @@
       ]
     },
     {
+      "fighter": "Rene Tellez Giron",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 11
+        }
+      ],
+      "name_variants": [
+        "Rene Tellez Giron"
+      ]
+    },
+    {
       "fighter": "Rex Tso",
       "divisions": [
         "Bantamweight"
@@ -4588,6 +9224,40 @@
       ],
       "name_variants": [
         "Reymart Gaballo"
+      ]
+    },
+    {
+      "fighter": "Ricardo Nunez",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 9
+        }
+      ],
+      "name_variants": [
+        "Ricardo Nunez"
+      ]
+    },
+    {
+      "fighter": "Richard Johnson",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Richard Johnson"
       ]
     },
     {
@@ -4634,6 +9304,41 @@
       ],
       "name_variants": [
         "Richard Torrez Jr"
+      ]
+    },
+    {
+      "fighter": "Richardson Hitchins",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 4
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 7
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 2
+        }
+      ],
+      "name_variants": [
+        "Richardson Hitchins"
       ]
     },
     {
@@ -4723,6 +9428,24 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 7
+        },
+        {
+          "division": "Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 7
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 9
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 6
         }
       ],
       "name_variants": [
@@ -4740,6 +9463,18 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 10
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 2
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 5
         }
       ],
       "name_variants": [
@@ -4764,6 +9499,29 @@
       ]
     },
     {
+      "fighter": "Royston Barney-Smith",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 5
+        }
+      ],
+      "name_variants": [
+        "Royston Barney-Smith"
+      ]
+    },
+    {
       "fighter": "Rubens Diego Dos Santos",
       "divisions": [
         "Bantamweight"
@@ -4781,6 +9539,40 @@
       ]
     },
     {
+      "fighter": "Ruslan Abdullaev",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Ruslan Abdullaev"
+      ]
+    },
+    {
+      "fighter": "Ruslan Madiyev",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Ruslan Madiyev"
+      ]
+    },
+    {
       "fighter": "Ryan Garcia",
       "divisions": [
         "Welterweight"
@@ -4791,6 +9583,12 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 2
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBC",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
@@ -4808,10 +9606,17 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 5
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBC",
+          "type": "champion",
+          "title_classification": "interim"
         }
       ],
       "name_variants": [
-        "Ryan Garner"
+        "Ryan Garner",
+        "Ryan Garner (interim)"
       ]
     },
     {
@@ -4884,6 +9689,46 @@
       ]
     },
     {
+      "fighter": "Ryota Toyoshima",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 14
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 9
+        }
+      ],
+      "name_variants": [
+        "Ryota Toyoshima"
+      ]
+    },
+    {
+      "fighter": "Sam Gilley",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 11
+        }
+      ],
+      "name_variants": [
+        "Sam Gilley"
+      ]
+    },
+    {
       "fighter": "Sam Goodman",
       "divisions": [
         "Super Bantamweight"
@@ -4918,10 +9763,45 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 5
+        },
+        {
+          "division": "Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 2
         }
       ],
       "name_variants": [
         "Sam Noakes"
+      ]
+    },
+    {
+      "fighter": "Samuel Molina",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 6
+        }
+      ],
+      "name_variants": [
+        "Samuel Molina"
       ]
     },
     {
@@ -4935,6 +9815,12 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 6
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 1
         }
       ],
       "name_variants": [
@@ -4952,10 +9838,33 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 1
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBC",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
         "Saul Alvarez"
+      ]
+    },
+    {
+      "fighter": "Sean McComb",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Sean McComb"
       ]
     },
     {
@@ -4969,6 +9878,12 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 3
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBC",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
@@ -5089,6 +10004,23 @@
       ]
     },
     {
+      "fighter": "Shakhram Giyasov",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 8
+        }
+      ],
+      "name_variants": [
+        "Shakhram Giyasov"
+      ]
+    },
+    {
       "fighter": "Shakur Stevenson",
       "divisions": [
         "Super Lightweight"
@@ -5098,10 +10030,187 @@
           "division": "Super Lightweight",
           "organization": "RING",
           "type": "champion"
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBO",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
         "Shakur Stevenson"
+      ]
+    },
+    {
+      "fighter": "Shane Mosley Jr.",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 2
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 15
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 6
+        }
+      ],
+      "name_variants": [
+        "Shane Mosley Jr."
+      ]
+    },
+    {
+      "fighter": "Sharabutdin Ataev",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 4
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 1
+        }
+      ],
+      "name_variants": [
+        "Sharabutdin Ataev"
+      ]
+    },
+    {
+      "fighter": "Shuma Nakazato",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 9
+        }
+      ],
+      "name_variants": [
+        "Shuma Nakazato"
+      ]
+    },
+    {
+      "fighter": "Simon Zachenhuber",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Simon Zachenhuber"
+      ]
+    },
+    {
+      "fighter": "Siro Choi",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Siro Choi"
+      ]
+    },
+    {
+      "fighter": "Sofiane Oumiha",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Sofiane Oumiha"
+      ]
+    },
+    {
+      "fighter": "Souleymane Cissokho",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 1
+        }
+      ],
+      "name_variants": [
+        "Souleymane Cissokho"
+      ]
+    },
+    {
+      "fighter": "Steven Cairns",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Steven Cairns"
+      ]
+    },
+    {
+      "fighter": "Stevie McKenna",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Stevie McKenna"
       ]
     },
     {
@@ -5115,10 +10224,74 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 7
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 10
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 5
+        },
+        {
+          "division": "Super Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 9
         }
       ],
       "name_variants": [
         "Subriel Matias"
+      ]
+    },
+    {
+      "fighter": "Sultan Zaurbek",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 1
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Sultan Zaurbek"
+      ]
+    },
+    {
+      "fighter": "Taiga Imanaga",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 15
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Taiga Imanaga"
       ]
     },
     {
@@ -5142,6 +10315,23 @@
       ],
       "name_variants": [
         "Takuma Inoue"
+      ]
+    },
+    {
+      "fighter": "Taras Shelestyuk",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Taras Shelestyuk"
       ]
     },
     {
@@ -5213,6 +10403,12 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 3
+        },
+        {
+          "division": "Welterweight",
+          "organization": "WBA",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
@@ -5234,6 +10430,46 @@
       ],
       "name_variants": [
         "Teremoana Jnr"
+      ]
+    },
+    {
+      "fighter": "Thomas O'Toole",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Thomas O'Toole"
+      ]
+    },
+    {
+      "fighter": "Tim Tszyu",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 3
+        }
+      ],
+      "name_variants": [
+        "Tim Tszyu"
       ]
     },
     {
@@ -5334,6 +10570,18 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 5
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 12
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 12
         }
       ],
       "name_variants": [
@@ -5351,6 +10599,18 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 9
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 14
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 11
         }
       ],
       "name_variants": [
@@ -5410,6 +10670,23 @@
       ]
     },
     {
+      "fighter": "Uisma Lima",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Uisma Lima"
+      ]
+    },
+    {
       "fighter": "Umar Dzambekov",
       "divisions": [
         "Light Heavyweight"
@@ -5420,6 +10697,18 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 10
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 11
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 6
         }
       ],
       "name_variants": [
@@ -5450,6 +10739,46 @@
       ]
     },
     {
+      "fighter": "Vadim Musaev",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Vadim Musaev"
+      ]
+    },
+    {
+      "fighter": "Vadim Tukov",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 4
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 1
+        }
+      ],
+      "name_variants": [
+        "Vadim Tukov"
+      ]
+    },
+    {
       "fighter": "Vartan Arutyunyan",
       "divisions": [
         "Heavyweight"
@@ -5469,7 +10798,8 @@
     {
       "fighter": "Vergil Ortiz Jr",
       "divisions": [
-        "Super Welterweight"
+        "Super Welterweight",
+        "Middleweight"
       ],
       "appearances": [
         {
@@ -5477,10 +10807,17 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 2
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 2
         }
       ],
       "name_variants": [
-        "Vergil Ortiz Jr"
+        "Vergil Ortiz Jr",
+        "Vergil Ortiz Jr."
       ]
     },
     {
@@ -5576,6 +10913,58 @@
       ]
     },
     {
+      "fighter": "Vildan Minasov",
+      "divisions": [
+        "Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Lightweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Vildan Minasov"
+      ]
+    },
+    {
+      "fighter": "Vito Mielnicki Jr.",
+      "divisions": [
+        "Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 6
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 6
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 6
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 2
+        }
+      ],
+      "name_variants": [
+        "Vito Mielnicki Jr."
+      ]
+    },
+    {
       "fighter": "Vsevolod Shumkov",
       "divisions": [
         "Featherweight"
@@ -5593,6 +10982,58 @@
       ]
     },
     {
+      "fighter": "Wilkens Mathieu",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 12
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 15
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 6
+        },
+        {
+          "division": "Super Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Wilkens Mathieu"
+      ]
+    },
+    {
+      "fighter": "William Scull",
+      "divisions": [
+        "Super Middleweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "William Scull"
+      ]
+    },
+    {
       "fighter": "William Zepeda",
       "divisions": [
         "Lightweight"
@@ -5603,10 +11044,33 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 1
+        },
+        {
+          "division": "Lightweight",
+          "organization": "WBC",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
         "William Zepeda"
+      ]
+    },
+    {
+      "fighter": "Willy Gilheaney",
+      "divisions": [
+        "Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 14
+        }
+      ],
+      "name_variants": [
+        "Willy Gilheaney"
       ]
     },
     {
@@ -5620,6 +11084,12 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 4
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBC",
+          "type": "champion",
+          "title_classification": "world"
         }
       ],
       "name_variants": [
@@ -5629,7 +11099,8 @@
     {
       "fighter": "Xander Zayas",
       "divisions": [
-        "Super Welterweight"
+        "Super Welterweight",
+        "Middleweight"
       ],
       "appearances": [
         {
@@ -5637,10 +11108,80 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 5
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 8
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 8
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 6
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 3
         }
       ],
       "name_variants": [
         "Xander Zayas"
+      ]
+    },
+    {
+      "fighter": "Yair Gallardo",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 11
+        }
+      ],
+      "name_variants": [
+        "Yair Gallardo"
+      ]
+    },
+    {
+      "fighter": "Yamato Hata",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 15
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 12
+        },
+        {
+          "division": "Super Featherweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 4
+        }
+      ],
+      "name_variants": [
+        "Yamato Hata"
       ]
     },
     {
@@ -5658,6 +11199,29 @@
       ],
       "name_variants": [
         "Yamil Peralta"
+      ]
+    },
+    {
+      "fighter": "Yan Marcos",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 10
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 12
+        }
+      ],
+      "name_variants": [
+        "Yan Marcos"
       ]
     },
     {
@@ -5690,6 +11254,23 @@
       ]
     },
     {
+      "fighter": "Yaser Al Ghena",
+      "divisions": [
+        "Super Lightweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Lightweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 6
+        }
+      ],
+      "name_variants": [
+        "Yaser Al Ghena"
+      ]
+    },
+    {
       "fighter": "Yerny Betancourt",
       "divisions": [
         "Super Bantamweight"
@@ -5713,6 +11294,46 @@
       ]
     },
     {
+      "fighter": "Yevgeniy Pavlov",
+      "divisions": [
+        "Super Featherweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Featherweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 11
+        }
+      ],
+      "name_variants": [
+        "Yevgeniy Pavlov"
+      ]
+    },
+    {
+      "fighter": "Yoenis Tellez",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBA",
+          "type": "ranking",
+          "rank": 2
+        },
+        {
+          "division": "Super Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 15
+        }
+      ],
+      "name_variants": [
+        "Yoenis Tellez"
+      ]
+    },
+    {
       "fighter": "Yoenli Hernandez",
       "divisions": [
         "Middleweight"
@@ -5723,6 +11344,24 @@
           "organization": "RING",
           "type": "ranking",
           "rank": 2
+        },
+        {
+          "division": "Middleweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 8
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 3
+        },
+        {
+          "division": "Middleweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 1
         }
       ],
       "name_variants": [
@@ -5812,6 +11451,23 @@
       ]
     },
     {
+      "fighter": "Yuri Sakunts",
+      "divisions": [
+        "Super Welterweight"
+      ],
+      "appearances": [
+        {
+          "division": "Super Welterweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 13
+        }
+      ],
+      "name_variants": [
+        "Yuri Sakunts"
+      ]
+    },
+    {
       "fighter": "Yuta Sakai",
       "divisions": [
         "Bantamweight"
@@ -5832,6 +11488,52 @@
       ],
       "name_variants": [
         "Yuta Sakai"
+      ]
+    },
+    {
+      "fighter": "Zach Parker",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 10
+        }
+      ],
+      "name_variants": [
+        "Zach Parker"
+      ]
+    },
+    {
+      "fighter": "Zak Chelli",
+      "divisions": [
+        "Light Heavyweight"
+      ],
+      "appearances": [
+        {
+          "division": "Light Heavyweight",
+          "organization": "IBF",
+          "type": "ranking",
+          "rank": 15
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBC",
+          "type": "ranking",
+          "rank": 13
+        },
+        {
+          "division": "Light Heavyweight",
+          "organization": "WBO",
+          "type": "ranking",
+          "rank": 3
+        }
+      ],
+      "name_variants": [
+        "Zak Chelli"
       ]
     }
   ]
