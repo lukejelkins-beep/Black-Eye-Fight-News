@@ -863,3 +863,32 @@ test('Aleksandre Topuria has exactly two completed UFC fights with native 373 an
    i?{...r,nativeFighterId:'999999'}:r)}),false);
  assert.equal(verified(evidence,{}),false);
 });
+
+test('Official UFC drawn bout uses explicit native draw method with no winner, never an absent winner alone',()=>{
+ const profile={name:'Fighter A',ufcTimeline:{}};
+ const h=[{date:'2026-11-10',opponent:'Opponent A',result:'draw',promotion:'ufc',source:'native',boutId:'41'}];
+ const proof={
+   fighterName:'Fighter A',sourceCoverageAttested:true,
+   verificationMethod:'full_official_ufc_fight_listing_crosscheck',
+   verifiedAt:'2026-11-14',
+   fighterUrl:'https://ufcstats.com/fighter-details/aaaaaaaaaaaaaaaa',
+   officialFighterUrl:'https://www.ufc.com/athlete/fighter-a',
+   sourceSnapshot:{fightResultsBlobSha:'a'.repeat(40),fighterDetailsBlobSha:'b'.repeat(40)},
+   verifiedNumericFighterIds:['1'],
+   bouts:[{date:'2026-11-10',opponent:'Opponent A',result:'draw',
+     fightUrl:'https://ufcstats.com/fight-details/aaaaaaaaaaaaaaaa',
+     nativeBoutId:'41',nativeFighterId:'1'}]
+ };
+ const native={id:'41',org:'ufc',event:'UFC Fight Night',eventDate:'2026-11-10',
+   a:{id:'1',name:'Fighter A'},b:{id:'2',name:'Opponent A'},
+   status:'completed',result:{method:'draw',winnerId:null}};
+ const verify=(n,e=proof)=>evaluateCareerEvidence(profile,h,'2026-11-10',
+   '2026-11-14',e,{'41':n}).independentlyVerified;
+ assert.equal(verify(native),true,'source-verified draw must not be lost');
+ assert.equal(verify({...native,result:{method:'decision',winnerId:null}}),false,
+   'missing winner alone is not evidence of a draw');
+ assert.equal(verify({...native,result:{method:'draw',winnerId:'1'}}),false,
+   'a win cannot be converted to a draw merely by the method string');
+ assert.equal(verify(native,{...proof,bouts:[{...proof.bouts[0],result:'win'}]}),false,
+   'an independently sourced win contradicts the archived drawn result');
+});
