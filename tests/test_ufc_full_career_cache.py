@@ -316,6 +316,94 @@ class FullCareerCacheTests(unittest.TestCase):
             self.assertEqual(outcome["added"],0,scenario)
             self.assertEqual(len(rs["profiles"]["aliaskhab-khizriev"]["recentHistory"]),1)
 
+    def cached_whole_career_fixture(self):
+        state=m.default_progress()
+        def bout(id,date,a_id,a_name,a_slug,b_id,b_name,b_slug,
+                 status="completed",winner=None,event="UFC 300"):
+            return {"id":id,"org":"ufc","eventDate":date,"event":event,
+                "status":status,"titleFight":False,
+                "a":{"id":a_id,"name":a_name,"slug":a_slug},
+                "b":{"id":b_id,"name":b_name,"slug":b_slug},
+                "result":{"winnerId":winner,"method":"Decision"}}
+        state["bouts"]={
+            "600":bout("600","2025-04-01","123","Carlos Hernandez","carlos-hernandez",
+                       "987","Opponent A","opponent-a",winner="123"),
+            "601":bout("601","2024-02-01","123","Carlos Hernandez","carlos-hernandez",
+                       "986","Opponent B","opponent-b",winner="986"),
+            "602":bout("602","2023-01-01","123","Carlos Hernandez","carlos-hernandez",
+                       "985","Opponent C","opponent-c",winner="123"),
+            "603":bout("603","2022-04-01","123","Carlos Hernandez","carlos-hernandez",
+                       "984","Opponent D","opponent-d",status="no_contest"),
+            "604":bout("604","2021-04-01","123","Carlos Hernandez","carlos-hernandez",
+                       "983","Feeder Person","feeder-person",winner="123",
+                       event="Dana White's Contender Series"),
+            "605":bout("605","2023-02-01","123","Carlos Hernandez","carlos-hernandez",
+                       "982","Other Opponent","other-opponent",status="completed",
+                       winner=None)}
+        research={"profiles":{"carlos-hernandez-7":{
+            "name":"Carlos Hernandez","recentHistory":[{
+                "date":"2025-04-01","opponent":"Opponent A","result":"win",
+                "promotion":"ufc","source":"native","boutId":"600"}],
+            "ufcTimeline":{"complete":False,"settledCount":1}}}}
+        census={"schema":1,"scope":"ufc","activityMonths":36,
+                "asOf":"2026-11-14",
+                "indexCompleteness":"36_month_event_scan_complete",
+                "fighters":[{"slug":"carlos-hernandez-7",
+                             "eligibilityStatus":"latest_observed_mma_ufc"}]}
+        approval={**self.approval(["carlos-hernandez-7"]),
+                  "rosterAsOf":"2026-11-14","approvedAt":"2026-11-14"}
+        return state,research,census,approval
+
+    def test_native_career_reconcile_recovers_all_official_existing_fight_outcomes_without_api(self):
+        state,research,census,approval=self.cached_whole_career_fixture()
+        before=dict(state["bouts"])
+        stats=m.reconcile_indexed_native_ufc_careers(
+            state,research,census,dt.date(2026,11,14),approval)
+        self.assertEqual(stats,{"added":3,"profiles":1,"conflicts":0,"identitySkipped":0})
+        profile=research["profiles"]["carlos-hernandez-7"]
+        self.assertEqual([(h["boutId"],h["result"]) for h in profile["recentHistory"]],
+                         [("600","win"),("601","loss"),("602","win"),("603","no_contest")])
+        self.assertFalse(profile["ufcTimeline"]["complete"])
+        self.assertTrue(profile["ufcTimeline"]["savedHistoryHasAdditionalUfcBouts"])
+        self.assertEqual(state["bouts"],before,"Do not rewrite original official fight cache")
+        self.assertEqual(m.reconcile_indexed_native_ufc_careers(
+            state,research,census,dt.date(2026,11,14),approval)["added"],0)
+
+    def test_native_career_reconcile_requires_approved_cohort_unambiguous_stable_id(self):
+        import copy
+        state,research,census,approval=self.cached_whole_career_fixture()
+        wrong={**approval,"status":"pending"}
+        self.assertEqual(m.reconcile_indexed_native_ufc_careers(
+            state,copy.deepcopy(research),census,dt.date(2026,11,14),wrong)["added"],0)
+        invalid=copy.deepcopy(research)
+        invalid["profiles"]["carlos-hernandez-7"]["recentHistory"][0]["opponent"]="Wrong Person"
+        self.assertEqual(m.reconcile_indexed_native_ufc_careers(
+            state,invalid,census,dt.date(2026,11,14),approval)["added"],0)
+        shared=copy.deepcopy(research)
+        shared["profiles"]["other-carlos"]={"name":"Carlos Hernandez",
+            "recentHistory":[{
+             "date":"2025-04-01","opponent":"Opponent A","promotion":"ufc",
+             "source":"native","result":"win","boutId":"600"}]}
+        census["fighters"].append({"slug":"other-carlos","eligibilityStatus":"latest_observed_mma_ufc"})
+        approved={**approval,"approvedFighters":["carlos-hernandez-7","other-carlos"]}
+        self.assertEqual(m.reconcile_indexed_native_ufc_careers(
+            state,shared,census,dt.date(2026,11,14),approved)["added"],0,
+            "A numeric fighter ID claimed by two approved slugs cannot auto-link history")
+
+    def test_native_career_reconcile_never_overwrites_conflicting_saved_bout(self):
+        import copy
+        state,research,census,approval=self.cached_whole_career_fixture()
+        profile=research["profiles"]["carlos-hernandez-7"]
+        profile["recentHistory"].append({
+            "date":"2024-02-01","opponent":"Opponent B","promotion":"ufc",
+            "source":"native","result":"win","boutId":"99999"})
+        stats=m.reconcile_indexed_native_ufc_careers(
+            state,research,census,dt.date(2026,11,14),approval)
+        self.assertEqual(stats["added"],2)
+        self.assertEqual(stats["conflicts"],1)
+        self.assertEqual(profile["recentHistory"][-1]["boutId"],"603")
+        self.assertTrue(any(h.get("boutId")=="99999" for h in profile["recentHistory"]))
+
     def test_no_signoff_no_full_career_calls(self):
         state,research,candidate=self.fixture()
         client=Fake()
