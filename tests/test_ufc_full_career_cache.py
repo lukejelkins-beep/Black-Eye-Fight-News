@@ -251,6 +251,37 @@ class FullCareerCacheTests(unittest.TestCase):
           client,state,research,candidate,dt.date(2026,11,13),self.approval()),0)
         self.assertEqual(client.paths,[])
 
+    def test_ufc_verified_contender_series_bouts_are_not_retryable_ufc_fights(self):
+        evidence=m.read(m.FEEDER_EVIDENCE,{})
+        self.assertEqual(evidence["schema"],1)
+        self.assertEqual(len(evidence["bouts"]),3)
+        for row in evidence["bouts"]:
+            saved={"boutId":row["boutId"],"date":row["date"],
+                   "opponent":row["opponent"],"source":"native",
+                   "promotion":"ufc","result":"loss"}
+            self.assertTrue(m.confirmed_feeder_bout(
+                saved,row["fighterSlug"],evidence))
+            self.assertFalse(m.confirmed_feeder_bout(
+                {**saved,"date":"2024-01-01"},row["fighterSlug"],evidence))
+            self.assertFalse(m.confirmed_feeder_bout(
+                {**saved,"opponent":"Wrong opponent"},row["fighterSlug"],evidence))
+            state=m.default_progress()
+            research={"profiles":{row["fighterSlug"]:{"recentHistory":[saved]}}}
+            census={"schema":1,"scope":"ufc","activityMonths":36,
+                    "asOf":"2026-11-14",
+                    "indexCompleteness":"36_month_event_scan_complete",
+                    "fighters":[{"slug":row["fighterSlug"],
+                      "eligibilityStatus":"latest_observed_mma_ufc"}]}
+            manifest={**self.approval([row["fighterSlug"]]),
+                      "rosterAsOf":"2026-11-14","approvedAt":"2026-11-14"}
+            client=Fake()
+            self.assertEqual(m.collect_ufc_career_bouts(
+                client,state,research,census,dt.date(2026,11,14),manifest),0)
+            self.assertEqual(client.paths,[])
+            self.assertEqual(m.approved_ufc_round_priority(
+                manifest,census,research,dt.date(2026,11,14),state),{})
+            self.assertEqual(len(research["profiles"][row["fighterSlug"]]["recentHistory"]),1)
+
     def test_cached_contender_series_event_prevents_repeating_false_ufc_lookup(self):
         state,research,candidate=self.fixture()
         # The provider's career history labels a DWCS bout as "ufc".
