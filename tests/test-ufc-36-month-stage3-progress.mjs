@@ -801,7 +801,9 @@ test('Bruno flyweight official twelve-bout career retains overturned UFC 243 NC 
  assert.equal(proof({...evidence,bouts:evidence.bouts.map(r=>
   r.opponent==='Khalid Taha'?{...r,nativeFighterId:'87'}:r)}),false);
  assert.equal(proof({...evidence,bouts:evidence.bouts.slice(1)}),false);
- assert.equal(proof({...evidence,fighterUrl:'https://ufcstats.com/fighter-details/12ebd7d157e91701'}),true,
-  'URL format gate alone cannot prove disambiguation; source identity must remain human attested');
+ assert.equal(proof({...evidence,fighterUrl:'https://ufcstats.com/fighter-details/12ebd7d157e91701'}),false,
+  'The different middleweight Bruno Silva identity must be rejected');
+ assert.equal(proof({...evidence,disambiguation:undefined}),false,
+  'Historical name alias must be tied to the source-reviewed fighter identity');
  assert.equal(proof(evidence,{}),false);
 });
