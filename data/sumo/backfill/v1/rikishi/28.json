@@ -9,51 +9,122 @@
   "certification": "not-started",
   "stages": {
     "profile": {
-      "complete": false,
-      "skip": 0,
-      "total": null,
-      "attempts": 3,
-      "updatedAt": null
-    },
-    "stats": {
-      "complete": false,
+      "complete": true,
       "skip": 0,
       "total": null,
       "attempts": 0,
-      "updatedAt": null
+      "updatedAt": "2026-11-14T21:09:23.345Z",
+      "source": "https://www.sumo-api.com/api/rikishi/28"
+    },
+    "stats": {
+      "complete": true,
+      "skip": 0,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T21:09:24.054Z",
+      "source": "https://www.sumo-api.com/api/rikishi/28/stats"
     },
     "measurements": {
       "complete": false,
       "skip": 0,
       "total": null,
-      "attempts": 0,
+      "attempts": 1,
       "updatedAt": null
     },
     "ranks": {
       "complete": false,
       "skip": 0,
       "total": null,
-      "attempts": 0,
+      "attempts": 1,
       "updatedAt": null
     },
     "shikonas": {
       "complete": false,
       "skip": 0,
       "total": null,
-      "attempts": 0,
+      "attempts": 1,
       "updatedAt": null
     },
     "matches": {
       "complete": false,
       "skip": 0,
       "total": null,
-      "attempts": 0,
+      "attempts": 1,
       "updatedAt": null
     }
   },
   "data": {
-    "profile": null,
-    "stats": null,
+    "profile": {
+      "id": 28,
+      "sumodbId": 12226,
+      "nskId": 3616,
+      "shikonaEn": "Ura",
+      "shikonaJp": "宇良　和輝",
+      "currentRank": "Maegashira 2 East",
+      "heya": "Kise",
+      "birthDate": "1992-06-22T00:00:00Z",
+      "shusshin": "Osaka-fu, Neyagawa-shi",
+      "height": 173,
+      "weight": 138,
+      "debut": "201503"
+    },
+    "stats": {
+      "absenceByDivision": {
+        "Jonidan": 7,
+        "Jonokuchi": 0,
+        "Juryo": 16,
+        "Makushita": 23,
+        "Makuuchi": 29,
+        "Sandanme": 21
+      },
+      "basho": 69,
+      "bashoByDivision": {
+        "Jonidan": 4,
+        "Jonokuchi": 1,
+        "Juryo": 10,
+        "Makushita": 9,
+        "Makuuchi": 38,
+        "Sandanme": 7
+      },
+      "lossByDivision": {
+        "Jonidan": 1,
+        "Jonokuchi": 0,
+        "Juryo": 47,
+        "Makushita": 7,
+        "Makuuchi": 273,
+        "Sandanme": 3
+      },
+      "sansho": {
+        "Gino-sho": 1
+      },
+      "totalAbsences": 96,
+      "totalByDivision": {
+        "Jonidan": 21,
+        "Jonokuchi": 7,
+        "Juryo": 134,
+        "Makushita": 40,
+        "Makuuchi": 533,
+        "Sandanme": 28
+      },
+      "totalLosses": 331,
+      "totalMatches": 763,
+      "totalWins": 432,
+      "winsByDivision": {
+        "Jonidan": 20,
+        "Jonokuchi": 7,
+        "Juryo": 87,
+        "Makushita": 33,
+        "Makuuchi": 260,
+        "Sandanme": 25
+      },
+      "yusho": 5,
+      "yushoByDivision": {
+        "Jonidan": 1,
+        "Jonokuchi": 1,
+        "Juryo": 1,
+        "Sandanme": 2
+      }
+    },
     "measurements": [],
     "ranks": [],
     "shikonas": [],
@@ -77,6 +148,37 @@
       "stage": "profile",
       "message": "Sumo API HTTP 400",
       "transient": false
+    },
+    {
+      "at": "2026-11-14T21:09:22.982Z",
+      "stage": "profile",
+      "message": "Requeued after correcting unsupported query arguments",
+      "transient": false
+    },
+    {
+      "at": "2026-11-14T21:09:24.758Z",
+      "stage": "measurements",
+      "message": "Expected paginated measurements response",
+      "transient": false
+    },
+    {
+      "at": "2026-11-14T21:09:24.815Z",
+      "stage": "ranks",
+      "message": "Expected paginated ranks response",
+      "transient": false
+    },
+    {
+      "at": "2026-11-14T21:09:24.866Z",
+      "stage": "shikonas",
+      "message": "Expected paginated shikonas response",
+      "transient": false
+    },
+    {
+      "at": "2026-11-14T21:09:24.929Z",
+      "stage": "matches",
+      "message": "Expected paginated matches response",
+      "transient": false
     }
-  ]
+  ],
+  "profileRequestContract": 2
 }
