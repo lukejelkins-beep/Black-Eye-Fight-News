@@ -1707,12 +1707,24 @@ def collect_approved_full_ufc_fight_search(client,state,research,coverage,today,
     minimums=independent.get("fighters",{}) if isinstance(independent,dict) and \
         independent.get("schema")==1 and \
         independent.get("scope")=="ufc-independent-full-career-verification" else {}
+    def one_time_cursor_bug_recheck(f,prior):
+        # Previous collector revision accidentally classified a natural
+        # final page (cursor=None) as an invalid provider response. Permit
+        # one correction only for the three independently source-confirmed
+        # depth gaps; never blanket-retry unrelated manual-review results.
+        return (f in minimums and isinstance(prior,dict) and
+                prior.get("status")=="manual_review" and
+                prior.get("invalidRows")==1 and
+                0<int(prior.get("scannedRows") or 0)<=2 and
+                not prior.get("cursorPaginationBugRechecked"))
     candidate=[]
     for f in eligible:
         fid=ids.get(f)
         if not fid or reverse.get(fid)!={f}:continue
         prior=ledger.get(f,{})
-        if prior.get("status") in ("checked","manual_review"):continue
+        if prior.get("status") in ("checked","source_depth_gap"):continue
+        if prior.get("status")=="manual_review" and not one_time_cursor_bug_recheck(f,prior):
+            continue
         if prior.get("status")=="retry" and str(prior.get("retryAfter") or "")>today.isoformat():
             continue
         known=sum(1 for h in (profiles.get(f) or {}).get("recentHistory",[])
@@ -1805,14 +1817,33 @@ def collect_approved_full_ufc_fight_search(client,state,research,coverage,today,
         if next_cursor and (not isinstance(next_cursor,str) or len(next_cursor)>300):
             next_cursor=None
             invalid+=1
-        if next_cursor==cursor:next_cursor=None;invalid+=1
+        if next_cursor is not None and next_cursor==cursor:
+            next_cursor=None
+            invalid+=1
         cumulative=int(prior.get("scannedRows") or 0)+len(rows)
+        updated_history=(profiles.get(f) or {}).get("recentHistory",[])
+        updated_native_count=sum(1 for h in updated_history
+            if isinstance(h,dict) and h.get("source")=="native" and
+               str(h.get("promotion") or "").lower()=="ufc")
+        official_minimum=minimum if type(minimum) is int and minimum>0 else None
+        unresolved_minimum=max(0,official_minimum-updated_native_count) if official_minimum else 0
+        # An exhausted winner-fight search does not prove a complete history,
+        # especially when an independent official source proves additional UFC
+        # fights. Record an actionable conflict instead of declaring success.
+        status=("partial" if next_cursor else
+                "manual_review" if invalid else
+                "source_depth_gap" if unresolved_minimum>0 else "checked")
         ledger[f]={
-            "status":"partial" if next_cursor else "manual_review" if invalid else "checked",
+            "status":status,
             "fighterId":fid,"checkedAt":today.isoformat(),
             "cursor":next_cursor,"scannedRows":cumulative,
-            "invalidRows":int(prior.get("invalidRows") or 0)+invalid}
-        if not next_cursor:
+            "invalidRows":int(prior.get("invalidRows") or 0)+invalid,
+            "cursorPaginationBugRechecked":bool(
+                prior.get("cursorPaginationBugRechecked") or
+                one_time_cursor_bug_recheck(f,prior)),
+            "officialMinimumUfcBouts":official_minimum,
+            "missingOfficialMinimumUfcBouts":unresolved_minimum}
+        if not next_cursor and status=="checked":
             completed+=1
     if calls:
         print("BEFN UFCalendar full UFC fight-index crosscheck:",calls,"requests;",

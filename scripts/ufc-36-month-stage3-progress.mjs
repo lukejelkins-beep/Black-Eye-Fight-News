@@ -611,6 +611,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     fullFightIndexSearchFightersPartial:searchStatus('partial'),
     fullFightIndexSearchFightersRetry:searchStatus('retry'),
     fullFightIndexSearchFightersManualReview:searchStatus('manual_review'),
+    fullFightIndexSearchFightersBlockedBySourceMinimum:searchStatus('source_depth_gap'),
     fullFightIndexSearchFightersNotAttempted:fightSearchUnattempted,
     fullFightIndexSearchFightersWithAnyLedger:searchCallsRecorded,
     fullFightIndexSearchProviderRowsScanned:searchedApproved.reduce((n,row)=>
@@ -652,7 +653,9 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
       row.status!=='checked').map(row=>({
         slug:row.slug,status:row.status,scannedRows:row.scannedRows||0,
         invalidRows:row.invalidRows||0,checkedAt:row.checkedAt||null,
-        retryAfter:row.retryAfter||null
+        retryAfter:row.retryAfter||null,
+        sourceConfirmedMinimumUfcBouts:row.officialMinimumUfcBouts||null,
+        missingSourceConfirmedUfcBouts:row.missingOfficialMinimumUfcBouts||0
       })),
     cachedCareerHistoryCandidates,profilesWithAmbiguousNumericIdentity,
     approvedMissingHistory:missingHistory.slice(0,30),
@@ -737,6 +740,7 @@ export function markdownReport(report){
    fullFightIndexSearchFightersPartial:'Approved UFC fighter winner-fight search awaiting further cursor pages',
    fullFightIndexSearchFightersRetry:'Approved UFC fighter winner-fight searches awaiting retry after provider error',
    fullFightIndexSearchFightersManualReview:'Approved UFC fighter winner-fight search results needing manual identity review',
+   fullFightIndexSearchFightersBlockedBySourceMinimum:'Approved winner-fight searches exhausted despite source-confirmed missing UFC career depth',
    fullFightIndexSearchFightersNotAttempted:'Approved UFC fighters not yet searched through the full numeric fight-index',
    fullFightIndexSearchFightersWithAnyLedger:'Approved UFC fighters with persisted full fight-index search state',
    fullFightIndexSearchProviderRowsScanned:'Saved native UFC winner-fight rows scanned across approved fighters (includes repeat IDs by fighter)',
