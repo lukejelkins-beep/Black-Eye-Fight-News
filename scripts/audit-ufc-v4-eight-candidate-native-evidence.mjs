@@ -17,6 +17,7 @@ const approved=read('data/ufc-36-month-roster-approval.json');
 const research=read('data/ufcalendar-fighter-research.json');
 const progress=read('data/ufcalendar-rich-progress.json');
 const metrics=read('data/ufc-postfight-metrics.json');
+const feederEvidence=read('data/ufc-feeder-bout-evidence.json');
 const cases=[];
 if(approved.status!=='approved'||approved.approvedFighters.length!==783||src.rosterAsOf!==approved.rosterAsOf)throw Error('approved immutable roster mismatch');
 for(const [slug,entry] of Object.entries(src.fighters)){
@@ -37,7 +38,8 @@ for(const [slug,entry] of Object.entries(src.fighters)){
   const [own,opp]=corners[0]||[];
   if(own?.id)fId.add(String(own.id));
   const winner=b?.result?.winnerId;
-  const nativeResult=b?.status==='no_contest'?'no_contest':b?.status==='draw'?'draw':
+  const nativeResult=b?.status==='no_contest'||b?.result?.method==='no_contest'?'no_contest':
+   b?.status==='draw'||(!winner&&b?.result?.method==='draw')?'draw':
    winner&&String(winner)===String(own?.id)?'win':winner&&String(winner)===String(opp?.id)?'loss':null;
   if(nativeResult!==r.result)problems.push('result:'+id);
   if(!m||!Number.isFinite(m.cageSec)||m.cageSec<=0||req.some(k=>!Number.isFinite(m.metrics?.[k])))problems.push('metrics:'+id);
@@ -49,7 +51,11 @@ for(const [slug,entry] of Object.entries(src.fighters)){
  const extras=saved.filter(x=>!entry.rows.some(r=>r.nativeBoutId===String(x.boutId)));
  const extrasWithScope=extras.map(x=>({date:x.date,opponent:x.opponent,boutId:x.boutId,
   nativeEvent:progress.bouts?.[x.boutId]?.event??null,
-  explicitFeeder:/(?:contender series|road to ufc|dwcs)/i.test(progress.bouts?.[x.boutId]?.event||'')}));
+  explicitFeeder:/(?:contender series|road to ufc|dwcs)/i.test(progress.bouts?.[x.boutId]?.event||'')||
+   feederEvidence.bouts?.some(y=>y.fighterSlug===slug&&String(y.boutId||'')===String(x.boutId||'')&&
+    y.date===x.date&&norm(y.opponent)===norm(x.opponent)&&
+    /(?:contender series|road to ufc|dwcs)/i.test(y.event||'')&&
+    /^https:\/\/(?:www\.)?ufc\.com\//i.test(y.sourceUrl||''))===true}));
  if(extrasWithScope.some(x=>!x.explicitFeeder))problems.push('unexplained_extra_native_history');
  if(fId.size!==1)problems.push('multiple_or_missing_numeric_fighter_ids');
  if(slug==='sean-woodson')console.log('BEFN_WOODSON_EXACT_REVIEW '+JSON.stringify({
