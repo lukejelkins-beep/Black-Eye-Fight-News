@@ -69,7 +69,7 @@ test('preview markup provides accessible full head-to-head navigation',()=>{
   assert.match(source,/nextDayForBasho\(new Date\(\)/);
   assert.match(source,/techniqueText\(m\.kimarite\)/);
   const html=readFileSync(new URL('../sumo.html',import.meta.url),'utf8');
-  assert.match(html,/20261115-matchups1/);
+  assert.match(html,/20261115-career-h2h2/);
 });
 
 test('research preview shows five recent H2H results then lazily all career meetings',()=>{
