@@ -17,6 +17,8 @@ on:
       - 'tests/test-ufc-unified-wave46-bannon-xiao-20261115.mjs'
       - 'data/ufc-unified-wave47-zhang-denis-source-review-20261115.json'
       - 'tests/test-ufc-unified-wave47-zhang-denis-20261115.mjs'
+      - 'data/ufc-unified-wave48-green-burns-source-review-20261115.json'
+      - 'tests/test-ufc-unified-wave48-green-burns-20261115.mjs'
       - 'tests/test-ufc-unified-daria-zhelezniakova-20261115.mjs'
       - 'tests/test-ufc-unified-jeka-saragih-20261115.mjs'
       - 'tests/test-ufc-unified-wave38-kline-armfield-ochoa-20261115.mjs'
@@ -255,6 +257,7 @@ jobs:
           node --test tests/test-ufc-unified-wave45-nick-klein-20261115.mjs
           node --test tests/test-ufc-unified-wave46-bannon-xiao-20261115.mjs
           node --test tests/test-ufc-unified-wave47-zhang-denis-20261115.mjs
+          node --test tests/test-ufc-unified-wave48-green-burns-20261115.mjs
           node scripts/ufc-36-month-stage3-progress.mjs
           node --test tests/test-ufc-stage3-v4-reconciliation.mjs
           node scripts/ufc-reconcile-stage3-v4-certifications.mjs
