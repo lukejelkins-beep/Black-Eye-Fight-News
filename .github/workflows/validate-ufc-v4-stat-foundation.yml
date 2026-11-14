@@ -9,6 +9,8 @@ on:
       - 'scripts/build-ufc-v4-stat-foundation.mjs'
       - 'scripts/certify-ufc-v4-independent-full-careers.mjs'
       - 'scripts/ufc-v4-targeted-greco-evidence.mjs'
+      - 'scripts/ufc-v4-next20-pinned-source-links.mjs'
+      - 'data/ufc-v4-greco-next20-fight-links-20261114.json'
       - 'scripts/ufc-v4-next20-greco-evidence.mjs'
       - 'data/ufc-v4-next20-greco-fight-links-20261114.json'
       - 'scripts/audit-ufc-v4-eight-candidate-native-evidence.mjs'
@@ -66,6 +68,8 @@ jobs:
           node --test tests/test-ufc-v4-source-scope.mjs
           node --test tests/test-ufc-v4-metric-availability.mjs
           node --test tests/test-ufc-v4-source-conflicts.mjs
+      - name: Review independently linked historical bout IDs for next 20 fighters (one-time)
+        run: node scripts/ufc-v4-next20-pinned-source-links.mjs
       - name: Review pinned Greco source links for next eight fighters (skip after checkpoint commit)
         run: node scripts/ufc-v4-targeted-greco-evidence.mjs
       - name: Cross-reference next 20 uncertified careers with pinned Greco source links
@@ -107,6 +111,7 @@ jobs:
             qa/ufc-v4-first-two-certification-attempt.json
             qa/ufc-v4-independent-full-career-certifications.json
             qa/ufc-v4-targeted-greco-fight-links-20261114.json
+            qa/ufc-v4-greco-next20-fight-links-20261114.json
             qa/ufc-v4-next20-greco-fight-links-20261114.json
             qa/ufc-v4-eight-candidate-native-evidence.json
             qa/ufc-v4-shadow-ratings.json
