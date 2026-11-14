@@ -29473,6 +29473,74 @@
         }
       ],
       "sourceVerifiedExcludedFeederBouts": []
+    },
+    "nick-klein": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Nick Klein",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/7eaa5e31c2dd86aa",
+      "officialFighterUrl": "https://www.ufc.com/athlete/nick-klein",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived CSV, not direct UFCStats scraping",
+        "method": "Complete official UFC.com dated Octagon career, exact pinned Greco fight IDs, original saved native fighter/opponent corners, win/loss outcomes and measured rounds; separate UFC-confirmed DWCS feeder exclusion."
+      },
+      "verifiedNumericFighterIds": [
+        "2863"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "All three completed UFC.com dated Octagon results: 2025-02-22 loss to Mansur Abdul-Malik, 2025-08-02 loss to Andrey Pulyaev and 2026-10-31 loss to Joe Kropschot. Native full name Joseph Kropschot (opponent ID 29328) refers to the same exact 2026-10-31 pinned Greco and native bout. Primary UFC full biography overrules misleading Win summary graphic. One-day UTC discrepancy between 2025-08-02 Greco/UFC and 2025-08-03 native Pulyaev event is preserved, not erased. Official 2024-10-15 DWCS Heraldo Souza win (native 84169) independently excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/nick-klein",
+        "https://www.ufc.com/news/week-10-results-scorecards-dana-whites-contender-series-season-8",
+        "https://www.ufc.com/news/nick-klein-getting-everything-he-hopes-ufc-seattle-cejudo-vs-song",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-02-22",
+          "opponent": "Mansur Abdul-Malik",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e011819e721c4a2a",
+          "nativeBoutId": "38535",
+          "nativeFighterId": "2863"
+        },
+        {
+          "date": "2025-08-02",
+          "opponent": "Andrey Pulyaev",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b3c695728e177fd4",
+          "nativeBoutId": "60760",
+          "nativeFighterId": "2863"
+        },
+        {
+          "date": "2026-10-31",
+          "opponent": "Joseph Kropschot",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f9bda28454d49c78",
+          "nativeBoutId": "85985",
+          "nativeFighterId": "2863"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84169",
+          "date": "2024-10-15",
+          "opponent": "Heraldo Souza",
+          "result": "win",
+          "event": "Dana White's Contender Series Season 8 Week 10",
+          "officialSourceUrl": "https://www.ufc.com/news/week-10-results-scorecards-dana-whites-contender-series-season-8",
+          "excludedBecause": "Official UFC DWCS Season 8 Week 10 contest predates Feb 2025 UFC debut, not a fourth UFC Octagon bout."
+        }
+      ]
     }
   }
 }
