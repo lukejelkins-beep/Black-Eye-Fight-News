@@ -132,6 +132,8 @@ export function combinePage(doc,stage,result,id){
   // career bout and the earliest debut match already reconcile independently.
   if(stage==='matches'&&isObject(result)&&result.records===null&&
      Number.isSafeInteger(Number(result.total))&&Number(result.total)>=0&&
+     Number(result.total)<=doc.stages.matches.skip&&
+     result.has_more!==true&&result.hasMore!==true&&
      Number.isSafeInteger(Number(result.limit))&&Number(result.limit)>0){
     const proof=terminalHistoryEvidence(doc);
     if(!proof)throw Error('Null matches page without independently reconciled career evidence');
