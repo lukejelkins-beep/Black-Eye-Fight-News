@@ -5,12 +5,12 @@
   "certified": 0,
   "notAttempted": 180,
   "collecting": 4,
-  "integrityException": 1,
-  "sourceReady": 5,
+  "integrityException": 0,
+  "sourceReady": 6,
   "records": {
-    "weight": 10,
-    "rank": 308,
-    "matches": 3505
+    "weight": 14,
+    "rank": 397,
+    "matches": 3705
   },
   "independentJsaSpotchecks": {
     "identityVerified": 4,
@@ -110,12 +110,9 @@
     {
       "sourceId": 7,
       "name": "Kirishima",
-      "status": "source-integrity-exception",
-      "readyForExternalCrosscheck": false,
-      "errors": [
-        "malformed-rank-value",
-        "rank-history-basho-count-mismatch"
-      ],
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
       "warnings": [],
       "stagesCompleted": 6,
       "counts": {
@@ -124,7 +121,7 @@
         "matches": 820,
         "regularMatches": 811,
         "specialMatches": 9,
-        "formalRanks": 69
+        "formalRanks": 68
       }
     },
     {
@@ -196,25 +193,6 @@
       }
     },
     {
-      "sourceId": 11,
-      "name": "Ichiyamamoto",
-      "status": "still-collecting",
-      "readyForExternalCrosscheck": false,
-      "errors": [],
-      "warnings": [
-        "blocked-stage-profile"
-      ],
-      "stagesCompleted": 0,
-      "counts": {
-        "weights": 0,
-        "ranks": 0,
-        "matches": 0,
-        "regularMatches": 0,
-        "specialMatches": 0,
-        "formalRanks": 0
-      }
-    },
-    {
       "sourceId": 3,
       "name": "Hakunofuji",
       "status": "source-collected-needs-independent-verification",
@@ -229,25 +207,6 @@
         "regularMatches": 296,
         "specialMatches": 1,
         "formalRanks": 24
-      }
-    },
-    {
-      "sourceId": 9,
-      "name": "Daieisho",
-      "status": "still-collecting",
-      "readyForExternalCrosscheck": false,
-      "errors": [],
-      "warnings": [
-        "blocked-stage-profile"
-      ],
-      "stagesCompleted": 0,
-      "counts": {
-        "weights": 0,
-        "ranks": 0,
-        "matches": 0,
-        "regularMatches": 0,
-        "specialMatches": 0,
-        "formalRanks": 0
       }
     }
   ]

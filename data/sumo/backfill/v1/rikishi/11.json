@@ -9,18 +9,20 @@
   "certification": "not-started",
   "stages": {
     "profile": {
-      "complete": false,
-      "skip": 0,
-      "total": null,
-      "attempts": 3,
-      "updatedAt": null
-    },
-    "stats": {
-      "complete": false,
+      "complete": true,
       "skip": 0,
       "total": null,
       "attempts": 0,
-      "updatedAt": null
+      "updatedAt": "2026-11-14T21:34:20.274Z",
+      "source": "https://www.sumo-api.com/api/rikishi/11"
+    },
+    "stats": {
+      "complete": true,
+      "skip": 0,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T21:34:21.006Z",
+      "source": "https://www.sumo-api.com/api/rikishi/11/stats"
     },
     "measurements": {
       "complete": false,
@@ -52,8 +54,75 @@
     }
   },
   "data": {
-    "profile": null,
-    "stats": null,
+    "profile": {
+      "id": 11,
+      "sumodbId": 12362,
+      "nskId": 3753,
+      "shikonaEn": "Ichiyamamoto",
+      "shikonaJp": "一山本　大生",
+      "currentRank": "Maegashira 12 East",
+      "heya": "Hanaregoma",
+      "birthDate": "1993-10-01T00:00:00Z",
+      "shusshin": "Hokkaido, Iwanai-gun, Iwanai-cho",
+      "height": 190,
+      "weight": 160,
+      "debut": "201701"
+    },
+    "stats": {
+      "absenceByDivision": {
+        "Jonidan": 0,
+        "Jonokuchi": 0,
+        "Juryo": 15,
+        "Makushita": 7,
+        "Makuuchi": 6,
+        "Sandanme": 0
+      },
+      "basho": 58,
+      "bashoByDivision": {
+        "Jonidan": 1,
+        "Jonokuchi": 1,
+        "Juryo": 8,
+        "Makushita": 17,
+        "Makuuchi": 30,
+        "Sandanme": 1
+      },
+      "lossByDivision": {
+        "Jonidan": 1,
+        "Jonokuchi": 0,
+        "Juryo": 37,
+        "Makushita": 42,
+        "Makuuchi": 235,
+        "Sandanme": 1
+      },
+      "sansho": {
+        "Kanto-sho": 2
+      },
+      "totalAbsences": 28,
+      "totalByDivision": {
+        "Jonidan": 7,
+        "Jonokuchi": 7,
+        "Juryo": 105,
+        "Makushita": 112,
+        "Makuuchi": 436,
+        "Sandanme": 7
+      },
+      "totalLosses": 316,
+      "totalMatches": 674,
+      "totalWins": 358,
+      "winsByDivision": {
+        "Jonidan": 6,
+        "Jonokuchi": 7,
+        "Juryo": 68,
+        "Makushita": 70,
+        "Makuuchi": 201,
+        "Sandanme": 6
+      },
+      "yusho": 3,
+      "yushoByDivision": {
+        "Jonokuchi": 1,
+        "Juryo": 2
+      }
+    },
     "measurements": [],
     "ranks": [],
     "shikonas": [],
@@ -77,6 +146,15 @@
       "stage": "profile",
       "message": "Sumo API HTTP 400",
       "transient": false
+    },
+    {
+      "at": "2026-11-14T21:34:20.201Z",
+      "stage": "profile",
+      "message": "Requeued after correcting unsupported query arguments",
+      "transient": false
     }
-  ]
+  ],
+  "profileRequestContract": 2,
+  "historyResponseContract": 2,
+  "matchPaginationContract": 3
 }
