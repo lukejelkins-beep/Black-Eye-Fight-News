@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "scope": "Research API response integrity only — NEVER a JSA or full-career certificate",
+  "cohortSize": 190,
+  "certified": 0,
+  "notAttempted": 180,
+  "collecting": 8,
+  "integrityException": 2,
+  "sourceReady": 0,
+  "records": {
+    "weight": 4,
+    "rank": 134,
+    "matches": 400
+  },
+  "pendingExternalChecks": [
+    "JSA identity/current profile",
+    "JSA/independent chronological career crosscheck",
+    "Published height and weight provenance",
+    "Cross-source fight-history totals",
+    "Photo licensing"
+  ],
+  "cases": [
+    {
+      "sourceId": 7,
+      "name": "Kirishima",
+      "status": "still-collecting",
+      "readyForExternalCrosscheck": false,
+      "errors": [],
+      "warnings": [
+        "blocked-stage-profile"
+      ],
+      "stagesCompleted": 0,
+      "counts": {
+        "weights": 0,
+        "ranks": 0,
+        "matches": 0
+      }
+    },
+    {
+      "sourceId": 2,
+      "name": "Asanoyama",
+      "status": "source-integrity-exception",
+      "readyForExternalCrosscheck": false,
+      "errors": [
+        "source-career-totals-identity"
+      ],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 64,
+        "matches": 200
+      }
+    },
+    {
+      "sourceId": 28,
+      "name": "Ura",
+      "status": "source-integrity-exception",
+      "readyForExternalCrosscheck": false,
+      "errors": [
+        "source-career-totals-identity",
+        "malformed-rank-value"
+      ],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 70,
+        "matches": 200
+      }
+    },
+    {
+      "sourceId": 5,
+      "name": "Takerufuji",
+      "status": "still-collecting",
+      "readyForExternalCrosscheck": false,
+      "errors": [],
+      "warnings": [
+        "blocked-stage-profile"
+      ],
+      "stagesCompleted": 0,
+      "counts": {
+        "weights": 0,
+        "ranks": 0,
+        "matches": 0
+      }
+    },
+    {
+      "sourceId": 8,
+      "name": "Kotoshoho",
+      "status": "still-collecting",
+      "readyForExternalCrosscheck": false,
+      "errors": [],
+      "warnings": [
+        "blocked-stage-profile"
+      ],
+      "stagesCompleted": 0,
+      "counts": {
+        "weights": 0,
+        "ranks": 0,
+        "matches": 0
+      }
+    },
+    {
+      "sourceId": 11,
+      "name": "Ichiyamamoto",
+      "status": "still-collecting",
+      "readyForExternalCrosscheck": false,
+      "errors": [],
+      "warnings": [
+        "blocked-stage-profile"
+      ],
+      "stagesCompleted": 0,
+      "counts": {
+        "weights": 0,
+        "ranks": 0,
+        "matches": 0
+      }
+    },
+    {
+      "sourceId": 3,
+      "name": "Hakunofuji",
+      "status": "still-collecting",
+      "readyForExternalCrosscheck": false,
+      "errors": [],
+      "warnings": [
+        "blocked-stage-profile"
+      ],
+      "stagesCompleted": 0,
+      "counts": {
+        "weights": 0,
+        "ranks": 0,
+        "matches": 0
+      }
+    },
+    {
+      "sourceId": 9,
+      "name": "Daieisho",
+      "status": "still-collecting",
+      "readyForExternalCrosscheck": false,
+      "errors": [],
+      "warnings": [
+        "blocked-stage-profile"
+      ],
+      "stagesCompleted": 0,
+      "counts": {
+        "weights": 0,
+        "ranks": 0,
+        "matches": 0
+      }
+    }
+  ]
+}
