@@ -43,7 +43,7 @@ jobs:
       - name: Collect only missing research data
         env:
           SUMO_REQUEST_BUDGET: '8'
-          SUMO_FIGHTERS_PER_RUN: '2'
+          SUMO_FIGHTERS_PER_RUN: '3'
         run: node scripts/sumo-backfill-190.mjs
       - name: Audit collected history before any future JSA certification
         run: node scripts/sumo-verify-190.mjs
