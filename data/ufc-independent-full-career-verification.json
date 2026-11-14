@@ -3920,6 +3920,435 @@
         }
       ],
       "note": "Source-attested exhaustive UFC career through 14 Nov 2026: one fighter-specific official UFCStats indexed bout, crosschecked against UFC Shanghai athlete/event source, result, native corner ID and complete measured rounds. Pending individual Stage3 independent certification gate; no feeder fights counted."
+    },
+    "pavel-andrusca": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Pavel Andrusca",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/93f9c19ae41d2a97",
+      "officialFighterUrl": "https://www.ufc.com/athlete/pavel-andrusca",
+      "firstOfficialUfcFight": "2026-09-05",
+      "lastOfficialUfcFight": "2026-09-05",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "13256"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Compared whole official UFC.com athlete debut-to-14-Nov-2026 event result history with independent pinned Greco UFCStats fighter/fight list (one official bout from initial complete Greco index through 7 Nov); reconciled source URL, opponent, official fight date, result, two saved numeric native corners and measured round stats. Previously cached UFC-provider DWCS/RTU/TUF feeder fights excluded by actual named event classification, never simply skipped due missing rounds.",
+        "officialDebut": "2026-09-05",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "Official UFC athlete lists debut Sep 5 2026, and the UFC Paris result records a unanimous decision victory over Nathaniel Wood. Upcoming Dec 5 bout is future, not completed.",
+        "officialResultUrl": "https://www.ufc.com/event/ufc-fight-night-september-05-2026",
+        "officialNewsUrl": "https://www.ufc.com/news/ufc-paris-official-scorecards-hooker-vs-parnasse",
+        "excludedFeederNativeFights": [],
+        "directUfcStatsSiteAccess": "Direct UFCStats unavailable; exact URLs and outcomes independently indexed by pinned Greco historical UFCStats data and corroborated with official UFC records."
+      },
+      "bouts": [
+        {
+          "date": "2026-09-05",
+          "opponent": "Nathaniel Wood",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ac3af13ffe39b1d8",
+          "nativeBoutId": "86002",
+          "nativeFightId": "86002",
+          "nativeFighterId": "13256",
+          "event": "UFC Fight Night: Hooker vs Parnasse",
+          "method": "decision_unanimous",
+          "round": 3,
+          "time": "5:00",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-september-05-2026"
+        }
+      ],
+      "note": "Verified the sole official UFC contest through roster snapshot 14 Nov 2026 from complete official debut fighter listing, independent source fight, linked native UFC event and recorded round statistics. Pending strict independent Stage3 CI gate."
+    },
+    "salahdine-parnasse": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Salahdine Parnasse",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/b3cb9dfccff3be76",
+      "officialFighterUrl": "https://www.ufc.com/athlete/salahdine-parnasse",
+      "firstOfficialUfcFight": "2026-09-05",
+      "lastOfficialUfcFight": "2026-09-05",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "4965"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Compared whole official UFC.com athlete debut-to-14-Nov-2026 event result history with independent pinned Greco UFCStats fighter/fight list (one official bout from initial complete Greco index through 7 Nov); reconciled source URL, opponent, official fight date, result, two saved numeric native corners and measured round stats. Previously cached UFC-provider DWCS/RTU/TUF feeder fights excluded by actual named event classification, never simply skipped due missing rounds.",
+        "officialDebut": "2026-09-05",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "First official UFC fight Sep 5 2026 KO/TKO over Dan Hooker. UFC athlete detailed narrative text states 2:25, but official UFC Paris event and scorecard source and independently indexed UFCStats bout give 2:35 R1, agreeing with native measured 2:35. Retain this publication inconsistency; previous KSW fights excluded.",
+        "officialResultUrl": "https://www.ufc.com/event/ufc-fight-night-september-05-2026",
+        "officialNewsUrl": "https://www.ufc.com/news/ufc-paris-official-scorecards-hooker-vs-parnasse",
+        "excludedFeederNativeFights": [],
+        "directUfcStatsSiteAccess": "Direct UFCStats unavailable; exact URLs and outcomes independently indexed by pinned Greco historical UFCStats data and corroborated with official UFC records."
+      },
+      "bouts": [
+        {
+          "date": "2026-09-05",
+          "opponent": "Dan Hooker",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/bba8c0ab999b9e6f",
+          "nativeBoutId": "83280",
+          "nativeFightId": "83280",
+          "nativeFighterId": "4965",
+          "event": "UFC Fight Night: Hooker vs Parnasse",
+          "method": "ko_tko",
+          "round": 1,
+          "time": "2:35",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-september-05-2026"
+        }
+      ],
+      "note": "Verified the sole official UFC contest through roster snapshot 14 Nov 2026 from complete official debut fighter listing, independent source fight, linked native UFC event and recorded round statistics. Pending strict independent Stage3 CI gate."
+    },
+    "delphine-benouaich": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Delphine Benouaich",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/3138df4d117ebc12",
+      "officialFighterUrl": "https://www.ufc.com/athlete/delphine-benouaich",
+      "firstOfficialUfcFight": "2026-09-05",
+      "lastOfficialUfcFight": "2026-09-05",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "61304"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Compared whole official UFC.com athlete debut-to-14-Nov-2026 event result history with independent pinned Greco UFCStats fighter/fight list (one official bout from initial complete Greco index through 7 Nov); reconciled source URL, opponent, official fight date, result, two saved numeric native corners and measured round stats. Previously cached UFC-provider DWCS/RTU/TUF feeder fights excluded by actual named event classification, never simply skipped due missing rounds.",
+        "officialDebut": "2026-09-05",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "UFC Paris Sept 5 debut R2 rear-naked choke at 4:22 against Sofia Montenegro. TUF Season 34 quarterfinal and semifinal exhibitions listed in separate UFC bio section excluded from professional UFC record.",
+        "officialResultUrl": "https://www.ufc.com/event/ufc-fight-night-september-05-2026",
+        "officialNewsUrl": "https://www.ufc.com/news/ufc-paris-official-scorecards-hooker-vs-parnasse",
+        "excludedFeederNativeFights": [],
+        "directUfcStatsSiteAccess": "Direct UFCStats unavailable; exact URLs and outcomes independently indexed by pinned Greco historical UFCStats data and corroborated with official UFC records."
+      },
+      "bouts": [
+        {
+          "date": "2026-09-05",
+          "opponent": "Sofia Montenegro",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9226a13d001b49ec",
+          "nativeBoutId": "83776",
+          "nativeFightId": "83776",
+          "nativeFighterId": "61304",
+          "event": "UFC Fight Night: Hooker vs Parnasse",
+          "method": "submission",
+          "round": 2,
+          "time": "4:22",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-september-05-2026"
+        }
+      ],
+      "note": "Verified the sole official UFC contest through roster snapshot 14 Nov 2026 from complete official debut fighter listing, independent source fight, linked native UFC event and recorded round statistics. Pending strict independent Stage3 CI gate."
+    },
+    "gigi-canuto": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "GiGi Canuto",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/651d209fa8c8cd83",
+      "officialFighterUrl": "https://www.ufc.com/athlete/gigi-canuto",
+      "firstOfficialUfcFight": "2026-08-08",
+      "lastOfficialUfcFight": "2026-08-08",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "30303"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Compared whole official UFC.com athlete debut-to-14-Nov-2026 event result history with independent pinned Greco UFCStats fighter/fight list (one official bout from initial complete Greco index through 7 Nov); reconciled source URL, opponent, official fight date, result, two saved numeric native corners and measured round stats. Previously cached UFC-provider DWCS/RTU/TUF feeder fights excluded by actual named event classification, never simply skipped due missing rounds.",
+        "officialDebut": "2026-08-08",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "UFC athlete top Last fight tile incorrectly shows Win, but its detailed UFC biography, official event and scorecards show unanimous decision loss 29-28 x3 to Carol Foro. TUF Season 34 exhibitions and grappling invitational not official UFC bouts.",
+        "officialResultUrl": "https://www.ufc.com/event/ufc-fight-night-august-08-2026",
+        "officialNewsUrl": "https://www.ufc.com/news/ufc-fight-night-gamrot-vs-salkilld-official-scorecards-judges",
+        "excludedFeederNativeFights": [],
+        "directUfcStatsSiteAccess": "Direct UFCStats unavailable; exact URLs and outcomes independently indexed by pinned Greco historical UFCStats data and corroborated with official UFC records."
+      },
+      "bouts": [
+        {
+          "date": "2026-08-08",
+          "opponent": "Carol Foro",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ded584e13276cbcb",
+          "nativeBoutId": "83406",
+          "nativeFightId": "83406",
+          "nativeFighterId": "30303",
+          "event": "UFC Fight Night: Gamrot vs Salkilld",
+          "method": "decision_unanimous",
+          "round": 3,
+          "time": "5:00",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-august-08-2026"
+        }
+      ],
+      "note": "Verified the sole official UFC contest through roster snapshot 14 Nov 2026 from complete official debut fighter listing, independent source fight, linked native UFC event and recorded round statistics. Pending strict independent Stage3 CI gate."
+    },
+    "richie-miranda": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Richie Miranda",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/abde3388a589103c",
+      "officialFighterUrl": "https://www.ufc.com/athlete/richie-miranda",
+      "firstOfficialUfcFight": "2026-08-08",
+      "lastOfficialUfcFight": "2026-08-08",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "42957"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Compared whole official UFC.com athlete debut-to-14-Nov-2026 event result history with independent pinned Greco UFCStats fighter/fight list (one official bout from initial complete Greco index through 7 Nov); reconciled source URL, opponent, official fight date, result, two saved numeric native corners and measured round stats. Previously cached UFC-provider DWCS/RTU/TUF feeder fights excluded by actual named event classification, never simply skipped due missing rounds.",
+        "officialDebut": "2026-08-08",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "UFC athlete top Last fight tile incorrectly shows Win, while detailed biography, official fight night event and Manoel Sousa biography confirm unanimous decision loss. One official UFC debut on Aug 8 2026.",
+        "officialResultUrl": "https://www.ufc.com/event/ufc-fight-night-august-08-2026",
+        "officialNewsUrl": "https://www.ufc.com/news/ufc-fight-night-gamrot-vs-salkilld-prelim-results",
+        "excludedFeederNativeFights": [],
+        "directUfcStatsSiteAccess": "Direct UFCStats unavailable; exact URLs and outcomes independently indexed by pinned Greco historical UFCStats data and corroborated with official UFC records."
+      },
+      "bouts": [
+        {
+          "date": "2026-08-08",
+          "opponent": "Manoel Sousa",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/81ae2a465e0dfa4f",
+          "nativeBoutId": "83375",
+          "nativeFightId": "83375",
+          "nativeFighterId": "42957",
+          "event": "UFC Fight Night: Gamrot vs Salkilld",
+          "method": "decision_unanimous",
+          "round": 3,
+          "time": "5:00",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-august-08-2026"
+        }
+      ],
+      "note": "Verified the sole official UFC contest through roster snapshot 14 Nov 2026 from complete official debut fighter listing, independent source fight, linked native UFC event and recorded round statistics. Pending strict independent Stage3 CI gate."
+    },
+    "sofia-montenegro": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Sofia Montenegro",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/8b1b051038354655",
+      "officialFighterUrl": "https://www.ufc.com/athlete/sofia-montenegro",
+      "firstOfficialUfcFight": "2026-09-05",
+      "lastOfficialUfcFight": "2026-09-05",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "32244"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Compared whole official UFC.com athlete debut-to-14-Nov-2026 event result history with independent pinned Greco UFCStats fighter/fight list (one official bout from initial complete Greco index through 7 Nov); reconciled source URL, opponent, official fight date, result, two saved numeric native corners and measured round stats. Previously cached UFC-provider DWCS/RTU/TUF feeder fights excluded by actual named event classification, never simply skipped due missing rounds.",
+        "officialDebut": "2026-09-05",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "UFC Sept 5 debut R2 submission loss at 4:22 to Delphine Benouaich. Saved native ID 88284 on Sept 23 2025 was Dana White's Contender Series 9 vs Jeisla Chaves, excluded as feeder rather than an earlier official UFC fight. UFC athlete page explicitly lists DWCS separately.",
+        "officialResultUrl": "https://www.ufc.com/event/ufc-fight-night-september-05-2026",
+        "officialNewsUrl": "https://www.ufc.com/news/ufc-paris-official-scorecards-hooker-vs-parnasse",
+        "excludedFeederNativeFights": [
+          {
+            "date": "2025-09-23",
+            "opponent": "Jeisla Chaves",
+            "boutId": "88284",
+            "event": "Dana White's Contender Series 83",
+            "reason": "DWCS event not official UFC bout"
+          }
+        ],
+        "directUfcStatsSiteAccess": "Direct UFCStats unavailable; exact URLs and outcomes independently indexed by pinned Greco historical UFCStats data and corroborated with official UFC records."
+      },
+      "bouts": [
+        {
+          "date": "2026-09-05",
+          "opponent": "Delphine Benouaich",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9226a13d001b49ec",
+          "nativeBoutId": "83776",
+          "nativeFightId": "83776",
+          "nativeFighterId": "32244",
+          "event": "UFC Fight Night: Hooker vs Parnasse",
+          "method": "submission",
+          "round": 2,
+          "time": "4:22",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-september-05-2026"
+        }
+      ],
+      "note": "Verified the sole official UFC contest through roster snapshot 14 Nov 2026 from complete official debut fighter listing, independent source fight, linked native UFC event and recorded round statistics. Pending strict independent Stage3 CI gate."
+    },
+    "carol-foro": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Carol Foro",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/77ba5b2939c4018b",
+      "officialFighterUrl": "https://www.ufc.com/athlete/carol-foro",
+      "firstOfficialUfcFight": "2026-08-08",
+      "lastOfficialUfcFight": "2026-08-08",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "32578"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Compared whole official UFC.com athlete debut-to-14-Nov-2026 event result history with independent pinned Greco UFCStats fighter/fight list (one official bout from initial complete Greco index through 7 Nov); reconciled source URL, opponent, official fight date, result, two saved numeric native corners and measured round stats. Previously cached UFC-provider DWCS/RTU/TUF feeder fights excluded by actual named event classification, never simply skipped due missing rounds.",
+        "officialDebut": "2026-08-08",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "UFC Aug 8 debut unanimous decision over GiGi Canuto 29-28 x3. Saved numeric UFC-provider ID 83913 from Sep 9 2025 is Dana White's Contender Series 9 vs Shanelle Dyer, not an official UFC fight. Fighter biography explicitly lists it in its separate DWCS section.",
+        "officialResultUrl": "https://www.ufc.com/event/ufc-fight-night-august-08-2026",
+        "officialNewsUrl": "https://www.ufc.com/news/ufc-fight-night-gamrot-vs-salkilld-official-scorecards-judges",
+        "excludedFeederNativeFights": [
+          {
+            "date": "2025-09-09",
+            "opponent": "Shanelle Dyer",
+            "boutId": "83913",
+            "event": "Dana White's Contender Series 81",
+            "reason": "DWCS event not official UFC bout"
+          }
+        ],
+        "directUfcStatsSiteAccess": "Direct UFCStats unavailable; exact URLs and outcomes independently indexed by pinned Greco historical UFCStats data and corroborated with official UFC records."
+      },
+      "bouts": [
+        {
+          "date": "2026-08-08",
+          "opponent": "GiGi Canuto",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ded584e13276cbcb",
+          "nativeBoutId": "83406",
+          "nativeFightId": "83406",
+          "nativeFighterId": "32578",
+          "event": "UFC Fight Night: Gamrot vs Salkilld",
+          "method": "decision_unanimous",
+          "round": 3,
+          "time": "5:00",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-august-08-2026"
+        }
+      ],
+      "note": "Verified the sole official UFC contest through roster snapshot 14 Nov 2026 from complete official debut fighter listing, independent source fight, linked native UFC event and recorded round statistics. Pending strict independent Stage3 CI gate."
     }
   }
 }
