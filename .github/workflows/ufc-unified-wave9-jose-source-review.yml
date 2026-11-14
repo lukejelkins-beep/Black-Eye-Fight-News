@@ -1,12 +1,5 @@
 name: UFC wave9 Jose Henrique exact source/native review (nonproduction)
 on:
-  pull_request:
-    branches:
-      - research/ufc-wave8-crosscheck-20261114
-    paths:
-      - 'data/ufc-unified-wave9-jose-henrique-official-source-review-20261114.json'
-      - 'scripts/ufc-unified-wave9-jose-source-review.mjs'
-      - '.github/workflows/ufc-unified-wave9-jose-source-review.yml'
   workflow_dispatch:
 permissions:
   contents: read
