@@ -1,0 +1,42 @@
+name: UFC wave16 six full careers strict Stage3 (research only)
+on:
+  push:
+    branches: [research/ufc-wave16-amosov-hafez-20261114]
+    paths:
+      - 'data/ufc-independent-full-career-verification.json'
+      - 'data/ufc-feeder-bout-evidence.json'
+      - 'tests/test-ufc-unified-wave16-amosov-hafez-evidence.mjs'
+      - '.github/workflows/ufc-unified-wave16-strict-stage3.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  strict-full-783:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate new and previous independent fighter careers, native IDs and exact exclusions
+        run: |
+          node --test tests/test-ufc-unified-wave16-amosov-hafez-evidence.mjs
+          node --test tests/test-ufc-unified-gantt-xiong-six-evidence.mjs
+          node --test tests/test-ufc-unified-pedro-rodrigo-evidence.mjs
+          node --test tests/test-ufc-unified-wave8-wave9-evidence.mjs
+          node --test tests/test-ufc-36-month-stage3-progress.mjs
+          node --test tests/test-ufc-v4-certification-queue.mjs
+      - name: Strict independent full 783-person complete UFC career + measured round gate
+        run: |
+          node scripts/ufc-36-month-stage3-progress.mjs
+          node scripts/ufc-v4-certification-queue.mjs
+      - name: Preserve nonproduction strict audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-wave16-full-cohort-strict-stage3
+          path: |
+            qa/ufc-36-month-stage3-progress.json
+            qa/ufc-v4-certification-queue.json
+          if-no-files-found: warn
