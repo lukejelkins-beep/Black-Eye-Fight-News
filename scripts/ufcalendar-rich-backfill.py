@@ -33,6 +33,7 @@ FEEDER_EVIDENCE = ROOT / "data/ufc-feeder-bout-evidence.json"
 VERIFIED_ROUND_FALLBACK = ROOT / "data/ufc-official-verified-round-fallback.json"
 LEGACY_UFC_EVIDENCE = ROOT / "data/ufc-official-legacy-evidence.json"
 INDEPENDENT_FULL_CAREER = ROOT / "data/ufc-independent-full-career-verification.json"
+OFFICIAL_BOUT_INVENTORY = ROOT / "data/ufc-official-career-bout-inventory.json"
 OFFICIAL_NC_REPAIR = ROOT / "data/ufc-official-no-contest-history-repair.json"
 JUDGING = ROOT / "data/ufcalendar-judging-research.json"
 BASE = "https://api.ufcalendar.com/v1"
@@ -1656,6 +1657,158 @@ def reconcile_indexed_native_ufc_careers(state,research,coverage,today,approval)
     return {"added":added,"profiles":changed,"conflicts":conflicts,"identitySkipped":skipped}
 
 
+
+def reconcile_official_inventory_from_cached_native(state,research,coverage,today,
+                                                    approval,inventory):
+    """Restore exact source-listed UFC bouts that are ALREADY in the indexed cache.
+
+    This is an evidence-gated reconciliation, not a source-data import.
+    A matching official biography entry can select one already authenticated
+    provider-native fight ID only after both corners, exact numeric athlete
+    identity, UTC/local event date and result agree. It must not overwrite
+    a contradictory outcome, count Road-to-UFC qualifying bouts, make API
+    requests, or assert full career completeness.
+    """
+    if not isinstance(inventory,dict) or inventory.get("schema")!=1 or \
+       inventory.get("scope")!="ufc-official-career-bout-inventory" or \
+       inventory.get("rosterAsOf")!=(approval or {}).get("rosterAsOf"):
+        return {"added":0,"profiles":0,"conflicts":0,"remaining":0}
+    approved=approved_ufc_career_cohort(approval,coverage,today)
+    eligible={slug(f.get("slug")) for f in coverage.get("fighters",[])
+              if isinstance(f,dict) and f.get("eligibilityStatus")=="latest_observed_mma_ufc"}
+    eligible.intersection_update(approved)
+    if not eligible:return {"added":0,"profiles":0,"conflicts":0,"remaining":0}
+    import unicodedata
+    norm=lambda v:re.sub(r"[^a-z0-9]","",
+        unicodedata.normalize("NFKD",safe(v,140)).encode("ascii","ignore").decode().lower())
+    def name_parts(value):
+        a=re.sub(r"([a-z])([A-Z])",r"\1 \2",safe(value,140))
+        return tuple(sorted(re.findall(r"[a-z0-9]+",
+            unicodedata.normalize("NFKD",a).encode("ascii","ignore").decode().lower())))
+    def same_name(a,b):
+        return bool(norm(a) and norm(a)==norm(b)) or bool(
+            name_parts(a) and name_parts(a)==name_parts(b))
+    def same_day(a,b):
+        da=date_str(a);db=date_str(b)
+        return bool(da and db and abs(
+            (dt.date.fromisoformat(da)-dt.date.fromisoformat(db)).days)<=1)
+    def official(b):
+        return isinstance(b,dict) and b.get("org")=="ufc" and \
+            b.get("status") in ("completed","no_contest","draw") and \
+            date_str(b.get("eventDate")) and \
+            official_ufc_event_title(b.get("event") or "") and \
+            not feeder_event_title(b.get("event") or "")
+    bouts={str(i):b for i,b in state.get("bouts",{}).items() if official(b)}
+    profiles=research.get("profiles",{})
+    # Determine athlete numeric IDs only from existing trusted official fights,
+    # never from a disambiguated slug or a provider biography guess.
+    ids_by_slug={}
+    for fighter in approved:
+        profile=profiles.get(fighter)
+        if not isinstance(profile,dict):continue
+        names={norm(profile.get("name")),norm(fighter.replace("-"," "))}
+        source=inventory.get("fighters",{}).get(fighter,{})
+        if isinstance(source,dict):names.add(norm(source.get("fighterName")))
+        ids=set()
+        for h in profile.get("recentHistory",[]):
+            if not isinstance(h,dict) or h.get("source")!="native" or \
+               str(h.get("promotion") or "").lower()!="ufc":continue
+            b=bouts.get(str(h.get("boutId") or ""))
+            if not b or not same_day(h.get("date"),b.get("eventDate")):continue
+            for side,other in (("a","b"),("b","a")):
+                own=b.get(side) or {}
+                opp=b.get(other) or {}
+                fid=str(own.get("id") or "")
+                if (re.fullmatch(r"[1-9][0-9]{0,11}",fid) and
+                    same_name(h.get("opponent"),opp.get("name")) and
+                    (own.get("slug")==fighter or norm(own.get("name")) in names or
+                     same_name(own.get("name"),profile.get("name")) or
+                     same_name(own.get("name"),source.get("fighterName")))):
+                    ids.add(fid)
+        ids_by_slug[fighter]=ids
+    owners={}
+    for fighter,ids in ids_by_slug.items():
+        if len(ids)==1:owners.setdefault(next(iter(ids)),set()).add(fighter)
+    stats={"added":0,"profiles":0,"conflicts":0,"remaining":0}
+    for fighter,source in sorted(inventory.get("fighters",{}).items()):
+        if fighter not in eligible or not isinstance(source,dict) or \
+           not str(source.get("sourceUrl") or "").startswith("https://www.ufc.com/athlete/"):
+            continue
+        ids=ids_by_slug.get(fighter,set())
+        if len(ids)!=1:
+            stats["remaining"]+=len(source.get("bouts",[]));continue
+        fid=next(iter(ids))
+        if owners.get(fid)!={fighter}:
+            stats["remaining"]+=len(source.get("bouts",[]));continue
+        profile=profiles.get(fighter)
+        if not isinstance(profile,dict):continue
+        saved=profile.get("recentHistory")
+        if not isinstance(saved,list):continue
+        added_for_fighter=0
+        for source_row in source.get("bouts",[]):
+            if not isinstance(source_row,dict):continue
+            day=date_str(source_row.get("date"))
+            opponent=safe(source_row.get("opponent"),110)
+            desired=str(source_row.get("result") or "").lower()
+            if (not day or day>today.isoformat() or not norm(opponent) or
+                desired not in ("win","loss","draw","no_contest")):
+                continue
+            matches=[]
+            for bid,b in bouts.items():
+                if not same_day(day,b.get("eventDate")):continue
+                sides=[("a","b"),("b","a")]
+                for side,other in sides:
+                    own=b.get(side) or {}
+                    opp=b.get(other) or {}
+                    if str(own.get("id") or "")!=fid or \
+                       not same_name(opponent,opp.get("name")):continue
+                    status=b.get("status")
+                    if status=="no_contest":actual="no_contest"
+                    elif status=="draw":actual="draw"
+                    else:
+                        winner=str((b.get("result") or {}).get("winnerId") or "")
+                        aid=str((b.get("a") or {}).get("id") or "")
+                        zid=str((b.get("b") or {}).get("id") or "")
+                        if winner not in (aid,zid) or not aid or not zid or aid==zid:
+                            continue
+                        actual="win" if winner==fid else "loss"
+                    if actual==desired:
+                        matches.append((bid,b,opp.get("name"),actual))
+                    else:
+                        stats["conflicts"]+=1
+            unique_ids={row[0] for row in matches}
+            if len(unique_ids)!=1:
+                stats["remaining"]+=1;continue
+            bid,b,name,actual=matches[0]
+            if any(isinstance(h,dict) and (
+                str(h.get("boutId") or "")==bid or
+                (str(h.get("promotion") or "").lower()=="ufc" and
+                 same_name(h.get("opponent"),name) and
+                 same_day(h.get("date"),day))
+            ) for h in saved):
+                # Existing history might have a conflicting native ID; never
+                # overwrite it or award the same fight twice.
+                continue
+            saved.append({"date":b["eventDate"],"opponent":safe(name,110),
+                          "result":actual,"promotion":"ufc","source":"native",
+                          "boutId":bid,"method":safe((b.get("result") or {}).get("method"),50),
+                          "titleFight":b.get("titleFight") is True})
+            added_for_fighter+=1
+            stats["added"]+=1
+        if added_for_fighter:
+            saved.sort(key=lambda h:(str(h.get("date") or ""),
+                                      str(h.get("opponent") or "")),reverse=True)
+            stats["profiles"]+=1
+            evidence=profile.get("ufcTimeline")
+            if isinstance(evidence,dict):
+                evidence["complete"]=False
+                evidence["savedHistoryHasAdditionalUfcBouts"]=True
+                evidence["sourceInventoryCachedBoutsRecovered"]=int(
+                    evidence.get("sourceInventoryCachedBoutsRecovered") or 0)+added_for_fighter
+    if stats["added"] or stats["conflicts"]:
+        print("BEFN official UFC historical biography/cache crosscheck:",stats)
+    return stats
+
 def collect_approved_full_ufc_fight_search(client,state,research,coverage,today,
                                           approval,independent=None):
     """One bounded, paginated UFC *fight-index* search per approved athlete.
@@ -2181,6 +2334,9 @@ def main():
             state,research,approved36,roster_today,approval,
             read(OFFICIAL_NC_REPAIR,{}))
         reconcile_indexed_native_ufc_careers(state,research,approved36,roster_today,approval)
+        reconcile_official_inventory_from_cached_native(
+            state,research,approved36,roster_today,approval,
+            read(OFFICIAL_BOUT_INVENTORY,{}))
         collect_approved_full_ufc_fight_search(
             client,state,research,approved36,roster_today,approval,
             read(INDEPENDENT_FULL_CAREER,{}))
