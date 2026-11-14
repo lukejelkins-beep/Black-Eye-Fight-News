@@ -44,3 +44,21 @@ test('fails closed on duplicate or absent approvals and unmatched Stage 3 rows',
  assert.throws(()=>buildCertificationQueue({...approval,approvedFighters:roster.slice(1)},report(),registry));
  assert.throws(()=>buildCertificationQueue(approval,report(),registry,{batchSize:100}));
 });
+
+test('Greco history candidates create review work without automatic certification',()=>{
+ const snapshot={scope:'ufc-greco-bulk-crosscheck-checkpoint',rosterAsOf:'2026-11-14',
+  sourceCommit:'a'.repeat(40),
+  candidateAlerts:[{slug:'fighter-25',sourceCandidateNotSaved:4,identityReviewRequired:false}]};
+ const q=buildCertificationQueue(approval,report(),registry,{grecoCheckpoint:snapshot});
+ const row=q.queue.find(x=>x.slug==='fighter-25');
+ assert.equal(row.state,'bulk_source_candidate_review');
+ assert.equal(row.unverifiedGrecoCandidates,4);
+ assert.equal(q.summary.certified,0);
+});
+test('Greco checkpoint from an unrelated roster is ignored',()=>{
+ const q=buildCertificationQueue(approval,report(),registry,{grecoCheckpoint:{
+  scope:'ufc-greco-bulk-crosscheck-checkpoint',rosterAsOf:'2025-01-01',
+  sourceCommit:'a'.repeat(40),
+  candidateAlerts:[{slug:'fighter-25',sourceCandidateNotSaved:1000}]}});
+ assert.equal(q.queue.find(x=>x.slug==='fighter-25').state,'source_listing_review');
+});
