@@ -10,12 +10,14 @@ on:
       - 'scripts/ufc-36-month-review-report.mjs'
       - 'scripts/ufc-36-month-stage3-progress.mjs'
       - 'scripts/ufc-v4-certification-queue.mjs'
+      - 'scripts/ufc-certification-consolidation-preflight.mjs'
       - 'data/ufc-independent-full-career-verification.json'
       - 'data/ufc-unified-wave17-dulatov-choinski-gimenis-official-source-review-20261114.json'
       - 'data/ufc-unified-josias-musasa-official-source-review-20261114.json'
       - 'data/ufc-unified-wave19-loder-bleda-sidey-official-source-review-20261114.json'
       - 'data/ufc-unified-wave20-taveras-walker-musayev-source-review-20261114.json'
       - 'tests/test-ufc-v4-certification-queue.mjs'
+      - 'tests/test-ufc-certification-consolidation-preflight.mjs'
       - 'tests/test-ufc-v4-stage3-import.mjs'
       - 'tests/test-ufc-stage3-v4-reconciliation.mjs'
       - 'tests/test-ufc-unified-next-two-official-source-review.mjs'
@@ -102,6 +104,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Enforce one canonical fighter certification register (offline)
+        run: |
+          node --test tests/test-ufc-certification-consolidation-preflight.mjs
+          node scripts/ufc-certification-consolidation-preflight.mjs
       - name: Verify source history and pipeline tests
         run: |
           node --test tests/test-ufc-research-pipeline.mjs
