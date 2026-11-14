@@ -97,30 +97,47 @@ export function combinePage(doc,stage,result,id){
   const state=doc.stages[stage],total=direct?null:result.total==null?null:Number(result.total);
   const next=state.skip+items.length;
   const more=direct?items.length===PAGE_SIZE:
-    (result.has_more??result.hasMore??(total===null?null:next<total));
+    (result.has_more??result.hasMore??(stage==='matches'
+      ?items.length===PAGE_SIZE||(total!==null&&total>next)
+      :(total===null?null:next<total)));
+  // The match endpoint has been observed to report total=page length
+  // (e.g., 200 of Ura's 763 career bouts). A full page is NOT a complete
+  // career even if total equals the page size.
   if(direct&&items.length>PAGE_SIZE)throw Error('History API did not respect requested page limit for '+stage);
-  if(!direct&&result.skip!=null&&Number(result.skip)!==state.skip)throw Error('Unexpected '+stage+' page offset');
+  // The match API is known to report skip=0 even when a skip query is used.
+  // The overlapping-page check below protects against a genuinely ignored
+  // cursor without trusting that inaccurate response field.
+  if(!direct&&result.skip!=null&&Number(result.skip)!==state.skip&&
+     !(stage==='matches'&&Number(result.skip)===0))throw Error('Unexpected '+stage+' page offset');
   if(!direct&&result.count!=null&&Number(result.count)!==items.length)throw Error('Unexpected '+stage+' page count');
-  if(total!==null&&(!Number.isSafeInteger(total)||total<0||next>total))throw Error('Invalid '+stage+' source total');
+  if(total!==null&&(!Number.isSafeInteger(total)||total<0||
+      (next>total&&!(stage==='matches'&&total<=PAGE_SIZE))))
+    throw Error('Invalid '+stage+' source total');
   if(more!=null&&typeof more!=='boolean')throw Error('Invalid '+stage+' has_more');
   if(items.length===0&&more===true)throw Error('Empty '+stage+' page despite more records');
   if(total===null&&more===null)throw Error('Missing pagination metadata for '+stage);
   if(total!==null&&more===false&&next<total)throw Error('Truncated '+stage+' page');
-  if(total!==null&&more===true&&next>=total)throw Error('Inconsistent '+stage+' pagination');
+  if(total!==null&&more===true&&next>=total&&stage!=='matches')throw Error('Inconsistent '+stage+' pagination');
   const existing=doc.data[stage];
   const key=x=>x.id!=null?String(x.id):stage==='matches'?
     [x.bashoId,x.day,x.matchNo,x.eastId,x.westId].join(':'):JSON.stringify(x);
   const merged=new Map([...existing,...items].map(x=>[key(x),x]));
   if(state.skip>0&&merged.size<=existing.length)throw Error('Repeated '+stage+' page; possible ignored skip');
-  const complete=more===false||(total!==null&&next===total&&more!==true);
-  if(complete&&total!==null&&merged.size!==total){
+  const complete=more===false;
+  if(complete&&total!==null&&stage!=='matches'&&merged.size!==total){
     throw Error('Duplicate/missing records in '+stage+': '+merged.size+'/'+total);
   }
+  // Page boundaries alone never establish a complete career; source totals
+  // are compared with the career stats by the independent audit.
+  if(stage==='matches'&&complete&&Number(doc.data.stats?.totalMatches)>merged.size){
+    state.historyShortfall=Number(doc.data.stats.totalMatches)-merged.size;
+  }else if(stage==='matches')state.historyShortfall=0;
   if(direct&&complete&&merged.size!==next)throw Error('Duplicate records in '+stage+' unwrapped history');
   // Atomic update: a rejected or duplicate page never moves the cursor.
   doc.data[stage]=[...merged.values()];
   state.skip=next;
-  state.total=total;
+  state.total=stage==='matches'&&total!==null&&total<=PAGE_SIZE?null:total;
+  if(stage==='matches')state.lastReportedPageTotal=total;
   state.complete=complete;
   state.responseShape=direct?'direct-array':'paginated-envelope';
   state.updatedAt=clock();
@@ -186,6 +203,18 @@ async function ensureCache(w){
       }
     }
     stored.historyResponseContract=2;
+  }
+  // Safely reopen legacy first pages that were incorrectly marked complete
+  // when the upstream claimed total=200 despite much longer career totals.
+  if(stored.matchPaginationContract!==3){
+    const stage=stored.stages.matches,known=Number(stored.data.stats?.totalMatches)||0;
+    if(stage?.complete&&stored.data.matches.length===PAGE_SIZE&&known>PAGE_SIZE){
+      stage.complete=false;
+      stage.total=null;
+      stage.historyShortfall=known-stored.data.matches.length;
+      stored.errors.push({at:clock(),stage:'matches',message:'Reopened 200-bout page: career stats indicate more history',transient:false});
+    }
+    stored.matchPaginationContract=3;
   }
   return stored;
 }
