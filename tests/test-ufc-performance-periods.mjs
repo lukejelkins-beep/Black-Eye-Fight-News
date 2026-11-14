@@ -146,3 +146,12 @@ test("nested event.title and event.eventName feeder aliases cannot bypass UFC-on
   const official=fight("real-ufc",3,{event:{title:"UFC Fight Night: London"}});
   assert.deepEqual(verifiedUfcBouts([title,name,mixed,official]).map(x=>x.boutId),["real-ufc"]);
 });
+
+test("string-valued event labels from career cache exclude feeder bouts",()=>{
+  const road=fight("road",0,{event:"Road to UFC Season 5",promotion:"UFC"});
+  const dwcs=fight("dwcs",1,{event:"Dana White’s Contender Series 2026",promotion:"UFC"});
+  const official=fight("official-string",2,{event:"UFC Fight Night: London",promotion:"UFC"});
+  assert.deepEqual(verifiedUfcBouts([road,dwcs,official]).map(x=>x.boutId),["official-string"]);
+  assert.equal(periodOptions([...sample.slice(0,4),road])[0].enabled,false);
+  assert.equal(computeUfcPeriod([...sample.slice(0,4),dwcs],"5").available,false);
+});
