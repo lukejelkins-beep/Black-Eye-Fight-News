@@ -1,0 +1,29 @@
+name: UFC next-eight pinned source research (one-time, no certification)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ufc-next8-pinned-source-review.yml'
+      - 'scripts/ufc-unified-next8-source-review.mjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  review:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.head_ref == 'research/ufc-unified-stage3-v4-evidence-20261114' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Inspect immutable eight candidate roster using pinned public archive only
+        run: node scripts/ufc-unified-next8-source-review.mjs
+      - name: Save source-only review (not certified)
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-next8-source-only
+          path: qa/ufc-unified-next8-source-review.json
+          retention-days: 14
+          if-no-files-found: error
