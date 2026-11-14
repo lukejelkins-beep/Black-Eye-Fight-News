@@ -223,3 +223,19 @@ test('UFCalendar DWCS exclusion evidence is unique, precisely identified and pri
    assert.ok(row.sourceUrl?.startsWith('https://www.ufc.com/'));
  }
 });
+
+test('UFC-documented Contender Series evidence covers every remaining six-to-ten exception',()=>{
+ const evidence=JSON.parse(readFileSync(new URL('../data/ufc-feeder-bout-evidence.json',import.meta.url),'utf8'));
+ const required=[
+  ['83929','jamie-pickett','2019-06-18','Punahele Soriano'],
+  ['83929','punahele-soriano','2019-06-18','Jamie Pickett'],
+  ['84037','joe-pyfer','2020-08-11','Dustin Stoltzfus'],
+  ['88200','phil-hawes','2017-08-01','Julian Marquez']
+ ];
+ for(const [boutId,fighterSlug,date,opponent] of required){
+  assert.ok(evidence.bouts.some(row=>row.boutId===boutId&&
+    row.fighterSlug===fighterSlug&&row.date===date&&
+    row.opponent===opponent&&row.sourceUrl.startsWith('https://www.ufc.com/')),
+    'Missing exact UFC-source evidence for '+fighterSlug+' versus '+opponent);
+ }
+});
