@@ -26220,6 +26220,70 @@
           "nativeFighterId": "437"
         }
       ]
+    },
+    "isaac-dulgarian": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Isaac Dulgarian",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/a57cb948c4c70a47",
+      "officialFighterUrl": "https://www.ufc.com/athlete/isaac-dulgarian",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco snapshot, no live UFCStats scrape",
+        "method": "All four complete dated official UFC.com athlete biography results, independent pinned Greco source exact fight IDs and outcomes, all original native paired corner IDs, saved winners and complete measured rounds."
+      },
+      "verifiedNumericFighterIds": [
+        "411"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Official UFC.com full dated biography confirms exactly four completed Octagon bouts from 2023-08-12 through 2025-11-01: first-round knockout win over Francis Marshall, split-decision loss to Christian Rodriguez, arm-triangle submission win over Brendon Marotte and submission loss to Yadier del Valle. UFC graphical Win tile on the losses is contradicted by the full official biography, pinned Greco result and exact native cached opponent winners. No unfinished, DWCS, exhibition or cancelled bouts are included.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/isaac-dulgarian",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2023-08-12",
+          "opponent": "Francis Marshall",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9479ba3cdcb1e513",
+          "nativeBoutId": "60084",
+          "nativeFighterId": "411"
+        },
+        {
+          "date": "2024-03-16",
+          "opponent": "Christian Rodriguez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/acc7392d48cc09a0",
+          "nativeBoutId": "61239",
+          "nativeFighterId": "411"
+        },
+        {
+          "date": "2024-09-07",
+          "opponent": "Brendon Marotte",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/abfd5ac6cf186d8a",
+          "nativeBoutId": "61110",
+          "nativeFighterId": "411"
+        },
+        {
+          "date": "2025-11-01",
+          "opponent": "Yadier del Valle",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/767b78b67c7da17c",
+          "nativeBoutId": "60421",
+          "nativeFighterId": "411"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
     }
   }
 }
