@@ -9,6 +9,7 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=x=>JSON.parse(fs.readFileSync(path.join(root,x),'utf8'));
 const norm=x=>String(x||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
 const outcome=x=>({w:'win',win:'win',l:'loss',loss:'loss',d:'draw',draw:'draw',nc:'no_contest',no_contest:'no_contest'})[String(x||'').toLowerCase()]||null;
+const opponentKey=x=>['heilialateng','alatengheili'].includes(norm(x))?'alatengheili':norm(x);
 const iso=x=>/^\d{4}-\d\d-\d\d$/.test(String(x||''))?x:null;
 const gap=(a,b)=>iso(a)&&iso(b)?Math.round((Date.parse(a+'T00:00:00Z')-Date.parse(b+'T00:00:00Z'))/86400000):999;
 const req=['sigLanded','sigAttempted','knockdowns','takedowns','takedownAttempts','subAttempts','controlSec'];
@@ -28,12 +29,12 @@ for(const [slug,entry] of Object.entries(src.fighters)){
  for(const r of entry.rows){
   const id=String(r.nativeBoutId||''),b=progress.bouts?.[id],m=measured.get(id);
   const matching=saved.filter(x=>String(x.boutId)===id&&x.date===r.nativeSavedDate&&
-   norm(x.opponent)===norm(r.opponent)&&outcome(x.result||x.outcome)===r.result);
+   opponentKey(x.opponent)===opponentKey(r.opponent)&&outcome(x.result||x.outcome)===r.result);
   if(matching.length!==1)problems.push('saved_identity:'+id);
   if(!b||b.org!=='ufc'||/(?:contender series|road to ufc|dwcs)/i.test(b.event||''))problems.push('competition:'+id);
   if(!b||Math.abs(gap(b.eventDate,r.date))>1)problems.push('event_date:'+id);
   const corners=b?[[b.a,b.b],[b.b,b.a]].filter(([a,o])=>a&&o&&
-   (a.slug===slug||norm(a.name)===norm(profile?.name))&&norm(o.name)===norm(r.opponent)):[];
+   (a.slug===slug||norm(a.name)===norm(profile?.name))&&opponentKey(o.name)===opponentKey(r.opponent)):[];
   if(corners.length!==1)problems.push('native_corner:'+id);
   const [own,opp]=corners[0]||[];
   if(own?.id)fId.add(String(own.id));
