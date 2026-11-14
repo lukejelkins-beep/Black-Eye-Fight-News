@@ -678,3 +678,30 @@ test('Roster date superseded by more recent saved UFC bout is reported separatel
  assert.equal(fighter.providerHistoryDiscrepancy,true,
    'Old provider history remains separately flagged even though roster entry exists');
 });
+
+test('Full native UFC fight-index audit separates harmless exclusions from real identity conflicts',()=>{
+ const p={...progress,ufcApprovedFullFightSearchChecks:{
+   'fighter-1':{status:'checked',scannedRows:15,invalidRows:0,
+     excludedByReason:{documented_ufc_feeder_event:2,non_winner_or_unfinished_bout:1},
+     rejectedByReason:{}},
+   'fighter-2':{status:'manual_review',scannedRows:17,invalidRows:1,
+     rejectedByReason:{numeric_fighter_identity_disagreement:1},excludedByReason:{}},
+   'fighter-3':{status:'manual_review',scannedRows:21,invalidRows:2}
+ }};
+ const out=auditApprovedStage3(approval,census,p,research,archive);
+ const s=out.summary;
+ assert.equal(s.fullFightIndexSearchFightersChecked,1);
+ assert.equal(s.fullFightIndexSearchFightersManualReview,2);
+ assert.equal(s.fullFightIndexSearchDocumentedFeederRowsSkipped,2);
+ assert.equal(s.fullFightIndexSearchNonWinnerRowsSkipped,1);
+ assert.equal(s.fullFightIndexSearchNumericIdentityConflicts,1);
+ assert.equal(s.fullFightIndexSearchOlderManualCasesWithoutReason,1);
+ assert.deepEqual(out.fullFightIndexSearchReview.map(row=>row.slug),
+   ['fighter-2','fighter-3']);
+ assert.equal(out.fullFightIndexSearchReview[0].rejectedByReason
+   .numeric_fighter_identity_disagreement,1);
+ assert.deepEqual(out.fullFightIndexSearchReview[1].rejectedByReason,{},
+   'Legacy manual review without captured reasons stays unresolved');
+ assert.equal(s.independentlyVerifiedFullCareerTimelines,0,
+   'Excluding nonwinner and feeder rows never certifies an entire UFC history');
+});
