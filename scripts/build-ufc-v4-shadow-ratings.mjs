@@ -93,12 +93,18 @@ function adjustForOpponent(value,quality){
 export function scoreFighter(rows,allRows,asOf,limit=5){
  if(!day(asOf)||!Array.isArray(rows)||!Number.isInteger(limit)||limit<3)
   throw Error("Valid UFC bouts, asOf date and horizon required");
- const eligible=rows.filter(b=>day(b.date)&&b.date<asOf&&
-  ["W","L","D"].includes(b.outcome)&&String(b.boutId||"")&&
-  integer(b.cageSec)>0)
+ // The last 5/10 windows refer to the actual chronological UFC fights.
+ // An NC must occupy its true position, NOT be replaced by an older decision.
+ const chronological=rows.filter(b=>day(b.date)&&b.date<asOf&&
+  String(b.boutId||""))
   .sort((a,b)=>b.date.localeCompare(a.date)||b.boutId.localeCompare(a.boutId))
   .slice(0,limit);
- if(eligible.length<MIN_BOUTS)return {status:"insufficient_sample",bouts:eligible.length,
+ const eligible=chronological.filter(b=>["W","L","D"].includes(b.outcome)&&
+  integer(b.cageSec)>0);
+ if(eligible.length<MIN_BOUTS)return {
+  status:"insufficient_sample",bouts:eligible.length,
+  fightsInChronologicalWindow:chronological.length,
+  noContestsInWindow:chronological.filter(b=>b.outcome==="NC").length,
   overall:null,skills:null,effectiveBouts:0};
  const dimensions=["striking","wrestling","grappling","defence","form"];
  const accum=Object.fromEntries(dimensions.map(d=>[d,[]]));
@@ -128,7 +134,9 @@ export function scoreFighter(rows,allRows,asOf,limit=5){
  const overall=complete?round(weighted(Object.entries(SCORE_WEIGHTS)
   .map(([k,weight])=>mul(skills[k],weight)))):null;
  return {status:complete?"provisional_ufc_only":"missing_technical_evidence",
-  bouts:eligible.length,effectiveBouts:round(effective),
+  bouts:eligible.length,fightsInChronologicalWindow:chronological.length,
+  noContestsInWindow:chronological.filter(b=>b.outcome==="NC").length,
+  effectiveBouts:round(effective),
   opponentsWithPriorUfcResults:seenStrong,skills,overall,
   externalCredentialBonus:0};
 }
