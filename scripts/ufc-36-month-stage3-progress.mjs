@@ -205,6 +205,44 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
   }).sort((a,b)=>(b.priorityTier-a.priorityTier)||
     (a.action==='not_yet_attempted'?-1:0)-(b.action==='not_yet_attempted'?-1:0)||
     a.id.localeCompare(b.id));
+  // Read-only evidence crosswalk. An event/date/opponent match may identify a
+  // stale native ID, but it is never proof that the *requested* fight ID was
+  // successfully hydrated or that all rounds were recorded.
+  const sameMatch=(a,b,expected,opponent)=>
+    (normal(a)===normal(expected)&&normal(b)===normal(opponent))||
+    (normal(b)===normal(expected)&&normal(a)===normal(opponent));
+  const neighbourDays=(day)=>{
+    if(!date(day))return [];
+    const dayMs=Date.parse(day+'T00:00:00Z');
+    return [-1,0,1].map(offset=>new Date(dayMs+offset*86400000).toISOString().slice(0,10));
+  };
+  const legacyCacheCandidates=missingDiagnostics
+    .filter(x=>x.sourceVerifiedOfficialLegacy)
+    .map(item=>{
+      const cachedBouts=[],archivedRounds=[];
+      for(const ref of item.references){
+        const fighter=profiles[ref.fighterSlug]?.name||ref.fighterSlug.replace(/-/g,' ');
+        const days=neighbourDays(ref.date);
+        for(const [foundId,bout] of Object.entries(bouts)){
+          if(foundId===item.id||bout?.org!=='ufc'||isFeederTitle(bout.event)||
+             !days.includes(date(bout.eventDate)))continue;
+          if(!sameMatch(bout.a?.name,bout.b?.name,fighter,ref.opponent))continue;
+          if(!cachedBouts.some(row=>row.nativeId===foundId)){
+            cachedBouts.push({nativeId:foundId,date:bout.eventDate,
+              event:bout.event||null,identityMatch:'same_names_within_one_utc_day'});
+          }
+        }
+        for(const day of days){
+          const k=key(day,fighter,ref.opponent),rounds=arr(fights[k]?.rounds);
+          if(!k||!fights[k]||archivedRounds.some(row=>row.key===k))continue;
+          archivedRounds.push({key:k,date:day,roundRows:rounds.length,
+            pairedCoreRoundRows:rounds.filter(r=>
+              ['a','b'].every(c=>Number.isFinite(r?.[c]?.sigLanded)&&
+                Number.isFinite(r?.[c]?.controlSec))).length});
+        }
+      }
+      return {id:item.id,references:item.references,cachedBouts,archivedRounds};
+    });
   const blockedCount=type=>missingDiagnostics.filter(x=>x.action===type).length;
   const readyCount=tier=>missingDiagnostics.filter(x=>
     (tier===null||x.priorityTier===tier)&&
@@ -233,6 +271,10 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
       missingDiagnostics.filter(x=>x.sourceVerifiedOfficialFinale).length,
     sourceVerifiedOfficialLegacyFightIdsAwaitingIndex:
       missingDiagnostics.filter(x=>x.sourceVerifiedOfficialLegacy).length,
+    sourceVerifiedLegacyWithMatchingCachedBout:
+      legacyCacheCandidates.filter(x=>x.cachedBouts.length>0).length,
+    sourceVerifiedLegacyWithMatchingArchivedRounds:
+      legacyCacheCandidates.filter(x=>x.archivedRounds.some(r=>r.roundRows>0)).length,
     indexedFightsWithArchivedRounds:linkedRounds.size,
     indexedFightsWithMeasuredRoundMetrics:linkedMetrics.size,
     indexedNativeFightsWithoutConfirmedMeasuredRounds:indexedNative.size-linkedMetrics.size,
@@ -277,6 +319,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     savedKnownIdsAwaitingIndex:sorted(missingIndex).slice(0,30),
     priorityMissingIdDiagnostics:missingDiagnostics.slice(0,40),
     manualReviewCases:missingDiagnostics.filter(x=>x.action==='manual_review'),
+    legacyCacheCandidates,
     readyForLookupCases:missingDiagnostics.filter(x=>
       x.action==='not_yet_attempted'||x.action==='retry_eligible'),
     unmeasuredIndexedIds:allIndexedMissingRounds.slice(0,30),
@@ -305,6 +348,8 @@ export function markdownReport(report){
    manualReviewOfficialFinaleFightIds:'Missing UFC fight IDs with independently cached Finale event dates',
    sourceVerifiedOfficialFinaleFightIdsAwaitingIndex:'Missing official UFC Finale fight IDs independently confirmed from exact UFC-source evidence',
    sourceVerifiedOfficialLegacyFightIdsAwaitingIndex:'Missing older UFC fight identities corroborated by official source, but provider-native indexing remains unresolved',
+   sourceVerifiedLegacyWithMatchingCachedBout:'Legacy official UFC identities with alternative cached native bout candidates (not verified indexed)',
+   sourceVerifiedLegacyWithMatchingArchivedRounds:'Legacy official UFC identities with archived matching round rows (not verified native identity)',
    profilesWithAllKnownUfcBoutsIndexed:'Profiles with every currently known UFC bout indexed (not career-certified)',
    profilesWithAllKnownUfcBoutsMeasured:'Profiles with measured rounds for every currently known UFC bout',
    providerCertifiedProfilesWithAllKnownBoutsIndexed:'Provider-certified careers with all known bouts indexed',
