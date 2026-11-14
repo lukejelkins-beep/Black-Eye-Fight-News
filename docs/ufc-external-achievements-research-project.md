@@ -8,6 +8,18 @@ Enrich the approved 783-athlete cohort with real, source-verified **external com
 
 Do **not** use this research project to block the UFCalendar-only V4 skills, Last 5 / Last 10 / Career performance stats, UFC opponent graph, or baseline V4 prospect/contender release.
 
+## Approved progressive publication policy — 14 November 2026
+
+The owner explicitly approved **progressively adding verified external achievements to fighter profiles after the UFC-only statistical foundation is established**, rather than holding all achievements until every one of the 783 fighters has been researched.
+
+- **Launch condition:** UFC-only V4 data foundation is established and its profile/statistics display is QA-verified. Do not start public achievement publication or large-scale achievement research in place of completing the UFCalendar-first baseline.
+- **Per-achievement release:** an achievement may be displayed as soon as its particular fighter identity, organisation, competition, event/year, discipline/division, placing/title and authoritative result are individually verified. There is no 783-of-783 research completion requirement and no minimum group size to display a verified badge.
+- **Verification is separate from research completion:** unknown, unresearched, source-conflicted and identity-ambiguous claims are not published. An athlete whose external achievements have not yet been researched must not be labelled as having no achievements.
+- **No credential influence on V4 scores yet:** all external bonuses and credential-derived Prospect/Contender adjustments remain disabled and isolated, regardless of the number of verified public badges. An achievement badge must never quietly change a V4 skill rating or classification.
+- **Batch safely:** work in small, independently reviewed groups after the 25-fighter pilot; add newly confirmed achievements without overwriting previously checked results, duplicate records or concurrent UFC-only source data.
+- **Presentation:** keep existing profile design clean; show succinct verified achievement labels/badges with internal source ledger and date. Do not add a public calculation/provenance panel.
+- **Approval for later scoring:** test any achievement coefficients separately, prevent double counting and obtain explicit owner sign-off before enabling a new credential-adjusted model. UFC-only V4 scores remain the stable baseline and rollback option.
+
 ## Avoid 783 × every-source searches
 
 The unit of external research is **a confirmed achievement record**, not a blind full web search for every athlete across every sporting body. Pilot first, measure cost/yield, then scale by source authority and detection signals:
