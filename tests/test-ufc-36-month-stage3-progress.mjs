@@ -248,3 +248,27 @@ test('UFC-documented Contender Series evidence covers every remaining six-to-ten
     'Missing exact UFC-source evidence for '+fighterSlug+' versus '+opponent);
  }
 });
+
+test('DWCS exclusions apply to both official-UFC-history corners without dropping raw bouts',()=>{
+ const day='2019-06-18';
+ const r={profiles:{
+   'fighter-1':{recentHistory:[history(83929,'Fighter 2',day)]},
+   'fighter-2':{recentHistory:[history(83929,'Fighter 1',day)]}
+ }};
+ const proof={schema:1,bouts:[
+   {boutId:'83929',fighterSlug:'fighter-1',date:day,opponent:'Fighter 2',
+     sourceUrl:'https://www.ufc.com/news/dwcs-result'},
+   {boutId:'83929',fighterSlug:'fighter-2',date:day,opponent:'Fighter 1',
+     sourceUrl:'https://www.ufc.com/news/dwcs-result'}
+ ]};
+ const withBoth=auditApprovedStage3(approval,census,progress,r,archive,proof).summary;
+ assert.equal(withBoth.uniqueNativeFightIdsAwaitingIndex,0);
+ assert.equal(withBoth.profilesWithSavedUfcHistory,0);
+ assert.equal(withBoth.excludedFeederHistoryRowsWithCachedEventEvidence,2);
+ const withOne=auditApprovedStage3(approval,census,progress,r,archive,
+   {...proof,bouts:proof.bouts.slice(0,1)}).summary;
+ assert.equal(withOne.uniqueNativeFightIdsAwaitingIndex,1);
+ assert.equal(withOne.profilesWithSavedUfcHistory,1);
+ assert.equal(r.profiles['fighter-1'].recentHistory.length,1);
+ assert.equal(r.profiles['fighter-2'].recentHistory.length,1);
+});
