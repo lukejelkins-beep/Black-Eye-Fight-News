@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-14T11:41:37.559Z",
-  "checkedAt": "2026-11-14T11:41:37.559Z",
-  "updatedAt": "2026-11-14T09:32:02Z",
+  "attemptedAt": "2026-11-14T12:22:11.032Z",
+  "checkedAt": "2026-11-14T12:22:11.032Z",
+  "updatedAt": "2026-11-14T11:01:31.855486Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 4,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 4,
+      "checked": 6,
       "failed": 0,
-      "configured": 4,
-      "message": "4 of 4 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 26,
+      "configured": 33,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 42,
+      "configured": 37,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 2,
+      "configured": 1,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,22 +55,70 @@
   "rollingScan": {
     "directoryEntries": 447,
     "scheduledEntries": 84,
-    "batchIndex": 2,
+    "batchIndex": 4,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "X": 26,
-      "Instagram": 42,
-      "Bluesky": 4,
-      "Threads": 10,
-      "Reddit": 2
+      "X": 33,
+      "Instagram": 37,
+      "Bluesky": 6,
+      "Threads": 7,
+      "Reddit": 1
     },
-    "directlyChecked": 4,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2bdvwrchm23",
+      "cid": "bafyreifs3zarh2viupas5dhxxfobq3iksi4hjjuheyro26cgakfuqbra4u",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Merab Dvalishvili doesn’t want to press charges against Usman Nurmagomedov, wants to help him get out of prison www.mmafighting.com/ufc/521058/m...",
+      "postedAt": "2026-11-14T11:01:31.855486Z",
+      "date": "14 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2bdvwrchm23",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2bdoq4wg22r",
+      "cid": "bafyreibrkcfvod2455geuzmysmi4p66qte243yky2d2gdqigycqgecim4a",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Jaron 'Boots' Ennis wants to retire an undefeated legend and is targeting another KO against Josh Kelly. 🥊\n\nBoots warns the British champion cannot afford a single mistake as he targets Kelly's IBF belt and a potential undisputed clash with Sebastian Fundora. 🇺🇸🇬🇧",
+      "postedAt": "2026-11-14T10:57:32Z",
+      "date": "14 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2bdoq4wg22r",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2b6vtjvtb2u",
       "cid": "bafyreige2y4poutaq46x3np2ifvcibays5ti4ieghew4t4y4u2gufmdfum",
@@ -93,6 +141,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2b62m3eos2n",
+      "cid": "bafyreibnhszgtwcg5kt374r5jq7s5qltbmfup4dahfr57dpvqophn6hpjy",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Terence Crawford calls Floyd Mayweather the GOAT and starts name-dropping the 50-0 legend. 🥊🐐\n\nBud could be eyeing a 92-0 comeback super-event against the five-weight king.\n\nRival Ryan Garcia insists he's in the driving seat for a February 6 title fight with Mayweather.",
+      "postedAt": "2026-11-14T09:16:48Z",
+      "date": "14 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2b62m3eos2n",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -120,6 +192,54 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2awjv6zug2i",
+      "cid": "bafyreifxmswqpmshv7zrjncdmayh37zfxhmazlfixkwndzh7jzmrgyrqua",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "RAF Abu Dhabi Results: Khamzat vs. Weidman www.mmafighting.com/raf-wrestlin...",
+      "postedAt": "2026-11-14T07:02:09.553065Z",
+      "date": "14 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2awjv6zug2i",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2atgahoyj2n",
+      "cid": "bafyreiabh3alz36tmdr7fgchunt54fjsgk67ija4tastrcrurgaxgg6jt4",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Former IBF heavyweight champion Charles Martin claims he is facing Johnny Fisher on Zuffa Boxing. 🥊\n\nThe proposed December 4 heavyweight clash has yet to be officially confirmed.",
+      "postedAt": "2026-11-14T06:06:27Z",
+      "date": "14 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2atgahoyj2n",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2apxtnpeh2u",
       "cid": "bafyreifx523kjt4lv2lh72mbnuh35bligorgpq4gvmckabyofoot36hli4",
       "platform": "Bluesky",
@@ -140,7 +260,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -188,7 +308,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -210,9 +330,9 @@
       "engagement": {
         "likes": 0,
         "comments": 0,
-        "shares": 0
+        "shares": 1
       },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -236,7 +356,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -260,7 +380,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -284,7 +404,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -308,7 +428,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -356,7 +476,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -408,54 +528,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n27zqmta5w2i",
-      "cid": "bafyreidrxlfa6tbass5vazzclkx6u3exnvtjexq4aqoumst5mq3lxlqz5q",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Video: Carlos Prates and Michael Morales have intense first faceoff at UFC 335 and UFC 336 press conference www.mmafighting.com/ufc/520992/v...",
-      "postedAt": "2026-11-13T22:26:57.361151Z",
-      "date": "14 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n27zqmta5w2i",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n27ygcluq42x",
-      "cid": "bafyreihzh254jimtf5gcb2tj3qig5pnl6e37fambsfnutziwmnwndzdi7e",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "UFC 334 Preview Show: Has Josh Hokit gotten over with fans ahead of his fight with Ciryl Gane? www.mmafighting.com/ufc/520982/u...",
-      "postedAt": "2026-11-13T22:03:17.000011Z",
-      "date": "14 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n27ygcluq42x",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n27x7hz3ua26",
       "cid": "bafyreiadxwy24qqzysufnbrmpgm56rcgbhidhhsufycegjfapkfitfibjq",
       "platform": "Bluesky",
@@ -500,7 +572,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -596,7 +668,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -620,7 +692,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -668,7 +740,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -764,7 +836,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -788,7 +860,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -812,7 +884,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
+      "engagementCheckedAt": "2026-11-14T12:22:11.032Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -840,30 +912,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n26zkk7vzy24",
-      "cid": "bafyreifcwpzmcr4rw43jn33ovyi25q6uc6nno2gsuo4wddaxnsr5qiohpu",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Heavyweight, 61, Ranks 86 Places Above Tyson Fury’s Last Foe #boxing #boxingnews",
-      "postedAt": "2026-11-13T12:50:55Z",
-      "date": "13 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n26zkk7vzy24",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n26zkjrkft23",
       "cid": "bafyreigqi4p5tbvwrrsbunq3epajyzd5mb6fhepjbbdd3r4zjephn4kuaa",
       "platform": "Bluesky",
@@ -888,30 +936,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n26p36p5x72c",
-      "cid": "bafyreiglmr55ct56fsvi7hz4meca722ourcarwsddpg3maqae7o5xizfae",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "David Benavidez has his sights set on becoming a five-weight world champion. 🥊\n\nThe Mexican Monster wants to become undisputed at cruiserweight before moving up to bridgerweight.\n\nHis ultimate goal is to capture the heavyweight world title and retire as a champion across five weight divisions.",
-      "postedAt": "2026-11-13T09:43:22Z",
-      "date": "13 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n26p36p5x72c",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n266dny4vk27",
       "cid": "bafyreidfw642ppyh6jiiqxbkqpax6fng4gdlbexww3ili764uf7avqexmy",
       "platform": "Bluesky",
@@ -933,30 +957,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n25jyih3hr2i",
-      "cid": "bafyreia3d3wazxhlyxoo2jgenhlnfqph72sujlgwihfjtp5jdijbbfje6e",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Terence Crawford has hit back at reports he's returning to boxing for the money. 🥊\n\nBud showed a bank deposit of more than $100k, claiming it represents just one sources of income.\n\nThe former undisputed champion is making it clear that money isn't driving a potential comeback.",
-      "postedAt": "2026-11-12T22:39:43Z",
-      "date": "13 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n25jyih3hr2i",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T05:52:13.072Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
