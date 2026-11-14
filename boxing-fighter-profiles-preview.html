@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Boxing Fighter Profiles — BEFN Research Preview</title>
+<link rel="icon" href="/assets/site-favicon-192.png" type="image/png">
+<style>
+:root{--bg:#f4f3ed;--cream:#faf9f5;--ink:#112830;--dark:#0e2930;--line:#d8e2de;--mint:#99e3d2;--body:#4b6267;--gold:#b89a53}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #079a88;outline-offset:2px}
+header{background:var(--dark);color:#fff;padding:16px max(4vw,20px);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:900;font-size:25px;letter-spacing:-.06em;border:2px solid var(--mint);padding:7px 9px}
+header p{margin:0;color:#b5d2d1;font-size:12px}
+nav{margin-left:auto;font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--mint)}
+main{max-width:1380px;margin:auto;padding:34px 4vw 90px}
+.eyebrow{letter-spacing:.18em;font-size:11px;font-weight:900;color:#34756c;text-transform:uppercase}
+h1{font-size:clamp(36px,6vw,74px);line-height:.91;letter-spacing:-.055em;margin:12px 0 18px}
+.intro{max-width:730px;line-height:1.55;color:var(--body)}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0}
+.stat{background:var(--cream);border:1px solid var(--line);padding:14px 20px;min-width:145px;flex:1}
+.stat strong{display:block;font-size:30px;letter-spacing:-.07em}
+.stat span{font-size:11px;color:var(--body);text-transform:uppercase;font-weight:750}
+.filters{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:28px 0 15px}
+.filters input,.filters select{background:#fff;border:1px solid #bfcfca;border-radius:4px;padding:13px 12px;color:var(--ink);min-width:185px}
+.filters input{flex:1;min-width:240px}
+.count{margin-left:auto;font-size:12px;color:var(--body);font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.person{background:#fff;border:1px solid var(--line);text-align:left;display:flex;flex-direction:column;min-height:190px;padding:19px;gap:8px;transition:transform .14s,box-shadow .14s}
+.person:hover{transform:translateY(-3px);box-shadow:0 10px 27px #172c3220}
+.badges{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:9px;letter-spacing:.07em;text-transform:uppercase;font-weight:850;color:#26544c;background:#e9f5f1;padding:5px 7px}
+.tag.gold{background:#f7f1df;color:#6c5421}
+.person h2{font-size:23px;line-height:1.05;letter-spacing:-.035em;margin:3px 0 0}
+.person .meta{color:#586b6c;font-size:12px}
+.person .cta{margin-top:auto;padding-top:8px;font-size:10px;font-weight:900;letter-spacing:.08em;color:#136d60}
+.empty{padding:35px;background:white;color:var(--body);border:1px solid var(--line)}
+dialog{border:0;padding:0;max-width:min(820px,calc(100vw - 24px));width:100%;max-height:calc(100dvh - 30px);background:#fff;box-shadow:0 35px 100px #06171c7a;color:var(--ink);overflow:auto}
+dialog::backdrop{background:#0b222bd9}
+.dialog-head{background:var(--dark);color:white;padding:25px 30px;display:flex;justify-content:space-between;gap:15px}
+.dialog-head h2{font-size:clamp(32px,5vw,58px);letter-spacing:-.055em;margin:10px 0 0;line-height:1}
+.dialog-head p{font-size:12px;color:var(--mint);margin:6px 0 0}
+.close{background:transparent;color:#fff;border:1px solid #819997;border-radius:2px;width:42px;height:42px;font-size:27px}
+.dialog-body{padding:26px 30px 35px}
+.detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0 20px}
+.mini{background:#f2f7f5;padding:13px;min-height:70px}
+.mini small{display:block;color:#52716b;margin-bottom:6px;font-size:10px;font-weight:800;text-transform:uppercase}
+.mini strong{font-size:20px;letter-spacing:-.03em}
+h3{font-size:19px;margin:27px 0 13px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{text-align:left;border-bottom:1px solid #dde6e2;padding:10px 8px}
+th{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#5d7376}
+.note{background:#f8faf8;border-left:3px solid #9ecfc4;color:#4a6264;padding:12px 13px;font-size:12px;line-height:1.5}
+.archive{color:#727f80;font-size:11px}
+.shade{background:#f6f9f7;border:1px solid #e0e9e6;padding:15px}
+.shade p{margin:0;line-height:1.5}
+@media(max-width:1100px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}main{padding:28px 14px 70px}.dialog-body{padding:20px}.dialog-head{padding:22px}.detail-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:430px){.grid{grid-template-columns:1fr 1fr;gap:8px}.person{padding:12px;min-height:172px}.person h2{font-size:20px}.filters>*{width:100%;min-width:0!important}.stat{min-width:130px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">BEFN</div>
+  <div><strong>BOXING FIGHTER PROFILES</strong><p>Research preview — not connected to the live website</p></div>
+  <nav>BANTAMWEIGHT → HEAVYWEIGHT</nav>
+</header>
+<main>
+  <div class="eyebrow">BEFN · Boxing research</div>
+  <h1>THE FIGHTER<br>DATABASE</h1>
+  <p class="intro">Professional boxing profiles built around the four major governing bodies and The Ring, with existing scouting work preserved and validated punch reports added where available. All fighters, rankings and archived results remain subject to editorial review before publication.</p>
+  <section class="stats" id="summary" aria-label="Database totals"></section>
+  <section class="filters" aria-label="Filter fighters">
+    <input id="search" type="search" placeholder="Search boxer names" aria-label="Search boxer name">
+    <select id="division" aria-label="Filter by weight division"><option value="">All weight divisions</option></select>
+    <select id="kind" aria-label="Filter by status">
+      <option value="">All profiles</option>
+      <option value="title">Titleholders in ranking snapshot</option>
+      <option value="ranked">Ranked boxers</option>
+      <option value="scout">Additional scouting profiles</option>
+      <option value="punch">Has validated punch report</option>
+    </select>
+    <span class="count" id="result-count"></span>
+  </section>
+  <section class="grid" id="fighters" aria-live="polite"><p>Loading profiles…</p></section>
+</main>
+<dialog id="profile" aria-labelledby="fighter-name">
+  <div class="dialog-head"><div><div class="eyebrow">Fighter profile · draft</div><h2 id="fighter-name"></h2><p id="fighter-subtitle"></p></div><button type="button" class="close" id="close" aria-label="Close profile">×</button></div>
+  <div class="dialog-body" id="profile-body"></div>
+</dialog>
+<script>
+(function(){
+'use strict';
+var data=null;
+var $=id=>document.getElementById(id);
+var box=$('fighters');
+var dialog=$('profile');
+var divisions=['Heavyweight','Cruiserweight','Light Heavyweight','Super Middleweight','Middleweight','Super Welterweight','Welterweight','Super Lightweight','Lightweight','Super Featherweight','Featherweight','Super Bantamweight','Bantamweight'];
+var els={};
+function node(tag,text,cls){
+  var el=document.createElement(tag);
+  if(text!==undefined&&text!==null)el.textContent=String(text);
+  if(cls)el.className=cls;
+  return el;
+}
+function append(parent,tag,text,cls){var n=node(tag,text,cls);parent.appendChild(n);return n;}
+function fmt(x){return x===null||x===undefined?'Pending':String(x);}
+function badge(parent,text,gold){append(parent,'span',text,'tag'+(gold?' gold':''));}
+function stat(parent,n,cap){var e=append(parent,'div',null,'stat');append(e,'strong',n);append(e,'span',cap);}
+function mini(parent,label,value){var e=append(parent,'div',null,'mini');append(e,'small',label);append(e,'strong',value);}
+function table(section,cols,values){
+  var t=append(section,'table');var h=append(t,'thead');var tr=append(h,'tr');
+  cols.forEach(c=>append(tr,'th',c));
+  var body=append(t,'tbody');values.forEach(row=>{var r=append(body,'tr');row.forEach(c=>append(r,'td',fmt(c)));});
+}
+function render(){
+  if(!data)return;
+  var q=$('search').value.trim().toLowerCase(), div=$('division').value, kind=$('kind').value;
+  var selection=data.profiles.filter(p=>
+    (!q||p.name.toLowerCase().includes(q)) &&
+    (!div||p.divisions.includes(div)) &&
+    (!kind||
+      (kind==='title'&&p.titles.length)||
+      (kind==='ranked'&&p.rankings.length)||
+      (kind==='scout'&&p.scope==='supplementary_legacy_scouting')||
+      (kind==='punch'&&p.compubox.report_count>0)));
+  $('result-count').textContent=selection.length+' profiles';
+  box.replaceChildren();
+  if(!selection.length){append(box,'p','No profiles match your filters.','empty');return;}
+  var fragment=document.createDocumentFragment();
+  for(var p of selection){
+    var card=node('button',null,'person');card.type='button';
+    card.setAttribute('aria-label','Open draft fighter profile for '+p.name);
+    var b=append(card,'div',null,'badges');
+    if(p.titles.length)badge(b,'Titleholder',true);
+    else if(p.rankings.length)badge(b,'Ranked',false);
+    else badge(b,'Scout',false);
+    if(p.compubox.report_count)badge(b,'Punch stats · '+p.compubox.report_count);
+    append(card,'h2',p.name);
+    append(card,'div',p.divisions.join(' / '),'meta');
+    append(card,'div',p.archived_scouting?.archive_record||'Record under review','meta');
+    append(card,'div','OPEN PROFILE','cta');
+    card.addEventListener('click',()=>open(p));
+    fragment.appendChild(card);
+  }
+  box.appendChild(fragment);
+}
+function open(p){
+  $('fighter-name').textContent=p.name;
+  $('fighter-subtitle').textContent=p.divisions.join(' / ')+' · Rankings dated '+data.source_roster_date;
+  var wrap=$('profile-body');wrap.replaceChildren();
+  var grid=append(wrap,'div',null,'detail-grid');
+  mini(grid,'Professional record',p.archived_scouting?.archive_record||'Pending verification');
+  mini(grid,'Ranking organisations',p.ranked_by.length||'Not ranked');
+  mini(grid,'Validated punch reports',p.compubox.report_count);
+  if(p.primary_division_review)append(wrap,'p','Listed in multiple weight divisions. Primary weight class is under review.','note');
+  if(p.rankings.length){
+    append(wrap,'h3','Sanctioning-body and Ring rankings');
+    table(wrap,['Organisation','Division','Position'],p.rankings.map(x=>[x.organisation,x.division,'#'+x.rank]));
+  }
+  if(p.titles.length){
+    append(wrap,'h3','Recognised titles in dated snapshot');
+    table(wrap,['Organisation','Division','Classification'],p.titles.map(x=>[x.organisation,x.division,x.classification]));
+  }
+  if(p.archived_scouting){
+    var x=p.archived_scouting;
+    if(x.narrative.length){
+      append(wrap,'h3','Scouting analysis');
+      var report=append(wrap,'div',null,'shade');
+      x.narrative.slice(0,5).forEach(t=>{var para=append(report,'p',t);para.style.marginBottom='8px';});
+      append(wrap,'p','This analysis is retained from the prior scouting archive and awaits updating.','archive');
+    }
+    if(x.recent_bouts.length){
+      append(wrap,'h3','Five latest results in existing scouting archive');
+      table(wrap,['Date','Opponent','Result','Method'],x.recent_bouts.map(y=>[y.date_text,y.opponent_text,y.outcome,y.method_text]));
+      append(wrap,'p','Archived results require independent bout-history reconciliation before performance calculations.','archive');
+    }
+  }
+  if(p.compubox.report_count){
+    append(wrap,'h3','Recorded punch performance — covered bouts only');
+    p.compubox.verified_report_fights.forEach(f=>{
+      var section=append(wrap,'div',null,'shade');
+      append(section,'p',f.report_title+' · '+f.date);
+      table(section,['Metric','Landed','Thrown','Accuracy'],['total','jab','power'].map(k=>{
+        var s=f[k];return [k==='total'?'All punches':k==='jab'?'Jabs':'Power punches',s.landed,s.thrown,s.thrown?(100*s.landed/s.thrown).toFixed(1)+'%':'N/A'];
+      }));
+    });
+  }
+  append(wrap,'h3','Five / ten / career analytics');
+  var stats=append(wrap,'div',null,'detail-grid');
+  mini(stats,'Latest five fights','Pending verified ledger');
+  mini(stats,'Latest ten fights','Pending verified ledger');
+  mini(stats,'Full career','Pending verified ledger');
+  append(wrap,'p','Punch and fight-history metrics are never treated as zero when coverage is missing. This preview does not certify archived records or title changes.','note');
+  dialog.showModal();
+}
+$('close').addEventListener('click',()=>dialog.close());
+dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
+$('search').addEventListener('input',render);
+$('division').addEventListener('change',render);
+$('kind').addEventListener('change',render);
+divisions.forEach(x=>{var o=node('option',x);o.value=x;$('division').appendChild(o);});
+fetch('./research/boxing/generated/boxing-profiles-foundation-v1.json',{cache:'no-store'})
+  .then(x=>{if(!x.ok)throw Error('Profile file unavailable');return x.json();})
+  .then(json=>{
+    data=json;
+    var sum=json.summary;
+    stat($('summary'),sum.total,'Research profiles');
+    stat($('summary'),sum.ranked_provisional,'Ranked candidates');
+    stat($('summary'),sum.existing_profiles_reused,'Existing profiles reused');
+    stat($('summary'),sum.fighters_with_validated_compubox_bouts,'Punch-data profiles');
+    render();
+  }).catch(err=>{
+    box.replaceChildren();
+    append(box,'div','The research data is not available on this branch yet. Run the foundation build, then refresh this page.','empty');
+  });
+})();
+</script>
+</body></html>
