@@ -65,6 +65,11 @@ assert(nativeFighterIds.size===1&&nativeFighterIds.has('1113'),'Native athlete i
 assert(history.every(h=>e.bouts.some(b=>String(h.boutId)===String(b.nativeBoutId))),'Unreviewed saved history outside source inventory');
 const rosterCensus=census.fighters.find(f=>f.slug===slug);
 const gate=evaluateCareerEvidence(p,history,rosterCensus?.lastUfcFight,census.asOf,e);
+if(!gate.independentlyVerified){
+ const keys=rows=>rows.map(r=>[r.date,norm(r.opponent),result(r.result||r.outcome||r.status)].join('|')).sort();
+ const actualKeys=keys(history),providedKeys=keys(e.bouts);
+ console.log('BEFN_INDEPENDENT_GATE_KEY_DIFF '+JSON.stringify({savedOnly:actualKeys.filter(x=>!providedKeys.includes(x)),sourceOnly:providedKeys.filter(x=>!actualKeys.includes(x)),saved:history.map(x=>({date:x.date,opponent:x.opponent,result:x.result,boutId:x.boutId}))}));
+}
 assert(gate.independentlyVerified===true,'Strict independent career evidence gate did not pass: '+JSON.stringify(gate));
 assert(gate.unresolvedIdentityConflicts===false,'Unresolved native fighter identity conflicts');
 const out={schema:1,scope:'ufc-v4-certified-full-career-proof',slug,status:'independently_certified',
