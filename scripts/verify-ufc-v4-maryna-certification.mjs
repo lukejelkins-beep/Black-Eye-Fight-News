@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {evaluateCareerEvidence} from './ufc-36-month-stage3-progress.mjs';
+import {buildPostfightMetrics} from './build-ufc-postfight-metrics.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),'utf8'));
 const norm=x=>String(x??'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
@@ -16,7 +17,7 @@ const census=read('data/ufc-36-month-candidates.json');
 const registry=read('data/ufc-independent-full-career-verification.json');
 const research=read('data/ufcalendar-fighter-research.json');
 const progress=read('data/ufcalendar-rich-progress.json');
-const postfight=read('data/ufc-postfight-metrics.json');
+const archive=read('data/ufc-research-archive.json');
 const slug='maryna-moroz';
 assert(approval.status==='approved'&&approval.approvedFighters.length===783&&
  approval.approvedFighters.includes(slug)&&approval.rosterAsOf===registry.rosterAsOf,
@@ -31,7 +32,8 @@ assert(norm(p?.name)==='marynamoroz','Source has wrong athlete identity');
 const history=(p.recentHistory||[]).filter(b=>String(b.promotion||b.org||'').toLowerCase()==='ufc');
 const official=history.filter(b=>result(b.result||b.outcome||b.status));
 assert(official.length===12,'Extra or missing saved UFC fights; expected 12');
-const measured=new Map((postfight.fighters?.[slug]?.careerBouts||[]).map(b=>[String(b.boutId),b]));
+// The deployed V3 export exposes only last-five bouts. Build a read-only, isolated
+// per-native-ID sample from the underlying saved round archive for older fights.
 const nativeFighterIds=new Set();
 const totals={official:12,nativeMatched:0,measured:0,identityVerified:0,datesMatched:0,resultsMatched:0};
 for(const b of e.bouts){
@@ -51,7 +53,9 @@ for(const b of e.bouts){
  assert(native.status==='completed'&&native.result?.winnerId!=null,'Missing resolved native winner '+b.nativeBoutId);
  const actual=String(native.result.winnerId)===String(self.id)?'win':String(native.result.winnerId)===String(other.id)?'loss':null;
  assert(actual===b.result,'Native winner differs from official result '+b.nativeBoutId);
- const metrics=measured.get(String(b.nativeBoutId));
+ const isolated=buildPostfightMetrics({bouts:{[b.nativeBoutId]:native}},archive,{asOf:'2026-11-14'});
+ const metrics=Object.values(isolated.fighters||{}).flatMap(f=>f.recentBouts||[])
+  .find(x=>String(x.boutId)===String(b.nativeBoutId)&&name(x.opponent)===name(b.opponent));
  assert(metrics&&Number.isFinite(metrics.cageSec)&&metrics.cageSec>0,'Unmeasured fight '+b.nativeBoutId);
  for(const stat of ['sigLanded','sigAttempted','knockdowns','takedowns','takedownAttempts','subAttempts','controlSec'])
   assert(Number.isFinite(metrics.metrics?.[stat]),'Missing '+stat+' for native UFC fight '+b.nativeBoutId);
