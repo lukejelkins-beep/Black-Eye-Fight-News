@@ -13,11 +13,13 @@ const finale=read('ufc-official-finale-recovery.json');
 const legacy=read('ufc-official-legacy-evidence.json');
 const independentlyVerified=read('ufc-independent-full-career-verification.json');
 const inventory=read('ufc-official-career-bout-inventory.json');
-const audit=asOf=>auditApprovedStage3(approval,{...census,asOf},cache,research,archive,feeder,finale,legacy,independentlyVerified,inventory).summary;
+const audit=asOf=>auditApprovedStage3(approval,{...census,asOf},cache,research,archive,feeder,finale,legacy,independentlyVerified,inventory);
 test('Stage3 preserves strict certified careers across midnight without fabricating an evidence refresh',()=>{
  assert.equal(approval.rosterAsOf,'2026-11-14');assert.equal(approval.approvedFighters.length,783);
- const atApproved=audit('2026-11-14');
- const afterMidnight=audit('2026-11-15');
+ const atApproved=audit('2026-11-14').summary;
+ const next=audit('2026-11-15');
+ const afterMidnight=next.summary;
+ console.log('BEFN_CERT_AUDIT_ROLLOVER_DIAGNOSTIC='+JSON.stringify({atApproved:atApproved.independentlyVerifiedFullCareerTimelines,afterMidnight:afterMidnight.independentlyVerifiedFullCareerTimelines,canonical:Object.keys(independentlyVerified.fighters).length,fighters:next.careerVerificationDecisions.filter(x=>['shannon-ross','sean-sharaf'].includes(x.slug)),otherUncertifiedAmongCanonical:next.careerVerificationDecisions.filter(x=>independentlyVerified.fighters[x.slug]&&!x.independentlyVerifiedFullCareer).map(x=>({slug:x.slug,status:x.status,measured:x.allKnownFightsMeasured,known:x.knownOfficialUfcFightCount})).slice(0,15)}));
  assert.equal(afterMidnight.asOf,'2026-11-15');
  assert.equal(afterMidnight.approvedSnapshotAsOf,'2026-11-14');
  assert.equal(afterMidnight.certificationEvidenceCutoff,'2026-11-14');
