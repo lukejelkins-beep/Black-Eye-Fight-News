@@ -118,8 +118,9 @@ jobs:
       - name: Collect independent historical weights only if source permissions are documented
         if: steps.preflight.outputs.run == 'true'
         env:
-          # At most eight pages per scheduled pass, paced at four requests/minute.
-          SUMODB_MAX_PER_RUN: '8'
+          # Up to ten pages per pass, four per minute, with a strict 160s
+          # collector deadline so checkout, QA and checkpoint can finish.
+          SUMODB_MAX_PER_RUN: '10'
         run: node scripts/sumo-weight-sumodb-collector.mjs
       - name: Refresh dated weight-source coverage without external requests
         if: steps.preflight.outputs.run == 'true'
