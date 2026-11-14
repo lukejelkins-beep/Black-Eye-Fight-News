@@ -1577,5 +1577,88 @@ class FullCareerCacheTests(unittest.TestCase):
             self.assertFalse(any(h.get("boutId")==row["nativeFightId"] for h in
                 rs["profiles"]["bruno-gustavo-da-silva"]["recentHistory"]),case)
 
+
+    def bruno_overturned_nc_event_fixture(self, status="no_contest"):
+        st,rs,cv,ap,exc,inv=self.bruno_exact_source_history_fixture()
+        result=m.reconcile_exact_official_native_id_exceptions(
+            st,rs,cv,dt.date(2026,11,14),ap,exc,inv)
+        self.assertEqual(result["added"],20)
+        self.assertEqual(len(rs["profiles"]["bruno-gustavo-da-silva"]["recentHistory"]),11)
+        key="bruno-gustavo-da-silva|2019-10-05|khalid:taha"
+        st["ufcOfficialSourceNonWinnerChecks"]={key:{
+            "status":"not_found","checkedAt":"2026-11-13",
+            "reason":"no_unique_exact_native_nc_or_draw_in_source_event_cards"}}
+        event={"id":444,"org":"ufc","title":"UFC 243: Whittaker vs Adesanya",
+               "starts_at":"2019-10-06T00:00:00Z","status":"completed"}
+        listing={"data":[event],"meta":{}}
+        details={"data":{**event,"card":[{
+           "id":706,"status":status,
+           "fighter_a":{"id":158,"slug":"bruno-silva","name":"Bruno Silva"},
+           "fighter_b":{"id":999,"slug":"khalid-taha","name":"Khalid Taha"},
+           "result":{"winner_fighter_id":999 if status=="completed" else None,
+                     "method":"Arm Triangle","round":3,"time":"3:00"},
+           "is_main":False,"is_title":False}]}}
+        return st,rs,cv,ap,exc,inv,key,listing,details
+
+    def test_bruno_verified_historical_id_retries_exact_2019_overturned_nc_once(self):
+        st,rs,cv,ap,exc,inv,key,listing,details=(
+            self.bruno_overturned_nc_event_fixture())
+        client=self.PaginatedSearch(listing,details)
+        r=m.recover_source_verified_ufc_non_winner_event_cards(
+            client,st,rs,cv,dt.date(2026,11,14),ap,inv,exc)
+        self.assertEqual(r,{"calls":2,"linked":1,"indexed":1,"unresolved":0})
+        self.assertEqual(client.paths,[
+            "/events?org=ufc&from=2019-10-04&to=2019-10-06&limit=25",
+            "/events/444"])
+        self.assertEqual(st["bouts"]["706"]["status"],"no_contest")
+        bruno=rs["profiles"]["bruno-gustavo-da-silva"]
+        self.assertEqual(len(bruno["recentHistory"]),12)
+        self.assertTrue(any(x["boutId"]=="706" and x["result"]=="no_contest"
+                            for x in bruno["recentHistory"]))
+        self.assertFalse(bruno["ufcTimeline"]["complete"])
+        self.assertEqual(st["ufcOfficialSourceNonWinnerChecks"][key]["status"],"linked")
+        self.assertEqual(m.recover_source_verified_ufc_non_winner_event_cards(
+            client,st,rs,cv,dt.date(2026,11,14),ap,inv,exc)["calls"],0)
+
+    def test_bruno_2019_overturn_provider_legacy_winner_remains_manual_review(self):
+        st,rs,cv,ap,exc,inv,key,listing,details=(
+            self.bruno_overturned_nc_event_fixture(status="completed"))
+        client=self.PaginatedSearch(listing,details)
+        out=m.recover_source_verified_ufc_non_winner_event_cards(
+            client,st,rs,cv,dt.date(2026,11,14),ap,inv,exc)
+        self.assertEqual(out["linked"],0)
+        self.assertEqual(out["unresolved"],1)
+        ledger=st["ufcOfficialSourceNonWinnerChecks"][key]
+        self.assertEqual(ledger["status"],"manual_review")
+        self.assertEqual(ledger["searchedFighterId"],"158")
+        self.assertEqual(ledger["candidateIds"],["706"])
+        self.assertEqual(ledger["reason"],
+                         "official_overturn_disagrees_with_provider_native_event")
+        self.assertNotIn("706",st["bouts"])
+        self.assertEqual(m.recover_source_verified_ufc_non_winner_event_cards(
+            client,st,rs,cv,dt.date(2026,11,14),ap,inv,exc)["calls"],0)
+
+    def test_no_brunos_historical_nc_recheck_without_exact_ten_fight_source_proof(self):
+        import copy
+        for kind in ("missing_archived_row","wrong_historical_id","wrong_official_event",
+                     "no_exception_manifest"):
+            st,rs,cv,ap,exc,inv,key,listing,details=(
+                self.bruno_overturned_nc_event_fixture())
+            if kind=="missing_archived_row":
+                rs["profiles"]["bruno-gustavo-da-silva"]["recentHistory"]=[
+                    x for x in rs["profiles"]["bruno-gustavo-da-silva"]["recentHistory"]
+                    if x["boutId"]!="59151"]
+            elif kind=="wrong_historical_id":
+                exc["athletes"]["bruno-gustavo-da-silva"]["historicalNumericId"]="777"
+            elif kind=="wrong_official_event":
+                inv["fighters"]["bruno-gustavo-da-silva"]["bouts"][0][
+                    "officialEventUrl"]="https://www.ufc.com/event/another"
+            else:exc={}
+            client=self.PaginatedSearch(listing,details)
+            self.assertEqual(m.recover_source_verified_ufc_non_winner_event_cards(
+                client,st,rs,cv,dt.date(2026,11,14),ap,inv,exc)["calls"],0,kind)
+            self.assertEqual(len(rs["profiles"]["bruno-gustavo-da-silva"]["recentHistory"]),11
+               if kind!="missing_archived_row" else 10)
+
 if __name__=="__main__":
     unittest.main()
