@@ -1681,8 +1681,9 @@ def collect_approved_full_ufc_fight_search(client,state,research,coverage,today,
             if (not isinstance(h,dict) or h.get("source")!="native" or
                 str(h.get("promotion") or "").lower()!="ufc"):continue
             b=state.get("bouts",{}).get(str(h.get("boutId") or ""))
-            if not isinstance(b,dict) or b.get("org")!="ufc" or
-               not official_ufc_event_title(b.get("event") or ""):
+            if (not isinstance(b,dict) or b.get("org")!="ufc" or
+                not official_ufc_event_title(b.get("event") or "")):
+
                 continue
             for side,opp in (("a","b"),("b","a")):
                 own=b.get(side) or {}
@@ -1711,7 +1712,7 @@ def collect_approved_full_ufc_fight_search(client,state,research,coverage,today,
         fid=ids.get(f)
         if not fid or reverse.get(fid)!={f}:continue
         prior=ledger.get(f,{})
-        if prior.get("status")=="checked":continue
+        if prior.get("status") in ("checked","manual_review"):continue
         if prior.get("status")=="retry" and str(prior.get("retryAfter") or "")>today.isoformat():
             continue
         known=sum(1 for h in (profiles.get(f) or {}).get("recentHistory",[])
@@ -1731,7 +1732,6 @@ def collect_approved_full_ufc_fight_search(client,state,research,coverage,today,
         prior=ledger.get(f,{})
         cursor=prior.get("cursor") if isinstance(prior.get("cursor"),str) else None
         path="/fights/search"+param(org="ufc",fighter=fid,limit=25,cursor=cursor)
-        before_errors=len(client.errors)
         response=client.call(path)
         calls+=1
         if response is None:
