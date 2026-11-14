@@ -99,3 +99,20 @@ test('fractional historical weights are retained',()=>{
  assert.equal(m.measurements[0].weightKg,121.5);
  assert.equal(m.measurements[0].heightCm,175.5);
 });
+
+test('current official profile weight has no inferred weigh-in date, historical points remain separate',()=>{
+ const {w,source}=cache(28);
+ const jsa=JSON.parse(readFileSync(new URL('../data/sumo/backfill/v1/jsa-public/profiles/28.json',import.meta.url),'utf8'));
+ const extra=JSON.parse(readFileSync(new URL('../data/sumo/backfill/v1/weight-source-crosschecks/28.json',import.meta.url),'utf8'));
+ const p=buildResearchProfile(w,source,null,jsa,extra);
+ assert.equal(p.measurements.length,6);
+ assert.equal(p.currentOfficialMeasurement.weightKg,jsa.weightKg);
+ assert.equal(p.currentOfficialMeasurement.sourceUrl,jsa.url);
+ assert.equal(p.currentOfficialMeasurement.snapshotType,'current-listed-weight-not-dated-weigh-in');
+ assert.equal(p.currentOfficialMeasurement.measurementDateKnown,false);
+ assert.equal(p.currentOfficialMeasurement.independentlyCertified,false);
+ assert.equal(p.currentOfficialMeasurement.officialAsOf.monthYear,'November 2026');
+ const fake={...jsa,sourceId:999};
+ const p2=buildResearchProfile(w,source,null,fake,extra);
+ assert.equal(p2.currentOfficialMeasurement,null);
+});
