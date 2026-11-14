@@ -1007,7 +1007,37 @@ def approved_ufc_career_cohort(approval,coverage,today):
     return set(names)
 
 
-def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None):
+def verified_official_finale_bout(manifest,bid,day,research,references):
+    """Allow one early retry only for a corroborated official UFC fight.
+
+    An authoritative UFC card gives a date/identity crosscheck, not licence to
+    skip the provider's native fight-ID, event or result validation.
+    """
+    if not isinstance(manifest,dict) or manifest.get("schema")!=1 or \
+       manifest.get("scope")!="ufc-official-finale-recovery":
+        return None
+    for record in manifest.get("bouts",[]):
+        if not isinstance(record,dict) or str(record.get("fightId"))!=bid or \
+           date_str(record.get("date"))!=day:
+            continue
+        athlete=slug(record.get("fighterSlug"))
+        opponent=safe(record.get("opponent"),110)
+        url=str(record.get("sourceUrl") or "")
+        if (not athlete or athlete not in references.get(bid,set()) or
+            not opponent or not url.startswith("https://www.ufc.com/")):
+            continue
+        saved=research.get("profiles",{}).get(athlete,{})
+        if any(isinstance(row,dict) and
+               str(row.get("boutId") or "")==bid and
+               date_str(row.get("date"))==day and
+               str(row.get("promotion") or "").lower()=="ufc" and
+               safe(row.get("opponent"),110).casefold()==opponent.casefold()
+               for row in saved.get("recentHistory",[])):
+            return record
+    return None
+
+
+def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None,verified_finales=None):
     """Hydrate native UFC career IDs once, then share each fight's round cache.
 
     Only the completed 36-month event audit can enable this separate stage.
@@ -1064,9 +1094,11 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None)
         if attempts>=cap or client.remaining<=0 or client.stopped or client.calls>=client.max_calls-10:
             break
         prior=checks.get(bid,{})
+        verified=verified_official_finale_bout(
+            verified_finales,bid,pending[bid],research,references)
         finale_retry=(prior.get("status")=="requires_manual_review" and
-                      pending[bid] in official_finale_dates and
-                      not prior.get("officialFinaleRetryAttempted"))
+                      not prior.get("officialFinaleRetryAttempted") and
+                      (pending[bid] in official_finale_dates or bool(verified)))
         if str(prior.get("retryAfter") or "")>today.isoformat() and not finale_retry:
             continue
         if finale_retry:
@@ -1097,6 +1129,23 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None)
                          "retryAfter":(today+dt.timedelta(days=14)).isoformat(),
                          "status":"requires_manual_review"}
             continue
+        if verified and finale_retry:
+            # Independently corroborate the two corners of the provider fight,
+            # never infer that a matching ID or event title guarantees identity.
+            source_fighter=research.get("profiles",{}).get(verified["fighterSlug"],{})
+            expected_names={
+                safe(source_fighter.get("name"),110).casefold(),
+                verified["fighterSlug"].replace("-"," ").casefold()
+            }
+            observed=[safe(bout[c].get("name"),110).casefold() for c in ("a","b")]
+            if (not any(name and name in observed for name in expected_names) or
+                safe(verified.get("opponent"),110).casefold() not in observed or
+                event_date!=verified["date"]):
+                checks[bid]={**prior,"checkedAt":today.isoformat(),
+                             "retryAfter":(today+dt.timedelta(days=14)).isoformat(),
+                             "status":"requires_manual_review",
+                             "reason":"verified_finale_provider_identity_disagreement"}
+                continue
         state["bouts"][bid]={
             "id":bid,"a":bout["a"],"b":bout["b"],"event":title,
             "eventDate":event_date,"org":"ufc","eventId":positive(event.get("id")),
@@ -1426,7 +1475,9 @@ def main():
         roster_today=dt.datetime.now(ZoneInfo("Australia/Melbourne")).date()
         approved36=read(COVERAGE36,{})
         approval=read(ROSTER_APPROVAL,{})
-        collect_ufc_career_bouts(client,state,research,approved36,roster_today,approval)
+        collect_ufc_career_bouts(
+            client,state,research,approved36,roster_today,approval,
+            read(ROOT/"data/ufc-official-finale-recovery.json",{}))
         round_priority=approved_ufc_round_priority(approval,approved36,research,roster_today,state)
         recovery=collect_rounds(client,state,cards,archive,pfl_archive,today,coverage,
                                 approved_priority=round_priority)
