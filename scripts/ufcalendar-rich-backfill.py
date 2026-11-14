@@ -13,6 +13,7 @@ import os
 import re
 import sys
 import time
+import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -29,6 +30,7 @@ COVERAGE = ROOT / "data/ufc-last-five-coverage.json"
 COVERAGE36 = ROOT / "data/ufc-36-month-candidates.json"
 ROSTER_APPROVAL = ROOT / "data/ufc-36-month-roster-approval.json"
 FEEDER_EVIDENCE = ROOT / "data/ufc-feeder-bout-evidence.json"
+LEGACY_UFC_EVIDENCE = ROOT / "data/ufc-official-legacy-evidence.json"
 JUDGING = ROOT / "data/ufcalendar-judging-research.json"
 BASE = "https://api.ufcalendar.com/v1"
 MAX_SPEND_PER_MONTH = 27000  # 90% of Hobby; reserve 3,000 for live BEFN integrations.
@@ -1182,6 +1184,136 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None,
     if attempts:print("UFCalendar full UFC career IDs indexed:",indexed,"of",attempts,"lookups")
     return indexed
 
+
+def reconcile_legacy_ufc_by_event_date(client,state,research,coverage,today,
+                                       approval=None,evidence=None):
+    """One-time four-event provider crosscheck; never trust source IDs blindly.
+
+    Official UFC source proves the event/date and two fighters, *not* that a
+    possibly stale UFCalendar historical native ID addresses that same fight.
+    Batch by event date to avoid one paid search call per athlete; request no
+    more than four date windows from the 12-item approved legacy manifest.
+    A different returned ID is a manual-review candidate, never a silent link.
+    """
+    if not isinstance(coverage,dict) or coverage.get("schema")!=1 or \
+       coverage.get("scope")!="ufc" or coverage.get("activityMonths")!=36 or \
+       coverage.get("indexCompleteness")!="36_month_event_scan_complete":
+        return {"calls":0,"indexed":0,"alternative":0}
+    if not (today-dt.timedelta(days=7)).isoformat()<=str(coverage.get("asOf") or "")<=today.isoformat():
+        return {"calls":0,"indexed":0,"alternative":0}
+    approved=approved_ufc_career_cohort(approval,coverage,today)
+    if not approved or not isinstance(evidence,dict) or evidence.get("schema")!=1 or \
+       evidence.get("scope")!="ufc-official-legacy-evidence":
+        return {"calls":0,"indexed":0,"alternative":0}
+    eligible={slug(f.get("slug")) for f in coverage.get("fighters",[])
+              if isinstance(f,dict) and f.get("eligibilityStatus")=="latest_observed_mma_ufc"}
+    eligible.intersection_update(approved)
+    normalized=lambda value:re.sub(r"[^a-z0-9]","",
+        unicodedata.normalize("NFKD",safe(value,140)).encode("ascii","ignore").decode().casefold())
+    grouped={}
+    seen=set()
+    for row in evidence.get("bouts",[]):
+        if not isinstance(row,dict):continue
+        bid=str(row.get("fightId") or "")
+        day=date_str(row.get("date"))
+        fighter=slug(row.get("fighterSlug"))
+        opponent=safe(row.get("opponent"),110)
+        source=str(row.get("sourceUrl") or "")
+        signature=(bid,fighter,day,normalized(opponent))
+        if (not re.fullmatch(r"[1-9][0-9]{0,11}",bid) or not day or
+            fighter not in eligible or not normalized(opponent) or
+            not source.startswith("https://www.ufc.com/") or
+            signature in seen or bid in state.get("bouts",{})):
+            continue
+        profile=research.get("profiles",{}).get(fighter,{})
+        if not isinstance(profile,dict):continue
+        if not any(isinstance(r,dict) and str(r.get("boutId"))==bid and
+                   str(r.get("promotion") or "").lower()=="ufc" and
+                   date_str(r.get("date"))==day and
+                   normalized(r.get("opponent"))==normalized(opponent)
+                   for r in profile.get("recentHistory",[])):
+            continue
+        seen.add(signature)
+        grouped.setdefault(day,[]).append((bid,fighter,opponent,profile))
+    checks=state.setdefault("ufcLegacyDateSearchChecks",{})
+    calls=indexed=alternatives=0
+    for day,targets in sorted(grouped.items()):
+        if calls>=4 or client.remaining<=0 or client.stopped or \
+           client.calls>=client.max_calls-20:break
+        pending=[x for x in targets if x[0] not in checks]
+        if not pending:continue
+        date=dt.date.fromisoformat(day)
+        start=(date-dt.timedelta(days=1)).isoformat()
+        end=(date+dt.timedelta(days=2)).isoformat()
+        path="/fights/search"+param(org="ufc",**{"from":start,"to":end},limit=25)
+        response=client.call(path)
+        calls+=1
+        if response is None:
+            # Transient failures may be retried later; a failed query is not
+            # evidence the historical bout does not exist.
+            for bid,*_ in pending:
+                checks[bid]={"status":"retry","checkedAt":today.isoformat(),
+                             "retryAfter":(today+dt.timedelta(days=7)).isoformat()}
+            continue
+        rows=response_rows(response)
+        for bid,fighter,opponent,profile in pending:
+            aliases={normalized(profile.get("name")),
+                     normalized(fighter.replace("-"," "))}
+            aliases.discard("")
+            valid=[]
+            for row in rows:
+                bout=summary_bout(row)
+                event=row.get("event") if isinstance(row,dict) else None
+                if not bout or not isinstance(event,dict):continue
+                title=safe(event.get("title"),150)
+                event_date=date_str(event.get("starts_at"))
+                if not event_date or abs((dt.date.fromisoformat(event_date)-date).days)>1:
+                    continue
+                if (event.get("org") not in (None,"ufc") or
+                    not official_ufc_event_title(title) or
+                    bout["status"] not in ("completed","draw","no_contest")):
+                    continue
+                a,b=bout["a"],bout["b"]
+                if not ((normalized(a.get("name")) in aliases and
+                         normalized(b.get("name"))==normalized(opponent)) or
+                        (normalized(b.get("name")) in aliases and
+                         normalized(a.get("name"))==normalized(opponent))):
+                    continue
+                valid.append((bout,event,title,event_date))
+            ids={x[0]["id"] for x in valid}
+            if len(ids)!=1:
+                checks[bid]={"status":"ambiguous" if ids else "no_match",
+                             "checkedAt":today.isoformat(),
+                             "candidateCount":len(ids)}
+                continue
+            bout,event,title,event_date=valid[0]
+            found=bout["id"]
+            if found!=bid:
+                # Provider search has contradicted the stored canonical
+                # historical ID. Do not reassign native IDs or fetch rounds
+                # under an unapproved crosswalk.
+                checks[bid]={"status":"alternative_id_manual_review",
+                             "checkedAt":today.isoformat(),
+                             "candidateId":found,"eventDate":event_date,
+                             "event":title}
+                alternatives+=1
+                continue
+            state["bouts"][bid]={
+                "id":bid,"a":bout["a"],"b":bout["b"],"event":title,
+                "eventDate":event_date,"org":"ufc",
+                "eventId":positive(event.get("id")),
+                "status":bout["status"],"main":bout["main"],
+                "titleFight":bout["titleFight"],"result":bout["result"]}
+            state.setdefault("ufcCareerBoutChecks",{}).pop(bid,None)
+            checks[bid]={"status":"indexed_exact_native_id",
+                         "checkedAt":today.isoformat(),"candidateId":found}
+            indexed+=1
+    if calls:
+        print("UFCalendar verified legacy date-search:",calls,
+              "provider calls,",indexed,"exact native IDs indexed,",
+              alternatives,"alternative IDs requiring review")
+    return {"calls":calls,"indexed":indexed,"alternative":alternatives}
+
 def reconcile_approved_ufc_full_career_timelines(client,state,research,coverage,today,approval=None):
     """One bounded, identity-verified crosscheck of cached UFC career histories.
 
@@ -1504,6 +1636,9 @@ def main():
         collect_ufc_career_bouts(
             client,state,research,approved36,roster_today,approval,
             read(ROOT/"data/ufc-official-finale-recovery.json",{}))
+        reconcile_legacy_ufc_by_event_date(
+            client,state,research,approved36,roster_today,approval,
+            read(LEGACY_UFC_EVIDENCE,{}))
         round_priority=approved_ufc_round_priority(approval,approved36,research,roster_today,state)
         recovery=collect_rounds(client,state,cards,archive,pfl_archive,today,coverage,
                                 approved_priority=round_priority)
