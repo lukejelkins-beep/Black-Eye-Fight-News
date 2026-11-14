@@ -21,7 +21,7 @@ The existing **BEFN release readiness** workflow runs source tests, packaging re
 ## Interpreting the report
 
 - `pass` means that specific syntactic diagnostic passed. It does not prove a feed is editorially correct, a career is certified, or the deployed version matches main.
-- `warning` means review duplicate IDs or a stale/future timestamp; no record is edited automatically. Thresholds are conservative operational defaults, not new release standards.
+- `warning` means review an empty feed, invalid/duplicate IDs or a stale/future timestamp; no record is edited automatically. Thresholds are conservative operational defaults, not new release standards.
 - `unknown` means evidence is insufficient. A date-only review date cannot establish minute-level freshness.
 - A failed GitHub request is explicitly unknown, not a green operational health result. Only the latest 100 main-branch runs are sampled. Workflows missing from that sample require individual inspection; no all-green claim is made.
 - Consecutive failures are grouped by workflow path, branch and trigger. A later success clears the observed failure streak; unrelated PR failures cannot be mistaken for a main outage.

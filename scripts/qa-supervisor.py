@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Read-only inventory and operational report. Never collects or certifies fights."""
 import argparse
+from collections import Counter
 import datetime as dt
 import fnmatch
 import json
@@ -56,10 +57,14 @@ def feed_checks(root, now):
             rows = data.get(collection)
             if not isinstance(rows, list):
                 raise ValueError(f'{collection} must be an array')
-            ids = [r.get('id') for r in rows if isinstance(r, dict)]
-            duplicate_ids = sorted({str(i) for i in ids if i is not None and ids.count(i)>1})
-            checks.append(dict(check=f'{filename}:ids', status='warning' if duplicate_ids or len(ids)!=len(rows) or None in ids else 'pass',
-                               detail=dict(rows=len(rows), duplicateIds=duplicate_ids, missingIds=ids.count(None))))
+            ids = [r.get('id') if isinstance(r, dict) else None for r in rows]
+            valid_ids = [i for i in ids if (isinstance(i, str) and i.strip()) or type(i) is int]
+            counts = Counter(valid_ids)
+            duplicate_ids = sorted(str(i) for i, count in counts.items() if count > 1)
+            invalid_ids = len(ids) - len(valid_ids)
+            checks.append(dict(check=f'{filename}:ids', status='warning' if not rows or duplicate_ids or invalid_ids else 'pass',
+                               detail=dict(rows=len(rows), emptyFeed=not rows, duplicateIds=duplicate_ids,
+                                           missingIds=ids.count(None), invalidIds=invalid_ids)))
             raw = data.get(timestamp)
             try:
                 # Date-only values cannot establish sub-day freshness.

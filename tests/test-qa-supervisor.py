@@ -21,6 +21,18 @@ class SupervisorTests(unittest.TestCase):
         def run(branch,result,day): return dict(path='ci.yml',head_branch=branch,event='push',status='completed',conclusion=result,created_at=day,html_url='https://example.com')
         rows=qa.workflow_health([run('main','success','3'),run('main','failure','2'),run('dev','failure','3')])
         self.assertEqual({r['branch']:r['consecutiveFailuresInSample'] for r in rows},{'main':0,'dev':1})
+    def test_empty_and_invalid_ids_are_not_healthy(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);(root/'data').mkdir()
+            for rows in [[], [{'id':''}], [{'id':'   '}], [{'id':[]}], [None], [{'id':True}]]:
+                (root/'data/news-live.json').write_text(json.dumps(dict(articles=rows)))
+                checks=qa.feed_checks(root,dt.datetime(2026,11,14,tzinfo=dt.timezone.utc))
+                ids=next(c for c in checks if c['check']=='news-live.json:ids')
+                self.assertEqual(ids['status'],'warning',repr(rows))
+            (root/'data/news-live.json').write_text(json.dumps(dict(articles=[{'id':'valid'}, {'id':42}])))
+            checks=qa.feed_checks(root,dt.datetime(2026,11,14,tzinfo=dt.timezone.utc))
+            self.assertEqual(next(c for c in checks if c['check']=='news-live.json:ids')['status'],'pass')
+
     def test_missing_invalid_future_and_duplicate_data(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);(root/'data').mkdir()

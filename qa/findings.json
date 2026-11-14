@@ -115,9 +115,9 @@
     "severity": "P2",
     "subsystem": "Frontend quality",
     "title": "Featured news repeats Mike Perry signing story across two publishers",
-    "status": "observed; editorial review needed",
+    "status": "cached pair confirmed; conservative matching change deferred pending negative fixtures",
     "evidence": "Production homepage top stories showed Mike Perry re-signs with UFC and UFC signs Mike Perry after five-year split.",
-    "rootCause": "Not established: semantic deduplication may miss paraphrases.",
+    "rootCause": "Cached feed reproduces the pair. event_kind classifies re-signs as contract-extension but signs after a split has no event kind; short headlines also fall below generic overlap thresholds.",
     "impact": "Prominent repeated story reduces variety.",
     "remediation": "Add a fixture to existing news dedupe after checking distinct reporting content.",
     "effort": "medium",
@@ -228,5 +228,22 @@
     "branch": "qa/quality-supervisor-20261114",
     "issueOrPR": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/190",
     "verificationRequired": "Rendered three-section controls reference all existing panels; upcoming UI/merge and full release checks pass; approved-preview screen-reader review before accessibility sign-off."
+  },
+  {
+    "id": "QA-014",
+    "severity": "P2",
+    "subsystem": "QA reporting",
+    "title": "Empty feeds and malformed IDs can pass ID diagnostics",
+    "status": "regression reproduced; fixed and tested, pending review",
+    "evidence": "New reporter test fails on empty articles before fix. Empty arrays, blank IDs, containers, booleans and non-object records now warn.",
+    "rootCause": "Original check only detected duplicate/nonexistent IDs; empty arrays passed vacuously and malformed ID values were not validated.",
+    "impact": "An empty or malformed feed could be presented as passing its ID diagnostic.",
+    "remediation": "Warn on empty feeds and invalid IDs; count valid IDs once rather than repeatedly scanning the list.",
+    "effort": "small",
+    "risks": "Empty feeds may be intentional; warning remains advisory, never a certification or publication gate.",
+    "dependenciesAndConflicts": "Only new QA reporter and tests modified; no source data or research workflows touched.",
+    "branch": "qa/quality-supervisor-20261114",
+    "issueOrPR": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/190",
+    "verificationRequired": "Four reporter tests and generation against cached feeds pass; PR CI must pass before merge."
   }
 ]
