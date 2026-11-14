@@ -29155,6 +29155,324 @@
         }
       ],
       "sourceVerifiedExcludedFeederBouts": []
+    },
+    "mitch-raposo": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Mitch Raposo",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/0be6776db31d98ec",
+      "officialFighterUrl": "https://www.ufc.com/athlete/mitch-raposo",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived CSV, not a direct UFCStats scrape",
+        "method": "Complete official UFC.com dated athlete biography crosschecked with pinned Greco UFCStats-derived fighter/fight/event identities, saved UFCalendar numeric native IDs and both opposing corners, original outcomes and complete measured rounds. Officially attested DWCS feeders excluded separately. Full-cohort Stage3 CI is sole certification decision."
+      },
+      "verifiedNumericFighterIds": [
+        "124"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "UFC.com official full dated biography confirms five UFC Octagon fights from 1 June 2024 through 7 November 2026, and separately lists the 12 October 2021 DWCS submission loss to Jake Hadley and a TUF 29 house exhibition loss. Both feeder/exhibition contests are excluded. All five official UFC bouts independently match pinned Greco UFCStats results and original saved numeric native corners and measured rounds.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/mitch-raposo",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2024-06-01",
+          "opponent": "André Lima",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f1d3eec12662d8d7",
+          "nativeBoutId": "60259",
+          "nativeFighterId": "124"
+        },
+        {
+          "date": "2025-04-12",
+          "opponent": "Sumudaerji",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/fd98843926965cbd",
+          "nativeBoutId": "60976",
+          "nativeFighterId": "124"
+        },
+        {
+          "date": "2025-10-25",
+          "opponent": "Azat Maksum",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/22dd728012944f0a",
+          "nativeBoutId": "60469",
+          "nativeFighterId": "124"
+        },
+        {
+          "date": "2026-06-20",
+          "opponent": "Allan Nascimento",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3b4803afa824fea3",
+          "nativeBoutId": "66000",
+          "nativeFighterId": "124"
+        },
+        {
+          "date": "2026-11-07",
+          "opponent": "Marcos Degli",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/beda278798850354",
+          "nativeBoutId": "93615",
+          "nativeFighterId": "124"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83896",
+          "date": "2021-10-12",
+          "opponent": "Jake Hadley",
+          "result": "loss",
+          "event": "Dana White's Contender Series 43",
+          "officialSourceUrl": "https://www.ufc.com/athlete/mitch-raposo",
+          "excludedBecause": "Complete official UFC.com athlete biography separately lists this Dana White's Contender Series result outside the UFC Octagon career; preserve its native ID and do not count its measured rounds as a UFC fight."
+        }
+      ]
+    },
+    "muin-gafurov": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Muin Gafurov",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/a54660deb6a8489c",
+      "officialFighterUrl": "https://www.ufc.com/athlete/muin-gafurov",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived CSV, not a direct UFCStats scrape",
+        "method": "Complete official UFC.com dated athlete biography crosschecked with pinned Greco UFCStats-derived fighter/fight/event identities, saved UFCalendar numeric native IDs and both opposing corners, original outcomes and complete measured rounds. Officially attested DWCS feeders excluded separately. Full-cohort Stage3 CI is sole certification decision."
+      },
+      "verifiedNumericFighterIds": [
+        "492"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "UFC.com dated complete biography identifies five UFC bouts from June 2023 to February 2026 and separately lists the 7 September 2021 DWCS loss to Chad Anheliger. Official 2026 narrative confirms submission loss to Jakub Wiklacz despite erroneous graphical Win badge. Original native numeric fighter and opponent corners, winners, dates and measured rounds independently match five exact pinned Greco UFCStats fight IDs.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/muin-gafurov",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2023-06-03",
+          "opponent": "John Castaneda",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c98f62eb74e69bcb",
+          "nativeBoutId": "61315",
+          "nativeFighterId": "492"
+        },
+        {
+          "date": "2023-10-21",
+          "opponent": "Said Nurmagomedov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ed3334d108b257a6",
+          "nativeBoutId": "60001",
+          "nativeFighterId": "492"
+        },
+        {
+          "date": "2024-06-22",
+          "opponent": "Kyung Ho Kang",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8db5cf5df713a7e9",
+          "nativeBoutId": "38814",
+          "nativeFighterId": "492"
+        },
+        {
+          "date": "2025-01-18",
+          "opponent": "Rinya Nakamura",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e5e3d396a9b1c5ae",
+          "nativeBoutId": "60951",
+          "nativeFighterId": "492"
+        },
+        {
+          "date": "2026-02-07",
+          "opponent": "Jakub Wiklacz",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9d30c887e8bd8824",
+          "nativeBoutId": "60736",
+          "nativeFighterId": "492"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83961",
+          "date": "2021-09-07",
+          "opponent": "Chad Anheliger",
+          "result": "loss",
+          "event": "Dana White's Contender Series 38",
+          "officialSourceUrl": "https://www.ufc.com/athlete/muin-gafurov",
+          "excludedBecause": "Complete official UFC.com athlete biography separately lists this Dana White's Contender Series result outside the UFC Octagon career; preserve its native ID and do not count its measured rounds as a UFC fight."
+        }
+      ]
+    },
+    "nurullo-aliev": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Nurullo Aliev",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/ca28cdf526d6b6e9",
+      "officialFighterUrl": "https://www.ufc.com/athlete/nurullo-aliev",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived CSV, not a direct UFCStats scrape",
+        "method": "Complete official UFC.com dated athlete biography crosschecked with pinned Greco UFCStats-derived fighter/fight/event identities, saved UFCalendar numeric native IDs and both opposing corners, original outcomes and complete measured rounds. Officially attested DWCS feeders excluded separately. Full-cohort Stage3 CI is sole certification decision."
+      },
+      "verifiedNumericFighterIds": [
+        "372"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "Official UFC.com full dated biography lists five completed UFC bouts from February 2023 through October 2026, and separately identifies the 20 September 2022 DWCS win over Josh Wick as feeder-only. Authoritative official narrative confirms October 2026 loss to Grant Dawson despite misleading graphical Win badge. Every pinned Greco UFCStats fight maps to the original preserved numeric fighter/opponent corner IDs, outcomes, dates and measured rounds.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/nurullo-aliev",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2023-02-25",
+          "opponent": "Rafael Alves",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/02615499125b4b5d",
+          "nativeBoutId": "59714",
+          "nativeFighterId": "372"
+        },
+        {
+          "date": "2025-01-11",
+          "opponent": "Joe Solecki",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/192619174bd1ad77",
+          "nativeBoutId": "60354",
+          "nativeFighterId": "372"
+        },
+        {
+          "date": "2025-11-22",
+          "opponent": "Shem Rock",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/46f81d5ecd974c1c",
+          "nativeBoutId": "60416",
+          "nativeFighterId": "372"
+        },
+        {
+          "date": "2026-07-25",
+          "opponent": "Mike Davis",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3859314324918eeb",
+          "nativeBoutId": "82957",
+          "nativeFighterId": "372"
+        },
+        {
+          "date": "2026-10-24",
+          "opponent": "Grant Dawson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c70b4b6a8a5a3abb",
+          "nativeBoutId": "83683",
+          "nativeFighterId": "372"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83945",
+          "date": "2022-09-20",
+          "opponent": "Josh Wick",
+          "result": "win",
+          "event": "Dana White's Contender Series 55",
+          "officialSourceUrl": "https://www.ufc.com/athlete/nurullo-aliev",
+          "excludedBecause": "Complete official UFC.com athlete biography separately lists this Dana White's Contender Series result outside the UFC Octagon career; preserve its native ID and do not count its measured rounds as a UFC fight."
+        }
+      ]
+    },
+    "ottman-azaitar": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Ottman Azaitar",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/ee18ff42063174df",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ottman-azaitar",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived CSV, not a direct UFCStats scrape",
+        "method": "Complete official UFC.com dated athlete biography crosschecked with pinned Greco UFCStats-derived fighter/fight/event identities, saved UFCalendar numeric native IDs and both opposing corners, original outcomes and complete measured rounds. Officially attested DWCS feeders excluded separately. Full-cohort Stage3 CI is sole certification decision."
+      },
+      "verifiedNumericFighterIds": [
+        "2718"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "Official UFC.com complete five-bout dated UFC history from September 2019 through December 2024. Losses to Matt Frevola, Francisco Prado and Michael Johnson follow wins over Teemu Packalen and Khama Worthy. The official December 14, 2024 event-local date corresponds to December 15 in the preserved UTC native cache; this exact one-day difference is documented without rewriting source data. UFC.com graphic Win badge on the Michael Johnson bout is overridden by official dated biography and saved native winner.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/ottman-azaitar",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2019-09-07",
+          "opponent": "Teemu Packalen",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2c7b788effdc1b4c",
+          "nativeBoutId": "58965",
+          "nativeFighterId": "2718"
+        },
+        {
+          "date": "2020-09-12",
+          "opponent": "Khama Worthy",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1ed8776f978a0155",
+          "nativeBoutId": "61768",
+          "nativeFighterId": "2718"
+        },
+        {
+          "date": "2022-11-12",
+          "opponent": "Matt Frevola",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/40707ddc9fdea500",
+          "nativeBoutId": "59799",
+          "nativeFighterId": "2718"
+        },
+        {
+          "date": "2023-07-15",
+          "opponent": "Francisco Prado",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b52dccbe69864d2a",
+          "nativeBoutId": "60117",
+          "nativeFighterId": "2718"
+        },
+        {
+          "date": "2024-12-14",
+          "opponent": "Michael Johnson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9c24c03131d5b49a",
+          "nativeBoutId": "60374",
+          "nativeFighterId": "2718"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
     }
   }
 }
