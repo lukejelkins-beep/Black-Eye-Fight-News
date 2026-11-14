@@ -27912,6 +27912,214 @@
         }
       ],
       "sourceVerifiedExcludedFeederBouts": []
+    },
+    "fatima-kline": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Fatima Kline",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/745fa7b605f8e2da",
+      "officialFighterUrl": "https://www.ufc.com/athlete/fatima-kline",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived dataset, not direct UFCStats scrape",
+        "method": "Entire dated UFC.com full athlete fight biography crosschecked to distinct pinned Greco UFCStats fight results and original unchanged native UFC bout IDs/corners/results and measured rounds. Feeder contests and future bookings excluded. UTC day shift at most one day when fully identity-anchored."
+      },
+      "verifiedNumericFighterIds": [
+        "389"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "Official UFC athlete history exhaustively lists five completed UFC bouts from 13 July 2024 to 18 July 2026: unanimous loss to Jasmine Jasudavicius, TKO wins over Viktoriia Dudakova and Melissa Martinez, and decision wins over Angela Hill and Tabatha Ricci. The original saved native dates for Martinez and Hill roll one UTC day after the source-local official date; both are matched by exact native bout ID and source fight ID. No DWCS or other feeder contests are included.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/fatima-kline",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2024-07-13",
+          "opponent": "Jasmine Jasudavicius",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/582afc25875911d1",
+          "nativeBoutId": "61072",
+          "nativeFighterId": "389"
+        },
+        {
+          "date": "2025-01-11",
+          "opponent": "Viktoriia Dudakova",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f01851055b8309e0",
+          "nativeBoutId": "60353",
+          "nativeFighterId": "389"
+        },
+        {
+          "date": "2025-07-12",
+          "opponent": "Melissa Martinez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/120d66cb0da0f3c3",
+          "nativeBoutId": "60840",
+          "nativeFighterId": "389"
+        },
+        {
+          "date": "2025-11-15",
+          "opponent": "Angela Hill",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6c2c6a6e3f4d04db",
+          "nativeBoutId": "38206",
+          "nativeFighterId": "389"
+        },
+        {
+          "date": "2026-07-18",
+          "opponent": "Tabatha Ricci",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/52ddf20a10890b41",
+          "nativeBoutId": "82921",
+          "nativeFighterId": "389"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    },
+    "garrett-armfield": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Garrett Armfield",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/1effd880e1f1bb30",
+      "officialFighterUrl": "https://www.ufc.com/athlete/garrett-armfield",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived dataset, not direct UFCStats scrape",
+        "method": "Entire dated UFC.com full athlete fight biography crosschecked to distinct pinned Greco UFCStats fight results and original unchanged native UFC bout IDs/corners/results and measured rounds. Feeder contests and future bookings excluded. UTC day shift at most one day when fully identity-anchored."
+      },
+      "verifiedNumericFighterIds": [
+        "2800"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "Official UFC athlete biography exhaustively lists five UFC bouts from July 2022 through November 2024: submission loss to David Onama, KO/TKO victory over Toshiomi Kazama, decision victory over Brad Katona, submission loss to Brady Hiestand and split-decision loss to Serhiy Sidey. Pinned Greco historical fight IDs, dated UFC narratives, exact saved native fighter ID, both corners, outcomes, and measured rounds independently match. Earlier non-UFC career fights excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/garrett-armfield",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2022-07-09",
+          "opponent": "David Onama",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a652918360fe9a72",
+          "nativeBoutId": "61500",
+          "nativeFighterId": "2800"
+        },
+        {
+          "date": "2023-08-26",
+          "opponent": "Toshiomi Kazama",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/48231fbd1af53674",
+          "nativeBoutId": "52440",
+          "nativeFighterId": "2800"
+        },
+        {
+          "date": "2024-01-20",
+          "opponent": "Brad Katona",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/670e4754d8d3d172",
+          "nativeBoutId": "59869",
+          "nativeFighterId": "2800"
+        },
+        {
+          "date": "2024-06-15",
+          "opponent": "Brady Hiestand",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/fea3a0643218e16b",
+          "nativeBoutId": "61057",
+          "nativeFighterId": "2800"
+        },
+        {
+          "date": "2024-11-02",
+          "opponent": "Serhiy Sidey",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f93b074dfd47b4b4",
+          "nativeBoutId": "61138",
+          "nativeFighterId": "2800"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    },
+    "jose-ochoa": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Jose Ochoa",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/88be62d6c1e6dadb",
+      "officialFighterUrl": "https://www.ufc.com/athlete/jose-ochoa",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived dataset, not direct UFCStats scrape",
+        "method": "Entire dated UFC.com full athlete fight biography crosschecked to distinct pinned Greco UFCStats fight results and original unchanged native UFC bout IDs/corners/results and measured rounds. Feeder contests and future bookings excluded. UTC day shift at most one day when fully identity-anchored."
+      },
+      "verifiedNumericFighterIds": [
+        "26"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "UFC athlete biography exhaustively lists four completed promotional bouts through May 2026: decision loss to Lone'er Kavanagh, KO victory over Cody Durden, decision loss to Asu Almabayev and decision victory over Clayton Carpenter. Pinned independent Greco UFCStats identifies all four distinct fights and source outcomes. The cached Cody Durden bout is dated 15 June 2025 UTC versus 14 June on UFC.com; preserved exactly with verified source/native fight identity. No separate qualifier or future contest included.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/jose-ochoa",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2024-11-23",
+          "opponent": "Lone'er Kavanagh",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/38f1c83c19e99fa2",
+          "nativeBoutId": "66436",
+          "nativeFighterId": "26"
+        },
+        {
+          "date": "2025-06-14",
+          "opponent": "Cody Durden",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b39b8ff0d7de211a",
+          "nativeBoutId": "60292",
+          "nativeFighterId": "26"
+        },
+        {
+          "date": "2025-07-26",
+          "opponent": "Asu Almabayev",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/887c61da1a78a5e1",
+          "nativeBoutId": "60820",
+          "nativeFighterId": "26"
+        },
+        {
+          "date": "2026-05-09",
+          "opponent": "Clayton Carpenter",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e92d89cb2d69235e",
+          "nativeBoutId": "66062",
+          "nativeFighterId": "26"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
     }
   }
 }
