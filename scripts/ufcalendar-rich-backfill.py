@@ -32,6 +32,7 @@ ROSTER_APPROVAL = ROOT / "data/ufc-36-month-roster-approval.json"
 FEEDER_EVIDENCE = ROOT / "data/ufc-feeder-bout-evidence.json"
 VERIFIED_ROUND_FALLBACK = ROOT / "data/ufc-official-verified-round-fallback.json"
 LEGACY_UFC_EVIDENCE = ROOT / "data/ufc-official-legacy-evidence.json"
+INDEPENDENT_FULL_CAREER = ROOT / "data/ufc-independent-full-career-verification.json"
 OFFICIAL_NC_REPAIR = ROOT / "data/ufc-official-no-contest-history-repair.json"
 JUDGING = ROOT / "data/ufcalendar-judging-research.json"
 BASE = "https://api.ufcalendar.com/v1"
@@ -1654,6 +1655,172 @@ def reconcile_indexed_native_ufc_careers(state,research,coverage,today,approval)
               "approved profiles;",conflicts,"possible duplicate/conflicting identities")
     return {"added":added,"profiles":changed,"conflicts":conflicts,"identitySkipped":skipped}
 
+
+def collect_approved_full_ufc_fight_search(client,state,research,coverage,today,
+                                          approval,independent=None):
+    """One bounded, paginated UFC *fight-index* search per approved athlete.
+
+    Separate from /fighters/{id}/history, whose merged career feed may omit
+    earlier UFC fights. /fights/search?fighter=NUMERIC-ID returns winner
+    bouts only. A 25-row first page is NOT a complete career unless its
+    pagination says no additional page. Draws/NCs remain a separate event
+    audit, and source completeness can never be claimed from this endpoint.
+    """
+    approved=approved_ufc_career_cohort(approval,coverage,today)
+    if not approved:return {"calls":0,"fighters":0,"newFights":0,"newHistoryRows":0}
+    eligible={slug(f.get("slug")) for f in coverage.get("fighters",[])
+              if isinstance(f,dict) and f.get("eligibilityStatus")=="latest_observed_mma_ufc"}
+    eligible.intersection_update(approved)
+    profiles=research.get("profiles",{})
+    norm=lambda v:re.sub(r"[^a-z0-9]","",
+        unicodedata.normalize("NFKD",safe(v,140)).encode("ascii","ignore").decode().casefold())
+    def anchor_id(fighter):
+        profile=profiles.get(fighter) or {}
+        ids=set()
+        for h in profile.get("recentHistory",[]):
+            if (not isinstance(h,dict) or h.get("source")!="native" or
+                str(h.get("promotion") or "").lower()!="ufc"):continue
+            b=state.get("bouts",{}).get(str(h.get("boutId") or ""))
+            if not isinstance(b,dict) or b.get("org")!="ufc" or
+               not official_ufc_event_title(b.get("event") or ""):
+                continue
+            for side,opp in (("a","b"),("b","a")):
+                own=b.get(side) or {}
+                other=b.get(opp) or {}
+                bid=str(own.get("id") or "")
+                # The opponent is the same observed opponent in a known native
+                # UFC match. This guards against fighter name/slug aliases.
+                if (re.fullmatch(r"[1-9][0-9]{0,11}",bid) and
+                    norm(h.get("opponent")) and
+                    norm(h.get("opponent"))==norm(other.get("name")) and
+                    (own.get("slug")==fighter or
+                     (norm(own.get("name")) and
+                      norm(own.get("name"))==norm(profile.get("name"))))):
+                    ids.add(bid)
+        return next(iter(ids)) if len(ids)==1 else None
+    ids={f:anchor_id(f) for f in eligible}
+    reverse={}
+    for f,n in ids.items():
+        if n:reverse.setdefault(n,set()).add(f)
+    ledger=state.setdefault("ufcApprovedFullFightSearchChecks",{})
+    minimums=independent.get("fighters",{}) if isinstance(independent,dict) and \
+        independent.get("schema")==1 and \
+        independent.get("scope")=="ufc-independent-full-career-verification" else {}
+    candidate=[]
+    for f in eligible:
+        fid=ids.get(f)
+        if not fid or reverse.get(fid)!={f}:continue
+        prior=ledger.get(f,{})
+        if prior.get("status")=="checked":continue
+        if prior.get("status")=="retry" and str(prior.get("retryAfter") or "")>today.isoformat():
+            continue
+        known=sum(1 for h in (profiles.get(f) or {}).get("recentHistory",[])
+                  if isinstance(h,dict) and str(h.get("promotion") or "").lower()=="ufc"
+                  and h.get("source")=="native")
+        verified=minimums.get(f,{}) if isinstance(minimums,dict) else {}
+        minimum=verified.get("minimumOfficialUfcBouts") if isinstance(verified,dict) else None
+        deficit=max(0,minimum-known) if type(minimum) is int else 0
+        # Mandatory source-confirmed shortfalls first, then long known careers.
+        candidate.append((-deficit,-known,f,fid))
+    candidate.sort()
+    cap=max(1,min(12,int(client.max_calls*.035)))
+    calls=completed=new_fights=new_links=0
+    for _,_,f,fid in candidate:
+        if calls>=cap or client.stopped or client.remaining<=0 or client.calls>=client.max_calls-30:
+            break
+        prior=ledger.get(f,{})
+        cursor=prior.get("cursor") if isinstance(prior.get("cursor"),str) else None
+        path="/fights/search"+param(org="ufc",fighter=fid,limit=25,cursor=cursor)
+        before_errors=len(client.errors)
+        response=client.call(path)
+        calls+=1
+        if response is None:
+            status="retry"
+            ledger[f]={**prior,"status":status,"fighterId":fid,
+                       "checkedAt":today.isoformat(),
+                       "retryAfter":(today+dt.timedelta(days=7)).isoformat()}
+            continue
+        rows=response_rows(response)
+        invalid=0
+        for raw in rows:
+            if not isinstance(raw,dict):invalid+=1;continue
+            bout=summary_bout(raw)
+            event=raw.get("event")
+            if not bout or not isinstance(event,dict):invalid+=1;continue
+            title=safe(event.get("title"),150)
+            day=date_str(event.get("starts_at"))
+            if (event.get("org") not in ("ufc",None) or not day or
+                day>today.isoformat() or not official_ufc_event_title(title) or
+                bout.get("status")!="completed"):
+                invalid+=1;continue
+            side="a" if str(bout["a"].get("id"))==fid else (
+                "b" if str(bout["b"].get("id"))==fid else None)
+            if not side:invalid+=1;continue
+            opposite="b" if side=="a" else "a"
+            winner=str((bout.get("result") or {}).get("winnerId") or "")
+            if winner not in (str(bout["a"].get("id")),str(bout["b"].get("id"))):
+                invalid+=1;continue
+            bid=bout["id"]
+            previous=state.get("bouts",{}).get(bid)
+            if previous and (previous.get("org")!="ufc" or
+                             previous.get("eventDate")!=day):
+                invalid+=1;continue
+            if not previous:
+                state["bouts"][bid]={
+                    "id":bid,"a":bout["a"],"b":bout["b"],
+                    "event":title,"eventDate":day,"org":"ufc",
+                    "eventId":positive(event.get("id")),
+                    "status":"completed","main":bout["main"],
+                    "titleFight":bout["titleFight"],"result":bout["result"]}
+                new_fights+=1
+            profile=profiles.get(f)
+            if not isinstance(profile,dict):continue
+            history=profile.get("recentHistory")
+            if not isinstance(history,list):continue
+            if any(isinstance(h,dict) and str(h.get("boutId") or "")==bid
+                   for h in history):continue
+            opponent=safe(bout[opposite].get("name"),110)
+            if not norm(opponent):continue
+            duplicate=any(isinstance(h,dict) and
+                str(h.get("promotion") or "").lower()=="ufc" and
+                norm(h.get("opponent"))==norm(opponent) and
+                date_str(h.get("date")) and
+                abs((dt.date.fromisoformat(date_str(h["date"]))-
+                     dt.date.fromisoformat(day)).days)<=1
+                for h in history)
+            if duplicate:invalid+=1;continue
+            history.append({"date":day,"opponent":opponent,
+                "result":"win" if winner==fid else "loss",
+                "method":safe((bout.get("result") or {}).get("method"),50),
+                "promotion":"ufc","source":"native","boutId":bid,
+                "titleFight":bout["titleFight"]})
+            history.sort(key=lambda r:(str(r.get("date") or ""),
+                                       str(r.get("opponent") or "")),reverse=True)
+            new_links+=1
+            timeline=profile.get("ufcTimeline")
+            if isinstance(timeline,dict):
+                timeline["complete"]=False
+                timeline["savedHistoryHasAdditionalUfcBouts"]=True
+        next_cursor=cursor_of(response)
+        if next_cursor and (not isinstance(next_cursor,str) or len(next_cursor)>300):
+            next_cursor=None
+            invalid+=1
+        if next_cursor==cursor:next_cursor=None;invalid+=1
+        cumulative=int(prior.get("scannedRows") or 0)+len(rows)
+        ledger[f]={
+            "status":"partial" if next_cursor else "manual_review" if invalid else "checked",
+            "fighterId":fid,"checkedAt":today.isoformat(),
+            "cursor":next_cursor,"scannedRows":cumulative,
+            "invalidRows":int(prior.get("invalidRows") or 0)+invalid}
+        if not next_cursor:
+            completed+=1
+    if calls:
+        print("BEFN UFCalendar full UFC fight-index crosscheck:",calls,"requests;",
+              completed,"athletes exhausted;",new_fights,"new native IDs;",
+              new_links,"new approved career history links")
+    return {"calls":calls,"fighters":completed,"newFights":new_fights,
+            "newHistoryRows":new_links}
+
 def reconcile_approved_ufc_full_career_timelines(client,state,research,coverage,today,approval=None):
     """One bounded, identity-verified crosscheck of cached UFC career histories.
 
@@ -1983,6 +2150,9 @@ def main():
             state,research,approved36,roster_today,approval,
             read(OFFICIAL_NC_REPAIR,{}))
         reconcile_indexed_native_ufc_careers(state,research,approved36,roster_today,approval)
+        collect_approved_full_ufc_fight_search(
+            client,state,research,approved36,roster_today,approval,
+            read(INDEPENDENT_FULL_CAREER,{}))
         round_priority=approved_ufc_round_priority(approval,approved36,research,roster_today,state)
         recovery=collect_rounds(client,state,cards,archive,pfl_archive,today,coverage,
                                 approved_priority=round_priority)
