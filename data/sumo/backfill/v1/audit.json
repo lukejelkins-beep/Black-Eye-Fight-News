@@ -10,12 +10,12 @@
   "records": {
     "weight": 10,
     "rank": 308,
-    "matches": 2604
+    "matches": 3004
   },
   "independentJsaSpotchecks": {
-    "identityVerified": 2,
-    "measurementsVerified": 2,
-    "currentRecordMatches": 1,
+    "identityVerified": 4,
+    "measurementsVerified": 4,
+    "currentRecordMatches": 2,
     "comparisons": [
       {
         "sourceId": 2,
@@ -56,6 +56,46 @@
           "absences": 96
         },
         "note": "Totals differ between source captures. Reconcile result-cutoff dates before certification."
+      },
+      {
+        "sourceId": 5,
+        "name": "Takerufuji",
+        "officialSource": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4171/",
+        "officialAsOf": "2026-11 day 7",
+        "identityVerified": true,
+        "measurementsVerified": true,
+        "careerTotalsMatchAtSourceSnapshots": true,
+        "sourceTotals": {
+          "wins": 180,
+          "losses": 87,
+          "absences": 44
+        },
+        "officialTotals": {
+          "wins": 180,
+          "losses": 87,
+          "absences": 44
+        },
+        "note": "Totals matched the provided official snapshot"
+      },
+      {
+        "sourceId": 3,
+        "name": "Hakunofuji",
+        "officialSource": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4187/",
+        "officialAsOf": "2026-11 day 7",
+        "identityVerified": true,
+        "measurementsVerified": true,
+        "careerTotalsMatchAtSourceSnapshots": false,
+        "sourceTotals": {
+          "wins": 176,
+          "losses": 120,
+          "absences": 40
+        },
+        "officialTotals": {
+          "wins": 176,
+          "losses": 119,
+          "absences": 40
+        },
+        "note": "Totals differ between source captures. Reconcile result-cutoff dates before certification."
       }
     ]
   },
@@ -81,9 +121,9 @@
       "counts": {
         "weights": 2,
         "ranks": 70,
-        "matches": 400,
-        "regularMatches": 396,
-        "specialMatches": 4,
+        "matches": 600,
+        "regularMatches": 595,
+        "specialMatches": 5,
         "formalRanks": 69
       }
     },
