@@ -1,6 +1,6 @@
 {
   "schema_version": "befn.boxing.profiles.foundation.v1",
-  "generated_at": "2026-11-14T03:35:02.656Z",
+  "generated_at": "2026-11-14T03:35:25.199Z",
   "status": "RESEARCH_ONLY_NO_PRODUCTION_DEPLOY",
   "source_roster_date": "2026-11-14",
   "data_quality_rule": "Missing or unverified fight and punch data are null, never zero. Archive scouting results are not independently certified.",
@@ -14,7 +14,7 @@
     "fighters_with_validated_compubox_bouts": 7,
     "validated_compubox_bout_reports": 16,
     "matched_report_performances": 7,
-    "verified_bout_results": 5,
+    "verified_bout_results": 7,
     "published_profiles": 0
   },
   "profiles": [
@@ -10464,7 +10464,19 @@
         "WBC"
       ],
       "archived_scouting": null,
-      "verified_bouts": [],
+      "verified_bouts": [
+        {
+          "date": "2026-10-31",
+          "opponent": "Saul Alvarez",
+          "outcome": "L",
+          "method": "UD",
+          "final_round": 12,
+          "report_id": 16941,
+          "source_url": "https://api2.compuboxdata.com/round-stats/16941",
+          "verification": "result_verified_against_compubox_report",
+          "career_record_inferred": false
+        }
+      ],
       "professional_record": {
         "wins": null,
         "losses": null,
@@ -43298,7 +43310,19 @@
         "WBC"
       ],
       "archived_scouting": null,
-      "verified_bouts": [],
+      "verified_bouts": [
+        {
+          "date": "2026-10-31",
+          "opponent": "Christian Mbilli",
+          "outcome": "W",
+          "method": "UD",
+          "final_round": 12,
+          "report_id": 16941,
+          "source_url": "https://api2.compuboxdata.com/round-stats/16941",
+          "verification": "result_verified_against_compubox_report",
+          "career_record_inferred": false
+        }
+      ],
       "professional_record": {
         "wins": null,
         "losses": null,
