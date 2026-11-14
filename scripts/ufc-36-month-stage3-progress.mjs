@@ -327,7 +327,7 @@ export function auditOfficialCareerInventory(inventory,approved,census,profiles,
  return result;
 }
 
-export function auditApprovedStage3(approval,census,progress,research,archive={},feederEvidence={},finaleEvidence={},legacyEvidence={},independentEvidence={},officialInventory={}){
+export function auditApprovedStage3(approval,census,progress,research,archive={},feederEvidence={},finaleEvidence={},legacyEvidence={},independentEvidence={},officialInventory={},approvedSnapshot={}){
   if(approval?.status!=='approved'||approval?.approvedBy!=='user'||approval?.schema!==1||
      approval?.scope!=='ufc-36-month-roster')throw Error('Stage 3 roster not approved');
   const approved=arr(approval.approvedFighters);
@@ -336,6 +336,27 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
   if(census?.indexCompleteness!=='36_month_event_scan_complete'||
     census?.scope!=='ufc'||census?.activityMonths!==36)throw Error('Invalid cached UFC census');
   const current=new Map(arr(census.fighters).map(f=>[f.slug,f]));
+  // Rolling eligibility can omit approved fighters without invalidating the
+  // original owner's immutable research cohort and source-confirmed histories.
+  // A missing current row receives only its original pinned last-fight date;
+  // its eligibility and all source/native/corner/round gates remain separate.
+  let frozenRosterAnchorFallbacks=0;
+  if(approvedSnapshot?.schema===1){
+    if(approvedSnapshot.scope!=='ufc-approved-cohort-frozen-census-snapshot'||
+       approvedSnapshot.rosterAsOf!==approval.rosterAsOf||
+       approvedSnapshot.approvedRosterSha256!==approval.approvedRosterSha256||
+       Object.keys(approvedSnapshot.fighters||{}).length!==783||
+       approved.some(slug=>{
+         const row=approvedSnapshot.fighters?.[slug];
+         return row?.slug!==slug||!date(row?.lastUfcFight)||
+           row?.eligibilityStatus!=='latest_observed_mma_ufc';
+       }))throw Error('Invalid original approved UFC cohort date snapshot');
+    for(const slug of approved){
+      if(current.has(slug))continue;
+      current.set(slug,{...approvedSnapshot.fighters[slug],frozenApprovedCohortAnchor:true});
+      frozenRosterAnchorFallbacks++;
+    }
+  }
   const currentEligible=new Set(arr(census.fighters).filter(f=>
     f?.eligibilityStatus==='latest_observed_mma_ufc').map(f=>f.slug));
   const bouts=progress?.bouts||{},roundDone=progress?.roundDone||{},
@@ -807,6 +828,8 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
   const summary={
     asOf:census.asOf,approvedSnapshotAsOf:approval.rosterAsOf,
     certificationEvidenceCutoff:approval.rosterAsOf,
+    liveCensusFighterRows:arr(census.fighters).length,
+    frozenApprovedCohortAnchorFallbacks:frozenRosterAnchorFallbacks,
     approvalHash:approval.approvedRosterSha256||null,
     approvedFighters:approved.length,
     stillEligibleApproved:approved.filter(x=>currentEligible.has(x)).length,
@@ -1114,7 +1137,8 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
    read('data/ufc-official-finale-recovery.json'),
    read('data/ufc-official-legacy-evidence.json'),
    read('data/ufc-independent-full-career-verification.json'),
-   read('data/ufc-official-career-bout-inventory.json'));
+   read('data/ufc-official-career-bout-inventory.json'),
+   read('data/ufc-approved-cohort-frozen-census-20261114.json'));
  const qa=path.join(root,'qa');fs.mkdirSync(qa,{recursive:true});
  fs.writeFileSync(path.join(qa,'ufc-36-month-stage3-progress.json'),JSON.stringify(r,null,2)+'\n');
  fs.writeFileSync(path.join(qa,'ufc-36-month-stage3-progress.md'),markdownReport(r));
