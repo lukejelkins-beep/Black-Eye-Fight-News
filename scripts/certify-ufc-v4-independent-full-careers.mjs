@@ -7,7 +7,9 @@ const norm=x=>String(x??'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toL
 const out=x=>({w:'win',win:'win',l:'loss',loss:'loss',d:'draw',draw:'draw',nc:'no_contest',no_contest:'no_contest'})[String(x??'').toLowerCase()]||null;
 // Narrow, separately UFC-sourced opponent aliases; NEVER fuzzy-name matching.
 const opponentAliases={joannecalderwood:'joannewood',joannewood:'joannewood',
- veronicamacedo:'veronicahardy',veronicahardy:'veronicahardy'};
+ veronicamacedo:'veronicahardy',veronicahardy:'veronicahardy',
+ // Official UFC records name this one athlete both Heili Alateng and Alatengheili.
+ heilialateng:'alatengheili',alatengheili:'alatengheili'};
 const opponentKey=x=>opponentAliases[norm(x)]||norm(x);
 const day=x=>/^\d{4}-\d\d-\d\d$/.test(String(x||''))&&!Number.isNaN(Date.parse(x+'T00:00:00Z'));
 const dateDiff=(a,b)=>day(a)&&day(b)?Math.round((Date.parse(a+'T00:00:00Z')-Date.parse(b+'T00:00:00Z'))/86400000):999;
