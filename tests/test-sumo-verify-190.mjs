@@ -175,3 +175,16 @@ test('strict W-L and debut evidence can close terminal-null bout page without ce
  assert.equal(d.certification,'not-started');
  assert.equal(result.errors.length,0);
 });
+
+test('Obara source-complete total cannot conceal a one-win/one-loss ledger conflict',()=>{
+ const raw=JSON.parse(readFileSync(new URL('../data/sumo/backfill/v1/rikishi/242.json',import.meta.url),'utf8'));
+ const w=JSON.parse(readFileSync(new URL('../data/sumo/rikishi-index.json',import.meta.url),'utf8')).rikishi.find(x=>x.sourceId===242);
+ const v=auditRikishi(w,raw);
+ assert.equal(v.boutLedger.totalDifference,0);
+ assert.equal(v.boutLedger.winDifference,1);
+ assert.equal(v.boutLedger.lossDifference,-1);
+ assert.equal(v.readyForExternalCrosscheck,false);
+ assert.ok(v.errors.includes('career-win-count-mismatch'));
+ assert.ok(v.errors.includes('career-loss-count-mismatch'));
+ assert.equal(v.careerCertified,false);
+});
