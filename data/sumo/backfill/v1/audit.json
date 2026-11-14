@@ -4,13 +4,13 @@
   "cohortSize": 190,
   "certified": 0,
   "notAttempted": 180,
-  "collecting": 6,
-  "integrityException": 0,
-  "sourceReady": 4,
+  "collecting": 4,
+  "integrityException": 1,
+  "sourceReady": 5,
   "records": {
     "weight": 10,
     "rank": 308,
-    "matches": 3404
+    "matches": 3505
   },
   "independentJsaSpotchecks": {
     "identityVerified": 4,
@@ -110,20 +110,20 @@
     {
       "sourceId": 7,
       "name": "Kirishima",
-      "status": "still-collecting",
+      "status": "source-integrity-exception",
       "readyForExternalCrosscheck": false,
       "errors": [
         "malformed-rank-value",
         "rank-history-basho-count-mismatch"
       ],
       "warnings": [],
-      "stagesCompleted": 5,
+      "stagesCompleted": 6,
       "counts": {
         "weights": 2,
         "ranks": 70,
-        "matches": 800,
-        "regularMatches": 795,
-        "specialMatches": 5,
+        "matches": 820,
+        "regularMatches": 811,
+        "specialMatches": 9,
         "formalRanks": 69
       }
     },
@@ -176,6 +176,23 @@
         "regularMatches": 267,
         "specialMatches": 1,
         "formalRanks": 25
+      }
+    },
+    {
+      "sourceId": 8,
+      "name": "Kotoshoho",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 54,
+        "matches": 681,
+        "regularMatches": 675,
+        "specialMatches": 6,
+        "formalRanks": 53
       }
     },
     {
