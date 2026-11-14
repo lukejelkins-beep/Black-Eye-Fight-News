@@ -63,19 +63,28 @@ export function auditRikishi(w,cache){
     if(allComplete&&stage==='ranks'&&!arr.length)errors.push('rank-history-empty');
     if(allComplete&&stage==='matches'&&!arr.length&&Number(stats?.totalMatches)>0)errors.push('match-history-empty');
   }
-  // Career fights must cover the entire provider-reported fighting record.
-  // The live matches API misleadingly returned total=200 for the first page
-  // of wrestlers with 600–760 career bouts; do not certify those pages.
-  if(cache.stages?.matches?.complete&&stats?.totalMatches!=null&&
-     cache.data?.matches?.length<Number(stats.totalMatches)){
-    errors.push('match-history-shortfall');
+  // Preserve all career records including Mae-zumo and tie-break playoffs.
+  // The upstream career-stat total counts regular tournament bouts only.
+  // This reconciles Ura's 772 raw records to 763 (2 Mae-zumo + 7 day-16)
+  // and Asanoyama's 667 to 665 (2 day-16 playoff bouts).
+  const allMatches=Array.isArray(cache.data?.matches)?cache.data.matches:[];
+  const regularMatches=allMatches.filter(m=>m.division!=='Mae-zumo'&&
+    Number.isInteger(Number(m.day))&&Number(m.day)>=1&&Number(m.day)<=15);
+  const specialMatches=allMatches.filter(m=>m.division==='Mae-zumo'||Number(m.day)>15);
+  if(cache.stages?.matches?.complete&&stats?.totalMatches!=null){
+    if(regularMatches.length<Number(stats.totalMatches))errors.push('match-history-shortfall');
+    if(regularMatches.length>Number(stats.totalMatches))errors.push('career-regular-bout-count-mismatch');
+  }
+  const formalRanks=(cache.data?.ranks||[]).filter(x=>x.rank!=='Mae-zumo');
+  if(cache.stages?.ranks?.complete&&stats?.basho!=null&&formalRanks.length!==Number(stats.basho)){
+    errors.push('rank-history-basho-count-mismatch');
   }
   const uniqueErrors=[...new Set(errors)],uniqueWarnings=[...new Set(warnings)];
   const status=!allComplete?'still-collecting':uniqueErrors.length?'source-integrity-exception':'source-collected-needs-independent-verification';
   return {
     sourceId:id,name:w.shikonaEn,status,readyForExternalCrosscheck:allComplete&&!uniqueErrors.length,
     errors:uniqueErrors,warnings:uniqueWarnings,stagesCompleted:REQUIRED.filter(s=>cache.stages?.[s]?.complete).length,
-    counts:{weights:cache.data?.measurements?.length||0,ranks:cache.data?.ranks?.length||0,matches:cache.data?.matches?.length||0}
+    counts:{weights:cache.data?.measurements?.length||0,ranks:cache.data?.ranks?.length||0,matches:allMatches.length,regularMatches:regularMatches.length,specialMatches:specialMatches.length,formalRanks:formalRanks.length}
   };
 }
 export function crossCheckOfficial(w,cache,evidence){
