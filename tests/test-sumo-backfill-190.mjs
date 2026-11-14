@@ -163,3 +163,31 @@ test('100-row historical rank cap does not silently truncate long careers',()=>{
   assert.equal(d.data.ranks.length,102);
   assert.equal(d.data.ranks.filter(x=>x.rank!=='Mae-zumo').length,101);
 });
+
+test('null final match page closes only when all saved regular bouts and official source W-L agree',()=>{
+  const d=newCache(sample);
+  d.data.stats={rikishi_id:28,totalMatches:2,totalWins:1,totalLosses:1};
+  d.data.matches=[
+    {bashoId:'202611',day:1,matchNo:1,eastId:28,westId:9,winnerId:28,division:'Makuuchi'},
+    {bashoId:'202611',day:2,matchNo:2,eastId:28,westId:9,winnerId:9,division:'Makuuchi'},
+    {bashoId:'201503',day:2,matchNo:3,eastId:28,westId:9,winnerId:28,division:'Mae-zumo'}
+  ];
+  d.stages.matches.skip=3;
+  combinePage(d,'matches',{limit:200,skip:0,total:0,records:null},28);
+  assert.equal(d.stages.matches.complete,true);
+  assert.equal(d.stages.matches.skip,3);
+  assert.equal(d.data.matches.length,3);
+  assert.equal(d.stages.matches.total,null);
+});
+test('null terminal page cannot conceal missing or inconsistent career outcomes',()=>{
+  const d=newCache(sample);
+  d.data.stats={totalMatches:2,totalWins:2,totalLosses:0};
+  d.data.matches=[{bashoId:'202611',day:1,matchNo:1,eastId:28,westId:9,winnerId:28,division:'Makuuchi'}];
+  d.stages.matches.skip=1;
+  assert.throws(()=>combinePage(d,'matches',{limit:200,skip:0,total:0,records:null},28),/Expected matches collection/);
+  assert.equal(d.stages.matches.skip,1);
+  assert.equal(d.stages.matches.complete,false);
+  d.data.stats={totalMatches:1,totalWins:1,totalLosses:0};
+  assert.throws(()=>combinePage(d,'matches',{limit:200,skip:0,total:10,records:null},28),/Expected matches collection/);
+  assert.equal(d.stages.matches.skip,1);
+});
