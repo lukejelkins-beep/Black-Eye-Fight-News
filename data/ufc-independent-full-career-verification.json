@@ -1560,6 +1560,412 @@
         }
       ],
       "note": "A single officially completed UFC debut as of 14 Nov 2026, corroborated independently with exact UFCStats-derived fight link and reciprocal corners in native 83063; standalone CI proof required before counting as certified. No paid API requests."
+    },
+    "sergei-pavlovich": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "certificationStatus": "independently_verified_full_career",
+      "fighterName": "Sergei Pavlovich",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/f14cf73e51b29254",
+      "officialFighterUrl": "https://www.ufc.com/athlete/sergei-pavlovich",
+      "earliestOfficialUfcBout": "2018-11-24",
+      "latestCompletedOfficialUfcBout": "2026-05-30",
+      "verifiedUfcRecord": {
+        "wins": 9,
+        "losses": 3,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "55"
+      ],
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-14",
+        "sourceSnapshotLatestEvent": "2026-11-07",
+        "independentFullHistoryUrl": "https://thefightalgorithm.com/fighters/sergei-pavlovich",
+        "method": "Exhaustive UFCStats-derived historical fighter and 9,015 fight-result rows, current UFC.com detailed UFC-only fight history and separately compiled 12-bout listing one-to-one reconciled with numeric native corner, winner and complete measured rounds. UFCStats live page blocked 502; exact historical fighter and fight URLs retained."
+      },
+      "nativeIdentityReconciliation": "Every official source fight maps one-to-one to numeric UFC native fighter identity 55; aliases and UTC shifts are retained explicitly, without rewriting cached records.",
+      "sourceDateReconciliations": [
+        {
+          "opponent": "Tai Tuivasa",
+          "officialEventDate": "2022-12-03",
+          "savedUtcDate": "2022-12-04",
+          "offsetDays": 1,
+          "nativeBoutId": "59768"
+        }
+      ],
+      "nameDiacriticReconciliations": [],
+      "sourceCoverageSummary": {
+        "sourceRows": 12,
+        "officialUfcBiographyDatedBouts": 12,
+        "uniqueNativeBoutIds": 12,
+        "uniqueUfcStatsFightUrls": 12,
+        "measuredBouts": 12,
+        "sourceOrSavedUnmatched": 0
+      },
+      "bouts": [
+        {
+          "date": "2026-05-30",
+          "opponent": "Tallison Teixeira",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f74e4afdf6ae29d1",
+          "eventUrl": "https://ufcstats.com/event-details/1e75e6c9de99fa76",
+          "nativeBoutId": "66103",
+          "nativeFighterId": "55",
+          "savedUtcDate": "2026-05-30",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2025-08-23",
+          "opponent": "Waldo Cortes Acosta",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5538d15c4eeac3b3",
+          "eventUrl": "https://ufcstats.com/event-details/754968e325d6f60d",
+          "nativeBoutId": "65913",
+          "nativeFighterId": "55",
+          "savedUtcDate": "2025-08-23",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2025-02-01",
+          "opponent": "Jairzinho Rozenstruik",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3c00f34f20c8a189",
+          "eventUrl": "https://ufcstats.com/event-details/80dbeb1dd5b53e64",
+          "nativeBoutId": "38554",
+          "nativeFighterId": "55",
+          "savedUtcDate": "2025-02-01",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2024-06-22",
+          "opponent": "Alexander Volkov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/cd3bb8a2824fbf22",
+          "eventUrl": "https://ufcstats.com/event-details/b12a1d19ee383b7c",
+          "nativeBoutId": "38807",
+          "nativeFighterId": "55",
+          "savedUtcDate": "2024-06-22",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2023-11-11",
+          "opponent": "Tom Aspinall",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/db49619221b282af",
+          "eventUrl": "https://ufcstats.com/event-details/5a558ba1ff5e9121",
+          "nativeBoutId": "59961",
+          "nativeFighterId": "55",
+          "savedUtcDate": "2023-11-11",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2023-04-22",
+          "opponent": "Curtis Blaydes",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/856468ba24a37fcc",
+          "eventUrl": "https://ufcstats.com/event-details/6fb1ba67bef41b37",
+          "nativeBoutId": "61272",
+          "nativeFighterId": "55",
+          "savedUtcDate": "2023-04-22",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2022-12-03",
+          "opponent": "Tai Tuivasa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/972e17c1b98fca06",
+          "eventUrl": "https://ufcstats.com/event-details/b23388ff8ac6637b",
+          "nativeBoutId": "59768",
+          "nativeFighterId": "55",
+          "savedUtcDate": "2022-12-04",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2022-07-30",
+          "opponent": "Derrick Lewis",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/52f87252af59e23b",
+          "eventUrl": "https://ufcstats.com/event-details/b0a6124751a56bc4",
+          "nativeBoutId": "59536",
+          "nativeFighterId": "55",
+          "savedUtcDate": "2022-07-30",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2022-03-19",
+          "opponent": "Shamil Abdurakhimov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ae989e21c3839b49",
+          "eventUrl": "https://ufcstats.com/event-details/1d00756835ca67c9",
+          "nativeBoutId": "61427",
+          "nativeFighterId": "55",
+          "savedUtcDate": "2022-03-19",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2019-10-26",
+          "opponent": "Maurice Greene",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/cc477d322638ba30",
+          "eventUrl": "https://ufcstats.com/event-details/df05aa15b2d66f57",
+          "nativeBoutId": "62096",
+          "nativeFighterId": "55",
+          "savedUtcDate": "2019-10-26",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2019-04-20",
+          "opponent": "Marcelo Golm",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2a2b00e9bfd089cc",
+          "eventUrl": "https://ufcstats.com/event-details/7dcf06c1967801c1",
+          "nativeBoutId": "59069",
+          "nativeFighterId": "55",
+          "savedUtcDate": "2019-04-20",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2018-11-24",
+          "opponent": "Alistair Overeem",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1c43b38c1f4bdbe2",
+          "eventUrl": "https://ufcstats.com/event-details/de25520d54eab12d",
+          "nativeBoutId": "58946",
+          "nativeFighterId": "55",
+          "savedUtcDate": "2018-11-24",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        }
+      ]
+    },
+    "tanner-boser": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "certificationStatus": "independently_verified_full_career",
+      "fighterName": "Tanner Boser",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/04c8b08b16a5b99e",
+      "officialFighterUrl": "https://www.ufc.com/athlete/tanner-boser",
+      "earliestOfficialUfcBout": "2019-10-18",
+      "latestCompletedOfficialUfcBout": "2026-10-17",
+      "verifiedUfcRecord": {
+        "wins": 6,
+        "losses": 6,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "562"
+      ],
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-14",
+        "sourceSnapshotLatestEvent": "2026-11-07",
+        "independentFullHistoryUrl": "https://thefightalgorithm.com/fighters/tanner-boser",
+        "method": "Exhaustive UFCStats-derived historical fighter and 9,015 fight-result rows, current UFC.com detailed UFC-only fight history and separately compiled 12-bout listing one-to-one reconciled with numeric native corner, winner and complete measured rounds. UFCStats live page blocked 502; exact historical fighter and fight URLs retained."
+      },
+      "nativeIdentityReconciliation": "Every official source fight maps one-to-one to numeric UFC native fighter identity 562; aliases and UTC shifts are retained explicitly, without rewriting cached records.",
+      "sourceDateReconciliations": [
+        {
+          "opponent": "Andrei Arlovski",
+          "officialEventDate": "2020-11-07",
+          "savedUtcDate": "2020-11-08",
+          "offsetDays": 1,
+          "nativeBoutId": "66281"
+        },
+        {
+          "opponent": "Raphael Pessoa",
+          "officialEventDate": "2020-07-25",
+          "savedUtcDate": "2020-07-26",
+          "offsetDays": 1,
+          "nativeBoutId": "65647"
+        }
+      ],
+      "nameDiacriticReconciliations": [
+        {
+          "sourceOpponent": "Ion Cutelaba",
+          "savedOpponent": "Ion Cuțelaba",
+          "nativeOpponent": "Ion Cuțelaba",
+          "nativeBoutId": "53841"
+        }
+      ],
+      "sourceCoverageSummary": {
+        "sourceRows": 12,
+        "officialUfcBiographyDatedBouts": 12,
+        "uniqueNativeBoutIds": 12,
+        "uniqueUfcStatsFightUrls": 12,
+        "measuredBouts": 12,
+        "sourceOrSavedUnmatched": 0
+      },
+      "bouts": [
+        {
+          "date": "2026-10-17",
+          "opponent": "Jhonata Diniz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/856716a6ee05e0ca",
+          "eventUrl": "https://ufcstats.com/event-details/55e94a9b525dcf45",
+          "nativeBoutId": "83622",
+          "nativeFighterId": "562",
+          "savedUtcDate": "2026-10-17",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2026-04-18",
+          "opponent": "Gokhan Saricam",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/85c7a0f44aa3e10a",
+          "eventUrl": "https://ufcstats.com/event-details/c3ac8d0da7b05772",
+          "nativeBoutId": "66096",
+          "nativeFighterId": "562",
+          "savedUtcDate": "2026-04-18",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2023-08-05",
+          "opponent": "Aleksa Camur",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2c0496a5f39ab8a4",
+          "eventUrl": "https://ufcstats.com/event-details/6f81b6de2557739a",
+          "nativeBoutId": "61145",
+          "nativeFighterId": "562",
+          "savedUtcDate": "2023-08-05",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2023-04-15",
+          "opponent": "Ion Cutelaba",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/995e79b951da945b",
+          "eventUrl": "https://ufcstats.com/event-details/15b1b21cd743d652",
+          "nativeBoutId": "53841",
+          "nativeFighterId": "562",
+          "savedUtcDate": "2023-04-15",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2022-09-17",
+          "opponent": "Rodrigo Nascimento",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3cbd3565dd631cc4",
+          "eventUrl": "https://ufcstats.com/event-details/8d477c3fbe001f9d",
+          "nativeBoutId": "61181",
+          "nativeFighterId": "562",
+          "savedUtcDate": "2022-09-17",
+          "sourceMethod": "Decision - Split",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2021-06-26",
+          "opponent": "Ovince Saint Preux",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d40eae4425092219",
+          "eventUrl": "https://ufcstats.com/event-details/a1d6b308781aa2f5",
+          "nativeBoutId": "59472",
+          "nativeFighterId": "562",
+          "savedUtcDate": "2021-06-26",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2021-06-05",
+          "opponent": "Ilir Latifi",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0716a38768a34789",
+          "eventUrl": "https://ufcstats.com/event-details/3b2485c8d5c8b580",
+          "nativeBoutId": "59502",
+          "nativeFighterId": "562",
+          "savedUtcDate": "2021-06-05",
+          "sourceMethod": "Decision - Split",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2020-11-07",
+          "opponent": "Andrei Arlovski",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f0cf92b063735164",
+          "eventUrl": "https://ufcstats.com/event-details/41dca66f9dadfc86",
+          "nativeBoutId": "66281",
+          "nativeFighterId": "562",
+          "savedUtcDate": "2020-11-08",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2020-07-25",
+          "opponent": "Raphael Pessoa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/88d3b6b833e31712",
+          "eventUrl": "https://ufcstats.com/event-details/dde70a112e053a6c",
+          "nativeBoutId": "65647",
+          "nativeFighterId": "562",
+          "savedUtcDate": "2020-07-26",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2020-06-27",
+          "opponent": "Philipe Lins",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/75570ea2da94a4fb",
+          "eventUrl": "https://ufcstats.com/event-details/c32eab6c2119e989",
+          "nativeBoutId": "66200",
+          "nativeFighterId": "562",
+          "savedUtcDate": "2020-06-27",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2019-12-21",
+          "opponent": "Ciryl Gane",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3637e661b6854b49",
+          "eventUrl": "https://ufcstats.com/event-details/74fefd43f073cd2f",
+          "nativeBoutId": "61967",
+          "nativeFighterId": "562",
+          "savedUtcDate": "2019-12-21",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2019-10-18",
+          "opponent": "Daniel Spitz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1e3d3545b6dd13a7",
+          "eventUrl": "https://ufcstats.com/event-details/3ae10ac4df3df05c",
+          "nativeBoutId": "65745",
+          "nativeFighterId": "562",
+          "savedUtcDate": "2019-10-18",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        }
+      ]
     }
   }
 }
