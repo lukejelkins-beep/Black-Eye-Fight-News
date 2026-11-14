@@ -106,8 +106,12 @@ export function combinePage(doc,stage,result,id){
   // Some historical list endpoints enforce an undocumented 100-row page,
   // even when limit=200 is requested. For rank history, compare against the
   // fighter's independent career basho count rather than trusting page size.
+  const knownBasho=Number(doc.data.stats?.basho)||0;
+  const isFormalRank=x=>x.rank!=='Mae-zumo'&&x.rank!=='Banzuke-gai';
+  const formalRanks=stage==='ranks'?
+    doc.data.ranks.filter(isFormalRank).length+items.filter(isFormalRank).length:0;
   const more=direct?(items.length===PAGE_SIZE||
-    (stage==='ranks'&&Number(doc.data.stats?.basho)>next)):
+    (stage==='ranks'&&knownBasho>formalRanks)):
     (result.has_more??result.hasMore??(stage==='matches'
       ?items.length===PAGE_SIZE||(total!==null&&total>next)
       :(total===null?null:next<total)));
