@@ -49,3 +49,20 @@ test('source discrepancies do not become certified profiles',()=>{
  assert.equal(v.sourceId,28);
  assert.ok(v.problems.includes('career-win-count-mismatch'));
 });
+
+test('Obara research model reconciles official forfeit loss while raw API cache remains unchanged',()=>{
+ const {w,source}=cache(242);
+ const manifest=JSON.parse(readFileSync(new URL('../data/sumo/backfill/v1/official-bout-corrections.json',import.meta.url),'utf8'));
+ const original=source.data.matches.find(m=>m.bashoId==='202207'&&m.day===12);
+ assert.equal(original.winnerId,242);
+ const result=buildResearchProfile(w,source,manifest);
+ assert.equal(result.status,'source-regular-bouts-reconciled-external-verification-pending');
+ assert.equal(result.career.wins,249);
+ assert.equal(result.career.losses,209);
+ assert.equal(result.boutHistory.officialBoutCorrections.length,1);
+ assert.equal(result.boutHistory.officialBoutCorrections[0].newWinnerId,213);
+ assert.equal(result.headToHead.reduce((n,x)=>n+x.wins,0),249);
+ assert.equal(result.headToHead.reduce((n,x)=>n+x.losses,0),209);
+ assert.equal(original.winnerId,242);
+ assert.equal(result.releaseGates.certified,false);
+});
