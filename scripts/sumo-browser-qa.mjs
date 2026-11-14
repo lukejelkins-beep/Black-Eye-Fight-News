@@ -74,13 +74,14 @@ async function testSite(viewport,isMobile,label) {
   await snap(page,label+'-profile',{fullPage:false});
   // Full pair-specific history is distinct from a single basho's opponent record.
   await open(page,'headtohead/8850/8857','.sumo-h2h-hero');
-  await page.waitForFunction(()=>document.querySelectorAll('.sumo-h2h-order+ol li').length===6,{timeout:30000});
+  await page.waitForFunction(()=>document.querySelectorAll('.sumo-h2h-order+ol li').length===6,null,{timeout:30000});
   const history=await page.locator('#sumo-main').innerText();
   assertContains(history,'Career head-to-head','dedicated H2H view');
   assertContains(history,'1–5','source-confirmed all-time series');
   assert.equal(await page.locator('.sumo-h2h-hero+.section-head').count(),1,'Head-to-head history heading shown');
   assert.equal(await page.locator('.sumo-h2h-order+ol li').count(),6,'Every source-confirmed bout is shown');
   assertContains(history,'Tsukiotoshi','actual kimarite recorded');
+  assertContains(history,'Independent JSA full-career certification remains pending','research is not mislabeled as JSA-certified');
   assertContains(history,'Fusen (forfeit; no technique)','forfeit is not a winning technique');
   await page.locator('[data-h2h-order="oldest"]').click();
   assertContains(await page.locator('.sumo-h2h-order+ol li').first().innerText(),'November 2025','chronological oldest-first sort');
