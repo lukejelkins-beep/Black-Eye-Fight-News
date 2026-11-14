@@ -1,0 +1,27 @@
+name: Validate UFC 243 Bruno historical NC recovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'data/ufc-official-career-bout-inventory.json'
+      - 'scripts/ufcalendar-rich-backfill.py'
+      - 'tests/test_ufc_full_career_cache.py'
+      - '.github/workflows/validate-ufc-bruno-2019-nc.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-nc-recovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Guard native older IDs and NC recovery without provider requests
+        run: |
+          python -m py_compile scripts/ufcalendar-rich-backfill.py
+          python -m unittest discover -s tests -p 'test_ufc_full_career_cache.py' -v
+      - name: Preserve existing safe provider and result handling
+        run: python -m unittest discover -s tests -p 'test_ufcalendar_rich_backfill.py' -v
