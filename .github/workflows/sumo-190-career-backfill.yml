@@ -1,0 +1,65 @@
+name: BEFN Sumo 190-rikishi research backfill (every 5 minutes)
+
+on:
+  schedule:
+    # GitHub Actions scheduled workflows run from the DEFAULT branch only.
+    # The job itself checks out and writes ONLY the isolated research branch.
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: befn-sumo-190-career-cache-single-writer
+  cancel-in-progress: false
+
+jobs:
+  research-backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Check out research branch, never main or the Render test branch
+        uses: actions/checkout@v4
+        with:
+          ref: research/sumo-190-career-cache-20261114
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Install Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate bounded source backfill
+        run: |
+          node --check scripts/sumo-backfill-190.mjs
+          node --test tests/test-sumo-backfill-190.mjs
+      - name: Collect only missing research data
+        env:
+          SUMO_REQUEST_BUDGET: '8'
+          SUMO_FIGHTERS_PER_RUN: '2'
+        run: node scripts/sumo-backfill-190.mjs
+      - name: Checkpoint cached results on research branch only
+        env:
+          TARGET_BRANCH: research/sumo-190-career-cache-20261114
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "BEFN Sumo research cache"
+          git config user.email "sumo-research@users.noreply.github.com"
+          git add data/sumo/backfill/v1/
+          if git diff --cached --quiet; then
+            echo "No missing stages or new records: no commit and no repeated API work."
+            exit 0
+          fi
+          git commit -m "Research: checkpoint verified API response pages, not fighter certification [skip ci]"
+          for attempt in 1 2 3 4; do
+            git fetch origin "$TARGET_BRANCH"
+            git rebase "origin/$TARGET_BRANCH"
+            if git push origin "HEAD:$TARGET_BRANCH"; then
+              echo "Checkpoint pushed exclusively to $TARGET_BRANCH"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "Could not push checkpoint without losing another writer's changes." >&2
+          exit 1
