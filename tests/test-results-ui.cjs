@@ -7,7 +7,8 @@ const fixture={events:[{id:'qa-card',name:'QA fight card',date:'2026-11-13',stat
  {id:'qa-pending',eventId:'qa-card',event:'QA fight card',date:'2026-11-13',sport:'MMA',status:'pending',winner:null,section:'Prelims',order:0,source:'https://example.org/card',fighters:[{name:'Gamma Pending'},{name:'Delta Pending'}]}
 ]};
 let payload=fixture,fail=false,calls=0;const timers=[];
-const document={hidden:false,createElement:()=>({textContent:''}),head:{appendChild(){}},addEventListener(){},querySelectorAll(){return []},getElementById(){return null}};
+let root=null;const handlers={};
+const document={activeElement:null,hidden:false,createElement:()=>({textContent:''}),head:{appendChild(){}},addEventListener(name,fn){(handlers[name]??=[]).push(fn)},querySelectorAll(){return []},getElementById(id){return id==='results-content'?root:null}};
 const window={BEFNFightsUI:{view:'results'}};
 const location={href:'https://example.org/#fights',hash:'#fights'};
 const context={window,document,location,URL,Date:Clock,Intl,AbortSignal,
@@ -27,6 +28,32 @@ const tick=()=>new Promise(resolve=>setImmediate(resolve));
  assert(html.includes('2-0')&&html.includes('Record unavailable'),'Missing record stays unknown');
  assert(!html.includes('Round null')&&!html.includes('undefined'));
  assert(!html.includes('Gamma Pending winner'),'No winner inferred for pending bout');
+ // Minimal DOM contract: replacing innerHTML detaches descendants and clears focus.
+ const outside={dataset:{},name:'outside control'};
+ let buttons=[];
+ root={
+  contains(node){return buttons.includes(node)},
+  querySelectorAll(selector){return selector==='[data-result-event-tab]'?buttons:[]},
+  set innerHTML(value){
+   if(this.contains(document.activeElement))document.activeElement=null;
+   buttons=[...value.matchAll(/data-result-event-tab="([^"]+)" data-result-card-section="([^"]+)"/g)].map(([,event,section])=>({
+    dataset:{resultEventTab:event,resultCardSection:section},
+    closest(selector){return selector==='[data-result-event-tab]'?this:null},
+    focus(options){assert.equal(options.preventScroll,true);document.activeElement=this}
+   }));
+  }
+ };
+ root.innerHTML=html;
+ const selected=buttons.find(b=>b.dataset.resultCardSection==='prelims');
+ assert(selected,'Fixture provides a real rendered prelim button');
+ document.activeElement=selected;
+ for(const handler of handlers.click)handler({target:selected});
+ assert.notEqual(document.activeElement,selected,'Original focused node was replaced');
+ assert.equal(document.activeElement?.dataset.resultCardSection,'prelims','Card selection preserves keyboard focus on replacement');
+ document.activeElement=outside;
+ for(const handler of handlers.input)handler({target:{id:'results-search',value:''}});
+ assert.equal(document.activeElement,outside,'A refresh cannot steal focus from outside results');
+ root=null;
  let start=calls;
  now+=30000;poll();await tick();assert.equal(calls,start,'Idle feed does not fetch at 30 seconds');
  now+=270000;poll();await tick();assert.equal(calls,start+1,'Idle feed fetches at five minutes');

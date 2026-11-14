@@ -254,11 +254,20 @@ function hydrateResultPhotos(){
  function update(){
  const el=document.getElementById('results-content');
  if(el){
+  // Re-rendering removes the active section button. Preserve keyboard position
+  // only inside this list; background refreshes must not steal outside focus.
+  const focused=document.activeElement;
+  const focusedTab=focused&&el.contains(focused)?focused.dataset:null;
   const closed=new Set([...el.querySelectorAll('details[data-card]:not([open])')].map(x=>x.dataset.card));
   const expanded=new Set([...el.querySelectorAll('.befn-result-list-event[open]')].map(x=>x.dataset.resultEvent));
   el.innerHTML=content();
   el.querySelectorAll('details[data-card]').forEach(x=>{if(closed.has(x.dataset.card))x.open=false});
   el.querySelectorAll('.befn-result-list-event').forEach(x=>{if(expanded.has(x.dataset.resultEvent))x.open=true});
+  if(focusedTab?.resultEventTab){
+   [...el.querySelectorAll('[data-result-event-tab]')].find(x=>
+    x.dataset.resultEventTab===focusedTab.resultEventTab&&
+    x.dataset.resultCardSection===focusedTab.resultCardSection)?.focus({preventScroll:true});
+  }
   hydrateResultPhotos();
  }
 }
