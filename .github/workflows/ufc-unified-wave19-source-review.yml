@@ -1,11 +1,5 @@
 name: UFC wave19 Donte/Kody one-time source-native review (research only)
 on:
-  push:
-    branches: [research/ufc-wave19-donte-kody-20261114]
-    paths:
-      - 'data/ufc-unified-wave19-official-source-review-20261114.json'
-      - 'scripts/ufc-unified-wave19-source-review.mjs'
-      - '.github/workflows/ufc-unified-wave19-source-review.yml'
   workflow_dispatch:
 permissions:
   contents: read
