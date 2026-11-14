@@ -7,7 +7,7 @@
   "nonproduction": true,
   "sourceMethod": "full_official_ufc_fight_listing_crosscheck",
   "independentSourceDataset": "Greco1899 UFCStats-derived historical results, source snapshot through 2026-11-07; source-linked fight detail URLs are references, not a claim of direct UFCStats website access",
-  "notes": "Independent exhaustive scope crosschecked against UFC official fighter bios, last fight/debut, and UFCStats-derived third party 12-fight lists. Native IDs, corners, winners, measured metrics and date offsets must be validated again in CI; do not count certs from this file alone. Event titles are display-only and are not exact-match certification requirements. Narrow opponent name aliases are independently grounded in official UFC biographies. Seven additional fighter-by-fighter full official UFC biographies independently reviewed against the pinned 8 Nov Greco UFCStats source, 94 source-linked bouts across eight candidates, and strict native identity/metrics preflight. Sean Woodson excluded from certification due to unresolved result and DWCS row, not counted.",
+  "notes": "Independent exhaustive scope crosschecked against UFC official fighter bios, last fight/debut, and UFCStats-derived third party 12-fight lists. Native IDs, corners, winners, measured metrics and date offsets must be validated again in CI; do not count certs from this file alone. Event titles are display-only and are not exact-match certification requirements. Narrow opponent name aliases are independently grounded in official UFC biographies. Seven additional fighter-by-fighter full official UFC biographies independently reviewed against the pinned 8 Nov Greco UFCStats source, 94 source-linked bouts across eight candidates, and strict native identity/metrics preflight. Sean Woodson excluded from certification due to unresolved result and DWCS row, not counted. Sean Woodson independently verified: exactly 11 UFC bouts including UFC 278 split draw and excluding source-confirmed 2019 DWCS non-UFC bout (native id 84014), without changing collector-owned cache.",
   "fighters": {
     "maryna-moroz": {
       "fighterName": "Maryna Moroz",
@@ -1264,6 +1264,150 @@
           "nativeBoutId": "61753",
           "nativeSavedDate": "2021-04-24",
           "originalOfficialDate": "2021-04-24"
+        }
+      ]
+    },
+    "sean-woodson": {
+      "fighterName": "Sean Woodson",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/sean-woodson",
+      "fighterUrl": "https://ufcstats.com/fighter-details/4682bc59d5f55145",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 11,
+      "uniqueNativeFighterId": "1120",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/sean-woodson",
+        "https://www.ufc.com/news/official-scorecards-ufc-278-usman-vs-edwards-2-salt-lake-city",
+        "https://www.ufc.com/news/ufc-278-usman-vs-edwards-2-results-highlights-winner-interviews-salt-lake-city",
+        "https://espnpressroom.com/press-release/dana-whites-contender-series-episode-five-july-23-on-espn/",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceScopeVerified": "UFC 2019-10-18 debut through UFC 2026-08-29 latest completed official fight: all eleven qualifying UFC bouts source-linked. Separate 2019-07-23 DWCS Terrance McKinney feeder bout is excluded on official UFC biography; native 59846 vs Luis Saldana is official UFC 278 split draw, native method draw with null winner under completed status as independently corroborated by UFC official scorecards.",
+      "sourceVerifiedFeederExcluded": [
+        {
+          "boutId": "84014",
+          "date": "2019-07-23",
+          "opponent": "Terrance McKinney",
+          "officialSourceUrl": "https://www.ufc.com/athlete/sean-woodson"
+        }
+      ],
+      "sourceVerifiedDraw": [
+        {
+          "boutId": "59846",
+          "date": "2022-08-20",
+          "opponent": "Luis Saldana",
+          "result": "draw",
+          "officialSourceUrl": "https://www.ufc.com/news/official-scorecards-ufc-278-usman-vs-edwards-2-salt-lake-city"
+        }
+      ],
+      "dateDiscrepancies": [
+        {
+          "boutId": "60376",
+          "officialLocalDate": "2024-12-14",
+          "nativeSavedDate": "2024-12-15",
+          "reason": "event local date versus cached UTC day"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-08-29",
+          "opponent": "Jack Jenkins",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8a980234dab7ae43",
+          "nativeBoutId": "83379",
+          "nativeSavedDate": "2026-08-29",
+          "originalOfficialDate": "2026-08-29"
+        },
+        {
+          "date": "2025-04-12",
+          "opponent": "Dan Ige",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/fc43d60cbd6b0e6a",
+          "nativeBoutId": "60971",
+          "nativeSavedDate": "2025-04-12",
+          "originalOfficialDate": "2025-04-12"
+        },
+        {
+          "date": "2024-12-14",
+          "opponent": "Fernando Padilla",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ebeeed2595266bbc",
+          "nativeBoutId": "60376",
+          "nativeSavedDate": "2024-12-15",
+          "originalOfficialDate": "2024-12-14"
+        },
+        {
+          "date": "2024-05-11",
+          "opponent": "Alex Caceres",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8aa07b6cc40f0cb2",
+          "nativeBoutId": "60933",
+          "nativeSavedDate": "2024-05-11",
+          "originalOfficialDate": "2024-05-11"
+        },
+        {
+          "date": "2024-01-20",
+          "opponent": "Charles Jourdain",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/331ddc1141e934d1",
+          "nativeBoutId": "59870",
+          "nativeSavedDate": "2024-01-20",
+          "originalOfficialDate": "2024-01-20"
+        },
+        {
+          "date": "2023-08-05",
+          "opponent": "Dennis Buzukja",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/436a1ce6b0c6b4bb",
+          "nativeBoutId": "61151",
+          "nativeSavedDate": "2023-08-05",
+          "originalOfficialDate": "2023-08-05"
+        },
+        {
+          "date": "2022-08-20",
+          "opponent": "Luis Saldana",
+          "result": "draw",
+          "fightUrl": "https://ufcstats.com/fight-details/2ac9b3ccb43422d8",
+          "nativeBoutId": "59846",
+          "nativeSavedDate": "2022-08-20",
+          "originalOfficialDate": "2022-08-20"
+        },
+        {
+          "date": "2021-11-13",
+          "opponent": "Collin Anglin",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a27a355f52883f3e",
+          "nativeBoutId": "61652",
+          "nativeSavedDate": "2021-11-13",
+          "originalOfficialDate": "2021-11-13"
+        },
+        {
+          "date": "2021-06-05",
+          "opponent": "Youssef Zalal",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/73a83b2595416f0a",
+          "nativeBoutId": "59507",
+          "nativeSavedDate": "2021-06-05",
+          "originalOfficialDate": "2021-06-05"
+        },
+        {
+          "date": "2020-06-27",
+          "opponent": "Julian Erosa",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8a8fea2c10512434",
+          "nativeBoutId": "66198",
+          "nativeSavedDate": "2020-06-27",
+          "originalOfficialDate": "2020-06-27"
+        },
+        {
+          "date": "2019-10-18",
+          "opponent": "Kyle Bochniak",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9c3fb95a1558b38d",
+          "nativeBoutId": "65741",
+          "nativeSavedDate": "2019-10-18",
+          "originalOfficialDate": "2019-10-18"
         }
       ]
     }
