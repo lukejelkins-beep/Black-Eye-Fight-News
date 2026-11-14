@@ -14,11 +14,27 @@ const feeder=event=>/(?:\bdwcs\b|contender\s+series|road\s+to\s+ufc)/i.test(Stri
 const aliasMatches=(name,expect)=>norm(name)===norm(expect)||
  // Candidate matching ONLY: Bruno Silva can mean another distinct athlete.
  (norm(expect)==='brunogustavodasilva'&&norm(name)==='brunosilva');
+const correctCorners=(fight,source,opponent)=>{
+ const a=aliasMatches(fight?.a?.name,source.fighterName)&&norm(fight?.b?.name)===norm(opponent);
+ const c=aliasMatches(fight?.b?.name,source.fighterName)&&norm(fight?.a?.name)===norm(opponent);
+ return a===c?null:(a?'a':'b');
+};
 const validFight=(fight,source,opponent)=>fight?.org==='ufc'&&!feeder(fight.event)&&
- dayClose(fight.eventDate,source.date)&&
- [fight.a?.name,fight.b?.name].some(n=>aliasMatches(n,source.fighterName))&&
- [fight.a?.name,fight.b?.name].some(n=>norm(n)===norm(opponent));
-function comparableName(a,b){return norm(a)===norm(b);}
+ dayClose(fight.eventDate,source.date)&&!!correctCorners(fight,source,opponent);
+const matchNativeOutcome=(fight,source,opponent)=>{
+ const own=correctCorners(fight,source,opponent);
+ if(!own)return false;
+ const status=String(fight.status||'').toLowerCase();
+ if(status==='no_contest'||status==='nc')return outcome(source.result)==='no_contest';
+ if(status==='draw')return outcome(source.result)==='draw';
+ if(status!=='completed')return false;
+ const ownId=String(fight[own]?.id||''),otherId=String(fight[own==='a'?'b':'a']?.id||'');
+ const winner=String(fight.result?.winnerId||'');
+ return !!winner&&winner!==otherId&&winner===ownId?outcome(source.result)==='win':
+  !!winner&&winner===otherId?outcome(source.result)==='loss':false;
+};
+const comparableName=(a,b,boutId)=>norm(a)===norm(b)||
+ (String(boutId)==='83254'&&[norm(a),norm(b)].sort().join('|')==='hyunsungpark|parkhyunsung');
 export function auditOfficialReverseEvidence(inventory,research,progress,approval){
  if(approval?.schema!==1||approval?.scope!=='ufc-36-month-roster'||
     approval?.status!=='approved'||approval?.rosterAsOf!=='2026-11-14'||
@@ -40,16 +56,17 @@ export function auditOfficialReverseEvidence(inventory,research,progress,approva
  for(const source of target.bouts||[]){
   const sourceEvidence={...source,fighterName:target.fighterName};
   if(!outcome(source.result)||!source.date||!source.opponent)throw Error('Invalid official source bout');
-  const alreadyLinked=ownHistory.some(h=>dayClose(h.date,source.date)&&comparableName(h.opponent,source.opponent)&&outcome(h.result)===outcome(source.result));
+  const alreadyLinked=ownHistory.some(h=>dayClose(h.date,source.date)&&comparableName(h.opponent,source.opponent,h.boutId)&&outcome(h.result)===outcome(source.result));
   const candidates=new Map();
   const add=(id,kind,opponentSlug,detail={})=>{
    if(!/^[1-9]\d*$/.test(String(id)))return;
    const match=native[String(id)]||null;
    const sourceDateValid=!!match&&validFight(match,sourceEvidence,source.opponent);
+   const fullResultMatch=sourceDateValid&&matchNativeOutcome(match,sourceEvidence,source.opponent);
    const previous=candidates.get(String(id));
    const evidence={nativeFightId:String(id),foundVia:[...new Set([...(previous?.foundVia||[]),kind])],
     opponentSlug:opponentSlug||previous?.opponentSlug||null,
-    indexedFightAgrees:sourceDateValid,
+    indexedFightAgrees:sourceDateValid,verifiedResultAlsoMatches:fullResultMatch,
     event:match?.event||detail.event||null,
     nativeFighterIds:match?[String(match.a?.id||''),String(match.b?.id||'')].filter(Boolean):[],
     review:'source_matching_candidate_not_authorized_for_autolink'};
