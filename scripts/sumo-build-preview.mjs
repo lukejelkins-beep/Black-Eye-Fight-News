@@ -49,6 +49,27 @@ const previousBanzuke = {};
 for (const div of TRACKED_DIVISIONS) {
   previousBanzuke[div] = await collectOptional(() => client.banzuke(PREVIOUS_BASHO, div), div + ' previous banzuke');
 }
+// Only separately published torikumi can authorise an upcoming pairing.
+// The banzuke's empty-result opponent slots are NOT a verified schedule.
+function upcomingDayFromBasho(bashoData, nowIso) {
+  const start = String(bashoData?.startDate || '').slice(0,10);
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(start))return null;
+  const parts=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{
+    timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'
+  }).formatToParts(new Date(nowIso)).filter(p=>p.type!=='literal').map(p=>[p.type,p.value]));
+  const tokyoDay=parts.year+'-'+parts.month+'-'+parts.day;
+  const days=Math.round((Date.parse(tokyoDay+'T00:00:00Z')-Date.parse(start+'T00:00:00Z'))/86400000);
+  const next=days+2;
+  return next>=1&&next<=15?next:null;
+}
+const announcedDay=upcomingDayFromBasho(basho.data,capturedAt);
+const torikumi={};
+if(announcedDay){
+  for(const div of TRACKED_DIVISIONS){
+    torikumi[div]=await collectOptional(()=>client.torikumi(CURRENT_BASHO,div,announcedDay),div+' torikumi day '+announcedDay);
+  }
+}
+
 const featuredExtras = [];
 for (const fighter of featured) {
   const rich = await collectOptional(() => client.rikishi(fighter.id), 'fighter detail '+fighter.shikonaEn);
@@ -98,7 +119,9 @@ const details = {
   basho,
   banzuke,
   previousBashoId: PREVIOUS_BASHO,
-  previousBanzuke
+  previousBanzuke,
+  announcedDay,
+  torikumi
 };
 await save('data/sumo/rikishi-index.json', roster);
 await save('data/sumo/preview-details.json', details);
@@ -107,6 +130,7 @@ console.log(JSON.stringify({
   banzuke: Object.fromEntries(Object.entries(banzuke).map(([key,value]) => [key,value.status])),
   previousBanzuke: Object.fromEntries(Object.entries(previousBanzuke).map(([key,value]) => [key,value.status])),
   exampleExtras: featuredExtras.map(x=>({name:x.shikonaEn,richKeys:Object.keys(x.rikishi?.data||{}).slice(0,25),h2hKeys:Object.keys(x.headToHead?.record?.data||{}).slice(0,25)})),
+  announcedDay, torikumiSchemas:Object.fromEntries(Object.entries(torikumi).map(([d,t])=>[d,{status:t.status, keys:Object.keys(t.data||{}).slice(0,20), total:Array.isArray(t.data)?t.data.length:t.data?.records?.length, samples:JSON.stringify(t.data?.records?.slice?.(0,2)||t.data).slice(0,700)}])),
   apiCalls: client.callCount,
   exampleStatsKeys: Object.keys(featured[0]?.stats?.data ?? {}).slice(0, 30),
   exampleMatchKeys: Object.keys(featured[0]?.matches?.data ?? {}).slice(0, 30)
