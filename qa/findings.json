@@ -115,15 +115,15 @@
     "severity": "P2",
     "subsystem": "Frontend quality",
     "title": "Featured news repeats Mike Perry signing story across two publishers",
-    "status": "cached pair confirmed; conservative matching change deferred pending negative fixtures",
-    "evidence": "Production homepage top stories showed Mike Perry re-signs with UFC and UFC signs Mike Perry after five-year split.",
+    "status": "conservative matcher and regression fixtures passed PR CI; production editorial review pending",
+    "evidence": "Production homepage top stories showed Mike Perry re-signs with UFC and UFC signs Mike Perry after five-year split. QA branch adds narrow confirmed return-signing matching, seven new regression tests and release gate step. GitHub Actions run 43575558020 passed both jobs, including focused news tests.",
     "rootCause": "Cached feed reproduces the pair. event_kind classifies re-signs as contract-extension but signs after a split has no event kind; short headlines also fall below generic overlap thresholds.",
     "impact": "Prominent repeated story reduces variety.",
-    "remediation": "Add a fixture to existing news dedupe after checking distinct reporting content.",
+    "remediation": "Match re-signing and explicitly post-split signing only when named promotion, two rare subject tokens and publication window agree; preserve stage, role, booking and promotion exclusions.",
     "effort": "medium",
-    "risks": "Over-deduplication can hide distinct developments.",
-    "dependenciesAndConflicts": "Existing news_dedupe.py; no collection or content changes here.",
-    "verificationRequired": "Fixture for paraphrased same event and distinct follow-up; production editorial comparison."
+    "risks": "False-positive editorial merges remain possible; production source/editorial review required before release. No published stories or cached feed records were changed.",
+    "dependenciesAndConflicts": "Changed scripts/news_dedupe.py, tests/test_news_dedupe.py and existing release-readiness gate only; no overlap with inspected UFC certification PR #189. No provider collection.",
+    "verificationRequired": "CI run 43575558020 passed targeted suite and full PR jobs. Review actual dedupe output on a non-production copy of current news cache and confirm no unrelated stories disappear before merge/deployment."
   },
   {
     "branch": "qa/quality-supervisor-20261114",
@@ -252,7 +252,7 @@
     "subsystem": "Results performance",
     "title": "All historical event cards render upfront",
     "status": "bounded rendering implemented; preview verification outstanding",
-    "evidence": "Live DOM read: 110282 Results descendants and 886 bouts with disclosures closed. Full snapshot timed out while small reads succeeded. Cached regression renders 12 initial cards and reaches all 76.",
+    "evidence": "Live DOM read: 110282 Results descendants and 886 bouts with disclosures closed. Full snapshot timed out while small reads succeeded. Cached regression renders 12 initial cards and reaches all 76. PR source CI 43573161795 and 43575558020 passed; no live preview or runtime measurement performed.",
     "rootCause": "content rendered every selected event including closed card contents.",
     "impact": "Large initial DOM; inspection timeout association observed, user latency not measured.",
     "remediation": "Render 12 event cards per batch; search all rows before pagination; reset batch on selection change; focus first newly revealed event.",
@@ -261,6 +261,6 @@
     "dependenciesAndConflicts": "No results.js overlap in latest inspected research PR; no data changes.",
     "branch": "qa/quality-supervisor-20261114",
     "issueOrPR": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/190",
-    "verificationRequired": "All batches reachable, older search and reset, ordering and full release preflight pass; preview mobile/keyboard and runtime measurements before deployment."
+    "verificationRequired": "Source regression and CI passed for 12-card batching, older-event search and ordering; mobile/desktop preview, focus, screen-reader and before/after DOM/runtime comparison remain required."
   }
 ]
