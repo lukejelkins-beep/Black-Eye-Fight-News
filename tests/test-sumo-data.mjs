@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { parseBanzukeRank, ordinalRank, careerPoints, careerGraphs } from '../assets/sumo-career.mjs';
 import {
   bashoLabel, divisionOf, recordSummary, rankTable, leadingRikishi,
   dailyResults, currentDay, matchResult, techniqueDistribution, searchRikishi,
@@ -233,4 +234,52 @@ test('a verified current or prior Yokozuna is a provable highest rank, but other
   assert.equal(confirmedCareerHigh({currentRank:'Ozeki 1 West',previousRank:'Ozeki 1 East'}),null);
   assert.deepEqual(confirmedCareerHigh({currentRank:'Juryo 5 East',apiDetail:{highestRank:'Ozeki 1 West'}}),
     {rank:'Ozeki 1 West',evidence:'explicit-source'});
+});
+
+test('Ura career graphs show dated historical weights and all 69 published banzuke positions',()=>{
+  const cached=JSON.parse(readFileSync(new URL('../data/sumo/career-history.json',import.meta.url),'utf8'));
+  const ura={sourceId:28,officialNskId:3616,currentRank:'Maegashira 2 East',weightKg:138};
+  const data=careerPoints(ura,cached,'202611','202609','Maegashira 9 East');
+  assert.equal(data.ranks.length,69);
+  assert.deepEqual(data.weight.map(p=>p.kg),[113,136,138]);
+  assert.equal(data.ranks[0].basho,'201505');
+  assert.equal(data.ranks[0].rank,'Jonokuchi 9 West');
+  assert.equal(data.ranks.find(p=>p.basho==='201911')?.rank,'Jonidan 106 West');
+  assert.equal(data.ranks.find(p=>p.basho==='202401')?.rank,'Komusubi 1 West');
+  assert.equal(data.ranks.at(-1).rank,'Maegashira 2 East');
+  assert.ok(!data.ranks.some(p=>p.basho==='202005'),'Cancelled May 2020 tournament cannot be invented');
+  assert.equal(new Set(data.ranks.map(p=>p.basho)).size,data.ranks.length);
+  const markup=careerGraphs(ura,cached,'202611','202609','Maegashira 9 East');
+  assert.match(markup,/Weight history/);
+  assert.match(markup,/Career rank movement/);
+  assert.match(markup,/113 kg/);
+  assert.match(markup,/138 kg/);
+  assert.match(markup,/source-reported and require independent official archive verification/);
+});
+test('rank score preserves tier, number and East-West distinction',()=>{
+  assert.deepEqual(parseBanzukeRank('Jonidan 106 West'),{tier:8,place:106,side:'West'});
+  assert.equal(parseBanzukeRank('Maegashira 0 East'),null);
+  assert.equal(ordinalRank('Unknown 2 West'),null);
+  assert.ok(ordinalRank('Komusubi 1 West')<ordinalRank('Maegashira 1 East'));
+  assert.ok(ordinalRank('Maegashira 2 East')<ordinalRank('Maegashira 9 East'));
+  assert.ok(ordinalRank('Maegashira 2 East')<ordinalRank('Maegashira 2 West'));
+});
+test('other rikishi charts never inherit Ura history or invent weights',()=>{
+  const cached=JSON.parse(readFileSync(new URL('../data/sumo/career-history.json',import.meta.url),'utf8'));
+  const other={sourceId:3001,officialNskId:4001,currentRank:'Juryo 3 East',weightKg:150};
+  const series=careerPoints(other,cached,'202611','202609','Juryo 7 West');
+  assert.equal(series.entry,null);
+  assert.deepEqual(series.weight.map(p=>p.kg),[150]);
+  assert.deepEqual(series.ranks.map(p=>p.rank),['Juryo 7 West','Juryo 3 East']);
+  assert.match(careerGraphs(other,cached,'202611','202609','Juryo 7 West'),/missing measurements have not been estimated/);
+  const wrongId={sourceId:28,officialNskId:9999,currentRank:'Maegashira 2 East',weightKg:138};
+  assert.equal(careerPoints(wrongId,cached,'202611','202609',null).ranks.length,1);
+});
+test('Sumo preview profiles load source-linked career cache and accessible charts',()=>{
+  const html=readFileSync(new URL('../sumo.html',import.meta.url),'utf8');
+  const script=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
+  assert.match(html,/assets\/sumo\.css\?v=20261114-career1/);
+  assert.match(script,/data\/sumo\/career-history\.json/);
+  assert.match(script,/careerGraphs\(w,STATE\.careerHistory/);
+  assert.doesNotMatch(script,/fetch\(\s*['"]https:\/\/www\.sumo-api\.com/);
 });
