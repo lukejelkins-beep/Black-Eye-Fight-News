@@ -47,7 +47,7 @@ jobs:
           # One coordinated worker uses the available GitHub runner window,
           # not an arbitrary fixed API-call budget.
           SUMO_WORK_SECONDS: '165'
-          SUMO_REQUEST_INTERVAL_MS: '300'
+          SUMO_REQUEST_INTERVAL_MS: '200'
         run: node scripts/sumo-backfill-190.mjs
       - name: Audit collected history before any future JSA certification
         run: node scripts/sumo-verify-190.mjs
