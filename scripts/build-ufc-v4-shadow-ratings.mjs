@@ -207,7 +207,8 @@ export function buildShadowRatings(approval,foundation,postfight,{asOf}={}){
  const date=asOf||foundation.asOf;
  const allRows=listBySlug(postfight),fighters={},
   summary={approved:783,fullyKnownCareerMatched:0,scoredLast5:0,
-   scoredLast10:0,scoredCareer:0,insufficientSamples:0,
+   scoredLast10:0,scoredCareer:0,scoredLast5FullHorizon:0,scoredLast10FullHorizon:0,
+   insufficientSamples:0,
    fewerThanThreeOfficialUfcBouts:0,
    atLeastThreeOfficialUfcBoutsUnrated:0,
    officialUfcHistoryLengthBands:{"0":0,"1":0,"2":0,"3plus":0},
@@ -233,6 +234,10 @@ export function buildShadowRatings(approval,foundation,postfight,{asOf}={}){
    windows[label]=valid;
    if(valid.overall!==null)summary[label==="knownCareer"?"scoredCareer":
     label==="last5"?"scoredLast5":"scoredLast10"]++;
+   if(valid.overall!==null&&label==="last5"&&f.knownCareerBouts>=5)
+    summary.scoredLast5FullHorizon++;
+   if(valid.overall!==null&&label==="last10"&&f.knownCareerBouts>=10)
+    summary.scoredLast10FullHorizon++;
   }
   if(windows.last5.overall===null){
    summary.insufficientSamples++;
