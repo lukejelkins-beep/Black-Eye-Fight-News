@@ -7,7 +7,7 @@
   "nonproduction": true,
   "sourceMethod": "full_official_ufc_fight_listing_crosscheck",
   "independentSourceDataset": "Greco1899 UFCStats-derived historical results, source snapshot through 2026-11-07; source-linked fight detail URLs are references, not a claim of direct UFCStats website access",
-  "notes": "Independent exhaustive scope crosschecked against UFC official fighter bios, last fight/debut, and UFCStats-derived third party 12-fight lists. Native IDs, corners, winners, measured metrics and date offsets must be validated again in CI; do not count certs from this file alone.",
+  "notes": "Independent exhaustive scope crosschecked against UFC official fighter bios, last fight/debut, and UFCStats-derived third party 12-fight lists. Native IDs, corners, winners, measured metrics and date offsets must be validated again in CI; do not count certs from this file alone. Event titles are display-only and are not exact-match certification requirements. Narrow opponent name aliases are independently grounded in official UFC biographies.",
   "fighters": {
     "maryna-moroz": {
       "fighterName": "Maryna Moroz",
@@ -155,6 +155,14 @@
           "nativeSavedDate": "2015-04-11",
           "nativeEventTitle": "UFC Fight Night: Gonzaga vs Cro Cop 2",
           "originalOfficialDate": "2015-04-11"
+        }
+      ],
+      "verifiedOpponentAliases": [
+        {
+          "historicalName": "Joanne Calderwood",
+          "currentName": "Joanne Wood",
+          "source": "https://www.ufc.com/athlete/joanne-wood",
+          "note": "UFC fighter bio directly records 2015 Calderwood and 2024 Wood appearances as the same athlete"
         }
       ]
     },
@@ -319,6 +327,14 @@
           "nativeSavedDate": "2018-02-04",
           "nativeEventTitle": "UFC Fight Night: Machida vs Anders",
           "originalOfficialDate": "2018-02-03"
+        }
+      ],
+      "verifiedOpponentAliases": [
+        {
+          "historicalName": "Veronica Macedo",
+          "currentName": "Veronica Hardy",
+          "source": "https://www.ufc.com/news/veronica-hardy-started-a-new-chapter-in-her-life-ufc-286",
+          "note": "Official UFC reports Macedo changed surname to Hardy"
         }
       ]
     }
