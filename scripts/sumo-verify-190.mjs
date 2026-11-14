@@ -11,7 +11,7 @@ const banzuke=/^(Yokozuna|Ozeki|Sekiwake|Komusubi|Maegashira|Juryo|Makushita|San
 const basho=/^(18|19|20)\d{2}(01|03|05|07|09|11)$/;
 const read=async (file,fallback=null)=>{try{return JSON.parse(await readFile(file,'utf8'));}catch(e){if(e.code==='ENOENT')return fallback;throw e;}};
 export function auditRikishi(w,cache){
-  if(!cache)return {sourceId:w.sourceId,name:w.shikonaEn,status:'not-attempted',readyForExternalCrosscheck:false,errors:[],warnings:[]};
+  if(!cache)return {sourceId:w.sourceId,name:w.shikonaEn,status:'not-attempted',readyForExternalCrosscheck:false,errors:[],warnings:[],stagesCompleted:0,counts:{weights:0,ranks:0,matches:0}};
   const errors=[],warnings=[],id=Number(w.sourceId);
   if(cache.rikishiId!==id)errors.push('cache-identity');
   if(w.officialNskId&&cache.nskId&&Number(cache.nskId)!==Number(w.officialNskId))errors.push('nsk-identity');
