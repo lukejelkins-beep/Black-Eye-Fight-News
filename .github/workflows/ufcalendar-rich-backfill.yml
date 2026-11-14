@@ -84,6 +84,8 @@ jobs:
           fi
       - name: Crosscheck Greco historical UFC CSVs at most once per UTC day
         if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           # GitHub public source only; 1 metadata + 2 bounded CSV requests/day.
