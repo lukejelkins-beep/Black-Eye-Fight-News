@@ -12,6 +12,7 @@ import fs from "node:fs";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {isFeederUfcEvent} from "./ufc-official-event-scope.mjs";
+import {evaluateCareerEvidence} from "./ufc-36-month-stage3-progress.mjs";
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const validDay=x=>/^\d{4}-\d\d-\d\d$/.test(String(x||""));
@@ -69,6 +70,7 @@ function timeline(profile,asOf,feederDates){
   if(id)seenIds.add(id);
   seenMatch.add(semantic);
   out.push({boutId:id,date:row.date,opponent:row.opponent||null,
+   result:row.result||row.outcome||row.status||null,
    outcome:row.result||row.outcome||row.status||null});
  }
  return out;
@@ -115,7 +117,8 @@ function aggregate(rows,measured){
   unlinkedTimelineRows:rows.filter(x=>!x.boutId).length,
   totals,metricCoverage:coverage,rates:calculatedRates};
 }
-export function buildV4StatFoundation(approval,research,progress,postfight,{asOf}={}){
+export function buildV4StatFoundation(approval,research,progress,postfight,
+  {asOf,census=null,independentEvidence=null}={}){
  if(approval?.schema!==1||approval?.scope!=="ufc-36-month-roster"||
     approval?.status!=="approved"||approval?.approvedBy!=="user"||
     !Array.isArray(approval.approvedFighters)||
@@ -127,10 +130,20 @@ export function buildV4StatFoundation(approval,research,progress,postfight,{asOf
  const day=asOf||approval.rosterAsOf;
  if(!validDay(day))throw Error("V4 requires a valid as-of date");
  const feederDates=feederDatesFrom(progress);
+ // Use the same stringent, independently maintained timeline verification
+ // rules as the existing Stage 3 career audit. A legacy .complete=true
+ // flag NEVER certifies a UFC career on its own.
+ const censusBySlug=new Map(Array.isArray(census?.fighters)?
+  census.fighters.map(f=>[f.slug,f]):[]);
+ const independentRegistry=independentEvidence?.schema===1&&
+  independentEvidence.scope==="ufc-independent-full-career-verification"&&
+  independentEvidence.rosterAsOf===approval.rosterAsOf?
+   independentEvidence.fighters||{}:{};
  const missingByBout=new Map();
  const fighters={},stats={approved:approval.approvedFighters.length,knownHistory:0,
   knownFive:0,knownTen:0,measuredFiveOfFive:0,measuredTenOfTen:0,
-  providerCertified:0,historyRows:0,linkedMeasuredRows:0,uniqueMeasuredIds:new Set(),
+  providerCertified:0,independentCertified:0,legacyClaims:0,
+  historyRows:0,linkedMeasuredRows:0,uniqueMeasuredIds:new Set(),
   unlinkedHistoryRows:0,missingNativeMetricRows:0};
  for(const slug of approval.approvedFighters){
   const profile=research?.profiles?.[slug]||{};
@@ -177,8 +190,16 @@ export function buildV4StatFoundation(approval,research,progress,postfight,{asOf
   const windows={last5:aggregate(history.slice(0,5),measured),
    last10:aggregate(history.slice(0,10),measured),
    career:aggregate(history,measured)};
-  const certified=profile?.ufcTimeline?.complete===true;
   const all=windows.career;
+  const proof=evaluateCareerEvidence(profile,history,
+   censusBySlug.get(slug)?.lastUfcFight,census?.asOf||day,
+   independentRegistry[slug]);
+  const completeMeasuredHistory=history.length>0&&
+   windows.career.linkedMeasuredBouts===history.length;
+  const certified=proof.providerCertified&&completeMeasuredHistory;
+  const independentlyCertified=proof.independentlyVerified&&completeMeasuredHistory;
+  if(proof.legacyClaim)stats.legacyClaims++;
+  if(independentlyCertified)stats.independentCertified++;
   if(history.length)stats.knownHistory++;
   if(history.length>=5)stats.knownFive++;
   if(history.length>=10)stats.knownTen++;
@@ -191,9 +212,17 @@ export function buildV4StatFoundation(approval,research,progress,postfight,{asOf
   stats.missingNativeMetricRows+=history.filter(x=>x.boutId&&!measured.has(x.boutId)).length;
   for(const row of history)if(row.boutId&&measured.has(row.boutId))
    stats.uniqueMeasuredIds.add(row.boutId);
-  fighters[slug]={name:profile?.name||null,slug,ufcTimelineCertified:certified,
+  fighters[slug]={name:profile?.name||null,slug,
+   ufcTimelineCertified:certified,
+   independentlyCertifiedCareer:independentlyCertified,
    // A complete history is never inferred from how many observations were saved.
-   careerCoverageStatus:certified?"provider_certified":"provider_completeness_unverified",
+   careerCoverageStatus:independentlyCertified?"independently_verified_full_career":
+    certified?"provider_certified_full_career":
+    !completeMeasuredHistory?"known_fight_coverage_gap":
+    proof.providerDiscrepancy||!proof.rosterLatestPresent?
+     "provider_history_discrepancy":
+    proof.legacyClaim?"legacy_completeness_flag_unsubstantiated":
+    "historical_completeness_unverified",
    knownCareerBouts:history.length,windows,
    v4Scores:null,externalCredentialBonusApplied:false};
  }
@@ -217,6 +246,8 @@ export function buildV4StatFoundation(approval,research,progress,postfight,{asOf
   fightersWithFiveMeasuredLatestBouts:stats.measuredFiveOfFive,
   fightersWithTenMeasuredLatestBouts:stats.measuredTenOfTen,
   fullyProviderCertifiedTimelines:stats.providerCertified,
+  independentlyCertifiedCareers:stats.independentCertified,
+  uncertifiedLegacyCompleteFlags:stats.legacyClaims,
   knownUfcHistoryRows:stats.historyRows,
   linkedMeasuredFighterBoutRows:stats.linkedMeasuredRows,
   distinctLinkedMeasuredUfcFights:stats.uniqueMeasuredIds.size,
@@ -235,7 +266,9 @@ export function main(){
   read("data/ufcalendar-fighter-research.json"),
   read("data/ufcalendar-rich-progress.json"),
   read("data/ufc-postfight-metrics.json"),
-  {asOf:new Date().toISOString().slice(0,10)}
+  {asOf:new Date().toISOString().slice(0,10),
+   census:read("data/ufc-36-month-candidates.json"),
+   independentEvidence:read("data/ufc-independent-full-career-verification.json")}
  );
  if(out.population!==783)throw Error("Immutable BEFN cohort must contain 783 fighters");
  const file=path.join(root,"qa/ufc-v4-stat-foundation.json");
