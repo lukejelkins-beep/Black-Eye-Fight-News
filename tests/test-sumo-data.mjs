@@ -5,7 +5,7 @@ import {
   bashoLabel, divisionOf, recordSummary, rankTable, leadingRikishi,
   dailyResults, currentDay, matchResult, techniqueDistribution, searchRikishi,
   banzukeFor, validMatchSamples, trackedBanzukeCohort, currentBashoMatchSample,
-  originCountry, banzukeMovement, dayMatchups, verifiedHeadToHead, verifiedHighestRank
+  originCountry, banzukeMovement, dayMatchups, verifiedHeadToHead, verifiedHighestRank, confirmedCareerHigh
 } from '../assets/sumo-data.mjs';
 
 const entries = {
@@ -223,4 +223,14 @@ test('all 190 current source origins have a valid country flag',()=>{
   const roster=JSON.parse(readFileSync(new URL('../data/sumo/rikishi-index.json',import.meta.url),'utf8'));
   const unknown=roster.rikishi.filter(w=>!originCountry(w.birthplace));
   assert.deepEqual(unknown.map(x=>x.shikonaEn),[]);
+});
+
+test('a verified current or prior Yokozuna is a provable highest rank, but others are not inferred',()=>{
+  assert.deepEqual(confirmedCareerHigh({currentRank:'Yokozuna 1 East'}),
+    {rank:'Yokozuna',evidence:'current-or-prior-verified-yokozuna'});
+  assert.deepEqual(confirmedCareerHigh({currentRank:'Maegashira 3 West',previousRank:'Yokozuna 1 East'}),
+    {rank:'Yokozuna',evidence:'current-or-prior-verified-yokozuna'});
+  assert.equal(confirmedCareerHigh({currentRank:'Ozeki 1 West',previousRank:'Ozeki 1 East'}),null);
+  assert.deepEqual(confirmedCareerHigh({currentRank:'Juryo 5 East',apiDetail:{highestRank:'Ozeki 1 West'}}),
+    {rank:'Ozeki 1 West',evidence:'explicit-source'});
 });
