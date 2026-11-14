@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import {
   bashoLabel, divisionOf, recordSummary, rankTable, leadingRikishi,
   dailyResults, currentDay, matchResult, techniqueDistribution, searchRikishi,
-  banzukeFor, validMatchSamples, trackedBanzukeCohort
+  banzukeFor, validMatchSamples, trackedBanzukeCohort, currentBashoMatchSample
 } from '../assets/sumo-data.mjs';
 
 const entries = {
@@ -46,6 +46,22 @@ test('treats winnerId as source of truth regardless of east or west side',()=>{
   assert.equal(matchResult(m,10).outcome,'loss');
   assert.equal(matchResult(m,12),null);
 });
+test('all-rikishi current-basho results include opponents and preserve Makushita seven-bout sequencing',()=>{
+  const maku=currentBashoMatchSample(entries.east[0],'202611');
+  assert.equal(maku.length,1);
+  assert.equal(maku[0].opponent,'West One');
+  assert.equal(maku[0].outcome,'win');
+  assert.equal(maku[0].day,1);
+  assert.equal(maku[0].sourceScope,'current-basho-banzuke');
+
+  const lower={...entries.east[0],rank:'Makushita 1 East'};
+  const makushita=currentBashoMatchSample(lower,'202611');
+  assert.equal(makushita.length,1);
+  assert.equal(makushita[0].day,null);
+  assert.equal(makushita[0].boutSequence,1);
+  assert.deepEqual(currentBashoMatchSample(null,'202611'),[]);
+});
+
 test('technique distributions exclude forfeit wins and record the correct sample denominator',()=>{
   const data=[
     {winnerId:10,kimarite:'yorikiri'},
