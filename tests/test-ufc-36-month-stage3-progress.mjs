@@ -248,3 +248,31 @@ test('UFC-documented Contender Series evidence covers every remaining six-to-ten
     'Missing exact UFC-source evidence for '+fighterSlug+' versus '+opponent);
  }
 });
+
+test('Official UFC evidence protects the older-career DWCS exclusions across seasons',()=>{
+ const evidence=JSON.parse(readFileSync(new URL('../data/ufc-feeder-bout-evidence.json',import.meta.url),'utf8'));
+ const required=[
+  ['83848','alex-perez','Kevin Gray'],
+  ['83873','johnny-walker','Henrique da Silva'],
+  ['83877','diego-lopes','Joanderson Brito'],
+  ['83877','joanderson-brito','Diego Lopes'],
+  ['83905','sean-o-malley','Alfred Khashakyan'],
+  ['83916','sodiq-yusuff','Mike Davis'],
+  ['83925','ode-osbourne','Armando Villarreal'],
+  ['83928','brendan-allen','Aaron Jeffery'],
+  ['83931','bill-algeo','Brendan Loughnane'],
+  ['83938','dustin-jacoby','Ty Flores'],
+  ['84005','giga-chikadze','Austin Springer'],
+  ['84065','jamall-emmers','Julian Erosa'],
+  ['84065','julian-erosa','Jamall Emmers'],
+  ['84159','gregory-rodrigues','Jordan Williams'],
+  ['88204','john-castaneda','Cheyden Leialoha'],
+  ['88223','andre-muniz','Taylor Johnson']
+ ];
+ for(const [boutId,fighterSlug,opponent] of required){
+   assert.ok(evidence.bouts.some(r=>r.boutId===boutId&&
+     r.fighterSlug===fighterSlug&&r.opponent===opponent&&
+     r.sourceUrl?.startsWith('https://www.ufc.com/')),
+     'Missing exact UFC DWCS evidence for '+boutId+' '+fighterSlug);
+ }
+});
