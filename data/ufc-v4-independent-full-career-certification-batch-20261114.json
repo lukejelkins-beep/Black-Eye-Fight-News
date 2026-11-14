@@ -1,0 +1,326 @@
+{
+  "schema": 1,
+  "scope": "ufc-v4-manual-independent-career-certification-batch",
+  "rosterAsOf": "2026-11-14",
+  "reviewedAt": "2026-11-14",
+  "status": "independently_attested_sources_requires_repeated_strict_native_audit",
+  "nonproduction": true,
+  "sourceMethod": "full_official_ufc_fight_listing_crosscheck",
+  "independentSourceDataset": "Greco1899 UFCStats-derived historical results, source snapshot through 2026-11-07; source-linked fight detail URLs are references, not a claim of direct UFCStats website access",
+  "notes": "Independent exhaustive scope crosschecked against UFC official fighter bios, last fight/debut, and UFCStats-derived third party 12-fight lists. Native IDs, corners, winners, measured metrics and date offsets must be validated again in CI; do not count certs from this file alone.",
+  "fighters": {
+    "maryna-moroz": {
+      "fighterName": "Maryna Moroz",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/maryna-moroz",
+      "fighterUrl": "https://ufcstats.com/fighter-details/b4192a975027aab6",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 12,
+      "uniqueNativeFighterId": "1113",
+      "independentSourceCrosschecks": [
+        "https://edgeup.gg/mma/fighters/mma-b4192a975027aab6",
+        "https://thefightalgorithm.com/fighters/maryna-moroz",
+        "https://www.ufc.com/athlete/maryna-moroz"
+      ],
+      "sourceScopeVerified": "Official biography UFC debut through latest official UFC fight, with all 12 dated opponents/results matched to independent UFCStats-derived bout source links and native per-fight data.",
+      "dateDiscrepancies": [],
+      "specialEventTitleReconciliations": [
+        {
+          "boutId": "59784",
+          "date": "2022-11-19",
+          "savedEvent": "UFC Fight Night: Lewis vs Spivac",
+          "officialFinalEvent": "UFC Fight Night: Nzechukwu vs Cutelaba",
+          "sourceUrl": "https://www.ufc.com/news/ufc-fight-night-lewis-vs-spivac-results-highlights-winner-interviews-vegas-65",
+          "reason": "Derrick Lewis and Serghei Spivac bout cancelled; Nzechukwu vs Cutelaba promoted to main event, both names refer to identical event card"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2024-03-09",
+          "opponent": "Joanne Wood",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3677ce6c1ee06a83",
+          "nativeBoutId": "60915",
+          "nativeSavedDate": "2024-03-09",
+          "nativeEventTitle": "UFC 299: O'Malley vs Vera 2",
+          "originalOfficialDate": "2024-03-09"
+        },
+        {
+          "date": "2023-08-19",
+          "opponent": "Karine Silva",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f329bd89e375d6df",
+          "nativeBoutId": "61164",
+          "nativeSavedDate": "2023-08-19",
+          "nativeEventTitle": "UFC 292: Sterling vs O'Malley",
+          "originalOfficialDate": "2023-08-19"
+        },
+        {
+          "date": "2022-11-19",
+          "opponent": "Jennifer Maia",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/144443d4dbf43990",
+          "nativeBoutId": "59784",
+          "nativeSavedDate": "2022-11-19",
+          "nativeEventTitle": "UFC Fight Night: Lewis vs Spivac",
+          "originalOfficialDate": "2022-11-19"
+        },
+        {
+          "date": "2022-03-05",
+          "opponent": "Mariya Agapova",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c6fc43c351b08bda",
+          "nativeBoutId": "61401",
+          "nativeSavedDate": "2022-03-05",
+          "nativeEventTitle": "UFC 272: Covington vs Masvidal",
+          "originalOfficialDate": "2022-03-05"
+        },
+        {
+          "date": "2020-03-14",
+          "opponent": "Mayra Bueno Silva",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2a1826612a7d739c",
+          "nativeBoutId": "59150",
+          "nativeSavedDate": "2020-03-14",
+          "nativeEventTitle": "UFC Fight Night: Lee vs Oliveira",
+          "originalOfficialDate": "2020-03-14"
+        },
+        {
+          "date": "2019-03-30",
+          "opponent": "Sabina Mazo",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b695fc80bd538172",
+          "nativeBoutId": "59102",
+          "nativeSavedDate": "2019-03-30",
+          "nativeEventTitle": "UFC Fight Night: Barboza vs Gaethje",
+          "originalOfficialDate": "2019-03-30"
+        },
+        {
+          "date": "2018-02-24",
+          "opponent": "Angela Hill",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/037c68d03c970609",
+          "nativeBoutId": "58807",
+          "nativeSavedDate": "2018-02-24",
+          "nativeEventTitle": "UFC Fight Night: Emmett vs Stephens",
+          "originalOfficialDate": "2018-02-24"
+        },
+        {
+          "date": "2017-06-25",
+          "opponent": "Carla Esparza",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1bd52b0c01018f4a",
+          "nativeBoutId": "58619",
+          "nativeSavedDate": "2017-06-25",
+          "nativeEventTitle": "UFC Fight Night: Chiesa vs Lee",
+          "originalOfficialDate": "2017-06-25"
+        },
+        {
+          "date": "2016-08-06",
+          "opponent": "Danielle Taylor",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/58c73a9562adcfe5",
+          "nativeBoutId": "62694",
+          "nativeSavedDate": "2016-08-06",
+          "nativeEventTitle": "UFC Fight Night: Rodriguez vs Caceres",
+          "originalOfficialDate": "2016-08-06"
+        },
+        {
+          "date": "2016-04-10",
+          "opponent": "Cristina Stanciu",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1a0bf11582ae518b",
+          "nativeBoutId": "50959",
+          "nativeSavedDate": "2016-04-10",
+          "nativeEventTitle": "UFC Fight Night: Rothwell vs Dos Santos",
+          "originalOfficialDate": "2016-04-10"
+        },
+        {
+          "date": "2015-08-23",
+          "opponent": "Valerie Letourneau",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/20b70a226f1c13fb",
+          "nativeBoutId": "50745",
+          "nativeSavedDate": "2015-08-23",
+          "nativeEventTitle": "UFC Fight Night: Holloway vs Oliveira",
+          "originalOfficialDate": "2015-08-23"
+        },
+        {
+          "date": "2015-04-11",
+          "opponent": "Joanne Calderwood",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fe9a58e79d54695b",
+          "nativeBoutId": "56917",
+          "nativeSavedDate": "2015-04-11",
+          "nativeEventTitle": "UFC Fight Night: Gonzaga vs Cro Cop 2",
+          "originalOfficialDate": "2015-04-11"
+        }
+      ]
+    },
+    "polyana-viana": {
+      "fighterName": "Polyana Viana",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/polyana-viana",
+      "fighterUrl": "https://ufcstats.com/fighter-details/9673a497a9da119a",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 12,
+      "uniqueNativeFighterId": "46",
+      "independentSourceCrosschecks": [
+        "https://fightshow.pro/fighters/56aeb83-polyana-viana",
+        "https://www.ufc.com/athlete/polyana-viana"
+      ],
+      "sourceScopeVerified": "Official biography UFC debut through latest official UFC fight, with all 12 dated opponents/results matched to independent UFCStats-derived bout source links and native per-fight data.",
+      "dateDiscrepancies": [
+        {
+          "officialLocalDate": "2021-02-13",
+          "nativeSavedDate": "2021-02-14",
+          "boutId": "61924",
+          "reason": "documented_one_day_event_local_vs_UTC_shift"
+        },
+        {
+          "officialLocalDate": "2019-08-10",
+          "nativeSavedDate": "2019-08-11",
+          "boutId": "65623",
+          "reason": "documented_one_day_event_local_vs_UTC_shift"
+        },
+        {
+          "officialLocalDate": "2019-03-02",
+          "nativeSavedDate": "2019-03-03",
+          "boutId": "62181",
+          "reason": "documented_one_day_event_local_vs_UTC_shift"
+        },
+        {
+          "officialLocalDate": "2018-02-03",
+          "nativeSavedDate": "2018-02-04",
+          "boutId": "65445",
+          "reason": "documented_one_day_event_local_vs_UTC_shift"
+        }
+      ],
+      "specialEventTitleReconciliations": [],
+      "bouts": [
+        {
+          "date": "2026-05-16",
+          "opponent": "Alice Ardelean",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b98ead4eff6bf872",
+          "nativeBoutId": "66124",
+          "nativeSavedDate": "2026-05-16",
+          "nativeEventTitle": "UFC Fight Night: Allen vs Costa",
+          "originalOfficialDate": "2026-05-16"
+        },
+        {
+          "date": "2025-04-26",
+          "opponent": "Jaqueline Amorim",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e7b3ca036835b7c2",
+          "nativeBoutId": "60885",
+          "nativeSavedDate": "2025-04-26",
+          "nativeEventTitle": "UFC Fight Night: Machado Garry vs Prates",
+          "originalOfficialDate": "2025-04-26"
+        },
+        {
+          "date": "2024-01-20",
+          "opponent": "Gillian Robertson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/dff2685afd98ed9e",
+          "nativeBoutId": "59872",
+          "nativeSavedDate": "2024-01-20",
+          "nativeEventTitle": "UFC 297: Strickland vs du Plessis",
+          "originalOfficialDate": "2024-01-20"
+        },
+        {
+          "date": "2023-08-12",
+          "opponent": "Iasmin Lucindo",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c2f730cb33df5221",
+          "nativeBoutId": "60079",
+          "nativeSavedDate": "2023-08-12",
+          "nativeEventTitle": "UFC Fight Night: Luque vs Dos Anjos",
+          "originalOfficialDate": "2023-08-12"
+        },
+        {
+          "date": "2022-11-05",
+          "opponent": "Jinh Yu Frey",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5475f5b6bad40989",
+          "nativeBoutId": "59811",
+          "nativeSavedDate": "2022-11-05",
+          "nativeEventTitle": "UFC Fight Night: Rodriguez vs Lemos",
+          "originalOfficialDate": "2022-11-05"
+        },
+        {
+          "date": "2022-05-21",
+          "opponent": "Tabatha Ricci",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5eaff5c832430378",
+          "nativeBoutId": "61458",
+          "nativeSavedDate": "2022-05-21",
+          "nativeEventTitle": "UFC Fight Night: Holm vs Vieira",
+          "originalOfficialDate": "2022-05-21"
+        },
+        {
+          "date": "2021-02-13",
+          "opponent": "Mallory Martin",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/17616514e8fdacb9",
+          "nativeBoutId": "61924",
+          "nativeSavedDate": "2021-02-14",
+          "nativeEventTitle": "UFC 258: Usman vs Burns",
+          "originalOfficialDate": "2021-02-13"
+        },
+        {
+          "date": "2020-08-29",
+          "opponent": "Emily Whitmire",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/16358c536d739017",
+          "nativeBoutId": "65821",
+          "nativeSavedDate": "2020-08-29",
+          "nativeEventTitle": "UFC Fight Night: Smith vs Rakic",
+          "originalOfficialDate": "2020-08-29"
+        },
+        {
+          "date": "2019-08-10",
+          "opponent": "Veronica Macedo",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/494042bf96730bc0",
+          "nativeBoutId": "65623",
+          "nativeSavedDate": "2019-08-11",
+          "nativeEventTitle": "UFC Fight Night: Shevchenko vs Carmouche",
+          "originalOfficialDate": "2019-08-10"
+        },
+        {
+          "date": "2019-03-02",
+          "opponent": "Hannah Cifers",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0405e4446e8f239a",
+          "nativeBoutId": "62181",
+          "nativeSavedDate": "2019-03-03",
+          "nativeEventTitle": "UFC 235: Jones vs Smith",
+          "originalOfficialDate": "2019-03-02"
+        },
+        {
+          "date": "2018-08-04",
+          "opponent": "JJ Aldrich",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d2f6b87189908088",
+          "nativeBoutId": "62210",
+          "nativeSavedDate": "2018-08-04",
+          "nativeEventTitle": "UFC 227: Dillashaw vs Garbrandt 2",
+          "originalOfficialDate": "2018-08-04"
+        },
+        {
+          "date": "2018-02-03",
+          "opponent": "Maia Stevenson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/7bfb92f7ea59dbbd",
+          "nativeBoutId": "65445",
+          "nativeSavedDate": "2018-02-04",
+          "nativeEventTitle": "UFC Fight Night: Machida vs Anders",
+          "originalOfficialDate": "2018-02-03"
+        }
+      ]
+    }
+  }
+}
