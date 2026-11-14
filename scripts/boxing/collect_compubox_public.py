@@ -100,6 +100,42 @@ def pdf_text(data):
     return "\n".join(p.get_text(sort=True) for p in doc)
 
 
+def roster_match_from_report_title(title, report_label, roster):
+    """Identify a boxer from the report's full bout header and table surname.
+    Match full fighter names exactly against roster aliases; no surname-only guesses.
+    """
+    match = re.search(r"\s+(?:UD|SD|MD|KO|TKO|RTD|TD|PTS|DQ|NC|DRAW)\s+\d+\s+", title, re.I)
+    if not match:
+        return None
+    fighters = [title[:match.start()].strip(), title[match.end():].strip()]
+    label = norm(report_label)
+    matched = set()
+    for full in fighters:
+        full_key = norm(full)
+        if (full_key == label or full_key.endswith(" " + label)) and full_key in roster:
+            matched.add(roster[full_key])
+    return next(iter(matched)) if len(matched) == 1 else None
+
+
+def repair_cached_roster_links(roster):
+    """Add definitive roster links to previously collected verified reports."""
+    repaired = 0
+    for path in OUT.glob("*.json"):
+        data = json.loads(path.read_text())
+        changed = False
+        for athlete in data.get("fighters", []):
+            match = roster_match_from_report_title(
+                data.get("report_title", ""), athlete.get("report_fighter_label", ""), roster
+            )
+            if athlete.get("roster_fighter") != match:
+                athlete["roster_fighter"] = match
+                changed = True
+        if changed:
+            path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
+            repaired += 1
+    return repaired
+
+
 def parse(text, ident, roster, label):
     lines = [re.sub(r"\s+", " ", line).strip() for line in text.splitlines() if line.strip()]
     first = lines[0] if lines else ""
@@ -188,6 +224,7 @@ def parse(text, ident, roster, label):
         candidates = [person for key, person in roster.items() if key and key in norm(label)]
         candidates = sorted(set(candidates), key=lambda n: len(n), reverse=True)
         records.append({"report_fighter_label": name, "event_roster_candidates": candidates,
+                        "roster_fighter": roster_match_from_report_title(first, name, roster),
                         "totals": metrics, "rounds": round_data,
                         "completed_rounds": len(round_data),
                         "round_table_columns": len(mapped["total"])})
@@ -200,6 +237,8 @@ def parse(text, ident, roster, label):
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     roster = load_roster()
+    repaired = repair_cached_roster_links(roster)
+    print("Updated existing fighter-roster matches:", repaired)
     findings = {"timestamp_utc": now, "mode": "read_only_public_report_pilot",
                 "source": BASE, "max_pdf_requests": MAX_PDFS,
                 "processed": [], "skipped_existing": [], "failed": [], "not_pdf": []}
