@@ -54,3 +54,18 @@ test('only exact UFC Vancouver bout permits Bruno Gustavo da Silva abbreviation'
  assert.equal(unrelated.missingCount,1,'Different native ID must not inherit potentially homonymous alias');
  assert.equal(unrelated.extraCount,1);
 });
+
+test('Park same dated official fight under 38150 and 83254 is a native identity exception',()=>{
+ const source={bouts:[{date:'2025-10-18',opponent:'Bruno Silva',result:'loss'}]};
+ const profile={recentHistory:[
+  {date:'2025-10-18',opponent:'Bruno Silva',result:'loss',promotion:'ufc',boutId:'38150'},
+  {date:'2025-10-18',opponent:'Bruno Gustavo da Silva',result:'loss',promotion:'ufc',boutId:'83254'}
+ ]};
+ const result=comparePilot(source,profile,{'83254':{event:'UFC Vancouver: De Ridder vs Hernandez'}});
+ assert.equal(result.matchedCount,1);
+ assert.equal(result.missingCount,0);
+ assert.equal(result.extraCount,1);
+ assert.equal(result.extra[0].scope,'duplicate_native_fight_identity_review');
+ assert.equal(result.extra[0].nativeBoutId,'83254');
+ assert.equal(result.extra[0].matchedAlternateNativeBoutId,'38150');
+});
