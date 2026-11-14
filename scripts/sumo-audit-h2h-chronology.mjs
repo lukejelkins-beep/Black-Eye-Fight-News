@@ -20,7 +20,7 @@ export function sourceBoutKey(m){
   return [...sides,String(m.bashoId),Number(m.day),Number(m.matchNo)||0].join(':');
 }
 export function checkChronology(profiles,cohortIds){
-  const cohort=new Set(cohortIds),seen=new Map();
+  const cohort=new Set(cohortIds),readyIds=new Set(profiles.map(p=>Number(p.sourceId))),seen=new Map();
   let sourceAppearances=0,regularAppearances=0,forfeitAppearances=0;
   let techniqueKnownAppearances=0,missingTechniqueAppearances=0,specialAppearances=0;
   for(const p of profiles){
@@ -76,7 +76,7 @@ export function checkChronology(profiles,cohortIds){
     if(entry.kimarite===null)unique.missing++;
     else if(/^fusen/i.test(entry.kimarite))unique.forfeits++;
     else unique.known++;
-    const parts=key.split(':'),bothInCohort=cohort.has(Number(parts[0]))&&cohort.has(Number(parts[1]));
+    const parts=key.split(':'),bothInCohort=readyIds.has(Number(parts[0]))&&readyIds.has(Number(parts[1]));
     if(copies.length>2||copies.some(c=>c.winnerId!==entry.winnerId||
        c.kimarite!==entry.kimarite)){
       conflicts.push({key,records:copies});
@@ -106,13 +106,16 @@ export function checkChronology(profiles,cohortIds){
 async function main(){
   const roster=await read('data/sumo/rikishi-index.json');
   if(roster?.count!==190)throw Error('Frozen Sumo roster mismatch');
-  const profiles=[];
+  const profiles=[],missingProfiles=[];
   for(const w of roster.rikishi){
     const p=await read(join(ROOT,'profile-ready',w.sourceId+'.json'));
-    if(!p)throw Error('Missing completed research profile for '+w.sourceId);
+    if(!p){missingProfiles.push({sourceId:w.sourceId,name:w.shikonaEn,reason:'profile projection withheld pending source reconciliation'});continue;}
     profiles.push(p);
   }
   const audit=checkChronology(profiles,roster.rikishi.map(w=>w.sourceId));
+  audit.missingProfiles=missingProfiles;
+  audit.profilesNotYetCrosscheckReady=missingProfiles.length;
+  if(missingProfiles.length) audit.integrityStatus='incomplete-profile-projections-require-review';
   const dest=join(ROOT,'h2h-chronology-coverage.json'),old=await read(dest);
   if(JSON.stringify(old)!==JSON.stringify(audit)){
     const tmp=dest+'.tmp';
