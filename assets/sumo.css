@@ -98,3 +98,38 @@
 @media(max-width:740px){.sumo-result-grid{grid-template-columns:1fr}.sumo-match-people{grid-template-columns:1fr;gap:9px}.sumo-match-person{padding:8px 2px}.sumo-versus{justify-self:center;line-height:1}.sumo-match-card .sumo-match-person .sumo-photo{width:63px;height:78px}.sumo-match-footer{flex-direction:column;align-items:flex-start}.sumo-rank-card-body{padding:11px;gap:10px}.sumo-rank-name{font-size:25px}.sumo-rank-card .sumo-photo{width:70px;height:88px}.profile-icon.sumo-photo.xl{min-height:175px}.sumo-country-name{font-size:9px}}
 @media(min-width:741px) and (max-width:1260px){.sumo-match-people{grid-template-columns:1fr;gap:5px}.sumo-match-person{padding:4px}.sumo-versus{height:14px}}
 @media(max-width:390px){.sumo-match-card .sumo-match-person{gap:7px}.sumo-rank-name{font-size:23px}.sumo-rank-info{gap:4px 9px}.sumo-rank-info span{font-size:9px}}
+
+
+/* BEFN Sumo career graphs: preview only */
+.sumo-career-summary{display:flex;flex-wrap:wrap;gap:9px;margin:8px 0 16px}
+.sumo-career-summary span{background:#282125;color:#f5d887;font:850 11px 'DM Sans',sans-serif;padding:10px 15px;border-bottom:2px solid #d5a943}
+.sumo-career-panels{display:grid;grid-template-columns:1fr;gap:17px}
+.sumo-career-panel{background:#fffdfa;border:1px solid #d7cabd;min-width:0;overflow:hidden;box-shadow:0 3px 16px rgba(28,13,17,.06)}
+.sumo-career-panel-head{background:linear-gradient(110deg,#1d171b,#35292e);border-bottom:3px solid #caa65c;color:#fff;padding:15px 20px}
+.sumo-career-panel-head small{display:block;font:850 10px 'DM Sans',sans-serif;color:#eabf64;letter-spacing:.14em}
+.sumo-career-panel-head h3{font:900 clamp(26px,3vw,35px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;margin:6px 0 0}
+.sumo-career-panel-main{padding:17px 20px 10px}
+.sumo-career-source{padding:2px 20px 18px;margin:0;color:#736663;font-size:11px;line-height:1.65}
+.sumo-career-source a{color:#ae2838;font-weight:850}
+.sumo-chart-grid{stroke:#e7ddd2;stroke-width:1}
+.sumo-chart-axis{fill:#796a65;font:750 11px 'DM Sans',Arial,sans-serif}
+.sumo-chart-number{fill:#5d2630;font:900 16px 'Barlow Condensed',Impact,sans-serif}
+.sumo-chart-ranklabel{fill:#564950;font:750 12px 'DM Sans',Arial,sans-serif}
+.sumo-weight-scroll,.sumo-rank-scroll{width:100%;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-color:#af975f #efe8df}
+.sumo-weight-svg{width:100%;min-width:520px;height:auto;display:block;margin:auto;max-width:960px}
+.sumo-rank-svg{height:auto;display:block;max-width:none}
+.sumo-weight-connector{fill:none;stroke:#b38933;stroke-width:3;stroke-dasharray:7 6}
+.sumo-weight-point{fill:#fff8e9;stroke:#a47b24;stroke-width:3;cursor:help}
+.sumo-rank-connector{fill:none;stroke:#9f2734;stroke-width:3}
+.sumo-rank-point{stroke:#fff6ed;stroke-width:1.4;cursor:help}
+.sumo-rank-point.up{fill:#218553}.sumo-rank-point.down{fill:#c52e3b}.sumo-rank-point.neutral{fill:#bb963d}
+.sumo-rank-point:focus,.sumo-weight-point:focus{outline:2px solid #d9222d;outline-offset:3px}
+.sumo-rank-legend{display:flex;flex-wrap:wrap;gap:8px 20px;color:#665c5e;font-size:11px;font-weight:800;margin:10px 0}
+.sumo-career-empty{font-size:12px;padding:24px;background:#faf5ef;color:#756b67;border:1px dashed #d5c9be}
+.sumo-career-milestones{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin:20px 0 8px}
+.sumo-career-milestones>div{background:#f6f0e8;padding:10px 12px;border-top:3px solid #bb9854;min-width:0}
+.sumo-career-milestones small{display:block;color:#966b31;font-weight:800}
+.sumo-career-milestones strong{display:block;font:900 19px 'Barlow Condensed',Impact,sans-serif;color:#2b2023;margin:4px 0}
+.sumo-career-milestones span{font-size:10px;color:#695d5b}
+@media(max-width:820px){.sumo-career-milestones{grid-template-columns:repeat(2,minmax(0,1fr))}.sumo-career-panel-main{padding:12px}.sumo-career-panel-head{padding:12px 16px}}
+@media(max-width:480px){.sumo-career-summary span{flex-grow:1;font-size:10px}.sumo-career-milestones{gap:6px}.sumo-career-panel-head h3{font-size:28px}}
