@@ -169,3 +169,13 @@
   .sumo-h2h-technique{font-size:10px}
   .sumo-h2h-score>strong{font-size:33px}
 }
+
+/* Career H2H opponent library · BEFN cream/ink/gold preview treatment. */
+.sumo-rival-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:17px 0 21px}
+.sumo-rival{min-width:0;display:flex;flex-direction:column;gap:6px;padding:14px 15px 13px;border:1px solid #d8c9b5;background:linear-gradient(145deg,#fffdf7,#f6eee3);text-decoration:none;color:#322428;box-shadow:0 4px 12px rgba(39,26,24,.06);border-top:3px solid #a98b55;transition:transform .15s,border-color .15s}
+.sumo-rival:hover,.sumo-rival:focus-visible{border-color:#ac2c3b;transform:translateY(-2px)}
+.sumo-rival-name{font:850 19px/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;letter-spacing:.02em;overflow-wrap:anywhere}
+.sumo-rival strong{font:900 27px/1 'Barlow Condensed',Impact,sans-serif;color:#8d2432}
+.sumo-rival small{font:750 10px 'DM Sans',Arial,sans-serif;color:#796a5c}
+@media(max-width:1020px){.sumo-rival-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:620px){.sumo-rival-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.sumo-rival{padding:11px 12px}.sumo-rival-name{font-size:17px}.sumo-rival strong{font-size:25px}}
