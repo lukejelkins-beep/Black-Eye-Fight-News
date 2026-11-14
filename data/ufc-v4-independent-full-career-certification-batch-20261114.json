@@ -7,7 +7,7 @@
   "nonproduction": true,
   "sourceMethod": "full_official_ufc_fight_listing_crosscheck",
   "independentSourceDataset": "Greco1899 UFCStats-derived historical results, source snapshot through 2026-11-07; source-linked fight detail URLs are references, not a claim of direct UFCStats website access",
-  "notes": "Independent exhaustive scope crosschecked against UFC official fighter bios, last fight/debut, and UFCStats-derived third party 12-fight lists. Native IDs, corners, winners, measured metrics and date offsets must be validated again in CI; do not count certs from this file alone. Event titles are display-only and are not exact-match certification requirements. Narrow opponent name aliases are independently grounded in official UFC biographies. Seven additional fighter-by-fighter full official UFC biographies independently reviewed against the pinned 8 Nov Greco UFCStats source, 94 source-linked bouts across eight candidates, and strict native identity/metrics preflight. Sean Woodson excluded from certification due to unresolved result and DWCS row, not counted. Sean Woodson independently verified: exactly 11 UFC bouts including UFC 278 split draw and excluding source-confirmed 2019 DWCS non-UFC bout (native id 84014), without changing collector-owned cache. Five additional official UFC career histories were independently source-reviewed, with three UFC-backed DWCS exclusions newly added, and submitted to the strict nonproduction certification CI. Additional official UFC biography reviews, with exact independently linked UFC fight results, recorded in nonproduction source-attestation cohort. Await strict GitHub native-ID and stats certification gate. Ten already certified Stage3 official full-career histories separately revalidated through the same strict V4 native fighter ID, official event scope, winner and full required measured stat gates in successful CI run 43560373659 (10 passed, zero blocked). This is source reuse, NOT ten new unique athletes when comparing main and V4. Wave 3: 11 independently reviewed full UFC biography listings crosschecked against targeted pinned UFCStats-derived 11 individual career histories; source URLs per bout, native corners, date offsets and measured statistics still subject to strict V4 CI gate. Five additional UFC careers: Da'Mon, Pearce, Casey source opponent aliases independently traced to dated official UFC results and existing native IDs; Alessandro/Bruna DWCS exclusions independently source-verified, Bruna Road to UFC semifinal excluded. Final strict V4 check mandatory. STRICT CORRECTION 2026-11-14: Bruna Brasil excluded from this attested certification batch until 2025-08-22 Shi Ming official UFC showcase fight (native 60900) is included and its measured native statistics are reconciled. UFC's official report describes Shi-Brasil as one of two UFC bouts on the Road to UFC show; source-linked full UFCStats fight-details/abf5f4d6f777cf7b. Seven-only UFC career is incomplete. Do not reattest seven. Bruna Brasil 2025-08-22 Shi Ming has been added as eighth official UFC fight (verified showcase; NOT RTU qualifier). Keep DWCS Marnic Mann excluded. Do not certify if 60900 is not measured, source-linked or matched in native official record. Seven further career histories independently reviewed against UFC athlete record narratives (including official TUF finales and title fights) plus pinned Greco UFCStats source; submitted to strict per-fight source and numeric native metric gates.",
+  "notes": "Independent exhaustive scope crosschecked against UFC official fighter bios, last fight/debut, and UFCStats-derived third party 12-fight lists. Native IDs, corners, winners, measured metrics and date offsets must be validated again in CI; do not count certs from this file alone. Event titles are display-only and are not exact-match certification requirements. Narrow opponent name aliases are independently grounded in official UFC biographies. Seven additional fighter-by-fighter full official UFC biographies independently reviewed against the pinned 8 Nov Greco UFCStats source, 94 source-linked bouts across eight candidates, and strict native identity/metrics preflight. Sean Woodson excluded from certification due to unresolved result and DWCS row, not counted. Sean Woodson independently verified: exactly 11 UFC bouts including UFC 278 split draw and excluding source-confirmed 2019 DWCS non-UFC bout (native id 84014), without changing collector-owned cache. Five additional official UFC career histories were independently source-reviewed, with three UFC-backed DWCS exclusions newly added, and submitted to the strict nonproduction certification CI. Additional official UFC biography reviews, with exact independently linked UFC fight results, recorded in nonproduction source-attestation cohort. Await strict GitHub native-ID and stats certification gate. Ten already certified Stage3 official full-career histories separately revalidated through the same strict V4 native fighter ID, official event scope, winner and full required measured stat gates in successful CI run 43560373659 (10 passed, zero blocked). This is source reuse, NOT ten new unique athletes when comparing main and V4. Wave 3: 11 independently reviewed full UFC biography listings crosschecked against targeted pinned UFCStats-derived 11 individual career histories; source URLs per bout, native corners, date offsets and measured statistics still subject to strict V4 CI gate. Five additional UFC careers: Da'Mon, Pearce, Casey source opponent aliases independently traced to dated official UFC results and existing native IDs; Alessandro/Bruna DWCS exclusions independently source-verified, Bruna Road to UFC semifinal excluded. Final strict V4 check mandatory. STRICT CORRECTION 2026-11-14: Bruna Brasil excluded from this attested certification batch until 2025-08-22 Shi Ming official UFC showcase fight (native 60900) is included and its measured native statistics are reconciled. UFC's official report describes Shi-Brasil as one of two UFC bouts on the Road to UFC show; source-linked full UFCStats fight-details/abf5f4d6f777cf7b. Seven-only UFC career is incomplete. Do not reattest seven. Bruna Brasil 2025-08-22 Shi Ming has been added as eighth official UFC fight (verified showcase; NOT RTU qualifier). Keep DWCS Marnic Mann excluded. Do not certify if 60900 is not measured, source-linked or matched in native official record. Seven further career histories independently reviewed against UFC athlete record narratives (including official TUF finales and title fights) plus pinned Greco UFCStats source; submitted to strict per-fight source and numeric native metric gates. Wave-four additional independent official biography/source mapping for 8 source-complete eligible careers, with independently confirmed DWCS exclusions; Jean Silva retained for same-name UFCStats athlete ID disambiguation.",
   "fighters": {
     "maryna-moroz": {
       "fighterName": "Maryna Moroz",
@@ -6360,6 +6360,719 @@
           "fightUrl": "https://ufcstats.com/fight-details/ce62a50e97d497f9",
           "nativeBoutId": "61176",
           "nativeSavedDate": "2022-09-03"
+        }
+      ]
+    },
+    "francis-marshall": {
+      "fighterName": "Francis Marshall",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/francis-marshall",
+      "fighterUrl": "https://ufcstats.com/fighter-details/5d495dec23d7c68e",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 8,
+      "uniqueNativeFighterId": "466",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/francis-marshall",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da",
+        "https://www.ufc.com/athlete/francis-marshall"
+      ],
+      "sourceScopeVerified": "Official UFC athlete biography independently checked from first qualifying Octagon fight through latest completed UFC fight as at 2026-11-14, 8 unique UFC fights including eligible TUF finale/NC/draw and all native UFC fights source linked against pinned UFCStats-derived data. 1 separately officially documented DWCS fights excluded, every source/date/opponent/result mapped to saved native fight ID. No missing known qualifying UFC fight.",
+      "dateDiscrepancies": [
+        {
+          "boutId": "59777",
+          "officialLocalDate": "2022-12-03",
+          "nativeSavedDate": "2022-12-04",
+          "reason": "Source event-local date differs from saved UTC event date"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-10-31",
+          "opponent": "Dakota Hope",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b7f8e619c7d9a7de",
+          "nativeBoutId": "93560",
+          "nativeSavedDate": "2026-10-31",
+          "originalOfficialDate": "2026-10-31"
+        },
+        {
+          "date": "2026-04-25",
+          "opponent": "Lucas Brennan",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c7fb90f1355291e4",
+          "nativeBoutId": "66086",
+          "nativeSavedDate": "2026-04-25",
+          "originalOfficialDate": "2026-04-25"
+        },
+        {
+          "date": "2026-02-28",
+          "opponent": "Erik Silva",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/581292ffe5b09344",
+          "nativeBoutId": "60684",
+          "nativeSavedDate": "2026-02-28",
+          "originalOfficialDate": "2026-02-28"
+        },
+        {
+          "date": "2025-03-08",
+          "opponent": "Mairon Santos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/19fe7177254802d1",
+          "nativeBoutId": "60329",
+          "nativeSavedDate": "2025-03-08",
+          "originalOfficialDate": "2025-03-08"
+        },
+        {
+          "date": "2024-08-24",
+          "opponent": "Dennis Buzukja",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/560f1e26c2a6690a",
+          "nativeBoutId": "60233",
+          "nativeSavedDate": "2024-08-24",
+          "originalOfficialDate": "2024-08-24"
+        },
+        {
+          "date": "2023-08-12",
+          "opponent": "Isaac Dulgarian",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9479ba3cdcb1e513",
+          "nativeBoutId": "60084",
+          "nativeSavedDate": "2023-08-12",
+          "originalOfficialDate": "2023-08-12"
+        },
+        {
+          "date": "2023-04-22",
+          "opponent": "William Gomis",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a941c4e25ddddfff",
+          "nativeBoutId": "61281",
+          "nativeSavedDate": "2023-04-22",
+          "originalOfficialDate": "2023-04-22"
+        },
+        {
+          "date": "2022-12-03",
+          "opponent": "Marcelo Rojo",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1114cd1515cf3b8f",
+          "nativeBoutId": "59777",
+          "nativeSavedDate": "2022-12-04",
+          "originalOfficialDate": "2022-12-03"
+        }
+      ]
+    },
+    "julian-marquez": {
+      "fighterName": "Julian Marquez",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/julian-marquez",
+      "fighterUrl": "https://ufcstats.com/fighter-details/d0e1b42d41dab603",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 8,
+      "uniqueNativeFighterId": "2646",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/julian-marquez",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da",
+        "https://www.ufc.com/athlete/julian-marquez"
+      ],
+      "sourceScopeVerified": "Official UFC athlete biography independently checked from first qualifying Octagon fight through latest completed UFC fight as at 2026-11-14, 8 unique UFC fights including eligible TUF finale/NC/draw and all native UFC fights source linked against pinned UFCStats-derived data. 1 separately officially documented DWCS fights excluded, every source/date/opponent/result mapped to saved native fight ID. No missing known qualifying UFC fight.",
+      "dateDiscrepancies": [
+        {
+          "boutId": "61921",
+          "officialLocalDate": "2021-02-13",
+          "nativeSavedDate": "2021-02-14",
+          "reason": "Source event-local date differs from saved UTC event date"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2025-03-01",
+          "opponent": "Cody Brundage",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6bdf0756fb57aced",
+          "nativeBoutId": "60332",
+          "nativeSavedDate": "2025-03-01",
+          "originalOfficialDate": "2025-03-01"
+        },
+        {
+          "date": "2024-06-08",
+          "opponent": "Zach Reese",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3b12094dd48c2dc5",
+          "nativeBoutId": "61031",
+          "nativeSavedDate": "2024-06-08",
+          "originalOfficialDate": "2024-06-08"
+        },
+        {
+          "date": "2023-03-04",
+          "opponent": "Marc-Andre Barriault",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c29e2c49e1e417c8",
+          "nativeBoutId": "59688",
+          "nativeSavedDate": "2023-03-04",
+          "originalOfficialDate": "2023-03-04"
+        },
+        {
+          "date": "2022-06-18",
+          "opponent": "Gregory Rodrigues",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5095f6290670009d",
+          "nativeBoutId": "61612",
+          "nativeSavedDate": "2022-06-18",
+          "originalOfficialDate": "2022-06-18"
+        },
+        {
+          "date": "2021-04-10",
+          "opponent": "Sam Alvey",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/646eeca9447c6965",
+          "nativeBoutId": "61541",
+          "nativeSavedDate": "2021-04-10",
+          "originalOfficialDate": "2021-04-10"
+        },
+        {
+          "date": "2021-02-13",
+          "opponent": "Maki Pitolo",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9201312dd860fa5a",
+          "nativeBoutId": "61921",
+          "nativeSavedDate": "2021-02-14",
+          "originalOfficialDate": "2021-02-13"
+        },
+        {
+          "date": "2018-07-06",
+          "opponent": "Alessio Di Chirico",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/760b90b0805e0fbf",
+          "nativeBoutId": "62187",
+          "nativeSavedDate": "2018-07-06",
+          "originalOfficialDate": "2018-07-06"
+        },
+        {
+          "date": "2017-12-16",
+          "opponent": "Darren Stewart",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/535b8e5494cbc580",
+          "nativeBoutId": "58841",
+          "nativeSavedDate": "2017-12-16",
+          "originalOfficialDate": "2017-12-16"
+        }
+      ]
+    },
+    "raul-rosas-jr": {
+      "fighterName": "Raul Rosas Jr.",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/raul-rosas-jr",
+      "fighterUrl": "https://ufcstats.com/fighter-details/fe2babf95de24fb1",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 8,
+      "uniqueNativeFighterId": "463",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/raul-rosas-jr",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da",
+        "https://www.ufc.com/athlete/raul-rosas-jr"
+      ],
+      "sourceScopeVerified": "Official UFC athlete biography independently checked from first qualifying Octagon fight through latest completed UFC fight as at 2026-11-14, 8 unique UFC fights including eligible TUF finale/NC/draw and all native UFC fights source linked against pinned UFCStats-derived data. 1 separately officially documented DWCS fights excluded, every source/date/opponent/result mapped to saved native fight ID. No missing known qualifying UFC fight.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-09-26",
+          "opponent": "Raoni Barcelos",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0e55d8a3d7a73912",
+          "nativeBoutId": "83730",
+          "nativeSavedDate": "2026-09-26",
+          "originalOfficialDate": "2026-09-26"
+        },
+        {
+          "date": "2026-03-07",
+          "opponent": "Rob Font",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/bed89a91da9d04c1",
+          "nativeBoutId": "60688",
+          "nativeSavedDate": "2026-03-07",
+          "originalOfficialDate": "2026-03-07"
+        },
+        {
+          "date": "2025-03-29",
+          "opponent": "Vince Morales",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0f20c1d7c44fa5fe",
+          "nativeBoutId": "61006",
+          "nativeSavedDate": "2025-03-29",
+          "originalOfficialDate": "2025-03-29"
+        },
+        {
+          "date": "2024-09-14",
+          "opponent": "Aoriqileng",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3cdc6fea724be133",
+          "nativeBoutId": "60226",
+          "nativeSavedDate": "2024-09-14",
+          "originalOfficialDate": "2024-09-14"
+        },
+        {
+          "date": "2024-06-08",
+          "opponent": "Ricky Turcios",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b34abcfe4c2e8a57",
+          "nativeBoutId": "61029",
+          "nativeSavedDate": "2024-06-08",
+          "originalOfficialDate": "2024-06-08"
+        },
+        {
+          "date": "2023-09-16",
+          "opponent": "Terrence Mitchell",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c0ca4c201d086ea8",
+          "nativeBoutId": "60044",
+          "nativeSavedDate": "2023-09-16",
+          "originalOfficialDate": "2023-09-16"
+        },
+        {
+          "date": "2023-04-08",
+          "opponent": "Christian Rodriguez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/2cb34fc074f7a9ae",
+          "nativeBoutId": "53830",
+          "nativeSavedDate": "2023-04-08",
+          "originalOfficialDate": "2023-04-08"
+        },
+        {
+          "date": "2022-12-10",
+          "opponent": "Jay Perrin",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fd7421f421e802bd",
+          "nativeBoutId": "61229",
+          "nativeSavedDate": "2022-12-10",
+          "originalOfficialDate": "2022-12-10"
+        }
+      ]
+    },
+    "thomas-petersen": {
+      "fighterName": "Thomas Petersen",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/thomas-petersen",
+      "fighterUrl": "https://ufcstats.com/fighter-details/764d39074a352e33",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 8,
+      "uniqueNativeFighterId": "167",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/thomas-petersen",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da",
+        "https://www.ufc.com/athlete/thomas-petersen"
+      ],
+      "sourceScopeVerified": "Official UFC athlete biography independently checked from first qualifying Octagon fight through latest completed UFC fight as at 2026-11-14, 8 unique UFC fights including eligible TUF finale/NC/draw and all native UFC fights source linked against pinned UFCStats-derived data. 1 separately officially documented DWCS fights excluded, every source/date/opponent/result mapped to saved native fight ID. No missing known qualifying UFC fight.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-11-07",
+          "opponent": "Gabriel Lorenco",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a21a21810258623e",
+          "nativeBoutId": "93636",
+          "nativeSavedDate": "2026-11-07",
+          "originalOfficialDate": "2026-11-07"
+        },
+        {
+          "date": "2026-07-25",
+          "opponent": "Valter Walker",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d7070ab1b2144f8d",
+          "nativeBoutId": "82601",
+          "nativeSavedDate": "2026-07-25",
+          "originalOfficialDate": "2026-07-25"
+        },
+        {
+          "date": "2026-04-04",
+          "opponent": "Guilherme Pat",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0760bc02280574dd",
+          "nativeBoutId": "60704",
+          "nativeSavedDate": "2026-04-04",
+          "originalOfficialDate": "2026-04-04"
+        },
+        {
+          "date": "2025-10-11",
+          "opponent": "Vitor Petrino",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a815dafc89adf33b",
+          "nativeBoutId": "65894",
+          "nativeSavedDate": "2025-10-11",
+          "originalOfficialDate": "2025-10-11"
+        },
+        {
+          "date": "2025-05-03",
+          "opponent": "Don'Tale Mayes",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c445401709421fa4",
+          "nativeBoutId": "60801",
+          "nativeSavedDate": "2025-05-03",
+          "originalOfficialDate": "2025-05-03"
+        },
+        {
+          "date": "2025-02-01",
+          "opponent": "Shamil Gaziev",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/43bbaf06603b0f0c",
+          "nativeBoutId": "38558",
+          "nativeSavedDate": "2025-02-01",
+          "originalOfficialDate": "2025-02-01"
+        },
+        {
+          "date": "2024-07-20",
+          "opponent": "Mohammed Usman",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/836e9bc5c1f6acd3",
+          "nativeBoutId": "65933",
+          "nativeSavedDate": "2024-07-20",
+          "originalOfficialDate": "2024-07-20"
+        },
+        {
+          "date": "2024-02-03",
+          "opponent": "Jamal Pogues",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/df9847839c73a678",
+          "nativeBoutId": "59863",
+          "nativeSavedDate": "2024-02-03",
+          "originalOfficialDate": "2024-02-03"
+        }
+      ]
+    },
+    "armen-petrosyan": {
+      "fighterName": "Armen Petrosyan",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/armen-petrosyan",
+      "fighterUrl": "https://ufcstats.com/fighter-details/369ea36e450ae62a",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 7,
+      "uniqueNativeFighterId": "1188",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/armen-petrosyan",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da",
+        "https://www.ufc.com/athlete/armen-petrosyan"
+      ],
+      "sourceScopeVerified": "Official UFC athlete biography independently checked from first qualifying Octagon fight through latest completed UFC fight as at 2026-11-14, 7 unique UFC fights including eligible TUF finale/NC/draw and all native UFC fights source linked against pinned UFCStats-derived data. 1 separately officially documented DWCS fights excluded, every source/date/opponent/result mapped to saved native fight ID. No missing known qualifying UFC fight.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2025-03-08",
+          "opponent": "Brunno Ferreira",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e61cb905f6152183",
+          "nativeBoutId": "60327",
+          "nativeSavedDate": "2025-03-08",
+          "originalOfficialDate": "2025-03-08"
+        },
+        {
+          "date": "2024-10-26",
+          "opponent": "Shara Magomedov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/108434acbbd75d26",
+          "nativeBoutId": "60182",
+          "nativeSavedDate": "2024-10-26",
+          "originalOfficialDate": "2024-10-26"
+        },
+        {
+          "date": "2024-02-10",
+          "opponent": "Rodolfo Vieira",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9d8473ae274ed625",
+          "nativeBoutId": "59905",
+          "nativeSavedDate": "2024-02-10",
+          "originalOfficialDate": "2024-02-10"
+        },
+        {
+          "date": "2023-06-17",
+          "opponent": "Christian Leroy Duncan",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5d9b84493f1ed114",
+          "nativeBoutId": "60168",
+          "nativeSavedDate": "2023-06-17",
+          "originalOfficialDate": "2023-06-17"
+        },
+        {
+          "date": "2022-10-22",
+          "opponent": "AJ Dobson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1b204fc28bb023e6",
+          "nativeBoutId": "61221",
+          "nativeSavedDate": "2022-10-22",
+          "originalOfficialDate": "2022-10-22"
+        },
+        {
+          "date": "2022-07-09",
+          "opponent": "Caio Borralho",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6c60e58f8e9e7a4c",
+          "nativeBoutId": "61493",
+          "nativeSavedDate": "2022-07-09",
+          "originalOfficialDate": "2022-07-09"
+        },
+        {
+          "date": "2022-02-26",
+          "opponent": "Gregory Rodrigues",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/84d633d4a9fbf331",
+          "nativeBoutId": "61386",
+          "nativeSavedDate": "2022-02-26",
+          "originalOfficialDate": "2022-02-26"
+        }
+      ]
+    },
+    "asu-almabayev": {
+      "fighterName": "Asu Almabayev",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/asu-almabayev",
+      "fighterUrl": "https://ufcstats.com/fighter-details/8d3273573b85be09",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 8,
+      "uniqueNativeFighterId": "375",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/asu-almabayev",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceScopeVerified": "Official UFC athlete biography independently checked from first qualifying Octagon fight through latest completed UFC fight as at 2026-11-14, 8 unique UFC fights including eligible TUF finale/NC/draw and all native UFC fights source linked against pinned UFCStats-derived data. 0 separately officially documented DWCS fights excluded, every source/date/opponent/result mapped to saved native fight ID. No missing known qualifying UFC fight.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-06-27",
+          "opponent": "Charles Johnson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/81cde317c156723b",
+          "nativeBoutId": "66374",
+          "nativeSavedDate": "2026-06-27",
+          "originalOfficialDate": "2026-06-27"
+        },
+        {
+          "date": "2025-11-22",
+          "opponent": "Alex Perez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/443f30a4a856584a",
+          "nativeBoutId": "60412",
+          "nativeSavedDate": "2025-11-22",
+          "originalOfficialDate": "2025-11-22"
+        },
+        {
+          "date": "2025-07-26",
+          "opponent": "Jose Ochoa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/887c61da1a78a5e1",
+          "nativeBoutId": "60820",
+          "nativeSavedDate": "2025-07-26",
+          "originalOfficialDate": "2025-07-26"
+        },
+        {
+          "date": "2025-03-01",
+          "opponent": "Manel Kape",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9d8a37f130db13e5",
+          "nativeBoutId": "60331",
+          "nativeSavedDate": "2025-03-01",
+          "originalOfficialDate": "2025-03-01"
+        },
+        {
+          "date": "2024-10-19",
+          "opponent": "Matheus Nicolau",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c61923255389e67c",
+          "nativeBoutId": "65939",
+          "nativeSavedDate": "2024-10-19",
+          "originalOfficialDate": "2024-10-19"
+        },
+        {
+          "date": "2024-06-15",
+          "opponent": "Jose Johnson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3b1438e9ec64990e",
+          "nativeBoutId": "61058",
+          "nativeSavedDate": "2024-06-15",
+          "originalOfficialDate": "2024-06-15"
+        },
+        {
+          "date": "2024-03-09",
+          "opponent": "CJ Vergara",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3d3dde60e3d59c1c",
+          "nativeBoutId": "60914",
+          "nativeSavedDate": "2024-03-09",
+          "originalOfficialDate": "2024-03-09"
+        },
+        {
+          "date": "2023-08-05",
+          "opponent": "Ode Osbourne",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6b5c225814a924ed",
+          "nativeBoutId": "61152",
+          "nativeSavedDate": "2023-08-05",
+          "originalOfficialDate": "2023-08-05"
+        }
+      ]
+    },
+    "carlston-harris": {
+      "fighterName": "Carlston Harris",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/carlston-harris",
+      "fighterUrl": "https://ufcstats.com/fighter-details/a53d30163304aa6e",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 8,
+      "uniqueNativeFighterId": "730",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/carlston-harris",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceScopeVerified": "Official UFC athlete biography independently checked from first qualifying Octagon fight through latest completed UFC fight as at 2026-11-14, 8 unique UFC fights including eligible TUF finale/NC/draw and all native UFC fights source linked against pinned UFCStats-derived data. 0 separately officially documented DWCS fights excluded, every source/date/opponent/result mapped to saved native fight ID. No missing known qualifying UFC fight.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-05-30",
+          "opponent": "Jake Matthews",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c1c9dfd0c0952f18",
+          "nativeBoutId": "66456",
+          "nativeSavedDate": "2026-05-30",
+          "originalOfficialDate": "2026-05-30"
+        },
+        {
+          "date": "2025-01-11",
+          "opponent": "Santiago Ponzinibbio",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ce4fc800a7456d18",
+          "nativeBoutId": "60342",
+          "nativeSavedDate": "2025-01-11",
+          "originalOfficialDate": "2025-01-11"
+        },
+        {
+          "date": "2024-05-18",
+          "opponent": "Khaos Williams",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/85ddb65429a9d517",
+          "nativeBoutId": "61016",
+          "nativeSavedDate": "2024-05-18",
+          "originalOfficialDate": "2024-05-18"
+        },
+        {
+          "date": "2023-08-05",
+          "opponent": "Jeremiah Wells",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/bda7992779a005fa",
+          "nativeBoutId": "61148",
+          "nativeSavedDate": "2023-08-05",
+          "originalOfficialDate": "2023-08-05"
+        },
+        {
+          "date": "2023-03-11",
+          "opponent": "Jared Gooden",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ccb5e29cd0347110",
+          "nativeBoutId": "59679",
+          "nativeSavedDate": "2023-03-11",
+          "originalOfficialDate": "2023-03-11"
+        },
+        {
+          "date": "2022-02-05",
+          "opponent": "Shavkat Rakhmonov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6b4c2cc27855506a",
+          "nativeBoutId": "61623",
+          "nativeSavedDate": "2022-02-05",
+          "originalOfficialDate": "2022-02-05"
+        },
+        {
+          "date": "2021-09-18",
+          "opponent": "Impa Kasanganay",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/06b3226c34c17001",
+          "nativeBoutId": "61914",
+          "nativeSavedDate": "2021-09-18",
+          "originalOfficialDate": "2021-09-18"
+        },
+        {
+          "date": "2021-05-08",
+          "opponent": "Christian Aguilera",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/37fda56a435a9b24",
+          "nativeBoutId": "61581",
+          "nativeSavedDate": "2021-05-08",
+          "originalOfficialDate": "2021-05-08"
+        }
+      ]
+    },
+    "dennis-buzukja": {
+      "fighterName": "Dennis Buzukja",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/dennis-buzukja",
+      "fighterUrl": "https://ufcstats.com/fighter-details/c4d039123e62f6a9",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 6,
+      "uniqueNativeFighterId": "566",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/dennis-buzukja",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da",
+        "https://www.ufc.com/athlete/dennis-buzukja"
+      ],
+      "sourceScopeVerified": "Official UFC athlete biography independently checked from first qualifying Octagon fight through latest completed UFC fight as at 2026-11-14, 6 unique UFC fights including eligible TUF finale/NC/draw and all native UFC fights source linked against pinned UFCStats-derived data. 2 separately officially documented DWCS fights excluded, every source/date/opponent/result mapped to saved native fight ID. No missing known qualifying UFC fight.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-08-01",
+          "opponent": "Bogdan Grad",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/13aa6688d0538095",
+          "nativeBoutId": "82716",
+          "nativeSavedDate": "2026-08-01",
+          "originalOfficialDate": "2026-08-01"
+        },
+        {
+          "date": "2026-04-18",
+          "opponent": "Marcio Barbosa",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/678440bd8274a18e",
+          "nativeBoutId": "66094",
+          "nativeSavedDate": "2026-04-18",
+          "originalOfficialDate": "2026-04-18"
+        },
+        {
+          "date": "2024-08-24",
+          "opponent": "Francis Marshall",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/560f1e26c2a6690a",
+          "nativeBoutId": "60233",
+          "nativeSavedDate": "2024-08-24",
+          "originalOfficialDate": "2024-08-24"
+        },
+        {
+          "date": "2024-03-30",
+          "opponent": "Connor Matthews",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f59cefe16905d62c",
+          "nativeBoutId": "38988",
+          "nativeSavedDate": "2024-03-30",
+          "originalOfficialDate": "2024-03-30"
+        },
+        {
+          "date": "2023-11-11",
+          "opponent": "Jamall Emmers",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1cf69de0eea46877",
+          "nativeBoutId": "59972",
+          "nativeSavedDate": "2023-11-11",
+          "originalOfficialDate": "2023-11-11"
+        },
+        {
+          "date": "2023-08-05",
+          "opponent": "Sean Woodson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/436a1ce6b0c6b4bb",
+          "nativeBoutId": "61151",
+          "nativeSavedDate": "2023-08-05",
+          "originalOfficialDate": "2023-08-05"
         }
       ]
     }
