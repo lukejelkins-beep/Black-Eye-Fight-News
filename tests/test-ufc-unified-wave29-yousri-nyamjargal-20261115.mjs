@@ -24,7 +24,8 @@ test('wave29: five exact independently sourced official UFC bouts preserve origi
 test('wave29: three attested feeder bouts and cancelled/announced fights are not official UFC certificates',()=>{
  let count=0;for(const[slug,e]of Object.entries(src.fighters)){for(const f of e.sourceVerifiedExcludedFeederBouts){
   assert.match(cache.bouts[f.nativeBoutId]?.event||'',/contender series|road to ufc/i);
-  assert.ok(feeder.bouts.some(b=>b.fighterSlug===slug&&b.boutId===f.nativeBoutId&&b.sourceUrl===e.officialFighterUrl));
+  if(/contender series/i.test(f.event))assert.ok(feeder.bouts.some(b=>b.fighterSlug===slug&&b.boutId===f.nativeBoutId&&b.sourceUrl===e.officialFighterUrl));
+  else assert.match(f.event,/road to ufc/i); // RTU proof stays in source review, not the DWCS-only exclusion register.
   assert.ok(!reg.fighters[slug].bouts.some(b=>b.nativeBoutId===f.nativeBoutId));count++;
  }}
  assert.equal(count,3);
