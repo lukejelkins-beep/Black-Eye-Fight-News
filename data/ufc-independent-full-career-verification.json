@@ -383,10 +383,21 @@
           "method": "submission",
           "round": 3,
           "time": "3:07",
-          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-july-25-2026"
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-july-25-2026",
+          "nativeBoutId": "83220"
         }
       ],
-      "note": "One official completed UFC bout at source cut-off, Greco source-linked exact fight URL, saved bout 83220, numeric fighter 13875 and round metrics. Explicit CI independent gate mandatory; separate PR only, no production data changed."
+      "note": "One official completed UFC bout at source cut-off, Greco source-linked exact fight URL, saved bout 83220, numeric fighter 13875 and round metrics. Explicit CI independent gate mandatory; separate PR only, no production data changed.",
+      "officialFighterUrl": "https://www.ufc.com/athlete/abdul-hussein",
+      "verifiedNumericFighterIds": [
+        "13875"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "cutoffLastEvent": "2026-11-07",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da"
+      }
     }
   }
 }
