@@ -1,0 +1,2343 @@
+{
+  "schema": 1,
+  "scope": "ufc-v4-next20-pinned-independent-source-links",
+  "rosterAsOf": "2026-11-14",
+  "sourceRepository": "https://github.com/Greco1899/scrape_ufc_stats",
+  "pinnedCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+  "sourceLatestEvent": "2026-11-07",
+  "status": "secondary_source_candidate_review_not_certification",
+  "sourceRun": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559501804",
+  "note": "Only target fighter source-link references, not copied entire Greco dataset; Greco name match does not establish athlete identity or certify completeness. Persisted to avoid repeated CSV fetches.",
+  "fighters": {
+    "bill-algeo": {
+      "sourceName": "Bill Algeo",
+      "grecoSourceBouts": 10,
+      "savedUfcBouts": 11,
+      "sourceOnly": 0,
+      "savedOnly": 1,
+      "ambiguousIdentity": 0,
+      "rows": [
+        {
+          "date": "2024-07-20",
+          "opponent": "Dooho Choi",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ec8bc554a0646638",
+          "nativeBoutId": "65927",
+          "nativeSavedDate": "2024-07-20",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-03-30",
+          "opponent": "Kyle Nelson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/91aa08e910fb4412",
+          "nativeBoutId": "38983",
+          "nativeSavedDate": "2024-03-30",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-10-07",
+          "opponent": "Alexander Hernandez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b638646fb297228d",
+          "nativeBoutId": "60025",
+          "nativeSavedDate": "2023-10-07",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-04-15",
+          "opponent": "TJ Brown",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b01e6e97d66681c5",
+          "nativeBoutId": "53844",
+          "nativeSavedDate": "2023-04-15",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-09-17",
+          "opponent": "Andre Fili",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/adb78db5ba8ccc0f",
+          "nativeBoutId": "61179",
+          "nativeSavedDate": "2022-09-17",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-07-16",
+          "opponent": "Herbert Burns",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/4dd2bcd2b025204e",
+          "nativeBoutId": "61511",
+          "nativeSavedDate": "2022-07-16",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-01-15",
+          "opponent": "Joanderson Brito",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8693027377658e61",
+          "nativeBoutId": "61534",
+          "nativeSavedDate": "2022-01-15",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-05-22",
+          "opponent": "Ricardo Ramos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ae0afbff5ba07a34",
+          "nativeBoutId": "61759",
+          "nativeSavedDate": "2021-05-22",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2020-11-28",
+          "opponent": "Spike Carlyle",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/181c3312f14de5a8",
+          "nativeBoutId": "66358",
+          "nativeSavedDate": "2020-11-29",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2020-08-29",
+          "opponent": "Ricardo Lamas",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3a8e4b830750e9d4",
+          "nativeBoutId": "65816",
+          "nativeSavedDate": "2020-08-29",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "caio-borralho": {
+      "sourceName": "Caio Borralho",
+      "grecoSourceBouts": 9,
+      "savedUfcBouts": 11,
+      "sourceOnly": 0,
+      "savedOnly": 2,
+      "ambiguousIdentity": 0,
+      "rows": [
+        {
+          "date": "2026-03-07",
+          "opponent": "Reinier de Ridder",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d564db29997e1371",
+          "nativeBoutId": "60687",
+          "nativeSavedDate": "2026-03-07",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-09-06",
+          "opponent": "Nassourdine Imavov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5bcd8abf6da01dae",
+          "nativeBoutId": "60471",
+          "nativeSavedDate": "2025-09-06",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-08-24",
+          "opponent": "Jared Cannonier",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/15805ae1eea3343e",
+          "nativeBoutId": "60227",
+          "nativeSavedDate": "2024-08-24",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-05-04",
+          "opponent": "Paul Craig",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2db0998b24c11ea0",
+          "nativeBoutId": "60920",
+          "nativeSavedDate": "2024-05-04",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-11-04",
+          "opponent": "Abus Magomedov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/7d474fbf31894108",
+          "nativeBoutId": "59990",
+          "nativeSavedDate": "2023-11-04",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-04-29",
+          "opponent": "Michal Oleksiejczuk",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ecec1b0dd64ca2ae",
+          "nativeBoutId": "53864",
+          "nativeSavedDate": "2023-04-29",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-10-22",
+          "opponent": "Makhmud Muradov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2d36e2c10ee349fe",
+          "nativeBoutId": "61218",
+          "nativeSavedDate": "2022-10-22",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-07-09",
+          "opponent": "Armen Petrosyan",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6c60e58f8e9e7a4c",
+          "nativeBoutId": "61493",
+          "nativeSavedDate": "2022-07-09",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-04-16",
+          "opponent": "Gadzhi Omargadzhiev",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a0a120c50d93f70a",
+          "nativeBoutId": "61516",
+          "nativeSavedDate": "2022-04-16",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "christian-rodriguez": {
+      "sourceName": "Christian Rodriguez",
+      "grecoSourceBouts": 10,
+      "savedUfcBouts": 11,
+      "sourceOnly": 0,
+      "savedOnly": 1,
+      "ambiguousIdentity": 0,
+      "rows": [
+        {
+          "date": "2026-06-20",
+          "opponent": "Hyder Amil",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/aaec28fa3c0c576d",
+          "nativeBoutId": "66003",
+          "nativeSavedDate": "2026-06-20",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-08-09",
+          "opponent": "Andre Fili",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/98d6771af9b0ebe5",
+          "nativeBoutId": "60511",
+          "nativeSavedDate": "2025-08-09",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-03-29",
+          "opponent": "Melquizael Costa",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/41cdbcc0f3635b8f",
+          "nativeBoutId": "61010",
+          "nativeSavedDate": "2025-03-29",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-01-11",
+          "opponent": "Austin Bashi",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/03c1865919daeaa4",
+          "nativeBoutId": "60345",
+          "nativeSavedDate": "2025-01-11",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-07-13",
+          "opponent": "Julian Erosa",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a63bb85cc39389c7",
+          "nativeBoutId": "61069",
+          "nativeSavedDate": "2024-07-13",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-03-16",
+          "opponent": "Isaac Dulgarian",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/acc7392d48cc09a0",
+          "nativeBoutId": "61239",
+          "nativeSavedDate": "2024-03-16",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-10-14",
+          "opponent": "Cameron Saaiman",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0197a61472fc351d",
+          "nativeBoutId": "60014",
+          "nativeSavedDate": "2023-10-14",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-04-08",
+          "opponent": "Raul Rosas Jr.",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2cb34fc074f7a9ae",
+          "nativeBoutId": "53830",
+          "nativeSavedDate": "2023-04-08",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-10-29",
+          "opponent": "Joshua Weems",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fdb9d29cf0edc16a",
+          "nativeBoutId": "59825",
+          "nativeSavedDate": "2022-10-29",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-02-19",
+          "opponent": "Jonathan Pearce",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/528c208293bdef13",
+          "nativeBoutId": "61380",
+          "nativeSavedDate": "2022-02-19",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "cody-gibson": {
+      "sourceName": "Cody Gibson",
+      "grecoSourceBouts": 11,
+      "savedUfcBouts": 11,
+      "sourceOnly": 0,
+      "savedOnly": 0,
+      "ambiguousIdentity": 0,
+      "rows": [
+        {
+          "date": "2026-07-25",
+          "opponent": "Abdul Hussein",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/532340708f0500bd",
+          "nativeBoutId": "83220",
+          "nativeSavedDate": "2026-07-25",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-10-18",
+          "opponent": "Aoriqileng",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/970f083af8368f57",
+          "nativeBoutId": "38149",
+          "nativeSavedDate": "2025-10-18",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-03-15",
+          "opponent": "Da'Mon Blackshear",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ab1aa23060d4e87b",
+          "nativeBoutId": "60358",
+          "nativeSavedDate": "2025-03-15",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-11-02",
+          "opponent": "Chad Anheliger",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c9cef59a5de32219",
+          "nativeBoutId": "61139",
+          "nativeSavedDate": "2024-11-02",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-07-20",
+          "opponent": "Brian Kelleher",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/40c18c6d64463809",
+          "nativeBoutId": "65929",
+          "nativeSavedDate": "2024-07-20",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-03-23",
+          "opponent": "Miles Johns",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/48ff3f1bcefbf965",
+          "nativeBoutId": "39000",
+          "nativeSavedDate": "2024-03-23",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-08-19",
+          "opponent": "Brad Katona",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e9754f597ec50f6f",
+          "nativeBoutId": "61161",
+          "nativeSavedDate": "2023-08-19",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2015-02-22",
+          "opponent": "Douglas Silva de Andrade",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/10cff9ac7ce89c28",
+          "nativeBoutId": "65302",
+          "nativeSavedDate": "2015-02-22",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2014-09-27",
+          "opponent": "Manvel Gamburyan",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a49706a6edb0c5c3",
+          "nativeBoutId": "63177",
+          "nativeSavedDate": "2014-09-27",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2014-06-28",
+          "opponent": "Johnny Bedford",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/4eae10815ebe78e3",
+          "nativeBoutId": "63143",
+          "nativeSavedDate": "2014-06-28",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2014-02-22",
+          "opponent": "Aljamain Sterling",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/41727d51af72b1d5",
+          "nativeBoutId": "58305",
+          "nativeSavedDate": "2014-02-22",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "diego-lopes": {
+      "sourceName": "Diego Lopes",
+      "grecoSourceBouts": 10,
+      "savedUfcBouts": 11,
+      "sourceOnly": 0,
+      "savedOnly": 1,
+      "ambiguousIdentity": 0,
+      "rows": [
+        {
+          "date": "2026-06-14",
+          "opponent": "Steve Garcia",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/127ba4a1ccb3d4a6",
+          "nativeBoutId": "66010",
+          "nativeSavedDate": "2026-06-15",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2026-01-31",
+          "opponent": "Alexander Volkanovski",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b06b43670238c2d8",
+          "nativeBoutId": "65847",
+          "nativeSavedDate": "2026-01-31",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-09-13",
+          "opponent": "Jean Silva",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/de1a3734be60e6a1",
+          "nativeBoutId": "38221",
+          "nativeSavedDate": "2025-09-13",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-04-12",
+          "opponent": "Alexander Volkanovski",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e733f148060bef2a",
+          "nativeBoutId": "60966",
+          "nativeSavedDate": "2025-04-12",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-09-14",
+          "opponent": "Brian Ortega",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2335e75ce63805b6",
+          "nativeBoutId": "60219",
+          "nativeSavedDate": "2024-09-14",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-06-29",
+          "opponent": "Dan Ige",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fc8ad0c7fc70dde7",
+          "nativeBoutId": "61042",
+          "nativeSavedDate": "2024-06-29",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-04-13",
+          "opponent": "Sodiq Yusuff",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/538ca98010ed00ec",
+          "nativeBoutId": "53795",
+          "nativeSavedDate": "2024-04-13",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-11-11",
+          "opponent": "Pat Sabatini",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/128ab9aa4802c73f",
+          "nativeBoutId": "59964",
+          "nativeSavedDate": "2023-11-11",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-08-05",
+          "opponent": "Gavin Tucker",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/79bfba62da6242a6",
+          "nativeBoutId": "61144",
+          "nativeSavedDate": "2023-08-05",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-05-06",
+          "opponent": "Movsar Evloev",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/069ab7e7b8b5d262",
+          "nativeBoutId": "59633",
+          "nativeSavedDate": "2023-05-06",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "dooho-choi": {
+      "sourceName": "Dooho Choi",
+      "grecoSourceBouts": 11,
+      "savedUfcBouts": 11,
+      "sourceOnly": 0,
+      "savedOnly": 0,
+      "ambiguousIdentity": 0,
+      "rows": [
+        {
+          "date": "2026-09-19",
+          "opponent": "Patricio Pitbull",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f7810c98786c3dd8",
+          "nativeBoutId": "83421",
+          "nativeSavedDate": "2026-09-19",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2026-05-16",
+          "opponent": "Daniel Santos",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fc1266e2892ed111",
+          "nativeBoutId": "66115",
+          "nativeSavedDate": "2026-05-16",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-12-07",
+          "opponent": "Nate Landwehr",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/089388c9f00ce9c6",
+          "nativeBoutId": "60781",
+          "nativeSavedDate": "2024-12-07",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-07-20",
+          "opponent": "Bill Algeo",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ec8bc554a0646638",
+          "nativeBoutId": "65927",
+          "nativeSavedDate": "2024-07-20",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-02-04",
+          "opponent": "Kyle Nelson",
+          "result": "draw",
+          "fightUrl": "https://ufcstats.com/fight-details/01e8868086004dd8",
+          "nativeBoutId": "59746",
+          "nativeSavedDate": "2023-02-05",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2019-12-21",
+          "opponent": "Charles Jourdain",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/997ab1ea9fab5643",
+          "nativeBoutId": "61963",
+          "nativeSavedDate": "2019-12-21",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2018-01-14",
+          "opponent": "Jeremy Stephens",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/51e684bfce8d94aa",
+          "nativeBoutId": "65448",
+          "nativeSavedDate": "2018-01-14",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2016-12-10",
+          "opponent": "Cub Swanson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5f0aa841c21f7d30",
+          "nativeBoutId": "62606",
+          "nativeSavedDate": "2016-12-10",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2016-07-08",
+          "opponent": "Thiago Tavares",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/febbd4eb209b4579",
+          "nativeBoutId": "58546",
+          "nativeSavedDate": "2016-07-08",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2015-11-28",
+          "opponent": "Sam Sicilia",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a09bfdaa83d99efb",
+          "nativeBoutId": "58464",
+          "nativeSavedDate": "2015-11-28",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2014-11-22",
+          "opponent": "Juan Manuel Puig",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1a637fbda4bdf575",
+          "nativeBoutId": "63041",
+          "nativeSavedDate": "2014-11-22",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "jai-herbert": {
+      "sourceName": "Jai Herbert",
+      "grecoSourceBouts": 11,
+      "savedUfcBouts": 11,
+      "sourceOnly": 0,
+      "savedOnly": 0,
+      "ambiguousIdentity": 0,
+      "rows": [
+        {
+          "date": "2026-10-10",
+          "opponent": "Matheus Camilo",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/295339c08c80a3cf",
+          "nativeBoutId": "93197",
+          "nativeSavedDate": "2026-10-10",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2026-04-18",
+          "opponent": "Mandel Nallo",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e644218737c1a778",
+          "nativeBoutId": "66091",
+          "nativeSavedDate": "2026-04-18",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-03-22",
+          "opponent": "Chris Padilla",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/2a1071689c3af9df",
+          "nativeBoutId": "60314",
+          "nativeSavedDate": "2025-03-22",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-08-03",
+          "opponent": "Rolando Bedoya",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d038ff5ac21094f3",
+          "nativeBoutId": "61102",
+          "nativeSavedDate": "2024-08-03",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-07-22",
+          "opponent": "Fares Ziam",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c4caa8a4f32a0eed",
+          "nativeBoutId": "60104",
+          "nativeSavedDate": "2023-07-22",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-03-18",
+          "opponent": "Ludovit Klein",
+          "result": "draw",
+          "fightUrl": "https://ufcstats.com/fight-details/938c2c71b84e56ff",
+          "nativeBoutId": "59665",
+          "nativeSavedDate": "2023-03-18",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-07-23",
+          "opponent": "Kyle Nelson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a1029686c3f1bead",
+          "nativeBoutId": "59568",
+          "nativeSavedDate": "2022-07-23",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-03-19",
+          "opponent": "Ilia Topuria",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a200b5dcbdd2506e",
+          "nativeBoutId": "61425",
+          "nativeSavedDate": "2022-03-19",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-10-23",
+          "opponent": "Khama Worthy",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6d7eecf4acecda2a",
+          "nativeBoutId": "65798",
+          "nativeSavedDate": "2021-10-23",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-06-26",
+          "opponent": "Renato Moicano",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/4341ebb5a56e6943",
+          "nativeBoutId": "59476",
+          "nativeSavedDate": "2021-06-26",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2020-07-25",
+          "opponent": "Francisco Trinaldo",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3b209a2aee014ac2",
+          "nativeBoutId": "65643",
+          "nativeSavedDate": "2020-07-26",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "jamahal-hill": {
+      "sourceName": "Jamahal Hill",
+      "grecoSourceBouts": 11,
+      "savedUfcBouts": 11,
+      "sourceOnly": 1,
+      "savedOnly": 1,
+      "ambiguousIdentity": 1,
+      "rows": [
+        {
+          "date": "2025-06-21",
+          "opponent": "Khalil Rountree Jr.",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/03bc32bdb5a33496",
+          "nativeBoutId": "60271",
+          "nativeSavedDate": "2025-06-21",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-01-18",
+          "opponent": "Jiri Prochazka",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/959fea398ffa5778",
+          "nativeBoutId": "60943",
+          "nativeSavedDate": "2025-01-18",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-04-13",
+          "opponent": "Alex Pereira",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e4931f3ab3bf4141",
+          "nativeBoutId": "53787",
+          "nativeSavedDate": "2024-04-13",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-01-21",
+          "opponent": "Glover Teixeira",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/dde7d29cc443e263",
+          "nativeBoutId": "59715",
+          "nativeSavedDate": "2023-01-21",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-08-06",
+          "opponent": "Thiago Santos",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a8bc6e005077bb0b",
+          "nativeBoutId": "59547",
+          "nativeSavedDate": "2022-08-06",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-02-19",
+          "opponent": "Johnny Walker",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f7865e5a6d009a87",
+          "nativeBoutId": "61370",
+          "nativeSavedDate": "2022-02-19",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-12-04",
+          "opponent": "Jimmy Crute",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b3847772199e2639",
+          "nativeBoutId": "61658",
+          "nativeSavedDate": "2021-12-05",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-06-12",
+          "opponent": "Paul Craig",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/4560734220b96851",
+          "nativeBoutId": "61732",
+          "nativeSavedDate": "2021-06-12",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2020-12-05",
+          "opponent": "Ovince Saint Preux",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8d4a475e48722fea",
+          "nativeBoutId": "66175",
+          "nativeSavedDate": "2020-12-06",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2020-05-30",
+          "opponent": "Klidson Abreu",
+          "result": "no_contest",
+          "fightUrl": "https://ufcstats.com/fight-details/0fcf42b68f2f0fa3",
+          "nativeBoutId": null,
+          "nativeSavedDate": null,
+          "savedMatches": 0,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2020-01-25",
+          "opponent": "Darko Stosic",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6195d3e7c412c8a2",
+          "nativeBoutId": "59217",
+          "nativeSavedDate": "2020-01-25",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "john-castaneda": {
+      "sourceName": "John Castaneda",
+      "grecoSourceBouts": 10,
+      "savedUfcBouts": 11,
+      "sourceOnly": 1,
+      "savedOnly": 2,
+      "ambiguousIdentity": 1,
+      "rows": [
+        {
+          "date": "2026-09-26",
+          "opponent": "Alatengheili",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/577011f3bbcf7f91",
+          "nativeBoutId": null,
+          "nativeSavedDate": null,
+          "savedMatches": 0,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2026-04-18",
+          "opponent": "Mark Vologdin",
+          "result": "draw",
+          "fightUrl": "https://ufcstats.com/fight-details/552f7cdaf93e1055",
+          "nativeBoutId": "66099",
+          "nativeSavedDate": "2026-04-18",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-04-26",
+          "opponent": "Chris Gutierrez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6f3cb7ce84185dd3",
+          "nativeBoutId": "60882",
+          "nativeSavedDate": "2025-04-26",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-06-08",
+          "opponent": "Daniel Marcos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e976815e397c40e1",
+          "nativeBoutId": "61037",
+          "nativeSavedDate": "2024-06-08",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-11-11",
+          "opponent": "Kyung Ho Kang",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/57333b7bff20ece0",
+          "nativeBoutId": "59970",
+          "nativeSavedDate": "2023-11-11",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-06-03",
+          "opponent": "Muin Gafurov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c98f62eb74e69bcb",
+          "nativeBoutId": "61315",
+          "nativeSavedDate": "2023-06-03",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-10-01",
+          "opponent": "Daniel Santos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/63f6af6d5f7b82ad",
+          "nativeBoutId": "61195",
+          "nativeSavedDate": "2022-10-01",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-02-05",
+          "opponent": "Miles Johns",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c816a969cb001168",
+          "nativeBoutId": "61627",
+          "nativeSavedDate": "2022-02-05",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-02-20",
+          "opponent": "Eddie Wineland",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/990c2378caec68d4",
+          "nativeBoutId": "66221",
+          "nativeSavedDate": "2021-02-20",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2020-07-25",
+          "opponent": "Nathaniel Wood",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/67db05bac9165722",
+          "nativeBoutId": "65650",
+          "nativeSavedDate": "2020-07-26",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "kyoji-horiguchi": {
+      "sourceName": "Kyoji Horiguchi",
+      "grecoSourceBouts": 11,
+      "savedUfcBouts": 11,
+      "sourceOnly": 1,
+      "savedOnly": 1,
+      "ambiguousIdentity": 1,
+      "rows": [
+        {
+          "date": "2026-06-20",
+          "opponent": "Manel Kape",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/33afdd7ad43a2756",
+          "nativeBoutId": "65999",
+          "nativeSavedDate": "2026-06-20",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2026-02-07",
+          "opponent": "Amir Albazi",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/dbbf8334a2600895",
+          "nativeBoutId": "60726",
+          "nativeSavedDate": "2026-02-07",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-11-22",
+          "opponent": "Tagir Ulanbekov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/00ee51bba08b7a08",
+          "nativeBoutId": "60409",
+          "nativeSavedDate": "2025-11-22",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2016-11-19",
+          "opponent": "Ali Bagautinov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ad0bac98558900af",
+          "nativeBoutId": "62791",
+          "nativeSavedDate": "2016-11-19",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2016-05-08",
+          "opponent": "Neil Seery",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d37ed975c2b70fd2",
+          "nativeBoutId": "62637",
+          "nativeSavedDate": "2016-05-08",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2015-09-26",
+          "opponent": "Chico Camus",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/26ac85fc4bee63a6",
+          "nativeBoutId": null,
+          "nativeSavedDate": null,
+          "savedMatches": 0,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2015-04-25",
+          "opponent": "Demetrious Johnson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6c2097664ac1bf16",
+          "nativeBoutId": "56902",
+          "nativeSavedDate": "2015-04-25",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2015-01-03",
+          "opponent": "Louis Gaudinot",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f81cd5b3903bccf8",
+          "nativeBoutId": "62918",
+          "nativeSavedDate": "2015-01-03",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2014-09-20",
+          "opponent": "Jon Delos Reyes",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c2a36e996bba3a4a",
+          "nativeBoutId": "63267",
+          "nativeSavedDate": "2014-09-19",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2014-05-10",
+          "opponent": "Darrell Montague",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8ea70cfd5d3aa5ee",
+          "nativeBoutId": "58386",
+          "nativeSavedDate": "2014-05-10",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2013-10-19",
+          "opponent": "Dustin Pague",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e1ccf09c055bac01",
+          "nativeBoutId": "58358",
+          "nativeSavedDate": "2013-10-19",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "manel-kape": {
+      "sourceName": "Manel Kape",
+      "grecoSourceBouts": 11,
+      "savedUfcBouts": 11,
+      "sourceOnly": 0,
+      "savedOnly": 0,
+      "ambiguousIdentity": 0,
+      "rows": [
+        {
+          "date": "2026-06-20",
+          "opponent": "Kyoji Horiguchi",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/33afdd7ad43a2756",
+          "nativeBoutId": "65999",
+          "nativeSavedDate": "2026-06-20",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-12-13",
+          "opponent": "Brandon Royval",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a5a81a39ccf9b680",
+          "nativeBoutId": "60647",
+          "nativeSavedDate": "2025-12-14",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-03-01",
+          "opponent": "Asu Almabayev",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9d8a37f130db13e5",
+          "nativeBoutId": "60331",
+          "nativeSavedDate": "2025-03-01",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-12-14",
+          "opponent": "Bruno Silva",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1a635a5e4551e7d5",
+          "nativeBoutId": "60370",
+          "nativeSavedDate": "2024-12-15",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-07-27",
+          "opponent": "Muhammad Mokaev",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d6e240c47ba6034d",
+          "nativeBoutId": "61085",
+          "nativeSavedDate": "2024-07-27",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-09-09",
+          "opponent": "Felipe dos Santos",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/222bb2c67a87d312",
+          "nativeBoutId": "60055",
+          "nativeSavedDate": "2023-09-09",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-12-17",
+          "opponent": "David Dvorak",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f87a7812733f7e8f",
+          "nativeBoutId": "61294",
+          "nativeSavedDate": "2022-12-17",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-12-04",
+          "opponent": "Zhalgas Zhumagulov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/376dddfa82debbf4",
+          "nativeBoutId": "61663",
+          "nativeSavedDate": "2021-12-05",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-08-07",
+          "opponent": "Ode Osbourne",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/85c5dd604d5b3634",
+          "nativeBoutId": "59457",
+          "nativeSavedDate": "2021-08-07",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-03-13",
+          "opponent": "Matheus Nicolau",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/01f262b68a6a2223",
+          "nativeBoutId": "66239",
+          "nativeSavedDate": "2021-03-13",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-02-06",
+          "opponent": "Alexandre Pantoja",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/2c81668d1459991f",
+          "nativeBoutId": "61930",
+          "nativeSavedDate": "2021-02-06",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "matheus-nicolau": {
+      "sourceName": "Matheus Nicolau",
+      "grecoSourceBouts": 11,
+      "savedUfcBouts": 11,
+      "sourceOnly": 0,
+      "savedOnly": 0,
+      "ambiguousIdentity": 0,
+      "rows": [
+        {
+          "date": "2024-10-19",
+          "opponent": "Asu Almabayev",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c61923255389e67c",
+          "nativeBoutId": "65939",
+          "nativeSavedDate": "2024-10-19",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-04-27",
+          "opponent": "Alex Perez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a0cae57eae875820",
+          "nativeBoutId": "65834",
+          "nativeSavedDate": "2024-04-27",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-04-15",
+          "opponent": "Brandon Royval",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/bbde45b2c766bb67",
+          "nativeBoutId": "53845",
+          "nativeSavedDate": "2023-04-15",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-12-03",
+          "opponent": "Matt Schnell",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5a8f7afc5ea69537",
+          "nativeBoutId": "59767",
+          "nativeSavedDate": "2022-12-04",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-03-26",
+          "opponent": "David Dvorak",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/82b2b97b85c7225c",
+          "nativeBoutId": "61442",
+          "nativeSavedDate": "2022-03-26",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-10-09",
+          "opponent": "Tim Elliott",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/20f19439e9b100b0",
+          "nativeBoutId": "61696",
+          "nativeSavedDate": "2021-10-09",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-03-13",
+          "opponent": "Manel Kape",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/01f262b68a6a2223",
+          "nativeBoutId": "66239",
+          "nativeSavedDate": "2021-03-13",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2018-07-28",
+          "opponent": "Dustin Ortiz",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/09ab925c4cfe0cc5",
+          "nativeBoutId": "62517",
+          "nativeSavedDate": "2018-07-28",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2017-12-30",
+          "opponent": "Louis Smolka",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/7e9ed49a1831056f",
+          "nativeBoutId": "62435",
+          "nativeSavedDate": "2017-12-30",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2016-07-08",
+          "opponent": "John Moraga",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9275134accfb1adc",
+          "nativeBoutId": "58549",
+          "nativeSavedDate": "2016-07-08",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2015-11-07",
+          "opponent": "Bruno Korea",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e5461559114e30ff",
+          "nativeBoutId": "62844",
+          "nativeSavedDate": "2015-11-07",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "matthew-semelsberger": {
+      "sourceName": "Matthew Semelsberger",
+      "grecoSourceBouts": 11,
+      "savedUfcBouts": 11,
+      "sourceOnly": 0,
+      "savedOnly": 0,
+      "ambiguousIdentity": 0,
+      "rows": [
+        {
+          "date": "2024-11-09",
+          "opponent": "Charles Radtke",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6b9ed3867dd42b3b",
+          "nativeBoutId": "65830",
+          "nativeSavedDate": "2024-11-09",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-01-13",
+          "opponent": "Preston Parsons",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5f622d812b8f407f",
+          "nativeBoutId": "59919",
+          "nativeSavedDate": "2024-01-13",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-07-29",
+          "opponent": "Uros Medic",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3de326b65aa6245d",
+          "nativeBoutId": "60098",
+          "nativeSavedDate": "2023-07-29",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-04-22",
+          "opponent": "Jeremiah Wells",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/06d9fb9c995f1e4f",
+          "nativeBoutId": "61276",
+          "nativeSavedDate": "2023-04-22",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-12-17",
+          "opponent": "Jake Matthews",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5f4e944ff1bdcd9c",
+          "nativeBoutId": "61290",
+          "nativeSavedDate": "2022-12-17",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-07-30",
+          "opponent": "Alex Morono",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/579b5770129b328a",
+          "nativeBoutId": "59539",
+          "nativeSavedDate": "2022-07-30",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-03-12",
+          "opponent": "AJ Fletcher",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3b06c512abfa0494",
+          "nativeBoutId": "61412",
+          "nativeSavedDate": "2022-03-12",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-09-25",
+          "opponent": "Martin Sano",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/73f6b72b4889088f",
+          "nativeBoutId": "61870",
+          "nativeSavedDate": "2021-09-25",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-06-19",
+          "opponent": "Khaos Williams",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/87c8e086c29ae543",
+          "nativeBoutId": "59492",
+          "nativeSavedDate": "2021-06-19",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-03-13",
+          "opponent": "Jason Witt",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d0ebb0551377a1c1",
+          "nativeBoutId": "66247",
+          "nativeSavedDate": "2021-03-13",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2020-08-22",
+          "opponent": "Carlton Minus",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/949619e1b1de9e5f",
+          "nativeBoutId": "66233",
+          "nativeSavedDate": "2020-08-22",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "movsar-evloev": {
+      "sourceName": "Movsar Evloev",
+      "grecoSourceBouts": 11,
+      "savedUfcBouts": 11,
+      "sourceOnly": 0,
+      "savedOnly": 0,
+      "ambiguousIdentity": 0,
+      "rows": [
+        {
+          "date": "2026-10-24",
+          "opponent": "Alexander Volkanovski",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ce1388d6c7651d2e",
+          "nativeBoutId": "83679",
+          "nativeSavedDate": "2026-10-24",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2026-03-21",
+          "opponent": "Lerone Murphy",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/346e3897c2ead99a",
+          "nativeBoutId": "60559",
+          "nativeSavedDate": "2026-03-21",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-12-07",
+          "opponent": "Aljamain Sterling",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/df30514e0674d598",
+          "nativeBoutId": "60784",
+          "nativeSavedDate": "2024-12-07",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-01-20",
+          "opponent": "Arnold Allen",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1a7cd191f0cf160c",
+          "nativeBoutId": "59868",
+          "nativeSavedDate": "2024-01-20",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-05-06",
+          "opponent": "Diego Lopes",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/069ab7e7b8b5d262",
+          "nativeBoutId": "59633",
+          "nativeSavedDate": "2023-05-06",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-06-04",
+          "opponent": "Dan Ige",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/aacb47949a572f25",
+          "nativeBoutId": "61467",
+          "nativeSavedDate": "2022-06-04",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-06-12",
+          "opponent": "Hakeem Dawodu",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d66164d2c770da68",
+          "nativeBoutId": "61736",
+          "nativeSavedDate": "2021-06-12",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-01-23",
+          "opponent": "Nik Lentz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f3ccbfd7036f3cf3",
+          "nativeBoutId": "59266",
+          "nativeSavedDate": "2021-01-24",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2020-07-25",
+          "opponent": "Mike Grundy",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/32b0e450b11b32fe",
+          "nativeBoutId": "65646",
+          "nativeSavedDate": "2020-07-26",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2019-10-26",
+          "opponent": "Enrique Barzola",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a4527094aa107b55",
+          "nativeBoutId": "62095",
+          "nativeSavedDate": "2019-10-26",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2019-04-20",
+          "opponent": "SeungWoo Choi",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1b4374c9d7e5139c",
+          "nativeBoutId": "59072",
+          "nativeSavedDate": "2019-04-20",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "nassourdine-imavov": {
+      "sourceName": "Nassourdine Imavov",
+      "grecoSourceBouts": 12,
+      "savedUfcBouts": 11,
+      "sourceOnly": 1,
+      "savedOnly": 0,
+      "ambiguousIdentity": 1,
+      "rows": [
+        {
+          "date": "2025-09-06",
+          "opponent": "Caio Borralho",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5bcd8abf6da01dae",
+          "nativeBoutId": "60471",
+          "nativeSavedDate": "2025-09-06",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-02-01",
+          "opponent": "Israel Adesanya",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/85e79748b75eb30e",
+          "nativeBoutId": "38552",
+          "nativeSavedDate": "2025-02-01",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-09-28",
+          "opponent": "Brendan Allen",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/62ff1e5deb124ff5",
+          "nativeBoutId": "38701",
+          "nativeSavedDate": "2024-09-28",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-06-08",
+          "opponent": "Jared Cannonier",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/052f53e006b28132",
+          "nativeBoutId": "61027",
+          "nativeSavedDate": "2024-06-08",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-02-03",
+          "opponent": "Roman Dolidze",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/767ceb4a0cb43ade",
+          "nativeBoutId": "59851",
+          "nativeSavedDate": "2024-02-03",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-06-10",
+          "opponent": "Chris Curtis",
+          "result": "no_contest",
+          "fightUrl": "https://ufcstats.com/fight-details/96eaf07b34538b8b",
+          "nativeBoutId": null,
+          "nativeSavedDate": null,
+          "savedMatches": 0,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-01-14",
+          "opponent": "Sean Strickland",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/868c83e734dbbceb",
+          "nativeBoutId": "59754",
+          "nativeSavedDate": "2023-01-14",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-09-03",
+          "opponent": "Joaquin Buckley",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/20f316f96c9e4458",
+          "nativeBoutId": "61167",
+          "nativeSavedDate": "2022-09-03",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-11-06",
+          "opponent": "Edmen Shahbazyan",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/095a351dd6f09f7e",
+          "nativeBoutId": "61688",
+          "nativeSavedDate": "2021-11-06",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-07-24",
+          "opponent": "Ian Heinisch",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/dff1dbb8fe1f31cb",
+          "nativeBoutId": "61723",
+          "nativeSavedDate": "2021-07-24",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-02-20",
+          "opponent": "Phil Hawes",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/05ceb8b2f93993a6",
+          "nativeBoutId": "66218",
+          "nativeSavedDate": "2021-02-20",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2020-10-03",
+          "opponent": "Jordan Williams",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/15a422574c3b89e1",
+          "nativeBoutId": "66255",
+          "nativeSavedDate": "2020-10-03",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "ricky-glenn": {
+      "sourceName": "Ricky Glenn",
+      "grecoSourceBouts": 11,
+      "savedUfcBouts": 11,
+      "sourceOnly": 0,
+      "savedOnly": 0,
+      "ambiguousIdentity": 0,
+      "rows": [
+        {
+          "date": "2024-08-17",
+          "opponent": "Song Kenan",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ea824ac4b8ed8a35",
+          "nativeBoutId": "65955",
+          "nativeSavedDate": "2024-08-17",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-10-07",
+          "opponent": "Drew Dober",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/68095e551ff6bbfd",
+          "nativeBoutId": "60024",
+          "nativeSavedDate": "2023-10-07",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-04-22",
+          "opponent": "Christos Giagos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/16628e25a043043a",
+          "nativeBoutId": "61277",
+          "nativeSavedDate": "2023-04-22",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-10-23",
+          "opponent": "Grant Dawson",
+          "result": "draw",
+          "fightUrl": "https://ufcstats.com/fight-details/9fe62ea683decc55",
+          "nativeBoutId": "65789",
+          "nativeSavedDate": "2021-10-23",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-06-19",
+          "opponent": "Joaquim Silva",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1e9f081a84e7ec18",
+          "nativeBoutId": "59494",
+          "nativeSavedDate": "2021-06-19",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2018-11-30",
+          "opponent": "Kevin Aguilar",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/4e6bbc5832e55f64",
+          "nativeBoutId": "62312",
+          "nativeSavedDate": "2018-11-30",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2018-07-14",
+          "opponent": "Dennis Bermudez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/786296db3c4749f1",
+          "nativeBoutId": "65551",
+          "nativeSavedDate": "2018-07-14",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2017-12-30",
+          "opponent": "Myles Jury",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/147d2ab0230af48d",
+          "nativeBoutId": "62433",
+          "nativeSavedDate": "2017-12-30",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2017-09-09",
+          "opponent": "Gavin Tucker",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f597d2e69ab7c270",
+          "nativeBoutId": "58583",
+          "nativeSavedDate": "2017-09-09",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2017-02-11",
+          "opponent": "Phillipe Nover",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c4174e22cb22622c",
+          "nativeBoutId": "65512",
+          "nativeSavedDate": "2017-02-12",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2016-09-17",
+          "opponent": "Evan Dunham",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0596fc5eba5c1fe0",
+          "nativeBoutId": "65539",
+          "nativeSavedDate": "2016-09-17",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "said-nurmagomedov": {
+      "sourceName": "Said Nurmagomedov",
+      "grecoSourceBouts": 11,
+      "savedUfcBouts": 11,
+      "sourceOnly": 0,
+      "savedOnly": 0,
+      "ambiguousIdentity": 0,
+      "rows": [
+        {
+          "date": "2025-07-26",
+          "opponent": "Bryce Mitchell",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e72c691b7c68b03a",
+          "nativeBoutId": "60822",
+          "nativeSavedDate": "2025-07-26",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-02-01",
+          "opponent": "Vinicius Oliveira",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/70b8dca3addcf4de",
+          "nativeBoutId": "38555",
+          "nativeSavedDate": "2025-02-01",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-10-21",
+          "opponent": "Muin Gafurov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ed3334d108b257a6",
+          "nativeBoutId": "60001",
+          "nativeSavedDate": "2023-10-21",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-03-11",
+          "opponent": "Jonathan Martinez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b9539d5e379b3edc",
+          "nativeBoutId": "59670",
+          "nativeSavedDate": "2023-03-11",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-12-17",
+          "opponent": "Saidyokub Kakhramonov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ed6203e849a2bf28",
+          "nativeBoutId": "61291",
+          "nativeSavedDate": "2022-12-17",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-07-09",
+          "opponent": "Douglas Silva de Andrade",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/bba6cc8760da34ab",
+          "nativeBoutId": "61494",
+          "nativeSavedDate": "2022-07-09",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-01-22",
+          "opponent": "Cody Stamann",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/80f65ee9b6f8d63b",
+          "nativeBoutId": "61637",
+          "nativeSavedDate": "2022-01-23",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2020-10-17",
+          "opponent": "Mark Striegl",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/024a04f78b37b7d9",
+          "nativeBoutId": "61828",
+          "nativeSavedDate": "2020-10-17",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2019-12-21",
+          "opponent": "Raoni Barcelos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/75523d31940c9344",
+          "nativeBoutId": "61971",
+          "nativeSavedDate": "2019-12-21",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2019-02-02",
+          "opponent": "Ricardo Ramos",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9192053a3884aadf",
+          "nativeBoutId": "58918",
+          "nativeSavedDate": "2019-02-03",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2018-07-14",
+          "opponent": "Justin Scoggins",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/48d21357134ca51a",
+          "nativeBoutId": "65557",
+          "nativeSavedDate": "2018-07-14",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "sedriques-dumas": {
+      "sourceName": "Sedriques Dumas",
+      "grecoSourceBouts": 10,
+      "savedUfcBouts": 11,
+      "sourceOnly": 0,
+      "savedOnly": 1,
+      "ambiguousIdentity": 0,
+      "rows": [
+        {
+          "date": "2026-09-26",
+          "opponent": "Luis Hernandez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7c954175878dd610",
+          "nativeBoutId": "93180",
+          "nativeSavedDate": "2026-09-26",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2026-04-25",
+          "opponent": "Jackson McVey",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ef1cd6371a3f18e0",
+          "nativeBoutId": "66083",
+          "nativeSavedDate": "2026-04-25",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-11-01",
+          "opponent": "Donte Johnson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c245be6698c1e378",
+          "nativeBoutId": "60426",
+          "nativeSavedDate": "2025-11-01",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-09-13",
+          "opponent": "Zach Reese",
+          "result": "no_contest",
+          "fightUrl": "https://ufcstats.com/fight-details/d822ebc7dbc6c259",
+          "nativeBoutId": "66437",
+          "nativeSavedDate": "2025-09-13",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2025-04-12",
+          "opponent": "Michal Oleksiejczuk",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/4bbda6c1f6cf9d4e",
+          "nativeBoutId": "60975",
+          "nativeSavedDate": "2025-04-12",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-08-03",
+          "opponent": "Denis Tiuliulin",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e6851877e33d343f",
+          "nativeBoutId": "61103",
+          "nativeSavedDate": "2024-08-03",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-03-30",
+          "opponent": "Nursulton Ruziboev",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e30250daa73005a8",
+          "nativeBoutId": "38982",
+          "nativeSavedDate": "2024-03-30",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-10-21",
+          "opponent": "Abu Azaitar",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/43de9ff6064361e1",
+          "nativeBoutId": "60005",
+          "nativeSavedDate": "2023-10-21",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-06-24",
+          "opponent": "Cody Brundage",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/7b909acede0a26eb",
+          "nativeBoutId": "60165",
+          "nativeSavedDate": "2023-06-24",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-03-11",
+          "opponent": "Josh Fremd",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3cf3771274a4f8b1",
+          "nativeBoutId": "59675",
+          "nativeSavedDate": "2023-03-11",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "sodiq-yusuff": {
+      "sourceName": "Sodiq Yusuff",
+      "grecoSourceBouts": 10,
+      "savedUfcBouts": 11,
+      "sourceOnly": 0,
+      "savedOnly": 1,
+      "ambiguousIdentity": 0,
+      "rows": [
+        {
+          "date": "2025-05-17",
+          "opponent": "Mairon Santos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/dcb27eef6441268c",
+          "nativeBoutId": "60842",
+          "nativeSavedDate": "2025-05-17",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-04-13",
+          "opponent": "Diego Lopes",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/538ca98010ed00ec",
+          "nativeBoutId": "53795",
+          "nativeSavedDate": "2024-04-13",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-10-14",
+          "opponent": "Edson Barboza",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/824859c7580eb35b",
+          "nativeBoutId": "60010",
+          "nativeSavedDate": "2023-10-14",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-10-01",
+          "opponent": "Don Shainis",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1aedd959f1523a27",
+          "nativeBoutId": "61193",
+          "nativeSavedDate": "2022-10-01",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2022-03-12",
+          "opponent": "Alex Caceres",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/70b8d357e89383bd",
+          "nativeBoutId": "61408",
+          "nativeSavedDate": "2022-03-12",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-04-10",
+          "opponent": "Arnold Allen",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/71b81d8199a0fa19",
+          "nativeBoutId": "61540",
+          "nativeSavedDate": "2021-04-10",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2020-01-18",
+          "opponent": "Andre Fili",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5868c154789648f0",
+          "nativeBoutId": "62034",
+          "nativeSavedDate": "2020-01-19",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2019-08-17",
+          "opponent": "Gabriel Benitez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ea43a5fe4ff9a3c4",
+          "nativeBoutId": "62261",
+          "nativeSavedDate": "2019-08-17",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2019-03-30",
+          "opponent": "Sheymon Moraes",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/818b55b087013e64",
+          "nativeBoutId": "59096",
+          "nativeSavedDate": "2019-03-30",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2018-12-01",
+          "opponent": "Suman Mokhtarian",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0ac4f0c1b4d021f6",
+          "nativeBoutId": "62323",
+          "nativeSavedDate": "2018-12-02",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    },
+    "song-kenan": {
+      "sourceName": "Song Kenan",
+      "grecoSourceBouts": 11,
+      "savedUfcBouts": 11,
+      "sourceOnly": 0,
+      "savedOnly": 0,
+      "ambiguousIdentity": 0,
+      "rows": [
+        {
+          "date": "2024-11-23",
+          "opponent": "Muslim Salikhov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/bec57d7cce0e6257",
+          "nativeBoutId": "38587",
+          "nativeSavedDate": "2024-11-23",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2024-08-17",
+          "opponent": "Ricky Glenn",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ea824ac4b8ed8a35",
+          "nativeBoutId": "65955",
+          "nativeSavedDate": "2024-08-17",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-12-09",
+          "opponent": "Kevin Jousset",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3adab28c5c6a9254",
+          "nativeBoutId": "59942",
+          "nativeSavedDate": "2023-12-10",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-08-26",
+          "opponent": "Rolando Bedoya",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/da6b863cf684e0ae",
+          "nativeBoutId": "52442",
+          "nativeSavedDate": "2023-08-26",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2023-03-04",
+          "opponent": "Ian Machado Garry",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ed9f8f702585ed44",
+          "nativeBoutId": "59689",
+          "nativeSavedDate": "2023-03-04",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2021-03-20",
+          "opponent": "Max Griffin",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/edac9fd482177a64",
+          "nativeBoutId": "66313",
+          "nativeSavedDate": "2021-03-20",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2020-02-22",
+          "opponent": "Callan Potter",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/03c2707563915d7d",
+          "nativeBoutId": "59184",
+          "nativeSavedDate": "2020-02-22",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2019-08-31",
+          "opponent": "Derrick Krantz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/676561d9690ce31d",
+          "nativeBoutId": "58973",
+          "nativeSavedDate": "2019-08-31",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2018-11-24",
+          "opponent": "Alex Morono",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9e1853861f58191f",
+          "nativeBoutId": "58949",
+          "nativeSavedDate": "2018-11-24",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2018-06-23",
+          "opponent": "Hector Aldana",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b125025990755616",
+          "nativeBoutId": "58735",
+          "nativeSavedDate": "2018-06-23",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        },
+        {
+          "date": "2017-11-25",
+          "opponent": "Bobby Nash",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/43ae6a9daa51ed93",
+          "nativeBoutId": "58863",
+          "nativeSavedDate": "2017-11-25",
+          "savedMatches": 1,
+          "possibleFeeder": false
+        }
+      ]
+    }
+  }
+}

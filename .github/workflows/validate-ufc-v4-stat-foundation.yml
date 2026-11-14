@@ -1,0 +1,178 @@
+name: Validate UFC V4 statistical foundation (offline)
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/build-ufc-postfight-metrics.mjs'
+      - 'scripts/ufc-official-event-scope.mjs'
+      - 'scripts/build-ufc-v4-stat-foundation.mjs'
+      - 'scripts/certify-ufc-v4-independent-full-careers.mjs'
+      - 'scripts/ufc-v4-targeted-greco-evidence.mjs'
+      - 'scripts/ufc-v4-next20-greco-evidence.mjs'
+      - 'scripts/ufc-v4-next18-greco-evidence.mjs'
+      - 'scripts/audit-ufc-v4-next18-native-evidence.mjs'
+      - 'data/ufc-v4-next18-greco-fight-links-20261114.json'
+      - 'scripts/ufc-v4-wave3-greco-evidence.mjs'
+      - 'scripts/ufc-v4-wave4-greco-evidence.mjs'
+      - 'scripts/ufc-v4-wave5-greco-evidence.mjs'
+      - 'scripts/ufc-v4-wave6-greco-evidence.mjs'
+      - 'scripts/audit-ufc-v4-wave6-native-evidence.mjs'
+      - 'data/ufc-v4-wave6-greco-fight-links-20261114.json'
+      - 'scripts/audit-ufc-v4-wave5-native-evidence.mjs'
+      - 'data/ufc-v4-wave5-greco-fight-links-20261114.json'
+      - 'scripts/audit-ufc-v4-wave4-native-evidence.mjs'
+      - 'data/ufc-v4-wave4-greco-fight-links-20261114.json'
+      - 'scripts/audit-ufc-v4-wave3-native-evidence.mjs'
+      - 'data/ufc-v4-wave3-greco-fight-links-20261114.json'
+      - 'scripts/audit-ufc-v4-next20-native-evidence.mjs'
+      - 'scripts/audit-ufc-v4-main-stage3-source-reuse.mjs'
+      - 'data/ufc-v4-import-stage3-source-proof-candidates-20261114.json'
+      - 'scripts/audit-ufc-v4-next20-blocked-source-details.mjs'
+      - 'data/ufc-v4-next20-greco-fight-links-20261114.json'
+      - 'scripts/audit-ufc-v4-eight-candidate-native-evidence.mjs'
+      - 'scripts/audit-ufc-v4-bill-algeo-direct.mjs'
+      - 'data/ufc-v4-bill-algeo-fight-evidence-20261114.json'
+      - 'data/ufc-v4-targeted-greco-fight-links-20261114.json'
+      - 'data/ufc-v4-independent-full-career-certification-batch-20261114.json'
+      - 'tests/test-ufc-postfight-metrics.mjs'
+      - 'tests/test-ufc-v4-round-corroboration.mjs'
+      - 'data/ufc-v4-targeted-round-corroboration.json'
+      - 'data/ufc-feeder-bout-evidence.json'
+      - 'tests/test-ufc-v4-stat-foundation.mjs'
+      - 'tests/test-ufc-v4-independent-full-careers.mjs'
+      - 'scripts/audit-ufc-v4-career-verification.mjs'
+      - 'tests/test-ufc-v4-career-verification.mjs'
+      - 'scripts/ufc-next-career-certification-candidates.mjs'
+      - 'scripts/audit-ufc-v4-first-two-certification-attempt.mjs'
+      - 'data/ufc-v4-first-two-official-career-evidence.json'
+      - 'tests/test-ufc-next-career-certification-candidates.mjs'
+      - 'scripts/build-ufc-v4-shadow-ratings.mjs'
+      - 'tests/test-ufc-v4-shadow-ratings.mjs'
+      - 'scripts/audit-ufc-v4-release-gates.mjs'
+      - 'tests/test-ufc-v4-release-gates.mjs'
+      - 'scripts/audit-ufc-v4-exception-causes.mjs'
+      - 'tests/test-ufc-v4-exception-causes.mjs'
+      - 'tests/test-ufc-v4-source-scope.mjs'
+      - 'scripts/audit-ufc-v4-metric-availability.mjs'
+      - 'tests/test-ufc-v4-metric-availability.mjs'
+      - 'scripts/audit-ufc-v4-source-conflicts.mjs'
+      - 'tests/test-ufc-v4-source-conflicts.mjs'
+      - '.github/workflows/validate-ufc-v4-stat-foundation.yml'
+permissions:
+  contents: read
+concurrency:
+  group: befn-ufc-v4-offline-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test existing V3 compatibility and V4 statistical window rules
+        run: |
+          node --test tests/test-ufc-postfight-metrics.mjs
+          node --test tests/test-ufc-v4-round-corroboration.mjs
+          node --test tests/test-ufc-v4-stat-foundation.mjs
+          node --test tests/test-ufc-v4-independent-full-careers.mjs
+          node --test tests/test-ufc-v4-career-verification.mjs
+          node --test tests/test-ufc-next-career-certification-candidates.mjs
+          node --test tests/test-ufc-v4-shadow-ratings.mjs
+          node --test tests/test-ufc-v4-release-gates.mjs
+          node --test tests/test-ufc-v4-exception-causes.mjs
+          node --test tests/test-ufc-v4-source-scope.mjs
+          node --test tests/test-ufc-v4-metric-availability.mjs
+          node --test tests/test-ufc-v4-source-conflicts.mjs
+      - name: Review pinned Greco source links for next eight fighters (skip after checkpoint commit)
+        run: node scripts/ufc-v4-targeted-greco-evidence.mjs
+      - name: Cross-reference next 20 uncertified careers with pinned Greco source links
+        run: node scripts/ufc-v4-next20-greco-evidence.mjs
+      - name: Reconcile pinned source links for third 17 pending UFC careers
+        run: node scripts/ufc-v4-wave3-greco-evidence.mjs
+      - name: Inspect next 18 eligible UFC careers with independent pinned fight source
+        run: node scripts/ufc-v4-next18-greco-evidence.mjs
+      - name: Crosscheck pinned independent UFC fight links for fourth candidate wave
+        run: node scripts/ufc-v4-wave4-greco-evidence.mjs
+      - name: Pin next 15 independent UFC history source links (wave five)
+        run: node scripts/ufc-v4-wave5-greco-evidence.mjs
+      - name: Source-link sixth batch of 13 independently sourced UFC careers
+        run: node scripts/ufc-v4-wave6-greco-evidence.mjs
+      - name: Rebuild the complete measured career cache without API calls
+        run: node scripts/build-ufc-postfight-metrics.mjs
+      - name: Audit next eight independent source-linked careers against native data
+        run: node scripts/audit-ufc-v4-eight-candidate-native-evidence.mjs
+      - name: Reconcile Bill Algeo official ten UFC fights to cached native stats
+        run: node scripts/audit-ufc-v4-bill-algeo-direct.mjs
+      - name: Audit next 20 source-linked candidate careers with native metrics
+        run: node scripts/audit-ufc-v4-next20-native-evidence.mjs
+      - name: Independently triage unmatched next20 historical source identities and NC bouts
+        run: node scripts/audit-ufc-v4-next20-blocked-source-details.mjs
+      - name: Strictly revalidate ten already certified Stage3 debut careers for V4 source reuse
+        run: node scripts/audit-ufc-v4-main-stage3-source-reuse.mjs
+      - name: Audit wave-three independent historical links against native fight statistics
+        run: node scripts/audit-ufc-v4-wave3-native-evidence.mjs
+      - name: Reconcile next18 source bouts with native fighter IDs and metrics
+        run: node scripts/audit-ufc-v4-next18-native-evidence.mjs
+      - name: Strictly audit fourth-wave source fight IDs against cached metrics
+        run: node scripts/audit-ufc-v4-wave4-native-evidence.mjs
+      - name: Audit wave-five candidate history against native identities and measured stats
+        run: node scripts/audit-ufc-v4-wave5-native-evidence.mjs
+      - name: Audit sixth-wave native fighter and fight statistical completeness
+        run: node scripts/audit-ufc-v4-wave6-native-evidence.mjs
+      - name: Audit the approved 783-fighter Last 5 / Last 10 / Career windows
+        run: node scripts/build-ufc-v4-stat-foundation.mjs
+      - name: Classify saved-data gaps without provider calls
+        run: node scripts/audit-ufc-v4-exception-causes.mjs
+      - name: Audit availability of each UFC metric by true chronological window
+        run: node scripts/audit-ufc-v4-metric-availability.mjs
+      - name: Triage provider-source conflicts without accepting disputed values
+        run: node scripts/audit-ufc-v4-source-conflicts.mjs
+      - name: Prioritize authoritative UFC official career omissions and historical certifications
+        run: node scripts/audit-ufc-v4-career-verification.mjs
+      - name: Rank 780 nonpilot career certification cases from saved histories
+        run: node scripts/ufc-next-career-certification-candidates.mjs
+      - name: Attempt independently evidenced first two full-career native bout reconciliations
+        run: node scripts/audit-ufc-v4-first-two-certification-attempt.mjs
+      - name: Calculate shadow UFC-only V4 ratings and strict pre-fight backtest
+        run: node scripts/build-ufc-v4-shadow-ratings.mjs
+      - name: Enforce historical career and experimental model release blockers
+        run: node scripts/audit-ufc-v4-release-gates.mjs
+      - name: Publish audit as non-production workflow artifact only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-v4-ufc-stat-foundation-qa
+          path: |
+            qa/ufc-v4-stat-foundation.json
+            qa/ufc-v4-exception-causes.json
+            qa/ufc-v4-metric-coverage.json
+            qa/ufc-v4-source-conflict-triage.json
+            qa/ufc-v4-career-verification-queue.json
+            qa/ufc-v4-nonpilot-certification-triage.json
+            qa/ufc-v4-first-two-certification-attempt.json
+            qa/ufc-v4-independent-full-career-certifications.json
+            qa/ufc-v4-targeted-greco-fight-links-20261114.json
+            qa/ufc-v4-next20-greco-fight-links-20261114.json
+            qa/ufc-v4-next18-greco-fight-links-20261114.json
+            qa/ufc-v4-next18-native-evidence.json
+            qa/ufc-v4-wave3-greco-fight-links-20261114.json
+            qa/ufc-v4-wave4-greco-fight-links-20261114.json
+            qa/ufc-v4-wave5-greco-fight-links-20261114.json
+            qa/ufc-v4-wave6-greco-fight-links-20261114.json
+            qa/ufc-v4-wave6-native-evidence.json
+            qa/ufc-v4-wave5-native-evidence.json
+            qa/ufc-v4-wave4-native-evidence.json
+            qa/ufc-v4-wave3-native-evidence.json
+            qa/ufc-v4-next20-native-evidence.json
+            qa/ufc-v4-import-stage3-source-proof-audit.json
+            qa/ufc-v4-next20-source-exceptions.json
+            qa/ufc-v4-eight-candidate-native-evidence.json
+            qa/ufc-v4-bill-algeo-source-native-reconciliation.json
+            qa/ufc-v4-shadow-ratings.json
+            qa/ufc-v4-release-readiness.json
+          retention-days: 14
+          if-no-files-found: warn

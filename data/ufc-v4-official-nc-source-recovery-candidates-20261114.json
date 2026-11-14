@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "scope": "ufc-v4-official-source-no-contest-recovery",
+  "rosterAsOf": "2026-11-14",
+  "status": "official_evidence_verified_canonical_native_recovery_required",
+  "strictNoCertificationUntilReconciled": true,
+  "owner": "exclusive_five_minute_github_ufcalendar_collector",
+  "note": "Offline independent-source research only. Missing official UFC NC bouts block complete-career certification until the existing exclusive provider collector recovers the native ID and measured statistics. Do not guess native IDs, write collector cache, create competing provider clients or turn missing stats into zeros.",
+  "cases": [
+    {
+      "slug": "jamahal-hill",
+      "fighterName": "Jamahal Hill",
+      "date": "2020-05-30",
+      "opponent": "Klidson Abreu",
+      "officialOutcome": "no_contest",
+      "officialSourceUrl": "https://www.ufc.com/athlete/jamahal-hill",
+      "independentFightUrl": "https://ufcstats.com/fight-details/0fcf42b68f2f0fa3",
+      "officialEvidence": "UFC biography: Hill's win over Klidson Abreu overturned to NC following a post-fight drug-test finding.",
+      "savedUfcHistoryExactMatch": false,
+      "verifiedNativeBoutId": null,
+      "requiredRecovery": "Identify canonical numeric UFC fight ID and exact fighter corners for UFC May 30 2020 bout, record overturned NC result in settled full career, link measured fight statistics; do not alter original measurement values."
+    },
+    {
+      "slug": "nassourdine-imavov",
+      "fighterName": "Nassourdine Imavov",
+      "date": "2023-06-10",
+      "opponent": "Chris Curtis",
+      "officialOutcome": "no_contest",
+      "officialSourceUrl": "https://www.ufc.com/news/official-judges-scorecards-ufc-289-nunes-vs-aldana-vancouver",
+      "independentFightUrl": "https://ufcstats.com/fight-details/96eaf07b34538b8b",
+      "officialEvidence": "Official UFC 289 judges scorecards: accidental clash of heads, ruled NC in round 2 at 3:04.",
+      "savedUfcHistoryExactMatch": false,
+      "verifiedNativeBoutId": null,
+      "requiredRecovery": "Recover canonical numeric UFC fight ID and fighter corner identity for UFC 289; represent NC correctly and index measured stats including partial-round data, without artificially implying a win or loss."
+    }
+  ]
+}
