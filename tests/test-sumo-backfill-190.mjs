@@ -166,6 +166,7 @@ test('100-row historical rank cap does not silently truncate long careers',()=>{
 
 test('null final match page closes only when all saved regular bouts and official source W-L agree',()=>{
   const d=newCache(sample);
+  d.data.profile={id:28,debut:'201503'};
   d.data.stats={rikishi_id:28,totalMatches:2,totalWins:1,totalLosses:1};
   d.data.matches=[
     {bashoId:'202611',day:1,matchNo:1,eastId:28,westId:9,winnerId:28,division:'Makuuchi'},
@@ -184,11 +185,11 @@ test('null terminal page cannot conceal missing or inconsistent career outcomes'
   d.data.stats={totalMatches:2,totalWins:2,totalLosses:0};
   d.data.matches=[{bashoId:'202611',day:1,matchNo:1,eastId:28,westId:9,winnerId:28,division:'Makuuchi'}];
   d.stages.matches.skip=1;
-  assert.throws(()=>combinePage(d,'matches',{limit:200,skip:0,total:0,records:null},28),/Expected matches collection/);
+  assert.throws(()=>combinePage(d,'matches',{limit:200,skip:0,total:0,records:null},28),/Null matches page/);
   assert.equal(d.stages.matches.skip,1);
   assert.equal(d.stages.matches.complete,false);
   d.data.stats={totalMatches:1,totalWins:1,totalLosses:0};
-  assert.throws(()=>combinePage(d,'matches',{limit:200,skip:0,total:10,records:null},28),/Expected matches collection/);
+  assert.throws(()=>combinePage(d,'matches',{limit:200,skip:0,total:10,records:null},28),/Null matches page/);
   assert.equal(d.stages.matches.skip,1);
 });
 
