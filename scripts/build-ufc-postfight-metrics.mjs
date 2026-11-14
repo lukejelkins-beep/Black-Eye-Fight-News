@@ -71,6 +71,43 @@ function rollup(parts,field){
  }
  return {value:covered?sum:null,coveredBouts:covered};
 }
+/**
+ * A disagreement in head/body/distance/clinch/ground subdivisions must not
+ * erase unrelated UFC core stats. However, the archived conflict ledger is
+ * capped at 40 entries, so checking its named fields alone is NOT sufficient.
+ * Rescan every saved provider round for ALL core metrics before allowing any
+ * secondary-only-conflict fight through. Missing provenance fails closed.
+ */
+export function classifyArchivedMetricConflicts(observed){
+ const conflicts=Array.isArray(observed?.conflicts)?observed.conflicts:[];
+ if(!conflicts.length)return {blocked:false,secondaryOnly:false,reason:null};
+ if(conflicts.some(c=>METRICS.includes(String(c?.metric||""))))
+  return {blocked:true,secondaryOnly:false,reason:"cross_source_core_metric_conflict"};
+ const origins=Object.values(observed?.sources||{}).filter(src=>
+  Array.isArray(src?.rounds)&&src.rounds.length);
+ if(origins.length<2)return {blocked:true,secondaryOnly:false,
+  reason:"cross_source_conflict_provenance_missing"};
+ const values=new Map();
+ for(const source of origins){
+  for(const r of source.rounds){
+   if(!Number.isInteger(r?.round))continue;
+   for(const corner of ["a","b"]){
+    for(const metric of METRICS){
+     const value=num(r?.[corner]?.[metric]);
+     if(value===null)continue;
+     const k=r.round+"|"+corner+"|"+metric;
+     if(values.has(k)&&values.get(k)!==value)
+      return {blocked:true,secondaryOnly:false,
+       reason:"cross_source_core_metric_conflict"};
+     values.set(k,value);
+    }
+   }
+  }
+ }
+ if(!values.size)return {blocked:true,secondaryOnly:false,
+  reason:"cross_source_conflict_provenance_missing"};
+ return {blocked:false,secondaryOnly:true,reason:null};
+}
 export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12"}={}){
  const complete=Object.values(progress?.bouts||{})
   .filter(b=>b?.org==="ufc"&&isOfficialUfcEvent(b.event)&&
@@ -103,8 +140,9 @@ export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12"}={}){
   const a=entry(b.a.name,b.a.slug),c=entry(b.b.name,b.b.slug);
   const observed=archivedBoutFor(archiveFights,b);
   if(!observed){pending.push({boutId:id,date:b.eventDate,reason:"round_data_not_available"});continue;}
-  if(Array.isArray(observed.conflicts)&&observed.conflicts.length){
-   pending.push({boutId:id,date:b.eventDate,reason:"cross_source_metric_conflict"});continue;
+  const conflictAudit=classifyArchivedMetricConflicts(observed);
+  if(conflictAudit.blocked){
+   pending.push({boutId:id,date:b.eventDate,reason:conflictAudit.reason});continue;
   }
   const minutes=elapsed(b.result);
   const roundCount=b.result?.round;
@@ -140,7 +178,9 @@ export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12"}={}){
    mapped.push({boutId:id,date:b.eventDate,event:safe(b.event),
     opponent:safe(b[sides[1-i]].name),cageSec:minutes,
     outcome:won?"W":otherWon?"L":b.status==="no_contest"?"NC":b.status==="draw"?"D":null,
-    finishMethod:safe(b.result?.method),metrics});
+    finishMethod:safe(b.result?.method),metrics,
+    sourceDisputeStatus:conflictAudit.secondaryOnly?
+     "secondary_breakdowns_disputed_core_uncontested":"no_recorded_metric_conflicts"});
   }
   [a,c].forEach((fighter,i)=>{
    if(fighter._ids.has(id))return;
