@@ -11,7 +11,14 @@ test('new UFC source evidence is explicitly uncertified and never overwrites exi
  assert.equal(evidence.collectorCacheWrites,0);
  for(const [slug,f] of Object.entries(evidence.fighters)){
   assert.ok(roster.approvedFighters.includes(slug));
-  assert.equal(registry.fighters[slug],undefined);
+  // The source-only research artifact is historical: it never grants certification.
+  // Its missing IDs have since been reconciled into the sole canonical register.
+  const proof=registry.fighters[slug];
+  assert.equal(proof.sourceCoverageAttested,true);
+  assert.equal(proof.scope,'complete_official_ufc_career');
+  assert.equal(proof.bouts.length,1);
+  assert.ok(/^https:\\/\\/ufcstats\\.com\\/fight-details\\/[0-9a-f]{16}$/.test(proof.bouts[0].fightUrl));
+  assert.ok(/^[1-9]\\d*$/.test(proof.bouts[0].nativeBoutId));
   assert.equal(f.bouts.length,1);
   assert.equal(f.ufcDebut,f.bouts[0].date);
   assert.ok(f.ufcOfficialResultUrl.startsWith('https://www.ufc.com/news/'));
@@ -31,4 +38,26 @@ test('DWCS cannot become a second official Chokheli career bout',()=>{
  assert.equal(f.officialCareerBoutsThroughSnapshot,1);
  assert.equal(f.bouts[0].result,'win');
  assert.match(f.feederNote,/DWCS/);
+});
+
+test('newly resolved Chokheli, Brennan and Degli evidence preserves exact UFC fight results and excludes DWCS',()=>{
+ const cases={
+  'levan-chokheli':{id:'82829',fighter:'22100',opponent:'Leon Shahbazyan',result:'win'},
+  'lucas-brennan':{id:'66086',fighter:'546',opponent:'Francis Marshall',result:'loss'},
+  'marcos-degli':{id:'93615',fighter:'11999',opponent:'Mitch Raposo',result:'loss'}
+ };
+ for(const [slug,expected] of Object.entries(cases)){
+  const proof=registry.fighters[slug];
+  assert.ok(proof,slug+' independent source evidence absent');
+  assert.equal(proof.sourceCoverageAttested,true);
+  assert.equal(proof.officialUfcCareerBoutCount,1);
+  assert.equal(proof.bouts.length,1);
+  assert.equal(proof.bouts[0].nativeBoutId,expected.id);
+  assert.equal(proof.bouts[0].nativeFighterId,expected.fighter);
+  assert.equal(proof.bouts[0].opponent,expected.opponent);
+  assert.equal(proof.bouts[0].result,expected.result);
+  assert.equal(proof.sourceSnapshot.sourceCommit,'c742842f29466758fedc3906dbad28d6d320a8da');
+ }
+ assert.match(registry.fighters['marcos-degli'].sourceScopeVerified,/DWCS/);
+ assert.match(registry.fighters['lucas-brennan'].sourceScopeVerified,/incorrect athlete header Win/);
 });
