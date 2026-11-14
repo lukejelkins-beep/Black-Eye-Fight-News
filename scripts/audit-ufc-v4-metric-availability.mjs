@@ -23,7 +23,7 @@ export function auditMetricAvailability(foundation){
   throw Error("Approved V4 stat foundation required");
  const summary={};
  for(const [key,required] of Object.entries(windows)){
-  let eligible=0,allCoreComplete=0,linkedAll=0;
+  let eligible=0,allCoreComplete=0,allCoreRateReady=0,linkedAll=0;
   const availability=Object.fromEntries(fields.map(f=>[f,{
    completeFighters:0,partiallyMeasuredFighters:0,noMeasurements:0,
    measuredBoutRows:0,knownBoutRows:0
@@ -46,10 +46,20 @@ export function auditMetricAvailability(foundation){
     else m.noMeasurements++;
    }
    if(completeCore===core.length)allCoreComplete++;
+   const requiredRates=["sigLandedPerMinute","sigAbsorbedPerMinute",
+    "sigStrikeDifferentialPer15","knockdownsPer15","takedownsPer15",
+    "subAttemptsPer15","controlSecPer15"];
+   if(completeCore===core.length&&requiredRates.every(rate=>{
+    const r=w.rates?.[rate];
+    return r?.coveredBouts===w.knownBouts&&
+     Number.isFinite(r?.elapsedSeconds)&&r.elapsedSeconds>0&&
+     Number.isFinite(r?.value);
+   }))allCoreRateReady++;
   }
   summary[key]={minimumKnownBouts:required,eligibleFighters:eligible,
    allBoutIdsLinkedToRoundCache:linkedAll,
    fullyObservedAllNineCoreFields:allCoreComplete,
+   fullyRateReadyAllNineCoreFields:allCoreRateReady,
    perMetric:availability};
  }
  return {schema:1,scope:"ufc-v4-per-metric-coverage",
@@ -66,6 +76,7 @@ export function main(){
  const digest=Object.fromEntries(Object.entries(result.summary).map(([name,r])=>
   [name,{eligible:r.eligibleFighters,linked:r.allBoutIdsLinkedToRoundCache,
    allCore:r.fullyObservedAllNineCoreFields,
+   rateReady:r.fullyRateReadyAllNineCoreFields,
    fullByMetric:Object.fromEntries(Object.entries(r.perMetric).map(
     ([field,d])=>[field,d.completeFighters]))}]));
  console.log("BEFN_V4_METRIC_READINESS "+JSON.stringify(digest));
