@@ -7,7 +7,7 @@
   "sourceLatestEvent": "2026-11-07",
   "status": "independent_history_source_links_not_certification",
   "sourceRun": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562511615",
-  "note": "13 target-specific independent historical UFCStats-derived source-link lists. Exact native identity and exhaustiveness not inferred from name/count alone; one Chad Anheliger opponent alias remains unresolved.",
+  "note": "13 target-specific independent historical UFCStats-derived source-link lists. Exact native identity and exhaustiveness not inferred from name/count alone; one Chad Anheliger opponent alias remains unresolved. Chad Anheliger UFC 279 result Sept 10 2022 source opponent Alatengheili is exactly saved native fighter Heili Alateng, bout ID 59836 (not a new ID). Source mismatch independently resolved against official UFC athlete career listing.",
   "fighters": {
     "shamil-gaziev": {
       "sourceName": "Shamil Gaziev",
@@ -723,9 +723,9 @@
       "sourceName": "Chad Anheliger",
       "grecoSourceBouts": 6,
       "savedUfcBouts": 7,
-      "sourceOnly": 1,
-      "savedOnly": 2,
-      "ambiguousIdentity": 1,
+      "sourceOnly": 0,
+      "savedOnly": 1,
+      "ambiguousIdentity": 0,
       "rows": [
         {
           "date": "2026-10-17",
@@ -772,10 +772,12 @@
           "opponent": "Alatengheili",
           "result": "loss",
           "fightUrl": "https://ufcstats.com/fight-details/6010f681e54ba2cd",
-          "nativeBoutId": null,
-          "nativeSavedDate": null,
-          "savedMatches": 0,
-          "possibleFeeder": false
+          "nativeBoutId": "59836",
+          "nativeSavedDate": "2022-09-10",
+          "savedMatches": 1,
+          "possibleFeeder": false,
+          "manualAliasReconciled": true,
+          "aliasEvidenceUrl": "https://www.ufc.com/athlete/chad-anheliger"
         },
         {
           "date": "2022-02-19",
