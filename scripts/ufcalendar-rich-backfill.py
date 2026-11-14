@@ -29,6 +29,7 @@ COVERAGE = ROOT / "data/ufc-last-five-coverage.json"
 COVERAGE36 = ROOT / "data/ufc-36-month-candidates.json"
 ROSTER_APPROVAL = ROOT / "data/ufc-36-month-roster-approval.json"
 FEEDER_EVIDENCE = ROOT / "data/ufc-feeder-bout-evidence.json"
+OFFICIAL_FINALE_EVIDENCE = ROOT / "data/ufc-official-finale-bout-evidence.json"
 JUDGING = ROOT / "data/ufcalendar-judging-research.json"
 BASE = "https://api.ufcalendar.com/v1"
 MAX_SPEND_PER_MONTH = 27000  # 90% of Hobby; reserve 3,000 for live BEFN integrations.
@@ -406,6 +407,19 @@ def confirmed_feeder_bout(row,fighter_slug,evidence):
             entry.get("fighterSlug")==fighter_slug and
             re.sub(r"[^a-z0-9]","",safe(entry.get("opponent"),110).casefold())==opp and
             str(entry.get("sourceUrl") or "").startswith("https://www.ufc.com/")):
+            return True
+    return False
+
+
+def verified_official_finale_bout(row,fighter_slug,evidence):
+    """Proven UFC Finale identity; can authorize one extra guarded retry."""
+    if not isinstance(evidence,dict) or evidence.get("schema")!=1:return False
+    for entry in evidence.get("bouts",[]):
+        if (isinstance(entry,dict) and
+            re.search(r"\b(?:tuf|the ultimate fighter)\b.*\bfinale\b",
+                      str(entry.get("event") or ""),re.I) and
+            confirmed_feeder_bout(row,fighter_slug,
+                                  {"schema":1,"bouts":[entry]})):
             return True
     return False
 
@@ -1059,6 +1073,8 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None)
     references={}
     feeder_dates,official_finale_dates=ufc_event_date_evidence(state)
     feeder_proof=read(FEEDER_EVIDENCE,{})
+    finale_proof=read(OFFICIAL_FINALE_EVIDENCE,{})
+    verified_finale_ids=set()
     tiers=approved_ufc_round_priority(approval,coverage,research,today,state)
     for slugval,profile in research.get("profiles",{}).items():
         if slugval not in eligible:continue
@@ -1066,6 +1082,8 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None)
             if not isinstance(row,dict) or row.get("source")!="native" or \
                str(row.get("promotion") or "").lower()!="ufc":continue
             if confirmed_feeder_bout(row,slugval,feeder_proof):continue
+            if verified_official_finale_bout(row,slugval,finale_proof):
+                verified_finale_ids.add(str(row.get("boutId") or ""))
             bid=str(row.get("boutId") or "")
             if not re.fullmatch(r"[1-9][0-9]{0,11}",bid) or bid in state["bouts"]:continue
             when=date_str(row.get("date"))
@@ -1091,7 +1109,8 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None)
             break
         prior=checks.get(bid,{})
         finale_retry=(prior.get("status")=="requires_manual_review" and
-                      pending[bid] in official_finale_dates and
+                      (pending[bid] in official_finale_dates or
+                       bid in verified_finale_ids) and
                       not prior.get("officialFinaleRetryAttempted"))
         if str(prior.get("retryAfter") or "")>today.isoformat() and not finale_retry:
             continue
