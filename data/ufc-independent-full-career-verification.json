@@ -3672,6 +3672,254 @@
         }
       ],
       "note": "Fully reconciled dated UFC debut through 14 Nov 2026 from independent UFCStats-derived fighter and fight identifiers, official UFC biography and final result, and existing measured native fight, subject to Stage3 independent certification CI."
+    },
+    "francesco-nuzzi": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Francesco Nuzzi",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/874cfc98877daecd",
+      "officialFighterUrl": "https://www.ufc.com/athlete/francesco-nuzzi",
+      "firstOfficialUfcFight": "2026-08-29",
+      "lastOfficialUfcFight": "2026-08-29",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedNumericFighterIds": [
+        "5101"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "latestGrecoEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "not directly accessible: URLs and exhaustive source UFC fight list independently pinned in Greco UFCStats-derived archive and checked against official UFC fighter and event pages"
+      },
+      "sourceCoverage": {
+        "method": "Full official athlete dated UFC fight record checked against complete pinned Greco UFCStats source fighter listing through 7 Nov 2026, exact source fight URL, saved native fighter identity and both official UFC Shanghai event results and Aug 29 official scorecards. One completed official UFC contest and saved fully measured stats. Preserve distinction between professional MMA/feeder appearances and Octagon official record.",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "officialDebut": "2026-08-29",
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-august-29-2026",
+        "officialScorecardsUrl": "https://www.ufc.com/news/ufc-shanghai-official-scorecards-nurmagomedov-vs-song",
+        "officialWeighinUrl": "https://www.ufc.com/news/official-weigh-results-ufc-shanghai-nurmagomedov-song-fight-night",
+        "sourceIdentityAndPresentationNotes": "UFC athlete complete fight history; official Octagon debut Aug 29 2026, stopped Xiao Long at 1:00 R1. Independent Greco L/W source says Xiao loss/Nuzzi win."
+      },
+      "bouts": [
+        {
+          "date": "2026-08-29",
+          "opponent": "Xiao Long",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/636867bbc9f96739",
+          "nativeBoutId": "83783",
+          "nativeFightId": "83783",
+          "nativeFighterId": "5101",
+          "opponentNativeFighterId": "267",
+          "event": "UFC Fight Night: Nurmagomedov vs Song",
+          "method": "ko_tko",
+          "round": 1,
+          "time": "1:00",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-august-29-2026"
+        }
+      ],
+      "note": "Source-attested exhaustive UFC career through 14 Nov 2026: one fighter-specific official UFCStats indexed bout, crosschecked against UFC Shanghai athlete/event source, result, native corner ID and complete measured rounds. Pending individual Stage3 independent certification gate; no feeder fights counted."
+    },
+    "hector-santiago": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Hector Santiago",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/8e4902b4a8045070",
+      "officialFighterUrl": "https://www.ufc.com/athlete/hector-de-sousa-santiago",
+      "firstOfficialUfcFight": "2026-08-29",
+      "lastOfficialUfcFight": "2026-08-29",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedNumericFighterIds": [
+        "149677"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "latestGrecoEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "not directly accessible: URLs and exhaustive source UFC fight list independently pinned in Greco UFCStats-derived archive and checked against official UFC fighter and event pages"
+      },
+      "sourceCoverage": {
+        "method": "Full official athlete dated UFC fight record checked against complete pinned Greco UFCStats source fighter listing through 7 Nov 2026, exact source fight URL, saved native fighter identity and both official UFC Shanghai event results and Aug 29 official scorecards. One completed official UFC contest and saved fully measured stats. Preserve distinction between professional MMA/feeder appearances and Octagon official record.",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "officialDebut": "2026-08-29",
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-august-29-2026",
+        "officialScorecardsUrl": "https://www.ufc.com/news/ufc-shanghai-official-scorecards-nurmagomedov-vs-song",
+        "officialWeighinUrl": "https://www.ufc.com/news/official-weigh-results-ufc-shanghai-nurmagomedov-song-fight-night",
+        "sourceIdentityAndPresentationNotes": "UFC athlete is listed as Hector Santiago, URL/full matchup renders de Sousa Santiago; exact official bout with Lawrence Lui and native numeric 149677, no other UFC bouts. Won R2 0:53 KO; source Greco L/W corroborates."
+      },
+      "bouts": [
+        {
+          "date": "2026-08-29",
+          "opponent": "Lawrence Lui",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ab5922e10699e869",
+          "nativeBoutId": "83784",
+          "nativeFightId": "83784",
+          "nativeFighterId": "149677",
+          "opponentNativeFighterId": "308",
+          "event": "UFC Fight Night: Nurmagomedov vs Song",
+          "method": "ko_tko",
+          "round": 2,
+          "time": "0:53",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-august-29-2026"
+        }
+      ],
+      "note": "Source-attested exhaustive UFC career through 14 Nov 2026: one fighter-specific official UFCStats indexed bout, crosschecked against UFC Shanghai athlete/event source, result, native corner ID and complete measured rounds. Pending individual Stage3 independent certification gate; no feeder fights counted."
+    },
+    "namsrai-batbayar": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Namsrai Batbayar",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/e1f8beeb6d2d871a",
+      "officialFighterUrl": "https://www.ufc.com/athlete/namsrai-batbayar",
+      "firstOfficialUfcFight": "2026-08-29",
+      "lastOfficialUfcFight": "2026-08-29",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedNumericFighterIds": [
+        "54312"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "latestGrecoEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "not directly accessible: URLs and exhaustive source UFC fight list independently pinned in Greco UFCStats-derived archive and checked against official UFC fighter and event pages"
+      },
+      "sourceCoverage": {
+        "method": "Full official athlete dated UFC fight record checked against complete pinned Greco UFCStats source fighter listing through 7 Nov 2026, exact source fight URL, saved native fighter identity and both official UFC Shanghai event results and Aug 29 official scorecards. One completed official UFC contest and saved fully measured stats. Preserve distinction between professional MMA/feeder appearances and Octagon official record.",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "officialDebut": "2026-08-29",
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-august-29-2026",
+        "officialScorecardsUrl": "https://www.ufc.com/news/ufc-shanghai-official-scorecards-nurmagomedov-vs-song",
+        "officialWeighinUrl": "https://www.ufc.com/news/official-weigh-results-ufc-shanghai-nurmagomedov-song-fight-night",
+        "sourceIdentityAndPresentationNotes": "Official Aug 29 2026 UFC loss by Andre Lima guillotine, R3 3:03; exhaustive independent source UFCStats-derived one official UFC row. Earlier 2025 Road to UFC quarter/semifinals and 2026 Road to UFC final excluded (not a completed official UFC fight in UFCStats source), despite 'Octagon Debut Jan 31 2026' visual and misleading Win icon on UFC athlete page."
+      },
+      "bouts": [
+        {
+          "date": "2026-08-29",
+          "opponent": "André Lima",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/80f7f5405d5ffca0",
+          "nativeBoutId": "83410",
+          "nativeFightId": "83410",
+          "nativeFighterId": "54312",
+          "opponentNativeFighterId": "117",
+          "event": "UFC Fight Night: Nurmagomedov vs Song",
+          "method": "submission",
+          "round": 3,
+          "time": "3:03",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-august-29-2026"
+        }
+      ],
+      "note": "Source-attested exhaustive UFC career through 14 Nov 2026: one fighter-specific official UFCStats indexed bout, crosschecked against UFC Shanghai athlete/event source, result, native corner ID and complete measured rounds. Pending individual Stage3 independent certification gate; no feeder fights counted."
+    },
+    "nilson-rojas": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Nilson Rojas",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/bf60dd3256801649",
+      "officialFighterUrl": "https://www.ufc.com/athlete/nilson-rojas",
+      "firstOfficialUfcFight": "2026-08-29",
+      "lastOfficialUfcFight": "2026-08-29",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedNumericFighterIds": [
+        "11849"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "latestGrecoEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "not directly accessible: URLs and exhaustive source UFC fight list independently pinned in Greco UFCStats-derived archive and checked against official UFC fighter and event pages"
+      },
+      "sourceCoverage": {
+        "method": "Full official athlete dated UFC fight record checked against complete pinned Greco UFCStats source fighter listing through 7 Nov 2026, exact source fight URL, saved native fighter identity and both official UFC Shanghai event results and Aug 29 official scorecards. One completed official UFC contest and saved fully measured stats. Preserve distinction between professional MMA/feeder appearances and Octagon official record.",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "officialDebut": "2026-08-29",
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-august-29-2026",
+        "officialScorecardsUrl": "https://www.ufc.com/news/ufc-shanghai-official-scorecards-nurmagomedov-vs-song",
+        "officialWeighinUrl": "https://www.ufc.com/news/official-weigh-results-ufc-shanghai-nurmagomedov-song-fight-night",
+        "sourceIdentityAndPresentationNotes": "Official UFC debut Aug 29 2026, KO loss to Bilal Hasan at R2 2:28. Athlete header Win icon is incorrect; dated official fighter biography, complete UFC event page and Aug29 official scorecards confirm loss."
+      },
+      "bouts": [
+        {
+          "date": "2026-08-29",
+          "opponent": "Bilal Hasan",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1fe768d599c159dc",
+          "nativeBoutId": "83729",
+          "nativeFightId": "83729",
+          "nativeFighterId": "11849",
+          "opponentNativeFighterId": "52597",
+          "event": "UFC Fight Night: Nurmagomedov vs Song",
+          "method": "ko_tko",
+          "round": 2,
+          "time": "2:28",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-august-29-2026"
+        }
+      ],
+      "note": "Source-attested exhaustive UFC career through 14 Nov 2026: one fighter-specific official UFCStats indexed bout, crosschecked against UFC Shanghai athlete/event source, result, native corner ID and complete measured rounds. Pending individual Stage3 independent certification gate; no feeder fights counted."
     }
   }
 }
