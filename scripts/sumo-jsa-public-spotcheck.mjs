@@ -100,7 +100,10 @@ export function reconcileJsaBashoResults(officialRows,source,asOf){
 
 export function parseOfficialProfile(html,roster){
  const text=htmlToPublicText(html);
- const career=text.match(/\bCareer\s+Record\s*:\s*(\d{1,5})\s*-\s*(\d{1,5})\s*-\s*(\d{1,5})/i);
+ // Some official pages display W-L only; an omitted absence field is
+ // unknown, NOT zero. Permit thousands separators without losing precision.
+ const career=text.match(/\bCareer\s+Record\s*:\s*([\d,]+)\s*-\s*([\d,]+)(?:\s*-\s*([\d,]+))?(?![\d,-])/i);
+ const careerNumber=v=>v==null?null:Number(v.replace(/,/g,''));
  const beforeCareer=text.indexOf('Career Record:');
  const basic=text.slice(Math.max(0,text.indexOf('Rikishi Profile')),beforeCareer>=0?beforeCareer:2000);
  const num=(label,unit)=>{const m=basic.match(new RegExp('\\b'+label+'\\s+([0-9]+(?:\\.[0-9]+)?)\\s*'+unit,'i'));return m?Number(m[1]):null;};
@@ -123,12 +126,13 @@ export function parseOfficialProfile(html,roster){
  };
  const completeness=!!career&&!!rank&&!!stableMatch&&num('Height','cm')!=null&&num('Weight','kg')!=null;
  return {
-  schemaVersion:1,parserVersion:3,source:'Japan Sumo Association official public Rikishi Profile',
+  schemaVersion:1,parserVersion:4,source:'Japan Sumo Association official public Rikishi Profile',
   sourceId:roster.sourceId,officialNskId:roster.officialNskId,
   url:'https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+roster.officialNskId+'/',
   profileName:announcedName,stable:short(stableMatch?.[1]),rank,heightCm:num('Height','cm'),
   weightKg:num('Weight','kg'),
-  career:career?{wins:Number(career[1]),losses:Number(career[2]),absences:Number(career[3])}:null,
+  career:career?{wins:careerNumber(career[1]),losses:careerNumber(career[2]),absences:careerNumber(career[3])}:null,
+  careerAbsencesPublished:career?.[3]!=null,
   officialAsOf:asOf?{monthYear:asOf[1],day:Number(asOf[2])}:null,
   fieldComparisons:comparisons,
   status:!nameMatchOk?'identity-review':!completeness?'parse-review':
@@ -157,7 +161,9 @@ async function main(){
   if(requested>=MAX_REQUESTS)break;
   const path=join(ROOT,'profiles',w.sourceId+'.json');
   const cached=await load(path);
-  if(cached?.parserVersion>=3)continue;
+  // Keep all valid v3 snapshots; only re-fetch known career-record parse
+  // failures from v3, rather than repeating 60+ already collected pages.
+  if(cached?.parserVersion>=4||cached?.parserVersion===3&&cached.career!==null)continue;
   requested++;
   const url='https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+w.officialNskId+'/';
   try{
