@@ -69,4 +69,6 @@ Homepage fetched HTTP 200 (682,161 bytes); this is uncompressed HTML size, not a
 - Per-feed source attribution/referential/date/status validation beyond existing unit tests and new structural diagnostics.
 - Full request-level cache hit/yield metrics and cross-writer conflict analysis before schedule consolidation.
 
+Draft PR #190 contains these changes. Saved results reconcile successfully offline; QA-002 requires the failing pipeline input before an identity fix.
+
 No merge, deployment, production setting, research record, paid API collection or automation change occurred. Proposed CI becomes active only after explicit integration approval.

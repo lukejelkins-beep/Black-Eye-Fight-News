@@ -1,7 +1,7 @@
 [
   {
     "branch": "qa/quality-supervisor-20261114",
-    "issueOrPR": "pending",
+    "issueOrPR": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/190",
     "owner": "QA supervisor; repository owner approves integration",
     "id": "QA-001",
     "severity": "P2",
@@ -19,14 +19,14 @@
   },
   {
     "branch": "qa/quality-supervisor-20261114",
-    "issueOrPR": "pending",
+    "issueOrPR": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/190",
     "owner": "QA supervisor; repository owner approves integration",
     "id": "QA-002",
     "severity": "P1",
     "subsystem": "Results ingestion",
     "title": "ONE reconciliation aborts on two cards sharing one date",
     "status": "confirmed failure; investigation open",
-    "evidence": "Actions run 43554340366, job 132323677592: ONE official card not uniquely identified: 2026-10-30 2.",
+    "evidence": "Actions run 43554340366, job 132323677592: ONE official card not uniquely identified: 2026-10-30 2. Saved main results reconcile successfully offline; duplicate arose in runtime pipeline input, not reproduced from saved snapshot.",
     "rootCause": "Date-based match is not unique; exact event identity requires investigation.",
     "impact": "Daily historical result backfill cannot finish that run.",
     "remediation": "Reproduce offline and resolve using official event identity; preserve fail-closed ambiguity handling.",
@@ -37,7 +37,7 @@
   },
   {
     "branch": "qa/quality-supervisor-20261114",
-    "issueOrPR": "pending",
+    "issueOrPR": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/190",
     "owner": "QA supervisor; repository owner approves integration",
     "id": "QA-003",
     "severity": "P2",
@@ -55,7 +55,7 @@
   },
   {
     "branch": "qa/quality-supervisor-20261114",
-    "issueOrPR": "pending",
+    "issueOrPR": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/190",
     "owner": "QA supervisor; repository owner approves integration",
     "id": "QA-004",
     "severity": "P2",
@@ -73,7 +73,7 @@
   },
   {
     "branch": "qa/quality-supervisor-20261114",
-    "issueOrPR": "pending",
+    "issueOrPR": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/190",
     "owner": "QA supervisor; repository owner approves integration",
     "id": "QA-005",
     "severity": "P2",
@@ -91,7 +91,7 @@
   },
   {
     "branch": "qa/quality-supervisor-20261114",
-    "issueOrPR": "pending",
+    "issueOrPR": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/190",
     "owner": "QA supervisor; repository owner approves integration",
     "id": "QA-006",
     "severity": "P2",
@@ -109,7 +109,7 @@
   },
   {
     "branch": "qa/quality-supervisor-20261114",
-    "issueOrPR": "pending",
+    "issueOrPR": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/190",
     "owner": "QA supervisor; repository owner approves integration",
     "id": "QA-007",
     "severity": "P2",
@@ -127,7 +127,7 @@
   },
   {
     "branch": "qa/quality-supervisor-20261114",
-    "issueOrPR": "pending",
+    "issueOrPR": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/190",
     "owner": "QA supervisor; repository owner approves integration",
     "id": "QA-008",
     "severity": "P2",
@@ -145,7 +145,7 @@
   },
   {
     "branch": "qa/quality-supervisor-20261114",
-    "issueOrPR": "pending",
+    "issueOrPR": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/190",
     "owner": "QA supervisor; repository owner approves integration",
     "id": "QA-009",
     "severity": "P2",
@@ -175,7 +175,7 @@
     "risks": "Do not weaken assertions or use production timestamps as fixed expected counts.",
     "dependenciesAndConflicts": "No open PR overlaps these test files at initial inspection; avoid protected research tests.",
     "branch": "qa/quality-supervisor-20261114",
-    "issueOrPR": "pending",
+    "issueOrPR": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/190",
     "verificationRequired": "Ordering, live/idle polling and upcoming status regressions pass and are invoked in CI."
   }
 ]
