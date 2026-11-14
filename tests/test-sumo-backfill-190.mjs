@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {STAGES,newCache,endpoint,combinePage,fillStage,stageStatus} from '../scripts/sumo-backfill-190.mjs';
+import {STAGES,newCache,endpoint,combinePage,fillStage,stageStatus,nextStage} from '../scripts/sumo-backfill-190.mjs';
 
 const sample={sourceId:28,officialNskId:3616,sumoDbId:12226,shikonaEn:'Ura'};
 test('free Sumo API history endpoints use explicit source ID and stable pagination',()=>{
@@ -42,5 +42,30 @@ test('invalid official identity blocks a profile from being accepted',async()=>{
   await assert.rejects(()=>fillStage(doc,'profile',async()=>({id:28,nskId:9999})),/JSA identity mismatch/);
   assert.equal(doc.stages.profile.complete,false);
   const another=newCache(sample);another.stages.stats.attempts=3;
+  assert.equal(stageStatus(another),'partial','other stages stay eligible after one endpoint fails');
+  assert.equal(nextStage(another),'profile');
+  for(const name of STAGES)another.stages[name].attempts=3;
+  assert.equal(nextStage(another),null);
   assert.equal(stageStatus(another),'exception');
+});
+
+test('rejects duplicate source records atomically and never advances page offset',()=>{
+  const doc=newCache(sample);
+  assert.throws(()=>combinePage(doc,'ranks',{
+    rikishi_id:28,ranks:[
+      {id:'202611-28',rikishiId:28,bashoId:'202611',rank:'Maegashira 2 East'},
+      {id:'202611-28',rikishiId:28,bashoId:'202611',rank:'Maegashira 2 East'}
+    ],total:2,has_more:false
+  },28),/Duplicate\/missing/);
+  assert.equal(doc.data.ranks.length,0);
+  assert.equal(doc.stages.ranks.skip,0);
+  assert.equal(doc.stages.ranks.complete,false);
+});
+test('failing source stage cannot hide other six-stage collection opportunities',()=>{
+  const doc=newCache(sample);
+  doc.stages.profile.attempts=3;
+  assert.equal(nextStage(doc),'stats');
+  assert.equal(stageStatus(doc),'partial');
+  doc.stages.stats.complete=true;
+  assert.equal(nextStage(doc),'measurements');
 });
