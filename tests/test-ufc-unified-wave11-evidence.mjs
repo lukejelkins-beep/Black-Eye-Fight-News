@@ -111,10 +111,17 @@ test('Mark Vologdin retains official majority draw, never converted to win',()=>
  assert.equal(b.opponent,'John Castaneda');
  assert.equal(b.date,'2026-04-18');
 });
-test('wave11 historical follow-ups remain recorded while Marnic is independently re-gated',()=>{
+test('wave11 historical follow-ups remain recorded and later independent certificates preserve exact scope',()=>{
  assert.ok(source.followUpNotCertified.some(x=>x.slug==='marnic-mann'));
  assert.ok(source.followUpNotCertified.some(x=>x.slug==='nyamjargal-tumendemberel'));
  assert.equal(registry.fighters['marnic-mann']?.sourceCoverageAttested,true);
  assert.equal(registry.fighters['marnic-mann']?.bouts.length,2);
- assert.equal(registry.fighters['nyamjargal-tumendemberel'],undefined);
+ const p=registry.fighters['nyamjargal-tumendemberel'];
+ assert.equal(p?.sourceCoverageAttested,true);
+ assert.equal(p?.scope,'complete_official_ufc_career');
+ assert.equal(p?.verificationMethod,'full_official_ufc_fight_listing_crosscheck');
+ assert.deepEqual(p?.bouts.map(b=>b.nativeBoutId),['38594','60694']);
+ assert.deepEqual(p?.bouts.map(b=>b.result),['loss','win']);
+ assert.ok(!p?.bouts.some(b=>b.nativeBoutId==='60901'));
+ assert.ok(p?.sourceVerifiedExcludedFeederBouts.some(b=>b.nativeBoutId==='60901'&&/road to ufc/i.test(b.event)));
 });
