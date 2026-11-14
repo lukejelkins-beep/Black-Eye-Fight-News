@@ -114,4 +114,58 @@ class NewsDedupeTests(unittest.TestCase):
         self.assertEqual(kept[0]['url'],b['url'])
         self.assertEqual(rejected[0]['keptUrl'],b['url'])
 
+
+    def test_mike_perry_return_signing_pair(self):
+        a=article('Mike Perry re-signs with UFC','https://one.example/perry')
+        b=article('UFC signs Mike Perry after five-year split','https://two.example/perry')
+        self.assertTrue(duplicate_of(a,b))
+        kept,rejected=deduplicate([a,b])
+        self.assertEqual((len(kept),len(rejected)),(1,1))
+        self.assertTrue(duplicate_of(b,a))
+
+    def test_return_signing_rumour_is_not_confirmation(self):
+        a=article('Mike Perry reportedly re-signs with UFC','https://one.example/perry')
+        b=article('UFC signs Mike Perry after five-year split','https://two.example/perry')
+        self.assertFalse(duplicate_of(a,b))
+
+    def test_contract_extension_rumour_is_not_confirmation(self):
+        a=article('Mike Perry reportedly re-signs with UFC','https://one.example/perry')
+        b=article('Mike Perry re-signs with UFC','https://two.example/perry')
+        self.assertFalse(duplicate_of(a,b))
+
+    def test_return_signing_offer_or_rejection_stays_separate(self):
+        signed=article('UFC signs Mike Perry after five-year split','https://three.example/perry')
+        for i,headline in enumerate((
+            'Mike Perry offered UFC contract after five-year split',
+            'Mike Perry rejects UFC return offer after five-year split'
+        )):
+            with self.subTest(headline=headline):
+                self.assertFalse(duplicate_of(article(headline,f'https://one.example/{i}'),signed))
+
+    def test_return_signing_different_fighter_or_promotion(self):
+        a=article('Mike Perry re-signs with UFC','https://one.example/perry')
+        self.assertFalse(duplicate_of(a,article(
+            'UFC signs Jake Perry after five-year split','https://two.example/jake')))
+        self.assertFalse(duplicate_of(a,article(
+            'PFL signs Mike Perry after five-year split','https://two.example/pfl')))
+        self.assertFalse(duplicate_of(a,article(
+            'Mike Perry re-signs with PFL','https://two.example/pfl2')))
+
+    def test_return_signing_not_later_booking_or_new_role(self):
+        a=article('Mike Perry re-signs with UFC','https://one.example/perry')
+        self.assertFalse(duplicate_of(a,article(
+            'UFC books Mike Perry against another fighter','https://two.example/booking')))
+        self.assertFalse(duplicate_of(a,article(
+            'UFC signs Mike Perry after five-year split and booked fight announced',
+            'https://two.example/booking-after-signing')))
+        self.assertFalse(duplicate_of(a,article(
+            'UFC signs Mike Perry for commentary role after five-year split',
+            'https://two.example/commentary')))
+
+    def test_return_signing_outside_time_window_is_new_development(self):
+        a=article('Mike Perry re-signs with UFC','https://one.example/perry')
+        b=article('UFC signs Mike Perry after five-year split','https://two.example/perry',
+                  when='2026-11-18T01:00:00+00:00')
+        self.assertFalse(duplicate_of(a,b))
+
 if __name__=='__main__':unittest.main()
