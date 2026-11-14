@@ -56,7 +56,7 @@ test("no false zeros for missing rounds, source conflicts or absent fields",()=>
  assert.equal(out.fighters["fighter-alpha"].totals.totalLanded.value,null);
  assert.equal(out.fighters["fighter-alpha"].totals.totalLanded.coveredBouts,0);
  assert.equal(out.metricBouts,1);
- assert(out.pending.some(x=>x.reason==="cross_source_metric_conflict"));
+ assert(out.pending.some(x=>x.reason==="cross_source_core_metric_conflict"));
 });
 test("one-day UTC and event-local shift joins exactly one verified UFC bout",()=>{
  const shifted=structuredClone(archive);
