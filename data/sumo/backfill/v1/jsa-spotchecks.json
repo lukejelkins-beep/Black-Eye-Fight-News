@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "purpose": "JSA independent spot-checks for individual public fields. NOT full-career certificates.",
+  "retrievedDate": "2026-11-15",
+  "note": "The official pages identify records as November 2026 Day 7. API research snapshots may represent a different result cutoff; differing fight totals remain unresolved until synchronized, not silently corrected.",
+  "bySourceId": {
+    "2": {
+      "name": "Asanoyama",
+      "sumoApiId": 2,
+      "officialNskId": 3682,
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3682/",
+      "officialBanzukeUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/search",
+      "officialAsOf": "2026-11 day 7",
+      "currentRank": "Maegashira 1 East",
+      "stable": "Takasago",
+      "heightCm": 188,
+      "weightKg": 172,
+      "record": {
+        "wins": 442,
+        "losses": 223,
+        "absences": 159
+      },
+      "sourceEvidence": "JSA official profile and East/West banzuke list",
+      "pending": "Full bout-by-bout career history and full historical weight/rank crosscheck outstanding."
+    },
+    "28": {
+      "name": "Ura",
+      "sumoApiId": 28,
+      "officialNskId": 3616,
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3616/",
+      "officialBanzukeUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/search",
+      "officialAsOf": "2026-11 day 7",
+      "currentRank": "Maegashira 2 East",
+      "stable": "Kise",
+      "heightCm": 173,
+      "weightKg": 138,
+      "record": {
+        "wins": 432,
+        "losses": 330,
+        "absences": 96
+      },
+      "sourceEvidence": "JSA official profile and East/West banzuke list",
+      "pending": "Source API cached 432-331-96; one-loss discrepancy requires same-day timing reconciliation."
+    }
+  }
+}
