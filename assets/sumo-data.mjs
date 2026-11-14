@@ -69,14 +69,21 @@ export function trackedBanzukeCohort(sourceRoster, banzukeByDivision) {
   };
 }
 
-export function recordSummary(record) {
+export function recordSummary(record, division = 'Makuuchi') {
   const data = Array.isArray(record) ? record : [];
-  const out = { win: 0, loss: 0, absence: 0, pending: 0, completed: 0 };
+  const lower = division === 'Makushita' || division === 'Sandanme' ||
+    division === 'Jonidan' || division === 'Jonokuchi';
+  // The API marks unfought calendar days "absent" in lower divisions, even
+  // when a wrestler is simply not scheduled. Absence/kyujo cannot be inferred.
+  const out = { win: 0, loss: 0, absence: lower ? null : 0, noBout: 0, pending: 0, completed: 0 };
   for (const item of data) {
     const result = String(item?.result ?? '').toLowerCase();
     if (result === 'win') { out.win++; out.completed++; }
     else if (result === 'loss') { out.loss++; out.completed++; }
-    else if (result === 'absent' || result === 'absence' || result === 'kyujo') out.absence++;
+    else if (result === 'absent' || result === 'absence' || result === 'kyujo') {
+      if (lower) out.noBout++;
+      else out.absence++;
+    }
     else out.pending++;
   }
   return out;
@@ -89,7 +96,7 @@ export function sortBanzukeEntries(banzuke) {
 }
 export function rankTable(banzuke) {
   return sortBanzukeEntries(banzuke).map(entry => ({
-    ...entry, summary: recordSummary(entry.record)
+    ...entry, summary: recordSummary(entry.record, divisionOf(entry.rank))
   }));
 }
 export function leadingRikishi(banzuke, count = 6) {
@@ -146,8 +153,9 @@ export function matchResult(match, id) {
   };
 }
 /** Completed current-basho bouts for a tracked wrestler.
- * For Makushita, banzuke record position is a bout sequence, not a calendar
- * day; never map the seven bout slots to days 1..7.
+ * The source banzuke records have 15 calendar-day positions in ALL divisions.
+ * Makushita has non-bout days between up to seven bouts: those must not be
+ * counted as loss or kyūjō without a corroborating torikumi.
  */
 export function currentBashoMatchSample(entry, bashoId) {
   if (!entry || !Array.isArray(entry.record)) return [];
@@ -159,8 +167,8 @@ export function currentBashoMatchSample(entry, bashoId) {
     const result = String(rec.result).toLowerCase();
     rows.push({
       bashoId: String(bashoId || ''),
-      day: div === 'Makushita' ? null : i + 1,
-      boutSequence: i + 1,
+      day: i + 1,
+      boutSequence: rows.length + 1,
       opponentId: Number.isSafeInteger(oppId) && oppId > 0 ? oppId : null,
       opponent: rec.opponentShikonaEn || 'Opponent not supplied',
       outcome: result,
