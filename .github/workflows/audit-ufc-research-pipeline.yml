@@ -16,6 +16,8 @@ on:
       - 'data/ufc-unified-josias-musasa-official-source-review-20261114.json'
       - 'data/ufc-unified-wave19-loder-bleda-sidey-official-source-review-20261114.json'
       - 'data/ufc-unified-wave20-taveras-walker-musayev-source-review-20261114.json'
+      - 'data/ufc-unified-wave21-riley-luna-rahiki-source-review-20261114.json'
+      - 'tests/test-ufc-unified-wave21-riley-luna-rahiki.mjs'
       - 'tests/test-ufc-v4-certification-queue.mjs'
       - 'tests/test-ufc-certification-consolidation-preflight.mjs'
       - 'tests/test-ufc-v4-stage3-import.mjs'
@@ -145,6 +147,7 @@ jobs:
           node --test tests/test-ufc-unified-josias-musasa-evidence.mjs
           node --test tests/test-ufc-unified-wave19-three-careers-evidence.mjs
           node --test tests/test-ufc-unified-wave20-three-careers-evidence.mjs
+          node --test tests/test-ufc-unified-wave21-riley-luna-rahiki.mjs
           node --test tests/test-ufc-unified-waves17-18-evidence.mjs
           node --test tests/test-ufc-unified-wave19-evidence.mjs
           node --test tests/test-ufc-unified-wave18-three-careers.mjs

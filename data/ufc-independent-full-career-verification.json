@@ -23170,6 +23170,182 @@
           "nativeFighterId": "529"
         }
       ]
+    },
+    "luke-riley": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Luke Riley",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/b1de86d835638319",
+      "officialFighterUrl": "https://www.ufc.com/athlete/luke-riley",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Immutable pinned Greco UFCStats-derived historical CSV; no direct live UFCStats scraping",
+        "method": "Full official UFC.com dated career narrative verified against unique immutable Greco UFCStats fight/event records, original saved numeric native bout and opposite fighter IDs, result, date and all measured rounds; exclude independently attested feeder records. Official narratives/results override unreliable graphic Win tiles."
+      },
+      "verifiedNumericFighterIds": [
+        "377"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Official UFC.com exhaustive three-bout UFC Octagon chronology through 2026-11-14 independently reconciled to three unique pinned UFCStats fight IDs, original paired native fighter/outcome/date/round data. 0 separately sourced DWCS feeder appearances excluded, with no cancelled or scheduled fights counted.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/luke-riley",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-11-22",
+          "opponent": "Bogdan Grad",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5e6a74db89f5410c",
+          "nativeBoutId": "60410",
+          "nativeFighterId": "377"
+        },
+        {
+          "date": "2026-03-21",
+          "opponent": "Michael Aswell Jr.",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fa534aaa5b997a69",
+          "nativeBoutId": "60560",
+          "nativeFighterId": "377"
+        },
+        {
+          "date": "2026-07-11",
+          "opponent": "Kai Kamaka III",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/930317fde9dbc55e",
+          "nativeBoutId": "66445",
+          "nativeFighterId": "377"
+        }
+      ]
+    },
+    "santiago-luna": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Santiago Luna",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/faf317c665546a36",
+      "officialFighterUrl": "https://www.ufc.com/athlete/santiago-luna",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Immutable pinned Greco UFCStats-derived historical CSV; no direct live UFCStats scraping",
+        "method": "Full official UFC.com dated career narrative verified against unique immutable Greco UFCStats fight/event records, original saved numeric native bout and opposite fighter IDs, result, date and all measured rounds; exclude independently attested feeder records. Official narratives/results override unreliable graphic Win tiles."
+      },
+      "verifiedNumericFighterIds": [
+        "228"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Official UFC.com exhaustive three-bout UFC Octagon chronology through 2026-11-14 independently reconciled to three unique pinned UFCStats fight IDs, original paired native fighter/outcome/date/round data. 0 separately sourced DWCS feeder appearances excluded, with no cancelled or scheduled fights counted. Pinned Greco source repeats Noche UFC 2025-09-13 fight in two historical rows with same exact fight ID; this is one Octagon bout, not two.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/santiago-luna",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-09-13",
+          "opponent": "Quang Le",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8a884a7930d75ca9",
+          "nativeBoutId": "38225",
+          "nativeFighterId": "228"
+        },
+        {
+          "date": "2026-02-28",
+          "opponent": "Angel Pacheco",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3b76a00f5d0400eb",
+          "nativeBoutId": "60678",
+          "nativeFighterId": "228"
+        },
+        {
+          "date": "2026-06-06",
+          "opponent": "Bryce Mitchell",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c47796e11a801e12",
+          "nativeBoutId": "66470",
+          "nativeFighterId": "228"
+        }
+      ]
+    },
+    "marwan-rahiki": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Marwan Rahiki",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/6eedb757f13b9978",
+      "officialFighterUrl": "https://www.ufc.com/athlete/marwan-rahiki",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Immutable pinned Greco UFCStats-derived historical CSV; no direct live UFCStats scraping",
+        "method": "Full official UFC.com dated career narrative verified against unique immutable Greco UFCStats fight/event records, original saved numeric native bout and opposite fighter IDs, result, date and all measured rounds; exclude independently attested feeder records. Official narratives/results override unreliable graphic Win tiles."
+      },
+      "verifiedNumericFighterIds": [
+        "540"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Official UFC.com exhaustive three-bout UFC Octagon chronology through 2026-11-14 independently reconciled to three unique pinned UFCStats fight IDs, original paired native fighter/outcome/date/round data. 1 separately sourced DWCS feeder appearances excluded, with no cancelled or scheduled fights counted.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/marwan-rahiki",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2026-03-14",
+          "opponent": "Harry Hardwick",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e0acd0cf4930671b",
+          "nativeBoutId": "60714",
+          "nativeFighterId": "540"
+        },
+        {
+          "date": "2026-05-02",
+          "opponent": "Ollie Schmid",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/cfc884a249141cba",
+          "nativeBoutId": "66066",
+          "nativeFighterId": "540"
+        },
+        {
+          "date": "2026-09-12",
+          "opponent": "Tommy McMillen",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1fca7dfa9e1e15cb",
+          "nativeBoutId": "83442",
+          "nativeFighterId": "540"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84105",
+          "date": "2025-10-14",
+          "opponent": "Ananias Mulumba",
+          "result": "win",
+          "event": "Dana White's Contender Series 86",
+          "officialSourceUrl": "https://www.ufc.com/athlete/marwan-rahiki",
+          "excludedBecause": "UFC.com dated biography independently identifies historical Dana White's Contender Series appearance outside official UFC Octagon career"
+        }
+      ]
     }
   }
 }
