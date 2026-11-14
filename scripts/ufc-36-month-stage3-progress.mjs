@@ -77,6 +77,11 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
  const nativeMapped=given.length>0&&given.every(r=>
    numId(r?.nativeBoutId)&&numId(r?.nativeFighterId));
  const nativeIdentitySet=new Set(arr(ext.verifiedNumericFighterIds).map(numId).filter(Boolean));
+ // Explicitly reviewed historical names are allowed only together with
+ // source-linked exact native IDs, opponent and outcome verification. Name
+ // aliases alone never establish a fighter identity (e.g. the two Bruno Silvas).
+ const reviewedNativeNames=new Set([ext.fighterName,...arr(ext.sourceVerifiedNativeNameAliases)]
+   .map(normal).filter(Boolean));
  const nativeMatches=nativeMapped&&indexedBouts&&
    normal(ext.fighterName)===normal(profile?.name)&&
    /^https:\/\/www\.ufc\.com\/athlete\//i.test(String(ext.officialFighterUrl||''))&&
@@ -100,7 +105,7 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
      const corners=[[b.a,b.b],[b.b,b.a]].filter(([own,other])=>
        own&&other&&String(own.id)===String(r.nativeFighterId)&&
        nativeIdentitySet.has(String(own.id))&&
-       normal(own.name)===normal(ext.fighterName)&&
+       reviewedNativeNames.has(normal(own.name))&&
        sameAthleteName(other.name,r.opponent));
      if(corners.length!==1)return false;
      const [own,other]=corners[0];
