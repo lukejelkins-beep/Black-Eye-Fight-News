@@ -293,7 +293,8 @@ export function main(){
  const sourceBatch=read("data/ufc-v4-independent-full-career-certification-batch-20261114.json");
  // Independent source attestation is never a shortcut past the exact
  // canonical native ID, fighter identity, UFC scope, outcome, or stats gates.
- const proof=certifyAttestedFullCareers(approval,research,progress,measured,independentBase,sourceBatch);
+ const proof=certifyAttestedFullCareers(approval,research,progress,measured,independentBase,sourceBatch,
+  read("data/ufc-feeder-bout-evidence.json"));
  const out=buildV4StatFoundation(
   approval,research,progress,measured,
   {asOf:approval.rosterAsOf,
