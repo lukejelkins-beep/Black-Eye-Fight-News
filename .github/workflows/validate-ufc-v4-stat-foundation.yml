@@ -8,6 +8,8 @@ on:
       - 'scripts/build-ufc-v4-stat-foundation.mjs'
       - 'tests/test-ufc-postfight-metrics.mjs'
       - 'tests/test-ufc-v4-stat-foundation.mjs'
+      - 'scripts/audit-ufc-v4-exception-causes.mjs'
+      - 'tests/test-ufc-v4-exception-causes.mjs'
       - '.github/workflows/validate-ufc-v4-stat-foundation.yml'
 permissions:
   contents: read
@@ -27,15 +29,20 @@ jobs:
         run: |
           node --test tests/test-ufc-postfight-metrics.mjs
           node --test tests/test-ufc-v4-stat-foundation.mjs
+          node --test tests/test-ufc-v4-exception-causes.mjs
       - name: Rebuild the complete measured career cache without API calls
         run: node scripts/build-ufc-postfight-metrics.mjs
       - name: Audit the approved 783-fighter Last 5 / Last 10 / Career windows
         run: node scripts/build-ufc-v4-stat-foundation.mjs
+      - name: Classify saved-data gaps without provider calls
+        run: node scripts/audit-ufc-v4-exception-causes.mjs
       - name: Publish audit as non-production workflow artifact only
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: befn-v4-ufc-stat-foundation-qa
-          path: qa/ufc-v4-stat-foundation.json
+          path: |
+            qa/ufc-v4-stat-foundation.json
+            qa/ufc-v4-exception-causes.json
           retention-days: 14
           if-no-files-found: warn
