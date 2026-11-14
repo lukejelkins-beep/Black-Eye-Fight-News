@@ -21995,6 +21995,137 @@
           "nativeFighterId": "212"
         }
       ]
+    },
+    "islam-dulatov": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Islam Dulatov",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/e803242fb2e41112",
+      "officialFighterUrl": "https://www.ufc.com/athlete/islam-dulatov",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct live UFCStats scrape",
+        "method": "Complete primary official UFC.com dated athlete fight biographies and, where available, official scorecards; exact pinned UFCStats-derived fight URL mapped to native fighter/bout IDs, opposing corner, outcome, date and measured rounds; separately exclude DWCS feeder and cancelled/announced fights. Strict Stage3 certifies separately."
+      },
+      "verifiedNumericFighterIds": [
+        "2869"
+      ],
+      "officialUfcCareerBoutCount": 1,
+      "sourceScopeVerified": "Independently exhaustive UFC.com completed Octagon history through 14 November 2026. One UFC 318 completed KO win; 2024-10-08 DWCS Vanilto Antunes win excluded from UFC; 2026-07-25 Turman cancellation and future 2026-12-05 booking not counted. Original one-to-one Greco fight and native numeric UFC bout/opposing corner/result/round metrics verified; strict Stage3 audit required.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/islam-dulatov",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da",
+        "https://www.ufc.com/news/all-eyes-on-islam-dulatov-ufc-318"
+      ],
+      "bouts": [
+        {
+          "date": "2025-07-19",
+          "opponent": "Adam Fugitt",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/37bc72d5d211b189",
+          "nativeBoutId": "60812",
+          "nativeFighterId": "2869"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84055",
+          "date": "2024-10-08",
+          "opponent": "Vanilto Antunes",
+          "result": "win",
+          "event": "Dana White's Contender Series 75",
+          "officialSourceUrl": "https://www.ufc.com/athlete/islam-dulatov",
+          "excludedBecause": "DWCS feeder is not a completed official UFC Octagon bout"
+        }
+      ]
+    },
+    "mark-choinski": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Mark Choinski",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/001eb2ab0f30e7ea",
+      "officialFighterUrl": "https://www.ufc.com/athlete/mark-choinski",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct live UFCStats scrape",
+        "method": "Complete primary official UFC.com dated athlete fight biographies and, where available, official scorecards; exact pinned UFCStats-derived fight URL mapped to native fighter/bout IDs, opposing corner, outcome, date and measured rounds; separately exclude DWCS feeder and cancelled/announced fights. Strict Stage3 certifies separately."
+      },
+      "verifiedNumericFighterIds": [
+        "2857"
+      ],
+      "officialUfcCareerBoutCount": 1,
+      "sourceScopeVerified": "Independently exhaustive UFC.com completed Octagon history through 14 November 2026. UFC 316 debut loss to MarQuel Mederos independently affirmed by official scorecard; false graphical athlete Win badge overridden by official narrative and judges result. Original one-to-one Greco fight and native numeric UFC bout/opposing corner/result/round metrics verified; strict Stage3 audit required.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/mark-choinski",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da",
+        "https://www.ufc.com/news/official-judges-scorecards-ufc-316-dvalishvili-vs-omalley-2-newark"
+      ],
+      "bouts": [
+        {
+          "date": "2025-06-07",
+          "opponent": "MarQuel Mederos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0e8599eca8ccfa32",
+          "nativeBoutId": "60873",
+          "nativeFighterId": "2857"
+        }
+      ]
+    },
+    "max-gimenis": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Max Gimenis",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/6a311920edd73c85",
+      "officialFighterUrl": "https://www.ufc.com/athlete/max-gimenis",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct live UFCStats scrape",
+        "method": "Complete primary official UFC.com dated athlete fight biographies and, where available, official scorecards; exact pinned UFCStats-derived fight URL mapped to native fighter/bout IDs, opposing corner, outcome, date and measured rounds; separately exclude DWCS feeder and cancelled/announced fights. Strict Stage3 certifies separately."
+      },
+      "verifiedNumericFighterIds": [
+        "422"
+      ],
+      "officialUfcCareerBoutCount": 1,
+      "sourceScopeVerified": "Independently exhaustive UFC.com completed Octagon history through 14 November 2026. UFC debut 2025-11-08 TKO loss to Josh Hokit confirmed in dated official UFC athlete narrative and opposite corner; scheduled 2026-08-01 Jovan Leka bout cancelled and not counted. Original one-to-one Greco fight and native numeric UFC bout/opposing corner/result/round metrics verified; strict Stage3 audit required.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/max-gimenis",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da",
+        "https://www.ufc.com/athlete/josh-hokit"
+      ],
+      "bouts": [
+        {
+          "date": "2025-11-08",
+          "opponent": "Josh Hokit",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/87dcb3eab20f6ac1",
+          "nativeBoutId": "65907",
+          "nativeFighterId": "422"
+        }
+      ]
     }
   }
 }

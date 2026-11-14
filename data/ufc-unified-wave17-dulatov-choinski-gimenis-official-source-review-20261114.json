@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave17-dulatov-choinski-gimenis-official-source-review",
+  "snapshot": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07",
+    "evidenceCutoff": "2026-11-14",
+    "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct live UFCStats scrape",
+    "method": "Complete primary official UFC.com dated athlete fight biographies and, where available, official scorecards; exact pinned UFCStats-derived fight URL mapped to native fighter/bout IDs, opposing corner, outcome, date and measured rounds; separately exclude DWCS feeder and cancelled/announced fights. Strict Stage3 certifies separately."
+  },
+  "sourceMethod": "Primary dated full UFC.com biographies, official scorecard and opponent confirmation, pinned immutable Greco UFCStats source and saved numeric UFCalendar paired corners; CI must independently strict-Stage3 gate.",
+  "fighters": {
+    "islam-dulatov": {
+      "fighterName": "Islam Dulatov",
+      "officialFighterUrl": "https://www.ufc.com/athlete/islam-dulatov",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/e803242fb2e41112",
+      "officialUfcCareerCount": 1,
+      "bouts": [
+        {
+          "date": "2025-07-19",
+          "opponent": "Adam Fugitt",
+          "result": "win",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/37bc72d5d211b189",
+          "nativeBoutId": "60812",
+          "nativeFighterId": "2869"
+        }
+      ],
+      "reviewNote": "One UFC 318 completed KO win; 2024-10-08 DWCS Vanilto Antunes win excluded from UFC; 2026-07-25 Turman cancellation and future 2026-12-05 booking not counted.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "strict 783-person Stage3 passing audit and preservation checks"
+      ]
+    },
+    "mark-choinski": {
+      "fighterName": "Mark Choinski",
+      "officialFighterUrl": "https://www.ufc.com/athlete/mark-choinski",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/001eb2ab0f30e7ea",
+      "officialUfcCareerCount": 1,
+      "bouts": [
+        {
+          "date": "2025-06-07",
+          "opponent": "MarQuel Mederos",
+          "result": "loss",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/0e8599eca8ccfa32",
+          "nativeBoutId": "60873",
+          "nativeFighterId": "2857"
+        }
+      ],
+      "reviewNote": "UFC 316 debut loss to MarQuel Mederos independently affirmed by official scorecard; false graphical athlete Win badge overridden by official narrative and judges result.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "strict 783-person Stage3 passing audit and preservation checks"
+      ]
+    },
+    "max-gimenis": {
+      "fighterName": "Max Gimenis",
+      "officialFighterUrl": "https://www.ufc.com/athlete/max-gimenis",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/6a311920edd73c85",
+      "officialUfcCareerCount": 1,
+      "bouts": [
+        {
+          "date": "2025-11-08",
+          "opponent": "Josh Hokit",
+          "result": "loss",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/87dcb3eab20f6ac1",
+          "nativeBoutId": "65907",
+          "nativeFighterId": "422"
+        }
+      ],
+      "reviewNote": "UFC debut 2025-11-08 TKO loss to Josh Hokit confirmed in dated official UFC athlete narrative and opposite corner; scheduled 2026-08-01 Jovan Leka bout cancelled and not counted.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "strict 783-person Stage3 passing audit and preservation checks"
+      ]
+    }
+  }
+}
