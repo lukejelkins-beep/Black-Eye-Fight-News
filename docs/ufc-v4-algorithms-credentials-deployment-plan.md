@@ -1,8 +1,8 @@
 # BEFN — UFC Fighter Performance Index V4: deployment and credentials expansion
 
-**Proposed 14 November 2026 · planning only; not approved for production scoring**
+**Approved direction 14 November 2026 · UFC-first delivery, external achievement research deferred**
 
-Status: design candidate awaiting data audit, retrospective validation, owner approval and live QA. This document adds a *future* rollout stream; it does not supersede the approved 783-fighter 36-month eligibility roster, the Stage 3 full-career UFC collection, existing published V3 scores/categories, or any budget/security/CI guards.
+Status: V4 direction authorised by site owner. Build and validate the UFCalendar-only UFC statistical foundation first. A separate, subsequent achievements research project may enrich V4 later. Specific unvalidated coefficients, classifications and production release remain QA-gated. This plan does not supersede the 783-fighter approved cohort, Stage 3 history collector or existing budget/deployment protections.
 
 ## Non-negotiable constraints
 
@@ -14,19 +14,34 @@ Status: design candidate awaiting data audit, retrospective validation, owner ap
 - Do not silently assume all legacy fights have round stats: compute period-specific baselines from valid comparable samples only. Dates, divisions and opponents must be assessed at fight time, not using today's ranks retrospectively.
 - All scores are **descriptive, experimental indices** until tested; they are NOT official UFC rankings, objective skill measurements, win-probability forecasts or betting advice.
 
-## Sequenced rollout (future Stage 4 after Stage 3)
+## UFC-first rollout — Stage 4, followed by separate Stage 5 research
 
-| Stage | Deliverable | Gate/acceptance |
+Owner's explicit decision (14 November 2026): **move towards V4 now; complete UFC-only fight/statistical profiles using UFCalendar and existing saved evidence before starting the other-achievement research as an independent project**. External credential completion is **not a dependency** of initial V4 scores, leaderboards, or UFC fighter profile release.
+
+The saved GitHub Stage 3 audit at 2026-11-14 ~01:04 UTC reported: **783 approved, 783 with saved UFC history, 6,688 saved history rows, 4,504 distinct native UFC IDs, 4,492 indexed and 4,490 with paired core round metrics**. All **482** athletes with five known bouts had five measured bouts; all **285** with ten known bouts had ten measured bouts. **780** fighters had at least one measured recent bout. Only **3** full career timelines carried explicit provider-complete certification and **144** numeric identity crosschecks were completed. Treat provider certification separately from statistical sample coverage; do not infer absent results for fighters with fewer than five UFC appearances. These are a dated snapshot, not guaranteed live counts.
+
+| Phase | UFC-first deliverable | Gate |
 |---|---|---|
-| 3 — ongoing | Full UFC bout/result history for approved 783 athletes, reusing saved cache; source-verified individual stat fields | Coverage and lineage audit; no interruption to five-minute collector or hourly research |
-| 4A — evidence audit | Field-by-field completeness by year, division, metric, fighter and sample fights; historical opponent network beyond active roster; canonical athlete/bout IDs | Publish missingness and confidence report; decide which metrics can support each period |
-| 4B — credential catalogue | Collect/verify achievements listed below separately from UFCalendar fight stats, recording exact source and dates | Research ledger shows verified / explicitly checked absent / unknown / disputed; no guessed points |
-| 4C — shadow V4 models | Offline scoring module producing Striking, Grappling, Wrestling, Defence, Form, Prospect, Contender and overall Ability; retain V3 in public | Deterministic tests, denominator checks, opponent links, versioned saved outputs, no API duplicate calls |
-| 4D — retrospective calibration | Compare last 3, last 5, last 10 and exponentially weighted career models; test proposed coefficients and division standards | Walk-forward holdout using only information available before each bout; evaluate calibration, discrimination, instability, bias and sample reliability |
-| 4E — preview | Insert *shadow* V4 ratings on non-production preview; retain existing clean V3 design and approved 5/10/career selectors | Mobile/desktop visual QA, profile-by-profile spot checks including newcomers, veteran champions, rare specialists, sparse historic data, changes of division |
-| 4F — controlled release | With explicit owner approval, feature-flag V4 to a limited sample, then publish through existing CI/Render safeguards | Rollback path to V3, unchanged data pipelines, observed prod deployment hashes, live visual QA and post-release score monitoring |
+| **Stage 3 — existing, ongoing** | Collect/reconcile full UFC careers for approved 783; prioritise 12 remaining native-ID manual-review exceptions and the unconfirmed career completeness checks. Use cached results and checks before calling UFCalendar again. | No history truncation, duplicate API work, feeder contamination, or altered existing automation |
+| **4A — canonical UFC dataset** | Deduplicate all saved official UFC bouts by confirmed native bout ID, with both corners' results, finish clock, event, division, round metrics and source. Join once to each approved fighter by canonical identity; preserve independently verified official UFC histories and conflicts. | End-to-end audit by fighter and unique bout; complete/partial/unverified flags, no zero substitution |
+| **4B — UFC-only statistics** | Compute latest 5, latest 10 and career performance for EVERY eligible fighter using actual completed UFC fights and per-metric denominators. Include coverage by year/era, per-corner stats, KO/TKO and submission wins, knockdowns, takedown attempts/success/defence, striking, control and observed seconds. | Test missing/fewer-than-5 cases, short finish rates, historical gaps and division mismatches |
+| **4C — shadow V4 UFC-only ratings** | Independently calculate Striking, Grappling, Wrestling, Defence, Recent Form, Prospect, Contender and a candidate overall Ability index using ONLY UFC record, result, opponent and UFCalendar-derived metrics. **No external achievement points**. | Snapshot version, deterministic idempotent tests, separate run from data ingestion, no API calls |
+| **4D — historical validation** | Compare 3/5/10/decayed full-career alternatives, opponent adjustments, shrinkage, division/era normalisation and thresholds on past as-of snapshots. Investigate Glicko-style career rating without assuming predictive validation. | Walk-forward checks; score stability; sparse-data/outlier audits; differential reports for all 783 |
+| **4E — staged publication** | Retain the existing profile layout and Last 5/Last 10/Career UI; preview, CI, responsive and live Render QA; phased V4 UFC-only publication under rollback feature flag. | Model coefficients and production switch receive explicit final approval after validation |
+| **Stage 5 — separate project** | Research NCAA, Olympic, judo, IBJJF, ADCC, international wrestling, kickboxing, Muay Thai, boxing, sambo, IMMAF and previous professional MMA titles in a distinct offline research ledger/worker. | Starts after UFC-only baseline is established, independently verified; achievements never block core statistics |
+| **5B — optional enrichment** | Test credential bonus schedule against performance data, avoid double counting and show verified achievements in profiles; apply scoring adjustment only when separately validated. | Distinct code version and production sign-off; non-UFC MMA belts are historical competition context, not automatic technical skill bonuses |
 
-The weights below are **starting hypotheses only**, to be changed only after historical comparison. Test performance stability and significance, not just whether a score sounds sensible.
+### Efficient scaling to 783 profiles
+
+1. **Collect per unique fight, not per fighter:** a single native UFC fight ID is authoritative for both fighters. Cache all parsed round fields once; no separate per-fighter stat calls.
+2. **Audit existing inventory first:** produce a fighter-by-fighter coverage matrix with number of known UFC fights, career completeness/certification evidence, native-ID links, last 5/10/career stat-covered fights, observed seconds and missing metric fields. Missing 5/10 window because an athlete only has 2 UFC fights is not a data defect.
+3. **Classify acquisition work:** (A) already cached and usable (derive immediately); (B) missing but fetchable known UFC fight ID (queue once); (C) provider history completeness/identity uncertain (separate one-time targeted crosscheck); (D) conflicting/unsupported historic fields (manual exception; do not endlessly retry).
+4. **Prioritise impact:** identity corrections first; then newest five; then fights six–ten; then uncovered older career bouts. Shared fights across two approved fighters win ties. Do not re-fetch complete bout observations.
+5. **Use aggregate statistics correctly:** significant strikes/min = sum landed / summed *observed cage minutes* for bouts with valid numerator/denominator; takedowns/15 and knockdowns/15 likewise; accuracy/defence = summed successes / summed verified attempts. Reuse the same source facts for the 5/10/career windows with per-stat coverage counts.
+6. **Continuous maintenance:** existing scheduled UFCalendar collector remains sole paid-data ingester. An independent downstream script rebuilds versioned UFC-only stats when saved input hashes change; recalculate the affected athletes/opponent network only, with a periodic full consistency audit. No added competing five-minute workflow.
+7. **Separate scoring from collection:** source observations immutable; V4 interpretation may be recalibrated without querying UFCalendar again. Keep V3 scores live until V4 feature flag approval.
+
+The future achievement project specification lives in [ufc-external-achievements-research-project.md](ufc-external-achievements-research-project.md). No research API/integration, website, automation or production classifier changes are authorised merely by approving this plan.
 
 ## Performance-index candidate model
 
@@ -53,37 +68,11 @@ Use per-bout UFC statistics, observed cage exposure and point-in-time opponent r
 - **Titleholder status** is separately verified, dated and displayed. UFC belts/reigns are *not* an extra skill score purchase. Independent professional MMA belts are historical competitive credentials, not proof of a specific striking or wrestling skill.
 - Capture and evaluate all eligible athletes; labels remain algorithm-driven with no fixed counts per weight class. Show Unassessed if necessary source or minimal evidence is missing.
 
-## Verified credential expansion — research workstream
+## External achievements — deferred, independent research project
 
-**Existing types:** NCAA Divisions I/II/III wrestling, Olympic judo, BJJ belts, ADCC medal results, sport/combat sambo, Golden Gloves. Do not delete the existing catalogue or retroactively re-score V3. Review current browser extraction/deduplication and the scoring source-verification gate, especially distinction between official medal placements vs participation.
+Do **not** hold back the UFCalendar-derived UFC statistical foundation, V4 technical metrics, baseline Prospect/Contender classifications or leaderboards while researching external credentials. Begin this project only after the UFC-first stage is sufficiently established.
 
-**New types to research for all approved UFC athletes (in priority order):**
-
-| Family | Achievements to record | Suggested primary authority | Scoring treatment to evaluate |
-|---|---|---|---|
-| **International wrestling** | Olympic freestyle/Greco-Roman/women's wrestling medals and participation; UWW senior worlds medals; continental and senior national titles | Olympics/UWW (https://uww.org); national governing bodies | Strong Wrestling bonus for senior elite medals; lesser participation/titles lower, no double counting |
-| **Judo** | IJF world medals; Olympic judo already tracked; Grand Slam/Grand Prix/continental medals and titles | IJF (https://www.ijf.org) | Modest to strong relevant Grappling/Wrestling credit; separate medals from belt rank |
-| **Competitive BJJ** | IBJJF Adult black-belt World GI/No-Gi titles and medals; Pan and European Championships; other explicitly identified belt/age brackets | IBJJF (https://ibjjf.com) | Major adult black-belt results above training belts; master's/junior/brown-belt categories distinct |
-| **Professional submission grappling** | ADCC Trials titles and Worlds medals; recognised major professional grappling champion titles (verify promotion, discipline and level) | ADCC (https://adcombat.com), direct event organiser | Grappling credit, tiered beneath/alongside ADCC Worlds as appropriate |
-| **Boxing** | Olympic medals; world amateur medals; national senior championships; actual pro boxing titles (scope/provenance) | Olympics, World Boxing, national amateur bodies, sanctioning organisations | Relevant Striking; separate boxing achievements from an MMA KO record |
-| **Kickboxing** | GLORY, K-1 senior professional championship belts; WAKO senior worlds medals | Promotion and WAKO official records | Relevant Striking; belts not equivalent across promotions/levels |
-| **Muay Thai** | IFMA senior world medals; Lumpinee/Rajadamnern stadium belts; other verifiable major senior titles | IFMA (https://muaythai.sport), stadium/promotion records | Relevant Striking; label ruleset and competitive tier |
-| **Sambo extension** | Distinguish FIAS senior combat/sport world titles and medals from local/national results | FIAS official records | Combat may affect multiple skills; avoid duplicating already stored sambo achievements |
-| **Amateur MMA** | IMMAF senior Worlds medals, continental gold; junior titles separate | IMMAF (https://immaf.org) | Prospect/progression *context* and modest foundation credit, not UFC-specific technical evidence |
-| **Non-UFC professional MMA belts** | Prior Bellator, PFL, ONE MMA, Rizin, Cage Warriors, LFA, Invicta and other verified titles; defence/reign dates and weight classes | Individual organisation official histories/results | Historical achievement and opponent-quality context; never direct technical bonus or UFC title status |
-
-**Secondary research only:** NAIA/NJCAA or comparable collegiate/national championships, elite karate/taekwondo/sanda accomplishments, major amateur kickboxing events, recognised national BJJ championships and regional MMA titles. Distinguish competitive tier and ruleset; do not award points merely for gym affiliation, publicity, record claims, self-reported ranks, or unverified youth/school achievements.
-
-### Credential scoring and validation rules
-
-- Preserve detailed achievements for readers **even if their point adjustment is zero**. Keep no public footnotes on calculation in the streamlined fighter card; internal ledger must be auditable.
-- Minimum data per achievement: athlete stable ID, martial art, event/promotion and sanctioning body, discipline/ruleset, verified event date/year, age/belt tier, weight class, placing/medal/title, eligibility (senior/juvenile/master), primary link, reviewed-on date, verification status, cross-source identity resolution and non-duplicative achievement key.
-- Verification statuses: `verified`, `checked-none`, `unknown`, `disputed`; the latter two are not scored. An arbitrary HTTPS link is not sufficient verification. Distinguish `credentials: []` with explicit documented verification from merely unresearched.
-- Competitive medal **versus** tournament participation; individual NCAA title **versus** team championship; BJJ **black belt rank** versus adult-black-belt world title; professional championship **versus** contender bout or interim title; sanctioned **sport** versus **combat** sambo.
-- Initial point examples awaiting validation: NCAA D-I individual champion +6 Wrestling; D-I All-American +4 Wrestling; D-II individual champion +4 Wrestling; Olympic judo gold +5 Grappling/+4 Wrestling; ADCC Worlds gold +7 Grappling; verified BJJ black belt +2 Grappling; national Golden Gloves +4 Striking; FIAS Combat Sambo senior world title +3 Striking/+4 Grappling/+4 Wrestling. **No automatic points assigned to newly introduced families before review and calibration.** Trial cap 8 points per dimension, subject to sensitivity analysis.
-- Use the highest achievement within equivalent award families, with tightly limited incremental credit for separate verified results; avoid counting the same competition as title + gold medal + medal count. Separate credential effects from measured MMA ratings, so adding a medal never generates statistical evidence where none exists. Do not award credential points twice through Prospect/Contender and technique composites.
-- Preserve historical award facts even if the fighter is no longer ranked in that discipline. Evaluate whether/how prior credentials should decay in contemporary UFC ability assessments; don't erase earned medals.
-- Verified NCAA, judo and world-level accomplishments should be assessed individually using **primary** result sources, rather than extrapolated from biographies or social media.
+See [separate external achievements research project](ufc-external-achievements-research-project.md) for collection phases, source priorities, verification schema, organisational batching and optional post-baseline scoring experiments. Keep achievements/source provenance independently stored. Do not infer a missing credential to be absent, or award bonuses because a biography mentions a rank without verification. No change to V3 credential scores in this phase.
 
 ## Test and deployment gates
 
@@ -104,4 +93,4 @@ Use per-bout UFC statistics, observed cage exposure and point-in-time opponent r
 - IMMAF senior/junior ranking distinctions: https://immaf.org/athletes/rankings/
 - Glicko-2 methodological reference: https://www.glicko.net/glicko/glicko2.pdf
 
-**Scope of this planning update:** documentation only. No production code, public data, deployment configuration, automation prompt or existing ingestion workflow is changed by this document.
+**Scope of this planning update:** UFC-first direction approved, documentation only. No production model code, public fighter data, automation or UFCalendar ingestion workflow is changed by this plan commit.
