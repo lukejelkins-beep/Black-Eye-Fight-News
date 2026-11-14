@@ -92,6 +92,12 @@ export function auditRikishi(w,cache){
   boutLedger.totalDifference=stats?.totalMatches==null?null:boutLedger.regularRows-Number(stats.totalMatches);
   if(cache.stages?.matches?.complete&&boutLedger.missingWinner>0)
     errors.push('match-winner-missing');
+  // A matching total alone is insufficient: verify every reported win and
+  // loss against the individually sourced regular bouts before readiness.
+  if(cache.stages?.matches?.complete&&stats?.totalWins!=null&&boutLedger.winDifference!==0)
+    errors.push('career-win-count-mismatch');
+  if(cache.stages?.matches?.complete&&stats?.totalLosses!=null&&boutLedger.lossDifference!==0)
+    errors.push('career-loss-count-mismatch');
   if(cache.stages?.matches?.complete&&stats?.totalMatches!=null){
     if(regularMatches.length<Number(stats.totalMatches))errors.push('match-history-shortfall');
     if(regularMatches.length>Number(stats.totalMatches))errors.push('career-regular-bout-count-mismatch');
