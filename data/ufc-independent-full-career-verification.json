@@ -28710,6 +28710,233 @@
           "excludedBecause": "Official UFC Season 6 Week 3 DWCS results confirm separate qualifying decision win; it precedes Clayton Carpenter's 2023-02-18 official Octagon debut and is not a UFC Octagon bout."
         }
       ]
+    },
+    "julius-walker": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Julius Walker",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/6add18754930182b",
+      "officialFighterUrl": "https://www.ufc.com/athlete/julius-walker",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived dataset, not directly scraped UFCStats",
+        "method": "Full complete UFC.com dated official career biography crosschecked against pinned Greco UFCStats source fight URL/identity/results, exact preserved original numeric UFCalendar fighter and fight IDs, opponent corners/results and measured rounds. Identity/date/title aliases documented; independently established DWCS feeder excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "498"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "UFC.com exhaustive five UFC Fight Night bouts from 2025-02-22 to 2026-10-10 match pinned Greco UFCStats bout URLs, saved original native opposing corners/results and round measurements. Two wins over Rafael Cerqueira and Gerald Meerschaert, three losses to Alonzo Menifield, Dustin Jacoby and Abdul Rakhman Yakhyaev. The Greco CSV misspells native opponent Rafael Cerqueira as Cerquiera but exact original fight URL, dated event, both original corners and UFC official biography establish same contest.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/julius-walker",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-02-22",
+          "opponent": "Alonzo Menifield",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c0d8a231d2f1d1af",
+          "nativeBoutId": "38532",
+          "nativeFighterId": "498"
+        },
+        {
+          "date": "2025-08-09",
+          "opponent": "Rafael Cerqueira",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3d6571790c21527c",
+          "nativeBoutId": "60514",
+          "nativeFighterId": "498"
+        },
+        {
+          "date": "2026-02-07",
+          "opponent": "Dustin Jacoby",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6cca11f353a2b42d",
+          "nativeBoutId": "60730",
+          "nativeFighterId": "498"
+        },
+        {
+          "date": "2026-06-27",
+          "opponent": "Abdul Rakhman Yakhyaev",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/48b1ee7ab45add4c",
+          "nativeBoutId": "66373",
+          "nativeFighterId": "498"
+        },
+        {
+          "date": "2026-10-10",
+          "opponent": "Gerald Meerschaert",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/eda03e3ddf74d1cd",
+          "nativeBoutId": "93200",
+          "nativeFighterId": "498"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    },
+    "kaue-fernandes": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Kaue Fernandes",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/ec13c393d029297d",
+      "officialFighterUrl": "https://www.ufc.com/athlete/kaue-fernandes",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived dataset, not directly scraped UFCStats",
+        "method": "Full complete UFC.com dated official career biography crosschecked against pinned Greco UFCStats source fight URL/identity/results, exact preserved original numeric UFCalendar fighter and fight IDs, opponent corners/results and measured rounds. Identity/date/title aliases documented; independently established DWCS feeder excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "247"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "UFC official dated complete biography documents five Octagon fights, loss to Marc Diakiese 2023-11-04, wins Mohammad Yahya, Guram Kutateladze, Harry Hardwick, loss to Jalin Turner 2026-08-15. Exactly five distinct pinned Greco UFCStats source URLs and original UFCalendar numeric bout/fighter IDs, winning sides and measured rounds, with no feeder bouts included.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/kaue-fernandes",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2023-11-04",
+          "opponent": "Marc Diakiese",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3c69bed42893da75",
+          "nativeBoutId": "59996",
+          "nativeFighterId": "247"
+        },
+        {
+          "date": "2024-08-03",
+          "opponent": "Mohammad Yahya",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1cd63899011c4bf6",
+          "nativeBoutId": "61098",
+          "nativeFighterId": "247"
+        },
+        {
+          "date": "2025-03-22",
+          "opponent": "Guram Kutateladze",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/265dbd9be8caa7de",
+          "nativeBoutId": "60320",
+          "nativeFighterId": "247"
+        },
+        {
+          "date": "2025-09-06",
+          "opponent": "Harry Hardwick",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5cd2dd6075fadcce",
+          "nativeBoutId": "60479",
+          "nativeFighterId": "247"
+        },
+        {
+          "date": "2026-08-15",
+          "opponent": "Jalin Turner",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d4bd456d70965734",
+          "nativeBoutId": "82953",
+          "nativeFighterId": "247"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    },
+    "luis-gurule": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Luis Gurule",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/29162be25ebef5f0",
+      "officialFighterUrl": "https://www.ufc.com/athlete/luis-gurule",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived dataset, not directly scraped UFCStats",
+        "method": "Full complete UFC.com dated official career biography crosschecked against pinned Greco UFCStats source fight URL/identity/results, exact preserved original numeric UFCalendar fighter and fight IDs, opponent corners/results and measured rounds. Identity/date/title aliases documented; independently established DWCS feeder excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "48"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "UFC.com official dated biography independently establishes complete five-bout Octagon career from 2025-04-05 to 2026-05-30: losses Ode Osbourne, Jesus Aguilar, Alden Coria and Rei Tsuruya, win Daniel Barez. Pinned Greco source duplicates one historical Jesus Aguilar match under Noche UFC and UFC Fight Night event title variants with the SAME identical UFCStats fight URL; it is one fight, mapped to exactly one original native ID 38230, not two. Original 2024-10-15 UFC DWCS Season 8 Week 10 split-decision win Nick Piccininni (native 84170) separately attested and excluded from UFC Octagon record.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/luis-gurule",
+        "https://www.ufc.com/news/week-10-results-scorecards-dana-whites-contender-series-season-8",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-04-05",
+          "opponent": "Ode Osbourne",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/de9422207df2de64",
+          "nativeBoutId": "60300",
+          "nativeFighterId": "48"
+        },
+        {
+          "date": "2025-09-13",
+          "opponent": "Jesus Aguilar",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3dc1a6335d890650",
+          "nativeBoutId": "38230",
+          "nativeFighterId": "48"
+        },
+        {
+          "date": "2026-02-21",
+          "opponent": "Alden Coria",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ac39c1f00ae31e58",
+          "nativeBoutId": "60667",
+          "nativeFighterId": "48"
+        },
+        {
+          "date": "2026-05-16",
+          "opponent": "Daniel Barez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b482d4452e4d0eee",
+          "nativeBoutId": "66125",
+          "nativeFighterId": "48"
+        },
+        {
+          "date": "2026-05-30",
+          "opponent": "Rei Tsuruya",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/224dce2c0b03e7eb",
+          "nativeBoutId": "66457",
+          "nativeFighterId": "48"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84170",
+          "date": "2024-10-15",
+          "opponent": "Nick Piccininni",
+          "result": "win",
+          "event": "Dana White's Contender Series 76",
+          "officialSourceUrl": "https://www.ufc.com/news/week-10-results-scorecards-dana-whites-contender-series-season-8",
+          "excludedBecause": "Official UFC Oct 16 2024 article separately identifies 2024-10-15 split-decision win as DWCS Season 8 Week 10 contract-qualifying appearance, prior to Octagon debut on 2025-04-05."
+        }
+      ]
     }
   }
 }
