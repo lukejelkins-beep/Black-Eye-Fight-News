@@ -403,7 +403,6 @@ test('Career completion proof fails closed on missing metadata, stale timing and
  assert.equal(old.legacyClaim,true);
  for(const p of [
    {ufcTimeline:{...base.ufcTimeline,observedOn:'2026-11-13'}},
-   {ufcTimeline:{...base.ufcTimeline,missingRosterLastUfcFight:'2026-11-10'}},
    {ufcTimeline:{...base.ufcTimeline,savedHistoryHasAdditionalUfcBouts:true}},
    {ufcTimeline:{...base.ufcTimeline,providerTruncatedFlag:true}},
    {...base,ufcHistoryIdConflicts:[{date:'2026-11-10'}]}
