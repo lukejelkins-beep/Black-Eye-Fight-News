@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "scope": "ufc-exact-official-native-fighter-id-exceptions",
+  "rosterAsOf": "2026-11-14",
+  "reviewedOn": "2026-11-14",
+  "note": "One-to-one approved athlete linkage for EXACT UFC-source corroborated historical native bout IDs. Numeric fighter IDs remain unchanged in the original archive. Do not use this as a global provider ID alias or a certificate of complete UFC history.",
+  "athletes": {
+    "carlos-hernandez-7": {
+      "sourceUrl": "https://www.ufc.com/athlete/carlos-hernandez",
+      "canonicalNumericId": "102973",
+      "historicalNumericId": "1071",
+      "bouts": [
+        {
+          "nativeFightId": "61392",
+          "date": "2022-02-26",
+          "opponent": "Victor Altamirano",
+          "result": "win"
+        },
+        {
+          "nativeFightId": "59762",
+          "date": "2023-01-14",
+          "opponent": "Allan Nascimento",
+          "result": "loss"
+        },
+        {
+          "nativeFightId": "60174",
+          "date": "2023-06-17",
+          "opponent": "Denys Bondar",
+          "result": "win"
+        },
+        {
+          "nativeFightId": "59946",
+          "date": "2023-12-09",
+          "opponent": "Tatsuro Taira",
+          "result": "loss"
+        },
+        {
+          "nativeFightId": "61052",
+          "date": "2024-06-29",
+          "opponent": "Rei Tsuruya",
+          "result": "loss"
+        },
+        {
+          "nativeFightId": "38594",
+          "date": "2024-11-23",
+          "opponent": "Nyamjargal Tumendemberel",
+          "result": "win"
+        }
+      ]
+    },
+    "park-hyun-sung": {
+      "sourceUrl": "https://www.ufc.com/athlete/hyunsung-park",
+      "canonicalNumericId": "102972",
+      "historicalNumericId": "146",
+      "bouts": [
+        {
+          "nativeFightId": "59751",
+          "date": "2023-02-04",
+          "opponent": "SeungGuk Choi",
+          "result": "win"
+        },
+        {
+          "nativeFightId": "59943",
+          "date": "2023-12-09",
+          "opponent": "Shannon Ross",
+          "result": "win"
+        },
+        {
+          "nativeFightId": "60752",
+          "date": "2025-08-02",
+          "opponent": "Tatsuro Taira",
+          "result": "loss"
+        },
+        {
+          "nativeFightId": "38150",
+          "date": "2025-10-18",
+          "opponent": "Bruno Silva",
+          "result": "loss"
+        }
+      ]
+    }
+  }
+}

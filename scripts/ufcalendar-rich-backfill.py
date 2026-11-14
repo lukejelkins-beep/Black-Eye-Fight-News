@@ -34,6 +34,7 @@ VERIFIED_ROUND_FALLBACK = ROOT / "data/ufc-official-verified-round-fallback.json
 LEGACY_UFC_EVIDENCE = ROOT / "data/ufc-official-legacy-evidence.json"
 INDEPENDENT_FULL_CAREER = ROOT / "data/ufc-independent-full-career-verification.json"
 OFFICIAL_BOUT_INVENTORY = ROOT / "data/ufc-official-career-bout-inventory.json"
+OFFICIAL_ID_EXCEPTIONS = ROOT / "data/ufc-source-verified-native-id-exceptions.json"
 OFFICIAL_NC_REPAIR = ROOT / "data/ufc-official-no-contest-history-repair.json"
 JUDGING = ROOT / "data/ufcalendar-judging-research.json"
 BASE = "https://api.ufcalendar.com/v1"
@@ -1658,6 +1659,155 @@ def reconcile_indexed_native_ufc_careers(state,research,coverage,today,approval)
 
 
 
+
+def reconcile_exact_official_native_id_exceptions(state,research,coverage,today,
+                                                  approval,manifest,inventory):
+    """Link only source-attested existing UFC fights with historical ID drift.
+
+    The UFC official athlete biographies confirm exact opponent/date/result
+    identities that UFCalendar indexes under two DIFFERENT numeric fighter IDs.
+    This is a narrow one-to-one bout exception, NOT permission to merge all
+    provider records under those IDs. Preserve every original cached corner ID.
+    """
+    empty={"added":0,"profiles":0,"blocked":0}
+    if (not isinstance(manifest,dict) or manifest.get("schema")!=1 or
+        manifest.get("scope")!="ufc-exact-official-native-fighter-id-exceptions" or
+        manifest.get("rosterAsOf")!=(approval or {}).get("rosterAsOf") or
+        not isinstance(inventory,dict) or inventory.get("schema")!=1 or
+        inventory.get("scope")!="ufc-official-career-bout-inventory" or
+        inventory.get("rosterAsOf")!=manifest.get("rosterAsOf")):
+        return empty
+    approved=approved_ufc_career_cohort(approval,coverage,today)
+    if not approved:return empty
+    eligible={slug(x.get("slug")) for x in coverage.get("fighters",[])
+              if isinstance(x,dict) and x.get("eligibilityStatus")=="latest_observed_mma_ufc"}
+    eligible.intersection_update(approved)
+    # These were manually crosschecked against UFC official athlete histories,
+    # not inferred from a same-name match or a global provider alias table.
+    known={
+       "carlos-hernandez-7":("102973","1071",6),
+       "park-hyun-sung":("102972","146",4)
+    }
+    def name_tokens(value):
+        value=re.sub(r"([a-z])([A-Z])",r"\1 \2",safe(value,140))
+        return tuple(sorted(re.findall(r"[a-z0-9]+",
+            unicodedata.normalize("NFKD",value).encode("ascii","ignore").decode().lower())))
+    def same(a,b):
+        return bool(name_tokens(a) and name_tokens(a)==name_tokens(b))
+    def near(a,b):
+        da=date_str(a);db=date_str(b)
+        return bool(da and db and abs(
+            (dt.date.fromisoformat(da)-dt.date.fromisoformat(db)).days)<=1)
+    def winner_result(b,own,other):
+        if b.get("status")!="completed":return None
+        win=str((b.get("result") or {}).get("winnerId") or "")
+        aid=str(own.get("id") or "");zid=str(other.get("id") or "")
+        if not aid or not zid or aid==zid or win not in (aid,zid):return None
+        return "win" if win==aid else "loss"
+    bouts=state.get("bouts",{})
+    profiles=research.get("profiles",{})
+    added=changed=blocked=0
+    for fighter,exception in sorted(manifest.get("athletes",{}).items()):
+        canonical,old_id,expected=known.get(fighter,(None,None,0))
+        source=inventory.get("fighters",{}).get(fighter,{})
+        if (fighter not in eligible or not isinstance(exception,dict) or
+            not isinstance(source,dict) or not canonical or
+            exception.get("canonicalNumericId")!=canonical or
+            exception.get("historicalNumericId")!=old_id or
+            exception.get("sourceUrl")!=source.get("sourceUrl") or
+            not str(source.get("sourceUrl") or "").startswith("https://www.ufc.com/athlete/") or
+            not isinstance(exception.get("bouts"),list) or
+            len(exception["bouts"])!=expected):
+            blocked+=1;continue
+        p=profiles.get(fighter)
+        if not isinstance(p,dict) or not isinstance(p.get("recentHistory"),list):
+            blocked+=1;continue
+        saved=p["recentHistory"]
+        # Prove the approved fighter's contemporary ID from a preexisting
+        # official native UFC fight with a matching independently saved opponent.
+        anchored=False
+        for h in saved:
+            if (not isinstance(h,dict) or h.get("source")!="native" or
+                str(h.get("promotion") or "").lower()!="ufc"):continue
+            b=bouts.get(str(h.get("boutId") or ""))
+            if (not isinstance(b,dict) or b.get("org")!="ufc" or
+                not official_ufc_event_title(b.get("event") or "") or
+                not near(h.get("date"),b.get("eventDate"))):continue
+            for side,other in (("a","b"),("b","a")):
+                own=b.get(side) or {};opponent=b.get(other) or {}
+                if (str(own.get("id") or "")==canonical and
+                    same(opponent.get("name"),h.get("opponent")) and
+                    (own.get("slug")==fighter or same(own.get("name"),p.get("name")) or
+                     same(own.get("name"),source.get("fighterName")))):
+                    anchored=True;break
+            if anchored:break
+        if not anchored:
+            blocked+=1;continue
+        official={(date_str(x.get("date")),name_tokens(x.get("opponent")),
+                    x.get("result")) for x in source.get("bouts",[])
+                  if isinstance(x,dict)}
+        count=0
+        seen=set()
+        for entry in exception["bouts"]:
+            if not isinstance(entry,dict):blocked+=1;continue
+            bid=str(entry.get("nativeFightId") or "")
+            day=date_str(entry.get("date"))
+            opponent=safe(entry.get("opponent"),110)
+            desired=entry.get("result")
+            signature=(day,name_tokens(opponent),desired)
+            if (not re.fullmatch(r"[1-9][0-9]{0,11}",bid) or
+                bid in seen or not day or day>today.isoformat() or
+                desired not in ("win","loss") or
+                signature not in official):
+                blocked+=1;continue
+            seen.add(bid)
+            b=bouts.get(bid)
+            if (not isinstance(b,dict) or str(b.get("id"))!=bid or
+                b.get("org")!="ufc" or b.get("status")!="completed" or
+                not near(day,b.get("eventDate")) or
+                not official_ufc_event_title(b.get("event") or "") or
+                feeder_event_title(b.get("event") or "")):
+                blocked+=1;continue
+            matches=[]
+            for side,other in (("a","b"),("b","a")):
+                own=b.get(side) or {};other_corner=b.get(other) or {}
+                if (str(own.get("id") or "")==old_id and
+                    same(other_corner.get("name"),opponent) and
+                    winner_result(b,own,other_corner)==desired):
+                    matches.append((own,other_corner))
+            if len(matches)!=1:blocked+=1;continue
+            if any(isinstance(h,dict) and str(h.get("boutId") or "")==bid and
+                   str(h.get("promotion") or "").lower()=="ufc"
+                   for h in saved):
+                continue  # Already linked; never mutate the original
+            if any(isinstance(h,dict) and
+                   str(h.get("promotion") or "").lower()=="ufc" and
+                   near(h.get("date"),day) and
+                   same(h.get("opponent"),opponent) for h in saved):
+                blocked+=1;continue # Conflicting history native ID
+            saved.append({"date":b["eventDate"],
+                          "opponent":safe(matches[0][1].get("name"),110),
+                          "result":desired,"promotion":"ufc","source":"native",
+                          "boutId":bid,"method":safe((b.get("result") or {}).get("method"),50),
+                          "titleFight":b.get("titleFight") is True,
+                          "verifiedHistoricalAlias":True})
+            added+=1;count+=1
+        if count:
+            saved.sort(key=lambda r:(str(r.get("date") or ""),
+                                     str(r.get("opponent") or "")),reverse=True)
+            changed+=1
+            timeline=p.get("ufcTimeline")
+            if isinstance(timeline,dict):
+                timeline["complete"]=False
+                timeline["savedHistoryHasAdditionalUfcBouts"]=True
+                timeline["exactOfficialIdExceptionsRecovered"]=int(
+                    timeline.get("exactOfficialIdExceptionsRecovered") or 0)+count
+    if added or blocked:
+        print("BEFN official UFC exact native-ID exception recovery:",
+              added,"existing fight IDs linked into",changed,
+              "approved profiles;",blocked,"evidence checks blocked")
+    return {"added":added,"profiles":changed,"blocked":blocked}
+
 def reconcile_official_inventory_from_cached_native(state,research,coverage,today,
                                                     approval,inventory):
     """Restore exact source-listed UFC bouts that are ALREADY in the indexed cache.
@@ -2739,6 +2889,9 @@ def main():
         reconcile_official_inventory_from_cached_native(
             state,research,approved36,roster_today,approval,
             read(OFFICIAL_BOUT_INVENTORY,{}))
+        reconcile_exact_official_native_id_exceptions(
+            state,research,approved36,roster_today,approval,
+            read(OFFICIAL_ID_EXCEPTIONS,{}),read(OFFICIAL_BOUT_INVENTORY,{}))
         recover_source_verified_ufc_non_winner_event_cards(
             client,state,research,approved36,roster_today,approval,
             read(OFFICIAL_BOUT_INVENTORY,{}))

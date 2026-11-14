@@ -796,6 +796,112 @@ class FullCareerCacheTests(unittest.TestCase):
                 self.assertEqual(m.recover_source_verified_ufc_non_winner_event_cards(
                     client,st,rs,cv,dt.date(2026,11,14),ap,ma)["calls"],0)
 
+    def exact_native_id_exceptions_fixture(self):
+        state=m.default_progress()
+        # A single shared verified fight establishes each approved fighter's
+        # contemporary canonical ID. Older bouts preserve their other IDs.
+        state["bouts"]["9001"]={
+            "id":"9001","org":"ufc","event":"UFC Fight Night: Verified",
+            "eventDate":"2025-05-17","status":"completed",
+            "a":{"id":"102972","slug":"park-hyun-sung","name":"HyunSung Park"},
+            "b":{"id":"102973","slug":"carlos-hernandez-7","name":"Carlos Hernandez"},
+            "result":{"winnerId":"102972","method":"Submission"}}
+        manifest=m.read(m.OFFICIAL_ID_EXCEPTIONS,{})
+        inventory=m.read(m.OFFICIAL_BOUT_INVENTORY,{})
+        names={"carlos-hernandez-7":("Carlos Hernandez","HyunSung Park","loss"),
+               "park-hyun-sung":("HyunSung Park","Carlos Hernandez","win")}
+        research={"profiles":{}}
+        for slugval,(name,opponent,result) in names.items():
+            research["profiles"][slugval]={
+                "name":name,
+                "recentHistory":[{
+                    "date":"2025-05-17","opponent":opponent,"promotion":"ufc",
+                    "source":"native","boutId":"9001","result":result}],
+                "ufcTimeline":{"complete":True}}
+        for slugval,entry in manifest["athletes"].items():
+            fid=entry["historicalNumericId"]
+            for i,row in enumerate(entry["bouts"]):
+                other=str(80000+i)
+                state["bouts"][row["nativeFightId"]]={
+                    "id":row["nativeFightId"],"org":"ufc",
+                    "eventDate":row["date"],"event":"UFC Fight Night: Verified",
+                    "status":"completed","titleFight":False,
+                    "a":{"id":fid,"name":names[slugval][0],
+                         "slug":"historical-provider-alias"},
+                    "b":{"id":other,"name":row["opponent"],
+                         "slug":"opponent"},
+                    "result":{"winnerId":fid if row["result"]=="win" else other,
+                              "method":"Decision"}}
+        census={"schema":1,"scope":"ufc","activityMonths":36,
+                "asOf":"2026-11-14",
+                "indexCompleteness":"36_month_event_scan_complete",
+                "fighters":[{"slug":name,"eligibilityStatus":"latest_observed_mma_ufc"}
+                            for name in names]}
+        approval={**self.approval(list(names)),"rosterAsOf":"2026-11-14",
+                  "approvedAt":"2026-11-14"}
+        return state,research,census,approval,manifest,inventory
+
+    def test_exact_source_proven_native_id_exceptions_recover_ten_without_rewriting_ids(self):
+        import copy
+        state,research,census,approval,manifest,inventory=(
+            self.exact_native_id_exceptions_fixture())
+        old_bouts=copy.deepcopy(state["bouts"])
+        result=m.reconcile_exact_official_native_id_exceptions(
+            state,research,census,dt.date(2026,11,14),
+            approval,manifest,inventory)
+        self.assertEqual(result,{"added":10,"profiles":2,"blocked":0})
+        for slugval,expected in (("carlos-hernandez-7",7),("park-hyun-sung",5)):
+            p=research["profiles"][slugval]
+            self.assertEqual(len(p["recentHistory"]),expected)
+            self.assertEqual(len(set(x["boutId"] for x in p["recentHistory"])),expected)
+            self.assertFalse(p["ufcTimeline"]["complete"],
+                             "Recovered source history cannot certify full career")
+            self.assertTrue(p["ufcTimeline"]["savedHistoryHasAdditionalUfcBouts"])
+            self.assertEqual(p["ufcTimeline"]["exactOfficialIdExceptionsRecovered"],
+                             expected-1)
+        self.assertEqual(state["bouts"],old_bouts,
+                         "Retain historical native numerical IDs and shared stats")
+        self.assertEqual(m.reconcile_exact_official_native_id_exceptions(
+            state,research,census,dt.date(2026,11,14),
+            approval,manifest,inventory),
+            {"added":0,"profiles":0,"blocked":0},
+            "Subsequent scheduled runs cannot double-count exact source bouts")
+
+    def test_exact_source_bout_exception_fails_closed_on_wrong_fighter_or_result(self):
+        import copy
+        state,research,census,approval,manifest,inventory=(
+            self.exact_native_id_exceptions_fixture())
+        for kind in ("wrong_historical_id","wrong_result","wrong_source_opponent",
+                     "feeder","no_contemporary_anchor","unapproved"):
+            st,rs,cv,ap,ma,inv=(copy.deepcopy(x) for x in
+                                  (state,research,census,approval,manifest,inventory))
+            target=ma["athletes"]["carlos-hernandez-7"]["bouts"][0]
+            bid=target["nativeFightId"]
+            if kind=="wrong_historical_id":
+                st["bouts"][bid]["a"]["id"]="777"
+            elif kind=="wrong_result":
+                st["bouts"][bid]["result"]["winnerId"]=st["bouts"][bid]["b"]["id"]
+            elif kind=="wrong_source_opponent":
+                target["opponent"]="Different Person"
+            elif kind=="feeder":
+                st["bouts"][bid]["event"]="Dana White's Contender Series"
+            elif kind=="no_contemporary_anchor":
+                st["bouts"]["9001"]["b"]["id"]="999"
+            elif kind=="unapproved":
+                ap["status"]="pending"
+            out=m.reconcile_exact_official_native_id_exceptions(
+                st,rs,cv,dt.date(2026,11,14),ap,ma,inv)
+            if kind=="unapproved":
+                self.assertEqual(out["added"],0)
+            elif kind=="no_contemporary_anchor":
+                self.assertEqual(out["added"],4,
+                                 "Park evidence cannot justify Carlos records")
+            else:
+                self.assertEqual(out["added"],9,kind)
+            self.assertFalse(any(x.get("boutId")==bid
+                for x in rs["profiles"]["carlos-hernandez-7"]["recentHistory"]),
+                kind)
+
     def test_no_signoff_no_full_career_calls(self):
         state,research,candidate=self.fixture()
         client=Fake()
