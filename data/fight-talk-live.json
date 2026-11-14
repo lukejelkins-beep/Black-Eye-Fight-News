@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-14T15:37:52.926Z",
-  "checkedAt": "2026-11-14T15:37:52.926Z",
-  "updatedAt": "2026-11-14T13:02:31.947534Z",
+  "attemptedAt": "2026-11-14T16:17:59.133Z",
+  "checkedAt": "2026-11-14T16:17:59.133Z",
+  "updatedAt": "2026-11-14T16:03:25Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 3,
+  "sourcesChecked": 4,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 3,
+      "checked": 4,
       "failed": 0,
-      "configured": 3,
-      "message": "3 of 3 scheduled sources checked."
+      "configured": 4,
+      "message": "4 of 4 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 17,
+      "configured": 28,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 54,
+      "configured": 40,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 2,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,21 +55,118 @@
   "rollingScan": {
     "directoryEntries": 447,
     "scheduledEntries": 84,
-    "batchIndex": 1,
+    "batchIndex": 3,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 54,
-      "X": 17,
-      "Bluesky": 3,
-      "Threads": 10
+      "X": 28,
+      "Instagram": 40,
+      "Threads": 10,
+      "Bluesky": 4,
+      "Reddit": 2
     },
-    "directlyChecked": 3,
+    "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2burojcxb2d",
+      "cid": "bafyreicojf4egpg5iuw4h62dmu4a7walixmmjiarorwhje6dz2dx5bwe3a",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Khamzat Chimaev’s former UFC opponent stopped by ex-title challenger moments after illegal strike",
+      "postedAt": "2026-11-14T16:03:25Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2burojcxb2d",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2brj2x4ot2f",
+      "cid": "bafyreicsc7wmj3zynt7nn4wfwupvj7ee2ja2sokijctafwic3yxaxz5nly",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Alex Pereira provides his final prediction for Ciryl Gane vs. Josh Hokit at UFC 334",
+      "postedAt": "2026-11-14T15:04:54Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2brj2x4ot2f",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2bnxx52bs2r",
+      "cid": "bafyreifkt6aw3k3jdsa7chxwmvpjtmluer33ubsinr4dszt2o43fpccw5e",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Mike Perry reveals he re-signed to the UFC the day before suffering TKO loss and teases next opponent",
+      "postedAt": "2026-11-14T14:01:39Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2bnxx52bs2r",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2bkp5wmjr2q",
+      "cid": "bafyreiau4upjxpkmkfpga5otuth22lahvmowuw3jtwispn44y7uyuukhvi",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Fans narrowly back UFC 334 upsets as Gane vs Hokit and Harrison vs Nunes polls go down to the wire",
+      "postedAt": "2026-11-14T13:03:03Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2bkp5wmjr2q",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2bkoceny62a",
       "cid": "bafyreicpsaxibp4dl6p27p3bgjtpmxqr4h2hdhhvnbm2f5bqsmkwlb7aou",
@@ -211,7 +308,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
+      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -355,7 +452,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
+      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -523,7 +620,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
+      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -547,7 +644,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
+      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -571,7 +668,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
+      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -643,31 +740,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n27oairit22u",
-      "cid": "bafyreiaptpbklgvgdz5oamu5kjvar7r2hw2uevpoit3hghxwsidjfzcqre",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Mike Perry’s return to the UFC after 5 years away confirmed by recent drug test",
-      "postedAt": "2026-11-13T19:01:06Z",
-      "date": "14 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n27oairit22u",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
+      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -815,54 +888,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n27c5kkzvz2k",
-      "cid": "bafyreicfmx7diqovhvvok6paje3oj7fmimff4kdqxbqicpruxc2vc7b5yq",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Merab Dvalishvili and Saba Lazishvili will both compete at RAF Wrestling tomorrow night after Usman Nurmagomedov jailed",
-      "postedAt": "2026-11-13T15:24:42Z",
-      "date": "14 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n27c5kkzvz2k",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n27a4p2irc2d",
-      "cid": "bafyreifzo5f5y4f2oakz73xpvekhpomd57engf5ihfffqsrmw6x43gbpgm",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "‘Looks like a corpse’… Kayla Harrison’s weigh-in concerns fans ahead of UFC 334",
-      "postedAt": "2026-11-13T14:48:26Z",
-      "date": "14 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n27a4p2irc2d",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n275u5dm5p2y",
       "cid": "bafyreifbqzf7alvnrdtryizkazcbcjgiuekmxas3y7dmrk2ews2bizvdza",
       "platform": "Bluesky",
@@ -884,30 +909,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-14T13:23:35.228Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2724lbw6y2c",
-      "cid": "bafyreiam6tzz5s6zczay5uxgjuzmkysdmuo6zusb534byzunv6jipbcdi4",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Dana White reacts after fan shouts ‘pay your fighters’ at UFC 334 press conference",
-      "postedAt": "2026-11-13T13:01:00Z",
-      "date": "14 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2724lbw6y2c",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1567,7 +1568,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
+      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5188,7 +5189,7 @@
         "comments": 2,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
+      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
