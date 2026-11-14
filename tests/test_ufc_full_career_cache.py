@@ -529,6 +529,60 @@ class FullCareerCacheTests(unittest.TestCase):
             client,state,research,census,dt.date(2026,11,14),
             approval,independent)["calls"],0)
 
+    def official_inventory_fixture(self):
+        state,research,census,approval=self.cached_whole_career_fixture()
+        manifest={"schema":1,"scope":"ufc-official-career-bout-inventory",
+                  "rosterAsOf":"2026-11-14",
+                  "fighters":{"carlos-hernandez-7":{
+                    "sourceUrl":"https://www.ufc.com/athlete/carlos-hernandez",
+                    "fighterName":"Carlos Hernandez",
+                    "bouts":[
+                      {"date":"2024-02-01","opponent":"Opponent B","result":"loss"},
+                      {"date":"2023-01-01","opponent":"Opponent C","result":"win"},
+                      {"date":"2022-04-01","opponent":"Opponent D","result":"no_contest"},
+                      {"date":"2021-04-01","opponent":"Feeder Person","result":"win"}
+                    ]}}}
+        return state,research,census,approval,manifest
+
+    def test_official_inventory_native_cache_reuses_verified_wins_losses_and_no_contests(self):
+        state,research,census,approval,manifest=self.official_inventory_fixture()
+        original=dict(state["bouts"])
+        out=m.reconcile_official_inventory_from_cached_native(
+            state,research,census,dt.date(2026,11,14),approval,manifest)
+        self.assertEqual(out,{"added":3,"profiles":1,"conflicts":0,"remaining":1})
+        h=research["profiles"]["carlos-hernandez-7"]["recentHistory"]
+        self.assertEqual([(row["boutId"],row["result"]) for row in h],
+                         [("600","win"),("601","loss"),("602","win"),("603","no_contest")])
+        self.assertEqual(state["bouts"],original)
+        self.assertFalse(research["profiles"]["carlos-hernandez-7"]["ufcTimeline"]["complete"])
+        self.assertTrue(research["profiles"]["carlos-hernandez-7"]["ufcTimeline"]["savedHistoryHasAdditionalUfcBouts"])
+        second=m.reconcile_official_inventory_from_cached_native(
+            state,research,census,dt.date(2026,11,14),approval,manifest)
+        self.assertEqual(second["added"],0)
+        self.assertEqual(len(h),4)
+
+    def test_official_inventory_rejects_foreign_athlete_result_identity_and_unapproved(self):
+        import copy
+        state,research,census,approval,manifest=self.official_inventory_fixture()
+        for case in ("unapproved","wrong_numeric_id","wrong_outcome",
+                     "nonofficial_event","wrong_opponent","changed_date"):
+            st,rs,cv,ap,ma=[copy.deepcopy(x) for x in
+                            (state,research,census,approval,manifest)]
+            ma["fighters"]["carlos-hernandez-7"]["bouts"]=[
+                {"date":"2024-02-01","opponent":"Opponent B","result":"loss"}]
+            if case=="unapproved":ap["status"]="pending"
+            elif case=="wrong_numeric_id":st["bouts"]["601"]["a"]["id"]="909"
+            elif case=="wrong_outcome":st["bouts"]["601"]["result"]["winnerId"]="123"
+            elif case=="nonofficial_event":st["bouts"]["601"]["event"]="Dana White's Contender Series"
+            elif case=="wrong_opponent":st["bouts"]["601"]["b"]["name"]="Different Opponent"
+            elif case=="changed_date":st["bouts"]["601"]["eventDate"]="2024-01-14"
+            out=m.reconcile_official_inventory_from_cached_native(
+                st,rs,cv,dt.date(2026,11,14),ap,ma)
+            self.assertEqual(out["added"],0,case)
+            self.assertEqual(len(rs["profiles"]["carlos-hernandez-7"]["recentHistory"]),1,case)
+            if case=="wrong_outcome":self.assertEqual(out["conflicts"],1)
+            if case=="unapproved":self.assertEqual(out["remaining"],0)
+
     def test_no_signoff_no_full_career_calls(self):
         state,research,candidate=self.fixture()
         client=Fake()
