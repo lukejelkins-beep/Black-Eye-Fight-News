@@ -279,3 +279,31 @@ test("source mismatch and inconsistent snapshot dates stop publication",()=>{
  assert.throws(()=>buildSnapshot(coverage,{schema:1,scope:"all"}),/Required saved/);
  assert.throws(()=>buildSnapshot(coverage,postfight,cohorts,{asOf:"2026-11-14"}),/date must match/);
 });
+
+test("latest MMA eligibility export excludes departures and prevents stale V3 population",()=>{
+ const scoped=structuredClone(coverage);
+ scoped.fighters[0].eligibilityStatus="latest_observed_mma_ufc";
+ scoped.fighters[1].eligibilityStatus="review_required";
+ scoped.fighters[2].eligibilityStatus="latest_professional_mma_not_ufc";
+ scoped.fighters[3].eligibilityStatus="latest_observed_mma_ufc";
+ scoped.fighters[4].eligibilityStatus="latest_observed_mma_ufc";
+ scoped.summary={activeFighters:scoped.fighters.length};
+ const a=buildSnapshot(scoped,postfight,cohorts);
+ assert.equal(a.population,2);
+ assert.equal(a.fighters.cunknown,undefined);
+ assert.equal(a.fighters.btwo,undefined,"review-pending fighters cannot enter leaderboards");
+ assert.equal(a.boards.find(x=>x.id==="slpm").eligible,1);
+ scoped.summary.activeFighters+=1;
+ assert.throws(()=>buildSnapshot(scoped,postfight,cohorts),
+  /population disagrees with eligibility audit/);
+});
+
+test("36-month roster requires explicit eligibility status for publication",()=>{
+ const scoped=structuredClone(coverage);
+ scoped.activityCutoff="2023-11-13";
+ scoped.fighters[0].eligibilityStatus="latest_observed_mma_ufc";
+ for(const f of scoped.fighters.slice(1))delete f.eligibilityStatus;
+ const d=buildSnapshot(scoped,postfight,cohorts);
+ assert.equal(d.population,1);
+ assert.equal(d.boards.find(x=>x.id==="slpm").eligible,1);
+});
