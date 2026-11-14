@@ -11,7 +11,14 @@ const result=s=>({win:'win',w:'win',loss:'loss',l:'loss',draw:'draw',d:'draw',nc
 const near=(a,b)=>/^\d{4}-\d{2}-\d{2}$/.test(String(a))&&/^\d{4}-\d{2}-\d{2}$/.test(String(b))&&
  Math.abs(Date.parse(a+'T00:00:00Z')-Date.parse(b+'T00:00:00Z'))<=86400000;
 const feederTitle=s=>/\b(?:dana\s+white[’']?s\s+)?contender\s+series\b|\bdwcs\b|\broad\s+to\s+ufc\b/i.test(String(s??''));
-const sameOpponent=(a,b)=>clean(a)===clean(b)||Boolean(tokens(a)&&tokens(a)===tokens(b));
+// Explicit UFC.com-vetted Korean given/family name order; do not generalize
+// to unrelated homonymous fighters without independent event/fight evidence.
+const reviewedOpponentAliases=new Set(['hyunsungpark|parkhyunsung']);
+const sameOpponent=(a,b)=>{
+ const na=clean(a),nb=clean(b);
+ return Boolean(na&&nb&&(na===nb||(tokens(a)&&tokens(a)===tokens(b))||
+  reviewedOpponentAliases.has([na,nb].sort().join('|'))));
+};
 export function comparePilot(official,profile,nativeBouts={}){
  const source=official?.bouts||[];
  const saved=(profile?.recentHistory||[]).filter(h=>String(h.promotion||h.org||'').toLowerCase()==='ufc'&&result(h.result||h.outcome||h.status));
