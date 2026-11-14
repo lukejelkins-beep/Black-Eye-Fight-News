@@ -13,6 +13,8 @@ const key=(day,a,b)=>day&&normal(a)&&normal(b)&&normal(a)!==normal(b)?
   day+':'+[normal(a),normal(b)].sort().join(':'):null;
 const ratio=(n,d)=>d?Number((100*n/d).toFixed(1)):null;
 const sorted=(set)=>[...set].sort();
+const isFeederTitle=title=>/(?:contender\s+series|road\s+to\s+ufc|\bdwcs\b)/i.test(String(title||''));
+const isFinaleTitle=title=>/(?:the\s+ultimate\s+fighter|\btuf\s*\d+).*finale/i.test(String(title||''));
 const isUfc=row=>String(row?.promotion||row?.org||'').toLowerCase()==='ufc'&&
   ['win','loss','draw','no_contest','w','l','d','nc'].includes(
     String(row?.result||row?.outcome||row?.status||'').toLowerCase());
@@ -30,6 +32,21 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     f?.eligibilityStatus==='latest_observed_mma_ufc').map(f=>f.slug));
   const bouts=progress?.bouts||{},roundDone=progress?.roundDone||{},
     fights=archive?.fights||{},profiles=research?.profiles||{};
+  const titlesByDate=new Map();
+  for(const bout of Object.values(bouts)){
+    if(bout?.org!=='ufc'||!date(bout.eventDate)||!bout.event)continue;
+    if(!titlesByDate.has(bout.eventDate))titlesByDate.set(bout.eventDate,new Set());
+    titlesByDate.get(bout.eventDate).add(bout.event);
+  }
+  // Only dated event titles already in the cache may exclude a fight;
+  // a Tuesday or missing native ID alone is never evidence of a feeder.
+  const feederDates=new Set([...titlesByDate].filter(([,names])=>
+    names.size&&[...names].every(isFeederTitle)).map(([d])=>d));
+  const officialFinaleDates=new Set([...titlesByDate].filter(([,names])=>
+    names.size&&[...names].every(t=>!isFeederTitle(t))&&
+    [...names].some(isFinaleTitle)).map(([d])=>d));
+  const excludedFeederFightIds=new Set();
+  let excludedFeederHistoryRows=0;
   let profilesWithHistory=0,fullyCertified=0,historyRows=0,nativeLinks=0,
     fightersWithFive=0,fightersWithTen=0,withMeasuredRecent=0,
     fullFiveMeasured=0,fullTenMeasured=0,unlinkedCareerRows=0,
@@ -54,7 +71,13 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     const eligible=currentEligible.has(slug);
     if(!eligible)blockedByEligibility.push(slug);
     const profile=profiles[slug]||{};
-    const history=arr(profile.recentHistory).filter(isUfc).filter(r=>!date(r.date)||r.date<=census.asOf);
+    const allHistory=arr(profile.recentHistory).filter(isUfc).filter(r=>!date(r.date)||r.date<=census.asOf);
+    for(const row of allHistory.filter(r=>feederDates.has(date(r.date)))){
+      excludedFeederHistoryRows++;
+      const native=row.source==='native'?numId(row.boutId):null;
+      if(native)excludedFeederFightIds.add(native);
+    }
+    const history=allHistory.filter(r=>!feederDates.has(date(r.date)));
     if(history.length)profilesWithHistory++;
     if(profile.ufcTimeline?.complete===true){fullyCertified++;certified.push(slug);}
     historyRows+=history.length;
@@ -127,6 +150,14 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
       timelineCertified:profile.ufcTimeline?.complete===true});
   }
   const withUnindexed=cohorts.filter(c=>c.nativeFightIds>c.indexedNativeIds).length;
+  const officialFinaleGaps=[];
+  for(const slug of approved){
+    for(const r of arr(profiles[slug]?.recentHistory)){
+      const id=r?.source==='native'?numId(r.boutId):null;
+      if(id&&missingIndex.has(id)&&officialFinaleDates.has(date(r.date)))
+        officialFinaleGaps.push(id);
+    }
+  }
   const allIndexedMissingRounds=sorted(missingRounds);
   const checks=progress?.ufcCareerBoutChecks||{};
   // Only audit native IDs referenced by the approved roster. A saved
@@ -163,6 +194,9 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     uniqueNativeFightIdsAwaitingIndex:missingIndex.size,
     fightersWithNativeIndexGaps:withUnindexed,
     unlinkedCareerHistoryRows:unlinkedCareerRows,
+    excludedFeederHistoryRowsWithCachedEventEvidence:excludedFeederHistoryRows,
+    excludedDistinctFeederNativeFightIds:excludedFeederFightIds.size,
+    manualReviewOfficialFinaleFightIds:new Set(officialFinaleGaps).size,
     indexedFightsWithArchivedRounds:linkedRounds.size,
     indexedFightsWithMeasuredRoundMetrics:linkedMetrics.size,
     indexedNativeFightsWithoutConfirmedMeasuredRounds:indexedNative.size-linkedMetrics.size,
@@ -209,7 +243,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     unmeasuredIndexedIds:allIndexedMissingRounds.slice(0,30),
     approvedMissingHistory:missingHistory.slice(0,30),
     approvedNoLongerEligible:blockedByEligibility.slice(0,30),
-    note:'This report reads saved caches only. Any measured metric is distinct from two-sided metric coverage. All-known UFC bouts indexed is not proof of complete UFC careers; only provider-explicit completeness is certified. Missing values are not imputed as zero.'
+    note:'This report reads saved caches only. Provider UFC org labels may also cover DWCS and feeder contests; UFC-only stats exclude only dates with unambiguous cached feeder-event titles. Unknown dates remain unresolved. TUF Finale bouts are official UFC. No missing value is imputed as zero; provider-explicit completeness is independently tracked.'
   };
 }
 export function markdownReport(report){
@@ -226,6 +260,9 @@ export function markdownReport(report){
    uniquelyIndexedNativeFightIds:'Distinct native fight IDs indexed as official UFC',
    uniqueNativeFightIdsAwaitingIndex:'Native fight IDs awaiting indexing',
    unlinkedCareerHistoryRows:'UFC history rows without native fight IDs',
+   excludedFeederHistoryRowsWithCachedEventEvidence:'History rows excluded from UFC-only views on corroborated DWCS/feeder dates',
+   excludedDistinctFeederNativeFightIds:'Distinct feeder fight IDs excluded from official UFC statistics',
+   manualReviewOfficialFinaleFightIds:'Missing UFC fight IDs with independently cached Finale event dates',
    profilesWithAllKnownUfcBoutsIndexed:'Profiles with every currently known UFC bout indexed (not career-certified)',
    profilesWithAllKnownUfcBoutsMeasured:'Profiles with measured rounds for every currently known UFC bout',
    providerCertifiedProfilesWithAllKnownBoutsIndexed:'Provider-certified careers with all known bouts indexed',
