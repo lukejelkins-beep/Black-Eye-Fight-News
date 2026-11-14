@@ -18266,6 +18266,56 @@
           "nativeFighterId": "392"
         }
       ]
+    },
+    "victor-valenzuela": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Victor Valenzuela",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/078695e385ec2f57",
+      "officialFighterUrl": "https://www.ufc.com/athlete/victor-valenzuela-0",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived source; no direct UFCStats page retrieval claimed",
+        "method": "Official UFC.com 2026 debut and W/L, independent current UFCStats fighter ID 0786 crosswalk, exact pinned fight result source, original cached numeric native fighter/bout ID and both corners; another same-name archived ID excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "545"
+      ],
+      "officialUfcCareerBoutCount": 1,
+      "sourceScopeVerified": "Only official completed 2026-04-25 UFC welterweight bout with Max Griffin, won by unanimous decision. Current UFCStats 078695e385ec2f57 independently linked to current UFC athlete Victor Valenzuela ('Psicosis'); different archived identical-name  de277a4abcfeea46 explicitly NOT merged; independently sourced Oct 2025 DWCS loss to Michael Oliveira excluded by exact native bout.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/victor-valenzuela-0",
+        "https://www.ufc.com/event/ufc-fight-night-april-25-2026",
+        "https://cagemetrics.com/fighter/078695e385ec2f57/",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43575470919",
+      "disambiguation": {
+        "verifiedUfcStatsFighterId": "078695e385ec2f57",
+        "excludedUfcStatsMiddleweightId": "de277a4abcfeea46",
+        "officialCurrentUfcAthleteUrl": "https://www.ufc.com/athlete/victor-valenzuela-0",
+        "excludedSameNameArchivedUfcAthleteUrl": "https://www.ufc.com/athlete/victor-valenzuela",
+        "exactNativeFighterId": "545",
+        "independentSourceUfcStatsId": "https://cagemetrics.com/fighter/078695e385ec2f57/"
+      },
+      "bouts": [
+        {
+          "date": "2026-04-25",
+          "opponent": "Max Griffin",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2e7f8d0ad385876d",
+          "nativeBoutId": "66087",
+          "nativeFighterId": "545"
+        }
+      ]
     }
   }
 }
