@@ -20491,6 +20491,363 @@
         "laterCertifiedMirroredFightUrl": "https://ufcstats.com/fight-details/8b2fcf7f83bf72b6",
         "auditPolicy": "No fuzzy matching, no duplicate TUF semifinals or quarterfinals. Strict Stage3 complete measured rounds gate remains mandatory."
       }
+    },
+    "thomas-gantt": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Tommy Gantt",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/de83f920fd302871",
+      "officialFighterUrl": "https://www.ufc.com/athlete/thomas-gantt",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent Greco UFCStats-derived source CSV; no direct UFCStats page access claimed",
+        "method": "Exhaustive official UFC.com fighter career verified through 2026-11-14 against pinned Greco UFCStats event, exact fight URL, original saved UFCalendar numeric bout IDs, complete paired fighter corners, native outcome/winner and measured rounds. Preserve non-UFC DWCS outcomes separately; official dates supersede occasional narrative typos and graphical Win badges. No premium API used."
+      },
+      "verifiedNumericFighterIds": [
+        "40"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Exactly two completed officially dated UFC Octagon bouts independently matched to pinned UFCStats-derived fight/event/source chronology with original saved native numeric IDs/opposing corners, verified win/win results and measured rounds. 1 separately source-attested DWCS entries excluded.  ",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/thomas-gantt",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43580439420",
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88279",
+          "date": "2025-09-16",
+          "opponent": "Adam Livingston",
+          "result": "win",
+          "event": "Dana White's Contender Series",
+          "officialSourceUrl": "https://www.ufc.com/athlete/thomas-gantt",
+          "excludedBecause": "Dana White's Contender Series non-UFC Octagon feeder history",
+          "reviewNote": "Official UFC.com Thomas Gantt dated biography documents 2025-09-16 DWCS win over Adam Livingston; saved original numeric native bout 88279 records Adam Livingston. Narrow shortened-name/orthographic variation retained as originally cached. This is not an official completed UFC Octagon bout."
+        }
+      ],
+      "sourceVerifiedNativeNameAliases": [
+        "Thomas Gantt"
+      ],
+      "disambiguation": {
+        "verifiedUfcStatsFighterId": "de83f920fd302871",
+        "officialUfcAliasEvidenceUrl": "https://www.ufc.com/athlete/thomas-gantt",
+        "verifiedNameVariants": [
+          "Tommy Gantt",
+          "Thomas Gantt"
+        ],
+        "note": "Official UFC athlete profile at /athlete/thomas-gantt displays Tommy Gantt; retained approved original saved Thomas Gantt identity, unique pinned UFCStats fighter ID and identical original numeric native corners."
+      },
+      "bouts": [
+        {
+          "date": "2026-05-16",
+          "opponent": "Artur Minev",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c9e0aa88afb81dab",
+          "nativeBoutId": "66131",
+          "nativeFighterId": "40"
+        },
+        {
+          "date": "2026-09-12",
+          "opponent": "Drakkar Klose",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0aa849ca85e4355a",
+          "nativeBoutId": "92964",
+          "nativeFighterId": "40"
+        }
+      ]
+    },
+    "torrez-finney": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Torrez Finney",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/fbb60f24af5d5a02",
+      "officialFighterUrl": "https://www.ufc.com/athlete/torrez-finney",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent Greco UFCStats-derived source CSV; no direct UFCStats page access claimed",
+        "method": "Exhaustive official UFC.com fighter career verified through 2026-11-14 against pinned Greco UFCStats event, exact fight URL, original saved UFCalendar numeric bout IDs, complete paired fighter corners, native outcome/winner and measured rounds. Preserve non-UFC DWCS outcomes separately; official dates supersede occasional narrative typos and graphical Win badges. No premium API used."
+      },
+      "verifiedNumericFighterIds": [
+        "320"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Exactly two completed officially dated UFC Octagon bouts independently matched to pinned UFCStats-derived fight/event/source chronology with original saved native numeric IDs/opposing corners, verified win/loss results and measured rounds. 3 separately source-attested DWCS entries excluded.  ",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/torrez-finney",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43580439420",
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84031",
+          "date": "2024-10-01",
+          "opponent": "Abdelah Er-Ramy",
+          "result": "win",
+          "event": "Dana White's Contender Series",
+          "officialSourceUrl": "https://www.ufc.com/athlete/torrez-finney",
+          "excludedBecause": "Dana White's Contender Series non-UFC Octagon feeder history",
+          "reviewNote": "Official UFC.com Torrez Finney dated biography documents 2024-10-01 DWCS win over Abdellah Er-Ramy; saved original numeric native bout 84031 records Abdelah Er-Ramy. Narrow shortened-name/orthographic variation retained as originally cached. This is not an official completed UFC Octagon bout."
+        },
+        {
+          "nativeBoutId": "84112",
+          "date": "2024-08-20",
+          "opponent": "Cam Rowston",
+          "result": "win",
+          "event": "Dana White's Contender Series",
+          "officialSourceUrl": "https://www.ufc.com/athlete/torrez-finney",
+          "excludedBecause": "Dana White's Contender Series non-UFC Octagon feeder history",
+          "reviewNote": "Official UFC.com Torrez Finney dated biography documents 2024-08-20 DWCS win over Cameron Rowston; saved original numeric native bout 84112 records Cam Rowston. Narrow shortened-name/orthographic variation retained as originally cached. This is not an official completed UFC Octagon bout."
+        },
+        {
+          "nativeBoutId": "84100",
+          "date": "2023-10-10",
+          "opponent": "Yuri Panferov",
+          "result": "win",
+          "event": "Dana White's Contender Series",
+          "officialSourceUrl": "https://www.ufc.com/athlete/torrez-finney",
+          "excludedBecause": "Dana White's Contender Series non-UFC Octagon feeder history",
+          "reviewNote": "Official UFC.com Torrez Finney dated biography documents 2023-10-10 DWCS win over Yuri Panferov; saved original numeric native bout 84100 records Yuri Panferov. Narrow shortened-name/orthographic variation retained as originally cached. This is not an official completed UFC Octagon bout."
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2025-04-05",
+          "opponent": "Robert Valentin",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d1368ca941c1fefc",
+          "nativeBoutId": "60301",
+          "nativeFighterId": "320"
+        },
+        {
+          "date": "2026-01-31",
+          "opponent": "Jacob Malkoun",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0047f8aadca1936f",
+          "nativeBoutId": "65854",
+          "nativeFighterId": "320"
+        }
+      ]
+    },
+    "ty-miller": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Ty Miller",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/0859524157a19045",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ty-miller",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent Greco UFCStats-derived source CSV; no direct UFCStats page access claimed",
+        "method": "Exhaustive official UFC.com fighter career verified through 2026-11-14 against pinned Greco UFCStats event, exact fight URL, original saved UFCalendar numeric bout IDs, complete paired fighter corners, native outcome/winner and measured rounds. Preserve non-UFC DWCS outcomes separately; official dates supersede occasional narrative typos and graphical Win badges. No premium API used."
+      },
+      "verifiedNumericFighterIds": [
+        "307"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Exactly two completed officially dated UFC Octagon bouts independently matched to pinned UFCStats-derived fight/event/source chronology with original saved native numeric IDs/opposing corners, verified win/win results and measured rounds. 1 separately source-attested DWCS entries excluded.  ",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/ty-miller",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43580439420",
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84073",
+          "date": "2025-08-12",
+          "opponent": "Jimmy Drago",
+          "result": "win",
+          "event": "Dana White's Contender Series",
+          "officialSourceUrl": "https://www.ufc.com/athlete/ty-miller",
+          "excludedBecause": "Dana White's Contender Series non-UFC Octagon feeder history",
+          "reviewNote": "Official UFC.com Ty Miller dated biography documents 2025-08-12 DWCS win over Jimmy Drago; saved original numeric native bout 84073 records Jimmy Drago. Narrow shortened-name/orthographic variation retained as originally cached. This is not an official completed UFC Octagon bout."
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-01-24",
+          "opponent": "Adam Fugitt",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/210fc45074fba464",
+          "nativeBoutId": "60646",
+          "nativeFighterId": "307"
+        },
+        {
+          "date": "2026-08-08",
+          "opponent": "Billy Ray Goff",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f44ab9e9e4a89735",
+          "nativeBoutId": "83256",
+          "nativeFighterId": "307"
+        }
+      ]
+    },
+    "tyrell-fortune": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Tyrell Fortune",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/bc7f4b2d4c2724a2",
+      "officialFighterUrl": "https://www.ufc.com/athlete/tyrell-fortune",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent Greco UFCStats-derived source CSV; no direct UFCStats page access claimed",
+        "method": "Exhaustive official UFC.com fighter career verified through 2026-11-14 against pinned Greco UFCStats event, exact fight URL, original saved UFCalendar numeric bout IDs, complete paired fighter corners, native outcome/winner and measured rounds. Preserve non-UFC DWCS outcomes separately; official dates supersede occasional narrative typos and graphical Win badges. No premium API used."
+      },
+      "verifiedNumericFighterIds": [
+        "516"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Exactly two completed officially dated UFC Octagon bouts independently matched to pinned UFCStats-derived fight/event/source chronology with original saved native numeric IDs/opposing corners, verified win/loss results and measured rounds. 0 separately source-attested DWCS entries excluded.  ",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/tyrell-fortune",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43580439420",
+      "bouts": [
+        {
+          "date": "2026-03-28",
+          "opponent": "Marcin Tybura",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/08d4e3864c44f8a5",
+          "nativeBoutId": "60631",
+          "nativeFighterId": "516"
+        },
+        {
+          "date": "2026-07-25",
+          "opponent": "Rizvan Kuniev",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5ffb251c6ea48b65",
+          "nativeBoutId": "82600",
+          "nativeFighterId": "516"
+        }
+      ]
+    },
+    "uran-satybaldiev": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Uran Satybaldiev",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/02f484417a6fa69d",
+      "officialFighterUrl": "https://www.ufc.com/athlete/uran-satybaldiev",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent Greco UFCStats-derived source CSV; no direct UFCStats page access claimed",
+        "method": "Exhaustive official UFC.com fighter career verified through 2026-11-14 against pinned Greco UFCStats event, exact fight URL, original saved UFCalendar numeric bout IDs, complete paired fighter corners, native outcome/winner and measured rounds. Preserve non-UFC DWCS outcomes separately; official dates supersede occasional narrative typos and graphical Win badges. No premium API used."
+      },
+      "verifiedNumericFighterIds": [
+        "143"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Exactly two completed officially dated UFC Octagon bouts independently matched to pinned UFCStats-derived fight/event/source chronology with original saved native numeric IDs/opposing corners, verified loss/win results and measured rounds. 0 separately source-attested DWCS entries excluded. Dec 5 2026 upcoming contest is excluded as not yet completed. ",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/uran-satybaldiev",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43580439420",
+      "bouts": [
+        {
+          "date": "2025-04-05",
+          "opponent": "Martin Buday",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/96cc199d78732d11",
+          "nativeBoutId": "60306",
+          "nativeFighterId": "143"
+        },
+        {
+          "date": "2025-08-23",
+          "opponent": "Diyar Nurgozhay",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/7fc5f1dc2df84ac7",
+          "nativeBoutId": "65922",
+          "nativeFighterId": "143"
+        }
+      ]
+    },
+    "xiong-jing-nan": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Xiong Jingnan",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/2cdb479a0ef0ee1d",
+      "officialFighterUrl": "https://www.ufc.com/athlete/xiong-jing-nan",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent Greco UFCStats-derived source CSV; no direct UFCStats page access claimed",
+        "method": "Exhaustive official UFC.com fighter career verified through 2026-11-14 against pinned Greco UFCStats event, exact fight URL, original saved UFCalendar numeric bout IDs, complete paired fighter corners, native outcome/winner and measured rounds. Preserve non-UFC DWCS outcomes separately; official dates supersede occasional narrative typos and graphical Win badges. No premium API used."
+      },
+      "verifiedNumericFighterIds": [
+        "4680"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Exactly two completed officially dated UFC Octagon bouts independently matched to pinned UFCStats-derived fight/event/source chronology with original saved native numeric IDs/opposing corners, verified loss/loss results and measured rounds. 0 separately source-attested DWCS entries excluded.  Former ONE championship contests excluded from UFC-only record.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/xiong-jing-nan",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da",
+        "https://www.ufc.com/event/ufc-fight-night-may-30-2026"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43580439420",
+      "bouts": [
+        {
+          "date": "2026-05-30",
+          "opponent": "Angela Hill",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3f719885c9916e06",
+          "nativeBoutId": "66112",
+          "nativeFighterId": "4680"
+        },
+        {
+          "date": "2026-08-29",
+          "opponent": "Julia Polastri",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6206c62fc8f0b71b",
+          "nativeBoutId": "83411",
+          "nativeFighterId": "4680"
+        }
+      ]
     }
   }
 }
