@@ -26,6 +26,8 @@ on:
       - 'scripts/ufc-unified-wave4-source-review.mjs'
       - 'scripts/ufc-unified-wave5-source-review.mjs'
       - 'scripts/ufc-unified-wave6-source-review.mjs'
+      - 'scripts/ufc-unified-wave7-source-review.mjs'
+      - 'data/ufc-unified-wave7-official-source-review-20261114.json'
       - 'tests/test-ufc-unified-wave6-idempotence.mjs'
       - 'scripts/ufc-unified-ding-exact-alias-review.mjs'
       - 'data/ufc-unified-wave6-official-source-review-20261114.json'
@@ -107,6 +109,10 @@ jobs:
         if: github.event_name == 'pull_request'
         continue-on-error: true
         run: node scripts/ufc-unified-ding-exact-alias-review.mjs
+      - name: Independently reconcile eight new UFC career histories against pinned Greco and saved native fights (one-off)
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        run: node scripts/ufc-unified-wave7-source-review.mjs
       - name: Save report
         if: always()
         uses: actions/upload-artifact@v4
@@ -122,6 +128,7 @@ jobs:
             qa/ufc-stage3-v4-reconciliation.json
             qa/ufc-v4-stage3-blocker-diagnostics.json
             qa/ufc-unified-next8b-source-review.json
+            qa/ufc-unified-wave7-source-review.json
             qa/ufc-unified-ding-exact-alias-review.json
           retention-days: 14
           if-no-files-found: warn
