@@ -23,6 +23,81 @@ export function htmlToPublicText(html){
   .replace(/\s+/g,' ').trim());
 }
 const short=v=>typeof v==='string'?v.trim().slice(0,160):null;
+
+const MONTH_INDEX={January:'01',March:'03',May:'05',July:'07',September:'09',November:'11'};
+/** Parse official tournament-level W-L records, never individual results from icons. */
+export function parseJsaBashoResults(html){
+ const plain=htmlToPublicText(html);
+ const sectionIndex=plain.indexOf('Tournament Records');
+ if(sectionIndex<0)return [];
+ const section=plain.slice(sectionIndex+'Tournament Records'.length);
+ const dateRx=/\b((?:18|19|20)\d{2})\s+(January|March|May|July|September|November)\b/g;
+ const dates=[...section.matchAll(dateRx)];
+ const results=[];
+ const unique=new Set();
+ for(let i=0;i<dates.length;i++){
+  const m=dates[i],id=m[1]+MONTH_INDEX[m[2]];
+  if(unique.has(id))continue;
+  // A tournament result immediately follows that tournament's rank and
+  // shikona. Do not search unbounded content into a later tournament.
+  const end=dates[i+1]?.index??section.length;
+  const segment=section.slice(m.index+m[0].length,Math.min(end,m.index+m[0].length+220));
+  const result=segment.match(/\b(\d{1,2})\s*-\s*(\d{1,2})(?:\s*-\s*(\d{1,2}))?(?![\d-])/);
+  if(!result)continue;
+  const wins=Number(result[1]),losses=Number(result[2]);
+  const absences=result[3]==null?null:Number(result[3]);
+  if(wins>15||losses>15||absences!=null&&absences>15)continue;
+  results.push({bashoId:id,wins,losses,absences,
+    source:'JSA official Rikishi Profile tournament results'});
+  unique.add(id);
+ }
+ return results.sort((a,b)=>a.bashoId.localeCompare(b.bashoId));
+}
+/** Compare the same completed tournament against the complete source bout ledger. */
+export function reconcileJsaBashoResults(officialRows,source,asOf){
+ const known=Array.isArray(officialRows)?officialRows:[];
+ const completedMonth=asOf?.monthYear?(()=>{
+  const m=String(asOf.monthYear).match(/^([A-Za-z]+)\s+(\d{4})$/);
+  return m&&MONTH_INDEX[m[1]]?m[2]+MONTH_INDEX[m[1]]:null;
+ })():null;
+ const matches=source?.data?.matches||[];
+ const id=Number(source?.rikishiId);
+ const groups=new Map();
+ for(const m of matches){
+  if(m.division==='Mae-zumo'||Number(m.day)>15||Number(m.day)<1)continue;
+  const bid=String(m.bashoId||'');
+  if(!groups.has(bid))groups.set(bid,{wins:0,losses:0});
+  const x=groups.get(bid);
+  if(Number(m.winnerId)===id)x.wins++;
+  else if(Number.isSafeInteger(Number(m.winnerId))&&Number(m.winnerId)>0)x.losses++;
+ }
+ const compared=[],unavailable=[];
+ for(const o of known){
+  // The current basho can be mid-tournament and JSA / API may represent
+  // different completed-day cutoffs. Never mistake this for an old discrepancy.
+  if(completedMonth&&o.bashoId>=completedMonth)continue;
+  const got=groups.get(o.bashoId);
+  if(!got){unavailable.push(o.bashoId);continue;}
+  const state=got.wins===o.wins&&got.losses===o.losses?'agree':'discrepancy';
+  compared.push({bashoId:o.bashoId,official:{wins:o.wins,losses:o.losses},
+    apiLedger:{wins:got.wins,losses:got.losses},status:state});
+ }
+ const discrepancies=compared.filter(x=>x.status==='discrepancy');
+ return {
+  officialBashoRows:known.length,comparedBasho:compared.length,
+  agreeingBasho:compared.length-discrepancies.length,
+  discrepantBasho:discrepancies.length,
+  unmatchedOfficialBasho:unavailable,
+  discrepancies,excludedCurrentBasho:completedMonth,
+  status:!known.length?'official-tournament-parse-review':
+    !source?.stages?.matches?.complete?'api-history-incomplete':
+    discrepancies.length?'historical-results-disagree':
+    !compared.length?'insufficient-common-basho':'historical-tournaments-agree',
+  certified:false,
+  note:'Only completed prior tournaments compared. Agreement cannot by itself certify an entire rikishi career.'
+ };
+}
+
 export function parseOfficialProfile(html,roster){
  const text=htmlToPublicText(html);
  const career=text.match(/\bCareer\s+Record\s*:\s*(\d{1,5})\s*-\s*(\d{1,5})\s*-\s*(\d{1,5})/i);
@@ -48,7 +123,7 @@ export function parseOfficialProfile(html,roster){
  };
  const completeness=!!career&&!!rank&&!!stableMatch&&num('Height','cm')!=null&&num('Weight','kg')!=null;
  return {
-  schemaVersion:1,parserVersion:2,source:'Japan Sumo Association official public Rikishi Profile',
+  schemaVersion:1,parserVersion:3,source:'Japan Sumo Association official public Rikishi Profile',
   sourceId:roster.sourceId,officialNskId:roster.officialNskId,
   url:'https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+roster.officialNskId+'/',
   profileName:announcedName,stable:short(stableMatch?.[1]),rank,heightCm:num('Height','cm'),
@@ -76,7 +151,7 @@ async function main(){
   if(requested>=MAX_REQUESTS)break;
   const path=join(ROOT,'profiles',w.sourceId+'.json');
   const cached=await load(path);
-  if(cached&&(cached.status==='basic-fields-parsed'||cached.parserVersion>=2))continue;
+  if(cached?.parserVersion>=3)continue;
   requested++;
   const url='https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+w.officialNskId+'/';
   try{
@@ -89,6 +164,10 @@ async function main(){
    const html=await resp.text();
    if(html.length<500||html.length>2_000_000)throw Error('Unexpected official HTML response length');
    const doc=parseOfficialProfile(html,w);
+   const cachedHistory=await load(join('data/sumo/backfill/v1/rikishi',w.sourceId+'.json'));
+   doc.officialBashoRecords=parseJsaBashoResults(html);
+   doc.bashoReconciliation=reconcileJsaBashoResults(
+     doc.officialBashoRecords,cachedHistory,doc.officialAsOf);
    doc.capturedAt=now();
    doc.rawHtmlSha256=createHash('sha256').update(html).digest('hex');
    await put(path,doc);
@@ -100,14 +179,22 @@ async function main(){
    break;
   }
  }
- let done=0,matched=0,exceptions=0;
+ let done=0,matched=0,exceptions=0,bashoChecked=0,historicalDiscrepancies=0;
  for(const w of cases){
   const d=await load(join(ROOT,'profiles',w.sourceId+'.json'));
-  if(d){done++;if(d.status==='basic-fields-parsed')matched++;else exceptions++;}
+  if(d){
+   done++;if(d.status==='basic-fields-parsed')matched++;else exceptions++;
+   if(d.bashoReconciliation){
+    bashoChecked+=d.bashoReconciliation.comparedBasho||0;
+    historicalDiscrepancies+=d.bashoReconciliation.discrepantBasho||0;
+   }
+  }
  }
  const summary={schemaVersion:1,scope:'JSA public profile field snapshots; NOT career certifications',
   cohort:190,checked:done,parsedFields:matched,fieldOrParsingReview:exceptions,
-  pending:190-done,lastRunAt:now(),requestsThisRun:requested,goodThisRun:succeeded,
+  pending:190-done,historicalBashoCompared:bashoChecked,
+  historicalDiscrepancies,
+  lastRunAt:now(),requestsThisRun:requested,goodThisRun:succeeded,
   reviewThisRun:review,stoppedReason:reason,nextAllowedAt,certified:0,
   photoUseRights:'not obtained or inferred'};
  await put(metaPath,summary);
