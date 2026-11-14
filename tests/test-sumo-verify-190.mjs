@@ -102,3 +102,18 @@ test('formal banzuke count must reconcile to career basho count',()=>{
   assert.equal(out.readyForExternalCrosscheck,false);
   assert.ok(out.errors.includes('rank-history-basho-count-mismatch'));
 });
+
+test('Kirishima historic Banzuke-gai is valid nonranked status, not a fake rank',()=>{
+  const d=complete();
+  d.data.stats.basho=1;
+  d.data.ranks=[
+    {id:'201503-28',rikishiId:28,bashoId:'201503',rank:'Banzuke-gai'},
+    {id:'201505-28',rikishiId:28,bashoId:'201505',rank:'Mae-zumo'},
+    {id:'201507-28',rikishiId:28,bashoId:'201507',rank:'Jonokuchi 9 East'}];
+  d.stages.ranks.total=3;
+  const report=auditRikishi(w,d);
+  assert.equal(report.readyForExternalCrosscheck,true);
+  assert.equal(report.counts.formalRanks,1);
+  assert.ok(!report.errors.includes('malformed-rank-value'));
+  assert.ok(!report.errors.includes('rank-history-basho-count-mismatch'));
+});
