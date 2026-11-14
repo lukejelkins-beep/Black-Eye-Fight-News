@@ -1,0 +1,51 @@
+name: BEFN CompuBox public-report pilot (research only)
+
+on:
+  push:
+    branches:
+      - research/boxing-2026-11-cohort
+    paths:
+      - '.github/workflows/boxing-compubox-public-pilot.yml'
+      - 'scripts/boxing/collect_compubox_public.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: boxing-compubox-public-pilot
+  cancel-in-progress: false
+
+jobs:
+  collect-pilot:
+    if: github.ref == 'refs/heads/research/boxing-2026-11-cohort'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout isolated research branch
+        uses: actions/checkout@v4
+        with:
+          ref: research/boxing-2026-11-cohort
+          persist-credentials: true
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install only PDF parsing and HTML discovery dependencies
+        run: pip install --disable-pip-version-check 'pymupdf>=1.24,<1.27' 'requests>=2.31,<3' 'beautifulsoup4>=4.12,<5'
+      - name: Collect and reconcile up to twelve public reports
+        env:
+          COMPUBOX_PILOT_MAX: '12'
+        run: python scripts/boxing/collect_compubox_public.py
+      - name: Commit research data to research branch only
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/boxing/compubox/
+          if ! git diff --cached --quiet; then
+            git commit -m 'data(boxing): cache validated CompuBox public report pilot'
+            git push origin HEAD:research/boxing-2026-11-cohort
+          else
+            echo 'No new boxing pilot data to commit.'
+          fi
