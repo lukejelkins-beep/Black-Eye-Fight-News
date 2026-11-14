@@ -9,18 +9,20 @@
   "certification": "not-started",
   "stages": {
     "profile": {
-      "complete": false,
-      "skip": 0,
-      "total": null,
-      "attempts": 3,
-      "updatedAt": null
-    },
-    "stats": {
-      "complete": false,
+      "complete": true,
       "skip": 0,
       "total": null,
       "attempts": 0,
-      "updatedAt": null
+      "updatedAt": "2026-11-14T21:26:09.884Z",
+      "source": "https://www.sumo-api.com/api/rikishi/5"
+    },
+    "stats": {
+      "complete": true,
+      "skip": 0,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T21:26:10.562Z",
+      "source": "https://www.sumo-api.com/api/rikishi/5/stats"
     },
     "measurements": {
       "complete": false,
@@ -52,8 +54,79 @@
     }
   },
   "data": {
-    "profile": null,
-    "stats": null,
+    "profile": {
+      "id": 5,
+      "sumodbId": 12780,
+      "nskId": 4171,
+      "shikonaEn": "Takerufuji",
+      "shikonaJp": "尊富士　弥輝也",
+      "currentRank": "Maegashira 4 East",
+      "heya": "Isegahama",
+      "birthDate": "1999-04-09T00:00:00Z",
+      "shusshin": "Aomori-ken, Goshogawara-shi",
+      "height": 186,
+      "weight": 149,
+      "debut": "202209"
+    },
+    "stats": {
+      "absenceByDivision": {
+        "Jonidan": 0,
+        "Jonokuchi": 0,
+        "Juryo": 12,
+        "Makushita": 0,
+        "Makuuchi": 32,
+        "Sandanme": 0
+      },
+      "basho": 25,
+      "bashoByDivision": {
+        "Jonidan": 1,
+        "Jonokuchi": 1,
+        "Juryo": 7,
+        "Makushita": 4,
+        "Makuuchi": 11,
+        "Sandanme": 1
+      },
+      "lossByDivision": {
+        "Jonidan": 0,
+        "Jonokuchi": 0,
+        "Juryo": 30,
+        "Makushita": 5,
+        "Makuuchi": 51,
+        "Sandanme": 1
+      },
+      "sansho": {
+        "Gino-sho": 1,
+        "Kanto-sho": 1,
+        "Shukun-sho": 1
+      },
+      "totalAbsences": 44,
+      "totalByDivision": {
+        "Jonidan": 7,
+        "Jonokuchi": 7,
+        "Juryo": 93,
+        "Makushita": 28,
+        "Makuuchi": 125,
+        "Sandanme": 7
+      },
+      "totalLosses": 87,
+      "totalMatches": 267,
+      "totalWins": 180,
+      "winsByDivision": {
+        "Jonidan": 7,
+        "Jonokuchi": 7,
+        "Juryo": 63,
+        "Makushita": 23,
+        "Makuuchi": 74,
+        "Sandanme": 6
+      },
+      "yusho": 5,
+      "yushoByDivision": {
+        "Jonidan": 1,
+        "Jonokuchi": 1,
+        "Juryo": 2,
+        "Makuuchi": 1
+      }
+    },
     "measurements": [],
     "ranks": [],
     "shikonas": [],
@@ -77,6 +150,15 @@
       "stage": "profile",
       "message": "Sumo API HTTP 400",
       "transient": false
+    },
+    {
+      "at": "2026-11-14T21:26:09.862Z",
+      "stage": "profile",
+      "message": "Requeued after correcting unsupported query arguments",
+      "transient": false
     }
-  ]
+  ],
+  "profileRequestContract": 2,
+  "historyResponseContract": 2,
+  "matchPaginationContract": 3
 }
