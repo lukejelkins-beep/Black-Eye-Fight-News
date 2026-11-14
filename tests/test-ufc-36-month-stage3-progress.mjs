@@ -316,3 +316,23 @@ test('Confirmed legacy UFC source evidence never counts as provider-hydrated sta
   assert.ok(!feederIds.has(row.fightId),'Official UFC fight must not be in feeder exclusion evidence');
  }
 });
+
+test('Historical cache crosswalk suggests a same-bout candidate but never certifies a missing native ID',()=>{
+ const p={...progress,bouts:{
+   '999':{id:'999',org:'ufc',event:'The Ultimate Fighter 21 Finale',
+     eventDate:'2015-01-02',a:{name:'Fighter 1'},b:{name:'Opponent E'}}}};
+ const r={profiles:{'fighter-1':{name:'Fighter 1',recentHistory:[
+   history(45,'Opponent E','2015-01-01')]}}};
+ const a={fights:{'2015-01-01:fighter1:opponente':{rounds:[
+   {round:1,a:{sigLanded:7,controlSec:15},b:{sigLanded:4,controlSec:8}}]}}};
+ const evidence={schema:1,scope:'ufc-official-legacy-evidence',bouts:[{
+   fightId:'45',fighterSlug:'fighter-1',date:'2015-01-01',
+   opponent:'Opponent E',sourceUrl:'https://www.ufc.com/event/test'}]};
+ const output=auditApprovedStage3(approval,census,p,r,a,{}, {}, evidence);
+ assert.equal(output.summary.uniqueNativeFightIdsAwaitingIndex,1);
+ assert.equal(output.summary.sourceVerifiedLegacyWithMatchingCachedBout,1);
+ assert.equal(output.summary.sourceVerifiedLegacyWithMatchingArchivedRounds,1);
+ assert.deepEqual(output.legacyCacheCandidates[0].cachedBouts.map(x=>x.nativeId),['999']);
+ assert.equal(output.legacyCacheCandidates[0].archivedRounds[0].roundRows,1);
+ assert.equal(output.summary.profilesWithAllKnownUfcBoutsIndexed,0);
+});
