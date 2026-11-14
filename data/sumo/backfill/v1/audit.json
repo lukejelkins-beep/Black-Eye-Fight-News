@@ -5,8 +5,8 @@
   "certified": 0,
   "notAttempted": 0,
   "collecting": 0,
-  "integrityException": 2,
-  "sourceReady": 188,
+  "integrityException": 3,
+  "sourceReady": 187,
   "records": {
     "weight": 415,
     "rank": 8711,
@@ -1072,6 +1072,7 @@
       "status": "source-integrity-exception",
       "readyForExternalCrosscheck": false,
       "errors": [
+        "career-loss-count-mismatch",
         "career-regular-bout-count-mismatch"
       ],
       "warnings": [],
@@ -2438,6 +2439,7 @@
       "status": "source-integrity-exception",
       "readyForExternalCrosscheck": false,
       "errors": [
+        "career-win-count-mismatch",
         "career-regular-bout-count-mismatch"
       ],
       "warnings": [],
@@ -4807,9 +4809,12 @@
     {
       "sourceId": 242,
       "name": "Obara",
-      "status": "source-collected-needs-independent-verification",
-      "readyForExternalCrosscheck": true,
-      "errors": [],
+      "status": "source-integrity-exception",
+      "readyForExternalCrosscheck": false,
+      "errors": [
+        "career-win-count-mismatch",
+        "career-loss-count-mismatch"
+      ],
       "warnings": [],
       "stagesCompleted": 6,
       "counts": {
