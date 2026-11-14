@@ -57,7 +57,7 @@ export function changedAgainstMergeBase(base,head){
  const git=(args)=>execFileSync('git',args,{cwd:root,encoding:'utf8',timeout:20000}).trim();
  const ancestor=git(['merge-base',base,head]);
  const diff=git(['diff','--name-only','--diff-filter=ACMR',ancestor,head]);
- return diff?diff.split('\\n').map(s=>s.trim()).filter(Boolean):[];
+ return diff?diff.split(String.fromCharCode(10)).map(s=>s.trim()).filter(Boolean):[];
 }
 
 export function main(base,head){
