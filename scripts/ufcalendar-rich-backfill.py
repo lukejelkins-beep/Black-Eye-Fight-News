@@ -388,7 +388,38 @@ def should_collect_rounds(state,bout,today):
     return True
 
 
-def approved_ufc_round_priority(approval,coverage,research,today):
+def feeder_event_title(title):
+    """Do not confuse official UFC fights with DWCS/Road-to-UFC feeders."""
+    return bool(re.search(r"(?:contender\s+series|road\s+to\s+ufc|\bdwcs\b)",
+                          title or "",re.I))
+
+
+def official_ufc_event_title(title):
+    """TUF Finals count as UFC; TV exhibition/qualifier bouts do not."""
+    if not title or feeder_event_title(title):return False
+    return bool(re.search(r"\bufc\b",title,re.I) or
+                re.search(r"\bthe\s+ultimate\s+fighter\b.*\bfinale\b",title,re.I) or
+                re.search(r"\btuf\s*\d+\s+finale\b",title,re.I))
+
+
+def ufc_event_date_evidence(state):
+    """Cached fight-event titles; never infer official status from weekday."""
+    by_date={}
+    for bout in state.get("bouts",{}).values():
+        if not isinstance(bout,dict) or bout.get("org")!="ufc":continue
+        day=date_str(bout.get("eventDate"))
+        title=safe(bout.get("event"),150)
+        if day and title:by_date.setdefault(day,set()).add(title)
+    feeder={day for day,titles in by_date.items() if titles and
+            all(feeder_event_title(t) for t in titles)}
+    finale={day for day,titles in by_date.items() if titles and
+            all(official_ufc_event_title(t) for t in titles) and
+            any(re.search(r"(?:the\s+ultimate\s+fighter|\btuf\s*\d+).*finale",
+                          t,re.I) for t in titles)}
+    return feeder,finale
+
+
+def approved_ufc_round_priority(approval,coverage,research,today,state=None):
     """Prioritise the signed-off UFC cohort's cached fights without API calls.
 
     Latest five fights are most useful for the public Recent Performance card,
@@ -409,6 +440,7 @@ def approved_ufc_round_priority(approval,coverage,research,today):
     wanted=approved.intersection(eligible)
     if not wanted:return {}
     priority={}
+    feeder_dates=ufc_event_date_evidence(state)[0] if state else set()
     for fighter in wanted:
         profile=research.get("profiles",{}).get(fighter,{})
         ordered=[]
@@ -422,7 +454,7 @@ def approved_ufc_round_priority(approval,coverage,research,today):
             bid=str(row.get("boutId") or "")
             day=date_str(row.get("date"))
             if (not re.fullmatch(r"[1-9][0-9]{0,11}",bid) or
-                not day or day>today.isoformat() or bid in seen):
+                not day or day>today.isoformat() or day in feeder_dates or bid in seen):
                 continue
             seen.add(bid)
             ordered.append((day,bid))
@@ -1001,7 +1033,8 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None)
     # shared by two approved fighters is still requested precisely once.
     pending={}
     references={}
-    tiers=approved_ufc_round_priority(approval,coverage,research,today)
+    feeder_dates,official_finale_dates=ufc_event_date_evidence(state)
+    tiers=approved_ufc_round_priority(approval,coverage,research,today,state)
     for slugval,profile in research.get("profiles",{}).items():
         if slugval not in eligible:continue
         for row in profile.get("recentHistory",[]):
@@ -1010,7 +1043,7 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None)
             bid=str(row.get("boutId") or "")
             if not re.fullmatch(r"[1-9][0-9]{0,11}",bid) or bid in state["bouts"]:continue
             when=date_str(row.get("date"))
-            if when and when<=today.isoformat():
+            if when and when<=today.isoformat() and when not in feeder_dates:
                 pending[bid]=max(when,pending.get(bid,""))
                 references.setdefault(bid,set()).add(slugval)
     checks=state.setdefault("ufcCareerBoutChecks",{})
@@ -1031,29 +1064,36 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None)
         if attempts>=cap or client.remaining<=0 or client.stopped or client.calls>=client.max_calls-10:
             break
         prior=checks.get(bid,{})
-        if str(prior.get("retryAfter") or "")>today.isoformat():continue
+        finale_retry=(prior.get("status")=="requires_manual_review" and
+                      pending[bid] in official_finale_dates and
+                      not prior.get("officialFinaleRetryAttempted"))
+        if str(prior.get("retryAfter") or "")>today.isoformat() and not finale_retry:
+            continue
+        if finale_retry:
+            prior={**prior,"officialFinaleRetryAttempted":True}
+            checks[bid]=prior
         attempts+=1
         payload=client.call("/fights/"+bid)
         data=(payload or {}).get("data")
         if not isinstance(data,dict):
-            checks[bid]={"checkedAt":today.isoformat(),
+            checks[bid]={**prior,"checkedAt":today.isoformat(),
                          "retryAfter":(today+dt.timedelta(days=7)).isoformat()}
             continue
         event=data.get("event")
         bout=summary_bout(data)
         title=safe(event.get("title"),150) if isinstance(event,dict) else ""
         event_date=date_str(event.get("starts_at")) if isinstance(event,dict) else None
-        is_feeder=bool(re.search(r"(?:contender\s+series|road\s+to\s+ufc|\bdwcs\b)",title,re.I))
+        is_feeder=feeder_event_title(title)
         # Fail closed on a mismatched provider response: a retrieved bout
         # must have the *same native ID* requested from the cached UFC history.
         # A 200 response with a different fight must never poison this ID's
         # career chronology or round statistics cache.
         if (not bout or str(bout.get("id") or "")!=bid or
             not event_date or event_date>today.isoformat() or
-            not title or not re.search(r"\bufc\b",title,re.I) or is_feeder or
+            not official_ufc_event_title(title) or is_feeder or
             event.get("org") not in ("ufc",None) or
             bout["status"] not in ("completed","draw","no_contest")):
-            checks[bid]={"checkedAt":today.isoformat(),
+            checks[bid]={**prior,"checkedAt":today.isoformat(),
                          "retryAfter":(today+dt.timedelta(days=14)).isoformat(),
                          "status":"requires_manual_review"}
             continue
@@ -1387,7 +1427,7 @@ def main():
         approved36=read(COVERAGE36,{})
         approval=read(ROSTER_APPROVAL,{})
         collect_ufc_career_bouts(client,state,research,approved36,roster_today,approval)
-        round_priority=approved_ufc_round_priority(approval,approved36,research,roster_today)
+        round_priority=approved_ufc_round_priority(approval,approved36,research,roster_today,state)
         recovery=collect_rounds(client,state,cards,archive,pfl_archive,today,coverage,
                                 approved_priority=round_priority)
         if recovery["retried"]:

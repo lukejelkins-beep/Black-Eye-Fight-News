@@ -70,6 +70,43 @@ test('the existing paid collector reports offline Stage 3 progress without a sec
   assert.match(yaml,/Offline Stage 3 audit unavailable; preserve newly fetched records/);
 });
 
+test('corroborated Contender Series dates are excluded only from UFC-only counts',()=>{
+ const p={...progress,bouts:{
+   '900':{id:'900',org:'ufc',eventDate:'2022-08-09',
+      event:"Dana White's Contender Series 49",a:{name:'Opponent A'},b:{name:'Opponent B'}},
+   '44':{...fight(44,'Opponent D'),event:'UFC Fight Night: Official'}
+ }};
+ const r={profiles:{'fighter-1':{recentHistory:[
+   history(41,'Zachary Borrego','2022-08-09'),
+   history(42,'Other DWCS Opponent','2022-08-09'),
+   history(44,'Opponent D')
+ ]}}};
+ const summary=auditApprovedStage3(approval,census,p,r,archive).summary;
+ assert.equal(summary.excludedFeederHistoryRowsWithCachedEventEvidence,2);
+ assert.equal(summary.excludedDistinctFeederNativeFightIds,2);
+ assert.equal(summary.uniqueNativeFightIds,1);
+ assert.equal(summary.uniquelyIndexedNativeFightIds,1);
+ assert.equal(summary.uniqueNativeFightIdsAwaitingIndex,0);
+ assert.equal(summary.savedUfcHistoryRows,1);
+ assert.equal(r.profiles['fighter-1'].recentHistory.length,3,
+              'Read-only audit preserves professional MMA research data');
+});
+
+test('a Finale date remains eligible for UFC history and manual-review reconciliation',()=>{
+ const p={...progress,bouts:{
+   '990':{id:'990',org:'ufc',eventDate:'2018-11-30',
+      event:'The Ultimate Fighter 28 Finale',
+      a:{name:'Another Athlete'},b:{name:'Another Opponent'}}
+ }};
+ const r={profiles:{'fighter-1':{recentHistory:[
+   history(41,'Kevin Aguilar','2018-11-30')
+ ]}}};
+ const summary=auditApprovedStage3(approval,census,p,r,archive).summary;
+ assert.equal(summary.excludedDistinctFeederNativeFightIds,0);
+ assert.equal(summary.uniqueNativeFightIdsAwaitingIndex,1);
+ assert.equal(summary.manualReviewOfficialFinaleFightIds,1);
+});
+
 test('Full-career identity checks are tracked separately from full career certification',()=>{
  const p={...progress,ufcFullCareerHistoryChecks:{
    'fighter-1':{status:'checked',newUfcBoutsRecovered:2},
