@@ -777,3 +777,31 @@ test('Carlos Hernandez complete 7-fight UFC source listing is independently tied
   i?b:{...b,opponent:'Unknown person'})}),false);
  assert.equal(proof(evidence,{}),false);
 });
+
+
+test('Bruno flyweight official twelve-bout career retains overturned UFC 243 NC and source-linked native aliases',()=>{
+ const load=p=>JSON.parse(readFileSync(new URL('../data/'+p,import.meta.url),'utf8'));
+ const evidence=load('ufc-independent-full-career-verification.json').fighters['bruno-gustavo-da-silva'];
+ const researchData=load('ufcalendar-fighter-research.json');
+ const index=load('ufcalendar-rich-progress.json').bouts;
+ const fighter=researchData.profiles['bruno-gustavo-da-silva'];
+ const history=fighter.recentHistory.filter(r=>r.promotion==='ufc');
+ const proof=(source,bouts=index)=>evaluateCareerEvidence(fighter,history,
+  '2025-10-18','2026-11-14',source,bouts).independentlyVerified;
+ assert.equal(history.length,12);
+ assert.equal(evidence.bouts.length,12);
+ assert.equal(proof(evidence),true);
+ const nc=evidence.bouts.find(r=>r.opponent==='Khalid Taha');
+ assert.equal(nc.result,'no_contest');
+ assert.equal(nc.nativeBoutId,'62109');
+ assert.equal(nc.fightUrl,'https://ufcstats.com/fight-details/57ff0eb2351979c4');
+ assert.equal(proof({...evidence,bouts:evidence.bouts.map(r=>
+  r.opponent==='Khalid Taha'?{...r,result:'loss'}:r)}),false);
+ assert.equal(proof({...evidence,sourceVerifiedNativeNameAliases:[]}),false);
+ assert.equal(proof({...evidence,bouts:evidence.bouts.map(r=>
+  r.opponent==='Khalid Taha'?{...r,nativeFighterId:'87'}:r)}),false);
+ assert.equal(proof({...evidence,bouts:evidence.bouts.slice(1)}),false);
+ assert.equal(proof({...evidence,fighterUrl:'https://ufcstats.com/fighter-details/12ebd7d157e91701'}),true,
+  'URL format gate alone cannot prove disambiguation; source identity must remain human attested');
+ assert.equal(proof(evidence,{}),false);
+});
