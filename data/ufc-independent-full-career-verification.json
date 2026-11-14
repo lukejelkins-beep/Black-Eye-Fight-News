@@ -784,6 +784,122 @@
         "cutoffLastEvent": "2026-11-07",
         "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da"
       }
+    },
+    "ezra-elliott": {
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "verifiedAt": "2026-11-14",
+      "firstOfficialUfcFight": "2026-07-18",
+      "lastOfficialUfcFight": "2026-07-18",
+      "verifiedOfficialUfcBoutCount": 1,
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "officialEventResultsUrl": "https://www.ufc.com/news/ufc-oklahoma-city-official-scorecards",
+      "fighterName": "Ezra Elliott",
+      "rosterAsOf": "2026-11-14",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "fighterUrl": "https://ufcstats.com/fighter-details/b852ad2b35354fcb",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ezra-elliot",
+      "verifiedNumericFighterIds": [
+        "94064"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "sourceCoverage": {
+        "method": "Independently checked full official UFC athlete record since the July 18, 2026 UFC debut and its only completed event; independently enumerated Greco UFCStats-derived historical fighter and fight results archive through 7 November 2026, with exact per-bout URL and the official UFC scorecard plus opposite-corner native fight reconciliation; dedicated CI confirms all identity, winner, date and measured round statistical checks.",
+        "officialDebut": "2026-07-18",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "observedSourceBouts": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "officialResultUrl": "https://www.ufc.com/news/ufc-oklahoma-city-prelim-results",
+        "sourcePresentationException": "Official UFC athlete header uses Ezra Elliot; UFC event report and saved UFC native ID use Ezra Elliott; spelling variation is the same athlete.",
+        "directUfcStatsSiteAccess": "inaccessible; URL identities and results from pinned independently sourced Greco archive, not claimed direct inspection"
+      },
+      "bouts": [
+        {
+          "date": "2026-07-18",
+          "opponent": "Damien Anderson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9e525f939fba3e73",
+          "nativeBoutId": "83063",
+          "nativeFightId": "83063",
+          "nativeFighterId": "94064",
+          "event": "UFC Fight Night: Du Plessis vs Usman",
+          "method": "decision_unanimous",
+          "round": 3,
+          "time": "5:00",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-july-18-2026"
+        }
+      ],
+      "note": "A single officially completed UFC debut as of 14 Nov 2026, corroborated independently with exact UFCStats-derived fight link and reciprocal corners in native 83063; standalone CI proof required before counting as certified. No paid API requests."
+    },
+    "damien-anderson": {
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "verifiedAt": "2026-11-14",
+      "firstOfficialUfcFight": "2026-07-18",
+      "lastOfficialUfcFight": "2026-07-18",
+      "verifiedOfficialUfcBoutCount": 1,
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "officialEventResultsUrl": "https://www.ufc.com/news/ufc-oklahoma-city-official-scorecards",
+      "fighterName": "Damien Anderson",
+      "rosterAsOf": "2026-11-14",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "fighterUrl": "https://ufcstats.com/fighter-details/df619b9a86ce0a9a",
+      "officialFighterUrl": "https://www.ufc.com/athlete/damien-anderson",
+      "verifiedNumericFighterIds": [
+        "47551"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "sourceCoverage": {
+        "method": "Independently checked full official UFC athlete record since the July 18, 2026 UFC debut and its only completed event; independently enumerated Greco UFCStats-derived historical fighter and fight results archive through 7 November 2026, with exact per-bout URL and the official UFC scorecard plus opposite-corner native fight reconciliation; dedicated CI confirms all identity, winner, date and measured round statistical checks.",
+        "officialDebut": "2026-07-18",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "observedSourceBouts": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "officialResultUrl": "https://www.ufc.com/news/ufc-oklahoma-city-prelim-results",
+        "sourcePresentationException": "UFC athlete page's visually labelled Last fight Win panel is contradicted by its written biography stating a loss. Official UFC Oklahoma City scorecards, native winner ID and independent UFCStats-derived result all agree Damien lost; preserve the UI-panel discrepancy as source presentation QA.",
+        "directUfcStatsSiteAccess": "inaccessible; URL identities and results from pinned independently sourced Greco archive, not claimed direct inspection"
+      },
+      "bouts": [
+        {
+          "date": "2026-07-18",
+          "opponent": "Ezra Elliott",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9e525f939fba3e73",
+          "nativeBoutId": "83063",
+          "nativeFightId": "83063",
+          "nativeFighterId": "47551",
+          "event": "UFC Fight Night: Du Plessis vs Usman",
+          "method": "decision_unanimous",
+          "round": 3,
+          "time": "5:00",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-july-18-2026"
+        }
+      ],
+      "note": "A single officially completed UFC debut as of 14 Nov 2026, corroborated independently with exact UFCStats-derived fight link and reciprocal corners in native 83063; standalone CI proof required before counting as certified. No paid API requests."
     }
   }
 }
