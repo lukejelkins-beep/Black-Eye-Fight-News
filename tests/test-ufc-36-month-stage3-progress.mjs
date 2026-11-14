@@ -210,7 +210,16 @@ test('UFCalendar DWCS exclusion evidence is unique, precisely identified and pri
  assert.equal(raw.schema,1);
  assert.ok(raw.bouts.length>=16);
  const ids=raw.bouts.map(r=>r.boutId);
- assert.equal(new Set(ids).size,ids.length,'A native bout ID cannot be excluded twice');
+ // Both UFC fighters can have their own source-evidence record for the same fight.
+ // Uniqueness applies to the precise fighter/bout/date/opponent, not the fight ID.
+ const keys=raw.bouts.map(r=>[r.boutId,r.fighterSlug,r.date,r.opponent].join('|'));
+ assert.equal(new Set(keys).size,keys.length,'Duplicate exact fighter/bout exclusion');
+ const datesById=new Map();
+ for(const row of raw.bouts){
+   if(datesById.has(row.boutId))
+     assert.equal(datesById.get(row.boutId),row.date,'Conflicting date for native bout ID');
+   else datesById.set(row.boutId,row.date);
+ }
  const added=['88222','84039','83878','88218','88200','83916','84037',
               '83838','84160','83876','88209','84138','83973'];
  for(const id of added)assert.ok(ids.includes(id),'Missing researched DWCS bout '+id);
@@ -221,5 +230,21 @@ test('UFCalendar DWCS exclusion evidence is unique, precisely identified and pri
    assert.ok(row.opponent?.trim());
    assert.ok(row.event?.includes('Contender Series'));
    assert.ok(row.sourceUrl?.startsWith('https://www.ufc.com/'));
+ }
+});
+
+test('UFC-documented Contender Series evidence covers every remaining six-to-ten exception',()=>{
+ const evidence=JSON.parse(readFileSync(new URL('../data/ufc-feeder-bout-evidence.json',import.meta.url),'utf8'));
+ const required=[
+  ['83929','jamie-pickett','2019-06-18','Punahele Soriano'],
+  ['83929','punahele-soriano','2019-06-18','Jamie Pickett'],
+  ['84037','joe-pyfer','2020-08-11','Dustin Stoltzfus'],
+  ['88200','phil-hawes','2017-08-01','Julian Marquez']
+ ];
+ for(const [boutId,fighterSlug,date,opponent] of required){
+  assert.ok(evidence.bouts.some(row=>row.boutId===boutId&&
+    row.fighterSlug===fighterSlug&&row.date===date&&
+    row.opponent===opponent&&row.sourceUrl.startsWith('https://www.ufc.com/')),
+    'Missing exact UFC-source evidence for '+fighterSlug+' versus '+opponent);
  }
 });
