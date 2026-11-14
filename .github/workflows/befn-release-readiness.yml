@@ -56,7 +56,9 @@ jobs:
           python -m unittest discover -s tests -p 'test_fighter_records.py'
           python -m unittest discover -s tests -p 'test_upcoming_cards.py'
       - name: Verify conservative news deduplication without collection
-        run: python -m unittest discover -s tests -p 'test_news_dedupe.py'
+        run: |
+          python -m unittest discover -s tests -p 'test_news_dedupe.py'
+          node --test tests/test-news-dedupe.cjs
       - name: Record validated source revision
         if: success()
         run: |

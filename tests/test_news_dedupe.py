@@ -168,4 +168,25 @@ class NewsDedupeTests(unittest.TestCase):
                   when='2026-11-18T01:00:00+00:00')
         self.assertFalse(duplicate_of(a,b))
 
+    def test_signing_followup_booking_cannot_bypass_narrow_match(self):
+        signed=article('Mike Perry re-signs with UFC','https://one.example/perry')
+        for headline in (
+            'Mike Perry re-signs with UFC and booked to face Robbie Lawler',
+            'UFC signs Mike Perry after five-year split and will fight Robbie Lawler',
+            'UFC signs Mike Perry after five-year split to fight Robbie Lawler',
+        ):
+            with self.subTest(headline=headline):
+                followup=article(headline,'https://two.example/booking')
+                self.assertFalse(duplicate_of(signed,followup))
+                self.assertFalse(duplicate_of(followup,signed))
+
+    def test_booking_match_preserves_editorial_stage(self):
+        confirmed=article('Alistair Overeem vs. Jimi Manuwa added to Paul vs. Doumbe fight card',
+                          'https://one.example/confirmed',sport='boxing')
+        for prefix in ('reportedly ', 'possibly '):
+            headline=confirmed['title'].replace('added to',prefix+'added to')
+            unconfirmed=article(headline,'https://two.example/rumour',sport='boxing')
+            self.assertFalse(duplicate_of(confirmed,unconfirmed))
+            self.assertFalse(duplicate_of(unconfirmed,confirmed))
+
 if __name__=='__main__':unittest.main()
