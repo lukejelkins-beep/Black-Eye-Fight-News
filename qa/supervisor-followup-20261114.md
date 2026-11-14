@@ -31,3 +31,7 @@ These jobs have different responsibilities and privileges. Moving them together 
 Results section selection was reproduced losing keyboard focus in a synthetic DOM contract regression. The small frontend fix restores the same event/section button after replacement, without scrolling or taking focus from an outside control. Existing results tests cover this automatically; no extra scheduled workflow or dependency was added. The test failed before the fix and passed after.
 
 Live homepage inspection succeeded, but Fights navigation and one subsequent state read timed out in the cloud browser. This is a browser inspection limitation, not evidence of a production outage. No fresh mobile layout or screen-reader pass is claimed. QA-012 requires real keyboard verification on an approved preview before rollout; broader mobile and accessibility review remains open.
+
+## Upcoming section accessibility
+
+The prior focus-fix commit passed GitHub release readiness (run 43570350522). Continued inspection found the upcoming All control referenced only the first panel despite displaying every section. QA-013 corrects the space-separated `aria-controls` relationship and checks that every referenced panel exists. Individual section controls retain their single target. The regression failed before the change and passed afterward, alongside existing upcoming UI and cancellation/merge checks. No visual layout, data, collection or scheduling change. Browser/screen-reader validation remains outstanding; this does not imply a complete accessibility pass.

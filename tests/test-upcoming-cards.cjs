@@ -30,6 +30,16 @@ for(const file of ['local-time.js','upcoming-cards.js'])vm.runInNewContext(fs.re
  assert(mma.includes('reported-mma title')&&mma.includes('Reported · UFC confirmation pending'),'Reported event remains explicitly provisional');
  for(const section of ['main','prelims','early'])assert(mma.includes('data-upcoming-panel="'+section+'"'),'Preserve '+section+' bouts');
  assert(mma.includes('reported-a Alpha')&&mma.includes('reported-b Alpha'),'All reported pairings retained');
+ // Each control must identify exactly the panels its click action shows.
+ const ids=new Set([...mma.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]));
+ for(const match of mma.matchAll(/<button[^>]*data-upcoming-tab="([^"]+)"[^>]*data-upcoming-section="([^"]+)"[^>]*aria-controls="([^"]+)"/g)){
+  const [,eventId,section,controls]=match;
+  const expected=section==='all'?['main','prelims','early']: [section];
+  // The reported fixture has one section and therefore no toggle controls.
+  assert.deepEqual(controls.split(' '),expected.map(key=>'upcoming-'+eventId+'-'+key),'Control names every panel it reveals');
+  for(const id of controls.split(' '))assert(ids.has(id),'Controlled panel exists: '+id);
+ }
+ assert(mma.includes('data-upcoming-section="all"'),'Fixture exercises All sections control');
  assert(mma.includes('Start time TBC · venue date'),'Unknown start is not converted into a made-up local time');
  assert(mma.includes('Record not verified'),'Missing record stays unknown');
  assert(!mma.includes('undefined')&&!boxing.includes('undefined'));

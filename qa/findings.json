@@ -211,5 +211,22 @@
     "branch": "qa/quality-supervisor-20261114",
     "issueOrPR": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/190",
     "verificationRequired": "Existing results regression and CI pass; verify keyboard section navigation on approved preview before deployment."
+  },
+  {
+    "id": "QA-013",
+    "severity": "P3",
+    "subsystem": "Upcoming accessibility",
+    "title": "All sections control identifies only the first panel",
+    "status": "reproduced and fixed; awaiting PR review",
+    "evidence": "Synthetic three-section card: aria-controls named main only although All displays main, prelims and early. New regression fails before fix and passes after.",
+    "rootCause": "All control reused sections[0].key instead of the full panel ID list.",
+    "impact": "Assistive technology receives an incomplete control-to-panel relationship.",
+    "remediation": "Emit space-separated IDs for every controlled panel; individual section buttons retain one ID.",
+    "effort": "small",
+    "risks": "No layout or event data changes. Real assistive technology verification remains outstanding.",
+    "dependenciesAndConflicts": "Latest PR #189 changed-file list has no overlap. Existing test and release-preflight extended; no new workflow.",
+    "branch": "qa/quality-supervisor-20261114",
+    "issueOrPR": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/190",
+    "verificationRequired": "Rendered three-section controls reference all existing panels; upcoming UI/merge and full release checks pass; approved-preview screen-reader review before accessibility sign-off."
   }
 ]
