@@ -56,11 +56,10 @@ export function endpoint(id,stage,skip=0){
   if(!STAGES.includes(stage))throw Error('Unexpected research stage');
   const q=new URLSearchParams();
   if(stage==='profile'){
-    q.set('includeMeasurements','true');
-    q.set('includeRanks','true');
-    q.set('includeShikonas','true');
-    q.set('sortOrder','asc');
-    return SOURCE+'/rikishi/'+id+'?'+q;
+    // Plain profile path is already exercised by the existing Sumo preview.
+    // Invalid extra query options previously returned HTTP 400 for all eight pilots.
+    // Dedicated endpoints below collect the three histories independently.
+    return SOURCE+'/rikishi/'+id;
   }
   if(stage==='stats')return SOURCE+'/rikishi/'+id+'/stats';
   if(stage==='matches')return SOURCE+'/rikishi/'+id+'/matches?limit='+PAGE_SIZE+'&skip='+skip;
@@ -144,6 +143,16 @@ async function ensureCache(w){
   const stored=await readJson(filePath(w.sourceId));
   if(!stored)return newCache(w);
   if(stored.schemaVersion!==1||Number(stored.rikishiId)!==w.sourceId||(stored.nskId!=null&&w.officialNskId!=null&&Number(stored.nskId)!==Number(w.officialNskId)))throw Error('Saved cache identity/schema conflict for '+w.shikonaEn);
+  // One-time requeue for pilot exceptions caused by the old, malformed profile
+  // query. Preserve audit error history; never retry it repeatedly each run.
+  if(stored.profileRequestContract!==2){
+    if(stored.stages.profile?.attempts>=3 &&
+       stored.errors?.some(x=>x.stage==='profile'&&x.message==='Sumo API HTTP 400')){
+      stored.stages.profile.attempts=0;
+      stored.errors.push({at:clock(),stage:'profile',message:'Requeued after correcting unsupported query arguments',transient:false});
+    }
+    stored.profileRequestContract=2;
+  }
   return stored;
 }
 async function summary(roster){
