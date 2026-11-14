@@ -69,7 +69,8 @@ jobs:
           node --check scripts/sumo-jsa-reconcile.mjs
           node --check scripts/sumo-build-profile-cache.mjs
           node --check scripts/sumo-jsa-public-spotcheck.mjs
-          node --test tests/test-sumo-backfill-190.mjs tests/test-sumo-verify-190.mjs tests/test-sumo-jsa-reconcile.mjs tests/test-sumo-build-profile-cache.mjs tests/test-sumo-jsa-public-spotcheck.mjs
+          node --check scripts/sumo-official-bout-corrections.mjs
+          node --test tests/test-sumo-backfill-190.mjs tests/test-sumo-verify-190.mjs tests/test-sumo-jsa-reconcile.mjs tests/test-sumo-build-profile-cache.mjs tests/test-sumo-jsa-public-spotcheck.mjs tests/test-sumo-official-bout-corrections.mjs
       - name: Collect only missing research data
         if: steps.preflight.outputs.run == 'true'
         env:
