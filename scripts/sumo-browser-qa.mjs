@@ -59,6 +59,8 @@ async function testSite(viewport,isMobile,label) {
   assertContains(profile,'Recent performance','recent results');
   assertContains(profile,'Career honours','honours');
   assertContains(profile,'cached recent bout sample','source label');
+  assertContains(profile,'JSA-listed signature manoeuvres','official source signature tags');
+  assert.equal(await page.locator('.style-tags span').count(),4);
   await snap(page,label+'-profile',{fullPage:false});
   // All 190 rikishi should expose current banzuke opponent histories even
   // without individually fetched lifetime stats or 18-bout enrichment.
@@ -66,6 +68,7 @@ async function testSite(viewport,isMobile,label) {
   const unfeatured=await page.locator('#sumo-main').innerText();
   assertContains(unfeatured,'current November 2026 tournament only','source-scoped technique sample');
   assertContains(unfeatured,'banzuke only','source-scoped recent bouts');
+  assert.equal(await page.locator('.style-tags span').count(),0,'No speculative official style on unverified profiles');
   await open(page,'profile/75','.profile-hero');
   const makushitaProfile=await page.locator('#sumo-main').innerText();
   assertContains(makushitaProfile,'non-bout days','Makushita rest days do not count as absences');
