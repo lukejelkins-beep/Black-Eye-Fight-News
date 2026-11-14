@@ -32,6 +32,8 @@ on:
       - 'tests/test-ufc-unified-wave8-wave9-evidence.mjs'
       - 'tests/test-ufc-unified-wave10-evidence.mjs'
       - 'tests/test-ufc-unified-wave11-evidence.mjs'
+      - 'tests/test-ufc-unified-marnic-evidence.mjs'
+      - 'data/ufc-unified-marnic-official-career-review-20261114.json'
       - 'tests/test-ufc-unified-wave6-idempotence.mjs'
       - 'tests/test-ufc-unified-wave6-evidence.mjs'
       - 'tests/test-ufc-unified-victor-evidence.mjs'
@@ -102,6 +104,7 @@ jobs:
           node --test tests/test-ufc-unified-wave8-wave9-evidence.mjs
           node --test tests/test-ufc-unified-wave10-evidence.mjs
           node --test tests/test-ufc-unified-wave11-evidence.mjs
+          node --test tests/test-ufc-unified-marnic-evidence.mjs
           node --test tests/test-ufc-unified-mandel-evidence.mjs
           node --test tests/test-ufc-v4-stage3-import.mjs
           node --test tests/test-ufc-36-month-stage3-progress.mjs

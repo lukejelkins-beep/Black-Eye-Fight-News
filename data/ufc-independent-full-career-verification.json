@@ -19723,6 +19723,61 @@
           "nativeFighterId": "36074"
         }
       ]
+    },
+    "marnic-mann": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Marnic Mann",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/b6203e0492a9336c",
+      "officialFighterUrl": "https://www.ufc.com/athlete/marnic-mann",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "No direct UFCStats page retrieval claimed; pinned Greco UFCStats-derived complete history contains duplicate 2023 URL under two event-title variants; one exact fight identity counted once",
+        "method": "Official UFC.com athlete fight narrative and independent UFC event scorecard establish two full completed UFC bouts, confirmed one-to-one to pinned distinct historical UFCStats fight IDs and saved native numeric fighter/corner/outcomes. Josefine's full native name reconciled to UFC.com source reference. Strict Stage3 audit required."
+      },
+      "verifiedNumericFighterIds": [
+        "2804"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Exactly two completed official UFC bouts as of 14 November 2026: 2023-09-16 loss to Josefine Knutsson; 2024-04-27 decision loss to Ketlen Souza. Pinned Greco 2023 results repeat the SAME fight-details URL with two event name variants; do not infer a third fight. The saved Dana White Contender Series 2022-09-13 loss to Bruna Brasil is source-attested feeder evidence and excluded from official UFC career stats. Complete numeric ID 2804 and paired corners verified through saved native index. Official event scorecards override UFC athlete summary Win badges.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/marnic-mann",
+        "https://www.ufc.com/news/official-judges-scorecards-ufc-fight-night-nicolau-vs-perez",
+        "https://www.ufc.com/news/week-3-preview-dana-whites-contender-series-season-7",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2023-09-16",
+          "opponent": "Josefine Knutsson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/11318a7807cee8ca",
+          "nativeBoutId": "60052",
+          "nativeFighterId": "2804",
+          "sourceVerifiedNativeOpponentAliases": [
+            "Josefine Lindgren Knutsson"
+          ],
+          "verifiedOpponentNativeFighterIds": [
+            "11107"
+          ]
+        },
+        {
+          "date": "2024-04-27",
+          "opponent": "Ketlen Souza",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/4915c8a588513c22",
+          "nativeBoutId": "65843",
+          "nativeFighterId": "2804"
+        }
+      ]
     }
   }
 }
