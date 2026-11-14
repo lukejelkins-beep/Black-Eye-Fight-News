@@ -28333,6 +28333,155 @@
         }
       ],
       "sourceVerifiedExcludedFeederBouts": []
+    },
+    "billy-elekana": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Billy Elekana",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/07a74004d964c7f4",
+      "officialFighterUrl": "https://www.ufc.com/athlete/billy-elekana",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived dataset, not directly scraped UFCStats",
+        "method": "Independently read complete UFC.com dated athlete histories and official UFC results, crosschecked to pinned Greco UFCStats fight URLs, immutable original UFCalendar numeric fighter/bout IDs and opposing corners, dated results and measured rounds; DWCS excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "84"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "All five completed official UFC bouts between 2025-01-18 and 2026-11-07 are listed in UFC.com complete dated biographical results. The 2026-11-07 unanimous decision is an explicit loss to Lucas Fernando in the official detailed biography, despite a misleading generic Win tile; Greco and original native opposite winner agree. Previous two losses and three victories are preserved, with all five measured bouts and no DWCS appearances claimed.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/billy-elekana",
+        "https://www.ufc.com/athlete/lucas-fernando",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-01-18",
+          "opponent": "Bogdan Guskov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a6db8eb1fb3eebf2",
+          "nativeBoutId": "60948",
+          "nativeFighterId": "84"
+        },
+        {
+          "date": "2025-07-26",
+          "opponent": "Ibo Aslan",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f9dac7702609669f",
+          "nativeBoutId": "60826",
+          "nativeFighterId": "84"
+        },
+        {
+          "date": "2025-11-01",
+          "opponent": "Kevin Christian",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f063bcccbbb9edc5",
+          "nativeBoutId": "60424",
+          "nativeFighterId": "84"
+        },
+        {
+          "date": "2026-01-31",
+          "opponent": "Junior Tafa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d94f1b32a81e3fa1",
+          "nativeBoutId": "65852",
+          "nativeFighterId": "84"
+        },
+        {
+          "date": "2026-11-07",
+          "opponent": "Lucas Fernando",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1955773d3e42a616",
+          "nativeBoutId": "93276",
+          "nativeFighterId": "84"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    },
+    "yadier-del-valle": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Yadier del Valle",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/70380ccdc81915b8",
+      "officialFighterUrl": "https://www.ufc.com/athlete/yadier-del-valle",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived dataset, not directly scraped UFCStats",
+        "method": "Independently read complete UFC.com dated athlete histories and official UFC results, crosschecked to pinned Greco UFCStats fight URLs, immutable original UFCalendar numeric fighter/bout IDs and opposing corners, dated results and measured rounds; DWCS excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "412"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "All four completed official UFC bouts since debut on 2025-05-17 individually agree with UFC.com full dated history and pinned Greco native source: submission wins Connor Matthews/Isaac Dulgarian, unanimous-decision loss Jordan Leavitt, KO win Darren Elkins. UFC.com generic Win tile for Leavitt is misleading; detailed official biography and opponent record confirm loss. Earlier 2024-10-15 DWCS Antonio/Antônio Monteiro unanimous decision win (native 84171) was a separately official-source-attested feeder and is excluded, without changing its native cache entry.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/yadier-del-valle",
+        "https://www.ufc.com/athlete/jordan-leavitt",
+        "https://www.ufc.com/news/week-10-results-scorecards-dana-whites-contender-series-season-8",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-05-17",
+          "opponent": "Connor Matthews",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d6e2bc6e6c0cc4fe",
+          "nativeBoutId": "60847",
+          "nativeFighterId": "412"
+        },
+        {
+          "date": "2025-11-01",
+          "opponent": "Isaac Dulgarian",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/767b78b67c7da17c",
+          "nativeBoutId": "60421",
+          "nativeFighterId": "412"
+        },
+        {
+          "date": "2026-02-21",
+          "opponent": "Jordan Leavitt",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5b97f47cdd355cbe",
+          "nativeBoutId": "60671",
+          "nativeFighterId": "412"
+        },
+        {
+          "date": "2026-08-08",
+          "opponent": "Darren Elkins",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/06bfde3e3577906f",
+          "nativeBoutId": "83257",
+          "nativeFighterId": "412"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84171",
+          "date": "2024-10-15",
+          "opponent": "Antônio Monteiro",
+          "result": "win",
+          "event": "Dana White's Contender Series 76",
+          "officialSourceUrl": "https://www.ufc.com/news/week-10-results-scorecards-dana-whites-contender-series-season-8",
+          "excludedBecause": "UFC officially identifies the decision as a DWCS Season 8 Week 10 qualifying appearance for an Octagon contract, before the UFC debut in May 2025; it is not a UFC Octagon bout."
+        }
+      ]
     }
   }
 }
