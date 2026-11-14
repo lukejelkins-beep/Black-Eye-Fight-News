@@ -365,3 +365,24 @@ test('Final measured-round exceptions retain identity and provider retry evidenc
  assert.equal(result.profilesWithKnownRoundGaps[0].slug,'fighter-1');
  assert.equal(s.fullyProviderCertifiedTimelines,0);
 });
+
+test('Provider completeness states distinguish untruncated, truncated and missing flag',()=>{
+ const r={profiles:{
+   'fighter-1':{ufcTimeline:{complete:true,providerTruncatedFlag:false}},
+   'fighter-2':{ufcTimeline:{complete:false,providerTruncatedFlag:true}},
+   'fighter-3':{ufcTimeline:{complete:false,providerTruncatedFlag:null,
+     savedHistoryHasAdditionalUfcBouts:true}},
+   'fighter-4':{ufcTimeline:{complete:false,
+     conflictingNativeFightIds:1,missingRosterLastUfcFight:'2025-11-03'}}
+ }};
+ const s=auditApprovedStage3(approval,census,progress,r,archive).summary;
+ assert.equal(s.fullyProviderCertifiedTimelines,1);
+ assert.equal(s.providerMetadataExplicitlyUntruncated,1);
+ assert.equal(s.providerMetadataExplicitlyTruncated,1);
+ assert.equal(s.providerMetadataFlagUnavailable,1);
+ assert.equal(s.providerMetadataLegacyNotRecorded,1);
+ assert.equal(s.profilesWithoutTimelineEvidence,779);
+ assert.equal(s.providerTimelinesWithSavedHistoryContradictions,1);
+ assert.equal(s.providerTimelinesWithNativeIdConflicts,1);
+ assert.equal(s.providerTimelinesMissingLatestRosterBout,1);
+});
