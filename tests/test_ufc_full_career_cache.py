@@ -509,6 +509,26 @@ class FullCareerCacheTests(unittest.TestCase):
             approval,independent)["calls"],0,"No repeated exhausted searches")
         self.assertEqual(client.calls,1)
 
+    def test_exactly_one_recheck_recovers_source_confirmed_pre_fix_manual_cases(self):
+        state,research,census,approval,independent=self.full_index_search_fixture()
+        independent["fighters"]["carlos-hernandez-7"]["minimumOfficialUfcBouts"]=11
+        state["ufcApprovedFullFightSearchChecks"]={
+            "carlos-hernandez-7":{"status":"manual_review",
+             "checkedAt":"2026-11-14","fighterId":"123",
+             "invalidRows":1,"scannedRows":1}}
+        client=self.PaginatedSearch({"data":[],"meta":{}})
+        result=m.collect_approved_full_ufc_fight_search(
+            client,state,research,census,dt.date(2026,11,14),
+            approval,independent)
+        self.assertEqual(result["calls"],1)
+        check=state["ufcApprovedFullFightSearchChecks"]["carlos-hernandez-7"]
+        self.assertEqual(check["status"],"source_depth_gap")
+        self.assertTrue(check["cursorPaginationBugRechecked"])
+        self.assertEqual(check["missingOfficialMinimumUfcBouts"],10)
+        self.assertEqual(m.collect_approved_full_ufc_fight_search(
+            client,state,research,census,dt.date(2026,11,14),
+            approval,independent)["calls"],0)
+
     def test_no_signoff_no_full_career_calls(self):
         state,research,candidate=self.fixture()
         client=Fake()
