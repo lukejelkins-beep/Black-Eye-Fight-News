@@ -30,6 +30,7 @@ COVERAGE = ROOT / "data/ufc-last-five-coverage.json"
 COVERAGE36 = ROOT / "data/ufc-36-month-candidates.json"
 ROSTER_APPROVAL = ROOT / "data/ufc-36-month-roster-approval.json"
 FEEDER_EVIDENCE = ROOT / "data/ufc-feeder-bout-evidence.json"
+VERIFIED_ROUND_FALLBACK = ROOT / "data/ufc-official-verified-round-fallback.json"
 LEGACY_UFC_EVIDENCE = ROOT / "data/ufc-official-legacy-evidence.json"
 JUDGING = ROOT / "data/ufcalendar-judging-research.json"
 BASE = "https://api.ufcalendar.com/v1"
@@ -349,6 +350,111 @@ def merge_archive(archive,event,bout,rounds,stamp):
     return m.put(archive,event["date"],bout["a"]["name"],bout["b"]["name"],
                  event["title"],"ufcalendar",bout["id"],rounds,stamp,
                  promotion=event["org"].upper())
+
+
+def apply_verified_round_fallbacks(state,archive,manifest,coverage,approval,today,stamp):
+    """Fill two missing UFC rounds from independently corroborated UFCStats facts.
+
+    UFCalendar remains the first-choice collector and takes precedence if it
+    supplies these statistics later. This is neither provider-native collection
+    nor proof that a fighter's career timeline is complete. Keep source evidence
+    internal and preserve all roundRetry / roundDone records unchanged.
+    """
+    if (not isinstance(manifest,dict) or manifest.get("schema")!=1 or
+        manifest.get("scope")!="ufc-official-verified-round-fallback"):
+        return 0
+    if not approved_ufc_career_cohort(approval,coverage,today):
+        return 0
+    import importlib.util
+    spec=importlib.util.spec_from_file_location(
+        "befn_independent_round_archive",ROOT/"scripts/refresh-ufc-research-archive.py")
+    module=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    allowed={"83242","83254"}
+    core={"sigLanded","sigAttempted","takedowns","takedownAttempts",
+          "controlSec","knockdowns","subAttempts"}
+    source="ufc-stats-verified-web"
+    applied=0
+    for entry in manifest.get("bouts",[]):
+        if not isinstance(entry,dict):continue
+        bid=str(entry.get("fightId") or "")
+        when=date_str(entry.get("date"))
+        bout=state.get("bouts",{}).get(bid)
+        if (bid not in allowed or not when or not isinstance(bout,dict) or
+            bout.get("id")!=bid or bout.get("org")!="ufc" or
+            bout.get("eventDate")!=when or
+            bout.get("status") not in ("completed","draw","no_contest") or
+            not official_ufc_event_title(bout.get("event") or "")):
+            continue
+        if (not isinstance(bout.get("a"),dict) or
+            not isinstance(bout.get("b"),dict) or
+            bout["a"].get("name")!=entry.get("aName") or
+            bout["b"].get("name")!=entry.get("bName")):
+            continue
+        # A verified result must carry a distinct pair of primary/cross-check
+        # pages. The actual numeric values are the tiny manually inspected set.
+        url=str(entry.get("sourceUrl") or "")
+        corroboration=str(entry.get("crossCheckUrl") or "")
+        provider_url=str(entry.get("providerPublicCheckUrl") or "")
+        known_sources=("https://cagenightly.com/","https://fightiq.net/")
+        if (not url.startswith(known_sources) or
+            not corroboration.startswith(("https://fightiq.net/",
+                                            "https://www.ufcalendar.com/")) or
+            not provider_url.startswith("https://www.ufcalendar.com/") or
+            len({url,corroboration,provider_url})!=3):
+            continue
+        raw=entry.get("rounds")
+        expected=(bout.get("result") or {}).get("round")
+        if (type(expected) is not int or not isinstance(raw,list) or
+            len(raw)!=expected or not 1<=expected<=5):
+            continue
+        converted=[]
+        valid=True
+        for n,row in enumerate(raw,1):
+            if not isinstance(row,dict) or row.get("round")!=n:
+                valid=False;break
+            converted_row={"round":n}
+            for corner in ("a","b"):
+                stats=row.get(corner)
+                if not isinstance(stats,dict) or set(stats)!=core:
+                    valid=False;break
+                if any(type(x) is not int or x<0 for x in stats.values()):
+                    valid=False;break
+                if (stats["sigLanded"]>stats["sigAttempted"] or
+                    stats["takedowns"]>stats["takedownAttempts"] or
+                    stats["controlSec"]>300 or stats["knockdowns"]>10 or
+                    stats["subAttempts"]>20):
+                    valid=False;break
+                converted_row[corner]=dict(stats)
+            if not valid:break
+            converted_row["a"]["sigAbsorbed"]=converted_row["b"]["sigLanded"]
+            converted_row["b"]["sigAbsorbed"]=converted_row["a"]["sigLanded"]
+            converted.append(converted_row)
+        if not valid:continue
+        key=module.key_for(when,bout["a"]["name"],bout["b"]["name"])
+        if not key:continue
+        original=archive.get("fights",{}).get(key,{})
+        sources=original.get("sources",{})
+        if source in sources:continue # Permanent idempotence across relays
+        # If the primary collector has already measured every round for both
+        # corners, avoid adding unnecessary secondary observations.
+        primary=sources.get("ufcalendar",{}).get("rounds",[])
+        if (len(primary)>=expected and all(
+            isinstance(row,dict) and
+            all(isinstance(row.get(c),dict) and
+                type(row[c].get("sigLanded")) is int
+                for c in ("a","b")) for row in primary)):
+            continue
+        if module.put(archive,when,bout["a"]["name"],bout["b"]["name"],
+                      bout.get("event") or "",source,bid,converted,stamp,
+                      promotion="UFC"):
+            archive["fights"][key]["sources"][source]["sourceUrl"]=url
+            archive["fights"][key]["sources"][source]["crossCheckUrl"]=corroboration
+            archive["fights"][key]["sources"][source]["providerPublicCheckUrl"]=provider_url
+            applied+=1
+    if applied:
+        print("BEFN: added independently verified, provider-secondary UFC round records:",applied)
+    return applied
 
 def selection(state):
     pairs=[x for x in state.get("bouts",{}).values()
@@ -1644,6 +1750,10 @@ def main():
         round_priority=approved_ufc_round_priority(approval,approved36,research,roster_today,state)
         recovery=collect_rounds(client,state,cards,archive,pfl_archive,today,coverage,
                                 approved_priority=round_priority)
+        apply_verified_round_fallbacks(
+            state,archive,read(VERIFIED_ROUND_FALLBACK,{}),
+            approved36,approval,roster_today,
+            dt.datetime.now(dt.timezone.utc).isoformat())
         if recovery["retried"]:
             print("UFCalendar incomplete UFC round rechecks:",recovery["retried"])
         collect_judging(client,state,cards,judging)

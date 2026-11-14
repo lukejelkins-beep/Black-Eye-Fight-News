@@ -115,7 +115,9 @@ def normalize_round(rows, source):
 def reconcile(fight):
     merged={}
     conflict=[]
-    for source in ("ufc-stats-api","cito","ufcalendar"):
+    # Independently checked, narrow fallback is lowest priority; never override
+    # UFCalendar or other saved provider measurements when they later arrive.
+    for source in ("ufc-stats-api","cito","ufcalendar","ufc-stats-verified-web"):
         for round_data in fight.get("sources",{}).get(source,{}).get("rounds",[]):
             n=round_data["round"]
             rec=merged.setdefault(n,{"round":n,"a":{},"b":{}})

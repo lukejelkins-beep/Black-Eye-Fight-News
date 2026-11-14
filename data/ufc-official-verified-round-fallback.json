@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "scope": "ufc-official-verified-round-fallback",
+  "observedOn": "2026-11-14",
+  "note": "Two independently verified UFCStats-derived round-statistic exceptions only. Never override a richer UFCalendar record, infer zero for missing source figures, reassign fight IDs, or use this to certify a full career. Keep provenance internal.",
+  "bouts": [
+    {
+      "fightId": "83242",
+      "date": "2025-05-17",
+      "aName": "Park Hyun-sung",
+      "bName": "Carlos Hernandez",
+      "sourceUrl": "https://cagenightly.com/fights/hyunsung-park-vs-carlos-hernandez-ufc-2025-05-17",
+      "crossCheckUrl": "https://fightiq.net/bout/2025-05-17-hyunsung-park-vs-carlos-hernandez",
+      "providerPublicCheckUrl": "https://www.ufcalendar.com/sr/fighters/hyunsung-park/stats",
+      "rounds": [
+        {
+          "round": 1,
+          "a": {
+            "sigLanded": 14,
+            "sigAttempted": 22,
+            "takedowns": 1,
+            "takedownAttempts": 1,
+            "controlSec": 33,
+            "knockdowns": 0,
+            "subAttempts": 1
+          },
+          "b": {
+            "sigLanded": 4,
+            "sigAttempted": 17,
+            "takedowns": 0,
+            "takedownAttempts": 0,
+            "controlSec": 0,
+            "knockdowns": 0,
+            "subAttempts": 0
+          }
+        }
+      ]
+    },
+    {
+      "fightId": "83254",
+      "date": "2025-10-18",
+      "aName": "Bruno Gustavo da Silva",
+      "bName": "Park Hyun-sung",
+      "sourceUrl": "https://fightiq.net/bout/2025-10-18-bruno-silva-vs-hyunsung-park",
+      "crossCheckUrl": "https://www.ufcalendar.com/sr/fighters/hyunsung-park/stats",
+      "providerPublicCheckUrl": "https://www.ufcalendar.com/fighters/bruno-silva/stats",
+      "rounds": [
+        {
+          "round": 1,
+          "a": {
+            "sigLanded": 20,
+            "sigAttempted": 33,
+            "takedowns": 1,
+            "takedownAttempts": 1,
+            "controlSec": 40,
+            "knockdowns": 0,
+            "subAttempts": 0
+          },
+          "b": {
+            "sigLanded": 10,
+            "sigAttempted": 31,
+            "takedowns": 1,
+            "takedownAttempts": 4,
+            "controlSec": 42,
+            "knockdowns": 0,
+            "subAttempts": 0
+          }
+        },
+        {
+          "round": 2,
+          "a": {
+            "sigLanded": 12,
+            "sigAttempted": 18,
+            "takedowns": 2,
+            "takedownAttempts": 4,
+            "controlSec": 205,
+            "knockdowns": 1,
+            "subAttempts": 0
+          },
+          "b": {
+            "sigLanded": 7,
+            "sigAttempted": 31,
+            "takedowns": 0,
+            "takedownAttempts": 0,
+            "controlSec": 0,
+            "knockdowns": 0,
+            "subAttempts": 0
+          }
+        },
+        {
+          "round": 3,
+          "a": {
+            "sigLanded": 14,
+            "sigAttempted": 23,
+            "takedowns": 2,
+            "takedownAttempts": 4,
+            "controlSec": 44,
+            "knockdowns": 0,
+            "subAttempts": 1
+          },
+          "b": {
+            "sigLanded": 14,
+            "sigAttempted": 46,
+            "takedowns": 0,
+            "takedownAttempts": 0,
+            "controlSec": 0,
+            "knockdowns": 0,
+            "subAttempts": 0
+          }
+        }
+      ]
+    }
+  ]
+}

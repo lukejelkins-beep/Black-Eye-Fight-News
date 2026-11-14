@@ -127,6 +127,105 @@ class FullCareerCacheTests(unittest.TestCase):
         self.assertEqual(result["calls"],0)
         self.assertEqual(client.calls,0)
 
+    def round_fallback_fixture(self):
+        state=m.default_progress()
+        for bid,day,a,b,end_round,event in [
+            ("83242","2025-05-17","Park Hyun-sung","Carlos Hernandez",1,
+             "UFC Fight Night: Burns vs Morales"),
+            ("83254","2025-10-18","Bruno Gustavo da Silva","Park Hyun-sung",3,
+             "UFC Vancouver: De Ridder vs Hernandez")]:
+            state["bouts"][bid]={
+                "id":bid,"org":"ufc","status":"completed","eventDate":day,
+                "event":event,"result":{"round":end_round},
+                "a":{"name":a},"b":{"name":b}}
+        state["roundDone"]={"83242":0,"83254":0}
+        state["roundRetry"]={
+            "83242":{"attempts":1,"retryAfter":"2026-11-27"},
+            "83254":{"attempts":1,"retryAfter":"2026-11-27"}}
+        coverage={"schema":1,"scope":"ufc","activityMonths":36,
+                  "asOf":"2026-11-14","indexCompleteness":"36_month_event_scan_complete"}
+        approval={**self.approval(["park-hyun-sung","carlos-hernandez-7",
+                                   "bruno-gustavo-da-silva"]),
+                  "rosterAsOf":"2026-11-14","approvedAt":"2026-11-14"}
+        return state,{"schema":1,"fights":{}},coverage,approval
+
+    def test_independent_verified_round_fallback_recovers_two_bouts_once(self):
+        state,archive,coverage,approval=self.round_fallback_fixture()
+        manifest=m.read(m.VERIFIED_ROUND_FALLBACK,{})
+        self.assertEqual([row["fightId"] for row in manifest["bouts"]],
+                         ["83242","83254"])
+        prior_retries=dict(state["roundRetry"])
+        n=m.apply_verified_round_fallbacks(
+            state,archive,manifest,coverage,approval,dt.date(2026,11,14),
+            "2026-11-14T01:00:00Z")
+        self.assertEqual(n,2)
+        self.assertEqual(m.apply_verified_round_fallbacks(
+            state,archive,manifest,coverage,approval,dt.date(2026,11,14),
+            "2026-11-14T01:05:00Z"),0,"Must not reimport on next five-minute hop")
+        self.assertEqual(state["roundDone"],{"83242":0,"83254":0},
+                         "Independent research must not masquerade as provider completion")
+        self.assertEqual(state["roundRetry"],prior_retries)
+        first=archive["fights"]["2025-05-17:carloshernandez:parkhyunsung"]
+        second=archive["fights"]["2025-10-18:brunogustavodasilva:parkhyunsung"]
+        self.assertEqual([r["round"] for r in first["rounds"]],[1])
+        self.assertEqual([r["round"] for r in second["rounds"]],[1,2,3])
+        self.assertEqual(first["rounds"][0]["a"]["sigLanded"],14)
+        self.assertEqual(first["rounds"][0]["b"]["knockdowns"],0)
+        self.assertEqual(second["rounds"][1]["a"]["knockdowns"],1)
+        self.assertEqual(second["rounds"][1]["a"]["controlSec"],205)
+        self.assertEqual(second["rounds"][0]["a"]["sigAbsorbed"],10)
+        self.assertEqual(first["rounds"][0]["a"]["sourceByMetric"]["sigLanded"],
+                         "ufc-stats-verified-web")
+        self.assertIn("sourceUrl",first["sources"]["ufc-stats-verified-web"])
+
+    def test_independent_round_fallback_rejects_bad_identity_and_unapproved_scope(self):
+        import copy
+        state,archive,coverage,approval=self.round_fallback_fixture()
+        source=m.read(m.VERIFIED_ROUND_FALLBACK,{})
+        for mutate in ("native_id","event_date","wrong_opponent",
+                       "feeder","negative_metric","inferred_zero"):
+            current=copy.deepcopy(state)
+            manifest=copy.deepcopy(source)
+            manifest["bouts"]=manifest["bouts"][:1]
+            if mutate=="native_id":current["bouts"]["83242"]["id"]="999"
+            elif mutate=="event_date":current["bouts"]["83242"]["eventDate"]="2025-05-16"
+            elif mutate=="wrong_opponent":current["bouts"]["83242"]["b"]["name"]="Other Fighter"
+            elif mutate=="feeder":current["bouts"]["83242"]["event"]="Dana White's Contender Series"
+            elif mutate=="negative_metric":manifest["bouts"][0]["rounds"][0]["a"]["controlSec"]=-1
+            elif mutate=="inferred_zero":del manifest["bouts"][0]["rounds"][0]["b"]["knockdowns"]
+            a={"schema":1,"fights":{}}
+            self.assertEqual(m.apply_verified_round_fallbacks(
+                current,a,manifest,coverage,approval,dt.date(2026,11,14),
+                "2026-11-14T01:00:00Z"),0,mutate)
+            self.assertEqual(a["fights"],{})
+        self.assertEqual(m.apply_verified_round_fallbacks(
+            state,archive,source,coverage,{"status":"not_approved"},
+            dt.date(2026,11,14),"2026-11-14T01:00:00Z"),0)
+
+    def test_independent_fallback_never_overrides_newer_primary_provider_metric(self):
+        state,archive,coverage,approval=self.round_fallback_fixture()
+        manifest=m.read(m.VERIFIED_ROUND_FALLBACK,{})
+        self.assertEqual(m.apply_verified_round_fallbacks(
+            state,archive,manifest,coverage,approval,dt.date(2026,11,14),
+            "2026-11-14T01:00:00Z"),2)
+        import importlib.util
+        spec=importlib.util.spec_from_file_location(
+            "befn_archive_test",m.ROOT/"scripts/refresh-ufc-research-archive.py")
+        arch=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(arch)
+        item=archive["fights"]["2025-05-17:carloshernandez:parkhyunsung"]
+        item["sources"]["ufcalendar"]={"id":"83242",
+            "rounds":[{"round":1,"a":{"sigLanded":15},"b":{"sigLanded":5}}]}
+        arch.reconcile(item)
+        self.assertEqual(item["rounds"][0]["a"]["sigLanded"],15)
+        self.assertEqual(item["rounds"][0]["a"]["sourceByMetric"]["sigLanded"],
+                         "ufcalendar")
+        self.assertEqual(item["rounds"][0]["a"]["takedowns"],1)
+        self.assertEqual(item["rounds"][0]["a"]["sourceByMetric"]["takedowns"],
+                         "ufc-stats-verified-web")
+        self.assertTrue(item["conflicts"],
+                        "Contradictions remain visible in internal archive QA")
+
     def test_no_signoff_no_full_career_calls(self):
         state,research,candidate=self.fixture()
         client=Fake()
