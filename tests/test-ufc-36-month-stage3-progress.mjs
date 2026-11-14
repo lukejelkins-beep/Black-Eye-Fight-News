@@ -276,3 +276,17 @@ test('Official UFC evidence protects the older-career DWCS exclusions across sea
      'Missing exact UFC DWCS evidence for '+boutId+' '+fighterSlug);
  }
 });
+
+test('Two Luke Flores DWCS fights are precisely excluded despite an inconsistent recap alias',()=>{
+ const evidence=JSON.parse(readFileSync(new URL('../data/ufc-feeder-bout-evidence.json',import.meta.url),'utf8'));
+ for(const [id,fighter,date] of [
+  ['83941','jordan-leavitt','2020-08-04'],
+  ['84114','matt-frevola','2017-08-29']
+ ]){
+  const exact=evidence.bouts.filter(r=>r.boutId===id&&
+    r.fighterSlug===fighter&&r.date===date&&r.opponent==='Luke Flores');
+  assert.equal(exact.length,1,'Missing distinct fighter/date DWCS identity proof');
+  assert.ok(exact[0].sourceUrl.startsWith('https://www.ufc.com/'));
+  assert.match(exact[0].reviewNote,/Jose Flores/);
+ }
+});
