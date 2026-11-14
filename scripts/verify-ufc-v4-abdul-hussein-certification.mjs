@@ -43,7 +43,7 @@ for(const metric of ['sigLanded','sigAttempted','knockdowns','takedowns','takedo
   fail(Number.isFinite(obs.metrics?.[metric]),'missing measured '+metric);
 const c=census.fighters?.find(x=>x.slug===slug);
 fail(c?.lastUfcFight==='2026-07-25','approved roster last UFC fight no longer reconciles');
-const gate=evaluateCareerEvidence(p,history,c.lastUfcFight,census.asOf,e);
+const gate=evaluateCareerEvidence(p,history,c.lastUfcFight,census.asOf,e,progress.bouts);
 fail(gate.independentlyVerified===true&&!gate.unresolvedIdentityConflicts,'independent exhaustive career gate refused: '+JSON.stringify(gate));
 const proof={schema:1,scope:'ufc-v4-certified-full-career-proof',slug,fighter:'Abdul Hussein',
  status:'independently_certified',rosterAsOf:'2026-11-14',sourceFighterUrl:e.fighterUrl,
