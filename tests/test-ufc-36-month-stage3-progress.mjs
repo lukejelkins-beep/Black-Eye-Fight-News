@@ -157,7 +157,10 @@ test('missing UFC fight IDs are classified from saved retry evidence without any
  const finale={schema:1,scope:'ufc-official-finale-recovery',
    bouts:[{fightId:'44',fighterSlug:'fighter-1',date:'2015-01-01',
      opponent:'Opponent D',sourceUrl:'https://www.ufc.com/event/test-finale'}]};
- const out=auditApprovedStage3(approval,census,p,r,archive,{},finale);
+ const legacy={schema:1,scope:'ufc-official-legacy-evidence',
+   bouts:[{fightId:'45',fighterSlug:'fighter-1',date:'2015-01-01',
+     opponent:'Opponent E',sourceUrl:'https://www.ufc.com/event/legacy'}]};
+ const out=auditApprovedStage3(approval,census,p,r,archive,{},finale,legacy);
  const s=out.summary;
  assert.equal(s.uniqueNativeFightIdsAwaitingIndex,5);
  assert.equal(s.missingKnownNativeIdsNotYetAttempted,2);
@@ -176,6 +179,9 @@ test('missing UFC fight IDs are classified from saved retry evidence without any
    [{fighterSlug:'fighter-1',date:'2015-01-01',opponent:'Opponent D'}]);
  assert.equal(out.manualReviewCases[0].sourceVerifiedOfficialFinale,true);
  assert.equal(s.sourceVerifiedOfficialFinaleFightIdsAwaitingIndex,1);
+ assert.equal(s.sourceVerifiedOfficialLegacyFightIdsAwaitingIndex,1);
+ assert.equal(out.priorityMissingIdDiagnostics.find(x=>x.id==='45').sourceVerifiedOfficialLegacy,true);
+ assert.equal(s.uniqueNativeFightIdsAwaitingIndex,5,'Official source proof must not fake successful indexing');
 });
 
 test('A single metric does not imply complete statistics; all-known indexing does not certify a full career',()=>{
@@ -288,5 +294,25 @@ test('Two Luke Flores DWCS fights are precisely excluded despite an inconsistent
   assert.equal(exact.length,1,'Missing distinct fighter/date DWCS identity proof');
   assert.ok(exact[0].sourceUrl.startsWith('https://www.ufc.com/'));
   assert.match(exact[0].reviewNote,/Jose Flores/);
+ }
+});
+
+test('Confirmed legacy UFC source evidence never counts as provider-hydrated statistics',()=>{
+ const legacy=JSON.parse(readFileSync(new URL('../data/ufc-official-legacy-evidence.json',import.meta.url),'utf8'));
+ const feeder=JSON.parse(readFileSync(new URL('../data/ufc-feeder-bout-evidence.json',import.meta.url),'utf8'));
+ assert.equal(legacy.schema,1);
+ assert.equal(legacy.scope,'ufc-official-legacy-evidence');
+ assert.equal(legacy.bouts.length,12);
+ const ids=legacy.bouts.map(x=>x.fightId);
+ assert.equal(new Set(ids).size,12,'Each unresolved official UFC fight identity must be distinct');
+ const feederIds=new Set(feeder.bouts.map(x=>x.boutId));
+ for(const row of legacy.bouts){
+  assert.match(row.fightId,/^[1-9][0-9]{0,11}$/);
+  assert.match(row.fighterSlug,/^[a-z0-9][a-z0-9-]+$/);
+  assert.match(row.date,/^\d{4}-\d{2}-\d{2}$/);
+  assert.ok(row.opponent?.trim());
+  assert.match(row.event,/Ultimate Fighter/);
+  assert.ok(row.sourceUrl.startsWith('https://www.ufc.com/'));
+  assert.ok(!feederIds.has(row.fightId),'Official UFC fight must not be in feeder exclusion evidence');
  }
 });
