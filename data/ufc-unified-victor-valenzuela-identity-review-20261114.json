@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "scope": "ufc-victor-valenzuela-strict-source-id-disambiguation",
+  "snapshot": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "approvedFighterSlug": "victor-valenzuela",
+  "officialFighterName": "Victor Valenzuela",
+  "officialSourceUrl": "https://www.ufc.com/athlete/victor-valenzuela-0",
+  "sourceFighterId": "078695e385ec2f57",
+  "sourceFighterUrl": "https://ufcstats.com/fighter-details/078695e385ec2f57",
+  "independentUfcStatsIdCrosscheck": "https://cagemetrics.com/fighter/078695e385ec2f57/",
+  "differentHomonymousUfcStatsFighterId": "de277a4abcfeea46",
+  "differentHomonymousUfcStatsUrl": "https://ufcstats.com/fighter-details/de277a4abcfeea46",
+  "distinctUfcArchivedProfileUrl": "https://www.ufc.com/athlete/victor-valenzuela",
+  "officialCareerBouts": [
+    {
+      "date": "2026-04-25",
+      "opponent": "Max Griffin",
+      "result": "win",
+      "sourceOfficialEvent": "https://www.ufc.com/event/ufc-fight-night-april-25-2026"
+    }
+  ],
+  "verifiedFeederCandidate": {
+    "date": "2025-10-14",
+    "opponent": "Michael Oliveira",
+    "result": "loss",
+    "event": "Dana White's Contender Series",
+    "sourceUrl": "https://www.ufc.com/athlete/victor-valenzuela-0"
+  },
+  "pending": [
+    "Get exact independent pinned Greco UFCStats fight-detail URL and verify there is only one true source-ID-matched UFC bout",
+    "Crosscheck saved native numeric fighter ID, fight ID and both opponents' original IDs for 2026-04-25 UFC",
+    "Independently source-exclude exact Oct 2025 DWCS native bout",
+    "Run full strict 783-person Stage3 gate; do not allow different Victor Valenzuela UFCStats identity or unrelated results"
+  ]
+}

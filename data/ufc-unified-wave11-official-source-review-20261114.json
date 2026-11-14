@@ -1,0 +1,199 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave11-official-career-source-review",
+  "snapshot": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "sourceMethod": "Official UFC.com dated biography crosscheck, historical Greco UFCStats-derived immutable fighter/date/results/fight URLs, original saved numeric native fighter/bout identities, paired corners and outcomes. Draws must remain draws; DWCS bouts are excluded. Strict full-cohort Stage 3 gate separately decides certification.",
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07",
+    "evidenceCutoff": "2026-11-14"
+  },
+  "fighters": {
+    "manolo-zecchini": {
+      "fighterName": "Manolo Zecchini",
+      "officialFighterUrl": "https://www.ufc.com/athlete/manolo-zecchini",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/fd7ab338e4953644",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2023-09-02",
+          "opponent": "Morgan Charriere",
+          "result": "loss"
+        },
+        {
+          "date": "2026-04-04",
+          "opponent": "Tommy McMillen",
+          "result": "loss"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "reviewNote": "Complete official UFC.com dated athlete biography corroborated fight by fight with uniquely pinned Greco UFCStats-derived fighter/event/results and native saved numeric bout, both fighter corners, precise winner/draw; separate source-proved DWCS exclusion. Full independently passing 783-athlete Stage3 measured-round audit still required.",
+      "status": "source_attested_not_stage3_certified"
+    },
+    "mantas-kondratavicius": {
+      "fighterName": "Mantas Kondratavicius",
+      "officialFighterUrl": "https://www.ufc.com/athlete/mantas-kondratavicius",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/3cc506f115cbb9d5",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-03-21",
+          "opponent": "Antonio Trocoli",
+          "result": "win"
+        },
+        {
+          "date": "2026-11-07",
+          "opponent": "Andre Petroski",
+          "result": "loss"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88282",
+          "date": "2025-09-23",
+          "opponent": "Đani Barbir",
+          "result": "win",
+          "event": "Dana White's Contender Series 83",
+          "officialSourceUrl": "https://www.ufc.com/athlete/mantas-kondratavicius",
+          "excludedBecause": "DWCS feeder appearance; not an official UFC career fight"
+        }
+      ],
+      "reviewNote": "Complete official UFC.com dated athlete biography corroborated fight by fight with uniquely pinned Greco UFCStats-derived fighter/event/results and native saved numeric bout, both fighter corners, precise winner/draw; separate source-proved DWCS exclusion. Full independently passing 783-athlete Stage3 measured-round audit still required.",
+      "status": "source_attested_not_stage3_certified"
+    },
+    "mark-vologdin": {
+      "fighterName": "Mark Vologdin",
+      "officialFighterUrl": "https://www.ufc.com/athlete/mark-vologdin",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/0e6b611451a9a7d8",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-04-18",
+          "opponent": "John Castaneda",
+          "result": "draw"
+        },
+        {
+          "date": "2026-08-01",
+          "opponent": "Borislav Nikolic",
+          "result": "loss"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88293",
+          "date": "2025-10-07",
+          "opponent": "Adrian Luna Martinetti",
+          "result": "loss",
+          "event": "Dana White's Contender Series 85",
+          "officialSourceUrl": "https://www.ufc.com/athlete/mark-vologdin",
+          "excludedBecause": "DWCS feeder appearance; not an official UFC career fight"
+        }
+      ],
+      "reviewNote": "Complete official UFC.com dated athlete biography corroborated fight by fight with uniquely pinned Greco UFCStats-derived fighter/event/results and native saved numeric bout, both fighter corners, precise winner/draw; separate source-proved DWCS exclusion. Full independently passing 783-athlete Stage3 measured-round audit still required.",
+      "status": "source_attested_not_stage3_certified",
+      "independentOfficialResultCrosscheck": {
+        "checkedDate": "2026-11-14",
+        "draw": {
+          "date": "2026-04-18",
+          "opponent": "John Castaneda",
+          "officialScorecardUrl": "https://www.ufc.com/news/ufc-winnipeg-official-scorecards-judges-burns-vs-malott",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-april-18-2026",
+          "score": "29-27, 28-28, 28-28",
+          "result": "majority draw",
+          "source": "UFC official scorecards and event; no winner for either corner",
+          "note": "UFC official result confirms a second-round Castaneda point deduction; do not convert draw to win/loss"
+        },
+        "loss": {
+          "date": "2026-08-01",
+          "opponent": "Borislav Nikolic",
+          "result": "loss by unanimous decision",
+          "sourceUrl": "https://www.ufc.com/athlete/mark-vologdin",
+          "sourcePriority": "Dated official UFC biography controls over contradictory athlete card 'Win' badge"
+        },
+        "excluded": {
+          "date": "2025-10-07",
+          "opponent": "Adrian Luna Martinetti",
+          "result": "DWCS unanimous decision loss",
+          "sourceUrl": "https://www.ufc.com/athlete/mark-vologdin",
+          "nativeBoutId": "88293",
+          "excludedFromOfficialUfcCareer": true
+        },
+        "certificationGranted": false,
+        "pending": [
+          "Verify both original native UFC bout IDs and paired fighter corners",
+          "Verify pinned UFCStats-derived fight-detail URLs for both UFC bouts",
+          "Verify measured rounds and strict completed Stage3 re-gate"
+        ]
+      }
+    },
+    "murtazali-magomedov": {
+      "fighterName": "Murtazali Magomedov",
+      "officialFighterUrl": "https://www.ufc.com/athlete/murtazali-magomedov",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/d436f5d55156a521",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-06-20",
+          "opponent": "Melsik Baghdasaryan",
+          "result": "win"
+        },
+        {
+          "date": "2026-11-07",
+          "opponent": "Jose Delano",
+          "result": "win"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88283",
+          "date": "2025-09-23",
+          "opponent": "Brahyam Zurcher",
+          "result": "win",
+          "event": "Dana White's Contender Series 83",
+          "officialSourceUrl": "https://www.ufc.com/athlete/murtazali-magomedov",
+          "excludedBecause": "DWCS feeder appearance; not an official UFC career fight"
+        }
+      ],
+      "reviewNote": "Complete official UFC.com dated athlete biography corroborated fight by fight with uniquely pinned Greco UFCStats-derived fighter/event/results and native saved numeric bout, both fighter corners, precise winner/draw; separate source-proved DWCS exclusion. Full independently passing 783-athlete Stage3 measured-round audit still required.",
+      "status": "source_attested_not_stage3_certified"
+    },
+    "noah-gugnon": {
+      "fighterName": "Noah Gugnon",
+      "officialFighterUrl": "https://www.ufc.com/athlete/noah-gugnon",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/6266abf6e4245c72",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-08-01",
+          "opponent": "Milos Janicic",
+          "result": "win"
+        },
+        {
+          "date": "2026-10-24",
+          "opponent": "Kody Steele",
+          "result": "loss"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "reviewNote": "Complete official UFC.com dated athlete biography corroborated fight by fight with uniquely pinned Greco UFCStats-derived fighter/event/results and native saved numeric bout, both fighter corners, precise winner/draw; separate source-proved DWCS exclusion. Full independently passing 783-athlete Stage3 measured-round audit still required.",
+      "status": "source_attested_not_stage3_certified"
+    }
+  },
+  "followUpNotCertified": [
+    {
+      "slug": "marnic-mann",
+      "reason": "Historical Greco contains duplicate identical bout URL under alternate event title and a second no-date source row; require independent date/scope and opponent alias reconciliation before strict Stage3 submission"
+    },
+    {
+      "slug": "nyamjargal-tumendemberel",
+      "reason": "UFC.com reports a Road to UFC semifinal for Terrance Saeteurn distinct from confirmed official UFC contests; pinned Greco has missing date for feeder row; separately verify exact UFC eligibility and exclude qualifiers by original native ID"
+    }
+  ]
+}

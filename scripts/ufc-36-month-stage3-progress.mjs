@@ -26,6 +26,22 @@ const normalizedOutcome=value=>({
  nc:'no_contest',no_contest:'no_contest'
 })[String(value||'').toLowerCase()]||null;
 
+/** Only individually official-UFC-confirmed showcase bouts on an otherwise feeder-labelled card.
+ * Data alone never certifies a career: native ID, both corners, result and rounds still must pass.
+ */
+export const isAttestedOfficialUfcShowcase=(entry,row)=>{
+ const id=numId(row?.nativeBoutId??row?.boutId),when=date(row?.date);
+ if(!id||!when)return false;
+ return arr(entry?.officialShowcaseBouts).some(x=>
+   x?.independentlyOfficial===true&&numId(x.nativeBoutId)===id&&
+   date(x.date)&&Math.abs((Date.parse(x.date+'T00:00:00Z')-
+    Date.parse(when+'T00:00:00Z'))/86400000)<=1&&
+   normal(x.opponent)===normal(row.opponent)&&
+   /^https:\/\/www\.ufc\.com\/news\//i.test(String(x.officialUfcSourceUrl||''))&&
+   /^https:\/\/ufcstats\.com\/fight-details\/[a-f0-9]{16}$/i.test(String(x.fightUrl||''))&&
+   (!row.fightUrl||row.fightUrl===x.fightUrl));
+};
+
 /** Full-career proof must be independently grounded, not inferred from index coverage. */
 export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,independentEntry,indexedBouts=null){
  const timeline=profile?.ufcTimeline||{};
@@ -104,8 +120,12 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
  const nativeIds=representations.map(r=>String(r.nativeBoutId));
  const sourceIds=given.map(r=>String(r.fightUrl));
  const savedNativeIds=rows.map(r=>String(r.boutId||''));
+ // Exact own-name aliases must be separately source-pinned to this UFCStats ID.
+ const reviewedAthleteName=normal(ext.fighterName)===normal(profile?.name)||
+   (sourceFighterIdentitySafe&&arr(ext.sourceVerifiedNativeNameAliases).some(alias=>
+    normal(alias)===normal(profile?.name)));
  const nativeMatches=nativeMapped&&indexedBouts&&sourceFighterIdentitySafe&&
-   normal(ext.fighterName)===normal(profile?.name)&&
+   reviewedAthleteName&&
    /^https:\/\/www\.ufc\.com\/athlete\//i.test(String(ext.officialFighterUrl||''))&&
    nativeIdentitySet.size>0&&
    ext.sourceSnapshot?.fightResultsBlobSha?.match(/^[a-f0-9]{40}$/i)&&
@@ -134,7 +154,7 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
      const h=matches[0],b=indexedBouts[id];
      const delta=(a,c)=>date(a)&&date(c)?
        Math.abs((Date.parse(a+'T00:00:00Z')-Date.parse(c+'T00:00:00Z'))/86400000):999;
-     if(!b||b.org!=='ufc'||isFeederTitle(b.event)||
+     if(!b||b.org!=='ufc'||(isFeederTitle(b.event)&&!isAttestedOfficialUfcShowcase(ext,r))||
         !['completed','draw','no_contest'].includes(b.status)||
         delta(r.date,h.date)>1||delta(r.date,b.eventDate)>1||
         normalizedOutcome(r.result)!==normalizedOutcome(h.result))return false;
@@ -149,8 +169,13 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
        reviewedNativeNames.has(normal(own.name))&&opponentMatched(other));
      if(corners.length!==1)return false;
      const [own,other]=corners[0];
+     // A draw may be persisted as status=completed with a native method=draw.
+     // Require an actual native draw method AND no winner; do not infer from a null winner alone.
+     const nativeDrawWithoutWinner=!b.result?.winnerId&&
+       String(b.result?.method||'').toLowerCase()==='draw';
      const outcome=b.status==='no_contest'?'no_contest':
-       b.status==='draw'?'draw':String(b.result?.winnerId)===String(own.id)?'win':
+       b.status==='draw'||nativeDrawWithoutWinner?'draw':
+       String(b.result?.winnerId)===String(own.id)?'win':
        String(b.result?.winnerId)===String(other.id)?'loss':null;
      return outcome===normalizedOutcome(r.result);
    });
@@ -454,13 +479,16 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
         providerTimelineMetadata.missingRosterLatestBout++;
     }
     const allHistory=arr(profile.recentHistory).filter(isUfc).filter(r=>!date(r.date)||r.date<=census.asOf);
-    for(const row of allHistory.filter(r=>feederDates.has(date(r.date))||sourceVerified(slug,r))){
+    const officialShowcase=(row)=>isAttestedOfficialUfcShowcase(independentRegistry[slug],row);
+    for(const row of allHistory.filter(r=>
+      (feederDates.has(date(r.date))&&!officialShowcase(r))||sourceVerified(slug,r))){
       excludedFeederHistoryRows++;
       if(sourceVerified(slug,row)&&!feederDates.has(date(row.date)))sourceVerifiedFeederHistoryRows++;
       const native=row.source==='native'?numId(row.boutId):null;
       if(native)excludedFeederFightIds.add(native);
     }
-    const history=allHistory.filter(r=>!feederDates.has(date(r.date))&&!sourceVerified(slug,r));
+    const history=allHistory.filter(r=>
+      (!feederDates.has(date(r.date))||officialShowcase(r))&&!sourceVerified(slug,r));
     if(history.length)profilesWithHistory++;
     // Legacy complete=true is not a certification without retained source evidence.
     historyRows+=history.length;

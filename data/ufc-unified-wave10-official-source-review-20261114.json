@@ -1,0 +1,216 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave10-official-career-source-review",
+  "snapshot": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "sourceMethod": "Human-reviewed complete UFC.com athlete fight descriptions and dated results crosschecked against pinned Greco UFCStats-derived immutable fighter, event and fight records; every bout mapped to original saved numeric UFCalendar IDs/opposing corners/results. DWCS excluded even where cached as UFC; Road To UFC 325 final counted as official UFC event.",
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "fighters": {
+    "lance-gibson-jr": {
+      "fighterName": "Lance Gibson Jr.",
+      "officialFighterUrl": "https://www.ufc.com/athlete/lance-gibson-jr",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/07bc580bdf3eb9c8",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2025-12-13",
+          "opponent": "King Green",
+          "result": "loss"
+        },
+        {
+          "date": "2026-03-28",
+          "opponent": "Chase Hooper",
+          "result": "win"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "sourceNote": "Official UFC.com complete dated biography individually checked, including wrong summary win badges: every full official bout aligned with the pinned source and numbered native corners, outcomes, event dates; DWCS separately source-attested and excluded. Strict measured-round Stage 3 gate is required independently.",
+      "status": "source_attested_not_yet_stage3_certified"
+    },
+    "lawrence-lui": {
+      "fighterName": "Lawrence Lui",
+      "officialFighterUrl": "https://www.ufc.com/athlete/lawrence-lui",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/a1ad35b98a9136e5",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-01-31",
+          "opponent": "Sulangrangbo",
+          "result": "win"
+        },
+        {
+          "date": "2026-08-29",
+          "opponent": "Hector Santiago",
+          "result": "loss"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "sourceNote": "Official UFC.com complete dated biography individually checked, including wrong summary win badges: every full official bout aligned with the pinned source and numbered native corners, outcomes, event dates; DWCS separately source-attested and excluded. Strict measured-round Stage 3 gate is required independently.",
+      "status": "source_attested_not_yet_stage3_certified"
+    },
+    "leon-shahbazyan": {
+      "fighterName": "Leon Shahbazyan",
+      "officialFighterUrl": "https://www.ufc.com/athlete/leon-shahbazyan",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/9eed2bcc9e0b92af",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-06-20",
+          "opponent": "Levan Chokheli",
+          "result": "loss"
+        },
+        {
+          "date": "2026-10-10",
+          "opponent": "Niko Price",
+          "result": "loss"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88225",
+          "date": "2019-08-20",
+          "opponent": "Phil Rowe",
+          "result": "loss",
+          "event": "Dana White's Contender Series 25",
+          "officialSourceUrl": "https://www.ufc.com/athlete/leon-shahbazyan",
+          "excludedBecause": "DWCS feeder appearance, not official UFC career fight"
+        }
+      ],
+      "sourceNote": "Official UFC.com complete dated biography individually checked, including wrong summary win badges: every full official bout aligned with the pinned source and numbered native corners, outcomes, event dates; DWCS separately source-attested and excluded. Strict measured-round Stage 3 gate is required independently.",
+      "status": "source_attested_not_yet_stage3_certified"
+    },
+    "lerryan-douglas": {
+      "fighterName": "Lerryan Douglas",
+      "officialFighterUrl": "https://www.ufc.com/athlete/lerryan-douglas",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/640a0f838f057a81",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-03-28",
+          "opponent": "Julian Erosa",
+          "result": "win"
+        },
+        {
+          "date": "2026-08-22",
+          "opponent": "Jamall Emmers",
+          "result": "loss"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83910",
+          "date": "2025-09-09",
+          "opponent": "Cam Teague",
+          "result": "win",
+          "event": "Dana White's Contender Series 81",
+          "officialSourceUrl": "https://www.ufc.com/athlete/lerryan-douglas",
+          "excludedBecause": "DWCS feeder appearance, not official UFC career fight"
+        }
+      ],
+      "sourceNote": "Official UFC.com complete dated biography individually checked, including wrong summary win badges: every full official bout aligned with the pinned source and numbered native corners, outcomes, event dates; DWCS separately source-attested and excluded. Strict measured-round Stage 3 gate is required independently.",
+      "status": "source_attested_not_yet_stage3_certified"
+    },
+    "levi-rodrigues-jr": {
+      "fighterName": "Levi Rodrigues Jr.",
+      "officialFighterUrl": "https://www.ufc.com/athlete/levi-rodrigues-jr",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/9ac4e43ed56429ed",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-07-18",
+          "opponent": "Felipe Franco",
+          "result": "loss"
+        },
+        {
+          "date": "2026-08-29",
+          "opponent": "Liu Ce",
+          "result": "loss"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84103",
+          "date": "2025-10-14",
+          "opponent": "Freddy Vidal",
+          "result": "no_contest",
+          "event": "Dana White's Contender Series 86",
+          "officialSourceUrl": "https://www.ufc.com/athlete/levi-rodrigues-jr",
+          "excludedBecause": "DWCS feeder appearance, not official UFC career fight"
+        }
+      ],
+      "sourceNote": "Official UFC.com complete dated biography individually checked, including wrong summary win badges: every full official bout aligned with the pinned source and numbered native corners, outcomes, event dates; DWCS separately source-attested and excluded. Strict measured-round Stage 3 gate is required independently.",
+      "status": "source_attested_not_yet_stage3_certified"
+    },
+    "lucas-fernando": {
+      "fighterName": "Lucas Fernando",
+      "officialFighterUrl": "https://www.ufc.com/athlete/lucas-fernando",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/3df223aeaacecf3f",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-08-15",
+          "opponent": "Rafael Tobias",
+          "result": "win"
+        },
+        {
+          "date": "2026-11-07",
+          "opponent": "Billy Elekana",
+          "result": "win"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83866",
+          "date": "2023-08-08",
+          "opponent": "Cesar Almeida",
+          "result": "loss",
+          "event": "Dana White's Contender Series 57",
+          "officialSourceUrl": "https://www.ufc.com/athlete/lucas-fernando",
+          "excludedBecause": "DWCS feeder appearance, not official UFC career fight"
+        }
+      ],
+      "sourceNote": "Official UFC.com complete dated biography individually checked, including wrong summary win badges: every full official bout aligned with the pinned source and numbered native corners, outcomes, event dates; DWCS separately source-attested and excluded. Strict measured-round Stage 3 gate is required independently.",
+      "status": "source_attested_not_yet_stage3_certified"
+    },
+    "lucas-rocha": {
+      "fighterName": "Lucas Rocha",
+      "officialFighterUrl": "https://www.ufc.com/athlete/lucas-rocha",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/e0d3d9b564f95635",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2024-10-12",
+          "opponent": "Clayton Carpenter",
+          "result": "loss"
+        },
+        {
+          "date": "2025-10-11",
+          "opponent": "Stewart Nicoll",
+          "result": "win"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84102",
+          "date": "2023-10-10",
+          "opponent": "Davi Bittencourt",
+          "result": "win",
+          "event": "Dana White's Contender Series 66",
+          "officialSourceUrl": "https://www.ufc.com/athlete/lucas-rocha",
+          "excludedBecause": "DWCS feeder appearance, not official UFC career fight"
+        }
+      ],
+      "sourceNote": "Official UFC.com complete dated biography individually checked, including wrong summary win badges: every full official bout aligned with the pinned source and numbered native corners, outcomes, event dates; DWCS separately source-attested and excluded. Strict measured-round Stage 3 gate is required independently.",
+      "status": "source_attested_not_yet_stage3_certified"
+    }
+  }
+}

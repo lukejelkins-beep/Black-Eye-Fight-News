@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-mandel-independent-source-review",
+  "snapshot": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "fighters": {
+    "mandel-nallo": {
+      "ufcOfficialAthleteUrl": "https://www.ufc.com/athlete/mandel-nallo",
+      "ufcOfficialResultUrls": [
+        "https://www.ufc.com/athlete/mandel-nallo",
+        "https://www.ufc.com/event/ufc-fight-night-october-17-2026"
+      ],
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/8f4528c10bd34fab",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-04-18",
+          "opponent": "Jai Herbert",
+          "result": "loss"
+        },
+        {
+          "date": "2026-10-17",
+          "opponent": "Nate Landwehr",
+          "result": "win"
+        }
+      ],
+      "feederExclusion": "2025-09-02 Dana White's Contender Series vs Samuel Silva is not an official Octagon bout",
+      "feederSource": "https://www.ufc.com/news/week-4-results-scorecards-fight-recaps-interviews-contract-winners-dana-whites-contender-series-season-9",
+      "status": "source_only_not_certified",
+      "pending": [
+        "exact pinned fight details",
+        "saved native IDs and both corners",
+        "source-verified feeder exclusion",
+        "strict 783-fighter round statistics and career completion audit"
+      ]
+    }
+  }
+}

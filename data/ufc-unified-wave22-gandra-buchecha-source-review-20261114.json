@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave22-two-full-career-official-source-review",
+  "asOf": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "sourceMethod": "Primary UFC.com dated complete careers and official outcomes crosschecked with Greco UFCStats-derived exact source identity, original UFCalendar saved numeric fighter and bout IDs/opposing corners, dates, outcomes, measured rounds, separately attested DWCS exclusion; strict 783-person Stage3 CI required.",
+  "fighters": {
+    "ryan-gandra": {
+      "fighterName": "Ryan Gandra",
+      "nativeName": "Ryan Gandra",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ryan-gandra",
+      "grecoFighterUrl": "https://ufcstats.com/fighter-details/e463ce0a2ca474f4",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2026-02-28",
+          "opponent": "Jose Daniel Medina",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/45ec0c5f19c9adbe",
+          "nativeBoutId": "60679",
+          "nativeFighterId": "478",
+          "sourceEventDate": "2026-02-28",
+          "originalOpponentNumericId": "229"
+        },
+        {
+          "date": "2026-07-11",
+          "opponent": "Zach Reese",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1162a74e3604c488",
+          "nativeBoutId": "66462",
+          "nativeFighterId": "478",
+          "sourceEventDate": "2026-07-11",
+          "originalOpponentNumericId": "233"
+        },
+        {
+          "date": "2026-09-19",
+          "opponent": "Ozzy Diaz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/51789f77811b1817",
+          "nativeBoutId": "83416",
+          "nativeFighterId": "478",
+          "sourceEventDate": "2026-09-19",
+          "originalOpponentNumericId": "550"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBoutIds": [
+        "84057"
+      ],
+      "notes": "Three source-confirmed UFC wins, DWCS Trent Miller bout 84057 separately excluded by native identity; no upcoming/scheduled fights included."
+    },
+    "marcus-almeida": {
+      "fighterName": "Marcus Buchecha",
+      "nativeName": "Marcus Almeida",
+      "officialFighterUrl": "https://www.ufc.com/athlete/marcus-buchecha",
+      "grecoFighterUrl": "https://ufcstats.com/fighter-details/095854a135e6db55",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2025-07-26",
+          "opponent": "Martin Buday",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0a598768f5c8d540",
+          "nativeBoutId": "60828",
+          "nativeFighterId": "7324",
+          "sourceEventDate": "2025-07-26",
+          "originalOpponentNumericId": "1032"
+        },
+        {
+          "date": "2025-12-14",
+          "opponent": "Kennedy Nzechukwu",
+          "result": "draw",
+          "fightUrl": "https://ufcstats.com/fight-details/47149f3187661509",
+          "nativeBoutId": "60651",
+          "nativeFighterId": "7324",
+          "sourceEventDate": "2025-12-13",
+          "originalOpponentNumericId": "344"
+        },
+        {
+          "date": "2026-04-25",
+          "opponent": "Ryan Spann",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7e551ddb1494a45f",
+          "nativeBoutId": "66081",
+          "nativeFighterId": "7324",
+          "sourceEventDate": "2026-04-25",
+          "originalOpponentNumericId": "556"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBoutIds": [],
+      "notes": "Source fighter Marcus Buchecha corresponds to native Marcus Almeida only via exact saved 7324 numeric corner and all three events; Kennedy Nzechukwu official draw, one-day event-UTC difference, not a win. Prior ONE fights outside scope."
+    }
+  }
+}

@@ -10,8 +10,76 @@ on:
       - 'scripts/ufc-36-month-review-report.mjs'
       - 'scripts/ufc-36-month-stage3-progress.mjs'
       - 'scripts/ufc-v4-certification-queue.mjs'
+      - 'scripts/ufc-certification-consolidation-preflight.mjs'
       - 'data/ufc-independent-full-career-verification.json'
+      - 'data/ufc-unified-wave17-dulatov-choinski-gimenis-official-source-review-20261114.json'
+      - 'data/ufc-unified-josias-musasa-official-source-review-20261114.json'
+      - 'data/ufc-unified-wave19-loder-bleda-sidey-official-source-review-20261114.json'
+      - 'data/ufc-unified-wave20-taveras-walker-musayev-source-review-20261114.json'
+      - 'data/ufc-unified-wave21-riley-luna-rahiki-source-review-20261114.json'
+      - 'data/ufc-unified-wave22-gandra-buchecha-source-review-20261114.json'
+      - 'tests/test-ufc-unified-wave22-gandra-buchecha.mjs'
+      - 'tests/test-ufc-unified-wave21-riley-luna-rahiki.mjs'
+      - 'tests/test-ufc-unified-ronaldo-rodriguez-full-career.mjs'
+      - 'data/ufc-unified-wave24-yannis-yoo-source-review-20261114.json'
+      - 'tests/test-ufc-unified-wave24-yannis-yoo-evidence.mjs'
+      - 'tests/test-ufc-unified-wave25-six-careers-20261114.mjs'
+      - 'data/ufc-unified-wave25-six-careers-source-20261114.json'
       - 'tests/test-ufc-v4-certification-queue.mjs'
+      - 'tests/test-ufc-certification-consolidation-preflight.mjs'
+      - 'tests/test-ufc-v4-stage3-import.mjs'
+      - 'tests/test-ufc-stage3-v4-reconciliation.mjs'
+      - 'tests/test-ufc-unified-next-two-official-source-review.mjs'
+      - 'tests/test-ufc-unified-wave3-evidence.mjs'
+      - 'tests/test-ufc-unified-wave4-evidence.mjs'
+      - 'tests/test-ufc-unified-wave5-evidence.mjs'
+      - 'tests/test-ufc-unified-mandel-evidence.mjs'
+      - 'data/ufc-unified-next-two-official-source-review-20261114.json'
+      - 'scripts/ufc-reconcile-stage3-v4-certifications.mjs'
+      - 'scripts/diagnose-ufc-v4-stage3-blockers.mjs'
+      - 'scripts/ufc-unified-next8b-source-review.mjs'
+      - 'scripts/ufc-unified-wave4-source-review.mjs'
+      - 'scripts/ufc-unified-wave5-source-review.mjs'
+      - 'scripts/ufc-unified-wave6-source-review.mjs'
+      - 'scripts/ufc-unified-wave7-source-review.mjs'
+      - 'data/ufc-unified-wave7-official-source-review-20261114.json'
+      - 'tests/test-ufc-unified-wave7-evidence.mjs'
+      - 'tests/test-ufc-unified-wave8-wave9-evidence.mjs'
+      - 'tests/test-ufc-unified-wave12-evidence.mjs'
+      - 'tests/test-ufc-unified-wave13-evidence.mjs'
+      - 'tests/test-ufc-unified-wave14-evidence.mjs'
+      - 'tests/test-ufc-unified-pedro-rodrigo-evidence.mjs'
+      - 'tests/test-ufc-unified-gantt-xiong-six-evidence.mjs'
+      - 'tests/test-ufc-unified-wave16-amosov-hafez-evidence.mjs'
+      - 'tests/test-ufc-unified-seven-careers-evidence.mjs'
+      - 'tests/test-ufc-unified-five-careers-evidence.mjs'
+      - 'tests/test-ufc-unified-wave17-three-debut-evidence.mjs'
+      - 'tests/test-ufc-unified-josias-musasa-evidence.mjs'
+      - 'tests/test-ufc-unified-wave19-three-careers-evidence.mjs'
+      - 'tests/test-ufc-unified-wave20-three-careers-evidence.mjs'
+      - 'tests/test-ufc-unified-waves17-18-evidence.mjs'
+      - 'tests/test-ufc-unified-wave19-evidence.mjs'
+      - 'data/ufc-unified-wave19-three-two-bout-careers-20261114.json'
+      - 'tests/test-ufc-unified-wave18-three-careers.mjs'
+      - 'data/ufc-unified-wave18-official-career-source-review-20261114.json'
+      - 'tests/test-ufc-unified-blake-bilder-evidence.mjs'
+      - 'tests/test-ufc-unified-wave19-donte-kody-evidence.mjs'
+      - 'tests/test-ufc-unified-wave10-evidence.mjs'
+      - 'tests/test-ufc-unified-wave11-evidence.mjs'
+      - 'tests/test-ufc-unified-marnic-evidence.mjs'
+      - 'data/ufc-unified-marnic-official-career-review-20261114.json'
+      - 'tests/test-ufc-unified-wave6-idempotence.mjs'
+      - 'tests/test-ufc-unified-wave6-evidence.mjs'
+      - 'tests/test-ufc-unified-victor-evidence.mjs'
+      - 'scripts/ufc-unified-ding-exact-alias-review.mjs'
+      - 'scripts/ufc-unified-victor-source-review.mjs'
+      - 'data/ufc-unified-victor-valenzuela-identity-review-20261114.json'
+      - 'data/ufc-unified-wave6-official-source-review-20261114.json'
+      - 'data/ufc-unified-wave5-official-source-review-20261114.json'
+      - 'data/ufc-unified-wave4-official-source-review-20261114.json'
+      - 'data/ufc-stage3-v4-consolidation-manifest-20261114.json'
+      - 'tests/test-ufc-unified-pico-keita-evidence.mjs'
+      - 'data/ufc-unified-pico-keita-source-review-20261114.json'
       - 'tests/test-ufc-36-month-stage3-progress.mjs'
       - 'tests/test-ufc-36-month-review-report.mjs'
       - 'tests/test-ufc-research-pipeline.mjs'
@@ -45,6 +113,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Enforce one canonical fighter certification register (offline)
+        run: |
+          node --test tests/test-ufc-certification-consolidation-preflight.mjs
+          node scripts/ufc-certification-consolidation-preflight.mjs
       - name: Verify source history and pipeline tests
         run: |
           node --test tests/test-ufc-research-pipeline.mjs
@@ -61,14 +133,58 @@ jobs:
       - name: Validate and report actual approved Stage 3 career and measured-round coverage
         if: always()
         run: |
+          node --test tests/test-ufc-unified-next-two-official-source-review.mjs
+          node --test tests/test-ufc-unified-wave3-evidence.mjs
+          node --test tests/test-ufc-unified-wave4-evidence.mjs
+          node --test tests/test-ufc-unified-wave5-evidence.mjs
+          node --test tests/test-ufc-unified-wave6-idempotence.mjs
+          node --test tests/test-ufc-unified-wave6-evidence.mjs
+          node --test tests/test-ufc-unified-victor-evidence.mjs
+          node --test tests/test-ufc-unified-wave7-evidence.mjs
+          node --test tests/test-ufc-unified-wave8-wave9-evidence.mjs
+          node --test tests/test-ufc-unified-wave12-evidence.mjs
+          node --test tests/test-ufc-unified-wave13-evidence.mjs
+          node --test tests/test-ufc-unified-wave14-evidence.mjs
+          node --test tests/test-ufc-unified-pedro-rodrigo-evidence.mjs
+          node --test tests/test-ufc-unified-gantt-xiong-six-evidence.mjs
+          node --test tests/test-ufc-unified-wave16-amosov-hafez-evidence.mjs
+          node --test tests/test-ufc-unified-seven-careers-evidence.mjs
+          node --test tests/test-ufc-unified-five-careers-evidence.mjs
+          node --test tests/test-ufc-unified-wave17-three-debut-evidence.mjs
+          node --test tests/test-ufc-unified-josias-musasa-evidence.mjs
+          node --test tests/test-ufc-unified-wave19-three-careers-evidence.mjs
+          node --test tests/test-ufc-unified-wave20-three-careers-evidence.mjs
+          node --test tests/test-ufc-unified-wave21-riley-luna-rahiki.mjs
+          node --test tests/test-ufc-unified-ronaldo-rodriguez-full-career.mjs
+          node --test tests/test-ufc-unified-wave22-gandra-buchecha.mjs
+          node --test tests/test-ufc-unified-waves17-18-evidence.mjs
+          node --test tests/test-ufc-unified-wave19-evidence.mjs
+          node --test tests/test-ufc-unified-wave18-three-careers.mjs
+          node --test tests/test-ufc-unified-blake-bilder-evidence.mjs
+          node --test tests/test-ufc-unified-wave19-donte-kody-evidence.mjs
+          node --test tests/test-ufc-unified-wave24-yannis-yoo-evidence.mjs
+          node --test tests/test-ufc-unified-wave25-six-careers-20261114.mjs
+          node --test tests/test-ufc-unified-wave10-evidence.mjs
+          node --test tests/test-ufc-unified-wave11-evidence.mjs
+          node --test tests/test-ufc-unified-marnic-evidence.mjs
+          node --test tests/test-ufc-unified-mandel-evidence.mjs
+          node --test tests/test-ufc-v4-stage3-import.mjs
+          node --test tests/test-ufc-unified-pico-keita-evidence.mjs
           node --test tests/test-ufc-36-month-stage3-progress.mjs
           node scripts/ufc-36-month-stage3-progress.mjs
+          node --test tests/test-ufc-stage3-v4-reconciliation.mjs
+          node scripts/ufc-reconcile-stage3-v4-certifications.mjs
+          node scripts/diagnose-ufc-v4-stage3-blockers.mjs
       - name: Attempt all 783 UFC career certifications offline and queue exceptions
         if: always()
         run: |
           node --test tests/test-ufc-v4-certification-queue.mjs
           test -s qa/ufc-36-month-stage3-progress.json
           node scripts/ufc-v4-certification-queue.mjs
+      - name: Research next eight unclaimed UFC fighters against pinned historical source (read-only)
+        if: always()
+        continue-on-error: true
+        run: node scripts/ufc-unified-next8b-source-review.mjs
       - name: Save report
         if: always()
         uses: actions/upload-artifact@v4
@@ -81,5 +197,8 @@ jobs:
             qa/ufc-36-month-stage3-progress.json
             qa/ufc-36-month-stage3-progress.md
             qa/ufc-v4-certification-queue.json
+            qa/ufc-stage3-v4-reconciliation.json
+            qa/ufc-v4-stage3-blocker-diagnostics.json
+            qa/ufc-unified-next8b-source-review.json
           retention-days: 14
           if-no-files-found: warn

@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-pico-keita-full-career-official-source-native-evidence",
+  "snapshot": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "independentOfficialSources": [
+    "https://www.ufc.com/athlete/aaron-pico",
+    "https://www.ufc.com/athlete/losene-keita",
+    "https://www.ufc.com/news/ufc-333-volkanovski-vs-evloev-results",
+    "https://www.ufc.com/news/ufc-333-volkanovski-vs-evloev-official-scorecards"
+  ],
+  "pinnedGrecoSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07",
+    "evidenceCutoff": "2026-11-14",
+    "directUfcStatsAccess": "Pinned independent Greco UFCStats-derived historical CSV, not a claimed direct live UFCStats scrape",
+    "method": "Complete dated official UFC athlete histories and UFC 333 official results independently matched to pinned UFCStats-derived fighter/fight source identities, five original UFCalendar native completed bout IDs, both fighter corners and winners; stage3 validates archived measured rounds. Cancelled fights and outside-UFC histories excluded; no paid calls."
+  },
+  "identities": [
+    "5537efc6e496dd84",
+    "5b43d68174b6e2ab"
+  ],
+  "distinctOfficialUfcNativeFightIds": [
+    "60497",
+    "65990",
+    "93414",
+    "60566",
+    "83646"
+  ],
+  "officialFighterBoutLinks": 6,
+  "excludedFeederNativeIds": [],
+  "cancelledFightNote": "Keita vs Patricio Pitbull scheduled in 2025 was cancelled, no completed UFC native bout. All pre-UFC Bellator, PFL, OKTAGON, and other MMA histories excluded from UFC-only certification.",
+  "fighters": {
+    "aaron-pico": {
+      "fighterName": "Aaron Pico",
+      "officialFighterUrl": "https://www.ufc.com/athlete/aaron-pico",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/5537efc6e496dd84",
+      "completeUfcCareerCount": 3,
+      "nativeFighterIds": [
+        "576"
+      ],
+      "bouts": [
+        {
+          "date": "2025-08-16",
+          "opponent": "Lerone Murphy",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9fa6a029f7f8241c",
+          "nativeBoutId": "60497",
+          "nativeFighterId": "576"
+        },
+        {
+          "date": "2026-04-11",
+          "opponent": "Patricio Pitbull",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/10ab34056720b6b4",
+          "nativeBoutId": "65990",
+          "nativeFighterId": "576"
+        },
+        {
+          "date": "2026-10-24",
+          "opponent": "Losene Keita",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8271c52b2987e021",
+          "nativeBoutId": "93414",
+          "nativeFighterId": "576"
+        }
+      ]
+    },
+    "losene-keita": {
+      "fighterName": "Losene Keita",
+      "officialFighterUrl": "https://www.ufc.com/athlete/losene-keita",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/5b43d68174b6e2ab",
+      "completeUfcCareerCount": 3,
+      "nativeFighterIds": [
+        "529"
+      ],
+      "bouts": [
+        {
+          "date": "2026-03-21",
+          "opponent": "Nathaniel Wood",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3b9f50f07d9a1601",
+          "nativeBoutId": "60566",
+          "nativeFighterId": "529"
+        },
+        {
+          "date": "2026-09-05",
+          "opponent": "Muhammad Naimov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b90b099c1f47bb93",
+          "nativeBoutId": "83646",
+          "nativeFighterId": "529"
+        },
+        {
+          "date": "2026-10-24",
+          "opponent": "Aaron Pico",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8271c52b2987e021",
+          "nativeBoutId": "93414",
+          "nativeFighterId": "529"
+        }
+      ]
+    }
+  },
+  "note": "Read-only source attestation only. The full strict 783-fighter Stage 3 and regression CI must pass before either certificate is counted. No cache or paid API write, release or production merge."
+}

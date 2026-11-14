@@ -1,0 +1,23 @@
+name: UFC pinned fighter source review (manual, nonproduction)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Inspect selected approved fighters against pinned public source and cached native fights
+        run: node scripts/ufc-unified-next8-source-review.mjs
+      - name: Save evidence-only report (not certification)
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-pinned-source-review
+          path: qa/ufc-unified-next8-source-review.json
+          retention-days: 14
+          if-no-files-found: error
