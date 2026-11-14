@@ -1,5 +1,12 @@
 name: UFC wave10 pinned source/native reconciliation (nonproduction)
 on:
+  push:
+    branches:
+      - research/ufc-wave10-fastlane-20261114
+    paths:
+      - 'data/ufc-unified-wave10-official-source-review-20261114.json'
+      - 'scripts/ufc-unified-wave10-source-review.mjs'
+      - '.github/workflows/ufc-unified-wave10-source-review.yml'
   pull_request:
     branches:
       - research/ufc-unified-stage3-v4-evidence-20261114
