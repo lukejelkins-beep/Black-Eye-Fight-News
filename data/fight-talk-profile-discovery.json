@@ -1,12 +1,12 @@
 {
-  "checkedAt": "2026-11-13T19:39:22.743Z",
+  "checkedAt": "2026-11-14T01:48:48.483Z",
   "source": "Wikidata P2002/P2003/P11892 + official athlete structured links",
   "discoveredThisRun": 0,
   "promotersAdded": 0,
   "candidatesChecked": 0,
-  "mode": "search",
+  "mode": "bulk",
   "wikiBatches": 0,
-  "searchChecked": 12,
+  "searchChecked": 0,
   "officialChecked": 50,
   "counts": {
     "total": 215,
@@ -16,10 +16,12 @@
     "withInstagram": 158,
     "withThreads": 39
   },
-  "rateLimited": false,
+  "rateLimited": true,
   "conflicts": [],
-  "errors": [],
+  "errors": [
+    "Wikidata batch 0: HTTP 429 www.wikidata.org"
+  ],
   "nextSearchOffset": 42,
-  "nextOfficialOffset": 19,
+  "nextOfficialOffset": 14,
   "note": "Profile metadata discovery is not a social timeline feed. Original post collection still depends on public publisher-linked posts or permitted platform APIs. Missing names are not guessed."
 }
