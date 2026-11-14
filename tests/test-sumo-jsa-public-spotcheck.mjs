@@ -100,3 +100,22 @@ test('missing source tournaments do not become certification',()=>{
  assert.notEqual(out.status,'historical-tournaments-agree');
  assert.equal(out.certified,false);
 });
+
+test('official JSA two-part career totals retain unknown absences as null',()=>{
+ const html=official.replace('677-716-2','624-630');
+ const actual=parseOfficialProfile(html,w);
+ assert.equal(actual.status,'basic-fields-parsed');
+ assert.deepEqual(actual.career,{wins:624,losses:630,absences:null});
+ assert.equal(actual.careerAbsencesPublished,false);
+ assert.equal(actual.parserVersion,4);
+});
+test('three-part JSA career record retains reported absences including zero',()=>{
+ const result=parseOfficialProfile(official.replace('677-716-2','677-716-0'),w);
+ assert.deepEqual(result.career,{wins:677,losses:716,absences:0});
+ assert.equal(result.careerAbsencesPublished,true);
+});
+test('official career records with thousands separators parse as numbers',()=>{
+ const result=parseOfficialProfile(official.replace('677-716-2','1,244-1,029'),w);
+ assert.deepEqual(result.career,{wins:1244,losses:1029,absences:null});
+ assert.equal(result.status,'basic-fields-parsed');
+});
