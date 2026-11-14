@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "scope": "ufc-v4-next-two-independent-official-source-reconciliation",
+  "snapshot": "2026-11-14",
+  "status": "source_evidence_only_not_certified",
+  "sourceProvenance": "UFC.com athlete biographies and official event scorecards; no UFCStats direct access claimed",
+  "fighters": {
+    "levan-chokheli": {
+      "ufcAthleteUrl": "https://www.ufc.com/athlete/levan-chokheli",
+      "ufcOfficialResultUrl": "https://www.ufc.com/news/ufc-fight-night-kape-vs-horiguchi-official-judges-scorecards",
+      "ufcEventUrl": "https://www.ufc.com/event/ufc-fight-night-june-20-2026",
+      "ufcDebut": "2026-06-20",
+      "officialCareerBoutsThroughSnapshot": 1,
+      "bouts": [
+        {
+          "date": "2026-06-20",
+          "opponent": "Leon Shahbazyan",
+          "result": "win",
+          "method": "TKO (strikes)",
+          "round": 1,
+          "time": "0:23",
+          "nativeBoutId": null,
+          "sourceFightUrl": null
+        }
+      ],
+      "feederNote": "UFC.com documents a 2024 DWCS loss; excluded from UFC career",
+      "pending": [
+        "original saved numeric native bout and corner identities",
+        "pinned independent UFCStats-derived fight-detail URL",
+        "measured-round coverage and strict Stage3 gate"
+      ]
+    },
+    "lucas-brennan": {
+      "ufcAthleteUrl": "https://www.ufc.com/athlete/lucas-brennan",
+      "ufcOfficialResultUrl": "https://www.ufc.com/news/ufc-fight-night-sterling-vs-zalal-official-scorecards-judges",
+      "ufcEventUrl": "https://www.ufc.com/event/ufc-fight-night-april-25-2026",
+      "ufcDebut": "2026-04-25",
+      "officialCareerBoutsThroughSnapshot": 1,
+      "bouts": [
+        {
+          "date": "2026-04-25",
+          "opponent": "Francis Marshall",
+          "result": "loss",
+          "method": "unanimous decision",
+          "score": "30-27, 30-27, 30-27 for Marshall",
+          "round": 3,
+          "time": "5:00",
+          "nativeBoutId": null,
+          "sourceFightUrl": null
+        }
+      ],
+      "sourceConflict": "UFC athlete results panel shows Win for Brennan but UFC biography and official scorecard explicitly show Brennan loss; authoritative scorecard governs.",
+      "pending": [
+        "original saved numeric native bout and corner identities",
+        "pinned independent UFCStats-derived fight-detail URL",
+        "measured-round coverage and strict Stage3 gate"
+      ]
+    }
+  },
+  "certifiedByThisEvidence": 0,
+  "paidProviderCalls": 0,
+  "collectorCacheWrites": 0
+}
