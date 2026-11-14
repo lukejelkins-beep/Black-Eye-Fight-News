@@ -1,6 +1,10 @@
 name: BEFN Sumo 190-rikishi research backfill (every 5 minutes)
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/sumo-190-career-backfill.yml
   schedule:
     # GitHub Actions scheduled workflows run from the DEFAULT branch only.
     # The job itself checks out and writes ONLY the isolated research branch.
