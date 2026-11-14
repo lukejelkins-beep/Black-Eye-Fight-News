@@ -12,7 +12,7 @@
       "complete": false,
       "skip": 0,
       "total": null,
-      "attempts": 1,
+      "attempts": 2,
       "updatedAt": null
     },
     "stats": {
@@ -62,6 +62,12 @@
   "errors": [
     {
       "at": "2026-11-14T14:26:27.549Z",
+      "stage": "profile",
+      "message": "Sumo API HTTP 400",
+      "transient": false
+    },
+    {
+      "at": "2026-11-14T15:14:13.819Z",
       "stage": "profile",
       "message": "Sumo API HTTP 400",
       "transient": false
