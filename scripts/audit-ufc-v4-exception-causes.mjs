@@ -79,7 +79,7 @@ export function diagnoseMissingUfcBouts(foundation,progress,archive){
   throw Error("V4 foundation and deduplicated missing fight queue required");
  const index=archiveIndex(archive),detail=[];
  const counts={},priority={},sourceActions={},eventGroups={},byPriorityAndCause={};
- const conflictEvents={},conflictSamples=[],unindexedEventGroups={};
+ const conflictEvents={},conflictSamples=[],unindexedEventGroups={},manualReasonCounts={};
  for(const item of foundation.missingNativeBoutQueue){
   const bout=progress?.bouts?.[item.boutId]||null;
   const reason=causeFor(bout,index);
@@ -93,6 +93,10 @@ export function diagnoseMissingUfcBouts(foundation,progress,archive){
   const check=progress?.ufcCareerBoutChecks?.[item.boutId]||{};
   const retry=progress?.roundRetry?.[item.boutId]||{};
   const action=item.action||"manual_review";
+  if(action==="manual_review"){
+   const label=String(check.reason||"unspecified");
+   manualReasonCounts[label]=(manualReasonCounts[label]||0)+1;
+  }
   if(reason==="official_ufc_event_identity_review"){
    const name=String(bout?.event||"unknown");eventGroups[name]=(eventGroups[name]||0)+1;
   }
@@ -139,6 +143,7 @@ export function diagnoseMissingUfcBouts(foundation,progress,archive){
    byPriorityAndCause,conflictEvents:Object.entries(conflictEvents)
     .sort((a,b)=>b[1]-a[1]).map(([title,count])=>({title,count})),
    unindexedFightYears:unindexedEventGroups,
+   savedManualReviewReasons:manualReasonCounts,
    conflictExamples:conflictSamples,
    eventTitleGroups:Object.entries(eventGroups)
     .sort((a,b)=>b[1]-a[1]).map(([title,count])=>({title,count}))},
