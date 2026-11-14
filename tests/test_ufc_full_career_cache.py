@@ -583,6 +583,70 @@ class FullCareerCacheTests(unittest.TestCase):
             if case=="wrong_outcome":self.assertEqual(out["conflicts"],1)
             if case=="unapproved":self.assertEqual(out["remaining"],0)
 
+    def source_date_search_fixture(self):
+        state,research,census,approval,official=self.official_inventory_fixture()
+        official["fighters"]["carlos-hernandez-7"]["bouts"]=[
+           {"date":"2020-06-01","opponent":"Unseen Opponent","result":"win"}]
+        return state,research,census,approval,official
+
+    def test_source_date_search_recovers_exact_winner_once_and_reuses_saved_native(self):
+        state,research,census,approval,official=self.source_date_search_fixture()
+        row=self.indexed_search_row(700,"2020-06-01")
+        client=self.PaginatedSearch({"data":[row],"meta":{"pagination":{"next_cursor":None}}})
+        old=len(research["profiles"]["carlos-hernandez-7"]["recentHistory"])
+        outcome=m.recover_official_inventory_by_event_date(
+            client,state,research,census,dt.date(2026,11,14),approval,official)
+        self.assertEqual(outcome,{"calls":1,"indexed":1,"linked":1,"unresolved":0})
+        self.assertEqual(client.paths,
+            ["/fights/search?org=ufc&from=2020-05-31&to=2020-06-02&limit=25"])
+        self.assertEqual(len(research["profiles"]["carlos-hernandez-7"]["recentHistory"]),old+1)
+        self.assertEqual(research["profiles"]["carlos-hernandez-7"]["recentHistory"][-1]["boutId"],"700")
+        self.assertFalse(research["profiles"]["carlos-hernandez-7"]["ufcTimeline"]["complete"])
+        self.assertEqual(m.recover_official_inventory_by_event_date(
+            client,state,research,census,dt.date(2026,11,14),approval,official)["calls"],0)
+
+    def test_source_date_search_pagination_resumes_and_persists_missing_result(self):
+        state,research,census,approval,official=self.source_date_search_fixture()
+        data1={"data":[self.indexed_search_row(701,"2020-06-01",opponent="Other Fighter")],
+               "meta":{"pagination":{"next_cursor":"next-page"}}}
+        data2={"data":[self.indexed_search_row(702,"2020-06-01")],
+               "meta":{"pagination":{"next_cursor":None}}}
+        client=self.PaginatedSearch(data1,data2)
+        a=m.recover_official_inventory_by_event_date(
+            client,state,research,census,dt.date(2026,11,14),approval,official)
+        self.assertEqual(a["linked"],0)
+        self.assertEqual(state["ufcOfficialSourceDatePages"]["2020-06-01"]["status"],"partial")
+        b=m.recover_official_inventory_by_event_date(
+            client,state,research,census,dt.date(2026,11,14),approval,official)
+        self.assertEqual(b["linked"],1)
+        self.assertIn("cursor=next-page",client.paths[-1])
+        self.assertEqual(state["ufcOfficialSourceDatePages"]["2020-06-01"]["status"],"done")
+        self.assertEqual(m.recover_official_inventory_by_event_date(
+            client,state,research,census,dt.date(2026,11,14),approval,official)["calls"],0)
+
+    def test_source_date_search_rejects_foreign_result_feeder_and_nc_without_extra_calls(self):
+        import copy
+        state,research,census,approval,official=self.source_date_search_fixture()
+        for case in ["wrong_fighter","wrong_opponent","wrong_result","feeder","future",
+                     "unapproved","no_contest"]:
+            st,rs,cv,ap,src=[copy.deepcopy(x) for x in
+                             (state,research,census,approval,official)]
+            row=self.indexed_search_row(705,"2020-06-01")
+            if case=="wrong_fighter":row["fighter_a"]["id"]=878
+            elif case=="wrong_opponent":row["fighter_b"]["name"]="Other Opponent"
+            elif case=="wrong_result":row["result"]["winner_fighter_id"]=999
+            elif case=="feeder":row["event"]["title"]="Dana White's Contender Series"
+            elif case=="future":row["event"]["starts_at"]="2027-01-01T00:00:00Z"
+            elif case=="unapproved":ap["status"]="pending"
+            elif case=="no_contest":src["fighters"]["carlos-hernandez-7"]["bouts"][0]["result"]="no_contest"
+            client=self.PaginatedSearch({"data":[row],"meta":{}})
+            result=m.recover_official_inventory_by_event_date(
+                client,st,rs,cv,dt.date(2026,11,14),ap,src)
+            self.assertEqual(result["linked"],0,case)
+            self.assertEqual(result["indexed"],0,case)
+            self.assertNotIn("705",st["bouts"])
+            if case in ("unapproved","no_contest"):self.assertEqual(client.calls,0,case)
+            else:self.assertEqual(result["unresolved"],1,case)
     def test_no_signoff_no_full_career_calls(self):
         state,research,candidate=self.fixture()
         client=Fake()
