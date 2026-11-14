@@ -206,6 +206,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     legacyCompleteClaims=0,independentCertified=0,providerTimelineConflicts=0,
     sourceConfirmedIncompleteCareers=0,sourceConfirmedMinimumMissingUfcBouts=0,
     rosterUtcDayAdjustments=0,providerFlagsExplainedByUtcDayShift=0,
+    approvedRosterLatestDatesSuperseded=0,
     fightersWithFive=0,fightersWithTen=0,withMeasuredRecent=0,
     fullFiveMeasured=0,fullTenMeasured=0,unlinkedCareerRows=0,
     allKnownIndexed=0,allKnownMeasured=0,certifiedAndIndexed=0;
@@ -406,6 +407,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     if(proof.legacyClaim)legacyCompleteClaims++;
     if(providerHistoryDiscrepancy)providerTimelineConflicts++;
     if(proof.utcDateShift)rosterUtcDayAdjustments++;
+    if(proof.rosterSnapshotStale)approvedRosterLatestDatesSuperseded++;
     if(proof.utcDateShift&&profile.ufcTimeline?.missingRosterLastUfcFight)
       providerFlagsExplainedByUtcDayShift++;
     if(!proof.rosterLatestPresent&&date(current.get(slug)?.lastUfcFight)){
@@ -448,6 +450,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
       explicitProviderUntruncated:proof.explicitUntruncated,
       providerHistoryDiscrepancy:proof.providerDiscrepancy,
       rosterLatestUtcDateShift:proof.utcDateShift,
+      approvedRosterLastFightSuperseded:proof.rosterSnapshotStale,
       providerLatestFightMismatch:proof.providerLatestMismatch,
       numericIdHistoryChecked:progress?.ufcFullCareerHistoryChecks?.[slug]?.status==='checked',
       providerTimelineObservedOn:date(profile.ufcTimeline?.observedOn),
@@ -650,6 +653,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     approvedCareersWithoutIndependentFullCareerCertification:approved.length-independentCertified,
     providerHistoryDiscrepancyCases:providerTimelineConflicts,
     rosterLatestFightOneDayUtcDateShifts:rosterUtcDayAdjustments,
+    approvedRosterLatestDatesSuperseded,
     priorProviderLatestMismatchFlagsExplainedByDayShift:providerFlagsExplainedByUtcDayShift,
     careerVerificationStatusCounts,
     providerMetadataExplicitlyUntruncated:providerTimelineMetadata.explicitUntruncated,
@@ -806,6 +810,7 @@ export function markdownReport(report){
    approvedCareersWithoutIndependentFullCareerCertification:'Approved UFC careers still awaiting independent historical completeness verification',
    providerHistoryDiscrepancyCases:'Provider history and roster chronology discrepancies requiring review',
    rosterLatestFightOneDayUtcDateShifts:'Roster latest-fight dates aligned with saved histories after one-day UTC/local normalization',
+   approvedRosterLatestDatesSuperseded:'Roster last-fight dates superseded by newer saved official UFC bouts (not a missing-history claim)',
    priorProviderLatestMismatchFlagsExplainedByDayShift:'Previous provider latest-fight mismatch flags explained by UTC calendar-day normalization',
    providerMetadataExplicitlyUntruncated:'Provider timeline responses explicitly marked untruncated (not necessarily career-certified)',
    providerMetadataExplicitlyTruncated:'Provider timeline responses explicitly marked truncated',
