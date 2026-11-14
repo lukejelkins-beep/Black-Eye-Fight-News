@@ -2,7 +2,7 @@
   "schema": 1,
   "scope": "ufc-independent-full-career-verification",
   "rosterAsOf": "2026-11-14",
-  "status": "evidence_collection_pending",
+  "status": "career_certification_in_progress",
   "description": "Separate from provider UFCalendar metadata. Only independently checked complete UFC fight listings with source-linked bout-by-bout identities may establish full-career verification. No fighter is independently certified merely because every currently known UFC fight is indexed and measured. Minimum-count evidence may prove historical omissions but cannot certify full-career completeness, even if its minimum is met.",
   "fighters": {
     "bruno-gustavo-da-silva": {
@@ -28,6 +28,130 @@
       "fighterUrl": "https://www.ufc.com/athlete/hyunsung-park",
       "verifiedAt": "2026-11-14",
       "note": "Official UFC history shows five UFC fights across 2023-2025. Two 2022 Road to UFC qualifying bouts are excluded from UFC-only count. Only two UFC bouts currently saved."
+    },
+    "maryna-moroz": {
+      "sourceCoverageAttested": true,
+      "scope": "independently_reconciled_complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterUrl": "https://ufcstats.com/fighter-details/b4192a975027aab6",
+      "officialFighterUrl": "https://www.ufc.com/athlete/maryna-moroz",
+      "historicalCrosscheckUrl": "https://raw.githubusercontent.com/Greco1899/scrape_ufc_stats/main/ufc_fight_results.csv",
+      "additionalIndependentHistoryUrl": "https://www.sherdog.com/fighter/Maryna-Moroz-151905",
+      "verifiedAt": "2026-11-14",
+      "sourceCoverageReview": {
+        "rosterAsOf": "2026-11-14",
+        "officialBiographyFightCount": 12,
+        "sourceLinkedFightCount": 12,
+        "savedNativeUfcFightCount": 12,
+        "distinctSavedNativeBoutIds": 12,
+        "fullyMeasuredOfficialUfcBouts": 12,
+        "earliestUfcDate": "2015-04-11",
+        "latestUfcDate": "2024-03-09",
+        "nativeFighterNumericId": "1113",
+        "sourceResultCrosscheck": "Each official UFC biography bout's date, opponent and result matched a distinct independent UFCStats-derived bout URL and a saved native bout ID. CI verified native corner numeric fighter identity, winner, official UFC event and required fight metrics for 12/12; no extra saved UFC bouts. Latest official UFC history checked through 2026-11-14. Original UFCStats pages were inaccessible; per-fight URLs and results independently crosschecked using pinned-source-derived Greco records rather than falsely claiming direct UFCStats retrieval.",
+        "approvedCompetitionScope": "Official UFC only; no feeder, DWCS or Road to UFC fights in 12 matched bouts",
+        "aliasesReviewed": [
+          "Joanne Wood = Joanne Calderwood"
+        ],
+        "eventTitleCorrections": [
+          {
+            "nativeBoutId": "59784",
+            "date": "2022-11-19",
+            "savedEvent": "UFC Fight Night: Lewis vs Spivac",
+            "officialEvent": "UFC Fight Night: Nzechukwu vs Cutelaba",
+            "officialExplanationUrl": "https://www.ufc.com/news/updates-ufc-fight-night-lewis-vs-spivac",
+            "decision": "same event following main-event cancellation"
+          }
+        ]
+      },
+      "bouts": [
+        {
+          "date": "2024-03-09",
+          "opponent": "Joanne Wood",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3677ce6c1ee06a83",
+          "nativeBoutId": "60915"
+        },
+        {
+          "date": "2023-08-19",
+          "opponent": "Karine Silva",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f329bd89e375d6df",
+          "nativeBoutId": "61164"
+        },
+        {
+          "date": "2022-11-19",
+          "opponent": "Jennifer Maia",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/144443d4dbf43990",
+          "nativeBoutId": "59784"
+        },
+        {
+          "date": "2022-03-05",
+          "opponent": "Mariya Agapova",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c6fc43c351b08bda",
+          "nativeBoutId": "61401"
+        },
+        {
+          "date": "2020-03-14",
+          "opponent": "Mayra Bueno Silva",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2a1826612a7d739c",
+          "nativeBoutId": "59150"
+        },
+        {
+          "date": "2019-03-30",
+          "opponent": "Sabina Mazo",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b695fc80bd538172",
+          "nativeBoutId": "59102"
+        },
+        {
+          "date": "2018-02-24",
+          "opponent": "Angela Hill",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/037c68d03c970609",
+          "nativeBoutId": "58807"
+        },
+        {
+          "date": "2017-06-25",
+          "opponent": "Carla Esparza",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1bd52b0c01018f4a",
+          "nativeBoutId": "58619"
+        },
+        {
+          "date": "2016-08-06",
+          "opponent": "Danielle Taylor",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/58c73a9562adcfe5",
+          "nativeBoutId": "62694"
+        },
+        {
+          "date": "2016-04-10",
+          "opponent": "Cristina Stanciu",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1a0bf11582ae518b",
+          "nativeBoutId": "50959"
+        },
+        {
+          "date": "2015-08-23",
+          "opponent": "Valerie Letourneau",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/20b70a226f1c13fb",
+          "nativeBoutId": "50745"
+        },
+        {
+          "date": "2015-04-11",
+          "opponent": "Joanne Calderwood",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fe9a58e79d54695b",
+          "nativeBoutId": "56917"
+        }
+      ],
+      "certificationStatus": "source_verified_full_career_pending_independent_ci_gate",
+      "note": "Manual UFC.com full-biography review + UFCStats-derived individual fight IDs + 12 distinct native UFCalendar fight records and matched outcome/round metrics. The full-career certification is recorded only if offline CI independently recomputes the strict Stage 3 gate. No production deploy or merge."
     }
   }
 }
