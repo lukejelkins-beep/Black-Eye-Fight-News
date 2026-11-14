@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import {
   bashoLabel, divisionOf, recordSummary, rankTable, leadingRikishi,
   dailyResults, currentDay, matchResult, techniqueDistribution, searchRikishi,
-  banzukeFor, validMatchSamples
+  banzukeFor, validMatchSamples, trackedBanzukeCohort
 } from '../assets/sumo-data.mjs';
 
 const entries = {
@@ -68,6 +68,27 @@ test('rejects an unavailable match sample rather than manufacturing a career',()
   assert.deepEqual(validMatchSamples({matches:{status:'unavailable'}},10),[]);
   assert.equal(banzukeFor(entries,11)?.rank,'Maegashira 1 West');
 });
+test('authoritative roster comes from the three current banzuke lists and fails on any missing identity',()=>{
+  const source=Array.from({length:6},(_,i)=>({sourceId:i+1,shikonaEn:'Name '+(i+1),currentRank:'Juryo 9 East'}));
+  const bz={
+    Makuuchi:{east:[{rikishiID:1,shikonaEn:'Name 1',rank:'Yokozuna 1 East'}],
+      west:[{rikishiID:2,shikonaEn:'Name 2',rank:'Maegashira 1 West'}]},
+    Juryo:{east:[{rikishiID:3,shikonaEn:'Name 3',rank:'Juryo 1 East'}],
+      west:[{rikishiID:4,shikonaEn:'Name 4',rank:'Juryo 1 West'}]},
+    Makushita:{east:[{rikishiID:5,shikonaEn:'Name 5',rank:'Makushita 1 East'}],
+      west:[{rikishiID:6,shikonaEn:'Name 6',rank:'Makushita 1 West'}]}
+  };
+  const cohort=trackedBanzukeCohort(source,bz);
+  assert.equal(cohort.count,6);
+  assert.deepEqual(cohort.divisionCounts,{Makuuchi:2,Juryo:2,Makushita:2});
+  assert.equal(cohort.rikishi[0].currentRank,'Yokozuna 1 East');
+  assert.equal(cohort.rikishi[0].sourceReportedRank,'Juryo 9 East');
+  assert.throws(()=>trackedBanzukeCohort(source.slice(0,-1),bz),/Unreconciled banzuke/);
+  assert.throws(()=>trackedBanzukeCohort(source,{...bz,Makushita:undefined}),/Incomplete current banzuke/);
+  const duplicate={...bz,Makushita:{...bz.Makushita,east:[{rikishiID:1,shikonaEn:'Name 1',rank:'Makushita 1 East'}]}};
+  assert.throws(()=>trackedBanzukeCohort(source,duplicate),/duplicate banzuke identity/);
+});
+
 test('live API snapshot contains exactly the current top three divisions',()=>{
   const roster=JSON.parse(readFileSync(new URL('../data/sumo/rikishi-index.json',import.meta.url),'utf8'));
   const details=JSON.parse(readFileSync(new URL('../data/sumo/preview-details.json',import.meta.url),'utf8'));
@@ -76,11 +97,18 @@ test('live API snapshot contains exactly the current top three divisions',()=>{
   assert.equal(roster.count,Object.values(roster.divisionCounts).reduce((a,b)=>a+b,0));
   assert.equal(new Set(roster.rikishi.map(w=>w.sourceId)).size,roster.count);
   for(const w of roster.rikishi) assert.ok(roster.trackedDivisions.includes(divisionOf(w.currentRank)),w.shikonaEn);
+  const expectedSourceIds=new Set();
   for(const d of roster.trackedDivisions){
     const b=details.banzuke[d];
     assert.equal(b.status,'available',d+' banzuke not available');
     assert.equal((b.data.east?.length||0)+(b.data.west?.length||0),roster.divisionCounts[d]);
+    for(const entry of [...b.data.east,...b.data.west]){
+      assert.ok(!expectedSourceIds.has(entry.rikishiID),'Banzuke duplicate '+entry.rikishiID);
+      expectedSourceIds.add(entry.rikishiID);
+      assert.equal(roster.rikishi.find(w=>w.sourceId===entry.rikishiID)?.currentRank,entry.rank);
+    }
   }
+  assert.deepEqual([...expectedSourceIds].sort((a,b)=>a-b),roster.rikishi.map(w=>w.sourceId).sort((a,b)=>a-b));
   assert.equal(roster.sourceRosterCount>=roster.count,true);
   assert.equal(roster.preview,true);
   assert.equal(details.preview,true);
