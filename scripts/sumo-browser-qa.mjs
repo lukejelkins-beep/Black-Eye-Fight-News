@@ -30,6 +30,11 @@ async function testSite(viewport,isMobile,label) {
   const page=await ctx.newPage();
   page.on('pageerror',err=>failures.push(label+': page JS exception: '+err.message));
 
+  const response=await page.request.get('http://127.0.0.1:8765/data/sumo/research-h2h-summary.json');
+  assert.ok(response.ok(),'190-rikishi H2H research summary must be cached on preview branch');
+  const research=await response.json();
+  assert.equal(research.profileCount,190,'All 190 career research records should be available');
+  assert.equal(research.certified,false,'Research cache must not imply JSA certification');
   await open(page,'home','.hero');
   const home=await page.locator('#sumo-main').innerText();
   assertContains(home,'THE SUMO','homepage');
@@ -58,7 +63,10 @@ async function testSite(viewport,isMobile,label) {
   assertContains(profile,'Basho performance','basho data');
   assertContains(profile,'Recent performance','recent results');
   assertContains(profile,'Career honours','honours');
-  assertContains(profile,'cached recent bout sample','source label');
+  assertContains(profile,'Full source career record cached','full historical source availability');
+  assertContains(profile,'All recorded opponents','full career opponent catalogue');
+  await page.waitForSelector('.sumo-rival',{timeout:25000});
+  assert.ok(await page.locator('.sumo-rival').count()>=10,'Complete sourced opponent directory available');
   assertContains(profile,'JSA-listed signature manoeuvres','official source signature tags');
   assert.equal(await page.locator('.style-tags span').count(),4);
   assert.ok(await page.locator('.sumo-result-card').count()>0,'Profile has photo-ready opponent cards');
@@ -66,6 +74,7 @@ async function testSite(viewport,isMobile,label) {
   await snap(page,label+'-profile',{fullPage:false});
   // Full pair-specific history is distinct from a single basho's opponent record.
   await open(page,'headtohead/8850/8857','.sumo-h2h-hero');
+  await page.waitForFunction(()=>document.querySelectorAll('.sumo-h2h-order+ol li').length===6,{timeout:30000});
   const history=await page.locator('#sumo-main').innerText();
   assertContains(history,'Career head-to-head','dedicated H2H view');
   assertContains(history,'1–5','source-confirmed all-time series');
@@ -80,9 +89,15 @@ async function testSite(viewport,isMobile,label) {
   // without individually fetched lifetime stats or 18-bout enrichment.
   await open(page,'profile/2','.profile-hero');
   const unfeatured=await page.locator('#sumo-main').innerText();
-  assertContains(unfeatured,'current November 2026 tournament only','source-scoped technique sample');
-  assertContains(unfeatured,'banzuke only','source-scoped recent bouts');
+  assertContains(unfeatured,'Full source career record cached','all tracked profiles use researched career data');
+  assertContains(unfeatured,'All recorded opponents','opponent directory section');
+  await page.waitForSelector('.sumo-rival',{timeout:25000});
+  assert.ok(await page.locator('.sumo-rival').count()>0,'Unfeatured rikishi has complete opponent library');
   assert.equal(await page.locator('.style-tags span').count(),0,'No speculative official style on unverified profiles');
+  await open(page,'profile/82','.profile-hero');
+  assertContains(await page.locator('#sumo-main').innerText(),'206-131','Fujiseiun reconciled official record');
+  await open(page,'profile/16','.profile-hero');
+  assertContains(await page.locator('#sumo-main').innerText(),'677-716','Nishikigi reconciled official record');
   await open(page,'profile/75','.profile-hero');
   const makushitaProfile=await page.locator('#sumo-main').innerText();
   assertContains(makushitaProfile,'non-bout days','Makushita rest days do not count as absences');
