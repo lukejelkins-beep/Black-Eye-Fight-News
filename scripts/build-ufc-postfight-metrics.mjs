@@ -289,7 +289,8 @@ export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12",roundC
    const won=String(b.result?.winnerId||"")===String(b[sides[i]].id||"");
    const otherWon=String(b.result?.winnerId||"")===String(b[sides[1-i]].id||"");
    mapped.push({boutId:id,date:b.eventDate,event:safe(b.event),
-    opponent:safe(b[sides[1-i]].name),cageSec:minutes,
+    opponent:safe(b[sides[1-i]].name),
+    opponentSlug:safe(b[sides[1-i]].slug),cageSec:minutes,
     outcome:won?"W":otherWon?"L":b.status==="no_contest"?"NC":b.status==="draw"?"D":null,
     finishMethod:safe(b.result?.method),metrics,
     sourceDisputeStatus:corroborated?
