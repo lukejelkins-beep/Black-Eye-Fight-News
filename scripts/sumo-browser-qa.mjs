@@ -68,7 +68,7 @@ async function testSite(viewport,isMobile,label) {
   assertContains(unfeatured,'banzuke only','source-scoped recent bouts');
   await open(page,'profile/75','.profile-hero');
   const makushitaProfile=await page.locator('#sumo-main').innerText();
-  assertContains(makushitaProfile,'bout 1','Makushita bouts, not fabricated day mappings');
+  assertContains(makushitaProfile,'non-bout days','Makushita rest days do not count as absences');
 
 
   await open(page,'banzuke','.standings');
@@ -82,7 +82,8 @@ async function testSite(viewport,isMobile,label) {
   await open(page,'basho','.basho-hero');
   await page.locator('[data-basho-division="Makushita"]').click();
   const basho=await page.locator('#sumo-main').innerText();
-  assertContains(basho,'Makushita wrestlers compete across 15 days','lower division caveat');
+  assertContains(basho,'15 calendar-day positions','lower division caveat');
+  assert.ok(await page.locator('[data-day]').count()>=7,'Makushita has actual calendar-day controls');
   assert.ok((await page.locator('.standings tbody tr').count())>=20);
   await snap(page,label+'-basho',{fullPage:false});
 
