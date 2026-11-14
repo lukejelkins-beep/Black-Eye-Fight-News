@@ -21,7 +21,10 @@ concurrency:
 jobs:
   research-backfill:
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    # QA, JSA verification and historical-weight requests run sequentially.
+    # The collector itself is bounded to 160 seconds; allow the remaining
+    # checks + git checkpoint to finish rather than losing a good research pass.
+    timeout-minutes: 7
     steps:
       - name: Skip expensive scheduled work after all 190 API histories are collected
         id: preflight
