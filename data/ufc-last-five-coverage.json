@@ -8,13 +8,13 @@
   "summary": {
     "recentUfcActivityCandidates": 888,
     "excludedWithoutRecentOfficialUfc": 150,
-    "excludedLaterNonUfcMma": 19,
+    "excludedLaterNonUfcMma": 21,
     "excludedConfirmedRetired": 0,
     "excludedConfirmedUfcExit": 0,
     "excludedOfficialNotFighting": 0,
     "latestPromotionReviewRequired": 34,
-    "noKnownLaterMmaOrUnknown": 685,
-    "activeFighters": 719,
+    "noKnownLaterMmaOrUnknown": 683,
+    "activeFighters": 717,
     "withFiveKnown": 438,
     "withFiveLinkedIds": 438,
     "withThreeMeasured": 547,
@@ -25,12 +25,12 @@
       "fiveLinkedStatsGap": 55,
       "fiveUnlinked": 0,
       "shortLinkedMeasuredDepthConfirmed": 0,
-      "shortLinkedMeasuredDepthUnconfirmed": 251,
+      "shortLinkedMeasuredDepthUnconfirmed": 249,
       "shortLinkedStatsGapDepthConfirmed": 0,
       "shortLinkedStatsGap": 30,
       "shortUnlinked": 0
     },
-    "needHistoryCheck": 281,
+    "needHistoryCheck": 279,
     "needStats": 85,
     "shiftedDateAliasesJoined": 343,
     "uniqueKnownBoutIds": 1731
@@ -1685,10 +1685,10 @@
       "slug": "rhys-mckee",
       "lastUfcFight": "2025-09-06",
       "evidence": {
-        "date": "2026-04-16",
+        "date": "2026-11-14",
         "promotion": "pfl",
-        "opponent": "Alex Lohoré",
-        "source": "fighter-career-history"
+        "opponent": "Ernesto Rodriguez",
+        "source": "mma-bout-index"
       },
       "reason": "later_professional_mma_outside_official_ufc"
     },
@@ -1789,6 +1789,18 @@
       }
     },
     {
+      "name": "Saygid Izagakhmaev",
+      "slug": "saygid-izagakhmaev",
+      "lastUfcFight": "2026-07-25",
+      "evidence": {
+        "date": "2026-11-14",
+        "promotion": "pfl",
+        "opponent": "David Martinez",
+        "source": "mma-bout-index"
+      },
+      "reason": "later_professional_mma_outside_official_ufc"
+    },
+    {
       "name": "Sean Clancy Jr.",
       "slug": "sean-clancy-jr",
       "lastUfcFight": null,
@@ -1799,6 +1811,18 @@
         "event": "Dana White's Contender Series 89",
         "source": "ufcalendar-feeder-event"
       }
+    },
+    {
+      "name": "Shem Rock",
+      "slug": "shem-rock",
+      "lastUfcFight": "2026-03-21",
+      "evidence": {
+        "date": "2026-11-14",
+        "promotion": "pfl",
+        "opponent": "Connor Hughes",
+        "source": "mma-bout-index"
+      },
+      "reason": "later_professional_mma_outside_official_ufc"
     },
     {
       "name": "Shi Ming",
@@ -12359,41 +12383,6 @@
       ]
     },
     {
-      "name": "Saygid Izagakhmaev",
-      "slug": "saygid-izagakhmaev",
-      "lastUfcFight": "2026-07-25",
-      "eligibilityStatus": "latest_observed_mma_ufc",
-      "champion": false,
-      "upcoming": false,
-      "ranked": false,
-      "recentCount": 2,
-      "measuredCount": 2,
-      "evidenceStage": "shortLinkedMeasuredDepthUnconfirmed",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": true,
-      "needsStats": false,
-      "recent": [
-        {
-          "date": "2026-07-25",
-          "opponent": "Abubakar Vagaev",
-          "boutId": "83100",
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2025-11-22",
-          "opponent": "Nicolas Dalby",
-          "boutId": "60411",
-          "method": "decision_split",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        }
-      ]
-    },
-    {
       "name": "Tyrell Fortune",
       "slug": "tyrell-fortune",
       "lastUfcFight": "2026-07-25",
@@ -14272,41 +14261,6 @@
           "boutId": "61245",
           "method": "decision_split",
           "outcome": "W",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        }
-      ]
-    },
-    {
-      "name": "Shem Rock",
-      "slug": "shem-rock",
-      "lastUfcFight": "2026-03-21",
-      "eligibilityStatus": "latest_observed_mma_ufc",
-      "champion": false,
-      "upcoming": false,
-      "ranked": false,
-      "recentCount": 2,
-      "measuredCount": 2,
-      "evidenceStage": "shortLinkedMeasuredDepthUnconfirmed",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": true,
-      "needsStats": false,
-      "recent": [
-        {
-          "date": "2026-03-21",
-          "opponent": "Abdul-Kareem Al-Selwady",
-          "boutId": "60570",
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2025-11-22",
-          "opponent": "Nurullo Aliev",
-          "boutId": "60416",
-          "method": "decision_unanimous",
-          "outcome": "L",
           "origin": "ufc-bout-index",
           "hasMeasuredTotals": true
         }
