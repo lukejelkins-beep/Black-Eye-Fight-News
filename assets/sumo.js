@@ -8,7 +8,7 @@ const ROOT = document.querySelector('#sumo-main');
 const tabs = [...document.querySelectorAll('[data-page]')];
 const DIVS = ['Makuuchi','Juryo','Makushita'];
 const STATE = {
-  roster: null, details: null, error: null, query: '', division: 'All',
+  roster: null, details: null, officialStyles: null, error: null, query: '', division: 'All',
   visible: 24, bashoDivision: 'Makuuchi', banzukeDivision: 'Makuuchi',
   day: null, profileLimit: 5
 };
@@ -219,6 +219,17 @@ function renderProfile(id) {
   const item=entryFor(w), r=recordSummary(item?.record,divisionOf(w.currentRank)), s=detailStats(w), enriched=detailFor(details(),w.sourceId);
   const perf=detailFor(details(),w.sourceId)?'Featured sample data available':'Career data collection pending';
   const pct=r.win+r.loss?Math.round(r.win/(r.win+r.loss)*100):0;
+  const styleEvidence=STATE.officialStyles?.byNskId?.[String(w.officialNskId)];
+  const verifiedStyle=styleEvidence && Number(styleEvidence.sumoApiId)===Number(w.sourceId) &&
+    Array.isArray(styleEvidence.signature) && styleEvidence.signature.length &&
+    /^https:\/\/www\.sumo\.or\.jp\/EnSumoDataRikishi\/profile\/\d+\/$/.test(styleEvidence.sourceUrl);
+  const officialStyleMarkup=verifiedStyle
+    ?'<p><strong>Official JSA-listed signature manoeuvres</strong></p><div class="style-tags">'+
+      styleEvidence.signature.map(t=>'<span>'+e(t)+'</span>').join('')+'</div>'+
+      '<p class="footnote">These manoeuvres are listed on the <a href="'+e(styleEvidence.sourceUrl)+'" target="_blank" rel="noopener noreferrer">official JSA wrestler profile ↗</a>. '+
+      (styleEvidence.sourcePageLatestBasho!==details().bashoId?'The source profile may be older than this banzuke. ':'')+
+      'They are descriptive labels, not performance percentages or a BEFN rating.</p>'
+    :'<p><strong>Official signature manoeuvres:</strong> not yet independently collected for this wrestler.</p>';
   const officialId=Number(w.officialNskId);
   const officialLink=Number.isSafeInteger(officialId)&&officialId>0
     ?'<a href="https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+officialId+'/" target="_blank" rel="noopener noreferrer">JSA OFFICIAL RIKISHI PROFILE ↗</a>'
@@ -247,8 +258,8 @@ function renderProfile(id) {
     heading('Latest tournament · source-backed','Basho performance')+
     (item?recordChart(item):'<p class="missing">No current tournament data cached.</p>')+
     heading('Scouting · verified sample only','Winning techniques')+
-    '<div class="columns"><section class="panel"><div class="panel-head"><h3>Kimarite usage</h3><span>RECENT BOUT SAMPLE</span></div><div class="panel-body">'+profileTechniques(w)+'</div></section>'+
-    '<section class="panel"><div class="panel-head"><h3>Technical profile</h3><span>NO UNVERIFIED RATING</span></div><div class="panel-body"><p><strong>Stylistic identity:</strong> Not classified from the available sample. Official signature manoeuvres and longer-term style observations require separate verification.</p>'+
+    '<div class="columns"><section class="panel"><div class="panel-head"><h3>Kimarite usage</h3><span>'+(detailFor(details(),w.sourceId)?'RECENT BOUT SAMPLE':'CURRENT BASHO SAMPLE')+'</span></div><div class="panel-body">'+profileTechniques(w)+'</div></section>'+
+    '<section class="panel"><div class="panel-head"><h3>Technical profile</h3><span>JSA STYLES WHERE SOURCED</span></div><div class="panel-body">'+officialStyleMarkup+
     '<p><strong>BEFN overall:</strong> withheld pending a defensible, sumo-specific model. No invented technique or strength scores.</p>'+
     '<a class="btn light" href="#kimarite">LEARN THE KIMARITE</a></div></section></div>'+
     heading('Recorded opponents','Recent performance')+
@@ -361,11 +372,12 @@ async function loadJson(url){
 }
 async function init(){
   try {
-    const [roster,details]=await Promise.all([loadJson('data/sumo/rikishi-index.json'),loadJson('data/sumo/preview-details.json')]);
+    const [roster,details,styles]=await Promise.all([loadJson('data/sumo/rikishi-index.json'),loadJson('data/sumo/preview-details.json'),loadJson('data/sumo/official-style-evidence.json')]);
     if(!Array.isArray(roster?.rikishi)||!Array.isArray(details?.featured)||roster?.count!==roster.rikishi.length) throw new Error('Sumo cache schema or roster total not valid');
     if((roster?.trackedDivisions||[]).join(',')!==DIVS.join(','))throw new Error('Sumo cache does not match the approved three-division scope');
     if(roster.rikishi.some(x=>!DIVS.includes(divisionOf(x.currentRank))))throw new Error('Out-of-scope division in Sumo index');
-    STATE.roster=roster;STATE.details=details;
+    if(styles?.schemaVersion!==1||!styles.byNskId)throw new Error('Official style evidence cache unavailable or malformed');
+    STATE.roster=roster;STATE.details=details;STATE.officialStyles=styles;
     render();
   } catch(error){
     STATE.error=error.message || 'Unable to load the preview dataset';
