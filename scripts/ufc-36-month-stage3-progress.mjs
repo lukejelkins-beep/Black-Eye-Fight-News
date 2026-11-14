@@ -120,6 +120,18 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     missingHistory=[],blockedByEligibility=[],certified=[];
   const idCheckEntries=Object.entries(progress?.ufcFullCareerHistoryChecks||{})
     .filter(([s,r])=>approved.includes(s)&&r&&typeof r==='object');
+  const completeFightSearchLedger=progress?.ufcApprovedFullFightSearchChecks||{};
+  const searchedApproved=approved.map(slug=>({
+    slug,...(completeFightSearchLedger[slug]||{})
+  }));
+  const searchStatus=status=>searchedApproved.filter(row=>row.status===status).length;
+  const searchCallsRecorded=searchedApproved.filter(row=>typeof row.status==='string').length;
+  const fightSearchUnattempted=approved.length-searchCallsRecorded;
+  const fightSearchSourceDeficits=arr(independentEvidence?.schema===1&&
+    independentEvidence?.scope==='ufc-independent-full-career-verification'?
+      Object.entries(independentEvidence.fighters||{}):[]).filter(([slug,row])=>
+      approved.includes(slug)&&row?.scope==='minimum_count_evidence_only'&&
+      Number.isInteger(row?.minimumOfficialUfcBouts));
   const identityChecksCompleted=idCheckEntries.filter(([,r])=>r.status==='checked');
   const identityChecksRetry=idCheckEntries.filter(([,r])=>r.status==='retry');
   const identityCheckDiscoveredUfcBouts=identityChecksCompleted.reduce((n,[,r])=>
@@ -595,6 +607,15 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     fightersWithMeasuredFiveOfFive:fullFiveMeasured,
     fightersWithMeasuredTenOfTen:fullTenMeasured,
     proportionIndexedNativeFightIds:ratio(indexedNative.size,allKnownNativeIds.size),
+    fullFightIndexSearchFightersChecked:searchStatus('checked'),
+    fullFightIndexSearchFightersPartial:searchStatus('partial'),
+    fullFightIndexSearchFightersRetry:searchStatus('retry'),
+    fullFightIndexSearchFightersManualReview:searchStatus('manual_review'),
+    fullFightIndexSearchFightersNotAttempted:fightSearchUnattempted,
+    fullFightIndexSearchFightersWithAnyLedger:searchCallsRecorded,
+    fullFightIndexSearchProviderRowsScanned:searchedApproved.reduce((n,row)=>
+      n+(Number.isInteger(row.scannedRows)?Math.max(0,row.scannedRows):0),0),
+    sourceConfirmedHistoricalDeficitsUnderIndexSearch:fightSearchSourceDeficits.length,
     approvedFullCareerIdentityChecksCompleted:identityChecksCompleted.length,
     approvedFullCareerIdentityChecksOnRetry:identityChecksRetry.length,
     approvedFullCareerIdentityChecksRecoveredUfcBouts:identityCheckDiscoveredUfcBouts,
@@ -627,6 +648,12 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     }),
     profilesWithKnownRoundGaps:cohorts.filter(c=>c.missingMeasuredFightIds.length>0),
     careerVerificationDecisions,rosterLastBoutSourceGaps,
+    fullFightIndexSearchReview:searchedApproved.filter(row=>row.status&&
+      row.status!=='checked').map(row=>({
+        slug:row.slug,status:row.status,scannedRows:row.scannedRows||0,
+        invalidRows:row.invalidRows||0,checkedAt:row.checkedAt||null,
+        retryAfter:row.retryAfter||null
+      })),
     cachedCareerHistoryCandidates,profilesWithAmbiguousNumericIdentity,
     approvedMissingHistory:missingHistory.slice(0,30),
     approvedNoLongerEligible:blockedByEligibility.slice(0,30),
@@ -706,6 +733,14 @@ export function markdownReport(report){
    fightersWithMeasuredFiveOfFive:'Fighters with measured statistics for all 5 most recent',
    fightersWithAtLeastTenObservedUfcFights:'Fighters with ≥10 observed UFC fights',
    fightersWithMeasuredTenOfTen:'Fighters with measured statistics for all 10 most recent',
+   fullFightIndexSearchFightersChecked:'Approved UFC fighters fully scanned through paginated native winner-fight search (NC/draw completeness excluded)',
+   fullFightIndexSearchFightersPartial:'Approved UFC fighter winner-fight search awaiting further cursor pages',
+   fullFightIndexSearchFightersRetry:'Approved UFC fighter winner-fight searches awaiting retry after provider error',
+   fullFightIndexSearchFightersManualReview:'Approved UFC fighter winner-fight search results needing manual identity review',
+   fullFightIndexSearchFightersNotAttempted:'Approved UFC fighters not yet searched through the full numeric fight-index',
+   fullFightIndexSearchFightersWithAnyLedger:'Approved UFC fighters with persisted full fight-index search state',
+   fullFightIndexSearchProviderRowsScanned:'Saved native UFC winner-fight rows scanned across approved fighters (includes repeat IDs by fighter)',
+   sourceConfirmedHistoricalDeficitsUnderIndexSearch:'Independently sourced minimum-history cases prioritised by the full index search',
    approvedFullCareerIdentityChecksCompleted:'Approved full-career numeric-ID crosschecks completed',
    approvedFullCareerIdentityChecksOnRetry:'Numeric-ID crosschecks in provider retry cooldown',
    approvedFullCareerIdentityChecksRecoveredUfcBouts:'Previously missing UFC history bouts recovered by numeric-ID crosschecks',
