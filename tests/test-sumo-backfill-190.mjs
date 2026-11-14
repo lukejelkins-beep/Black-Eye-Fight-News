@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {STAGES,newCache,endpoint,combinePage,fillStage,stageStatus,nextStage,chooseWork} from '../scripts/sumo-backfill-190.mjs';
+import {STAGES,newCache,endpoint,combinePage,fillStage,stageStatus,nextStage,chooseWork,unrankedDebutEvidence,terminalHistoryEvidence} from '../scripts/sumo-backfill-190.mjs';
 
 const sample={sourceId:28,officialNskId:3616,sumoDbId:12226,shikonaEn:'Ura'};
 test('free Sumo API history endpoints use explicit source ID and stable pagination',()=>{
@@ -190,4 +190,29 @@ test('null terminal page cannot conceal missing or inconsistent career outcomes'
   d.data.stats={totalMatches:1,totalWins:1,totalLosses:0};
   assert.throws(()=>combinePage(d,'matches',{limit:200,skip:0,total:10,records:null},28),/Expected matches collection/);
   assert.equal(d.stages.matches.skip,1);
+});
+
+import {readFileSync} from 'node:fs';
+
+test('missing debut banzuke is explicitly evidenced, never invented',()=>{
+ const d=JSON.parse(readFileSync(new URL('../data/sumo/backfill/v1/rikishi/9050.json',import.meta.url),'utf8'));
+ const evidence=unrankedDebutEvidence(d);
+ assert.equal(evidence.bashoId,'202503');
+ assert.equal(evidence.firstPublishedRankBasho,'202505');
+ assert.equal(d.data.ranks.some(x=>x.bashoId==='202503'),false);
+ const copy=structuredClone(d);
+ copy.data.matches=copy.data.matches.filter(x=>x.bashoId!=='202503');
+ assert.equal(unrankedDebutEvidence(copy),null);
+});
+test('null terminal page is accepted only when full source totals and debut fights agree',()=>{
+ const d=JSON.parse(readFileSync(new URL('../data/sumo/backfill/v1/rikishi/113.json',import.meta.url),'utf8'));
+ const evidence=terminalHistoryEvidence(d);
+ assert.equal(evidence.regularBouts,391);
+ assert.equal(evidence.rawRows,400);
+ const clone=structuredClone(d);
+ clone.data.matches=clone.data.matches.slice(0,380);
+ assert.equal(terminalHistoryEvidence(clone),null);
+ clone.data.matches=d.data.matches;
+ clone.data.stats.totalWins++;
+ assert.equal(terminalHistoryEvidence(clone),null);
 });
