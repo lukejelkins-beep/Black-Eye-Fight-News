@@ -35,21 +35,31 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
  // A one-day difference for the MOST RECENT saved fight is not evidence
  // of a missing fight. Larger gaps remain unresolved, never auto-closed.
  const newestSaved=[...rows].map(r=>date(r.date)).filter(Boolean).sort().at(-1)||null;
- const difference=latest&&newestSaved?
-   (Date.parse(latest+'T00:00:00Z')-Date.parse(newestSaved+'T00:00:00Z'))/86400000:null;
+ const dayDelta=(a,b)=>date(a)&&date(b)?
+   (Date.parse(a+'T00:00:00Z')-Date.parse(b+'T00:00:00Z'))/86400000:null;
+ const difference=dayDelta(latest,newestSaved);
  const utcDateShift=(difference===1||difference===-1);
- const rosterLatestPresent=difference===0||utcDateShift;
+ // The roster's last-fight date is a discovery snapshot, not an upper
+ // bound on historical evidence. When subsequent *verified* UFC bouts are
+ // saved, the roster date must still be present but need not be the newest.
+ const rosterLatestPresent=!!latest&&rows.some(r=>{
+   const gap=dayDelta(latest,date(r.date));
+   return gap!==null&&Math.abs(gap)<=1;
+ });
+ const rosterSnapshotStale=rosterLatestPresent&&difference!==null&&difference< -1;
  const providerFlag=timeline.providerTruncatedFlag===false;
  const providerLatestMismatch=!!timeline.missingRosterLastUfcFight&&!rosterLatestPresent;
- const contradictions=Boolean(providerLatestMismatch||
-   timeline.savedHistoryHasAdditionalUfcBouts===true||
+ const unresolvedIdentityConflicts=Boolean(
    Number(timeline.conflictingNativeFightIds)>0||
    arr(profile?.ufcHistoryIdConflicts).length>0);
+ const providerDiscrepancy=Boolean(providerLatestMismatch||
+   timeline.savedHistoryHasAdditionalUfcBouts===true||
+   unresolvedIdentityConflicts);
  const legacyClaim=timeline.complete===true&&!providerFlag;
  const providerCertified=Boolean(timeline.complete===true&&providerFlag&&
    snapshot&&date(timeline.observedOn)>=snapshot&&
    Number.isInteger(timeline.settledCount)&&timeline.settledCount>0&&
-   rosterLatestPresent&&!contradictions);
+   rosterLatestPresent&&!providerDiscrepancy);
  // A manually checked independent UFCStats fighter-history listing must
  // cover exactly the same complete bout identities, not a partial sample.
  const ext=independentEntry||{};
@@ -68,10 +78,17 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
    savedKeys.length===givenKeys.length&&
    new Set(givenKeys).size===givenKeys.length&&
    givenKeys.slice().sort().every((v,i)=>v===savedKeys.slice().sort()[i]);
- const independentlyVerified=Boolean(checked&&rosterLatestPresent&&!contradictions);
+ // Incomplete /fighters/{id}/history is a *provider* contradiction,
+ // not a contradiction of an independently checked complete UFC fight list.
+ // A separately reconciled, exact full UFCStats chronology can certify even
+ // after richer cached UFC evidence invalidated the provider's old response.
+ // Native identity collisions remain a hard block for both pathways.
+ const independentlyVerified=Boolean(checked&&rosterLatestPresent&&
+   !unresolvedIdentityConflicts);
  return {providerCertified,independentlyVerified,legacyClaim,
-   explicitUntruncated:providerFlag,providerDiscrepancy:contradictions,
-   rosterLatestPresent,utcDateShift,providerLatestMismatch,
+   explicitUntruncated:providerFlag,providerDiscrepancy,
+   unresolvedIdentityConflicts,rosterLatestPresent,
+   rosterSnapshotStale,utcDateShift,providerLatestMismatch,
    newestSavedUfcFight:newestSaved,independentCheckAttempted:given.length>0};
 }
 
