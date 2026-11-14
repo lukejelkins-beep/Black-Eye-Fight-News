@@ -464,3 +464,30 @@ test('Coverage readiness and career verification are separate, exhaustive states
  assert.equal(out.careerVerificationDecisions.find(x=>x.slug==='fighter-1')
    .status,'provider_history_discrepancy');
 });
+
+test('Independent UFC minimum-count evidence establishes omissions but never full career certification',()=>{
+ const p={...progress,bouts:{'41':fight(41,'Opponent A')}};
+ const r={profiles:{'fighter-1':{recentHistory:[history(41,'Opponent A')],
+   ufcTimeline:{complete:true}}}};
+ const a={fights:{'2015-01-01:fighter1:opponenta':{rounds:[
+   {round:1,a:{sigLanded:2},b:{sigLanded:3}}]}}};
+ const ext={schema:1,scope:'ufc-independent-full-career-verification',
+   rosterAsOf:'2026-11-14',fighters:{
+    'fighter-1':{scope:'minimum_count_evidence_only',
+      sourceCoverageAttested:false,verifiedAt:'2026-11-14',
+      fighterUrl:'https://www.ufc.com/athlete/fighter-1',
+      minimumOfficialUfcBouts:4}}};
+ const result=auditApprovedStage3(approval,census,p,r,a,{},{},{},ext);
+ const s=result.summary;
+ assert.equal(s.profilesWithAllKnownUfcBoutsIndexed,1);
+ assert.equal(s.profilesWithAllKnownUfcBoutsMeasured,1);
+ assert.equal(s.sourceConfirmedIncompleteCareerHistories,1);
+ assert.equal(s.sourceConfirmedMinimumMissingHistoricalUfcBouts,3);
+ assert.equal(s.legacyTimelineCompleteClaimsWithoutRetainedProof,1);
+ assert.equal(s.independentlyVerifiedFullCareerTimelines,0);
+ assert.equal(result.careerVerificationDecisions.find(x=>x.slug==='fighter-1').status,
+   'official_source_confirms_missing_historical_bouts');
+ ext.fighters['fighter-1'].fighterUrl='https://example.com/athlete/fighter-1';
+ const invalid=auditApprovedStage3(approval,census,p,r,a,{},{},{},ext);
+ assert.equal(invalid.summary.sourceConfirmedIncompleteCareerHistories,0);
+});
