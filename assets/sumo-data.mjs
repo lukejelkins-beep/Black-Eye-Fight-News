@@ -319,6 +319,19 @@ export function banzukeMovement(rikishiId, currentBanzuke, priorBanzuke) {
 /** API-provided highest rank only; never infer a historical career high from
  * the current rank or a two-tournament sample.
  */
+/** An active or previous Yokozuna has necessarily achieved the sport's
+ * highest possible rank. Nothing else is promoted to a lifetime peak based
+ * merely on two adjacent tournament rankings.
+ */
+export function confirmedCareerHigh({currentRank=null,previousRank=null,apiDetail=null}={}){
+  const direct=verifiedHighestRank(apiDetail);
+  if(direct) return {rank:direct,evidence:'explicit-source'};
+  if([currentRank,previousRank].some(x=>/^Yokozuna\b/i.test(String(x||'')))) {
+    return {rank:'Yokozuna',evidence:'current-or-prior-verified-yokozuna'};
+  }
+  return null;
+}
+
 export function verifiedHighestRank(rikishiDetail) {
   if(!rikishiDetail || typeof rikishiDetail!=='object') return null;
   const candidates=[rikishiDetail.highestRank,rikishiDetail.highestRankString,
