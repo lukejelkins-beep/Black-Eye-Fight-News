@@ -90,7 +90,7 @@ await mkdir('qa/sumo-reports',{recursive:true});
 await writeFile('qa/sumo-reports/coverage.json',JSON.stringify(output,null,2)+'\n');
 console.log(JSON.stringify({
   tracked:output.trackedRikishi,divisionCounts:output.divisionCounts,
-  movement,flags:output.countryOrigins,
+  movement:movements,flags:output.countryOrigins,
   careerHighsConfirmed:output.careerHighsConfirmed,
   heightKnown:output.heightsKnown,weightKnown:output.weightsKnown,
   h2h:output.allTimeH2h,bouts:output.matchingBouts,
