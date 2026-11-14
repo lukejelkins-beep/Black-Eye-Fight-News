@@ -1,0 +1,27 @@
+name: Validate source-gated UFC 243 overturn non-winner history recovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'data/ufc-official-career-bout-inventory.json'
+      - 'scripts/ufcalendar-rich-backfill.py'
+      - 'tests/test_ufc_full_career_cache.py'
+      - '.github/workflows/validate-ufc-bruno-nc-retry.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  official-nc-retry-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate UFC 243 source-verified corrected no-contest
+        run: |
+          python3 -m py_compile scripts/ufcalendar-rich-backfill.py
+          python3 -m unittest discover -s tests -p 'test_ufc_full_career_cache.py' -v
+      - name: Validate existing UFC paid-collector regressions offline
+        run: python3 -m unittest discover -s tests -p 'test_ufcalendar_rich_backfill.py' -v
