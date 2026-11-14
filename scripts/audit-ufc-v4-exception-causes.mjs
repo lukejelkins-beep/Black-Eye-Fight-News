@@ -79,6 +79,7 @@ export function diagnoseMissingUfcBouts(foundation,progress,archive){
   throw Error("V4 foundation and deduplicated missing fight queue required");
  const index=archiveIndex(archive),detail=[];
  const counts={},priority={},sourceActions={},eventGroups={},byPriorityAndCause={};
+ const conflictEvents={},conflictSamples=[],unindexedEventGroups={};
  for(const item of foundation.missingNativeBoutQueue){
   const bout=progress?.bouts?.[item.boutId]||null;
   const reason=causeFor(bout,index);
@@ -87,6 +88,18 @@ export function diagnoseMissingUfcBouts(foundation,progress,archive){
   const action=item.action||"manual_review";
   if(reason==="official_ufc_event_identity_review"){
    const name=String(bout?.event||"unknown");eventGroups[name]=(eventGroups[name]||0)+1;
+  }
+  if(reason==="archived_metric_source_conflict"){
+   const title=String(bout?.event||"unknown");
+   conflictEvents[title]=(conflictEvents[title]||0)+1;
+   const archived=matching(index,bout)[0];
+   if(conflictSamples.length<5)conflictSamples.push({boutId:item.boutId,
+    event:title,example:JSON.stringify(archived?.conflicts||[]).slice(0,500)});
+  }
+  if(reason==="native_fight_not_indexed"){
+   const date=item.references?.[0]?.date||"unknown";
+   const year=String(date).slice(0,4);
+   unindexedEventGroups[year]=(unindexedEventGroups[year]||0)+1;
   }
   const bucket=item.band||"unknown";
   if(!byPriorityAndCause[bucket])byPriorityAndCause[bucket]={};
@@ -112,7 +125,11 @@ export function diagnoseMissingUfcBouts(foundation,progress,archive){
    byPriorityBand:priority,bySavedWorkflowAction:sourceActions,
    notIndexedInProviderCache:foundation.missingNativeBoutQueue.filter(x=>
     x.indexedInSavedProviderCache===false).length,
-   byPriorityAndCause,eventTitleGroups:Object.entries(eventGroups)
+   byPriorityAndCause,conflictEvents:Object.entries(conflictEvents)
+    .sort((a,b)=>b[1]-a[1]).map(([title,count])=>({title,count})),
+   unindexedFightYears:unindexedEventGroups,
+   conflictExamples:conflictSamples,
+   eventTitleGroups:Object.entries(eventGroups)
     .sort((a,b)=>b[1]-a[1]).map(([title,count])=>({title,count}))},
   cases:detail,note:"Cause classifications are cached-evidence diagnostics only, not authority to retry an API request or impute missing statistics."};
 }
