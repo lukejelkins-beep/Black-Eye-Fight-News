@@ -269,10 +269,10 @@ test('wave45 preserves the documented one-day native UTC shift and reciprocal of
  assert.equal(p.date,'2024-12-14');
  assert.equal(cache.bouts['60374'].eventDate,'2024-12-15');
  assert.equal(p.result,'loss');
- assert.equal(cache.bouts['60374'].result.winnerId,'1261');
+ assert.equal(cache.bouts['60374'].result.winnerId,'464');
  const m=register['muin-gafurov'].bouts.find(x=>x.nativeBoutId==='60736');
  assert.equal(m.result,'loss');
- assert.equal(cache.bouts['60736'].result.winnerId,'320');
+ assert.equal(cache.bouts['60736'].result.winnerId,'205');
 });
 test('wave45 strict Stage3 gate fails closed for missing bout, altered native fighter ID or changed winner',()=>{
  for(const c of cases){
