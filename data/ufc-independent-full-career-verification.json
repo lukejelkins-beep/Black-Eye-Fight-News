@@ -17460,6 +17460,56 @@
           "nativeFighterId": "2853"
         }
       ]
+    },
+    "mandel-nallo": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Mandel Nallo",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/8f4528c10bd34fab",
+      "officialFighterUrl": "https://www.ufc.com/athlete/mandel-nallo",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived fight/result/event source only; direct UFCStats site not accessed",
+        "method": "Official UFC biography and event results for both UFC fights, pinned independent full historical results, exact native fighter/corners/outcomes; DWCS excluded with UFC first-party proof."
+      },
+      "verifiedNumericFighterIds": [
+        "571"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Two completed official UFC bouts from Octagon debut 18 April 2026 through 14 November 2026, full result chronology independently corroborated with pinned UFCStats-derived fight links, paired saved native fighter IDs and result, with separately first-party-sourced 2 September 2025 DWCS bout excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/mandel-nallo",
+        "https://www.ufc.com/event/ufc-fight-night-october-17-2026",
+        "https://www.ufc.com/news/week-4-results-scorecards-fight-recaps-interviews-contract-winners-dana-whites-contender-series-season-9",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43574294112",
+      "bouts": [
+        {
+          "date": "2026-04-18",
+          "opponent": "Jai Herbert",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e644218737c1a778",
+          "nativeBoutId": "66091",
+          "nativeFighterId": "571"
+        },
+        {
+          "date": "2026-10-17",
+          "opponent": "Nate Landwehr",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/49707683a6ebf34c",
+          "nativeBoutId": "83405",
+          "nativeFighterId": "571"
+        }
+      ]
     }
   }
 }
