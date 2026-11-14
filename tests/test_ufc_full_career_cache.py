@@ -226,6 +226,23 @@ class FullCareerCacheTests(unittest.TestCase):
         self.assertTrue(item["conflicts"],
                         "Contradictions remain visible in internal archive QA")
 
+    def test_provider_timeline_retains_explicit_truncation_metadata_and_missing_flag(self):
+        row={"org_slug":"ufc","status":"win","date":"2025-05-17",
+             "opponent":{"name":"Test Opponent"}}
+        for meta,want in [({"truncated":False},False),
+                          ({"truncated":True},True),
+                          ({},None)]:
+            result=m.ufc_timeline_evidence({"data":[row],"meta":meta},
+                                           dt.date(2026,11,14))
+            self.assertIs(result["providerTruncatedFlag"],want)
+            self.assertEqual(result["providerHistoryRowCount"],1)
+            self.assertEqual(result["settledCount"],1)
+            self.assertIs(result["complete"],want is False)
+        missing=m.ufc_timeline_evidence({"data":[row]},
+                                         dt.date(2026,11,14))
+        self.assertIsNone(missing["providerTruncatedFlag"])
+        self.assertFalse(missing["complete"])
+
     def test_no_signoff_no_full_career_calls(self):
         state,research,candidate=self.fixture()
         client=Fake()
