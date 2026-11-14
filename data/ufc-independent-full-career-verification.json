@@ -823,7 +823,7 @@
     "abdul-hussein": {
       "fighterName": "Abdul Hussein",
       "rosterAsOf": "2026-11-14",
-      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "certificationStatus": "independently_verified_full_career",
       "sourceCoverageAttested": true,
       "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
       "scope": "full_ufc_career_from_debut_to_snapshot",
@@ -886,6 +886,21 @@
         "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
         "cutoffLastEvent": "2026-11-07",
         "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da"
+      },
+      "certificationProof": {
+        "status": "passed",
+        "independentGate": "evaluateCareerEvidence.independentlyVerified=true",
+        "verifiedAt": "2026-11-14",
+        "workflowRunId": 43558250434,
+        "workflowUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43558250434",
+        "workflowCommitSha": "069b5e4dd4e3c22f3de57d32d77ce5e014e904fb",
+        "artifactId": 14098664972,
+        "verifiedOfficialUfcBouts": 1,
+        "verifiedNativeUfcBouts": 1,
+        "fullyMeasuredUfcBouts": 1,
+        "distinctNativeFightId": "83220",
+        "sharedFightInOtherApprovedCareer": false,
+        "doNotTreatUnlinkedSourceHistoryAsCertified": true
       }
     },
     "sam-hughes": {
@@ -1462,7 +1477,7 @@
       "officialEventResultsUrl": "https://www.ufc.com/news/ufc-oklahoma-city-official-scorecards",
       "fighterName": "Ezra Elliott",
       "rosterAsOf": "2026-11-14",
-      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "certificationStatus": "independently_verified_full_career",
       "fighterUrl": "https://ufcstats.com/fighter-details/b852ad2b35354fcb",
       "officialFighterUrl": "https://www.ufc.com/athlete/ezra-elliot",
       "verifiedNumericFighterIds": [
@@ -1501,7 +1516,22 @@
           "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-july-18-2026"
         }
       ],
-      "note": "A single officially completed UFC debut as of 14 Nov 2026, corroborated independently with exact UFCStats-derived fight link and reciprocal corners in native 83063; standalone CI proof required before counting as certified. No paid API requests."
+      "note": "A single officially completed UFC debut as of 14 Nov 2026, corroborated independently with exact UFCStats-derived fight link and reciprocal corners in native 83063; standalone CI proof required before counting as certified. No paid API requests.",
+      "certificationProof": {
+        "status": "passed",
+        "independentGate": "evaluateCareerEvidence.independentlyVerified=true",
+        "verifiedAt": "2026-11-14",
+        "workflowRunId": 43558739458,
+        "workflowUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43558739458",
+        "workflowCommitSha": "7201fc8ab569677a7930839c2b0b392c63e79bb8",
+        "artifactId": 14100110374,
+        "verifiedOfficialUfcBouts": 1,
+        "verifiedNativeUfcBouts": 1,
+        "fullyMeasuredUfcBouts": 1,
+        "distinctNativeFightId": "83063",
+        "sharedFightInOtherApprovedCareer": true,
+        "doNotTreatUnlinkedSourceHistoryAsCertified": true
+      }
     },
     "damien-anderson": {
       "scope": "full_ufc_career_from_debut_to_snapshot",
@@ -1520,7 +1550,7 @@
       "officialEventResultsUrl": "https://www.ufc.com/news/ufc-oklahoma-city-official-scorecards",
       "fighterName": "Damien Anderson",
       "rosterAsOf": "2026-11-14",
-      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "certificationStatus": "independently_verified_full_career",
       "fighterUrl": "https://ufcstats.com/fighter-details/df619b9a86ce0a9a",
       "officialFighterUrl": "https://www.ufc.com/athlete/damien-anderson",
       "verifiedNumericFighterIds": [
@@ -1559,7 +1589,22 @@
           "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-july-18-2026"
         }
       ],
-      "note": "A single officially completed UFC debut as of 14 Nov 2026, corroborated independently with exact UFCStats-derived fight link and reciprocal corners in native 83063; standalone CI proof required before counting as certified. No paid API requests."
+      "note": "A single officially completed UFC debut as of 14 Nov 2026, corroborated independently with exact UFCStats-derived fight link and reciprocal corners in native 83063; standalone CI proof required before counting as certified. No paid API requests.",
+      "certificationProof": {
+        "status": "passed",
+        "independentGate": "evaluateCareerEvidence.independentlyVerified=true",
+        "verifiedAt": "2026-11-14",
+        "workflowRunId": 43558739458,
+        "workflowUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43558739458",
+        "workflowCommitSha": "7201fc8ab569677a7930839c2b0b392c63e79bb8",
+        "artifactId": 14100110374,
+        "verifiedOfficialUfcBouts": 1,
+        "verifiedNativeUfcBouts": 1,
+        "fullyMeasuredUfcBouts": 1,
+        "distinctNativeFightId": "83063",
+        "sharedFightInOtherApprovedCareer": true,
+        "doNotTreatUnlinkedSourceHistoryAsCertified": true
+      }
     },
     "sergei-pavlovich": {
       "sourceCoverageAttested": true,
@@ -1970,7 +2015,7 @@
     "tahir-abdullayev": {
       "rosterAsOf": "2026-11-14",
       "fighterName": "Tahir Abdullayev",
-      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "certificationStatus": "independently_verified_full_career",
       "sourceCoverageAttested": true,
       "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
       "scope": "full_ufc_career_from_debut_to_snapshot",
@@ -2022,12 +2067,27 @@
           "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-june-27-2026"
         }
       ],
-      "note": "Source-linked debut-to-snapshot exhaustive official UFC chronology. Each athlete separately mapped to shared native 82871, preserved distinct native fighter IDs, final result and complete measured round statistics. Independent CI gate must pass before certification finalization."
+      "note": "Source-linked debut-to-snapshot exhaustive official UFC chronology. Each athlete separately mapped to shared native 82871, preserved distinct native fighter IDs, final result and complete measured round statistics. Independent CI gate must pass before certification finalization.",
+      "certificationProof": {
+        "status": "passed",
+        "independentGate": "evaluateCareerEvidence.independentlyVerified=true",
+        "verifiedAt": "2026-11-14",
+        "workflowRunId": 43559108236,
+        "workflowUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559108236",
+        "workflowCommitSha": "9faa250fb16509b578d47f14a8a16142de993570",
+        "artifactId": 14100086191,
+        "verifiedOfficialUfcBouts": 1,
+        "verifiedNativeUfcBouts": 1,
+        "fullyMeasuredUfcBouts": 1,
+        "distinctNativeFightId": "82871",
+        "sharedFightInOtherApprovedCareer": true,
+        "doNotTreatUnlinkedSourceHistoryAsCertified": true
+      }
     },
     "jefferson-nascimento": {
       "rosterAsOf": "2026-11-14",
       "fighterName": "Jefferson Nascimento",
-      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "certificationStatus": "independently_verified_full_career",
       "sourceCoverageAttested": true,
       "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
       "scope": "full_ufc_career_from_debut_to_snapshot",
@@ -2079,7 +2139,22 @@
           "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-june-27-2026"
         }
       ],
-      "note": "Source-linked debut-to-snapshot exhaustive official UFC chronology. Each athlete separately mapped to shared native 82871, preserved distinct native fighter IDs, final result and complete measured round statistics. Independent CI gate must pass before certification finalization."
+      "note": "Source-linked debut-to-snapshot exhaustive official UFC chronology. Each athlete separately mapped to shared native 82871, preserved distinct native fighter IDs, final result and complete measured round statistics. Independent CI gate must pass before certification finalization.",
+      "certificationProof": {
+        "status": "passed",
+        "independentGate": "evaluateCareerEvidence.independentlyVerified=true",
+        "verifiedAt": "2026-11-14",
+        "workflowRunId": 43559108236,
+        "workflowUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559108236",
+        "workflowCommitSha": "9faa250fb16509b578d47f14a8a16142de993570",
+        "artifactId": 14100086191,
+        "verifiedOfficialUfcBouts": 1,
+        "verifiedNativeUfcBouts": 1,
+        "fullyMeasuredUfcBouts": 1,
+        "distinctNativeFightId": "82871",
+        "sharedFightInOtherApprovedCareer": true,
+        "doNotTreatUnlinkedSourceHistoryAsCertified": true
+      }
     },
     "aleksandre-topuria": {
       "sourceCoverageAttested": true,
@@ -2128,7 +2203,7 @@
     "sean-king": {
       "rosterAsOf": "2026-11-14",
       "fighterName": "Sean King",
-      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "certificationStatus": "independently_verified_full_career",
       "sourceCoverageAttested": true,
       "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
       "scope": "full_ufc_career_from_debut_to_snapshot",
@@ -2180,12 +2255,27 @@
           "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-september-12-2026"
         }
       ],
-      "note": "Verified one unique completed UFC bout debut to 14 Nov 2026 with independent full UFCStats-derived identity and native numeric ID, UFC official narrative and scorecards, measured round statistics and explicit preservation of official display discrepancy. Source coverage must pass strict CI gate."
+      "note": "Verified one unique completed UFC bout debut to 14 Nov 2026 with independent full UFCStats-derived identity and native numeric ID, UFC official narrative and scorecards, measured round statistics and explicit preservation of official display discrepancy. Source coverage must pass strict CI gate.",
+      "certificationProof": {
+        "status": "passed",
+        "independentGate": "evaluateCareerEvidence.independentlyVerified=true",
+        "verifiedAt": "2026-11-14",
+        "workflowRunId": 43559409970,
+        "workflowUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559409970",
+        "workflowCommitSha": "0a7a3f33a2b9b1960c16a37997616d1a43613f91",
+        "artifactId": 14100042035,
+        "verifiedOfficialUfcBouts": 1,
+        "verifiedNativeUfcBouts": 1,
+        "fullyMeasuredUfcBouts": 1,
+        "distinctNativeFightId": "92965",
+        "sharedFightInOtherApprovedCareer": true,
+        "doNotTreatUnlinkedSourceHistoryAsCertified": true
+      }
     },
     "jessie-rosas": {
       "rosterAsOf": "2026-11-14",
       "fighterName": "Jessie Rosas",
-      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "certificationStatus": "independently_verified_full_career",
       "sourceCoverageAttested": true,
       "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
       "scope": "full_ufc_career_from_debut_to_snapshot",
@@ -2237,12 +2327,27 @@
           "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-september-12-2026"
         }
       ],
-      "note": "Verified one unique completed UFC bout debut to 14 Nov 2026 with independent full UFCStats-derived identity and native numeric ID, UFC official narrative and scorecards, measured round statistics and explicit preservation of official display discrepancy. Source coverage must pass strict CI gate."
+      "note": "Verified one unique completed UFC bout debut to 14 Nov 2026 with independent full UFCStats-derived identity and native numeric ID, UFC official narrative and scorecards, measured round statistics and explicit preservation of official display discrepancy. Source coverage must pass strict CI gate.",
+      "certificationProof": {
+        "status": "passed",
+        "independentGate": "evaluateCareerEvidence.independentlyVerified=true",
+        "verifiedAt": "2026-11-14",
+        "workflowRunId": 43559409970,
+        "workflowUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559409970",
+        "workflowCommitSha": "0a7a3f33a2b9b1960c16a37997616d1a43613f91",
+        "artifactId": 14100042035,
+        "verifiedOfficialUfcBouts": 1,
+        "verifiedNativeUfcBouts": 1,
+        "fullyMeasuredUfcBouts": 1,
+        "distinctNativeFightId": "92965",
+        "sharedFightInOtherApprovedCareer": true,
+        "doNotTreatUnlinkedSourceHistoryAsCertified": true
+      }
     },
     "fabia-sintes": {
       "rosterAsOf": "2026-11-14",
       "fighterName": "Fabia Sintes",
-      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "certificationStatus": "independently_verified_full_career",
       "sourceCoverageAttested": true,
       "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
       "scope": "full_ufc_career_from_debut_to_snapshot",
@@ -2294,12 +2399,27 @@
           "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-september-05-2026"
         }
       ],
-      "note": "Crosschecked full completed official UFC career through 14 Nov 2026: one fight, one native ID, no feeder contamination, verified Greco source-linked result, 900-second measurement record, official written outcome preserved."
+      "note": "Crosschecked full completed official UFC career through 14 Nov 2026: one fight, one native ID, no feeder contamination, verified Greco source-linked result, 900-second measurement record, official written outcome preserved.",
+      "certificationProof": {
+        "status": "passed",
+        "independentGate": "evaluateCareerEvidence.independentlyVerified=true",
+        "verifiedAt": "2026-11-14",
+        "workflowRunId": 43559601348,
+        "workflowUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559601348",
+        "workflowCommitSha": "7e39ea56a6c63e637398b59431bd047da9b2c462",
+        "artifactId": 14099802577,
+        "verifiedOfficialUfcBouts": 1,
+        "verifiedNativeUfcBouts": 1,
+        "fullyMeasuredUfcBouts": 1,
+        "distinctNativeFightId": "83815",
+        "sharedFightInOtherApprovedCareer": true,
+        "doNotTreatUnlinkedSourceHistoryAsCertified": true
+      }
     },
     "michael-aljarouj": {
       "rosterAsOf": "2026-11-14",
       "fighterName": "Michael Aljarouj",
-      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "certificationStatus": "independently_verified_full_career",
       "sourceCoverageAttested": true,
       "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
       "scope": "full_ufc_career_from_debut_to_snapshot",
@@ -2351,7 +2471,22 @@
           "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-september-05-2026"
         }
       ],
-      "note": "Crosschecked full completed official UFC career through 14 Nov 2026: one fight, one native ID, no feeder contamination, verified Greco source-linked result, 900-second measurement record, official written outcome preserved."
+      "note": "Crosschecked full completed official UFC career through 14 Nov 2026: one fight, one native ID, no feeder contamination, verified Greco source-linked result, 900-second measurement record, official written outcome preserved.",
+      "certificationProof": {
+        "status": "passed",
+        "independentGate": "evaluateCareerEvidence.independentlyVerified=true",
+        "verifiedAt": "2026-11-14",
+        "workflowRunId": 43559601348,
+        "workflowUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559601348",
+        "workflowCommitSha": "7e39ea56a6c63e637398b59431bd047da9b2c462",
+        "artifactId": 14099802577,
+        "verifiedOfficialUfcBouts": 1,
+        "verifiedNativeUfcBouts": 1,
+        "fullyMeasuredUfcBouts": 1,
+        "distinctNativeFightId": "83815",
+        "sharedFightInOtherApprovedCareer": true,
+        "doNotTreatUnlinkedSourceHistoryAsCertified": true
+      }
     }
   }
 }
