@@ -76,7 +76,14 @@ export function endpoint(id,stage,skip=0){
 }
 export function combinePage(doc,stage,result,id){
   const name=stage==='shikonas'?'shikonas':stage;
-  if(!isObject(result)||!Array.isArray(result[name]))throw Error('Expected paginated '+stage+' response');
+  if(!isObject(result)||!Array.isArray(result[name])){
+    // Preserve only a harmless structural signature. This distinguishes a
+    // provider error document from a changed pagination contract without
+    // logging raw API payloads or assuming an empty history.
+    const keys=isObject(result)?Object.keys(result).slice(0,12).join(','):Array.isArray(result)?'array':'non-object';
+    const msg=isObject(result)?String(result.message??result.error??'').slice(0,70):'';
+    throw Error('Expected paginated '+stage+' response; shape='+keys+(msg?' detail='+msg:''));
+  }
   const indicated=result.rikishi_id??result.rikishiId;
   if(indicated!=null&&Number(indicated)!==Number(id))throw Error('Mismatched wrestler identity in '+stage);
   for(const x of result[name]){
