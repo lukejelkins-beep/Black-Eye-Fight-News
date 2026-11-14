@@ -144,8 +144,13 @@ export function crosscheckGreco({events,results,approval,research,inventory,comm
   note:'Dataset may be stale; UFCStats scraper licence and extracted data reuse need independent review. No source data copied to BEFN or UFC full-career certifications issued.'};
 }
 async function requestText(url,max=MAX_BYTES){
+ const headers={'user-agent':'BEFN-UFC-history-crosscheck/1.0','accept':'*/*'};
+ // GitHub API has a low anonymous request quota. Auth applies ONLY to the
+ // official API host, never raw.githubusercontent.com or arbitrary redirects.
+ if(new URL(url).hostname==='api.github.com'&&process.env.GH_TOKEN)
+   headers.authorization='Bearer '+process.env.GH_TOKEN;
  const response=await fetch(url,{signal:AbortSignal.timeout(18000),
-  headers:{'user-agent':'BEFN-UFC-history-crosscheck/1.0','accept':'*/*'}});
+   redirect:'error',headers});
  if(!response.ok)throw Error('Public Github source request failed: '+response.status);
  const bytes=await response.arrayBuffer();
  if(bytes.byteLength>max)throw Error('Public source exceeds size cap');
