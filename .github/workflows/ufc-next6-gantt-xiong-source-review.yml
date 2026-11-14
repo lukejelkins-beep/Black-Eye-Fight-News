@@ -1,0 +1,31 @@
+name: UFC next six Gantt-Xiong pinned source/native audit (research only)
+on:
+  push:
+    branches: [research/ufc-next6-gantt-xiong-20261114]
+    paths:
+      - 'data/ufc-unified-next6-gantt-xiong-official-source-review-20261114.json'
+      - 'scripts/ufc-unified-next6-gantt-xiong-source-review.mjs'
+      - '.github/workflows/ufc-next6-gantt-xiong-source-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independently-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify read-only code
+        run: node --check scripts/ufc-unified-next6-gantt-xiong-source-review.mjs
+      - name: One bounded independent pinned Greco UFCStats-to-original-native review
+        run: node scripts/ufc-unified-next6-gantt-xiong-source-review.mjs
+      - name: Persist offline audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-next6-gantt-xiong-source-only
+          path: qa/ufc-unified-next6-gantt-xiong-source-review.json
+          if-no-files-found: warn
