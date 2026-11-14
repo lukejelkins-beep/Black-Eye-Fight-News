@@ -27,7 +27,7 @@ function validEntries(document, label, approved) {
   for (const [slug, proof] of entries) {
     if (!approved.has(slug)) throw Error(label + ': unapproved fighter ' + slug);
     if (proof?.sourceCoverageAttested !== true ||
-        proof?.scope !== 'complete_official_ufc_career' ||
+        !['complete_official_ufc_career', 'full_ufc_career_from_debut_to_snapshot'].includes(proof?.scope) ||
         !Array.isArray(proof?.bouts) || !proof.bouts.length)
       throw Error(label + ': incomplete source evidence for ' + slug);
     const ids = new Set();
