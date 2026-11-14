@@ -1989,6 +1989,7 @@ def recover_source_verified_ufc_non_winner_event_cards(client,state,research,cov
     profiles=research.get("profiles",{})
     native=state.get("bouts",{})
     ledger=state.setdefault("ufcOfficialSourceNonWinnerChecks",{})
+    exact_exceptions=read(OFFICIAL_ID_EXCEPTIONS,{})
     calls=linked=indexed=unresolved=0
     for fighter,source in inventory.get("fighters",{}).items():
         if (fighter not in approved or not isinstance(source,dict) or
@@ -2015,6 +2016,52 @@ def recover_source_verified_ufc_non_winner_event_cards(client,state,research,cov
                     stable_ids.add(fid)
         if len(stable_ids)!=1:continue
         fid=next(iter(stable_ids))
+        # UFC 243 Bruno/Taha was overturned to NC. Its 2019 numeric identity
+        # is the independently corroborated historical ID 158, not newer 87.
+        # Only permit the old ID after ALL TEN exact official native-ID
+        # exceptions have actually been restored into this approved career.
+        historic_nc_id=None
+        if (fighter=="bruno-gustavo-da-silva" and stable_ids=={"87"} and
+            source.get("sourceUrl")=="https://www.ufc.com/athlete/bruno-silva" and
+            exact_exceptions.get("schema")==1 and
+            exact_exceptions.get("scope")=="ufc-exact-official-native-fighter-id-exceptions" and
+            exact_exceptions.get("rosterAsOf")==inventory.get("rosterAsOf")):
+            exc=(exact_exceptions.get("athletes") or {}).get(fighter,{})
+            older=exc.get("bouts",[])
+            saved=profile.get("recentHistory",[])
+            official={(date_str(b.get("date")),parts(b.get("opponent")),b.get("result"))
+                for b in source.get("bouts",[]) if isinstance(b,dict)}
+            if (exc.get("canonicalNumericId")=="87" and
+                exc.get("historicalNumericId")=="158" and
+                exc.get("sourceUrl")==source.get("sourceUrl") and
+                isinstance(older,list) and len(older)==10 and
+                len({str(x.get("nativeFightId")) for x in older if isinstance(x,dict)})==10):
+                verified=0
+                for x in older:
+                    bid=str(x.get("nativeFightId") or "")
+                    b=native.get(bid,{})
+                    own=[(b.get(side) or {},b.get(other) or {})
+                         for side,other in (("a","b"),("b","a"))
+                         if str((b.get(side) or {}).get("id") or "")=="158"]
+                    historical=(date_str(x.get("date")),parts(x.get("opponent")),x.get("result"))
+                    if (historical not in official or len(own)!=1 or
+                        b.get("org")!="ufc" or b.get("status")!="completed" or
+                        not official_ufc_event_title(b.get("event") or "") or
+                        not close(x.get("date"),b.get("eventDate")) or
+                        not same(own[0][1].get("name"),x.get("opponent")) or
+                        str((b.get("result") or {}).get("winnerId") or "") not in
+                        {str(own[0][0].get("id") or ""),str(own[0][1].get("id") or "")}):
+                        break
+                    actual="win" if str((b.get("result") or {}).get("winnerId"))==str(own[0][0].get("id")) else "loss"
+                    if actual!=x.get("result") or not any(
+                        isinstance(h,dict) and str(h.get("boutId") or "")==bid and
+                        h.get("verifiedHistoricalAlias") is True and
+                        h.get("result")==actual and close(h.get("date"),x.get("date")) and
+                        same(h.get("opponent"),x.get("opponent"))
+                        for h in saved):
+                        break
+                    verified+=1
+                if verified==10:historic_nc_id="158"
         for row in source.get("bouts",[]):
             if calls>=4 or client.stopped or client.remaining<=0 or \
                client.calls>=client.max_calls-35:break
@@ -2023,6 +2070,15 @@ def recover_source_verified_ufc_non_winner_event_cards(client,state,research,cov
             day=date_str(row.get("date"))
             opponent=safe(row.get("opponent"),110)
             if not day or day>today.isoformat() or not parts(opponent):continue
+            # Explicit one-time historical numeric-ID rescue, not a general alias.
+            is_bruno_ufc243=bool(historic_nc_id=="158" and
+                fighter=="bruno-gustavo-da-silva" and day=="2019-10-05" and
+                parts(opponent)==parts("Khalid Taha") and
+                row.get("result")=="no_contest" and
+                row.get("officialEventName")=="UFC 243: Whittaker vs Adesanya" and
+                row.get("officialNoContestSourceUrl")=="https://www.ufc.com/athlete/khalid-taha")
+            event_fid=historic_nc_id if is_bruno_ufc243 else fid
+            review_version="bruno-ufc243-historical-158-v1" if is_bruno_ufc243 else None
             if any(isinstance(h,dict) and
                 str(h.get("promotion") or "").lower()=="ufc" and
                 close(h.get("date"),day) and same(h.get("opponent"),opponent) and
@@ -2031,7 +2087,10 @@ def recover_source_verified_ufc_non_winner_event_cards(client,state,research,cov
                 continue
             key=fighter+"|"+day+"|"+":".join(parts(opponent))
             prior=ledger.get(key,{})
-            if prior.get("status") in ("linked","not_found","manual_review"):continue
+            if prior.get("status") in ("linked","manual_review"):continue
+            if prior.get("status")=="not_found" and (
+                not is_bruno_ufc243 or
+                prior.get("reviewVersion")==review_version):continue
             if prior.get("status")=="retry" and \
                str(prior.get("retryAfter") or "")>today.isoformat():continue
             start=(dt.date.fromisoformat(day)-dt.timedelta(days=1)).isoformat()
@@ -2041,12 +2100,14 @@ def recover_source_verified_ufc_non_winner_event_cards(client,state,research,cov
             calls+=1
             if events is None:
                 ledger[key]={"status":"retry","checkedAt":today.isoformat(),
-                    "retryAfter":(today+dt.timedelta(days=7)).isoformat()}
+                    "retryAfter":(today+dt.timedelta(days=7)).isoformat(),
+                    **({"reviewVersion":review_version} if review_version else {})}
                 continue
             event_candidates=[ev for ev in response_rows(events) if
                  isinstance(ev,dict) and ev.get("org") in ("ufc",None) and
                  close(day,ev.get("starts_at")) and
                  official_ufc_event_title(ev.get("title") or "") and
+                 (not is_bruno_ufc243 or "ufc 243" in str(ev.get("title") or "").lower()) and
                  positive(ev.get("id"))]
             matches=[]
             for ev in event_candidates[:3]:
@@ -2057,12 +2118,13 @@ def recover_source_verified_ufc_non_winner_event_cards(client,state,research,cov
                 calls+=1
                 card=summary_event((card_response or {}).get("data"))
                 if not card or card["org"]!="ufc" or not close(day,card["date"]) or \
-                   not official_ufc_event_title(card["title"]):continue
+                   not official_ufc_event_title(card["title"]) or \
+                   (is_bruno_ufc243 and "ufc 243" not in card["title"].lower()):continue
                 for b in card["bouts"]:
                     if b.get("status")!=row["result"]:continue
                     for side,other in (("a","b"),("b","a")):
                         own=b.get(side) or {};opp=b.get(other) or {}
-                        if str(own.get("id") or "")==fid and same(opp.get("name"),opponent):
+                        if str(own.get("id") or "")==event_fid and same(opp.get("name"),opponent):
                             matches.append((b,card))
             ids={match[0]["id"] for match in matches}
             if len(ids)!=1:
@@ -2070,7 +2132,8 @@ def recover_source_verified_ufc_non_winner_event_cards(client,state,research,cov
                 ledger[key]={"status":"manual_review" if len(ids)>1 else "not_found",
                    "checkedAt":today.isoformat(),
                    "reason":"no_unique_exact_native_nc_or_draw_in_source_event_cards",
-                   "candidateIds":sorted(ids)}
+                   "candidateIds":sorted(ids),
+                   **({"reviewVersion":review_version} if review_version else {})}
                 continue
             b,card=matches[0]
             bid=b["id"]
@@ -2112,7 +2175,8 @@ def recover_source_verified_ufc_non_winner_event_cards(client,state,research,cov
             timeline["complete"]=False
             timeline["savedHistoryHasAdditionalUfcBouts"]=True
             ledger[key]={"status":"linked","checkedAt":today.isoformat(),
-                         "nativeId":bid,"eventId":card["id"]}
+                         "nativeId":bid,"eventId":card["id"],
+                         **({"reviewVersion":review_version} if review_version else {})}
             linked+=1
     if calls:
         print("BEFN UFC official non-winner event-card recovery:",calls,
