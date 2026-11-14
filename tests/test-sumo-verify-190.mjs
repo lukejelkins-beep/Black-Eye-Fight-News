@@ -8,7 +8,7 @@ function complete(){
  const d=newCache(w);
  for(const stage of STAGES){d.stages[stage].complete=true;d.stages[stage].total=0;}
  d.data.profile={id:28,nskId:3616,shikonaEn:'Ura',currentRank:w.currentRank};
- d.data.stats={rikishi_id:28,totalWins:6,totalLosses:4,totalMatches:10};
+ d.data.stats={rikishi_id:28,totalWins:1,totalLosses:0,totalMatches:1};
  d.data.measurements=[{id:'202611-28',rikishiId:28,bashoId:'202611',height:173,weight:138}];
  d.data.ranks=[{id:'202611-28',rikishiId:28,bashoId:'202611',rank:w.currentRank}];
  d.data.shikonas=[{id:'201503-28',rikishiId:28,bashoId:'201503',shikonaEn:'Ura'}];
@@ -47,4 +47,19 @@ test('current profile rank drift is a warning, not fabricated failure or certifi
  const r=auditRikishi(w,d);
  assert.ok(r.warnings.includes('current-banzuke-snapshot-drift'));
  assert.equal(r.readyForExternalCrosscheck,true);
+});
+
+test('a capped first page of 200 bouts is not a complete 763-bout career',()=>{
+  const d=complete();
+  d.data.stats.totalMatches=763;
+  const result=auditRikishi(w,d);
+  assert.equal(result.readyForExternalCrosscheck,false);
+  assert.ok(result.errors.includes('match-history-shortfall'));
+});
+test('source Mae-zumo is an authentic unranked debut status, not a malformed banzuke',()=>{
+  const d=complete();
+  d.data.ranks=[{id:'201503-28',rikishiId:28,bashoId:'201503',rank:'Mae-zumo'}];
+  const result=auditRikishi(w,d);
+  assert.equal(result.readyForExternalCrosscheck,true);
+  assert.ok(!result.errors.includes('malformed-rank-value'));
 });
