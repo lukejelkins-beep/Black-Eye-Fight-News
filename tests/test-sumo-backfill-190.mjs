@@ -130,7 +130,11 @@ test('one failing endpoint does not block another fighter or stage',()=>{
   const attempted=new Set(['28:profile']);
   assert.equal(chooseWork([ura,next],docs,'quick',attempted).w.sourceId,2);
   docs.get(28).stages.profile.attempts=3;
-  assert.equal(chooseWork([ura,next],docs,'quick').stage,'stats');
+  assert.equal(chooseWork([ura,next],docs,'quick').w.sourceId,2,
+    'another wrestler still progresses when Ura has a blocked source stage');
+  for(const s of STAGES.filter(x=>x!=='matches'))docs.get(2).stages[s].complete=true;
+  assert.equal(chooseWork([ura,next],docs,'quick').stage,'stats',
+    'remaining Ura stages are still eligible after his profile request fails');
 });
 test('when the quick stage is done it never needs a repeat API request',()=>{
   const docs=new Map([[28,newCache(sample)]]);
