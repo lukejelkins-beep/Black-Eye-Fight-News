@@ -7,7 +7,7 @@
   "sourceLatestEvent": "2026-11-07",
   "status": "source_links_not_certifications",
   "sourceRun": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560551446",
-  "note": "Exactly 17 targeted source-linked UFCStats-derived histories from one successful pinned Greco crosscheck. Independent official scope and native/metrics verification mandatory; source alone never sufficient.",
+  "note": "Exactly 17 targeted source-linked UFCStats-derived histories from one successful pinned Greco crosscheck. Independent official scope and native/metrics verification mandatory; source alone never sufficient. Three independently UFC-source-verified opponent aliases reconciled with existing canonical native fight IDs: Da'Mon Blackshear–Alatengheili 60883; Jonathan Pearce–Kai Kamaka III 66360 (one-day UTC difference); Casey O'Neill–Ariane Lipski da Silva 59933. No synthetic IDs and no cache edits.",
   "fighters": {
     "tatiana-suarez": {
       "sourceName": "Tatiana Suarez",
@@ -133,9 +133,9 @@
       "sourceName": "Da'Mon Blackshear",
       "grecoSourceBouts": 10,
       "savedUfcBouts": 10,
-      "sourceOnly": 1,
-      "savedOnly": 1,
-      "ambiguousIdentity": 1,
+      "sourceOnly": 0,
+      "savedOnly": 0,
+      "ambiguousIdentity": 0,
       "rows": [
         {
           "date": "2025-07-26",
@@ -152,10 +152,12 @@
           "opponent": "Alatengheili",
           "result": "win",
           "fightUrl": "https://ufcstats.com/fight-details/7d51649373d42571",
-          "nativeBoutId": null,
-          "nativeSavedDate": null,
-          "savedMatches": 0,
-          "possibleFeeder": false
+          "nativeBoutId": "60883",
+          "nativeSavedDate": "2025-04-26",
+          "savedMatches": 1,
+          "possibleFeeder": false,
+          "manualAliasReconciled": true,
+          "aliasEvidenceUrl": "https://www.ufc.com/athlete/damon-blackshear"
         },
         {
           "date": "2025-03-15",
@@ -793,9 +795,9 @@
       "sourceName": "Jonathan Pearce",
       "grecoSourceBouts": 9,
       "savedUfcBouts": 10,
-      "sourceOnly": 1,
-      "savedOnly": 2,
-      "ambiguousIdentity": 1,
+      "sourceOnly": 0,
+      "savedOnly": 1,
+      "ambiguousIdentity": 0,
       "rows": [
         {
           "date": "2024-10-12",
@@ -872,10 +874,12 @@
           "opponent": "Kai Kamaka",
           "result": "win",
           "fightUrl": "https://ufcstats.com/fight-details/4d56bcd82438e632",
-          "nativeBoutId": null,
-          "nativeSavedDate": null,
-          "savedMatches": 0,
-          "possibleFeeder": false
+          "nativeBoutId": "66360",
+          "nativeSavedDate": "2020-11-29",
+          "savedMatches": 1,
+          "possibleFeeder": false,
+          "manualAliasReconciled": true,
+          "aliasEvidenceUrl": "https://www.ufc.com/news/ufc-vegas-15-fight-night-smith-vs-clark-results"
         },
         {
           "date": "2019-10-18",
@@ -1703,9 +1707,9 @@
       "sourceName": "Casey O'Neill",
       "grecoSourceBouts": 9,
       "savedUfcBouts": 9,
-      "sourceOnly": 1,
-      "savedOnly": 1,
-      "ambiguousIdentity": 1,
+      "sourceOnly": 0,
+      "savedOnly": 0,
+      "ambiguousIdentity": 0,
       "rows": [
         {
           "date": "2026-09-19",
@@ -1742,10 +1746,12 @@
           "opponent": "Ariane da Silva",
           "result": "loss",
           "fightUrl": "https://ufcstats.com/fight-details/c442899c21d58779",
-          "nativeBoutId": null,
-          "nativeSavedDate": null,
-          "savedMatches": 0,
-          "possibleFeeder": false
+          "nativeBoutId": "59933",
+          "nativeSavedDate": "2023-12-16",
+          "savedMatches": 1,
+          "possibleFeeder": false,
+          "manualAliasReconciled": true,
+          "aliasEvidenceUrl": "https://www.ufc.com/athlete/casey-oneill"
         },
         {
           "date": "2023-03-18",
