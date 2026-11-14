@@ -107,5 +107,5 @@ test("identities and feeder events cannot leak into the UFC-only windows",()=>{
  const result=buildV4StatFoundation(approval,research,progress,measured,
   {asOf:"2026-11-14"});
  assert.equal(result.fighters["fighter-alpha"].knownCareerBouts,11);
- assert.equal(result.fighters["fighter-alpha"].windows.last5.totals.sigLanded,8+9+11);
+ assert.equal(result.fighters["fighter-alpha"].windows.last5.totals.sigLanded,7+8+9+11);
 });
