@@ -5,12 +5,13 @@ import {
   originCountry, banzukeMovement, dayMatchups, verifiedHeadToHead, verifiedHighestRank,
   rankPositions, confirmedCareerHigh
 } from './sumo-data.mjs';
+import { careerGraphs } from './sumo-career.mjs';
 
 const ROOT = document.querySelector('#sumo-main');
 const tabs = [...document.querySelectorAll('[data-page]')];
 const DIVS = ['Makuuchi','Juryo','Makushita'];
 const STATE = {
-  roster: null, details: null, officialStyles: null, photoIndex: null, error: null, query: '', division: 'All',
+  roster: null, details: null, careerHistory: null, officialStyles: null, photoIndex: null, error: null, query: '', division: 'All',
   visible: 24, bashoDivision: 'Makuuchi', banzukeDivision: 'Makuuchi',
   day: null, profileLimit: 5
 };
@@ -383,8 +384,8 @@ function renderProfile(id) {
     '<p class="section-intro">All tracked rikishi show available results from the current banzuke, and featured wrestlers can show a larger recent match sample. Switch between five and up to ten or eighteen cached bouts where available; a full-career view requires verified historical collection.</p>'+
     profileResults(w,STATE.profileLimit)+
     heading('Wins, titles, prizes','Career honours')+honHtml+
-    heading('Rise through the ranks','Banzuke history')+
-    '<div class="sumo-history">Historical promotion, rank progression and full per-basho results are planned. They will remain unavailable until the relevant source records are fetched and verified. Current rank: <strong>'+e(w.currentRank||'—')+'</strong>.</div>'+
+    heading('From debut to the current tournament','Career weight and banzuke movement')+
+    careerGraphs(w,STATE.careerHistory,details().bashoId,details().previousBashoId,movementFor(w).previousRank)+
     sourceFooter();
 }
 function banzukeCard(row) {
@@ -505,13 +506,14 @@ async function loadJson(url){
 }
 async function init(){
   try {
-    const [roster,details,styles,photos]=await Promise.all([loadJson('data/sumo/rikishi-index.json'),loadJson('data/sumo/preview-details.json'),loadJson('data/sumo/official-style-evidence.json'),loadJson('data/sumo/approved-photos.json')]);
+    const [roster,details,styles,photos,careerHistory]=await Promise.all([loadJson('data/sumo/rikishi-index.json'),loadJson('data/sumo/preview-details.json'),loadJson('data/sumo/official-style-evidence.json'),loadJson('data/sumo/approved-photos.json'),loadJson('data/sumo/career-history.json')]);
     if(!Array.isArray(roster?.rikishi)||!Array.isArray(details?.featured)||roster?.count!==roster.rikishi.length) throw new Error('Sumo cache schema or roster total not valid');
     if((roster?.trackedDivisions||[]).join(',')!==DIVS.join(','))throw new Error('Sumo cache does not match the approved three-division scope');
     if(roster.rikishi.some(x=>!DIVS.includes(divisionOf(x.currentRank))))throw new Error('Out-of-scope division in Sumo index');
     if(styles?.schemaVersion!==1||!styles.byNskId)throw new Error('Official style evidence cache unavailable or malformed');
     if(photos?.schemaVersion!==1||!photos.bySourceId||typeof photos.bySourceId!=='object')throw new Error('Licensed Sumo photo manifest missing or malformed');
-    STATE.roster=roster;STATE.details=details;STATE.officialStyles=styles;STATE.photoIndex=photos.bySourceId;
+    if(careerHistory?.schemaVersion!==1||!careerHistory.bySourceId)throw new Error('Sumo career timeline snapshot invalid');
+    STATE.roster=roster;STATE.details=details;STATE.officialStyles=styles;STATE.photoIndex=photos.bySourceId;STATE.careerHistory=careerHistory;
     render();
   } catch(error){
     STATE.error=error.message || 'Unable to load the preview dataset';
