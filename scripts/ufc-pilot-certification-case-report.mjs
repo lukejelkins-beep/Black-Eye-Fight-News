@@ -39,9 +39,19 @@ export function comparePilot(official,profile,nativeBouts={}){
   if(seen.has(i))return [];
   const native=nativeBouts[String(h.boutId||'')]||{};
   const title=native.event||h.event||h.eventName||'';
+  // Source biography may match two DISTINCT provider IDs for the SAME
+  // event/opponent/outcome. Flag for identity reconciliation, not a new bout.
+  const counterpart=source.find(b=>near(b.date,h.date)&&
+   sameOpponent(b.opponent,h.opponent,h.boutId)&&
+   result(b.result)===result(h.result||h.outcome||h.status));
+  const matchedCounterpart=counterpart?matched.find(m=>near(m.date,counterpart.date)&&
+   sameOpponent(m.opponent,counterpart.opponent,m.nativeBoutId)&&
+   String(m.nativeBoutId)!==String(h.boutId||'')):null;
   return [{date:h.date,opponent:h.opponent,result:result(h.result||h.outcome||h.status),
    nativeBoutId:String(h.boutId||''),event:title,
-   scope:feederTitle(title)?'feeder_excluded_from_ufc_career':'requires_independent_official_event_review'}];
+   scope:matchedCounterpart?'duplicate_native_fight_identity_review':
+    feederTitle(title)?'feeder_excluded_from_ufc_career':'requires_independent_official_event_review',
+   ...(matchedCounterpart?{matchedAlternateNativeBoutId:matchedCounterpart.nativeBoutId}: {})}];
  });
  return {officialCount:source.length,savedUfcLabeledRows:saved.length,matchedCount:matched.length,
   missingCount:missing.length,extraCount:extra.length,matched,missing,extra};
