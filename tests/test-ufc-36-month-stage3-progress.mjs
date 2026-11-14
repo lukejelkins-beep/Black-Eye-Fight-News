@@ -1,7 +1,7 @@
 import {readFileSync} from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {auditApprovedStage3,markdownReport,evaluateCareerEvidence} from '../scripts/ufc-36-month-stage3-progress.mjs';
+import {auditApprovedStage3,markdownReport,evaluateCareerEvidence,auditOfficialCareerInventory} from '../scripts/ufc-36-month-stage3-progress.mjs';
 const slugs=Array.from({length:783},(_,i)=>'fighter-'+(i+1));
 const approval={schema:1,scope:'ufc-36-month-roster',status:'approved',
   approvedBy:'user',rosterAsOf:'2026-11-14',approvedFighters:slugs};
@@ -542,4 +542,47 @@ test('Full numeric fight-index search progress is distinct from complete-career 
  assert.deepEqual(output.fullFightIndexSearchReview.map(x=>x.slug),
    ['fighter-2','fighter-3','fighter-4','fighter-5']);
  assert.equal(output.fullFightIndexSearchReview.at(-1).missingSourceConfirmedUfcBouts,9);
+});
+
+test('Official UFC career inventory identifies exact source fights absent from saved histories',()=>{
+ const inventory={schema:1,scope:'ufc-official-career-bout-inventory',
+   rosterAsOf:'2026-11-14',fighters:{'fighter-1':{
+     fighterName:'HyunSung Park',sourceUrl:'https://www.ufc.com/athlete/hyunsung-park',
+     bouts:[{date:'2025-10-18',opponent:'Bruno Silva',result:'loss'},
+       {date:'2025-08-02',opponent:'Tatsuro Taira',result:'loss'},
+       {date:'2025-05-17',opponent:'Carlos Hernandez',result:'win'},
+       {date:'2023-02-04',opponent:'SeungGuk Choi',result:'win'}]}}};
+ const c={...census,fighters:census.fighters.map(x=>
+   x.slug==='fighter-1'?{...x,lastUfcFight:'2025-08-02'}:x)};
+ const r={'fighter-1':{name:'HyunSung Park',recentHistory:[
+   {date:'2025-10-19',opponent:'Bruno Silva',result:'loss',promotion:'ufc',
+     source:'native',boutId:'100'},
+   {date:'2025-05-17',opponent:'Carlos Hernandez',result:'loss',promotion:'ufc',
+     source:'native',boutId:'101'}]}};
+ const b={'103':{org:'ufc',eventDate:'2023-02-04',event:'UFC Fight Night',
+   a:{slug:'fighter-1',name:'HyunSung Park'},b:{name:'Choi Seung-guk'}}};
+ const out=auditOfficialCareerInventory(inventory,slugs,c,r,b);
+ assert.equal(out.totalSourceBouts,4);
+ assert.equal(out.matchedSaved,1);
+ assert.equal(out.sourceMissingSaved,2);
+ assert.equal(out.conflicts.length,1);
+ assert.equal(out.sourceNewerThanRoster,0);
+ assert.deepEqual(out.cases.map(x=>x.officialOpponent),['Tatsuro Taira','SeungGuk Choi']);
+ assert.deepEqual(out.cases.at(-1).cachedFightCandidates,['103'],
+   'Source opponent aliases and reversed Korean name order can map a cached exact event, not certify one');
+ assert.equal(out.conflicts[0].officialOpponent,'Carlos Hernandez');
+ const audit=auditApprovedStage3(approval,c,progress,{profiles:r},archive,
+   {},{},{},{},inventory);
+ assert.equal(audit.summary.sourceInventoryMissingSavedUfcBouts,2);
+ assert.equal(audit.summary.sourceInventorySavedResultContradictions,1);
+ assert.equal(audit.summary.independentlyVerifiedFullCareerTimelines,0);
+});
+
+test('Official source inventory rejects changed cohort and unverified fighter URLs',()=>{
+ const inv={schema:1,scope:'ufc-official-career-bout-inventory',
+   rosterAsOf:'2026-11-14',fighters:{'fighter-1':{
+    fighterName:'Example Fighter',sourceUrl:'https://unverified.invalid/fighter',
+    bouts:[{date:'2026-10-01',opponent:'Opponent 1',result:'win'}]}}};
+ assert.equal(auditOfficialCareerInventory(inv,slugs,census,{},{}).totalSourceBouts,0);
+ assert.equal(auditOfficialCareerInventory({...inv,rosterAsOf:'2026-10-01'},slugs,census,{},{}).totalSourceBouts,0);
 });
