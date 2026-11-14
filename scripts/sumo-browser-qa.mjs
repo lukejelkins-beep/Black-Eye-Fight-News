@@ -64,6 +64,18 @@ async function testSite(viewport,isMobile,label) {
   assert.ok(await page.locator('.sumo-result-card').count()>0,'Profile has photo-ready opponent cards');
   assert.ok(await page.locator('.sumo-country').count()>0,'Profile shows birthplace-country flag');
   await snap(page,label+'-profile',{fullPage:false});
+  // Full pair-specific history is distinct from a single basho's opponent record.
+  await open(page,'headtohead/8850/8857','.sumo-h2h-hero');
+  const history=await page.locator('#sumo-main').innerText();
+  assertContains(history,'Career head-to-head','dedicated H2H view');
+  assertContains(history,'1–5','source-confirmed all-time series');
+  assert.equal(await page.locator('.sumo-h2h-hero+.section-head').count(),1,'Head-to-head history heading shown');
+  assert.equal(await page.locator('.sumo-h2h-order+ol li').count(),6,'Every source-confirmed bout is shown');
+  assertContains(history,'Tsukiotoshi','actual kimarite recorded');
+  assertContains(history,'Fusen (forfeit; no technique)','forfeit is not a winning technique');
+  await page.locator('[data-h2h-order="oldest"]').click();
+  assertContains(await page.locator('.sumo-h2h-order+ol li').first().innerText(),'November 2025','chronological oldest-first sort');
+
   // All 190 rikishi should expose current banzuke opponent histories even
   // without individually fetched lifetime stats or 18-bout enrichment.
   await open(page,'profile/2','.profile-hero');
