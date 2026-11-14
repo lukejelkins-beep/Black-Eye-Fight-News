@@ -223,3 +223,95 @@ export function snapshotDate(date) {
   if (!date || !Number.isFinite(new Date(date).getTime())) return 'Date not available';
   return new Intl.DateTimeFormat('en-AU', { timeZone:'Australia/Melbourne', day:'numeric', month:'short', year:'numeric', hour:'numeric', minute:'2-digit', hour12:true }).format(new Date(date)) + ' AEDT';
 }
+
+
+/** Source-derived birthplace country, not citizenship/nationality.
+ * No flag is inferred for an unmatched location.
+ */
+const JAPAN_PREFECTURES = new Set(
+ 'Hokkaido Aomori Iwate Miyagi Akita Yamagata Fukushima Ibaraki Tochigi Gunma Saitama Chiba Tokyo Kanagawa Niigata Toyama Ishikawa Fukui Yamanashi Nagano Gifu Shizuoka Aichi Mie Shiga Kyoto Osaka Hyogo Nara Wakayama Tottori Shimane Okayama Hiroshima Yamaguchi Tokushima Kagawa Ehime Kochi Fukuoka Saga Nagasaki Kumamoto Oita Miyazaki Kagoshima Okinawa'.split(' ')
+);
+const COUNTRIES = Object.freeze({
+  japan: { name:'Japan', code:'JP', flag:'🇯🇵' },
+  mongolia: { name:'Mongolia', code:'MN', flag:'🇲🇳' },
+  ukraine: { name:'Ukraine', code:'UA', flag:'🇺🇦' },
+  russia: { name:'Russia', code:'RU', flag:'🇷🇺' },
+  china: { name:'China', code:'CN', flag:'🇨🇳' },
+  kazakhstan: { name:'Kazakhstan', code:'KZ', flag:'🇰🇿' },
+  georgia: { name:'Georgia', code:'GE', flag:'🇬🇪' },
+  bulgaria: { name:'Bulgaria', code:'BG', flag:'🇧🇬' },
+  egypt: { name:'Egypt', code:'EG', flag:'🇪🇬' },
+  brazil: { name:'Brazil', code:'BR', flag:'🇧🇷' },
+  usa: { name:'United States', code:'US', flag:'🇺🇸' }
+});
+export function originCountry(birthplace) {
+  if (typeof birthplace !== 'string' || !birthplace.trim()) return null;
+  const prefix = birthplace.trim().split(',')[0].trim();
+  const lower = prefix.toLowerCase();
+  if (Object.hasOwn(COUNTRIES,lower)) return COUNTRIES[lower];
+  if (/^(united states|usa|u\.s\.a\.)$/i.test(prefix)) return COUNTRIES.usa;
+  if (/^japan$/i.test(prefix)) return COUNTRIES.japan;
+  const pref = prefix.replace(/-(ken|fu|to|do)$/i,'').trim();
+  return JAPAN_PREFECTURES.has(pref) ? COUNTRIES.japan : null;
+}
+
+/** East and West occupy different rank slots. We compare actual positions in
+ * the combined three-division banzuke (1..190), never raw rankValue values.
+ * Cross-division changes are explicitly named and unavailable histories stay null.
+ */
+export function rankPositions(banzukeByDivision) {
+  const positions = new Map();
+  let ordinal = 0;
+  for (const division of TRACKED_DIVISIONS) {
+    const table = banzukeByDivision?.[division];
+    if (!table?.east || !table?.west) return null;
+    for (const row of sortBanzukeEntries(table)) {
+      const id = Number(row.rikishiID);
+      if (!Number.isSafeInteger(id) || positions.has(id)) return null;
+      positions.set(id,{ position:++ordinal, division, rank:row.rank });
+    }
+  }
+  return positions;
+}
+export function banzukeMovement(rikishiId, currentBanzuke, priorBanzuke) {
+  const current=rankPositions(currentBanzuke), prior=rankPositions(priorBanzuke);
+  if(!current||!prior) return {status:'unavailable', label:'Previous rank unavailable', places:null};
+  const curr=current.get(Number(rikishiId)), old=prior.get(Number(rikishiId));
+  if(!curr) return {status:'unavailable',label:'Current rank unavailable',places:null};
+  if(!old) return {status:'new',label:'New to tracked top three',places:null, currentRank:curr.rank};
+  const places=old.position-curr.position;
+  return {
+    status:places>0?'up':places<0?'down':'same',
+    places:Math.abs(places),
+    label:places>0?'Up '+places+' places':places<0?'Down '+Math.abs(places)+' places':'Unchanged',
+    currentRank:curr.rank, previousRank:old.rank,
+    previousDivision:old.division, division:curr.division,
+    divisionChanged:old.division!==curr.division
+  };
+}
+
+/** API-provided highest rank only; never infer a historical career high from
+ * the current rank or a two-tournament sample.
+ */
+export function verifiedHighestRank(rikishiDetail) {
+  if(!rikishiDetail || typeof rikishiDetail!=='object') return null;
+  const candidates=[rikishiDetail.highestRank,rikishiDetail.highestRankString,
+    rikishiDetail.careerHighRank,rikishiDetail.maxRank];
+  const x=candidates.find(v=>typeof v==='string' && v.trim() && divisionOf(v)!=='Unranked');
+  return x||null;
+}
+
+/** Only publish H2H when the API provides explicit matchup win/loss totals.
+ * A partial tournament sample must not be presented as lifetime head-to-head.
+ */
+export function verifiedHeadToHead(record, fighterId, opponentId) {
+  if(!record || typeof record!=='object') return null;
+  const a=Number(fighterId),b=Number(opponentId);
+  if(!Number.isSafeInteger(a)||!Number.isSafeInteger(b)||a===b) return null;
+  const idA=Number(record.rikishiId ?? record.rikishiID ?? record.id);
+  const idB=Number(record.opponentId ?? record.opponentID ?? record.otherId);
+  if(idA!==a || idB!==b) return null;
+  const wins=record.wins,losses=record.losses;
+  if(!Number.isInteger(wins)||!Number.isInteger(losses)||wins<0||losses<0) return null;
+  return {wins,losses,total:wins+losses,source:'sumo-api head-to-head'};
+}
