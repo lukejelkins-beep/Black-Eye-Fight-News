@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {permissionAllowsCollection,conservativeRobotsAllow,sourceIdentityEvidence}
  from '../scripts/sumo-weight-sumodb-collector.mjs';
 
@@ -34,4 +35,26 @@ test('historical shikona is accepted only when explicitly present in the sourced
  assert.equal(found.matchedShikona,'Senshoho Takuya');
  const unrelated=sourceIdentityEvidence('<title>Random Rikishi Information</title>',wrestler,api);
  assert.equal(unrelated.valid,false);
+});
+
+test('all 190 SumoDB IDs mapped uniquely with November banzuke evidence for seven previously missing',()=>{
+ const roster=JSON.parse(readFileSync(new URL('../data/sumo/rikishi-index.json',import.meta.url),'utf8'));
+ const review=JSON.parse(readFileSync(new URL('../data/sumo/backfill/v1/sumodb-id-review.json',import.meta.url),'utf8'));
+ assert.equal(roster.rikishi.length,190);
+ assert.equal(roster.count,190);
+ const mapped=roster.rikishi.map(x=>x.sumoDbId);
+ assert.ok(mapped.every(x=>Number.isSafeInteger(x)&&x>0));
+ assert.equal(new Set(mapped).size,190);
+ assert.equal(review.remaining,0);
+ assert.equal(review.cases.length,7);
+ for(const entry of review.cases){
+   const wrestler=roster.rikishi.find(x=>x.sourceId===entry.sourceId);
+   assert.ok(wrestler,'unrecognised source id '+entry.sourceId);
+   assert.equal(entry.sumoDbId,wrestler.sumoDbId);
+   assert.equal(entry.rikishi,wrestler.shikonaEn);
+   assert.equal(entry.matchedRank,wrestler.currentRank);
+   assert.equal(entry.profileEvidenceUrl,
+    'https://sumodb.sumogames.de/Rikishi.aspx?r='+wrestler.sumoDbId);
+   assert.equal(entry.historicalWeightsCertified,false);
+ }
 });
