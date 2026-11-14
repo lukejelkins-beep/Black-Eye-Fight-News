@@ -1,7 +1,7 @@
 import {readFileSync} from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {auditApprovedStage3,markdownReport} from '../scripts/ufc-36-month-stage3-progress.mjs';
+import {auditApprovedStage3,markdownReport,evaluateCareerEvidence} from '../scripts/ufc-36-month-stage3-progress.mjs';
 const slugs=Array.from({length:783},(_,i)=>'fighter-'+(i+1));
 const approval={schema:1,scope:'ufc-36-month-roster',status:'approved',
   approvedBy:'user',rosterAsOf:'2026-11-14',approvedFighters:slugs};
@@ -207,7 +207,8 @@ test('A single metric does not imply complete statistics; all-known indexing doe
  const x=auditApprovedStage3(approval,census,p,r,a).summary;
  assert.equal(x.profilesWithAllKnownUfcBoutsIndexed,2);
  assert.equal(x.profilesWithAllKnownUfcBoutsMeasured,2);
- assert.equal(x.providerCertifiedProfilesWithAllKnownBoutsIndexed,1);
+ assert.equal(x.providerCertifiedProfilesWithAllKnownBoutsIndexed,0);
+ assert.equal(x.legacyTimelineCompleteClaimsWithoutRetainedProof,1);
  assert.equal(x.distinctIndexedFightsWithPairedSignificantStrikes,2);
  assert.equal(x.distinctIndexedFightsWithPairedControlTime,1);
  assert.equal(x.distinctIndexedFightsWithPairedSubmissionAttempts,1);
@@ -376,7 +377,8 @@ test('Provider completeness states distinguish untruncated, truncated and missin
      conflictingNativeFightIds:1,missingRosterLastUfcFight:'2025-11-03'}}
  }};
  const s=auditApprovedStage3(approval,census,progress,r,archive).summary;
- assert.equal(s.fullyProviderCertifiedTimelines,1);
+ assert.equal(s.fullyProviderCertifiedTimelines,0);
+ assert.equal(s.independentlyVerifiedFullCareerTimelines,0);
  assert.equal(s.providerMetadataExplicitlyUntruncated,1);
  assert.equal(s.providerMetadataExplicitlyTruncated,1);
  assert.equal(s.providerMetadataFlagUnavailable,1);
@@ -385,4 +387,80 @@ test('Provider completeness states distinguish untruncated, truncated and missin
  assert.equal(s.providerTimelinesWithSavedHistoryContradictions,1);
  assert.equal(s.providerTimelinesWithNativeIdConflicts,1);
  assert.equal(s.providerTimelinesMissingLatestRosterBout,1);
+});
+
+test('Career completion proof fails closed on missing metadata, stale timing and saved contradictions',()=>{
+ const h=[history(41,'Opponent A','2026-11-10')];
+ const base={ufcTimeline:{complete:true,providerTruncatedFlag:false,
+   observedOn:'2026-11-14',settledCount:1}};
+ const yes=evaluateCareerEvidence(base,h,'2026-11-10','2026-11-14',null);
+ assert.equal(yes.providerCertified,true);
+ assert.equal(yes.independentlyVerified,false);
+ assert.equal(yes.legacyClaim,false);
+ const old=evaluateCareerEvidence({ufcTimeline:{complete:true,
+   observedOn:'2026-11-14',settledCount:1}},h,'2026-11-10','2026-11-14');
+ assert.equal(old.providerCertified,false);
+ assert.equal(old.legacyClaim,true);
+ for(const p of [
+   {ufcTimeline:{...base.ufcTimeline,observedOn:'2026-11-13'}},
+   {ufcTimeline:{...base.ufcTimeline,savedHistoryHasAdditionalUfcBouts:true}},
+   {ufcTimeline:{...base.ufcTimeline,providerTruncatedFlag:true}},
+   {...base,ufcHistoryIdConflicts:[{date:'2026-11-10'}]}
+ ])assert.equal(evaluateCareerEvidence(p,h,'2026-11-10','2026-11-14').providerCertified,
+   false,'Provider certification needs fresh, explicit, contradiction-free evidence');
+ assert.equal(evaluateCareerEvidence(base,h,'2026-11-11','2026-11-14').providerCertified,true,
+   'A one-calendar-day offset is valid when the newest saved official fight is aligned');
+ assert.equal(evaluateCareerEvidence(base,h,'2026-11-11','2026-11-14').utcDateShift,true);
+ assert.equal(evaluateCareerEvidence(base,h,'2026-11-12','2026-11-14').providerCertified,false,
+   'A larger date gap cannot be normalized away');
+ const shiftedProvider={ufcTimeline:{...base.ufcTimeline,
+   missingRosterLastUfcFight:'2026-11-11'}};
+ const normalized=evaluateCareerEvidence(shiftedProvider,h,'2026-11-11','2026-11-14');
+ assert.equal(normalized.providerCertified,true);
+ assert.equal(normalized.providerDiscrepancy,false);
+ assert.equal(normalized.utcDateShift,true);
+});
+
+test('Independent full-career certification requires exact full official fight listing',()=>{
+ const h=[history(41,'Opponent A','2026-11-10'),
+   history(42,'Opponent B','2026-10-10')];
+ const timeline={ufcTimeline:{complete:false,providerTruncatedFlag:null}};
+ const evidence={sourceCoverageAttested:true,
+   verificationMethod:'full_official_ufc_fight_listing_crosscheck',
+   verifiedAt:'2026-11-14',
+   fighterUrl:'https://ufcstats.com/fighter-details/abcdef123',
+   bouts:[{date:'2026-11-10',opponent:'Opponent A',result:'win',
+     fightUrl:'https://ufcstats.com/fight-details/deadbeef01'},
+    {date:'2026-10-10',opponent:'Opponent B',result:'win',
+     fightUrl:'https://ufcstats.com/fight-details/deadbeef02'}]};
+ assert.equal(evaluateCareerEvidence(timeline,h,'2026-11-10',
+   '2026-11-14',evidence).independentlyVerified,true);
+ for(const modified of [
+   {...evidence,bouts:evidence.bouts.slice(0,1)},
+   {...evidence,sourceCoverageAttested:false},
+   {...evidence,bouts:[evidence.bouts[0],{...evidence.bouts[1],opponent:'Other'}]},
+   {...evidence,verifiedAt:'2026-11-13'},
+   {...evidence,bouts:[evidence.bouts[0],{...evidence.bouts[0]}]},
+   {...evidence,bouts:[evidence.bouts[0],{...evidence.bouts[1],fightUrl:'https://unknown.test/bout'}]}
+ ])assert.equal(evaluateCareerEvidence(timeline,h,'2026-11-10',
+   '2026-11-14',modified).independentlyVerified,false);
+});
+
+test('Coverage readiness and career verification are separate, exhaustive states',()=>{
+ const p={...progress,bouts:{'41':fight(41,'Opponent A')}};
+ const r={profiles:{'fighter-1':{recentHistory:[history(41,'Opponent A')],
+   ufcTimeline:{complete:true,observedOn:'2026-11-14',settledCount:1}}}};
+ const a={fights:{'2015-01-01:fighter1:opponenta':{rounds:[
+   {round:1,a:{sigLanded:2},b:{sigLanded:3}}]}}};
+ const out=auditApprovedStage3(approval,census,p,r,a);
+ assert.equal(out.summary.profilesWithAllKnownUfcBoutsMeasured,1);
+ assert.equal(out.summary.fullyProviderCertifiedTimelines,0);
+ assert.equal(out.summary.legacyTimelineCompleteClaimsWithoutRetainedProof,1);
+ assert.equal(out.summary.independentlyVerifiedFullCareerTimelines,0);
+ assert.equal(out.summary.approvedCareersWithoutIndependentFullCareerCertification,783);
+ assert.equal(out.careerVerificationDecisions.length,783);
+ assert.equal(Object.values(out.summary.careerVerificationStatusCounts)
+   .reduce((n,v)=>n+v,0),783);
+ assert.equal(out.careerVerificationDecisions.find(x=>x.slug==='fighter-1')
+   .status,'provider_history_discrepancy');
 });
