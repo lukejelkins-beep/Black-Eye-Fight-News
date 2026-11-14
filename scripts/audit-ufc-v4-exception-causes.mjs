@@ -83,6 +83,7 @@ export function diagnoseMissingUfcBouts(foundation,progress,archive){
  for(const item of foundation.missingNativeBoutQueue){
   const bout=progress?.bouts?.[item.boutId]||null;
   const reason=causeFor(bout,index);
+  const archived=bout?matching(index,bout)[0]||null:null;
   const check=progress?.ufcCareerBoutChecks?.[item.boutId]||{};
   const retry=progress?.roundRetry?.[item.boutId]||{};
   const action=item.action||"manual_review";
@@ -114,6 +115,8 @@ export function diagnoseMissingUfcBouts(foundation,progress,archive){
    event:bout?.event||null,date:bout?.eventDate||null,
    expectedRounds:bout?.result?.round??null,
    roundsReportedComplete:progress?.roundDone?.[item.boutId]??null,
+   archivedRoundNumbers:archived?.rounds?.map(x=>x.round)||[],
+   archivedSourceNames:Object.keys(archived?.sources||{}),
    roundRetryAfter:retry.retryAfter||null,
    roundRetryAttempts:retry.attempts??null,
    references:item.references
@@ -142,6 +145,11 @@ export function main(){
  const file=path.join(root,"qa/ufc-v4-exception-causes.json");
  fs.writeFileSync(file,JSON.stringify(out,null,2)+"\n");
  console.log("BEFN_V4_MISSING_CAUSES "+JSON.stringify(out.summary));
+ console.log("BEFN_V4_INCOMPLETE_ROUNDS "+JSON.stringify(
+  out.cases.filter(x=>x.cause==="missing_or_incomplete_round_rows").map(
+   x=>({boutId:x.boutId,event:x.event,date:x.date,expectedRounds:x.expectedRounds,
+    recordedRounds:x.archivedRoundNumbers,sources:x.archivedSourceNames,
+    fighterReferences:x.references?.map(v=>v.fighterSlug)}))));
  console.log("BEFN_V4_UNEXPECTED_JOIN "+JSON.stringify(
   out.cases.filter(x=>x.cause==="unexpected_postfight_join_gap").map(x=>{
    const b=read("data/ufcalendar-rich-progress.json").bouts?.[x.boutId]||{};
