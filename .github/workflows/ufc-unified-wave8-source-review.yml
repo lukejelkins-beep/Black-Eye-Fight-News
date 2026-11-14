@@ -1,0 +1,32 @@
+name: UFC wave8 pinned history/native source reconciliation (nonproduction)
+on:
+  pull_request:
+    branches:
+      - research/ufc-unified-stage3-v4-evidence-20261114
+    paths:
+      - 'data/ufc-unified-wave8-official-source-review-20261114.json'
+      - 'scripts/ufc-unified-wave8-source-review.mjs'
+      - '.github/workflows/ufc-unified-wave8-source-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check source review syntax (no paid API)
+        run: node --check scripts/ufc-unified-wave8-source-review.mjs
+      - name: Reconcile seven independent UFC.com careers against pinned Greco and cached native fights
+        run: node scripts/ufc-unified-wave8-source-review.mjs
+      - name: Save crosscheck report for human/strict-gate review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-wave8-source-crosscheck
+          path: qa/ufc-unified-wave8-source-review.json
+          if-no-files-found: warn
