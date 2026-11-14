@@ -69,3 +69,45 @@ export function techniqueText(name){
   if(/^fusen/i.test(term))return 'Fusen (forfeit; no technique)';
   return term[0].toUpperCase()+term.slice(1);
 }
+
+/**
+ * Join the isolated 190-rikishi career-research export to preview routes.
+ * Summaries provide the last five bouts on cards, while the full, much larger
+ * timeline is loaded ONLY when an H2H detail page is opened.
+ * This is API source research, never a JSA-issued certification.
+ */
+export function researchedHeadToHead(summary,fullHistory,firstId,secondId){
+  const first=Number(firstId),second=Number(secondId);
+  if(!validId(first)||!validId(second)||first===second)return null;
+  const key=pairKey(first,second);
+  const full=fullHistory?.schemaVersion===1&&fullHistory?.cohortSize===190
+    ?fullHistory.pairs?.[key]:null;
+  const brief=summary?.schemaVersion===1&&summary?.cohortSize===190
+    ?summary.activePairs?.[key]:null;
+  const pair=full||brief;
+  if(!pair||Number(pair.a)!==Math.min(first,second)||Number(pair.b)!==Math.max(first,second))return null;
+  const raw=full?full.regular:brief.latest;
+  if(!Array.isArray(raw)||!Number.isSafeInteger(Number(pair.winsA))||
+     !Number.isSafeInteger(Number(pair.winsB)))return null;
+  const rows=raw.map(m=>{
+    if(!Array.isArray(m)||m.length<6||!/^\d{6}$/.test(String(m[0]))||
+       Number(m[1])<1||Number(m[1])>15||
+       ![first,second].includes(Number(m[2])))return null;
+    return {bashoId:String(m[0]),day:Number(m[1]),winnerId:Number(m[2]),
+      kimarite:typeof m[3]==='string'?m[3]:null,
+      division:String(m[4]||''),matchNo:Number(m[5])||null};
+  });
+  if(rows.some(x=>!x))return null;
+  const total=Number(pair.winsA)+Number(pair.winsB);
+  if(full&&rows.length!==total)return null;
+  if(!full&&Number(brief.total)!==total)return null;
+  const special=(full?.special||[]).filter(x=>Array.isArray(x)&&x.length>=7).map(m=>({
+    bashoId:String(m[0]),day:Number(m[1]),winnerId:Number(m[2]),
+    kimarite:typeof m[3]==='string'?m[3]:null,division:String(m[4]||''),
+    matchNo:Number(m[5])||null,eventType:String(m[6]||'special')
+  }));
+  return {wins:first===pair.a?Number(pair.winsA):Number(pair.winsB),
+    losses:first===pair.a?Number(pair.winsB):Number(pair.winsA),total,
+    rows,complete:!!full,special,source:'190-rikishi full-career research cache',
+    collectedAt:summary?.sourceAsOf||fullHistory?.sourceAsOf||null};
+}
