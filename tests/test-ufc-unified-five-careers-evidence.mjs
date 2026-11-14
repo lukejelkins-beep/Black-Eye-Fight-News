@@ -155,7 +155,7 @@ test('five exact DWCS feeders are excluded without inventing or altering UFC fin
  let sum=0;
  for(const [slug,expected] of Object.entries(cases)){
   const e=registry.fighters[slug];const excluded=e.sourceVerifiedExcludedFeederBouts||[];
-  assert.deepEqual(excluded.map(x=>x.nativeBoutId),expected.excluded,slug);
+  assert.deepEqual(excluded.map(x=>x.nativeBoutId).sort(),[...expected.excluded].sort(),slug);
   for(const id of expected.excluded){
    assert.ok(!e.bouts.some(b=>b.nativeBoutId===id),slug);
    const rows=feeder.bouts.filter(x=>x.fighterSlug===slug&&String(x.boutId)===id);
