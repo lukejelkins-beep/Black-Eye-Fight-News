@@ -35,6 +35,7 @@ on:
       - 'tests/test-ufc-unified-wave14-evidence.mjs'
       - 'tests/test-ufc-unified-pedro-rodrigo-evidence.mjs'
       - 'tests/test-ufc-unified-gantt-xiong-six-evidence.mjs'
+      - 'tests/test-ufc-unified-wave16-amosov-hafez-evidence.mjs'
       - 'tests/test-ufc-unified-wave10-evidence.mjs'
       - 'tests/test-ufc-unified-wave11-evidence.mjs'
       - 'tests/test-ufc-unified-marnic-evidence.mjs'
@@ -112,6 +113,7 @@ jobs:
           node --test tests/test-ufc-unified-wave14-evidence.mjs
           node --test tests/test-ufc-unified-pedro-rodrigo-evidence.mjs
           node --test tests/test-ufc-unified-gantt-xiong-six-evidence.mjs
+          node --test tests/test-ufc-unified-wave16-amosov-hafez-evidence.mjs
           node --test tests/test-ufc-unified-wave10-evidence.mjs
           node --test tests/test-ufc-unified-wave11-evidence.mjs
           node --test tests/test-ufc-unified-marnic-evidence.mjs
