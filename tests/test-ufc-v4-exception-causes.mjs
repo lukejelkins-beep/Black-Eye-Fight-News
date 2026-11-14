@@ -10,19 +10,19 @@ const base=()=>{
   const id=String(600+i),date="2026-10-0"+i;
   queue.push({boutId:id,band:i<3?"last5":"career",priority:i<3?1:3,
    action:i===2?"manual_review":"inspect_saved_round_or_clock_data",
-   references:[{fighterSlug:"alpha",careerPosition:i,date,opponent:"Beta"}]});
+   references:[{fighterSlug:"alpha",careerPosition:i,date,opponent:"Beta "+i}]});
   bouts[id]={id,org:"ufc",event:"UFC Fight Night "+i,
-   eventDate:date,status:"completed",a:{name:"Alpha"},b:{name:"Beta"},
+   eventDate:date,status:"completed",a:{name:"Alpha"},b:{name:"Beta "+i},
    result:{round:1,time:"5:00"}};
  }
  const archives={
-  "f2":{promotion:"UFC",date:"2026-10-02",fighterA:"Alpha",fighterB:"Beta",
+  "f2":{promotion:"UFC",date:"2026-10-02",fighterA:"Alpha",fighterB:"Beta 2",
    rounds:[{round:1,a:{sigLanded:5},b:{sigLanded:4}}]},
-  "f3":{promotion:"UFC",date:"2026-10-03",fighterA:"Alpha",fighterB:"Beta",
+  "f3":{promotion:"UFC",date:"2026-10-03",fighterA:"Alpha",fighterB:"Beta 3",
    rounds:[]},
-  "f4":{promotion:"UFC",date:"2026-10-04",fighterA:"Alpha",fighterB:"Beta",
+  "f4":{promotion:"UFC",date:"2026-10-04",fighterA:"Alpha",fighterB:"Beta 4",
    conflicts:["source conflict"],rounds:[{round:1,a:{sigLanded:5},b:{sigLanded:4}}]},
-  "f5":{promotion:"UFC",date:"2026-10-05",fighterA:"Alpha",fighterB:"Beta",
+  "f5":{promotion:"UFC",date:"2026-10-05",fighterA:"Alpha",fighterB:"Beta 5",
    rounds:[{round:1,a:{sigLanded:5},b:{sigLanded:4}}]}
  };
  bouts["602"].result.time="unknown";
