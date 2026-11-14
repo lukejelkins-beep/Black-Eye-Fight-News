@@ -260,7 +260,7 @@ async function summary(roster){
     schemaVersion:1,cohortSize:roster.length,scope:'Frozen November 2026 BEFN top-three banzuke roster',
     status:'research-data-only',certified:0,counts,weightSnapshots,rankEntries,matchEntries,
     outstandingStages:requestsRequired,stageTotals,exceptions:examples.exception,partialExamples:examples.partial,
-    lastCheckedAt:clock(),source:SOURCE,maximumCallsPerScheduledRun:REQUEST_LIMIT,
+    lastCheckedAt:clock(),source:SOURCE,maximumCallsPerScheduledRun:null,
     note:'Collected means API pagination completed. It does not imply historical accuracy, JSA agreement, official weight confirmation, copyright permission for photos, or certification.'
   };
 }
