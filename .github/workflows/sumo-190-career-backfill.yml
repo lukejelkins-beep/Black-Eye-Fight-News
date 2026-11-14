@@ -36,12 +36,15 @@ jobs:
       - name: Validate bounded source backfill
         run: |
           node --check scripts/sumo-backfill-190.mjs
-          node --test tests/test-sumo-backfill-190.mjs
+          node --check scripts/sumo-verify-190.mjs
+          node --test tests/test-sumo-backfill-190.mjs tests/test-sumo-verify-190.mjs
       - name: Collect only missing research data
         env:
           SUMO_REQUEST_BUDGET: '8'
           SUMO_FIGHTERS_PER_RUN: '2'
         run: node scripts/sumo-backfill-190.mjs
+      - name: Audit collected history before any future JSA certification
+        run: node scripts/sumo-verify-190.mjs
       - name: Checkpoint cached results on research branch only
         env:
           TARGET_BRANCH: research/sumo-190-career-cache-20261114
