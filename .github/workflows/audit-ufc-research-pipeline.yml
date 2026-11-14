@@ -26,6 +26,7 @@ on:
       - 'scripts/ufc-unified-wave4-source-review.mjs'
       - 'scripts/ufc-unified-wave5-source-review.mjs'
       - 'scripts/ufc-unified-wave6-source-review.mjs'
+      - 'tests/test-ufc-unified-wave6-idempotence.mjs'
       - 'scripts/ufc-unified-ding-exact-alias-review.mjs'
       - 'data/ufc-unified-wave6-official-source-review-20261114.json'
       - 'data/ufc-unified-wave5-official-source-review-20261114.json'
@@ -84,6 +85,7 @@ jobs:
           node --test tests/test-ufc-unified-wave3-evidence.mjs
           node --test tests/test-ufc-unified-wave4-evidence.mjs
           node --test tests/test-ufc-unified-wave5-evidence.mjs
+          node --test tests/test-ufc-unified-wave6-idempotence.mjs
           node --test tests/test-ufc-unified-mandel-evidence.mjs
           node --test tests/test-ufc-v4-stage3-import.mjs
           node --test tests/test-ufc-36-month-stage3-progress.mjs
