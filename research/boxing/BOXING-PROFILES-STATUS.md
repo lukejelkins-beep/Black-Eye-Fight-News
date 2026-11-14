@@ -14,7 +14,7 @@
 | Archived recent bout entries preserved and queued for verification | **345** |
 | Validated CompuBox single-bout reports in research cache | **16** |
 | Ranked candidates with valid punch-performance data | **7** |
-| Curated, individually verified bout outcomes | **5** |
+| Curated, individually verified boxer bout-result entries | **7** |
 | Fully certified professional careers | **0** |
 | Draft profiles published to live website | **0** |
 
