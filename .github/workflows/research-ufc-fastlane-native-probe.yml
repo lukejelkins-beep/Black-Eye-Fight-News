@@ -1,0 +1,45 @@
+name: Offline UFC fast-lane evidence probe (research only)
+on:
+  push:
+    branches:
+      - research/ufc-fastlane-evidence-probe-20261114
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Print cached native bout identities for unclaimed candidates without external calls
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const read=p=>JSON.parse(fs.readFileSync(p,'utf8'));
+          const data=read('data/ufcalendar-fighter-research.json');
+          const progress=read('data/ufcalendar-rich-progress.json');
+          const archive=read('data/ufc-research-archive.json');
+          const approvals=read('data/ufc-36-month-roster-approval.json');
+          const names=['cameron-nelson','ce-liu','cezary-oleksiejczuk','cody-chovancek','cristian-perez','damian-rzepecki','donghun-choi','eduardo-chapolin'];
+          const normalized=x=>String(x||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+          const isFeeder=x=>/(?:contender\s+series|road\s+to\s+ufc|\bdwcs\b)/i.test(x||'');
+          const profiles=data.profiles||{},bouts=progress.bouts||{};
+          const out=[];
+          for(const slug of names){
+            const p=profiles[slug]||{};
+            const rows=(p.recentHistory||[]).filter(x=>(x.promotion||x.org)==='ufc'&&(!x.date||x.date<='2026-11-14'));
+            const found=[];
+            for(const h of rows){
+              const bid=String(h.boutId||'');
+              const b=bouts[bid]||null;
+              const match=b?[[b.a,b.b],[b.b,b.a]].find(([me,opp])=>me&&(me.slug===slug||normalized(me.name)===normalized(p.name))):null;
+              found.push({savedDate:h.date,opponent:h.opponent,result:h.result,source:h.source,nativeBoutId:bid,event:b?.event,eventDate:b?.eventDate,boutStatus:b?.status,feeder:isFeeder(b?.event),nativeFighterId:match?.[0]?.id??null,nativeOpponentId:match?.[1]?.id??null,nativeOpponentName:match?.[1]?.name??null,nativeWinnerId:b?.winnerId??null,method:b?.method??null,round:b?.round??null,time:b?.time??null});
+            }
+            const unique=[...new Set(found.filter(x=>!x.feeder).map(x=>x.nativeFighterId).filter(Boolean).map(String))];
+            out.push({slug,approved:approvals.approvedFighters.includes(slug),profileName:p.name||null,savedRows:rows.length,nativeIds:unique,rows:found,sourceArchiveFightsTotal:Object.keys(archive.fights||{}).length});
+          }
+          console.log('BEFN_RESEARCH_ONLY_FASTLANE_NATIVE_EVIDENCE='+JSON.stringify(out));
+          NODE
