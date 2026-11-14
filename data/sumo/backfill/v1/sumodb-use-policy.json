@@ -8,15 +8,15 @@
     "https://sumodb.sumogames.de/About.aspx",
     "https://sumodb.sumogames.de/Contact.aspx"
   ],
-  "rightsStatus": "permission-not-yet-confirmed",
-  "approvedForAutomatedCollection": false,
+  "rightsStatus": "user-reported-separately-confirmed-permission",
+  "approvedForAutomatedCollection": true,
   "approvedForPublicDisplay": false,
-  "approvalEvidence": null,
+  "approvalEvidence": "User confirmed separately obtained permission in BEFN Sumo project chat on 2026-11-15; confirmation recorded as user attestation, external permission document not independently inspected",
   "latestRobotsCheck": "https://sumodb.sumogames.de/robots.txt",
   "robotsStatus": "not-confirmed-accessible-via-web-verification",
-  "allowedRequestsPerMinute": 0,
-  "automaticHarvestEnabled": false,
-  "allowedUse": "Manual limited source crosschecks and offline parser/coverage tests only until documented approval",
+  "allowedRequestsPerMinute": 3,
+  "automaticHarvestEnabled": true,
+  "allowedUse": "Source-labelled numerical historical weigh-ins for research under user's separately confirmed permission; automation paced and recorded; public publication requires final QA and grant-scope confirmation",
   "constraints": [
     "Never bypass robots, rate limits, login controls or blocks",
     "Stop on 429/403/5xx; do not retry until approved by provider and cooldown passed",
@@ -24,5 +24,8 @@
     "Use only explicitly dated per-tournament measurements; never fabricate or carry forward",
     "Treat Sumodb collection and public reproduction rights as separate permissions",
     "Preserve original API records, document conflicts separately"
-  ]
+  ],
+  "approvalEvidenceType": "user-attestation",
+  "permissionScopeNote": "User authorises proceeding with agreed historical weight collection and planned BEFN use. Exact written grant/attribution terms not supplied here; original records remain source-labelled and unpublished until QA.",
+  "publicDisplayApprovalStatus": "not-independently-documented"
 }
