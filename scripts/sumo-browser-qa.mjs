@@ -61,6 +61,8 @@ async function testSite(viewport,isMobile,label) {
   assertContains(profile,'cached recent bout sample','source label');
   assertContains(profile,'JSA-listed signature manoeuvres','official source signature tags');
   assert.equal(await page.locator('.style-tags span').count(),4);
+  assert.ok(await page.locator('.sumo-result-card').count()>0,'Profile has photo-ready opponent cards');
+  assert.ok(await page.locator('.sumo-country').count()>0,'Profile shows birthplace-country flag');
   await snap(page,label+'-profile',{fullPage:false});
   // All 190 rikishi should expose current banzuke opponent histories even
   // without individually fetched lifetime stats or 18-bout enrichment.
@@ -74,19 +76,24 @@ async function testSite(viewport,isMobile,label) {
   assertContains(makushitaProfile,'non-bout days','Makushita rest days do not count as absences');
 
 
-  await open(page,'banzuke','.standings');
-  assert.equal(await page.locator('.standings tbody tr').count(),42);
+  await open(page,'banzuke','.sumo-rank-card');
+  assert.equal(await page.locator('.sumo-rank-card').count(),42);
+  assert.equal(await page.locator('.sumo-rank-card .sumo-country').count(),42);
+  assert.equal(await page.locator('.sumo-rank-card .sumo-move').count(),42);
   await page.locator('[data-banzuke-division="Juryo"]').click();
-  assert.equal(await page.locator('.standings tbody tr').count(),28);
+  assert.equal(await page.locator('.sumo-rank-card').count(),28);
   await page.locator('[data-banzuke-division="Makushita"]').click();
-  assert.equal(await page.locator('.standings tbody tr').count(),120);
+  assert.equal(await page.locator('.sumo-rank-card').count(),120);
   await snap(page,label+'-banzuke',{fullPage:false});
 
   await open(page,'basho','.basho-hero');
   await page.locator('[data-basho-division="Makushita"]').click();
   const basho=await page.locator('#sumo-main').innerText();
-  assertContains(basho,'15 calendar-day positions','lower division caveat');
-  assert.ok(await page.locator('[data-day]').count()>=7,'Makushita has actual calendar-day controls');
+  assertContains(basho,'seven times across 15 tournament days','lower division caveat');
+  assert.equal(await page.locator('[data-day]').count(),15,'All calendar days are selectable');
+  await page.locator('[data-day="7"]').click();
+  assert.ok(await page.locator('.sumo-match-card').count()>0,'Makushita matchups use designed cards');
+  assert.ok(await page.locator('.sumo-match-card .sumo-match-person').count()>=2);
   assert.ok((await page.locator('.standings tbody tr').count())>=20);
   await snap(page,label+'-basho',{fullPage:false});
 
