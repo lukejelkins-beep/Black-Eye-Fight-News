@@ -11,7 +11,7 @@ const opponentAliases={joannecalderwood:'joannewood',joannewood:'joannewood',
  // Official UFC records name this one athlete both Heili Alateng and Alatengheili.
  heilialateng:'alatengheili',alatengheili:'alatengheili',
  // UFC November 28, 2020 event lists Kai Kamaka III, result records Kai Kamaka.
- kaikamaka:'kaikamaka',kaikamakaIII:'kaikamaka',
+ kaikamaka:'kaikamaka',kaikamakaiii:'kaikamaka',
  // UFC biography and stats list Casey O'Neill's 2023 opponent under two names.
  arianedasilva:'arianelipski',arianelipski:'arianelipski',
  arianelipskidasilva:'arianelipski'};
