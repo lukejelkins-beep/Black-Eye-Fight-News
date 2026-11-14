@@ -128,7 +128,7 @@ function historyRowsMarkup(h2h,a,b,limit=5,reverse=false) {
   return '<ol class="sumo-h2h-timeline">'+rows.slice(0,limit).map(m=>{
     const winner=headToHeadName(m.winnerId,a,b);
     const firstWon=m.winnerId===Number(a);
-    return '<li class="sumo-h2h-bout"><span class="sumo-h2h-date">'+e(bashoLabel(m.bashoId))+' · Day '+e(m.day)+'</span>'+
+    return '<li class="sumo-h2h-bout"><span class="sumo-h2h-date">'+e(bashoLabel(m.bashoId))+' · Day '+e(m.day)+(m.eventType?' · '+e(m.eventType==='mae-zumo'?'Mae-zumo trial':'Playoff'):'')+'</span>'+
       '<span class="sumo-h2h-winner '+(firstWon?'won':'lost')+'">WINNER · '+e(winner)+'</span>'+
       '<span class="sumo-h2h-technique">'+e(techniqueText(m.kimarite))+'</span></li>';
   }).join('')+'</ol>';
@@ -498,7 +498,11 @@ function renderHeadToHead(a,b) {
       historyRowsMarkup(history,a,b,Number.MAX_SAFE_INTEGER,STATE.h2hOldestFirst)+
       (!history.complete?note(history.source.includes('190-rikishi')?'Showing '+history.rows.length+' most recent of '+history.total+' career meetings. Full historical cache is '+(STATE.h2hLoading?'loading':'not yet loaded')+'.':'The API reports '+history.total+' meetings, but only '+history.rows.length+' individual matches are cached. The chronology is incomplete.'):
        note('All '+history.total+' regular source-recorded meetings are represented in this cache. '+(history.special?.length?history.special.length+' non-regular meetings are stored separately. ':'')+'Independent JSA full-career certification remains pending.')):
-      note('The all-time series and individual results have not yet been collected for this pair. No win/loss totals are inferred from the current tournament.'))+
+      note('The full career series is still loading or has not been sourced for this pairing. No totals are inferred from an isolated tournament.'))+
+    (history?.complete&&history.special?.length?
+      heading('Outside regular career W–L','Playoff and trial meetings')+
+      historyRowsMarkup({rows:history.special},a,b,Number.MAX_SAFE_INTEGER,STATE.h2hOldestFirst)+
+      note('Playoffs and Mae-zumo trials are preserved separately and do not inflate regular career head-to-head records.'):'')+
     sourceFooter();
 }
 function getAnnouncedTorikumi(div,day){
