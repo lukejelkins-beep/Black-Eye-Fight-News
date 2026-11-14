@@ -66,3 +66,25 @@ test('190 source files are required and unverified rikishi are not certified',()
  api.delete(5);
  assert.throws(()=>summarizeWeightCoverage(roster,api,new Map()),/Missing cached API weights/);
 });
+
+test('report distinguishes DOB-checked and older unverified historical weight evidence',()=>{
+ const roster={count:190,rikishi:Array.from({length:190},(_,i)=>({
+  sourceId:i+1,shikonaEn:'Rikishi'+(i+1),sumoDbId:i+200}))};
+ const api=new Map(roster.rikishi.map(x=>[x.sourceId,{data:{
+  measurements:[{bashoId:'202505',weight:142,height:180}]}}]));
+ const extra=new Map([
+  [1,{sourceId:1,sumoDbId:200,identityEvidence:{birthDateStatus:'match'},
+   datedEvidence:[{bashoId:'202505',heightCm:180,weightKg:142,
+     sourceUrl:'https://sumodb.sumogames.de/Rikishi.aspx?r=200'}]}],
+  [2,{sourceId:2,sumoDbId:201,datedEvidence:[{bashoId:'202505',heightCm:180,weightKg:142,
+     sourceUrl:'https://sumodb.sumogames.de/Rikishi.aspx?r=201'}]}]
+ ]);
+ const report=summarizeWeightCoverage(roster,api,extra);
+ assert.equal(report.checkedIndependentRikishi,2);
+ assert.equal(report.independentIdentityBirthDateVerified,1);
+ assert.equal(report.independentIdentityBirthDatePending,1);
+ assert.equal(report.independentIdentityBirthDateMismatch,0);
+ assert.equal(report.entries.find(x=>x.sourceId===2).independentSourceBirthDateStatus,
+  'prior-check-needs-birthdate-proof');
+ assert.equal(report.certifiedWeightHistories,0);
+});
