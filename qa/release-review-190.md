@@ -38,3 +38,11 @@ ONE remains deferred. Fighter cohort, certification standards, research evidence
 A fresh live tab loaded Homepage and Upcoming. Selecting Results succeeded, but full DOM inspection timed out; a minimal DOM read succeeded and measured 110,282 descendants inside Results, including 886 bouts. This supports a size-related inspection limitation, not a demonstrated navigation failure. User latency remains unmeasured.
 
 QA-015 limits initial rendering to 12 event cards and provides Show more. Search filters the complete cached dataset before pagination. The existing card-order suite now verifies reaching all 76 cached events, searching an older event and resetting pagination on search change. All local release-preflight checks passed. No stored records are removed. Repeated expansion can still grow the DOM; approved-preview mobile, focus and runtime verification remains required.
+
+## Latest remote CI verification — 14 November 2026
+
+- Verified QA head `59de1f46418b0b73a8b2a11b63d040984043884e` in GitHub Actions run `43573161795` (`BEFN release readiness`): **completed successfully**.
+- Both `release-preflight` (job `132381664578`) and `qa-inventory` (job `132381664806`) concluded **success**. The former included native packaging, frontend and results validation without provider calls; the latter included read-only reporter tests, inventory and artifact upload.
+- PR #190 was confirmed **open/draft/unmerged** against `main` at `a25f1fb499c2a3d003b2ac572d8a2483232320d6` before this documentation-only update.
+- Successful CI does **not** establish mobile browser behavior, accessible focus, a reduction in perceived latency, or deployment readiness. Preview testing and DOM/runtime comparison remain open.
+- Preview checks could not run in the receiving chat: connected browser access requires the originating extension context, and Render requires the owner to select its workspace. No preview or production deployment was attempted.
