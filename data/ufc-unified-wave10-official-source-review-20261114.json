@@ -1,0 +1,201 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave10-official-career-source-review",
+  "snapshot": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "sourceMethod": "Dated complete official UFC.com athlete biographies and independent official event scorecards, with athlete Win badges rejected when inconsistent with the detailed primary fight narrative. Full source-to-native and strict Stage3 required separately.",
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "fighters": {
+    "lance-gibson-jr": {
+      "fighterName": "Lance Gibson Jr.",
+      "officialFighterUrl": "https://www.ufc.com/athlete/lance-gibson-jr",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/07bc580bdf3eb9c8",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2025-12-13",
+          "opponent": "King Green",
+          "result": "loss"
+        },
+        {
+          "date": "2026-03-28",
+          "opponent": "Chase Hooper",
+          "result": "win"
+        }
+      ],
+      "reviewNote": "Official UFC narrative establishes a split-decision loss to King Green despite an incorrect summary Win badge.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "pinned independent fighter/fight/event chronology and native bout IDs",
+        "saved native both corners, outcomes, dates and measured rounds",
+        "individually source-attest all non-UFC RTU/DWCS feeder appearances",
+        "successful complete 783-person strict Stage3 audit"
+      ]
+    },
+    "lawrence-lui": {
+      "fighterName": "Lawrence Lui",
+      "officialFighterUrl": "https://www.ufc.com/athlete/lawrence-lui",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/a1ad35b98a9136e5",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-01-31",
+          "opponent": "Sulangrangbo",
+          "result": "win"
+        },
+        {
+          "date": "2026-08-29",
+          "opponent": "Hector Santiago",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "Jan 2026 Road to UFC season-4 FINAL at UFC 325 is included as official UFC bout; two prior Road to UFC 2025 quarter/semi matches are feeder exclusions. August 2026 summary Win badge contradicts the dated narrative documenting KO loss.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "pinned independent fighter/fight/event chronology and native bout IDs",
+        "saved native both corners, outcomes, dates and measured rounds",
+        "individually source-attest all non-UFC RTU/DWCS feeder appearances",
+        "successful complete 783-person strict Stage3 audit"
+      ]
+    },
+    "leon-shahbazyan": {
+      "fighterName": "Leon Shahbazyan",
+      "officialFighterUrl": "https://www.ufc.com/athlete/leon-shahbazyan",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/9eed2bcc9e0b92af",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-06-20",
+          "opponent": "Levan Chokheli",
+          "result": "loss"
+        },
+        {
+          "date": "2026-10-10",
+          "opponent": "Niko Price",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "UFC.com dated narratives independently document both first-round stoppage losses. 2019 DWCS loss to Phil Rowe is a non-UFC feeder bout.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "pinned independent fighter/fight/event chronology and native bout IDs",
+        "saved native both corners, outcomes, dates and measured rounds",
+        "individually source-attest all non-UFC RTU/DWCS feeder appearances",
+        "successful complete 783-person strict Stage3 audit"
+      ]
+    },
+    "lerryan-douglas": {
+      "fighterName": "Lerryan Douglas",
+      "officialFighterUrl": "https://www.ufc.com/athlete/lerryan-douglas",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/640a0f838f057a81",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-03-28",
+          "opponent": "Julian Erosa",
+          "result": "win"
+        },
+        {
+          "date": "2026-08-22",
+          "opponent": "Jamall Emmers",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "Dated official narratives prove win over Julian Erosa and KO loss to Jamall Emmers; August fighter Win tile wrong. September 2025 DWCS Cam Teague fight excluded.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "pinned independent fighter/fight/event chronology and native bout IDs",
+        "saved native both corners, outcomes, dates and measured rounds",
+        "individually source-attest all non-UFC RTU/DWCS feeder appearances",
+        "successful complete 783-person strict Stage3 audit"
+      ]
+    },
+    "levi-rodrigues-jr": {
+      "fighterName": "Levi Rodrigues Jr.",
+      "officialFighterUrl": "https://www.ufc.com/athlete/levi-rodrigues-jr",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/9ac4e43ed56429ed",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-07-18",
+          "opponent": "Felipe Franco",
+          "result": "loss"
+        },
+        {
+          "date": "2026-08-29",
+          "opponent": "Liu Ce",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "Full official UFC.com dated narratives show two KO losses, not wins shown in graphical widgets; October 2025 DWCS no contest against Freddy Vidal excluded.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "pinned independent fighter/fight/event chronology and native bout IDs",
+        "saved native both corners, outcomes, dates and measured rounds",
+        "individually source-attest all non-UFC RTU/DWCS feeder appearances",
+        "successful complete 783-person strict Stage3 audit"
+      ]
+    },
+    "lucas-fernando": {
+      "fighterName": "Lucas Fernando",
+      "officialFighterUrl": "https://www.ufc.com/athlete/lucas-fernando",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/3df223aeaacecf3f",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-08-15",
+          "opponent": "Rafael Tobias",
+          "result": "win"
+        },
+        {
+          "date": "2026-11-07",
+          "opponent": "Billy Elekana",
+          "result": "win"
+        }
+      ],
+      "reviewNote": "Both wins confirmed by official narrative; November 7 judges' scorecards corroborate unanimous decision. Aug 2023 DWCS loss to Cesar Almeida excluded.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "pinned independent fighter/fight/event chronology and native bout IDs",
+        "saved native both corners, outcomes, dates and measured rounds",
+        "individually source-attest all non-UFC RTU/DWCS feeder appearances",
+        "successful complete 783-person strict Stage3 audit"
+      ]
+    },
+    "lucas-rocha": {
+      "fighterName": "Lucas Rocha",
+      "officialFighterUrl": "https://www.ufc.com/athlete/lucas-rocha",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/e0d3d9b564f95635",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2024-10-12",
+          "opponent": "Clayton Carpenter",
+          "result": "loss"
+        },
+        {
+          "date": "2025-10-11",
+          "opponent": "Stewart Nicoll",
+          "result": "win"
+        }
+      ],
+      "reviewNote": "Dated official biography establishes first loss by RNC and second unanimous decision win. 2023 DWCS KO of Davi Bittencourt excluded.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "pinned independent fighter/fight/event chronology and native bout IDs",
+        "saved native both corners, outcomes, dates and measured rounds",
+        "individually source-attest all non-UFC RTU/DWCS feeder appearances",
+        "successful complete 783-person strict Stage3 audit"
+      ]
+    }
+  }
+}
