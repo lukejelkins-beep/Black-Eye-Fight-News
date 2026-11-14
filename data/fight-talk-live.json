@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-14T08:34:40.464Z",
-  "checkedAt": "2026-11-14T08:34:40.464Z",
-  "updatedAt": "2026-11-14T08:23:19.061Z",
+  "attemptedAt": "2026-11-14T10:16:01.046Z",
+  "checkedAt": "2026-11-14T10:16:01.046Z",
+  "updatedAt": "2026-11-14T09:32:02Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 6,
+  "sourcesChecked": 4,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 6,
+      "checked": 4,
       "failed": 0,
-      "configured": 6,
-      "message": "6 of 6 scheduled sources checked."
+      "configured": 4,
+      "message": "4 of 4 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 27,
+      "configured": 28,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 43,
+      "configured": 40,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 2,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,21 +55,46 @@
   "rollingScan": {
     "directoryEntries": 447,
     "scheduledEntries": 84,
-    "batchIndex": 0,
+    "batchIndex": 3,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 43,
-      "Bluesky": 6,
-      "X": 27,
-      "Threads": 8
+      "X": 28,
+      "Instagram": 40,
+      "Threads": 10,
+      "Bluesky": 4,
+      "Reddit": 2
     },
-    "directlyChecked": 6,
+    "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2b6vtjvtb2u",
+      "cid": "bafyreige2y4poutaq46x3np2ifvcibays5ti4ieghew4t4y4u2gufmdfum",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Merab Dvalishvili outweighed by nearly 15 pounds in clash with former UFC opponent days after brawl",
+      "postedAt": "2026-11-14T09:32:02Z",
+      "date": "14 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2b6vtjvtb2u",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n2b32xajjk2k",
       "cid": "bafyreifwxpkeqpbphjizfakb4ht4hdkhoxqtwxf2l75oocf43szucmya4q",
@@ -139,7 +164,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T07:46:20.054Z",
+      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -307,7 +332,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T07:46:20.054Z",
+      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -355,7 +380,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T07:46:20.054Z",
+      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -379,7 +404,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T07:46:20.054Z",
+      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -499,7 +524,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T07:46:20.054Z",
+      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -523,7 +548,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T07:46:20.054Z",
+      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -691,7 +716,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T07:46:20.054Z",
+      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -715,7 +740,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T07:46:20.054Z",
+      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -811,7 +836,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T07:46:20.054Z",
+      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -860,30 +885,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n26wumth2z2f",
-      "cid": "bafyreifp5hivzezhyf7m6guwlcfeh6atrlqtynotzcrlbbbnzd5epr3rjy",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Tommy McMillen makes surprise UFC request following hospital scare",
-      "postedAt": "2026-11-13T12:02:52Z",
-      "date": "13 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n26wumth2z2f",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T07:46:20.054Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1567,7 +1568,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T07:46:20.054Z",
+      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5188,7 +5189,7 @@
         "comments": 2,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T07:46:20.054Z",
+      "engagementCheckedAt": "2026-11-14T10:16:01.046Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
