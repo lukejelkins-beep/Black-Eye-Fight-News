@@ -84,12 +84,13 @@ jobs:
           bash -n scripts/sumo-sync-h2h-preview.sh
           node --check scripts/sumo-jsa-public-spotcheck.mjs
           node --check scripts/sumo-jsa-corrected-basho-audit.mjs
+          node --check scripts/sumo-research-run-health.mjs
           node --check scripts/sumo-jsa-history-exceptions.mjs
           node --check scripts/sumo-weight-history-190.mjs
           node --check scripts/sumo-weight-sumodb-collector.mjs
           node --check scripts/sumo-official-bout-corrections.mjs
           node --check scripts/sumo-official-career-totals.mjs
-          node --test tests/test-sumo-backfill-190.mjs tests/test-sumo-verify-190.mjs tests/test-sumo-jsa-reconcile.mjs tests/test-sumo-build-profile-cache.mjs tests/test-sumo-h2h-chronology.mjs tests/test-sumo-jsa-public-spotcheck.mjs tests/test-sumo-jsa-corrected-basho-audit.mjs tests/test-sumo-jsa-history-exceptions.mjs tests/test-sumo-weight-history-190.mjs tests/test-sumo-weight-sumodb-collector.mjs tests/test-sumo-official-bout-corrections.mjs tests/test-sumo-official-career-totals.mjs
+          node --test tests/test-sumo-backfill-190.mjs tests/test-sumo-verify-190.mjs tests/test-sumo-jsa-reconcile.mjs tests/test-sumo-build-profile-cache.mjs tests/test-sumo-h2h-chronology.mjs tests/test-sumo-jsa-public-spotcheck.mjs tests/test-sumo-jsa-corrected-basho-audit.mjs tests/test-sumo-research-run-health.mjs tests/test-sumo-jsa-history-exceptions.mjs tests/test-sumo-weight-history-190.mjs tests/test-sumo-weight-sumodb-collector.mjs tests/test-sumo-official-bout-corrections.mjs tests/test-sumo-official-career-totals.mjs
       - name: Collect only missing research data
         if: steps.preflight.outputs.run == 'true'
         env:
@@ -137,6 +138,9 @@ jobs:
       - name: Build complete research-only profile projections
         if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-build-profile-cache.mjs
+      - name: Save auditable successful Sumo research run checkpoint
+        if: steps.preflight.outputs.run == 'true'
+        run: node scripts/sumo-research-run-health.mjs
       - name: Checkpoint cached results on research branch only
         if: steps.preflight.outputs.run == 'true'
         env:
