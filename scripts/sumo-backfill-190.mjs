@@ -6,7 +6,7 @@
  * This script only fetches missing stages/pages and writes source-labelled
  * per-rikishi JSON cache plus a countable progress summary.
  */
-import { readFile, writeFile, mkdir, rename, readdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, rename } from 'node:fs/promises';
 import { join } from 'node:path';
 
 const SOURCE='https://www.sumo-api.com/api';
@@ -16,8 +16,15 @@ const SUMMARY_PATH=join(DATA_ROOT,'summary.json');
 const ROSTER_PATH='data/sumo/rikishi-index.json';
 export const STAGES=['profile','stats','measurements','ranks','shikonas','matches'];
 const PAGE_SIZE=200;
-const REQUEST_LIMIT=Math.min(8,Math.max(1,Number(process.env.SUMO_REQUEST_BUDGET||8)));
-const MAX_FIGHTERS=Math.min(3,Math.max(1,Number(process.env.SUMO_FIGHTERS_PER_RUN||2)));
+// The user approved maximum practical collection. Bound work by the GitHub
+// runner window, never by a small arbitrary per-run request quota.
+const RUN_SECONDS=Math.min(195,Math.max(30,Number(process.env.SUMO_WORK_SECONDS||165)));
+const MIN_INTERVAL_MS=Math.max(150,Number(process.env.SUMO_REQUEST_INTERVAL_MS||300));
+const QUICK_STAGES=STAGES.filter(s=>s!=='matches');
+const sleep=ms=>new Promise(done=>setTimeout(done,ms));
+let runDeadline=Infinity;
+let lastCallStarted=0;
+let cooldownUntil=null;
 const TIMEOUT_MS=18_000;
 let calls=0;
 let stoppedReason=null;
@@ -148,7 +155,10 @@ export function combinePage(doc,stage,result,id){
   state.source=endpoint(id,stage,Math.max(0,next-items.length));
 }
 async function fetchApi(url){
-  if(calls>=REQUEST_LIMIT)throw Error('Per-run request budget exhausted');
+  if(Date.now()>runDeadline)throw Error('GitHub runtime window exhausted');
+  const interval=Math.max(0,lastCallStarted+MIN_INTERVAL_MS-Date.now());
+  if(interval)await sleep(interval);
+  lastCallStarted=Date.now();
   calls++;
   let response;
   try {
@@ -159,6 +169,10 @@ async function fetchApi(url){
       replace(/[\r\n\t]/g,' ').slice(0,180);
     const e=new Error('Sumo API HTTP '+response.status+(errorBody?' · '+errorBody:''));
     e.transient=response.status===429||response.status>=500||response.status===408;
+    e.status=response.status;
+    const retryHeader=response.headers?.get('retry-after');
+    const retry=retryHeader==null?NaN:Number(retryHeader);
+    e.retryAfterSeconds=Number.isFinite(retry)&&retry>=0?Math.min(3600,retry):null;
     throw e;
   }
   const raw=await response.text();
@@ -250,53 +264,99 @@ async function summary(roster){
     note:'Collected means API pagination completed. It does not imply historical accuracy, JSA agreement, official weight confirmation, copyright permission for photos, or certification.'
   };
 }
-async function main(){
-  const r=await readJson(ROSTER_PATH);
-  if(r?.count!==190||!Array.isArray(r.rikishi)||r.rikishi.length!==190)throw Error('Refusing to run: frozen 190-rikishi roster unavailable');
-  const roster=[...r.rikishi].sort((a,b)=>a.sourceId-b.sourceId);
-  const first=roster.findIndex(x=>x.sourceId===28);
-  if(first>=0)roster.unshift(roster.splice(first,1)[0]); // Ura test case first
-  if(new Set(roster.map(x=>x.sourceId)).size!==190)throw Error('Duplicate source IDs in the approved cohort');
-  await mkdir(RIKISHI_DIR,{recursive:true});
-  let touched=0,processed=0;
+/**
+ * One coordinated writer, two independent queues:
+ *  - quick: profile, stats, rankings, weights and shikona
+ *  - history: remaining pages of every fighter's complete bout record
+ * No duplicated requests for completed stages. A failing stage is retried at
+ * most once in a run, while other fighters continue making progress.
+ */
+export function chooseWork(roster,docs,lane,attempted=new Set()){
+  const stages=lane==='quick'?QUICK_STAGES:lane==='history'?['matches']:null;
+  if(!stages)throw Error('Unsupported collection lane '+lane);
+  const choices=[];
   for(const w of roster){
-    if(calls>=REQUEST_LIMIT||processed>=MAX_FIGHTERS||stoppedReason)break;
-    const doc=await ensureCache(w);
-    if(!nextStage(doc))continue;
-    processed++;
-    let changed=false;
-    const attemptedThisRun=new Set();
-    while(calls<REQUEST_LIMIT){
-      const stage=STAGES.find(s=>!attemptedThisRun.has(s)&&!doc.stages[s].complete&&doc.stages[s].attempts<3);
-      if(!stage)break;
-      attemptedThisRun.add(stage);
-      try {
-        await fillStage(doc,stage);
-        changed=true;
-        // A separate data request must never monopolise the free API.
-        await new Promise(ok=>setTimeout(ok,650));
-      }catch(err){
-        const detail=String(err.message||err).slice(0,220);
-        const transient=Boolean(err.transient);
-        doc.errors.push({at:clock(),stage,message:detail,transient});
-        doc.errors=doc.errors.slice(-12);
-        if(!transient)doc.stages[stage].attempts++;
-        changed=true;
-        if(transient){stoppedReason=detail;break;}
-        // An individual failing endpoint no longer blocks other stage
-        // requests. It is retried only in a subsequent scheduled run.
-        continue;
+    const d=docs.get(w.sourceId)||newCache(w);
+    if(lane==='history'&&(!d.stages.profile.complete||!d.stages.stats.complete))continue;
+    const stage=stages.find(k=>!d.stages[k].complete&&d.stages[k].attempts<3&&!attempted.has(w.sourceId+':'+k));
+    if(!stage)continue;
+    choices.push({w,doc:d,stage,progress:lane==='history'?
+      d.stages.matches.skip||0:QUICK_STAGES.filter(s=>d.stages[s].complete).length});
+  }
+  choices.sort((a,b)=>b.progress-a.progress||a.w.sourceId-b.w.sourceId);
+  return choices[0]||null;
+}
+async function main(){
+  const frozen=await readJson(ROSTER_PATH);
+  if(frozen?.count!==190||frozen.rikishi?.length!==190)throw Error('Frozen 190-rikishi cohort unavailable');
+  const roster=[...frozen.rikishi].sort((a,b)=>a.sourceId-b.sourceId);
+  if(new Set(roster.map(x=>x.sourceId)).size!==190)throw Error('Duplicate rikishi source IDs');
+  const prior=await readJson(SUMMARY_PATH);
+  if(prior?.cooldownUntil&&Date.parse(prior.cooldownUntil)>Date.now()){
+    console.log(JSON.stringify({status:'provider-cooldown',until:prior.cooldownUntil,apiCalls:0,certified:0}));
+    return;
+  }
+  await mkdir(RIKISHI_DIR,{recursive:true});
+  const docs=new Map();
+  for(const w of roster)docs.set(w.sourceId,await ensureCache(w));
+  const attempted=new Set(),changed=new Set();
+  const runStart=Date.now();
+  runDeadline=runStart+RUN_SECONDS*1000;
+  const laneCalls={quick:0,history:0};
+  const exceptions=[];
+  let finished=false;
+  while(Date.now()+TIMEOUT_MS+1500<runDeadline){
+    // Two source requests for basic profile coverage per one request for
+    // deeper history. When either queue empties, use all capacity on the other.
+    const preferred=calls%3===2?'history':'quick';
+    let selected=chooseWork(roster,docs,preferred,attempted);
+    let lane=preferred;
+    if(!selected){lane=preferred==='quick'?'history':'quick';selected=chooseWork(roster,docs,lane,attempted);}
+    if(!selected){finished=true;break;}
+    const {w,doc,stage}=selected,key=w.sourceId+':'+stage;
+    try {
+      await fillStage(doc,stage);
+      changed.add(w.sourceId);
+      laneCalls[lane]++;
+      // Completed stage is never called again; a non-final match page may be
+      // paged again in this run, with exact persisted skip.
+      if(!doc.stages[stage].complete && stage!=='matches')attempted.add(key);
+    }catch(err){
+      const detail=String(err?.message||err).slice(0,220);
+      doc.errors.push({at:clock(),stage,message:detail,transient:!!err.transient});
+      doc.errors=doc.errors.slice(-12);
+      if(!err.transient)doc.stages[stage].attempts++;
+      attempted.add(key);
+      changed.add(w.sourceId);
+      exceptions.push({rikishiId:w.sourceId,stage,error:detail});
+      if(err.transient){
+        stoppedReason=detail;
+        const seconds=err.retryAfterSeconds??(err.status===429?300:180);
+        cooldownUntil=new Date(Date.now()+Math.max(60,seconds)*1000).toISOString();
+        break;
       }
     }
-    if(changed){await saveJson(filePath(w.sourceId),doc);touched++;}
   }
+  for(const id of changed)await saveJson(filePath(id),docs.get(id));
   const report=await summary(roster);
-  const prior=await readJson(SUMMARY_PATH);
-  if(!prior||touched||JSON.stringify(report.counts)!==JSON.stringify(prior.counts)){
-    await saveJson(SUMMARY_PATH,report);
-  }
-  console.log(JSON.stringify({status:'ok',calls,processed,updatedFiles:touched,stoppedReason,progress:report.counts,rankEntries:report.rankEntries,weightSnapshots:report.weightSnapshots,matchEntries:report.matchEntries}));
+  report.maximumCallsPerScheduledRun=null;
+  report.requestPolicy='Maximize within the GitHub runner window; one source writer, paced, stop on 429/5xx, honor Retry-After';
+  report.targetRunSeconds=RUN_SECONDS;
+  report.requestIntervalMs=MIN_INTERVAL_MS;
+  report.cooldownUntil=cooldownUntil;
+  report.lastRun={
+    at:clock(),elapsedSeconds:Math.round((Date.now()-runStart)/1000),
+    apiCalls:calls,updatedRikishi:changed.size,laneCalls,
+    failures:exceptions.slice(-16),stoppedReason,queuesExhausted:finished
+  };
+  // Keep latest operational report deterministic except a genuine run.
+  await saveJson(SUMMARY_PATH,report);
+  console.log(JSON.stringify({status:cooldownUntil?'rate-limited':'ok',
+    requests:calls,changed:changed.size,elapsed:report.lastRun.elapsedSeconds,
+    queues:laneCalls,counts:report.counts,remaining:report.outstandingStages,
+    cooldownUntil,certified:0}));
 }
+
 if(process.argv[1]&&import.meta.url===new URL('file://'+process.argv[1]).href){
   main().catch(err=>{console.error('Sumo backfill fatal: '+err.message);process.exitCode=1;});
 }
