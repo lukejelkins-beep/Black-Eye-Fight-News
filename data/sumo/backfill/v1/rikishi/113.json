@@ -55,7 +55,7 @@
       "complete": false,
       "skip": 400,
       "total": null,
-      "attempts": 1,
+      "attempts": 2,
       "updatedAt": "2026-11-14T22:00:40.493Z",
       "historyShortfall": 0,
       "lastReportedPageTotal": 200,
@@ -7006,6 +7006,12 @@
   "errors": [
     {
       "at": "2026-11-14T22:00:41.390Z",
+      "stage": "matches",
+      "message": "Expected matches collection; shape=limit,skip,total,records",
+      "transient": false
+    },
+    {
+      "at": "2026-11-14T22:02:50.822Z",
       "stage": "matches",
       "message": "Expected matches collection; shape=limit,skip,total,records",
       "transient": false

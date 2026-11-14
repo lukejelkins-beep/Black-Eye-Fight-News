@@ -34,13 +34,13 @@
       "source": "https://www.sumo-api.com/api/measurements?rikishiId=172&limit=200&skip=0&sortOrder=asc"
     },
     "ranks": {
-      "complete": false,
-      "skip": 100,
+      "complete": true,
+      "skip": 117,
       "total": null,
       "attempts": 0,
-      "updatedAt": "2026-11-14T22:00:11.072Z",
+      "updatedAt": "2026-11-14T22:02:51.420Z",
       "responseShape": "direct-array",
-      "source": "https://www.sumo-api.com/api/ranks?rikishiId=172&limit=200&skip=0&sortOrder=asc"
+      "source": "https://www.sumo-api.com/api/ranks?rikishiId=172&limit=200&skip=100&sortOrder=asc"
     },
     "shikonas": {
       "complete": true,
@@ -883,6 +883,125 @@
         "rikishiId": 172,
         "rankValue": 806,
         "rank": "Sandanme 6 West"
+      },
+      {
+        "id": "202403-172",
+        "bashoId": "202403",
+        "rikishiId": 172,
+        "rankValue": 817,
+        "rank": "Sandanme 17 West"
+      },
+      {
+        "id": "202405-172",
+        "bashoId": "202405",
+        "rikishiId": 172,
+        "rankValue": 839,
+        "rank": "Sandanme 39 West"
+      },
+      {
+        "id": "202407-172",
+        "bashoId": "202407",
+        "rikishiId": 172,
+        "rankValue": 810,
+        "rank": "Sandanme 10 West"
+      },
+      {
+        "id": "202409-172",
+        "bashoId": "202409",
+        "rikishiId": 172,
+        "rankValue": 824,
+        "rank": "Sandanme 24 East"
+      },
+      {
+        "id": "202411-172",
+        "bashoId": "202411",
+        "rikishiId": 172,
+        "rankValue": 759,
+        "rank": "Makushita 59 West"
+      },
+      {
+        "id": "202501-172",
+        "bashoId": "202501",
+        "rikishiId": 172,
+        "rankValue": 811,
+        "rank": "Sandanme 11 East"
+      },
+      {
+        "id": "202503-172",
+        "bashoId": "202503",
+        "rikishiId": 172,
+        "rankValue": 841,
+        "rank": "Sandanme 41 West"
+      },
+      {
+        "id": "202505-172",
+        "bashoId": "202505",
+        "rikishiId": 172,
+        "rankValue": 753,
+        "rank": "Makushita 53 East"
+      },
+      {
+        "id": "202507-172",
+        "bashoId": "202507",
+        "rikishiId": 172,
+        "rankValue": 742,
+        "rank": "Makushita 42 East"
+      },
+      {
+        "id": "202509-172",
+        "bashoId": "202509",
+        "rikishiId": 172,
+        "rankValue": 804,
+        "rank": "Sandanme 4 East"
+      },
+      {
+        "id": "202511-172",
+        "bashoId": "202511",
+        "rikishiId": 172,
+        "rankValue": 836,
+        "rank": "Sandanme 36 East"
+      },
+      {
+        "id": "202601-172",
+        "bashoId": "202601",
+        "rikishiId": 172,
+        "rankValue": 810,
+        "rank": "Sandanme 10 West"
+      },
+      {
+        "id": "202603-172",
+        "bashoId": "202603",
+        "rikishiId": 172,
+        "rankValue": 825,
+        "rank": "Sandanme 25 West"
+      },
+      {
+        "id": "202605-172",
+        "bashoId": "202605",
+        "rikishiId": 172,
+        "rankValue": 813,
+        "rank": "Sandanme 13 East"
+      },
+      {
+        "id": "202607-172",
+        "bashoId": "202607",
+        "rikishiId": 172,
+        "rankValue": 824,
+        "rank": "Sandanme 24 West"
+      },
+      {
+        "id": "202609-172",
+        "bashoId": "202609",
+        "rikishiId": 172,
+        "rankValue": 760,
+        "rank": "Makushita 60 East"
+      },
+      {
+        "id": "202611-172",
+        "bashoId": "202611",
+        "rikishiId": 172,
+        "rankValue": 749,
+        "rank": "Makushita 49 East"
       }
     ],
     "shikonas": [
@@ -13855,5 +13974,9 @@
       }
     ]
   },
-  "errors": []
+  "errors": [],
+  "profileRequestContract": 2,
+  "historyResponseContract": 2,
+  "matchPaginationContract": 3,
+  "rankPaginationContract": 2
 }

@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "scope": "Published JSA field spotchecks only; not full-career certifications",
   "publishedAsOf": "2026-11-15",
-  "checkedProfiles": 8,
+  "checkedProfiles": 9,
   "fullyMatchingPublicFields": 6,
-  "discrepancies": 2,
+  "discrepancies": 3,
   "explainedCutoffDifferences": 2,
-  "unexplainedDifferences": 0,
+  "unexplainedDifferences": 1,
   "certifiedCareers": 0,
   "bySourceId": {
     "2": {
@@ -563,6 +563,83 @@
       "cutoffAlignment": null,
       "careerCertified": false,
       "notes": "Basic fields only. Bout-by-bout history, historical measurements and photographs remain separate gates."
+    },
+    "16": {
+      "sumoApiId": 16,
+      "name": "Nishikigi",
+      "officialAsOf": "2026-11 day 7",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/2892/",
+      "status": "requires-reconciliation",
+      "fieldCounts": {
+        "matched": 9,
+        "discrepant": 1,
+        "unavailable": 0
+      },
+      "fields": [
+        {
+          "field": "sumoApiId",
+          "official": 16,
+          "api": 16,
+          "state": "match"
+        },
+        {
+          "field": "officialNskId",
+          "official": 2892,
+          "api": 2892,
+          "state": "match"
+        },
+        {
+          "field": "name",
+          "official": "Nishikigi",
+          "api": "Nishikigi",
+          "state": "match"
+        },
+        {
+          "field": "currentRank",
+          "official": "Makushita 2 East",
+          "api": "Makushita 2 East",
+          "state": "match"
+        },
+        {
+          "field": "stable",
+          "official": "Isenoumi",
+          "api": "Isenoumi",
+          "state": "match"
+        },
+        {
+          "field": "heightCm",
+          "official": 186,
+          "api": 186,
+          "state": "match"
+        },
+        {
+          "field": "weightKg",
+          "official": 184,
+          "api": 184,
+          "state": "match"
+        },
+        {
+          "field": "careerWins",
+          "official": 677,
+          "api": 676,
+          "state": "discrepancy"
+        },
+        {
+          "field": "careerLosses",
+          "official": 716,
+          "api": 716,
+          "state": "match"
+        },
+        {
+          "field": "careerAbsences",
+          "official": 2,
+          "api": 2,
+          "state": "match"
+        }
+      ],
+      "cutoffAlignment": null,
+      "careerCertified": false,
+      "notes": "Do not overwrite conflicting values without source time alignment."
     },
     "28": {
       "sumoApiId": 28,

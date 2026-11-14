@@ -34,13 +34,13 @@
       "source": "https://www.sumo-api.com/api/measurements?rikishiId=125&limit=200&skip=0&sortOrder=asc"
     },
     "ranks": {
-      "complete": false,
-      "skip": 100,
+      "complete": true,
+      "skip": 105,
       "total": null,
       "attempts": 0,
-      "updatedAt": "2026-11-14T21:59:28.167Z",
+      "updatedAt": "2026-11-14T22:02:50.516Z",
       "responseShape": "direct-array",
-      "source": "https://www.sumo-api.com/api/ranks?rikishiId=125&limit=200&skip=0&sortOrder=asc"
+      "source": "https://www.sumo-api.com/api/ranks?rikishiId=125&limit=200&skip=100&sortOrder=asc"
     },
     "shikonas": {
       "complete": true,
@@ -869,6 +869,41 @@
         "rikishiId": 125,
         "rankValue": 811,
         "rank": "Sandanme 11 East"
+      },
+      {
+        "id": "202603-125",
+        "bashoId": "202603",
+        "rikishiId": 125,
+        "rankValue": 750,
+        "rank": "Makushita 50 West"
+      },
+      {
+        "id": "202605-125",
+        "bashoId": "202605",
+        "rikishiId": 125,
+        "rankValue": 731,
+        "rank": "Makushita 31 East"
+      },
+      {
+        "id": "202607-125",
+        "bashoId": "202607",
+        "rikishiId": 125,
+        "rankValue": 750,
+        "rank": "Makushita 50 East"
+      },
+      {
+        "id": "202609-125",
+        "bashoId": "202609",
+        "rikishiId": 125,
+        "rankValue": 741,
+        "rank": "Makushita 41 East"
+      },
+      {
+        "id": "202611-125",
+        "bashoId": "202611",
+        "rikishiId": 125,
+        "rankValue": 748,
+        "rank": "Makushita 48 West"
       }
     ],
     "shikonas": [
@@ -12506,5 +12541,9 @@
       }
     ]
   },
-  "errors": []
+  "errors": [],
+  "profileRequestContract": 2,
+  "historyResponseContract": 2,
+  "matchPaginationContract": 3,
+  "rankPaginationContract": 2
 }

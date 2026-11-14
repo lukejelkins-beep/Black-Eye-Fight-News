@@ -5,57 +5,55 @@
   "status": "research-data-only",
   "certified": 0,
   "counts": {
-    "pending": 53,
-    "partial": 45,
+    "pending": 0,
+    "partial": 10,
     "exception": 0,
-    "collected": 92
+    "collected": 180
   },
-  "weightSnapshots": 363,
-  "rankEntries": 7862,
-  "matchEntries": 59444,
-  "outstandingStages": 363,
+  "weightSnapshots": 415,
+  "rankEntries": 8711,
+  "matchEntries": 76532,
+  "outstandingStages": 10,
   "stageTotals": {
     "profile": {
-      "completed": 137,
+      "completed": 190,
       "blocked": 0
     },
     "stats": {
-      "completed": 137,
+      "completed": 190,
       "blocked": 0
     },
     "measurements": {
-      "completed": 137,
+      "completed": 190,
       "blocked": 0
     },
     "ranks": {
-      "completed": 133,
+      "completed": 181,
       "blocked": 0
     },
     "shikonas": {
-      "completed": 137,
+      "completed": 190,
       "blocked": 0
     },
     "matches": {
-      "completed": 96,
+      "completed": 189,
       "blocked": 0
     }
   },
   "exceptions": [],
   "partialExamples": [
     "Tokunomusashi",
-    "Kitaharima",
-    "Tsurubayashi",
-    "Asakoki",
-    "Kototsubasa",
-    "Kaiseijo",
-    "Kaishin",
-    "Hinataryu",
-    "Chiyotora",
-    "Asonoyama",
-    "Hamayutaka",
-    "Oshoryu"
+    "Fujitensei",
+    "Fujiryoga",
+    "Gyotoku",
+    "Hanahibiki",
+    "Kakueizan",
+    "Ryusho",
+    "Fudoho",
+    "Omori",
+    "Honoikazuchi"
   ],
-  "lastCheckedAt": "2026-11-14T22:01:46.595Z",
+  "lastCheckedAt": "2026-11-14T22:04:50.636Z",
   "source": "https://www.sumo-api.com/api",
   "maximumCallsPerScheduledRun": null,
   "note": "Collected means API pagination completed. It does not imply historical accuracy, JSA agreement, official weight confirmation, copyright permission for photos, or certification.",
@@ -64,13 +62,13 @@
   "requestIntervalMs": 300,
   "cooldownUntil": null,
   "lastRun": {
-    "at": "2026-11-14T22:01:46.595Z",
-    "elapsedSeconds": 146,
-    "apiCalls": 486,
-    "updatedRikishi": 104,
+    "at": "2026-11-14T22:04:50.636Z",
+    "elapsedSeconds": 121,
+    "apiCalls": 401,
+    "updatedRikishi": 98,
     "laneCalls": {
-      "quick": 324,
-      "history": 161
+      "quick": 269,
+      "history": 131
     },
     "failures": [
       {
@@ -80,6 +78,6 @@
       }
     ],
     "stoppedReason": null,
-    "queuesExhausted": false
+    "queuesExhausted": true
   }
 }
