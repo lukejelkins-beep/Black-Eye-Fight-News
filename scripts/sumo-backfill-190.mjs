@@ -88,7 +88,24 @@ export function combinePage(doc,stage,result,id){
   // Supporting both full envelopes and arrays protects existing test fixtures.
   const direct=Array.isArray(result);
   const collection=stage==='matches'?'records':stage;
-  const items=direct?result:result?.[collection]??(stage==='matches'?result?.matches:undefined);
+  const provided=direct?result:result?.[collection]??(stage==='matches'?result?.matches:undefined);
+  // Some empty terminal match pages return records:null instead of [].
+  // Accept that only if all saved regular wins and losses *already agree*
+  // with the career totals and the provider's reported total is exhausted.
+  const stateForPage=doc.stages[stage],statsForPage=doc.data.stats;
+  const savedRegular=stage==='matches'?(doc.data.matches||[]).filter(m=>
+    m.division!=='Mae-zumo'&&Number(m.day)>=1&&Number(m.day)<=15):[];
+  const savedWins=savedRegular.filter(m=>Number(m.winnerId)===Number(id)).length;
+  const savedLosses=savedRegular.filter(m=>Number.isSafeInteger(Number(m.winnerId))&&
+    Number(m.winnerId)>0&&Number(m.winnerId)!==Number(id)).length;
+  const nullTerminalPage=stage==='matches'&&isObject(result)&&provided==null&&
+    stateForPage.skip>0&&Number.isSafeInteger(Number(result.total))&&
+    Number(result.total)>=0&&Number(result.total)<=stateForPage.skip&&
+    statsForPage?.totalMatches!=null&&
+    savedRegular.length===Number(statsForPage.totalMatches)&&
+    savedWins===Number(statsForPage.totalWins)&&
+    savedLosses===Number(statsForPage.totalLosses);
+  const items=nullTerminalPage?[]:provided;
   if(!Array.isArray(items)){
     const keys=isObject(result)?Object.keys(result).slice(0,12).join(','):Array.isArray(result)?'array':'non-object';
     const msg=isObject(result)?String(result.message??result.error??'').slice(0,70):'';
@@ -140,7 +157,8 @@ export function combinePage(doc,stage,result,id){
   const key=x=>x.id!=null?String(x.id):stage==='matches'?
     [x.bashoId,x.day,x.matchNo,x.eastId,x.westId].join(':'):JSON.stringify(x);
   const merged=new Map([...existing,...items].map(x=>[key(x),x]));
-  if(state.skip>0&&merged.size<=existing.length)throw Error('Repeated '+stage+' page; possible ignored skip');
+  if(state.skip>0&&merged.size<=existing.length&&!nullTerminalPage)
+    throw Error('Repeated '+stage+' page; possible ignored skip');
   const complete=more===false;
   if(complete&&total!==null&&stage!=='matches'&&merged.size!==total){
     throw Error('Duplicate/missing records in '+stage+': '+merged.size+'/'+total);
