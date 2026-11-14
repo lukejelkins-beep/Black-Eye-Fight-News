@@ -4,7 +4,8 @@ import { readFileSync } from 'node:fs';
 import {
   bashoLabel, divisionOf, recordSummary, rankTable, leadingRikishi,
   dailyResults, currentDay, matchResult, techniqueDistribution, searchRikishi,
-  banzukeFor, validMatchSamples, trackedBanzukeCohort, currentBashoMatchSample
+  banzukeFor, validMatchSamples, trackedBanzukeCohort, currentBashoMatchSample,
+  originCountry, banzukeMovement, dayMatchups, verifiedHeadToHead, verifiedHighestRank
 } from '../assets/sumo-data.mjs';
 
 const entries = {
@@ -167,4 +168,59 @@ test('Sumo preview is non-deploying and links correctly to dedicated UI',()=>{
   assert.match(index,/befn-sumo-link/);
   assert.match(js,/data\/sumo\/rikishi-index\.json/);
   assert.doesNotMatch(js,/fetch\(\s*['"]https:\/\/www\.sumo-api\.com/);
+});
+
+test('country flags are based on identifiable birthplace, not inferred nationality',()=>{
+  assert.equal(originCountry('Mongolia, Ulaanbaatar').flag,'🇲🇳');
+  assert.equal(originCountry('Ukraine, Vinnytsia Oblast').flag,'🇺🇦');
+  assert.equal(originCountry('Ishikawa-ken, Tsubata').flag,'🇯🇵');
+  assert.equal(originCountry('Tokyo-to, Edogawa-ku').flag,'🇯🇵');
+  assert.equal(originCountry('Kazakhstan, Almaty').flag,'🇰🇿');
+  assert.equal(originCountry('China, Inner Mongolia').flag,'🇨🇳');
+  assert.equal(originCountry('Mars, Olympus Mons'),null);
+  assert.equal(originCountry(null),null);
+});
+test('movement uses rank positions, not imprecise rankValue subtraction',()=>{
+  const previous={
+    Makuuchi:{east:[{rikishiID:10,rank:'Maegashira 1 East',rankValue:501,side:'East'}],west:[{rikishiID:11,rank:'Maegashira 1 West',rankValue:501,side:'West'}]},
+    Juryo:{east:[{rikishiID:12,rank:'Juryo 1 East',rankValue:601,side:'East'}],west:[{rikishiID:13,rank:'Juryo 1 West',rankValue:601,side:'West'}]},
+    Makushita:{east:[{rikishiID:14,rank:'Makushita 1 East',rankValue:701,side:'East'}],west:[{rikishiID:15,rank:'Makushita 1 West',rankValue:701,side:'West'}]}
+  };
+  const current={
+    ...previous,
+    Makuuchi:{east:[{rikishiID:11,rank:'Maegashira 1 East',rankValue:501,side:'East'}],west:[{rikishiID:10,rank:'Maegashira 1 West',rankValue:501,side:'West'}]}
+  };
+  assert.equal(banzukeMovement(11,current,previous).status,'up');
+  assert.equal(banzukeMovement(11,current,previous).places,1);
+  assert.equal(banzukeMovement(10,current,previous).status,'down');
+  assert.equal(banzukeMovement(10,current,previous).places,1);
+  assert.equal(banzukeMovement(14,current,previous).status,'same');
+  assert.equal(banzukeMovement(10,current,{}).status,'unavailable');
+});
+test('pairings show recorded future opponents without calling a pending fight completed',()=>{
+  const b={
+    east:[{rikishiID:10,shikonaEn:'A',rankValue:100,side:'East',record:[{result:'win',opponentID:11,opponentShikonaEn:'B',kimarite:'yorikiri'},{result:'',opponentID:11,opponentShikonaEn:'B'}]}],
+    west:[{rikishiID:11,shikonaEn:'B',rankValue:100,side:'West',record:[{result:'loss',opponentID:10,opponentShikonaEn:'A',kimarite:'yorikiri'},{result:'',opponentID:10,opponentShikonaEn:'A'}]}]
+  };
+  const result=dayMatchups(b,1), scheduled=dayMatchups(b,2);
+  assert.equal(result.length,1);
+  assert.equal(result[0].finished,true);
+  assert.equal(result[0].winnerId,10);
+  assert.equal(scheduled.length,1);
+  assert.equal(scheduled[0].finished,false);
+  assert.equal(scheduled[0].winnerId,null);
+  assert.equal(dayMatchups(b,3).length,0);
+});
+test('career-high and pair H2H are withheld without explicit trusted values',()=>{
+  assert.equal(verifiedHighestRank({currentRank:'Yokozuna 1 East'}),null);
+  assert.equal(verifiedHighestRank({highestRank:'Ozeki 1 East'}),'Ozeki 1 East');
+  assert.deepEqual(verifiedHeadToHead({rikishiId:10,opponentId:11,rikishiWins:3,opponentWins:2},10,11),
+    {wins:3,losses:2,total:5,source:'sumo-api head-to-head'});
+  assert.equal(verifiedHeadToHead({rikishiId:12,opponentId:11,rikishiWins:3,opponentWins:2},10,11),null);
+  assert.equal(verifiedHeadToHead({rikishiId:10,opponentId:11,matches:[]},10,11),null);
+});
+test('all 190 current source origins have a valid country flag',()=>{
+  const roster=JSON.parse(readFileSync(new URL('../data/sumo/rikishi-index.json',import.meta.url),'utf8'));
+  const unknown=roster.rikishi.filter(w=>!originCountry(w.birthplace));
+  assert.deepEqual(unknown.map(x=>x.shikonaEn),[]);
 });
