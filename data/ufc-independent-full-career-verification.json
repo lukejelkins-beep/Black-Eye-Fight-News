@@ -3188,6 +3188,258 @@
         }
       ],
       "note": "Only one completed official UFC bout through 14 Nov 2026, one source-linked independent UFCStats result and official UFC debut; no separate feeder contest counted."
+    },
+    "anthony-romero-3": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Anthony Romero",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/6f81399074fcdbba",
+      "officialFighterUrl": "https://www.ufc.com/athlete/anthony-romero-0",
+      "firstOfficialUfcFight": "2026-10-03",
+      "lastOfficialUfcFight": "2026-10-03",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedNumericFighterIds": [
+        "52815"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "latestGrecoEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "not direct; independently sourced URLs and full fight results from immutable Greco UFCStats-derived historical CSV"
+      },
+      "sourceCoverage": {
+        "method": "Manually checked full official UFC.com fighter history and UFC332 Oct 3 official debut, post-event UFC Oct 4 scorecard and complete independently pinned Greco UFCStats source per-fighter fight result through Nov 7. Exactly one dated official UFC fight, exact unique source fighter and fight URLs, native opponent IDs, result/winner and measured rounds.",
+        "officialDebut": "2026-10-03",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "officialEventUrl": "https://www.ufc.com/event/ufc-332",
+        "officialScorecardsUrl": "https://www.ufc.com/news/ufc-332-silva-vs-wang-official-scorecards",
+        "officialResultsUrl": "https://www.ufc.com/news/ufc-332-silva-vs-wang-results",
+        "officialSourceDiscrepancy": "UFC 332 (10/3/26) Romero was stopped by Marcus McGhee; header 'Win' icon incorrectly contradicts fighter biography and official Oct 4 scorecards.",
+        "fighterIdentity": "Source UFCStats fighter 6f81399074fcdbba, native numeric fighter 52815 and UFC.com profile anthony-romero-0 reconciled against unique Oct 3 official event and named opponent; no other dated completed UFC bout found in full source."
+      },
+      "bouts": [
+        {
+          "date": "2026-10-03",
+          "opponent": "Marcus McGhee",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/041f9b7dd3542fa6",
+          "nativeBoutId": "93300",
+          "nativeFightId": "93300",
+          "nativeFighterId": "52815",
+          "opponentNativeFighterId": "296",
+          "event": "UFC 332: Silva vs Wang",
+          "method": "ko_tko",
+          "round": 1,
+          "time": "4:58",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-332"
+        }
+      ],
+      "note": "Verified full official UFC career from Octagon debut through 14 November 2026: one UFC332 fight and fully measured native corner; source snapshot confirms one exhaustive UFCStats-derived row. Do not confuse older professional MMA bouts with UFC fights. Crosschecked result with official event scorecards; fighter page presentation conflict documented where applicable."
+    },
+    "bruce-whitehead": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Bruce Whitehead",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/6c39d016053601ee",
+      "officialFighterUrl": "https://www.ufc.com/athlete/bruce-whitehead",
+      "firstOfficialUfcFight": "2026-10-03",
+      "lastOfficialUfcFight": "2026-10-03",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedNumericFighterIds": [
+        "34189"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "latestGrecoEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "not direct; independently sourced URLs and full fight results from immutable Greco UFCStats-derived historical CSV"
+      },
+      "sourceCoverage": {
+        "method": "Manually checked full official UFC.com fighter history and UFC332 Oct 3 official debut, post-event UFC Oct 4 scorecard and complete independently pinned Greco UFCStats source per-fighter fight result through Nov 7. Exactly one dated official UFC fight, exact unique source fighter and fight URLs, native opponent IDs, result/winner and measured rounds.",
+        "officialDebut": "2026-10-03",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "officialEventUrl": "https://www.ufc.com/event/ufc-332",
+        "officialScorecardsUrl": "https://www.ufc.com/news/ufc-332-silva-vs-wang-official-scorecards",
+        "officialResultsUrl": "https://www.ufc.com/news/ufc-332-silva-vs-wang-results",
+        "officialSourceDiscrepancy": "UFC 332 (10/3/26) Whitehead was stopped by Jacobe Smith; fighter 'Win' icon is inaccurate against official dated biography, event scorecards and Greco result.",
+        "fighterIdentity": "Source UFCStats fighter 6c39d016053601ee, native numeric fighter 34189 and UFC.com profile bruce-whitehead reconciled against unique Oct 3 official event and named opponent; no other dated completed UFC bout found in full source."
+      },
+      "bouts": [
+        {
+          "date": "2026-10-03",
+          "opponent": "Jacobe Smith",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/bc35fb29afba68b9",
+          "nativeBoutId": "93246",
+          "nativeFightId": "93246",
+          "nativeFighterId": "34189",
+          "opponentNativeFighterId": "489",
+          "event": "UFC 332: Silva vs Wang",
+          "method": "ko_tko",
+          "round": 1,
+          "time": "1:32",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-332"
+        }
+      ],
+      "note": "Verified full official UFC career from Octagon debut through 14 November 2026: one UFC332 fight and fully measured native corner; source snapshot confirms one exhaustive UFCStats-derived row. Do not confuse older professional MMA bouts with UFC fights. Crosschecked result with official event scorecards; fighter page presentation conflict documented where applicable."
+    },
+    "lucas-armand": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Lucas Armand",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/20e04625a5395a06",
+      "officialFighterUrl": "https://www.ufc.com/athlete/lucas-armand",
+      "firstOfficialUfcFight": "2026-10-03",
+      "lastOfficialUfcFight": "2026-10-03",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedNumericFighterIds": [
+        "25664"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "latestGrecoEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "not direct; independently sourced URLs and full fight results from immutable Greco UFCStats-derived historical CSV"
+      },
+      "sourceCoverage": {
+        "method": "Manually checked full official UFC.com fighter history and UFC332 Oct 3 official debut, post-event UFC Oct 4 scorecard and complete independently pinned Greco UFCStats source per-fighter fight result through Nov 7. Exactly one dated official UFC fight, exact unique source fighter and fight URLs, native opponent IDs, result/winner and measured rounds.",
+        "officialDebut": "2026-10-03",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "officialEventUrl": "https://www.ufc.com/event/ufc-332",
+        "officialScorecardsUrl": "https://www.ufc.com/news/ufc-332-silva-vs-wang-official-scorecards",
+        "officialResultsUrl": "https://www.ufc.com/news/ufc-332-silva-vs-wang-results",
+        "officialSourceDiscrepancy": "UFC 332 (10/3/26) Armand stopped by Anthony Wint at 0:23 R1; official UFC fighter header incorrectly shows Win, but fighter biography and event scorecards explicitly say loss.",
+        "fighterIdentity": "Source UFCStats fighter 20e04625a5395a06, native numeric fighter 25664 and UFC.com profile lucas-armand reconciled against unique Oct 3 official event and named opponent; no other dated completed UFC bout found in full source."
+      },
+      "bouts": [
+        {
+          "date": "2026-10-03",
+          "opponent": "Anthony Wint",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/bd673bf80b95d350",
+          "nativeBoutId": "93083",
+          "nativeFightId": "93083",
+          "nativeFighterId": "25664",
+          "opponentNativeFighterId": "42586",
+          "event": "UFC 332: Silva vs Wang",
+          "method": "ko_tko",
+          "round": 1,
+          "time": "0:23",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-332"
+        }
+      ],
+      "note": "Verified full official UFC career from Octagon debut through 14 November 2026: one UFC332 fight and fully measured native corner; source snapshot confirms one exhaustive UFCStats-derived row. Do not confuse older professional MMA bouts with UFC fights. Crosschecked result with official event scorecards; fighter page presentation conflict documented where applicable."
+    },
+    "roberto-soldic": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Roberto Soldic",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/5a229cbd9cdd28ca",
+      "officialFighterUrl": "https://www.ufc.com/athlete/roberto-soldic",
+      "firstOfficialUfcFight": "2026-10-03",
+      "lastOfficialUfcFight": "2026-10-03",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedNumericFighterIds": [
+        "4967"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "latestGrecoEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "not direct; independently sourced URLs and full fight results from immutable Greco UFCStats-derived historical CSV"
+      },
+      "sourceCoverage": {
+        "method": "Manually checked full official UFC.com fighter history and UFC332 Oct 3 official debut, post-event UFC Oct 4 scorecard and complete independently pinned Greco UFCStats source per-fighter fight result through Nov 7. Exactly one dated official UFC fight, exact unique source fighter and fight URLs, native opponent IDs, result/winner and measured rounds.",
+        "officialDebut": "2026-10-03",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "officialEventUrl": "https://www.ufc.com/event/ufc-332",
+        "officialScorecardsUrl": "https://www.ufc.com/news/ufc-332-silva-vs-wang-official-scorecards",
+        "officialResultsUrl": "https://www.ufc.com/news/ufc-332-silva-vs-wang-results",
+        "officialSourceDiscrepancy": "UFC 332 (10/3/26) Roberto Soldić won unanimous decision over Khaos Williams; full official UFC record has only one fight, prior KSW/ONE bouts correctly excluded from UFC-only career.",
+        "fighterIdentity": "Source UFCStats fighter 5a229cbd9cdd28ca, native numeric fighter 4967 and UFC.com profile roberto-soldic reconciled against unique Oct 3 official event and named opponent; no other dated completed UFC bout found in full source."
+      },
+      "bouts": [
+        {
+          "date": "2026-10-03",
+          "opponent": "Khaos Williams",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a7c8722ad85eee5f",
+          "nativeBoutId": "92979",
+          "nativeFightId": "92979",
+          "nativeFighterId": "4967",
+          "opponentNativeFighterId": "951",
+          "event": "UFC 332: Silva vs Wang",
+          "method": "decision_unanimous",
+          "round": 3,
+          "time": "5:00",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-332"
+        }
+      ],
+      "note": "Verified full official UFC career from Octagon debut through 14 November 2026: one UFC332 fight and fully measured native corner; source snapshot confirms one exhaustive UFCStats-derived row. Do not confuse older professional MMA bouts with UFC fights. Crosschecked result with official event scorecards; fighter page presentation conflict documented where applicable."
     }
   }
 }
