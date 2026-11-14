@@ -11,14 +11,14 @@ const research=JSON.parse(fs.readFileSync(new URL('data/ufcalendar-fighter-resea
 const progress=JSON.parse(fs.readFileSync(new URL('data/ufcalendar-rich-progress.json',root)));
 const prior=JSON.parse(fs.readFileSync(new URL('data/ufc-independent-full-career-verification.json',root)));
 const candidates=[
- ['cameron-nelson','34d4cae19105eb68'],
- ['ce-liu','a9936818d709e2d7'],
- ['cezary-oleksiejczuk','084532da3d25f3b8'],
- ['cody-chovancek','3c4320a1b6106611'],
- ['cristian-perez','d84033157714ee94'],
- ['damian-rzepecki','99223fbb4a05326b'],
- ['donghun-choi','3be16d817b36098b'],
- ['eduardo-chapolin','62f3039da2f92a8c']
+ ['gabriel-lorenco','e3fc6c1fab298561'],
+ ['hecher-sosa','ec3bd30378d63dd1'],
+ ['isaac-thomson','5d8006587d6a6711'],
+ ['jamie-siraj','e6679e38e7fab7a8'],
+ ['john-garza','a54b961a1f8be1d5'],
+ ['joseph-kropschot','8a81a0707350c4a8'],
+ ['jovan-leka','182a73d5b4e57871'],
+ ['juan-diaz','74939a16c7b56f33']
 ];
 if(approval.status!=='approved'||approval.approvedFighters.length!==783||
  new Set(approval.approvedFighters).size!==783)throw Error('Immutable approved cohort required');
