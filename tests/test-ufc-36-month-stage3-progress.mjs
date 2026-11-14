@@ -276,3 +276,19 @@ test('Official UFC evidence protects the older-career DWCS exclusions across sea
      'Missing exact UFC DWCS evidence for '+boutId+' '+fighterSlug);
  }
 });
+
+
+test('UFC-source Luke Flores corrections exclude only the matched DWCS bout histories',()=>{
+ const evidence=JSON.parse(readFileSync(new URL('../data/ufc-feeder-bout-evidence.json',import.meta.url),'utf8'));
+ const required=[
+  ['83941','jordan-leavitt','2020-08-04','Luke Flores'],
+  ['84114','matt-frevola','2017-08-29','Luke Flores']
+ ];
+ for(const [boutId,fighterSlug,date,opponent] of required){
+  const entries=evidence.bouts.filter(r=>r.boutId===boutId&&r.fighterSlug===fighterSlug);
+  assert.equal(entries.length,1,'Expected one identity-specific DWCS evidence entry');
+  assert.equal(entries[0].date,date);
+  assert.equal(entries[0].opponent,opponent);
+  assert.match(entries[0].sourceUrl,/^https:\/\/www\.ufc\.com\//);
+ }
+});
