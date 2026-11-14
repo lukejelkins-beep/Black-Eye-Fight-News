@@ -7,7 +7,7 @@
   "nonproduction": true,
   "sourceMethod": "full_official_ufc_fight_listing_crosscheck",
   "independentSourceDataset": "Greco1899 UFCStats-derived historical results, source snapshot through 2026-11-07; source-linked fight detail URLs are references, not a claim of direct UFCStats website access",
-  "notes": "Independent exhaustive scope crosschecked against UFC official fighter bios, last fight/debut, and UFCStats-derived third party 12-fight lists. Native IDs, corners, winners, measured metrics and date offsets must be validated again in CI; do not count certs from this file alone. Event titles are display-only and are not exact-match certification requirements. Narrow opponent name aliases are independently grounded in official UFC biographies. Seven additional fighter-by-fighter full official UFC biographies independently reviewed against the pinned 8 Nov Greco UFCStats source, 94 source-linked bouts across eight candidates, and strict native identity/metrics preflight. Sean Woodson excluded from certification due to unresolved result and DWCS row, not counted. Sean Woodson independently verified: exactly 11 UFC bouts including UFC 278 split draw and excluding source-confirmed 2019 DWCS non-UFC bout (native id 84014), without changing collector-owned cache. Five additional official UFC career histories were independently source-reviewed, with three UFC-backed DWCS exclusions newly added, and submitted to the strict nonproduction certification CI. Additional official UFC biography reviews, with exact independently linked UFC fight results, recorded in nonproduction source-attestation cohort. Await strict GitHub native-ID and stats certification gate. Ten already certified Stage3 official full-career histories separately revalidated through the same strict V4 native fighter ID, official event scope, winner and full required measured stat gates in successful CI run 43560373659 (10 passed, zero blocked). This is source reuse, NOT ten new unique athletes when comparing main and V4. Wave 3: 11 independently reviewed full UFC biography listings crosschecked against targeted pinned UFCStats-derived 11 individual career histories; source URLs per bout, native corners, date offsets and measured statistics still subject to strict V4 CI gate. Five additional UFC careers: Da'Mon, Pearce, Casey source opponent aliases independently traced to dated official UFC results and existing native IDs; Alessandro/Bruna DWCS exclusions independently source-verified, Bruna Road to UFC semifinal excluded. Final strict V4 check mandatory. STRICT CORRECTION 2026-11-14: Bruna Brasil excluded from this attested certification batch until 2025-08-22 Shi Ming official UFC showcase fight (native 60900) is included and its measured native statistics are reconciled. UFC's official report describes Shi-Brasil as one of two UFC bouts on the Road to UFC show; source-linked full UFCStats fight-details/abf5f4d6f777cf7b. Seven-only UFC career is incomplete. Do not reattest seven. Bruna Brasil 2025-08-22 Shi Ming has been added as eighth official UFC fight (verified showcase; NOT RTU qualifier). Keep DWCS Marnic Mann excluded. Do not certify if 60900 is not measured, source-linked or matched in native official record.",
+  "notes": "Independent exhaustive scope crosschecked against UFC official fighter bios, last fight/debut, and UFCStats-derived third party 12-fight lists. Native IDs, corners, winners, measured metrics and date offsets must be validated again in CI; do not count certs from this file alone. Event titles are display-only and are not exact-match certification requirements. Narrow opponent name aliases are independently grounded in official UFC biographies. Seven additional fighter-by-fighter full official UFC biographies independently reviewed against the pinned 8 Nov Greco UFCStats source, 94 source-linked bouts across eight candidates, and strict native identity/metrics preflight. Sean Woodson excluded from certification due to unresolved result and DWCS row, not counted. Sean Woodson independently verified: exactly 11 UFC bouts including UFC 278 split draw and excluding source-confirmed 2019 DWCS non-UFC bout (native id 84014), without changing collector-owned cache. Five additional official UFC career histories were independently source-reviewed, with three UFC-backed DWCS exclusions newly added, and submitted to the strict nonproduction certification CI. Additional official UFC biography reviews, with exact independently linked UFC fight results, recorded in nonproduction source-attestation cohort. Await strict GitHub native-ID and stats certification gate. Ten already certified Stage3 official full-career histories separately revalidated through the same strict V4 native fighter ID, official event scope, winner and full required measured stat gates in successful CI run 43560373659 (10 passed, zero blocked). This is source reuse, NOT ten new unique athletes when comparing main and V4. Wave 3: 11 independently reviewed full UFC biography listings crosschecked against targeted pinned UFCStats-derived 11 individual career histories; source URLs per bout, native corners, date offsets and measured statistics still subject to strict V4 CI gate. Five additional UFC careers: Da'Mon, Pearce, Casey source opponent aliases independently traced to dated official UFC results and existing native IDs; Alessandro/Bruna DWCS exclusions independently source-verified, Bruna Road to UFC semifinal excluded. Final strict V4 check mandatory. STRICT CORRECTION 2026-11-14: Bruna Brasil excluded from this attested certification batch until 2025-08-22 Shi Ming official UFC showcase fight (native 60900) is included and its measured native statistics are reconciled. UFC's official report describes Shi-Brasil as one of two UFC bouts on the Road to UFC show; source-linked full UFCStats fight-details/abf5f4d6f777cf7b. Seven-only UFC career is incomplete. Do not reattest seven. Bruna Brasil 2025-08-22 Shi Ming has been added as eighth official UFC fight (verified showcase; NOT RTU qualifier). Keep DWCS Marnic Mann excluded. Do not certify if 60900 is not measured, source-linked or matched in native official record. Seven further career histories independently reviewed against UFC athlete record narratives (including official TUF finales and title fights) plus pinned Greco UFCStats source; submitted to strict per-fight source and numeric native metric gates.",
   "fighters": {
     "maryna-moroz": {
       "fighterName": "Maryna Moroz",
@@ -5717,6 +5717,649 @@
           "fightUrl": "https://ufcstats.com/fight-details/5de3a1bbcf705b58",
           "nativeBoutId": "53849",
           "nativeSavedDate": "2023-04-15"
+        }
+      ]
+    },
+    "david-onama": {
+      "fighterName": "David Onama",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/david-onama",
+      "fighterUrl": "https://ufcstats.com/fighter-details/ffe9703408fb5964",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 9,
+      "uniqueNativeFighterId": "409",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/david-onama",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceScopeVerified": "UFC official biography enumerates nine bouts from Oct 23 2021 debut against Mason Jones to Nov 1 2025 loss against Steve Garcia; all nine source-linked fights individually dated and result-checked. Exact opponent, date and result for each bout are crosslinked to native fight IDs and independently sourced UFCStats fight-detail references; final statistics and identity must pass stringent GitHub CI.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2025-11-01",
+          "opponent": "Steve Garcia",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/747d922b329b7f30",
+          "nativeBoutId": "60418",
+          "nativeSavedDate": "2025-11-01"
+        },
+        {
+          "date": "2025-04-26",
+          "opponent": "Giga Chikadze",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/4072abf0b0c179f2",
+          "nativeBoutId": "60876",
+          "nativeSavedDate": "2025-04-26"
+        },
+        {
+          "date": "2024-11-16",
+          "opponent": "Roberto Romero",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c565e2baa27cc7e5",
+          "nativeBoutId": "60388",
+          "nativeSavedDate": "2024-11-16"
+        },
+        {
+          "date": "2024-04-27",
+          "opponent": "Jonathan Pearce",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/7ca5604d99220e88",
+          "nativeBoutId": "65838",
+          "nativeSavedDate": "2024-04-27"
+        },
+        {
+          "date": "2023-06-24",
+          "opponent": "Gabriel Santos",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/582806c33ce6dcf6",
+          "nativeBoutId": "60156",
+          "nativeSavedDate": "2023-06-24"
+        },
+        {
+          "date": "2022-08-13",
+          "opponent": "Nate Landwehr",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/efd7efba85092c6f",
+          "nativeBoutId": "59522",
+          "nativeSavedDate": "2022-08-13"
+        },
+        {
+          "date": "2022-07-09",
+          "opponent": "Garrett Armfield",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a652918360fe9a72",
+          "nativeBoutId": "61500",
+          "nativeSavedDate": "2022-07-09"
+        },
+        {
+          "date": "2022-02-19",
+          "opponent": "Gabriel Benitez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/25da52bc590ef664",
+          "nativeBoutId": "61375",
+          "nativeSavedDate": "2022-02-19"
+        },
+        {
+          "date": "2021-10-23",
+          "opponent": "Mason Jones",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d44d735e5079bfb8",
+          "nativeBoutId": "65795",
+          "nativeSavedDate": "2021-10-23"
+        }
+      ]
+    },
+    "jack-shore": {
+      "fighterName": "Jack Shore",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/jack-shore",
+      "fighterUrl": "https://ufcstats.com/fighter-details/b8a85389d115e35a",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 9,
+      "uniqueNativeFighterId": "750",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/jack-shore",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceScopeVerified": "UFC official biography covers nine Octagon appearances across Sep 2019 to Nov 2 2024, including eventual 2024 losses against Joanderson Brito and Youssef Zalal; full fight-by-fight source history and dated native IDs reviewed. Exact opponent, date and result for each bout are crosslinked to native fight IDs and independently sourced UFCStats fight-detail references; final statistics and identity must pass stringent GitHub CI.",
+      "dateDiscrepancies": [
+        {
+          "boutId": "65686",
+          "officialLocalDate": "2020-07-15",
+          "nativeSavedDate": "2020-07-16",
+          "reason": "verified event-local vs cached UTC day offset"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2024-11-02",
+          "opponent": "Youssef Zalal",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5256ba94641a4284",
+          "nativeBoutId": "61136",
+          "nativeSavedDate": "2024-11-02"
+        },
+        {
+          "date": "2024-05-04",
+          "opponent": "Joanderson Brito",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c456b1950208e0b2",
+          "nativeBoutId": "60921",
+          "nativeSavedDate": "2024-05-04"
+        },
+        {
+          "date": "2023-03-18",
+          "opponent": "Makwan Amirkhani",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/13f5be7a2ea5577e",
+          "nativeBoutId": "59657",
+          "nativeSavedDate": "2023-03-18"
+        },
+        {
+          "date": "2022-07-16",
+          "opponent": "Ricky Simon",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/74b8a36293758342",
+          "nativeBoutId": "61510",
+          "nativeSavedDate": "2022-07-16"
+        },
+        {
+          "date": "2022-03-19",
+          "opponent": "Timur Valiev",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/53d0df57a917c6a0",
+          "nativeBoutId": "61429",
+          "nativeSavedDate": "2022-03-19"
+        },
+        {
+          "date": "2021-09-04",
+          "opponent": "Liudvik Sholinian",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/4fc128b1bdf088b1",
+          "nativeBoutId": "61890",
+          "nativeSavedDate": "2021-09-04"
+        },
+        {
+          "date": "2021-04-10",
+          "opponent": "Hunter Azure",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1fee9eca658d9808",
+          "nativeBoutId": "61548",
+          "nativeSavedDate": "2021-04-10"
+        },
+        {
+          "date": "2020-07-15",
+          "opponent": "Aaron Phillips",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f3c42ce9fad55eb7",
+          "nativeBoutId": "65686",
+          "nativeSavedDate": "2020-07-16"
+        },
+        {
+          "date": "2019-09-28",
+          "opponent": "Nohelin Hernandez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fc16ccf0994c6e50",
+          "nativeBoutId": "59237",
+          "nativeSavedDate": "2019-09-28"
+        }
+      ]
+    },
+    "julija-stoliarenko": {
+      "fighterName": "Julija Stoliarenko",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/julija-stoliarenko",
+      "fighterUrl": "https://ufcstats.com/fighter-details/a78a87d8c2bbb1cb",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 9,
+      "uniqueNativeFighterId": "1077",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/julija-stoliarenko",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceScopeVerified": "UFC official biography enumerates nine professional qualifying bouts from TUF 28 Finale Nov 30 2018 against Leah Letson through Aug 9 2025 against Gabriella Fernandes; The Ultimate Fighter televised house bouts are excluded. Exact opponent, date and result for each bout are crosslinked to native fight IDs and independently sourced UFCStats fight-detail references; final statistics and identity must pass stringent GitHub CI.",
+      "dateDiscrepancies": [
+        {
+          "boutId": "59385",
+          "officialLocalDate": "2020-08-08",
+          "nativeSavedDate": "2020-08-09",
+          "reason": "verified event-local vs cached UTC day offset"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2025-08-09",
+          "opponent": "Gabriella Fernandes",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6ef50ed03b116b60",
+          "nativeBoutId": "60518",
+          "nativeSavedDate": "2025-08-09"
+        },
+        {
+          "date": "2024-02-03",
+          "opponent": "Luana Carolina",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c28d40498150de90",
+          "nativeBoutId": "59861",
+          "nativeSavedDate": "2024-02-03"
+        },
+        {
+          "date": "2023-07-22",
+          "opponent": "Molly McCann",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/743a04674ab72ee0",
+          "nativeBoutId": "60101",
+          "nativeSavedDate": "2023-07-22"
+        },
+        {
+          "date": "2022-10-01",
+          "opponent": "Chelsea Chandler",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ad59e2de1ab5c8d2",
+          "nativeBoutId": "61199",
+          "nativeSavedDate": "2022-10-01"
+        },
+        {
+          "date": "2022-07-02",
+          "opponent": "Jessica-Rose Clark",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0e2c7ec02a095813",
+          "nativeBoutId": "61491",
+          "nativeSavedDate": "2022-07-02"
+        },
+        {
+          "date": "2022-02-05",
+          "opponent": "Alexis Davis",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/673ed36fa5c12d5f",
+          "nativeBoutId": "61630",
+          "nativeSavedDate": "2022-02-05"
+        },
+        {
+          "date": "2021-06-26",
+          "opponent": "Julia Avila",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0eac7075bf3d7ab7",
+          "nativeBoutId": "59481",
+          "nativeSavedDate": "2021-06-26"
+        },
+        {
+          "date": "2020-08-08",
+          "opponent": "Yana Santos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ad62675e819e92fc",
+          "nativeBoutId": "59385",
+          "nativeSavedDate": "2020-08-09"
+        },
+        {
+          "date": "2018-11-30",
+          "opponent": "Leah Letson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6abf4f61a1e11d34",
+          "nativeBoutId": "62315",
+          "nativeSavedDate": "2018-11-30"
+        }
+      ]
+    },
+    "paddy-pimblett": {
+      "fighterName": "Paddy Pimblett",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/paddy-pimblett",
+      "fighterUrl": "https://ufcstats.com/fighter-details/7826923b47f8d72a",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 9,
+      "uniqueNativeFighterId": "331",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/paddy-pimblett",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceScopeVerified": "UFC official biography lists all nine Octagon fights from Sep 4 2021 against Luigi Vendramini to Jul 11 2026 win over Benoit Saint Denis, including five-round Jan 2026 interim title loss to Justin Gaethje. Exact opponent, date and result for each bout are crosslinked to native fight IDs and independently sourced UFCStats fight-detail references; final statistics and identity must pass stringent GitHub CI.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-07-11",
+          "opponent": "Benoit Saint Denis",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/130b325610c54a64",
+          "nativeBoutId": "66440",
+          "nativeSavedDate": "2026-07-11"
+        },
+        {
+          "date": "2026-01-24",
+          "opponent": "Justin Gaethje",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/fa4b3f5ce8055921",
+          "nativeBoutId": "60636",
+          "nativeSavedDate": "2026-01-24"
+        },
+        {
+          "date": "2025-04-12",
+          "opponent": "Michael Chandler",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d05cb4c4135ce402",
+          "nativeBoutId": "60967",
+          "nativeSavedDate": "2025-04-12"
+        },
+        {
+          "date": "2024-07-27",
+          "opponent": "King Green",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3e2bde19e752f64b",
+          "nativeBoutId": "61079",
+          "nativeSavedDate": "2024-07-27"
+        },
+        {
+          "date": "2023-12-16",
+          "opponent": "Tony Ferguson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ac8628d945a78b03",
+          "nativeBoutId": "59928",
+          "nativeSavedDate": "2023-12-16"
+        },
+        {
+          "date": "2022-12-10",
+          "opponent": "Jared Gordon",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/144cd3f62591a5fb",
+          "nativeBoutId": "61225",
+          "nativeSavedDate": "2022-12-10"
+        },
+        {
+          "date": "2022-07-23",
+          "opponent": "Jordan Leavitt",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8e02bdaac8ed50e5",
+          "nativeBoutId": "59559",
+          "nativeSavedDate": "2022-07-23"
+        },
+        {
+          "date": "2022-03-19",
+          "opponent": "Kazula Vargas",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/001441f70c293931",
+          "nativeBoutId": "61422",
+          "nativeSavedDate": "2022-03-19"
+        },
+        {
+          "date": "2021-09-04",
+          "opponent": "Luigi Vendramini",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8fc238e84c4624a7",
+          "nativeBoutId": "61888",
+          "nativeSavedDate": "2021-09-04"
+        }
+      ]
+    },
+    "steve-erceg": {
+      "fighterName": "Steve Erceg",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/steve-erceg",
+      "fighterUrl": "https://ufcstats.com/fighter-details/32ab52e5de93092d",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 9,
+      "uniqueNativeFighterId": "554",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/steve-erceg",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceScopeVerified": "UFC official biography lists all nine Octagon fights from June 10 2023 debut against David Dvorak through July 25 2026 loss against Ramazan Temirov; UFC 301 flyweight title fight against Alexandre Pantoja included. Exact opponent, date and result for each bout are crosslinked to native fight IDs and independently sourced UFCStats fight-detail references; final statistics and identity must pass stringent GitHub CI.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-07-25",
+          "opponent": "Ramazan Temirov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c36cd04f8f560f0a",
+          "nativeBoutId": "82604",
+          "nativeSavedDate": "2026-07-25"
+        },
+        {
+          "date": "2026-05-02",
+          "opponent": "Tim Elliott",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/afec383a96893ec5",
+          "nativeBoutId": "66065",
+          "nativeSavedDate": "2026-05-02"
+        },
+        {
+          "date": "2025-08-09",
+          "opponent": "Ode Osbourne",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/37d58369782cb86b",
+          "nativeBoutId": "60509",
+          "nativeSavedDate": "2025-08-09"
+        },
+        {
+          "date": "2025-03-29",
+          "opponent": "Brandon Moreno",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/33e301872e2b5680",
+          "nativeBoutId": "61003",
+          "nativeSavedDate": "2025-03-29"
+        },
+        {
+          "date": "2024-08-17",
+          "opponent": "Kai Kara-France",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/bf8c5effd23f69c4",
+          "nativeBoutId": "65946",
+          "nativeSavedDate": "2024-08-17"
+        },
+        {
+          "date": "2024-05-04",
+          "opponent": "Alexandre Pantoja",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3f419fce8ba8aa0e",
+          "nativeBoutId": "60916",
+          "nativeSavedDate": "2024-05-04"
+        },
+        {
+          "date": "2024-03-02",
+          "opponent": "Matt Schnell",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/024beecfd3f0ed7a",
+          "nativeBoutId": "61265",
+          "nativeSavedDate": "2024-03-02"
+        },
+        {
+          "date": "2023-11-11",
+          "opponent": "Alessandro Costa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5704e73f91b9e7f7",
+          "nativeBoutId": "59965",
+          "nativeSavedDate": "2023-11-11"
+        },
+        {
+          "date": "2023-06-10",
+          "opponent": "David Dvorak",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/947ea1122c04ba18",
+          "nativeBoutId": "61341",
+          "nativeSavedDate": "2023-06-10"
+        }
+      ]
+    },
+    "jessica-penne": {
+      "fighterName": "Jessica Penne",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/jessica-penne",
+      "fighterUrl": "https://ufcstats.com/fighter-details/c742287ed86a09bc",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 9,
+      "uniqueNativeFighterId": "2371",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/jessica-penne",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceScopeVerified": "Official UFC biography lists nine qualifying appearances from TUF 20 Finale Dec 12 2014 against Randa Markos to Oct 19 2024 loss against Elise Reed, excluding filmed TUF house rounds and including title fight against Joanna Jedrzejczyk. Exact opponent, date and result for each bout are crosslinked to native fight IDs and independently sourced UFCStats fight-detail references; final statistics and identity must pass stringent GitHub CI.",
+      "dateDiscrepancies": [
+        {
+          "boutId": "62541",
+          "officialLocalDate": "2017-04-22",
+          "nativeSavedDate": "2017-04-23",
+          "reason": "verified event-local vs cached UTC day offset"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2024-10-19",
+          "opponent": "Elise Reed",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/53f7f1b4834387a8",
+          "nativeBoutId": "65942",
+          "nativeSavedDate": "2024-10-19"
+        },
+        {
+          "date": "2023-03-04",
+          "opponent": "Tabatha Ricci",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c3b9b97467f828d1",
+          "nativeBoutId": "59691",
+          "nativeSavedDate": "2023-03-04"
+        },
+        {
+          "date": "2022-07-16",
+          "opponent": "Emily Ducote",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b1af3bd0f8266a90",
+          "nativeBoutId": "61514",
+          "nativeSavedDate": "2022-07-16"
+        },
+        {
+          "date": "2021-08-07",
+          "opponent": "Karolina Kowalkiewicz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f2336b7545f5f442",
+          "nativeBoutId": "59456",
+          "nativeSavedDate": "2021-08-07"
+        },
+        {
+          "date": "2021-04-17",
+          "opponent": "Loopy Godinez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/25d4376e00b16510",
+          "nativeBoutId": "61558",
+          "nativeSavedDate": "2021-04-17"
+        },
+        {
+          "date": "2017-04-22",
+          "opponent": "Danielle Taylor",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c0c587cb52de929b",
+          "nativeBoutId": "62541",
+          "nativeSavedDate": "2017-04-23"
+        },
+        {
+          "date": "2016-06-04",
+          "opponent": "Jessica Andrade",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e06f96f3484ad74a",
+          "nativeBoutId": "62659",
+          "nativeSavedDate": "2016-06-04"
+        },
+        {
+          "date": "2015-06-20",
+          "opponent": "Joanna Jedrzejczyk",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/2f0cbf0502173a79",
+          "nativeBoutId": "63092",
+          "nativeSavedDate": "2015-06-20"
+        },
+        {
+          "date": "2014-12-12",
+          "opponent": "Randa Markos",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fa2bed87e5d6c568",
+          "nativeBoutId": "62908",
+          "nativeSavedDate": "2014-12-12"
+        }
+      ]
+    },
+    "ailin-perez": {
+      "fighterName": "Ailin Perez",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/ailin-perez",
+      "fighterUrl": "https://ufcstats.com/fighter-details/06e4245d16fc5315",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 8,
+      "uniqueNativeFighterId": "472",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/ailin-perez",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceScopeVerified": "UFC official biography enumerates eight completed fights from Sep 3 2022 against Stephanie Egger to Sep 26 2026 victory over Norma Dumont, including losses and all decisions from 2023 through 2026. Exact opponent, date and result for each bout are crosslinked to native fight IDs and independently sourced UFCStats fight-detail references; final statistics and identity must pass stringent GitHub CI.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-09-26",
+          "opponent": "Norma Dumont",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5e5d01e437bced71",
+          "nativeBoutId": "85946",
+          "nativeSavedDate": "2026-09-26"
+        },
+        {
+          "date": "2026-02-28",
+          "opponent": "Macy Chiasson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c40b934d2666e351",
+          "nativeBoutId": "60680",
+          "nativeSavedDate": "2026-02-28"
+        },
+        {
+          "date": "2025-01-18",
+          "opponent": "Karol Rosa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/340fcdcabc49f142",
+          "nativeBoutId": "60950",
+          "nativeSavedDate": "2025-01-18"
+        },
+        {
+          "date": "2024-09-28",
+          "opponent": "Daria Zhelezniakova",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/7ba432e218edc17d",
+          "nativeBoutId": "38710",
+          "nativeSavedDate": "2024-09-28"
+        },
+        {
+          "date": "2024-06-01",
+          "opponent": "Joselyne Edwards",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2554b31a07f34e1a",
+          "nativeBoutId": "60258",
+          "nativeSavedDate": "2024-06-01"
+        },
+        {
+          "date": "2023-11-18",
+          "opponent": "Lucie Pudilova",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6997693d552600dd",
+          "nativeBoutId": "59984",
+          "nativeSavedDate": "2023-11-18"
+        },
+        {
+          "date": "2023-07-15",
+          "opponent": "Ashlee Evans-Smith",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/cae7de0873e03947",
+          "nativeBoutId": "60127",
+          "nativeSavedDate": "2023-07-15"
+        },
+        {
+          "date": "2022-09-03",
+          "opponent": "Stephanie Egger",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ce62a50e97d497f9",
+          "nativeBoutId": "61176",
+          "nativeSavedDate": "2022-09-03"
         }
       ]
     }
