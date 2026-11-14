@@ -21487,6 +21487,73 @@
           "nativeFighterId": "417"
         }
       ]
+    },
+    "blake-bilder": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Blake Bilder",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/5095b0920a3602aa",
+      "officialFighterUrl": "https://www.ufc.com/athlete/blake-bilder",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived independent source; no direct live UFCStats page scrape claimed",
+        "method": "Complete dated official UFC.com full-fighter biography including official fight narrative/outcomes; source verified against pinned UFCStats-derived original fighter/fight/event URLs and the saved original numeric native bout IDs, paired fighter/opponent IDs, winners and complete measured rounds. Graphic Win tile never overrides official result. DWCS/RTU qualifiers independently excluded. No paid API calls."
+      },
+      "verifiedNumericFighterIds": [
+        "2779"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Complete official Octagon career from debut to 2026-11-14 under immutable pinned source cutoff 2026-11-07; verified 3 exact completed UFC fights, original native paired corners, winners, opponent identity, event chronology and measured rounds. 1 separate source-proven DWCS native bouts excluded. ",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/blake-bilder",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43581846802",
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88258",
+          "date": "2022-08-30",
+          "opponent": "Alex Morgan",
+          "result": "win",
+          "event": "Dana White's Contender Series",
+          "officialSourceUrl": "https://www.ufc.com/athlete/blake-bilder",
+          "excludedBecause": "DWCS qualifier/feeder; not a completed official UFC Octagon fight"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2023-02-11",
+          "opponent": "Shane Young",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5c962ea13cb9b937",
+          "nativeBoutId": "59741",
+          "nativeFighterId": "2779"
+        },
+        {
+          "date": "2023-06-10",
+          "opponent": "Kyle Nelson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7ee8b91d7f80f8a7",
+          "nativeBoutId": "61340",
+          "nativeFighterId": "2779"
+        },
+        {
+          "date": "2024-02-03",
+          "opponent": "JeongYeong Lee",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e1930496b33fa636",
+          "nativeBoutId": "59860",
+          "nativeFighterId": "2779"
+        }
+      ]
     }
   }
 }
