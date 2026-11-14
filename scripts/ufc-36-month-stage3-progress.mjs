@@ -564,8 +564,11 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     const knownMeasured=observed.length>0&&samples.every(r=>r.measured);
     if(knownIndexed)allKnownIndexed++;
     if(knownMeasured)allKnownMeasured++;
+    // Certification is scoped to the immutable owner-approved cohort date, NOT
+    // the rolling audit/report date. Native source/bout exact-match gates below
+    // still block any new saved UFC fights not covered by the independent proof.
     const proof=evaluateCareerEvidence(profile,history,
-      current.get(slug)?.lastUfcFight,census.asOf,independentRegistry[slug],bouts);
+      current.get(slug)?.lastUfcFight,approval.rosterAsOf,independentRegistry[slug],bouts);
     const independentFullCareer=knownMeasured&&proof.independentlyVerified;
     const providerFullCareer=knownMeasured&&proof.providerCertified;
     const providerHistoryDiscrepancy=proof.providerDiscrepancy||!proof.rosterLatestPresent;
@@ -803,6 +806,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     (x.action==='not_yet_attempted'||x.action==='retry_eligible')).length;
   const summary={
     asOf:census.asOf,approvedSnapshotAsOf:approval.rosterAsOf,
+    certificationEvidenceCutoff:approval.rosterAsOf,
     approvalHash:approval.approvedRosterSha256||null,
     approvedFighters:approved.length,
     stillEligibleApproved:approved.filter(x=>currentEligible.has(x)).length,
