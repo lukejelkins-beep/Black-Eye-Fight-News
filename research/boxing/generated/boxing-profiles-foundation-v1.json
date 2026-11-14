@@ -1,6 +1,6 @@
 {
   "schema_version": "befn.boxing.profiles.foundation.v1",
-  "generated_at": "2026-11-14T03:33:43.737Z",
+  "generated_at": "2026-11-14T03:35:02.656Z",
   "status": "RESEARCH_ONLY_NO_PRODUCTION_DEPLOY",
   "source_roster_date": "2026-11-14",
   "data_quality_rule": "Missing or unverified fight and punch data are null, never zero. Archive scouting results are not independently certified.",
@@ -11,10 +11,10 @@
     "existing_profiles_reused": 78,
     "existing_ranked_profiles_reused": 68,
     "archival_recent_bout_entries": 345,
-    "fighters_with_validated_compubox_bouts": 5,
-    "validated_compubox_bout_reports": 15,
-    "matched_report_performances": 5,
-    "verified_bout_results": 4,
+    "fighters_with_validated_compubox_bouts": 7,
+    "validated_compubox_bout_reports": 16,
+    "matched_report_performances": 7,
+    "verified_bout_results": 5,
     "published_profiles": 0
   },
   "profiles": [
@@ -10495,8 +10495,214 @@
         }
       },
       "compubox": {
-        "report_count": 0,
-        "verified_report_fights": [],
+        "report_count": 1,
+        "verified_report_fights": [
+          {
+            "report_id": 16941,
+            "date": "2026-10-31",
+            "report_title": "SAUL ALVAREZ UD 12 CHRISTIAN MBILLI",
+            "opponent_name": null,
+            "source_url": "https://api2.compuboxdata.com/round-stats/16941",
+            "verification": "round_totals_reconciled",
+            "total": {
+              "landed": 127,
+              "body_landed": 38,
+              "thrown": 724
+            },
+            "jab": {
+              "landed": 28,
+              "body_landed": 8,
+              "thrown": 351
+            },
+            "power": {
+              "landed": 99,
+              "body_landed": 30,
+              "thrown": 373
+            },
+            "rounds": [
+              {
+                "round": 1,
+                "total": {
+                  "landed": 7,
+                  "thrown": 43
+                },
+                "jab": {
+                  "landed": 2,
+                  "thrown": 26
+                },
+                "power": {
+                  "landed": 5,
+                  "thrown": 17
+                }
+              },
+              {
+                "round": 2,
+                "total": {
+                  "landed": 13,
+                  "thrown": 58
+                },
+                "jab": {
+                  "landed": 3,
+                  "thrown": 29
+                },
+                "power": {
+                  "landed": 10,
+                  "thrown": 29
+                }
+              },
+              {
+                "round": 3,
+                "total": {
+                  "landed": 10,
+                  "thrown": 65
+                },
+                "jab": {
+                  "landed": 2,
+                  "thrown": 30
+                },
+                "power": {
+                  "landed": 8,
+                  "thrown": 35
+                }
+              },
+              {
+                "round": 4,
+                "total": {
+                  "landed": 10,
+                  "thrown": 56
+                },
+                "jab": {
+                  "landed": 2,
+                  "thrown": 27
+                },
+                "power": {
+                  "landed": 8,
+                  "thrown": 29
+                }
+              },
+              {
+                "round": 5,
+                "total": {
+                  "landed": 13,
+                  "thrown": 57
+                },
+                "jab": {
+                  "landed": 2,
+                  "thrown": 17
+                },
+                "power": {
+                  "landed": 11,
+                  "thrown": 40
+                }
+              },
+              {
+                "round": 6,
+                "total": {
+                  "landed": 10,
+                  "thrown": 64
+                },
+                "jab": {
+                  "landed": 2,
+                  "thrown": 24
+                },
+                "power": {
+                  "landed": 8,
+                  "thrown": 40
+                }
+              },
+              {
+                "round": 7,
+                "total": {
+                  "landed": 7,
+                  "thrown": 60
+                },
+                "jab": {
+                  "landed": 1,
+                  "thrown": 31
+                },
+                "power": {
+                  "landed": 6,
+                  "thrown": 29
+                }
+              },
+              {
+                "round": 8,
+                "total": {
+                  "landed": 11,
+                  "thrown": 58
+                },
+                "jab": {
+                  "landed": 2,
+                  "thrown": 21
+                },
+                "power": {
+                  "landed": 9,
+                  "thrown": 37
+                }
+              },
+              {
+                "round": 9,
+                "total": {
+                  "landed": 11,
+                  "thrown": 70
+                },
+                "jab": {
+                  "landed": 3,
+                  "thrown": 37
+                },
+                "power": {
+                  "landed": 8,
+                  "thrown": 33
+                }
+              },
+              {
+                "round": 10,
+                "total": {
+                  "landed": 9,
+                  "thrown": 59
+                },
+                "jab": {
+                  "landed": 2,
+                  "thrown": 37
+                },
+                "power": {
+                  "landed": 7,
+                  "thrown": 22
+                }
+              },
+              {
+                "round": 11,
+                "total": {
+                  "landed": 13,
+                  "thrown": 67
+                },
+                "jab": {
+                  "landed": 5,
+                  "thrown": 40
+                },
+                "power": {
+                  "landed": 8,
+                  "thrown": 27
+                }
+              },
+              {
+                "round": 12,
+                "total": {
+                  "landed": 13,
+                  "thrown": 67
+                },
+                "jab": {
+                  "landed": 2,
+                  "thrown": 32
+                },
+                "power": {
+                  "landed": 11,
+                  "thrown": 35
+                }
+              }
+            ]
+          }
+        ],
         "aggregate_metrics": null,
         "coverage": "unknown_without_complete_fight_history"
       },
@@ -43123,8 +43329,214 @@
         }
       },
       "compubox": {
-        "report_count": 0,
-        "verified_report_fights": [],
+        "report_count": 1,
+        "verified_report_fights": [
+          {
+            "report_id": 16941,
+            "date": "2026-10-31",
+            "report_title": "SAUL ALVAREZ UD 12 CHRISTIAN MBILLI",
+            "opponent_name": null,
+            "source_url": "https://api2.compuboxdata.com/round-stats/16941",
+            "verification": "round_totals_reconciled",
+            "total": {
+              "landed": 158,
+              "body_landed": 16,
+              "thrown": 504
+            },
+            "jab": {
+              "landed": 26,
+              "body_landed": 0,
+              "thrown": 189
+            },
+            "power": {
+              "landed": 132,
+              "body_landed": 16,
+              "thrown": 315
+            },
+            "rounds": [
+              {
+                "round": 1,
+                "total": {
+                  "landed": 10,
+                  "thrown": 24
+                },
+                "jab": {
+                  "landed": 5,
+                  "thrown": 11
+                },
+                "power": {
+                  "landed": 5,
+                  "thrown": 13
+                }
+              },
+              {
+                "round": 2,
+                "total": {
+                  "landed": 13,
+                  "thrown": 34
+                },
+                "jab": {
+                  "landed": 3,
+                  "thrown": 11
+                },
+                "power": {
+                  "landed": 10,
+                  "thrown": 23
+                }
+              },
+              {
+                "round": 3,
+                "total": {
+                  "landed": 11,
+                  "thrown": 31
+                },
+                "jab": {
+                  "landed": 0,
+                  "thrown": 9
+                },
+                "power": {
+                  "landed": 11,
+                  "thrown": 22
+                }
+              },
+              {
+                "round": 4,
+                "total": {
+                  "landed": 8,
+                  "thrown": 27
+                },
+                "jab": {
+                  "landed": 0,
+                  "thrown": 7
+                },
+                "power": {
+                  "landed": 8,
+                  "thrown": 20
+                }
+              },
+              {
+                "round": 5,
+                "total": {
+                  "landed": 12,
+                  "thrown": 52
+                },
+                "jab": {
+                  "landed": 2,
+                  "thrown": 24
+                },
+                "power": {
+                  "landed": 10,
+                  "thrown": 28
+                }
+              },
+              {
+                "round": 6,
+                "total": {
+                  "landed": 17,
+                  "thrown": 53
+                },
+                "jab": {
+                  "landed": 0,
+                  "thrown": 13
+                },
+                "power": {
+                  "landed": 17,
+                  "thrown": 40
+                }
+              },
+              {
+                "round": 7,
+                "total": {
+                  "landed": 23,
+                  "thrown": 59
+                },
+                "jab": {
+                  "landed": 5,
+                  "thrown": 23
+                },
+                "power": {
+                  "landed": 18,
+                  "thrown": 36
+                }
+              },
+              {
+                "round": 8,
+                "total": {
+                  "landed": 14,
+                  "thrown": 40
+                },
+                "jab": {
+                  "landed": 0,
+                  "thrown": 8
+                },
+                "power": {
+                  "landed": 14,
+                  "thrown": 32
+                }
+              },
+              {
+                "round": 9,
+                "total": {
+                  "landed": 15,
+                  "thrown": 53
+                },
+                "jab": {
+                  "landed": 3,
+                  "thrown": 18
+                },
+                "power": {
+                  "landed": 12,
+                  "thrown": 35
+                }
+              },
+              {
+                "round": 10,
+                "total": {
+                  "landed": 11,
+                  "thrown": 41
+                },
+                "jab": {
+                  "landed": 4,
+                  "thrown": 20
+                },
+                "power": {
+                  "landed": 7,
+                  "thrown": 21
+                }
+              },
+              {
+                "round": 11,
+                "total": {
+                  "landed": 10,
+                  "thrown": 42
+                },
+                "jab": {
+                  "landed": 2,
+                  "thrown": 22
+                },
+                "power": {
+                  "landed": 8,
+                  "thrown": 20
+                }
+              },
+              {
+                "round": 12,
+                "total": {
+                  "landed": 14,
+                  "thrown": 48
+                },
+                "jab": {
+                  "landed": 2,
+                  "thrown": 23
+                },
+                "power": {
+                  "landed": 12,
+                  "thrown": 25
+                }
+              }
+            ]
+          }
+        ],
         "aggregate_metrics": null,
         "coverage": "unknown_without_complete_fight_history"
       },
@@ -46401,7 +46813,19 @@
         "WBC"
       ],
       "archived_scouting": null,
-      "verified_bouts": [],
+      "verified_bouts": [
+        {
+          "date": "2026-11-13",
+          "opponent": "Muhammad Yaqubov",
+          "outcome": "W",
+          "method": "UD",
+          "final_round": 10,
+          "report_id": 16989,
+          "source_url": "https://beta.compuboxdata.com/round-stats/16989",
+          "verification": "result_verified_against_compubox_report",
+          "career_record_inferred": false
+        }
+      ],
       "professional_record": {
         "wins": null,
         "losses": null,
