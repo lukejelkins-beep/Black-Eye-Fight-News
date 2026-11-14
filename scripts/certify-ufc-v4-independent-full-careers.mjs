@@ -17,7 +17,7 @@ const feeder=x=>/(?:contender\s+series|road\s+to\s+ufc|\bdwcs\b)/i.test(String(x
 const required=['sigLanded','sigAttempted','knockdowns','takedowns','takedownAttempts','subAttempts','controlSec'];
 const block=(slug,reason)=>{throw Error('BEFN_V4_CERTIFICATION_BLOCKED '+slug+':'+reason);};
 const need=(slug,cond,reason)=>{if(!cond)block(slug,reason);};
-export function certifyAttestedFullCareers(approval,research,progress,postfight,base,batch){
+export function certifyAttestedFullCareers(approval,research,progress,postfight,base,batch,feederEvidence={}){
  need('cohort',approval?.status==='approved'&&approval?.approvedFighters?.length===783&&
   new Set(approval.approvedFighters).size===783,'must_use_immutable_783');
  need('registry',base?.schema===1&&base?.scope==='ufc-independent-full-career-verification'&&
@@ -33,7 +33,14 @@ export function certifyAttestedFullCareers(approval,research,progress,postfight,
   need(slug,sourceFighterUrl(s.fighterUrl)&&/^https:\/\/www\.ufc\.com\/athlete\//.test(s.ufcOfficialSourceUrl||''),'unverified_source_urls');
   const p=research?.profiles?.[slug];
   need(slug,p&&norm(p.name)===norm(s.fighterName),'athlete_identity_not_confirmed');
-  const saved=(p.recentHistory||[]).filter(x=>String(x.promotion||x.org||'').toLowerCase()==='ufc'&&out(x.result||x.outcome||x.status));
+  const excludedByVerifiedFeeder=(row)=>row?.source==='native'&&
+    (feederEvidence?.schema===1&&Array.isArray(feederEvidence.bouts))&&
+    feederEvidence.bouts.some(item=>item.fighterSlug===slug&&
+      String(item.boutId||'')===String(row.boutId||'')&&
+      item.date===row.date&&opponentKey(item.opponent)===opponentKey(row.opponent)&&
+      feeder(item.event)&&/^https:\/\/(?:www\.)?ufc\.com\//i.test(String(item.sourceUrl||'')));
+  const saved=(p.recentHistory||[]).filter(x=>String(x.promotion||x.org||'').toLowerCase()==='ufc'&&
+    out(x.result||x.outcome||x.status)&&!excludedByVerifiedFeeder(x));
   need(slug,Array.isArray(s.bouts)&&s.bouts.length>0&&
     s.bouts.length===s.completeOfficialUfcCareerCount&&
     saved.length===s.bouts.length,'official_vs_saved_career_length');
@@ -72,7 +79,7 @@ export function certifyAttestedFullCareers(approval,research,progress,postfight,
    fighterIds.add(String(own.id));
    const winner=native.result?.winnerId;
    const nativeResult=native.status==='no_contest'?'no_contest':
-     native.status==='draw'?'draw':
+     native.status==='draw'||(!winner&&native.result?.method==='draw')?'draw':
      winner&&String(winner)===String(own.id)?'win':
      winner&&String(winner)===String(opponent.id)?'loss':null;
    need(slug,nativeResult===record.result,'native_result_disagrees_with_official:'+id);
