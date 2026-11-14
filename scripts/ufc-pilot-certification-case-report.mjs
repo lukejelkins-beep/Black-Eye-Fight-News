@@ -53,8 +53,21 @@ export function comparePilot(official,profile,nativeBouts={}){
     feederTitle(title)?'feeder_excluded_from_ufc_career':'requires_independent_official_event_review',
    ...(matchedCounterpart?{matchedAlternateNativeBoutId:matchedCounterpart.nativeBoutId}: {})}];
  });
+ // Produce actionable saved-cache candidates for each missing official bout.
+ // Candidates are never treated as recovered, verified, or certified.
+ const missingWithCandidates=missing.map(bout=>{
+  const candidates=saved.filter(h=>near(bout.date,h.date)&&
+   sameOpponent(bout.opponent,h.opponent,h.boutId)).map(h=>({
+    nativeBoutId:String(h.boutId||''),savedDate:h.date,
+    savedResult:result(h.result||h.outcome||h.status),
+    reviewReason:result(h.result||h.outcome||h.status)!==bout.result?
+     'result_conflict':'same_opponent_date_unmatched_identity'
+   }));
+  return {...bout,savedCandidates:candidates};
+ });
  return {officialCount:source.length,savedUfcLabeledRows:saved.length,matchedCount:matched.length,
-  missingCount:missing.length,extraCount:extra.length,matched,missing,extra};
+  missingCount:missing.length,extraCount:extra.length,matched,
+  missing:missingWithCandidates,extra};
 }
 export function buildPilotReport(approval,inventory,research,progress){
  if(approval?.status!=='approved'||approval.rosterAsOf!=='2026-11-14'||approval.approvedFighters?.length!==783||
