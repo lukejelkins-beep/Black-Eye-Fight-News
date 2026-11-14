@@ -5161,6 +5161,427 @@
         }
       ],
       "note": "Attested exhaustive multi-bout official UFC full career. One-to-one independent source fight URL and exact native athlete/bout identity for each measured contest; no missing date or feeder counts; pending existing independent Stage 3 CI gate."
+    },
+    "artur-minev": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Artur Minev",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/20d37922ba85e6fc",
+      "officialFighterUrl": "https://www.ufc.com/athlete/artur-minev",
+      "firstOfficialUfcFight": "2026-05-16",
+      "lastOfficialUfcFight": "2026-05-16",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "2921"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Reviewed full official UFC athlete profile from debut to 14 Nov 2026; independently verified one unique UFCStats-derived source bout against all pinned Greco fighter fight rows, dated independent event listing, saved numeric fighter native bout identity both corners, official outcome, measured round/time. All previously saved DWCS feeder contests explicitly excluded. UFC misleading summary widgets do not replace official detailed result narratives.",
+        "officialDebut": "2026-05-16",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "UFC athlete Latest Fight tile erroneously labels Minev the winner while both official May16 UFC event results and detailed biography confirm a Round 2 2:51 KO/TKO loss. Official UFC event uses Tommy Gantt and UFC earlier preview uses Thomas Gantt; identical fighter confirmed at identical event, numeric native opponent 40.",
+        "excludedFeederNativeFights": [],
+        "directUfcStatsSiteAccess": "Not directly accessible; complete Greco historical UFCStats-derived source fighter/fight/event URLs independently corroborated with UFC.com."
+      },
+      "bouts": [
+        {
+          "date": "2026-05-16",
+          "opponent": "Thomas Gantt",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c9e0aa88afb81dab",
+          "nativeBoutId": "66131",
+          "nativeFightId": "66131",
+          "nativeFighterId": "2921",
+          "event": "UFC Fight Night: Allen vs Costa",
+          "method": "ko_tko",
+          "round": 2,
+          "time": "2:51",
+          "independentEventUrl": "https://ufcstats.com/event-details/73abb7a5c57fb443",
+          "sourceVerifiedNativeOpponentAliases": [
+            "Tommy Gantt"
+          ],
+          "verifiedOpponentNativeFighterIds": [
+            "40"
+          ]
+        }
+      ],
+      "note": "One completed official UFC career fight verified through Nov14 2026; no inferred/cached-only certification. Independent Stage3 CI gate pending."
+    },
+    "ben-johnston": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Ben Johnston",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/3261aa79bf6caa64",
+      "officialFighterUrl": "https://www.ufc.com/athlete/benjamin-johnston",
+      "firstOfficialUfcFight": "2026-05-02",
+      "lastOfficialUfcFight": "2026-05-02",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "551"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Reviewed full official UFC athlete profile from debut to 14 Nov 2026; independently verified one unique UFCStats-derived source bout against all pinned Greco fighter fight rows, dated independent event listing, saved numeric fighter native bout identity both corners, official outcome, measured round/time. All previously saved DWCS feeder contests explicitly excluded. UFC misleading summary widgets do not replace official detailed result narratives.",
+        "officialDebut": "2026-05-02",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "Official athlete source is /athlete/benjamin-johnston (the saved/native name Ben Johnston); top card tile erroneously shows Win, detailed official UFC narrative unequivocally says Johnston was submitted by Wes Schultz R3 1:50. This is his only completed UFC contest.",
+        "excludedFeederNativeFights": [],
+        "directUfcStatsSiteAccess": "Not directly accessible; complete Greco historical UFCStats-derived source fighter/fight/event URLs independently corroborated with UFC.com."
+      },
+      "bouts": [
+        {
+          "date": "2026-05-02",
+          "opponent": "Wes Schultz",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/827c64369b374989",
+          "nativeBoutId": "66073",
+          "nativeFightId": "66073",
+          "nativeFighterId": "551",
+          "event": "UFC Fight Night: Della Maddalena vs Prates",
+          "method": "submission",
+          "round": 3,
+          "time": "1:50",
+          "independentEventUrl": "https://ufcstats.com/event-details/872b018076f831b0"
+        }
+      ],
+      "note": "One completed official UFC career fight verified through Nov14 2026; no inferred/cached-only certification. Independent Stage3 CI gate pending."
+    },
+    "bilal-hasan": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Bilal Hasan",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/5182316da3c1d891",
+      "officialFighterUrl": "https://www.ufc.com/athlete/bilal-hasan",
+      "firstOfficialUfcFight": "2026-08-29",
+      "lastOfficialUfcFight": "2026-08-29",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "52597"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Reviewed full official UFC athlete profile from debut to 14 Nov 2026; independently verified one unique UFCStats-derived source bout against all pinned Greco fighter fight rows, dated independent event listing, saved numeric fighter native bout identity both corners, official outcome, measured round/time. All previously saved DWCS feeder contests explicitly excluded. UFC misleading summary widgets do not replace official detailed result narratives.",
+        "officialDebut": "2026-08-29",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "One completed official UFC fight Aug29 2026 Nilson Rojas TKO win R2 2:28, separately excludes Dana White's Contender Series 10 Aug11 2026 bout vs Mridul Saikia. Nov14 matchup vs Luis Gurule is listed as upcoming on official athlete biography, not a completed fight at roster snapshot.",
+        "excludedFeederNativeFights": [
+          {
+            "date": "2026-08-11",
+            "opponent": "Mridul Saikia",
+            "nativeBoutId": "83743",
+            "event": "Dana White's Contender Series 87",
+            "reason": "Dana White Contender Series, not an official completed UFC fight"
+          }
+        ],
+        "directUfcStatsSiteAccess": "Not directly accessible; complete Greco historical UFCStats-derived source fighter/fight/event URLs independently corroborated with UFC.com."
+      },
+      "bouts": [
+        {
+          "date": "2026-08-29",
+          "opponent": "Nilson Rojas",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1fe768d599c159dc",
+          "nativeBoutId": "83729",
+          "nativeFightId": "83729",
+          "nativeFighterId": "52597",
+          "event": "UFC Fight Night: Nurmagomedov vs Song",
+          "method": "ko_tko",
+          "round": 2,
+          "time": "2:28",
+          "independentEventUrl": "https://ufcstats.com/event-details/9d61d8cb1c354867"
+        }
+      ],
+      "note": "One completed official UFC career fight verified through Nov14 2026; no inferred/cached-only certification. Independent Stage3 CI gate pending."
+    },
+    "borislav-nikolic": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Borislav Nikolić",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/5f926979c980b87e",
+      "officialFighterUrl": "https://www.ufc.com/athlete/borislav-nikolic",
+      "firstOfficialUfcFight": "2026-08-01",
+      "lastOfficialUfcFight": "2026-08-01",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "26669"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Reviewed full official UFC athlete profile from debut to 14 Nov 2026; independently verified one unique UFCStats-derived source bout against all pinned Greco fighter fight rows, dated independent event listing, saved numeric fighter native bout identity both corners, official outcome, measured round/time. All previously saved DWCS feeder contests explicitly excluded. UFC misleading summary widgets do not replace official detailed result narratives.",
+        "officialDebut": "2026-08-01",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "One completed official UFC fight Aug1 2026 unanimous decision win over Mark Vologdin in UFC Medić vs Rodriguez; official athlete name Borislav Nikolić retains diacritics; no non-UFC previous BRAVE fights counted.",
+        "excludedFeederNativeFights": [],
+        "directUfcStatsSiteAccess": "Not directly accessible; complete Greco historical UFCStats-derived source fighter/fight/event URLs independently corroborated with UFC.com."
+      },
+      "bouts": [
+        {
+          "date": "2026-08-01",
+          "opponent": "Mark Vologdin",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/4350abb4f1933f88",
+          "nativeBoutId": "83276",
+          "nativeFightId": "83276",
+          "nativeFighterId": "26669",
+          "event": "UFC Fight Night: Medić vs Rodriguez",
+          "method": "decision_unanimous",
+          "round": 3,
+          "time": "5:00",
+          "independentEventUrl": "https://ufcstats.com/event-details/1a50e734bb54861a"
+        }
+      ],
+      "note": "One completed official UFC career fight verified through Nov14 2026; no inferred/cached-only certification. Independent Stage3 CI gate pending."
+    },
+    "carlos-calderon-3": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Carlos Calderon",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/7d4d7583df7eebf9",
+      "officialFighterUrl": "https://www.ufc.com/athlete/carlos-calderon",
+      "firstOfficialUfcFight": "2026-11-07",
+      "lastOfficialUfcFight": "2026-11-07",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "161555"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Reviewed full official UFC athlete profile from debut to 14 Nov 2026; independently verified one unique UFCStats-derived source bout against all pinned Greco fighter fight rows, dated independent event listing, saved numeric fighter native bout identity both corners, official outcome, measured round/time. All previously saved DWCS feeder contests explicitly excluded. UFC misleading summary widgets do not replace official detailed result narratives.",
+        "officialDebut": "2026-11-07",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "Approved roster uses provider slug carlos-calderon-3, whereas one and only canonical official UFC athlete biography uses carlos-calderon. Nov7 UFC debut was first official bout, a submission loss vs Austin Bashi R1 1:07; top UFC Last Fight tile incorrectly shows Win. His Oct1 2024 DWCS loss to Alberto Montes excluded.",
+        "excludedFeederNativeFights": [
+          {
+            "date": "2024-10-01",
+            "opponent": "Alberto Montes",
+            "nativeBoutId": "84029",
+            "event": "Dana White's Contender Series 74",
+            "reason": "Dana White Contender Series, not an official completed UFC fight"
+          }
+        ],
+        "directUfcStatsSiteAccess": "Not directly accessible; complete Greco historical UFCStats-derived source fighter/fight/event URLs independently corroborated with UFC.com."
+      },
+      "bouts": [
+        {
+          "date": "2026-11-07",
+          "opponent": "Austin Bashi",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/397399a62874a00e",
+          "nativeBoutId": "93715",
+          "nativeFightId": "93715",
+          "nativeFighterId": "161555",
+          "event": "UFC Fight Night: Cortes Acosta vs Walker",
+          "method": "submission",
+          "round": 1,
+          "time": "1:07",
+          "independentEventUrl": "https://ufcstats.com/event-details/110404b505fb562c"
+        }
+      ],
+      "note": "One completed official UFC career fight verified through Nov14 2026; no inferred/cached-only certification. Independent Stage3 CI gate pending."
+    },
+    "gokhan-saricam": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Gokhan Saricam",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/1a97a3ef4c758fae",
+      "officialFighterUrl": "https://www.ufc.com/athlete/gokhan-saricam",
+      "firstOfficialUfcFight": "2026-04-18",
+      "lastOfficialUfcFight": "2026-04-18",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "561"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Reviewed full official UFC athlete profile from debut to 14 Nov 2026; independently verified one unique UFCStats-derived source bout against all pinned Greco fighter fight rows, dated independent event listing, saved numeric fighter native bout identity both corners, official outcome, measured round/time. All previously saved DWCS feeder contests explicitly excluded. UFC misleading summary widgets do not replace official detailed result narratives.",
+        "officialDebut": "2026-04-18",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "UFC athlete biography lists exactly one completed UFC contest Apr18 2026 second-round 4:43 KO/TKO win over Tanner Boser; older Bellator results excluded.",
+        "excludedFeederNativeFights": [],
+        "directUfcStatsSiteAccess": "Not directly accessible; complete Greco historical UFCStats-derived source fighter/fight/event URLs independently corroborated with UFC.com."
+      },
+      "bouts": [
+        {
+          "date": "2026-04-18",
+          "opponent": "Tanner Boser",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/85c7a0f44aa3e10a",
+          "nativeBoutId": "66096",
+          "nativeFightId": "66096",
+          "nativeFighterId": "561",
+          "event": "UFC Fight Night: Burns vs Malott",
+          "method": "ko_tko",
+          "round": 2,
+          "time": "4:43",
+          "independentEventUrl": "https://ufcstats.com/event-details/c3ac8d0da7b05772"
+        }
+      ],
+      "note": "One completed official UFC career fight verified through Nov14 2026; no inferred/cached-only certification. Independent Stage3 CI gate pending."
+    },
+    "jose-montanha": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Jose Montanha",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/1f8cd7634e8286ff",
+      "officialFighterUrl": "https://www.ufc.com/athlete/jose-montanha-da-silva",
+      "firstOfficialUfcFight": "2026-08-08",
+      "lastOfficialUfcFight": "2026-08-08",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "2986"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Reviewed full official UFC athlete profile from debut to 14 Nov 2026; independently verified one unique UFCStats-derived source bout against all pinned Greco fighter fight rows, dated independent event listing, saved numeric fighter native bout identity both corners, official outcome, measured round/time. All previously saved DWCS feeder contests explicitly excluded. UFC misleading summary widgets do not replace official detailed result narratives.",
+        "officialDebut": "2026-08-08",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "Official athlete is José Montanha da Silva while native name is Jose Montanha; identical dated Aug8 2026 one official submission R1 1:50 vs Louie Sutherland. UFC athlete header lists an originally planned June20 UFC debut; detailed UFC August8 account and independent pinned event data establish first *completed* Octagon fight Aug8.",
+        "excludedFeederNativeFights": [],
+        "directUfcStatsSiteAccess": "Not directly accessible; complete Greco historical UFCStats-derived source fighter/fight/event URLs independently corroborated with UFC.com."
+      },
+      "bouts": [
+        {
+          "date": "2026-08-08",
+          "opponent": "Louie Sutherland",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/64829a32c78ab656",
+          "nativeBoutId": "83095",
+          "nativeFightId": "83095",
+          "nativeFighterId": "2986",
+          "event": "UFC Fight Night: Gamrot vs Salkilld",
+          "method": "submission",
+          "round": 1,
+          "time": "1:50",
+          "independentEventUrl": "https://ufcstats.com/event-details/495add4fbede0a44"
+        }
+      ],
+      "note": "One completed official UFC career fight verified through Nov14 2026; no inferred/cached-only certification. Independent Stage3 CI gate pending."
     }
   }
 }
