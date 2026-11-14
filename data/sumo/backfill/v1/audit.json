@@ -4,13 +4,13 @@
   "cohortSize": 190,
   "certified": 0,
   "notAttempted": 180,
-  "collecting": 7,
+  "collecting": 6,
   "integrityException": 0,
-  "sourceReady": 3,
+  "sourceReady": 4,
   "records": {
-    "weight": 6,
-    "rank": 184,
-    "matches": 1936
+    "weight": 8,
+    "rank": 254,
+    "matches": 2204
   },
   "independentJsaSpotchecks": {
     "identityVerified": 2,
@@ -72,15 +72,19 @@
       "name": "Kirishima",
       "status": "still-collecting",
       "readyForExternalCrosscheck": false,
-      "errors": [],
-      "warnings": [
-        "blocked-stage-profile"
+      "errors": [
+        "malformed-rank-value",
+        "rank-history-basho-count-mismatch"
       ],
-      "stagesCompleted": 0,
+      "warnings": [],
+      "stagesCompleted": 5,
       "counts": {
-        "weights": 0,
-        "ranks": 0,
-        "matches": 0
+        "weights": 2,
+        "ranks": 70,
+        "matches": 200,
+        "regularMatches": 197,
+        "specialMatches": 3,
+        "formalRanks": 69
       }
     },
     {
@@ -94,7 +98,10 @@
       "counts": {
         "weights": 2,
         "ranks": 64,
-        "matches": 667
+        "matches": 667,
+        "regularMatches": 665,
+        "specialMatches": 2,
+        "formalRanks": 64
       }
     },
     {
@@ -108,7 +115,27 @@
       "counts": {
         "weights": 2,
         "ranks": 70,
-        "matches": 772
+        "matches": 772,
+        "regularMatches": 763,
+        "specialMatches": 9,
+        "formalRanks": 69
+      }
+    },
+    {
+      "sourceId": 5,
+      "name": "Takerufuji",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 1,
+        "ranks": 26,
+        "matches": 268,
+        "regularMatches": 267,
+        "specialMatches": 1,
+        "formalRanks": 25
       }
     },
     {
@@ -124,7 +151,10 @@
       "counts": {
         "weights": 0,
         "ranks": 0,
-        "matches": 0
+        "matches": 0,
+        "regularMatches": 0,
+        "specialMatches": 0,
+        "formalRanks": 0
       }
     },
     {
@@ -140,7 +170,10 @@
       "counts": {
         "weights": 0,
         "ranks": 0,
-        "matches": 0
+        "matches": 0,
+        "regularMatches": 0,
+        "specialMatches": 0,
+        "formalRanks": 0
       }
     },
     {
@@ -154,7 +187,10 @@
       "counts": {
         "weights": 1,
         "ranks": 24,
-        "matches": 297
+        "matches": 297,
+        "regularMatches": 296,
+        "specialMatches": 1,
+        "formalRanks": 24
       }
     },
     {
@@ -170,7 +206,10 @@
       "counts": {
         "weights": 0,
         "ranks": 0,
-        "matches": 0
+        "matches": 0,
+        "regularMatches": 0,
+        "specialMatches": 0,
+        "formalRanks": 0
       }
     }
   ]
