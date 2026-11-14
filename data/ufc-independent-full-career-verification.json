@@ -26157,6 +26157,69 @@
         }
       ],
       "sourceVerifiedExcludedFeederBouts": []
+    },
+    "louie-sutherland": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Louie Sutherland",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/cdb7b38b1b357f26",
+      "officialFighterUrl": "https://www.ufc.com/athlete/louie-sutherland",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived historical CSV, not direct UFCStats scrape",
+        "method": "Complete dated official UFC athlete biographies plus pinned Greco UFCStats fighter/fight identifiers, original cached numeric native fighter and both opposite corners, winner and measured rounds, with canceled bookings excluded"
+      },
+      "verifiedNumericFighterIds": [
+        "437"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Official UFC.com full dated bio: heel hook loss Valter Walker 2025-10-25, knockout loss Brando Pericic 2026-03-21, unanimous decision win Tai Tuivasa 2026-05-02, submission loss Jose Montanha (also known as Montanha da Silva) 2026-08-08. Cancelled Saricam and Mahjoub bookings excluded. Misleading UFC.com fight card Win labels overridden by explicit dated full bio, pinned source and native results.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/louie-sutherland",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-10-25",
+          "opponent": "Valter Walker",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f2c2a49fed32bd75",
+          "nativeBoutId": "60466",
+          "nativeFighterId": "437"
+        },
+        {
+          "date": "2026-03-21",
+          "opponent": "Brando Pericic",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/bfd17ed83ec5b598",
+          "nativeBoutId": "60569",
+          "nativeFighterId": "437"
+        },
+        {
+          "date": "2026-05-02",
+          "opponent": "Tai Tuivasa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2afaa97901d5587c",
+          "nativeBoutId": "66068",
+          "nativeFighterId": "437"
+        },
+        {
+          "date": "2026-08-08",
+          "opponent": "Jose Montanha",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/64829a32c78ab656",
+          "nativeBoutId": "83095",
+          "nativeFighterId": "437"
+        }
+      ]
     }
   }
 }
