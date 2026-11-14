@@ -5,6 +5,10 @@
  */
 const norm=x=>String(x??'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
 const out=x=>({w:'win',win:'win',l:'loss',loss:'loss',d:'draw',draw:'draw',nc:'no_contest',no_contest:'no_contest'})[String(x??'').toLowerCase()]||null;
+// Narrow, separately UFC-sourced opponent aliases; NEVER fuzzy-name matching.
+const opponentAliases={joannecalderwood:'joannewood',joannewood:'joannewood',
+ veronicamacedo:'veronicahardy',veronicahardy:'veronicahardy'};
+const opponentKey=x=>opponentAliases[norm(x)]||norm(x);
 const day=x=>/^\d{4}-\d\d-\d\d$/.test(String(x||''))&&!Number.isNaN(Date.parse(x+'T00:00:00Z'));
 const dateDiff=(a,b)=>day(a)&&day(b)?Math.round((Date.parse(a+'T00:00:00Z')-Date.parse(b+'T00:00:00Z'))/86400000):999;
 const sourceFightUrl=x=>/^https:\/\/ufcstats\.com\/fight-details\/[a-f0-9]{16}$/i.test(String(x||''));
@@ -51,7 +55,7 @@ export function certifyAttestedFullCareers(approval,research,progress,postfight,
    }
    need(slug,out(record.result)===record.result&&norm(record.opponent),'invalid_official_outcome_opponent:'+id);
    const matches=saved.filter(x=>x.source==='native'&&String(x.boutId||'')===id&&
-      x.date===record.nativeSavedDate&&norm(x.opponent)===norm(record.opponent)&&
+      x.date===record.nativeSavedDate&&opponentKey(x.opponent)===opponentKey(record.opponent)&&
       out(x.result||x.outcome||x.status)===record.result);
    need(slug,matches.length===1,'native_history_identity_date_outcome_conflict:'+id);
    const native=progress.bouts?.[id];
@@ -61,7 +65,7 @@ export function certifyAttestedFullCareers(approval,research,progress,postfight,
    // Intentionally do NOT require identical event names. An event's title can
    // change after card cancellations; fight ID, corners, date and status matter.
    const corners=[[native.a,native.b],[native.b,native.a]].filter(([a,b])=>a&&b&&
-      (a.slug===slug||norm(a.name)===norm(s.fighterName))&&norm(b.name)===norm(record.opponent));
+      (a.slug===slug||norm(a.name)===norm(s.fighterName))&&opponentKey(b.name)===opponentKey(record.opponent));
    need(slug,corners.length===1,'native_corners_ambiguous:'+id);
    const [own,opponent]=corners[0];
    need(slug,String(own.id||'')===String(s.uniqueNativeFighterId),'numeric_fighter_identity_mismatch:'+id);
