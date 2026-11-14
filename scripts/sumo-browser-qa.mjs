@@ -58,8 +58,18 @@ async function testSite(viewport,isMobile,label) {
   assertContains(profile,'Basho performance','basho data');
   assertContains(profile,'Recent performance','recent results');
   assertContains(profile,'Career honours','honours');
-  assertContains(profile,'recent match sample only','source label');
+  assertContains(profile,'cached recent bout sample','source label');
   await snap(page,label+'-profile',{fullPage:false});
+  // All 190 rikishi should expose current banzuke opponent histories even
+  // without individually fetched lifetime stats or 18-bout enrichment.
+  await open(page,'profile/2','.profile-hero');
+  const unfeatured=await page.locator('#sumo-main').innerText();
+  assertContains(unfeatured,'current November 2026 tournament only','source-scoped technique sample');
+  assertContains(unfeatured,'banzuke only','source-scoped recent bouts');
+  await open(page,'profile/75','.profile-hero');
+  const makushitaProfile=await page.locator('#sumo-main').innerText();
+  assertContains(makushitaProfile,'bout 1','Makushita bouts, not fabricated day mappings');
+
 
   await open(page,'banzuke','.standings');
   assert.equal(await page.locator('.standings tbody tr').count(),42);
