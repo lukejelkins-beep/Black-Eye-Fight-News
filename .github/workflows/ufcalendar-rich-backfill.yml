@@ -59,6 +59,7 @@ jobs:
           node --test tests/test-ufc-36-month-candidates.mjs
           node --test tests/test-ufc-postfight-metrics.mjs
           node --test tests/test-ufc-independent-certification-queue.mjs
+          node --test tests/test-reconcile-ufc-independent-evidence.mjs
       - name: Build resumable UFC/PFL fight history and current card insights
         env:
           UFCALENDAR_API_KEY: ${{ secrets.UFCALENDAR_API_KEY }}
@@ -90,6 +91,16 @@ jobs:
             echo "Independent certification queue generated; source requests: 0."
           else
             echo "::warning::Independent certification queue unavailable; collector archive remains authoritative."
+          fi
+      - name: Reconcile already obtained authorized UFCStats source exports (offline only)
+        if: success()
+        shell: bash
+        run: |
+          # Optional evidence input. No HTTP, paid API requests, or certification writes.
+          if node scripts/reconcile-ufc-independent-evidence.mjs; then
+            echo "Independent source crosswalk audited; no network requests."
+          else
+            echo "::warning::Independent source crosswalk unavailable; archived provider data preserved."
           fi
       - name: Commit sourced observations without exposing credentials
         shell: bash
