@@ -51,7 +51,7 @@
         "sourceResultCrosscheck": "Each official UFC biography bout's date, opponent and result matched a distinct independent UFCStats-derived bout URL and a saved native bout ID. CI verified native corner numeric fighter identity, winner, official UFC event and required fight metrics for 12/12; no extra saved UFC bouts. Latest official UFC history checked through 2026-11-14. Original UFCStats pages were inaccessible; per-fight URLs and results independently crosschecked using pinned-source-derived Greco records rather than falsely claiming direct UFCStats retrieval.",
         "approvedCompetitionScope": "Official UFC only; no feeder, DWCS or Road to UFC fights in 12 matched bouts",
         "aliasesReviewed": [
-          "Joanne Wood = Joanne Calderwood"
+          "Joanne Wood (current UFC athlete name) = Joanne Calderwood (same fighter's former name in 2015), officially confirmed by UFC biography"
         ],
         "eventTitleCorrections": [
           {
@@ -144,10 +144,12 @@
         },
         {
           "date": "2015-04-11",
-          "opponent": "Joanne Calderwood",
+          "opponent": "Joanne Wood",
           "result": "win",
           "fightUrl": "https://ufcstats.com/fight-details/fe9a58e79d54695b",
-          "nativeBoutId": "56917"
+          "nativeBoutId": "56917",
+          "sourceHistoricalOpponentName": "Joanne Calderwood",
+          "aliasVerificationUrl": "https://www.ufc.com/athlete/joanne-wood"
         }
       ],
       "certificationStatus": "source_verified_full_career_pending_independent_ci_gate",
