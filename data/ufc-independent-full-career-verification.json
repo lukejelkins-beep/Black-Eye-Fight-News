@@ -3440,6 +3440,238 @@
         }
       ],
       "note": "Verified full official UFC career from Octagon debut through 14 November 2026: one UFC332 fight and fully measured native corner; source snapshot confirms one exhaustive UFCStats-derived row. Do not confuse older professional MMA bouts with UFC fights. Crosschecked result with official event scorecards; fighter page presentation conflict documented where applicable."
+    },
+    "javad-mahjoub": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Javad Mahjoub",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/e9f9add1481fc11c",
+      "officialFighterUrl": "https://www.ufc.com/athlete/javad-mahjoub",
+      "firstOfficialUfcFight": "2026-10-17",
+      "lastOfficialUfcFight": "2026-10-17",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "44121"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Independently checked the complete UFC.com athlete history and dated Octagon debut through 14 Nov 2026, official UFC result/event or detailed report, and Greco indexed UFCStats full fighter fight listing pinned through 7 Nov 2026. Exactly one completed official UFC bout; verified both saved numeric UFC fight corners and measured result. Feeder/DWCS/TUF exhibitions are not official UFC bouts.",
+        "officialDebut": "2026-10-17",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "Official UFC athlete Last fight tile displays Win incorrectly, while authoritative UFC Edmonton event result, UFC prelim report, independently indexed UFCStats fighter-side loss and measured native winner 24946 all show a TKO loss to Joel Faglier. This explicit UI discrepancy does not add a bout.",
+        "officialResultUrl": "https://www.ufc.com/event/ufc-fight-night-october-17-2026",
+        "officialNewsUrl": "https://www.ufc.com/news/ufc-edmonton-prelim-results-buckley-vs-malott",
+        "directUfcStatsSiteAccess": "Direct UFCStats site was not available; fighter and fight URLs verified from pinned Greco UFCStats-derived dataset and corroborated using official UFC results."
+      },
+      "bouts": [
+        {
+          "date": "2026-10-17",
+          "opponent": "Joel Faglier",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/88247eaef34c209b",
+          "nativeBoutId": "93413",
+          "nativeFightId": "93413",
+          "nativeFighterId": "44121",
+          "event": "UFC Fight Night: Buckley vs Malott",
+          "method": "ko_tko",
+          "round": 2,
+          "time": "2:11",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-october-17-2026"
+        }
+      ],
+      "note": "Fully reconciled dated UFC debut through 14 Nov 2026 from independent UFCStats-derived fighter and fight identifiers, official UFC biography and final result, and existing measured native fight, subject to Stage3 independent certification CI."
+    },
+    "asaf-chopurov": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Asaf Chopurov",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/a24bc9922ee76e9f",
+      "officialFighterUrl": "https://www.ufc.com/athlete/asaf-chopurov",
+      "firstOfficialUfcFight": "2026-10-24",
+      "lastOfficialUfcFight": "2026-10-24",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "38429"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Independently checked the complete UFC.com athlete history and dated Octagon debut through 14 Nov 2026, official UFC result/event or detailed report, and Greco indexed UFCStats full fighter fight listing pinned through 7 Nov 2026. Exactly one completed official UFC bout; verified both saved numeric UFC fight corners and measured result. Feeder/DWCS/TUF exhibitions are not official UFC bouts.",
+        "officialDebut": "2026-10-24",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "Official UFC Last fight tile incorrectly shows Win, but detailed UFC athlete narrative says Chopurov lost the split decision; UFC 333 official scorecards show Colby Thicknesse defeated him, matching independent UFCStats and native. The UFC athlete page explicitly confirms October 24, 2026 Octagon debut.",
+        "officialResultUrl": "https://www.ufc.com/event/ufc-333",
+        "officialNewsUrl": "https://www.ufc.com/news/ufc-333-volkanovski-vs-evloev-official-scorecards",
+        "directUfcStatsSiteAccess": "Direct UFCStats site was not available; fighter and fight URLs verified from pinned Greco UFCStats-derived dataset and corroborated using official UFC results."
+      },
+      "bouts": [
+        {
+          "date": "2026-10-24",
+          "opponent": "Colby Thicknesse",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/411ec0a245687c49",
+          "nativeBoutId": "93486",
+          "nativeFightId": "93486",
+          "nativeFighterId": "38429",
+          "event": "UFC 333: Volkanovski vs Evloev",
+          "method": "decision_split",
+          "round": 3,
+          "time": "5:00",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-333"
+        }
+      ],
+      "note": "Fully reconciled dated UFC debut through 14 Nov 2026 from independent UFCStats-derived fighter and fight identifiers, official UFC biography and final result, and existing measured native fight, subject to Stage3 independent certification CI."
+    },
+    "rodrigo-vera": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Rodrigo Vera",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/2b266e623e20737a",
+      "officialFighterUrl": "https://www.ufc.com/athlete/rodrigo-vera",
+      "firstOfficialUfcFight": "2026-05-30",
+      "lastOfficialUfcFight": "2026-05-30",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "2988"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Independently checked the complete UFC.com athlete history and dated Octagon debut through 14 Nov 2026, official UFC result/event or detailed report, and Greco indexed UFCStats full fighter fight listing pinned through 7 Nov 2026. Exactly one completed official UFC bout; verified both saved numeric UFC fight corners and measured result. Feeder/DWCS/TUF exhibitions are not official UFC bouts.",
+        "officialDebut": "2026-05-30",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "UFC athlete page explicitly dates UFC debut May 30, 2026 and lists one UFC KO/TKO win over Zhu Kangjie at 1:50 of round 1; event result and independently indexed UFCStats one-fight career agree.",
+        "officialResultUrl": "https://www.ufc.com/event/ufc-fight-night-may-30-2026",
+        "officialNewsUrl": "https://www.ufc.com/event/ufc-fight-night-may-30-2026",
+        "directUfcStatsSiteAccess": "Direct UFCStats site was not available; fighter and fight URLs verified from pinned Greco UFCStats-derived dataset and corroborated using official UFC results."
+      },
+      "bouts": [
+        {
+          "date": "2026-05-30",
+          "opponent": "Zhu Kangjie",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/34d5ec676fb5bce3",
+          "nativeBoutId": "66458",
+          "nativeFightId": "66458",
+          "nativeFighterId": "2988",
+          "event": "UFC Fight Night: Song vs Figueiredo",
+          "method": "ko_tko",
+          "round": 1,
+          "time": "1:50",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-may-30-2026"
+        }
+      ],
+      "note": "Fully reconciled dated UFC debut through 14 Nov 2026 from independent UFCStats-derived fighter and fight identifiers, official UFC biography and final result, and existing measured native fight, subject to Stage3 independent certification CI."
+    },
+    "mackenzie-stiller": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Mackenzie Stiller",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/55896e25df067f9d",
+      "officialFighterUrl": "https://www.ufc.com/athlete/mackenzie-stiller",
+      "firstOfficialUfcFight": "2026-10-17",
+      "lastOfficialUfcFight": "2026-10-17",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "43385"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Independently checked the complete UFC.com athlete history and dated Octagon debut through 14 Nov 2026, official UFC result/event or detailed report, and Greco indexed UFCStats full fighter fight listing pinned through 7 Nov 2026. Exactly one completed official UFC bout; verified both saved numeric UFC fight corners and measured result. Feeder/DWCS/TUF exhibitions are not official UFC bouts.",
+        "officialDebut": "2026-10-17",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "Official UFC athlete Last fight tile incorrectly marks Win; UFC Edmonton results and written prelim report confirm 4:46 first-round TKO loss to Katlyn Cerminara. UFC.com separately lists a TUF 34 quarterfinal loss, an exhibition excluded from official UFC career.",
+        "officialResultUrl": "https://www.ufc.com/event/ufc-fight-night-october-17-2026",
+        "officialNewsUrl": "https://www.ufc.com/news/ufc-edmonton-prelim-results-buckley-vs-malott",
+        "directUfcStatsSiteAccess": "Direct UFCStats site was not available; fighter and fight URLs verified from pinned Greco UFCStats-derived dataset and corroborated using official UFC results."
+      },
+      "bouts": [
+        {
+          "date": "2026-10-17",
+          "opponent": "Katlyn Cerminara",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d9b442194ca25bd9",
+          "nativeBoutId": "93428",
+          "nativeFightId": "93428",
+          "nativeFighterId": "43385",
+          "event": "UFC Fight Night: Buckley vs Malott",
+          "method": "ko_tko",
+          "round": 1,
+          "time": "4:46",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-october-17-2026"
+        }
+      ],
+      "note": "Fully reconciled dated UFC debut through 14 Nov 2026 from independent UFCStats-derived fighter and fight identifiers, official UFC biography and final result, and existing measured native fight, subject to Stage3 independent certification CI."
     }
   }
 }
