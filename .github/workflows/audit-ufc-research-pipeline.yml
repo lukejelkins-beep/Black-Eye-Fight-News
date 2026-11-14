@@ -98,6 +98,10 @@ jobs:
         if: github.event_name == 'pull_request'
         continue-on-error: true
         run: node scripts/ufc-unified-wave5-source-review.mjs
+      - name: Mandel Nallo independent two-bout pinned Greco/native reconciliation (research-only)
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        run: node scripts/ufc-unified-mandel-source-review.mjs
       - name: Save report
         if: always()
         uses: actions/upload-artifact@v4
@@ -114,5 +118,6 @@ jobs:
             qa/ufc-v4-stage3-blocker-diagnostics.json
             qa/ufc-unified-next8b-source-review.json
             qa/ufc-unified-wave5-source-review.json
+            qa/ufc-unified-mandel-source-review.json
           retention-days: 14
           if-no-files-found: warn
