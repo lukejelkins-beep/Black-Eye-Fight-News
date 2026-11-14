@@ -61,3 +61,31 @@ test('newly resolved Chokheli, Brennan and Degli evidence preserves exact UFC fi
  assert.match(registry.fighters['marcos-degli'].sourceScopeVerified,/DWCS/);
  assert.match(registry.fighters['lucas-brennan'].sourceScopeVerified,/incorrect athlete header Win/);
 });
+
+test('four additional frozen-roster official UFC debut careers retain one-to-one source/native proof',()=>{
+ const cases={
+  'luis-hernandez':{native:'93180',fid:'42105',result:'win'},
+  'magomed-tuchalov':{native:'82603',fid:'11127',result:'win'},
+  'marina-spasic':{native:'83278',fid:'41158',result:'loss'},
+  'matthieu-duclos':{native:'83409',fid:'32933',result:'win'}
+ };
+ for(const [slug,expected] of Object.entries(cases)){
+  assert.ok(roster.approvedFighters.includes(slug));
+  const row=registry.fighters[slug];
+  assert.ok(row,slug+' requires independent source proof');
+  assert.equal(row.sourceCoverageAttested,true);
+  assert.equal(row.scope,'complete_official_ufc_career');
+  assert.equal(row.officialUfcCareerBoutCount,1);
+  assert.equal(row.bouts.length,1);
+  assert.equal(row.verifiedNumericFighterIds.length,1);
+  assert.equal(row.bouts[0].nativeBoutId,expected.native);
+  assert.equal(row.bouts[0].nativeFighterId,expected.fid);
+  assert.equal(row.bouts[0].result,expected.result);
+  assert.ok(row.fighterUrl.startsWith('https://ufcstats.com/fighter-details/'));
+  assert.ok(row.bouts[0].fightUrl.startsWith('https://ufcstats.com/fight-details/'));
+  assert.equal(row.sourceSnapshot.sourceCommit,'c742842f29466758fedc3906dbad28d6d320a8da');
+ }
+ assert.ok(registry.fighters['luis-hernandez'].sourceScopeVerified.includes('DWCS'));
+ assert.ok(registry.fighters['matthieu-duclos'].sourceScopeVerified.includes('DWCS'));
+ assert.ok(registry.fighters['marina-spasic'].sourceScopeVerified.includes('loss'));
+});

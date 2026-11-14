@@ -16097,6 +16097,146 @@
           "nativeFighterId": "11999"
         }
       ]
+    },
+    "luis-hernandez": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Luis Hernandez",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/5dad1e8a516e6477",
+      "officialFighterUrl": "https://www.ufc.com/athlete/luis-hernandez",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived source CSV, not direct page retrieval",
+        "method": "Compared complete official UFC.com fighter biography and debut/last result (authoritative biography over unreliable win tile) with pinned complete Greco UFCStats-derived fighter and result index; verified original exact native numeric fighter ID, event date, opponent corners and native winner, plus complete measured round metrics; Stage3 full-cohort CI is the sole certification decision"
+      },
+      "verifiedNumericFighterIds": [
+        "42105"
+      ],
+      "officialUfcCareerBoutCount": 1,
+      "sourceScopeVerified": "Official UFC.com complete debut-to-snapshot biography: Sep 26 2026 first UFC Octagon appearance, guillotine submission win against Sedriques Dumas. DWCS Sept 15 2026 submission of Hugo Guillon explicitly separated and excluded; native DWCS ID 83761 is not a second UFC contest. Pinned UFCStats-derived Greco fighter roster shows exactly one official UFC bout, source date/opponent/outcome match native #93180, numeric fighter ID 42105 and full 57-second measured record. UFC written narrative says finish at 0:50, while native and athlete result tile say 0:57; retain clock as source presentation discrepancy, not identity/outcome mismatch.",
+      "bouts": [
+        {
+          "date": "2026-09-26",
+          "opponent": "Sedriques Dumas",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/7c954175878dd610",
+          "nativeBoutId": "93180",
+          "nativeFighterId": "42105"
+        }
+      ]
+    },
+    "magomed-tuchalov": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Magomed Tuchalov",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/bc5a51159ec2fdf2",
+      "officialFighterUrl": "https://www.ufc.com/athlete/magomed-tuchalov",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived source CSV, not direct page retrieval",
+        "method": "Compared complete official UFC.com fighter biography and debut/last result (authoritative biography over unreliable win tile) with pinned complete Greco UFCStats-derived fighter and result index; verified original exact native numeric fighter ID, event date, opponent corners and native winner, plus complete measured round metrics; Stage3 full-cohort CI is the sole certification decision"
+      },
+      "verifiedNumericFighterIds": [
+        "11127"
+      ],
+      "officialUfcCareerBoutCount": 1,
+      "sourceScopeVerified": "Official UFC.com complete career biography confirms 25 July 2026 sole completed Octagon appearance, three-round unanimous decision win against Brendson Ribeiro. December 5 2026 scheduled Ion Cutelaba contest is future booking excluded. Independent pinned Greco UFCStats-derived complete fighter index finds exactly one official Octagon fight, same date/opponent/result as saved native bout 82603, original fighter ID 11127 and complete 900 seconds measured statistics. Pre-UFC UAE Warriors appearances are not UFC fights.",
+      "bouts": [
+        {
+          "date": "2026-07-25",
+          "opponent": "Brendson Ribeiro",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3ac870d6e7d323b7",
+          "nativeBoutId": "82603",
+          "nativeFighterId": "11127"
+        }
+      ]
+    },
+    "marina-spasic": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Marina Spasić",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/5847c1a960bb23af",
+      "officialFighterUrl": "https://www.ufc.com/athlete/marina-spasic",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived source CSV, not direct page retrieval",
+        "method": "Compared complete official UFC.com fighter biography and debut/last result (authoritative biography over unreliable win tile) with pinned complete Greco UFCStats-derived fighter and result index; verified original exact native numeric fighter ID, event date, opponent corners and native winner, plus complete measured round metrics; Stage3 full-cohort CI is the sole certification decision"
+      },
+      "verifiedNumericFighterIds": [
+        "41158"
+      ],
+      "officialUfcCareerBoutCount": 1,
+      "sourceScopeVerified": "Official UFC.com complete career biography confirms sole 1 Aug 2026 UFC debut ended in submission loss to Stephanie Luciano; erroneous summary Win badge contradicted by official detailed athlete narrative and exact pinned independent UFCStats-derived L/W fight result. Source narrative 3:30 versus athlete result tile 3:20 is a presentation time discrepancy; saved native measured first round 200 seconds corresponds to 3:20. Source fighter appears as Marina Spasic without accent; canonical source identity and saved native Marina Spasić are same athlete, original numeric fighter ID 41158. One official UFC bout, no missing or second UFC appearance.",
+      "bouts": [
+        {
+          "date": "2026-08-01",
+          "opponent": "Stephanie Luciano",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/878a7e6fec3e4573",
+          "nativeBoutId": "83278",
+          "nativeFighterId": "41158"
+        }
+      ]
+    },
+    "matthieu-duclos": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Matthieu Duclos",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/ec322adbabbfa6e7",
+      "officialFighterUrl": "https://www.ufc.com/athlete/matthieu-letho-duclos",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived source CSV, not direct page retrieval",
+        "method": "Compared complete official UFC.com fighter biography and debut/last result (authoritative biography over unreliable win tile) with pinned complete Greco UFCStats-derived fighter and result index; verified original exact native numeric fighter ID, event date, opponent corners and native winner, plus complete measured round metrics; Stage3 full-cohort CI is the sole certification decision"
+      },
+      "verifiedNumericFighterIds": [
+        "32933"
+      ],
+      "officialUfcCareerBoutCount": 1,
+      "sourceScopeVerified": "Official UFC.com complete debut-to-snapshot chronology under /athlete/matthieu-letho-duclos confirms Sept 5 2026 UFC debut, first-round TKO of Luis Felipe Dias in 4:35. December 5 2026 fight against Rodrigues is upcoming and not counted. August 27 2024 DWCS loss to Marco Tulio excluded from UFC-only career; its saved native ID 84010 remains intact. Pinned Greco UFCStats-derived historical fighter lists exactly one Octagon appearance, source date/result/opponent and exact native 83409, fighter ID 32933, 275 seconds measured. Official UFC page uses Letho Duclos event-display alias, whereas canonical fighter and native identity are Matthieu Duclos.",
+      "bouts": [
+        {
+          "date": "2026-09-05",
+          "opponent": "Luis Felipe Dias",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e5fd7ef7ccf955b8",
+          "nativeBoutId": "83409",
+          "nativeFighterId": "32933"
+        }
+      ]
     }
   }
 }
