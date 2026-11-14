@@ -2603,6 +2603,228 @@
         }
       ],
       "note": "Full official UFC history through 14 Nov 2026: TUF season 34 finale on UFC main card, 139 sec and disqualification, separate excluded nonofficial TUF preliminary bouts; both results supported by UFC written official sources and independent numeric source fighter records. Single native 93174 measured for two separate fighter histories."
+    },
+    "aliaskhab-khizriev": {
+      "fighterName": "Aliaskhab Khizriev",
+      "scope": "complete_official_ufc_career",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/7ab478c397cd68ef",
+      "officialFighterUrl": "https://www.ufc.com/athlete/aliaskhab-khizriev",
+      "verifiedNumericFighterIds": [
+        "1194"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 1
+      },
+      "earliestOfficialUfcBout": "2022-03-26",
+      "latestCompletedOfficialUfcBout": "2024-02-03",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-14",
+        "latestGrecoEvent": "2026-11-07",
+        "directUfcStatsAccess": "not_available; fighter and fight-detail links taken from pinned UFCStats-derived historical archive",
+        "method": "Both official completed UFC fights independently enumerated from UFC athlete's full record and pinned UFCStats-derived fighter/results/events CSV. Official Feb 2024 event/card and opposing Muradov history confirm NC; September 2020 DWCS separately excluded."
+      },
+      "excludedFromOfficialUfc": [
+        {
+          "date": "2020-09-08",
+          "opponent": "Henrique Shiguemoto",
+          "nativeBoutId": "83840",
+          "reason": "Dana White's Contender Series audition, not official UFC career",
+          "sourceUrl": "https://www.ufc.com/athlete/aliaskhab-khizriev"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2022-03-26",
+          "opponent": "Denis Tiuliulin",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6ed495c177d69a3a",
+          "eventUrl": "https://ufcstats.com/event-details/1fac46d466abd5b8",
+          "nativeBoutId": "61440",
+          "nativeFighterId": "1194"
+        },
+        {
+          "date": "2024-02-03",
+          "opponent": "Makhmud Muradov",
+          "result": "no_contest",
+          "fightUrl": "https://ufcstats.com/fight-details/415ea2520b7ba720",
+          "eventUrl": "https://ufcstats.com/event-details/cce79e827569f26e",
+          "nativeBoutId": "59855",
+          "nativeFighterId": "1194",
+          "officialFinalResultUrl": "https://www.ufc.com/news/ufc-fight-night-dolidze-vs-imavov-main-card-results-winner-interviews"
+        }
+      ],
+      "note": "Two official fights, 1-0-1 NC. The 2024 eye-poke NC is preserved with native ID 59855 and no winner. A third saved native row 83840 is an explicitly excluded Sept 2020 DWCS bout, not a missing UFC fight. The provider's old missingLatest/extra-history flags do not invalidate independently exact complete-source evidence."
+    },
+    "alibi-idiris": {
+      "fighterName": "Alibi Idiris",
+      "scope": "complete_official_ufc_career",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/30cad5a751adcb48",
+      "officialFighterUrl": "https://www.ufc.com/athlete/alibi-idiris",
+      "verifiedNumericFighterIds": [
+        "482"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 1
+      },
+      "earliestOfficialUfcBout": "2025-08-16",
+      "latestCompletedOfficialUfcBout": "2026-02-21",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-14",
+        "latestGrecoEvent": "2026-11-07",
+        "directUfcStatsAccess": "not_available; fighter and fight-detail links taken from pinned UFCStats-derived historical archive",
+        "method": "UFC athlete full two-bout career and UFC 319 TUF 33 final, official Feb 2026 event card and March 2026 result amendment independently compared against two pinned UFCStats-derived fighter/bout identities. Greco CSV retains original Osbourne result and therefore final-result authority is UFC official amended event, not stale CSV outcome."
+      },
+      "excludedFromOfficialUfc": [
+        {
+          "event": "The Ultimate Fighter 33 quarterfinal and semifinal",
+          "opponents": "Furkatbek Yokubov; Roybert Echeverria",
+          "reason": "TUF television elimination bouts, unlike completed UFC 319 tournament finale",
+          "sourceUrl": "https://www.ufc.com/athlete/alibi-idiris"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2025-08-16",
+          "opponent": "Joseph Morales",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/68c423c7119004f3",
+          "eventUrl": "https://ufcstats.com/event-details/421ccfc6ddb17958",
+          "nativeBoutId": "60507",
+          "nativeFighterId": "482",
+          "officialTufFinale": true
+        },
+        {
+          "date": "2026-02-21",
+          "opponent": "Ode Osbourne",
+          "result": "no_contest",
+          "fightUrl": "https://ufcstats.com/fight-details/7ffdaa44fc8d111b",
+          "eventUrl": "https://ufcstats.com/event-details/79ab17db3b40831a",
+          "nativeBoutId": "60666",
+          "nativeFighterId": "482",
+          "amendedFinalResultSourceUrl": "https://www.ufc.com/event/ufc-fight-night-february-21-2026",
+          "originalResult": "win_by_unanimous_decision",
+          "amendmentExplanationSourceUrl": "https://www.ufc.com/news/statement-alibi-idiris",
+          "sourceDiscrepancy": "Pinned historical UFCStats-derived Greco result remains L/W; UFC.com current athlete and event officially display NC/NC following the March 2026 anti-doping overturn. Do not silently rewrite Greco source."
+        }
+      ],
+      "note": "Two complete UFC appearances: 2025 TUF 33 tournament FINAL loss, 2026 Osbourne result overturned from decision win to NC. UFC.com event and athlete amended result, saved native outcome both NC; independent historical Greco CSV preserved as stale pre-overturn result for provenance. No third qualifying TUF TV bout treated as UFC official."
+    },
+    "ange-loosa": {
+      "fighterName": "Ange Loosa",
+      "scope": "complete_official_ufc_career",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/1497e735d9f2560a",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ange-loosa",
+      "verifiedNumericFighterIds": [
+        "1027"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 2,
+        "losses": 3,
+        "draws": 0,
+        "noContests": 1
+      },
+      "earliestOfficialUfcBout": "2022-04-16",
+      "latestCompletedOfficialUfcBout": "2025-06-14",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-14",
+        "latestGrecoEvent": "2026-11-07",
+        "directUfcStatsAccess": "not_available; fighter and fight-detail links taken from pinned UFCStats-derived historical archive",
+        "method": "All six source-identified UFCStats-derived result/fighter and event rows independently compared to UFC.com athlete's complete six-fight narrative and original native corner/winner records. March 2024 accidental eye-poke NC preserved; prior Sept 2021 DWCS excluded."
+      },
+      "excludedFromOfficialUfc": [
+        {
+          "date": "2021-09-14",
+          "opponent": "Jack Della Maddalena",
+          "nativeBoutId": "83966",
+          "reason": "DWCS audition prior to UFC debut on 2022-04-16",
+          "sourceUrl": "https://www.ufc.com/athlete/ange-loosa"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2022-04-16",
+          "opponent": "Mounir Lazzez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/559031e51ced0b53",
+          "eventUrl": "https://ufcstats.com/event-details/8753e125f4499816",
+          "nativeBoutId": "61520",
+          "nativeFighterId": "1027"
+        },
+        {
+          "date": "2022-08-20",
+          "opponent": "AJ Fletcher",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/4dac5258f22be059",
+          "eventUrl": "https://ufcstats.com/event-details/4f853e98886283cf",
+          "nativeBoutId": "59847",
+          "nativeFighterId": "1027"
+        },
+        {
+          "date": "2023-09-02",
+          "opponent": "Rhys McKee",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1be27d95bba03f17",
+          "eventUrl": "https://ufcstats.com/event-details/ef61d9f5176b3200",
+          "nativeBoutId": "60072",
+          "nativeFighterId": "1027"
+        },
+        {
+          "date": "2024-03-16",
+          "opponent": "Bryan Battle",
+          "result": "no_contest",
+          "fightUrl": "https://ufcstats.com/fight-details/a7fd9da657bbce8e",
+          "eventUrl": "https://ufcstats.com/event-details/c398235fcaf8d71d",
+          "nativeBoutId": "61237",
+          "nativeFighterId": "1027",
+          "officialResultSourceUrl": "https://www.ufc.com/athlete/ange-loosa"
+        },
+        {
+          "date": "2024-07-13",
+          "opponent": "Gabriel Bonfim",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/dad759ec50508147",
+          "eventUrl": "https://ufcstats.com/event-details/66e0a70352fef46a",
+          "nativeBoutId": "61068",
+          "nativeFighterId": "1027"
+        },
+        {
+          "date": "2025-06-14",
+          "opponent": "Phil Rowe",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/2ae7404681deb3b3",
+          "eventUrl": "https://ufcstats.com/event-details/de277a4abcfeea46",
+          "nativeBoutId": "60294",
+          "nativeFighterId": "1027"
+        }
+      ],
+      "note": "Six completed UFC fights, record 2-3-1 NC. DWCS 2021 Jack Della Maddalena bout is separately excluded from official history. UFC visual Last fight card mislabels the Rowe loss as Win; the official detailed athlete narrative, native winner ID and pinned UFCStats-derived source agree Loosa LOST. Cached provider numeric fight-index manual_review involved a rejected native identity row; independent complete-source mapping does not pretend the provider pagination fully certified. No source/raw native observations overwritten."
     }
   }
 }
