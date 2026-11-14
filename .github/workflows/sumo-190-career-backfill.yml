@@ -27,7 +27,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: research/sumo-190-career-cache-20261114
-          fetch-depth: 0
+          # Fetch recent branch history only; the full repo clone wastes most
+          # of the runner window and contributes nothing to API collection.
+          fetch-depth: 5
           persist-credentials: true
       - name: Install Node 22
         uses: actions/setup-node@v4
