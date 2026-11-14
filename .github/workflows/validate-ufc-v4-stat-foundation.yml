@@ -5,11 +5,13 @@ on:
     branches: [main]
     paths:
       - 'scripts/build-ufc-postfight-metrics.mjs'
+      - 'scripts/ufc-official-event-scope.mjs'
       - 'scripts/build-ufc-v4-stat-foundation.mjs'
       - 'tests/test-ufc-postfight-metrics.mjs'
       - 'tests/test-ufc-v4-stat-foundation.mjs'
       - 'scripts/audit-ufc-v4-exception-causes.mjs'
       - 'tests/test-ufc-v4-exception-causes.mjs'
+      - 'tests/test-ufc-v4-source-scope.mjs'
       - '.github/workflows/validate-ufc-v4-stat-foundation.yml'
 permissions:
   contents: read
@@ -30,6 +32,7 @@ jobs:
           node --test tests/test-ufc-postfight-metrics.mjs
           node --test tests/test-ufc-v4-stat-foundation.mjs
           node --test tests/test-ufc-v4-exception-causes.mjs
+          node --test tests/test-ufc-v4-source-scope.mjs
       - name: Rebuild the complete measured career cache without API calls
         run: node scripts/build-ufc-postfight-metrics.mjs
       - name: Audit the approved 783-fighter Last 5 / Last 10 / Career windows
