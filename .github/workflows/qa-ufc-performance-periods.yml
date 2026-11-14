@@ -1,0 +1,44 @@
+name: QA UFC V3 period analytics (preview only)
+on:
+  push:
+    branches:
+      - feature/ufc-v3-period-analytics-design-20261113
+    paths:
+      - scripts/ufc-performance-periods.mjs
+      - assets/fighter-insights.js
+      - assets/fighter-profile-v3-layout-preview.css
+      - assets/ufc-stat-leaderboards.css
+      - scripts/audit-ufc-career-period-cache.mjs
+      - scripts/build-ufc-postfight-metrics.mjs
+      - tests/test-ufc-career-period-cache.mjs
+      - tests/test-ufc-performance-periods.mjs
+      - .github/workflows/qa-ufc-performance-periods.yml
+  pull_request:
+    branches: [main]
+    paths:
+      - scripts/ufc-performance-periods.mjs
+      - tests/test-ufc-performance-periods.mjs
+      - .github/workflows/qa-ufc-performance-periods.yml
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax check
+        run: |
+          node --check assets/fighter-insights.js
+          node --check scripts/ufc-performance-periods.mjs
+          node --check scripts/audit-ufc-career-period-cache.mjs
+          node --check scripts/build-ufc-postfight-metrics.mjs
+      - name: Test last five, last ten, career and missing-metric safeguards
+        run: |
+          node --test tests/test-ufc-performance-periods.mjs
+          node --test tests/test-ufc-career-period-cache.mjs
+      - name: Audit real cached UFC career histories without source API or public writes
+        run: node scripts/audit-ufc-career-period-cache.mjs

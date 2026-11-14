@@ -31,6 +31,7 @@
  const trackedUfcStats=new Map();
  const openSnapshots=new Set();
  const selectedTabs=new Map();
+ const selectedUfcPeriods=new Map();
  const sampleEvidence=new Map();
  const roundObservations=new Map();
  const levels={red:"red",orange:"orange",gold:"gold",green:"green"};
@@ -262,8 +263,8 @@
   const metric=[['Record',recentRecord,reviewed?decided.length+' fights':'Awaiting review'],
     ['KO/TKO wins',countFinish(/KO|TKO/i),reviewed?decided.length+' fights':'Awaiting review'],
     ['Submission wins',countFinish(/SUB|CHOKE|ARMBAR/i),reviewed?decided.length+' fights':'Awaiting review'],
-    ...['Sig. strikes/min','Strike accuracy','Knockdowns/15 min','Takedowns/15 min',
-       'TD defence','Control/15 min'].map(label=>[label,'—','Stats pending'])];
+    ...['Sig. strikes/min','Net sig. strikes/min','Knockdowns/15 min','Takedowns/15 min',
+       'Control/15 min','Submission attempts/15'].map(label=>[label,'—','Stats pending'])];
   const ratings=ratingsFor(f).filter(x=>x&&typeof x.label==='string').slice(0,5);
   const known=ratings.length?ratings:[{label:'Striking',score:null},{label:'Wrestling',score:null},
    {label:'Grappling',score:null},{label:'Defence',score:null},{label:'Recent Form',score:null}];
@@ -320,10 +321,13 @@
  }
 
  const highlightGroups={slpm:'Striking',sapm:'Defence',diff:'Striking',kd:'Power',td:'Wrestling',control:'Control',net:'Control',sub:'Grappling',acc:'Striking',tdDef:'Defence',ko:'Power',submission:'Grappling'};
- function renderPerformanceHighlights(f,v3){
+ function renderPerformanceHighlights(f,v3,periodId="5"){
   if(!ufcV3||ufcV3.schema<4||v3.recent.filter(b=>b.outcome!=='NC').length<3)return '';
-  const choices=ufcV3.boards.flatMap(b=>{
-   const m=v3.metrics?.[b.id];if(!m||m.bouts<3||m.bouts>5||!Number.isFinite(m.value))return [];
+  const periodMax=periodId==="career"?Infinity:periodId==="10"?10:5;
+  const periodBoards=ufcV3.schema>=5&&ufcV3.periodBoards?
+    ufcV3.periodBoards[periodId]||[]:ufcV3.boards;
+  const choices=periodBoards.flatMap(b=>{
+   const m=v3.metrics?.[b.id];if(!m||m.bouts<3||m.bouts>periodMax||!Number.isFinite(m.value))return [];
    const division=Number.isInteger(m.divisionRank)?m.divisionRank:Number.isInteger(m.divisionalRank)?m.divisionalRank:null;
    const all=Number.isInteger(m.rank)?m.rank:null;
    if(![division,all].some(n=>n!==null&&n>=1&&n<=30))return [];
@@ -335,7 +339,7 @@
   const selected=[],counts={};
   for(const x of choices){if(selected.length>=4)break;if((counts[x.group]||0)>=2)continue;selected.push(x);counts[x.group]=(counts[x.group]||0)+1}
   if(!selected.length)return '';
-  return '<section class="befn-performance-highlights" aria-label="Performance highlights"><header><h3>Performance Highlights</h3><small>Top 30 · Recent UFC performance</small></header>'+
+  return '<section class="befn-performance-highlights" aria-label="Performance highlights"><header><h3>Performance Highlights</h3><small>Top 30 · '+(periodId==='career'?'UFC career':periodId==='10'?'Last 10 UFC':'Last 5 UFC')+' performance</small></header>'+
    '<div class="befn-highlight-grid">'+selected.map(x=>'<div class="befn-highlight-slot"><div class="befn-highlight-card '+(x.best<=3?'is-podium':x.best<=10?'is-elite':'')+'">'+
     '<span>'+escapeHTML(x.label)+'</span><strong>'+escapeHTML(x.value)+'</strong><footer>'+
     (x.division&&x.division<=30?'<b class="'+(x.division<=10?'is-gold':'')+'">#'+x.division+' Division</b>':'')+
@@ -343,6 +347,26 @@
     '</footer></div></div>').join('')+'</div></section>';
  }
  function renderV3Profile(f,v3,kind){
+  // Only expose the selector after a verified period-aware snapshot exists.
+  // Until then the approved schema-4 last-five UI remains functional.
+  const choices=[["5","Last 5"],["10","Last 10"],["career","Career"]];
+  const periodData=ufcV3?.schema>=5&&v3.periods&&ufcV3.periodBoards&&
+   choices.every(([id])=>v3.periods[id]?.available!==true||
+    (v3.periods[id].rankedMetrics&&typeof v3.periods[id].rankedMetrics==="object"))?
+   v3.periods:null;
+  const available=periodData?choices.filter(([id])=>periodData[id]?.available===true):[];
+  const saved=selectedUfcPeriods.get(norm(f.name));
+  const currentPeriod=available.some(([id])=>id===saved)?saved:
+    available.some(([id])=>id==="5")?"5":
+    available.some(([id])=>id==="career")?"career":null;
+  const period=currentPeriod?periodData?.[currentPeriod]:null;
+  const periodControl=periodData?'<div class="befn-v3-period-controls" role="group" aria-label="UFC statistics period">'+
+    choices.map(([id,label])=>'<button type="button" data-befn-ufc-period="'+id+
+      '"'+(periodData[id]?.available===true?'':' disabled')+
+      ' aria-pressed="'+String(currentPeriod===id)+'" class="'+
+      (currentPeriod===id?'is-active':'')+'">'+label+'</button>').join('')+
+    '</div>':'';
+  const rankedV3=period?.rankedMetrics?{...v3,metrics:period.rankedMetrics}:v3;
   const score=v3.power;
   const tier=scoreTier(score);
   const ratings=[['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['defence','Defence'],['form','Recent Form']];
@@ -354,8 +378,9 @@
    acc:'Significant strike accuracy',tdDef:'Takedown defence',
    ko:'KO/TKO wins',submission:'Submission wins'
   };
-  const statRows=ufcV3.boards.filter(b=>v3.metrics[b.id]).map(b=>{
-   const m=v3.metrics[b.id];
+  const rankBoards=period?ufcV3.periodBoards?.[currentPeriod]||[]:ufcV3.boards;
+  const statRows=rankBoards.filter(b=>rankedV3.metrics[b.id]).map(b=>{
+   const m=rankedV3.metrics[b.id];
    const qualified=v3.recent.filter(f=>f.outcome!=='NC').length>=3&&m.bouts>=3;
    const rank=qualified&&ufcV3.schema>=4?m.rank:null;
    const topTen=Number.isInteger(rank)&&rank>=1&&rank<=10;
@@ -369,28 +394,32 @@
     ' · '+m.bouts+' recorded '+(m.bouts===1?'fight':'fights')+'</small></li>';
   }).join('');
   const decided=v3.recent.filter(b=>['W','L','D'].includes(b.outcome));
-  const record=['W','L','D'].map(x=>decided.filter(b=>b.outcome===x).length);
-  // Fixed nine-tile Recent Performance layout. Never invent missing metrics.
-  const tiles=[[decided.length?record[0]+'–'+record[1]+(record[2]?'–'+record[2]:''):'—',
-   'Record',decided.length?decided.length+' fights':'Results unavailable']];
-  for(const [id,label] of [
-   ['ko','KO/TKO wins'],['submission','Submission wins'],
-   ['slpm','Sig. strikes/min'],['acc','Strike accuracy'],
-   ['kd','Knockdowns/15 min'],['td','Takedowns/15 min'],
-   ['tdDef','TD defence'],['control','Control/15 min']
+  const record=period?.record?
+    [period.record.wins,period.record.losses,period.record.draws]:
+    ['W','L','D'].map(x=>decided.filter(b=>b.outcome===x).length);
+  const resultCount=period?.bouts?.length??decided.length;
+  const tiles=[[resultCount?record[0]+'–'+record[1]+(record[2]?'–'+record[2]:''):'—',
+   'Record',resultCount?resultCount+' UFC fights':'Results unavailable']];
+  for(const [id,periodId,label] of [
+   ['ko','ko','KO/TKO wins'],['submission','submission','Submission wins'],
+   ['slpm','slpm','Sig. strikes/min'],['diff','diffpm','Net sig. strikes/min'],
+   ['kd','kd15','Knockdowns/15 min'],['td','td15','Takedowns/15 min'],
+   ['control','control15','Control/15 min'],['sub','sub15','Submission attempts/15']
   ]){
-   const metric=v3.metrics?.[id];
+   const metric=period?period.metrics?.[periodId]:v3.metrics?.[id];
+   const count=period?metric?.measuredBouts:metric?.bouts;
    const measured=metric&&Number.isFinite(metric.value)&&
-    Number.isInteger(metric.bouts)&&metric.bouts>=1&&metric.bouts<=5;
+    Number.isInteger(count)&&count>=1;
    let value='—';
    if(measured){
-    value=id==='control'?(metric.value<0?'−':'')+
-     Math.floor(Math.abs(metric.value)/60)+':'+
-     String(Math.round(Math.abs(metric.value)%60)).padStart(2,'0'):
-     metricValue(metric,id==='ko'||id==='submission'?'count':
-      id==='tdDef'||id==='acc'?'pct':'rate');
+    const numeric=id==='diff'&&!period?metric.value/15:metric.value;
+    value=id==='control'?(numeric<0?'−':'')+
+     Math.floor(Math.abs(numeric)/60)+':'+
+     String(Math.round(Math.abs(numeric)%60)).padStart(2,'0'):
+     metricValue({...metric,value:numeric},id==='ko'||id==='submission'?'count':'rate');
    }
-   tiles.push([value,label,measured?metric.bouts+' of '+Math.min(5,v3.recent.length)+' fights':'Stats unavailable']);
+   const denominator=period?.bouts?.length??Math.min(5,v3.recent.length);
+   tiles.push([value,label,measured?count+' of '+denominator+' UFC fights':'Stats unavailable']);
   }
   return '<section class="befn-profile-insights befn-v3" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC Fighter V3">'+
    '<div class="befn-v3-hero" aria-label="Overall fighter rating"><div class="befn-overall-main"><span class="befn-overall-label">Overall</span><strong class="befn-v3-score is-'+tier+'">'+
@@ -415,10 +444,11 @@
      '<time class="befn-v3-date">'+escapeHTML(b.date||'Date unavailable')+'</time></li>';
    }).join('')+'</ul></details>'+
    '<div class="befn-v3-data-side">'+
-   (tiles.length?'<section class="befn-v3-stat-panel"><h3>Recent Performance</h3><div class="befn-v3-tiles">'+tiles.map(([value,label,sample])=>'<div><strong>'+escapeHTML(value)+'</strong><span>'+escapeHTML(label)+'</span><small>'+escapeHTML(sample)+'</small></div>').join('')+'</div></section>':'')+
+   (tiles.length?'<section class="befn-v3-stat-panel"><h3>UFC Performance</h3>'+periodControl+'<div class="befn-v3-tiles">'+tiles.map(([value,label,sample])=>'<div><strong>'+escapeHTML(value)+'</strong><span>'+escapeHTML(label)+'</span><small>'+escapeHTML(sample)+'</small></div>').join('')+'</div></section>':'')+
    '</div>'+
    '</div>'+
-   renderPerformanceHighlights(f,v3)+
+   (period&&!ufcV3.periodBoards?.[currentPeriod]?'':
+     renderPerformanceHighlights(f,rankedV3,currentPeriod||"5"))+
    (statRows?'<details class="befn-v3-statistics befn-v3-rank-full"><summary>All recent statistics</summary><ul class="befn-v3-rank-tiles">'+statRows+'</ul></details>':'')+
    '</section>';
  }
@@ -432,19 +462,32 @@
    }
    return;
   }
+  const periodChoices=[["5","Last 5"],["10","Last 10"],["career","Career"]];
+  const periodBoardsAvailable=ufcV3.schema>=5&&ufcV3.periodBoards&&
+    periodChoices.some(([id])=>Array.isArray(ufcV3.periodBoards[id])&&ufcV3.periodBoards[id].length>0);
+  let boardPeriod=periodBoardsAvailable&&ufcV3.periodBoards["5"]?.length?"5":
+    periodBoardsAvailable&&ufcV3.periodBoards.career?.length?"career":null;
+  const boardPeriodControls=periodBoardsAvailable?'<div class="befn-board-period-controls" role="group" aria-label="UFC leaderboard period">'+
+    periodChoices.map(([id,label])=>'<button type="button" data-befn-board-period="'+id+'"'+
+      (ufcV3.periodBoards[id]?.length?'':' disabled')+
+      ' aria-pressed="'+String(boardPeriod===id)+'" class="'+
+      (boardPeriod===id?'is-active':'')+'">'+label+'</button>').join('')+
+    '</div>':'';
   root.dataset.ready='true';
   root.innerHTML='<header class="befn-board-head"><div><p class="befn-board-eyebrow">UFC · Recent performance</p><h2>Statistical rankings</h2>'+
    '<p>'+ufcV3.population+' active fighters in this snapshot. Rankings require at least three UFC bouts with that statistic recorded.</p></div>'+
    '<span class="befn-board-date">Updated '+escapeHTML(ufcV3.asOf)+'</span></header>'+
-   '<div class="befn-board-controls"><label for="befn-board-metric">Choose a statistic</label>'+
+   '<div class="befn-board-controls">'+boardPeriodControls+'<label for="befn-board-metric">Choose a statistic</label>'+
    '<select id="befn-board-metric" aria-label="Choose UFC leaderboard statistic">'+ufcV3.boards.map(b=>
     '<option value="'+escapeHTML(b.id)+'">'+escapeHTML(b.label)+'</option>').join('')+
    '</select></div><div class="befn-v3-board-results" aria-live="polite"></div>';
   const select=root.querySelector('select'),results=root.querySelector('.befn-v3-board-results');
   const show=()=>{
-   const board=ufcV3.boards.find(b=>b.id===select.value);
+   const boards=boardPeriod?ufcV3.periodBoards?.[boardPeriod]||[]:ufcV3.boards;
+   const board=boards.find(b=>b.id===select.value);
    if(!board){results.innerHTML='<p class="befn-board-placeholder">No data available for this statistic.</p>';return;}
-   const eligible=board.leaders.filter(row=>row.bouts>=3&&row.bouts<=5&&
+   const maxBouts=boardPeriod==="career"?Infinity:boardPeriod==="10"?10:5;
+   const eligible=board.leaders.filter(row=>row.bouts>=3&&row.bouts<=maxBouts&&
     Number.isFinite(row.value)&&Number.isInteger(row.rank)&&row.rank>=1);
    const display=eligible.slice(0,30);
    const heading=board.label+' · '+board.eligible+' qualifying UFC fighters';
@@ -468,6 +511,20 @@
     '<p class="befn-board-placeholder">No athletes yet qualify for this category.</p>');
   };
   select.addEventListener('change',show);
+  root.querySelectorAll('[data-befn-board-period]').forEach(button=>{
+   button.addEventListener('click',()=>{
+    if(button.disabled)return;
+    const chosen=button.dataset.befnBoardPeriod;
+    if(!ufcV3.periodBoards?.[chosen]?.length)return;
+    boardPeriod=chosen;
+    for(const b of root.querySelectorAll('[data-befn-board-period]')){
+     const active=b.dataset.befnBoardPeriod===chosen;
+     b.classList.toggle('is-active',active);
+     b.setAttribute('aria-pressed',String(active));
+    }
+    show();
+   });
+  });
   show();
  }
  function applyV3(f){
@@ -705,6 +762,18 @@
   schedule();
  }
 
+ document.addEventListener("click",e=>{
+  const button=e.target.closest?.("[data-befn-ufc-period]");
+  if(!button||button.disabled)return;
+  const host=button.closest(".befn-profile-insights[data-befn-profile]");
+  const fighter=host&&byId.get(host.dataset.befnProfile);
+  const v3=fighter&&v3For(fighter);
+  const period=button.dataset.befnUfcPeriod;
+  if(!v3||ufcV3?.schema<5||v3.periods?.[period]?.available!==true)return;
+  selectedUfcPeriods.set(norm(fighter.name),period);
+  host.outerHTML=renderProfile(fighter);
+  layoutV3Dialog();
+ },true);
  document.addEventListener("click",e=>{
   const btn=e.target.closest?.("[data-befn-history-tab]");
   if(!btn)return;
@@ -1031,7 +1100,7 @@
   }).catch(()=>{});
 
  fetch("data/ufc-fighter-v3.json").then(r=>r.ok?r.json():null).then(data=>{
-  if(![3,4].includes(data?.schema)||!Array.isArray(data.boards)||!data.fighters)return;
+  if(![3,4,5].includes(data?.schema)||!Array.isArray(data.boards)||!data.fighters)return;
   ufcV3=data;
   for(const f of profiles)applyV3(f);
   if(document.querySelector('#fighterGrid'))window.dispatchEvent(new Event('hashchange'));

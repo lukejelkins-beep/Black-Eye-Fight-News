@@ -40,3 +40,23 @@
  .befn-board-value{font-size:18px}
 }
 @media(prefers-reduced-motion:reduce){.befn-board-name a{scroll-behavior:auto}}
+
+
+/* UFC-only 5/10/Career period filter, isolated from the other sports. */
+.befn-board-period-controls{display:flex;gap:5px;flex:0 0 auto}
+.befn-board-period-controls button{
+ min-height:42px;padding:8px 11px;background:#fffaf2;border:1px solid #aaa296;
+ border-radius:8px;color:#25201c;white-space:nowrap;cursor:pointer;
+ font:800 12px/1.1 "DM Sans",sans-serif
+}
+.befn-board-period-controls button.is-active{
+ background:#292327;border-color:#292327;color:#f6dfad
+}
+.befn-board-period-controls button:disabled{opacity:.42;cursor:not-allowed}
+.befn-board-period-controls button:focus-visible{
+ outline:3px solid #a23927;outline-offset:2px
+}
+@media(max-width:680px){
+ .befn-board-period-controls{margin-bottom:12px}
+ .befn-board-period-controls button{flex:1;padding:8px 6px}
+}
