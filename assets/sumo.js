@@ -1,6 +1,6 @@
 import {
   SOURCE_URL, JSA_URL, DIVISIONS, bashoLabel, divisionOf, recordSummary,
-  rankTable, leadingRikishi, currentDay, dailyResults, validMatchSamples,
+  rankTable, leadingRikishi, currentDay, dailyResults, validMatchSamples, currentBashoMatchSample,
   techniqueDistribution, detailFor, banzukeFor, searchRikishi, snapshotDate
 } from './sumo-data.mjs';
 
@@ -176,24 +176,37 @@ function recordChart(item) {
   '<p class="footnote">Current banzuke record: '+s.win+' W / '+s.loss+' L / '+s.absence+' absences. '+(div==='Makushita'?'Lower division bout sequence is shown; exact calendar day is not inferred.':'Completed result entries only; future days may be unavailable.')+'</p>';
 }
 function profileResults(w, limit) {
-  const enriched=detailFor(details(),w.sourceId), matches=validMatchSamples(enriched,w.sourceId);
-  if(!matches.length) return '<p class="missing">Detailed opponents, techniques and recent results have not yet been individually collected for this wrestler. The current banzuke record appears above.</p>';
+  const enriched=detailFor(details(),w.sourceId);
+  const sourced=validMatchSamples(enriched,w.sourceId);
+  const matches=sourced.length ? sourced : currentBashoMatchSample(entryFor(w),details().bashoId);
+  if(!matches.length) return '<p class="missing">No completed opponent records are available for this rikishi in the current snapshot. Missing results are not inferred.</p>';
   const subset=matches.slice(0,limit);
+  const link=x=>Number.isSafeInteger(x.opponentId)&&x.opponentId>0&&wrestler(x.opponentId)
+    ?'<a class="method" href="#profile/'+x.opponentId+'">Opponent profile ↗</a>'
+    :'<span class="method">Opponent profile outside current tracked cohort</span>';
+  const label=x=>x.day?'Day '+x.day:(x.boutSequence?'Bout '+x.boutSequence:'Day unavailable');
+  const maxNext=limit===5?10:18;
   return '<div class="results-grid">'+subset.map(x=>
-    '<div class="result-item"><div class="result-head"><span>'+e(bashoLabel(x.bashoId))+' / day '+(x.day||'?')+'</span><span class="outcome '+x.outcome+'">'+e(x.outcome.toUpperCase())+'</span></div>'+
-    '<span class="opponent">'+e(x.opponent)+'</span><a class="method" href="#profile/'+x.opponentId+'">Opponent profile ↗</a><p class="method">'+e(x.isFusen?'Fusen (forfeit)':x.kimarite||'Technique not supplied')+'</p></div>'
+    '<div class="result-item"><div class="result-head"><span>'+e(bashoLabel(x.bashoId))+' · '+e(label(x))+'</span><span class="outcome '+x.outcome+'">'+e(x.outcome.toUpperCase())+'</span></div>'+
+    '<span class="opponent">'+e(x.opponent)+'</span>'+link(x)+'<p class="method">'+e(x.isFusen?'Fusen (forfeit)':x.kimarite||'Technique not supplied')+'</p></div>'
   ).join('')+'</div>'+
-  (matches.length>limit?'<div class="more-wrap"><button class="btn light" data-profile-limit="'+(limit===5?10:18)+'">VIEW LATEST '+(limit===5?'10':'18')+' CACHED BOUTS</button></div>':'')+
-  '<p class="footnote">Only '+matches.length+' recent bout records have been cached for this featured rikishi. These are not the full career history.</p>';
+  (matches.length>limit?'<div class="more-wrap"><button class="btn light" data-profile-limit="'+maxNext+'">VIEW LATEST '+Math.min(maxNext,matches.length)+' CACHED BOUTS</button></div>':'')+
+  '<p class="footnote">'+(sourced.length
+    ?'Only '+matches.length+' recent bout records were fetched for this featured rikishi. These are not the complete career history.'
+    :'Current '+e(bashoLabel(details().bashoId))+' banzuke only: '+matches.length+' completed bouts with recorded opponents. The dates of Makushita bouts are not inferred from their sequence.')+'</p>';
 }
 function profileTechniques(w) {
   const enriched=detailFor(details(),w.sourceId);
-  const matches=Array.isArray(enriched?.matches?.data?.records)?enriched.matches.data.records:[];
-  const dist=techniqueDistribution(matches,w.sourceId);
-  if(!dist.sampleWins) return '<p class="missing">Not enough cached bout results to calculate a defensible technique distribution. No fighting-style scores are inferred.</p>';
+  const direct=Array.isArray(enriched?.matches?.data?.records)?enriched.matches.data.records:[];
+  const fallback=currentBashoMatchSample(entryFor(w),details().bashoId)
+    .filter(x=>x.outcome==='win').map(x=>({winnerId:w.sourceId,kimarite:x.kimarite}));
+  const sample=direct.length?direct:fallback;
+  const dist=techniqueDistribution(sample,w.sourceId);
+  if(!dist.sampleWins) return '<p class="missing">Not enough recorded non-forfeit wins to calculate a meaningful technique breakdown. No fighting-style scores are inferred.</p>';
+  const scope=direct.length?'cached recent bout sample':'current '+bashoLabel(details().bashoId)+' tournament only';
   return '<div>'+dist.techniques.slice(0,7).map(x=>
     '<div class="chart-row"><span class="name">'+e(x.technique)+'</span><div class="bar-bg" role="meter" aria-label="'+e(x.technique)+' percentage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+x.percentage+'"><div style="width:'+x.percentage+'%"></div></div><strong>'+x.percentage+'%</strong></div>'
-  ).join('')+'</div><p class="footnote">Distribution of '+dist.sampleWins+' winning techniques in the cached <strong>recent match sample only</strong>. This is not a career percentage or verified stylistic preference. Forfeits excluded.</p>';
+  ).join('')+'</div><p class="footnote">Distribution of '+dist.sampleWins+' recorded winning techniques from the <strong>'+e(scope)+'</strong>. These are not career percentages or verified stylistic preferences. Forfeits excluded.</p>';
 }
 function renderProfile(id) {
   const w=wrestler(id);
@@ -234,7 +247,7 @@ function renderProfile(id) {
     '<p><strong>BEFN overall:</strong> withheld pending a defensible, sumo-specific model. No invented technique or strength scores.</p>'+
     '<a class="btn light" href="#kimarite">LEARN THE KIMARITE</a></div></section></div>'+
     heading('Recorded opponents','Recent performance')+
-    '<p class="section-intro">The latest 5 and 10 completed bouts are displayed only where source records are available. Complete UFC-style career switching will follow after sumo historical collection is complete.</p>'+
+    '<p class="section-intro">All tracked rikishi show available results from the current banzuke, and featured wrestlers can show a larger recent match sample. Switch between five and up to ten or eighteen cached bouts where available; a full-career view requires verified historical collection.</p>'+
     profileResults(w,STATE.profileLimit)+
     heading('Wins, titles, prizes','Career honours')+honHtml+
     heading('Rise through the ranks','Banzuke history')+
