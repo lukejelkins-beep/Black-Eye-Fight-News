@@ -165,6 +165,14 @@ export function main(){
     hasExtraRoundPositiveValues:x.extraRoundHasPositiveValues,
     extraRoundNonzeroValues:x.extraRoundNonzeroValues,
     fighterReferences:x.references?.map(v=>v.fighterSlug)}))));
+ console.log("BEFN_V4_LAST5_EXCEPTIONS "+JSON.stringify(
+  out.cases.filter(x=>x.band==="last5").map(x=>({
+   boutId:x.boutId,cause:x.cause,action:x.action,event:x.event,date:x.date,
+   expectedRounds:x.expectedRounds,recordedRounds:x.archivedRoundNumbers,
+   afterFinishValues:x.extraRoundNonzeroValues,
+   fighterReferences:x.references,
+   reviewReason:x.sourceReviewReason
+  }))));
  console.log("BEFN_V4_UNEXPECTED_JOIN "+JSON.stringify(
   out.cases.filter(x=>x.cause==="unexpected_postfight_join_gap").map(x=>{
    const b=read("data/ufcalendar-rich-progress.json").bouts?.[x.boutId]||{};
