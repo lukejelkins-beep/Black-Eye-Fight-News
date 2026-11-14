@@ -25891,6 +25891,144 @@
           "excludedBecause": "Official UFC.com biography identifies DWCS feeder fight, not an Octagon career contest"
         }
       ]
+    },
+    "gabriel-santos": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Gabriel Santos",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/f2f140ce7532e327",
+      "officialFighterUrl": "https://www.ufc.com/athlete/gabriel-santos",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independently downloaded Greco UFCStats-derived snapshot, not a live UFCStats scrape",
+        "method": "Official UFC.com fully dated career biographies cross-reconciled against exact historical pinned Greco fight URLs/outcomes plus original immutable native numeric fighter and both opposing corner IDs, complete measured rounds, all documented feeders excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "2768"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Official UFC athlete biography explicitly documents full four UFC bouts from 2023-03-18 debut through 2025-02-08: 2023-03-18 split decision loss Lerone Murphy, 2023-06-24 KO loss David Onama, 2024-09-07 unanimous decision win Yizha, 2025-02-08 submission win Jack Jenkins. UFC.com graphics Win badge for Onama is misleading; detailed official narrative, pinned Greco and original native winners confirm loss.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/gabriel-santos",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2023-03-18",
+          "opponent": "Lerone Murphy",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/533984c3ff4b4858",
+          "nativeBoutId": "59661",
+          "nativeFighterId": "2768"
+        },
+        {
+          "date": "2023-06-24",
+          "opponent": "David Onama",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/582806c33ce6dcf6",
+          "nativeBoutId": "60156",
+          "nativeFighterId": "2768"
+        },
+        {
+          "date": "2024-09-07",
+          "opponent": "Yizha",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6e9876d2be2bbd02",
+          "nativeBoutId": "61112",
+          "nativeFighterId": "2768"
+        },
+        {
+          "date": "2025-02-08",
+          "opponent": "Jack Jenkins",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c35a53be30bfd066",
+          "nativeBoutId": "60984",
+          "nativeFighterId": "2768"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    },
+    "hailey-cowan": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Hailey Cowan",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/3c26c420584d912d",
+      "officialFighterUrl": "https://www.ufc.com/athlete/hailey-cowan",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independently downloaded Greco UFCStats-derived snapshot, not a live UFCStats scrape",
+        "method": "Official UFC.com fully dated career biographies cross-reconciled against exact historical pinned Greco fight URLs/outcomes plus original immutable native numeric fighter and both opposing corner IDs, complete measured rounds, all documented feeders excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "585"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Official UFC complete athlete biography confirms four UFC bouts: 2023-04-29 decision loss Jamey-Lyn Horth, 2025-04-12 submission loss Nora Cornolle, 2026-04-04 KO loss Alice Pereira, 2026-08-01 KO loss Nina Milošević. Separately attested 2022-08-16 DWCS split decision win over Claudia Leite is a feeder fight, not a fifth Octagon bout. UFC.com summary Win badges for these losses are corrected using full official narratives and native winners.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/hailey-cowan",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2023-04-29",
+          "opponent": "Jamey-Lyn Horth",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e434035be5453be0",
+          "nativeBoutId": "53873",
+          "nativeFighterId": "585"
+        },
+        {
+          "date": "2025-04-12",
+          "opponent": "Nora Cornolle",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0e71e69359db4d1e",
+          "nativeBoutId": "60978",
+          "nativeFighterId": "585"
+        },
+        {
+          "date": "2026-04-04",
+          "opponent": "Alice Pereira",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/74bb036ef0493bf7",
+          "nativeBoutId": "60707",
+          "nativeFighterId": "585"
+        },
+        {
+          "date": "2026-08-01",
+          "opponent": "Nina Milošević",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f78f34ef2ee7b02c",
+          "nativeBoutId": "82926",
+          "nativeFighterId": "585"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84152",
+          "date": "2022-08-16",
+          "opponent": "Cláudia Leite",
+          "result": "win",
+          "event": "Dana White's Contender Series 50",
+          "officialSourceUrl": "https://www.ufc.com/athlete/hailey-cowan",
+          "excludedBecause": "Primary UFC.com athlete biography separately confirms DWCS feeder appearance, excluded from completed official UFC Octagon chronology"
+        }
+      ]
     }
   }
 }
