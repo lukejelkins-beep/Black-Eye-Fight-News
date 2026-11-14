@@ -37,7 +37,7 @@
       "complete": false,
       "skip": 9,
       "total": null,
-      "attempts": 0,
+      "attempts": 1,
       "updatedAt": "2026-11-14T22:04:18.750Z",
       "responseShape": "direct-array",
       "source": "https://www.sumo-api.com/api/ranks?rikishiId=9084&limit=200&skip=0&sortOrder=asc"
@@ -1058,5 +1058,16 @@
       }
     ]
   },
-  "errors": []
+  "errors": [
+    {
+      "at": "2026-11-14T22:05:06.149Z",
+      "stage": "ranks",
+      "message": "Empty ranks page despite more records",
+      "transient": false
+    }
+  ],
+  "profileRequestContract": 2,
+  "historyResponseContract": 2,
+  "matchPaginationContract": 3,
+  "rankPaginationContract": 2
 }

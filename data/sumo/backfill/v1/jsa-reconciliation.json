@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "scope": "Published JSA field spotchecks only; not full-career certifications",
   "publishedAsOf": "2026-11-15",
-  "checkedProfiles": 9,
+  "checkedProfiles": 10,
   "fullyMatchingPublicFields": 6,
-  "discrepancies": 3,
+  "discrepancies": 4,
   "explainedCutoffDifferences": 2,
-  "unexplainedDifferences": 1,
+  "unexplainedDifferences": 2,
   "certifiedCareers": 0,
   "bySourceId": {
     "2": {
@@ -723,6 +723,83 @@
         "aligned": true,
         "note": "The JSA source has a pending Day 7 bout. Removing the API Day 7 result reconciles the records at the same cutoff; historical certification is still outstanding."
       },
+      "careerCertified": false,
+      "notes": "Do not overwrite conflicting values without source time alignment."
+    },
+    "82": {
+      "sumoApiId": 82,
+      "name": "Fujiseiun",
+      "officialAsOf": "2026-11 day 7, Day 7 result pending on JSA page",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4093/",
+      "status": "requires-reconciliation",
+      "fieldCounts": {
+        "matched": 8,
+        "discrepant": 2,
+        "unavailable": 0
+      },
+      "fields": [
+        {
+          "field": "sumoApiId",
+          "official": 82,
+          "api": 82,
+          "state": "match"
+        },
+        {
+          "field": "officialNskId",
+          "official": 4093,
+          "api": 4093,
+          "state": "match"
+        },
+        {
+          "field": "name",
+          "official": "Fujiseiun",
+          "api": "Fujiseiun",
+          "state": "match"
+        },
+        {
+          "field": "currentRank",
+          "official": "Maegashira 2 West",
+          "api": "Maegashira 2 West",
+          "state": "match"
+        },
+        {
+          "field": "stable",
+          "official": "Fujishima",
+          "api": "Fujishima",
+          "state": "match"
+        },
+        {
+          "field": "heightCm",
+          "official": 185,
+          "api": 185,
+          "state": "match"
+        },
+        {
+          "field": "weightKg",
+          "official": 149,
+          "api": 149,
+          "state": "match"
+        },
+        {
+          "field": "careerWins",
+          "official": 205,
+          "api": 206,
+          "state": "discrepancy"
+        },
+        {
+          "field": "careerLosses",
+          "official": 131,
+          "api": 130,
+          "state": "discrepancy"
+        },
+        {
+          "field": "careerAbsences",
+          "official": 29,
+          "api": 29,
+          "state": "match"
+        }
+      ],
+      "cutoffAlignment": null,
       "careerCertified": false,
       "notes": "Do not overwrite conflicting values without source time alignment."
     }
