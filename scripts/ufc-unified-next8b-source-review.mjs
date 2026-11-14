@@ -22,6 +22,16 @@ const candidates=[
 ];
 if(approval.status!=='approved'||approval.approvedFighters.length!==783||
  new Set(approval.approvedFighters).size!==783)throw Error('Immutable approved cohort required');
+// This one-time pinned source extraction must never re-fetch after all eight
+// athlete careers have been separately certified by the full Stage3 gate.
+if(candidates.every(([slug])=>prior.fighters?.[slug]?.sourceCoverageAttested===true)){
+ console.log('BEFN_NEXT8B_SUMMARY '+JSON.stringify({
+  status:'already_certified_source_wave',candidates:candidates.length,
+  outboundRequests:0,paidUfcalendarCalls:0,certificationGrantedByThisScript:false,
+  note:'Reuse canonical Stage3 certifications and latest successful strict audit; no repeated Greco download.'
+ }));
+ process.exit(0);
+}
 const pinned='c742842f29466758fedc3906dbad28d6d320a8da';
 const sha={ufc_fighter_details:'7141332f0b319edbc10d006b229050ee947e7336',
  ufc_event_details:'00cee85291a014d1d65e3f638129bac0a6d50f61',
