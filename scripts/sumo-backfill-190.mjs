@@ -103,7 +103,11 @@ export function combinePage(doc,stage,result,id){
   }
   const state=doc.stages[stage],total=direct?null:result.total==null?null:Number(result.total);
   const next=state.skip+items.length;
-  const more=direct?items.length===PAGE_SIZE:
+  // Some historical list endpoints enforce an undocumented 100-row page,
+  // even when limit=200 is requested. For rank history, compare against the
+  // fighter's independent career basho count rather than trusting page size.
+  const more=direct?(items.length===PAGE_SIZE||
+    (stage==='ranks'&&Number(doc.data.stats?.basho)>next)):
     (result.has_more??result.hasMore??(stage==='matches'
       ?items.length===PAGE_SIZE||(total!==null&&total>next)
       :(total===null?null:next<total)));
@@ -232,6 +236,19 @@ async function ensureCache(w){
       stored.errors.push({at:clock(),stage:'matches',message:'Reopened 200-bout page: career stats indicate more history',transient:false});
     }
     stored.matchPaginationContract=3;
+  }
+  if(stored.rankPaginationContract!==2){
+    const rankStage=stored.stages.ranks;
+    const knownBasho=Number(stored.data.stats?.basho)||0;
+    const actualRanks=stored.data.ranks||[];
+    const formalRankCount=actualRanks.filter(x=>x.rank!=='Mae-zumo'&&x.rank!=='Banzuke-gai').length;
+    if(rankStage?.complete&&actualRanks.length===100&&knownBasho>formalRankCount){
+      rankStage.complete=false;
+      rankStage.total=null;
+      rankStage.skip=actualRanks.length;
+      stored.errors.push({at:clock(),stage:'ranks',message:'Reopened provider-capped 100-entry ranking history',transient:false});
+    }
+    stored.rankPaginationContract=2;
   }
   return stored;
 }
