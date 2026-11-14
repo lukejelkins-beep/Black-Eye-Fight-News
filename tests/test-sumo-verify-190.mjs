@@ -12,7 +12,7 @@ function complete(){
  d.data.measurements=[{id:'202611-28',rikishiId:28,bashoId:'202611',height:173,weight:138}];
  d.data.ranks=[{id:'202611-28',rikishiId:28,bashoId:'202611',rank:w.currentRank}];
  d.data.shikonas=[{id:'201503-28',rikishiId:28,bashoId:'201503',shikonaEn:'Ura'}];
- d.data.matches=[{bashoId:'202611',day:1,matchNo:12,eastId:28,westId:10}];
+ d.data.matches=[{bashoId:'202611',day:1,matchNo:12,eastId:28,westId:10,winnerId:28}];
  for(const stage of ['measurements','ranks','shikonas','matches'])d.stages[stage].total=1;
  return d;
 }
@@ -116,4 +116,37 @@ test('Kirishima historic Banzuke-gai is valid nonranked status, not a fake rank'
   assert.equal(report.counts.formalRanks,1);
   assert.ok(!report.errors.includes('malformed-rank-value'));
   assert.ok(!report.errors.includes('rank-history-basho-count-mismatch'));
+});
+
+test('complete source histories report exact match-ledger W-L reconciliation without certification',()=>{
+  const d=complete();
+  const out=auditRikishi(w,d);
+  assert.equal(out.boutLedger.regularRows,1);
+  assert.equal(out.boutLedger.wins,1);
+  assert.equal(out.boutLedger.losses,0);
+  assert.equal(out.boutLedger.winDifference,0);
+  assert.equal(out.boutLedger.lossDifference,0);
+  assert.equal(out.boutLedger.missingWinner,0);
+  assert.equal(out.careerCertified,false);
+});
+test('out-of-sync API totals preserve real bout records and highlight a one-loss difference',()=>{
+  const d=complete();
+  d.data.matches.push({bashoId:'202611',day:2,matchNo:11,eastId:28,westId:9,winnerId:9});
+  d.stages.matches.total=2;
+  const result=auditRikishi(w,d);
+  assert.ok(result.errors.includes('career-regular-bout-count-mismatch'));
+  assert.equal(result.boutLedger.regularRows,2);
+  assert.equal(result.boutLedger.winDifference,0);
+  assert.equal(result.boutLedger.lossDifference,1);
+  assert.equal(result.boutLedger.totalDifference,1);
+  assert.equal(result.readyForExternalCrosscheck,false);
+  assert.equal(result.careerCertified,false);
+});
+test('a finished match ledger without identifiable winners never counts as verified',()=>{
+  const d=complete();
+  delete d.data.matches[0].winnerId;
+  const out=auditRikishi(w,d);
+  assert.ok(out.errors.includes('match-winner-missing'));
+  assert.equal(out.boutLedger.missingWinner,1);
+  assert.equal(out.readyForExternalCrosscheck,false);
 });
