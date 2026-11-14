@@ -16,6 +16,8 @@ on:
       - 'tests/test-ufc-v4-career-verification.mjs'
       - 'scripts/build-ufc-v4-shadow-ratings.mjs'
       - 'tests/test-ufc-v4-shadow-ratings.mjs'
+      - 'scripts/audit-ufc-v4-release-gates.mjs'
+      - 'tests/test-ufc-v4-release-gates.mjs'
       - 'scripts/audit-ufc-v4-exception-causes.mjs'
       - 'tests/test-ufc-v4-exception-causes.mjs'
       - 'tests/test-ufc-v4-source-scope.mjs'
@@ -45,6 +47,7 @@ jobs:
           node --test tests/test-ufc-v4-stat-foundation.mjs
           node --test tests/test-ufc-v4-career-verification.mjs
           node --test tests/test-ufc-v4-shadow-ratings.mjs
+          node --test tests/test-ufc-v4-release-gates.mjs
           node --test tests/test-ufc-v4-exception-causes.mjs
           node --test tests/test-ufc-v4-source-scope.mjs
           node --test tests/test-ufc-v4-metric-availability.mjs
@@ -63,6 +66,8 @@ jobs:
         run: node scripts/audit-ufc-v4-career-verification.mjs
       - name: Calculate shadow UFC-only V4 ratings and strict pre-fight backtest
         run: node scripts/build-ufc-v4-shadow-ratings.mjs
+      - name: Enforce historical career and experimental model release blockers
+        run: node scripts/audit-ufc-v4-release-gates.mjs
       - name: Publish audit as non-production workflow artifact only
         if: always()
         uses: actions/upload-artifact@v4
@@ -75,5 +80,6 @@ jobs:
             qa/ufc-v4-source-conflict-triage.json
             qa/ufc-v4-career-verification-queue.json
             qa/ufc-v4-shadow-ratings.json
+            qa/ufc-v4-release-readiness.json
           retention-days: 14
           if-no-files-found: warn
