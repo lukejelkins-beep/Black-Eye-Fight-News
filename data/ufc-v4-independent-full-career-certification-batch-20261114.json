@@ -7,7 +7,7 @@
   "nonproduction": true,
   "sourceMethod": "full_official_ufc_fight_listing_crosscheck",
   "independentSourceDataset": "Greco1899 UFCStats-derived historical results, source snapshot through 2026-11-07; source-linked fight detail URLs are references, not a claim of direct UFCStats website access",
-  "notes": "Independent exhaustive scope crosschecked against UFC official fighter bios, last fight/debut, and UFCStats-derived third party 12-fight lists. Native IDs, corners, winners, measured metrics and date offsets must be validated again in CI; do not count certs from this file alone. Event titles are display-only and are not exact-match certification requirements. Narrow opponent name aliases are independently grounded in official UFC biographies. Seven additional fighter-by-fighter full official UFC biographies independently reviewed against the pinned 8 Nov Greco UFCStats source, 94 source-linked bouts across eight candidates, and strict native identity/metrics preflight. Sean Woodson excluded from certification due to unresolved result and DWCS row, not counted. Sean Woodson independently verified: exactly 11 UFC bouts including UFC 278 split draw and excluding source-confirmed 2019 DWCS non-UFC bout (native id 84014), without changing collector-owned cache. Five additional official UFC career histories were independently source-reviewed, with three UFC-backed DWCS exclusions newly added, and submitted to the strict nonproduction certification CI. Additional official UFC biography reviews, with exact independently linked UFC fight results, recorded in nonproduction source-attestation cohort. Await strict GitHub native-ID and stats certification gate. Ten already certified Stage3 official full-career histories separately revalidated through the same strict V4 native fighter ID, official event scope, winner and full required measured stat gates in successful CI run 43560373659 (10 passed, zero blocked). This is source reuse, NOT ten new unique athletes when comparing main and V4. Wave 3: 11 independently reviewed full UFC biography listings crosschecked against targeted pinned UFCStats-derived 11 individual career histories; source URLs per bout, native corners, date offsets and measured statistics still subject to strict V4 CI gate. Five additional UFC careers: Da'Mon, Pearce, Casey source opponent aliases independently traced to dated official UFC results and existing native IDs; Alessandro/Bruna DWCS exclusions independently source-verified, Bruna Road to UFC semifinal excluded. Final strict V4 check mandatory. STRICT CORRECTION 2026-11-14: Bruna Brasil excluded from this attested certification batch until 2025-08-22 Shi Ming official UFC showcase fight (native 60900) is included and its measured native statistics are reconciled. UFC's official report describes Shi-Brasil as one of two UFC bouts on the Road to UFC show; source-linked full UFCStats fight-details/abf5f4d6f777cf7b. Seven-only UFC career is incomplete. Do not reattest seven. Bruna Brasil 2025-08-22 Shi Ming has been added as eighth official UFC fight (verified showcase; NOT RTU qualifier). Keep DWCS Marnic Mann excluded. Do not certify if 60900 is not measured, source-linked or matched in native official record. Seven further career histories independently reviewed against UFC athlete record narratives (including official TUF finales and title fights) plus pinned Greco UFCStats source; submitted to strict per-fight source and numeric native metric gates. Wave-four additional independent official biography/source mapping for 8 source-complete eligible careers, with independently confirmed DWCS exclusions; Jean Silva retained for same-name UFCStats athlete ID disambiguation. Fifth-wave source-attested, native-linked full UFC histories with individually verified feeder exclusions. Edgar Chairez 2023 NC and Julia Polastri alias mismatch explicitly remain uncertified pending native reconciliation.",
+  "notes": "Independent exhaustive scope crosschecked against UFC official fighter bios, last fight/debut, and UFCStats-derived third party 12-fight lists. Native IDs, corners, winners, measured metrics and date offsets must be validated again in CI; do not count certs from this file alone. Event titles are display-only and are not exact-match certification requirements. Narrow opponent name aliases are independently grounded in official UFC biographies. Seven additional fighter-by-fighter full official UFC biographies independently reviewed against the pinned 8 Nov Greco UFCStats source, 94 source-linked bouts across eight candidates, and strict native identity/metrics preflight. Sean Woodson excluded from certification due to unresolved result and DWCS row, not counted. Sean Woodson independently verified: exactly 11 UFC bouts including UFC 278 split draw and excluding source-confirmed 2019 DWCS non-UFC bout (native id 84014), without changing collector-owned cache. Five additional official UFC career histories were independently source-reviewed, with three UFC-backed DWCS exclusions newly added, and submitted to the strict nonproduction certification CI. Additional official UFC biography reviews, with exact independently linked UFC fight results, recorded in nonproduction source-attestation cohort. Await strict GitHub native-ID and stats certification gate. Ten already certified Stage3 official full-career histories separately revalidated through the same strict V4 native fighter ID, official event scope, winner and full required measured stat gates in successful CI run 43560373659 (10 passed, zero blocked). This is source reuse, NOT ten new unique athletes when comparing main and V4. Wave 3: 11 independently reviewed full UFC biography listings crosschecked against targeted pinned UFCStats-derived 11 individual career histories; source URLs per bout, native corners, date offsets and measured statistics still subject to strict V4 CI gate. Five additional UFC careers: Da'Mon, Pearce, Casey source opponent aliases independently traced to dated official UFC results and existing native IDs; Alessandro/Bruna DWCS exclusions independently source-verified, Bruna Road to UFC semifinal excluded. Final strict V4 check mandatory. STRICT CORRECTION 2026-11-14: Bruna Brasil excluded from this attested certification batch until 2025-08-22 Shi Ming official UFC showcase fight (native 60900) is included and its measured native statistics are reconciled. UFC's official report describes Shi-Brasil as one of two UFC bouts on the Road to UFC show; source-linked full UFCStats fight-details/abf5f4d6f777cf7b. Seven-only UFC career is incomplete. Do not reattest seven. Bruna Brasil 2025-08-22 Shi Ming has been added as eighth official UFC fight (verified showcase; NOT RTU qualifier). Keep DWCS Marnic Mann excluded. Do not certify if 60900 is not measured, source-linked or matched in native official record. Seven further career histories independently reviewed against UFC athlete record narratives (including official TUF finales and title fights) plus pinned Greco UFCStats source; submitted to strict per-fight source and numeric native metric gates. Wave-four additional independent official biography/source mapping for 8 source-complete eligible careers, with independently confirmed DWCS exclusions; Jean Silva retained for same-name UFCStats athlete ID disambiguation. Fifth-wave source-attested, native-linked full UFC histories with individually verified feeder exclusions. Edgar Chairez 2023 NC and Julia Polastri alias mismatch explicitly remain uncertified pending native reconciliation. Jean Silva independently official-biography crosschecked eight UFC Octagon fights, exact Greco Lord (not White Bear) fighter ID, 2023 DWCS Kevin Vallejos feeder exclusion and all eight source-linked saved native IDs; strict CI must agree before certification.",
   "fighters": {
     "maryna-moroz": {
       "fighterName": "Maryna Moroz",
@@ -8240,6 +8240,89 @@
           "nativeBoutId": "59659",
           "nativeSavedDate": "2023-03-18",
           "originalOfficialDate": "2023-03-18"
+        }
+      ]
+    },
+    "jean-silva": {
+      "fighterName": "Jean Silva",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/jean-silva",
+      "fighterUrl": "https://ufcstats.com/fighter-details/52ef95b5860fb28c",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 8,
+      "uniqueNativeFighterId": "236",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/jean-silva",
+        "https://www.ufc.com/event/ufc-fight-night-september-12-2026",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceScopeVerified": "Official UFC.com fighter biography exhaustively lists eight completed Octagon bouts from Westin Wilson on Jan 13 2024 to Jose Miguel Delgado on Sep 12 2026. All eight dates, opponents and outcomes individually match pinned Greco UFCStats-derived fight links and saved native fight IDs. His Sep 5 2023 Kevin Vallejos bout is explicitly Dana White's Contender Series, not an official UFC career fight. Name-disambiguated source fighter Jean Silva 'Lord' /52ef95b5860fb28c, NOT same-name Jean Silva 'White Bear' /9211aae062b799d6; source records and saved native fighter ID 236 corroborate this.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-09-12",
+          "opponent": "Jose Delgado",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/034c04e480d87b8f",
+          "nativeBoutId": "83816",
+          "nativeSavedDate": "2026-09-12"
+        },
+        {
+          "date": "2026-01-24",
+          "opponent": "Arnold Allen",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/836a188a90e479a5",
+          "nativeBoutId": "60640",
+          "nativeSavedDate": "2026-01-24"
+        },
+        {
+          "date": "2025-09-13",
+          "opponent": "Diego Lopes",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/de1a3734be60e6a1",
+          "nativeBoutId": "38221",
+          "nativeSavedDate": "2025-09-13"
+        },
+        {
+          "date": "2025-04-12",
+          "opponent": "Bryce Mitchell",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8c540eb4afe8c43e",
+          "nativeBoutId": "60969",
+          "nativeSavedDate": "2025-04-12"
+        },
+        {
+          "date": "2025-02-22",
+          "opponent": "Melsik Baghdasaryan",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8ef7723b6a8b45e1",
+          "nativeBoutId": "38531",
+          "nativeSavedDate": "2025-02-22"
+        },
+        {
+          "date": "2024-07-13",
+          "opponent": "Drew Dober",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/54de03e04f571735",
+          "nativeBoutId": "61067",
+          "nativeSavedDate": "2024-07-13"
+        },
+        {
+          "date": "2024-06-29",
+          "opponent": "Charles Jourdain",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2b7883b304b3df1c",
+          "nativeBoutId": "61048",
+          "nativeSavedDate": "2024-06-29"
+        },
+        {
+          "date": "2024-01-13",
+          "opponent": "Westin Wilson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0494ebcee93e717b",
+          "nativeBoutId": "59922",
+          "nativeSavedDate": "2024-01-13"
         }
       ]
     }
