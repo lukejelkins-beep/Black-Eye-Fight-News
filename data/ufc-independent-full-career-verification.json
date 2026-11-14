@@ -18684,6 +18684,71 @@
           ]
         }
       ]
+    },
+    "jose-henrique": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Jose Souza",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/20a0e4cc5227c117",
+      "officialFighterUrl": "https://www.ufc.com/athlete/jose-souza",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent Greco UFCStats-derived historical records, no direct UFCStats page access claimed",
+        "method": "Official UFC.com exhaustive José Souza/José Henrique two-fight dated biography source and event scorecards reconciled with pinned UFCStats-derived fighter/fight IDs and exact existing numeric native ID 286 in both corners. Explicit source-proven athlete alias, paired opponent IDs, wins and measured rounds; DWCS excluded by saved native 88254. Full strict Stage3 separate."
+      },
+      "verifiedNumericFighterIds": [
+        "286"
+      ],
+      "sourceVerifiedNativeNameAliases": [
+        "Jose Henrique"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "José Souza (source UFCStats 20a0e4cc5227c117) and original cached José Henrique (native fighter 286) are the same fighter on official UFC.com primary athlete biography, which uses both names, and exact paired fight source. Complete UFC professional Octagon record 2026-05-30 win Ding Meng native 66109, 2026-11-07 win Jonny Parsons native 93282; independently source excluded 2022-08-30 DWCS loss Kinoshita native 88254; source-reconciled two UFC fights with full numeric native corner identities, dates and winner ID; Stage3 measured-round proof mandatory.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/jose-souza",
+        "https://www.ufc.com/athlete/jonny-parsons",
+        "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-prelim-results",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43577162061",
+      "disambiguation": {
+        "verifiedUfcStatsFighterId": "20a0e4cc5227c117",
+        "sourceName": "Jose Souza",
+        "nativeOriginalName": "Jose Henrique",
+        "sourceOfficialUfcFighterUrl": "https://www.ufc.com/athlete/jose-souza",
+        "nativeOriginalNumericFighterId": "286",
+        "matchedOriginalUfcSourceOppositeJonnyParsonsBoutId": "93282",
+        "nativeIdNeverRewritten": true
+      },
+      "separatelySourceExcludedFeederNativeBoutIds": [
+        "88254"
+      ],
+      "bouts": [
+        {
+          "date": "2026-05-30",
+          "opponent": "Ding Meng",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/bc0b3c16246e0d1d",
+          "nativeBoutId": "66109",
+          "nativeFighterId": "286"
+        },
+        {
+          "date": "2026-11-07",
+          "opponent": "Jonny Parsons",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e2cd8521c8ba55b2",
+          "nativeBoutId": "93282",
+          "nativeFighterId": "286"
+        }
+      ]
     }
   }
 }
