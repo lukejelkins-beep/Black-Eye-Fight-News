@@ -1,0 +1,41 @@
+name: UFC Gantt through Xiong six full careers strict Stage3 (research)
+on:
+  push:
+    branches: [research/ufc-next6-gantt-xiong-20261114]
+    paths:
+      - 'data/ufc-independent-full-career-verification.json'
+      - 'data/ufc-feeder-bout-evidence.json'
+      - 'tests/test-ufc-unified-gantt-xiong-six-evidence.mjs'
+      - '.github/workflows/ufc-gantt-xiong-six-strict-stage3.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  full-cohort-strict-stage3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify 12 complete UFC fight identities, Gantt alias, five feeders and previous evidence
+        run: |
+          node --test tests/test-ufc-unified-gantt-xiong-six-evidence.mjs
+          node --test tests/test-ufc-unified-pedro-rodrigo-evidence.mjs
+          node --test tests/test-ufc-unified-wave8-wave9-evidence.mjs
+          node --test tests/test-ufc-36-month-stage3-progress.mjs
+          node --test tests/test-ufc-v4-certification-queue.mjs
+      - name: Full frozen 783-person independently reconciled career and rounds gate
+        run: |
+          node scripts/ufc-36-month-stage3-progress.mjs
+          node scripts/ufc-v4-certification-queue.mjs
+      - name: Research-only strict audit artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-gantt-xiong-six-full-cohort-stage3
+          path: |
+            qa/ufc-36-month-stage3-progress.json
+            qa/ufc-v4-certification-queue.json
+          if-no-files-found: warn
