@@ -66,3 +66,35 @@ test('rejects missing independently linked source fight',()=>{
  const f=fixture();f.batch.fighters[target].bouts[0].fightUrl='';
  assert.throws(()=>certifyAttestedFullCareers(f.approval,f.research,f.progress,f.postfight,f.base,f.batch),/invalid_duplicate_source_link/);
 });
+
+test('source-linked official draw recorded with completed status and method draw passes',()=>{
+ const f=fixture(),slug=target;
+ f.research.profiles[slug].recentHistory[0].result='draw';
+ f.batch.fighters[slug].bouts[0].result='draw';
+ f.progress.bouts['60915'].status='completed';
+ f.progress.bouts['60915'].result={method:'draw',winnerId:null};
+ const r=certifyAttestedFullCareers(f.approval,f.research,f.progress,f.postfight,f.base,f.batch);
+ assert.equal(r.report.certifiedCount,1);
+ assert.equal(r.registry.fighters[slug].bouts[0].result,'draw');
+});
+test('method draw never overrides a real declared winner conflict',()=>{
+ const f=fixture(),slug=target;
+ f.research.profiles[slug].recentHistory[0].result='draw';
+ f.batch.fighters[slug].bouts[0].result='draw';
+ f.progress.bouts['60915'].result={method:'draw',winnerId:'2'};
+ assert.throws(()=>certifyAttestedFullCareers(f.approval,f.research,f.progress,f.postfight,f.base,f.batch),
+ /native_result_disagrees_with_official/);
+});
+test('exact official DWCS fight excluded while retained in professional history',()=>{
+ const f=fixture(),slug=target;
+ f.research.profiles[slug].recentHistory.push({promotion:'ufc',source:'native',
+  date:'2019-07-23',opponent:'Terrance McKinney',result:'win',boutId:'84014'});
+ const verified={schema:1,bouts:[{boutId:'84014',fighterSlug:slug,date:'2019-07-23',
+  opponent:'Terrance McKinney',event:"Dana White's Contender Series",
+  sourceUrl:'https://www.ufc.com/athlete/sean-woodson'}]};
+ assert.throws(()=>certifyAttestedFullCareers(f.approval,f.research,f.progress,f.postfight,
+   f.base,f.batch),/official_vs_saved_career_length/);
+ const r=certifyAttestedFullCareers(f.approval,f.research,f.progress,f.postfight,
+   f.base,f.batch,verified);
+ assert.equal(r.report.certifiedCount,1);
+});
