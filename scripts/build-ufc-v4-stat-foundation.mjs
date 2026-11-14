@@ -13,6 +13,7 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {isFeederUfcEvent} from "./ufc-official-event-scope.mjs";
 import {evaluateCareerEvidence} from "./ufc-36-month-stage3-progress.mjs";
+import {certifyAttestedFullCareers} from "./certify-ufc-v4-independent-full-careers.mjs";
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const validDay=x=>/^\d{4}-\d\d-\d\d$/.test(String(x||""));
@@ -284,17 +285,34 @@ export function buildV4StatFoundation(approval,research,progress,postfight,
 }
 function read(name){return JSON.parse(fs.readFileSync(path.join(root,name),"utf8"))}
 export function main(){
+ const approval=read("data/ufc-36-month-roster-approval.json");
+ const research=read("data/ufcalendar-fighter-research.json");
+ const progress=read("data/ufcalendar-rich-progress.json");
+ const measured=read("data/ufc-postfight-metrics.json");
+ const independentBase=read("data/ufc-independent-full-career-verification.json");
+ const sourceBatch=read("data/ufc-v4-independent-full-career-certification-batch-20261114.json");
+ // Independent source attestation is never a shortcut past the exact
+ // canonical native ID, fighter identity, UFC scope, outcome, or stats gates.
+ const proof=certifyAttestedFullCareers(approval,research,progress,measured,independentBase,sourceBatch);
  const out=buildV4StatFoundation(
-  read("data/ufc-36-month-roster-approval.json"),
-  read("data/ufcalendar-fighter-research.json"),
-  read("data/ufcalendar-rich-progress.json"),
-  read("data/ufc-postfight-metrics.json"),
-  {asOf:new Date().toISOString().slice(0,10),
+  approval,research,progress,measured,
+  {asOf:approval.rosterAsOf,
    census:read("data/ufc-36-month-candidates.json"),
-   independentEvidence:read("data/ufc-independent-full-career-verification.json"),
+   independentEvidence:proof.registry,
    feederEvidence:read("data/ufc-feeder-bout-evidence.json")}
  );
  if(out.population!==783)throw Error("Immutable BEFN cohort must contain 783 fighters");
+ for(const certified of proof.report.certifiedFighters){
+  if(out.fighters?.[certified.slug]?.independentlyCertifiedCareer!==true)
+   throw Error("BEFN V4: independently attested fighter failed final full-career proof "+certified.slug);
+ }
+ fs.mkdirSync(path.join(root,"qa"),{recursive:true});
+ fs.writeFileSync(path.join(root,"qa/ufc-v4-independent-full-career-certifications.json"),
+  JSON.stringify(proof.report,null,2)+"\n");
+ console.log("BEFN_V4_INDEPENDENT_CERTIFIED "+JSON.stringify({
+  count:proof.report.certifiedCount,
+  fighters:proof.report.certifiedFighters.map(x=>({slug:x.slug,bouts:x.nativeBoutsMatched,
+   dateOffsets:x.dateOffsets,nativeFighterId:x.nativeFighterId}))}));
  const file=path.join(root,"qa/ufc-v4-stat-foundation.json");
  fs.mkdirSync(path.dirname(file),{recursive:true});
  fs.writeFileSync(file,JSON.stringify(out,null,2)+"\n");
