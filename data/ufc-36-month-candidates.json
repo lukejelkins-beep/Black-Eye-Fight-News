@@ -15,23 +15,23 @@
     "latestPromotionReviewRequired": 0,
     "noKnownLaterMmaOrUnknown": 783,
     "activeFighters": 783,
-    "withFiveKnown": 488,
-    "withFiveLinkedIds": 488,
-    "withThreeMeasured": 605,
-    "withShortUfcTimelineReconciled": 3,
-    "withUfcHistoryLinkedAndMeasured": 435,
+    "withFiveKnown": 490,
+    "withFiveLinkedIds": 490,
+    "withThreeMeasured": 606,
+    "withShortUfcTimelineReconciled": 1,
+    "withUfcHistoryLinkedAndMeasured": 433,
     "evidenceStages": {
       "fiveLinkedMeasured": 432,
-      "fiveLinkedStatsGap": 56,
+      "fiveLinkedStatsGap": 58,
       "fiveUnlinked": 0,
-      "shortLinkedMeasuredDepthConfirmed": 3,
+      "shortLinkedMeasuredDepthConfirmed": 1,
       "shortLinkedMeasuredDepthUnconfirmed": 254,
       "shortLinkedStatsGapDepthConfirmed": 0,
       "shortLinkedStatsGap": 38,
       "shortUnlinked": 0
     },
     "needHistoryCheck": 292,
-    "needStats": 94,
+    "needStats": 96,
     "shiftedDateAliasesJoined": 346,
     "uniqueKnownBoutIds": 1951
   },
@@ -39613,12 +39613,12 @@
       "champion": false,
       "upcoming": false,
       "ranked": false,
-      "recentCount": 2,
+      "recentCount": 5,
       "measuredCount": 2,
-      "evidenceStage": "shortLinkedMeasuredDepthConfirmed",
-      "ufcTimelineDepthConfirmed": true,
+      "evidenceStage": "fiveLinkedStatsGap",
+      "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": false,
-      "needsStats": false,
+      "needsStats": true,
       "recent": [
         {
           "date": "2025-10-18",
@@ -39630,6 +39630,24 @@
           "hasMeasuredTotals": true
         },
         {
+          "date": "2025-10-18",
+          "opponent": "Bruno Silva",
+          "boutId": "38150",
+          "method": "submission",
+          "outcome": "L",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        },
+        {
+          "date": "2025-08-03",
+          "opponent": "Tatsuro Taira",
+          "boutId": "60752",
+          "method": "submission",
+          "outcome": "L",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        },
+        {
           "date": "2025-05-17",
           "opponent": "Carlos Hernandez",
           "boutId": "83242",
@@ -39637,6 +39655,15 @@
           "outcome": "W",
           "origin": "ufc-bout-index",
           "hasMeasuredTotals": true
+        },
+        {
+          "date": "2023-12-10",
+          "opponent": "Shannon Ross",
+          "boutId": "59943",
+          "method": "ko_tko",
+          "outcome": "W",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
         }
       ]
     },
@@ -41508,12 +41535,12 @@
       "champion": false,
       "upcoming": false,
       "ranked": false,
-      "recentCount": 1,
-      "measuredCount": 1,
-      "evidenceStage": "shortLinkedMeasuredDepthConfirmed",
-      "ufcTimelineDepthConfirmed": true,
+      "recentCount": 5,
+      "measuredCount": 4,
+      "evidenceStage": "fiveLinkedStatsGap",
+      "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": false,
-      "needsStats": false,
+      "needsStats": true,
       "recent": [
         {
           "date": "2025-05-17",
@@ -41523,6 +41550,42 @@
           "outcome": "L",
           "origin": "ufc-bout-index",
           "hasMeasuredTotals": true
+        },
+        {
+          "date": "2024-11-23",
+          "opponent": "Nyamjargal Tumendemberel",
+          "boutId": "38594",
+          "method": "decision_split",
+          "outcome": "W",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2024-06-29",
+          "opponent": "Rei Tsuruya",
+          "boutId": "61052",
+          "method": "decision_unanimous",
+          "outcome": "L",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2023-12-10",
+          "opponent": "Tatsuro Taira",
+          "boutId": "59946",
+          "method": "ko_tko",
+          "outcome": "L",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": true
+        },
+        {
+          "date": "2023-06-17",
+          "opponent": "Denys Bondar",
+          "boutId": "60174",
+          "method": "decision_unanimous",
+          "outcome": "W",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
         }
       ]
     },
