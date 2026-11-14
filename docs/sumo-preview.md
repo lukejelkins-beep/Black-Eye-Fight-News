@@ -1,66 +1,74 @@
-# BEFN Sumo section — isolated test build
+# BEFN Sumo — three-division test implementation
 
-**Date:** 14 November 2026  
-**Branch:** feat/sumo-section-test-20261114  
-**Base for this work:** feat/sumo-api-source-20261114 (draft PR #194; API adapter)  
-**Entry page:** /sumo.html  
-**Production status:** NOT deployed. No production/main changes have been made by this development work.
+**Status:** Draft PR #196, testing only, not merged or deployed.  
+**Date:** 14 November 2026.  
+**Development branch:** feat/sumo-section-test-20261114  
+**Base:** feat/sumo-api-source-20261114 (API adapter draft PR #194).  
+**Entry:** sumo.html.  
+**Production:** main, Render and blackeyefightnews.com.au remain unchanged by this workstream.
 
-## Approved tracked roster
+## Current tracked roster
 
-This phase follows **all wrestlers currently ranked** in the three highest professional divisions, using the provider's current banzuke and wrestler roster. Lower divisions are not part of the active tracked directory. The roster is recalculated on every explicit source-snapshot build, so promotion or relegation moves a wrestler in or out of the selected cohort automatically.
+Track all rikishi listed in the current **Makuuchi, Juryo and Makushita** banzuke, including the Yokozuna, Ozeki, Sekiwake and Komusubi positions inside Makuuchi. The cohort is not permanently fixed at 190: new snapshots recalculate membership against the three division's published banzuke IDs, not against an arbitrary fixed list. The builder refuses duplicated IDs, unreconciled identities, missing divisions or partially fetched source data.
 
-As of the captured November 2026 API snapshot:
-
-| Division | Wrestlers |
+| Division | November 2026 current banzuke |
 | --- | ---: |
-| Makuuchi (Yokozuna, Ozeki, Sekiwake, Komusubi, Maegashira) | 42 |
+| Makuuchi | 42 |
 | Juryo | 28 |
 | Makushita | 120 |
-| **Total** | **190** |
+| **Tracked total** | **190** |
 
-The source returned 596 rikishi before eligibility filtering. This is *not* a permanent or capped list; it is determined by current rank. The source snapshot date is embedded in JSON and shown on the pages.
+The 14 November source roster held 596 identities in all divisions. The snapshot matched all 190 current banzuke IDs to stored rikishi with no extra/missing IDs or conflicting ranks.
 
-## Built pages
+## Implemented screens and interactions
 
-- **Sumo homepage**: dark/cream BEFN identity, sport navigation, title banner, current roster counts, one featured wrestler from each division, Makuuchi leaders and links to the other sections.
-- **Rikishi directory**: all 190 wrestlers, division filters, name/kanji/heya/birthplace search, browsable cards with current rank.
-- **Rikishi profile**: every tracked wrestler gets a profile route \`sumo.html#profile/<sumoApiId>\`, source identity, height, weight, stable and birth info when provided, current basho W/L/A from the division's banzuke, and results in a card design consistent with other BEFN profiles. Three featured wrestlers currently have additional source stats and recent bout history.
-- **Basho centre**: November 2026 tournament summary, all three divisional standings, previous completed matches for Makuuchi and Juryo and lower-division Makushita results. No live-status claim.
-- **Banzuke**: all three ranks with East/West ordering, per-rikishi wins, losses and absences.
-- **Kimarite**: technique reference, sampling explanation, and source-linked winning-method breakdown for the featured athletes.
-- **Integration**: the test-branch version of \`index.html\` has a Sumo link in its main and sport navigation. The existing sport-switch JS remains unchanged and all other sports retain their routes.
+1. **Overview** — matches BEFN's existing black/cream/gold/red branding and approved sport icon imagery; a current basho banner, three-division totals, featured wrestler cards and Makuuchi leaders.
+2. **Rikishi directory** — all 190 wrestler profiles, ranked per current banzuke, searchable by shikona (Japanese and Romanised), stable, origin or rank; per-division filters and paged cards.
+3. **Wrestler profile** — desktop portrait/identity/performance arrangement and condensed mobile arrangement; rank, stable, date of birth, birthplace, height and weight from the source; the November 2026 tournament outcome grid; existing opponent data and available kimarite percentages. Direct JSA profile links use separate official NSK IDs. No athlete photos are imported without rights.
+4. **Technique panels** — current-basho winning method distributions for wrestlers with recorded wins, labelled by sample and denominator. The featured profiles additionally use up to 18 recent source bout records. Unknown lifetime percentages, style scores and source gaps are never guessed.
+5. **JSA signature manoeuvres** — a separate evidence file records JSA-listed manoeuvres for Onosato (tsuki, oshi, migi-yotsu, yori), Wakatakakage (migi-yotsu, yori), and Nishikigi (oshi), each with its official JSA profile URL. These are **source-listed styles, not calculated win percentages**. Nishikigi's reviewed JSA page only showed September 2026 at the time of inspection; current rank is therefore taken from the separate November banzuke snapshot, not declared cross-certified by that older page.
+6. **Basho Centre** — November 2026 event dates, standings and calendar-day results for all three divisions, with day controls and outcome/kimarite details.
+7. **Banzuke** — complete three-division rankings in East/West rank order, W/L and absence fields only where the source supports them.
+8. **Kimarite reference** — a nine-technique explanatory catalogue with a link to the official JSA classification.
 
-## Sourced data & hard limits
+## Important Makushita interpretation
 
-- \`data/sumo/rikishi-index.json\`: 190 ranked identity/physical records out of 596 source athletes.
-- \`data/sumo/preview-details.json\`: all three current banzuke and featured match/stat samples.
-- Featured individual enrichment: **Onosato (Makuuchi), Wakatakakage (Juryo), Nishikigi (Makushita)**, with 18 recent results requested where the API supports them.
-- No automatic polling or background refresh enabled. A controlled action on the **test branch only** can refresh snapshots; the helper makes up to 16 read-only requests per run, validates the roster, and atomically writes the result.
-- Career stats, full historical banzuke progressions and opponent lists are **not complete** across all 190 athletes. These display explicit “not collected” messages, not fabricated analytics.
-- Makushita typically has seven fought bouts across a 15-day basho. The preview does **not** map sequential Makushita bout records onto consecutive calendar days.
-- Wins and losses, absences, forfeits and unplayed matches remain distinct. Techniques are counted only where the wrestler is the winner; forfeits do not count as a wrestling technique.
-- No fighter photographs have been imported: illustrated silhouette placeholders are intentional until image permissions are confirmed.
-- The API provider requests webmaster contact from users planning a website. Public republishing and bulk automated collection should remain pending a use-terms clarification and source spot-checks against the official Japan Sumo Association.
+**The API gives 15 calendar-day positions for Makushita, although wrestlers normally fight approximately seven bouts during the basho.** Its `absent` result can appear on routine non-bout days. Treating those positions as injury absences produced incorrect records and has been corrected.
 
-## How to review
+- Count `win` and `loss` outcomes only as completed bouts; keep their **actual calendar-day positions**.
+- Treat `absent` in Makushita as *no recorded bout* unless independent bout/kyujo evidence proves an absence. Show Makushita absence totals as unknown, rather than fabricating a numeric value.
+- Distinguish forfeits (fusen) from a performed wrestling technique; they are excluded from technique frequency charts.
+- Leave future/unrecorded day slots distinct from non-bout days and from losses.
 
-From a checkout of this branch, serve the repository with any static HTTP server; for example:
+The snapshot's Makushita 120-person banzuke has 15 slots per entry, with most wrestlers having 3–4 recorded results through day seven; this supports calendar-day interpretation rather than consecutive-bout numbering.
 
-\`\`\`bash
-python3 -m http.server 8000
-# Then open http://localhost:8000/sumo.html
-\`\`\`
+## Stored source data
 
-Do not open the HTML as \`file://\`, because JSON snapshots are loaded with \`fetch()\`.
+- data/sumo/rikishi-index.json — current 190 eligible identities and measurements (derived from 596-source roster).
+- data/sumo/preview-details.json — all three November 2026 current banzuke, event details and extended stats/matches for Onosato, Wakatakakage, Nishikigi.
+- data/sumo/official-style-evidence.json — small verified JSA style registry for those three example profiles.
+- scripts/sumo-build-preview.mjs — bounded, explicitly invoked build-time snapshot update using the read-only Sumo API source adapter.
+- assets/sumo-data.mjs — testable ranking, match, technique and eligibility calculations.
+- assets/sumo.js, assets/sumo.css, sumo.html, assets/sumo-nav.css — responsive user-facing preview.
 
-Navigate Overview → Rikishi → Profile, try division filters, compare the current Makuuchi/Juryo/Makushita banzuke, and inspect mobile layouts.
+The source API is https://www.sumo-api.com/api and its guide is https://www.sumo-api.com/api-guide. Official source comparisons: https://www.sumo.or.jp/EnSumoDataRikishi/search.
 
-## Automated tests
+## QA and access
 
-- Source adapter: \`node --test tests/test-sumo-api-source.mjs\`.
-- Sumo data and preview: \`node --test tests/test-sumo-data.mjs\`.
-- Syntax: \`node --check assets/sumo.js\` and \`node --check assets/sumo-data.mjs\`.
-- Dedicated action: \`.github/workflows/sumo-section-qa.yml\`; has no deployment steps.
+- Source-client tests: node --test tests/test-sumo-api-source.mjs.
+- Three-division data, source evidence and UI contract tests: node --test tests/test-sumo-data.mjs.
+- Browser QA: GitHub Actions workflow **Sumo desktop and mobile browser QA** visits the Overview, directory/search, featured and nonfeatured profiles, three divisional banzuke, basho and techniques at 1440px desktop and 390px mobile. Screenshots and the QA summary are downloadable as a short-retention GitHub Actions artifact.
+- CI workflow **Sumo section isolated preview QA** checks source contracts, rank/ID data, JS syntax and isolation from production.
+- Local review: check out this branch, run `python3 -m http.server 8000` and open http://localhost:8000/sumo.html. A local HTTP server is necessary because the pages fetch JSON.
 
-**Next release gates:** licensed imagery/provider contact; fuller 190-person stats/match collection within provider limits; proper official JSA reconciliation; browser-based cross-device QA; optional independent Render test service; explicit user production approval. Do not merge this work as part of unrelated UFC profile certification or boxing changes.
+**Draft review:** https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/196  
+**API prerequisite:** https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/194
+
+## Remaining gates / planned extensions
+
+- Provider asks websites using the service to make contact. Confirm public-use terms before broad historical enrichment, automatic scheduled collection or production deployment.
+- Collect and independently reconcile historical basho/banzuke data for all 190, career matches, rank progression, lifetime historical records, and more JSA-sourced signature manoeuvres; retain timestamp and source provenance.
+- Add wrestler photography only once rights or permitted official embeds are established.
+- Add a validated Sumo-specific overall/style model only after enough verified data is available. Do not invent ratings.
+- Optionally deploy an independent Render test service **after the user selects the Render workspace and approves any costs or new resources**.
+- Obtain explicit release approval before merging the stacked PRs into main. Keep unrelated UFC certification, boxing and other BEFN automation work untouched.
