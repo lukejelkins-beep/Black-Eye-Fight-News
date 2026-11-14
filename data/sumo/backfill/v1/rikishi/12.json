@@ -9,25 +9,29 @@
   "certification": "not-started",
   "stages": {
     "profile": {
-      "complete": false,
+      "complete": true,
       "skip": 0,
       "total": null,
-      "attempts": 1,
-      "updatedAt": null
+      "attempts": 0,
+      "updatedAt": "2026-11-14T21:36:52.004Z",
+      "source": "https://www.sumo-api.com/api/rikishi/12"
     },
     "stats": {
-      "complete": false,
+      "complete": true,
       "skip": 0,
       "total": null,
       "attempts": 0,
-      "updatedAt": null
+      "updatedAt": "2026-11-14T21:36:52.708Z",
+      "source": "https://www.sumo-api.com/api/rikishi/12/stats"
     },
     "measurements": {
-      "complete": false,
-      "skip": 0,
+      "complete": true,
+      "skip": 2,
       "total": null,
       "attempts": 0,
-      "updatedAt": null
+      "updatedAt": "2026-11-14T21:36:53.409Z",
+      "responseShape": "direct-array",
+      "source": "https://www.sumo-api.com/api/measurements?rikishiId=12&limit=200&skip=0&sortOrder=asc"
     },
     "ranks": {
       "complete": false,
@@ -52,9 +56,84 @@
     }
   },
   "data": {
-    "profile": null,
-    "stats": null,
-    "measurements": [],
+    "profile": {
+      "id": 12,
+      "sumodbId": 12370,
+      "nskId": 3761,
+      "shikonaEn": "Wakatakakage",
+      "shikonaJp": "若隆景　渥",
+      "currentRank": "Juryo 5 West",
+      "heya": "Arashio",
+      "birthDate": "1994-12-06T00:00:00Z",
+      "shusshin": "Fukushima-ken, Fukushima-shi",
+      "height": 183,
+      "weight": 138,
+      "debut": "201703"
+    },
+    "stats": {
+      "absenceByDivision": {
+        "Juryo": 15,
+        "Makushita": 0,
+        "Makuuchi": 87,
+        "Sandanme": 0
+      },
+      "basho": 58,
+      "bashoByDivision": {
+        "Juryo": 15,
+        "Makushita": 7,
+        "Makuuchi": 34,
+        "Sandanme": 2
+      },
+      "lossByDivision": {
+        "Juryo": 82,
+        "Makushita": 13,
+        "Makuuchi": 164,
+        "Sandanme": 2
+      },
+      "sansho": {
+        "Gino-sho": 7,
+        "Shukun-sho": 1
+      },
+      "totalAbsences": 102,
+      "totalByDivision": {
+        "Juryo": 202,
+        "Makushita": 49,
+        "Makuuchi": 423,
+        "Sandanme": 14
+      },
+      "totalLosses": 261,
+      "totalMatches": 688,
+      "totalWins": 427,
+      "winsByDivision": {
+        "Juryo": 120,
+        "Makushita": 36,
+        "Makuuchi": 259,
+        "Sandanme": 12
+      },
+      "yusho": 6,
+      "yushoByDivision": {
+        "Juryo": 1,
+        "Makushita": 2,
+        "Makuuchi": 2,
+        "Sandanme": 1
+      }
+    },
+    "measurements": [
+      {
+        "id": "201703-12",
+        "bashoId": "201703",
+        "rikishiId": 12,
+        "height": 180,
+        "weight": 115
+      },
+      {
+        "id": "202103-12",
+        "bashoId": "202103",
+        "rikishiId": 12,
+        "height": 180,
+        "weight": 129
+      }
+    ],
     "ranks": [],
     "shikonas": [],
     "matches": []
@@ -66,5 +145,8 @@
       "message": "Sumo API HTTP 400",
       "transient": false
     }
-  ]
+  ],
+  "profileRequestContract": 2,
+  "historyResponseContract": 2,
+  "matchPaginationContract": 3
 }

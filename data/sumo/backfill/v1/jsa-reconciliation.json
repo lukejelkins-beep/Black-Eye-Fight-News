@@ -5,6 +5,8 @@
   "checkedProfiles": 4,
   "fullyMatchingPublicFields": 2,
   "discrepancies": 2,
+  "explainedCutoffDifferences": 2,
+  "unexplainedDifferences": 0,
   "certifiedCareers": 0,
   "bySourceId": {
     "2": {
@@ -80,6 +82,7 @@
           "state": "match"
         }
       ],
+      "cutoffAlignment": null,
       "careerCertified": false,
       "notes": "Basic fields only. Bout-by-bout history, historical measurements and photographs remain separate gates."
     },
@@ -88,7 +91,7 @@
       "name": "Hakunofuji",
       "officialAsOf": "2026-11 day 7",
       "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4187/",
-      "status": "requires-reconciliation",
+      "status": "explained-source-cutoff",
       "fieldCounts": {
         "matched": 9,
         "discrepant": 1,
@@ -156,6 +159,15 @@
           "state": "match"
         }
       ],
+      "cutoffAlignment": {
+        "source": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4187/",
+        "bashoId": "202611",
+        "jsaLatestCompletedDay": 6,
+        "apiLatestCompletedDay": 7,
+        "apiBoutOutcome": "loss",
+        "aligned": true,
+        "note": "The JSA source has a pending Day 7 bout. Removing the API Day 7 result reconciles the records at the same cutoff; historical certification is still outstanding."
+      },
       "careerCertified": false,
       "notes": "Do not overwrite conflicting values without source time alignment."
     },
@@ -232,6 +244,7 @@
           "state": "match"
         }
       ],
+      "cutoffAlignment": null,
       "careerCertified": false,
       "notes": "Basic fields only. Bout-by-bout history, historical measurements and photographs remain separate gates."
     },
@@ -240,7 +253,7 @@
       "name": "Ura",
       "officialAsOf": "2026-11 day 7",
       "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3616/",
-      "status": "requires-reconciliation",
+      "status": "explained-source-cutoff",
       "fieldCounts": {
         "matched": 9,
         "discrepant": 1,
@@ -308,6 +321,15 @@
           "state": "match"
         }
       ],
+      "cutoffAlignment": {
+        "source": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3616/",
+        "bashoId": "202611",
+        "jsaLatestCompletedDay": 6,
+        "apiLatestCompletedDay": 7,
+        "apiBoutOutcome": "loss",
+        "aligned": true,
+        "note": "The JSA source has a pending Day 7 bout. Removing the API Day 7 result reconciles the records at the same cutoff; historical certification is still outstanding."
+      },
       "careerCertified": false,
       "notes": "Do not overwrite conflicting values without source time alignment."
     }
