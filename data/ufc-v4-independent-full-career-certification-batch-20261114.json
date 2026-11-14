@@ -7,7 +7,7 @@
   "nonproduction": true,
   "sourceMethod": "full_official_ufc_fight_listing_crosscheck",
   "independentSourceDataset": "Greco1899 UFCStats-derived historical results, source snapshot through 2026-11-07; source-linked fight detail URLs are references, not a claim of direct UFCStats website access",
-  "notes": "Independent exhaustive scope crosschecked against UFC official fighter bios, last fight/debut, and UFCStats-derived third party 12-fight lists. Native IDs, corners, winners, measured metrics and date offsets must be validated again in CI; do not count certs from this file alone. Event titles are display-only and are not exact-match certification requirements. Narrow opponent name aliases are independently grounded in official UFC biographies. Seven additional fighter-by-fighter full official UFC biographies independently reviewed against the pinned 8 Nov Greco UFCStats source, 94 source-linked bouts across eight candidates, and strict native identity/metrics preflight. Sean Woodson excluded from certification due to unresolved result and DWCS row, not counted. Sean Woodson independently verified: exactly 11 UFC bouts including UFC 278 split draw and excluding source-confirmed 2019 DWCS non-UFC bout (native id 84014), without changing collector-owned cache. Five additional official UFC career histories were independently source-reviewed, with three UFC-backed DWCS exclusions newly added, and submitted to the strict nonproduction certification CI. Additional official UFC biography reviews, with exact independently linked UFC fight results, recorded in nonproduction source-attestation cohort. Await strict GitHub native-ID and stats certification gate.",
+  "notes": "Independent exhaustive scope crosschecked against UFC official fighter bios, last fight/debut, and UFCStats-derived third party 12-fight lists. Native IDs, corners, winners, measured metrics and date offsets must be validated again in CI; do not count certs from this file alone. Event titles are display-only and are not exact-match certification requirements. Narrow opponent name aliases are independently grounded in official UFC biographies. Seven additional fighter-by-fighter full official UFC biographies independently reviewed against the pinned 8 Nov Greco UFCStats source, 94 source-linked bouts across eight candidates, and strict native identity/metrics preflight. Sean Woodson excluded from certification due to unresolved result and DWCS row, not counted. Sean Woodson independently verified: exactly 11 UFC bouts including UFC 278 split draw and excluding source-confirmed 2019 DWCS non-UFC bout (native id 84014), without changing collector-owned cache. Five additional official UFC career histories were independently source-reviewed, with three UFC-backed DWCS exclusions newly added, and submitted to the strict nonproduction certification CI. Additional official UFC biography reviews, with exact independently linked UFC fight results, recorded in nonproduction source-attestation cohort. Await strict GitHub native-ID and stats certification gate. Ten already certified Stage3 official full-career histories separately revalidated through the same strict V4 native fighter ID, official event scope, winner and full required measured stat gates in successful CI run 43560373659 (10 passed, zero blocked). This is source reuse, NOT ten new unique athletes when comparing main and V4.",
   "fighters": {
     "maryna-moroz": {
       "fighterName": "Maryna Moroz",
@@ -3597,6 +3597,303 @@
           "originalOfficialDate": "2013-10-19"
         }
       ]
+    },
+    "abdul-hussein": {
+      "fighterName": "Abdul Hussein",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/abdul-hussein",
+      "fighterUrl": "https://ufcstats.com/fighter-details/0e6bc8d1d6c0ad90",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 1,
+      "uniqueNativeFighterId": "13875",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/abdul-hussein",
+        "https://ufcstats.com/fighter-details/0e6bc8d1d6c0ad90",
+        "https://www.ufc.com/event/ufc-fight-night-july-25-2026"
+      ],
+      "sourceScopeVerified": "Full official UFC history independently source-attested in main Stage3 canonical register, corroborated with separately linked fight-detail records. V4 recertification requires exact per-fight identities, outcomes and measured stats.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-07-25",
+          "opponent": "Cody Gibson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/532340708f0500bd",
+          "nativeBoutId": "83220",
+          "nativeSavedDate": "2026-07-25"
+        }
+      ],
+      "priorStage3ProofReference": "data/ufc-independent-full-career-verification.json",
+      "sourceReuseRevalidatedInCI": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560373659"
+    },
+    "ezra-elliott": {
+      "fighterName": "Ezra Elliott",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/ezra-elliot",
+      "fighterUrl": "https://ufcstats.com/fighter-details/b852ad2b35354fcb",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 1,
+      "uniqueNativeFighterId": "94064",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/ezra-elliot",
+        "https://ufcstats.com/fighter-details/b852ad2b35354fcb",
+        "https://www.ufc.com/event/ufc-fight-night-july-18-2026"
+      ],
+      "sourceScopeVerified": "Full official UFC history independently source-attested in main Stage3 canonical register, corroborated with separately linked fight-detail records. V4 recertification requires exact per-fight identities, outcomes and measured stats.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-07-18",
+          "opponent": "Damien Anderson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9e525f939fba3e73",
+          "nativeBoutId": "83063",
+          "nativeSavedDate": "2026-07-18"
+        }
+      ],
+      "priorStage3ProofReference": "data/ufc-independent-full-career-verification.json",
+      "sourceReuseRevalidatedInCI": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560373659"
+    },
+    "damien-anderson": {
+      "fighterName": "Damien Anderson",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/damien-anderson",
+      "fighterUrl": "https://ufcstats.com/fighter-details/df619b9a86ce0a9a",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 1,
+      "uniqueNativeFighterId": "47551",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/damien-anderson",
+        "https://ufcstats.com/fighter-details/df619b9a86ce0a9a",
+        "https://www.ufc.com/event/ufc-fight-night-july-18-2026"
+      ],
+      "sourceScopeVerified": "Full official UFC history independently source-attested in main Stage3 canonical register, corroborated with separately linked fight-detail records. V4 recertification requires exact per-fight identities, outcomes and measured stats.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-07-18",
+          "opponent": "Ezra Elliott",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9e525f939fba3e73",
+          "nativeBoutId": "83063",
+          "nativeSavedDate": "2026-07-18"
+        }
+      ],
+      "priorStage3ProofReference": "data/ufc-independent-full-career-verification.json",
+      "sourceReuseRevalidatedInCI": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560373659"
+    },
+    "tahir-abdullayev": {
+      "fighterName": "Tahir Abdullayev",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/tahir-abdullayev",
+      "fighterUrl": "https://ufcstats.com/fighter-details/e047d3b541afd4a7",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 1,
+      "uniqueNativeFighterId": "72828",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/tahir-abdullayev",
+        "https://ufcstats.com/fighter-details/e047d3b541afd4a7",
+        "https://www.ufc.com/event/ufc-fight-night-june-27-2026"
+      ],
+      "sourceScopeVerified": "Full official UFC history independently source-attested in main Stage3 canonical register, corroborated with separately linked fight-detail records. V4 recertification requires exact per-fight identities, outcomes and measured stats.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-06-27",
+          "opponent": "Jefferson Nascimento",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f1cb2e7ef096ec7c",
+          "nativeBoutId": "82871",
+          "nativeSavedDate": "2026-06-27"
+        }
+      ],
+      "priorStage3ProofReference": "data/ufc-independent-full-career-verification.json",
+      "sourceReuseRevalidatedInCI": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560373659"
+    },
+    "jefferson-nascimento": {
+      "fighterName": "Jefferson Nascimento",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/jefferson-nascimento",
+      "fighterUrl": "https://ufcstats.com/fighter-details/4b85abc5abbe657c",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 1,
+      "uniqueNativeFighterId": "55221",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/jefferson-nascimento",
+        "https://ufcstats.com/fighter-details/4b85abc5abbe657c",
+        "https://www.ufc.com/event/ufc-fight-night-june-27-2026"
+      ],
+      "sourceScopeVerified": "Full official UFC history independently source-attested in main Stage3 canonical register, corroborated with separately linked fight-detail records. V4 recertification requires exact per-fight identities, outcomes and measured stats.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-06-27",
+          "opponent": "Tahir Abdullayev",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f1cb2e7ef096ec7c",
+          "nativeBoutId": "82871",
+          "nativeSavedDate": "2026-06-27"
+        }
+      ],
+      "priorStage3ProofReference": "data/ufc-independent-full-career-verification.json",
+      "sourceReuseRevalidatedInCI": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560373659"
+    },
+    "aleksandre-topuria": {
+      "fighterName": "Aleksandre Topuria",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/aleksandre-topuria",
+      "fighterUrl": "https://ufcstats.com/fighter-details/4a6dff1b260bcf61",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 2,
+      "uniqueNativeFighterId": "373",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/aleksandre-topuria",
+        "https://ufcstats.com/fighter-details/4a6dff1b260bcf61"
+      ],
+      "sourceScopeVerified": "Full official UFC history independently source-attested in main Stage3 canonical register, corroborated with separately linked fight-detail records. V4 recertification requires exact per-fight identities, outcomes and measured stats.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2025-02-08",
+          "opponent": "Colby Thicknesse",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c7fadbdfdc14c282",
+          "nativeBoutId": "60987",
+          "nativeSavedDate": "2025-02-08"
+        },
+        {
+          "date": "2025-11-22",
+          "opponent": "Bekzat Almakhan",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6f0231915cc28507",
+          "nativeBoutId": "60414",
+          "nativeSavedDate": "2025-11-22"
+        }
+      ],
+      "priorStage3ProofReference": "data/ufc-independent-full-career-verification.json",
+      "sourceReuseRevalidatedInCI": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560373659"
+    },
+    "sean-king": {
+      "fighterName": "Sean King",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/sean-king-iii",
+      "fighterUrl": "https://ufcstats.com/fighter-details/41523699f37d400c",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 1,
+      "uniqueNativeFighterId": "56135",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/sean-king-iii",
+        "https://ufcstats.com/fighter-details/41523699f37d400c",
+        "https://www.ufc.com/event/ufc-fight-night-september-12-2026"
+      ],
+      "sourceScopeVerified": "Full official UFC history independently source-attested in main Stage3 canonical register, corroborated with separately linked fight-detail records. V4 recertification requires exact per-fight identities, outcomes and measured stats.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-09-12",
+          "opponent": "Jessie Rosas",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5a91827fe8c1dc26",
+          "nativeBoutId": "92965",
+          "nativeSavedDate": "2026-09-12"
+        }
+      ],
+      "priorStage3ProofReference": "data/ufc-independent-full-career-verification.json",
+      "sourceReuseRevalidatedInCI": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560373659"
+    },
+    "jessie-rosas": {
+      "fighterName": "Jessie Rosas",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/jessie-rosas",
+      "fighterUrl": "https://ufcstats.com/fighter-details/d1026588fa65693f",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 1,
+      "uniqueNativeFighterId": "33379",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/jessie-rosas",
+        "https://ufcstats.com/fighter-details/d1026588fa65693f",
+        "https://www.ufc.com/event/ufc-fight-night-september-12-2026"
+      ],
+      "sourceScopeVerified": "Full official UFC history independently source-attested in main Stage3 canonical register, corroborated with separately linked fight-detail records. V4 recertification requires exact per-fight identities, outcomes and measured stats.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-09-12",
+          "opponent": "Sean King",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5a91827fe8c1dc26",
+          "nativeBoutId": "92965",
+          "nativeSavedDate": "2026-09-12"
+        }
+      ],
+      "priorStage3ProofReference": "data/ufc-independent-full-career-verification.json",
+      "sourceReuseRevalidatedInCI": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560373659"
+    },
+    "fabia-sintes": {
+      "fighterName": "Fabia Sintes",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/fabia-sintes",
+      "fighterUrl": "https://ufcstats.com/fighter-details/9911989cf48b195d",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 1,
+      "uniqueNativeFighterId": "37790",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/fabia-sintes",
+        "https://ufcstats.com/fighter-details/9911989cf48b195d",
+        "https://www.ufc.com/event/ufc-fight-night-september-05-2026"
+      ],
+      "sourceScopeVerified": "Full official UFC history independently source-attested in main Stage3 canonical register, corroborated with separately linked fight-detail records. V4 recertification requires exact per-fight identities, outcomes and measured stats.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-09-05",
+          "opponent": "Michael Aljarouj",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1f973e21581b082a",
+          "nativeBoutId": "83815",
+          "nativeSavedDate": "2026-09-05"
+        }
+      ],
+      "priorStage3ProofReference": "data/ufc-independent-full-career-verification.json",
+      "sourceReuseRevalidatedInCI": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560373659"
+    },
+    "michael-aljarouj": {
+      "fighterName": "Michael Aljarouj",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/michael-aljarouj",
+      "fighterUrl": "https://ufcstats.com/fighter-details/22e3458965d5d08a",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 1,
+      "uniqueNativeFighterId": "21764",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/michael-aljarouj",
+        "https://ufcstats.com/fighter-details/22e3458965d5d08a",
+        "https://www.ufc.com/event/ufc-fight-night-september-05-2026"
+      ],
+      "sourceScopeVerified": "Full official UFC history independently source-attested in main Stage3 canonical register, corroborated with separately linked fight-detail records. V4 recertification requires exact per-fight identities, outcomes and measured stats.",
+      "dateDiscrepancies": [],
+      "bouts": [
+        {
+          "date": "2026-09-05",
+          "opponent": "Fabia Sintes",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1f973e21581b082a",
+          "nativeBoutId": "83815",
+          "nativeSavedDate": "2026-09-05"
+        }
+      ],
+      "priorStage3ProofReference": "data/ufc-independent-full-career-verification.json",
+      "sourceReuseRevalidatedInCI": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560373659"
     }
   }
 }
