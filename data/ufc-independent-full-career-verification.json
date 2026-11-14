@@ -27265,6 +27265,516 @@
         }
       ],
       "sourceVerifiedExcludedFeederBouts": []
+    },
+    "kleydson-rodrigues": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Kleydson Rodrigues",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/102a8fdf8cbf7467",
+      "officialFighterUrl": "https://www.ufc.com/athlete/kleidison-rodrigues",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent UFCStats-derived Greco archive",
+        "method": "Complete officially dated UFC athlete career + pinned Greco fighter/fight/event IDs reconciled with numeric native fighters, opposing corners, outcomes, measured round archives; DWCS feeders independently identified and excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "957"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Four 2022–2024 Octagon contests: losses to CJ Vergara, Farid Basharat and Alatangheili (native Heili Alateng), win over Shannon Ross. Contender Series Santo Curatolo win separately excluded. Pinned Greco/native corner and dated event reconcile Alatangheili alias.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/kleidison-rodrigues",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2022-05-07",
+          "opponent": "CJ Vergara",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8289033e03b4d9a3",
+          "nativeBoutId": "61605",
+          "nativeFighterId": "957"
+        },
+        {
+          "date": "2023-02-11",
+          "opponent": "Shannon Ross",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/16dbe70eb7007f17",
+          "nativeBoutId": "59737",
+          "nativeFighterId": "957"
+        },
+        {
+          "date": "2023-09-02",
+          "opponent": "Farid Basharat",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ac73c6888ee9322c",
+          "nativeBoutId": "60074",
+          "nativeFighterId": "957"
+        },
+        {
+          "date": "2024-05-18",
+          "opponent": "Heili Alateng",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/63605e9f3e71d738",
+          "nativeBoutId": "61025",
+          "nativeFighterId": "957"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88241",
+          "date": "2021-09-21",
+          "opponent": "Santo Curatolo",
+          "result": "win",
+          "officialSourceUrl": "https://www.ufc.com/athlete/kleidison-rodrigues",
+          "excludedBecause": "Separately identified DWCS feeder, not an official completed UFC Octagon fight"
+        }
+      ]
+    },
+    "montse-rendon": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Montse Rendon",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/60193e707634e560",
+      "officialFighterUrl": "https://www.ufc.com/athlete/montserrat-rendon",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent UFCStats-derived Greco archive",
+        "method": "Complete officially dated UFC athlete career + pinned Greco fighter/fight/event IDs reconciled with numeric native fighters, opposing corners, outcomes, measured round archives; DWCS feeders independently identified and excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "235"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Four UFC results 2023–2026: wins Tamires Vidal and Alice Pereira; losses Daria Zhelezniakova and Bia Mesquita. Duplicate Greco listing of Alice Pereira under different event titles shares identical source fight URL; deduplicated.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/montserrat-rendon",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2023-09-23",
+          "opponent": "Tamires Vidal",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0732e6b6eb0a607d",
+          "nativeBoutId": "60041",
+          "nativeFighterId": "235"
+        },
+        {
+          "date": "2024-03-23",
+          "opponent": "Daria Zhelezniakova",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f1c3abce15ef053e",
+          "nativeBoutId": "39002",
+          "nativeFighterId": "235"
+        },
+        {
+          "date": "2025-09-13",
+          "opponent": "Alice Pereira",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c4a6174b0698652e",
+          "nativeBoutId": "38233",
+          "nativeFighterId": "235"
+        },
+        {
+          "date": "2026-03-14",
+          "opponent": "Bia Mesquita",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8cab057e6549afd0",
+          "nativeBoutId": "60722",
+          "nativeFighterId": "235"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    },
+    "rizvan-kuniev": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Rizvan Kuniev",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/739fd4fbb5d862f4",
+      "officialFighterUrl": "https://www.ufc.com/athlete/rizvan-kuniev",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent UFCStats-derived Greco archive",
+        "method": "Complete officially dated UFC athlete career + pinned Greco fighter/fight/event IDs reconciled with numeric native fighters, opposing corners, outcomes, measured round archives; DWCS feeders independently identified and excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "503"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Four completed UFC fights against Curtis Blaydes (loss), Jailton Almeida (win), Tyrell Fortune (win) and Alexander Volkov (loss), with two 2021/2024 Dana White Contender Series victories separately excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/rizvan-kuniev",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-06-21",
+          "opponent": "Curtis Blaydes",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8e5744c664fec3e9",
+          "nativeBoutId": "60273",
+          "nativeFighterId": "503"
+        },
+        {
+          "date": "2026-02-07",
+          "opponent": "Jailton Almeida",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a5c5f76cf0a7c784",
+          "nativeBoutId": "60727",
+          "nativeFighterId": "503"
+        },
+        {
+          "date": "2026-07-25",
+          "opponent": "Tyrell Fortune",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5ffb251c6ea48b65",
+          "nativeBoutId": "82600",
+          "nativeFighterId": "503"
+        },
+        {
+          "date": "2026-10-24",
+          "opponent": "Alexander Volkov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8788a6dda6e64aff",
+          "nativeBoutId": "83734",
+          "nativeFighterId": "503"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84110",
+          "date": "2024-08-20",
+          "opponent": "Hugo Cunha",
+          "result": "win",
+          "officialSourceUrl": "https://www.ufc.com/athlete/rizvan-kuniev",
+          "excludedBecause": "Separately identified DWCS feeder, not an official completed UFC Octagon fight"
+        },
+        {
+          "nativeBoutId": "84036",
+          "date": "2021-09-28",
+          "opponent": "Edivan Santos",
+          "result": "win",
+          "officialSourceUrl": "https://www.ufc.com/athlete/rizvan-kuniev",
+          "excludedBecause": "Separately identified DWCS feeder, not an official completed UFC Octagon fight"
+        }
+      ]
+    },
+    "saimon-oliveira": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Saimon Oliveira",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/72ea1984c52019b5",
+      "officialFighterUrl": "https://www.ufc.com/athlete/saimon-oliveira",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent UFCStats-derived Greco archive",
+        "method": "Complete officially dated UFC athlete career + pinned Greco fighter/fight/event IDs reconciled with numeric native fighters, opposing corners, outcomes, measured round archives; DWCS feeders independently identified and excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "135"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Four UFC losses to Tony Gravely, Daniel Marcos, David Martinez and Luan Lacerda. 2021 DWCS Jose Alday victory excluded; native UFC 270 UTC day differs from official local date.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/saimon-oliveira",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2022-01-23",
+          "opponent": "Tony Gravely",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9687021e5c4d092a",
+          "nativeBoutId": "61641",
+          "nativeFighterId": "135"
+        },
+        {
+          "date": "2023-01-21",
+          "opponent": "Daniel Marcos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1d35e4c0941d1397",
+          "nativeBoutId": "59729",
+          "nativeFighterId": "135"
+        },
+        {
+          "date": "2025-03-29",
+          "opponent": "David Martinez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/55376d5c205fa844",
+          "nativeBoutId": "61007",
+          "nativeFighterId": "135"
+        },
+        {
+          "date": "2025-10-11",
+          "opponent": "Luan Lacerda",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0f9e7d0d04e24b74",
+          "nativeBoutId": "65898",
+          "nativeFighterId": "135"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83959",
+          "date": "2021-09-07",
+          "opponent": "José Alday",
+          "result": "win",
+          "officialSourceUrl": "https://www.ufc.com/athlete/saimon-oliveira",
+          "excludedBecause": "Separately identified DWCS feeder, not an official completed UFC Octagon fight"
+        }
+      ]
+    },
+    "seokhyeon-ko": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Seokhyeon Ko",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/4a07b1988477502c",
+      "officialFighterUrl": "https://www.ufc.com/athlete/seokhyeon-ko",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent UFCStats-derived Greco archive",
+        "method": "Complete officially dated UFC athlete career + pinned Greco fighter/fight/event IDs reconciled with numeric native fighters, opposing corners, outcomes, measured round archives; DWCS feeders independently identified and excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "405"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Four completed UFC fights: wins over Oban Elliott, Phil Rowe and Wellington Turman, loss to Jean-Paul Lebosnoyani. Igor Cavalcanti 2024 DWCS victory excluded. Official Win tile inaccurate for Lebosnoyani result; detailed narrative and pinned native opponent win agree.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/seokhyeon-ko",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-06-21",
+          "opponent": "Oban Elliott",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e512b80bbaea36c2",
+          "nativeBoutId": "60277",
+          "nativeFighterId": "405"
+        },
+        {
+          "date": "2025-11-01",
+          "opponent": "Phil Rowe",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e6031b5937294176",
+          "nativeBoutId": "60429",
+          "nativeFighterId": "405"
+        },
+        {
+          "date": "2026-07-18",
+          "opponent": "Jean-Paul Lebosnoyani",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f2eb569176e46edf",
+          "nativeBoutId": "82954",
+          "nativeFighterId": "405"
+        },
+        {
+          "date": "2026-11-07",
+          "opponent": "Wellington Turman",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/cd446b8759b30093",
+          "nativeBoutId": "93281",
+          "nativeFighterId": "405"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83885",
+          "date": "2024-09-03",
+          "opponent": "Igor Cavalcanti",
+          "result": "win",
+          "officialSourceUrl": "https://www.ufc.com/athlete/seokhyeon-ko",
+          "excludedBecause": "Separately identified DWCS feeder, not an official completed UFC Octagon fight"
+        }
+      ]
+    },
+    "alexia-thainara": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Alexia Thainara",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/545092d13c67aa49",
+      "officialFighterUrl": "https://www.ufc.com/athlete/alexia-thainara",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent UFCStats-derived Greco archive",
+        "method": "Complete officially dated UFC athlete career + pinned Greco fighter/fight/event IDs reconciled with numeric native fighters, opposing corners, outcomes, measured round archives; DWCS feeders independently identified and excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "133"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Four UFC wins over Molly McCann, Loma Lookboonmee, Bruna Brasil, Amanda Lemos. 2024 DWCS Rose Conceicao win separately excluded; Sept 2025 source/cached event date within one day.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/alexia-thainara",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-03-22",
+          "opponent": "Molly McCann",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b5b4b69bccb9ff4a",
+          "nativeBoutId": "60311",
+          "nativeFighterId": "133"
+        },
+        {
+          "date": "2025-09-28",
+          "opponent": "Loma Lookboonmee",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e35f7504d83b8b07",
+          "nativeBoutId": "38220",
+          "nativeFighterId": "133"
+        },
+        {
+          "date": "2026-03-28",
+          "opponent": "Bruna Brasil",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/796e1151896195aa",
+          "nativeBoutId": "60635",
+          "nativeFighterId": "133"
+        },
+        {
+          "date": "2026-08-08",
+          "opponent": "Amanda Lemos",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/13f31f7a784013a3",
+          "nativeBoutId": "83097",
+          "nativeFighterId": "133"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83987",
+          "date": "2024-09-24",
+          "opponent": "Rose Conceição",
+          "result": "win",
+          "officialSourceUrl": "https://www.ufc.com/athlete/alexia-thainara",
+          "excludedBecause": "Separately identified DWCS feeder, not an official completed UFC Octagon fight"
+        }
+      ]
+    },
+    "antonio-trocoli": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Antonio Trocoli",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/6d48a2df51749d91",
+      "officialFighterUrl": "https://www.ufc.com/athlete/antonio-trocoli",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent UFCStats-derived Greco archive",
+        "method": "Complete officially dated UFC athlete career + pinned Greco fighter/fight/event IDs reconciled with numeric native fighters, opposing corners, outcomes, measured round archives; DWCS feeders independently identified and excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "350"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Four official UFC losses: Shara Magomedov, Tresean Gore, Mansur Abdul-Malik and Mantas Kondratavicius. Original July 2019 Kenneth Bergh DWCS no contest separately attested in existing feeder evidence; 2025 UFC 323 source UTC offset verified.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/antonio-trocoli",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2024-06-22",
+          "opponent": "Shara Magomedov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/fbbf5391ea25521b",
+          "nativeBoutId": "38809",
+          "nativeFighterId": "350"
+        },
+        {
+          "date": "2024-11-09",
+          "opponent": "Tresean Gore",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/582846744e379178",
+          "nativeBoutId": "65832",
+          "nativeFighterId": "350"
+        },
+        {
+          "date": "2025-12-07",
+          "opponent": "Mansur Abdul-Malik",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/964ea1777695851b",
+          "nativeBoutId": "60532",
+          "nativeFighterId": "350"
+        },
+        {
+          "date": "2026-03-21",
+          "opponent": "Mantas Kondratavicius",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8817bd21b6d0a989",
+          "nativeBoutId": "60568",
+          "nativeFighterId": "350"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84135",
+          "date": "2019-07-09",
+          "opponent": "Kenneth Bergh",
+          "result": "no_contest",
+          "officialSourceUrl": "https://www.ufc.com/athlete/antonio-trocoli",
+          "excludedBecause": "Separately identified DWCS feeder, not an official completed UFC Octagon fight"
+        }
+      ]
     }
   }
 }
