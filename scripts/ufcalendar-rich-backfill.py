@@ -1963,7 +1963,8 @@ def reconcile_official_inventory_from_cached_native(state,research,coverage,toda
 
 
 def recover_source_verified_ufc_non_winner_event_cards(client,state,research,coverage,
-                                                       today,approval,inventory):
+                                                       today,approval,inventory,
+                                                       id_exceptions=None):
     """Recover independently sourced UFC draw/no-contest via original event card.
 
     The /fights/search index includes only bouts with winners. Recover these
@@ -2013,8 +2014,61 @@ def recover_source_verified_ufc_non_winner_event_cards(client,state,research,cov
                    (own.get("slug")==fighter or
                     same(own.get("name"),profile.get("name"))):
                     stable_ids.add(fid)
-        if len(stable_ids)!=1:continue
-        fid=next(iter(stable_ids))
+        # The previously verified Bruno Silva historical alias has ten
+        # independently documented UFC.com fights cached under provider ID
+        # 158, while his more recent approved UFC fight uses ID 87. A
+        # previously unsuccessful 2019 non-winner event search used the
+        # wrong ID. Only retry using 158 after *all ten* exact source-backed
+        # native fights have been linked into the approved history.
+        historic_id=None
+        if fighter=="bruno-gustavo-da-silva" and stable_ids=={"87","158"} and (
+            isinstance(id_exceptions,dict) and
+            id_exceptions.get("scope")=="ufc-exact-official-native-fighter-id-exceptions" and
+            id_exceptions.get("rosterAsOf")==(approval or {}).get("rosterAsOf")):
+            entry=(id_exceptions.get("athletes") or {}).get(fighter) or {}
+            rows=entry.get("bouts") if isinstance(entry,dict) else None
+            source_rows={(date_str(x.get("date")),parts(x.get("opponent")),x.get("result"))
+                         for x in source.get("bouts",[]) if isinstance(x,dict)}
+            if (entry.get("sourceUrl")==source.get("sourceUrl") and
+                entry.get("canonicalNumericId")=="87" and
+                entry.get("historicalNumericId")=="158" and
+                isinstance(rows,list) and len(rows)==10 and
+                len({str(x.get("nativeFightId")) for x in rows
+                     if isinstance(x,dict)})==10):
+                valid=True
+                for evidence in rows:
+                    bid=str(evidence.get("nativeFightId") or "")
+                    b=native.get(bid)
+                    sig=(date_str(evidence.get("date")),
+                         parts(evidence.get("opponent")),evidence.get("result"))
+                    linked=any(isinstance(h,dict) and
+                        str(h.get("promotion") or "").lower()=="ufc" and
+                        str(h.get("boutId") or "")==bid and
+                        close(h.get("date"),evidence.get("date")) and
+                        same(h.get("opponent"),evidence.get("opponent")) and
+                        h.get("result")==evidence.get("result")
+                        for h in profile.get("recentHistory",[]))
+                    if (sig not in source_rows or not linked or
+                        not isinstance(b,dict) or b.get("org")!="ufc" or
+                        b.get("status")!="completed" or
+                        not official_ufc_event_title(b.get("event") or "") or
+                        not close(b.get("eventDate"),evidence.get("date"))):
+                        valid=False;break
+                    corners=[(b.get(side) or {},b.get(other) or {})
+                             for side,other in (("a","b"),("b","a"))]
+                    own=[(o,p) for o,p in corners if
+                         str(o.get("id") or "")=="158" and
+                         same(p.get("name"),evidence.get("opponent"))]
+                    if len(own)!=1:
+                        valid=False;break
+                    winner=str((b.get("result") or {}).get("winnerId") or "")
+                    expected="win" if winner=="158" else (
+                        "loss" if winner==str(own[0][1].get("id") or "") else None)
+                    if expected!=evidence.get("result"):
+                        valid=False;break
+                if valid:historic_id="158"
+        if len(stable_ids)!=1 and not historic_id:continue
+        fid=historic_id or next(iter(stable_ids))
         for row in source.get("bouts",[]):
             if calls>=4 or client.stopped or client.remaining<=0 or \
                client.calls>=client.max_calls-35:break
@@ -2031,7 +2085,16 @@ def recover_source_verified_ufc_non_winner_event_cards(client,state,research,cov
                 continue
             key=fighter+"|"+day+"|"+":".join(parts(opponent))
             prior=ledger.get(key,{})
-            if prior.get("status") in ("linked","not_found","manual_review"):continue
+            if prior.get("status") in ("linked","manual_review"):continue
+            # Re-open an old no-match exactly once when verified archived
+            # history supplies a different historical native fighter ID.
+            if prior.get("status")=="not_found" and not (
+                historic_id and
+                row.get("officialEventUrl")=="https://www.ufc.com/event/ufc-243" and
+                row.get("officialOverturnEvidenceUrl")=="https://www.ufc.com/athlete/khalid-taha" and
+                date_str(row.get("date"))=="2019-10-05" and
+                prior.get("searchedFighterId")!=fid):
+                continue
             if prior.get("status")=="retry" and \
                str(prior.get("retryAfter") or "")>today.isoformat():continue
             start=(dt.date.fromisoformat(day)-dt.timedelta(days=1)).isoformat()
@@ -2041,7 +2104,8 @@ def recover_source_verified_ufc_non_winner_event_cards(client,state,research,cov
             calls+=1
             if events is None:
                 ledger[key]={"status":"retry","checkedAt":today.isoformat(),
-                    "retryAfter":(today+dt.timedelta(days=7)).isoformat()}
+                    "retryAfter":(today+dt.timedelta(days=7)).isoformat(),
+                    "searchedFighterId":fid}
                 continue
             event_candidates=[ev for ev in response_rows(events) if
                  isinstance(ev,dict) and ev.get("org") in ("ufc",None) and
@@ -2049,6 +2113,7 @@ def recover_source_verified_ufc_non_winner_event_cards(client,state,research,cov
                  official_ufc_event_title(ev.get("title") or "") and
                  positive(ev.get("id"))]
             matches=[]
+            provider_outcome_conflicts=set()
             for ev in event_candidates[:3]:
                 if calls>=4 or client.stopped or client.remaining<=0 or \
                    client.calls>=client.max_calls-35:break
@@ -2059,18 +2124,30 @@ def recover_source_verified_ufc_non_winner_event_cards(client,state,research,cov
                 if not card or card["org"]!="ufc" or not close(day,card["date"]) or \
                    not official_ufc_event_title(card["title"]):continue
                 for b in card["bouts"]:
-                    if b.get("status")!=row["result"]:continue
                     for side,other in (("a","b"),("b","a")):
                         own=b.get(side) or {};opp=b.get(other) or {}
-                        if str(own.get("id") or "")==fid and same(opp.get("name"),opponent):
+                        if str(own.get("id") or "")!=fid or not same(opp.get("name"),opponent):
+                            continue
+                        if b.get("status")==row["result"]:
                             matches.append((b,card))
+                        elif historic_id and row.get("officialEventUrl")==(
+                            "https://www.ufc.com/event/ufc-243") and (
+                                b.get("status")=="completed"):
+                            # An overturned decision may remain completed in
+                            # provider historical data. Preserve raw data and
+                            # flag for manual official-outcome reconciliation.
+                            provider_outcome_conflicts.add(str(b.get("id") or ""))
             ids={match[0]["id"] for match in matches}
             if len(ids)!=1:
                 unresolved+=1
-                ledger[key]={"status":"manual_review" if len(ids)>1 else "not_found",
+                ledger[key]={"status":"manual_review" if len(ids)>1 or
+                       provider_outcome_conflicts else "not_found",
                    "checkedAt":today.isoformat(),
-                   "reason":"no_unique_exact_native_nc_or_draw_in_source_event_cards",
-                   "candidateIds":sorted(ids)}
+                   "searchedFighterId":fid,
+                   "reason":"official_overturn_disagrees_with_provider_native_event"
+                     if provider_outcome_conflicts else
+                     "no_unique_exact_native_nc_or_draw_in_source_event_cards",
+                   "candidateIds":sorted(ids or provider_outcome_conflicts)}
                 continue
             b,card=matches[0]
             bid=b["id"]
@@ -2895,7 +2972,7 @@ def main():
             read(OFFICIAL_ID_EXCEPTIONS,{}),read(OFFICIAL_BOUT_INVENTORY,{}))
         recover_source_verified_ufc_non_winner_event_cards(
             client,state,research,approved36,roster_today,approval,
-            read(OFFICIAL_BOUT_INVENTORY,{}))
+            read(OFFICIAL_BOUT_INVENTORY,{}),read(OFFICIAL_ID_EXCEPTIONS,{}))
         recover_official_inventory_by_event_date(
             client,state,research,approved36,roster_today,approval,
             read(OFFICIAL_BOUT_INVENTORY,{}))
