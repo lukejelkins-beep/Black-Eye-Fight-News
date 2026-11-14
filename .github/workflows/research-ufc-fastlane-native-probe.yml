@@ -43,3 +43,21 @@ jobs:
           }
           console.log('BEFN_RESEARCH_ONLY_FASTLANE_NATIVE_EVIDENCE='+JSON.stringify(out));
           NODE
+      - name: Cross-reference pinned Greco UFCStats historical fighter and result rows
+        run: |
+          set -euo pipefail
+          PIN=c742842f29466758fedc3906dbad28d6d320a8da
+          curl --fail --silent --show-error --location --retry 2 --max-time 35 "https://raw.githubusercontent.com/Greco1899/scrape_ufc_stats/$PIN/ufc_fight_results.csv" -o /tmp/ufc_fight_results.csv
+          curl --fail --silent --show-error --location --retry 2 --max-time 35 "https://raw.githubusercontent.com/Greco1899/scrape_ufc_stats/$PIN/ufc_fighter_details.csv" -o /tmp/ufc_fighter_details.csv
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const result=fs.readFileSync('/tmp/ufc_fight_results.csv','utf8').split(/\r?\n/);
+          const fighters=fs.readFileSync('/tmp/ufc_fighter_details.csv','utf8').split(/\r?\n/);
+          const cases=['Cameron Nelson','Liu Ce','Ce Liu','Cezary Oleksiejczuk','Cody Chovancek','Cristian Perez','Cristian Pérez','Damian Rzepecki','Donghun Choi','Eduardo Chapolin'];
+          const normalize=s=>String(s||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+          for(const term of cases){
+            const match=l=>normalize(l).includes(normalize(term));
+            const historical=result.filter(match),fighterRows=fighters.filter(match);
+            console.log('BEFN_PINNED_GRECO_CANDIDATE='+JSON.stringify({term,fighterRows,historicalResults:historical,rawHistoricalRows:historical.length,header:result[0]}));
+          }
+          NODE
