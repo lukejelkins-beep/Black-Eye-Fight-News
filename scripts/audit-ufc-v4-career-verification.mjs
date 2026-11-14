@@ -199,6 +199,25 @@ export function main(){
  fs.writeFileSync(path.join(root,"qa/ufc-v4-career-verification-queue.json"),
   JSON.stringify(r,null,2)+"\n");
  console.log("BEFN_V4_CAREER_VERIFICATION "+JSON.stringify(r.summary));
+ const foundation=read("qa/ufc-v4-stat-foundation.json");
+ const research=read("data/ufcalendar-fighter-research.json");
+ const flagged=Object.entries(foundation.fighters).filter(([,entry])=>
+  entry.independentlyCertifiedCareer===true);
+ console.log("BEFN_V4_CERTIFICATION_COUNTER_DIFF "+JSON.stringify({
+  foundationCertified:flagged.length,auditCertified:r.summary.independentlyCertified,
+  discrepancies:flagged.map(([slug,entry])=>{
+   const audit=r.priorityQueue.find(x=>x.slug===slug);
+   const p=research.profiles?.[slug]||{};
+   return {slug,foundation:entry.independentlyCertifiedCareer,
+    audit:audit?.independentlyCertifiedCareer,
+    auditReasons:audit?.reasons||[],
+    identityConflictCount:(p.ufcHistoryIdConflicts||[]).length,
+    identityConflicts:(p.ufcHistoryIdConflicts||[]).slice(0,5),
+    timelineIdentityConflictCount:p.ufcTimeline?.conflictingNativeFightIds??0,
+    savedHistoryHasAdditionalUfcBouts:p.ufcTimeline?.savedHistoryHasAdditionalUfcBouts??null,
+    missingRosterLastUfcFight:p.ufcTimeline?.missingRosterLastUfcFight??null};
+  }).filter(x=>x.foundation!==x.audit)}));
+
  console.log("BEFN_V4_OFFICIAL_OMISSIONS "+JSON.stringify(
   r.officialCrosschecks.filter(x=>x.exactUnmatchedBouts.length)));
 }
