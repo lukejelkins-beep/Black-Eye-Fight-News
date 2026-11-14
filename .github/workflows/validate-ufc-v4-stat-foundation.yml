@@ -1,0 +1,41 @@
+name: Validate UFC V4 statistical foundation (offline)
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/build-ufc-postfight-metrics.mjs'
+      - 'scripts/build-ufc-v4-stat-foundation.mjs'
+      - 'tests/test-ufc-postfight-metrics.mjs'
+      - 'tests/test-ufc-v4-stat-foundation.mjs'
+      - '.github/workflows/validate-ufc-v4-stat-foundation.yml'
+permissions:
+  contents: read
+concurrency:
+  group: befn-ufc-v4-offline-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test existing V3 compatibility and V4 statistical window rules
+        run: |
+          node --test tests/test-ufc-postfight-metrics.mjs
+          node --test tests/test-ufc-v4-stat-foundation.mjs
+      - name: Rebuild the complete measured career cache without API calls
+        run: node scripts/build-ufc-postfight-metrics.mjs
+      - name: Audit the approved 783-fighter Last 5 / Last 10 / Career windows
+        run: node scripts/build-ufc-v4-stat-foundation.mjs
+      - name: Publish audit as non-production workflow artifact only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-v4-ufc-stat-foundation-qa
+          path: qa/ufc-v4-stat-foundation.json
+          retention-days: 14
+          if-no-files-found: warn
