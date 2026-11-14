@@ -21180,6 +21180,397 @@
           "nativeFighterId": "2820"
         }
       ]
+    },
+    "bia-mesquita": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Bia Mesquita",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/eff9074bc066f0f2",
+      "officialFighterUrl": "https://www.ufc.com/athlete/bia-mesquita",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived independent source; no direct live UFCStats page scrape claimed",
+        "method": "Complete dated official UFC.com full-fighter biography including official fight narrative/outcomes; source verified against pinned UFCStats-derived original fighter/fight/event URLs and the saved original numeric native bout IDs, paired fighter/opponent IDs, winners and complete measured rounds. Graphic Win tile never overrides official result. DWCS/RTU qualifiers independently excluded. No paid API calls."
+      },
+      "verifiedNumericFighterIds": [
+        "174"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Complete official Octagon career from debut to 2026-11-14 under immutable pinned source cutoff 2026-11-07; verified 3 exact completed UFC fights, original native paired corners, winners, opponent identity, event chronology and measured rounds. 0 separate source-proven DWCS native bouts excluded. Upcoming 2026-11-14 Macy Chiasson bout not yet completed as of frozen snapshot; no result invented. Grappling achievements and non-UFC professional MMA excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/bia-mesquita",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43581846802",
+      "bouts": [
+        {
+          "date": "2025-10-11",
+          "opponent": "Irina Alekseeva",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/546f971f9d8e0a33",
+          "nativeBoutId": "65895",
+          "nativeFighterId": "174"
+        },
+        {
+          "date": "2026-03-14",
+          "opponent": "Montse Rendon",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8cab057e6549afd0",
+          "nativeBoutId": "60722",
+          "nativeFighterId": "174"
+        },
+        {
+          "date": "2026-06-20",
+          "opponent": "Melissa Mullins",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c0980a613f24accd",
+          "nativeBoutId": "66004",
+          "nativeFighterId": "174"
+        }
+      ]
+    },
+    "blake-bilder": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Blake Bilder",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/5095b0920a3602aa",
+      "officialFighterUrl": "https://www.ufc.com/athlete/blake-bilder",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived independent source; no direct live UFCStats page scrape claimed",
+        "method": "Complete dated official UFC.com full-fighter biography including official fight narrative/outcomes; source verified against pinned UFCStats-derived original fighter/fight/event URLs and the saved original numeric native bout IDs, paired fighter/opponent IDs, winners and complete measured rounds. Graphic Win tile never overrides official result. DWCS/RTU qualifiers independently excluded. No paid API calls."
+      },
+      "verifiedNumericFighterIds": [
+        "2779"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Complete official Octagon career from debut to 2026-11-14 under immutable pinned source cutoff 2026-11-07; verified 3 exact completed UFC fights, original native paired corners, winners, opponent identity, event chronology and measured rounds. 1 separate source-proven DWCS native bouts excluded. ",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/blake-bilder",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43581846802",
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88258",
+          "date": "2022-08-30",
+          "opponent": "Alex Morgan",
+          "result": "win",
+          "event": "Dana White's Contender Series",
+          "officialSourceUrl": "https://www.ufc.com/athlete/blake-bilder",
+          "excludedBecause": "DWCS qualifier/feeder; not a completed official UFC Octagon fight"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2023-02-11",
+          "opponent": "Shane Young",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5c962ea13cb9b937",
+          "nativeBoutId": "59741",
+          "nativeFighterId": "2779"
+        },
+        {
+          "date": "2023-06-10",
+          "opponent": "Kyle Nelson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7ee8b91d7f80f8a7",
+          "nativeBoutId": "61340",
+          "nativeFighterId": "2779"
+        },
+        {
+          "date": "2024-02-03",
+          "opponent": "JeongYeong Lee",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e1930496b33fa636",
+          "nativeBoutId": "59860",
+          "nativeFighterId": "2779"
+        }
+      ]
+    },
+    "changho-lee": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "ChangHo Lee",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/117a06469813e4ef",
+      "officialFighterUrl": "https://www.ufc.com/athlete/chang-ho-lee",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived independent source; no direct live UFCStats page scrape claimed",
+        "method": "Complete dated official UFC.com full-fighter biography including official fight narrative/outcomes; source verified against pinned UFCStats-derived original fighter/fight/event URLs and the saved original numeric native bout IDs, paired fighter/opponent IDs, winners and complete measured rounds. Graphic Win tile never overrides official result. DWCS/RTU qualifiers independently excluded. No paid API calls."
+      },
+      "verifiedNumericFighterIds": [
+        "417"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Complete official Octagon career from debut to 2026-11-14 under immutable pinned source cutoff 2026-11-07; verified 3 exact completed UFC fights, original native paired corners, winners, opponent identity, event chronology and measured rounds. 0 separate source-proven DWCS native bouts excluded.  2024-06-22 official Road to UFC 2 live final against Xiao Long included once; 2023 semifinal and quarterfinal excluded as non-UFC qualifying bouts with no invented native IDs.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/chang-ho-lee",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43581846802",
+      "bouts": [
+        {
+          "date": "2024-06-22",
+          "opponent": "Xiao Long",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c0d6feef69ccb330",
+          "nativeBoutId": "38816",
+          "nativeFighterId": "417"
+        },
+        {
+          "date": "2025-04-05",
+          "opponent": "Cortavious Romious",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fc3825dd1b67e39d",
+          "nativeBoutId": "60298",
+          "nativeFighterId": "417"
+        },
+        {
+          "date": "2025-11-01",
+          "opponent": "Timmy Cuamba",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/58f6248da3cdf3ce",
+          "nativeBoutId": "60425",
+          "nativeFighterId": "417"
+        }
+      ]
+    },
+    "connor-matthews": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Connor Matthews",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/36e78278a77006d4",
+      "officialFighterUrl": "https://www.ufc.com/athlete/connor-matthews",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived independent source; no direct live UFCStats page scrape claimed",
+        "method": "Complete dated official UFC.com full-fighter biography including official fight narrative/outcomes; source verified against pinned UFCStats-derived original fighter/fight/event URLs and the saved original numeric native bout IDs, paired fighter/opponent IDs, winners and complete measured rounds. Graphic Win tile never overrides official result. DWCS/RTU qualifiers independently excluded. No paid API calls."
+      },
+      "verifiedNumericFighterIds": [
+        "2848"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Complete official Octagon career from debut to 2026-11-14 under immutable pinned source cutoff 2026-11-07; verified 3 exact completed UFC fights, original native paired corners, winners, opponent identity, event chronology and measured rounds. 2 separate source-proven DWCS native bouts excluded.  UFC official Connor biography and Jose Miguel Delgado athlete/event pages identify same 2025-02-15 Jose Delgado winning fighter ID 436 and exact source fight URL; narrow complete-name variant only, not fuzzy matching.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/connor-matthews",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da",
+        "https://www.ufc.com/event/ufc-fight-night-february-15-2025",
+        "https://www.ufc.com/athlete/jose-miguel-delgado",
+        "https://www.ufc.com/news/prelim-results-highlights-winner-interviews-ufc-fight-night-cannonier-vs-rodrigues-las-vegas"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43581846802",
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84099",
+          "date": "2023-10-10",
+          "opponent": "Jair Farias",
+          "result": "win",
+          "event": "Dana White's Contender Series",
+          "officialSourceUrl": "https://www.ufc.com/athlete/connor-matthews",
+          "excludedBecause": "DWCS qualifier/feeder; not a completed official UFC Octagon fight"
+        },
+        {
+          "nativeBoutId": "88250",
+          "date": "2022-08-02",
+          "opponent": "Francis Marshall",
+          "result": "loss",
+          "event": "Dana White's Contender Series",
+          "officialSourceUrl": "https://www.ufc.com/athlete/connor-matthews",
+          "excludedBecause": "DWCS qualifier/feeder; not a completed official UFC Octagon fight"
+        }
+      ],
+      "disambiguation": {
+        "opponentOfficialFullName": "Jose Miguel Delgado",
+        "opponentPinnedHistoricalName": "Jose Delgado",
+        "verifiedOriginalNativeOpponentNumericId": "436",
+        "verifiedOriginalNativeBoutId": "60996",
+        "verifiedExactFightUrl": "https://ufcstats.com/fight-details/2a493f15e079a7ff",
+        "officialEventResult": "https://www.ufc.com/event/ufc-fight-night-february-15-2025",
+        "officialOpponentProfile": "https://www.ufc.com/athlete/jose-miguel-delgado",
+        "note": "Narrow full-name/short-name alias, independent UFC.com official event and athlete pages, exact original native opponent corner 436. The opposing person is not a separate athlete."
+      },
+      "bouts": [
+        {
+          "date": "2024-03-30",
+          "opponent": "Dennis Buzukja",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f59cefe16905d62c",
+          "nativeBoutId": "38988",
+          "nativeFighterId": "2848"
+        },
+        {
+          "date": "2025-02-15",
+          "opponent": "Jose Delgado",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/2a493f15e079a7ff",
+          "nativeBoutId": "60996",
+          "nativeFighterId": "2848"
+        },
+        {
+          "date": "2025-05-17",
+          "opponent": "Yadier del Valle",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d6e2bc6e6c0cc4fe",
+          "nativeBoutId": "60847",
+          "nativeFighterId": "2848"
+        }
+      ]
+    },
+    "damian-pinas": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Damian Pinas",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/fdd22e895a70e4a8",
+      "officialFighterUrl": "https://www.ufc.com/athlete/damian-pinas",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived independent source; no direct live UFCStats page scrape claimed",
+        "method": "Complete dated official UFC.com full-fighter biography including official fight narrative/outcomes; source verified against pinned UFCStats-derived original fighter/fight/event URLs and the saved original numeric native bout IDs, paired fighter/opponent IDs, winners and complete measured rounds. Graphic Win tile never overrides official result. DWCS/RTU qualifiers independently excluded. No paid API calls."
+      },
+      "verifiedNumericFighterIds": [
+        "458"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Complete official Octagon career from debut to 2026-11-14 under immutable pinned source cutoff 2026-11-07; verified 3 exact completed UFC fights, original native paired corners, winners, opponent identity, event chronology and measured rounds. 1 separate source-proven DWCS native bouts excluded. ",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/damian-pinas",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43581846802",
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88287",
+          "date": "2025-09-30",
+          "opponent": "Vitor Costa",
+          "result": "win",
+          "event": "Dana White's Contender Series",
+          "officialSourceUrl": "https://www.ufc.com/athlete/damian-pinas",
+          "excludedBecause": "DWCS qualifier/feeder; not a completed official UFC Octagon fight"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-02-28",
+          "opponent": "Wes Schultz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c6a85b67fdd2ef3d",
+          "nativeBoutId": "60685",
+          "nativeFighterId": "458"
+        },
+        {
+          "date": "2026-07-11",
+          "opponent": "Cesar Almeida",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b223b10ef19f912c",
+          "nativeBoutId": "66446",
+          "nativeFighterId": "458"
+        },
+        {
+          "date": "2026-10-03",
+          "opponent": "Andrey Pulyaev",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/31b85cd63fb291ed",
+          "nativeBoutId": "83727",
+          "nativeFighterId": "458"
+        }
+      ]
+    },
+    "denys-bondar": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Denys Bondar",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/2526be54e6a0e62a",
+      "officialFighterUrl": "https://www.ufc.com/athlete/denys-bondar",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived independent source; no direct live UFCStats page scrape claimed",
+        "method": "Complete dated official UFC.com full-fighter biography including official fight narrative/outcomes; source verified against pinned UFCStats-derived original fighter/fight/event URLs and the saved original numeric native bout IDs, paired fighter/opponent IDs, winners and complete measured rounds. Graphic Win tile never overrides official result. DWCS/RTU qualifiers independently excluded. No paid API calls."
+      },
+      "verifiedNumericFighterIds": [
+        "1069"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Complete official Octagon career from debut to 2026-11-14 under immutable pinned source cutoff 2026-11-07; verified 3 exact completed UFC fights, original native paired corners, winners, opponent identity, event chronology and measured rounds. 0 separate source-proven DWCS native bouts excluded. ",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/denys-bondar",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43581846802",
+      "bouts": [
+        {
+          "date": "2022-02-05",
+          "opponent": "Malcolm Gordon",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1765fc442ea03873",
+          "nativeBoutId": "61633",
+          "nativeFighterId": "1069"
+        },
+        {
+          "date": "2023-06-17",
+          "opponent": "Carlos Hernandez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8ea12c7360fa0f6b",
+          "nativeBoutId": "60174",
+          "nativeFighterId": "1069"
+        },
+        {
+          "date": "2024-02-24",
+          "opponent": "Ronaldo Rodriguez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5e8c710f9f27aff8",
+          "nativeBoutId": "39038",
+          "nativeFighterId": "1069"
+        }
+      ]
     }
   }
 }
