@@ -3,6 +3,31 @@
   "scope": "ufc-independent-full-career-verification",
   "rosterAsOf": "2026-11-14",
   "status": "evidence_collection_pending",
-  "description": "Separate from provider UFCalendar metadata. Only independently checked complete UFC fight listings with source-linked bout-by-bout identities may establish full-career verification. No fighter is independently certified merely because every currently known UFC fight is indexed and measured.",
-  "fighters": {}
+  "description": "Separate from provider UFCalendar metadata. Only independently checked complete UFC fight listings with source-linked bout-by-bout identities may establish full-career verification. No fighter is independently certified merely because every currently known UFC fight is indexed and measured. Minimum-count evidence may prove historical omissions but cannot certify full-career completeness, even if its minimum is met.",
+  "fighters": {
+    "bruno-gustavo-da-silva": {
+      "sourceCoverageAttested": false,
+      "scope": "minimum_count_evidence_only",
+      "minimumOfficialUfcBouts": 11,
+      "fighterUrl": "https://www.ufc.com/athlete/bruno-silva",
+      "verifiedAt": "2026-11-14",
+      "note": "UFC official fighter page lists substantially more UFC bouts since 2019 than the one currently saved. At least 11 official appearances, excluding other promotions and TUF exhibitions; full independent bout-by-bout reconciliation still pending."
+    },
+    "carlos-hernandez-7": {
+      "sourceCoverageAttested": false,
+      "scope": "minimum_count_evidence_only",
+      "minimumOfficialUfcBouts": 7,
+      "fighterUrl": "https://www.ufc.com/athlete/carlos-hernandez",
+      "verifiedAt": "2026-11-14",
+      "note": "Official UFC history lists seven UFC fights between 2022 and May 2025; only one saved under the approved disambiguated slug."
+    },
+    "park-hyun-sung": {
+      "sourceCoverageAttested": false,
+      "scope": "minimum_count_evidence_only",
+      "minimumOfficialUfcBouts": 5,
+      "fighterUrl": "https://www.ufc.com/athlete/hyunsung-park",
+      "verifiedAt": "2026-11-14",
+      "note": "Official UFC history shows five UFC fights across 2023-2025. Two 2022 Road to UFC qualifying bouts are excluded from UFC-only count. Only two UFC bouts currently saved."
+    }
+  }
 }
