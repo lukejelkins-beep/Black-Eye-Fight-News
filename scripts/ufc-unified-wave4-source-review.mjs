@@ -94,18 +94,24 @@ for(const [slug,sourceId] of candidates){
  const candidates=fighters.filter(f=>String(f.URL||'').toLowerCase().endsWith('/'+sourceId));
  if(candidates.length!==1)throw Error('Pinned athlete id not unique: '+slug);
  const sourceName=[candidates[0].FIRST,candidates[0].LAST].filter(Boolean).join(' ');
- const rows=source.filter(b=>b.names.some(n=>norm(n)===norm(sourceName)))
+ // Only the explicitly source-proven Nick/Nicholas identity uses an alternate
+ // UFC.com athlete name here; never admit fuzzy or surname-only matching.
+ const exactAthleteNames=slug==='nick-galanti'?
+  new Set([norm(sourceName),norm(p.name)]):new Set([norm(sourceName)]);
+ const sameOpponent=(saved,fromGreco)=>norm(saved)===norm(fromGreco)||
+  slug==='melissa-amaya'&&norm(saved)==='valescamachado'&&norm(fromGreco)==='tinablack';
+ const rows=source.filter(b=>b.names.some(n=>exactAthleteNames.has(norm(n))))
   .map(b=>{
-   const at=b.names.findIndex(n=>norm(n)===norm(sourceName));
+   const at=b.names.findIndex(n=>exactAthleteNames.has(norm(n)));
    const other=b.names[1-at],result=b.results[at];
    const all=(p.recentHistory||[]).filter(h=>String(h.promotion||h.org||'').toLowerCase()==='ufc');
-   const matches=all.filter(h=>diff(h.date,b.date)<=1&&norm(h.opponent)===norm(other)&&
+   const matches=all.filter(h=>diff(h.date,b.date)<=1&&sameOpponent(h.opponent,other)&&
      outcome(h.result||h.outcome||h.status)===result);
    const h=matches.length===1?matches[0]:null;
    const native=h&&progress.bouts?.[String(h.boutId||'')];
    const own=native&&[[native.a,native.b],[native.b,native.a]].find(([a,o])=>
     a&&o&&(a.slug===slug||norm(a.name)===norm(sourceName)||norm(a.name)===norm(p.name))&&
-    norm(o.name)===norm(other));
+    sameOpponent(o.name,other));
    const officialCard=!/contender\s+series|road\s+to\s+ufc|\bdwcs\b/i.test(String(native?.event||b.event));
    return {date:b.date,opponent:other,result,event:b.event,fightUrl:b.url,
     nativeBoutId:h?String(h.boutId):null,nativeSavedDate:h?.date??null,
