@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {buildResearchProfile} from '../scripts/sumo-build-profile-cache.mjs';
+import {buildResearchProfile,mergeHistoricalWeights} from '../scripts/sumo-build-profile-cache.mjs';
 const roster=JSON.parse(readFileSync(new URL('../data/sumo/rikishi-index.json',import.meta.url),'utf8'));
 function cache(id){
  const w=roster.rikishi.find(x=>x.sourceId===id);
@@ -65,4 +65,37 @@ test('Obara research model reconciles official forfeit loss while raw API cache 
  assert.equal(result.headToHead.reduce((n,x)=>n+x.losses,0),209);
  assert.equal(original.winnerId,242);
  assert.equal(result.releaseGates.certified,false);
+});
+
+test('Ura profile read model contains all six independently dated points but remains uncertified',()=>{
+ const {w,source}=cache(28);
+ const independent=JSON.parse(readFileSync(new URL('../data/sumo/backfill/v1/weight-source-crosschecks/28.json',import.meta.url),'utf8'));
+ const result=buildResearchProfile(w,source,null,null,independent);
+ assert.equal(result.measurements.length,6);
+ assert.equal(result.measurementCoverage.extraPoints,4);
+ assert.equal(result.measurementCoverage.matchingOverlapPoints,2);
+ assert.equal(result.measurementCoverage.conflictingOverlaps.length,0);
+ assert.equal(result.measurements.find(x=>x.bashoId==='202205').weightKg,148);
+ assert.equal(result.measurements.find(x=>x.bashoId==='201503').independentSourceConfirmed,
+  'https://sumodb.sumogames.de/Rikishi.aspx?r=12226');
+ assert.equal(result.releaseGates.certified,false);
+ assert.equal(source.data.measurements.length,2,'original Sumo API measurements unchanged');
+});
+test('weight conflicts retain original API values and remain reviewable',()=>{
+ const w={sourceId:28,sumoDbId:12226};
+ const rows=[{bashoId:'202505',height:175,weight:139}];
+ const extra={sourceId:28,sumoDbId:12226,
+  datedEvidence:[{bashoId:'202505',weightKg:141,heightCm:175,
+   sourceUrl:'https://sumodb.sumogames.de/Rikishi.aspx?r=12226'}]};
+ const merged=mergeHistoricalWeights(w,rows,extra);
+ assert.equal(merged.measurements[0].weightKg,139);
+ assert.equal(merged.coverage.conflictingOverlaps.length,1);
+ assert.equal(merged.coverage.status,'needs-overlap-review');
+ assert.equal(merged.coverage.extraPoints,0);
+ assert.equal(rows[0].weight,139);
+});
+test('fractional historical weights are retained',()=>{
+ const m=mergeHistoricalWeights({sourceId:28},[{bashoId:'202505',weight:121.5,height:175.5}]);
+ assert.equal(m.measurements[0].weightKg,121.5);
+ assert.equal(m.measurements[0].heightCm,175.5);
 });
