@@ -14,6 +14,8 @@ on:
       - 'tests/test-ufc-v4-source-scope.mjs'
       - 'scripts/audit-ufc-v4-metric-availability.mjs'
       - 'tests/test-ufc-v4-metric-availability.mjs'
+      - 'scripts/audit-ufc-v4-source-conflicts.mjs'
+      - 'tests/test-ufc-v4-source-conflicts.mjs'
       - '.github/workflows/validate-ufc-v4-stat-foundation.yml'
 permissions:
   contents: read
@@ -36,6 +38,7 @@ jobs:
           node --test tests/test-ufc-v4-exception-causes.mjs
           node --test tests/test-ufc-v4-source-scope.mjs
           node --test tests/test-ufc-v4-metric-availability.mjs
+          node --test tests/test-ufc-v4-source-conflicts.mjs
       - name: Rebuild the complete measured career cache without API calls
         run: node scripts/build-ufc-postfight-metrics.mjs
       - name: Audit the approved 783-fighter Last 5 / Last 10 / Career windows
@@ -44,6 +47,8 @@ jobs:
         run: node scripts/audit-ufc-v4-exception-causes.mjs
       - name: Audit availability of each UFC metric by true chronological window
         run: node scripts/audit-ufc-v4-metric-availability.mjs
+      - name: Triage provider-source conflicts without accepting disputed values
+        run: node scripts/audit-ufc-v4-source-conflicts.mjs
       - name: Publish audit as non-production workflow artifact only
         if: always()
         uses: actions/upload-artifact@v4
@@ -53,5 +58,6 @@ jobs:
             qa/ufc-v4-stat-foundation.json
             qa/ufc-v4-exception-causes.json
             qa/ufc-v4-metric-coverage.json
+            qa/ufc-v4-source-conflict-triage.json
           retention-days: 14
           if-no-files-found: warn
