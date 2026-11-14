@@ -1966,6 +1966,50 @@
           "measuredRoundStatsVerifiedInV4": true
         }
       ]
+    },
+    "aleksandre-topuria": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Aleksandre Topuria",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/4a6dff1b260bcf61",
+      "officialFighterUrl": "https://www.ufc.com/athlete/aleksandre-topuria",
+      "firstOfficialUfcBout": "2025-02-08",
+      "latestCompletedOfficialUfcBout": "2025-11-22",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "method": "Independently checked full official UFC.com athlete UFC history (two dated 2025 wins) and ESPN complete professional record, and both exact pinned Greco UFCStats-derived fight-result URLs with dated event source. All six earlier non-UFC professional bouts are excluded. Full UFCStats fighter identity is unique in source fighter CSV. Source URLs represent historical CSV rows; UFCStats pages not directly rendered.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "373"
+      ],
+      "bouts": [
+        {
+          "date": "2025-02-08",
+          "opponent": "Colby Thicknesse",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c7fadbdfdc14c282",
+          "eventUrl": "https://ufcstats.com/event-details/e6015889f50075d2",
+          "nativeBoutId": "60987",
+          "nativeFighterId": "373"
+        },
+        {
+          "date": "2025-11-22",
+          "opponent": "Bekzat Almakhan",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6f0231915cc28507",
+          "eventUrl": "https://ufcstats.com/event-details/92c96df8bdab5fea",
+          "nativeBoutId": "60414",
+          "nativeFighterId": "373"
+        }
+      ],
+      "excludedFromFullUfcCareer": "All six professional MMA bouts before 2025 were fought outside the UFC and excluded. A scheduled November 21, 2026 opponent is future and has not happened as of this source cutoff.",
+      "note": "Exactly two official UFC bantamweight appearances from Feb to Nov 2025. UFC official site independently enumerates both wins and the Octagon Debut 2025-02-08; ESPN corroborates the full professional 8-bout record with six earlier non-UFC bouts. Both native UFC records have exact winner ID 373, opponent, event dates, paired round-stat coverage and independent Greco UFCStats fight URLs."
     }
   }
 }
