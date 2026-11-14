@@ -10,7 +10,7 @@ const approval=JSON.parse(fs.readFileSync(new URL('data/ufc-36-month-roster-appr
 const research=JSON.parse(fs.readFileSync(new URL('data/ufcalendar-fighter-research.json',root)));
 const progress=JSON.parse(fs.readFileSync(new URL('data/ufcalendar-rich-progress.json',root)));
 const prior=JSON.parse(fs.readFileSync(new URL('data/ufc-independent-full-career-verification.json',root)));
-const official=JSON.parse(fs.readFileSync(new URL('data/ufc-unified-wave9-official-source-review-20261114.json',root)));
+const official=JSON.parse(fs.readFileSync(new URL('data/ufc-unified-wave9-jose-henrique-official-source-review-20261114.json',root)));
 if(official.nonproduction!==true||official.certificationGranted!==false||official.approvedFighterSlug!=='jose-henrique')throw Error('Jose primary review must be source-only');
 const candidates=[['jose-henrique','20a0e4cc5227c117']];
 if(approval.status!=='approved'||approval.approvedFighters.length!==783||
