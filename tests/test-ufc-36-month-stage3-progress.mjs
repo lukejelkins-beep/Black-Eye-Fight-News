@@ -70,6 +70,25 @@ test('the existing paid collector reports offline Stage 3 progress without a sec
   assert.match(yaml,/Offline Stage 3 audit unavailable; preserve newly fetched records/);
 });
 
+test('source-verified official Finale fight is retained and separately counted as a recovery target',()=>{
+ const p={...progress,bouts:{}};
+ const r={profiles:{'fighter-1':{recentHistory:[
+   history(62312,'Kevin Aguilar','2018-11-30')
+ ]}}};
+ const evidence={schema:1,bouts:[{
+   boutId:'62312',fighterSlug:'fighter-1',date:'2018-11-30',
+   opponent:'Kevin Aguilar',event:'TUF 28 Finale',
+   sourceUrl:'https://www.ufc.com/athlete/ricky-glenn'
+ }]};
+ const x=auditApprovedStage3(approval,census,p,r,archive,{},evidence).summary;
+ assert.equal(x.sourceVerifiedOfficialFinaleFightIdsAwaitingIndex,1);
+ assert.equal(x.uniqueNativeFightIdsAwaitingIndex,1);
+ assert.equal(x.excludedDistinctFeederNativeFightIds,0);
+ const bad=auditApprovedStage3(approval,census,p,r,archive,{},
+   {schema:1,bouts:[{...evidence.bouts[0],opponent:'Other'}]}).summary;
+ assert.equal(bad.sourceVerifiedOfficialFinaleFightIdsAwaitingIndex,0);
+});
+
 test('exact UFC-site verified feeder bout is excluded without event cache evidence',()=>{
  const p={...progress,bouts:{'44':fight(44,'Opponent D')}};
  const r={profiles:{'fighter-1':{recentHistory:[
