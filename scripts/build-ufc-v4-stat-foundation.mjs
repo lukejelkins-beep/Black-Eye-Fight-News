@@ -1,0 +1,203 @@
+#!/usr/bin/env node
+/**
+ * BEFN V4 offline UFC-only statistical foundation. No API calls, credential
+ * research, skill ratings or production profile writes.
+ *
+ * Join the immutable approved roster's complete known UFC timelines against
+ * measured post-fight observations by exact native bout ID. In particular,
+ * never select "the five most recently MEASURED fights": missing latest bouts
+ * must occupy their actual positions in Last 5 / Last 10 / Career.
+ */
+import fs from "node:fs";
+import path from "node:path";
+import {fileURLToPath} from "node:url";
+import {isFeederUfcEvent} from "./ufc-official-event-scope.mjs";
+
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
+const validDay=x=>/^\d{4}-\d\d-\d\d$/.test(String(x||""));
+const norm=x=>String(x||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
+ .toLowerCase().replace(/[^a-z0-9]/g,"");
+const integer=x=>Number.isInteger(x)&&x>=0?x:null;
+const signed=x=>Number.isInteger(x)?x:null;
+const round=x=>Number.isFinite(x)?Math.round(x*1e6)/1e6:null;
+const fields=["sigLanded","sigAttempted","sigAbsorbed","sigStrikeDifferential",
+ "totalLanded","totalAttempted","totalAbsorbed","totalStrikeDifferential",
+ "knockdowns","takedowns","takedownAttempts","subAttempts","reversals",
+ "controlSec","controlDifferentialSec"];
+const signedFields=new Set(["sigStrikeDifferential","totalStrikeDifferential",
+ "controlDifferentialSec"]);
+const rates={
+ sigLandedPerMinute:["sigLanded",60],
+ sigAbsorbedPerMinute:["sigAbsorbed",60],
+ sigStrikeDifferentialPer15:["sigStrikeDifferential",900],
+ knockdownsPer15:["knockdowns",900],
+ takedownsPer15:["takedowns",900],
+ subAttemptsPer15:["subAttempts",900],
+ controlSecPer15:["controlSec",900],
+ controlDifferentialSecPer15:["controlDifferentialSec",900]
+};
+const officialResult=x=>["win","loss","draw","no_contest","w","l","d","nc"]
+ .includes(String(x||"").toLowerCase());
+const isHistoryRow=x=>
+ String(x?.promotion||x?.org||"").toLowerCase()==="ufc"&&
+ officialResult(x?.result||x?.outcome||x?.status);
+
+function feederDatesFrom(progress){
+ const byDay=new Map();
+ for(const b of Object.values(progress?.bouts||{})){
+  if(b?.org!=="ufc"||!validDay(b.eventDate)||!b.event)continue;
+  if(!byDay.has(b.eventDate))byDay.set(b.eventDate,new Set());
+  byDay.get(b.eventDate).add(b.event);
+ }
+ return new Set([...byDay].filter(([,titles])=>
+  titles.size&&[...titles].every(isFeederUfcEvent)).map(([day])=>day));
+}
+function timeline(profile,asOf,feederDates){
+ const rows=(Array.isArray(profile?.recentHistory)?profile.recentHistory:[])
+  .filter(x=>isHistoryRow(x)&&validDay(x.date)&&x.date<=asOf&&
+   !feederDates.has(x.date));
+ rows.sort((a,b)=>b.date.localeCompare(a.date)||
+  Number(b.source==="native")-Number(a.source==="native")||
+  String(a.opponent||"").localeCompare(String(b.opponent||"")));
+ const seenIds=new Set(),seenMatch=new Set(),out=[];
+ for(const row of rows){
+  const id=row.source==="native"&&/^[1-9]\d{0,11}$/.test(String(row.boutId||""))?
+   String(row.boutId):null;
+  const semantic=row.date+"|"+norm(row.opponent);
+  if(id&&seenIds.has(id))continue;
+  if(seenMatch.has(semantic))continue;
+  if(id)seenIds.add(id);
+  seenMatch.add(semantic);
+  out.push({boutId:id,date:row.date,opponent:row.opponent||null,
+   outcome:row.result||row.outcome||row.status||null});
+ }
+ return out;
+}
+function aggregate(rows,measured){
+ const observed=rows.map(row=>row.boutId?measured.get(row.boutId)||null:null);
+ const totals={},coverage={};
+ for(const field of fields){
+  let sum=0,count=0,seconds=0,secondsCount=0;
+  for(const bout of observed){
+   const raw=bout?.metrics?.[field];
+   const v=signedFields.has(field)?signed(raw):integer(raw);
+   if(v===null)continue;
+   sum+=v;count++;
+   const clock=integer(bout.cageSec);
+   if(clock!==null&&clock>0){seconds+=clock;secondsCount++;}
+  }
+  totals[field]=count?sum:null;
+  coverage[field]={bouts:count,elapsedSeconds:secondsCount?seconds:null};
+ }
+ const calculatedRates={};
+ for(const [label,[field,factor]] of Object.entries(rates)){
+  let sum=0,seconds=0,count=0;
+  for(const bout of observed){
+   const raw=bout?.metrics?.[field],clock=integer(bout?.cageSec);
+   const v=signedFields.has(field)?signed(raw):integer(raw);
+   if(v===null||clock===null||clock<=0)continue;
+   sum+=v;seconds+=clock;count++;
+  }
+  calculatedRates[label]={value:seconds?round(sum*factor/seconds):null,
+   coveredBouts:count,elapsedSeconds:seconds||null};
+ }
+ let landed=0,attempted=0,attemptBouts=0;
+ for(const bout of observed){
+  const a=integer(bout?.metrics?.sigLanded),b=integer(bout?.metrics?.sigAttempted);
+  if(a===null||b===null||b<=0||a>b)continue;
+  landed+=a;attempted+=b;attemptBouts++;
+ }
+ calculatedRates.sigAccuracyPercent={
+  value:attempted?round(100*landed/attempted):null,
+  coveredBouts:attemptBouts,attempts:attempted||null
+ };
+ return {knownBouts:rows.length,linkedMeasuredBouts:observed.filter(Boolean).length,
+  unlinkedTimelineRows:rows.filter(x=>!x.boutId).length,
+  totals,metricCoverage:coverage,rates:calculatedRates};
+}
+export function buildV4StatFoundation(approval,research,progress,postfight,{asOf}={}){
+ if(approval?.schema!==1||approval?.scope!=="ufc-36-month-roster"||
+    approval?.status!=="approved"||approval?.approvedBy!=="user"||
+    !Array.isArray(approval.approvedFighters)||
+    approval.approvedFighters.length===0||
+    new Set(approval.approvedFighters).size!==approval.approvedFighters.length)
+  throw Error("V4 requires the unique, user-approved UFC roster");
+ if(postfight?.schema!==1||postfight?.scope!=="ufc-only")
+  throw Error("V4 requires measured UFC-only post-fight observations");
+ const day=asOf||approval.rosterAsOf;
+ if(!validDay(day))throw Error("V4 requires a valid as-of date");
+ const feederDates=feederDatesFrom(progress);
+ const fighters={},stats={approved:approval.approvedFighters.length,knownHistory:0,
+  knownFive:0,knownTen:0,measuredFiveOfFive:0,measuredTenOfTen:0,
+  providerCertified:0,historyRows:0,linkedMeasuredRows:0,uniqueMeasuredIds:new Set(),
+  unlinkedHistoryRows:0,missingNativeMetricRows:0};
+ for(const slug of approval.approvedFighters){
+  const profile=research?.profiles?.[slug]||{};
+  const history=timeline(profile,day,feederDates);
+  const sampled=postfight.fighters?.[slug];
+  // An old five-bout-only cache cannot claim comprehensive V4 career coverage.
+  if(sampled&&!Array.isArray(sampled.careerBouts))
+   throw Error("Full measured career cache required for "+slug+
+    "; regenerate postfight metrics offline with V4-compatible builder");
+  const measured=new Map();
+  for(const bout of sampled?.careerBouts||[]){
+   const id=String(bout?.boutId||"");
+   if(!id)continue;
+   if(measured.has(id))throw Error("Duplicate measured UFC fight "+id+" for "+slug);
+   measured.set(id,bout);
+  }
+  const windows={last5:aggregate(history.slice(0,5),measured),
+   last10:aggregate(history.slice(0,10),measured),
+   career:aggregate(history,measured)};
+  const certified=profile?.ufcTimeline?.complete===true;
+  const all=windows.career;
+  if(history.length)stats.knownHistory++;
+  if(history.length>=5)stats.knownFive++;
+  if(history.length>=10)stats.knownTen++;
+  if(history.length>=5&&windows.last5.linkedMeasuredBouts===5)stats.measuredFiveOfFive++;
+  if(history.length>=10&&windows.last10.linkedMeasuredBouts===10)stats.measuredTenOfTen++;
+  if(certified)stats.providerCertified++;
+  stats.historyRows+=history.length;
+  stats.linkedMeasuredRows+=all.linkedMeasuredBouts;
+  stats.unlinkedHistoryRows+=all.unlinkedTimelineRows;
+  stats.missingNativeMetricRows+=history.filter(x=>x.boutId&&!measured.has(x.boutId)).length;
+  for(const row of history)if(row.boutId&&measured.has(row.boutId))
+   stats.uniqueMeasuredIds.add(row.boutId);
+  fighters[slug]={name:profile?.name||null,slug,ucfTimelineCertified:certified,
+   // A complete history is never inferred from how many observations were saved.
+   careerCoverageStatus:certified?"provider_certified":"provider_completeness_unverified",
+   knownCareerBouts:history.length,windows,
+   v4Scores:null,externalCredentialBonusApplied:false};
+ }
+ const summary={approvedFighters:stats.approved,fightersWithKnownHistory:stats.knownHistory,
+  fightersWithFiveKnownBouts:stats.knownFive,
+  fightersWithTenKnownBouts:stats.knownTen,
+  fightersWithFiveMeasuredLatestBouts:stats.measuredFiveOfFive,
+  fightersWithTenMeasuredLatestBouts:stats.measuredTenOfTen,
+  fullyProviderCertifiedTimelines:stats.providerCertified,
+  knownUfcHistoryRows:stats.historyRows,
+  linkedMeasuredFighterBoutRows:stats.linkedMeasuredRows,
+  distinctLinkedMeasuredUfcFights:stats.uniqueMeasuredIds.size,
+  unlinkedHistoryRows:stats.unlinkedHistoryRows,
+  nativeHistoryRowsWithoutFullRoundMetrics:stats.missingNativeMetricRows};
+ return {schema:1,scope:"ufc-only-v4-stat-foundation",asOf:day,
+  status:"offline_qa_only_not_production",population:stats.approved,
+  note:"Last 5/10 reflect known chronological UFC bouts, not merely the latest measured ones. Career means all saved known UFC bouts, NOT provider-certified completeness. Per-metric absent evidence is null, never zero. No external achievement bonuses or unvalidated V4 ratings.",
+  summary,fighters};
+}
+function read(name){return JSON.parse(fs.readFileSync(path.join(root,name),"utf8"))}
+export function main(){
+ const out=buildV4StatFoundation(
+  read("data/ufc-36-month-roster-approval.json"),
+  read("data/ufcalendar-fighter-research.json"),
+  read("data/ufcalendar-rich-progress.json"),
+  read("data/ufc-postfight-metrics.json"),
+  {asOf:new Date().toISOString().slice(0,10)}
+ );
+ if(out.population!==783)throw Error("Immutable BEFN cohort must contain 783 fighters");
+ const file=path.join(root,"qa/ufc-v4-stat-foundation.json");
+ fs.mkdirSync(path.dirname(file),{recursive:true});
+ fs.writeFileSync(file,JSON.stringify(out,null,2)+"\n");
+ console.log("BEFN_V4_STAT_FOUNDATION "+JSON.stringify(out.summary));
+}
+if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))main();
