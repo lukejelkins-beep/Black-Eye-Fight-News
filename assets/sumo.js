@@ -39,8 +39,7 @@ function heading(label,title,more='') {
 function note(text) { return '<p class="notice">'+e(text)+'</p>'; }
 function richText(text) { return e(text).replace(/\n/g, '<br>'); }
 function imageToken(rank, name, large=false) {
-  const initials=String(name||'相').slice(0,1);
-  return '<div class="profile-icon'+(large?' large':'')+'" aria-label="Illustrated placeholder; no licensed wrestler photograph"><span>'+e(initials)+'</span></div>';
+  return '<div class="profile-icon'+(large?' large':'')+'" role="img" aria-label="Illustrated silhouette placeholder; licensed wrestler photograph not available"><span aria-hidden="true">相</span></div>';
 }
 function ranks() {
   return STATE.roster?.rikishi || [];
@@ -202,6 +201,10 @@ function renderProfile(id) {
   const item=entryFor(w), r=recordSummary(item?.record), s=detailStats(w), enriched=detailFor(details(),w.sourceId);
   const perf=detailFor(details(),w.sourceId)?'Featured sample data available':'Career data collection pending';
   const pct=r.win+r.loss?Math.round(r.win/(r.win+r.loss)*100):0;
+  const officialId=Number(w.officialNskId);
+  const officialLink=Number.isSafeInteger(officialId)&&officialId>0
+    ?'<a href="https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+officialId+'/" target="_blank" rel="noopener noreferrer">JSA OFFICIAL RIKISHI PROFILE ↗</a>'
+    :'<a href="'+JSA_URL+'" target="_blank" rel="noopener noreferrer">JSA OFFICIAL WRESTLER DIRECTORY ↗</a>';
   const meta=[
     ['Stable (heya)',w.heya],['Birthplace',w.birthplace],['Height',Number.isFinite(w.heightCm)?w.heightCm+' cm':null],
     ['Weight',Number.isFinite(w.weightKg)?w.weightKg+' kg':null],
@@ -221,6 +224,7 @@ function renderProfile(id) {
     '<div class="big-record">'+(item?r.win+'<span>–</span>'+r.loss+'<small>–'+r.absence+'</small>':'—')+'</div><p>'+e(perf)+' · W–L–A, current ranking only. '+(item?'':'Current banzuke record unavailable.')+'</p>'+
     '<div class="progress" aria-hidden="true"><div style="width:'+pct+'%"></div></div>'+
     '<p>Current tournament results · snapshot, not live</p></div></section>'+
+    '<div class="official-source-link">'+officialLink+'<span>BEFN is independent of the Japan Sumo Association.</span></div>'+
     formatStats(w,item?r:null)+
     heading('Latest tournament · source-backed','Basho performance')+
     (item?recordChart(item):'<p class="missing">No current tournament data cached.</p>')+
