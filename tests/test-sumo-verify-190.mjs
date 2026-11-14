@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {newCache,STAGES} from '../scripts/sumo-backfill-190.mjs';
 import {auditRikishi,crossCheckOfficial} from '../scripts/sumo-verify-190.mjs';
+import {unrankedDebutEvidence,terminalHistoryEvidence} from '../scripts/sumo-backfill-190.mjs';
+import {readFileSync} from 'node:fs';
 
 const w={sourceId:28,officialNskId:3616,sumoDbId:12226,shikonaEn:'Ura',currentRank:'Maegashira 2 East'};
 function complete(){
@@ -149,4 +151,27 @@ test('a finished match ledger without identifiable winners never counts as verif
   assert.ok(out.errors.includes('match-winner-missing'));
   assert.equal(out.boutLedger.missingWinner,1);
   assert.equal(out.readyForExternalCrosscheck,false);
+});
+
+test('documented Makushita debut is a sourced unranked tournament, never a fabricated position',()=>{
+ const d=JSON.parse(readFileSync(new URL('../data/sumo/backfill/v1/rikishi/9050.json',import.meta.url),'utf8'));
+ const w=JSON.parse(readFileSync(new URL('../data/sumo/rikishi-index.json',import.meta.url),'utf8')).rikishi.find(x=>x.sourceId===9050);
+ d.stages.ranks.complete=true;
+ d.stages.ranks.unrankedDebut=unrankedDebutEvidence(d);
+ const result=auditRikishi(w,d);
+ assert.equal(result.readyForExternalCrosscheck,true);
+ assert.ok(result.warnings.includes('documented-unranked-debut-basho'));
+ assert.equal(result.errors.length,0);
+ delete d.stages.ranks.unrankedDebut;
+ assert.ok(auditRikishi(w,d).errors.includes('rank-history-basho-count-mismatch'));
+});
+test('strict W-L and debut evidence can close terminal-null bout page without certification',()=>{
+ const d=JSON.parse(readFileSync(new URL('../data/sumo/backfill/v1/rikishi/113.json',import.meta.url),'utf8'));
+ const w=JSON.parse(readFileSync(new URL('../data/sumo/rikishi-index.json',import.meta.url),'utf8')).rikishi.find(x=>x.sourceId===113);
+ d.stages.matches.complete=true;
+ d.stages.matches.terminalEmptyPage=terminalHistoryEvidence(d);
+ const result=auditRikishi(w,d);
+ assert.equal(result.readyForExternalCrosscheck,true);
+ assert.equal(d.certification,'not-started');
+ assert.equal(result.errors.length,0);
 });
