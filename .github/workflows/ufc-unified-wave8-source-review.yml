@@ -1,12 +1,5 @@
 name: UFC wave8 pinned history/native source reconciliation (nonproduction)
 on:
-  pull_request:
-    branches:
-      - research/ufc-unified-stage3-v4-evidence-20261114
-    paths:
-      - 'data/ufc-unified-wave8-official-source-review-20261114.json'
-      - 'scripts/ufc-unified-wave8-source-review.mjs'
-      - '.github/workflows/ufc-unified-wave8-source-review.yml'
   workflow_dispatch:
 permissions:
   contents: read
