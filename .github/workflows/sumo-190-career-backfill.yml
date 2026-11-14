@@ -36,9 +36,14 @@ jobs:
           fi
           if json=$(gh api "repos/${GITHUB_REPOSITORY}/contents/data/sumo/backfill/v1/summary.json?ref=research/sumo-190-career-cache-20261114" --jq '.content' | tr -d '\n' | base64 -d); then
             if printf '%s' "$json" | jq -e '.cohortSize==190 and .counts.collected==190 and .counts.pending==0 and .counts.partial==0 and .counts.exception==0' > /dev/null; then
-              echo 'run=false' >> "$GITHUB_OUTPUT"
-              echo 'All 190 cached histories collected: skipping redundant API requests, QA checkout and commit.'
-              exit 0
+              if official=$(gh api "repos/${GITHUB_REPOSITORY}/contents/data/sumo/backfill/v1/jsa-public/summary.json?ref=research/sumo-190-career-cache-20261114" --jq '.content' 2>/dev/null | tr -d '\n' | base64 -d); then
+                if printf '%s' "$official" | jq -e '.cohort==190 and .pending==0' > /dev/null; then
+                  echo 'run=false' >> "$GITHUB_OUTPUT"
+                  echo 'All API histories and JSA public profile snapshots complete; skipping redundant schedule.'
+                  exit 0
+                fi
+              fi
+              echo 'API histories complete; public JSA verification still pending.'
             fi
           fi
           echo 'run=true' >> "$GITHUB_OUTPUT"
@@ -83,6 +88,7 @@ jobs:
         if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-build-profile-cache.mjs
       - name: Source-check public JSA profile fields without certifying careers
+        if: steps.preflight.outputs.run == 'true'
         env:
           SUMO_JSA_REQUESTS_PER_RUN: '6'
           SUMO_JSA_INTERVAL_MS: '2000'
