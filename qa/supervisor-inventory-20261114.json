@@ -1,0 +1,3527 @@
+{
+  "workflows": [
+    {
+      "path": ".github/workflows/approve-ufc-36-month-roster.yml",
+      "name": "Activate user-approved UFC 36-month Stage 3 snapshot",
+      "triggers": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/approve-ufc-36-month-roster.yml"
+          ]
+        },
+        "workflow_dispatch": "",
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/approve-ufc-36-month-roster.yml",
+            "scripts/approve-ufc-36-month-snapshot.mjs",
+            "tests/test-ufc36-approved-snapshot.mjs"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write",
+        "actions": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test-ufc-36-month-independent-evidence.mjs",
+        "tests/test-ufc-36-month-review-report.mjs",
+        "tests/test-ufc36-approved-snapshot.mjs",
+        "tests/test_ufc_full_career_cache.py"
+      ],
+      "scripts": [
+        "scripts/approve-ufc-36-month-snapshot.mjs",
+        "scripts/build-ufc-36-month-candidates.mjs",
+        "scripts/build-ufc-last-five-coverage.mjs",
+        "scripts/ufc-36-month-review-report.mjs"
+      ],
+      "jobs": {
+        "approve-frozen-roster": {
+          "needs": [],
+          "timeout": "14",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/checkout@v4",
+            "actions/setup-node@v4",
+            "actions/setup-python@v5"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/archive-ufc-research.yml",
+      "name": "Archive UFC round-by-round research",
+      "triggers": {
+        "workflow_dispatch": "",
+        "schedule": [
+          {
+            "cron": "10 8 * * 0,1,3"
+          }
+        ],
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/refresh-ufc-research-archive.py",
+            "tests/test_ufc_research_archive.py",
+            "scripts/crosscheck-ufc-stats-api.py",
+            "tests/test_ufc_stats_crosscheck.py",
+            ".github/workflows/archive-ufc-research.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "befn-ufc-research-archive",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test_ufc_research_archive.py",
+        "tests/test_ufc_stats_crosscheck.py"
+      ],
+      "scripts": [
+        "scripts/crosscheck-ufc-stats-api.py",
+        "scripts/refresh-ufc-research-archive.py"
+      ],
+      "jobs": {
+        "collect": {
+          "needs": [],
+          "timeout": "12",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/audit-image-urls.yml",
+      "name": "Audit external fighter image URLs",
+      "triggers": {
+        "workflow_dispatch": "",
+        "schedule": [
+          {
+            "cron": "27 19 * * 0"
+          }
+        ],
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/audit-image-urls.cjs",
+            ".github/workflows/audit-image-urls.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "image-url-audit",
+        "cancel-in-progress": "false"
+      },
+      "tests": [],
+      "scripts": [
+        "scripts/audit-image-urls.cjs"
+      ],
+      "jobs": {
+        "verify": {
+          "needs": [],
+          "timeout": "12",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/audit-ufc-park-native-identity.yml",
+      "name": "Audit UFC Park 2025 duplicate native fight identity",
+      "triggers": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/audit-ufc-park-two-native-ids.mjs",
+            "tests/test-ufc-park-two-native-ids.mjs",
+            ".github/workflows/audit-ufc-park-native-identity.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test-ufc-park-two-native-ids.mjs"
+      ],
+      "scripts": [
+        "scripts/audit-ufc-park-two-native-ids.mjs"
+      ],
+      "jobs": {
+        "offline": {
+          "needs": [],
+          "timeout": "6",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4",
+            "actions/upload-artifact@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "name": "Audit UFC research pipeline",
+      "triggers": {
+        "workflow_dispatch": "",
+        "schedule": [
+          {
+            "cron": "11 * * * *"
+          }
+        ],
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/audit-ufc-research-pipeline.mjs",
+            "scripts/ufc-36-month-review-report.mjs",
+            "scripts/ufc-36-month-stage3-progress.mjs",
+            "scripts/ufc-v4-certification-queue.mjs",
+            "data/ufc-independent-full-career-verification.json",
+            "tests/test-ufc-v4-certification-queue.mjs",
+            "tests/test-ufc-36-month-stage3-progress.mjs",
+            "tests/test-ufc-36-month-review-report.mjs",
+            "tests/test-ufc-research-pipeline.mjs",
+            ".github/workflows/audit-ufc-research-pipeline.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "data/ufc-*-profiles.json",
+            "data/ufc-independent-full-career-verification.json",
+            "data/ufc-research-workers/**",
+            "scripts/audit-ufc-research-pipeline.mjs",
+            "scripts/ufc-36-month-stage3-progress.mjs",
+            "scripts/ufc-v4-certification-queue.mjs",
+            "tests/test-ufc-v4-certification-queue.mjs",
+            "tests/test-ufc-research-pipeline.mjs",
+            "tests/test-ufc-36-month-stage3-progress.mjs",
+            ".github/workflows/audit-ufc-research-pipeline.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": {
+        "group": "befn-ufc-research-audit-${{ github.ref }}",
+        "cancel-in-progress": "true"
+      },
+      "tests": [
+        "tests/test-ufc-36-month-stage3-progress.mjs",
+        "tests/test-ufc-profile-queue.mjs",
+        "tests/test-ufc-research-pipeline.mjs",
+        "tests/test-ufc-v4-certification-queue.mjs",
+        "tests/test-ufc-worker-retention.mjs"
+      ],
+      "scripts": [
+        "scripts/audit-ufc-research-pipeline.mjs",
+        "scripts/check-ufc-worker-retention.mjs",
+        "scripts/ufc-36-month-review-report.mjs",
+        "scripts/ufc-36-month-stage3-progress.mjs",
+        "scripts/ufc-v4-certification-queue.mjs"
+      ],
+      "jobs": {
+        "audit": {
+          "needs": [],
+          "timeout": "5",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4",
+            "actions/upload-artifact@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/backfill-mma-results.yml",
+      "name": "Backfill six-month UFC ONE PFL results",
+      "triggers": {
+        "workflow_dispatch": "",
+        "schedule": [
+          {
+            "cron": "17 3 * * *"
+          }
+        ],
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/backfill-mma-2026.py",
+            "scripts/enrich-ufc-history.py",
+            "scripts/enrich-promotion-portraits.py",
+            "scripts/enrich-one-official-portraits.py",
+            "scripts/reconcile-one-official-october.py",
+            "data/one-official-october-2026.json",
+            "tests/test_one_official_october.py",
+            "tests/test_one_portraits.py",
+            "scripts/import-official-pfl-2026.py",
+            "scripts/enrich-pfl-official-portraits.py",
+            "tests/test_pfl_portraits.py",
+            "data/pfl-official-results-2026.json",
+            "tests/test_pfl_official_history.py",
+            "tests/test_mma_backfill.py",
+            ".github/workflows/backfill-mma-results.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "mma-history-backfill",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test_mma_backfill.py",
+        "tests/test_one_official_october.py",
+        "tests/test_one_portraits.py",
+        "tests/test_pfl_official_history.py",
+        "tests/test_pfl_portraits.py"
+      ],
+      "scripts": [
+        "scripts/backfill-mma-2026.py",
+        "scripts/enrich-one-official-portraits.py",
+        "scripts/enrich-pfl-official-portraits.py",
+        "scripts/enrich-promotion-portraits.py",
+        "scripts/enrich-ufc-history.py",
+        "scripts/import-official-pfl-2026.py",
+        "scripts/reconcile-one-official-october.py"
+      ],
+      "jobs": {
+        "backfill": {
+          "needs": [],
+          "timeout": "26",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "name": "BEFN release readiness",
+      "triggers": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ]
+        },
+        "push": {
+          "branches": [
+            "main"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test-event-status.cjs",
+        "tests/test-fighter-power-index.cjs",
+        "tests/test-mobile-build.mjs",
+        "tests/test-qa-supervisor.py",
+        "tests/test-results-card-order.cjs",
+        "tests/test-ufc-async-authority.cjs",
+        "tests/test-ufc-fighter-v3.mjs",
+        "tests/test-ufc-leaderboards-page.mjs",
+        "tests/test-ufc-postfight-metrics.mjs",
+        "tests/test-ufc-profile-card-qa.cjs",
+        "tests/test-ufc-profile-queue.mjs",
+        "tests/test-ufc-prospect-contender.cjs",
+        "tests/test-ufc-public-profile-clean.cjs",
+        "tests/test-ufc-qa-freshness.mjs",
+        "tests/test-ufc-title-match.cjs",
+        "tests/test-upcoming-merge.cjs",
+        "tests/test-upcoming-ui.cjs",
+        "tests/test_fighter_records.py",
+        "tests/test_results.py",
+        "tests/test_upcoming_cards.py"
+      ],
+      "scripts": [
+        "scripts/qa-supervisor.py"
+      ],
+      "jobs": {
+        "release-preflight": {
+          "needs": [],
+          "timeout": "12",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4",
+            "actions/setup-python@v5"
+          ]
+        },
+        "qa-inventory": {
+          "needs": [],
+          "timeout": "5",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5",
+            "actions/upload-artifact@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "name": "BEFN conditional Render recovery",
+      "triggers": {
+        "schedule": [
+          {
+            "cron": "31 */2 * * *"
+          }
+        ],
+        "workflow_dispatch": "",
+        "workflow_run": {
+          "workflows": [
+            "BEFN release readiness"
+          ],
+          "types": [
+            "completed"
+          ],
+          "branches": [
+            "main"
+          ]
+        },
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/befn-render-deploy-recovery.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "read",
+        "actions": "write"
+      },
+      "concurrency": {
+        "group": "befn-render-recovery",
+        "cancel-in-progress": "false"
+      },
+      "tests": [],
+      "scripts": [],
+      "jobs": {
+        "reconcile": {
+          "needs": [],
+          "timeout": "17",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/boxerbook-source-qa.yml",
+      "name": "Boxerbook source QA",
+      "triggers": {
+        "workflow_dispatch": {
+          "inputs": {
+            "live_check": {
+              "description": "Read-only live API QA (two calls; no deployment)",
+              "type": "boolean",
+              "default": "false"
+            }
+          }
+        },
+        "push": {
+          "branches": [
+            "main",
+            "feature/boxerbook-boxing-source"
+          ],
+          "paths": [
+            "scripts/boxerbook_source.py",
+            "tests/test_boxerbook_source.py",
+            ".github/workflows/boxerbook-source-qa.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test_boxerbook_source.py"
+      ],
+      "scripts": [
+        "scripts/boxerbook_source.py"
+      ],
+      "jobs": {
+        "qa": {
+          "needs": [],
+          "timeout": "5",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5",
+            "actions/upload-artifact@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/build-ufc-fighter-v3.yml",
+      "name": "Build UFC V3 statistical snapshot from local cache",
+      "triggers": {
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "data/ufc-last-five-coverage.json",
+            "scripts/build-ufc-fighter-v3.mjs",
+            "tests/test-ufc-fighter-v3.mjs",
+            ".github/workflows/build-ufc-fighter-v3.yml"
+          ]
+        },
+        "schedule": [
+          {
+            "cron": "19 * * * *"
+          }
+        ],
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/build-ufc-fighter-v3.mjs",
+            "tests/test-ufc-fighter-v3.mjs",
+            ".github/workflows/build-ufc-fighter-v3.yml",
+            ".github/workflows/befn-render-deploy-recovery.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write",
+        "actions": "write"
+      },
+      "concurrency": {
+        "group": "befn-ufc-v3-deterministic-snapshot",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test-ufc-fighter-v3.mjs"
+      ],
+      "scripts": [
+        "scripts/build-ufc-fighter-v3.mjs"
+      ],
+      "jobs": {
+        "build": {
+          "needs": [],
+          "timeout": "8",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/build-ufc-profile-queue.yml",
+      "name": "Build UFC profile research queue",
+      "triggers": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/build-ufc-profile-queue.mjs",
+            "scripts/build-ufc-postfight-metrics.mjs",
+            "scripts/build-ufc-last-five-coverage.mjs",
+            "tests/test-ufc-postfight-metrics.mjs",
+            "tests/test-ufc-last-five-coverage.mjs",
+            ".github/workflows/build-ufc-profile-queue.yml"
+          ]
+        },
+        "schedule": [
+          {
+            "cron": "13,43 * * * *"
+          }
+        ],
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/build-ufc-profile-queue.mjs",
+            "scripts/build-ufc-postfight-metrics.mjs",
+            "tests/test-ufc-postfight-metrics.mjs",
+            "data/ufcalendar-rich-progress.json",
+            "data/ufc-research-archive.json",
+            "data/upcoming-cards.json",
+            "data/ufc-*-profiles.json",
+            "tests/test-ufc-profile-queue.mjs",
+            "scripts/build-ufc-last-five-coverage.mjs",
+            "tests/test-ufc-last-five-coverage.mjs",
+            ".github/workflows/build-ufc-profile-queue.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "befn-ufc-profile-research-queue",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test-ufc-last-five-coverage.mjs",
+        "tests/test-ufc-postfight-metrics.mjs",
+        "tests/test-ufc-profile-card-qa.cjs",
+        "tests/test-ufc-profile-queue.mjs"
+      ],
+      "scripts": [
+        "scripts/build-ufc-last-five-coverage.mjs",
+        "scripts/build-ufc-postfight-metrics.mjs",
+        "scripts/build-ufc-profile-queue.mjs"
+      ],
+      "jobs": {
+        "compile-research-queue": {
+          "needs": [],
+          "timeout": "6",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/cache-licensed-portraits.yml",
+      "name": "Cache licence-cleared fighter photos",
+      "triggers": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "assets/portrait-sources.json",
+            ".github/workflows/cache-licensed-portraits.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": null,
+      "tests": [],
+      "scripts": [],
+      "jobs": {
+        "cache": {
+          "needs": [],
+          "timeout": null,
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/check-instagram-connection.yml",
+      "name": "Verify Instagram API connection",
+      "triggers": {
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/check-instagram-connection.mjs",
+            ".github/workflows/check-instagram-connection.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [],
+      "scripts": [
+        "scripts/check-instagram-connection.mjs"
+      ],
+      "jobs": {
+        "verify": {
+          "needs": [],
+          "timeout": "3",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/check-threads-connection.yml",
+      "name": "Verify Threads API connection",
+      "triggers": {
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/check-threads-connection.mjs",
+            ".github/workflows/check-threads-connection.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [],
+      "scripts": [
+        "scripts/check-threads-connection.mjs"
+      ],
+      "jobs": {
+        "verify": {
+          "needs": [],
+          "timeout": "3",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/check-threads-insights.yml",
+      "name": "Meta Threads insights permission test",
+      "triggers": {
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [],
+      "scripts": [
+        "scripts/check-threads-insights.mjs"
+      ],
+      "jobs": {
+        "check-insights": {
+          "needs": [],
+          "timeout": "4",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/check-threads-profile-discovery.yml",
+      "name": "Meta Threads profile discovery test",
+      "triggers": {
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "meta-threads-discovery-check",
+        "cancel-in-progress": "false"
+      },
+      "tests": [],
+      "scripts": [
+        "scripts/check-threads-profile-discovery.mjs"
+      ],
+      "jobs": {
+        "test-profile-discovery": {
+          "needs": [],
+          "timeout": "5",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/check-threads-review-demo.yml",
+      "name": "Check secure Threads OAuth demonstrator",
+      "triggers": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "threads-review/**",
+            ".github/workflows/check-threads-review-demo.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [],
+      "scripts": [],
+      "jobs": {
+        "check": {
+          "needs": [],
+          "timeout": "4",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/check-ufcalendar-upgrade.yml",
+      "name": "Check upgraded UFCalendar plan",
+      "triggers": {
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/check-ufcalendar-upgrade.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": null,
+      "tests": [],
+      "scripts": [],
+      "jobs": {
+        "verify": {
+          "needs": [],
+          "timeout": "5",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/cito-connection-check.yml",
+      "name": "Test Cito UFC API connection",
+      "triggers": {
+        "workflow_dispatch": "",
+        "push": {
+          "paths": [
+            ".github/workflows/cito-connection-check.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": null,
+      "tests": [],
+      "scripts": [],
+      "jobs": {
+        "check-cito": {
+          "needs": [],
+          "timeout": null,
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/cito-second-key-check.yml",
+      "name": "Test second Cito API key",
+      "triggers": {
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/cito-second-key-check.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "befn-cito-second-key-test",
+        "cancel-in-progress": "false"
+      },
+      "tests": [],
+      "scripts": [],
+      "jobs": {
+        "verify": {
+          "needs": [],
+          "timeout": "4",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/diagnose-production-assets.yml",
+      "name": "Diagnose production UFC asset freshness",
+      "triggers": {
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/diagnose-production-assets.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [],
+      "scripts": [],
+      "jobs": {
+        "compare": {
+          "needs": [],
+          "timeout": "3",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/discover-fight-talk-profiles.yml",
+      "name": "Discover fighter X Instagram and Threads profiles",
+      "triggers": {
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/discover-fight-talk-profiles.mjs",
+            "tests/test-fight-talk-profiles.mjs",
+            ".github/workflows/discover-fight-talk-profiles.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "discover-fighter-profiles",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test-fight-talk-profiles.mjs",
+        "tests/test-fight-talk-roster.cjs"
+      ],
+      "scripts": [
+        "scripts/discover-fight-talk-profiles.mjs"
+      ],
+      "jobs": {
+        "discover": {
+          "needs": [],
+          "timeout": "12",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/discover-fighter-profiles.yml",
+      "name": "Discover fighter X, Instagram and Threads profiles",
+      "triggers": {
+        "schedule": [
+          {
+            "cron": "49 0,6,12,18 * * *"
+          }
+        ],
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/discover-social-profiles.mjs",
+            "tests/test-social-profile-discovery.mjs",
+            ".github/workflows/discover-fighter-profiles.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "fighter-profile-discovery",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test-social-profile-discovery.mjs"
+      ],
+      "scripts": [
+        "scripts/discover-social-profiles.mjs"
+      ],
+      "jobs": {
+        "discover": {
+          "needs": [],
+          "timeout": "18",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/discover-industry-profiles.yml",
+      "name": "Expand official combat sports source directory",
+      "triggers": {
+        "schedule": [
+          {
+            "cron": "41 1,7,13,19 * * *"
+          }
+        ],
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/discover-industry-profiles.mjs",
+            "tests/test-industry-profiles.mjs",
+            "data/fight-talk-industry-sites.json",
+            ".github/workflows/discover-industry-profiles.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "discover-industry-profiles",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test-fight-talk-roster.cjs",
+        "tests/test-industry-profiles.mjs"
+      ],
+      "scripts": [
+        "scripts/discover-industry-profiles.mjs"
+      ],
+      "jobs": {
+        "discover": {
+          "needs": [],
+          "timeout": "12",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/generate-app-icons.yml",
+      "name": "Generate approved app icons",
+      "triggers": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "assets/app-icon-source.webp"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "generate-approved-app-icons",
+        "cancel-in-progress": "false"
+      },
+      "tests": [],
+      "scripts": [],
+      "jobs": {
+        "build": {
+          "needs": [],
+          "timeout": null,
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/historical-posters.yml",
+      "name": "Refresh historical fight posters",
+      "triggers": {
+        "workflow_dispatch": "",
+        "schedule": [
+          {
+            "cron": "20 5 */2 * *"
+          }
+        ],
+        "push": {
+          "paths": [
+            "scripts/refresh-historical-posters.py",
+            ".github/workflows/historical-posters.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "befn-historical-posters",
+        "cancel-in-progress": "false"
+      },
+      "tests": [],
+      "scripts": [
+        "scripts/refresh-historical-posters.py"
+      ],
+      "jobs": {
+        "refresh": {
+          "needs": [],
+          "timeout": "15",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/publish-version-1.0.0.yml",
+      "name": "Publish v1.0.0 stable checkpoint",
+      "triggers": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/publish-version-1.0.0.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": null,
+      "tests": [],
+      "scripts": [],
+      "jobs": {
+        "publish": {
+          "needs": [],
+          "timeout": null,
+          "permissions": null,
+          "concurrency": null,
+          "actions": []
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/publish-version-1.0.1.yml",
+      "name": "Publish v1.0.1 brand-theme checkpoint",
+      "triggers": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/publish-version-1.0.1.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": null,
+      "tests": [],
+      "scripts": [],
+      "jobs": {
+        "publish": {
+          "needs": [],
+          "timeout": null,
+          "permissions": null,
+          "concurrency": null,
+          "actions": []
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/refresh-fight-film.yml",
+      "name": "Refresh fight finish videos",
+      "triggers": {
+        "schedule": [
+          {
+            "cron": "*/5 * * * *"
+          }
+        ],
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/refresh-fight-film.py",
+            ".github/workflows/refresh-fight-film.yml",
+            "tests/test_fight_film.py"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "fight-film-video-updates",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test_fight_film.py"
+      ],
+      "scripts": [
+        "scripts/refresh-fight-film.py"
+      ],
+      "jobs": {
+        "refresh": {
+          "needs": [],
+          "timeout": "8",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/refresh-fight-talk.yml",
+      "name": "Refresh live Fight Talk",
+      "triggers": {
+        "schedule": [
+          {
+            "cron": "4,9,14,19,24,29,34,39,44,49,54,59 * * * *"
+          }
+        ],
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/refresh-fight-talk.mjs",
+            "scripts/fight-talk-rotation.mjs",
+            "scripts/fight-talk-platforms.mjs",
+            "scripts/fight-talk-public-sources.mjs",
+            "data/fight-talk-sources.json",
+            "data/fight-talk-selected.json",
+            "tests/test-fight-talk.cjs",
+            "tests/test-fight-talk-rotation.mjs",
+            "tests/test-fight-talk-roster.cjs",
+            "tests/test-fight-talk-public-sources.mjs",
+            "data/fight-talk-roster.json",
+            "index.html",
+            ".github/workflows/refresh-fight-talk.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "refresh-fight-talk",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test-fight-talk-public-sources.mjs",
+        "tests/test-fight-talk-roster.cjs",
+        "tests/test-fight-talk-rotation.mjs",
+        "tests/test-fight-talk.cjs",
+        "tests/test-meta-embeds.mjs"
+      ],
+      "scripts": [
+        "scripts/fight-talk-platforms.mjs",
+        "scripts/fight-talk-public-sources.mjs",
+        "scripts/fight-talk-rotation.mjs",
+        "scripts/refresh-fight-talk.mjs",
+        "scripts/refresh-meta-embeds.mjs"
+      ],
+      "jobs": {
+        "refresh": {
+          "needs": [],
+          "timeout": "12",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/refresh-fighter-intelligence.yml",
+      "name": "Refresh fighter scouting intelligence",
+      "triggers": {
+        "workflow_dispatch": "",
+        "schedule": [
+          {
+            "cron": "15 2 * * 1"
+          }
+        ],
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/refresh-fighter-intelligence.py",
+            "tests/test_fighter_intelligence.py",
+            "scripts/refresh-ufcalendar-budget.py",
+            "tests/test_ufcalendar_budget.py",
+            ".github/workflows/refresh-fighter-intelligence.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "befn-scouting-intelligence",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test_fighter_intelligence.py",
+        "tests/test_ufcalendar_budget.py"
+      ],
+      "scripts": [
+        "scripts/refresh-fighter-intelligence.py",
+        "scripts/refresh-ufcalendar-budget.py"
+      ],
+      "jobs": {
+        "refresh": {
+          "needs": [],
+          "timeout": "10",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/refresh-grappling-calendar.yml",
+      "name": "Refresh grappling and wrestling events",
+      "triggers": {
+        "schedule": [
+          {
+            "cron": "12 20 * * *"
+          },
+          {
+            "cron": "12 21 * * *"
+          }
+        ],
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/refresh-grappling-calendar.yml",
+            "scripts/refresh-grappling-calendar.py",
+            "tests/test_grappling_calendar.py"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "grappling-calendar-publication",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test_grappling_calendar.py"
+      ],
+      "scripts": [
+        "scripts/refresh-grappling-calendar.py"
+      ],
+      "jobs": {
+        "refresh": {
+          "needs": [],
+          "timeout": "12",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5",
+            "actions/upload-artifact@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/refresh-meta-embeds.yml",
+      "name": "Discover official Instagram, Threads and X post embeds",
+      "triggers": {
+        "schedule": [
+          {
+            "cron": "6,16,26,36,46,56 * * * *"
+          }
+        ],
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/refresh-meta-embeds.mjs",
+            "scripts/fight-talk-public-sources.mjs",
+            "data/fight-talk-sources.json",
+            "tests/test-meta-embeds.mjs",
+            "tests/test-fight-talk-public-sources.mjs",
+            ".github/workflows/refresh-meta-embeds.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "discover-fight-talk-posts",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test-fight-talk-public-sources.mjs",
+        "tests/test-meta-embeds.mjs"
+      ],
+      "scripts": [
+        "scripts/refresh-meta-embeds.mjs"
+      ],
+      "jobs": {
+        "discover": {
+          "needs": [],
+          "timeout": "8",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/refresh-news.yml",
+      "name": "Refresh news feeds",
+      "triggers": {
+        "schedule": [
+          {
+            "cron": "7,22,37,52 * * * *"
+          }
+        ],
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/refresh-news.py",
+            "tests/test_news.py",
+            "tests/test-desk.cjs",
+            "assets/local-time.js",
+            "assets/live-desk.inc.js",
+            ".github/workflows/refresh-news.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "publish-live-data",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test-desk.cjs",
+        "tests/test-qa-supervisor.py",
+        "tests/test-ufcalendar-targeted-history.py",
+        "tests/test_boxerbook_source.py",
+        "tests/test_fight_film.py",
+        "tests/test_fighter_intelligence.py",
+        "tests/test_fighter_records.py",
+        "tests/test_grappling_calendar.py",
+        "tests/test_mma_backfill.py",
+        "tests/test_news.py",
+        "tests/test_news_dedupe.py",
+        "tests/test_one_official_october.py",
+        "tests/test_one_portraits.py",
+        "tests/test_pfl_official_history.py",
+        "tests/test_pfl_portraits.py",
+        "tests/test_poster_discovery.py",
+        "tests/test_results.py",
+        "tests/test_ufc_full_career_cache.py",
+        "tests/test_ufc_research_archive.py",
+        "tests/test_ufc_stats_crosscheck.py",
+        "tests/test_ufcalendar_budget.py",
+        "tests/test_ufcalendar_rich_backfill.py",
+        "tests/test_upcoming_cards.py"
+      ],
+      "scripts": [
+        "scripts/refresh-news.py"
+      ],
+      "jobs": {
+        "refresh": {
+          "needs": [],
+          "timeout": "5",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/refresh-results.yml",
+      "name": "Refresh fight card results",
+      "triggers": {
+        "schedule": [
+          {
+            "cron": "*/5 * * * *"
+          }
+        ],
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/refresh-results.py",
+            "scripts/enrich-espn-headshots.py",
+            "scripts/enrich-fighter-records.py",
+            ".github/workflows/refresh-results.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "fight-results-refresh",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test_fighter_records.py",
+        "tests/test_results.py"
+      ],
+      "scripts": [
+        "scripts/enrich-espn-headshots.py",
+        "scripts/enrich-fighter-records.py",
+        "scripts/refresh-results.py"
+      ],
+      "jobs": {
+        "refresh": {
+          "needs": [],
+          "timeout": "8",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/refresh-twitterapi-io.yml",
+      "name": "Collect original X posts with TwitterAPI.io (US$2 budget)",
+      "triggers": {
+        "schedule": [
+          {
+            "cron": "17 0,3,6,9,12,15,18,21 * * *"
+          },
+          {
+            "cron": "47 1,4,7,10,13,16,19,22 * * *"
+          }
+        ],
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/refresh-twitterapi-io.mjs",
+            "scripts/twitterapi-io-core.mjs",
+            "tests/test-twitterapi-io.mjs",
+            ".github/workflows/refresh-twitterapi-io.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "befn-twitterapi-io-paid-collector",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test-fight-talk.cjs",
+        "tests/test-twitterapi-io.mjs"
+      ],
+      "scripts": [
+        "scripts/refresh-twitterapi-io.mjs",
+        "scripts/twitterapi-io-core.mjs"
+      ],
+      "jobs": {
+        "collect": {
+          "needs": [],
+          "timeout": "8",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/refresh-upcoming-cards.yml",
+      "name": "Refresh upcoming boxing and MMA fight cards",
+      "triggers": {
+        "schedule": [
+          {
+            "cron": "17 */3 * * *"
+          }
+        ],
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/refresh-upcoming-cards.py",
+            ".github/workflows/refresh-upcoming-cards.yml",
+            "tests/test_upcoming_cards.py",
+            "tests/test-upcoming-ui.cjs",
+            "tests/test-upcoming-merge.cjs",
+            "assets/upcoming-cards.js",
+            "assets/upcoming-cards.css"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "upcoming-fight-cards-refresh",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test-upcoming-merge.cjs",
+        "tests/test-upcoming-ui.cjs",
+        "tests/test_upcoming_cards.py"
+      ],
+      "scripts": [
+        "scripts/refresh-upcoming-cards.py"
+      ],
+      "jobs": {
+        "refresh": {
+          "needs": [],
+          "timeout": "10",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/source-event-posters.yml",
+      "name": "Find missing portrait fight posters",
+      "triggers": {
+        "schedule": [
+          {
+            "cron": "19 20 * * *"
+          }
+        ],
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/source-event-posters.py",
+            "tests/test_poster_discovery.py",
+            ".github/workflows/source-event-posters.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": {
+        "group": "missing-event-portrait-posters",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test-upcoming-poster-fit.cjs",
+        "tests/test_poster_discovery.py"
+      ],
+      "scripts": [
+        "scripts/source-event-posters.py"
+      ],
+      "jobs": {
+        "check": {
+          "needs": [],
+          "timeout": "22",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5",
+            "actions/upload-artifact@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/test-ufcalendar-budget.yml",
+      "name": "Validate UFCalendar budget engine",
+      "triggers": {
+        "pull_request": {
+          "paths": [
+            "scripts/refresh-ufcalendar-budget.py",
+            "tests/test_ufcalendar_budget.py",
+            ".github/workflows/test-ufcalendar-budget.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test_fighter_intelligence.py",
+        "tests/test_ufcalendar_budget.py"
+      ],
+      "scripts": [],
+      "jobs": {
+        "tests": {
+          "needs": [],
+          "timeout": "3",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "name": "Paid UFCalendar UFC/PFL historic research and fight card improvements",
+      "triggers": {
+        "workflow_dispatch": {
+          "inputs": {
+            "continuous": {
+              "description": "Internal bounded five-minute relay (manual runs default to one-time)",
+              "required": "false",
+              "type": "boolean",
+              "default": "false"
+            },
+            "hop": {
+              "description": "Internal relay hop number (0-71)",
+              "required": "false",
+              "type": "string",
+              "default": "0"
+            }
+          }
+        },
+        "schedule": [
+          {
+            "cron": "20 0,6,12,18 * 1-10,12 *"
+          }
+        ],
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/ufcalendar-rich-backfill.py",
+            "scripts/ufcalendar-relay.mjs",
+            "scripts/build-ufc-36-month-candidates.mjs",
+            "scripts/build-ufc-last-five-coverage.mjs",
+            "tests/test-ufc-36-month-candidates.mjs",
+            "tests/test_ufc_full_career_cache.py",
+            "tests/test-ufcalendar-relay.mjs",
+            "tests/test_ufcalendar_rich_backfill.py",
+            ".github/workflows/ufcalendar-rich-backfill.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write",
+        "actions": "write"
+      },
+      "concurrency": {
+        "group": "befn-ufc-research-archive",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test-ufc-36-month-candidates.mjs",
+        "tests/test-ufc-postfight-metrics.mjs",
+        "tests/test-ufc-profile-queue.mjs",
+        "tests/test-ufcalendar-relay.mjs",
+        "tests/test_ufc_full_career_cache.py",
+        "tests/test_ufc_research_archive.py",
+        "tests/test_ufcalendar_rich_backfill.py"
+      ],
+      "scripts": [
+        "scripts/build-ufc-36-month-candidates.mjs",
+        "scripts/build-ufc-postfight-metrics.mjs",
+        "scripts/build-ufc-profile-queue.mjs",
+        "scripts/ufc-36-month-stage3-progress.mjs",
+        "scripts/ufcalendar-relay.mjs",
+        "scripts/ufcalendar-rich-backfill.py"
+      ],
+      "jobs": {
+        "backfill": {
+          "needs": [],
+          "timeout": "22",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4",
+            "actions/setup-python@v5"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/ufcalendar-upgrade-health.yml",
+      "name": "Verify upgraded UFCalendar plan",
+      "triggers": {
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/ufcalendar-upgrade-health.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "write"
+      },
+      "concurrency": null,
+      "tests": [],
+      "scripts": [],
+      "jobs": {
+        "inspect": {
+          "needs": [],
+          "timeout": "4",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/validate-render-recovery.yml",
+      "name": "Validate conditional Render recovery gate",
+      "triggers": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/befn-render-deploy-recovery.yml",
+            ".github/workflows/validate-render-recovery.yml",
+            "tests/test-render-recovery-contract.mjs"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test-render-recovery-contract.mjs"
+      ],
+      "scripts": [],
+      "jobs": {
+        "recovery-contract": {
+          "needs": [],
+          "timeout": "4",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/validate-ufc-bruno-2019-nc.yml",
+      "name": "Validate UFC 243 Bruno historical NC recovery",
+      "triggers": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "data/ufc-official-career-bout-inventory.json",
+            "scripts/ufcalendar-rich-backfill.py",
+            "tests/test_ufc_full_career_cache.py",
+            ".github/workflows/validate-ufc-bruno-2019-nc.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test_ufc_full_career_cache.py",
+        "tests/test_ufcalendar_rich_backfill.py"
+      ],
+      "scripts": [
+        "scripts/ufcalendar-rich-backfill.py"
+      ],
+      "jobs": {
+        "offline-nc-recovery": {
+          "needs": [],
+          "timeout": "8",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/validate-ufc-bruno-native-history-recovery.yml",
+      "name": "Validate exact UFC Bruno ten-bout cached recovery",
+      "triggers": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "data/ufc-source-verified-native-id-exceptions.json",
+            "data/ufc-official-career-bout-inventory.json",
+            "scripts/ufcalendar-rich-backfill.py",
+            "tests/test_ufc_full_career_cache.py",
+            ".github/workflows/validate-ufc-bruno-native-history-recovery.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test_ufc_full_career_cache.py",
+        "tests/test_ufcalendar_rich_backfill.py"
+      ],
+      "scripts": [
+        "scripts/ufcalendar-rich-backfill.py"
+      ],
+      "jobs": {
+        "validate": {
+          "needs": [],
+          "timeout": "8",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/validate-ufc-last-five-coverage.yml",
+      "name": "Validate UFC last-five coverage inventory",
+      "triggers": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/build-ufc-last-five-coverage.mjs",
+            "scripts/build-ufc-36-month-candidates.mjs",
+            "scripts/ufcalendar-rich-backfill.py",
+            "tests/test-ufc-36-month-candidates.mjs",
+            "scripts/ufc-36-month-review-report.mjs",
+            "tests/test-ufc-36-month-review-report.mjs",
+            "tests/test-ufc-36-month-independent-evidence.mjs",
+            "data/ufc-36-month-reviewed-evidence.json",
+            "tests/test_ufcalendar_rich_backfill.py",
+            "tests/test_ufc_full_career_cache.py",
+            "tests/test-ufc-last-five-coverage.mjs",
+            ".github/workflows/build-ufc-profile-queue.yml",
+            ".github/workflows/validate-ufc-last-five-coverage.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test-ufc-36-month-candidates.mjs",
+        "tests/test-ufc-36-month-independent-evidence.mjs",
+        "tests/test-ufc-36-month-review-report.mjs",
+        "tests/test-ufc-fighter-v3.mjs",
+        "tests/test-ufc-last-five-coverage.mjs",
+        "tests/test-ufc-leaderboards-page.mjs",
+        "tests/test-ufc-pipeline-order.mjs",
+        "tests/test-ufc-postfight-metrics.mjs",
+        "tests/test-ufc-profile-queue.mjs",
+        "tests/test-ufc-prospect-contender.cjs",
+        "tests/test-ufc-research-pipeline.mjs",
+        "tests/test_ufc_full_career_cache.py",
+        "tests/test_ufcalendar_rich_backfill.py"
+      ],
+      "scripts": [
+        "scripts/build-ufc-36-month-candidates.mjs",
+        "scripts/build-ufc-last-five-coverage.mjs",
+        "scripts/ufc-36-month-review-report.mjs"
+      ],
+      "jobs": {
+        "source-audit": {
+          "needs": [],
+          "timeout": "6",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4",
+            "actions/setup-python@v5",
+            "actions/upload-artifact@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/validate-ufc-leaderboards-page.yml",
+      "name": "Validate UFC statistical leaderboard page",
+      "triggers": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "index.html",
+            "assets/fighter-insights.js",
+            "assets/ufc-stat-leaderboards.css",
+            "tests/test-ufc-leaderboards-page.mjs",
+            "tests/test-ufc-public-profile-clean.cjs",
+            ".github/workflows/validate-ufc-leaderboards-page.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test-ufc-leaderboards-page.mjs",
+        "tests/test-ufc-public-profile-clean.cjs"
+      ],
+      "scripts": [],
+      "jobs": {
+        "leaderboard-ui": {
+          "needs": [],
+          "timeout": "5",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/validate-ufc-profiles.yml",
+      "name": "Validate UFC fighter profile cards",
+      "triggers": {
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "feature/responsive-sports-layout",
+            "main"
+          ],
+          "paths": [
+            "data/ufc-*-profiles.json",
+            "scripts/build-ufc-profile-queue.mjs",
+            "scripts/build-ufc-postfight-metrics.mjs",
+            "tests/test-ufc-postfight-metrics.mjs",
+            "data/ufc-postfight-metrics.json",
+            "tests/test-ufc-profile-queue.mjs",
+            "tests/test-ufc-profile-visual.mjs",
+            "tests/test-ufc-async-authority.cjs",
+            "scripts/ufc-qa-freshness.mjs",
+            "tests/test-ufc-qa-freshness.mjs",
+            "data/ufc-postfight-metrics.json",
+            "assets/fighter-insights.js",
+            "assets/fighter-hover.js",
+            "tests/test-fighter-photo-close.cjs",
+            "assets/ufc-prospect-contender.js",
+            "tests/test-ufc-prospect-contender.cjs",
+            "assets/fighter-power.css",
+            "index.html",
+            "sw.js",
+            "assets/fighter-power-index.js",
+            "tests/test-ufc-*.cjs",
+            "tests/test-fighter-power-index.cjs",
+            "tests/test-ufc-postfight-metrics.mjs",
+            ".github/workflows/validate-ufc-profiles.yml"
+          ]
+        },
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "index.html",
+            "tests/test-ufc-title-match.cjs",
+            "data/ufc-*-profiles.json",
+            "assets/fighter-insights.js",
+            "scripts/build-ufc-fighter-v3.mjs",
+            "tests/test-ufc-fighter-v3.mjs",
+            "tests/test-ufc-profile-visual.mjs",
+            ".github/workflows/validate-ufc-profiles.yml",
+            "tests/test-ufc-async-authority.cjs",
+            "assets/fighter-power-index.js",
+            "tests/test-ufc-*.cjs",
+            "tests/test-fighter-power-index.cjs"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test-fighter-photo-close.cjs",
+        "tests/test-fighter-power-index.cjs",
+        "tests/test-ufc-async-authority.cjs",
+        "tests/test-ufc-champion-profiles.cjs",
+        "tests/test-ufc-fighter-v3.mjs",
+        "tests/test-ufc-last-five-coverage.mjs",
+        "tests/test-ufc-postfight-metrics.mjs",
+        "tests/test-ufc-profile-card-qa.cjs",
+        "tests/test-ufc-profile-queue.mjs",
+        "tests/test-ufc-profile-visual.mjs",
+        "tests/test-ufc-prospect-contender.cjs",
+        "tests/test-ufc-qa-freshness.mjs",
+        "tests/test-ufc-research-pipeline.mjs",
+        "tests/test-ufc-title-match.cjs"
+      ],
+      "scripts": [
+        "scripts/build-ufc-fighter-v3.mjs",
+        "scripts/build-ufc-last-five-coverage.mjs"
+      ],
+      "jobs": {
+        "profile-integrity": {
+          "needs": [],
+          "timeout": "20",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4",
+            "actions/upload-artifact@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/validate-ufc-three-pilot-source-links.yml",
+      "name": "Validate independently sourced three UFC pilot career links",
+      "triggers": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "data/ufc-three-pilot-source-linked-evidence.json",
+            "scripts/audit-ufc-three-pilot-source-links.mjs",
+            "tests/test-ufc-three-pilot-source-links.mjs",
+            ".github/workflows/validate-ufc-three-pilot-source-links.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test-ufc-three-pilot-source-links.mjs"
+      ],
+      "scripts": [
+        "scripts/audit-ufc-three-pilot-source-links.mjs"
+      ],
+      "jobs": {
+        "offline-source-review": {
+          "needs": [],
+          "timeout": "6",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4",
+            "actions/upload-artifact@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/validate-ufcalendar-targeted-history.yml",
+      "name": "Validate targeted UFCalendar UFC historical backfill",
+      "triggers": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "scripts/ufcalendar-rich-backfill.py",
+            "tests/test-ufcalendar-targeted-history.py",
+            "tests/test_ufcalendar_rich_backfill.py",
+            "scripts/build-ufc-last-five-coverage.mjs",
+            ".github/workflows/validate-ufcalendar-targeted-history.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test-ufc-last-five-coverage.mjs",
+        "tests/test-ufcalendar-targeted-history.py",
+        "tests/test_ufcalendar_rich_backfill.py"
+      ],
+      "scripts": [
+        "scripts/ufcalendar-rich-backfill.py"
+      ],
+      "jobs": {
+        "targeted-history": {
+          "needs": [],
+          "timeout": "4",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/verify-live-ufc-profiles.yml",
+      "name": "Verify live UFC fighter profiles",
+      "triggers": {
+        "workflow_dispatch": "",
+        "schedule": [
+          {
+            "cron": "17 * * * *"
+          }
+        ]
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": {
+        "group": "befn-production-ufc-profile-qa",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test-ufc-async-authority.cjs",
+        "tests/test-ufc-profile-card-qa.cjs",
+        "tests/test-ufc-profile-visual.mjs",
+        "tests/test-ufc-prospect-contender.cjs",
+        "tests/test-ufc-qa-freshness.mjs"
+      ],
+      "scripts": [
+        "scripts/qa-supervisor.py",
+        "scripts/verify-ufc-live-freshness.mjs"
+      ],
+      "jobs": {
+        "operational-report": {
+          "needs": [],
+          "timeout": "5",
+          "permissions": {
+            "contents": "read",
+            "actions": "read"
+          },
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-python@v5",
+            "actions/upload-artifact@v4"
+          ]
+        },
+        "production-profiles": {
+          "needs": [],
+          "timeout": "22",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4",
+            "actions/upload-artifact@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/verify-local-time.yml",
+      "name": "Validate visitor-local times",
+      "triggers": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/verify-local-time.yml",
+            "tests/test-local-time.cjs",
+            "assets/local-time.js",
+            "assets/upcoming-cards.js",
+            "assets/results.js",
+            "assets/fight-film.js",
+            "index.html",
+            "assets/fighter-hover.js",
+            "tests/test-fighter-photo-close.cjs",
+            "sw.js"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": "inherited; not inspected",
+      "concurrency": null,
+      "tests": [
+        "tests/test-fighter-photo-close.cjs",
+        "tests/test-local-time.cjs"
+      ],
+      "scripts": [],
+      "jobs": {
+        "check-local-time": {
+          "needs": [],
+          "timeout": null,
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/verify-ufc-v4-abdul-hussein-certification.yml",
+      "name": "Independently certify Abdul Hussein UFC full career (offline)",
+      "triggers": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "data/ufc-independent-full-career-verification.json",
+            "scripts/verify-ufc-v4-abdul-hussein-certification.mjs",
+            ".github/workflows/verify-ufc-v4-abdul-hussein-certification.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test-ufc-36-month-stage3-progress.mjs"
+      ],
+      "scripts": [
+        "scripts/verify-ufc-v4-abdul-hussein-certification.mjs"
+      ],
+      "jobs": {
+        "independent-career-certificate": {
+          "needs": [],
+          "timeout": "10",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4",
+            "actions/upload-artifact@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/verify-ufc-v4-baku-debut-certification.yml",
+      "name": "Independently certify two UFC Baku debut careers (offline)",
+      "triggers": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "data/ufc-independent-full-career-verification.json",
+            "scripts/verify-ufc-v4-baku-debut-certification.mjs",
+            ".github/workflows/verify-ufc-v4-baku-debut-certification.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test-ufc-36-month-stage3-progress.mjs"
+      ],
+      "scripts": [
+        "scripts/verify-ufc-v4-baku-debut-certification.mjs"
+      ],
+      "jobs": {
+        "two-reciprocal-ufc-career-certificates": {
+          "needs": [],
+          "timeout": "10",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4",
+            "actions/upload-artifact@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/verify-ufc-v4-elliott-anderson-certification.yml",
+      "name": "Independently certify two UFC debut careers (offline)",
+      "triggers": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "data/ufc-independent-full-career-verification.json",
+            "scripts/verify-ufc-v4-elliott-anderson-certification.mjs",
+            ".github/workflows/verify-ufc-v4-elliott-anderson-certification.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test-ufc-36-month-stage3-progress.mjs"
+      ],
+      "scripts": [
+        "scripts/verify-ufc-v4-elliott-anderson-certification.mjs"
+      ],
+      "jobs": {
+        "two-reciprocal-ufc-career-certificates": {
+          "needs": [],
+          "timeout": "10",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4",
+            "actions/upload-artifact@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/verify-ufc-v4-noche-debut-certification.yml",
+      "name": "Independently certify two Noche UFC debut careers (offline)",
+      "triggers": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "data/ufc-independent-full-career-verification.json",
+            "scripts/verify-ufc-v4-noche-debut-certification.mjs",
+            ".github/workflows/verify-ufc-v4-noche-debut-certification.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test-ufc-36-month-stage3-progress.mjs"
+      ],
+      "scripts": [
+        "scripts/verify-ufc-v4-noche-debut-certification.mjs"
+      ],
+      "jobs": {
+        "two-reciprocal-ufc-career-certificates": {
+          "needs": [],
+          "timeout": "10",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4",
+            "actions/upload-artifact@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/verify-ufc-v4-paris-debut-certification.yml",
+      "name": "Independently certify two UFC Paris debut careers (offline)",
+      "triggers": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "data/ufc-independent-full-career-verification.json",
+            "scripts/verify-ufc-v4-paris-debut-certification.mjs",
+            ".github/workflows/verify-ufc-v4-paris-debut-certification.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test-ufc-36-month-stage3-progress.mjs"
+      ],
+      "scripts": [
+        "scripts/verify-ufc-v4-paris-debut-certification.mjs"
+      ],
+      "jobs": {
+        "two-reciprocal-ufc-career-certificates": {
+          "needs": [],
+          "timeout": "10",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4",
+            "actions/upload-artifact@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/verify-ufc-v4-r1.yml",
+      "name": "UFC V4 R1 release-boundary validation (read-only)",
+      "triggers": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "docs/ufc-v4-staged-release-control.md",
+            "scripts/verify-ufc-v4-r1-boundary.mjs",
+            "tests/test-ufc-v4-r1-boundary.mjs",
+            ".github/workflows/verify-ufc-v4-r1.yml"
+          ]
+        }
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": {
+        "group": "befn-ufc-v4-r1-${{ github.event.pull_request.number }}",
+        "cancel-in-progress": "true"
+      },
+      "tests": [
+        "tests/test-ufc-36-month-stage3-progress.mjs",
+        "tests/test-ufc-v4-certification-queue.mjs",
+        "tests/test-ufc-v4-r1-boundary.mjs"
+      ],
+      "scripts": [
+        "scripts/verify-ufc-v4-r1-boundary.mjs"
+      ],
+      "jobs": {
+        "r1-boundary": {
+          "needs": [],
+          "timeout": "10",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/verify-ufc-v4-tuf34-finale-certification.yml",
+      "name": "Independently certify TUF 34 UFC finale careers (offline)",
+      "triggers": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "data/ufc-independent-full-career-verification.json",
+            "scripts/verify-ufc-v4-tuf34-finale-certification.mjs",
+            ".github/workflows/verify-ufc-v4-tuf34-finale-certification.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "read"
+      },
+      "concurrency": null,
+      "tests": [
+        "tests/test-ufc-36-month-stage3-progress.mjs"
+      ],
+      "scripts": [
+        "scripts/verify-ufc-v4-tuf34-finale-certification.mjs"
+      ],
+      "jobs": {
+        "two-reciprocal-ufc-career-certificates": {
+          "needs": [],
+          "timeout": "10",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4",
+            "actions/upload-artifact@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    },
+    {
+      "path": ".github/workflows/watch-ufcalendar-rich-backfill.yml",
+      "name": "Ensure paid UFC/PFL collector keeps progressing",
+      "triggers": {
+        "schedule": [
+          {
+            "cron": "9,24,39,54 * * 11 *"
+          }
+        ],
+        "workflow_dispatch": ""
+      },
+      "permissions": {
+        "contents": "read",
+        "actions": "write"
+      },
+      "concurrency": {
+        "group": "befn-ufc-watchdog",
+        "cancel-in-progress": "false"
+      },
+      "tests": [
+        "tests/test-ufcalendar-relay.mjs"
+      ],
+      "scripts": [
+        "scripts/ufcalendar-watchdog.mjs"
+      ],
+      "jobs": {
+        "ensure": {
+          "needs": [],
+          "timeout": "3",
+          "permissions": null,
+          "concurrency": null,
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4"
+          ]
+        }
+      },
+      "owner": "not declared",
+      "cost": "billing unavailable",
+      "necessity": "retain pending owner/dependency review"
+    }
+  ],
+  "tests": [
+    {
+      "path": "tests/test-desk.cjs",
+      "workflows": [
+        ".github/workflows/refresh-news.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-event-status.cjs",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-fight-talk-profiles.mjs",
+      "workflows": [
+        ".github/workflows/discover-fight-talk-profiles.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-fight-talk-public-sources.mjs",
+      "workflows": [
+        ".github/workflows/refresh-fight-talk.yml",
+        ".github/workflows/refresh-meta-embeds.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-fight-talk-roster.cjs",
+      "workflows": [
+        ".github/workflows/discover-fight-talk-profiles.yml",
+        ".github/workflows/discover-industry-profiles.yml",
+        ".github/workflows/refresh-fight-talk.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-fight-talk-rotation.mjs",
+      "workflows": [
+        ".github/workflows/refresh-fight-talk.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-fight-talk.cjs",
+      "workflows": [
+        ".github/workflows/refresh-fight-talk.yml",
+        ".github/workflows/refresh-twitterapi-io.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-fighter-photo-close.cjs",
+      "workflows": [
+        ".github/workflows/validate-ufc-profiles.yml",
+        ".github/workflows/verify-local-time.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-fighter-power-index.cjs",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml",
+        ".github/workflows/validate-ufc-profiles.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-industry-profiles.mjs",
+      "workflows": [
+        ".github/workflows/discover-industry-profiles.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-local-time.cjs",
+      "workflows": [
+        ".github/workflows/verify-local-time.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-meta-embeds.mjs",
+      "workflows": [
+        ".github/workflows/refresh-fight-talk.yml",
+        ".github/workflows/refresh-meta-embeds.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-mobile-build.mjs",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-qa-supervisor.py",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml",
+        ".github/workflows/refresh-news.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-render-recovery-contract.mjs",
+      "workflows": [
+        ".github/workflows/validate-render-recovery.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-results-card-order.cjs",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-results-ui.cjs",
+      "workflows": [],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-social-profile-discovery.mjs",
+      "workflows": [
+        ".github/workflows/discover-fighter-profiles.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-twitterapi-io.mjs",
+      "workflows": [
+        ".github/workflows/refresh-twitterapi-io.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-36-month-candidates.mjs",
+      "workflows": [
+        ".github/workflows/ufcalendar-rich-backfill.yml",
+        ".github/workflows/validate-ufc-last-five-coverage.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-36-month-independent-evidence.mjs",
+      "workflows": [
+        ".github/workflows/approve-ufc-36-month-roster.yml",
+        ".github/workflows/validate-ufc-last-five-coverage.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-36-month-review-report.mjs",
+      "workflows": [
+        ".github/workflows/approve-ufc-36-month-roster.yml",
+        ".github/workflows/validate-ufc-last-five-coverage.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-36-month-stage3-progress.mjs",
+      "workflows": [
+        ".github/workflows/audit-ufc-research-pipeline.yml",
+        ".github/workflows/verify-ufc-v4-abdul-hussein-certification.yml",
+        ".github/workflows/verify-ufc-v4-baku-debut-certification.yml",
+        ".github/workflows/verify-ufc-v4-elliott-anderson-certification.yml",
+        ".github/workflows/verify-ufc-v4-noche-debut-certification.yml",
+        ".github/workflows/verify-ufc-v4-paris-debut-certification.yml",
+        ".github/workflows/verify-ufc-v4-r1.yml",
+        ".github/workflows/verify-ufc-v4-tuf34-finale-certification.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-async-authority.cjs",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml",
+        ".github/workflows/validate-ufc-profiles.yml",
+        ".github/workflows/verify-live-ufc-profiles.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-champion-profiles.cjs",
+      "workflows": [
+        ".github/workflows/validate-ufc-profiles.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-fighter-v3.mjs",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml",
+        ".github/workflows/build-ufc-fighter-v3.yml",
+        ".github/workflows/validate-ufc-last-five-coverage.yml",
+        ".github/workflows/validate-ufc-profiles.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-last-five-coverage.mjs",
+      "workflows": [
+        ".github/workflows/build-ufc-profile-queue.yml",
+        ".github/workflows/validate-ufc-last-five-coverage.yml",
+        ".github/workflows/validate-ufc-profiles.yml",
+        ".github/workflows/validate-ufcalendar-targeted-history.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-leaderboards-page.mjs",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml",
+        ".github/workflows/validate-ufc-last-five-coverage.yml",
+        ".github/workflows/validate-ufc-leaderboards-page.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-park-two-native-ids.mjs",
+      "workflows": [
+        ".github/workflows/audit-ufc-park-native-identity.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-pipeline-order.mjs",
+      "workflows": [
+        ".github/workflows/validate-ufc-last-five-coverage.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-postfight-metrics.mjs",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml",
+        ".github/workflows/build-ufc-profile-queue.yml",
+        ".github/workflows/ufcalendar-rich-backfill.yml",
+        ".github/workflows/validate-ufc-last-five-coverage.yml",
+        ".github/workflows/validate-ufc-profiles.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-profile-card-qa.cjs",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml",
+        ".github/workflows/build-ufc-profile-queue.yml",
+        ".github/workflows/validate-ufc-profiles.yml",
+        ".github/workflows/verify-live-ufc-profiles.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-profile-queue.mjs",
+      "workflows": [
+        ".github/workflows/audit-ufc-research-pipeline.yml",
+        ".github/workflows/befn-release-readiness.yml",
+        ".github/workflows/build-ufc-profile-queue.yml",
+        ".github/workflows/ufcalendar-rich-backfill.yml",
+        ".github/workflows/validate-ufc-last-five-coverage.yml",
+        ".github/workflows/validate-ufc-profiles.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-profile-visual.mjs",
+      "workflows": [
+        ".github/workflows/validate-ufc-profiles.yml",
+        ".github/workflows/verify-live-ufc-profiles.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-prospect-contender.cjs",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml",
+        ".github/workflows/validate-ufc-last-five-coverage.yml",
+        ".github/workflows/validate-ufc-profiles.yml",
+        ".github/workflows/verify-live-ufc-profiles.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-public-profile-clean.cjs",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml",
+        ".github/workflows/validate-ufc-leaderboards-page.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-qa-freshness.mjs",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml",
+        ".github/workflows/validate-ufc-profiles.yml",
+        ".github/workflows/verify-live-ufc-profiles.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-research-pipeline.mjs",
+      "workflows": [
+        ".github/workflows/audit-ufc-research-pipeline.yml",
+        ".github/workflows/validate-ufc-last-five-coverage.yml",
+        ".github/workflows/validate-ufc-profiles.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-three-pilot-source-links.mjs",
+      "workflows": [
+        ".github/workflows/validate-ufc-three-pilot-source-links.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-title-match.cjs",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml",
+        ".github/workflows/validate-ufc-profiles.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-v4-certification-queue.mjs",
+      "workflows": [
+        ".github/workflows/audit-ufc-research-pipeline.yml",
+        ".github/workflows/verify-ufc-v4-r1.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-v4-r1-boundary.mjs",
+      "workflows": [
+        ".github/workflows/verify-ufc-v4-r1.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-v4-three-exception-careers.mjs",
+      "workflows": [],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc-worker-retention.mjs",
+      "workflows": [
+        ".github/workflows/audit-ufc-research-pipeline.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc334-research.cjs",
+      "workflows": [],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufc36-approved-snapshot.mjs",
+      "workflows": [
+        ".github/workflows/approve-ufc-36-month-roster.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufcalendar-relay.mjs",
+      "workflows": [
+        ".github/workflows/ufcalendar-rich-backfill.yml",
+        ".github/workflows/watch-ufcalendar-rich-backfill.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-ufcalendar-targeted-history.py",
+      "workflows": [
+        ".github/workflows/refresh-news.yml",
+        ".github/workflows/validate-ufcalendar-targeted-history.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-upcoming-cards.cjs",
+      "workflows": [],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-upcoming-merge.cjs",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml",
+        ".github/workflows/refresh-upcoming-cards.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-upcoming-poster-fit.cjs",
+      "workflows": [
+        ".github/workflows/source-event-posters.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test-upcoming-ui.cjs",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml",
+        ".github/workflows/refresh-upcoming-cards.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_boxerbook_source.py",
+      "workflows": [
+        ".github/workflows/boxerbook-source-qa.yml",
+        ".github/workflows/refresh-news.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_fight_film.py",
+      "workflows": [
+        ".github/workflows/refresh-fight-film.yml",
+        ".github/workflows/refresh-news.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_fighter_intelligence.py",
+      "workflows": [
+        ".github/workflows/refresh-fighter-intelligence.yml",
+        ".github/workflows/refresh-news.yml",
+        ".github/workflows/test-ufcalendar-budget.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_fighter_records.py",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml",
+        ".github/workflows/refresh-news.yml",
+        ".github/workflows/refresh-results.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_grappling_calendar.py",
+      "workflows": [
+        ".github/workflows/refresh-grappling-calendar.yml",
+        ".github/workflows/refresh-news.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_mma_backfill.py",
+      "workflows": [
+        ".github/workflows/backfill-mma-results.yml",
+        ".github/workflows/refresh-news.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_news.py",
+      "workflows": [
+        ".github/workflows/refresh-news.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_news_dedupe.py",
+      "workflows": [
+        ".github/workflows/refresh-news.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_one_official_october.py",
+      "workflows": [
+        ".github/workflows/backfill-mma-results.yml",
+        ".github/workflows/refresh-news.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_one_portraits.py",
+      "workflows": [
+        ".github/workflows/backfill-mma-results.yml",
+        ".github/workflows/refresh-news.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_pfl_official_history.py",
+      "workflows": [
+        ".github/workflows/backfill-mma-results.yml",
+        ".github/workflows/refresh-news.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_pfl_portraits.py",
+      "workflows": [
+        ".github/workflows/backfill-mma-results.yml",
+        ".github/workflows/refresh-news.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_poster_discovery.py",
+      "workflows": [
+        ".github/workflows/refresh-news.yml",
+        ".github/workflows/source-event-posters.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_results.py",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml",
+        ".github/workflows/refresh-news.yml",
+        ".github/workflows/refresh-results.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_ufc_full_career_cache.py",
+      "workflows": [
+        ".github/workflows/approve-ufc-36-month-roster.yml",
+        ".github/workflows/refresh-news.yml",
+        ".github/workflows/ufcalendar-rich-backfill.yml",
+        ".github/workflows/validate-ufc-bruno-2019-nc.yml",
+        ".github/workflows/validate-ufc-bruno-native-history-recovery.yml",
+        ".github/workflows/validate-ufc-last-five-coverage.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_ufc_research_archive.py",
+      "workflows": [
+        ".github/workflows/archive-ufc-research.yml",
+        ".github/workflows/refresh-news.yml",
+        ".github/workflows/ufcalendar-rich-backfill.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_ufc_stats_crosscheck.py",
+      "workflows": [
+        ".github/workflows/archive-ufc-research.yml",
+        ".github/workflows/refresh-news.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_ufcalendar_budget.py",
+      "workflows": [
+        ".github/workflows/refresh-fighter-intelligence.yml",
+        ".github/workflows/refresh-news.yml",
+        ".github/workflows/test-ufcalendar-budget.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_ufcalendar_rich_backfill.py",
+      "workflows": [
+        ".github/workflows/refresh-news.yml",
+        ".github/workflows/ufcalendar-rich-backfill.yml",
+        ".github/workflows/validate-ufc-bruno-2019-nc.yml",
+        ".github/workflows/validate-ufc-bruno-native-history-recovery.yml",
+        ".github/workflows/validate-ufc-last-five-coverage.yml",
+        ".github/workflows/validate-ufcalendar-targeted-history.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    },
+    {
+      "path": "tests/test_upcoming_cards.py",
+      "workflows": [
+        ".github/workflows/befn-release-readiness.yml",
+        ".github/workflows/refresh-news.yml",
+        ".github/workflows/refresh-upcoming-cards.yml"
+      ],
+      "note": "Static command mapping; indirect script invocation may add coverage."
+    }
+  ]
+}

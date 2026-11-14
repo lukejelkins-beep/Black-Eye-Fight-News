@@ -12,6 +12,40 @@ concurrency:
   group: befn-production-ufc-profile-qa
   cancel-in-progress: false
 jobs:
+  operational-report:
+    # Advisory read-only reporting shares the existing hourly monitor schedule.
+    # It never deploys, collects fighter data or changes certification status.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check PyYAML==6.0.2
+      - name: Report bounded main workflow history and cached data health
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/qa-supervisor.py --github
+      - name: Publish operational summary
+        if: always()
+        run: |
+          if test -f qa/supervisor/qa-status.md; then
+            cat qa/supervisor/qa-status.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: befn-qa-operational-status
+          path: qa/supervisor/
+          retention-days: 14
+          if-no-files-found: warn
   production-profiles:
     if: >-
       github.event_name != 'workflow_run' ||

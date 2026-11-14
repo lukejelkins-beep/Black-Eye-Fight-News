@@ -7,6 +7,8 @@ const fixture=JSON.parse(fs.readFileSync('data/results.json','utf8'));
 const listeners={};
 const document={
  hidden:false,
+ createElement:tag=>({tagName:tag,textContent:''}),
+ head:{appendChild(){}},
  addEventListener:(type,fn)=>{(listeners[type]??=[]).push(fn)},
  querySelectorAll:()=>[],
  getElementById:()=>null
@@ -27,7 +29,7 @@ function cardRows(){
  const html=window.ResultsDesk.render();
  const start=html.indexOf('<div class="result-bouts" id="results-bouts-'+eventId+'"');
  assert(start>=0,'Event fight card exists');
- const end=html.indexOf('<p class="result-bouts-note">',start);
+ const end=html.indexOf('</details>',start);
  assert(end>start,'Fight card end exists');
  return html.slice(start,end).split('<div role="listitem">').slice(1);
 }
@@ -39,6 +41,7 @@ function chooseSection(section){
 }
 (async()=>{
  await new Promise(resolve=>setImmediate(resolve));
+ chooseSection('main');
  const main=cardRows();
  assert.equal(main.length,6,'Six main card bouts');
  assert(main[0].includes('Waldo Cortes Acosta')&&main[0].includes('Johnny Walker'),'Main event must be first');
