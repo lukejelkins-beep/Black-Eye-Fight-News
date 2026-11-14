@@ -30,3 +30,15 @@ test('matching all minimum biography rows cannot certify a full career',()=>{
  assert.equal(report.summary.newlyCertified,0);
  assert.match(report.status,/not_full_career_certification/);
 });
+
+test('UFC-official Korean surname order alias matches exact opponent and result, not homonyms',()=>{
+ const saved={recentHistory:[{date:'2025-10-18',opponent:'Park Hyun-sung',result:'win',promotion:'ufc',boutId:'83254'}]};
+ const exact=comparePilot({bouts:[{date:'2025-10-18',opponent:'HyunSung Park',result:'win'}]},saved);
+ assert.equal(exact.matchedCount,1);
+ assert.equal(exact.missingCount,0);
+ assert.equal(exact.extraCount,0);
+ const incorrect=comparePilot({bouts:[{date:'2025-10-18',opponent:'HyunSung Park',result:'loss'}]},saved);
+ assert.equal(incorrect.missingCount,1,'Opposite outcome cannot be matched by name alias');
+ const homonym=comparePilot({bouts:[{date:'2025-10-18',opponent:'HyunSung Pak',result:'win'}]},saved);
+ assert.equal(homonym.missingCount,1,'Different surname cannot be silently matched');
+});
