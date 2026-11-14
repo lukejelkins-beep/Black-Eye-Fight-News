@@ -50,6 +50,7 @@ on:
       - 'data/ufc-unified-wave34-luan-lacerda-mario-pinto-source-review-20261115.json'
       - 'tests/test-ufc-unified-wave34-luan-mario-20261115.mjs'
       - 'tests/test-ufc-unified-wave35-four-careers-20261115.mjs'
+      - 'tests/test-ufc-unified-wave36-seven-four-bout-careers-20261115.mjs'
       - 'data/ufc-unified-wave29-yakhyaev-cristian-quinonez-source-review-20261115.json'
       - 'tests/test-ufc-unified-wave29-yakhyaev-quinonez-20261115.mjs'
       - 'data/ufc-independent-wave-20261115-bryczek-despaigne-elder-source.json'
@@ -215,6 +216,7 @@ jobs:
           node --test tests/test-ufc-unified-wave33-isaac-dulgarian-20261115.mjs
           node --test tests/test-ufc-unified-wave34-luan-mario-20261115.mjs
           node --test tests/test-ufc-unified-wave35-four-careers-20261115.mjs
+          node --test tests/test-ufc-unified-wave36-seven-four-bout-careers-20261115.mjs
           node --test tests/test-ufc-unified-wave29-yakhyaev-quinonez-20261115.mjs
           node --test tests/test-ufc-unified-stewart-bedoya-ashmouz-20261115.mjs
           node --test tests/test-ufc-unified-wave10-evidence.mjs
