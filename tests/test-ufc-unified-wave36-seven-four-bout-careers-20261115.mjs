@@ -16,7 +16,7 @@ const cases={
  'saimon-oliveira':{own:'135',fighter:'72ea1984c52019b5',excluded:['83959'],matches:{'65898':'0f9e7d0d04e24b74','61007':'55376d5c205fa844','59729':'1d35e4c0941d1397','61641':'9687021e5c4d092a'}},
  'seokhyeon-ko':{own:'405',fighter:'4a07b1988477502c',excluded:['83885'],matches:{'93281':'cd446b8759b30093','82954':'f2eb569176e46edf','60429':'e6031b5937294176','60277':'e512b80bbaea36c2'}},
  'alexia-thainara':{own:'133',fighter:'545092d13c67aa49',excluded:['83987'],matches:{'83097':'13f31f7a784013a3','60635':'796e1151896195aa','38220':'e35f7504d83b8b07','60311':'b5b4b69bccb9ff4a'}},
- 'antonio-trocoli':{own:'248',fighter:'6d48a2df51749d91',excluded:['84135'],matches:{'60568':'8817bd21b6d0a989','60532':'964ea1777695851b','65832':'582846744e379178','38809':'fbbf5391ea25521b'}}
+ 'antonio-trocoli':{own:'350',fighter:'6d48a2df51749d91',excluded:['84135'],matches:{'60568':'8817bd21b6d0a989','60532':'964ea1777695851b','65832':'582846744e379178','38809':'fbbf5391ea25521b'}}
 };
 
 test('wave36 adds exactly seven distinct full four-bout official UFC histories with exact original independent fight URLs',()=>{
