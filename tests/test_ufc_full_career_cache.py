@@ -807,6 +807,9 @@ class FullCareerCacheTests(unittest.TestCase):
             "b":{"id":"102973","slug":"carlos-hernandez-7","name":"Carlos Hernandez"},
             "result":{"winnerId":"102972","method":"Submission"}}
         manifest=m.read(m.OFFICIAL_ID_EXCEPTIONS,{})
+        # Preserve the original Carlos/Park ten-bout regression cohort; the
+        # independently sourced Bruno recovery is tested separately below.
+        manifest["athletes"].pop("bruno-gustavo-da-silva",None)
         inventory=m.read(m.OFFICIAL_BOUT_INVENTORY,{})
         names={"carlos-hernandez-7":("Carlos Hernandez","HyunSung Park","loss"),
                "park-hyun-sung":("HyunSung Park","Carlos Hernandez","win")}
@@ -1479,6 +1482,100 @@ class FullCareerCacheTests(unittest.TestCase):
         self.assertNotIn("800",state["bouts"])
         self.assertEqual(state["ufcCareerBoutChecks"]["800"]["status"],
                          "requires_manual_review")
+
+
+    def bruno_exact_source_history_fixture(self):
+        # Extend the existing proven two-athlete synthetic cache with the
+        # independently sourced 10-row historical Bruno ID=158 exception.
+        state,research,census,approval,manifest,inventory=(
+            self.exact_native_id_exceptions_fixture())
+        full=m.read(m.OFFICIAL_ID_EXCEPTIONS,{})
+        exception=full["athletes"]["bruno-gustavo-da-silva"]
+        manifest["athletes"]["bruno-gustavo-da-silva"]=exception
+        state["bouts"]["9002"]={
+            "id":"9002","org":"ufc","event":"UFC Vancouver: Verified",
+            "eventDate":"2025-10-18","status":"completed",
+            "a":{"id":"87","slug":"bruno-gustavo-da-silva",
+                 "name":"Bruno Gustavo da Silva"},
+            "b":{"id":"102972","slug":"park-hyun-sung","name":"HyunSung Park"},
+            "result":{"winnerId":"87","method":"Decision"}}
+        research["profiles"]["bruno-gustavo-da-silva"]={
+            "name":"Bruno Gustavo da Silva",
+            "recentHistory":[{"date":"2025-10-18","opponent":"HyunSung Park",
+                "promotion":"ufc","source":"native","boutId":"9002",
+                "result":"win"}],
+            "ufcTimeline":{"complete":True}}
+        census["fighters"].append({
+            "slug":"bruno-gustavo-da-silva",
+            "eligibilityStatus":"latest_observed_mma_ufc"})
+        approval["approvedFighters"].append("bruno-gustavo-da-silva")
+        for i,row in enumerate(exception["bouts"]):
+            other=str(81000+i)
+            historical=row["historicalNumericId"] if "historicalNumericId" in row else "158"
+            state["bouts"][row["nativeFightId"]]={
+                "id":row["nativeFightId"],"org":"ufc",
+                "eventDate":row["date"],"event":"UFC Fight Night: Verified",
+                "status":"completed","titleFight":False,
+                "a":{"id":historical,"name":"Bruno Silva",
+                     "slug":"historical-provider-alias"},
+                "b":{"id":other,"name":row["opponent"],
+                     "slug":"opponent"},
+                "result":{"winnerId":historical if row["result"]=="win" else other,
+                          "method":"Decision"}}
+        return state,research,census,approval,manifest,inventory
+
+    def test_brunos_ten_older_source_verified_fights_reuse_cached_stats_once(self):
+        import copy
+        st,rs,cv,ap,ma,inv=self.bruno_exact_source_history_fixture()
+        before=copy.deepcopy(st["bouts"])
+        self.assertEqual(ma["athletes"]["bruno-gustavo-da-silva"]
+                         ["historicalNumericId"],"158")
+        official={(row["date"],row["opponent"],row["result"])
+                  for row in inv["fighters"]["bruno-gustavo-da-silva"]["bouts"]}
+        for row in ma["athletes"]["bruno-gustavo-da-silva"]["bouts"]:
+            self.assertIn((row["date"],row["opponent"],row["result"]),official)
+        first=m.reconcile_exact_official_native_id_exceptions(
+            st,rs,cv,dt.date(2026,11,14),ap,ma,inv)
+        self.assertEqual(first,{"added":20,"profiles":3,"blocked":0})
+        bruno=rs["profiles"]["bruno-gustavo-da-silva"]
+        self.assertEqual(len(bruno["recentHistory"]),11)
+        self.assertEqual(len({h["boutId"] for h in bruno["recentHistory"]}),11)
+        self.assertFalse(bruno["ufcTimeline"]["complete"])
+        self.assertTrue(bruno["ufcTimeline"]["savedHistoryHasAdditionalUfcBouts"])
+        self.assertEqual(bruno["ufcTimeline"]["exactOfficialIdExceptionsRecovered"],10)
+        self.assertEqual(st["bouts"],before,
+                         "Do not alter archived fighter numeric IDs or measured statistics")
+        self.assertEqual(m.reconcile_exact_official_native_id_exceptions(
+            st,rs,cv,dt.date(2026,11,14),ap,ma,inv),
+            {"added":0,"profiles":0,"blocked":0},
+            "No duplicate links in subsequent five-minute collector runs")
+
+    def test_bruno_historical_identity_recovery_fails_closed_if_unproven(self):
+        import copy
+        base=self.bruno_exact_source_history_fixture()
+        for case in ("wrong_older_numeric_id","wrong_outcome","wrong_official_opponent",
+                     "dwcs_not_official","missing_canonical_anchor"):
+            st,rs,cv,ap,ma,inv=(copy.deepcopy(x) for x in base)
+            row=ma["athletes"]["bruno-gustavo-da-silva"]["bouts"][0]
+            native=st["bouts"][row["nativeFightId"]]
+            if case=="wrong_older_numeric_id":
+                native["a"]["id"]="77777"
+            elif case=="wrong_outcome":
+                native["result"]["winnerId"]=native["a"]["id"]
+            elif case=="wrong_official_opponent":
+                row["opponent"]="Other Unverified Athlete"
+            elif case=="dwcs_not_official":
+                native["event"]="Dana White's Contender Series 14"
+            elif case=="missing_canonical_anchor":
+                st["bouts"]["9002"]["a"]["id"]="99999"
+            out=m.reconcile_exact_official_native_id_exceptions(
+                st,rs,cv,dt.date(2026,11,14),ap,ma,inv)
+            if case=="missing_canonical_anchor":
+                self.assertEqual(out["added"],10,case)
+            else:
+                self.assertEqual(out["added"],19,case)
+            self.assertFalse(any(h.get("boutId")==row["nativeFightId"] for h in
+                rs["profiles"]["bruno-gustavo-da-silva"]["recentHistory"]),case)
 
 if __name__=="__main__":
     unittest.main()
