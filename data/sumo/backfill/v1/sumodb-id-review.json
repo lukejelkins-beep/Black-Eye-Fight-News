@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "cohort": 190,
+  "createdAt": "2026-11-15",
+  "scope": "Research-only unresolved SumoDB ID mapping queue. No fuzzy name-only association allowed.",
+  "remaining": 7,
+  "certified": 0,
+  "cases": [
+    {
+      "sourceId": 9103,
+      "rikishi": "Asahifuji",
+      "officialNskId": 4358,
+      "dateOfBirth": "2002-05-16T15:00:00Z",
+      "heya": "Isegahama",
+      "rank": "Juryo 12 East",
+      "currentApiProfileSource": "https://www.sumo-api.com/api/rikishi/9103",
+      "officialProfile": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4358/",
+      "sumoDbId": null,
+      "status": "unmapped-requires-independent-identity-link",
+      "requiredEvidence": [
+        "Historical shikona or full name plus matching birth date or stable",
+        "SumoDB page identifier backed by exact wrestler correspondence"
+      ],
+      "historicalWeightsCertified": false
+    },
+    {
+      "sourceId": 9115,
+      "rikishi": "Fudoho",
+      "officialNskId": 4376,
+      "dateOfBirth": "2003-08-03T15:00:00Z",
+      "heya": "Tokitsukaze",
+      "rank": "Makushita 5 East",
+      "currentApiProfileSource": "https://www.sumo-api.com/api/rikishi/9115",
+      "officialProfile": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4376/",
+      "sumoDbId": null,
+      "status": "unmapped-requires-independent-identity-link",
+      "requiredEvidence": [
+        "Historical shikona or full name plus matching birth date or stable",
+        "SumoDB page identifier backed by exact wrestler correspondence"
+      ],
+      "historicalWeightsCertified": false
+    },
+    {
+      "sourceId": 9135,
+      "rikishi": "Omori",
+      "officialNskId": 4394,
+      "dateOfBirth": "2003-07-08T15:00:00Z",
+      "heya": "Oitekaze",
+      "rank": "Makushita 11 East",
+      "currentApiProfileSource": "https://www.sumo-api.com/api/rikishi/9135",
+      "officialProfile": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4394/",
+      "sumoDbId": null,
+      "status": "unmapped-requires-independent-identity-link",
+      "requiredEvidence": [
+        "Historical shikona or full name plus matching birth date or stable",
+        "SumoDB page identifier backed by exact wrestler correspondence"
+      ],
+      "historicalWeightsCertified": false
+    },
+    {
+      "sourceId": 9121,
+      "rikishi": "Hakugetsuro",
+      "officialNskId": 4370,
+      "dateOfBirth": "2001-10-28T15:00:00Z",
+      "heya": "Asahiyama",
+      "rank": "Makushita 44 East",
+      "currentApiProfileSource": "https://www.sumo-api.com/api/rikishi/9121",
+      "officialProfile": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4370/",
+      "sumoDbId": null,
+      "status": "unmapped-requires-independent-identity-link",
+      "requiredEvidence": [
+        "Historical shikona or full name plus matching birth date or stable",
+        "SumoDB page identifier backed by exact wrestler correspondence"
+      ],
+      "historicalWeightsCertified": false
+    },
+    {
+      "sourceId": 9104,
+      "rikishi": "Tenshoyama",
+      "officialNskId": 4357,
+      "dateOfBirth": "2004-05-17T15:00:00Z",
+      "heya": "Tamanoi",
+      "rank": "Makushita 1 West",
+      "currentApiProfileSource": "https://www.sumo-api.com/api/rikishi/9104",
+      "officialProfile": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4357/",
+      "sumoDbId": null,
+      "status": "unmapped-requires-independent-identity-link",
+      "requiredEvidence": [
+        "Historical shikona or full name plus matching birth date or stable",
+        "SumoDB page identifier backed by exact wrestler correspondence"
+      ],
+      "historicalWeightsCertified": false
+    },
+    {
+      "sourceId": 9109,
+      "rikishi": "Shosei",
+      "officialNskId": 4364,
+      "dateOfBirth": "2008-02-05T15:00:00Z",
+      "heya": "Nakamura",
+      "rank": "Makushita 27 West",
+      "currentApiProfileSource": "https://www.sumo-api.com/api/rikishi/9109",
+      "officialProfile": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4364/",
+      "sumoDbId": null,
+      "status": "unmapped-requires-independent-identity-link",
+      "requiredEvidence": [
+        "Historical shikona or full name plus matching birth date or stable",
+        "SumoDB page identifier backed by exact wrestler correspondence"
+      ],
+      "historicalWeightsCertified": false
+    },
+    {
+      "sourceId": 9136,
+      "rikishi": "Honoikazuchi",
+      "officialNskId": 4395,
+      "dateOfBirth": "2003-07-15T15:00:00Z",
+      "heya": "Ikazuchi",
+      "rank": "Makushita 37 West",
+      "currentApiProfileSource": "https://www.sumo-api.com/api/rikishi/9136",
+      "officialProfile": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4395/",
+      "sumoDbId": null,
+      "status": "unmapped-requires-independent-identity-link",
+      "requiredEvidence": [
+        "Historical shikona or full name plus matching birth date or stable",
+        "SumoDB page identifier backed by exact wrestler correspondence"
+      ],
+      "historicalWeightsCertified": false
+    }
+  ],
+  "guardrails": [
+    "Do not infer numeric IDs from adjacent wrestlers",
+    "Do not accept a shared shikona alone",
+    "No date interpolation and no uncertified public results",
+    "Review source using current and former ring names"
+  ],
+  "status": "manual-or-provider-search-needed"
+}
