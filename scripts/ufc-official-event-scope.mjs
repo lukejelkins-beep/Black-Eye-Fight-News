@@ -9,5 +9,8 @@ export function isFeederUfcEvent(title){
 }
 export function isOfficialUfcEvent(title){
  const text=String(title||"").trim();
- return /\bufc\b/i.test(text)&&!isFeederUfcEvent(text);
+ // Official TUF season finales are UFC cards even when the event title
+ // does not contain the letters "UFC". TV-season qualifying bouts are not.
+ const officialFinale=/\bthe\s+ultimate\s+fighter\b/i.test(text)&&/\bfinale\b/i.test(text);
+ return (/\bufc\b/i.test(text)||officialFinale)&&!isFeederUfcEvent(text);
 }
