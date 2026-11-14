@@ -23,3 +23,78 @@
 .style-tags{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0 12px}
 .style-tags span{display:inline-flex;background:#fff1c7;color:#452d21;border:1px solid #bf903f;border-radius:3px;padding:6px 10px;text-transform:uppercase;font:900 11px/1.2 'DM Sans',sans-serif;letter-spacing:.04em}
 .profile-hero .style-tags span{background:#f3c332;color:#261a12}
+
+
+/* Phase 2 Sumo editorial cards: sourced flags and photo-ready identity */
+.sumo-country{display:inline-flex;align-items:center;gap:5px;vertical-align:middle;font:800 10px/1.2 'DM Sans',sans-serif;color:inherit;white-space:nowrap}
+.sumo-country-emoji{font-size:20px;line-height:1.2;font-family:system-ui,"Apple Color Emoji","Segoe UI Emoji",sans-serif;display:inline-block;vertical-align:middle}
+.sumo-country.unknown{font-size:11px;opacity:.65}
+.sumo-country-name{font-size:10px;letter-spacing:0;font-weight:750;opacity:.85}
+.profile-icon.sumo-photo{display:grid;place-items:center;flex:none;position:relative;isolation:isolate;border:1px solid #987c57;background:radial-gradient(circle at 48% 26%,#866e5b,#3b2b2d 80%)}
+.profile-icon.sumo-photo.sm{width:52px;height:68px}
+.profile-icon.sumo-photo.md{width:77px;height:100px}
+.profile-icon.sumo-photo.lg{width:86px;height:112px}
+.profile-icon.sumo-photo.xl{width:100%;min-height:270px;height:100%}
+.profile-icon.sumo-photo>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%;z-index:5;border-radius:inherit}
+.profile-icon.sumo-photo.has-photo::before,.profile-icon.sumo-photo.has-photo::after,.profile-icon.sumo-photo.has-photo>span{display:none}
+.profile-icon.sumo-photo:not(.has-photo)>span{z-index:3;position:absolute;bottom:7px;left:5px;right:5px;text-align:center;font:800 20px/1 serif;background:#2b2123c7;color:#f0ce92;padding:2px}
+.sumo-bio-line{display:block;margin:2px 0;font-size:10px;color:#655a58;line-height:1.55}
+.sumo-bio-line b{color:#ad2834}
+.sumo-directory-move{margin-top:9px}
+.feature-info .sumo-country-name,.directory-upper .sumo-country-name{font-size:9px}
+.directory-upper h3{display:block}
+.directory-upper h3 .sumo-country{display:inline-flex;vertical-align:baseline}
+.sumo-move{display:inline-flex;align-items:center;gap:3px;white-space:nowrap;font-size:10px;font-weight:900;letter-spacing:.03em;padding:4px 7px;border-radius:5px;background:#eee8e0;color:#60564d}
+.sumo-move.up{background:#e4f5e9;color:#167348}
+.sumo-move.down{background:#ffe6e5;color:#ba2732}
+.sumo-move.same{background:#eeeae6;color:#6c615e}
+.sumo-move.new{background:#fff1c7;color:#7d5414}
+.sumo-move.unavailable{background:#f2f1ef;color:#8b8280}
+.sumo-result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.sumo-result-card{border:1px solid #ded5cb;background:#fffdfa;padding:13px 15px;min-width:0;box-shadow:0 3px 13px rgba(28,18,16,.045)}
+.sumo-result-top{display:flex;align-items:center;justify-content:space-between;margin:0 0 11px;gap:5px;color:#756861;font-weight:850;font-size:11px}
+.sumo-result-card .sumo-match-person{background:#f5f0e9;border:1px solid #e7dbd0;padding:9px;min-height:112px}
+.sumo-result-card .sumo-match-identity{padding:0}
+.sumo-result-card .sumo-match-name{font-size:17px}
+.sumo-result-extra{margin-top:10px;border-top:1px solid #e5dcd1;padding-top:8px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;color:#6a5d58;font-size:10px;font-weight:800}
+.sumo-match-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.sumo-match-card{background:#fffefa;border:1px solid #dcd1c5;border-radius:7px;overflow:hidden;box-shadow:0 3px 12px rgba(25,14,17,.05);min-width:0}
+.sumo-match-top{background:#272024;color:#f5e8d3;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-size:11px;letter-spacing:.08em;gap:9px}
+.sumo-match-status{font-size:9px;font-weight:900;border:1px solid #9d7d50;padding:4px 6px;color:#ffe098;white-space:nowrap}
+.sumo-match-status.completed{background:#165b43;color:#dcf8e5;border-color:#23835b}
+.sumo-match-status.scheduled{background:#504332;color:#f5e4bb;border-color:#886c41}
+.sumo-match-people{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr);gap:8px;align-items:stretch;padding:13px}
+.sumo-match-person{display:flex;min-width:0;align-items:center;gap:9px}
+.sumo-match-identity{min-width:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px}
+.sumo-match-name{font:900 19px/1.1 'Barlow Condensed',Impact,sans-serif;overflow-wrap:anywhere;letter-spacing:.01em}
+.sumo-match-name a{text-decoration:none;color:#21191c}
+.sumo-match-name a:hover{text-decoration:underline;color:#b21d31}
+.sumo-match-name .sumo-country{display:flex;margin-bottom:4px}
+.sumo-match-name .sumo-country-name{font-family:'DM Sans',sans-serif}
+.sumo-match-person .sumo-bio-line{font-size:10px;color:#716561}
+.sumo-match-person .sumo-bio-line b{font-weight:900}
+.sumo-versus{display:grid;place-items:center;color:#a99783;font-size:11px;font-weight:900}
+.sumo-match-footer{border-top:1px solid #e9dfd6;background:#f7f2eb;display:flex;justify-content:space-between;align-items:center;gap:9px;padding:10px 13px;font-size:10px;color:#685e5c;line-height:1.45}
+.sumo-h2h{white-space:nowrap;color:#9d2735;font-size:9px;font-weight:900}
+.sumo-h2h strong{color:#2b2022}
+.sumo-empty-bout{grid-column:1/-1;margin:0;padding:22px;border:1px dashed #bbab94;background:#fff;color:#6c5e57}
+.sumo-rank-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0 26px}
+.sumo-rank-card{background:#fffcf7;border:1px solid #e1d5c7;min-width:0;border-radius:7px;overflow:hidden;box-shadow:0 3px 10px rgba(27,17,18,.04)}
+.sumo-rank-card-head{display:flex;justify-content:space-between;gap:9px;align-items:center;background:#2a2023;color:#f6e5d6;padding:8px 13px;font-size:9px;letter-spacing:.06em;font-weight:900}
+.sumo-rank-card-head .number-win{color:#75d5aa}.sumo-rank-card-head .number-loss{color:#ff979b}
+.sumo-rank-card-body{display:flex;gap:14px;padding:15px;align-items:center}
+.sumo-rank-card-data{flex:1;min-width:0}
+.sumo-rank-name{display:flex;gap:8px;align-items:center;font:900 27px/1 'Barlow Condensed',Impact,sans-serif;overflow-wrap:anywhere}
+.sumo-rank-name a{color:#21191c;text-decoration:none}
+.sumo-rank-name a:hover{color:#ab1b2b;text-decoration:underline}
+.sumo-rank-name .sumo-country-name{display:none}
+.sumo-rank-strong{font-weight:900;color:#b31f2d;font-size:11px;margin:6px 0 8px}
+.sumo-rank-info{display:flex;flex-wrap:wrap;gap:4px 14px;color:#777071;font-size:10px}
+.sumo-rank-info b{color:#30262a}
+.sumo-rank-change{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:10px;color:#756763;margin-top:10px}
+.profile-title h1 .sumo-country-name{font-family:'DM Sans',sans-serif;font-size:13px}
+.profile-title .hero-rank .sumo-move{margin-left:6px;vertical-align:middle}
+@media(max-width:1080px){.sumo-match-list,.sumo-rank-grid{grid-template-columns:1fr}}
+@media(max-width:740px){.sumo-result-grid{grid-template-columns:1fr}.sumo-match-people{grid-template-columns:1fr;gap:9px}.sumo-match-person{padding:8px 2px}.sumo-versus{justify-self:center;line-height:1}.sumo-match-card .sumo-match-person .sumo-photo{width:63px;height:78px}.sumo-match-footer{flex-direction:column;align-items:flex-start}.sumo-rank-card-body{padding:11px;gap:10px}.sumo-rank-name{font-size:25px}.sumo-rank-card .sumo-photo{width:70px;height:88px}.profile-icon.sumo-photo.xl{min-height:175px}.sumo-country-name{font-size:9px}}
+@media(min-width:741px) and (max-width:1260px){.sumo-match-people{grid-template-columns:1fr;gap:5px}.sumo-match-person{padding:4px}.sumo-versus{height:14px}}
+@media(max-width:390px){.sumo-match-card .sumo-match-person{gap:7px}.sumo-rank-name{font-size:23px}.sumo-rank-info{gap:4px 9px}.sumo-rank-info span{font-size:9px}}
