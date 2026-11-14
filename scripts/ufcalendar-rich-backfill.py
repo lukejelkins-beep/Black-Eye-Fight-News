@@ -1240,7 +1240,9 @@ def reconcile_legacy_ufc_by_event_date(client,state,research,coverage,today,
     for day,targets in sorted(grouped.items()):
         if calls>=4 or client.remaining<=0 or client.stopped or \
            client.calls>=client.max_calls-20:break
-        pending=[x for x in targets if x[0] not in checks]
+        pending=[x for x in targets if x[0] not in checks or
+                 (checks[x[0]].get("status")=="retry" and
+                  str(checks[x[0]].get("retryAfter") or "")<=today.isoformat())]
         if not pending:continue
         date=dt.date.fromisoformat(day)
         start=(date-dt.timedelta(days=1)).isoformat()
