@@ -84,6 +84,8 @@ export function summarizeWeightCoverage(cohort,apiDocs,sourceDocs){
  const result={schemaVersion:1,scope:'Research-only historical measurement gap analysis; not certified or licensed for production',
   cohortSize:190,rawApiWeightEntries:0,mappedSumoDbRikishi:0,unmappedSumoDbRikishi:[],
   checkedIndependentRikishi:0,independentDatedPoints:0,matchedOverlaps:0,
+  independentIdentityBirthDateVerified:0,independentIdentityBirthDatePending:0,
+  independentIdentityBirthDateMismatch:0,
   additionalDatedPoints:0,conflictingOverlaps:0,sourceReusePermissionConfirmed:false,
   publishedAdditionalPoints:0,certifiedWeightHistories:0,entries:[]};
  for(const r of cohort.rikishi){
@@ -98,6 +100,10 @@ export function summarizeWeightCoverage(cohort,apiDocs,sourceDocs){
   const checked=s?reconcileWeightHistory(api,s.datedEvidence,Number(r.sumoDbId)):null;
   if(checked){
    result.checkedIndependentRikishi++;
+   const birthStatus=s.identityEvidence?.birthDateStatus||null;
+   if(birthStatus==='match')result.independentIdentityBirthDateVerified++;
+   else if(birthStatus==='mismatch')result.independentIdentityBirthDateMismatch++;
+   else result.independentIdentityBirthDatePending++;
    result.independentDatedPoints+=checked.independentDatedPoints;
    result.matchedOverlaps+=checked.matchingOverlaps;
    result.additionalDatedPoints+=checked.additionalDatedPoints;
@@ -105,12 +111,15 @@ export function summarizeWeightCoverage(cohort,apiDocs,sourceDocs){
   }
   result.entries.push({sourceId,name:r.shikonaEn,sumoDbId:r.sumoDbId||null,
    apiWeightEntries:api.length,independentChecked:!!checked,
+   independentSourceBirthDateStatus:checked?(s.identityEvidence?.birthDateStatus||'prior-check-needs-birthdate-proof'):null,
    sourcedIndependentPoints:checked?.independentDatedPoints||0,
    additionalDatedPoints:checked?.additionalDatedPoints||0,
    conflictingOverlapCount:checked?.conflictingOverlaps.length||0,
    weightTimelineCertified:false});
  }
  result.awaitingIndependentResearch=190-result.checkedIndependentRikishi;
+ if(result.independentIdentityBirthDateMismatch>0)
+  throw Error('Independent SumoDB birth-date identity mismatch: quarantine before projection');
  result.note='Absence of a dated source observation is not evidence of a weigh-in or permission to interpolate. Undated current profile weights are excluded.';
  return result;
 }
