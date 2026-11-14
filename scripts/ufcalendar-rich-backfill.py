@@ -32,6 +32,7 @@ ROSTER_APPROVAL = ROOT / "data/ufc-36-month-roster-approval.json"
 FEEDER_EVIDENCE = ROOT / "data/ufc-feeder-bout-evidence.json"
 VERIFIED_ROUND_FALLBACK = ROOT / "data/ufc-official-verified-round-fallback.json"
 LEGACY_UFC_EVIDENCE = ROOT / "data/ufc-official-legacy-evidence.json"
+OFFICIAL_NC_REPAIR = ROOT / "data/ufc-official-no-contest-history-repair.json"
 JUDGING = ROOT / "data/ufcalendar-judging-research.json"
 BASE = "https://api.ufcalendar.com/v1"
 MAX_SPEND_PER_MONTH = 27000  # 90% of Hobby; reserve 3,000 for live BEFN integrations.
@@ -1426,6 +1427,82 @@ def reconcile_legacy_ufc_by_event_date(client,state,research,coverage,today,
               alternatives,"alternative IDs requiring review")
     return {"calls":calls,"indexed":indexed,"alternative":alternatives}
 
+
+def reconcile_cached_official_nc_histories(state,research,coverage,today,approval,manifest):
+    """Add only independently UFC-confirmed NC bouts with already indexed native IDs.
+
+    UFC history feeds may omit or lag an overturned result. Never invent
+    fight IDs, change the approved cohort, or mark any career complete.
+    No provider requests: this only reconciles facts already in saved caches.
+    """
+    if (not isinstance(manifest,dict) or manifest.get("schema")!=1 or
+        manifest.get("scope")!="ufc-official-no-contest-history-repair" or
+        manifest.get("rosterAsOf")!=approval.get("rosterAsOf")):
+        return {"added":0,"blocked":0}
+    approved=approved_ufc_career_cohort(approval,coverage,today)
+    if not approved:return {"added":0,"blocked":0}
+    eligible={slug(r.get("slug")) for r in coverage.get("fighters",[])
+              if isinstance(r,dict) and r.get("eligibilityStatus")=="latest_observed_mma_ufc"}
+    eligible.intersection_update(approved)
+    norm=lambda value:re.sub(r"[^a-z0-9]","",
+        unicodedata.normalize("NFKD",safe(value,140)).encode("ascii","ignore").decode().lower())
+    allowed={"59855","60458","60666"}
+    visited=set()
+    added=blocked=0
+    for row in manifest.get("bouts",[]):
+        if not isinstance(row,dict):blocked+=1;continue
+        bid=str(row.get("fightId") or "")
+        fighter=slug(row.get("fighterSlug"))
+        opponent=safe(row.get("opponent"),110)
+        day=date_str(row.get("date"))
+        source_url=str(row.get("sourceUrl") or "")
+        if (bid not in allowed or bid in visited or fighter not in eligible or
+            not day or not norm(opponent) or row.get("result")!="no_contest" or
+            not source_url.startswith("https://www.ufc.com/")):
+            blocked+=1;continue
+        visited.add(bid)
+        bout=state.get("bouts",{}).get(bid)
+        if not isinstance(bout,dict):
+            blocked+=1;continue
+        if (str(bout.get("id") or "")!=bid or bout.get("org")!="ufc" or
+            bout.get("status")!="no_contest" or bout.get("eventDate")!=day or
+            not official_ufc_event_title(bout.get("event") or "")):
+            blocked+=1;continue
+        a,b=bout.get("a") or {},bout.get("b") or {}
+        if a.get("slug")==fighter and norm(b.get("name"))==norm(opponent):
+            pass
+        elif b.get("slug")==fighter and norm(a.get("name"))==norm(opponent):
+            pass
+        else:
+            blocked+=1;continue
+        profile=research.get("profiles",{}).get(fighter)
+        if not isinstance(profile,dict):
+            blocked+=1;continue
+        history=profile.setdefault("recentHistory",[])
+        if not isinstance(history,list):blocked+=1;continue
+        same=[h for h in history if isinstance(h,dict) and
+              (str(h.get("boutId") or "")==bid or
+               (date_str(h.get("date"))==day and
+                norm(h.get("opponent"))==norm(opponent) and
+                str(h.get("promotion") or "").lower()=="ufc"))]
+        if same:
+            if any(str(h.get("boutId") or "")==bid and
+                   str(h.get("result") or "").lower()=="no_contest" for h in same):
+                continue # Permanent idempotence; source already recovered
+            # Don't overwrite conflicting historical outcomes or native IDs.
+            blocked+=1;continue
+        history.append({"date":day,"opponent":opponent,"promotion":"ufc",
+                        "result":"no_contest","method":"No Contest",
+                        "source":"native","boutId":bid,
+                        "titleFight":bool(bout.get("titleFight"))})
+        history.sort(key=lambda item:(str(item.get("date") or ""),
+                                      str(item.get("opponent") or "")),reverse=True)
+        added+=1
+    if added or blocked:
+        print("BEFN official UFC no-contest cache reconciliation:",
+              added,"saved NC history rows added,",blocked,"blocked for QA")
+    return {"added":added,"blocked":blocked}
+
 def reconcile_approved_ufc_full_career_timelines(client,state,research,coverage,today,approval=None):
     """One bounded, identity-verified crosscheck of cached UFC career histories.
 
@@ -1751,6 +1828,9 @@ def main():
         reconcile_legacy_ufc_by_event_date(
             client,state,research,approved36,roster_today,approval,
             read(LEGACY_UFC_EVIDENCE,{}))
+        reconcile_cached_official_nc_histories(
+            state,research,approved36,roster_today,approval,
+            read(OFFICIAL_NC_REPAIR,{}))
         round_priority=approved_ufc_round_priority(approval,approved36,research,roster_today,state)
         recovery=collect_rounds(client,state,cards,archive,pfl_archive,today,coverage,
                                 approved_priority=round_priority)
