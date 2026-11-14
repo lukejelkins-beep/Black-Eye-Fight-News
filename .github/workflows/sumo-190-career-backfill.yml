@@ -37,7 +37,8 @@ jobs:
         run: |
           node --check scripts/sumo-backfill-190.mjs
           node --check scripts/sumo-verify-190.mjs
-          node --test tests/test-sumo-backfill-190.mjs tests/test-sumo-verify-190.mjs
+          node --check scripts/sumo-jsa-reconcile.mjs
+          node --test tests/test-sumo-backfill-190.mjs tests/test-sumo-verify-190.mjs tests/test-sumo-jsa-reconcile.mjs
       - name: Collect only missing research data
         env:
           SUMO_REQUEST_BUDGET: '8'
@@ -45,6 +46,8 @@ jobs:
         run: node scripts/sumo-backfill-190.mjs
       - name: Audit collected history before any future JSA certification
         run: node scripts/sumo-verify-190.mjs
+      - name: Reconcile public JSA spotchecks without certifying careers
+        run: node scripts/sumo-jsa-reconcile.mjs
       - name: Checkpoint cached results on research branch only
         env:
           TARGET_BRANCH: research/sumo-190-career-cache-20261114
