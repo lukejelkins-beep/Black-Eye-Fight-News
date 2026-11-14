@@ -59,17 +59,18 @@ const [fighters,events,results]=await Promise.all([
  fetchCsv('ufc_event_details',600000),
  fetchCsv('ufc_fight_results',3500000)
 ]);
-const dateByEvent=new Map(events.map(x=>[x.EVENT,day(x.DATE)]));
-console.log('BEFN_NEXT8_SOURCE_DIAG '+JSON.stringify({events:events.length,results:results.length,firstResult:results[0],firstEvent:events[0],firstFighter:fighters[0],parsedFirstDate:day(events[0]?.DATE),eventMatches:results.filter(x=>dateByEvent.get(x.EVENT)).length}));
+const dateByEvent=new Map(events.map(x=>[String(x.EVENT||'').trim(),day(x.DATE)]));
+console.log('BEFN_NEXT8_SOURCE_DIAG '+JSON.stringify({events:events.length,results:results.length,firstResult:results[0],firstEvent:events[0],firstFighter:fighters[0],parsedFirstDate:day(events[0]?.DATE),eventMatches:results.filter(x=>dateByEvent.get(String(x.EVENT||'').trim())).length}));
 const source=results.flatMap(r=>{
  const names=String(r.BOUT||'').split(/\s+vs\.?\s+/i);
  const outs=String(r.OUTCOME||'').split('/');
- const date=dateByEvent.get(r.EVENT);
+ const date=dateByEvent.get(String(r.EVENT||'').trim());
  if(names.length!==2||outs.length!==2||!date||!outcome(outs[0])||!outcome(outs[1])||
   !/^https?:\/\/ufcstats\.com\/fight-details\/[a-f0-9]{16}$/i.test(r.URL||''))return [];
- return [{date,event:r.EVENT,names:names.map(x=>x.trim()),results:outs.map(outcome),
+ return [{date,event:String(r.EVENT||'').trim(),names:names.map(x=>x.trim()),results:outs.map(outcome),
   url:r.URL.replace(/^http:/,'https:')}];
 });
+if(source.length<1000)throw Error('Pinned fight result source parse unexpectedly empty or truncated');
 const report={schema:1,scope:'ufc-unified-next8-source-only-review',snapshot:'2026-11-14',
  pinnedGrecoCommit:pinned,sourceBlobShas:sha,sourceEventCutoff:'2026-11-07',
  certificationGranted:false,paidUfcalendarCalls:0,rosterSize:783,fighters:{}};
@@ -102,6 +103,7 @@ for(const [slug,sourceId] of candidates){
     nativeMethod:native?.result?.method??null,
     officialCard,sourceEventFeeder:/contender\s+series|road\s+to\s+ufc|\bdwcs\b/i.test(b.event)};
   }).sort((a,b)=>a.date.localeCompare(b.date));
+ if(rows.length===0)throw Error('Zero pinned independent fighter source rows for '+slug);
  const raw=(p.recentHistory||[]).filter(h=>String(h.promotion||h.org||'').toLowerCase()==='ufc');
  const seen=new Set(rows.map(x=>x.nativeBoutId).filter(Boolean));
  const extra=raw.filter(x=>!seen.has(String(x.boutId))).map(x=>({
