@@ -518,7 +518,7 @@ class FullCareerCacheTests(unittest.TestCase):
     def test_curated_ufc_finale_retries_one_verified_cooldown_id(self):
         state,research,candidate=self.fixture()
         today=dt.date(2026,11,13)
-        state["ufcCareerBoutChecks"]["800"]={
+        state.setdefault("ufcCareerBoutChecks",{})["800"]={
             "status":"requires_manual_review","checkedAt":today.isoformat(),
             "retryAfter":"2026-11-27"}
         manifest={"schema":1,"scope":"ufc-official-finale-recovery","bouts":[{
@@ -539,7 +539,7 @@ class FullCareerCacheTests(unittest.TestCase):
     def test_curated_finale_requires_exact_saved_bout_opponent_and_official_url(self):
         state,research,candidate=self.fixture()
         today=dt.date(2026,11,13)
-        state["ufcCareerBoutChecks"]["800"]={
+        state.setdefault("ufcCareerBoutChecks",{})["800"]={
             "status":"requires_manual_review","retryAfter":"2026-11-27"}
         base={"fightId":"800","date":"2008-05-01","fighterSlug":"veteran",
               "opponent":"Opponent",
@@ -557,7 +557,7 @@ class FullCareerCacheTests(unittest.TestCase):
     def test_curated_finale_provider_identity_mismatch_is_not_saved_or_repeated(self):
         state,research,candidate=self.fixture()
         today=dt.date(2026,11,13)
-        state["ufcCareerBoutChecks"]["800"]={
+        state.setdefault("ufcCareerBoutChecks",{})["800"]={
             "status":"requires_manual_review","retryAfter":"2026-11-27"}
         manifest={"schema":1,"scope":"ufc-official-finale-recovery","bouts":[{
           "fightId":"800","date":"2008-05-01","fighterSlug":"veteran",
