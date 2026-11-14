@@ -297,7 +297,7 @@ async function ensureCache(w){
     }
     stored.rankPaginationContract=2;
   }
-  if(stored.rankDebutContract!==1){
+  if(stored.rankDebutContract!==1&&stored.stages.matches?.complete){
     const evidence=unrankedDebutEvidence(stored),stage=stored.stages.ranks;
     if(evidence&&!stage.complete){
       stage.complete=true;
