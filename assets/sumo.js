@@ -15,7 +15,8 @@ const STATE = {
   roster: null, details: null, careerHistory: null, officialStyles: null, photoIndex: null, error: null, query: '', division: 'All',
   visible: 24, bashoDivision: 'Makuuchi', banzukeDivision: 'Makuuchi',
   day: null, profileLimit: 5, h2hOldestFirst: false, h2hOpponentLimit: 16,
-  h2hSummary: null, h2hFull: null, h2hLoading: false, h2hLoadFailed: false
+  h2hSummary: null, h2hFull: null, h2hLoading: false, h2hLoadFailed: false,
+  h2hOpponents: null, h2hOpponentsLoading: false, h2hOpponentsFailed: false
 };
 const TERMS = [
   {term:'Yorikiri',label:'Frontal force-out',detail:'The wrestler drives the opponent out while holding the mawashi (belt).'},
@@ -113,8 +114,8 @@ function headToHeadFor(a,b) {
 function headToHeadName(id,a,b){
   const current=wrestler(id);
   if(current)return current.shikonaEn;
-  const fromFirst=STATE.h2hSummary?.profiles?.[String(a)]?.opponents?.find(x=>Number(x.id)===Number(id));
-  const fromSecond=STATE.h2hSummary?.profiles?.[String(b)]?.opponents?.find(x=>Number(x.id)===Number(id));
+  const fromFirst=STATE.h2hOpponents?.profiles?.[String(a)]?.find(x=>Number(x.id)===Number(id));
+  const fromSecond=STATE.h2hOpponents?.profiles?.[String(b)]?.find(x=>Number(x.id)===Number(id));
   return fromFirst?.name||fromSecond?.name||('Rikishi #'+id);
 }
 function headToHeadUrl(a,b) {
@@ -435,9 +436,10 @@ function renderProfile(id) {
 }
 function profileRivalries(w){
   const profile=STATE.h2hSummary?.profiles?.[String(w.sourceId)];
-  if(!profile||!Array.isArray(profile.opponents))
-    return note('Career opponents are still synchronizing from the historical research cache.');
-  const subset=profile.opponents.slice(0,STATE.h2hOpponentLimit);
+  const opponents=STATE.h2hOpponents?.profiles?.[String(w.sourceId)];
+  if(!profile||!Array.isArray(opponents))
+    return note(STATE.h2hOpponentsFailed?'Opponent index currently unavailable; please try again later.':'Loading the full source-backed opponent directory…');
+  const subset=opponents.slice(0,STATE.h2hOpponentLimit);
   return '<p class="section-intro">'+profile.opponentCount+' distinct opponents recorded across the full API source career. Select any rival for a complete bout-by-bout history with winner, basho and kimarite. JSA full-career certification remains pending.</p>'+
     '<div class="sumo-rival-grid">'+subset.map(r=>{
       const opponent=wrestler(r.id),name=opponent?.shikonaEn||r.name||'Rikishi #'+r.id;
@@ -446,8 +448,8 @@ function profileRivalries(w){
         '<strong>'+e(r.wins+'–'+r.losses)+'</strong>'+
         '<small>'+e(r.meetings+' regular meetings')+'</small></a>';
     }).join('')+'</div>'+
-    (profile.opponents.length>STATE.h2hOpponentLimit?
-      '<div class="more-wrap"><button type="button" class="btn light" data-h2h-more>SHOW MORE OPPONENTS ('+(profile.opponents.length-STATE.h2hOpponentLimit)+' REMAIN)</button></div>':'');
+    (opponents.length>STATE.h2hOpponentLimit?
+      '<div class="more-wrap"><button type="button" class="btn light" data-h2h-more>SHOW MORE OPPONENTS ('+(opponents.length-STATE.h2hOpponentLimit)+' REMAIN)</button></div>':'');
 }
 function banzukeCard(row) {
   const w=wrestler(row.rikishiID);
@@ -568,9 +570,12 @@ function render() {
   if (!STATE.roster) { ROOT.innerHTML='<div class="loading">Loading sourced Sumo data…</div>';return; }
   switch(page) {
     case 'rikishi': ROOT.innerHTML=renderDirectory();break;
-    case 'profile': ROOT.innerHTML=renderProfile(id);break;
+    case 'profile': ROOT.innerHTML=renderProfile(id);
+      if(STATE.h2hSummary&&!STATE.h2hOpponents&&!STATE.h2hOpponentsLoading&&!STATE.h2hOpponentsFailed)void loadOpponentIndex();break;
     case 'headtohead': ROOT.innerHTML=renderHeadToHead(id,hash.split('/')[2]);
-      if(!STATE.h2hFull&&!STATE.h2hLoading&&!STATE.h2hLoadFailed)void loadCompleteH2h();break;
+      if(!STATE.h2hFull&&!STATE.h2hLoading&&!STATE.h2hLoadFailed)void loadCompleteH2h();
+      if(!wrestler(hash.split('/')[2])&&STATE.h2hSummary&&!STATE.h2hOpponents&&!STATE.h2hOpponentsLoading&&!STATE.h2hOpponentsFailed)void loadOpponentIndex();
+      break;
     case 'banzuke': ROOT.innerHTML=renderBanzuke();break;
     case 'basho': ROOT.innerHTML=renderBasho();break;
     case 'kimarite': ROOT.innerHTML=renderKimarite();break;
@@ -608,6 +613,21 @@ async function loadJson(url){
   const response=await fetch(url,{cache:'no-cache'});
   if(!response.ok)throw new Error('Cached Sumo data returned HTTP '+response.status);
   return response.json();
+}
+async function loadOpponentIndex(){
+  STATE.h2hOpponentsLoading=true;
+  try {
+    const data=await loadJson('data/sumo/research-h2h-opponents.json');
+    if(data?.schemaVersion!==1||data?.cohortSize!==190||data?.profileCount!==190||data.certified!==false||!data.profiles)
+      throw new Error('Opponent index failed research cache checks');
+    STATE.h2hOpponents=data;
+  } catch(error){
+    console.warn('Opponent index not synchronized:',error?.message||error);
+    STATE.h2hOpponentsFailed=true;
+  } finally {
+    STATE.h2hOpponentsLoading=false;
+    if(location.hash.startsWith('#profile/')||location.hash.startsWith('#headtohead/'))render();
+  }
 }
 async function loadCompleteH2h(){
   STATE.h2hLoading=true;
