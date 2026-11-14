@@ -22659,6 +22659,334 @@
           "excludedBecause": "Independent DWCS feeder not official UFC Octagon contest"
         }
       ]
+    },
+    "ramon-taveras": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Ramon Taveras",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/c5ccd878231c5407",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ramon-taveras",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Immutable Greco UFCStats-derived historical snapshot, not direct live UFCStats scrape",
+        "method": "UFC.com complete dated fight narrative independently crossmatched to pinned UFCStats fight URLs and original saved UFCalendar numeric identities, native corners, exact outcomes and measured rounds; feeder exclusions separately source-attested. Correct official results override UFC.com graphical Win badges."
+      },
+      "verifiedNumericFighterIds": [
+        "60"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "UFC.com exhaustively documents three completed official UFC Octagon bouts through 2026-11-14, each tied to original saved native ID, both corners, result and independent pinned Greco source. 2 individually official-source-proven DWCS feeder appearance(s) excluded. Cancelled or scheduled bouts not included.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/ramon-taveras",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84097",
+          "date": "2023-10-10",
+          "opponent": "Cortavious Romious",
+          "result": "win",
+          "event": "Dana White's Contender Series 66",
+          "officialSourceUrl": "https://www.ufc.com/athlete/ramon-taveras",
+          "excludedBecause": "UFC.com identifies historical Dana White's Contender Series feeder; not an official Octagon fight"
+        },
+        {
+          "nativeBoutId": "88267",
+          "date": "2023-09-05",
+          "opponent": "Serhiy Sidey",
+          "result": "loss",
+          "event": "Dana White's Contender Series 61",
+          "officialSourceUrl": "https://www.ufc.com/athlete/ramon-taveras",
+          "excludedBecause": "UFC.com identifies historical Dana White's Contender Series feeder; not an official Octagon fight"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2024-01-20",
+          "opponent": "Serhiy Sidey",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/43d90683078fcee5",
+          "nativeBoutId": "59871",
+          "nativeFighterId": "60"
+        },
+        {
+          "date": "2024-12-14",
+          "opponent": "Davey Grant",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b40e4deb48658851",
+          "nativeBoutId": "60379",
+          "nativeFighterId": "60"
+        },
+        {
+          "date": "2025-09-27",
+          "opponent": "Jack Jenkins",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/38248c5d13f273e6",
+          "nativeBoutId": "38211",
+          "nativeFighterId": "60"
+        }
+      ]
+    },
+    "brogan-walker": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Brogan Walker",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/4333a8e70a672eb7",
+      "officialFighterUrl": "https://www.ufc.com/athlete/brogan-walker",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Immutable Greco UFCStats-derived historical snapshot, not direct live UFCStats scrape",
+        "method": "UFC.com complete dated fight narrative independently crossmatched to pinned UFCStats fight URLs and original saved UFCalendar numeric identities, native corners, exact outcomes and measured rounds; feeder exclusions separately source-attested. Correct official results override UFC.com graphical Win badges."
+      },
+      "verifiedNumericFighterIds": [
+        "134"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "UFC.com exhaustively documents three completed official UFC Octagon bouts through 2026-11-14, each tied to original saved native ID, both corners, result and independent pinned Greco source. 0 individually official-source-proven DWCS feeder appearance(s) excluded. 2022 televised TUF 30 UFC final INCLUDED once; TUF house exhibition qualifiers not counted.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/brogan-walker",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2022-08-06",
+          "opponent": "Juliana Miller",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/2b11aa4b90b1dd41",
+          "nativeBoutId": "59550",
+          "nativeFighterId": "134"
+        },
+        {
+          "date": "2023-04-22",
+          "opponent": "Iasmin Lucindo",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/20c0f50c11509301",
+          "nativeBoutId": "61275",
+          "nativeFighterId": "134"
+        },
+        {
+          "date": "2025-10-04",
+          "opponent": "Veronica Hardy",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/98883348ddb3be33",
+          "nativeBoutId": "60751",
+          "nativeFighterId": "134"
+        }
+      ]
+    },
+    "mitch-ramirez": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Mitch Ramirez",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/e99eb0ef25885de5",
+      "officialFighterUrl": "https://www.ufc.com/athlete/mitch-ramirez",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Immutable Greco UFCStats-derived historical snapshot, not direct live UFCStats scrape",
+        "method": "UFC.com complete dated fight narrative independently crossmatched to pinned UFCStats fight URLs and original saved UFCalendar numeric identities, native corners, exact outcomes and measured rounds; feeder exclusions separately source-attested. Correct official results override UFC.com graphical Win badges."
+      },
+      "verifiedNumericFighterIds": [
+        "2852"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "UFC.com exhaustively documents three completed official UFC Octagon bouts through 2026-11-14, each tied to original saved native ID, both corners, result and independent pinned Greco source. 1 individually official-source-proven DWCS feeder appearance(s) excluded. Cancelled or scheduled bouts not included.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/mitch-ramirez",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84164",
+          "date": "2023-08-29",
+          "opponent": "Carlos Prates",
+          "result": "loss",
+          "event": "Dana White's Contender Series 60",
+          "officialSourceUrl": "https://www.ufc.com/athlete/mitch-ramirez",
+          "excludedBecause": "UFC.com identifies historical Dana White's Contender Series feeder; not an official Octagon fight"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2024-03-16",
+          "opponent": "Thiago Moises",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/537b3cef39d2d573",
+          "nativeBoutId": "61247",
+          "nativeFighterId": "2852"
+        },
+        {
+          "date": "2025-07-12",
+          "opponent": "Mike Davis",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7f33fbdc35afd721",
+          "nativeBoutId": "60839",
+          "nativeFighterId": "2852"
+        },
+        {
+          "date": "2026-07-18",
+          "opponent": "Chase Hooper",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f2abca7379982d4f",
+          "nativeBoutId": "66460",
+          "nativeFighterId": "2852"
+        }
+      ]
+    },
+    "steven-asplund": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Steven Asplund",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/e56cee1ad697db04",
+      "officialFighterUrl": "https://www.ufc.com/athlete/steven-asplund",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Immutable Greco UFCStats-derived historical snapshot, not direct live UFCStats scrape",
+        "method": "UFC.com complete dated fight narrative independently crossmatched to pinned UFCStats fight URLs and original saved UFCalendar numeric identities, native corners, exact outcomes and measured rounds; feeder exclusions separately source-attested. Correct official results override UFC.com graphical Win badges."
+      },
+      "verifiedNumericFighterIds": [
+        "337"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "UFC.com exhaustively documents three completed official UFC Octagon bouts through 2026-11-14, each tied to original saved native ID, both corners, result and independent pinned Greco source. 1 individually official-source-proven DWCS feeder appearance(s) excluded. Cancelled or scheduled bouts not included.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/steven-asplund",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83909",
+          "date": "2025-09-09",
+          "opponent": "Anthony Guarascio",
+          "result": "win",
+          "event": "Dana White's Contender Series 81",
+          "officialSourceUrl": "https://www.ufc.com/athlete/steven-asplund",
+          "excludedBecause": "UFC.com identifies historical Dana White's Contender Series feeder; not an official Octagon fight"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2025-12-13",
+          "opponent": "Sean Sharaf",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a2523a8565fe4361",
+          "nativeBoutId": "60655",
+          "nativeFighterId": "337"
+        },
+        {
+          "date": "2026-03-14",
+          "opponent": "Vitor Petrino",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/2c330a6f7f1e55f0",
+          "nativeBoutId": "60718",
+          "nativeFighterId": "337"
+        },
+        {
+          "date": "2026-08-08",
+          "opponent": "Guilherme Pat",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3050549d19395f6f",
+          "nativeBoutId": "83096",
+          "nativeFighterId": "337"
+        }
+      ]
+    },
+    "tommy-mcmillen": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Tommy McMillen",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/6b0a6def604de298",
+      "officialFighterUrl": "https://www.ufc.com/athlete/tommy-mcmillen",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Immutable Greco UFCStats-derived historical snapshot, not direct live UFCStats scrape",
+        "method": "UFC.com complete dated fight narrative independently crossmatched to pinned UFCStats fight URLs and original saved UFCalendar numeric identities, native corners, exact outcomes and measured rounds; feeder exclusions separately source-attested. Correct official results override UFC.com graphical Win badges."
+      },
+      "verifiedNumericFighterIds": [
+        "592"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "UFC.com exhaustively documents three completed official UFC Octagon bouts through 2026-11-14, each tied to original saved native ID, both corners, result and independent pinned Greco source. 1 individually official-source-proven DWCS feeder appearance(s) excluded. Cancelled or scheduled bouts not included.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/tommy-mcmillen",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84143",
+          "date": "2025-09-02",
+          "opponent": "David Mgoyan",
+          "result": "win",
+          "event": "Dana White's Contender Series 80",
+          "officialSourceUrl": "https://www.ufc.com/athlete/tommy-mcmillen",
+          "excludedBecause": "UFC.com identifies historical Dana White's Contender Series feeder; not an official Octagon fight"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-04-04",
+          "opponent": "Manolo Zecchini",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c27bec45d5a29a2c",
+          "nativeBoutId": "60702",
+          "nativeFighterId": "592"
+        },
+        {
+          "date": "2026-07-18",
+          "opponent": "Alberto Montes",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c64c6ba6eb1e1d06",
+          "nativeBoutId": "82919",
+          "nativeFighterId": "592"
+        },
+        {
+          "date": "2026-09-12",
+          "opponent": "Marwan Rahiki",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1fca7dfa9e1e15cb",
+          "nativeBoutId": "83442",
+          "nativeFighterId": "592"
+        }
+      ]
     }
   }
 }
