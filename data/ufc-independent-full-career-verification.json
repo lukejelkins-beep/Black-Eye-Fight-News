@@ -21808,6 +21808,193 @@
           "nativeFighterId": "272"
         }
       ]
+    },
+    "pete-rodriguez": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Pete Rodriguez",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/776d4262c4da38bf",
+      "officialFighterUrl": "https://www.ufc.com/athlete/pete-rodriguez",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Full dated official UFC.com biographies and results crossmatched to immutable pinned Greco UFCStats fighter/fight/event IDs and original saved UFCalendar numeric native bout IDs, paired corners, outcomes and measured rounds; explicitly exclude independently sourced Contender Series. No paid provider requests or cached original data writes."
+      },
+      "verifiedNumericFighterIds": [
+        "1088"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Exhaustive three official UFC fight career through 2026-11-14: exactly three independent UFCStats-derived fight URLs matched to corresponding cached numeric paired corners, original result and full measured rounds. Three career UFC bouts include 2022-01-22 UFC 270 loss to Jack Della Maddalena (saved UTC/native 2022-01-23), October 2022 win over Mike Jackson and 2024 loss to Themba Gorimbo. Graphical Win tiles are misleading; dated UFC.com narratives supply outcomes.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/pete-rodriguez",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2022-01-22",
+          "opponent": "Jack Della Maddalena",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0669231ebe3dd560",
+          "nativeBoutId": "61640",
+          "nativeFighterId": "1088"
+        },
+        {
+          "date": "2022-10-15",
+          "opponent": "Mike Jackson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/84b04e8d6b251c54",
+          "nativeBoutId": "61211",
+          "nativeFighterId": "1088"
+        },
+        {
+          "date": "2024-02-03",
+          "opponent": "Themba Gorimbo",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/4cff9aeef3ac75c1",
+          "nativeBoutId": "59859",
+          "nativeFighterId": "1088"
+        }
+      ]
+    },
+    "rayanne-dos-santos": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Rayanne dos Santos",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/02bb48869eb7ac8f",
+      "officialFighterUrl": "https://www.ufc.com/athlete/rayanne-dos-santos",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Full dated official UFC.com biographies and results crossmatched to immutable pinned Greco UFCStats fighter/fight/event IDs and original saved UFCalendar numeric native bout IDs, paired corners, outcomes and measured rounds; explicitly exclude independently sourced Contender Series. No paid provider requests or cached original data writes."
+      },
+      "verifiedNumericFighterIds": [
+        "2802"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Exhaustive three official UFC fight career through 2026-11-14: exactly three independent UFCStats-derived fight URLs matched to corresponding cached numeric paired corners, original result and full measured rounds. Official UFC.com dated narratives confirm three Octagon unanimous/split decision losses despite graphical Win tiles. 2022-08-23 DWCS loss to Denise Gomes (native 84128) is an independently evidenced non-UFC feeder, excluded. 2023-12-09 and 2025-05-31 US event dates can be one day earlier than saved UTC cache.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/rayanne-dos-santos",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84128",
+          "date": "2022-08-23",
+          "opponent": "Denise Gomes",
+          "result": "loss",
+          "event": "Dana White's Contender Series 51",
+          "officialSourceUrl": "https://www.ufc.com/athlete/rayanne-dos-santos",
+          "excludedBecause": "UFC.com athlete chronology attests Dana White's Contender Series bout, not official UFC Octagon career"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2023-12-09",
+          "opponent": "Talita Alencar",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/acde7c89bd724af8",
+          "nativeBoutId": "59947",
+          "nativeFighterId": "2802"
+        },
+        {
+          "date": "2024-06-08",
+          "opponent": "Puja Tomar",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b20640f9b2634de1",
+          "nativeBoutId": "61040",
+          "nativeFighterId": "2802"
+        },
+        {
+          "date": "2025-05-31",
+          "opponent": "Alice Ardelean",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/73240bea13ed5e71",
+          "nativeBoutId": "38405",
+          "nativeFighterId": "2802"
+        }
+      ]
+    },
+    "charlie-campbell": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Charlie Campbell",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/b39f7a6c2be17ee8",
+      "officialFighterUrl": "https://www.ufc.com/athlete/charlie-campbell",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Full dated official UFC.com biographies and results crossmatched to immutable pinned Greco UFCStats fighter/fight/event IDs and original saved UFCalendar numeric native bout IDs, paired corners, outcomes and measured rounds; explicitly exclude independently sourced Contender Series. No paid provider requests or cached original data writes."
+      },
+      "verifiedNumericFighterIds": [
+        "212"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Exhaustive three official UFC fight career through 2026-11-14: exactly three independent UFCStats-derived fight URLs matched to corresponding cached numeric paired corners, original result and full measured rounds. Three official Octagon bouts: Alex Reyes and Trevor Peek wins, Tom Nolan submission loss; official UFC.com dated narratives prevail over erroneous graphical Win tiles. 2022-08-02 DWCS loss to Chris Duncan (native 88248) excluded. The pinned Greco listing duplicates Alex Reyes vs Charlie Campbell under two event-title aliases but they reference SAME fight URL 58b2fdad7af9be02 and native 60051; count once. UFC Perth event US date 2025-09-27, cached local date 2025-09-28.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/charlie-campbell",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88248",
+          "date": "2022-08-02",
+          "opponent": "Chris Duncan",
+          "result": "loss",
+          "event": "Dana White's Contender Series 48",
+          "officialSourceUrl": "https://www.ufc.com/athlete/charlie-campbell",
+          "excludedBecause": "UFC.com athlete chronology attests Dana White's Contender Series bout, not official UFC Octagon career"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2023-09-16",
+          "opponent": "Alex Reyes",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/58b2fdad7af9be02",
+          "nativeBoutId": "60051",
+          "nativeFighterId": "212"
+        },
+        {
+          "date": "2024-04-06",
+          "opponent": "Trevor Peek",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/47f8812a335b6ce9",
+          "nativeBoutId": "61253",
+          "nativeFighterId": "212"
+        },
+        {
+          "date": "2025-09-27",
+          "opponent": "Tom Nolan",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8abad36b4c5e4070",
+          "nativeBoutId": "38213",
+          "nativeFighterId": "212"
+        }
+      ]
     }
   }
 }
