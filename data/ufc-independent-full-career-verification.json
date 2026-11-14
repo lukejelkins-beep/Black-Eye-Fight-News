@@ -26808,6 +26808,207 @@
           "nativeFighterId": "550"
         }
       ]
+    },
+    "felipe-lima": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Felipe Lima",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/9256f591b30c073e",
+      "officialFighterUrl": "https://www.ufc.com/athlete/felipe-lima",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived historical CSV, not live UFCStats scrape",
+        "method": "Complete official UFC.com dated athlete biographies and official result pages, pinned Greco UFCStats-derived independent historical source fighter/fight/event identities, original native numeric IDs/corners/outcomes, date ±1d and measured rounds, excluding non-UFC fights and future bookings."
+      },
+      "verifiedNumericFighterIds": [
+        "2840"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Complete official UFC.com dated biography: 2024-06-22 Muhammad Naimov submission win, 2024-12-14 Miles Johns decision win, 2025-06-28 Payton Talbott decision loss, 2026-09-05 Morgan Charriere decision win. Graphical Win badges do not override official dated loss.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/felipe-lima",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2024-06-22",
+          "opponent": "Muhammad Naimov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8bd5f20f49434c65",
+          "nativeBoutId": "38812",
+          "nativeFighterId": "2840"
+        },
+        {
+          "date": "2024-12-14",
+          "opponent": "Miles Johns",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/cf258c17234d649e",
+          "nativeBoutId": "60377",
+          "nativeFighterId": "2840"
+        },
+        {
+          "date": "2025-06-28",
+          "opponent": "Payton Talbott",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f6a3c78f15ff26c7",
+          "nativeBoutId": "60264",
+          "nativeFighterId": "2840"
+        },
+        {
+          "date": "2026-09-05",
+          "opponent": "Morgan Charriere",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ad17c34e0cc7d702",
+          "nativeBoutId": "83387",
+          "nativeFighterId": "2840"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    },
+    "matheus-camilo": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Matheus Camilo",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/72f890c5d421e705",
+      "officialFighterUrl": "https://www.ufc.com/athlete/matheus-camilo",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived historical CSV, not live UFCStats scrape",
+        "method": "Complete official UFC.com dated athlete biographies and official result pages, pinned Greco UFCStats-derived independent historical source fighter/fight/event identities, original native numeric IDs/corners/outcomes, date ±1d and measured rounds, excluding non-UFC fights and future bookings."
+      },
+      "verifiedNumericFighterIds": [
+        "304"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "UFC.com complete dated biography confirms 2025-05-17 Gabe Green submission loss, 2025-11-15 Viacheslav Borshchev decision win, 2026-06-27 Nazim Sadykhov TKO win, 2026-10-10 Jai Herbert decision loss. Independent UFC Baku scorecard matches Sadykhov stoppage. Earlier Dana White Lookin for a Fight is not an official completed Octagon result.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/matheus-camilo",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da",
+        "https://www.ufc.com/news/ufc-fight-night-fiziev-vs-torres-official-scorecards-judges"
+      ],
+      "bouts": [
+        {
+          "date": "2025-05-17",
+          "opponent": "Gabe Green",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a9a6cca4bbf7a5db",
+          "nativeBoutId": "60845",
+          "nativeFighterId": "304"
+        },
+        {
+          "date": "2025-11-15",
+          "opponent": "Viacheslav Borshchev",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1a5378e32e8519ef",
+          "nativeBoutId": "38208",
+          "nativeFighterId": "304"
+        },
+        {
+          "date": "2026-06-27",
+          "opponent": "Nazim Sadykhov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/809814f03ff3140c",
+          "nativeBoutId": "66369",
+          "nativeFighterId": "304"
+        },
+        {
+          "date": "2026-10-10",
+          "opponent": "Jai Herbert",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/295339c08c80a3cf",
+          "nativeBoutId": "93197",
+          "nativeFighterId": "304"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    },
+    "gaston-bolanos": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Gaston Bolanos",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/96924b0019b3aff1",
+      "officialFighterUrl": "https://www.ufc.com/athlete/gaston-bolanos",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived historical CSV, not live UFCStats scrape",
+        "method": "Complete official UFC.com dated athlete biographies and official result pages, pinned Greco UFCStats-derived independent historical source fighter/fight/event identities, original native numeric IDs/corners/outcomes, date ±1d and measured rounds, excluding non-UFC fights and future bookings."
+      },
+      "verifiedNumericFighterIds": [
+        "2826"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "Full official UFC.com dated biography: 2023-04-15 Aaron Phillips win, 2024-01-13 Marcus McGhee loss, 2024-11-09 Cortavious Romious decision win, 2025-05-03 Quang Le submission loss and 2026-06-20 Michael Aswell Jr. decision win. UFC graphical Win badges for losses are misleading; dated narrative, UFC scorecards and exact native winners are authoritative.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/gaston-bolanos",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2023-04-15",
+          "opponent": "Aaron Phillips",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/119559fd8124fee3",
+          "nativeBoutId": "53850",
+          "nativeFighterId": "2826"
+        },
+        {
+          "date": "2024-01-13",
+          "opponent": "Marcus McGhee",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/03de7404decde12f",
+          "nativeBoutId": "59920",
+          "nativeFighterId": "2826"
+        },
+        {
+          "date": "2024-11-09",
+          "opponent": "Cortavious Romious",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e6685759ed2af90d",
+          "nativeBoutId": "65825",
+          "nativeFighterId": "2826"
+        },
+        {
+          "date": "2025-05-03",
+          "opponent": "Quang Le",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/97b32ff27fd457a8",
+          "nativeBoutId": "60800",
+          "nativeFighterId": "2826"
+        },
+        {
+          "date": "2026-06-20",
+          "opponent": "Michael Aswell Jr.",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8b809ba1880aded0",
+          "nativeBoutId": "66452",
+          "nativeFighterId": "2826"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
     }
   }
 }
