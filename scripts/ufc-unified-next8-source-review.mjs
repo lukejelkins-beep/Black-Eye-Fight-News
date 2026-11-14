@@ -60,6 +60,7 @@ const [fighters,events,results]=await Promise.all([
  fetchCsv('ufc_fight_results',3500000)
 ]);
 const dateByEvent=new Map(events.map(x=>[x.EVENT,day(x.DATE)]));
+console.log('BEFN_NEXT8_SOURCE_DIAG '+JSON.stringify({events:events.length,results:results.length,firstResult:results[0],firstEvent:events[0],firstFighter:fighters[0],parsedFirstDate:day(events[0]?.DATE),eventMatches:results.filter(x=>dateByEvent.get(x.EVENT)).length}));
 const source=results.flatMap(r=>{
  const names=String(r.BOUT||'').split(/\s+vs\.?\s+/i);
  const outs=String(r.OUTCOME||'').split('/');
