@@ -152,6 +152,19 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     fights=archive?.fights||{},profiles=research?.profiles||{};
   const officialSourceInventory=auditOfficialCareerInventory(
     officialInventory,approved,census,profiles,bouts);
+  const officialSourceWinnerLedger=progress?.ufcOfficialSourceDateChecks||{};
+  const officialSourceWinnerPages=progress?.ufcOfficialSourceDatePages||{};
+  const officialSourceNonWinnerLedger=progress?.ufcOfficialSourceNonWinnerChecks||{};
+  const sourceRows=(obj,type)=>Object.entries(obj).filter(([k,v])=>
+    typeof k==='string'&&v&&typeof v==='object').map(([k,v])=>({
+      key:k,type,status:v.status||'unrecorded',checkedAt:v.checkedAt||null,
+      nativeId:numId(v.nativeId),reason:v.reason||null,
+      retryAfter:v.retryAfter||null
+    }));
+  const officialSourceRecoveryReview=[
+    ...sourceRows(officialSourceWinnerLedger,'winner_date_search'),
+    ...sourceRows(officialSourceNonWinnerLedger,'nonwinner_event_card')];
+  const statusCount=(rows,status)=>rows.filter(r=>r.status===status).length;
   const titlesByDate=new Map();
   for(const bout of Object.values(bouts)){
     if(bout?.org!=='ufc'||!date(bout.eventDate)||!bout.event)continue;
@@ -603,6 +616,17 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     sourceInventoryMissingSavedUfcBouts:officialSourceInventory.sourceMissingSaved,
     sourceInventorySavedResultContradictions:officialSourceInventory.conflicts.length,
     sourceInventoryMissingBoutsLaterThanRosterLatest:officialSourceInventory.sourceNewerThanRoster,
+    sourceWinnerDateSearchLinked:statusCount(officialSourceRecoveryReview.filter(r=>r.type==='winner_date_search'),'linked'),
+    sourceWinnerDateSearchNotFound:statusCount(officialSourceRecoveryReview.filter(r=>r.type==='winner_date_search'),'not_found'),
+    sourceWinnerDateSearchManualReview:statusCount(officialSourceRecoveryReview.filter(r=>r.type==='winner_date_search'),'manual_review'),
+    sourceWinnerDateSearchNonWinnerExcluded:statusCount(officialSourceRecoveryReview.filter(r=>r.type==='winner_date_search'),'non_winner_api_not_applicable'),
+    sourceWinnerDateSearchRetry:statusCount(officialSourceRecoveryReview.filter(r=>r.type==='winner_date_search'),'retry'),
+    sourceWinnerDateSearchDateWindowsExhausted:Object.values(officialSourceWinnerPages).filter(x=>x?.status==='done').length,
+    sourceWinnerDateSearchDateWindowsPartial:Object.values(officialSourceWinnerPages).filter(x=>x?.status==='partial').length,
+    sourceNonWinnerEventCardsLinked:statusCount(officialSourceRecoveryReview.filter(r=>r.type==='nonwinner_event_card'),'linked'),
+    sourceNonWinnerEventCardsNotFound:statusCount(officialSourceRecoveryReview.filter(r=>r.type==='nonwinner_event_card'),'not_found'),
+    sourceNonWinnerEventCardsManualReview:statusCount(officialSourceRecoveryReview.filter(r=>r.type==='nonwinner_event_card'),'manual_review'),
+    sourceNonWinnerEventCardsRetry:statusCount(officialSourceRecoveryReview.filter(r=>r.type==='nonwinner_event_card'),'retry'),
     sourceConfirmedIncompleteCareerHistories:sourceConfirmedIncompleteCareers,
     sourceConfirmedMinimumMissingHistoricalUfcBouts:sourceConfirmedMinimumMissingUfcBouts,
     independentlyVerifiedFullCareerTimelines:independentCertified,
@@ -718,6 +742,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     }),
     profilesWithKnownRoundGaps:cohorts.filter(c=>c.missingMeasuredFightIds.length>0),
     careerVerificationDecisions,rosterLastBoutSourceGaps,officialSourceInventory,
+    officialSourceRecoveryReview,
     fullFightIndexSearchReview:searchedApproved.filter(row=>row.status&&
       row.status!=='checked').map(row=>({
         slug:row.slug,status:row.status,scannedRows:row.scannedRows||0,
@@ -747,6 +772,17 @@ export function markdownReport(report){
    sourceInventoryMissingSavedUfcBouts:'Official UFC bouts missing from saved fighter history, regardless of current native fight-ID coverage',
    sourceInventorySavedResultContradictions:'Saved UFC result disagrees with independent official fighter history',
    sourceInventoryMissingBoutsLaterThanRosterLatest:'Official UFC fights later than the last-UFC activity date in the approved snapshot',
+   sourceWinnerDateSearchLinked:'Official biography win/loss fights recovered using bounded UFC event-date searches',
+   sourceWinnerDateSearchNotFound:'Official biography win/loss fights not found in exhausted provider event-date searches',
+   sourceWinnerDateSearchManualReview:'Official biography win/loss date-search results blocked by identity/manual review',
+   sourceWinnerDateSearchNonWinnerExcluded:'Official biography draws/NCs correctly excluded from winner-only search',
+   sourceWinnerDateSearchRetry:'Official biography win/loss searches in provider retry cooldown',
+   sourceWinnerDateSearchDateWindowsExhausted:'Official-bio UFC event-date search windows exhausted and permanently cached',
+   sourceWinnerDateSearchDateWindowsPartial:'Official-bio UFC date searches with saved next-page cursor',
+   sourceNonWinnerEventCardsLinked:'Official biography UFC no-contest/draw fights recovered by event-card lookup',
+   sourceNonWinnerEventCardsNotFound:'Official biography UFC NC/draw not found in historic UFC event cards',
+   sourceNonWinnerEventCardsManualReview:'UFC source NC/draw identity/outcome mismatches awaiting review',
+   sourceNonWinnerEventCardsRetry:'UFC source NC/draw event-card queries waiting on provider retry',
    sourceConfirmedIncompleteCareerHistories:'Independent UFC source confirms missing saved historical fights',
    sourceConfirmedMinimumMissingHistoricalUfcBouts:'Minimum confirmed historical UFC fights still absent from saved approved careers',
    independentlyVerifiedFullCareerTimelines:'UFC careers independently reconciled against complete external official records',
