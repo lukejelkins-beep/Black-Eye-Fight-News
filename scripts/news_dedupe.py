@@ -72,7 +72,7 @@ NAMED_PROMOTIONS=('ufc','pfl','rizin','ksw','bellator','bkfc','cage warriors')
 
 def named_promotions(title):
     text=str(title or '').lower()
-    return {p for p in NAMED_PROMOTIONS if re.search(r'\\b'+re.escape(p)+r'\\b',text)}
+    return {p for p in NAMED_PROMOTIONS if re.search(r'\b'+re.escape(p)+r'\b',text)}
 
 def same_event(a,b):
     kind=event_kind(a.get('title',''))
@@ -124,15 +124,15 @@ def matching_return_signing(a,b):
     This is intentionally not a generic "signs" alias for extensions.
     """
     x,y=str(a.get('title') or ''),str(b.get('title') or '')
-    resigned=lambda t: bool(re.search(r'\\bre-signs?\\b',t,re.I))
+    resigned=lambda t: bool(re.search(r'\bre-signs?\b',t,re.I))
     after_split=lambda t: bool(re.search(
-        r'\\bsigns?\\b.{0,100}\\bafter\\b.{0,70}\\b(?:split|hiatus|absence|departure)\\b',t,re.I))
+        r'\bsigns?\b.{0,100}\bafter\b.{0,70}\b(?:split|hiatus|absence|departure)\b',t,re.I))
     if not ((resigned(x) and after_split(y)) or (resigned(y) and after_split(x))):return False
     # Exclude unconfirmed claims, offers, rejections and unrelated follow-up bouts.
     if headline_stage(x) or headline_stage(y):return False
-    if re.search(r'\\b(?:booked|scheduled|set to face|fight announced|to face)\\b',x+' '+y,re.I):
+    if re.search(r'\b(?:booked|scheduled|set to face|fight announced|to face)\b',x+' '+y,re.I):
         return False
-    roles=r'\\b(?:commentary|commentator|announcer|broadcast|analyst|coach|pundit)\\b'
+    roles=r'\b(?:commentary|commentator|announcer|broadcast|analyst|coach|pundit)\b'
     if bool(re.search(roles,x,re.I))!=bool(re.search(roles,y,re.I)):return False
     promo_x,promo_y=named_promotions(x),named_promotions(y)
     if not promo_x or promo_x!=promo_y:return False
