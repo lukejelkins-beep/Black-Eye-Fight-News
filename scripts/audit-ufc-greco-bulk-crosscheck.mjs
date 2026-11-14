@@ -117,12 +117,26 @@ export function crosscheckGreco({events,results,approval,research,inventory,comm
   const aliases=new Set([norm(name),norm(entry.fighterName)]);
   if(slug==='bruno-gustavo-da-silva')aliases.add(norm('Bruno Silva'));
   const pool=[...bySource.entries()].filter(([n])=>aliases.has(n)).flatMap(([,rows])=>rows);
+  const officialHistory=(Array.isArray(profiles[slug]?.recentHistory)?
+    profiles[slug].recentHistory:[]).filter(x=>
+      String(x.promotion||x.org||'').toLowerCase()==='ufc')
+    .map(x=>({date:String(x.date||'').slice(0,10),opponent:x.opponent,
+      result:x.result||x.outcome||x.status}));
   const found=expected.map(b=>({date:b.date,opponent:b.opponent,result:b.result,
-   matches:pool.filter(x=>matching(x,b)).map(x=>({date:x.date,fightUrl:x.fightUrl,event:x.event}))}));
+   matches:pool.filter(x=>matching(x,b)).map(x=>({date:x.date,fightUrl:x.fightUrl,event:x.event})),
+   savedMatches:officialHistory.filter(x=>matching(x,b)).length}));
   const missing=found.filter(x=>x.matches.length===0);
   const ambiguous=found.filter(x=>x.matches.length>1);
+  const recovered=found.filter(x=>x.matches.length===1&&x.savedMatches===1);
+  const grecoButNotSaved=found.filter(x=>x.matches.length===1&&x.savedMatches===0);
+  const duplicateSaved=found.filter(x=>x.savedMatches>1);
   priority.push({slug,sourceInventoryCount:expected.length,grecoMatched:found.length-missing.length-ambiguous.length,
    missingCount:missing.length,ambiguousCount:ambiguous.length,missing,ambiguous,
+   exactOfficialAndGrecoBoutsAlreadySaved:recovered.length,
+   sourceBackedBoutsStillMissingFromSaved:grecoButNotSaved.length,
+   sourceBackedUnsavedBouts:grecoButNotSaved.map(x=>({date:x.date,
+     opponent:x.opponent,result:x.result,fightUrl:x.matches[0].fightUrl})),
+   duplicateSavedSourceBouts:duplicateSaved.length,
    matched:found.filter(x=>x.matches.length===1).map(x=>({...x,matches:x.matches[0]})),
    independentCareerCertified:false,
    note:'Official UFC athlete inventory matched to independent historical CSV, NOT yet proof that canonical UFCalendar history contains the bouts.'});
@@ -134,6 +148,9 @@ export function crosscheckGreco({events,results,approval,research,inventory,comm
    sourceInventoryBouts:priority.reduce((n,p)=>n+p.sourceInventoryCount,0),
    sourceInventoryExactMatches:priority.reduce((n,p)=>n+p.grecoMatched,0),
    sourceInventoryUnmatched:priority.reduce((n,p)=>n+p.missingCount,0),
+   sourceInventoryAlreadySaved:priority.reduce((n,p)=>n+p.exactOfficialAndGrecoBoutsAlreadySaved,0),
+   sourceInventoryStillMissingFromSaved:priority.reduce((n,p)=>n+p.sourceBackedBoutsStillMissingFromSaved,0),
+   sourceInventoryDuplicatedInSaved:priority.reduce((n,p)=>n+p.duplicateSavedSourceBouts,0),
    certifiedFightersByThisCrosscheck:0};
  return {schema:1,scope:'ufc-greco-bulk-crosscheck',snapshotAsOf:asOf,
   sourceRepository:'https://github.com/'+repo,sourceCommit:commit,
