@@ -1,0 +1,148 @@
+{
+  "schema": 1,
+  "scope": "ufc-wave12-source-native-reconciliation",
+  "asOf": "2026-11-14",
+  "sourceRun": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43579430949",
+  "certificationGranted": false,
+  "summary": {
+    "candidates": 6,
+    "sourceConflicts": 0,
+    "officialBoutAppearances": 12,
+    "extraSavedUfcLabeled": 2
+  },
+  "fighters": [
+    {
+      "slug": "pedro-falcao",
+      "officialBouts": [
+        {
+          "date": "2024-04-06",
+          "result": "loss",
+          "boutId": "61257",
+          "fighterId": "2846",
+          "opponentId": "2847"
+        },
+        {
+          "date": "2025-04-05",
+          "result": "loss",
+          "boutId": "60305",
+          "fighterId": "2846",
+          "opponentId": "82"
+        }
+      ],
+      "extra": {
+        "date": "2021-10-19",
+        "opponent": "James Barnes",
+        "result": "win",
+        "boutId": "83903"
+      },
+      "blocker": "independently establish DWCS/feeder scope of extra saved UFC-labeled row before strict gate"
+    },
+    {
+      "slug": "roberto-romero",
+      "officialBouts": [
+        {
+          "date": "2024-11-16",
+          "result": "loss",
+          "boutId": "60388",
+          "fighterId": "2859",
+          "opponentId": "409"
+        },
+        {
+          "date": "2025-04-26",
+          "result": "loss",
+          "boutId": "60886",
+          "fighterId": "2859",
+          "opponentId": "289"
+        }
+      ],
+      "blocker": "strict independent Stage3 gate still required"
+    },
+    {
+      "slug": "rodrigo-sezinando",
+      "officialBouts": [
+        {
+          "date": "2025-09-13",
+          "result": "loss",
+          "boutId": "38234",
+          "fighterId": "142",
+          "opponentId": "132"
+        },
+        {
+          "date": "2026-10-31",
+          "result": "win",
+          "boutId": "93263",
+          "fighterId": "142",
+          "opponentId": "12302"
+        }
+      ],
+      "blocker": "strict independent Stage3 gate still required"
+    },
+    {
+      "slug": "saygid-izagakhmaev",
+      "officialBouts": [
+        {
+          "date": "2025-11-22",
+          "result": "loss",
+          "boutId": "60411",
+          "fighterId": "376",
+          "opponentId": "292"
+        },
+        {
+          "date": "2026-07-25",
+          "result": "loss",
+          "boutId": "83100",
+          "fighterId": "376",
+          "opponentId": "4287"
+        }
+      ],
+      "blocker": "strict independent Stage3 gate still required"
+    },
+    {
+      "slug": "shanelle-dyer",
+      "officialBouts": [
+        {
+          "date": "2026-03-21",
+          "result": "win",
+          "boutId": "60571",
+          "fighterId": "512",
+          "opponentId": "145"
+        },
+        {
+          "date": "2026-08-22",
+          "result": "win",
+          "boutId": "82994",
+          "fighterId": "512",
+          "opponentId": "1223"
+        }
+      ],
+      "extra": {
+        "date": "2025-09-09",
+        "opponent": "Carol Foro",
+        "result": "loss",
+        "boutId": "83913"
+      },
+      "blocker": "independently establish DWCS/feeder scope of extra saved UFC-labeled row before strict gate"
+    },
+    {
+      "slug": "shem-rock",
+      "officialBouts": [
+        {
+          "date": "2025-11-22",
+          "result": "loss",
+          "boutId": "60416",
+          "fighterId": "369",
+          "opponentId": "372"
+        },
+        {
+          "date": "2026-03-21",
+          "result": "loss",
+          "boutId": "60570",
+          "fighterId": "369",
+          "opponentId": "526"
+        }
+      ],
+      "blocker": "strict independent Stage3 gate still required"
+    }
+  ],
+  "note": "Read-only exact values from successful pinned Greco source crosswalk CI; no attestation of exhaustive career or statistics coverage. Reuse official UFC athlete evidence and original source URLs in existing wave12 review before certification."
+}
