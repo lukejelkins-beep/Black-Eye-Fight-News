@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "purpose": "UFC-only statistics exclusion, retain full professional-MMA history",
-  "reviewedOn": "2026-11-14",
+  "reviewedOn": "2026-11-15",
   "basis": "Explicit UFC athlete/event records confirming DWCS appearance, not inferred from weekday or provider org slug",
   "bouts": [
     {
@@ -1069,6 +1069,36 @@
       "event": "Dana White's Contender Series 79",
       "sourceUrl": "https://www.ufc.com/athlete/ryan-gandra",
       "reviewNote": "Official UFC.com dated biography independently identifies this DWCS feeder. Retain native corners/outcome and exclude from UFC Octagon certification."
+    },
+    {
+      "boutId": "88249",
+      "fighterSlug": "shannon-ross",
+      "date": "2022-08-02",
+      "opponent": "Vinicius Salvador",
+      "result": "loss",
+      "event": "Dana White's Contender Series Season 6 Week 2",
+      "sourceUrl": "https://www.ufc.com/news/season-6-week-2-results-dana-whites-contender-series",
+      "reviewNote": "Primary UFC.com independently records Vinicius Salvador R2 TKO win; original UFCalendar fighter history row has UFC-labelled native ID 88249, excluded from Octagon-only history, never counted as a fourth official UFC result."
+    },
+    {
+      "boutId": "88238",
+      "fighterSlug": "aj-dobson",
+      "date": "2021-09-21",
+      "opponent": "Hashem Arkhagha",
+      "result": "win",
+      "event": "Dana White's Contender Series Season 5 Week 4",
+      "sourceUrl": "https://www.ufc.com/athlete/aj-dobson",
+      "reviewNote": "Official UFC.com dated career source attests DWCS rear-naked-choke win; original UFCalendar fighter history native ID 88238 remains feeder-only, not an official UFC Octagon bout."
+    },
+    {
+      "boutId": "83891",
+      "fighterSlug": "anton-turkalj",
+      "date": "2022-07-26",
+      "opponent": "Acácio dos Santos",
+      "result": "win",
+      "event": "Dana White's Contender Series Season 6 Week 1",
+      "sourceUrl": "https://www.ufc.com/athlete/anton-turkalj",
+      "reviewNote": "Official UFC.com dated biography independently lists DWCS decision victory vs Acacio dos Santos. Original native provider history ID 83891 excluded from official UFC Octagon count."
     }
   ]
 }
