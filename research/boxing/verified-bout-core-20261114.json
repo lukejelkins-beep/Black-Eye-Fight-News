@@ -52,12 +52,28 @@
         "Ezra Taylor": "Bradley Rea"
       },
       "source_counted_as": "one professional bout; fight result and round-by-round punches independently reconciled"
+    },
+    {
+      "report_id": 16989,
+      "date": "2026-11-13",
+      "source_url": "https://beta.compuboxdata.com/round-stats/16989",
+      "result_header": "TSENDBAATAR ERDENEBAT UD 10 MUHAMMAD YAQUBOV",
+      "winner": "Tsendbaatar Erdenebat",
+      "loser": "Muhammad Yaqubov",
+      "method": "UD",
+      "rounds": 10,
+      "opponent_display": {
+        "Tsendbaatar Erdenebat": "Muhammad Yaqubov",
+        "Muhammad Yaqubov": "Tsendbaatar Erdenebat"
+      },
+      "source_counted_as": "One recent verified individual bout; opponent has ambiguous possible full-name variant pending identity resolution."
     }
   ],
   "guardrails": [
     "Do not infer a fighter's career record from any of these bouts alone.",
     "Alias William Hutchinson = Willy Hutchinson documented by BoxRec (boxer ID 811747).",
     "This curated file lists initial verified results for ranked cohort boxers only; punches remain in separate per-report cache.",
-    "Comprehensive recent-five, recent-ten and career totals cannot be inferred from this evidence sample."
+    "Comprehensive recent-five, recent-ten and career totals cannot be inferred from this evidence sample.",
+    "Muhammad Yaqubov in CompuBox report 16989 must not be merged with ranking alias Muhammadkhuja Yaqubov without identity evidence."
   ]
 }
