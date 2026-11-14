@@ -33,6 +33,8 @@ jobs:
           node --test tests/test-ufc-greco-bulk-crosscheck.mjs
           node --test tests/test-ufc-36-month-stage3-progress.mjs
       - name: Exercise pinned public Greco bulk evidence source
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           BEFN_GRECO_FORCE=1 node scripts/audit-ufc-greco-bulk-crosscheck.mjs
           node -e 'const r=require("./qa/ufc-greco-bulk-crosscheck.json"); if(r.summary.sourceInventoryExactMatches<24||r.summary.sourceInventoryUnmatched>0)process.exit(1); console.log("Greco source-confirmed pilot",JSON.stringify(r.summary))'
