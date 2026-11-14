@@ -6,6 +6,7 @@ import {
   rankPositions, confirmedCareerHigh
 } from './sumo-data.mjs';
 import { careerGraphs } from './sumo-career.mjs';
+import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, techniqueText } from './sumo-matchup.mjs';
 
 const ROOT = document.querySelector('#sumo-main');
 const tabs = [...document.querySelectorAll('[data-page]')];
@@ -13,7 +14,7 @@ const DIVS = ['Makuuchi','Juryo','Makushita'];
 const STATE = {
   roster: null, details: null, careerHistory: null, officialStyles: null, photoIndex: null, error: null, query: '', division: 'All',
   visible: 24, bashoDivision: 'Makuuchi', banzukeDivision: 'Makuuchi',
-  day: null, profileLimit: 5
+  day: null, profileLimit: 5, h2hOldestFirst: false
 };
 const TERMS = [
   {term:'Yorikiri',label:'Frontal force-out',detail:'The wrestler drives the opponent out while holding the mawashi (belt).'},
@@ -104,28 +105,42 @@ function movementMarkup(w) {
   return '<span class="sumo-move '+clazz+'" title="'+e(m.label+detail)+'"><span aria-hidden="true">'+symbol+'</span> '+e(m.status==='up'||m.status==='down'?m.places+' places':m.status==='new'?'NEW':m.status==='same'?'0':'—')+'</span>';
 }
 function headToHeadFor(a,b) {
-  const extras=details()?.featuredExtras||[];
-  for(const x of extras){
-    const id=Number(x.id), other=Number(x.headToHead?.opponentId), source=x.headToHead?.record;
-    if(source?.status!=='available' || !source.data)continue;
-    if(id===Number(a)&&other===Number(b)){
-      const trusted={...source.data,rikishiId:id,opponentId:other};
-      return verifiedHeadToHead(trusted,id,other);
-    }
-    if(id===Number(b)&&other===Number(a)){
-      const trusted={...source.data,rikishiId:id,opponentId:other};
-      const inverted=verifiedHeadToHead(trusted,id,other);
-      return inverted?{wins:inverted.losses,losses:inverted.wins,total:inverted.total,source:inverted.source}:null;
-    }
-  }
-  return null;
+  return h2hHistory(details(),a,b);
+}
+function headToHeadUrl(a,b) {
+  return '#headtohead/'+Number(a)+'/'+Number(b);
+}
+function historyRowsMarkup(h2h,a,b,limit=5,reverse=false) {
+  if(!h2h)return '<p class="missing">Full head-to-head history has not been sourced for this pairing.</p>';
+  const rows=reverse?[...h2h.rows].reverse():h2h.rows;
+  if(!rows.length)return '<p class="missing">No individually sourced historical bouts are cached for this pairing.</p>';
+  return '<ol class="sumo-h2h-timeline">'+rows.slice(0,limit).map(m=>{
+    const winner=wrestler(m.winnerId)?.shikonaEn||(m.winnerId===Number(a)?(wrestler(a)?.shikonaEn||'First rikishi'):(wrestler(b)?.shikonaEn||'Second rikishi'));
+    const firstWon=m.winnerId===Number(a);
+    return '<li class="sumo-h2h-bout"><span class="sumo-h2h-date">'+e(bashoLabel(m.bashoId))+' · Day '+e(m.day)+'</span>'+
+      '<span class="sumo-h2h-winner '+(firstWon?'won':'lost')+'">WINNER · '+e(winner)+'</span>'+
+      '<span class="sumo-h2h-technique">'+e(techniqueText(m.kimarite))+'</span></li>';
+  }).join('')+'</ol>';
+}
+function headToHeadPreview(a,b,h2h) {
+  const link=headToHeadUrl(a,b);
+  if(!h2h)return '<div class="sumo-h2h-preview"><p class="sumo-h2h-unavailable">Historical meetings not yet collected for this pair.</p>'+
+    '<a class="sumo-h2h-link" href="'+link+'">MATCHUP DETAILS ↗</a></div>';
+  return '<div class="sumo-h2h-preview"><div class="sumo-h2h-title">LAST '+Math.min(5,h2h.rows.length)+' HEAD-TO-HEAD RESULTS</div>'+
+    historyRowsMarkup(h2h,a,b,5)+
+    '<a class="sumo-h2h-link" href="'+link+'">VIEW ALL '+h2h.total+' MEETINGS ↗</a>'+
+    (!h2h.complete?'<p class="footnote">Only '+h2h.rows.length+' bout details cached; the individual history is incomplete.</p>':'')+
+    '</div>';
 }
 function bioLine(w){
   if(!w)return '<span class="sumo-bio-line">Stats not available</span>';
-  const measurements=weightHeight(w);
+  const measurements=weightHeight(w),age=ageInJapan(w.birthDate),stats=detailStats(w);
+  const career=Number.isInteger(stats?.totalWins)&&Number.isInteger(stats?.totalLosses)
+    ?stats.totalWins+'–'+stats.totalLosses:'not yet sourced';
   return '<span class="sumo-bio-line"><b>'+e(w.currentRank||'Unranked')+'</b></span>'+
     '<span class="sumo-bio-line">Peak: '+e(knownHigh(w)||'not yet verified')+'</span>'+
-    '<span class="sumo-bio-line">'+e(measurements.h)+' · '+e(measurements.mass)+'</span>';
+    '<span class="sumo-bio-line">'+e(measurements.h)+' · '+e(measurements.mass)+(age===null?'':' · Age '+age)+'</span>'+
+    '<span class="sumo-bio-line">Career W–L: '+e(career)+'</span>';
 }
 function fighterOnCard(w,id,label) {
   const name=w?.shikonaEn||label||'Opponent';
@@ -144,7 +159,8 @@ function matchupCard(match) {
     '<div class="sumo-versus">VS</div>'+
     fighterOnCard(b,match.opponentId,match.opponent)+'</div>'+
     '<div class="sumo-match-footer"><span class="sumo-h2h">ALL-TIME H2H: <strong>'+e(h2h?h2h.wins+'–'+h2h.losses:'not yet sourced')+'</strong></span>'+
-    '<span>'+e(isFinished?'Winner: '+winner+' · '+(match.kimarite||'Technique unavailable'):'Pairing listed in API · awaiting official result')+'</span></div></article>';
+    '<span>'+e(isFinished?'Winner: '+winner+' · '+techniqueText(match.kimarite):'Pairing listed in API · awaiting official result')+'</span></div>'+
+    headToHeadPreview(match.rikishiId,match.opponentId,h2h)+'</article>';
 }
 function opponentBoutCard(w,rec,i,div){
   const status=String(rec?.result||'').toLowerCase();
@@ -157,7 +173,7 @@ function opponentBoutCard(w,rec,i,div){
   const clazz=status==='win'?'win':status==='loss'?'loss':'pending';
   return '<article class="sumo-result-card"><div class="sumo-result-top"><span>'+e(day)+'</span><span class="outcome '+clazz+'">'+result+'</span></div>'+
     fighterOnCard(other,id,name)+
-    '<div class="sumo-result-extra"><span>H2H '+e(h2h?h2h.wins+'–'+h2h.losses:'not yet sourced')+'</span><span>'+e(rec?.kimarite||'No kimarite recorded')+'</span></div></article>';
+    '<div class="sumo-result-extra"><a href="'+headToHeadUrl(w.sourceId,id)+'">H2H '+e(h2h?h2h.wins+'–'+h2h.losses:'not yet sourced')+' ↗</a><span>'+e(techniqueText(rec?.kimarite))+'</span></div></article>';
 }
 
 function ranks() {
@@ -309,8 +325,8 @@ function profileResults(w, limit) {
     return '<article class="sumo-result-card"><div class="sumo-result-top"><span>'+e(bashoLabel(x.bashoId))+' · '+
       e(x.day?'Day '+x.day:'Bout '+(x.boutSequence||'—'))+'</span><span class="outcome '+e(x.outcome)+'">'+e(x.outcome.toUpperCase())+'</span></div>'+
       fighterOnCard(opponent,x.opponentId,x.opponent)+
-      '<div class="sumo-result-extra"><span>ALL-TIME H2H '+e(h2h?h2h.wins+'–'+h2h.losses:'not yet sourced')+'</span>'+
-      '<span>'+e(x.isFusen?'Forfeit':x.kimarite||'Kimarite not supplied')+'</span></div></article>';
+      '<div class="sumo-result-extra"><a href="'+headToHeadUrl(w.sourceId,x.opponentId)+'">ALL-TIME H2H '+e(h2h?h2h.wins+'–'+h2h.losses:'not yet sourced')+' ↗</a>'+
+      '<span>'+e(techniqueText(x.kimarite))+'</span></div></article>';
   }).join('')+'</div>'+
   (matches.length>limit?'<div class="more-wrap"><button class="btn light" data-profile-limit="'+maxNext+
     '">VIEW LATEST '+Math.min(maxNext,matches.length)+' CACHED BOUTS</button></div>':'')+
@@ -416,6 +432,26 @@ function renderBanzuke() {
     '<p class="footnote">Green ↑ = promotion, red ↓ = demotion, ↔ = unchanged. NEW indicates an entry not present in the previous top-three banzuke, which must not be treated as a verified career debut. Flags refer to the source-recorded birthplace country, not nationality.</p>'+
     sourceFooter();
 }
+function renderHeadToHead(a,b) {
+  const first=wrestler(a),second=wrestler(b);
+  if(!first||!second)return '<a class="back-link" href="#basho">← BASHO CENTRE</a>'+
+    note('This matchup includes a rikishi outside the currently tracked three-division profiles.');
+  const history=headToHeadFor(a,b);
+  return '<a class="back-link" href="#basho">← BASHO CENTRE</a>'+
+    heading('Rikishi versus rikishi','Career head-to-head')+
+    '<div class="sumo-h2h-hero"><div>'+fighterOnCard(first,a,first.shikonaEn)+'</div>'+
+    '<div class="sumo-h2h-score"><span>CAREER SERIES</span><strong>'+e(history?history.wins+'–'+history.losses:'NOT YET SOURCED')+'</strong>'+
+    '<small>'+e(history?history.total+' career meetings':'Awaiting pair-specific history')+'</small></div>'+
+    '<div>'+fighterOnCard(second,b,second.shikonaEn)+'</div></div>'+
+    heading('Source-recorded bouts','Every historical meeting')+
+    '<p class="section-intro">Each result shows the basho, day, winner and kimarite (winning technique) when recorded. Fusen forfeits are labelled separately. The sequence defaults to most recent first.</p>'+
+    (history?'<div class="sumo-h2h-order"><button type="button" data-h2h-order="newest" class="'+(!STATE.h2hOldestFirst?'active':'')+'">Newest first</button>'+
+      '<button type="button" data-h2h-order="oldest" class="'+(STATE.h2hOldestFirst?'active':'')+'">Oldest first</button></div>'+
+      historyRowsMarkup(history,a,b,Number.MAX_SAFE_INTEGER,STATE.h2hOldestFirst)+
+      (!history.complete?note('The API reports '+history.total+' meetings, but only '+history.rows.length+' individual matches are cached. The chronology is incomplete.'):note('All '+history.total+' source-reported meetings are represented in this cached response. JSA cross-check remains pending.')):
+      note('The all-time series and individual results have not yet been collected for this pair. No win/loss totals are inferred from the current tournament.'))+
+    sourceFooter();
+}
 function getAnnouncedTorikumi(div,day){
   const next=Number(details().announcedDay);
   const item=details().torikumi?.[div];
@@ -425,17 +461,24 @@ function daysPanel(d,data) {
   const completedDay=lastCompletedBashoDay(data);
   const upcoming=Number(details().announcedDay);
   const scheduled=getAnnouncedTorikumi(d,upcoming);
-  const defaultDay=scheduled&&upcoming>=1&&upcoming<=15?upcoming:Math.max(1,completedDay);
+  const today=bashoDayForDate(new Date(),details().basho?.data?.startDate);
+  const tomorrow=nextDayForBasho(new Date(),details().basho?.data?.startDate);
+  const defaultDay=tomorrow||(scheduled&&upcoming>=1&&upcoming<=15?upcoming:Math.max(1,completedDay));
   const day=STATE.day===null?defaultDay:Math.min(15,Math.max(1,STATE.day));
   const pairings=verifiedDayMatchups(data,getAnnouncedTorikumi(d,day),{
     bashoId:details().bashoId,division:d,day
   });
   const pending=pairings.filter(x=>!x.finished).length;
   return '<p class="section-intro">Completed results come from the source banzuke. Upcoming pairings appear only when the separate day-specific torikumi list has been fetched. Cards show wrestler flags, ranks, height, weight and sourced all-time head-to-head records when available.</p>'+
+    '<div class="sumo-day-quick">'+
+      (today>=1&&today<=15?'<button type="button" data-day="'+today+'">TODAY · DAY '+today+'</button>':'')+
+      (tomorrow?'<button type="button" data-day="'+tomorrow+'" class="'+(day===tomorrow?'active':'')+'">TOMORROW · DAY '+tomorrow+'</button>':'')+
+      '<span>Dates follow Japan Standard Time (JST)</span></div>'+
     '<div class="day-select" role="group" aria-label="Basho calendar day">'+
     Array.from({length:15},(_,i)=>'<button type="button" data-day="'+(i+1)+'" class="'+(day===i+1?'active':'')+
       '" aria-pressed="'+(day===i+1)+'">'+(i+1)+'</button>').join('')+'</div>'+
     (d==='Makushita'?note('Makushita rikishi generally fight seven times across 15 tournament days. Days without recorded matches are not counted as losses or injury absences.'):'')+
+    (day===tomorrow&&!getAnnouncedTorikumi(d,day)?'<p class="sumo-schedule-source">Tomorrow’s Day '+day+' torikumi has not been captured in this snapshot. No opponents will be guessed; this preview is not live.</p>':'')+
     (day===upcoming&&scheduled?'<p class="sumo-schedule-source">Day '+day+' pairings sourced from the tournament torikumi announcement · snapshot, not live.</p>':'')+
     '<div class="sumo-match-list">'+(pairings.length?pairings.map(matchupCard).join(''):
       '<p class="sumo-empty-bout">No completed results or confirmed upcoming torikumi are cached for this day. Future opponents are not inferred from incomplete banzuke slots.</p>')+'</div>'+
@@ -479,6 +522,7 @@ function render() {
   switch(page) {
     case 'rikishi': ROOT.innerHTML=renderDirectory();break;
     case 'profile': ROOT.innerHTML=renderProfile(id);break;
+    case 'headtohead': ROOT.innerHTML=renderHeadToHead(id,hash.split('/')[2]);break;
     case 'banzuke': ROOT.innerHTML=renderBanzuke();break;
     case 'basho': ROOT.innerHTML=renderBasho();break;
     case 'kimarite': ROOT.innerHTML=renderKimarite();break;
@@ -500,7 +544,7 @@ document.addEventListener('input',ev=>{
   }
 });
 document.addEventListener('click',ev=>{
-  const el=ev.target.closest?.('[data-directory-division],[data-more-rikishi],[data-banzuke-division],[data-basho-division],[data-day],[data-profile-limit]');
+  const el=ev.target.closest?.('[data-directory-division],[data-more-rikishi],[data-banzuke-division],[data-basho-division],[data-day],[data-profile-limit],[data-h2h-order]');
   if(!el) return;
   if(el.dataset.directoryDivision){STATE.division=el.dataset.directoryDivision;STATE.visible=24;refreshDir();}
   if(el.hasAttribute('data-more-rikishi')){STATE.visible+=24;refreshDir();}
@@ -508,8 +552,9 @@ document.addEventListener('click',ev=>{
   if(el.dataset.bashoDivision){STATE.bashoDivision=el.dataset.bashoDivision;STATE.day=null;render();}
   if(el.dataset.day){STATE.day=Number(el.dataset.day);render();}
   if(el.dataset.profileLimit){STATE.profileLimit=Number(el.dataset.profileLimit);render();}
+  if(el.dataset.h2hOrder){STATE.h2hOldestFirst=el.dataset.h2hOrder==='oldest';render();}
 });
-window.addEventListener('hashchange',()=>{STATE.profileLimit=5;render();window.scrollTo({top:0,behavior:'instant'});});
+window.addEventListener('hashchange',()=>{STATE.profileLimit=5;STATE.h2hOldestFirst=false;render();window.scrollTo({top:0,behavior:'instant'});});
 async function loadJson(url){
   const response=await fetch(url,{cache:'no-cache'});
   if(!response.ok)throw new Error('Cached Sumo data returned HTTP '+response.status);
