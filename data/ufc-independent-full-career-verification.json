@@ -24800,6 +24800,139 @@
           "excludedBecause": "Official UFC biography confirms separate DWCS feeder bout; saved provider UFC-labelled history must not add it to complete Octagon career"
         }
       ]
+    },
+    "yousri-belgaroui": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Yousri Belgaroui",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/7674b836ce0698a0",
+      "officialFighterUrl": "https://www.ufc.com/athlete/yousri-belgaroui",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived historical CSV, not direct live UFCStats scrape",
+        "method": "Complete official UFC.com dated athlete narrative matched to independently pinned UFCStats-derived fighter/fight/event IDs, saved native fighter/opponent IDs, outcomes and measured rounds with ±1 day tolerance. Feeder and uncompleted bouts excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "137"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Official UFC athlete biography independently documents three completed Octagon KO/TKO wins, 18 Oct 2025 through 12 Sep 2026; two earlier DWCS results are feeder bouts, cancelled Gastelum booking and announced 14 Nov Borralho fight are not completed results in the frozen 14 Nov 2026 cohort.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/yousri-belgaroui",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-10-18",
+          "opponent": "Azamat Bekoev",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/87ac0e5face106b4",
+          "nativeBoutId": "38153",
+          "nativeFighterId": "137"
+        },
+        {
+          "date": "2026-03-28",
+          "opponent": "Mansur Abdul-Malik",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e32dc26b11d1f81d",
+          "nativeBoutId": "60627",
+          "nativeFighterId": "137"
+        },
+        {
+          "date": "2026-09-12",
+          "opponent": "Djorden Santos",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9a0e77ecd1b7f04e",
+          "nativeBoutId": "83821",
+          "nativeFighterId": "137"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84165",
+          "date": "2023-08-29",
+          "opponent": "Marco Tulio",
+          "result": "loss",
+          "event": "Dana White's Contender Series 60",
+          "officialSourceUrl": "https://www.ufc.com/athlete/yousri-belgaroui",
+          "excludedBecause": "UFC.com athlete biography explicitly records this DWCS feeder bout separately from ordinary UFC Octagon career."
+        },
+        {
+          "nativeBoutId": "88274",
+          "date": "2024-09-10",
+          "opponent": "Taiga Iwasaki",
+          "result": "win",
+          "event": "Dana White's Contender Series 71",
+          "officialSourceUrl": "https://www.ufc.com/athlete/yousri-belgaroui",
+          "excludedBecause": "UFC.com athlete biography explicitly records this DWCS feeder bout separately from ordinary UFC Octagon career."
+        }
+      ]
+    },
+    "nyamjargal-tumendemberel": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Nyamjargal Tumendemberel",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/17cb6d8e8187f304",
+      "officialFighterUrl": "https://www.ufc.com/athlete/nyamjargal-tumendemberel",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived historical CSV, not direct live UFCStats scrape",
+        "method": "Complete official UFC.com dated athlete narrative matched to independently pinned UFCStats-derived fighter/fight/event IDs, saved native fighter/opponent IDs, outcomes and measured rounds with ±1 day tolerance. Feeder and uncompleted bouts excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "144"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Official UFC athlete narrative confirms completed UFC Fight Night loss to Carlos Hernandez and UFC 326 decision win over Cody Durden; its separate Road to UFC 22 Aug 2025 semifinal with Terrance Saeteurn and earlier Road to UFC contests are feeder results, not ordinary UFC Octagon bouts. Frozen 14 Nov 2026 cohort.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/nyamjargal-tumendemberel",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2024-11-23",
+          "opponent": "Carlos Hernandez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5dab54e34c2cfe01",
+          "nativeBoutId": "38594",
+          "nativeFighterId": "144"
+        },
+        {
+          "date": "2026-03-07",
+          "opponent": "Cody Durden",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f661ef429055f8c1",
+          "nativeBoutId": "60694",
+          "nativeFighterId": "144"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "60901",
+          "date": "2025-08-22",
+          "opponent": "Terrance Saeteurn",
+          "result": "win",
+          "event": "Road to UFC Season 4 Semifinals",
+          "officialSourceUrl": "https://www.ufc.com/athlete/nyamjargal-tumendemberel",
+          "excludedBecause": "UFC.com athlete biography explicitly records this Road to UFC feeder bout separately from ordinary UFC Octagon career."
+        }
+      ]
     }
   }
 }
