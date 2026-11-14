@@ -86,7 +86,16 @@ def links_from_front():
         if ident in seen:
             continue
         seen.add(ident)
-        label = " ".join(link.parent.stripped_strings) if link.parent else ""
+        label = ""
+        for ancestor in list(link.parents)[:6]:
+            candidate = " ".join(ancestor.stripped_strings)
+            if len(candidate) <= 260 and re.search(r"\bvs\.?\b", candidate, re.I):
+                label = candidate
+                break
+        if not label:
+            previous = link.find_previous(string=re.compile(r"\bvs\.?\b", re.I))
+            if previous and len(str(previous).strip()) <= 140:
+                label = str(previous).strip()
         pairs.append((ident, label[:160]))
     return pairs
 
@@ -255,7 +264,12 @@ def main():
         points = sum(bool(key and key in norm(label)) for key in roster)
         ranked.append((ident, label, points))
     ranked.sort(key=lambda x: (-x[2], -x[0]))
-    queued = seeds + [(x, label) for x, label, _ in ranked]
+    findings["discovery"] = [{"report_id": rid, "label": label[:100], "roster_alias_hits": hits}
+                              for rid, label, hits in ranked[:22]]
+    # Only prioritise confirmed roster-name matches on the public index.
+    # Known test seeds are retained to check parser stability. Don't collect
+    # unrelated bouts simply because they are recent.
+    queued = seeds + [(x, label) for x, label, hits in ranked if hits > 0]
     seen, attempts = set(), 0
     for ident, label in queued:
         if ident in seen:
