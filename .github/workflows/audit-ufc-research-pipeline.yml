@@ -17,6 +17,8 @@ on:
       - 'tests/test-ufc-unified-next-two-official-source-review.mjs'
       - 'tests/test-ufc-unified-wave3-evidence.mjs'
       - 'tests/test-ufc-unified-wave4-evidence.mjs'
+      - 'tests/test-ufc-unified-wave5-evidence.mjs'
+      - 'tests/test-ufc-unified-mandel-evidence.mjs'
       - 'data/ufc-unified-next-two-official-source-review-20261114.json'
       - 'scripts/ufc-reconcile-stage3-v4-certifications.mjs'
       - 'scripts/diagnose-ufc-v4-stage3-blockers.mjs'
@@ -80,6 +82,8 @@ jobs:
           node --test tests/test-ufc-unified-next-two-official-source-review.mjs
           node --test tests/test-ufc-unified-wave3-evidence.mjs
           node --test tests/test-ufc-unified-wave4-evidence.mjs
+          node --test tests/test-ufc-unified-wave5-evidence.mjs
+          node --test tests/test-ufc-unified-mandel-evidence.mjs
           node --test tests/test-ufc-v4-stage3-import.mjs
           node --test tests/test-ufc-36-month-stage3-progress.mjs
           node scripts/ufc-36-month-stage3-progress.mjs
@@ -100,10 +104,6 @@ jobs:
         if: github.event_name == 'pull_request'
         continue-on-error: true
         run: node scripts/ufc-unified-wave6-source-review.mjs
-      - name: Mandel Nallo independent two-bout pinned Greco/native reconciliation (research-only)
-        if: github.event_name == 'pull_request'
-        continue-on-error: true
-        run: node scripts/ufc-unified-mandel-source-review.mjs
       - name: Save report
         if: always()
         uses: actions/upload-artifact@v4
@@ -120,6 +120,5 @@ jobs:
             qa/ufc-v4-stage3-blocker-diagnostics.json
             qa/ufc-unified-next8b-source-review.json
             qa/ufc-unified-wave6-source-review.json
-            qa/ufc-unified-mandel-source-review.json
           retention-days: 14
           if-no-files-found: warn
