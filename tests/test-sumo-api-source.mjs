@@ -37,12 +37,12 @@ test('rikishi list validates authoritative ID and name', async () => {
 });
 test('invalid IDs, arbitrary division, invalid tournament and basho day fail closed', async () => {
   const { client, urls } = mockApi();
-  await assert.rejects(client.stats('../admin'), /Invalid sumo rikishi ID/);
-  await assert.rejects(client.basho('202612'), /Invalid basho ID/);
-  await assert.rejects(client.banzuke('202611', 'random'), /Invalid sumo division/);
-  await assert.rejects(client.torikumi('202611', 'Makuuchi', 16), /Invalid basho day/);
-  await assert.rejects(client.listRikishi({ limit: 5000 }), /limit must be/);
-  await assert.rejects(client.kimariteBouts('../../../etc'), /Invalid kimarite/);
+  assert.throws(() => client.stats('../admin'), /Invalid sumo rikishi ID/);
+  assert.throws(() => client.basho('202612'), /Invalid basho ID/);
+  assert.throws(() => client.banzuke('202611', 'random'), /Invalid sumo division/);
+  assert.throws(() => client.torikumi('202611', 'Makuuchi', 16), /Invalid basho day/);
+  assert.throws(() => client.listRikishi({ limit: 5000 }), /limit must be/);
+  assert.throws(() => client.kimariteBouts('../../../etc'), /Invalid kimarite/);
   assert.equal(urls.length, 0);
 });
 test('collector paginates and certifies exact total without truncation', async () => {
