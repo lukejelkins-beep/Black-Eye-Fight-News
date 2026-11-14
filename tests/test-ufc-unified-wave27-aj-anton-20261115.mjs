@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';import{readFileSync}from'node:fs';
 const read=p=>JSON.parse(readFileSync(new URL('../data/'+p,import.meta.url),'utf8'));
-const roster=read('ufc-36-month-roster-approval.json'),reg=read('ufc-independent-full-career-verification.json'),cache=read('ufcalendar-rich-progress.json'),research=read('ufcalendar-fighter-research.json'),feeder=read('ufc-feeder-bout-evidence.json'),src=read('data/ufc-unified-wave27-aj-dobson-anton-turkalj-20261115.json');
+const roster=read('ufc-36-month-roster-approval.json'),reg=read('ufc-independent-full-career-verification.json'),cache=read('ufcalendar-rich-progress.json'),research=read('ufcalendar-fighter-research.json'),feeder=read('ufc-feeder-bout-evidence.json'),src=read('ufc-unified-wave27-aj-dobson-anton-turkalj-20261115.json');
 test('wave27 exactly eight independently pinned Greco UFCStats results match native both corners, dates, winners and measured rounds',()=>{
  assert.equal(roster.approvedFighters.length,783);assert.equal(new Set(roster.approvedFighters).size,783);
  assert.deepEqual(Object.keys(src.fighters).sort(),['aj-dobson','anton-turkalj']);
