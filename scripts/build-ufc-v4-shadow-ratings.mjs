@@ -208,6 +208,9 @@ export function buildShadowRatings(approval,foundation,postfight,{asOf}={}){
  const allRows=listBySlug(postfight),fighters={},
   summary={approved:783,fullyKnownCareerMatched:0,scoredLast5:0,
    scoredLast10:0,scoredCareer:0,insufficientSamples:0,
+   fewerThanThreeOfficialUfcBouts:0,
+   atLeastThreeOfficialUfcBoutsUnrated:0,
+   officialUfcHistoryLengthBands:{"0":0,"1":0,"2":0,"3plus":0},
    excludedHistoryDiscrepancies:0,historicalCareersCertified:0};
  for(const slug of approval.approvedFighters){
   const f=foundation.fighters?.[slug];
@@ -215,6 +218,10 @@ export function buildShadowRatings(approval,foundation,postfight,{asOf}={}){
   const rows=allRows.get(slug)||[];
   const matched=rows.length===f.knownCareerBouts&&
    f.windows?.career?.linkedMeasuredBouts===f.knownCareerBouts;
+  const band=f.knownCareerBouts>=3?"3plus":String(f.knownCareerBouts);
+  if(Object.hasOwn(summary.officialUfcHistoryLengthBands,band))
+   summary.officialUfcHistoryLengthBands[band]++;
+  if(f.knownCareerBouts<3)summary.fewerThanThreeOfficialUfcBouts++;
   if(matched)summary.fullyKnownCareerMatched++;
   else summary.excludedHistoryDiscrepancies++;
   if(f.ufcTimelineCertified||f.independentlyCertifiedCareer)summary.historicalCareersCertified++;
@@ -227,7 +234,10 @@ export function buildShadowRatings(approval,foundation,postfight,{asOf}={}){
    if(valid.overall!==null)summary[label==="knownCareer"?"scoredCareer":
     label==="last5"?"scoredLast5":"scoredLast10"]++;
   }
-  if(windows.last5.overall===null)summary.insufficientSamples++;
+  if(windows.last5.overall===null){
+   summary.insufficientSamples++;
+   if(f.knownCareerBouts>=3)summary.atLeastThreeOfficialUfcBoutsUnrated++;
+  }
   fighters[slug]={name:f.name,slug,fullCareerCertified:!!(f.ufcTimelineCertified||
    f.independentlyCertifiedCareer),
    knownCareerBouts:f.knownCareerBouts,windows};
