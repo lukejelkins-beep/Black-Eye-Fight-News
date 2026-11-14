@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "scope": "Research-only official tournament result and parser exception register; never full-career certification",
+  "cohortSize": 190,
+  "capturedProfiles": 66,
+  "pendingProfiles": 124,
+  "historicalTournamentsCompared": 3855,
+  "historicalTournamentsDisagree": 1,
+  "historicalCases": [
+    242
+  ],
+  "profileReviewCases": 6,
+  "cases": [
+    {
+      "sourceId": 242,
+      "name": "Obara",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3610/",
+      "asOf": {
+        "monthYear": "November 2026",
+        "day": 8
+      },
+      "publicProfileStatus": "basic-fields-parsed",
+      "publicFieldDisagreements": [],
+      "tournamentRowsCompared": 66,
+      "tournamentRowsAgreed": 65,
+      "unreconciledTournamentCount": 1,
+      "discrepancies": [
+        {
+          "bashoId": "202207",
+          "official": {
+            "wins": 3,
+            "losses": 3
+          },
+          "apiLedger": {
+            "wins": 4,
+            "losses": 2
+          },
+          "status": "requires-source-investigation",
+          "note": "Do not change historical bout results or grant certification from this comparison."
+        }
+      ],
+      "missingApiTournamentRows": [
+        "201605",
+        "202211"
+      ],
+      "certification": "not-started"
+    },
+    {
+      "sourceId": 29,
+      "name": "Kagayaki",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3255/",
+      "asOf": {
+        "monthYear": "November 2026",
+        "day": 8
+      },
+      "publicProfileStatus": "parse-review",
+      "publicFieldDisagreements": [],
+      "tournamentRowsCompared": 97,
+      "tournamentRowsAgreed": 97,
+      "unreconciledTournamentCount": 0,
+      "discrepancies": [],
+      "missingApiTournamentRows": [],
+      "certification": "not-started"
+    },
+    {
+      "sourceId": 41,
+      "name": "Oho",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3844/",
+      "asOf": {
+        "monthYear": "November 2026",
+        "day": 8
+      },
+      "publicProfileStatus": "parse-review",
+      "publicFieldDisagreements": [],
+      "tournamentRowsCompared": 51,
+      "tournamentRowsAgreed": 51,
+      "unreconciledTournamentCount": 0,
+      "discrepancies": [],
+      "missingApiTournamentRows": [],
+      "certification": "not-started"
+    },
+    {
+      "sourceId": 49,
+      "name": "Shonannoumi",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3553/",
+      "asOf": {
+        "monthYear": "November 2026",
+        "day": 8
+      },
+      "publicProfileStatus": "parse-review",
+      "publicFieldDisagreements": [],
+      "tournamentRowsCompared": 74,
+      "tournamentRowsAgreed": 74,
+      "unreconciledTournamentCount": 0,
+      "discrepancies": [],
+      "missingApiTournamentRows": [],
+      "certification": "not-started"
+    },
+    {
+      "sourceId": 88,
+      "name": "Gojinyu",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4123/",
+      "asOf": {
+        "monthYear": "November 2026",
+        "day": 8
+      },
+      "publicProfileStatus": "parse-review",
+      "publicFieldDisagreements": [],
+      "tournamentRowsCompared": 28,
+      "tournamentRowsAgreed": 28,
+      "unreconciledTournamentCount": 0,
+      "discrepancies": [],
+      "missingApiTournamentRows": [],
+      "certification": "not-started"
+    },
+    {
+      "sourceId": 89,
+      "name": "Nishinoryu",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3914/",
+      "asOf": {
+        "monthYear": "November 2026",
+        "day": 8
+      },
+      "publicProfileStatus": "parse-review",
+      "publicFieldDisagreements": [],
+      "tournamentRowsCompared": 46,
+      "tournamentRowsAgreed": 46,
+      "unreconciledTournamentCount": 0,
+      "discrepancies": [],
+      "missingApiTournamentRows": [],
+      "certification": "not-started"
+    }
+  ],
+  "sourceBashoResultsIndependentlyCertified": 0,
+  "certifiedCareers": 0,
+  "note": "Current partially completed November 2026 basho is excluded by the source reconciler; absence-only tournaments may have no individual bout rows."
+}
