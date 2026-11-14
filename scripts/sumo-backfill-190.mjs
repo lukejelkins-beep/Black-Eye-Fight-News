@@ -46,9 +46,14 @@ export function newCache(r){
     errors:[]
   };
 }
+export function nextStage(doc){
+  return STAGES.find(s=>!doc.stages?.[s]?.complete&&(doc.stages?.[s]?.attempts||0)<3)||null;
+}
 export function stageStatus(doc){
   if(STAGES.every(s=>doc.stages?.[s]?.complete))return 'collected-not-certified';
-  if(STAGES.some(s=>(doc.stages?.[s]?.attempts||0)>=3))return 'exception';
+  // A failing stage must not prevent collection of all the other fields.
+  // Reserve "exception" for a fighter with no more automatically retriable work.
+  if(!nextStage(doc)&&STAGES.some(s=>!doc.stages?.[s]?.complete))return 'exception';
   return 'partial';
 }
 export function endpoint(id,stage,skip=0){
@@ -90,17 +95,22 @@ export function combinePage(doc,stage,result,id){
   if(total!==null&&more===false&&next<total)throw Error('Truncated '+stage+' page');
   if(total!==null&&more===true&&next>=total)throw Error('Inconsistent '+stage+' pagination');
   const existing=doc.data[stage];
-  // The upstream supplies a stable source ID; fall back to the complete raw
-  // object when IDs are absent. Never collapse bouts solely by basho.
-  const key=x=>x.id==null?JSON.stringify(x):String(x.id);
+  // Matches in the API sometimes lack a source ID. The composite bout key
+  // prevents duplicate overlapping pages without treating all same-basho bouts
+  // as one match. Preserve the original payload for subsequent certification.
+  const key=x=>x.id!=null?String(x.id):stage==='matches'?
+    [x.bashoId,x.day,x.matchNo,x.eastId,x.westId].join(':'):JSON.stringify(x);
   const merged=new Map([...existing,...items].map(x=>[key(x),x]));
+  const complete=more===false||(total!==null&&next===total&&more!==true);
+  if(complete&&total!==null&&merged.size!==total){
+    throw Error('Duplicate/missing records in '+stage+': '+merged.size+'/'+total);
+  }
+  // Commit only after every check passes, so an invalid page cannot silently
+  // advance the checkpoint.
   doc.data[stage]=[...merged.values()];
   state.skip=next;
   state.total=total;
-  state.complete=more===false||(total!==null&&next===total&&more!==true);
-  if(state.complete&&total!==null&&doc.data[stage].length!==total){
-    throw Error('Duplicate/missing records in '+stage+': '+doc.data[stage].length+'/'+total);
-  }
+  state.complete=complete;
   state.updatedAt=clock();
   state.attempts=0;
   state.source=endpoint(id,stage,Math.max(0,next-items.length));
@@ -113,7 +123,9 @@ async function fetchApi(url){
     response=await fetch(url,{headers:{'Accept':'application/json, text/plain;q=0.9','User-Agent':'BlackEyeFightNews/1.0 (sumo research; bounded-cache)'},signal:AbortSignal.timeout(TIMEOUT_MS)});
   } catch(err){const e=new Error('Sumo API network error: '+(err?.message||err));e.transient=true;throw e;}
   if(!response.ok){
-    const e=new Error('Sumo API HTTP '+response.status);
+    const errorBody=(await response.text().catch(()=>'')).
+      replace(/[\r\n\t]/g,' ').slice(0,180);
+    const e=new Error('Sumo API HTTP '+response.status+(errorBody?' · '+errorBody:''));
     e.transient=response.status===429||response.status>=500||response.status===408;
     throw e;
   }
@@ -159,6 +171,7 @@ async function summary(roster){
   const counts={pending:0,partial:0,exception:0,collected:0};
   const examples={partial:[],exception:[]};
   let requestsRequired=0,weightSnapshots=0,rankEntries=0,matchEntries=0;
+  const stageTotals=Object.fromEntries(STAGES.map(s=>[s,{completed:0,blocked:0}]));
   for(const w of roster){
     const doc=await readJson(filePath(w.sourceId));
     if(!doc){counts.pending++;requestsRequired+=STAGES.length;continue;}
@@ -166,7 +179,11 @@ async function summary(roster){
     if(state==='collected-not-certified')counts.collected++;
     else if(state==='exception'){counts.exception++;if(examples.exception.length<12)examples.exception.push(w.shikonaEn);}
     else {counts.partial++;if(examples.partial.length<12)examples.partial.push(w.shikonaEn);}
-    requestsRequired+=STAGES.filter(s=>!doc.stages?.[s]?.complete&&(doc.stages?.[s]?.attempts||0)<3).length;
+    for(const stage of STAGES){
+      if(doc.stages?.[stage]?.complete)stageTotals[stage].completed++;
+      else if((doc.stages?.[stage]?.attempts||0)>=3)stageTotals[stage].blocked++;
+      else requestsRequired++;
+    }
     weightSnapshots+=doc.data?.measurements?.length||0;
     rankEntries+=doc.data?.ranks?.length||0;
     matchEntries+=doc.data?.matches?.length||0;
@@ -174,7 +191,7 @@ async function summary(roster){
   return {
     schemaVersion:1,cohortSize:roster.length,scope:'Frozen November 2026 BEFN top-three banzuke roster',
     status:'research-data-only',certified:0,counts,weightSnapshots,rankEntries,matchEntries,
-    outstandingStages:requestsRequired,exceptions:examples.exception,partialExamples:examples.partial,
+    outstandingStages:requestsRequired,stageTotals,exceptions:examples.exception,partialExamples:examples.partial,
     lastCheckedAt:clock(),source:SOURCE,maximumCallsPerScheduledRun:REQUEST_LIMIT,
     note:'Collected means API pagination completed. It does not imply historical accuracy, JSA agreement, official weight confirmation, copyright permission for photos, or certification.'
   };
@@ -191,12 +208,14 @@ async function main(){
   for(const w of roster){
     if(calls>=REQUEST_LIMIT||processed>=MAX_FIGHTERS||stoppedReason)break;
     const doc=await ensureCache(w);
-    if(stageStatus(doc)==='collected-not-certified'||stageStatus(doc)==='exception')continue;
+    if(!nextStage(doc))continue;
     processed++;
     let changed=false;
+    const attemptedThisRun=new Set();
     while(calls<REQUEST_LIMIT){
-      const stage=STAGES.find(s=>!doc.stages[s].complete&&doc.stages[s].attempts<3);
+      const stage=STAGES.find(s=>!attemptedThisRun.has(s)&&!doc.stages[s].complete&&doc.stages[s].attempts<3);
       if(!stage)break;
+      attemptedThisRun.add(stage);
       try {
         await fillStage(doc,stage);
         changed=true;
@@ -210,9 +229,9 @@ async function main(){
         if(!transient)doc.stages[stage].attempts++;
         changed=true;
         if(transient){stoppedReason=detail;break;}
-        // A deterministic error is retried in a later scheduled run, not
-        // repeatedly hammered in this run.
-        break;
+        // An individual failing endpoint no longer blocks other stage
+        // requests. It is retried only in a subsequent scheduled run.
+        continue;
       }
     }
     if(changed){await saveJson(filePath(w.sourceId),doc);touched++;}
