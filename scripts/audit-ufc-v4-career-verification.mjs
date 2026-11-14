@@ -107,8 +107,10 @@ export function auditCareerVerification(approval,foundation,research,progress,
     Boolean(profile.ufcTimeline?.savedHistoryHasAdditionalUfcBouts||
      profile.ufcTimeline?.missingRosterLastUfcFight||
      (profile.ufcHistoryIdConflicts||[]).length);
-  const independentlyCertified=f.independentlyCertifiedCareer===true;
-  const providerCertified=f.ufcTimelineCertified===true;
+  const independentlyCertified=f.independentlyCertifiedCareer===true&&
+    contradictorySavedRows.length===0;
+  const providerCertified=f.ufcTimelineCertified===true&&
+    contradictorySavedRows.length===0;
   const verified=providerCertified||independentlyCertified;
   const noFullSearch=checked.status===undefined;
   const incompleteSearch=checked.status&&checked.status!=="checked";
