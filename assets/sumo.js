@@ -3,7 +3,7 @@ import {
   rankTable, leadingRikishi, currentDay, dailyResults, validMatchSamples, currentBashoMatchSample,
   techniqueDistribution, detailFor, banzukeFor, searchRikishi, snapshotDate,
   originCountry, banzukeMovement, dayMatchups, verifiedHeadToHead, verifiedHighestRank,
-  rankPositions
+  rankPositions, confirmedCareerHigh
 } from './sumo-data.mjs';
 
 const ROOT = document.querySelector('#sumo-main');
@@ -62,10 +62,15 @@ function portraitFor(w,size='sm'){
     '<span aria-hidden="true">相</span></div>';
 }
 function knownHigh(w){
-  const full=details()?.featuredExtras?.find(x=>Number(x.id)===Number(w?.sourceId))?.rikishi;
-  const candidate=full?.status==='available'?verifiedHighestRank(full.data):null;
+  const rich=details()?.featuredExtras?.find(x=>Number(x.id)===Number(w?.sourceId))?.rikishi;
+  const official=rich?.status==='available'?rich.data:null;
   const curated=details()?.careerHighs?.[String(w?.sourceId)];
-  return typeof curated==='string'&&curated.trim() ?curated:candidate;
+  const fromSource=typeof curated==='string'&&curated.trim()?{rank:curated,evidence:'curated-official-source'}:null;
+  const previousRank=movementFor(w).previousRank||null;
+  const careerHigh=fromSource||confirmedCareerHigh({
+    currentRank:w?.currentRank,previousRank,apiDetail:official
+  });
+  return careerHigh?.rank||null;
 }
 function weightHeight(w) {
   const h=Number.isFinite(Number(w?.heightCm))&&Number(w.heightCm)>0?Math.round(Number(w.heightCm))+' cm':'—';
