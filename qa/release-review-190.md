@@ -56,3 +56,9 @@ QA-015 limits initial rendering to 12 event cards and provides Show more. Search
 - QA-015 still requires **real preview mobile/desktop and focus testing** and before/after DOM/runtime measurements. The earlier observed 110,282 Results descendants is a production baseline, not a measured branch improvement.
 - The receiving normal chat could not access its originating connected-browser extension context. Render preview inspection also requires an owner-confirmed workspace. No preview browser pass, deployment, merge, production source edit or screen-reader check was performed here.
 - PR #189's latest inspected changed file list concerned UFC research evidence and scripts, with no overlap with the QA news-dedupe files. Recheck both branches immediately before any integration.
+
+## Current feed and concurrent-main sanity check
+
+- Read-only inspection of `main:data/news-live.json` found **280 articles** and both observed Mike Perry headlines still present, with `sport=mma` and timestamps 2026-11-13T20:02:19+00:00 and 2026-11-13T13:28:00+00:00 (approximately **6.6 hours apart**). The PR does not modify the cached file.
+- A read-only JavaScript candidate scan of the 280 current cached article titles using the narrow return-signing criteria found **one candidate pair**, those same two headlines. This is a focused candidate check, not an end-to-end execution of Python `deduplicate()` over the full news feed or a production editorial acceptance test.
+- `main` advanced **17 commits** relative to original PR #190 base `a25f1fb499c2a3d003b2ac572d8a2483232320d6`. The compared main changes were in feed/data snapshots, including news-live, not in the QA frontend, tests or dedupe source being changed. Recheck the final head and conflicts before integration rather than assuming the original base is current.
