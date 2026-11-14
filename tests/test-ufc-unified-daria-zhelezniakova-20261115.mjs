@@ -60,3 +60,15 @@ test('Daria complete five-fight UFC career keeps exact pinned fight identities a
   assert.equal(rows.length, expected.length);
   assert.equal(evaluateCareerEvidence(profiles[slug], rows, last, roster.rosterAsOf, proof, cache.bouts).independentlyVerified, true);
 });
+
+test('Daria certificate fails closed if a source fight is omitted or its outcome changes', () => {
+  const proof = independent.fighters[slug];
+  const profile = profiles[slug];
+  const history = profile.recentHistory.filter(x => x.promotion === 'ufc' && x.date <= '2026-11-14');
+  const last = candidates.fighters.find(x => x.slug === slug)?.lastUfcFight;
+  const gate = entry => evaluateCareerEvidence(profile, history, last, roster.rosterAsOf, entry, cache.bouts).independentlyVerified;
+  assert.equal(gate({ ...proof, bouts: proof.bouts.slice(1) }), false);
+  assert.equal(gate({ ...proof, bouts: proof.bouts.map(x => x.nativeBoutId === '39002' ? { ...x, result: 'loss' } : x) }), false);
+  assert.equal(gate({ ...proof, verifiedNumericFighterIds: ['999999'] }), false);
+  assert.equal(gate({ ...proof, bouts: proof.bouts.map(x => x.nativeBoutId === '93272' ? { ...x, nativeFighterId: '999999' } : x) }), false);
+});
