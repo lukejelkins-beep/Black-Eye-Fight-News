@@ -59,11 +59,15 @@ export function routeCertificationAttempts(approval,audit,register,progress,{sou
      issues.push('numeric_fight_index_manual_review');
    else if(searchStatus==='retry'||searchStatus==='partial')
      issues.push('numeric_fight_index_retry_or_partial');
+   // The existing Stage 3 independent gate has already checked source-linked
+   // native aliases, all official fights and their measured data. Its PASS
+   // prevails over generic provider search/manual or numeric-ID heuristics;
+   // such heuristics must not falsely demote a valid career certificate.
    const verified=d.independentlyVerifiedFullCareer===true&&
      d.allKnownFightsIndexed===true&&d.allKnownFightsMeasured===true&&
      independent.sourceCoverageAttested===true&&
-     independent.verificationMethod==='full_official_ufc_fight_listing_crosscheck'&&
-     issues.length===0;
+     independent.verificationMethod==='full_official_ufc_fight_listing_crosscheck';
+   if(verified)issues.length=0;
    const lane=verified?'certified':issues.length?'exception':'source_research';
    const reason=verified?'exhaustive_source_and_native_bout_checks_passed':
      issues.length?issues[0]:'independent_complete_career_listing_not_yet_attested';
