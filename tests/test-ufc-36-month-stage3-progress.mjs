@@ -193,3 +193,23 @@ test('A single metric does not imply complete statistics; all-known indexing doe
  assert.equal(x.distinctIndexedFightsWithPairedKnockdowns,1);
  assert.equal(x.missingKnownFightIdsInRecentFive,0);
 });
+
+test('UFCalendar DWCS exclusion evidence is unique, precisely identified and primary-sourced',()=>{
+ const raw=JSON.parse(readFileSync(new URL('../data/ufc-feeder-bout-evidence.json',
+                                       import.meta.url),'utf8'));
+ assert.equal(raw.schema,1);
+ assert.ok(raw.bouts.length>=16);
+ const ids=raw.bouts.map(r=>r.boutId);
+ assert.equal(new Set(ids).size,ids.length,'A native bout ID cannot be excluded twice');
+ const added=['88222','84039','83878','88218','88200','83916','84037',
+              '83838','84160','83876','88209','84138','83973'];
+ for(const id of added)assert.ok(ids.includes(id),'Missing researched DWCS bout '+id);
+ for(const row of raw.bouts){
+   assert.match(row.boutId,/^[1-9][0-9]{0,11}$/);
+   assert.match(row.fighterSlug,/^[a-z0-9][a-z0-9-]+$/);
+   assert.match(row.date,/^\d{4}-\d{2}-\d{2}$/);
+   assert.ok(row.opponent?.trim());
+   assert.ok(row.event?.includes('Contender Series'));
+   assert.ok(row.sourceUrl?.startsWith('https://www.ufc.com/'));
+ }
+});
