@@ -69,8 +69,9 @@ jobs:
           node --check scripts/sumo-jsa-reconcile.mjs
           node --check scripts/sumo-build-profile-cache.mjs
           node --check scripts/sumo-jsa-public-spotcheck.mjs
+          node --check scripts/sumo-weight-history-190.mjs
           node --check scripts/sumo-official-bout-corrections.mjs
-          node --test tests/test-sumo-backfill-190.mjs tests/test-sumo-verify-190.mjs tests/test-sumo-jsa-reconcile.mjs tests/test-sumo-build-profile-cache.mjs tests/test-sumo-jsa-public-spotcheck.mjs tests/test-sumo-official-bout-corrections.mjs
+          node --test tests/test-sumo-backfill-190.mjs tests/test-sumo-verify-190.mjs tests/test-sumo-jsa-reconcile.mjs tests/test-sumo-build-profile-cache.mjs tests/test-sumo-jsa-public-spotcheck.mjs tests/test-sumo-weight-history-190.mjs tests/test-sumo-official-bout-corrections.mjs
       - name: Collect only missing research data
         if: steps.preflight.outputs.run == 'true'
         env:
@@ -94,6 +95,9 @@ jobs:
           SUMO_JSA_REQUESTS_PER_RUN: '6'
           SUMO_JSA_INTERVAL_MS: '2000'
         run: node scripts/sumo-jsa-public-spotcheck.mjs
+      - name: Refresh dated weight-source coverage without external requests
+        if: steps.preflight.outputs.run == 'true'
+        run: node scripts/sumo-weight-history-190.mjs
       - name: Checkpoint cached results on research branch only
         if: steps.preflight.outputs.run == 'true'
         env:
