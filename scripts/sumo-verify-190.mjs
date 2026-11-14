@@ -29,7 +29,7 @@ export function auditRikishi(w,cache){
     if(profile?.currentRank&&w.currentRank&&profile.currentRank!==w.currentRank)warnings.push('current-banzuke-snapshot-drift');
   }
   if(cache.stages?.stats?.complete){
-    if(!stats||Number(stats.rikishi_id)!==id)errors.push('source-career-totals-identity');
+    if(!stats||stats.rikishi_id!=null&&Number(stats.rikishi_id)!==id)errors.push('source-career-totals-identity');
     if(stats?.totalWins!=null&&stats?.totalLosses!=null&&stats?.totalMatches!=null&&
        Number(stats.totalWins)+Number(stats.totalLosses)!==Number(stats.totalMatches))warnings.push('career-total-reconciliation');
   }
@@ -56,12 +56,19 @@ export function auditRikishi(w,cache){
         if(item.eastId!=null&&item.westId!=null&&Number(item.eastId)!==id&&Number(item.westId)!==id)
           errors.push('match-opponent-identity');
       }
-      if(stage==='ranks'&&!banzuke.test(String(item.rank||'')))errors.push('malformed-rank-value');
+      if(stage==='ranks'&&item.rank!=='Mae-zumo'&&!banzuke.test(String(item.rank||'')))errors.push('malformed-rank-value');
       if(stage==='measurements'&&item.weight!=null&&(!Number.isFinite(Number(item.weight))||Number(item.weight)<=0))errors.push('invalid-historical-weight');
       if(stage==='measurements'&&item.height!=null&&(!Number.isFinite(Number(item.height))||Number(item.height)<=0))errors.push('invalid-historical-height');
     }
     if(allComplete&&stage==='ranks'&&!arr.length)errors.push('rank-history-empty');
     if(allComplete&&stage==='matches'&&!arr.length&&Number(stats?.totalMatches)>0)errors.push('match-history-empty');
+  }
+  // Career fights must cover the entire provider-reported fighting record.
+  // The live matches API misleadingly returned total=200 for the first page
+  // of wrestlers with 600–760 career bouts; do not certify those pages.
+  if(cache.stages?.matches?.complete&&stats?.totalMatches!=null&&
+     cache.data?.matches?.length<Number(stats.totalMatches)){
+    errors.push('match-history-shortfall');
   }
   const uniqueErrors=[...new Set(errors)],uniqueWarnings=[...new Set(warnings)];
   const status=!allComplete?'still-collecting':uniqueErrors.length?'source-integrity-exception':'source-collected-needs-independent-verification';
