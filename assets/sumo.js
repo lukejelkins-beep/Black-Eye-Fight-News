@@ -2,7 +2,7 @@ import {
   SOURCE_URL, JSA_URL, DIVISIONS, bashoLabel, divisionOf, recordSummary,
   rankTable, leadingRikishi, currentDay, dailyResults, validMatchSamples, currentBashoMatchSample,
   techniqueDistribution, detailFor, banzukeFor, searchRikishi, snapshotDate,
-  originCountry, banzukeMovement, dayMatchups, verifiedHeadToHead, verifiedHighestRank,
+  originCountry, banzukeMovement, dayMatchups, verifiedDayMatchups, lastCompletedBashoDay, verifiedHeadToHead, verifiedHighestRank,
   rankPositions, confirmedCareerHigh
 } from './sumo-data.mjs';
 import { careerGraphs } from './sumo-career.mjs';
@@ -416,24 +416,35 @@ function renderBanzuke() {
     '<p class="footnote">Green ↑ = promotion, red ↓ = demotion, ↔ = unchanged. NEW indicates an entry not present in the previous top-three banzuke, which must not be treated as a verified career debut. Flags refer to the source-recorded birthplace country, not nationality.</p>'+
     sourceFooter();
 }
+function getAnnouncedTorikumi(div,day){
+  const next=Number(details().announcedDay);
+  const item=details().torikumi?.[div];
+  return day===next && item?.status==='available' ? item.data : null;
+}
 function daysPanel(d,data) {
-  const completedDay=currentDay(data);
-  const day=STATE.day===null?Math.max(1,completedDay):Math.min(15,Math.max(1,STATE.day));
-  const pairings=dayMatchups(data,day);
-  const upcoming=pairings.filter(m=>!m.finished).length;
-  return '<p class="section-intro">Select any tournament day to view source-recorded matches and announced opponents. Each card identifies both rikishi with flags, rank, highest rank (where available), height, weight and verified all-time H2H where cached. Pending bouts are not counted as results.</p>'+
+  const completedDay=lastCompletedBashoDay(data);
+  const upcoming=Number(details().announcedDay);
+  const scheduled=getAnnouncedTorikumi(d,upcoming);
+  const defaultDay=scheduled&&upcoming>=1&&upcoming<=15?upcoming:Math.max(1,completedDay);
+  const day=STATE.day===null?defaultDay:Math.min(15,Math.max(1,STATE.day));
+  const pairings=verifiedDayMatchups(data,getAnnouncedTorikumi(d,day),{
+    bashoId:details().bashoId,division:d,day
+  });
+  const pending=pairings.filter(x=>!x.finished).length;
+  return '<p class="section-intro">Completed results come from the source banzuke. Upcoming pairings appear only when the separate day-specific torikumi list has been fetched. Cards show wrestler flags, ranks, height, weight and sourced all-time head-to-head records when available.</p>'+
     '<div class="day-select" role="group" aria-label="Basho calendar day">'+
     Array.from({length:15},(_,i)=>'<button type="button" data-day="'+(i+1)+'" class="'+(day===i+1?'active':'')+
       '" aria-pressed="'+(day===i+1)+'">'+(i+1)+'</button>').join('')+'</div>'+
     (d==='Makushita'?note('Makushita rikishi generally fight seven times across 15 tournament days. Days without recorded matches are not counted as losses or injury absences.'):'')+
+    (day===upcoming&&scheduled?'<p class="sumo-schedule-source">Day '+day+' pairings sourced from the tournament torikumi announcement · snapshot, not live.</p>':'')+
     '<div class="sumo-match-list">'+(pairings.length?pairings.map(matchupCard).join(''):
-      '<p class="sumo-empty-bout">No completed matches or individually named upcoming opponents are in this API snapshot for day '+day+'. Unannounced bouts are not invented.</p>')+'</div>'+
-    '<p class="footnote">Calendar day '+day+' · '+pairings.length+' source-recorded pairings ('+upcoming+' pending). Head-to-head totals are displayed only when the full pair-specific API response is cached; missing H2H does not mean 0–0. Image placeholders await licensing.</p>';
+      '<p class="sumo-empty-bout">No completed results or confirmed upcoming torikumi are cached for this day. Future opponents are not inferred from incomplete banzuke slots.</p>')+'</div>'+
+    '<p class="footnote">Day '+day+' · '+pairings.length+' individually sourced matchups ('+pending+' scheduled / pending). All-time H2H appears only with a verified pair-specific record. Photo placeholders await licence approval.</p>';
 }
 function renderBasho() {
   const d=STATE.bashoDivision, data=getBanzuke(d), rows=data?leadingRikishi(data,20):[];
   const target=details().basho?.data;
-  const lastday=data?currentDay(data):0;
+  const lastday=data?lastCompletedBashoDay(data):0;
   return '<section class="basho-hero"><div><div class="eyebrow" style="color:#f3c332">GRAND SUMO · SIX TOURNAMENTS EACH YEAR</div>'+
     '<h1>'+e(bashoLabel(details().bashoId))+'</h1><p>'+e(target?.startDate?dateOnly(target.startDate):'Start date unavailable')+' – '+e(target?.endDate?dateOnly(target.endDate):'End date unavailable')+' · Japan · third-party source snapshot</p></div>'+
     '<div><span class="basho-day">'+(lastday?'DAY '+lastday:'—')+'</span><p>'+'LATEST RECORDED DAY'+'</p></div></section>'+
