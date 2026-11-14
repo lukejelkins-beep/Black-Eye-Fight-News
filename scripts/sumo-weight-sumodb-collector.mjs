@@ -72,8 +72,12 @@ export function sourceIdentityEvidence(html,w,raw){
  const head=beforeRecord>=0?plain.slice(0,beforeRecord):plain.slice(0,1300);
  const names=[w?.shikonaEn,raw?.data?.profile?.shikonaEn,
    ...(raw?.data?.shikonas||[]).map(x=>x.shikonaEn)]
-   .filter(x=>typeof x==='string'&&x.trim().length>=4);
- const matching=names.find(x=>head.toLowerCase().includes(x.trim().toLowerCase()))||null;
+   .filter(x=>typeof x==='string'&&x.trim().length>=3);
+ // Whole romanised name tokens, not unsafe substring matches such as
+ // "Ura" inside an unrelated longer wrestler name.
+ const normalizeName=x=>' '+String(x).toLowerCase().replace(/[^a-z]+/g,' ').trim()+' ';
+ const headerNames=normalizeName(head);
+ const matching=names.find(x=>headerNames.includes(normalizeName(x)))||null;
  const rosterDob=w?.birthDate||raw?.data?.profile?.birthDate||null;
  const birth=head.match(/\bBirth\s+Date\s+((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+(?:18|19|20)\d{2})\b/i);
  const publishedDob=birth?.[1]?.replace(/\s+/g,' ')||null;
