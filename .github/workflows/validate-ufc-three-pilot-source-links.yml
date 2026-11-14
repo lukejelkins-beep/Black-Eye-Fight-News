@@ -1,0 +1,31 @@
+name: Validate independently sourced three UFC pilot career links
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'data/ufc-three-pilot-source-linked-evidence.json'
+      - 'scripts/audit-ufc-three-pilot-source-links.mjs'
+      - 'tests/test-ufc-three-pilot-source-links.mjs'
+      - '.github/workflows/validate-ufc-three-pilot-source-links.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-source-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify independent source-links cannot falsely attest complete UFC histories
+        run: node --test tests/test-ufc-three-pilot-source-links.mjs
+      - name: Compare official UFC.com careers and source fight detail URLs to saved native histories
+        run: node scripts/audit-ufc-three-pilot-source-links.mjs
+      - name: Store private-source-review QA artifact without adding source data to production
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-three-pilot-independent-source-link-review
+          path: qa/ufc-three-pilot-source-link-audit.json
+          retention-days: 7
