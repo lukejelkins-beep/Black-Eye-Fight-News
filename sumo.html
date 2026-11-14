@@ -11,7 +11,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/sumo.css?v=20261114-test1">
+  <link rel="stylesheet" href="assets/global-sport-v1.0.3.css?v=103b">
+  <link rel="stylesheet" href="assets/sumo.css?v=20261114-test2">
+  <link rel="stylesheet" href="assets/sumo-nav.css?v=20261114-sumo-preview">
   <script type="module" src="assets/sumo.js?v=20261114-test1"></script>
 </head>
 <body>
@@ -34,15 +36,15 @@
       <a href="sumo.html" class="selected" aria-current="page">Sumo</a>
     </div>
   </nav>
-  <div class="sports" aria-label="Combat sports">
-    <div class="frame sports-inner">
-      <a class="sport-all" href="index.html#home">ALL SPORTS</a>
-      <a class="sport-option" href="index.html#fights" title="Boxing"><b>🥊</b><span>BOXING</span></a>
-      <a class="sport-option" href="index.html#fights" title="MMA"><b>🥋</b><span>MMA</span></a>
-      <a class="sport-option" href="index.html#fights" title="Grappling"><b>🤼</b><span>GRAPPLING</span></a>
-      <span class="sport-option current"><b class="kanji">相</b><span>SUMO</span></span>
+  <section class="befn-global-sports" aria-label="Combat sports">
+    <div class="befn-global-sports-inner">
+      <a class="befn-sport-all" href="index.html#home">ALL SPORTS</a>
+      <a class="befn-sport-option" data-sport-value="boxing" href="index.html#fights" aria-label="Boxing" title="Boxing"><span class="sport-photo-visual" aria-hidden="true"></span></a>
+      <a class="befn-sport-option" data-sport-value="mma" href="index.html#fights" aria-label="MMA" title="MMA"><span class="sport-photo-visual" aria-hidden="true"></span></a>
+      <a class="befn-sport-option" data-sport-value="grappling" href="index.html#fights" aria-label="Grappling and wrestling" title="Grappling and wrestling"><span class="sport-photo-visual" aria-hidden="true"></span></a>
+      <a class="befn-sport-option befn-sumo-link" href="sumo.html" aria-current="page" aria-label="Sumo" title="Sumo"><span aria-hidden="true">相</span></a>
     </div>
-  </div>
+  </section>
   <div class="subnav"><nav class="frame subnav-inner" aria-label="Sumo pages">
     <a href="#home" data-page="home">Overview</a>
     <a href="#rikishi" data-page="rikishi">Rikishi</a>
