@@ -491,3 +491,29 @@ test('Independent UFC minimum-count evidence establishes omissions but never ful
  const invalid=auditApprovedStage3(approval,census,p,r,a,{},{},{},ext);
  assert.equal(invalid.summary.sourceConfirmedIncompleteCareerHistories,0);
 });
+
+test('Recoverable older UFC fights are detected from numeric fighter identities in cache',()=>{
+ const make=(id,date,opponent,event='UFC 100')=>({
+   id:String(id),org:'ufc',status:'completed',event,eventDate:date,
+   a:{name:'Fighter 1',slug:'fighter-1',id:'101'},
+   b:{name:opponent,slug:'other-'+id,id:String(200+Number(id))}
+ });
+ const p={...progress,bouts:{
+   '41':make(41,'2015-01-01','Opponent A'),
+   '42':make(42,'2014-06-01','Opponent B'),
+   '43':make(43,'2014-05-01','Contender','Dana Whites Contender Series')
+ }};
+ const r={profiles:{'fighter-1':{
+   name:'Fighter 1',recentHistory:[history(41,'Opponent A','2015-01-01')]
+ }}};
+ const out=auditApprovedStage3(approval,census,p,r,archive);
+ const summary=out.summary;
+ assert.equal(summary.uniquelyIndexedNativeFightIds,1);
+ assert.equal(summary.uniqueNativeFightIdsAwaitingIndex,0);
+ assert.equal(summary.additionalOfficialUfcFightsRecoverableFromExistingCache,1);
+ assert.equal(summary.fightersWithAdditionalIndexedOfficialUfcFightsMissingFromSavedHistory,1);
+ const candidate=out.cachedCareerHistoryCandidates.find(x=>x.slug==='fighter-1');
+ assert.equal(candidate.numericFighterId,'101');
+ assert.deepEqual(candidate.missingIndexedOfficialUfcFights.map(x=>x.id),['42']);
+ assert.equal(candidate.historicalIdentityConflicts.length,0);
+});
