@@ -80,6 +80,8 @@ jobs:
           node --check scripts/sumo-jsa-reconcile.mjs
           node --check scripts/sumo-build-profile-cache.mjs
           node --check scripts/sumo-audit-h2h-chronology.mjs
+          node --check scripts/sumo-export-preview-h2h.mjs
+          bash -n scripts/sumo-sync-h2h-preview.sh
           node --check scripts/sumo-jsa-public-spotcheck.mjs
           node --check scripts/sumo-weight-history-190.mjs
           node --check scripts/sumo-weight-sumodb-collector.mjs
@@ -105,6 +107,11 @@ jobs:
       - name: Reconstruct every opponent H2H meeting and audit each winning technique
         if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-audit-h2h-chronology.mjs
+      - name: Validate all 190 chronology projections and export efficient preview H2H cache
+        if: steps.preflight.outputs.run == 'true'
+        run: |
+          node --test tests/test-sumo-export-preview-h2h.mjs
+          node scripts/sumo-export-preview-h2h.mjs
       - name: Source-check public JSA profile fields without certifying careers
         if: steps.preflight.outputs.run == 'true'
         env:
@@ -129,7 +136,7 @@ jobs:
           set -euo pipefail
           git config user.name "BEFN Sumo research cache"
           git config user.email "sumo-research@users.noreply.github.com"
-          git add data/sumo/backfill/v1/
+          git add data/sumo/backfill/v1/ data/sumo/exports/
           if git diff --cached --quiet; then
             echo "No missing stages or new records: no commit and no repeated API work."
             exit 0
@@ -146,3 +153,8 @@ jobs:
           done
           echo "Could not push checkpoint without losing another writer's changes." >&2
           exit 1
+
+      - name: Sync approved source-backed H2H preview to isolated test branch only
+        if: steps.preflight.outputs.run == 'true'
+        shell: bash
+        run: bash scripts/sumo-sync-h2h-preview.sh
