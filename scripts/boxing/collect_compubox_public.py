@@ -21,6 +21,7 @@ from bs4 import BeautifulSoup
 
 BASE = "https://beta.compuboxdata.com"
 FALLBACK_BASE = "https://app2.compuboxdata.com"
+ARCHIVE_BASE = "https://api2.compuboxdata.com"
 ROOT = Path("research/boxing/compubox")
 OUT = ROOT / "bouts"
 ROSTER = Path("research/boxing/2026-11-14-cohort-preview.json")
@@ -57,7 +58,7 @@ def norm(value):
 def get(url):
     # Permit only known public CompuBox hosts; never follow cross-site redirects.
     assert urlparse(url).scheme == "https"
-    assert urlparse(url).hostname in {urlparse(BASE).hostname, urlparse(FALLBACK_BASE).hostname}
+    assert urlparse(url).hostname in {urlparse(BASE).hostname, urlparse(FALLBACK_BASE).hostname, urlparse(ARCHIVE_BASE).hostname}
     res = S.get(url, timeout=(10, 25), allow_redirects=False)
     if res.status_code in (301, 302, 303, 307, 308):
         raise ValueError("redirect_not_followed")
@@ -73,7 +74,7 @@ def get_report(report_id):
     try the same public URL on the alternative public CompuBox host.
     """
     problems = []
-    for base in (BASE, FALLBACK_BASE):
+    for base in (BASE, ARCHIVE_BASE, FALLBACK_BASE):
         target = f"{base}/round-stats/{report_id}"
         time.sleep(WAIT_SECONDS)
         try:
@@ -89,11 +90,17 @@ def get_report(report_id):
 
 def load_roster():
     raw = json.loads(ROSTER.read_text())
-    return {
+    names = {
         norm(alias): x["fighter"]
         for x in raw["fighters"]
         for alias in {x["fighter"], *x.get("name_variants", [])}
     }
+    # Independently confirmed identity: birth name William Hutchinson is
+    # boxer Willy Hutchinson, BoxRec boxer ID 811747.
+    # https://boxrec.com/wiki/index.php/Willy_Hutchinson
+    if names.get(norm("Willy Hutchinson")) == "Willy Hutchinson":
+        names[norm("William Hutchinson")] = "Willy Hutchinson"
+    return names
 
 
 def links_from_front():
