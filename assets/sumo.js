@@ -1,14 +1,16 @@
 import {
   SOURCE_URL, JSA_URL, DIVISIONS, bashoLabel, divisionOf, recordSummary,
   rankTable, leadingRikishi, currentDay, dailyResults, validMatchSamples, currentBashoMatchSample,
-  techniqueDistribution, detailFor, banzukeFor, searchRikishi, snapshotDate
+  techniqueDistribution, detailFor, banzukeFor, searchRikishi, snapshotDate,
+  originCountry, banzukeMovement, dayMatchups, verifiedHeadToHead, verifiedHighestRank,
+  rankPositions
 } from './sumo-data.mjs';
 
 const ROOT = document.querySelector('#sumo-main');
 const tabs = [...document.querySelectorAll('[data-page]')];
 const DIVS = ['Makuuchi','Juryo','Makushita'];
 const STATE = {
-  roster: null, details: null, officialStyles: null, error: null, query: '', division: 'All',
+  roster: null, details: null, officialStyles: null, photoIndex: null, error: null, query: '', division: 'All',
   visible: 24, bashoDivision: 'Makuuchi', banzukeDivision: 'Makuuchi',
   day: null, profileLimit: 5
 };
@@ -41,6 +43,117 @@ function richText(text) { return e(text).replace(/\n/g, '<br>'); }
 function imageToken(rank, name, large=false) {
   return '<div class="profile-icon'+(large?' large':'')+'" role="img" aria-label="Illustrated silhouette placeholder; licensed wrestler photograph not available"><span aria-hidden="true">相</span></div>';
 }
+
+function flagMark(w) {
+  const c=originCountry(w?.birthplace);
+  return c?'<span class="sumo-country" title="Birthplace country: '+e(c.name)+'" aria-label="Birthplace country: '+e(c.name)+'"><span class="sumo-country-emoji" aria-hidden="true">'+c.flag+'</span><span class="sumo-country-name">'+e(c.name)+'</span></span>'
+    :'<span class="sumo-country unknown" title="Birthplace country not supplied">🌐 <span class="sumo-country-name">Unspecified origin</span></span>';
+}
+function portraitFor(w,size='sm'){
+  const photo=w && STATE.photoIndex?.[String(w.sourceId)];
+  const valid=photo?.approved===true &&
+    /^assets\/sumo-photos\/[a-zA-Z0-9_-]+\.(webp|png|jpg|jpeg)$/.test(String(photo.path||'')) &&
+    typeof photo.license==='string' && photo.license.trim() &&
+    typeof photo.credit==='string' && photo.credit.trim();
+  const root='class="profile-icon sumo-photo '+e(size)+(valid?' has-photo':'')+'"';
+  const name=w?.shikonaEn||'Unknown rikishi';
+  return '<div '+root+' role="img" aria-label="'+e(valid?'Photograph of '+name:'Illustrated portrait placeholder for '+name)+'">'+
+    (valid?'<img src="'+e(photo.path)+'" alt="" loading="lazy" decoding="async">':'')+
+    '<span aria-hidden="true">相</span></div>';
+}
+function knownHigh(w){
+  const full=details()?.featuredExtras?.find(x=>Number(x.id)===Number(w?.sourceId))?.rikishi;
+  const candidate=full?.status==='available'?verifiedHighestRank(full.data):null;
+  const curated=details()?.careerHighs?.[String(w?.sourceId)];
+  return typeof curated==='string'&&curated.trim() ?curated:candidate;
+}
+function weightHeight(w) {
+  const h=Number.isFinite(Number(w?.heightCm))&&Number(w.heightCm)>0?Math.round(Number(w.heightCm))+' cm':'—';
+  const mass=Number.isFinite(Number(w?.weightKg))&&Number(w.weightKg)>0?Math.round(Number(w.weightKg))+' kg':'—';
+  return {h,mass};
+}
+function previousBanzukeData() {
+  const out={};
+  for(const d of DIVS) {
+    const rec=details()?.previousBanzuke?.[d];
+    if(rec?.status==='available'&&rec.data?.east&&rec.data?.west) out[d]=rec.data;
+  }
+  return out;
+}
+function currentBanzukeData(){
+  return Object.fromEntries(DIVS.map(d=>[d,getBanzuke(d)]));
+}
+let movementCache=new Map();
+function movementFor(w) {
+  const id=Number(w?.sourceId);
+  if(!Number.isSafeInteger(id))return {status:'unavailable',label:'No prior rank'};
+  if(!movementCache.has(id)) movementCache.set(id,banzukeMovement(id,currentBanzukeData(),previousBanzukeData()));
+  return movementCache.get(id);
+}
+function movementMarkup(w) {
+  const m=movementFor(w);
+  const clazz=['up','down','same','new'].includes(m.status)?m.status:'unavailable';
+  const symbol=m.status==='up'?'↑':m.status==='down'?'↓':m.status==='same'?'↔':m.status==='new'?'✦':'—';
+  const detail=m.previousRank?(' · previous: '+m.previousRank):'';
+  return '<span class="sumo-move '+clazz+'" title="'+e(m.label+detail)+'"><span aria-hidden="true">'+symbol+'</span> '+e(m.status==='up'||m.status==='down'?m.places+' places':m.status==='new'?'NEW':m.status==='same'?'0':'—')+'</span>';
+}
+function headToHeadFor(a,b) {
+  const extras=details()?.featuredExtras||[];
+  for(const x of extras){
+    const id=Number(x.id), other=Number(x.headToHead?.opponentId), source=x.headToHead?.record;
+    if(source?.status!=='available' || !source.data)continue;
+    if(id===Number(a)&&other===Number(b)){
+      const trusted={...source.data,rikishiId:id,opponentId:other};
+      return verifiedHeadToHead(trusted,id,other);
+    }
+    if(id===Number(b)&&other===Number(a)){
+      const trusted={...source.data,rikishiId:id,opponentId:other};
+      const inverted=verifiedHeadToHead(trusted,id,other);
+      return inverted?{wins:inverted.losses,losses:inverted.wins,total:inverted.total,source:inverted.source}:null;
+    }
+  }
+  return null;
+}
+function bioLine(w){
+  if(!w)return '<span class="sumo-bio-line">Stats not available</span>';
+  const measurements=weightHeight(w);
+  return '<span class="sumo-bio-line"><b>'+e(w.currentRank||'Unranked')+'</b></span>'+
+    '<span class="sumo-bio-line">Peak: '+e(knownHigh(w)||'not yet verified')+'</span>'+
+    '<span class="sumo-bio-line">'+e(measurements.h)+' · '+e(measurements.mass)+'</span>';
+}
+function fighterOnCard(w,id,label) {
+  const name=w?.shikonaEn||label||'Opponent';
+  const link=w?'<a href="#profile/'+Number(w.sourceId)+'">'+e(name)+'</a>':'<span>'+e(name)+'</span>';
+  return '<div class="sumo-match-person">'+portraitFor(w,'md')+
+    '<div class="sumo-match-identity"><div class="sumo-match-name">'+flagMark(w)+link+'</div>'+bioLine(w)+'</div></div>';
+}
+function matchupCard(match) {
+  const a=wrestler(match.rikishiId),b=wrestler(match.opponentId);
+  const h2h=headToHeadFor(match.rikishiId,match.opponentId);
+  const isFinished=match.finished===true;
+  const outcome=isFinished?'<span class="sumo-match-status completed">RESULT</span>':'<span class="sumo-match-status scheduled">RESULT PENDING</span>';
+  const winner=isFinished?(match.winnerId===match.rikishiId?(a?.shikonaEn||match.rikishi):(b?.shikonaEn||match.opponent)):'';
+  return '<article class="sumo-match-card"><div class="sumo-match-top"><strong>DAY '+e(match.day||'—')+'</strong>'+outcome+'</div>'+
+    '<div class="sumo-match-people">'+fighterOnCard(a,match.rikishiId,match.rikishi)+
+    '<div class="sumo-versus">VS</div>'+
+    fighterOnCard(b,match.opponentId,match.opponent)+'</div>'+
+    '<div class="sumo-match-footer"><span class="sumo-h2h">ALL-TIME H2H: <strong>'+e(h2h?h2h.wins+'–'+h2h.losses:'not yet sourced')+'</strong></span>'+
+    '<span>'+e(isFinished?'Winner: '+winner+' · '+(match.kimarite||'Technique unavailable'):'Pairing listed in API · awaiting official result')+'</span></div></article>';
+}
+function opponentBoutCard(w,rec,i,div){
+  const status=String(rec?.result||'').toLowerCase();
+  const day=div==='Makushita'?'DAY '+(i+1):'DAY '+(i+1);
+  const id=Number(rec?.opponentID);
+  const other=wrestler(id);
+  const name=rec?.opponentShikonaEn||other?.shikonaEn||'Opponent not supplied';
+  const h2h=headToHeadFor(Number(w.sourceId),id);
+  const result=status==='win'?'WIN':status==='loss'?'LOSS':'PENDING';
+  const clazz=status==='win'?'win':status==='loss'?'loss':'pending';
+  return '<article class="sumo-result-card"><div class="sumo-result-top"><span>'+e(day)+'</span><span class="outcome '+clazz+'">'+result+'</span></div>'+
+    fighterOnCard(other,id,name)+
+    '<div class="sumo-result-extra"><span>H2H '+e(h2h?h2h.wins+'–'+h2h.losses:'not yet sourced')+'</span><span>'+e(rec?.kimarite||'No kimarite recorded')+'</span></div></article>';
+}
+
 function ranks() {
   return STATE.roster?.rikishi || [];
 }
