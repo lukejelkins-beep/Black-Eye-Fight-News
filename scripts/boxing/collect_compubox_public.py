@@ -20,6 +20,7 @@ import requests
 from bs4 import BeautifulSoup
 
 BASE = "https://beta.compuboxdata.com"
+FALLBACK_BASE = "https://app2.compuboxdata.com"
 ROOT = Path("research/boxing/compubox")
 OUT = ROOT / "bouts"
 ROSTER = Path("research/boxing/2026-11-14-cohort-preview.json")
@@ -54,8 +55,9 @@ def norm(value):
 
 
 def get(url):
-    # Only requests on the known official hostname. Don't follow to untrusted domains.
-    assert urlparse(url).hostname == urlparse(BASE).hostname
+    # Permit only known public CompuBox hosts; never follow cross-site redirects.
+    assert urlparse(url).scheme == "https"
+    assert urlparse(url).hostname in {urlparse(BASE).hostname, urlparse(FALLBACK_BASE).hostname}
     res = S.get(url, timeout=(10, 25), allow_redirects=False)
     if res.status_code in (301, 302, 303, 307, 308):
         raise ValueError("redirect_not_followed")
@@ -63,6 +65,26 @@ def get(url):
     if len(res.content) > 3_000_000:
         raise ValueError("file_too_large")
     return res
+
+
+def get_report(report_id):
+    """Try documented public report URLs at two official CompuBox hosts.
+    Some older beta URLs redirect to the home page. This is not a bypass:
+    try the same public URL on the alternative public CompuBox host.
+    """
+    problems = []
+    for base in (BASE, FALLBACK_BASE):
+        target = f"{base}/round-stats/{report_id}"
+        time.sleep(WAIT_SECONDS)
+        try:
+            response = get(target)
+            if not response.content.startswith(b"%PDF"):
+                problems.append("not_pdf_" + urlparse(base).hostname)
+                continue
+            return response, target
+        except (ValueError, requests.RequestException) as error:
+            problems.append(type(error).__name__ + "_" + urlparse(base).hostname)
+    raise ValueError("official_hosts_unavailable: " + ", ".join(problems))
 
 
 def load_roster():
@@ -285,13 +307,11 @@ def main():
         if attempts >= MAX_PDFS:
             break
         attempts += 1
-        time.sleep(WAIT_SECONDS)
         try:
-            response = get(f"{BASE}/round-stats/{ident}")
-            if not response.content.startswith(b"%PDF"):
-                findings["not_pdf"].append(ident)
-                continue
+            response, report_url = get_report(ident)
             parsed = parse(pdf_text(response.content), ident, roster, label)
+            parsed["url"] = report_url
+            parsed["source_host"] = urlparse(report_url).hostname
             path.write_text(json.dumps(parsed, indent=2, ensure_ascii=False) + "\n")
             findings["processed"].append({"report_id": ident, "fight_date": parsed["fight_date"],
                                           "fighters": [f["report_fighter_label"] for f in parsed["fighters"]]})
