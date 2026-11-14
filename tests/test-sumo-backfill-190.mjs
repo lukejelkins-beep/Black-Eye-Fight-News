@@ -143,3 +143,23 @@ test('when the quick stage is done it never needs a repeat API request',()=>{
   docs.get(28).stages.matches.complete=true;
   assert.equal(chooseWork([sample],docs,'history'),null);
 });
+
+test('100-row historical rank cap does not silently truncate long careers',()=>{
+  const d=newCache(sample);
+  d.data.stats={basho:101};
+  const first=Array.from({length:100},(_,i)=>({
+    id:'rank'+i,rikishiId:28,bashoId:'202001',
+    rank:i===0?'Mae-zumo':'Maegashira 2 East'
+  }));
+  combinePage(d,'ranks',first,28);
+  assert.equal(d.stages.ranks.complete,false);
+  assert.equal(d.stages.ranks.skip,100);
+  assert.equal(endpoint(28,'ranks',d.stages.ranks.skip).includes('skip=100'),true);
+  combinePage(d,'ranks',[
+    {id:'rank100',rikishiId:28,bashoId:'202003',rank:'Maegashira 3 East'},
+    {id:'rank101',rikishiId:28,bashoId:'202005',rank:'Maegashira 4 East'}
+  ],28);
+  assert.equal(d.stages.ranks.complete,true);
+  assert.equal(d.data.ranks.length,102);
+  assert.equal(d.data.ranks.filter(x=>x.rank!=='Mae-zumo').length,101);
+});
