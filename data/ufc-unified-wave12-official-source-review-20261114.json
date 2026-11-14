@@ -1,0 +1,175 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave12-official-source-only-review",
+  "snapshot": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "sourceMethod": "Exhaustive dated official UFC.com athlete biographies, corroborated UFC event scorecards/results; recorded Win badges rejected where contradicted by primary judges' scorecards and dated narratives. Only subsequent original native ID crosschecks and full 783-person strict Stage3 grant certificates.",
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "fighters": {
+    "pedro-falcao": {
+      "fighterName": "Pedro Falcao",
+      "officialFighterUrl": "https://www.ufc.com/athlete/pedro-falcao",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/f7be1db194e03d7e",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2024-04-06",
+          "opponent": "Victor Hugo",
+          "result": "loss"
+        },
+        {
+          "date": "2025-04-05",
+          "opponent": "Victor Henry",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "2021 DWCS win over James Barnes (not official UFC bout); 2025 loss independently confirmed by official UFC Emmett vs Murphy scorecards, despite UFC.com summary Win tile.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exact Greco historical fighter/fight/event record and original cached native IDs",
+        "paired original native fighter corners, winner ID, date and complete measured rounds",
+        "separate native feeder exclusions if saved",
+        "complete 783-fighter strict Stage3 passing regression"
+      ]
+    },
+    "roberto-romero": {
+      "fighterName": "Roberto Romero",
+      "officialFighterUrl": "https://www.ufc.com/athlete/roberto-romero",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/15ea371202eb25e1",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2024-11-16",
+          "opponent": "David Onama",
+          "result": "loss"
+        },
+        {
+          "date": "2025-04-26",
+          "opponent": "Timmy Cuamba",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "Both official UFC losses stated in detailed fighter biography, contrary to erroneous athlete Win tiles.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exact Greco historical fighter/fight/event record and original cached native IDs",
+        "paired original native fighter corners, winner ID, date and complete measured rounds",
+        "separate native feeder exclusions if saved",
+        "complete 783-fighter strict Stage3 passing regression"
+      ]
+    },
+    "rodrigo-sezinando": {
+      "fighterName": "Rodrigo Sezinando",
+      "officialFighterUrl": "https://www.ufc.com/athlete/rodrigo-sezinando",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/c06d6b18862f9a53",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2025-09-13",
+          "opponent": "Daniil Donchenko",
+          "result": "loss"
+        },
+        {
+          "date": "2026-10-31",
+          "opponent": "Theodor Berggren",
+          "result": "win"
+        }
+      ],
+      "reviewNote": "2025 Noche UFC officially televised TUF 33 welterweight FINAL loss is a completed UFC bout. TUF Season 33 semis vs Jeff Creighton, quarters vs Diego Bianchini are NON-UFC exhibition feeder history and must not inflate UFC stats.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exact Greco historical fighter/fight/event record and original cached native IDs",
+        "paired original native fighter corners, winner ID, date and complete measured rounds",
+        "separate native feeder exclusions if saved",
+        "complete 783-fighter strict Stage3 passing regression"
+      ]
+    },
+    "saygid-izagakhmaev": {
+      "fighterName": "Saygid Izagakhmaev",
+      "officialFighterUrl": "https://www.ufc.com/athlete/saygid-izagakhmaev",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/de26d906f2874dd4",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2025-11-22",
+          "opponent": "Nicolas Dalby",
+          "result": "loss"
+        },
+        {
+          "date": "2026-07-25",
+          "opponent": "Abubakar Vagaev",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "Both official UFC narrative losses, while graphical fighter summary incorrectly says Win. 2026 Abubakar result also confirmed by UFC Abu Dhabi July 25 results.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exact Greco historical fighter/fight/event record and original cached native IDs",
+        "paired original native fighter corners, winner ID, date and complete measured rounds",
+        "separate native feeder exclusions if saved",
+        "complete 783-fighter strict Stage3 passing regression"
+      ]
+    },
+    "shanelle-dyer": {
+      "fighterName": "Shanelle Dyer",
+      "officialFighterUrl": "https://www.ufc.com/athlete/shanelle-dyer",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/cfbb3edab781dfd2",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-03-21",
+          "opponent": "Ravena Oliveira",
+          "result": "win"
+        },
+        {
+          "date": "2026-08-22",
+          "opponent": "Elise Reed",
+          "result": "win"
+        }
+      ],
+      "reviewNote": "Two official UFC KO/TKO wins; 2025-09-09 DWCS loss to Carol Foro separately excluded.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exact Greco historical fighter/fight/event record and original cached native IDs",
+        "paired original native fighter corners, winner ID, date and complete measured rounds",
+        "separate native feeder exclusions if saved",
+        "complete 783-fighter strict Stage3 passing regression"
+      ]
+    },
+    "shem-rock": {
+      "fighterName": "Shem Rock",
+      "officialFighterUrl": "https://www.ufc.com/athlete/shem-rock",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/52b6bf4528130e86",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2025-11-22",
+          "opponent": "Nurullo Aliev",
+          "result": "loss"
+        },
+        {
+          "date": "2026-03-21",
+          "opponent": "Abdul-Kareem Al-Selwady",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "Both losses proven by dated official UFC fighter narratives and 2026-03-21 UFC London scorecards; graphical record widgets incorrectly show Win.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exact Greco historical fighter/fight/event record and original cached native IDs",
+        "paired original native fighter corners, winner ID, date and complete measured rounds",
+        "separate native feeder exclusions if saved",
+        "complete 783-fighter strict Stage3 passing regression"
+      ]
+    }
+  }
+}
