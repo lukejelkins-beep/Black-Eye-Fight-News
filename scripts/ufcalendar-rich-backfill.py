@@ -2284,29 +2284,52 @@ def collect_approved_full_ufc_fight_search(client,state,research,coverage,today,
             continue
         rows=response_rows(response)
         invalid=0
+        # Benign source exclusions are not evidence of the wrong fighter.
+        # Retain granular, persistent reasons without preserving raw provider
+        # payloads or accidentally declaring an incomplete page complete.
+        rejected=dict(prior.get("rejectedByReason") or {})
+        excluded=dict(prior.get("excludedByReason") or {})
+        def reject(reason):
+            nonlocal invalid
+            invalid+=1
+            rejected[reason]=rejected.get(reason,0)+1
+        def skip(reason):
+            excluded[reason]=excluded.get(reason,0)+1
         for raw in rows:
-            if not isinstance(raw,dict):invalid+=1;continue
+            if not isinstance(raw,dict):
+                reject("unparseable_result_row");continue
             bout=summary_bout(raw)
             event=raw.get("event")
-            if not bout or not isinstance(event,dict):invalid+=1;continue
+            if not bout or not isinstance(event,dict):
+                reject("unparseable_bout_or_event");continue
             title=safe(event.get("title"),150)
             day=date_str(event.get("starts_at"))
-            if (event.get("org") not in ("ufc",None) or not day or
-                day>today.isoformat() or not official_ufc_event_title(title) or
-                bout.get("status")!="completed"):
-                invalid+=1;continue
+            if event.get("org") not in ("ufc",None):
+                skip("different_organisation");continue
+            if feeder_event_title(title):
+                skip("documented_ufc_feeder_event");continue
+            if not official_ufc_event_title(title):
+                reject("unverified_official_ufc_event");continue
+            if bout.get("status") in ("draw","no_contest","scheduled","announced","live"):
+                skip("non_winner_or_unfinished_bout");continue
+            if not day or day>today.isoformat() or bout.get("status")!="completed":
+                reject("invalid_completed_event_date_or_status");continue
             side="a" if str(bout["a"].get("id"))==fid else (
                 "b" if str(bout["b"].get("id"))==fid else None)
-            if not side:invalid+=1;continue
+            if not side:
+                reject("numeric_fighter_identity_disagreement");continue
             opposite="b" if side=="a" else "a"
             winner=str((bout.get("result") or {}).get("winnerId") or "")
             if winner not in (str(bout["a"].get("id")),str(bout["b"].get("id"))):
-                invalid+=1;continue
+                reject("winner_not_one_of_authenticated_corners");continue
             bid=bout["id"]
             previous=state.get("bouts",{}).get(bid)
             if previous and (previous.get("org")!="ufc" or
-                             previous.get("eventDate")!=day):
-                invalid+=1;continue
+                             previous.get("eventDate")!=day or
+                             {str((previous.get("a") or {}).get("id")),
+                              str((previous.get("b") or {}).get("id"))}!=
+                             {str(bout["a"].get("id")),str(bout["b"].get("id"))}):
+                reject("cached_native_id_or_event_identity_conflict");continue
             if not previous:
                 state["bouts"][bid]={
                     "id":bid,"a":bout["a"],"b":bout["b"],
@@ -2330,7 +2353,8 @@ def collect_approved_full_ufc_fight_search(client,state,research,coverage,today,
                 abs((dt.date.fromisoformat(date_str(h["date"]))-
                      dt.date.fromisoformat(day)).days)<=1
                 for h in history)
-            if duplicate:invalid+=1;continue
+            if duplicate:
+                reject("saved_history_bout_identity_collision");continue
             history.append({"date":day,"opponent":opponent,
                 "result":"win" if winner==fid else "loss",
                 "method":safe((bout.get("result") or {}).get("method"),50),
@@ -2346,10 +2370,10 @@ def collect_approved_full_ufc_fight_search(client,state,research,coverage,today,
         next_cursor=cursor_of(response)
         if next_cursor and (not isinstance(next_cursor,str) or len(next_cursor)>300):
             next_cursor=None
-            invalid+=1
+            reject("invalid_pagination_cursor")
         if next_cursor is not None and next_cursor==cursor:
             next_cursor=None
-            invalid+=1
+            reject("repeated_pagination_cursor")
         cumulative=int(prior.get("scannedRows") or 0)+len(rows)
         updated_history=(profiles.get(f) or {}).get("recentHistory",[])
         updated_native_count=sum(1 for h in updated_history
@@ -2368,6 +2392,7 @@ def collect_approved_full_ufc_fight_search(client,state,research,coverage,today,
             "fighterId":fid,"checkedAt":today.isoformat(),
             "cursor":next_cursor,"scannedRows":cumulative,
             "invalidRows":int(prior.get("invalidRows") or 0)+invalid,
+            "rejectedByReason":rejected,"excludedByReason":excluded,
             "cursorPaginationBugRechecked":bool(
                 prior.get("cursorPaginationBugRechecked") or
                 one_time_cursor_bug_recheck(f,prior)),
