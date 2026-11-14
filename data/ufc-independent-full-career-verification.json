@@ -24094,7 +24094,8 @@
           "result": "loss",
           "event": "Dana White's Contender Series, Season 6 Week 2",
           "officialSourceUrl": "https://www.ufc.com/news/season-6-week-2-results-dana-whites-contender-series",
-          "excludedBecause": "Independently confirmed DWCS feeder TKO loss; outside official UFC Octagon history, and no saved native UFC bout ID is asserted"
+          "excludedBecause": "UFC official 2022-08-02 DWCS TKO loss saved in UFCalendar fighter history as original native 88249, excluded from official UFC Octagon chronology; no match in separate indexed UFC event cache is asserted",
+          "nativeBoutId": "88249"
         }
       ]
     },
@@ -24345,6 +24346,154 @@
         }
       ],
       "sourceVerifiedExcludedFeederBouts": []
+    },
+    "aj-dobson": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "AJ Dobson",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/009c4420727149ea",
+      "officialFighterUrl": "https://www.ufc.com/athlete/aj-dobson",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact pinned Greco UFCStats-derived CSV at immutable source commit, not direct live UFCStats scrape",
+        "method": "Complete official UFC.com dated fighter biographies and official result narratives, Greco historical source fighter/fight IDs, saved native UFCalendar fighter/bout/corner IDs, winner and full measured rounds, ±1 UTC day; DWCS exhibitions excluded, true televised TUF final included."
+      },
+      "verifiedNumericFighterIds": [
+        "1048"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Official UFC.com dated career biography independently confirms exactly four completed Octagon results through 14 November 2026: losses Jacob Malkoun and Armen Petrosyan, decision win over Tafon Nchukwi, and KO loss to Edmen Shahbazyan. UFC graphics incorrectly label losses as wins; dated primary narratives, pinned Greco results and original saved winners agree. Separate 2021 DWCS Hashem Arkhagha submission win in saved provider history is a feeder result, not a fifth UFC Octagon bout.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/aj-dobson",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2022-02-12",
+          "opponent": "Jacob Malkoun",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c16bda7548181613",
+          "nativeBoutId": "61366",
+          "nativeFighterId": "1048"
+        },
+        {
+          "date": "2022-10-22",
+          "opponent": "Armen Petrosyan",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1b204fc28bb023e6",
+          "nativeBoutId": "61221",
+          "nativeFighterId": "1048"
+        },
+        {
+          "date": "2023-08-12",
+          "opponent": "Tafon Nchukwi",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/560a971c6ab8b854",
+          "nativeBoutId": "60080",
+          "nativeFighterId": "1048"
+        },
+        {
+          "date": "2024-03-23",
+          "opponent": "Edmen Shahbazyan",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d564e3a6c77d0c85",
+          "nativeBoutId": "38994",
+          "nativeFighterId": "1048"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88238",
+          "date": "2021-09-21",
+          "opponent": "Hashem Arkhagha",
+          "result": "win",
+          "event": "Dana White's Contender Series, Season 5 Episode 4",
+          "officialSourceUrl": "https://www.ufc.com/athlete/aj-dobson",
+          "excludedBecause": "Primary official UFC biography documents DWCS feeder submission; original saved UFC-labelled history ID is not an official Octagon contest"
+        }
+      ]
+    },
+    "anton-turkalj": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Anton Turkalj",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/82529ce93cd9a2cf",
+      "officialFighterUrl": "https://www.ufc.com/athlete/anton-turkalj",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact pinned Greco UFCStats-derived CSV at immutable source commit, not direct live UFCStats scrape",
+        "method": "Complete official UFC.com dated fighter biographies and official result narratives, Greco historical source fighter/fight IDs, saved native UFCalendar fighter/bout/corner IDs, winner and full measured rounds, ±1 UTC day; DWCS exhibitions excluded, true televised TUF final included."
+      },
+      "verifiedNumericFighterIds": [
+        "2769"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Official UFC.com complete dated biography confirms precisely four Octagon losses through 14 November 2026: Jailton Almeida (submission), Vitor Petrino (unanimous decision), Tyson Pedro (KO), and Ibo Aslan (KO). Separately independently attested 2022 DWCS win over Acacio dos Santos is original saved feeder native 83891, excluded from official Octagon chronology despite its UFC provider label.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/anton-turkalj",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2022-09-10",
+          "opponent": "Jailton Almeida",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/301f230c90c4bd7d",
+          "nativeBoutId": "59832",
+          "nativeFighterId": "2769"
+        },
+        {
+          "date": "2023-03-11",
+          "opponent": "Vitor Petrino",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8d5b88e0ff253617",
+          "nativeBoutId": "59672",
+          "nativeFighterId": "2769"
+        },
+        {
+          "date": "2023-09-09",
+          "opponent": "Tyson Pedro",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3e1c27f17433f9e4",
+          "nativeBoutId": "60057",
+          "nativeFighterId": "2769"
+        },
+        {
+          "date": "2024-03-30",
+          "opponent": "Ibo Aslan",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/697e38075fd41819",
+          "nativeBoutId": "38989",
+          "nativeFighterId": "2769"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83891",
+          "date": "2022-07-26",
+          "opponent": "Acácio dos Santos",
+          "result": "win",
+          "event": "Dana White's Contender Series, Season 6 Episode 1",
+          "officialSourceUrl": "https://www.ufc.com/athlete/anton-turkalj",
+          "excludedBecause": "Official UFC biography explicitly documents DWCS decision win; saved provider history row is feeder, not official UFC Octagon career"
+        }
+      ]
     }
   }
 }
