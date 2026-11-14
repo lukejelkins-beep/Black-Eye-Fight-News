@@ -28,7 +28,7 @@ test('recognises actual basho month and gracefully rejects invalid dates',()=>{
   assert.equal(bashoLabel('202612'),'202612');
 });
 test('keeps absences and pending bouts distinct from official losses',()=>{
-  assert.deepEqual(recordSummary([{result:'win'},{result:'loss'},{result:'absent'},{result:'pending'}]),{win:1,loss:1,absence:1,pending:1,completed:2});
+  assert.deepEqual(recordSummary([{result:'win'},{result:'loss'},{result:'absent'},{result:'pending'}]),{win:1,loss:1,absence:1,noBout:0,pending:1,completed:2});
 });
 test('deduplicates symmetric torikumi bouts and counts winners from winner ID',()=>{
   assert.equal(rankTable(entries).length,2);
@@ -57,8 +57,15 @@ test('all-rikishi current-basho results include opponents and preserve Makushita
   const lower={...entries.east[0],rank:'Makushita 1 East'};
   const makushita=currentBashoMatchSample(lower,'202611');
   assert.equal(makushita.length,1);
-  assert.equal(makushita[0].day,null);
+  assert.equal(makushita[0].day,1);
   assert.equal(makushita[0].boutSequence,1);
+  const rest=recordSummary([{result:'win'},{result:'absent'},{result:'loss'},{result:'absent'}],'Makushita');
+  assert.equal(rest.win,1);
+  assert.equal(rest.loss,1);
+  assert.equal(rest.absence,null);
+  assert.equal(rest.noBout,2);
+  const sequence=currentBashoMatchSample({...lower,record:[{result:'absent'},{result:'loss',opponentID:9},{result:'absent'},{result:'win',opponentID:11}]},'202611');
+  assert.deepEqual(sequence.map(x=>[x.day,x.boutSequence,x.outcome]),[[4,2,'win'],[2,1,'loss']]);
   assert.deepEqual(currentBashoMatchSample(null,'202611'),[]);
 });
 
@@ -118,6 +125,11 @@ test('live API snapshot contains exactly the current top three divisions',()=>{
     const b=details.banzuke[d];
     assert.equal(b.status,'available',d+' banzuke not available');
     assert.equal((b.data.east?.length||0)+(b.data.west?.length||0),roster.divisionCounts[d]);
+    if(d==='Makushita')for(const entry of [...b.data.east,...b.data.west]){
+      const stat=recordSummary(entry.record,'Makushita');
+      assert.equal(stat.absence,null,'lower-division rest day cannot be a certified absence');
+      assert.equal(stat.win+stat.loss+stat.noBout+stat.pending,entry.record.length);
+    }
     for(const entry of [...b.data.east,...b.data.west]){
       assert.ok(!expectedSourceIds.has(entry.rikishiID),'Banzuke duplicate '+entry.rikishiID);
       expectedSourceIds.add(entry.rikishiID);
