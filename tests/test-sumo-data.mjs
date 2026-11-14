@@ -297,3 +297,23 @@ test('Sumo preview profiles load source-linked career cache and accessible chart
   assert.match(script,/careerGraphs\(w,STATE\.careerHistory/);
   assert.doesNotMatch(script,/fetch\(\s*['"]https:\/\/www\.sumo-api\.com/);
 });
+
+test('the cached upcoming tournament list must contain verified torikumi identities',()=>{
+  const details=JSON.parse(readFileSync(new URL('../data/sumo/preview-details.json',import.meta.url),'utf8'));
+  assert.equal(details.bashoId,'202611');
+  assert.ok(Number.isInteger(details.announcedDay)&&details.announcedDay>=1&&details.announcedDay<=15);
+  for(const division of ['Makuuchi','Juryo','Makushita']){
+    const source=details.torikumi?.[division];
+    assert.equal(source?.status,'available',division+' torikumi missing');
+    assert.ok(Array.isArray(source.data?.torikumi),division+' torikumi not an array');
+    const options={division,bashoId:details.bashoId,day:details.announcedDay};
+    const entries=announcedTorikumiMatches(source.data,options);
+    assert.ok(entries.length>0,division+' did not confirm any announced matches');
+    assert.ok(entries.length<=source.data.torikumi.length,division+' generated imaginary matches');
+    assert.equal(new Set(entries.map(e=>e.key)).size,entries.length);
+    for(const fight of entries){
+      assert.equal(fight.sourceType,'announced-torikumi');
+      assert.ok(fight.rikishiId>0&&fight.opponentId>0);
+    }
+  }
+});
