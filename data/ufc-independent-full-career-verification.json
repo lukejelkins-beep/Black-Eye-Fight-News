@@ -23477,6 +23477,72 @@
         "verifiedNumericNativeFighterId": "7324",
         "proof": "The three complete dated official UFC.com Marcus Buchecha bouts exactly match immutable Greco fighter ID 095854a135e6db55 and original UFCalendar numeric fighter 7324, with both opposing corners and complete W/L/draw outcomes. Native alias Marcus Almeida is limited to this attested source identity; distinct names must not be merged on name alone."
       }
+    },
+    "ronaldo-rodriguez": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Ronaldo Rodriguez",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/f2900678e98f6d6a",
+      "officialFighterUrl": "https://www.ufc.com/athlete/luis-rodriguez",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned immutable Greco UFCStats-derived source, not direct live UFCStats scrape",
+        "method": "Full UFC.com dated primary athlete biography crossmatched to pinned UFCStats-derived fight identifiers, original saved numeric native bouts, both corners, outcomes and all measured rounds; a separate official-sourced DWCS feeder is excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "2855"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Official UFC.com Ronaldo Rodriguez profile is /athlete/luis-rodriguez. Full dated biography confirms exactly three completed UFC Octagon bouts through 2026-11-14; 2020-08-04 DWCS vs Jerome Rivera excluded. UFC card graphical Win tile for the Kevin Borjas bout is erroneous, dated official loss and pinned Greco/native winning opposing corner are authoritative. Feb 2024 Mexico City native UTC date differs by one day from official UFC date.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/luis-rodriguez",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83940",
+          "date": "2020-08-04",
+          "opponent": "Jerome Rivera",
+          "result": "loss",
+          "event": "Dana White's Contender Series",
+          "officialSourceUrl": "https://www.ufc.com/athlete/luis-rodriguez",
+          "excludedBecause": "UFC.com dated athlete biography identifies this DWCS feeder, not an official UFC Octagon bout"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2024-02-24",
+          "opponent": "Denys Bondar",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5e8c710f9f27aff8",
+          "nativeBoutId": "39038",
+          "nativeFighterId": "2855"
+        },
+        {
+          "date": "2024-09-14",
+          "opponent": "Ode Osbourne",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/78b506e5092a27fd",
+          "nativeBoutId": "60221",
+          "nativeFighterId": "2855"
+        },
+        {
+          "date": "2025-03-29",
+          "opponent": "Kevin Borjas",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5ba7dd466e30169f",
+          "nativeBoutId": "61008",
+          "nativeFighterId": "2855"
+        }
+      ]
     }
   }
 }
