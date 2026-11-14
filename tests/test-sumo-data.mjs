@@ -6,7 +6,7 @@ import {
   bashoLabel, divisionOf, recordSummary, rankTable, leadingRikishi,
   dailyResults, currentDay, matchResult, techniqueDistribution, searchRikishi,
   banzukeFor, validMatchSamples, trackedBanzukeCohort, currentBashoMatchSample,
-  originCountry, banzukeMovement, dayMatchups, verifiedHeadToHead, verifiedHighestRank, confirmedCareerHigh
+  originCountry, banzukeMovement, dayMatchups, verifiedHeadToHead, verifiedHighestRank, confirmedCareerHigh, announcedTorikumiMatches, verifiedDayMatchups, lastCompletedBashoDay
 } from '../assets/sumo-data.mjs';
 
 const entries = {
@@ -198,19 +198,33 @@ test('movement uses rank positions, not imprecise rankValue subtraction',()=>{
   assert.equal(banzukeMovement(14,current,previous).status,'same');
   assert.equal(banzukeMovement(10,current,{}).status,'unavailable');
 });
-test('pairings show recorded future opponents without calling a pending fight completed',()=>{
+test('only a separately published torikumi makes a future pairing official',()=>{
   const b={
-    east:[{rikishiID:10,shikonaEn:'A',rankValue:100,side:'East',record:[{result:'win',opponentID:11,opponentShikonaEn:'B',kimarite:'yorikiri'},{result:'',opponentID:11,opponentShikonaEn:'B'}]}],
-    west:[{rikishiID:11,shikonaEn:'B',rankValue:100,side:'West',record:[{result:'loss',opponentID:10,opponentShikonaEn:'A',kimarite:'yorikiri'},{result:'',opponentID:10,opponentShikonaEn:'A'}]}]
+    east:[{rikishiID:10,shikonaEn:'A',rankValue:100,side:'East',
+      record:[{result:'win',opponentID:11,opponentShikonaEn:'B',kimarite:'yorikiri'},
+        {result:'',opponentID:11,opponentShikonaEn:'B'}]}],
+    west:[{rikishiID:11,shikonaEn:'B',rankValue:100,side:'West',
+      record:[{result:'loss',opponentID:10,opponentShikonaEn:'A',kimarite:'yorikiri'},
+        {result:'',opponentID:10,opponentShikonaEn:'A'}]}]
   };
-  const result=dayMatchups(b,1), scheduled=dayMatchups(b,2);
-  assert.equal(result.length,1);
-  assert.equal(result[0].finished,true);
-  assert.equal(result[0].winnerId,10);
+  const official={
+    date:'202611',
+    torikumi:[{bashoId:'202611',division:'Makuuchi',day:2,matchNo:1,
+      eastId:10,westId:11,eastShikona:'A',westShikona:'B',winnerId:0,kimarite:''}]
+  };
+  assert.equal(dayMatchups(b,1).length,1);
+  assert.equal(dayMatchups(b,1)[0].winnerId,10);
+  assert.equal(dayMatchups(b,2).length,0,'Unplayed banzuke opponent ID alone is not an announced fight');
+  assert.equal(lastCompletedBashoDay(b),1);
+  const options={bashoId:'202611',division:'Makuuchi',day:2};
+  const scheduled=announcedTorikumiMatches(official,options);
   assert.equal(scheduled.length,1);
   assert.equal(scheduled[0].finished,false);
   assert.equal(scheduled[0].winnerId,null);
-  assert.equal(dayMatchups(b,3).length,0);
+  assert.equal(verifiedDayMatchups(b,official,options).length,1);
+  assert.equal(verifiedDayMatchups(b,null,options).length,0);
+  assert.equal(announcedTorikumiMatches(official,{...options,bashoId:'202609'}).length,0);
+  assert.equal(announcedTorikumiMatches(official,{...options,day:9}).length,0);
 });
 test('career-high and pair H2H are withheld without explicit trusted values',()=>{
   assert.equal(verifiedHighestRank({currentRank:'Yokozuna 1 East'}),null);
