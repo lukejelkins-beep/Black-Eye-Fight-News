@@ -3920,6 +3920,192 @@
         }
       ],
       "note": "Source-attested exhaustive UFC career through 14 Nov 2026: one fighter-specific official UFCStats indexed bout, crosschecked against UFC Shanghai athlete/event source, result, native corner ID and complete measured rounds. Pending individual Stage3 independent certification gate; no feeder fights counted."
+    },
+    "ryan-kuse": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Ryan Kuse",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/d958ed9e5a08c849",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ryan-kuse",
+      "firstOfficialUfcFight": "2026-08-22",
+      "lastOfficialUfcFight": "2026-08-22",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedNumericFighterIds": [
+        "22698"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "latestGrecoEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "not claimed; independently pinned Greco UFCStats-derived full fighter and official bout result listings"
+      },
+      "sourceCoverage": {
+        "method": "Read complete dated official UFC.com athlete fight history/debut record, independently pinned Greco UFCStats-derived full fighter-specific fight listing (exactly one UFC result through Nov 7 2026), official UFC Sacramento 2026 results and official round scorecards, exact native UFC fight 2-corner numeric IDs, result/method/round and measured archive. All three fought only once in official UFC Octagon from their Aug 22 debut through roster snapshot Nov 14.",
+        "officialDebut": "2026-08-22",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-august-22-2026",
+        "officialResultUrl": "https://www.ufc.com/news/ufc-sacramento-hernandez-vs-rodrigues-results",
+        "officialScorecardsUrl": "https://www.ufc.com/news/ufc-sacramento-hernandez-vs-rodrigues-official-scorecards",
+        "verifiedOfficialResultAndPresentationDiscrepancy": "UFC athlete heading/athlete-record card erroneously shows a Win flag, but UFC written biography, official event and official scorecards plainly establish a loss to Marcio Barbosa by TKO R1 2:47."
+      },
+      "bouts": [
+        {
+          "date": "2026-08-22",
+          "opponent": "Marcio Barbosa",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7e86f774f19e5e59",
+          "nativeBoutId": "83663",
+          "nativeFightId": "83663",
+          "nativeFighterId": "22698",
+          "opponentNativeFighterId": "564",
+          "event": "UFC Fight Night: Hernandez vs Rodrigues",
+          "method": "ko_tko",
+          "round": 1,
+          "time": "2:47",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-august-22-2026"
+        }
+      ],
+      "note": "Full independently attested UFC debut-to-snapshot one-bout history. Distinct from wider professional record; native fight result, complete measured round metrics and exact fighter URL source/official UFC result corroborated. Final certificate only after strict Stage 3 gate passes."
+    },
+    "stan-dorsainvil": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Stan Dorsainvil",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/5be51426ff3c1929",
+      "officialFighterUrl": "https://www.ufc.com/athlete/stan-dorsainvil",
+      "firstOfficialUfcFight": "2026-08-22",
+      "lastOfficialUfcFight": "2026-08-22",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedNumericFighterIds": [
+        "109548"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "latestGrecoEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "not claimed; independently pinned Greco UFCStats-derived full fighter and official bout result listings"
+      },
+      "sourceCoverage": {
+        "method": "Read complete dated official UFC.com athlete fight history/debut record, independently pinned Greco UFCStats-derived full fighter-specific fight listing (exactly one UFC result through Nov 7 2026), official UFC Sacramento 2026 results and official round scorecards, exact native UFC fight 2-corner numeric IDs, result/method/round and measured archive. All three fought only once in official UFC Octagon from their Aug 22 debut through roster snapshot Nov 14.",
+        "officialDebut": "2026-08-22",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-august-22-2026",
+        "officialResultUrl": "https://www.ufc.com/news/ufc-sacramento-hernandez-vs-rodrigues-results",
+        "officialScorecardsUrl": "https://www.ufc.com/news/ufc-sacramento-hernandez-vs-rodrigues-official-scorecards",
+        "verifiedOfficialResultAndPresentationDiscrepancy": "UFC official 29-28 all three cards and full fighter record show Dorsainvil won over Gauge Young in his sole 22 August 2026 Octagon bout."
+      },
+      "bouts": [
+        {
+          "date": "2026-08-22",
+          "opponent": "Gauge Young",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/116dc88b63113f61",
+          "nativeBoutId": "83664",
+          "nativeFightId": "83664",
+          "nativeFighterId": "109548",
+          "opponentNativeFighterId": "271",
+          "event": "UFC Fight Night: Hernandez vs Rodrigues",
+          "method": "decision_unanimous",
+          "round": 3,
+          "time": "5:00",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-august-22-2026"
+        }
+      ],
+      "note": "Full independently attested UFC debut-to-snapshot one-bout history. Distinct from wider professional record; native fight result, complete measured round metrics and exact fighter URL source/official UFC result corroborated. Final certificate only after strict Stage 3 gate passes."
+    },
+    "terrance-chatman": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Terrance Chatman",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/23a81656507b56a3",
+      "officialFighterUrl": "https://www.ufc.com/athlete/terrance-chatman",
+      "firstOfficialUfcFight": "2026-08-22",
+      "lastOfficialUfcFight": "2026-08-22",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedNumericFighterIds": [
+        "55708"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "latestGrecoEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "not claimed; independently pinned Greco UFCStats-derived full fighter and official bout result listings"
+      },
+      "sourceCoverage": {
+        "method": "Read complete dated official UFC.com athlete fight history/debut record, independently pinned Greco UFCStats-derived full fighter-specific fight listing (exactly one UFC result through Nov 7 2026), official UFC Sacramento 2026 results and official round scorecards, exact native UFC fight 2-corner numeric IDs, result/method/round and measured archive. All three fought only once in official UFC Octagon from their Aug 22 debut through roster snapshot Nov 14.",
+        "officialDebut": "2026-08-22",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-august-22-2026",
+        "officialResultUrl": "https://www.ufc.com/news/ufc-sacramento-hernandez-vs-rodrigues-results",
+        "officialScorecardsUrl": "https://www.ufc.com/news/ufc-sacramento-hernandez-vs-rodrigues-official-scorecards",
+        "verifiedOfficialResultAndPresentationDiscrepancy": "UFC athlete heading/record tab misleadingly labels Win, despite the athlete's own written fight history and official Sacramento result/scorecards confirming Anthony Wint won by technical submission (arm triangle) R1 4:29. Wint's prior DWCS fight was feeder and is not part of this career."
+      },
+      "bouts": [
+        {
+          "date": "2026-08-22",
+          "opponent": "Anthony Wint",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a6873fd459587d17",
+          "nativeBoutId": "83660",
+          "nativeFightId": "83660",
+          "nativeFighterId": "55708",
+          "opponentNativeFighterId": "42586",
+          "event": "UFC Fight Night: Hernandez vs Rodrigues",
+          "method": "submission",
+          "round": 1,
+          "time": "4:29",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-august-22-2026"
+        }
+      ],
+      "note": "Full independently attested UFC debut-to-snapshot one-bout history. Distinct from wider professional record; native fight result, complete measured round metrics and exact fighter URL source/official UFC result corroborated. Final certificate only after strict Stage 3 gate passes."
     }
   }
 }
