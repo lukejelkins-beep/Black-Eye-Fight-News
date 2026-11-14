@@ -1686,7 +1686,8 @@ def reconcile_exact_official_native_id_exceptions(state,research,coverage,today,
     # not inferred from a same-name match or a global provider alias table.
     known={
        "carlos-hernandez-7":("102973","1071",6),
-       "park-hyun-sung":("102972","146",4)
+       "park-hyun-sung":("102972","146",4),
+       "bruno-gustavo-da-silva":("87","158",10)
     }
     def name_tokens(value):
         value=re.sub(r"([a-z])([A-Z])",r"\1 \2",safe(value,140))
