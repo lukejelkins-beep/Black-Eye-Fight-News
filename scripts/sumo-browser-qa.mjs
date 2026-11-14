@@ -87,6 +87,18 @@ async function testSite(viewport,isMobile,label) {
   await snap(page,label+'-banzuke',{fullPage:false});
 
   await open(page,'basho','.basho-hero');
+  const announcedDay=await page.evaluate(async()=>{
+    const response=await fetch('data/sumo/preview-details.json');
+    return (await response.json()).announcedDay;
+  });
+  assert.ok(Number.isInteger(announcedDay)&&announcedDay>=1&&announcedDay<=15,'Published preview has a source-scheduled day');
+  await page.locator('[data-day="'+announcedDay+'"]').click();
+  const confirmed=await page.locator('.sumo-match-card .sumo-match-status.scheduled').count();
+  assert.ok(confirmed>0,'Verified torikumi pending matchups must appear');
+  assertContains(await page.locator('#sumo-main').innerText(),'torikumi announcement','scheduled source provenance');
+  await snap(page,label+'-scheduled',{fullPage:false});
+  await page.locator('[data-day="15"]').click();
+  assert.equal(await page.locator('.sumo-match-card .sumo-match-status.scheduled').count(),0,'Day 15 cannot be guessed from future banzuke slots');
   await page.locator('[data-basho-division="Makushita"]').click();
   const basho=await page.locator('#sumo-main').innerText();
   assertContains(basho,'seven times across 15 tournament days','lower division caveat');
@@ -116,8 +128,8 @@ try {
   await testSite({width:1440,height:900},false,'desktop');
   await testSite({width:390,height:844},true,'mobile');
   if(failures.length)throw new Error(failures.join('\n'));
-  await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'pass',screenshots:12,views:['home','rikishi','profile','banzuke','basho','kimarite'],viewportWidths:[1440,390]},null,2));
-  console.log('Sumo browser QA passed: 12 screenshots, 2 viewport widths, 6 sections, 3 banzuke divisions and no JS exceptions.');
+  await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'pass',screenshots:14,views:['home','rikishi','profile','banzuke','basho','kimarite'],viewportWidths:[1440,390]},null,2));
+  console.log('Sumo browser QA passed: 14 screenshots, 2 viewport widths, 6 sections, 3 banzuke divisions and no JS exceptions.');
 } catch(error) {
   await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'fail',error:String(error.stack||error),failures},null,2));
   throw error;
