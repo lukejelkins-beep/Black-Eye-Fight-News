@@ -28,6 +28,7 @@ FIGHTERS = ROOT / "data/ufcalendar-fighter-research.json"
 COVERAGE = ROOT / "data/ufc-last-five-coverage.json"
 COVERAGE36 = ROOT / "data/ufc-36-month-candidates.json"
 ROSTER_APPROVAL = ROOT / "data/ufc-36-month-roster-approval.json"
+FEEDER_EVIDENCE = ROOT / "data/ufc-feeder-bout-evidence.json"
 JUDGING = ROOT / "data/ufcalendar-judging-research.json"
 BASE = "https://api.ufcalendar.com/v1"
 MAX_SPEND_PER_MONTH = 27000  # 90% of Hobby; reserve 3,000 for live BEFN integrations.
@@ -388,6 +389,27 @@ def should_collect_rounds(state,bout,today):
     return True
 
 
+def confirmed_feeder_bout(row,fighter_slug,evidence):
+    """Exclude only a UFC-site-verified DWCS bout by exact fight identity.
+
+    The professional-MMA history entry remains unchanged in research storage.
+    Unverified IDs and incomplete/mismatched evidence fail closed.
+    """
+    if not isinstance(row,dict) or not isinstance(evidence,dict) or evidence.get("schema")!=1:
+        return False
+    bid=str(row.get("boutId") or "")
+    day=date_str(row.get("date"))
+    opp=re.sub(r"[^a-z0-9]","",safe(row.get("opponent"),110).casefold())
+    for entry in evidence.get("bouts",[]):
+        if not isinstance(entry,dict):continue
+        if (entry.get("boutId")==bid and entry.get("date")==day and
+            entry.get("fighterSlug")==fighter_slug and
+            re.sub(r"[^a-z0-9]","",safe(entry.get("opponent"),110).casefold())==opp and
+            str(entry.get("sourceUrl") or "").startswith("https://www.ufc.com/")):
+            return True
+    return False
+
+
 def feeder_event_title(title):
     """Do not confuse official UFC fights with DWCS/Road-to-UFC feeders."""
     return bool(re.search(r"(?:contender\s+series|road\s+to\s+ufc|\bdwcs\b)",
@@ -441,12 +463,14 @@ def approved_ufc_round_priority(approval,coverage,research,today,state=None):
     if not wanted:return {}
     priority={}
     feeder_dates=ufc_event_date_evidence(state)[0] if state else set()
+    feeder_proof=read(FEEDER_EVIDENCE,{})
     for fighter in wanted:
         profile=research.get("profiles",{}).get(fighter,{})
         ordered=[]
         seen=set()
         for row in profile.get("recentHistory",[]):
             if (not isinstance(row,dict) or row.get("source")!="native" or
+                confirmed_feeder_bout(row,fighter,feeder_proof) or
                 str(row.get("promotion") or "").lower()!="ufc" or
                 str(row.get("result") or "").lower() not in
                 ("win","loss","draw","no_contest","w","l","d","nc")):
@@ -1034,12 +1058,14 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None)
     pending={}
     references={}
     feeder_dates,official_finale_dates=ufc_event_date_evidence(state)
+    feeder_proof=read(FEEDER_EVIDENCE,{})
     tiers=approved_ufc_round_priority(approval,coverage,research,today,state)
     for slugval,profile in research.get("profiles",{}).items():
         if slugval not in eligible:continue
         for row in profile.get("recentHistory",[]):
             if not isinstance(row,dict) or row.get("source")!="native" or \
                str(row.get("promotion") or "").lower()!="ufc":continue
+            if confirmed_feeder_bout(row,slugval,feeder_proof):continue
             bid=str(row.get("boutId") or "")
             if not re.fullmatch(r"[1-9][0-9]{0,11}",bid) or bid in state["bouts"]:continue
             when=date_str(row.get("date"))
