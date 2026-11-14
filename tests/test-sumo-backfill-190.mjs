@@ -5,9 +5,8 @@ import {STAGES,newCache,endpoint,combinePage,fillStage,stageStatus} from '../scr
 const sample={sourceId:28,officialNskId:3616,sumoDbId:12226,shikonaEn:'Ura'};
 test('free Sumo API history endpoints use explicit source ID and stable pagination',()=>{
   assert.equal(STAGES.length,6);
-  assert.match(endpoint(28,'profile'),/includeMeasurements=true/);
-  assert.match(endpoint(28,'profile'),/includeRanks=true/);
-  assert.match(endpoint(28,'profile'),/includeShikonas=true/);
+  assert.equal(endpoint(28,'profile'),'https://www.sumo-api.com/api/rikishi/28');
+  assert.equal(endpoint(28,'profile').includes('?'),false);
   assert.match(endpoint(28,'measurements',200),/measurements\?rikishiId=28&limit=200&skip=200/);
   assert.match(endpoint(28,'ranks',0),/ranks\?rikishiId=28/);
   assert.match(endpoint(28,'shikonas',0),/shikonas\?rikishiId=28/);
