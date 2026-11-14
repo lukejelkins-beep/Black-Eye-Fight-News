@@ -1,0 +1,31 @@
+name: Independently certify two Noche UFC debut careers (offline)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'data/ufc-independent-full-career-verification.json'
+      - 'scripts/verify-ufc-v4-noche-debut-certification.mjs'
+      - '.github/workflows/verify-ufc-v4-noche-debut-certification.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  two-reciprocal-ufc-career-certificates:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run full career gate regression tests
+        run: node --test tests/test-ufc-36-month-stage3-progress.mjs
+      - name: Certify both native fight corners, UFC outcomes and full round metric archives offline
+        run: node scripts/verify-ufc-v4-noche-debut-certification.mjs
+      - name: Retain independently certified fighter proofs
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-v4-noche-paired-full-career-certificates
+          path: qa/ufc-v4-noche-sean-jessie-paired-certificates.json
+          retention-days: 30
+          if-no-files-found: error
