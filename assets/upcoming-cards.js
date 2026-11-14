@@ -219,6 +219,8 @@ window.UpcomingCards=(()=>{
   const query=String(window.BEFNFightsUI?.query||'').trim().toLowerCase();
   const promo=window.BEFNFightsUI?.promotion||'ufc';
   const events=feed.events.filter(e=>{
+   // Explicit final state outranks the grace period for unconfirmed start times.
+   if(['completed','cancelled'].includes(String(e.status||'').toLowerCase()))return false;
    if((sport!=='all'&&e.sport!==sport)||!Array.isArray(e.bouts)||!e.bouts.length)return false;
    if(sport==='mma'){
     const name=String(e.promotion||'').toLowerCase();

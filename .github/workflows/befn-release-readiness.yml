@@ -48,6 +48,8 @@ jobs:
         run: |
           node tests/test-event-status.cjs
           node tests/test-results-card-order.cjs
+          node tests/test-results-ui.cjs
+          node tests/test-upcoming-cards.cjs
           node tests/test-upcoming-ui.cjs
           node tests/test-upcoming-merge.cjs
           python -m unittest discover -s tests -p 'test_results.py'
