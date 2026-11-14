@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-14T00:41:20.788Z",
-  "checkedAt": "2026-11-14T00:41:20.788Z",
+  "attemptedAt": "2026-11-14T01:48:29.857Z",
+  "checkedAt": "2026-11-14T01:48:29.857Z",
   "windowDays": 28,
   "articlesChecked": 31,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 47,
   "publisherSourcesConfigured": 32,
-  "linksFound": 17,
-  "newEmbedsVerified": 0,
+  "linksFound": 19,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -18,6 +18,25 @@
   "curatedRejected": 0,
   "curatedPublisherLinked": 2,
   "posts": [
+    {
+      "type": "post",
+      "platform": "Threads",
+      "sport": "mma",
+      "name": "Original Threads post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-14T01:48:29.857Z",
+      "discoveredAt": "2026-11-14T01:48:29.857Z",
+      "sourcePublisher": "UFC",
+      "evidenceUrl": "https://www.ufc.com/",
+      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 12,
+      "url": "https://www.threads.com/t/DfsvUc8Gyht/"
+    },
     {
       "type": "post",
       "platform": "X",
@@ -2442,6 +2461,10 @@
     {
       "url": "https://x.com/ufc/status/2121368212965396923",
       "firstSeen": "2026-11-13T23:52:19.027Z"
+    },
+    {
+      "url": "https://www.threads.com/t/DfsvUc8Gyht/",
+      "firstSeen": "2026-11-14T01:48:29.857Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
