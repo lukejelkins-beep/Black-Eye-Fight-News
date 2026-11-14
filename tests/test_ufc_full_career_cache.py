@@ -647,6 +647,63 @@ class FullCareerCacheTests(unittest.TestCase):
             self.assertNotIn("705",st["bouts"])
             if case in ("unapproved","no_contest"):self.assertEqual(client.calls,0,case)
             else:self.assertEqual(result["unresolved"],1,case)
+    def official_nc_event_fixture(self):
+        state,research,census,approval,manifest=self.source_date_search_fixture()
+        manifest["fighters"]["carlos-hernandez-7"]["bouts"]=[
+           {"date":"2019-10-05","opponent":"Khalid Taha","result":"no_contest"}]
+        event={"id":444,"org":"ufc","title":"UFC 243: Historical",
+               "starts_at":"2019-10-06T00:00:00Z","status":"completed"}
+        listing={"data":[event],"meta":{}}
+        details={"data":{**event,"card":[{
+           "id":706,"status":"no_contest",
+           "fighter_a":{"id":123,"slug":"carlos-hernandez","name":"Carlos Hernandez"},
+           "fighter_b":{"id":999,"slug":"khalid-taha","name":"Khalid Taha"},
+           "result":{"winner_fighter_id":None,"method":"no contest","round":3,
+                     "time":"3:00"},
+           "is_main":False,"is_title":False}]}}
+        return state,research,census,approval,manifest,listing,details
+
+    def test_source_non_winner_search_recovers_exact_old_ufc_no_contest_once(self):
+        state,research,census,approval,manifest,listing,details=self.official_nc_event_fixture()
+        client=self.PaginatedSearch(listing,details)
+        r=m.recover_source_verified_ufc_non_winner_event_cards(
+            client,state,research,census,dt.date(2026,11,14),approval,manifest)
+        self.assertEqual(r,{"calls":2,"linked":1,"indexed":1,"unresolved":0})
+        self.assertEqual(client.paths,[
+            "/events?org=ufc&from=2019-10-04&to=2019-10-06&limit=25",
+            "/events/444"])
+        self.assertEqual(state["bouts"]["706"]["status"],"no_contest")
+        saved=research["profiles"]["carlos-hernandez-7"]["recentHistory"]
+        self.assertEqual(saved[-1]["boutId"],"706")
+        self.assertEqual(saved[-1]["result"],"no_contest")
+        self.assertFalse(research["profiles"]["carlos-hernandez-7"]["ufcTimeline"]["complete"])
+        self.assertEqual(m.recover_source_verified_ufc_non_winner_event_cards(
+            client,state,research,census,dt.date(2026,11,14),approval,manifest)["calls"],0)
+
+    def test_source_non_winner_search_rejects_wrong_result_fighter_or_event(self):
+        import copy
+        state,research,census,approval,manifest,listing,details=self.official_nc_event_fixture()
+        for case in ("wrong_numeric","wrong_opponent","not_a_nc","feeder","unapproved"):
+            st,rs,cv,ap,ma,ls,dtl=[copy.deepcopy(x) for x in
+                (state,research,census,approval,manifest,listing,details)]
+            bout=dtl["data"]["card"][0]
+            if case=="wrong_numeric":bout["fighter_a"]["id"]=799
+            elif case=="wrong_opponent":bout["fighter_b"]["name"]="Other Person"
+            elif case=="not_a_nc":bout["status"]="completed"
+            elif case=="feeder":dtl["data"]["title"]="Dana White's Contender Series"
+            elif case=="unapproved":ap["status"]="pending"
+            client=self.PaginatedSearch(ls,dtl)
+            out=m.recover_source_verified_ufc_non_winner_event_cards(
+                client,st,rs,cv,dt.date(2026,11,14),ap,ma)
+            self.assertEqual(out["linked"],0,case)
+            self.assertEqual(out["indexed"],0,case)
+            self.assertNotIn("706",st["bouts"])
+            if case=="unapproved":self.assertEqual(client.calls,0)
+            else:
+                self.assertEqual(out["unresolved"],1)
+                self.assertEqual(m.recover_source_verified_ufc_non_winner_event_cards(
+                    client,st,rs,cv,dt.date(2026,11,14),ap,ma)["calls"],0)
+
     def test_no_signoff_no_full_career_calls(self):
         state,research,candidate=self.fixture()
         client=Fake()
