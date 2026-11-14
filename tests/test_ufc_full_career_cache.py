@@ -343,6 +343,50 @@ class FullCareerCacheTests(unittest.TestCase):
             client,state,research,candidate,dt.date(2026,11,13),self.approval()),0)
         self.assertEqual(client.paths,["/fights/800"])
 
+    def test_ucf_site_verified_finales_bypass_only_one_manual_review_cooldown(self):
+        evidence=m.read(m.OFFICIAL_FINALE_EVIDENCE,{})
+        self.assertEqual(len(evidence["bouts"]),7)
+        for row in evidence["bouts"]:
+            saved={"boutId":row["boutId"],"date":row["date"],
+                   "opponent":row["opponent"],"source":"native",
+                   "promotion":"ufc","result":"win"}
+            self.assertTrue(m.verified_official_finale_bout(
+                saved,row["fighterSlug"],evidence))
+            self.assertFalse(m.verified_official_finale_bout(
+                {**saved,"opponent":"Wrong person"},row["fighterSlug"],evidence))
+            self.assertFalse(m.confirmed_feeder_bout(
+                saved,row["fighterSlug"],m.read(m.FEEDER_EVIDENCE,{})))
+        row=evidence["bouts"][0]
+        state=m.default_progress()
+        state.setdefault("ufcCareerBoutChecks",{})[row["boutId"]]={
+            "status":"requires_manual_review","checkedAt":"2026-11-14",
+            "retryAfter":"2026-11-28"}
+        research={"profiles":{row["fighterSlug"]:{"recentHistory":[{
+            "promotion":"ufc","source":"native","boutId":row["boutId"],
+            "date":row["date"],"result":"loss","opponent":row["opponent"]}]}}}
+        census={"schema":1,"scope":"ufc","activityMonths":36,
+                "asOf":"2026-11-14",
+                "indexCompleteness":"36_month_event_scan_complete",
+                "fighters":[{"slug":row["fighterSlug"],
+                  "eligibilityStatus":"latest_observed_mma_ufc"}]}
+        approval={**self.approval([row["fighterSlug"]]),
+                  "rosterAsOf":"2026-11-14","approvedAt":"2026-11-14"}
+        class Invalid(Fake):
+            def call(self,path):
+                self.calls+=1
+                self.paths.append(path)
+                return {"data":None}
+        client=Invalid()
+        self.assertEqual(m.collect_ufc_career_bouts(
+            client,state,research,census,dt.date(2026,11,14),approval),0)
+        self.assertEqual(client.paths,["/fights/"+row["boutId"]])
+        self.assertTrue(state["ufcCareerBoutChecks"][row["boutId"]]
+                        ["officialFinaleRetryAttempted"])
+        self.assertEqual(m.collect_ufc_career_bouts(
+            client,state,research,census,dt.date(2026,11,14),approval),0)
+        self.assertEqual(client.paths,["/fights/"+row["boutId"]])
+        self.assertNotIn(row["boutId"],state["bouts"])
+
     def test_official_event_titles_do_not_treat_tuf_finale_as_feeder(self):
         self.assertTrue(m.official_ufc_event_title("UFC Fight Night: Example"))
         self.assertTrue(m.official_ufc_event_title(
