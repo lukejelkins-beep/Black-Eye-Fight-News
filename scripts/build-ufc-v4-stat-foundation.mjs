@@ -11,7 +11,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
-import {isFeederUfcEvent} from "./ufc-official-event-scope.mjs";
+import {isFeederUfcEvent,isOfficialUfcBout} from "./ufc-official-event-scope.mjs";
 import {evaluateCareerEvidence} from "./ufc-36-month-stage3-progress.mjs";
 import {certifyAttestedFullCareers} from "./certify-ufc-v4-independent-full-careers.mjs";
 
@@ -65,10 +65,17 @@ function verifiedFeederRecord(slug,row,evidence){
   /^https:\/\/(?:www\.)?ufc\.com\//i.test(String(item.sourceUrl||""))
  );
 }
-function timeline(profile,asOf,feederDates,slug,feederEvidence){
+function verifiedMixedCardUfcRow(slug,row,progress){
+ const native=progress?.bouts?.[String(row?.boutId||"")];
+ return row?.source==="native"&&
+  (native?.a?.slug===slug||native?.b?.slug===slug)&&
+  isOfficialUfcBout(native);
+}
+function timeline(profile,asOf,feederDates,slug,feederEvidence,progress){
  const rows=(Array.isArray(profile?.recentHistory)?profile.recentHistory:[])
   .filter(x=>isHistoryRow(x)&&validDay(x.date)&&x.date<=asOf&&
-   !feederDates.has(x.date)&&!verifiedFeederRecord(slug,x,feederEvidence));
+   (!feederDates.has(x.date)||verifiedMixedCardUfcRow(slug,x,progress))&&
+   !verifiedFeederRecord(slug,x,feederEvidence));
  rows.sort((a,b)=>b.date.localeCompare(a.date)||
   Number(b.source==="native")-Number(a.source==="native")||
   String(a.opponent||"").localeCompare(String(b.opponent||"")));
@@ -160,11 +167,12 @@ export function buildV4StatFoundation(approval,research,progress,postfight,
   excludedFeederHistoryRows:0,excludedFeederFightIds:new Set()};
  for(const slug of approval.approvedFighters){
   const profile=research?.profiles?.[slug]||{};
-  const history=timeline(profile,day,feederDates,slug,feederEvidence);
+  const history=timeline(profile,day,feederDates,slug,feederEvidence,progress);
   const excludedExactFeederRows=(Array.isArray(profile?.recentHistory)?
    profile.recentHistory:[]).filter(x=>
    isHistoryRow(x)&&validDay(x.date)&&x.date<=day&&
-   (feederDates.has(x.date)||verifiedFeederRecord(slug,x,feederEvidence)));
+   ((feederDates.has(x.date)&&!verifiedMixedCardUfcRow(slug,x,progress))||
+    verifiedFeederRecord(slug,x,feederEvidence)));
   stats.excludedFeederHistoryRows+=excludedExactFeederRows.length;
   for(const row of excludedExactFeederRows)if(row.boutId)
    stats.excludedFeederFightIds.add(String(row.boutId));
