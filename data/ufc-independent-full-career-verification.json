@@ -25427,6 +25427,130 @@
           "nativeFighterId": "37"
         }
       ]
+    },
+    "kai-asakura": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Kai Asakura",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/d33da8a3d82bdb62",
+      "officialFighterUrl": "https://www.ufc.com/athlete/kai-asakura",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Immutable pinned independently sourced Greco UFCStats snapshot; no live UFCStats scrape"
+      },
+      "verifiedNumericFighterIds": [
+        "57"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Exhaustive official UFC.com athlete dated biography lists four official UFC fights: loss Alexandre Pantoja in the UFC 310 title bout, loss Tim Elliott (2025-08-16 event local; native UTC next day), KO win Cameron Smotherman, KO win Aoriqileng. All four source Greco UFCStats fight IDs, saved native 57/corners, results and measured rounds are exact. Historical Rizin bouts are outside UFC-only certification and excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/kai-asakura",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2024-12-07",
+          "opponent": "Alexandre Pantoja",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e761c5009c09b295",
+          "nativeBoutId": "60777",
+          "nativeFighterId": "57"
+        },
+        {
+          "date": "2025-08-16",
+          "opponent": "Tim Elliott",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/82338ba457fbe87f",
+          "nativeBoutId": "60500",
+          "nativeFighterId": "57"
+        },
+        {
+          "date": "2026-05-30",
+          "opponent": "Cameron Smotherman",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/00959e29e4a10e26",
+          "nativeBoutId": "66104",
+          "nativeFighterId": "57"
+        },
+        {
+          "date": "2026-08-29",
+          "opponent": "Aoriqileng",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/4af8cb715ac0d459",
+          "nativeBoutId": "83052",
+          "nativeFighterId": "57"
+        }
+      ]
+    },
+    "patricio-pitbull": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Patricio Pitbull",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/98a58c26c5b1ed17",
+      "officialFighterUrl": "https://www.ufc.com/athlete/patricio-freire",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Immutable pinned independently sourced Greco UFCStats snapshot; no live UFCStats scrape"
+      },
+      "verifiedNumericFighterIds": [
+        "577"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "The full UFC.com Patricio Pitbull (Patricio Freire) official biography has four UFC bouts: decision loss Yair Rodriguez, decision win Dan Ige (local July 19 vs cached July 20 UTC), decision loss Aaron Pico and KO win Dooho Choi. UFCStats Greco historical result rows alternatively call the fighter Patricio Freire (2025) or Patricio Pitbull (2026); exact pinned UFCStats fighter ID 98a58c26c5b1ed17, original numeric 577, both corners, outcomes and measured rounds resolve the alias without a duplicate career. Prior Bellator/Rizin bouts excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/patricio-freire",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-04-12",
+          "opponent": "Yair Rodriguez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d3be5a4e0ec273e2",
+          "nativeBoutId": "60968",
+          "nativeFighterId": "577"
+        },
+        {
+          "date": "2025-07-19",
+          "opponent": "Dan Ige",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/acc961fd5cf5c62e",
+          "nativeBoutId": "60806",
+          "nativeFighterId": "577"
+        },
+        {
+          "date": "2026-04-11",
+          "opponent": "Aaron Pico",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/10ab34056720b6b4",
+          "nativeBoutId": "65990",
+          "nativeFighterId": "577"
+        },
+        {
+          "date": "2026-09-19",
+          "opponent": "Dooho Choi",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f7810c98786c3dd8",
+          "nativeBoutId": "83421",
+          "nativeFighterId": "577"
+        }
+      ]
     }
   }
 }
