@@ -6,12 +6,162 @@
   "description": "Separate from provider UFCalendar metadata. Only independently checked complete UFC fight listings with source-linked bout-by-bout identities may establish full-career verification. No fighter is independently certified merely because every currently known UFC fight is indexed and measured. Minimum-count evidence may prove historical omissions but cannot certify full-career completeness, even if its minimum is met.",
   "fighters": {
     "bruno-gustavo-da-silva": {
-      "sourceCoverageAttested": false,
-      "scope": "minimum_count_evidence_only",
-      "minimumOfficialUfcBouts": 12,
-      "fighterUrl": "https://www.ufc.com/athlete/bruno-silva",
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Bruno Gustavo da Silva",
       "verifiedAt": "2026-11-14",
-      "note": "UFC official flyweight Bruno Silva (NOT middleweight Bruno Silva 'Blindado') lists 12 UFC appearances through 6 June 2026, including losses to Charles Johnson and Edgar Chairez in 2026; the immutable approved roster snapshot has a stale 2025-10-18 most-recent UFC date. This is a minimum count/source-confirmed gap, never independent full-career certification. The complete dated bout inventory lives in data/ufc-official-career-bout-inventory.json."
+      "fighterUrl": "https://ufcstats.com/fighter-details/294aa73dbf37d281",
+      "officialFighterUrl": "https://www.ufc.com/athlete/bruno-silva",
+      "nickname": "Bulldog",
+      "latestCompletedOfficialUfcBout": "2026-06-06",
+      "earliestOfficialUfcBout": "2019-10-05",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "method": "All 12 UFCStats-derived Greco fight results, source URLs and event dates reconciled with full 12-fight chronological official UFC.com biography. One 2019 UFC 243 bout at bantamweight is a no contest. Direct inaccessible UFCStats pages were not rendered; pinned CSV source URLs retained.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "87",
+        "158"
+      ],
+      "sourceVerifiedNativeNameAliases": [
+        "Bruno Silva"
+      ],
+      "disambiguation": {
+        "officialNickname": "Bulldog",
+        "ufcStatsFlyweightId": "294aa73dbf37d281",
+        "differentMiddleweightName": "Bruno Silva Blindado",
+        "excludedUfcStatsMiddleweightId": "12ebd7d157e91701",
+        "proof": "12 dated official UFC events and paired opponent/outcome records identify the flyweight; do not merge the middleweight."
+      },
+      "nativeIdentityReconciliation": "Historical ID 158 appears in 11 native UFC fights; the 18 October 2025 Park record uses newer ID 87. Both are anchored to exact official UFCStats bouts and opposing corners, not a name-only Greco guess.",
+      "bouts": [
+        {
+          "date": "2019-10-05",
+          "opponent": "Khalid Taha",
+          "result": "no_contest",
+          "fightUrl": "https://ufcstats.com/fight-details/57ff0eb2351979c4",
+          "eventUrl": "https://ufcstats.com/event-details/3cf68c1d17f66af7",
+          "nativeBoutId": "62109",
+          "nativeFighterId": "158",
+          "weightClass": "Bantamweight Bout"
+        },
+        {
+          "date": "2020-03-14",
+          "opponent": "David Dvorak",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1a2d13834696c4ab",
+          "eventUrl": "https://ufcstats.com/event-details/53278852bcd91e11",
+          "nativeBoutId": "59151",
+          "nativeFighterId": "158",
+          "weightClass": "Flyweight Bout"
+        },
+        {
+          "date": "2020-10-10",
+          "opponent": "Tagir Ulanbekov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/dbb5d682a2d7f584",
+          "eventUrl": "https://ufcstats.com/event-details/fd4578cac86d75ca",
+          "nativeBoutId": "61805",
+          "nativeFighterId": "158",
+          "weightClass": "Flyweight Bout"
+        },
+        {
+          "date": "2021-03-20",
+          "opponent": "JP Buys",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/55bf7f19a132e0fc",
+          "eventUrl": "https://ufcstats.com/event-details/c36e1f4fa755ffb4",
+          "nativeBoutId": "66321",
+          "nativeFighterId": "158",
+          "weightClass": "Flyweight Bout"
+        },
+        {
+          "date": "2021-05-22",
+          "opponent": "Victor Rodriguez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b381dc272b32ce03",
+          "eventUrl": "https://ufcstats.com/event-details/277ffed20cf07aea",
+          "nativeBoutId": "61763",
+          "nativeFighterId": "158",
+          "weightClass": "Flyweight Bout"
+        },
+        {
+          "date": "2023-03-11",
+          "opponent": "Tyson Nam",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c3af2b6ab1262fef",
+          "eventUrl": "https://ufcstats.com/event-details/35080a7f406f9ab3",
+          "nativeBoutId": "59678",
+          "nativeFighterId": "158",
+          "weightClass": "Flyweight Bout"
+        },
+        {
+          "date": "2024-07-20",
+          "opponent": "Cody Durden",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/94541dd979e0b4bd",
+          "eventUrl": "https://ufcstats.com/event-details/c11036da9162cb5f",
+          "nativeBoutId": "65926",
+          "nativeFighterId": "158",
+          "weightClass": "Flyweight Bout"
+        },
+        {
+          "date": "2024-12-14",
+          "opponent": "Manel Kape",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1a635a5e4551e7d5",
+          "eventUrl": "https://ufcstats.com/event-details/72c9c2eadfc3277e",
+          "nativeBoutId": "60370",
+          "nativeFighterId": "158",
+          "weightClass": "Flyweight Bout"
+        },
+        {
+          "date": "2025-06-07",
+          "opponent": "Joshua Van",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b6a87389bdc36a00",
+          "eventUrl": "https://ufcstats.com/event-details/18c49685296c60e6",
+          "nativeBoutId": "60866",
+          "nativeFighterId": "158",
+          "weightClass": "Flyweight Bout"
+        },
+        {
+          "date": "2025-10-18",
+          "opponent": "HyunSung Park",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/668a44403a130043",
+          "eventUrl": "https://ufcstats.com/event-details/38e5d9dcb0fddc42",
+          "nativeBoutId": "83254",
+          "nativeFighterId": "87",
+          "weightClass": "Flyweight Bout"
+        },
+        {
+          "date": "2026-03-14",
+          "opponent": "Charles Johnson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/fc9168fd102e2e66",
+          "eventUrl": "https://ufcstats.com/event-details/babc6b5745335f18",
+          "nativeBoutId": "60716",
+          "nativeFighterId": "158",
+          "weightClass": "Flyweight Bout"
+        },
+        {
+          "date": "2026-06-06",
+          "opponent": "Edgar Chairez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/20d74ed23d3e9b3a",
+          "eventUrl": "https://ufcstats.com/event-details/ba17afef01ed78b6",
+          "nativeBoutId": "66015",
+          "nativeFighterId": "158",
+          "weightClass": "Flyweight Bout"
+        }
+      ],
+      "note": "The UFC 243 Taha bout was overturned to an official no contest, native ID 62109, with final result checked against UFC.com, UFCStats-derived Greco UFC 243 NC/NC entry and event card. 2019 UFC 242 debut metadata reflects a scheduled bout, not a second contest. Official UFC.com graphical 'Win' panel for 2026 Chairez is incorrect; full athlete narrative and UFCStats-derived bout record both show a Silva loss. No additional provider calls; all 12 saved fight IDs retain round metrics."
     },
     "carlos-hernandez-7": {
       "sourceCoverageAttested": true,
