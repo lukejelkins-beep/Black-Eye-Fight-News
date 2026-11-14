@@ -23346,6 +23346,130 @@
           "excludedBecause": "UFC.com dated biography independently identifies historical Dana White's Contender Series appearance outside official UFC Octagon career"
         }
       ]
+    },
+    "ryan-gandra": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Ryan Gandra",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/e463ce0a2ca474f4",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ryan-gandra",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned immutable Greco UFCStats-derived historical CSV, not direct UFCStats live scrape",
+        "method": "Full dated official UFC.com athlete career narrative and exact Greco UFCStats-derived fighter/event/fight provenance reconciled to saved original numeric native bout IDs, opposing fighter corners, official outcomes, dates and measured rounds; individually source-proven DWCS excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "478"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Official UFC.com full career lists three UFC Octagon stoppage wins through 14 November 2026, all matched to pinned Greco UFCStats bout URLs, native IDs, opposing corners, results and measured rounds. The distinct 2025 DWCS bout is independently identified and excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/ryan-gandra",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2026-02-28",
+          "opponent": "Jose Daniel Medina",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/45ec0c5f19c9adbe",
+          "nativeBoutId": "60679",
+          "nativeFighterId": "478"
+        },
+        {
+          "date": "2026-07-11",
+          "opponent": "Zach Reese",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1162a74e3604c488",
+          "nativeBoutId": "66462",
+          "nativeFighterId": "478"
+        },
+        {
+          "date": "2026-09-19",
+          "opponent": "Ozzy Diaz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/51789f77811b1817",
+          "nativeBoutId": "83416",
+          "nativeFighterId": "478"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84057",
+          "date": "2025-08-26",
+          "opponent": "Trent Miller",
+          "result": "win",
+          "event": "Dana White's Contender Series 79",
+          "officialSourceUrl": "https://www.ufc.com/athlete/ryan-gandra",
+          "excludedBecause": "UFC.com dated biography independently identifies this Contender Series feeder outside official UFC Octagon history"
+        }
+      ]
+    },
+    "marcus-almeida": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Marcus Buchecha",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/095854a135e6db55",
+      "officialFighterUrl": "https://www.ufc.com/athlete/marcus-buchecha",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned immutable Greco UFCStats-derived historical CSV, not direct UFCStats live scrape",
+        "method": "Full dated official UFC.com athlete career narrative and exact Greco UFCStats-derived fighter/event/fight provenance reconciled to saved original numeric native bout IDs, opposing fighter corners, official outcomes, dates and measured rounds; individually source-proven DWCS excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "7324"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Official UFC.com and pinned UFCStats complete three-bout history for Marcus Buchecha, alias Marcus Almeida in native UFCalendar ID 7324. Two UFC losses and exact 2025-12-13 US / 2025-12-14 UTC Kennedy Nzechukwu draw (not a win). All Greco URLs, original numeric bout IDs, opposing fighter corners, outcomes and measured rounds independently matched. Earlier ONE fights excluded as non-UFC.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/marcus-buchecha",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-07-26",
+          "opponent": "Martin Buday",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0a598768f5c8d540",
+          "nativeBoutId": "60828",
+          "nativeFighterId": "7324"
+        },
+        {
+          "date": "2025-12-14",
+          "opponent": "Kennedy Nzechukwu",
+          "result": "draw",
+          "fightUrl": "https://ufcstats.com/fight-details/47149f3187661509",
+          "nativeBoutId": "60651",
+          "nativeFighterId": "7324"
+        },
+        {
+          "date": "2026-04-25",
+          "opponent": "Ryan Spann",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7e551ddb1494a45f",
+          "nativeBoutId": "66081",
+          "nativeFighterId": "7324"
+        }
+      ],
+      "sourceVerifiedNativeNameAliases": [
+        "Marcus Almeida"
+      ]
     }
   }
 }
