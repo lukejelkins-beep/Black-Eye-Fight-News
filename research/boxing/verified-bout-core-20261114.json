@@ -1,0 +1,63 @@
+{
+  "schema_version": "befn.boxing.bout-evidence.v1",
+  "as_of": "2026-11-14",
+  "status": "PARTIAL_VERIFIED_BOUT_CORE_NOT_COMPLETE_CAREER_HISTORY",
+  "records": [
+    {
+      "report_id": 16970,
+      "date": "2026-11-07",
+      "source_url": "https://beta.compuboxdata.com/round-stats/16970",
+      "result_header": "WILLIAM HUTCHINSON UD 12 JOSHUA BUATSI",
+      "winner": "Willy Hutchinson",
+      "loser": "Joshua Buatsi",
+      "method": "UD",
+      "rounds": 12,
+      "opponent_display": {
+        "Willy Hutchinson": "Joshua Buatsi",
+        "Joshua Buatsi": "Willy Hutchinson"
+      },
+      "aliases": {
+        "Willy Hutchinson": [
+          "William Hutchinson"
+        ]
+      },
+      "source_counted_as": "one professional bout; fight result and round-by-round punches independently reconciled"
+    },
+    {
+      "report_id": 16971,
+      "date": "2026-11-07",
+      "source_url": "https://beta.compuboxdata.com/round-stats/16971",
+      "result_header": "JACK RAFFERTY UD 12 HOVHANNES MARTIROSYAN",
+      "winner": "Jack Rafferty",
+      "loser": "Hovhannes Martirosyan",
+      "method": "UD",
+      "rounds": 12,
+      "opponent_display": {
+        "Jack Rafferty": "Hovhannes Martirosyan",
+        "Hovhannes Martirosyan": "Jack Rafferty"
+      },
+      "source_counted_as": "one professional bout; fight result and round-by-round punches independently reconciled"
+    },
+    {
+      "report_id": 16972,
+      "date": "2026-11-07",
+      "source_url": "https://beta.compuboxdata.com/round-stats/16972",
+      "result_header": "BRADLEY REA TKO 2 EZRA TAYLOR",
+      "winner": "Bradley Rea",
+      "loser": "Ezra Taylor",
+      "method": "TKO",
+      "rounds": 2,
+      "opponent_display": {
+        "Bradley Rea": "Ezra Taylor",
+        "Ezra Taylor": "Bradley Rea"
+      },
+      "source_counted_as": "one professional bout; fight result and round-by-round punches independently reconciled"
+    }
+  ],
+  "guardrails": [
+    "Do not infer a fighter's career record from any of these bouts alone.",
+    "Alias William Hutchinson = Willy Hutchinson documented by BoxRec (boxer ID 811747).",
+    "This curated file lists initial verified results for ranked cohort boxers only; punches remain in separate per-report cache.",
+    "Comprehensive recent-five, recent-ten and career totals cannot be inferred from this evidence sample."
+  ]
+}
