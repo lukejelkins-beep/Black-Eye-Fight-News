@@ -5,7 +5,7 @@
 import {readFile, mkdir, writeFile} from 'node:fs/promises';
 import {
   TRACKED_DIVISIONS, originCountry, banzukeMovement, dayMatchups,
-  confirmedCareerHigh, verifiedHeadToHead, rankPositions
+  confirmedCareerHigh, verifiedHeadToHead, rankPositions, announcedTorikumiMatches
 } from '../assets/sumo-data.mjs';
 
 const read=async p=>JSON.parse(await readFile(p,'utf8'));
@@ -53,15 +53,25 @@ for(const extra of details.featuredExtras||[]){
 }
 const matchupStats={};
 for(const division of TRACKED_DIVISIONS){
-  const keys=new Set();
-  let completed=0,pending=0;
+  const keys=new Set();let completed=0;
   for(let day=1;day<=15;day++){
     for(const match of dayMatchups(current[division],day)){
-      keys.add(day+':'+match.key);
-      if(match.finished)completed++;else pending++;
+      if(!match.finished)throw new Error('Unverified pending banzuke fixture published');
+      keys.add(day+':'+match.key);completed++;
     }
   }
-  matchupStats[division]={namedCompletedBouts:completed,namedPendingBouts:pending,uniqueDayPairings:keys.size};
+  const source=details.torikumi?.[division];
+  const forthcoming=source?.status==='available'?announcedTorikumiMatches(source.data,{
+    bashoId:details.bashoId,division,day:details.announcedDay
+  }):[];
+  const pending=forthcoming.filter(x=>!x.finished);
+  matchupStats[division]={
+    namedCompletedBouts:completed,
+    separatelyAnnouncedUpcoming:pending.length,
+    announcedDay:details.announcedDay||null,
+    completedUniqueDayPairings:keys.size,
+    futureDataStatus:source?.status||'not-collected'
+  };
 }
 const output={
   status:'ok',schemaVersion:1,collectedAt:details.collectedAt,bashoId:details.bashoId,
