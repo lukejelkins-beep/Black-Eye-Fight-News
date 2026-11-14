@@ -79,3 +79,26 @@ test('independently checks JSA identity and physical measurements without certif
   assert.match(verified.note,/result-cutoff dates/);
   assert.equal(crossCheckOfficial(w,d,{...evidence,officialNskId:9999}).identityVerified,false);
 });
+
+test('full history includes extra Mae-zumo and day-16 tie-break bouts without inflating official career totals',()=>{
+  const doc=complete();
+  doc.data.stats.basho=1;
+  doc.data.ranks.push({id:'201503-28',bashoId:'201503',rikishiId:28,rank:'Mae-zumo'});
+  doc.stages.ranks.total=2;
+  doc.data.matches.push(
+    {bashoId:'201503',division:'Mae-zumo',day:2,matchNo:3,eastId:28,westId:7},
+    {bashoId:'202601',division:'Makushita',day:16,matchNo:2,eastId:28,westId:8});
+  doc.stages.matches.total=3;
+  const out=auditRikishi(w,doc);
+  assert.equal(out.readyForExternalCrosscheck,true);
+  assert.equal(out.counts.matches,3);
+  assert.equal(out.counts.regularMatches,1);
+  assert.equal(out.counts.specialMatches,2);
+  assert.equal(out.counts.formalRanks,1);
+});
+test('formal banzuke count must reconcile to career basho count',()=>{
+  const doc=complete();doc.data.stats.basho=5;
+  const out=auditRikishi(w,doc);
+  assert.equal(out.readyForExternalCrosscheck,false);
+  assert.ok(out.errors.includes('rank-history-basho-count-mismatch'));
+});
