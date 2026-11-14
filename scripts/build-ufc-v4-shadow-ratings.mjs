@@ -211,6 +211,7 @@ export function buildShadowRatings(approval,foundation,postfight,{asOf}={}){
    insufficientSamples:0,
    fewerThanThreeOfficialUfcBouts:0,
    atLeastThreeOfficialUfcBoutsUnrated:0,
+   atLeastThreeUnratedCases:[],
    officialUfcHistoryLengthBands:{"0":0,"1":0,"2":0,"3plus":0},
    excludedHistoryDiscrepancies:0,historicalCareersCertified:0};
  for(const slug of approval.approvedFighters){
@@ -241,7 +242,12 @@ export function buildShadowRatings(approval,foundation,postfight,{asOf}={}){
   }
   if(windows.last5.overall===null){
    summary.insufficientSamples++;
-   if(f.knownCareerBouts>=3)summary.atLeastThreeOfficialUfcBoutsUnrated++;
+   if(f.knownCareerBouts>=3){
+    summary.atLeastThreeOfficialUfcBoutsUnrated++;
+    summary.atLeastThreeUnratedCases.push({slug,knownUfcBouts:f.knownCareerBouts,
+     status:windows.last5.status,decisionBouts:windows.last5.bouts,
+     reason:"sample_gate_or_missing_technical_stat_denominators"});
+   }
   }
   fighters[slug]={name:f.name,slug,fullCareerCertified:!!(f.ufcTimelineCertified||
    f.independentlyCertifiedCareer),
