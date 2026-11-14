@@ -111,7 +111,7 @@ function renderHome() {
       '<div class="panel-body">'+standingsTable(leaders)+'</div></section>' +
     '<section class="panel"><div class="panel-head"><h3>Three-division coverage</h3><span>CURRENT ROSTER</span></div>' +
     '<div class="panel-body"><p>Unlike boxing and MMA, Sumo uses tournament-by-tournament ranking tables. BEFN follows the current banzuke rather than retaining an arbitrary fixed list.</p>' +
-    '<p>All <b>42 Makuuchi</b>, <b>28 Jūryō</b> and <b>120 Makushita</b> places are covered in this source snapshot. Lower-division wrestlers normally compete in seven bouts per 15-day basho.</p>' +
+    '<p>All <b>'+counts().Makuuchi+' Makuuchi</b>, <b>'+counts().Juryo+' Jūryō</b> and <b>'+counts().Makushita+' Makushita</b> places are covered in this source snapshot. Lower-division wrestlers normally compete in seven bouts per 15-day basho.</p>' +
     '<a class="btn light" href="#banzuke">VIEW FULL BANZUKE</a></div></section></div>' +
     heading('Explore the roster','All ranked rikishi','<a href="#rikishi">Search 190 profiles →</a>')+
     '<div class="directory-grid">'+ranks().slice(0,8).map(directoryCard).join('')+'</div>'+
@@ -267,7 +267,7 @@ function renderBasho() {
   const lastday=data?currentDay(data):0;
   return '<section class="basho-hero"><div><div class="eyebrow" style="color:#f3c332">GRAND SUMO · SIX TOURNAMENTS EACH YEAR</div>'+
     '<h1>'+e(bashoLabel(details().bashoId))+'</h1><p>'+e(target?.startDate?dateOnly(target.startDate):'Start date unavailable')+' – '+e(target?.endDate?dateOnly(target.endDate):'End date unavailable')+' · Japan · third-party source snapshot</p></div>'+
-    '<div><span class="basho-day">'+(lastday?'DAY '+lastday:'—')+'</span><p>LATEST RECORDED DAY</p></div></section>'+
+    '<div><span class="basho-day">'+(lastday?(d==='Makushita'?'BOUT '+lastday:'DAY '+lastday):'—')+'</span><p>'+(d==='Makushita'?'LONGEST RECORDED BOUT SEQUENCE':'LATEST RECORDED DAY')+'</p></div></section>'+
     divisionTabs(d,'data-basho-division')+
     heading('Top of this division','Tournament standings')+
     '<div class="panel"><div class="panel-head"><h3>'+e(d)+' · '+e(bashoLabel(details().bashoId))+'</h3><span>AS-OF SNAPSHOT</span></div>'+
