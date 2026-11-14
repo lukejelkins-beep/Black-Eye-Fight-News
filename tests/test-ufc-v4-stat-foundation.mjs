@@ -139,3 +139,44 @@ test("a legacy complete flag cannot certify a career",()=>{
  assert.equal(out.fighters["fighter-alpha"].ufcTimelineCertified,true);
  assert.equal(out.summary.fullyProviderCertifiedTimelines,1);
 });
+
+test("exact UFC primary-source DWCS exclusions remove feeder fights, not legitimate UFC bouts",()=>{
+ const {progress,archive,approval,research}=fixtures();
+ research.profiles["fighter-alpha"].recentHistory.push({
+  source:"native",boutId:"83840",date:"2020-09-08",
+  promotion:"UFC",result:"win",opponent:"Henrique Shiguemoto"
+ });
+ const feederEvidence={schema:1,bouts:[{
+  fighterSlug:"fighter-alpha",boutId:"83840",date:"2020-09-08",
+  opponent:"Henrique Shiguemoto",event:"Dana White's Contender Series",
+  sourceUrl:"https://www.ufc.com/news/dana-whites-contender-series-results-week-6"
+ }]};
+ const measured=buildPostfightMetrics(progress,archive,{asOf:"2026-11-14"});
+ const without=buildV4StatFoundation(approval,research,progress,measured,
+  {asOf:"2026-11-14"});
+ const withProof=buildV4StatFoundation(approval,research,progress,measured,
+  {asOf:"2026-11-14",feederEvidence});
+ assert.equal(without.fighters["fighter-alpha"].knownCareerBouts,13);
+ assert.equal(withProof.fighters["fighter-alpha"].knownCareerBouts,12);
+ assert.equal(withProof.summary.excludedKnownFeederHistoryRows,1);
+ assert.equal(withProof.summary.excludedDistinctKnownFeederBoutIds,1);
+ assert.equal(withProof.missingNativeBoutQueue.some(x=>x.boutId==="83840"),false);
+ assert.equal(withProof.missingNativeBoutQueue.some(x=>x.boutId==="512"),true);
+});
+test("no date-only or untrusted-domain source can erase genuine official UFC stats",()=>{
+ const {progress,archive,approval,research}=fixtures();
+ research.profiles["fighter-alpha"].recentHistory.push({
+  source:"native",boutId:"83840",date:"2020-09-08",
+  promotion:"UFC",result:"win",opponent:"Henrique Shiguemoto"
+ });
+ const measured=buildPostfightMetrics(progress,archive,{asOf:"2026-11-14"});
+ const forged={schema:1,bouts:[{
+  fighterSlug:"fighter-alpha",boutId:"83840",date:"2020-09-08",
+  opponent:"Henrique Shiguemoto",event:"Dana White's Contender Series",
+  sourceUrl:"https://www.ufc.com.attacker.test/news/fake"
+ }]};
+ const out=buildV4StatFoundation(approval,research,progress,measured,
+  {asOf:"2026-11-14",feederEvidence:forged});
+ assert.equal(out.fighters["fighter-alpha"].knownCareerBouts,13);
+ assert.equal(out.summary.excludedKnownFeederHistoryRows,0);
+});
