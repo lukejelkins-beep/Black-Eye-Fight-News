@@ -28268,6 +28268,71 @@
         }
       ],
       "sourceVerifiedExcludedFeederBouts": []
+    },
+    "mairon-santos": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Mairon Santos",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/480779d7f9a424d3",
+      "officialFighterUrl": "https://www.ufc.com/athlete/mairon-santos-alves",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived dataset, not direct UFCStats scrape",
+        "method": "Exhaustive UFC.com biographical history and dated official UFC results individually reconciled to complete pinned Greco UFCStats fight IDs, original immutable UFCalendar numeric fighter/bout IDs and opposing corners, winners and archived measured rounds; TUF 32 UFC on ESPN final included and house bouts excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "306"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "All four completed official UFC bouts in complete UFC.com athlete history from August 2024 to December 2025 crosschecked: win by knockout over Kaan Ofli in televised TUF 32 official UFC Fight Night featherweight finale (2024-08-24), split decision win vs Francis Marshall (2025-03-08), unanimous decision win vs Sodiq Yusuff (2025-05-17), third-round TKO win vs Muhammad Naimov (2025-12-06). Native 2025-12-07 date is a documented UTC one-day representation, original saved source IDs and opponent corners preserved. No TUF exhibition/qualifier bouts counted.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/mairon-santos-alves",
+        "https://www.ufc.com/news/official-judges-scorecards-ufc-fight-night-cannonier-vs-borralho-vegas-96",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2024-08-24",
+          "opponent": "Kaan Ofli",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/bad06a5380d762b8",
+          "nativeBoutId": "60230",
+          "nativeFighterId": "306"
+        },
+        {
+          "date": "2025-03-08",
+          "opponent": "Francis Marshall",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/19fe7177254802d1",
+          "nativeBoutId": "60329",
+          "nativeFighterId": "306"
+        },
+        {
+          "date": "2025-05-17",
+          "opponent": "Sodiq Yusuff",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/dcb27eef6441268c",
+          "nativeBoutId": "60842",
+          "nativeFighterId": "306"
+        },
+        {
+          "date": "2025-12-06",
+          "opponent": "Muhammad Naimov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/40fa4f8b4b93884e",
+          "nativeBoutId": "60533",
+          "nativeFighterId": "306"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
     }
   }
 }
