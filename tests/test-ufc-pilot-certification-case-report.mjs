@@ -69,3 +69,16 @@ test('Park same dated official fight under 38150 and 83254 is a native identity 
  assert.equal(result.extra[0].nativeBoutId,'83254');
  assert.equal(result.extra[0].matchedAlternateNativeBoutId,'38150');
 });
+
+test('missing official bout reports cached native ID with contradictory result but does not match',()=>{
+ const official={bouts:[{date:'2026-06-06',opponent:'Edgar Chairez',result:'loss'}]};
+ const saved={recentHistory:[{date:'2026-06-06',opponent:'Edgar Chairez',result:'win',
+  promotion:'ufc',boutId:'cached-7'}]};
+ const out=comparePilot(official,saved);
+ assert.equal(out.matchedCount,0);
+ assert.equal(out.missingCount,1);
+ assert.deepEqual(out.missing[0].savedCandidates,[{
+  nativeBoutId:'cached-7',savedDate:'2026-06-06',savedResult:'win',
+  reviewReason:'result_conflict'
+ }]);
+});
