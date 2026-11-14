@@ -621,3 +621,60 @@ test('Source-confirmed UFC recovery audit separates win/loss search and non-winn
    ['winner_date_search','nonwinner_event_card'].includes(r.type)));
  assert.equal(s.independentlyVerifiedFullCareerTimelines,0);
 });
+
+test('Independent full-career source can supersede a deficient provider timeline without hiding native identity conflicts',()=>{
+ const rows=[history(41,'Opponent A','2026-11-10'),
+   history(42,'Opponent B','2026-10-10')];
+ const source={sourceCoverageAttested:true,
+   verificationMethod:'full_official_ufc_fight_listing_crosscheck',
+   verifiedAt:'2026-11-14',
+   fighterUrl:'https://ufcstats.com/fighter-details/abcdef123',
+   bouts:[{date:'2026-11-10',opponent:'Opponent A',result:'win',
+     fightUrl:'https://ufcstats.com/fight-details/deadbeef01'},
+    {date:'2026-10-10',opponent:'Opponent B',result:'win',
+     fightUrl:'https://ufcstats.com/fight-details/deadbeef02'}]};
+ const incompleteProvider={ufcTimeline:{complete:true,
+   providerTruncatedFlag:false,observedOn:'2026-11-14',settledCount:1,
+   savedHistoryHasAdditionalUfcBouts:true,
+   missingRosterLastUfcFight:'2026-10-10'}};
+ const decision=evaluateCareerEvidence(incompleteProvider,rows,
+   '2026-10-10','2026-11-14',source);
+ assert.equal(decision.rosterLatestPresent,true);
+ assert.equal(decision.rosterSnapshotStale,true);
+ assert.equal(decision.providerCertified,false,
+   'Provider response remains incomplete even when original roster fight exists');
+ assert.equal(decision.providerDiscrepancy,true);
+ assert.equal(decision.independentlyVerified,true,
+   'A separately verified exact full official fight listing is not disqualified by missing old provider rows');
+ const collision=evaluateCareerEvidence({
+   ...incompleteProvider,ufcHistoryIdConflicts:[{oldId:'11',newId:'22'}]
+ },rows,'2026-10-10','2026-11-14',source);
+ assert.equal(collision.independentlyVerified,false,
+   'Contradictory native IDs remain a hard certification blocker');
+ assert.equal(evaluateCareerEvidence(incompleteProvider,rows,
+   '2026-09-01','2026-11-14',source).independentlyVerified,false,
+   'An absent roster last-fight row cannot be inferred from an otherwise exact external list');
+ assert.equal(evaluateCareerEvidence(incompleteProvider,rows,
+   '2026-10-10','2026-11-14',
+   {...source,sourceCoverageAttested:false}).independentlyVerified,false);
+});
+
+test('Roster date superseded by more recent saved UFC bout is reported separately from missing fights',()=>{
+ const p={...progress,bouts:{
+   '41':{...fight(41,'Opponent A'),eventDate:'2026-11-10'},
+   '42':{...fight(42,'Opponent B'),eventDate:'2026-10-10'}
+ }};
+ const r={profiles:{'fighter-1':{
+   recentHistory:[history(41,'Opponent A','2026-11-10'),
+     history(42,'Opponent B','2026-10-10')],
+   ufcTimeline:{complete:false,savedHistoryHasAdditionalUfcBouts:true}
+ }}};
+ const c={...census, fighters:census.fighters.map(row=>
+   row.slug==='fighter-1'?{...row,lastUfcFight:'2026-10-10'}:row)};
+ const result=auditApprovedStage3(approval,c,p,r,archive);
+ assert.equal(result.summary.approvedRosterLatestDatesSuperseded,1);
+ const fighter=result.careerVerificationDecisions.find(x=>x.slug==='fighter-1');
+ assert.equal(fighter.approvedRosterLastFightSuperseded,true);
+ assert.equal(fighter.providerHistoryDiscrepancy,true,
+   'Old provider history remains separately flagged even though roster entry exists');
+});
