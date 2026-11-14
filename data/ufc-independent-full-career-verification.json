@@ -1966,6 +1966,120 @@
           "measuredRoundStatsVerifiedInV4": true
         }
       ]
+    },
+    "tahir-abdullayev": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Tahir Abdullayev",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/e047d3b541afd4a7",
+      "officialFighterUrl": "https://www.ufc.com/athlete/tahir-abdullayev",
+      "firstOfficialUfcFight": "2026-06-27",
+      "lastOfficialUfcFight": "2026-06-27",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "72828"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Crosschecked entire official UFC athlete record, UFC debut on June 27 2026, independent Greco UFCStats-derived fighter-specific complete source index through November 7 2026, unique exact UFCStats fight URL, official UFC Baku scorecards, opponent corner and saved native statistics. Only one official completed UFC bout each through November 14 2026.",
+        "officialDebut": "2026-06-27",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "UFC Baku official result, latest athlete record and written biography agree on the 27 June 2026 TKO win; next bout scheduled for 21 November 2026, after roster freeze.",
+        "officialScorecardsUrl": "https://www.ufc.com/news/ufc-fight-night-fiziev-vs-torres-official-scorecards-judges",
+        "officialResultUrl": "https://www.ufc.com/news/ufc-fight-night-fiziev-vs-torres-results-highlights-interviews-prelims-baku",
+        "directUfcStatsSiteAccess": "not available; exact UFCStats fighter and fight URLs come from independently pinned Greco UFCStats archive, not claimed direct UFCStats page access"
+      },
+      "bouts": [
+        {
+          "date": "2026-06-27",
+          "opponent": "Jefferson Nascimento",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f1cb2e7ef096ec7c",
+          "nativeBoutId": "82871",
+          "nativeFightId": "82871",
+          "nativeFighterId": "72828",
+          "event": "UFC Fight Night: Fiziev vs Torres",
+          "method": "ko_tko",
+          "round": 3,
+          "time": "4:28",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-june-27-2026"
+        }
+      ],
+      "note": "Source-linked debut-to-snapshot exhaustive official UFC chronology. Each athlete separately mapped to shared native 82871, preserved distinct native fighter IDs, final result and complete measured round statistics. Independent CI gate must pass before certification finalization."
+    },
+    "jefferson-nascimento": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Jefferson Nascimento",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/4b85abc5abbe657c",
+      "officialFighterUrl": "https://www.ufc.com/athlete/jefferson-nascimento",
+      "firstOfficialUfcFight": "2026-06-27",
+      "lastOfficialUfcFight": "2026-06-27",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "55221"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Crosschecked entire official UFC athlete record, UFC debut on June 27 2026, independent Greco UFCStats-derived fighter-specific complete source index through November 7 2026, unique exact UFCStats fight URL, official UFC Baku scorecards, opponent corner and saved native statistics. Only one official completed UFC bout each through November 14 2026.",
+        "officialDebut": "2026-06-27",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "UFC profile Last fight panel visually says Win but official written history and UFC Baku event plus scorecards confirm he was stopped by Tahir Abdullayev. Preserve this presentational contradiction without falsifying the result.",
+        "officialScorecardsUrl": "https://www.ufc.com/news/ufc-fight-night-fiziev-vs-torres-official-scorecards-judges",
+        "officialResultUrl": "https://www.ufc.com/news/ufc-fight-night-fiziev-vs-torres-results-highlights-interviews-prelims-baku",
+        "directUfcStatsSiteAccess": "not available; exact UFCStats fighter and fight URLs come from independently pinned Greco UFCStats archive, not claimed direct UFCStats page access"
+      },
+      "bouts": [
+        {
+          "date": "2026-06-27",
+          "opponent": "Tahir Abdullayev",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f1cb2e7ef096ec7c",
+          "nativeBoutId": "82871",
+          "nativeFightId": "82871",
+          "nativeFighterId": "55221",
+          "event": "UFC Fight Night: Fiziev vs Torres",
+          "method": "ko_tko",
+          "round": 3,
+          "time": "4:28",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-june-27-2026"
+        }
+      ],
+      "note": "Source-linked debut-to-snapshot exhaustive official UFC chronology. Each athlete separately mapped to shared native 82871, preserved distinct native fighter IDs, final result and complete measured round statistics. Independent CI gate must pass before certification finalization."
     }
   }
 }
