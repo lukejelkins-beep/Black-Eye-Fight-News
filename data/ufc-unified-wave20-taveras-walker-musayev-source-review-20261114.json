@@ -1,0 +1,126 @@
+{
+  "schema": 1,
+  "scope": "ufc-wave20-taveras-walker-musayev-official-source-only-review",
+  "rosterAsOf": "2026-11-14",
+  "rosterSize": 783,
+  "nonproduction": true,
+  "certificationGranted": false,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07",
+    "evidenceCutoff": "2026-11-14",
+    "directUfcStatsAccess": "Exact pinned Greco UFCStats-derived CSV at immutable source commit, not direct live UFCStats scrape",
+    "method": "Complete official UFC.com dated fighter biographies and official result narratives, Greco historical source fighter/fight IDs, saved native UFCalendar fighter/bout/corner IDs, winner and full measured rounds, ±1 UTC day; DWCS exhibitions excluded, true televised TUF final included."
+  },
+  "fighters": {
+    "ramon-taveras": {
+      "fighterName": "Ramon Taveras",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ramon-taveras",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/c5ccd878231c5407",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2024-01-20",
+          "opponent": "Serhiy Sidey",
+          "result": "win",
+          "nativeBoutId": "59871",
+          "nativeFighterId": "60",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/43d90683078fcee5"
+        },
+        {
+          "date": "2024-12-14",
+          "opponent": "Davey Grant",
+          "result": "loss",
+          "nativeBoutId": "60379",
+          "nativeFighterId": "60",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/b40e4deb48658851"
+        },
+        {
+          "date": "2025-09-27",
+          "opponent": "Jack Jenkins",
+          "result": "loss",
+          "nativeBoutId": "38211",
+          "nativeFighterId": "60",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/38248c5d13f273e6"
+        }
+      ],
+      "reviewNote": "Two full completed UFC losses to Davey Grant and Jack Jenkins and a UFC 297 split decision WIN over Serhiy Sidey, dated primary official UFC.com results overriding misleading tiles. Two distinct independently attested 2023 DWCS appearances excluded, including 2023 opposite outcome vs SAME opponent Sidey (native 88267); planned Zhu bout in 2026 cancelled.",
+      "status": "source_attested_not_certified",
+      "pending": "passing independent frozen-783 strict Stage3 gate"
+    },
+    "brogan-walker": {
+      "fighterName": "Brogan Walker",
+      "officialFighterUrl": "https://www.ufc.com/athlete/brogan-walker",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/4333a8e70a672eb7",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2022-08-06",
+          "opponent": "Juliana Miller",
+          "result": "loss",
+          "nativeBoutId": "59550",
+          "nativeFighterId": "134",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/2b11aa4b90b1dd41"
+        },
+        {
+          "date": "2023-04-22",
+          "opponent": "Iasmin Lucindo",
+          "result": "loss",
+          "nativeBoutId": "61275",
+          "nativeFighterId": "134",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/20c0f50c11509301"
+        },
+        {
+          "date": "2025-10-04",
+          "opponent": "Veronica Hardy",
+          "result": "loss",
+          "nativeBoutId": "60751",
+          "nativeFighterId": "134",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/98883348ddb3be33"
+        }
+      ],
+      "reviewNote": "Complete three-loss UFC chronology, including actual August 2022 TUF 30 televised women's flyweight final against Juliana Miller, excluding TUF house quarterfinal Hannah Guy and semifinal Laura Gallardo exhibitions. Actual opponent Oct 2025 Veronica Hardy, although UFC athlete card labels Macedo alias.",
+      "status": "source_attested_not_certified",
+      "pending": "passing independent frozen-783 strict Stage3 gate"
+    },
+    "tofiq-musayev": {
+      "fighterName": "Tofiq Musayev",
+      "officialFighterUrl": "https://www.ufc.com/athlete/tofiq-musayev",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/ae81a3ac7b260411",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2025-06-21",
+          "opponent": "Myktybek Orolbai",
+          "result": "loss",
+          "nativeBoutId": "60274",
+          "nativeFighterId": "519",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/36ec204f47e4d613"
+        },
+        {
+          "date": "2026-03-28",
+          "opponent": "Ignacio Bahamondes",
+          "result": "win",
+          "nativeBoutId": "60629",
+          "nativeFighterId": "519",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/fa96d6252579b51e"
+        },
+        {
+          "date": "2026-08-01",
+          "opponent": "Ludovit Klein",
+          "result": "win",
+          "nativeBoutId": "82714",
+          "nativeFighterId": "519",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/fbd99ae7e1ff993a"
+        }
+      ],
+      "reviewNote": "Entire three-fight UFC chronology: kimura submission loss to Myktybek Orolbai and two wins vs Ignacio Bahamondes and Ludovit Klein, reconciling misleading result badges by dated official narrative. Earlier Rizin/Bellator promotion results excluded from UFC-only certification.",
+      "status": "source_attested_not_certified",
+      "pending": "passing independent frozen-783 strict Stage3 gate"
+    }
+  }
+}

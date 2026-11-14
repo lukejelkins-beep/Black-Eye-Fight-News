@@ -22659,6 +22659,191 @@
           "excludedBecause": "Independent DWCS feeder not official UFC Octagon contest"
         }
       ]
+    },
+    "ramon-taveras": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Ramon Taveras",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/c5ccd878231c5407",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ramon-taveras",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact pinned Greco UFCStats-derived CSV at immutable source commit, not direct live UFCStats scrape",
+        "method": "Complete official UFC.com dated fighter biographies and official result narratives, Greco historical source fighter/fight IDs, saved native UFCalendar fighter/bout/corner IDs, winner and full measured rounds, ±1 UTC day; DWCS exhibitions excluded, true televised TUF final included."
+      },
+      "verifiedNumericFighterIds": [
+        "60"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Independent complete dated official UFC Octagon career through 14 November 2026. Two full completed UFC losses to Davey Grant and Jack Jenkins and a UFC 297 split decision WIN over Serhiy Sidey, dated primary official UFC.com results overriding misleading tiles. Two distinct independently attested 2023 DWCS appearances excluded, including 2023 opposite outcome vs SAME opponent Sidey (native 88267); planned Zhu bout in 2026 cancelled. Each completed bout's exact source/native ID, opponent, result and measured rounds reconciled separately; full Stage3 audit must pass.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/ramon-taveras",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2024-01-20",
+          "opponent": "Serhiy Sidey",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/43d90683078fcee5",
+          "nativeBoutId": "59871",
+          "nativeFighterId": "60"
+        },
+        {
+          "date": "2024-12-14",
+          "opponent": "Davey Grant",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b40e4deb48658851",
+          "nativeBoutId": "60379",
+          "nativeFighterId": "60"
+        },
+        {
+          "date": "2025-09-27",
+          "opponent": "Jack Jenkins",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/38248c5d13f273e6",
+          "nativeBoutId": "38211",
+          "nativeFighterId": "60"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88267",
+          "date": "2023-09-05",
+          "opponent": "Serhiy Sidey",
+          "result": "loss",
+          "event": "Dana White's Contender Series 61",
+          "officialSourceUrl": "https://www.ufc.com/athlete/ramon-taveras",
+          "excludedBecause": "DWCS feeder completed but not part of UFC Octagon fight record"
+        },
+        {
+          "nativeBoutId": "84097",
+          "date": "2023-10-10",
+          "opponent": "Cortavious Romious",
+          "result": "win",
+          "event": "Dana White's Contender Series 66",
+          "officialSourceUrl": "https://www.ufc.com/athlete/ramon-taveras",
+          "excludedBecause": "DWCS feeder completed but not part of UFC Octagon fight record"
+        }
+      ]
+    },
+    "brogan-walker": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Brogan Walker",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/4333a8e70a672eb7",
+      "officialFighterUrl": "https://www.ufc.com/athlete/brogan-walker",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact pinned Greco UFCStats-derived CSV at immutable source commit, not direct live UFCStats scrape",
+        "method": "Complete official UFC.com dated fighter biographies and official result narratives, Greco historical source fighter/fight IDs, saved native UFCalendar fighter/bout/corner IDs, winner and full measured rounds, ±1 UTC day; DWCS exhibitions excluded, true televised TUF final included."
+      },
+      "verifiedNumericFighterIds": [
+        "134"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Independent complete dated official UFC Octagon career through 14 November 2026. Complete three-loss UFC chronology, including actual August 2022 TUF 30 televised women's flyweight final against Juliana Miller, excluding TUF house quarterfinal Hannah Guy and semifinal Laura Gallardo exhibitions. Actual opponent Oct 2025 Veronica Hardy, although UFC athlete card labels Macedo alias. Each completed bout's exact source/native ID, opponent, result and measured rounds reconciled separately; full Stage3 audit must pass.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/brogan-walker",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2022-08-06",
+          "opponent": "Juliana Miller",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/2b11aa4b90b1dd41",
+          "nativeBoutId": "59550",
+          "nativeFighterId": "134"
+        },
+        {
+          "date": "2023-04-22",
+          "opponent": "Iasmin Lucindo",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/20c0f50c11509301",
+          "nativeBoutId": "61275",
+          "nativeFighterId": "134"
+        },
+        {
+          "date": "2025-10-04",
+          "opponent": "Veronica Hardy",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/98883348ddb3be33",
+          "nativeBoutId": "60751",
+          "nativeFighterId": "134"
+        }
+      ]
+    },
+    "tofiq-musayev": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Tofiq Musayev",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/ae81a3ac7b260411",
+      "officialFighterUrl": "https://www.ufc.com/athlete/tofiq-musayev",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact pinned Greco UFCStats-derived CSV at immutable source commit, not direct live UFCStats scrape",
+        "method": "Complete official UFC.com dated fighter biographies and official result narratives, Greco historical source fighter/fight IDs, saved native UFCalendar fighter/bout/corner IDs, winner and full measured rounds, ±1 UTC day; DWCS exhibitions excluded, true televised TUF final included."
+      },
+      "verifiedNumericFighterIds": [
+        "519"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Independent complete dated official UFC Octagon career through 14 November 2026. Entire three-fight UFC chronology: kimura submission loss to Myktybek Orolbai and two wins vs Ignacio Bahamondes and Ludovit Klein, reconciling misleading result badges by dated official narrative. Earlier Rizin/Bellator promotion results excluded from UFC-only certification. Each completed bout's exact source/native ID, opponent, result and measured rounds reconciled separately; full Stage3 audit must pass.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/tofiq-musayev",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-06-21",
+          "opponent": "Myktybek Orolbai",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/36ec204f47e4d613",
+          "nativeBoutId": "60274",
+          "nativeFighterId": "519"
+        },
+        {
+          "date": "2026-03-28",
+          "opponent": "Ignacio Bahamondes",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fa96d6252579b51e",
+          "nativeBoutId": "60629",
+          "nativeFighterId": "519"
+        },
+        {
+          "date": "2026-08-01",
+          "opponent": "Ludovit Klein",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fbd99ae7e1ff993a",
+          "nativeBoutId": "82714",
+          "nativeFighterId": "519"
+        }
+      ]
     }
   }
 }
