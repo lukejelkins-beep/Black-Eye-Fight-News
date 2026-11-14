@@ -356,6 +356,216 @@
         "method": "Pin UFCStats-derived full fight results + fighter identity + event dates; crosscheck all 12 against official UFC chronological biography and unique measured native identities. Original UFCStats pages unavailable (502); no direct access claimed."
       },
       "nativeIdentityReconciliation": "All 12 unique native fights identify Maryna Moroz by numeric ID 1113 in the correct corner; date, opponent and final winner agree with independent UFCStats-derived source. Source listing includes both Joanne Wood fights, including 2015 listed by UFC biography under former name Joanne Calderwood."
+    },
+    "polyana-viana": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Polyana Viana",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/9673a497a9da119a",
+      "officialFighterUrl": "https://www.ufc.com/athlete/polyana-viana",
+      "earliestOfficialUfcBout": "2018-02-03",
+      "latestCompletedOfficialUfcBout": "2026-05-16",
+      "certificationStatus": "independently_verified_full_career",
+      "verifiedUfcRecord": {
+        "wins": 4,
+        "losses": 8,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "46"
+      ],
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "method": "One-to-one manual source research using complete 9,015-row Greco UFCStats-derived historical fight-results archive, 12 UFC.com biography dated results through 16 May 2026 and independently compiled 12-bout UFC history; each exact UFCStats fight detail and event URL mapped to native corner, verified winner and measured rounds. Direct UFCStats fighter page blocked (502); no direct live page access claimed.",
+        "latestSourceEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "independentFullHistoryUrl": "https://thefightalgorithm.com/fighters/polyana-viana",
+        "sourceRowsForFighter": 12
+      },
+      "nativeIdentityReconciliation": "All twelve distinct official UFC fights map to numeric UFCalendar fighter ID 46 and unique saved native IDs. Four event-local dates are one day earlier than saved UTC date; original saved dates preserved and individually enumerated below.",
+      "sourceDateReconciliations": [
+        {
+          "opponent": "Mallory Martin",
+          "officialEventDate": "2021-02-13",
+          "savedUtcDate": "2021-02-14",
+          "offsetDays": 1,
+          "nativeBoutId": "61924"
+        },
+        {
+          "opponent": "Veronica Hardy",
+          "officialEventDate": "2019-08-10",
+          "savedUtcDate": "2019-08-11",
+          "offsetDays": 1,
+          "nativeBoutId": "65623"
+        },
+        {
+          "opponent": "Hannah Cifers",
+          "officialEventDate": "2019-03-02",
+          "savedUtcDate": "2019-03-03",
+          "offsetDays": 1,
+          "nativeBoutId": "62181"
+        },
+        {
+          "opponent": "Maia Stevenson",
+          "officialEventDate": "2018-02-03",
+          "savedUtcDate": "2018-02-04",
+          "offsetDays": 1,
+          "nativeBoutId": "65445"
+        }
+      ],
+      "exclusions": "No DWCS, Road to UFC qualifier, draw or no-contest bouts in the source-identified completed 12-fight UFC career. All archived rows are UFC events.",
+      "bouts": [
+        {
+          "date": "2026-05-16",
+          "opponent": "Alice Ardelean",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b98ead4eff6bf872",
+          "eventUrl": "https://ufcstats.com/event-details/73abb7a5c57fb443",
+          "nativeBoutId": "66124",
+          "nativeFighterId": "46",
+          "nativeSavedUtcDate": "2026-05-16",
+          "sourceMethod": "Submission",
+          "measuredRoundStatsVerifiedInV4Ci": true
+        },
+        {
+          "date": "2025-04-26",
+          "opponent": "Jaqueline Amorim",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e7b3ca036835b7c2",
+          "eventUrl": "https://ufcstats.com/event-details/b2e3aca4cd363477",
+          "nativeBoutId": "60885",
+          "nativeFighterId": "46",
+          "nativeSavedUtcDate": "2025-04-26",
+          "sourceMethod": "Submission",
+          "measuredRoundStatsVerifiedInV4Ci": true
+        },
+        {
+          "date": "2024-01-20",
+          "opponent": "Gillian Robertson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/dff2685afd98ed9e",
+          "eventUrl": "https://ufcstats.com/event-details/bd85ca0bb4f26cfc",
+          "nativeBoutId": "59872",
+          "nativeFighterId": "46",
+          "nativeSavedUtcDate": "2024-01-20",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4Ci": true
+        },
+        {
+          "date": "2023-08-12",
+          "opponent": "Iasmin Lucindo",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c2f730cb33df5221",
+          "eventUrl": "https://ufcstats.com/event-details/d2fa318f34d0aadc",
+          "nativeBoutId": "60079",
+          "nativeFighterId": "46",
+          "nativeSavedUtcDate": "2023-08-12",
+          "sourceMethod": "Submission",
+          "measuredRoundStatsVerifiedInV4Ci": true
+        },
+        {
+          "date": "2022-11-05",
+          "opponent": "Jinh Yu Frey",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5475f5b6bad40989",
+          "eventUrl": "https://ufcstats.com/event-details/756f45905fb20cb5",
+          "nativeBoutId": "59811",
+          "nativeFighterId": "46",
+          "nativeSavedUtcDate": "2022-11-05",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4Ci": true
+        },
+        {
+          "date": "2022-05-21",
+          "opponent": "Tabatha Ricci",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5eaff5c832430378",
+          "eventUrl": "https://ufcstats.com/event-details/a6c32678efd4f434",
+          "nativeBoutId": "61458",
+          "nativeFighterId": "46",
+          "nativeSavedUtcDate": "2022-05-21",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4Ci": true
+        },
+        {
+          "date": "2021-02-13",
+          "opponent": "Mallory Martin",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/17616514e8fdacb9",
+          "eventUrl": "https://ufcstats.com/event-details/3f7c14c7eca7195d",
+          "nativeBoutId": "61924",
+          "nativeFighterId": "46",
+          "nativeSavedUtcDate": "2021-02-14",
+          "sourceMethod": "Submission",
+          "measuredRoundStatsVerifiedInV4Ci": true
+        },
+        {
+          "date": "2020-08-29",
+          "opponent": "Emily Whitmire",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/16358c536d739017",
+          "eventUrl": "https://ufcstats.com/event-details/e29cf523ebd155c5",
+          "nativeBoutId": "65821",
+          "nativeFighterId": "46",
+          "nativeSavedUtcDate": "2020-08-29",
+          "sourceMethod": "Submission",
+          "measuredRoundStatsVerifiedInV4Ci": true
+        },
+        {
+          "date": "2019-08-10",
+          "opponent": "Veronica Hardy",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/494042bf96730bc0",
+          "eventUrl": "https://ufcstats.com/event-details/e5d03e4d966126bd",
+          "nativeBoutId": "65623",
+          "nativeFighterId": "46",
+          "nativeSavedUtcDate": "2019-08-11",
+          "sourceMethod": "Submission",
+          "measuredRoundStatsVerifiedInV4Ci": true
+        },
+        {
+          "date": "2019-03-02",
+          "opponent": "Hannah Cifers",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0405e4446e8f239a",
+          "eventUrl": "https://ufcstats.com/event-details/2d5fbe2103f97053",
+          "nativeBoutId": "62181",
+          "nativeFighterId": "46",
+          "nativeSavedUtcDate": "2019-03-03",
+          "sourceMethod": "Decision - Split",
+          "measuredRoundStatsVerifiedInV4Ci": true
+        },
+        {
+          "date": "2018-08-04",
+          "opponent": "JJ Aldrich",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d2f6b87189908088",
+          "eventUrl": "https://ufcstats.com/event-details/03b1e846b09f721d",
+          "nativeBoutId": "62210",
+          "nativeFighterId": "46",
+          "nativeSavedUtcDate": "2018-08-04",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4Ci": true
+        },
+        {
+          "date": "2018-02-03",
+          "opponent": "Maia Stevenson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/7bfb92f7ea59dbbd",
+          "eventUrl": "https://ufcstats.com/event-details/7cf20446453f852b",
+          "nativeBoutId": "65445",
+          "nativeFighterId": "46",
+          "nativeSavedUtcDate": "2018-02-04",
+          "sourceMethod": "Submission",
+          "measuredRoundStatsVerifiedInV4Ci": true
+        }
+      ]
     }
   }
 }
