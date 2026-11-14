@@ -58,7 +58,26 @@ test('three specific cached DWCS appearances remain source excluded',()=>{
   }
 });
 
-test('Jonny Parsons stays uncertified until source-proven opponent alias resolves',()=>{
-  assert.equal(registry.fighters['jonny-parsons']?.sourceCoverageAttested===true,false);
-  assert.equal(source.fighters['jonny-parsons'].officialUfcCareerCount,2);
+test('Jonny Parsons exact official Souza/Henrique alias is pinned to original numeric winner corner',()=>{
+  const e=registry.fighters['jonny-parsons'];
+  assert.equal(e.sourceCoverageAttested,true);
+  assert.equal(e.verificationMethod,'full_official_ufc_fight_listing_crosscheck');
+  assert.equal(e.sourceSnapshot.sourceCommit,pinned);
+  assert.equal(e.fighterUrl,'https://ufcstats.com/fighter-details/2975297f505e9447');
+  assert.equal(e.officialFighterUrl,'https://www.ufc.com/athlete/jonny-parsons');
+  assert.equal(e.officialUfcCareerBoutCount,2);
+  assert.equal(e.bouts.length,2);
+  assert.deepEqual(e.bouts.map(x=>x.nativeBoutId).sort(),['60107','93282']);
+  const second=e.bouts.find(x=>x.nativeBoutId==='93282');
+  assert.equal(second.date,'2026-11-07');
+  assert.equal(second.result,'loss');
+  assert.equal(second.nativeFighterId,'2818');
+  assert.equal(second.opponent,'Jose Souza');
+  assert.equal(second.fightUrl,'https://ufcstats.com/fight-details/e2cd8521c8ba55b2');
+  assert.deepEqual(second.sourceVerifiedNativeOpponentAliases,['Jose Henrique']);
+  assert.deepEqual(second.verifiedOpponentNativeFighterIds,['286']);
+  assert.ok(e.independentSourceCrosschecks.includes('https://www.ufc.com/athlete/jose-souza'));
+  const sourceDWCS=feeders.bouts.filter(x=>x.fighterSlug==='jonny-parsons'&&x.boutId==='83899');
+  assert.equal(sourceDWCS.length,1);
+  assert.ok(!e.bouts.some(x=>x.nativeBoutId==='83899'));
 });
