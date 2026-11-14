@@ -3328,6 +3328,131 @@
           "originalOfficialDate": "2015-11-07"
         }
       ]
+    },
+    "john-castaneda": {
+      "fighterName": "John Castaneda",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/john-castaneda",
+      "fighterUrl": "https://ufcstats.com/fighter-details/8a4e0da055e7fa24",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 10,
+      "uniqueNativeFighterId": "568",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/john-castaneda",
+        "https://www.ufc.com/event/ufc-fight-night-september-26-2026",
+        "https://www.ufc.com/athlete/heili-alateng",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceScopeVerified": "Official UFC athlete biography exhaustively lists 10 UFC bouts from July 2020 through Sept 26 2026, including 18 Apr 2026 majority draw. Compared all ten dated opponents and outcomes against pinned UFCStats-derived fighter history. The official event card verifies Castaneda lost split decision to Alatengheili ('Heili Alateng' in native provider cache), same Sep26 event; exact opponent alias reconciled to existing native fight 85944, not an invented ID. Source links and matching numeric fighter identity checked in independent CI; one 2017 DWCS qualifying bout Cheyden Leialoha native 88204 source-verified and excluded.",
+      "dateDiscrepancies": [
+        {
+          "boutId": "65650",
+          "officialLocalDate": "2020-07-25",
+          "nativeSavedDate": "2020-07-26",
+          "reason": "source-event date vs native UTC"
+        }
+      ],
+      "verifiedOpponentAliases": [
+        {
+          "sourceOpponent": "Alatengheili",
+          "nativeOpponent": "Heili Alateng",
+          "eventDate": "2026-09-26",
+          "sourceUrl": "https://www.ufc.com/event/ufc-fight-night-september-26-2026"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-09-26",
+          "opponent": "Alatengheili",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/577011f3bbcf7f91",
+          "nativeBoutId": "85944",
+          "nativeSavedDate": "2026-09-26",
+          "originalOfficialDate": "2026-09-26"
+        },
+        {
+          "date": "2026-04-18",
+          "opponent": "Mark Vologdin",
+          "result": "draw",
+          "fightUrl": "https://ufcstats.com/fight-details/552f7cdaf93e1055",
+          "nativeBoutId": "66099",
+          "nativeSavedDate": "2026-04-18",
+          "originalOfficialDate": "2026-04-18"
+        },
+        {
+          "date": "2025-04-26",
+          "opponent": "Chris Gutierrez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6f3cb7ce84185dd3",
+          "nativeBoutId": "60882",
+          "nativeSavedDate": "2025-04-26",
+          "originalOfficialDate": "2025-04-26"
+        },
+        {
+          "date": "2024-06-08",
+          "opponent": "Daniel Marcos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e976815e397c40e1",
+          "nativeBoutId": "61037",
+          "nativeSavedDate": "2024-06-08",
+          "originalOfficialDate": "2024-06-08"
+        },
+        {
+          "date": "2023-11-11",
+          "opponent": "Kyung Ho Kang",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/57333b7bff20ece0",
+          "nativeBoutId": "59970",
+          "nativeSavedDate": "2023-11-11",
+          "originalOfficialDate": "2023-11-11"
+        },
+        {
+          "date": "2023-06-03",
+          "opponent": "Muin Gafurov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c98f62eb74e69bcb",
+          "nativeBoutId": "61315",
+          "nativeSavedDate": "2023-06-03",
+          "originalOfficialDate": "2023-06-03"
+        },
+        {
+          "date": "2022-10-01",
+          "opponent": "Daniel Santos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/63f6af6d5f7b82ad",
+          "nativeBoutId": "61195",
+          "nativeSavedDate": "2022-10-01",
+          "originalOfficialDate": "2022-10-01"
+        },
+        {
+          "date": "2022-02-05",
+          "opponent": "Miles Johns",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c816a969cb001168",
+          "nativeBoutId": "61627",
+          "nativeSavedDate": "2022-02-05",
+          "originalOfficialDate": "2022-02-05"
+        },
+        {
+          "date": "2021-02-20",
+          "opponent": "Eddie Wineland",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/990c2378caec68d4",
+          "nativeBoutId": "66221",
+          "nativeSavedDate": "2021-02-20",
+          "originalOfficialDate": "2021-02-20"
+        },
+        {
+          "date": "2020-07-25",
+          "opponent": "Nathaniel Wood",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/67db05bac9165722",
+          "nativeBoutId": "65650",
+          "nativeSavedDate": "2020-07-26",
+          "originalOfficialDate": "2020-07-25"
+        }
+      ]
     }
   }
 }
