@@ -32,6 +32,7 @@ on:
       - 'tests/test-ufc-unified-wave8-wave9-evidence.mjs'
       - 'tests/test-ufc-unified-wave12-evidence.mjs'
       - 'tests/test-ufc-unified-wave13-evidence.mjs'
+      - 'tests/test-ufc-unified-wave14-evidence.mjs'
       - 'tests/test-ufc-unified-wave10-evidence.mjs'
       - 'tests/test-ufc-unified-wave11-evidence.mjs'
       - 'tests/test-ufc-unified-marnic-evidence.mjs'
@@ -106,6 +107,7 @@ jobs:
           node --test tests/test-ufc-unified-wave8-wave9-evidence.mjs
           node --test tests/test-ufc-unified-wave12-evidence.mjs
           node --test tests/test-ufc-unified-wave13-evidence.mjs
+          node --test tests/test-ufc-unified-wave14-evidence.mjs
           node --test tests/test-ufc-unified-wave10-evidence.mjs
           node --test tests/test-ufc-unified-wave11-evidence.mjs
           node --test tests/test-ufc-unified-marnic-evidence.mjs
