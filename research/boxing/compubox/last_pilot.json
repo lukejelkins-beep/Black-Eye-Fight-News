@@ -1,83 +1,61 @@
 {
-  "timestamp_utc": "2026-11-14T02:00:55+00:00",
+  "timestamp_utc": "2026-11-14T02:04:03+00:00",
   "mode": "read_only_public_report_pilot",
   "source": "https://beta.compuboxdata.com",
   "max_pdf_requests": 12,
   "processed": [
     {
-      "report_id": 16970,
-      "fight_date": "2026-11-07",
+      "report_id": 16960,
+      "fight_date": "2026-11-08",
       "fighters": [
-        "BUATSI",
-        "HUTCHINSON"
+        "SIMS",
+        "PATRICO"
       ]
     },
     {
-      "report_id": 16971,
-      "fight_date": "2026-11-07",
-      "fighters": [
-        "RAFFERTY",
-        "MARTIROSYAN"
-      ]
-    },
-    {
-      "report_id": 16972,
-      "fight_date": "2026-11-07",
-      "fighters": [
-        "REA",
-        "TAYLOR"
-      ]
-    },
-    {
-      "report_id": 16992,
-      "fight_date": "2026-11-13",
+      "report_id": 16958,
+      "fight_date": "2026-11-08",
       "fighters": [
         "GARCIA",
-        "ZUNIGA"
+        "DELGADO"
       ]
     },
     {
-      "report_id": 16991,
-      "fight_date": "2026-11-13",
-      "fighters": [
-        "FLORES",
-        "MELENDEZ"
-      ]
-    },
-    {
-      "report_id": 16973,
-      "fight_date": "2026-11-07",
-      "fighters": [
-        "MILLER",
-        "POWAR"
-      ]
-    },
-    {
-      "report_id": 16964,
+      "report_id": 16957,
       "fight_date": "2026-11-08",
       "fighters": [
-        "CAMARILLO",
-        "SERRA"
+        "NICOLSON",
+        "YOSHIDA"
       ]
     },
     {
-      "report_id": 16963,
+      "report_id": 16956,
       "fight_date": "2026-11-08",
       "fighters": [
-        "GUERRERO",
-        "ANDERSON"
+        "ALI",
+        "KREPS"
       ]
     },
     {
-      "report_id": 16962,
+      "report_id": 16955,
       "fight_date": "2026-11-08",
       "fighters": [
-        "DOVE",
-        "RODRIGUEZ"
+        "TURHAN",
+        "BAUMGARDNER"
       ]
     }
   ],
-  "skipped_existing": [],
+  "skipped_existing": [
+    16970,
+    16971,
+    16972,
+    16992,
+    16991,
+    16973,
+    16964,
+    16963,
+    16962
+  ],
   "failed": [
     {
       "report_id": 16942,
@@ -90,9 +68,13 @@
     {
       "report_id": 16961,
       "error_code": "missing_rounds_total_GARCIA"
+    },
+    {
+      "report_id": 16959,
+      "error_code": "missing_rounds_total_MALDOZHANOV"
     }
   ],
   "not_pdf": [],
-  "attempted_pdf_requests": 12,
-  "new_fights": 9
+  "attempted_pdf_requests": 9,
+  "new_fights": 5
 }
