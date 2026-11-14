@@ -40,3 +40,27 @@ test('incomplete or stale certification audits fail closed',()=>{
  const q=fixture();q.summary.independentlyVerifiedFullCareerTimelines=2;
  assert.throws(()=>buildCertificationQueue(q),/stale/);
 });
+
+test('one-bout career evidence is source linked and excludes DWCS/TUF exhibitions', async()=>{
+ const {readFileSync}=await import('node:fs');
+ const registry=JSON.parse(readFileSync(new URL('../data/ufc-independent-full-career-verification.json',import.meta.url),'utf8'));
+ const expected=[
+  ['adrian-luna-martinetti','66079','557','Davey Grant','DWCS'],
+  ['alexander-poppeck','83277','3291','Jovan Leka','DWCS'],
+  ['anna-melisano','83025','32354','Dione Barbosa','TUF']
+ ];
+ for(const [slug,nativeId,athleteId,opponent,excluded] of expected){
+  const f=registry.fighters[slug];
+  assert.equal(f.sourceCoverageAttested,true,slug);
+  assert.equal(f.verificationMethod,'full_official_ufc_fight_listing_crosscheck',slug);
+  assert.equal(f.verifiedOfficialUfcBoutCount,1,slug);
+  assert.equal(f.bouts.length,1,slug);
+  assert.equal(f.bouts[0].nativeBoutId,nativeId,slug);
+  assert.equal(f.bouts[0].nativeFighterId,athleteId,slug);
+  assert.equal(f.bouts[0].opponent,opponent,slug);
+  assert.equal(f.bouts[0].result,'loss',slug);
+  assert.match(f.bouts[0].fightUrl,/^https:\/\/ufcstats\.com\/fight-details\/[a-f0-9]{16}$/,slug);
+  assert.match(f.fighterUrl,/^https:\/\/ufcstats\.com\/fighter-details\/[a-f0-9]{16}$/,slug);
+  assert.match(f.sourceCoverage.excludedNonOfficialBouts,new RegExp(excluded),slug);
+ }
+});
