@@ -179,6 +179,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     String(item?.sourceUrl||'').startsWith('https://www.ufc.com/')&&
     refs.some(r=>r.fighterSlug===item.fighterSlug&&
       r.date===date(item.date)&&normal(r.opponent)===normal(item.opponent)));
+  const legacySearchChecks=progress?.ufcLegacyDateSearchChecks||{};
   const verifiedLegacy=arr(legacyEvidence?.schema===1&&
     legacyEvidence?.scope==='ufc-official-legacy-evidence'?legacyEvidence.bouts:[]);
   const legacyProof=(id,refs)=>verifiedLegacy.some(item=>
@@ -201,6 +202,10 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
       savedReviewReason:typeof check.reason==='string'?check.reason.slice(0,120):null,
       sourceVerifiedOfficialFinale:finaleProof(id,references),
       sourceVerifiedOfficialLegacy:legacyProof(id,references),
+      legacyProviderSearchStatus:legacyProof(id,references)?
+        (legacySearchChecks[id]?.status||'not_attempted'):null,
+      legacyProviderAlternativeId:legacyProof(id,references)?
+        numId(legacySearchChecks[id]?.candidateId):null,
       references};
   }).sort((a,b)=>(b.priorityTier-a.priorityTier)||
     (a.action==='not_yet_attempted'?-1:0)-(b.action==='not_yet_attempted'?-1:0)||
@@ -243,6 +248,18 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
       }
       return {id:item.id,references:item.references,cachedBouts,archivedRounds};
     });
+  const legacyProviderSearchReview=verifiedLegacy.map(item=>{
+    const id=numId(item?.fightId),r=id?legacySearchChecks[id]||{}:{};
+    return {id,fighterSlug:item?.fighterSlug||null,
+      status:typeof r.status==='string'?r.status:'not_attempted',
+      matchedAlternativeNativeId:numId(r.candidateId)&&numId(r.candidateId)!==id?
+        numId(r.candidateId):null,
+      sourceVerifiedOfficialLegacy:!!id&&legacyProof(id,[
+        {fighterSlug:item.fighterSlug,date:date(item.date),opponent:item.opponent}]),
+      originalNativeIndexed:!!id&&bouts[id]?.org==='ufc'};
+  });
+  const legacySearchCount=status=>legacyProviderSearchReview.filter(x=>
+    x.sourceVerifiedOfficialLegacy&&x.status===status).length;
   const blockedCount=type=>missingDiagnostics.filter(x=>x.action===type).length;
   const readyCount=tier=>missingDiagnostics.filter(x=>
     (tier===null||x.priorityTier===tier)&&
@@ -275,6 +292,12 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
       legacyCacheCandidates.filter(x=>x.cachedBouts.length>0).length,
     sourceVerifiedLegacyWithMatchingArchivedRounds:
       legacyCacheCandidates.filter(x=>x.archivedRounds.some(r=>r.roundRows>0)).length,
+    sourceVerifiedLegacyProviderSearchNotAttempted:legacySearchCount('not_attempted'),
+    sourceVerifiedLegacyProviderSearchNoMatch:legacySearchCount('no_match'),
+    sourceVerifiedLegacyProviderSearchAlternativeIds:legacySearchCount('alternative_id_manual_review'),
+    sourceVerifiedLegacyProviderSearchExactIds:legacySearchCount('indexed_exact_native_id'),
+    sourceVerifiedLegacyProviderSearchAmbiguous:legacySearchCount('ambiguous'),
+    sourceVerifiedLegacyProviderSearchOnRetry:legacySearchCount('retry'),
     indexedFightsWithArchivedRounds:linkedRounds.size,
     indexedFightsWithMeasuredRoundMetrics:linkedMetrics.size,
     indexedNativeFightsWithoutConfirmedMeasuredRounds:indexedNative.size-linkedMetrics.size,
@@ -319,7 +342,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     savedKnownIdsAwaitingIndex:sorted(missingIndex).slice(0,30),
     priorityMissingIdDiagnostics:missingDiagnostics.slice(0,40),
     manualReviewCases:missingDiagnostics.filter(x=>x.action==='manual_review'),
-    legacyCacheCandidates,
+    legacyCacheCandidates,legacyProviderSearchReview,
     readyForLookupCases:missingDiagnostics.filter(x=>
       x.action==='not_yet_attempted'||x.action==='retry_eligible'),
     unmeasuredIndexedIds:allIndexedMissingRounds.slice(0,30),
@@ -350,6 +373,12 @@ export function markdownReport(report){
    sourceVerifiedOfficialLegacyFightIdsAwaitingIndex:'Missing older UFC fight identities corroborated by official source, but provider-native indexing remains unresolved',
    sourceVerifiedLegacyWithMatchingCachedBout:'Legacy official UFC identities with alternative cached native bout candidates (not verified indexed)',
    sourceVerifiedLegacyWithMatchingArchivedRounds:'Legacy official UFC identities with archived matching round rows (not verified native identity)',
+   sourceVerifiedLegacyProviderSearchNotAttempted:'Verified legacy bouts awaiting targeted UFCalendar search',
+   sourceVerifiedLegacyProviderSearchNoMatch:'Verified legacy bouts without matching provider date-search result',
+   sourceVerifiedLegacyProviderSearchAlternativeIds:'Legacy bouts with contradictory provider native IDs requiring review',
+   sourceVerifiedLegacyProviderSearchExactIds:'Verified legacy bouts with exact native IDs indexed via date search',
+   sourceVerifiedLegacyProviderSearchAmbiguous:'Legacy bouts with ambiguous source search matches',
+   sourceVerifiedLegacyProviderSearchOnRetry:'Legacy bouts waiting on provider retry after transient error',
    profilesWithAllKnownUfcBoutsIndexed:'Profiles with every currently known UFC bout indexed (not career-certified)',
    profilesWithAllKnownUfcBoutsMeasured:'Profiles with measured rounds for every currently known UFC bout',
    providerCertifiedProfilesWithAllKnownBoutsIndexed:'Provider-certified careers with all known bouts indexed',
