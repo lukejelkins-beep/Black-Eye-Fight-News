@@ -12,10 +12,10 @@ import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),'utf8'));
 const states=['official_history_gap','native_identity_review','cached_bout_reconciliation',
- 'known_fight_data_gap','source_listing_review','independent_history_certified'];
+ 'bulk_source_candidate_review','known_fight_data_gap','source_listing_review','independent_history_certified'];
 const number=x=>Number.isSafeInteger(x)&&x>=0?x:0;
 
-export function buildCertificationQueue(approval,report,registry,{batchSize=20}={}){
+export function buildCertificationQueue(approval,report,registry,{batchSize=20,grecoCheckpoint=null}={}){
  const roster=approval?.approvedFighters;
  if(approval?.schema!==1||approval.status!=='approved'||!Array.isArray(roster)||
     roster.length!==783||new Set(roster).size!==783||
@@ -35,9 +35,14 @@ export function buildCertificationQueue(approval,report,registry,{batchSize=20}=
  const cache=new Map((report.cachedCareerHistoryCandidates||[]).map(x=>[x.slug,x]));
  const officialMissing=new Map((report.officialSourceInventory?.cases||[])
    .filter(x=>x?.slug).map(x=>[x.slug,true]));
+ const grecoAlerts=new Map(grecoCheckpoint?.scope==='ufc-greco-bulk-crosscheck-checkpoint'&&
+   grecoCheckpoint.rosterAsOf===approval.rosterAsOf&&
+   /^[0-9a-f]{40}$/i.test(String(grecoCheckpoint.sourceCommit||''))?
+   (grecoCheckpoint.candidateAlerts||[]).filter(x=>roster.includes(x.slug))
+     .map(x=>[x.slug,x]):[]);
  const queue=roster.map(slug=>{
    const d=decisions.get(slug), proof=registry.fighters?.[slug]||{};
-   const cached=cache.get(slug);
+   const cached=cache.get(slug),greco=grecoAlerts.get(slug)||{};
    const certified=d.independentlyVerifiedFullCareer===true&&
      proof.sourceCoverageAttested===true&&
      proof.verificationMethod==='full_official_ufc_fight_listing_crosscheck'&&
@@ -54,12 +59,16 @@ export function buildCertificationQueue(approval,report,registry,{batchSize=20}=
    else if(number(cached?.missingIndexedOfficialUfcFights?.length)>0||
      number(cached?.historicalIdentityConflicts?.length)>0){
        state='cached_bout_reconciliation';priority=2;
+   }else if(Number(greco.sourceCandidateNotSaved)>0){
+     // Public bulk candidate names are NOT verified UFC fighter identities.
+     state='bulk_source_candidate_review';priority=3;
    }else if(!d.allKnownFightsIndexed||!d.allKnownFightsMeasured){
-     state='known_fight_data_gap';priority=3;
+     state='known_fight_data_gap';priority=4;
    }
    const reason=state==='official_history_gap'?'Reconcile independently listed UFC bouts with native history':
      state==='native_identity_review'?'Resolve numeric UFC athlete identity before comparing histories':
      state==='cached_bout_reconciliation'?'Reconcile already cached UFC bout identities first':
+     state==='bulk_source_candidate_review'?'Review public historical match candidates; do not auto-link homonyms':
      state==='known_fight_data_gap'?'Resolve native or measured-round gaps':
      state==='source_listing_review'?'Independently check exhaustive UFCStats fighter and fight-detail listing':
      'Full independent certification previously passed strict Stage 3 checks';
@@ -67,6 +76,7 @@ export function buildCertificationQueue(approval,report,registry,{batchSize=20}=
      sourceMinimum:d.sourceVerifiedMinimumOfficialUfcBouts??null,
      minimumMissing:number(d.minimumConfirmedMissingHistoricalUfcBouts),
      independentSourceAttested:proof.sourceCoverageAttested===true,
+     unverifiedGrecoCandidates:Number(greco.sourceCandidateNotSaved)||0,
      fullCareerCertified:certified};
  }).sort((a,b)=>a.priority-b.priority||
     b.minimumMissing-a.minimumMissing||
@@ -85,7 +95,10 @@ export function main(){
  const output=buildCertificationQueue(
    read('data/ufc-36-month-roster-approval.json'),
    read('qa/ufc-36-month-stage3-progress.json'),
-   read('data/ufc-independent-full-career-verification.json'));
+   read('data/ufc-independent-full-career-verification.json'),{
+     grecoCheckpoint:fs.existsSync(path.join(root,'data/ufc-greco-crosscheck-checkpoint.json'))?
+       read('data/ufc-greco-crosscheck-checkpoint.json'):null
+   });
  const out=path.join(root,'qa/ufc-independent-certification-queue.json');
  fs.mkdirSync(path.dirname(out),{recursive:true});
  fs.writeFileSync(out,JSON.stringify(output,null,2)+'\n');
