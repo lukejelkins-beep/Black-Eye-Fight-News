@@ -1,0 +1,56 @@
+name: Build isolated Sumo design-preview data
+on:
+  push:
+    branches: [feat/sumo-section-test-20261114]
+    paths:
+      - scripts/sumo-build-preview.mjs
+      - .github/workflows/sumo-preview-build.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: sumo-preview-single-writer
+  cancel-in-progress: false
+jobs:
+  preview-data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/sumo-section-test-20261114
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check Sumo data-source contract before collecting
+        run: node --test tests/test-sumo-api-source.mjs
+      - name: Create bounded Sumo preview data only
+        run: node scripts/sumo-build-preview.mjs
+      - name: Commit snapshot to isolated test branch only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "BEFN Sumo preview"
+          git config user.email "sumo-preview@users.noreply.github.com"
+          git add data/sumo/rikishi-index.json data/sumo/preview-details.json
+          if git diff --cached --quiet; then
+            echo "No snapshot change"
+            exit 0
+          fi
+          git commit -m "Update bounded Sumo testing snapshot"
+          for attempt in 1 2 3; do
+            # Integrate any concurrent Sumo design commits without rewriting
+            # their history. Stop rather than force-push if a conflict occurs.
+            git fetch origin feat/sumo-section-test-20261114
+            if ! git rebase origin/feat/sumo-section-test-20261114; then
+              git rebase --abort || true
+              echo "Concurrent snapshot conflict; preserving remote branch" >&2
+              exit 1
+            fi
+            if git push origin HEAD:feat/sumo-section-test-20261114; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Could not commit source snapshot after three safe attempts" >&2
+          exit 1

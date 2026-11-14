@@ -1,0 +1,57 @@
+name: Sumo section isolated preview QA
+on:
+  push:
+    branches: [feat/sumo-section-test-20261114]
+    paths:
+      - sumo.html
+      - index.html
+      - assets/sumo.js
+      - assets/sumo-data.mjs
+      - assets/sumo.css
+      - assets/sumo-nav.css
+      - scripts/sumo-build-preview.mjs
+      - scripts/sumo-coverage-report.mjs
+      - data/sumo/**
+      - tests/test-sumo-data.mjs
+      - .github/workflows/sumo-section-qa.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: sumo-preview-qa
+  cancel-in-progress: true
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check source, data transforms and UI syntax
+        run: |
+          node --check scripts/sumo-build-preview.mjs
+          node --check assets/sumo-data.mjs
+          node --check assets/sumo.js
+      - name: Test Sumo API source and three-division UI data
+        run: |
+          node --test tests/test-sumo-api-source.mjs
+          node --test tests/test-sumo-data.mjs
+      - name: Audit 190 rikishi data coverage and movement
+        run: node scripts/sumo-coverage-report.mjs
+      - name: Upload coverage report for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-sumo-data-coverage
+          path: qa/sumo-reports/coverage.json
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Assert isolation from production publishing
+        run: |
+          test -f sumo.html
+          test -f data/sumo/rikishi-index.json
+          test -f data/sumo/preview-details.json
+          grep -q 'noindex,nofollow' sumo.html
+          echo "Sumo preview and data contract validated; no publish step"
