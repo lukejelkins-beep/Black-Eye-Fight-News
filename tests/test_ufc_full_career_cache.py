@@ -529,6 +529,47 @@ class FullCareerCacheTests(unittest.TestCase):
             client,state,research,census,dt.date(2026,11,14),
             approval,independent)["calls"],0)
 
+    def test_first_pass_numeric_history_search_is_bounded_to_twenty_per_relay(self):
+        state=m.default_progress()
+        names=[f"approved-fighter-{i:02d}" for i in range(21)]
+        research={"profiles":{}}
+        census={"schema":1,"scope":"ufc","activityMonths":36,
+                "asOf":"2026-11-14",
+                "indexCompleteness":"36_month_event_scan_complete",
+                "fighters":[{"slug":s,"eligibilityStatus":"latest_observed_mma_ufc"}
+                            for s in names]}
+        approved={**self.approval(names),"rosterAsOf":"2026-11-14",
+                  "approvedAt":"2026-11-14"}
+        for i,name in enumerate(names):
+            numeric=i+2000
+            native=str(i+10000)
+            state["bouts"][native]={
+                "id":native,"org":"ufc","event":"UFC 99: Verified",
+                "status":"completed","eventDate":"2025-01-01",
+                "a":{"name":f"Approved Fighter {i:02d}","slug":name,"id":str(numeric)},
+                "b":{"name":"Opponent","slug":"opponent","id":"999"}}
+            research["profiles"][name]={
+                "name":f"Approved Fighter {i:02d}",
+                "recentHistory":[{
+                    "date":"2025-01-01","opponent":"Opponent",
+                    "promotion":"ufc","source":"native",
+                    "result":"win","boutId":native}]}
+        client=self.PaginatedSearch()
+        r=m.collect_approved_full_ufc_fight_search(
+            client,state,research,census,dt.date(2026,11,14),approved,{})
+        self.assertEqual(r["calls"],20)
+        self.assertEqual(r["fighters"],20)
+        self.assertEqual(client.calls,20)
+        self.assertEqual(len(state["ufcApprovedFullFightSearchChecks"]),20)
+        self.assertEqual(len(set(client.paths)),20,
+                         "No duplicate numeric fighter-ID searches in a single run")
+        self.assertEqual(m.collect_approved_full_ufc_fight_search(
+            client,state,research,census,dt.date(2026,11,14),approved,{})["calls"],1)
+        self.assertEqual(client.calls,21)
+        self.assertEqual(m.collect_approved_full_ufc_fight_search(
+            client,state,research,census,dt.date(2026,11,14),approved,{})["calls"],0)
+        self.assertEqual(len(state["ufcApprovedFullFightSearchChecks"]),21)
+
     def official_inventory_fixture(self):
         state,research,census,approval=self.cached_whole_career_fixture()
         manifest={"schema":1,"scope":"ufc-official-career-bout-inventory",
