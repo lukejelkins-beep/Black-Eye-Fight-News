@@ -1,5 +1,6 @@
 {
   "schemaVersion": 1,
+  "parserVersion": 3,
   "source": "Japan Sumo Association official public Rikishi Profile",
   "sourceId": 5,
   "officialNskId": 4171,
@@ -31,6 +32,198 @@
   "status": "basic-fields-parsed",
   "certification": "not-started",
   "notice": "Basic current public fields only. Does NOT verify complete historical bouts, official historical weigh-ins, image rights, or career certification.",
-  "capturedAt": "2026-11-14T22:16:47.924Z",
+  "officialBashoRecords": [
+    {
+      "bashoId": "202211",
+      "wins": 7,
+      "losses": 0,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202301",
+      "wins": 7,
+      "losses": 0,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202303",
+      "wins": 6,
+      "losses": 1,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202305",
+      "wins": 6,
+      "losses": 1,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202307",
+      "wins": 6,
+      "losses": 1,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202309",
+      "wins": 5,
+      "losses": 2,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202311",
+      "wins": 6,
+      "losses": 1,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202401",
+      "wins": 13,
+      "losses": 2,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202403",
+      "wins": 13,
+      "losses": 2,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202405",
+      "wins": 0,
+      "losses": 0,
+      "absences": 15,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202407",
+      "wins": 2,
+      "losses": 1,
+      "absences": 12,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202409",
+      "wins": 13,
+      "losses": 2,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202411",
+      "wins": 10,
+      "losses": 5,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202501",
+      "wins": 10,
+      "losses": 5,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202503",
+      "wins": 9,
+      "losses": 6,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202505",
+      "wins": 6,
+      "losses": 9,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202507",
+      "wins": 5,
+      "losses": 8,
+      "absences": 2,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202509",
+      "wins": 0,
+      "losses": 0,
+      "absences": 15,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202511",
+      "wins": 8,
+      "losses": 7,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202601",
+      "wins": 8,
+      "losses": 7,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202603",
+      "wins": 8,
+      "losses": 7,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202605",
+      "wins": 11,
+      "losses": 4,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202607",
+      "wins": 10,
+      "losses": 5,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202609",
+      "wins": 9,
+      "losses": 6,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202611",
+      "wins": 2,
+      "losses": 5,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    }
+  ],
+  "bashoReconciliation": {
+    "officialBashoRows": 25,
+    "comparedBasho": 22,
+    "agreeingBasho": 22,
+    "discrepantBasho": 0,
+    "unmatchedOfficialBasho": [
+      "202405",
+      "202509"
+    ],
+    "discrepancies": [],
+    "excludedCurrentBasho": "202611",
+    "status": "historical-tournaments-agree",
+    "certified": false,
+    "note": "Only completed prior tournaments compared. Agreement cannot by itself certify an entire rikishi career."
+  },
+  "capturedAt": "2026-11-14T22:23:50.258Z",
   "rawHtmlSha256": "3271d7ed54740623f826800a2a675246bd2bbe0174606d1f3b288055b216f0b5"
 }
