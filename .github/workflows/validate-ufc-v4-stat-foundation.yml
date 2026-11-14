@@ -15,6 +15,8 @@ on:
       - 'scripts/audit-ufc-v4-career-verification.mjs'
       - 'tests/test-ufc-v4-career-verification.mjs'
       - 'scripts/ufc-next-career-certification-candidates.mjs'
+      - 'scripts/audit-ufc-v4-first-two-certification-attempt.mjs'
+      - 'data/ufc-v4-first-two-official-career-evidence.json'
       - 'tests/test-ufc-next-career-certification-candidates.mjs'
       - 'scripts/build-ufc-v4-shadow-ratings.mjs'
       - 'tests/test-ufc-v4-shadow-ratings.mjs'
@@ -69,6 +71,8 @@ jobs:
         run: node scripts/audit-ufc-v4-career-verification.mjs
       - name: Rank 780 nonpilot career certification cases from saved histories
         run: node scripts/ufc-next-career-certification-candidates.mjs
+      - name: Attempt independently evidenced first two full-career native bout reconciliations
+        run: node scripts/audit-ufc-v4-first-two-certification-attempt.mjs
       - name: Calculate shadow UFC-only V4 ratings and strict pre-fight backtest
         run: node scripts/build-ufc-v4-shadow-ratings.mjs
       - name: Enforce historical career and experimental model release blockers
@@ -85,6 +89,7 @@ jobs:
             qa/ufc-v4-source-conflict-triage.json
             qa/ufc-v4-career-verification-queue.json
             qa/ufc-v4-nonpilot-certification-triage.json
+            qa/ufc-v4-first-two-certification-attempt.json
             qa/ufc-v4-shadow-ratings.json
             qa/ufc-v4-release-readiness.json
           retention-days: 14
