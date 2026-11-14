@@ -35,3 +35,23 @@ test("rejects impossible per-fight evidence coverage rather than inflating score
   fighters:{a:{windows:{career:w}}}};
  assert.throws(()=>auditMetricAvailability(f),/Invalid evidence denominator/);
 });
+
+test("raw core fields do not imply rate readiness without valid cage time",()=>{
+ const w=window(5,5);
+ const rates=["sigLandedPerMinute","sigAbsorbedPerMinute",
+  "sigStrikeDifferentialPer15","knockdownsPer15","takedownsPer15",
+  "subAttemptsPer15","controlSecPer15"];
+ w.rates=Object.fromEntries(rates.map(n=>[n,{value:1,coveredBouts:5,elapsedSeconds:1500}]));
+ const f={scope:"ufc-only-v4-stat-foundation",population:1,
+  fighters:{a:{windows:{last5:w,career:w}}}};
+ let report=auditMetricAvailability(f);
+ assert.equal(report.summary.last5.fullyObservedAllNineCoreFields,1);
+ assert.equal(report.summary.last5.fullyRateReadyAllNineCoreFields,1);
+ w.rates.knockdownsPer15={value:null,coveredBouts:4,elapsedSeconds:1200};
+ report=auditMetricAvailability(f);
+ assert.equal(report.summary.last5.fullyObservedAllNineCoreFields,1);
+ assert.equal(report.summary.last5.fullyRateReadyAllNineCoreFields,0);
+ w.rates.knockdownsPer15={value:0,coveredBouts:5,elapsedSeconds:0};
+ report=auditMetricAvailability(f);
+ assert.equal(report.summary.last5.fullyRateReadyAllNineCoreFields,0);
+});
