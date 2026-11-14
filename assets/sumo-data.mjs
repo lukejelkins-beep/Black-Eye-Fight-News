@@ -18,6 +18,57 @@ export function divisionOf(rank) {
   for (const d of DIVISIONS) if (r.startsWith(d.toLowerCase())) return d;
   return 'Unranked';
 }
+
+/** Authoritative current tracked cohort: derive eligibility from the published
+ * banzuke for the selected basho, not from potentially stale roster rank text.
+ * Strictly refuse to publish partial, duplicated or identity-mismatched data.
+ */
+export const TRACKED_DIVISIONS = Object.freeze(['Makuuchi','Juryo','Makushita']);
+export function trackedBanzukeCohort(sourceRoster, banzukeByDivision) {
+  if (!Array.isArray(sourceRoster) || !sourceRoster.length) throw new Error('Missing Sumo source roster');
+  const byId = new Map();
+  for (const row of sourceRoster) {
+    if (!Number.isSafeInteger(row?.sourceId) || row.sourceId <= 0 || byId.has(row.sourceId)) {
+      throw new Error('Invalid or duplicate source roster identity');
+    }
+    byId.set(row.sourceId, row);
+  }
+  const used = new Set();
+  const rikishi = [];
+  const divisionCounts = {};
+  for (const division of TRACKED_DIVISIONS) {
+    const table = banzukeByDivision?.[division];
+    if (!table || !Array.isArray(table.east) || !Array.isArray(table.west) ||
+        !table.east.length || !table.west.length) {
+      throw new Error('Incomplete current banzuke: '+division);
+    }
+    divisionCounts[division] = 0;
+    for (const entry of [...table.east,...table.west]) {
+      const id = Number(entry?.rikishiID);
+      if (!Number.isSafeInteger(id) || id <= 0 || used.has(id)) {
+        throw new Error('Invalid or duplicate banzuke identity: '+division);
+      }
+      const row = byId.get(id);
+      if (!row || !entry?.shikonaEn || !entry?.rank || divisionOf(entry.rank) !== division) {
+        throw new Error('Unreconciled banzuke identity/rank: '+division+' / '+id);
+      }
+      used.add(id);
+      divisionCounts[division]++;
+      rikishi.push({
+        ...row,
+        currentRank: entry.rank,
+        sourceReportedRank: row.currentRank || null
+      });
+    }
+  }
+  return {
+    rikishi,
+    count: rikishi.length,
+    divisionCounts,
+    trackedDivisions: [...TRACKED_DIVISIONS]
+  };
+}
+
 export function recordSummary(record) {
   const data = Array.isArray(record) ? record : [];
   const out = { win: 0, loss: 0, absence: 0, pending: 0, completed: 0 };
