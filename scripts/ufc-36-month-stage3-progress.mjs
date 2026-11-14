@@ -159,6 +159,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
       indexedNativeIds:observed.filter(r=>r.id&&bouts[r.id]?.org==='ufc').length,
       lastFiveMeasured:latestFive.filter(r=>r.measured).length,
       lastTenMeasured:latestTen.filter(r=>r.measured).length,
+      missingMeasuredFightIds:observed.filter((r,i)=>!samples[i]?.measured).map(r=>r.id),
       timelineCertified:profile.ufcTimeline?.complete===true});
   }
   const withUnindexed=cohorts.filter(c=>c.nativeFightIds>c.indexedNativeIds).length;
@@ -301,6 +302,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     indexedFightsWithArchivedRounds:linkedRounds.size,
     indexedFightsWithMeasuredRoundMetrics:linkedMetrics.size,
     indexedNativeFightsWithoutConfirmedMeasuredRounds:indexedNative.size-linkedMetrics.size,
+    profilesWithKnownFightRoundGaps:cohorts.filter(c=>c.missingMeasuredFightIds.length>0).length,
     profilesWithAllKnownUfcBoutsIndexed:allKnownIndexed,
     profilesWithAllKnownUfcBoutsMeasured:allKnownMeasured,
     providerCertifiedProfilesWithAllKnownBoutsIndexed:certifiedAndIndexed,
@@ -346,6 +348,17 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     readyForLookupCases:missingDiagnostics.filter(x=>
       x.action==='not_yet_attempted'||x.action==='retry_eligible'),
     unmeasuredIndexedIds:allIndexedMissingRounds.slice(0,30),
+    unmeasuredIndexedEvidence:allIndexedMissingRounds.map(id=>{
+      const bout=bouts[id]||{},retry=progress?.roundRetry?.[id]||{};
+      const refs=cohorts.filter(c=>c.missingMeasuredFightIds.includes(id)).map(c=>c.slug);
+      return {id,event:bout.event||null,date:bout.eventDate||null,
+        fighterA:bout.a?.name||null,fighterB:bout.b?.name||null,
+        expectedRounds:bout.result?.round??null,
+        observedRoundRows:progress?.roundDone?.[id]??null,
+        retryAttempts:retry.attempts??null,retryAfter:retry.retryAfter||null,
+        approvedFighterSlugs:refs};
+    }),
+    profilesWithKnownRoundGaps:cohorts.filter(c=>c.missingMeasuredFightIds.length>0),
     approvedMissingHistory:missingHistory.slice(0,30),
     approvedNoLongerEligible:blockedByEligibility.slice(0,30),
     note:'This report reads saved caches only. Provider UFC org labels may also cover DWCS and feeder contests; UFC-only stats exclude only dates with unambiguous cached feeder-event titles. Unknown dates remain unresolved. TUF Finale bouts are official UFC. No missing value is imputed as zero; provider-explicit completeness is independently tracked.'
@@ -400,6 +413,7 @@ export function markdownReport(report){
    distinctIndexedFightsWithPairedTakedowns:'Fights with both fighters’ takedowns measured',
    distinctIndexedFightsWithAllFivePairedCoreMetrics:'Fights with all five two-sided core metrics measured',
    indexedNativeFightsWithoutConfirmedMeasuredRounds:'Indexed native fights without confirmed measured round values',
+   profilesWithKnownFightRoundGaps:'Profiles with at least one known official fight lacking measured rounds',
    fightersWithAtLeastFiveObservedUfcFights:'Fighters with ≥5 observed UFC fights',
    fightersWithMeasuredFiveOfFive:'Fighters with measured statistics for all 5 most recent',
    fightersWithAtLeastTenObservedUfcFights:'Fighters with ≥10 observed UFC fights',
