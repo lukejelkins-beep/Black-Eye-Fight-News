@@ -1,12 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { ageInJapan, japanDate, bashoDayForDate, nextDayForBasho, pairKey, h2hHistory, techniqueText } from '../assets/sumo-matchup.mjs';
+import { ageInJapan, japanDate, bashoDayForDate, nextDayForBasho, pairKey, h2hHistory, researchedHeadToHead, techniqueText } from '../assets/sumo-matchup.mjs';
 
 const snapshot=JSON.parse(readFileSync(new URL('../data/sumo/preview-details.json',import.meta.url),'utf8'));
 
 test('2026 November basho shows tomorrow as day 9 in Japan on November 15',()=>{
-  const when='2026-11-15T00:25:00Z'; // 09:25 Melbourne, 09:25 JST (JST is UTC+9)
+  const when='2026-11-15T00:25:00Z'; // 09:25 JST (11:25 Melbourne AEDT)
   assert.equal(japanDate(when),'2026-11-15');
   assert.equal(bashoDayForDate(when,'2026-11-08T00:00:00Z'),8);
   assert.equal(nextDayForBasho(when,'2026-11-08T00:00:00Z'),9);
@@ -70,4 +70,34 @@ test('preview markup provides accessible full head-to-head navigation',()=>{
   assert.match(source,/techniqueText\(m\.kimarite\)/);
   const html=readFileSync(new URL('../sumo.html',import.meta.url),'utf8');
   assert.match(html,/20261115-matchups1/);
+});
+
+test('research preview shows five recent H2H results then lazily all career meetings',()=>{
+  const key='8850:8857';
+  const rows=[
+    ['202611',1,8857,'tsukiotoshi','Makuuchi',12,'regular'],
+    ['202609',4,8850,'yorikiri','Makuuchi',8,'regular'],
+    ['202607',3,8857,'fusen','Makuuchi',3,'regular'],
+    ['202605',2,8857,'uwatenage','Makuuchi',5,'regular'],
+    ['202603',6,8857,'oshidashi','Makuuchi',10,'regular'],
+    ['202511',8,8857,'oshidashi','Makuuchi',4,'regular']
+  ];
+  const summary={schemaVersion:1,cohortSize:190,sourceAsOf:'2026-11-14',
+    activePairs:{[key]:{a:8850,b:8857,winsA:1,winsB:5,total:6,latest:rows.slice(0,5)}}};
+  const preview=researchedHeadToHead(summary,null,8850,8857);
+  assert.equal(preview.wins,1);
+  assert.equal(preview.total,6);
+  assert.equal(preview.rows.length,5);
+  assert.equal(preview.complete,false);
+  const full={schemaVersion:1,cohortSize:190,pairs:{
+    [key]:{a:8850,b:8857,winsA:1,winsB:5,regular:rows,
+      special:[['202601',16,8850,'yorikiri','Makuuchi',10,'playoff']]}
+  }};
+  const all=researchedHeadToHead(summary,full,8850,8857);
+  assert.equal(all.rows.length,6);
+  assert.equal(all.complete,true);
+  assert.equal(all.special.length,1);
+  assert.equal(researchedHeadToHead(summary,full,8857,8850).wins,5);
+  assert.equal(techniqueText(all.rows[2].kimarite),'Fusen (forfeit; no technique)');
+  assert.equal(researchedHeadToHead(summary,null,8850,123456),null,'unknown pair is not a fabricated 0-0 record');
 });
