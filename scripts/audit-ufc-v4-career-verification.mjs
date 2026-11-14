@@ -60,13 +60,28 @@ export function auditCareerVerification(approval,foundation,research,progress,
  const censusMap=new Map((census?.fighters||[]).map(x=>[x.slug,x]));
  const cases=[], counts={officialOmission:0,providerDiscrepancy:0,
   fullIndexNotAttempted:0,partialOrManualProviderSearch:0,
-  identityCheckUnattempted:0,uncertified:0,verifiedComplete:0};
+  identityCheckUnattempted:0,uncertified:0,verifiedComplete:0,
+  independentlyCertified:0,providerOnlyCertified:0,conflictingSavedOutcomes:0};
  const officialReview=[];
  for(const slug of approved){
   const f=foundation.fighters?.[slug];
   if(!f)throw Error("Missing approved V4 fighter "+slug);
   const profile=research?.profiles?.[slug]||{};
   const timeline=canonHistory(slug,profile,feeder);
+  // Never silently collapse contradictory results for the same dated opponent.
+  const outcomesByBout=new Map();
+  const contradictorySavedRows=[];
+  for(const row of profile?.recentHistory||[]){
+   if(String(row?.promotion||row?.org||"").toLowerCase()!=="ufc"||
+      !date(row.date)||!norm(row.opponent)||!result(row.result||row.outcome||row.status)||
+      verifiedFeeder(slug,row,feeder))continue;
+   const k=date(row.date)+"|"+norm(row.opponent);
+   const outcome=result(row.result||row.outcome||row.status);
+   if(outcomesByBout.has(k)&&outcomesByBout.get(k)!==outcome)
+    contradictorySavedRows.push({date:date(row.date),opponent:row.opponent,
+     outcomes:[outcomesByBout.get(k),outcome]});
+   else outcomesByBout.set(k,outcome);
+  }
   const checked=progress?.ufcApprovedFullFightSearchChecks?.[slug]||{};
   const identity=progress?.ufcFullCareerHistoryChecks?.[slug]||{};
   const external=independent.fighters?.[slug]||{};
@@ -92,7 +107,9 @@ export function auditCareerVerification(approval,foundation,research,progress,
     Boolean(profile.ufcTimeline?.savedHistoryHasAdditionalUfcBouts||
      profile.ufcTimeline?.missingRosterLastUfcFight||
      (profile.ufcHistoryIdConflicts||[]).length);
-  const verified=f.ufcTimelineCertified===true||f.independentlyCertifiedCareer===true;
+  const independentlyCertified=f.independentlyCertifiedCareer===true;
+  const providerCertified=f.ufcTimelineCertified===true;
+  const verified=providerCertified||independentlyCertified;
   const noFullSearch=checked.status===undefined;
   const incompleteSearch=checked.status&&checked.status!=="checked";
   const identityNotChecked=identity.status!=="checked";
@@ -102,9 +119,13 @@ export function auditCareerVerification(approval,foundation,research,progress,
   if(incompleteSearch)counts.partialOrManualProviderSearch++;
   if(identityNotChecked)counts.identityCheckUnattempted++;
   if(!verified)counts.uncertified++;else counts.verifiedComplete++;
-  const priority=hasOfficialOmission?1:mismatch?2:incompleteSearch?3:
+  if(independentlyCertified)counts.independentlyCertified++;
+  else if(providerCertified)counts.providerOnlyCertified++;
+  if(contradictorySavedRows.length)counts.conflictingSavedOutcomes++;
+  const priority=contradictorySavedRows.length?1:hasOfficialOmission?1:mismatch?2:incompleteSearch?3:
    noFullSearch?4:identityNotChecked?5:6;
-  const labels=[...(hasOfficialOmission?["official_listing_has_unsaved_bouts"]:[]),
+  const labels=[...(contradictorySavedRows.length?["contradictory_saved_ufc_outcomes"]:[]),
+    ...(hasOfficialOmission?["official_listing_has_unsaved_bouts"]:[]),
     ...(mismatch?["saved_provider_history_discrepancy"]:[]),
     ...(incompleteSearch?["full_fight_index_incomplete_or_manual_review"]:[]),
     ...(noFullSearch?["full_fight_index_not_attempted"]:[]),
@@ -115,10 +136,13 @@ export function auditCareerVerification(approval,foundation,research,progress,
    historicalStatus:f.careerCoverageStatus,
    officialInventoryBoutCount:approvedBoutInventory.length||null,
    officialInventoryUnmatched:unmatched.length,
+   contradictorySavedOutcomes:contradictorySavedRows,
    fullFightIndexSearchStatus:checked.status||"not_attempted",
    identityCareerCheckStatus:identity.status||"not_attempted",
    providerExplicitUntruncated:profile?.ufcTimeline?.providerTruncatedFlag===false,
    providerOrIndependentCareerCertified:verified,
+   independentlyCertifiedCareer:independentlyCertified,
+   providerOnlyCertified:providerCertified&&!independentlyCertified,
    reasons:labels});
  }
  cases.sort((a,b)=>a.priority-b.priority||
