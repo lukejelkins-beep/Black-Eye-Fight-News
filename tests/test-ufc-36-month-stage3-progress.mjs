@@ -843,3 +843,23 @@ test('Park five-bout career reconciles both UFC Vancouver native representations
   eventId:'999'}}),false,
   'The duplicate must come from the exact same official event');
 });
+
+test('Aleksandre Topuria has exactly two completed UFC fights with native 373 and independent source identity',()=>{
+ const load=p=>JSON.parse(readFileSync(new URL('../data/'+p,import.meta.url),'utf8'));
+ const evidence=load('ufc-independent-full-career-verification.json').fighters['aleksandre-topuria'];
+ const fighter=load('ufcalendar-fighter-research.json').profiles['aleksandre-topuria'];
+ const index=load('ufcalendar-rich-progress.json').bouts;
+ const rows=fighter.recentHistory.filter(x=>x.promotion==='ufc');
+ const verified=(source,cache=index)=>evaluateCareerEvidence(fighter,rows,
+  '2025-11-22','2026-11-14',source,cache).independentlyVerified;
+ assert.equal(rows.length,2);
+ assert.equal(evidence.bouts.length,2);
+ assert.deepEqual(evidence.bouts.map(x=>x.nativeBoutId).sort(),['60414','60987']);
+ assert.equal(verified(evidence),true);
+ assert.equal(verified({...evidence,bouts:evidence.bouts.slice(1)}),false);
+ assert.equal(verified({...evidence,bouts:evidence.bouts.map((r,i)=>
+   i?{...r,result:'loss'}:r)}),false);
+ assert.equal(verified({...evidence,bouts:evidence.bouts.map((r,i)=>
+   i?{...r,nativeFighterId:'999999'}:r)}),false);
+ assert.equal(verified(evidence,{}),false);
+});
