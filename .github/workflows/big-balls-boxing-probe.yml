@@ -1,0 +1,140 @@
+name: BEFN read-only Big Balls boxing API capability probe
+
+on:
+  push:
+    branches:
+      - test/big-balls-boxing-api-probe-20261114
+    paths:
+      - '.github/workflows/big-balls-boxing-probe.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/big-balls-boxing-probe.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: befn-boxing-api-capability-probe
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    name: Confirm boxing auth and punch-stat schema
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check published API behaviour with at most four read-only requests
+        env:
+          BIG_BALLS_BOXING_API: ${{ secrets.BIG_BALLS_BOXING_API }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import re
+          import urllib.request
+          import urllib.error
+          from collections import Counter
+          
+          key = os.getenv("BIG_BALLS_BOXING_API", "").strip()
+          if not key:
+              print("SECRET_PRESENT=False; probe skipped")
+              raise SystemExit(2)
+          
+          print("SECRET_PRESENT=True; secret value never logged")
+          base = "https://api.bigballsdata.com"
+          headers = {"Authorization": "Bearer " + key, "Accept": "application/json", "User-Agent": "BEFN-Boxing-ReadOnly-Probe/1.0"}
+          calls = 0
+          
+          def req(path, label):
+              global calls
+              if calls >= 4:
+                  return {}
+              calls += 1
+              try:
+                  request = urllib.request.Request(base + path, headers=headers)
+                  with urllib.request.urlopen(request, timeout=15) as response:
+                      status = response.status
+                      raw = response.read(300000)
+                  print(f"{label}: HTTP {status}")
+                  return json.loads(raw)
+              except urllib.error.HTTPError as error:
+                  print(f"{label}: HTTP {error.code} (no response body printed)")
+                  return {}
+              except Exception as error:
+                  print(f"{label}: connection_error={type(error).__name__}")
+                  return {}
+          
+          def items(payload):
+              if isinstance(payload, list):
+                  return payload
+              if not isinstance(payload, dict):
+                  return []
+              for key in ("data", "items", "results", "cards", "bouts", "athletes"):
+                  v = payload.get(key)
+                  if isinstance(v, list):
+                      return v
+                  if isinstance(v, dict):
+                      for sub in ("items", "data", "results", "cards", "bouts"):
+                          if isinstance(v.get(sub), list):
+                              return v[sub]
+              return []
+          
+          def fields(obj, path="", depth=0):
+              if depth > 9:
+                  return []
+              if isinstance(obj, dict):
+                  out = []
+                  for k, v in obj.items():
+                      newpath = (path + "." if path else "") + str(k)
+                      out.append(newpath)
+                      out.extend(fields(v, newpath, depth + 1))
+                  return out
+              if isinstance(obj, list) and obj:
+                  return fields(obj[0], path + "[0]", depth + 1)
+              return []
+          
+          def report(label, payload):
+              names = fields(payload)
+              print(f"{label}: nested_field_paths_inspected={len(names)}; top_level_keys={sorted(payload.keys()) if isinstance(payload, dict) else 'non-object'}")
+              words = ["jab", "punch", "power", "landed", "thrown", "compubox", "round"]
+              for w in words:
+                  matched = [p for p in names if w in p.lower()]
+                  print(f"{label}: {w}_field_paths={matched[:8]}")
+          
+          auth = req("/v1/user/me", "AUTH")
+          if not auth or not isinstance(auth, dict) or auth.get("error"):
+              print("AUTH_NOT_CONFIRMED; skipping remaining test calls")
+              raise SystemExit(1)
+          
+          people = req("/v1/athletes?sport=boxing&limit=2", "FIGHTER_LIST")
+          report("FIGHTER_LIST", people)
+          cards = req("/v1/fight-cards?sport=boxing&limit=1", "BOXING_CARD")
+          report("BOXING_CARD", cards)
+          
+          def find_bout_id(payload):
+              rows = items(payload)
+              if not rows:
+                  return None
+              d = rows[0]
+              if not isinstance(d, dict):
+                  return None
+              for k in ("bouts", "fights"):
+                  boutrows = d.get(k)
+                  if isinstance(boutrows, list) and boutrows:
+                      first = boutrows[0]
+                      if isinstance(first, dict):
+                          return first.get("id") or first.get("bout_id")
+              return None
+          
+          bout_id = find_bout_id(cards)
+          if bout_id is not None and re.fullmatch(r"[A-Za-z0-9_-]{1,80}", str(bout_id)):
+              bout = req("/v1/bouts/" + str(bout_id) + "?sport=boxing", "BOXING_BOUT")
+              report("BOXING_BOUT", bout)
+          else:
+              print("BOXING_BOUT: skipped; no valid bout ID in card response")
+          print(f"TOTAL_HTTP_CALLS={calls}; no writes; no secret output")
+          
+          PY
