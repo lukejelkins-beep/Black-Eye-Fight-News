@@ -1,0 +1,25 @@
+name: UFC wave9 Jose Henrique exact source/native review (nonproduction)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-native-reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate read-only pinned source script
+        run: node --check scripts/ufc-unified-wave9-jose-source-review.mjs
+      - name: Reconcile Jose Souza/Henrique complete UFC career to cached native IDs and source
+        run: node scripts/ufc-unified-wave9-jose-source-review.mjs
+      - name: Preserve independent source-only result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-wave9-jose-independent-native-source-review
+          path: qa/ufc-unified-wave9-source-review.json
+          if-no-files-found: warn
