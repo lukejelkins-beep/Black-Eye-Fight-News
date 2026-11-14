@@ -75,49 +75,54 @@ export function endpoint(id,stage,skip=0){
   return SOURCE+'/'+stage+'?'+q;
 }
 export function combinePage(doc,stage,result,id){
-  const name=stage==='shikonas'?'shikonas':stage;
-  if(!isObject(result)||!Array.isArray(result[name])){
-    // Preserve only a harmless structural signature. This distinguishes a
-    // provider error document from a changed pagination contract without
-    // logging raw API payloads or assuming an empty history.
+  // Confirmed provider response contracts (GitHub runner, Nov 2026):
+  // - measurement / rank / shikona change endpoints return bare arrays;
+  // - rikishi matches returns {limit,skip,total,records}.
+  // Supporting both full envelopes and arrays protects existing test fixtures.
+  const direct=Array.isArray(result);
+  const collection=stage==='matches'?'records':stage;
+  const items=direct?result:result?.[collection]??(stage==='matches'?result?.matches:undefined);
+  if(!Array.isArray(items)){
     const keys=isObject(result)?Object.keys(result).slice(0,12).join(','):Array.isArray(result)?'array':'non-object';
     const msg=isObject(result)?String(result.message??result.error??'').slice(0,70):'';
-    throw Error('Expected paginated '+stage+' response; shape='+keys+(msg?' detail='+msg:''));
+    throw Error('Expected '+stage+' collection; shape='+keys+(msg?' detail='+msg:''));
   }
-  const indicated=result.rikishi_id??result.rikishiId;
+  if(direct&&stage==='matches')throw Error('Match response lacks pagination totals');
+  const indicated=direct?null:result.rikishi_id??result.rikishiId;
   if(indicated!=null&&Number(indicated)!==Number(id))throw Error('Mismatched wrestler identity in '+stage);
-  for(const x of result[name]){
-    if(!isObject(x))throw Error('Malformed '+stage+' item');
-    if(x.rikishiId!=null&&Number(x.rikishiId)!==Number(id))throw Error('Cross-wrestler '+stage+' item');
+  for(const item of items){
+    if(!isObject(item))throw Error('Malformed '+stage+' item');
+    if(item.rikishiId!=null&&Number(item.rikishiId)!==Number(id))throw Error('Cross-wrestler '+stage+' item');
   }
-  const state=doc.stages[stage];
-  const items=result[name];
-  const total=result.total==null?null:Number(result.total);
-  const more=result.has_more??result.hasMore;
+  const state=doc.stages[stage],total=direct?null:result.total==null?null:Number(result.total);
   const next=state.skip+items.length;
+  const more=direct?items.length===PAGE_SIZE:
+    (result.has_more??result.hasMore??(total===null?null:next<total));
+  if(direct&&items.length>PAGE_SIZE)throw Error('History API did not respect requested page limit for '+stage);
+  if(!direct&&result.skip!=null&&Number(result.skip)!==state.skip)throw Error('Unexpected '+stage+' page offset');
+  if(!direct&&result.count!=null&&Number(result.count)!==items.length)throw Error('Unexpected '+stage+' page count');
   if(total!==null&&(!Number.isSafeInteger(total)||total<0||next>total))throw Error('Invalid '+stage+' source total');
   if(more!=null&&typeof more!=='boolean')throw Error('Invalid '+stage+' has_more');
-  if(items.length===0&&more===true)throw Error('Empty '+stage+' page despite has_more');
-  if(total===null&&more==null)throw Error('Missing pagination metadata for '+stage);
+  if(items.length===0&&more===true)throw Error('Empty '+stage+' page despite more records');
+  if(total===null&&more===null)throw Error('Missing pagination metadata for '+stage);
   if(total!==null&&more===false&&next<total)throw Error('Truncated '+stage+' page');
   if(total!==null&&more===true&&next>=total)throw Error('Inconsistent '+stage+' pagination');
   const existing=doc.data[stage];
-  // Matches in the API sometimes lack a source ID. The composite bout key
-  // prevents duplicate overlapping pages without treating all same-basho bouts
-  // as one match. Preserve the original payload for subsequent certification.
   const key=x=>x.id!=null?String(x.id):stage==='matches'?
     [x.bashoId,x.day,x.matchNo,x.eastId,x.westId].join(':'):JSON.stringify(x);
   const merged=new Map([...existing,...items].map(x=>[key(x),x]));
+  if(state.skip>0&&merged.size<=existing.length)throw Error('Repeated '+stage+' page; possible ignored skip');
   const complete=more===false||(total!==null&&next===total&&more!==true);
   if(complete&&total!==null&&merged.size!==total){
     throw Error('Duplicate/missing records in '+stage+': '+merged.size+'/'+total);
   }
-  // Commit only after every check passes, so an invalid page cannot silently
-  // advance the checkpoint.
+  if(direct&&complete&&merged.size!==next)throw Error('Duplicate records in '+stage+' unwrapped history');
+  // Atomic update: a rejected or duplicate page never moves the cursor.
   doc.data[stage]=[...merged.values()];
   state.skip=next;
   state.total=total;
   state.complete=complete;
+  state.responseShape=direct?'direct-array':'paginated-envelope';
   state.updatedAt=clock();
   state.attempts=0;
   state.source=endpoint(id,stage,Math.max(0,next-items.length));
@@ -171,6 +176,16 @@ async function ensureCache(w){
       stored.errors.push({at:clock(),stage:'profile',message:'Requeued after correcting unsupported query arguments',transient:false});
     }
     stored.profileRequestContract=2;
+  }
+  // Repair only known parser-version failures; preserve their error trails.
+  if(stored.historyResponseContract!==2){
+    for(const stage of ['measurements','ranks','shikonas','matches']){
+      if(stored.errors?.some(x=>x.stage===stage&&/Expected paginated .* response/.test(x.message))){
+        stored.stages[stage].attempts=0;
+        stored.errors.push({at:clock(),stage,message:'Requeued after verifying actual upstream response envelope',transient:false});
+      }
+    }
+    stored.historyResponseContract=2;
   }
   return stored;
 }
