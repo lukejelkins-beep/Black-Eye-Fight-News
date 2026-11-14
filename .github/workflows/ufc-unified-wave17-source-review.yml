@@ -1,11 +1,5 @@
 name: UFC wave17 Mesquita-Bondar pinned career source/native check (research only)
 on:
-  push:
-    branches: [research/ufc-wave17-mesquita-bondar-20261114]
-    paths:
-      - 'scripts/ufc-unified-wave17-source-review.mjs'
-      - 'data/ufc-unified-wave17-official-source-review-20261114.json'
-      - '.github/workflows/ufc-unified-wave17-source-review.yml'
   workflow_dispatch:
 permissions:
   contents: read
