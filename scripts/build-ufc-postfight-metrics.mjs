@@ -78,6 +78,22 @@ function rollup(parts,field){
  * Rescan every saved provider round for ALL core metrics before allowing any
  * secondary-only-conflict fight through. Missing provenance fails closed.
  */
+/**
+ * A result can end before the scheduled final round. Some provider feeds
+ * retain zero-only trailing placeholders; these cannot enter actual cage
+ * statistics. If any surviving source reports positive/noninteger values
+ * after the official finish round, fail closed for manual corroboration.
+ */
+function zeroOnlyTrailingRound(row){
+ if(!Number.isInteger(row?.round)||row.round<1)return false;
+ for(const corner of ["a","b"]){
+  for(const [metric,value] of Object.entries(row?.[corner]||{})){
+   if(metric==="sourceByMetric"||value===null||value===undefined)continue;
+   if(!Number.isInteger(value)||value!==0)return false;
+  }
+ }
+ return true;
+}
 export function classifyArchivedMetricConflicts(observed){
  const conflicts=Array.isArray(observed?.conflicts)?observed.conflicts:[];
  if(!conflicts.length)return {blocked:false,secondaryOnly:false,reason:null};
@@ -122,7 +138,8 @@ export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12"}={}){
   if(!archiveFights.has(k))archiveFights.set(k,f);
  }
  const fighters=new Map(),matchedBouts=new Set(),pending=[],
-  recoveredSecondaryOnlyDisputes=new Set();
+  recoveredSecondaryOnlyDisputes=new Set(),
+  recoveredPaddedRounds=new Set();
  function entry(name,slug){
   // Names are NOT unique identities: two different athletes can share the
   // same display name. Prefer the immutable source athlete slug and never
@@ -151,11 +168,25 @@ export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12"}={}){
   if(minutes===null||!Number.isInteger(roundCount)||roundCount<1||roundCount>5){
    pending.push({boutId:id,date:b.eventDate,reason:"finish_clock_unverified"});continue;
   }
-  const rounds=Array.isArray(observed.rounds)?observed.rounds:[];
+  const archivedRounds=Array.isArray(observed.rounds)?observed.rounds:[];
+  const rounds=archivedRounds.filter(x=>Number.isInteger(x?.round)&&
+   x.round>=1&&x.round<=roundCount);
+  const extra=archivedRounds.filter(x=>!Number.isInteger(x?.round)||
+   x.round>roundCount||x.round<1);
+  const sourceExtra=Object.values(observed?.sources||{}).flatMap(src=>
+   (Array.isArray(src?.rounds)?src.rounds:[]).filter(x=>
+    !Number.isInteger(x?.round)||x.round>roundCount||x.round<1));
+  if(extra.length&&(!extra.every(zeroOnlyTrailingRound)||
+     !sourceExtra.every(zeroOnlyTrailingRound))){
+   pending.push({boutId:id,date:b.eventDate,reason:"trailing_round_stat_conflict"});
+   continue;
+  }
   if(new Set(rounds.map(x=>x?.round)).size!==roundCount||
+     rounds.length!==roundCount||
      !Array.from({length:roundCount},(_,i)=>i+1).every(n=>rounds.some(x=>x.round===n))){
    pending.push({boutId:id,date:b.eventDate,reason:"round_coverage_incomplete"});continue;
   }
+  if(extra.length)recoveredPaddedRounds.add(id);
   const alignment=norm(observed.fighterA)===norm(b.a.name)&&
    norm(observed.fighterB)===norm(b.b.name)?["a","b"]:
    norm(observed.fighterA)===norm(b.b.name)&&
@@ -193,6 +224,7 @@ export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12"}={}){
   source:"Saved UFCalendar-derived UFC research observations with completed bout IDs",
   note:"Tracked UFC bouts ONLY, not certified career totals. Per-metric missing values are null. Core source conflicts and unverified source lineage remain quarantined. Secondary-only conflicts are allowed only after all retained provider rounds have matching core values.",
   recoveredSecondaryOnlyConflictedBouts:recoveredSecondaryOnlyDisputes.size,
+  recoveredZeroOnlyTrailingRoundBouts:recoveredPaddedRounds.size,
   processedCompletedBouts:matchedBouts.size,
   metricBouts:[...fighters.values()].reduce((sum,f)=>sum+f.bouts.length,0)/2,
   pending:pending.slice(-200).sort((a,b)=>a.date.localeCompare(b.date)||a.boutId.localeCompare(b.boutId)),
@@ -233,6 +265,7 @@ export function main(){
  console.log("Post-fight sample:",Object.keys(output.fighters).length,
   "fighters,",output.metricBouts,"unique completed bouts with rounds,",
   output.pending.length,"pending validation;",
-  output.recoveredSecondaryOnlyConflictedBouts,"secondary-dispute fights passed all-source core-field comparison");
+  output.recoveredSecondaryOnlyConflictedBouts,"secondary-dispute fights passed all-source core-field comparison;",
+  output.recoveredZeroOnlyTrailingRoundBouts,"zero-only trailing-round bouts recovered");
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))main();
