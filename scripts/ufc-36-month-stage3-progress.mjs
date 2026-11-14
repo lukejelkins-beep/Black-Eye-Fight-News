@@ -72,10 +72,32 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
   const pairedMetricFights=Object.fromEntries(coreMetrics.map(metric=>[metric,new Set()]));
   const allPairedCoreFights=new Set();
   const cohorts=[];
+  const providerTimelineMetadata={
+    explicitUntruncated:0,explicitTruncated:0,flagUnavailable:0,
+    previouslySavedWithoutMetadata:0,noTimelineEvidence:0,
+    savedHistoryContradictions:0,conflictingNativeIds:0,
+    missingRosterLatestBout:0
+  };
   for(const slug of approved){
     const eligible=currentEligible.has(slug);
     if(!eligible)blockedByEligibility.push(slug);
     const profile=profiles[slug]||{};
+    const timeline=profile.ufcTimeline;
+    if(!timeline||typeof timeline!=='object'){
+      providerTimelineMetadata.noTimelineEvidence++;
+    }else{
+      if(timeline.providerTruncatedFlag===false)providerTimelineMetadata.explicitUntruncated++;
+      else if(timeline.providerTruncatedFlag===true)providerTimelineMetadata.explicitTruncated++;
+      else if(Object.hasOwn(timeline,'providerTruncatedFlag'))
+        providerTimelineMetadata.flagUnavailable++;
+      else providerTimelineMetadata.previouslySavedWithoutMetadata++;
+      if(timeline.savedHistoryHasAdditionalUfcBouts===true)
+        providerTimelineMetadata.savedHistoryContradictions++;
+      if(Number(timeline.conflictingNativeFightIds)>0)
+        providerTimelineMetadata.conflictingNativeIds++;
+      if(timeline.missingRosterLastUfcFight)
+        providerTimelineMetadata.missingRosterLatestBout++;
+    }
     const allHistory=arr(profile.recentHistory).filter(isUfc).filter(r=>!date(r.date)||r.date<=census.asOf);
     for(const row of allHistory.filter(r=>feederDates.has(date(r.date))||sourceVerified(slug,r))){
       excludedFeederHistoryRows++;
@@ -275,6 +297,14 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     profilesWithSavedUfcHistory:profilesWithHistory,
     profilesWithoutSavedUfcHistory:missingHistory.length,
     fullyProviderCertifiedTimelines:fullyCertified,
+    providerMetadataExplicitlyUntruncated:providerTimelineMetadata.explicitUntruncated,
+    providerMetadataExplicitlyTruncated:providerTimelineMetadata.explicitTruncated,
+    providerMetadataFlagUnavailable:providerTimelineMetadata.flagUnavailable,
+    providerMetadataLegacyNotRecorded:providerTimelineMetadata.previouslySavedWithoutMetadata,
+    profilesWithoutTimelineEvidence:providerTimelineMetadata.noTimelineEvidence,
+    providerTimelinesWithSavedHistoryContradictions:providerTimelineMetadata.savedHistoryContradictions,
+    providerTimelinesWithNativeIdConflicts:providerTimelineMetadata.conflictingNativeIds,
+    providerTimelinesMissingLatestRosterBout:providerTimelineMetadata.missingRosterLatestBout,
     savedUfcHistoryRows:historyRows,uniqueNativeFightIds:allKnownNativeIds.size,
     nativeLinksAcrossFighters:nativeLinks,
     uniquelyIndexedNativeFightIds:indexedNative.size,
@@ -373,6 +403,14 @@ export function markdownReport(report){
    profilesWithSavedUfcHistory:'Profiles with saved UFC history',
    profilesWithoutSavedUfcHistory:'Profiles without saved UFC history',
    fullyProviderCertifiedTimelines:'Provider-certified complete UFC timelines',
+   providerMetadataExplicitlyUntruncated:'Provider timeline responses explicitly marked untruncated (not necessarily career-certified)',
+   providerMetadataExplicitlyTruncated:'Provider timeline responses explicitly marked truncated',
+   providerMetadataFlagUnavailable:'Provider timeline responses observed without explicit truncation flag',
+   providerMetadataLegacyNotRecorded:'Earlier saved timelines without retained truncation metadata',
+   profilesWithoutTimelineEvidence:'Approved fighters with no stored provider timeline evidence',
+   providerTimelinesWithSavedHistoryContradictions:'Provider histories missing UFC bouts already present in saved evidence',
+   providerTimelinesWithNativeIdConflicts:'Provider histories with conflicting saved UFC bout identities',
+   providerTimelinesMissingLatestRosterBout:'Provider histories missing the roster-confirmed latest UFC bout',
    savedUfcHistoryRows:'Saved UFC history rows',
    uniqueNativeFightIds:'Distinct native fight IDs referenced by approved fighters',
    uniquelyIndexedNativeFightIds:'Distinct native fight IDs indexed as official UFC',
