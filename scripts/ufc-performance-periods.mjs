@@ -50,6 +50,7 @@ export function verifiedUfcBouts(bouts){
     const promotion=String(item.promotion??item.org??"").trim().toUpperCase();
     // Provider org=UFC is not sufficient: DWCS/Road to UFC are feeder events.
     const eventNames=[item.eventName,item.eventTitle,item.cardName,
+      typeof item.event==="string"?item.event:null,
       item.event?.name,item.event?.title,item.event?.eventName]
       .filter(x=>typeof x==="string").join(" ");
     const feeder=/(?:dana white.?s contender series|\bDWCS\b|road to ufc|road-to-ufc)/i.test(eventNames);
