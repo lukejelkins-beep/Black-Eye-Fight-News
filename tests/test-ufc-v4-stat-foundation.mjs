@@ -66,7 +66,7 @@ test("V4 Last 5/10 are chronological, not last five or ten measured bouts",()=>{
  assert.equal(f.windows.last10.totals.sigLanded,3+4+5+6+7+8+9+10+11);
  assert.equal(f.windows.last5.rates.sigAccuracyPercent.coveredBouts,4);
  assert.equal(f.windows.last5.metricCoverage.sigLanded.bouts,4);
- assert.equal(f.careerCoverageStatus,"historical_completeness_unverified");
+ assert.equal(f.careerCoverageStatus,"known_fight_coverage_gap");
  assert.equal(f.v4Scores,null);
  assert.equal(f.externalCredentialBonusApplied,false);
  assert.equal(result.summary.fightersWithFiveMeasuredLatestBouts,0);
