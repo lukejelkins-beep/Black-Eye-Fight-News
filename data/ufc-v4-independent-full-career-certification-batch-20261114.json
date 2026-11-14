@@ -1410,6 +1410,122 @@
           "originalOfficialDate": "2019-10-18"
         }
       ]
+    },
+    "bill-algeo": {
+      "fighterName": "Bill Algeo",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/bill-algeo",
+      "fighterUrl": "https://ufcstats.com/fighter-details/9abc648e76c4493a",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 10,
+      "uniqueNativeFighterId": "1128",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/bill-algeo",
+        "https://cagemetrics.com/fighter/9abc648e76c4493a/",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceScopeVerified": "Official UFC biography exhaustively lists ten UFC contests from 2020-08-29 to 2024-07-20, independently crosschecked against ten UFCStats-derived fight-detail records with 16-digit source fight IDs. All ten fights have unique correctly identified saved numeric native IDs, matching outcomes and measured stats. The older 2019-06-18 Brendan Loughnane fight is confirmed separately by UFC as DWCS and has exact curated feeder evidence native 83931; excluded. This excludes all feeder fights; no known official source discrepancy. Event titles are display-only.",
+      "dateDiscrepancies": [
+        {
+          "boutId": "66358",
+          "officialLocalDate": "2020-11-28",
+          "nativeSavedDate": "2020-11-29",
+          "reason": "documented one-day UTC event-date shift"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2024-07-20",
+          "opponent": "Dooho Choi",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ec8bc554a0646638",
+          "nativeBoutId": "65927",
+          "nativeSavedDate": "2024-07-20",
+          "originalOfficialDate": "2024-07-20"
+        },
+        {
+          "date": "2024-03-30",
+          "opponent": "Kyle Nelson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/91aa08e910fb4412",
+          "nativeBoutId": "38983",
+          "nativeSavedDate": "2024-03-30",
+          "originalOfficialDate": "2024-03-30"
+        },
+        {
+          "date": "2023-10-07",
+          "opponent": "Alexander Hernandez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b638646fb297228d",
+          "nativeBoutId": "60025",
+          "nativeSavedDate": "2023-10-07",
+          "originalOfficialDate": "2023-10-07"
+        },
+        {
+          "date": "2023-04-15",
+          "opponent": "TJ Brown",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b01e6e97d66681c5",
+          "nativeBoutId": "53844",
+          "nativeSavedDate": "2023-04-15",
+          "originalOfficialDate": "2023-04-15"
+        },
+        {
+          "date": "2022-09-17",
+          "opponent": "Andre Fili",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/adb78db5ba8ccc0f",
+          "nativeBoutId": "61179",
+          "nativeSavedDate": "2022-09-17",
+          "originalOfficialDate": "2022-09-17"
+        },
+        {
+          "date": "2022-07-16",
+          "opponent": "Herbert Burns",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/4dd2bcd2b025204e",
+          "nativeBoutId": "61511",
+          "nativeSavedDate": "2022-07-16",
+          "originalOfficialDate": "2022-07-16"
+        },
+        {
+          "date": "2022-01-15",
+          "opponent": "Joanderson Brito",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8693027377658e61",
+          "nativeBoutId": "61534",
+          "nativeSavedDate": "2022-01-15",
+          "originalOfficialDate": "2022-01-15"
+        },
+        {
+          "date": "2021-05-22",
+          "opponent": "Ricardo Ramos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ae0afbff5ba07a34",
+          "nativeBoutId": "61759",
+          "nativeSavedDate": "2021-05-22",
+          "originalOfficialDate": "2021-05-22"
+        },
+        {
+          "date": "2020-11-28",
+          "opponent": "Spike Carlyle",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/181c3312f14de5a8",
+          "nativeBoutId": "66358",
+          "nativeSavedDate": "2020-11-29",
+          "originalOfficialDate": "2020-11-28"
+        },
+        {
+          "date": "2020-08-29",
+          "opponent": "Ricardo Lamas",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3a8e4b830750e9d4",
+          "nativeBoutId": "65816",
+          "nativeSavedDate": "2020-08-29",
+          "originalOfficialDate": "2020-08-29"
+        }
+      ]
     }
   }
 }
