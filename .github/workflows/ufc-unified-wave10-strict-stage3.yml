@@ -1,0 +1,43 @@
+name: UFC wave10 complete 783-person strict Stage3 audit (nonproduction)
+on:
+  push:
+    branches:
+      - research/ufc-wave10-fastlane-20261114
+    paths:
+      - 'data/ufc-independent-full-career-verification.json'
+      - 'data/ufc-feeder-bout-evidence.json'
+      - 'tests/test-ufc-unified-wave10-evidence.mjs'
+      - 'tests/test-ufc-unified-wave10-source-review.mjs'
+      - '.github/workflows/ufc-unified-wave10-strict-stage3.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify seven primary histories, native IDs and feeder exclusions
+        run: |
+          node --test tests/test-ufc-unified-wave10-source-review.mjs
+          node --test tests/test-ufc-unified-wave10-evidence.mjs
+          node --test tests/test-ufc-unified-wave8-wave9-evidence.mjs
+          node --test tests/test-ufc-36-month-stage3-progress.mjs
+          node --test tests/test-ufc-v4-certification-queue.mjs
+      - name: Independently certify full frozen 783-person UFC cohort with exact saved rounds
+        run: |
+          node scripts/ufc-36-month-stage3-progress.mjs
+          node scripts/ufc-v4-certification-queue.mjs
+      - name: Save strict audit result (research only)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-wave10-full-cohort-strict-stage3
+          path: |
+            qa/ufc-36-month-stage3-progress.json
+            qa/ufc-v4-certification-queue.json
+          if-no-files-found: warn
