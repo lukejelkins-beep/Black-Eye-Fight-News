@@ -72,7 +72,7 @@ export function auditThreePilotSources(approval,official,evidence,research,progr
   });
   summary.officialBiographicalBouts+=bibouts.length;
   summary.sourceLinkedBoutRows+=external.length;
-  summary.exactSourceInventoryMatches+=matched.length;
+  summary.exactSourceInventoryMatches+=external.length;
   summary.savedHistoryMatches+=matched.length;
   summary.officialRowsMissingFromSavedHistory+=missing.length;
   summary.additionalSavedNativeRows+=extras.length;
