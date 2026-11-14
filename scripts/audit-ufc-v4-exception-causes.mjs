@@ -78,13 +78,19 @@ export function diagnoseMissingUfcBouts(foundation,progress,archive){
    !Array.isArray(foundation?.missingNativeBoutQueue))
   throw Error("V4 foundation and deduplicated missing fight queue required");
  const index=archiveIndex(archive),detail=[];
- const counts={},priority={},sourceActions={};
+ const counts={},priority={},sourceActions={},eventGroups={},byPriorityAndCause={};
  for(const item of foundation.missingNativeBoutQueue){
   const bout=progress?.bouts?.[item.boutId]||null;
   const reason=causeFor(bout,index);
   const check=progress?.ufcCareerBoutChecks?.[item.boutId]||{};
   const retry=progress?.roundRetry?.[item.boutId]||{};
   const action=item.action||"manual_review";
+  if(reason==="official_ufc_event_identity_review"){
+   const name=String(bout?.event||"unknown");eventGroups[name]=(eventGroups[name]||0)+1;
+  }
+  const bucket=item.band||"unknown";
+  if(!byPriorityAndCause[bucket])byPriorityAndCause[bucket]={};
+  byPriorityAndCause[bucket][reason]=(byPriorityAndCause[bucket][reason]||0)+1;
   counts[reason]=(counts[reason]||0)+1;
   priority[item.band]=(priority[item.band]||0)+1;
   sourceActions[action]=(sourceActions[action]||0)+1;
@@ -103,7 +109,11 @@ export function diagnoseMissingUfcBouts(foundation,progress,archive){
  return {schema:1,scope:"ufc-v4-exception-diagnostics",
   status:"read_only_offline_qa_not_production",asOf:foundation.asOf,
   summary:{distinctExceptions:detail.length,byCause:counts,
-   byPriorityBand:priority,bySavedWorkflowAction:sourceActions},
+   byPriorityBand:priority,bySavedWorkflowAction:sourceActions,
+   notIndexedInProviderCache:foundation.missingNativeBoutQueue.filter(x=>
+    x.indexedInSavedProviderCache===false).length,
+   byPriorityAndCause,eventTitleGroups:Object.entries(eventGroups)
+    .sort((a,b)=>b[1]-a[1]).map(([title,count])=>({title,count}))},
   cases:detail,note:"Cause classifications are cached-evidence diagnostics only, not authority to retry an API request or impute missing statistics."};
 }
 function read(filename){return JSON.parse(fs.readFileSync(path.join(root,filename),"utf8"))}
@@ -115,5 +125,12 @@ export function main(){
  const file=path.join(root,"qa/ufc-v4-exception-causes.json");
  fs.writeFileSync(file,JSON.stringify(out,null,2)+"\n");
  console.log("BEFN_V4_MISSING_CAUSES "+JSON.stringify(out.summary));
+ console.log("BEFN_V4_UNEXPECTED_JOIN "+JSON.stringify(
+  out.cases.filter(x=>x.cause==="unexpected_postfight_join_gap").map(x=>{
+   const b=read("data/ufcalendar-rich-progress.json").bouts?.[x.boutId]||{};
+   return {boutId:x.boutId,event:x.event,date:x.date,
+    payloadNativeId:b.id||null,aSlug:b.a?.slug||null,bSlug:b.b?.slug||null,
+    references:x.references};
+  })));
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))main();
