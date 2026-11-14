@@ -1,0 +1,359 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave30-five-four-bout-careers",
+  "asOf": "2026-11-15",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "sourceMethod": "Full dated official UFC.com athlete narratives checked against pinned Greco UFCStats-derived fighter/fight/event listings and exact saved native UFC numeric fighter/corner/bout IDs, dates (±1 UTC day), winner and measured rounds. DWCS feeder fights and cancelled bookings excluded. Full-cohort strict Stage3 gate separately determines certification.",
+  "fighters": {
+    "danny-barlow": {
+      "name": "Danny Barlow",
+      "officialFighterUrl": "https://www.ufc.com/athlete/danny-barlow",
+      "ufcStatsFighterId": "b7c5eb7cdbac6a63",
+      "nativeFighterId": "159",
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2024-02-17",
+          "opponent": "Josh Quinlan",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ef13ed466e0b42d8",
+          "nativeBoutId": "59897",
+          "nativeFighterId": "159",
+          "originalOpponentNumericId": "2753",
+          "pinnedSourceEventTitle": "UFC 298: Volkanovski vs. Topuria",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/dab0e6cb8c932162",
+          "pinnedSourceEventDate": "2024-02-17"
+        },
+        {
+          "date": "2024-08-10",
+          "opponent": "Nikolay Veretennikov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/7b4284bd3033a319",
+          "nativeBoutId": "60240",
+          "nativeFighterId": "159",
+          "originalOpponentNumericId": "187",
+          "pinnedSourceEventTitle": "UFC Fight Night: Tybura vs. Spivac 2",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/2c733e059462c1dc",
+          "pinnedSourceEventDate": "2024-08-10"
+        },
+        {
+          "date": "2025-03-01",
+          "opponent": "Sam Patterson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d6c3b730dc9f21a5",
+          "nativeBoutId": "60335",
+          "nativeFighterId": "159",
+          "originalOpponentNumericId": "250",
+          "pinnedSourceEventTitle": "UFC Fight Night: Kape vs. Almabayev",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/9766ed20b68c7c33",
+          "pinnedSourceEventDate": "2025-03-01"
+        },
+        {
+          "date": "2025-10-18",
+          "opponent": "Djorden Santos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/096e00355c8c84ac",
+          "nativeBoutId": "38151",
+          "nativeFighterId": "159",
+          "originalOpponentNumericId": "24",
+          "pinnedSourceEventTitle": "UFC Fight Night: De Ridder vs. Allen",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/38e5d9dcb0fddc42",
+          "pinnedSourceEventDate": "2025-10-18"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83947",
+          "date": "2023-09-26",
+          "opponent": "Raheam Forest",
+          "result": "win",
+          "event": "Dana White's Contender Series 64",
+          "officialSourceUrl": "https://www.ufc.com/athlete/danny-barlow",
+          "excludedBecause": "UFC.com complete dated athlete biography explicitly documents this Dana White's Contender Series feeder bout separately from ordinary Octagon career."
+        }
+      ]
+    },
+    "david-martinez": {
+      "name": "David Martinez",
+      "officialFighterUrl": "https://www.ufc.com/athlete/david-martinez",
+      "ufcStatsFighterId": "9a97acbfd5a08bfa",
+      "nativeFighterId": "238",
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2025-03-29",
+          "opponent": "Saimon Oliveira",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/55376d5c205fa844",
+          "nativeBoutId": "61007",
+          "nativeFighterId": "238",
+          "originalOpponentNumericId": "135",
+          "pinnedSourceEventTitle": "UFC Fight Night: Moreno vs. Erceg",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/0f7210aa8d61af8d",
+          "pinnedSourceEventDate": "2025-03-29"
+        },
+        {
+          "date": "2025-09-13",
+          "opponent": "Rob Font",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/944b929130b23c2a",
+          "nativeBoutId": "38222",
+          "nativeFighterId": "238",
+          "originalOpponentNumericId": "237",
+          "pinnedSourceEventTitle": "Noche UFC: Lopes vs. Silva",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/5efaaf313b652dd7",
+          "pinnedSourceEventDate": "2025-09-13"
+        },
+        {
+          "date": "2026-02-28",
+          "opponent": "Marlon Vera",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/36d12b31957e94db",
+          "nativeBoutId": "60674",
+          "nativeFighterId": "238",
+          "originalOpponentNumericId": "152",
+          "pinnedSourceEventTitle": "UFC Fight Night: Moreno vs. Kavanagh",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/0cfbbfa0ba6d9855",
+          "pinnedSourceEventDate": "2026-02-28"
+        },
+        {
+          "date": "2026-09-12",
+          "opponent": "Dan Ige",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/51caa91f68873cf5",
+          "nativeBoutId": "83281",
+          "nativeFighterId": "238",
+          "originalOpponentNumericId": "488",
+          "pinnedSourceEventTitle": "Noche UFC: Silva vs. Delgado",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/638cfec7ec559d6e",
+          "pinnedSourceEventDate": "2026-09-12"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84030",
+          "date": "2024-10-01",
+          "opponent": "Xavier Franklin",
+          "result": "win",
+          "event": "Dana White's Contender Series 74",
+          "officialSourceUrl": "https://www.ufc.com/athlete/david-martinez",
+          "excludedBecause": "UFC.com complete dated athlete biography explicitly documents this Dana White's Contender Series feeder bout separately from ordinary Octagon career."
+        }
+      ]
+    },
+    "diyar-nurgozhay": {
+      "name": "Diyar Nurgozhay",
+      "officialFighterUrl": "https://www.ufc.com/athlete/diyar-nurgozhay",
+      "ufcStatsFighterId": "709fadb644ee3f51",
+      "nativeFighterId": "130",
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2025-03-15",
+          "opponent": "Brendson Ribeiro",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e56403718205b494",
+          "nativeBoutId": "60359",
+          "nativeFighterId": "130",
+          "originalOpponentNumericId": "263",
+          "pinnedSourceEventTitle": "UFC Fight Night: Vettori vs. Dolidze 2",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/39f62b833e4cf126",
+          "pinnedSourceEventDate": "2025-03-15"
+        },
+        {
+          "date": "2025-08-23",
+          "opponent": "Uran Satybaldiev",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7fc5f1dc2df84ac7",
+          "nativeBoutId": "65922",
+          "nativeFighterId": "130",
+          "originalOpponentNumericId": "143",
+          "pinnedSourceEventTitle": "UFC Fight Night: Walker vs. Zhang",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/754968e325d6f60d",
+          "pinnedSourceEventDate": "2025-08-23"
+        },
+        {
+          "date": "2026-03-07",
+          "opponent": "Rafael Tobias",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/cc03e698c4b7da52",
+          "nativeBoutId": "60696",
+          "nativeFighterId": "130",
+          "originalOpponentNumericId": "457",
+          "pinnedSourceEventTitle": "UFC 326: Holloway vs. Oliveira 2",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/15ec018d144710db",
+          "pinnedSourceEventDate": "2026-03-07"
+        },
+        {
+          "date": "2026-08-08",
+          "opponent": "Bruno Lopes",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/13380a8d6cdbb381",
+          "nativeBoutId": "83093",
+          "nativeFighterId": "130",
+          "originalOpponentNumericId": "514",
+          "pinnedSourceEventTitle": "UFC Fight Night: Gamrot vs. Salkilld",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/495add4fbede0a44",
+          "pinnedSourceEventDate": "2026-08-08"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84028",
+          "date": "2024-10-01",
+          "opponent": "Bartosz Szewczyk",
+          "result": "win",
+          "event": "Dana White's Contender Series 74",
+          "officialSourceUrl": "https://www.ufc.com/athlete/diyar-nurgozhay",
+          "excludedBecause": "UFC.com complete dated athlete biography explicitly documents this Dana White's Contender Series feeder bout separately from ordinary Octagon career."
+        }
+      ]
+    },
+    "djorden-santos": {
+      "name": "Djorden Santos",
+      "officialFighterUrl": "https://www.ufc.com/athlete/djorden-santos",
+      "ufcStatsFighterId": "312f7d7b2b2f7de4",
+      "nativeFighterId": "24",
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2025-03-08",
+          "opponent": "Ozzy Diaz",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/96c2f85b46e98e91",
+          "nativeBoutId": "60330",
+          "nativeFighterId": "24",
+          "originalOpponentNumericId": "550",
+          "pinnedSourceEventTitle": "UFC 313: Pereira vs. Ankalaev",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/ca936c67687789e9",
+          "pinnedSourceEventDate": "2025-03-08"
+        },
+        {
+          "date": "2025-10-18",
+          "opponent": "Danny Barlow",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/096e00355c8c84ac",
+          "nativeBoutId": "38151",
+          "nativeFighterId": "24",
+          "originalOpponentNumericId": "159",
+          "pinnedSourceEventTitle": "UFC Fight Night: De Ridder vs. Allen",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/38e5d9dcb0fddc42",
+          "pinnedSourceEventDate": "2025-10-18"
+        },
+        {
+          "date": "2026-05-09",
+          "opponent": "Baisangur Susurkaev",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1f5d0b106385b2ac",
+          "nativeBoutId": "66061",
+          "nativeFighterId": "24",
+          "originalOpponentNumericId": "23",
+          "pinnedSourceEventTitle": "UFC 328: Chimaev vs. Strickland",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/9eedac48b497de5a",
+          "pinnedSourceEventDate": "2026-05-09"
+        },
+        {
+          "date": "2026-09-12",
+          "opponent": "Yousri Belgaroui",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9a0e77ecd1b7f04e",
+          "nativeBoutId": "83821",
+          "nativeFighterId": "24",
+          "originalOpponentNumericId": "137",
+          "pinnedSourceEventTitle": "Noche UFC: Silva vs. Delgado",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/638cfec7ec559d6e",
+          "pinnedSourceEventDate": "2026-09-12"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83886",
+          "date": "2024-09-03",
+          "opponent": "Will Currie",
+          "result": "win",
+          "event": "Dana White's Contender Series 70",
+          "officialSourceUrl": "https://www.ufc.com/athlete/djorden-santos",
+          "excludedBecause": "UFC.com complete dated athlete biography explicitly documents this Dana White's Contender Series feeder bout separately from ordinary Octagon career."
+        }
+      ]
+    },
+    "elijah-smith": {
+      "name": "Elijah Smith",
+      "officialFighterUrl": "https://www.ufc.com/athlete/elijah-smith",
+      "ufcStatsFighterId": "7478b7f959ba61f5",
+      "nativeFighterId": "511",
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2025-02-15",
+          "opponent": "Vince Morales",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/07b357090cc91c2c",
+          "nativeBoutId": "61000",
+          "nativeFighterId": "511",
+          "originalOpponentNumericId": "552",
+          "pinnedSourceEventTitle": "UFC Fight Night: Cannonier vs. Rodrigues",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/ce7871949b0ed2bf",
+          "pinnedSourceEventDate": "2025-02-15"
+        },
+        {
+          "date": "2025-08-09",
+          "opponent": "Toshiomi Kazama",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ae7a8f19743e8154",
+          "nativeBoutId": "60515",
+          "nativeFighterId": "511",
+          "originalOpponentNumericId": "2786",
+          "pinnedSourceEventTitle": "UFC Fight Night: Dolidze vs. Hernandez",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/6cd3dfc54f01287f",
+          "pinnedSourceEventDate": "2025-08-09"
+        },
+        {
+          "date": "2026-03-14",
+          "opponent": "SuYoung You",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f44b4e998b6829f6",
+          "nativeBoutId": "60719",
+          "nativeFighterId": "511",
+          "originalOpponentNumericId": "266",
+          "pinnedSourceEventTitle": "UFC Fight Night: Emmett vs. Vallejos",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/babc6b5745335f18",
+          "pinnedSourceEventDate": "2026-03-14"
+        },
+        {
+          "date": "2026-11-07",
+          "opponent": "Davey Grant",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1f9c3310eeb1fb93",
+          "nativeBoutId": "93283",
+          "nativeFighterId": "511",
+          "originalOpponentNumericId": "150",
+          "pinnedSourceEventTitle": "UFC Fight Night: Cortes Acosta vs. Walker",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/110404b505fb562c",
+          "pinnedSourceEventDate": "2026-11-07"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83823",
+          "date": "2024-09-17",
+          "opponent": "Aaron Tau",
+          "result": "win",
+          "event": "Dana White's Contender Series 72",
+          "officialSourceUrl": "https://www.ufc.com/athlete/elijah-smith",
+          "excludedBecause": "UFC.com complete dated athlete biography explicitly documents this Dana White's Contender Series feeder bout separately from ordinary Octagon career."
+        }
+      ]
+    }
+  }
+}
