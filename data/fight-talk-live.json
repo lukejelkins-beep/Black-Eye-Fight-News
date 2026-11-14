@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-14T23:08:53.044Z",
-  "checkedAt": "2026-11-14T23:08:53.044Z",
-  "updatedAt": "2026-11-14T21:17:46Z",
+  "attemptedAt": "2026-11-14T23:45:23.398Z",
+  "checkedAt": "2026-11-14T23:45:23.398Z",
+  "updatedAt": "2026-11-14T23:08:19.620Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 3,
+  "sourcesChecked": 4,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 3,
+      "checked": 4,
       "failed": 0,
-      "configured": 3,
-      "message": "3 of 3 scheduled sources checked."
+      "configured": 4,
+      "message": "4 of 4 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 17,
+      "configured": 28,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 54,
+      "configured": 40,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 2,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,21 +55,190 @@
   "rollingScan": {
     "directoryEntries": 447,
     "scheduledEntries": 84,
-    "batchIndex": 1,
+    "batchIndex": 3,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 54,
-      "X": 17,
-      "Bluesky": 3,
-      "Threads": 10
+      "X": 28,
+      "Instagram": 40,
+      "Threads": 10,
+      "Bluesky": 4,
+      "Reddit": 2
     },
-    "directlyChecked": 3,
+    "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:q3k4mwmengzciq2ytpf3ckoa/app.bsky.feed.post/3n2cmjhuw7s2x",
+      "cid": "bafyreiffocbmk6clm7uhhrt2xpgr57rqizrhult5qycamzbvphah7ylevm",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Brent Brookhouse",
+      "handle": "@pridefightingchampionships.com",
+      "role": "media",
+      "quote": "Catchweight (136.4 lb)*: Juan Díaz def. Alateng Heili, Decision (unanimous) (30–27 x3)\n\nJuan Díaz: 1500 → 1518 (+18). Unranked → #54.\nAlateng Heili: 1500 → 1482 (−18). Unranked → #94.\n\n*Fight is rated at featherweight due to catchweight",
+      "postedAt": "2026-11-14T23:08:19.620Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/pridefightingchampionships.com/post/3n2cmjhuw7s2x",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:q3k4mwmengzciq2ytpf3ckoa/bafkreigdy2dezq35jr5pidrilhbx5rbe6nytft5o7irl47faclxctaepfu",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:q3k4mwmengzciq2ytpf3ckoa",
+      "engagement": {
+        "likes": 0,
+        "comments": 1,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T23:45:23.398Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:q3k4mwmengzciq2ytpf3ckoa/app.bsky.feed.post/3n2ckrhpjkk2x",
+      "cid": "bafyreie3phxo2pmuvtwp7oju3i46gy7m5p6hyyuygjpxpkhhoa26kksgqi",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Brent Brookhouse",
+      "handle": "@pridefightingchampionships.com",
+      "role": "media",
+      "quote": "Lightweight: Evan Elder def. Samuel Sanches, Decision (unanimous) (30–26 x3)\n\nEvan Elder: 1513 → 1531 (+17). Rank #80 → #52.\nSamuel Sanches: 1500 → 1483 (−17). Unranked → #104.",
+      "postedAt": "2026-11-14T22:37:00.394Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/pridefightingchampionships.com/post/3n2ckrhpjkk2x",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:q3k4mwmengzciq2ytpf3ckoa/bafkreigdy2dezq35jr5pidrilhbx5rbe6nytft5o7irl47faclxctaepfu",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:q3k4mwmengzciq2ytpf3ckoa",
+      "engagement": {
+        "likes": 0,
+        "comments": 1,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T23:45:23.398Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2ck4dtnrh2q",
+      "cid": "bafyreicfrnaoprx75yibhq5k6owgaogjgm7tht72zi62tieglnflro6ffm",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Conor McGregor places UFC 334 bet with €6 million payout",
+      "postedAt": "2026-11-14T22:25:11Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2ck4dtnrh2q",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T23:45:23.398Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2cjltjzch2q",
+      "cid": "bafyreifo3dp3sduhsdgoyzpe2cmdpzgmbu4h7enaygpijvene3vdvxs6yu",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Ex-boxing champion Lee Selby suffers horror injury in BKB Bare Knuckle Boxing return win over Ollie Sentance",
+      "postedAt": "2026-11-14T22:15:57Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2cjltjzch2q",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T23:45:23.398Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:q3k4mwmengzciq2ytpf3ckoa/app.bsky.feed.post/3n2cjewf3es2w",
+      "cid": "bafyreicw7rign4uj2dtcejk67lza7vsvn5wnclzmv2o5qjsl3dq4mdxc4e",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Brent Brookhouse",
+      "handle": "@pridefightingchampionships.com",
+      "role": "media",
+      "quote": "UFC 334 time. Elo update thread here. Gonna watch some football, cover some fights and then hopefully play some more Deadlock before bed.\n\nDeadlock is so good. Can't stop thinking about it",
+      "postedAt": "2026-11-14T22:12:05.831Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/pridefightingchampionships.com/post/3n2cjewf3es2w",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:q3k4mwmengzciq2ytpf3ckoa/bafkreigdy2dezq35jr5pidrilhbx5rbe6nytft5o7irl47faclxctaepfu",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:q3k4mwmengzciq2ytpf3ckoa",
+      "engagement": {
+        "likes": 1,
+        "comments": 3,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T23:45:23.398Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2citq7rbz2d",
+      "cid": "bafyreibc4dmlujip6bkbovrsgmbdc7n5cheda63qaklnmusvlshsr4fyiu",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Ciryl Gane v Josh Hokit UFC 334 LIVE Stream info, results, updates and more as Kayla Harrison takes on Amanda Nunes",
+      "postedAt": "2026-11-14T22:02:28Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2citq7rbz2d",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T23:45:23.398Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2chmpkmed2r",
+      "cid": "bafyreibhxhnkgeqcqxr7v6skbe7inrmgpus2jfl7zotmlokjpzee37vm6a",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Amado Vargas viciously knocks out Callum Nulty in BKB Bare Knuckle Boxing return",
+      "postedAt": "2026-11-14T21:40:39Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2chmpkmed2r",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T23:45:23.398Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2cgdsf7il2z",
       "cid": "bafyreididngxgka4cugzl5nurmn3qpilfmq32venjx77ubcafu34hnerau",
@@ -167,6 +336,54 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2ccdptglk25",
+      "cid": "bafyreibweyzadr3fuzxnzeybsctunugxpbfxhahzb7auq4vspad2nleqgi",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Paddy Pimblett watches as his ex-UFC star teammate is brutally KO’d in PFL debut",
+      "postedAt": "2026-11-14T20:06:08Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2ccdptglk25",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T23:45:23.398Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2cb3ddd5k22",
+      "cid": "bafyreidjf6gpmggfzyf42pmown4qhos5l5gettvj5rypzyicbp5sqoz6au",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Khamzat Chimaev wins title after dominating UFC legend in RAF Abu Dhabi main event",
+      "postedAt": "2026-11-14T19:43:33Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2cb3ddd5k22",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T23:45:23.398Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2caxqy6es2h",
       "cid": "bafyreihezayzyeij5e6hnwem3w6f6lwzb7qd6pmpbhrau6jzstoos4nday",
       "platform": "Bluesky",
@@ -212,6 +429,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-14T21:52:20.288Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2c7u2ves72y",
+      "cid": "bafyreialjbgfknpf6apytv5vuru6i2fhlbiqlple4h5wjkhbmjqk6tneje",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Zabit Magomedsharipov dominates UFC star at RAF Abu Dhabi to pick up second win of the year",
+      "postedAt": "2026-11-14T19:21:36Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2c7u2ves72y",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T23:45:23.398Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -311,6 +552,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2c52zundm2u",
+      "cid": "bafyreig6avcfh5araw43lrpmvcbmzkopkxry2ynwwjdcairrtlnwozf7z4",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Saba Lazishvili pulls off comeback at RAF Abu Dhabi after replacing Umar Nurmagomedov on one day’s notice",
+      "postedAt": "2026-11-14T18:31:48Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2c52zundm2u",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T23:45:23.398Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2c4hkmwyu25",
       "cid": "bafyreidmntutuf66uq6qh5trj7isuaznaooo474qmrynfzknpmpib6y6la",
       "platform": "Bluesky",
@@ -379,7 +644,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
+      "engagementCheckedAt": "2026-11-14T23:45:23.398Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -427,7 +692,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
+      "engagementCheckedAt": "2026-11-14T23:45:23.398Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -479,78 +744,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2bz2djqnq2a",
-      "cid": "bafyreidsg4h5xh7pku2i6xchsmftmuhqvh62is5thnkjxh2pfd7gbuzijy",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Merab Dvalishvili beats former UFC foe as he continues plea for Usman Nurmagomedov’s release after win",
-      "postedAt": "2026-11-14T17:19:50Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2bz2djqnq2a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2bwkhd3zm23",
-      "cid": "bafyreic3xoxqp5pdbhala72dh5mvm4qbsdweuymjvlag5gz7j6ixibdg5m",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Zabit Magomedsharipov’s brother loses undefeated record in upset despite ‘top five in the UFC’ claim",
-      "postedAt": "2026-11-14T16:35:10Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2bwkhd3zm23",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2burojcxb2d",
-      "cid": "bafyreicojf4egpg5iuw4h62dmu4a7walixmmjiarorwhje6dz2dx5bwe3a",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Khamzat Chimaev’s former UFC opponent stopped by ex-title challenger moments after illegal strike",
-      "postedAt": "2026-11-14T16:03:25Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2burojcxb2d",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2bsl6cij32c",
       "cid": "bafyreicysfmgcydyhiczm76pruydgi6zxw5lbcg4jfnpzz3kwbwqquzep4",
       "platform": "Bluesky",
@@ -572,78 +765,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-14T21:52:20.288Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2brj2x4ot2f",
-      "cid": "bafyreicsc7wmj3zynt7nn4wfwupvj7ee2ja2sokijctafwic3yxaxz5nly",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Alex Pereira provides his final prediction for Ciryl Gane vs. Josh Hokit at UFC 334",
-      "postedAt": "2026-11-14T15:04:54Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2brj2x4ot2f",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2bnxx52bs2r",
-      "cid": "bafyreifkt6aw3k3jdsa7chxwmvpjtmluer33ubsinr4dszt2o43fpccw5e",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Mike Perry reveals he re-signed to the UFC the day before suffering TKO loss and teases next opponent",
-      "postedAt": "2026-11-14T14:01:39Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2bnxx52bs2r",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2bkp5wmjr2q",
-      "cid": "bafyreiau4upjxpkmkfpga5otuth22lahvmowuw3jtwispn44y7uyuukhvi",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Fans narrowly back UFC 334 upsets as Gane vs Hokit and Harrison vs Nunes polls go down to the wire",
-      "postedAt": "2026-11-14T13:03:03Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2bkp5wmjr2q",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -719,30 +840,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2b6vtjvtb2u",
-      "cid": "bafyreige2y4poutaq46x3np2ifvcibays5ti4ieghew4t4y4u2gufmdfum",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Merab Dvalishvili outweighed by nearly 15 pounds in clash with former UFC opponent days after brawl",
-      "postedAt": "2026-11-14T09:32:02Z",
-      "date": "14 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2b6vtjvtb2u",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2b62m3eos2n",
       "cid": "bafyreibnhszgtwcg5kt374r5jq7s5qltbmfup4dahfr57dpvqophn6hpjy",
       "platform": "Bluesky",
@@ -788,30 +885,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2amlbmlal2a",
-      "cid": "bafyreihhl7zsv5vzx5sffeponr6emgnjrewqkjfe5lq4xvs5mvgb6zn7pe",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Joe Rogan breaks down Kayla Harrison vs Amanda Nunes at UFC 334: ‘She has such an advantage’",
-      "postedAt": "2026-11-14T04:04:00Z",
-      "date": "14 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2amlbmlal2a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1567,7 +1640,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
+      "engagementCheckedAt": "2026-11-14T23:45:23.398Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5188,7 +5261,7 @@
         "comments": 2,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
+      "engagementCheckedAt": "2026-11-14T23:45:23.398Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5357,60 +5430,6 @@
       "postedAt": "2026-11-08T11:04:34+0000",
       "url": "https://www.instagram.com/p/Dfem2EIGT2W/",
       "photo": "https://scontent-ord5-2.xx.fbcdn.net/v/t51.82787-15/703467491_18391568782095930_8495639239188447646_n.jpg?_nc_cat=103&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=gMLXQHy7G7UQ7kNvwHX-gSO&_nc_oc=AdrMBdLCuHaI7mliFyQdwUqGaWYCQrN5CYWl-0zCMEKS9i3j0Obiv_CNaPoCdQ0IVRo&_nc_zt=23&_nc_ht=scontent-ord5-2.xx&edm=AL-3X8kEAAAA&_nc_gid=FhJ3Fj3Zg4if4rw5NyDGTw&oh=00_AQT-01enxQbyBYIMnHhflPJi7IGmmijcmzp380lfWfERIw&oe=6AFAC772",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3mzryrdsdgc22",
-      "cid": "bafyreif4iikugmsefvyugjt7jmj3jkzuy72bzmvuhs6qoxdfrrbhaogwwe",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Dan Rafael",
-      "handle": "@danrafael1.bsky.social",
-      "role": "commentator",
-      "quote": "Willy Hutchinson avenges loss to Joshua Buatsi, fulfills childhood prophecy by winning vacant WBC 175 title. Read my story & sign up for my #boxing newsletter: danrafael.substack.com/p/hutchinson... #BuatsiHutchinson2",
-      "postedAt": "2026-11-08T08:32:13.125Z",
-      "date": "8 Nov 2026",
-      "url": "https://bsky.app/profile/danrafael1.bsky.social/post/3mzryrdsdgc22",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:ukajoiyhrbbiiu7qpcz43aha/bafkreifun33dacusv726vgtqm3jhyo44mqkzgax2esadqlh67jcvwz5hga",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
-      "engagement": {
-        "likes": 2,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "platform": "Instagram",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bryce Mitchell",
-      "handle": "@thugnasty_ufc",
-      "role": "fighter",
-      "source": "Instagram original author API",
-      "id": "18163500145511008",
-      "quote": "im workin nite shift. this is wat it looks like. \n\ni love this kinda work. and i love a wood stove\n 🔥🔥🔥❤️",
-      "postedAt": "2026-11-08T07:09:07+0000",
-      "url": "https://www.instagram.com/reel/DfeLtSNPIeT/",
-      "photo": "https://scontent-sea5-1.xx.fbcdn.net/v/t51.82787-15/707678529_18179077696397906_1237422916361142366_n.jpg?_nc_cat=105&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=XxCV1pSmDZ4Q7kNvwHN9Rqq&_nc_oc=Adq3wTb39uP9vGDmtDGV14OfEnWhvLR4Q5sFdAD9vG2jbozld6afMpYL_20tMoN2Eqo&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AL-3X8kEAAAA&_nc_gid=uJ5lUJqPNexF3C7HWploTA&oh=00_AQQUfecSoYsKL52GY_pIwP1bDVoMsEkGLBLN-ElNHw38wA&oe=6AFABAC2",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "platform": "Instagram",
-      "sport": "mma",
-      "type": "post",
-      "name": "Ian Machado Garry",
-      "handle": "@iangarry",
-      "role": "fighter",
-      "source": "Instagram original author API",
-      "id": "18356038756266462",
-      "quote": "November 6th 2021 #ufcdebut",
-      "postedAt": "2026-11-08T06:37:25+0000",
-      "url": "https://www.instagram.com/p/DfeIRf0CO2X/",
-      "photo": "https://scontent-sea5-1.xx.fbcdn.net/v/t51.2885-15/278106050_704934484024570_4460548853789095298_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=7d201b&_nc_ohc=UPoOvAqeXvAQ7kNvwErqf-D&_nc_oc=AdpHiUIIDa7f8SOLtdGvTtVpC4_TcWH6nXOLUBZDJ_DWH5clsbz1TpKwjpNELOkIdYE&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AL-3X8kEAAAA&oh=00_AQSChj7GvGTCpkph722eL56xpL51caY20MvWpax0mO_sIw&oe=6AFAB13C",
       "topic": "Original source post · claims may need confirmation"
     }
   ],
