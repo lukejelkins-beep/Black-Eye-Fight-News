@@ -1,0 +1,32 @@
+name: UFC wave10 pinned source/native reconciliation (nonproduction)
+on:
+  pull_request:
+    branches:
+      - research/ufc-unified-stage3-v4-evidence-20261114
+    paths:
+      - 'data/ufc-unified-wave10-official-source-review-20261114.json'
+      - 'scripts/ufc-unified-wave10-source-review.mjs'
+      - '.github/workflows/ufc-unified-wave10-source-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Static script check
+        run: node --check scripts/ufc-unified-wave10-source-review.mjs
+      - name: One pinned source/native crosscheck (no paid API, no certification writes)
+        run: node scripts/ufc-unified-wave10-source-review.mjs
+      - name: Preserve source report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-wave10-source-only
+          path: qa/ufc-unified-wave10-source-review.json
+          if-no-files-found: warn
