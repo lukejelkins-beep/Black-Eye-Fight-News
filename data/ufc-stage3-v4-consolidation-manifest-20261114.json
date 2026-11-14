@@ -2,7 +2,7 @@
   "schema": 1,
   "scope": "ufc-stage3-v4-evidence-consolidation",
   "rosterAsOf": "2026-11-14",
-  "status": "nonproduction_research_pending_stage3_ci",
+  "status": "nonproduction_strict_stage3_crossgate_passed_pending_owner_main_merge",
   "immutableRosterSize": 783,
   "before": {
     "mainStage3EvidenceEntries": 66,
@@ -252,5 +252,17 @@
     "tanner-boser": "b5f8adfe",
     "terrance-chatman": "93603218"
   },
-  "fingerprintMethod": "FNV-1a 32-bit over JSON.stringify(entry) in insertion order, change-detection only (not security grade)"
+  "fingerprintMethod": "FNV-1a 32-bit over JSON.stringify(entry) in insertion order, change-detection only (not security grade)",
+  "latestCompletedStrictStage3": {
+    "runUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567897945",
+    "onResearchBranch": true,
+    "asOf": "2026-11-14",
+    "certified": 153,
+    "fastLane": 373,
+    "exceptions": 257,
+    "evidenceGateFailures": 0,
+    "productionReady": false,
+    "originalMainEvidencePreserved": 66,
+    "v4OnlyReverifiedOnStage3": 87
+  }
 }
