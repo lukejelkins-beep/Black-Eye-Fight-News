@@ -27,6 +27,9 @@ on:
       - 'tests/test-ufc-unified-wave25-six-careers-20261114.mjs'
       - 'data/ufc-unified-wave26-ross-sharaf-source-review-20261115.json'
       - 'tests/test-ufc-unified-wave26-ross-sharaf-20261115.mjs'
+      - 'data/ufc-unified-wave27-aj-dobson-anton-turkalj-20261115.json'
+      - 'tests/test-ufc-unified-wave27-aj-anton-20261115.mjs'
+      - 'data/ufc-feeder-bout-evidence.json'
       - 'data/ufc-unified-wave25-six-careers-source-20261114.json'
       - 'data/ufc-unified-stewart-bedoya-ashmouz-source-review-20261115.json'
       - 'tests/test-ufc-unified-stewart-bedoya-ashmouz-20261115.mjs'
@@ -171,6 +174,7 @@ jobs:
           node --test tests/test-ufc-unified-wave24-yannis-yoo-evidence.mjs
           node --test tests/test-ufc-unified-wave25-six-careers-20261114.mjs
           node --test tests/test-ufc-unified-wave26-ross-sharaf-20261115.mjs
+          node --test tests/test-ufc-unified-wave27-aj-anton-20261115.mjs
           node --test tests/test-ufc-unified-stewart-bedoya-ashmouz-20261115.mjs
           node --test tests/test-ufc-unified-wave10-evidence.mjs
           node --test tests/test-ufc-unified-wave11-evidence.mjs
