@@ -107,10 +107,13 @@ export function auditCareerVerification(approval,foundation,research,progress,
     Boolean(profile.ufcTimeline?.savedHistoryHasAdditionalUfcBouts||
      profile.ufcTimeline?.missingRosterLastUfcFight||
      (profile.ufcHistoryIdConflicts||[]).length);
+  // A saved certification flag cannot override newly discovered official omissions.
+  // This remains a conservative veto, not a way to grant new certification.
+  const certificationBlocked=contradictorySavedRows.length>0||hasOfficialOmission||mismatch;
   const independentlyCertified=f.independentlyCertifiedCareer===true&&
-    contradictorySavedRows.length===0;
+    !certificationBlocked;
   const providerCertified=f.ufcTimelineCertified===true&&
-    contradictorySavedRows.length===0;
+    !certificationBlocked;
   const verified=providerCertified||independentlyCertified;
   const noFullSearch=checked.status===undefined;
   const incompleteSearch=checked.status&&checked.status!=="checked";
