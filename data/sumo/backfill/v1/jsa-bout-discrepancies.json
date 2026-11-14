@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "scope": "Research-only individual official JSA vs Sumo API bout-result discrepancy evidence; never silently mutate raw source data",
+  "reviewedAt": "2026-11-15",
+  "certifiedCareers": 0,
+  "cases": [
+    {
+      "sourceId": 242,
+      "wrestler": "Obara",
+      "officialNskId": 3610,
+      "status": "official-primary-source-contradicts-api-outcome",
+      "tournament": "202207",
+      "day": 12,
+      "division": "Sandanme",
+      "apiRaw": {
+        "rawCachePath": "data/sumo/backfill/v1/rikishi/242.json",
+        "sourceUrl": "https://www.sumo-api.com/api/rikishi/242/matches",
+        "matchNo": 28,
+        "eastId": 213,
+        "eastShikona": "Kotonofuji",
+        "westId": 242,
+        "westShikona": "Obara",
+        "kimarite": "fusen",
+        "reportedWinnerId": 242,
+        "reportedWinner": "Obara"
+      },
+      "officialJsa": {
+        "sourceUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3610/",
+        "evidence": "July 2022 West Sandanme #19 tournament row, Day 12: Obara listed as 不戦敗 (loss by default), versus Kotonofuji",
+        "tournamentRecord": "3-3-1",
+        "impliedWinnerId": 213,
+        "impliedWinner": "Kotonofuji",
+        "asOf": "2026-11 Day 8",
+        "officialCareerRecord": {
+          "wins": 249,
+          "losses": 209,
+          "absences": 22
+        }
+      },
+      "ledgerReconciliation": {
+        "rawRegularWins": 250,
+        "rawRegularLosses": 208,
+        "sourceCareerStatsWins": 249,
+        "sourceCareerStatsLosses": 209,
+        "ifThisSingleOutcomeAlignedToOfficial": {
+          "wins": 249,
+          "losses": 209
+        },
+        "unresolvedOtherBoutDifferences": 0,
+        "note": "Correcting one misassigned fusen winner resolves raw ledger vs stats and official current career W-L totals; does not independently certify all historical bout results."
+      },
+      "instructions": "Retain original API response immutable. Apply a separate keyed official-evidence correction only during verified projection or auditing, not by overwriting original match rows; check opposing wrestler profile independently before full-career certification.",
+      "careerCertified": false
+    }
+  ]
+}
