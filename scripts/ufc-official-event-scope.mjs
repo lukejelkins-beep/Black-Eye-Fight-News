@@ -30,11 +30,16 @@ export function isOfficialUfcEvent(title){
 export function isOfficialUfcBout(bout){
  if(!bout||bout.org!=="ufc")return false;
  if(isOfficialUfcEvent(bout.event))return true;
- const slugs=[String(bout.a?.slug||""),String(bout.b?.slug||"")].sort();
+ const corners=[bout.a,bout.b].filter(Boolean);
+ const norm=x=>String(x||"").toLowerCase().replace(/[^a-z0-9]/g,"");
+ const slugs=corners.map(x=>String(x.slug||""));
+ const names=corners.map(x=>norm(x.name));
  return String(bout.id)==="60900"&&
   bout.eventDate==="2025-08-22"&&
   /^Road to UFC Season 4 Semifinals$/i.test(String(bout.event||""))&&
-  slugs[0]==="bruna-brasil"&&slugs[1]==="shi-ming"&&
+  corners.length===2&&slugs.includes("bruna-brasil")&&
+  (slugs.includes("shi-ming")||slugs.includes("ming-shi")||names.includes("shiming")||names.includes("mingshi"))&&
+  names.includes("brunabrasil")&&
   (bout.result?.method==="decision_unanimous"||
    bout.result?.method==="decision");
 }
