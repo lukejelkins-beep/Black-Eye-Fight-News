@@ -23,7 +23,7 @@ const comparable=rows=>JSON.stringify(rows.map(x=>x.slice(0,7)).sort(recentFirst
 export function createPreviewH2h(profiles,rosterIds,asOf){
   const cohort=new Set(rosterIds.map(Number));
   if(cohort.size!==190||profiles.length!==190)throw Error('Expected frozen 190 career projections');
-  const pairs=new Map(),summaryProfiles={};
+  const pairs=new Map(),summaryProfiles={},opponentProfiles={};
   for(const p of profiles){
     const a=Number(p.sourceId);
     if(!cohort.has(a)||p.certification!=='not-started'||
@@ -61,9 +61,9 @@ export function createPreviewH2h(profiles,rosterIds,asOf){
       reconciledAggregateLag:p.career.sourceSummaryLagReconciled===true,
       recentPerformance:(p.recentPerformance||[]).slice(0,10),
       kimarite:p.kimarite||{wins:[],losses:[]},
-      opponentCount:opponentSummaries.length,
-      opponents:opponentSummaries.sort((a,b)=>b.meetings-a.meetings||a.id-b.id)
+      opponentCount:opponentSummaries.length
     };
+    opponentProfiles[String(a)]=opponentSummaries.sort((a,b)=>b.meetings-a.meetings||a.id-b.id);
   }
   const summaryPairs={},fullPairs={};
   for(const [key,p] of [...pairs].sort((a,b)=>a[0].localeCompare(b[0]))){
@@ -81,7 +81,8 @@ export function createPreviewH2h(profiles,rosterIds,asOf){
   return {
     summary:{...common,profileCount:profiles.length,profiles:summaryProfiles,
       activePairs:summaryPairs,activePairCount:Object.keys(summaryPairs).length},
-    history:{...common,pairCount:pairs.size,pairs:fullPairs}
+    history:{...common,pairCount:pairs.size,pairs:fullPairs},
+    opponents:{...common,profileCount:profiles.length,profiles:opponentProfiles}
   };
 }
 async function save(path,value){
@@ -99,8 +100,9 @@ async function main(){
   for(const w of roster.rikishi){
     profiles.push(await read(join(ROOT,'profile-ready',w.sourceId+'.json')));
   }
-  const {summary,history}=createPreviewH2h(profiles,roster.rikishi.map(w=>w.sourceId),roster.collectedAt||'November 2026');
+  const {summary,history,opponents}=createPreviewH2h(profiles,roster.rikishi.map(w=>w.sourceId),roster.collectedAt||'November 2026');
   await save('data/sumo/exports/h2h-summary.json',summary);
+  await save('data/sumo/exports/h2h-opponents.json',opponents);
   await save('data/sumo/exports/h2h-history.json',history);
   console.log(JSON.stringify({profiles:summary.profileCount,
     activePairs:summary.activePairCount,fullPairIndex:history.pairCount,
