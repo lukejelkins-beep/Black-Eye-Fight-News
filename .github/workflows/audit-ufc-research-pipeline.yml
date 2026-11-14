@@ -13,6 +13,7 @@ on:
       - 'data/ufc-independent-full-career-verification.json'
       - 'data/ufc-unified-wave17-dulatov-choinski-gimenis-official-source-review-20261114.json'
       - 'data/ufc-unified-josias-musasa-official-source-review-20261114.json'
+      - 'data/ufc-unified-wave19-loder-bleda-sidey-official-source-review-20261114.json'
       - 'tests/test-ufc-v4-certification-queue.mjs'
       - 'tests/test-ufc-v4-stage3-import.mjs'
       - 'tests/test-ufc-stage3-v4-reconciliation.mjs'
@@ -41,6 +42,7 @@ on:
       - 'tests/test-ufc-unified-seven-careers-evidence.mjs'
       - 'tests/test-ufc-unified-wave17-three-debut-evidence.mjs'
       - 'tests/test-ufc-unified-josias-musasa-evidence.mjs'
+      - 'tests/test-ufc-unified-wave19-three-careers-evidence.mjs'
       - 'tests/test-ufc-unified-waves17-18-evidence.mjs'
       - 'tests/test-ufc-unified-wave19-evidence.mjs'
       - 'data/ufc-unified-wave19-three-two-bout-careers-20261114.json'
@@ -129,6 +131,7 @@ jobs:
           node --test tests/test-ufc-unified-seven-careers-evidence.mjs
           node --test tests/test-ufc-unified-wave17-three-debut-evidence.mjs
           node --test tests/test-ufc-unified-josias-musasa-evidence.mjs
+          node --test tests/test-ufc-unified-wave19-three-careers-evidence.mjs
           node --test tests/test-ufc-unified-waves17-18-evidence.mjs
           node --test tests/test-ufc-unified-wave19-evidence.mjs
           node --test tests/test-ufc-unified-wave18-three-careers.mjs
