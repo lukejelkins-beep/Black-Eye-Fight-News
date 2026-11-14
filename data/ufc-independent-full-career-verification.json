@@ -21554,6 +21554,260 @@
           "nativeFighterId": "2779"
         }
       ]
+    },
+    "erik-silva": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Erik Silva",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/21b813b919776d90",
+      "officialFighterUrl": "https://www.ufc.com/athlete/erik-silva",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Complete dated primary UFC.com athlete biographies (narrative outcome and official event results override incorrect graphical Win badges). Reconcile every historical official UFC bout against exact pinned Greco UFCStats-derived fight URL/event and original saved numeric UFCalendar native bout IDs, both athlete and opposing fighter IDs, completed winner, date and full measured rounds. Independently source-exclude native DWCS bouts. UFC 2023 Road to UFC Asia final included; prior 2022 qualifier excluded. No paid UFCalendar calls or live-cache writes."
+      },
+      "verifiedNumericFighterIds": [
+        "467"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Independently complete dated UFC.com athlete history and immutable pinned Greco UFCStats-derived fight URL for each completed UFC bout, individually mapped to original cached UFCalendar native numeric bout ID, identity, opposing corner, winner, date and measured rounds. Venezuelan featherweight Erik Silva distinguished from similarly named athletes; three official losses; 24/25 February 2024 official/local date shift documented.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/erik-silva",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83954",
+          "date": "2022-08-09",
+          "opponent": "Anvar Boynazarov",
+          "result": "win",
+          "event": "Dana White's Contender Series",
+          "officialSourceUrl": "https://www.ufc.com/athlete/erik-silva",
+          "excludedBecause": "UFC source-proven DWCS feeder; not an official UFC Octagon career fight"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2022-12-10",
+          "opponent": "TJ Brown",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/2d9d966e0e8df232",
+          "nativeBoutId": "61234",
+          "nativeFighterId": "467"
+        },
+        {
+          "date": "2024-02-25",
+          "opponent": "Muhammad Naimov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/50dae6b76c9c6490",
+          "nativeBoutId": "39040",
+          "nativeFighterId": "467"
+        },
+        {
+          "date": "2026-02-28",
+          "opponent": "Francis Marshall",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/581292ffe5b09344",
+          "nativeBoutId": "60684",
+          "nativeFighterId": "467"
+        }
+      ]
+    },
+    "jean-paul-lebosnoyani": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Jean-Paul Lebosnoyani",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/a3dda21be645be93",
+      "officialFighterUrl": "https://www.ufc.com/athlete/jean-paul-lebosnoyani",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Complete dated primary UFC.com athlete biographies (narrative outcome and official event results override incorrect graphical Win badges). Reconcile every historical official UFC bout against exact pinned Greco UFCStats-derived fight URL/event and original saved numeric UFCalendar native bout IDs, both athlete and opposing fighter IDs, completed winner, date and full measured rounds. Independently source-exclude native DWCS bouts. UFC 2023 Road to UFC Asia final included; prior 2022 qualifier excluded. No paid UFCalendar calls or live-cache writes."
+      },
+      "verifiedNumericFighterIds": [
+        "479"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Independently complete dated UFC.com athlete history and immutable pinned Greco UFCStats-derived fight URL for each completed UFC bout, individually mapped to original cached UFCalendar native numeric bout ID, identity, opposing corner, winner, date and measured rounds. Three verified UFC wins, October doctor-stoppage victory reciprocally pinned to source-certified Farman Hasanov, 2025 DWCS win excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/jean-paul-lebosnoyani",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da",
+        "https://www.ufc.com/news/ufc-fight-night-moicano-vs-nolan-results"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84139",
+          "date": "2025-09-02",
+          "opponent": "Jack Congdon",
+          "result": "win",
+          "event": "Dana White's Contender Series",
+          "officialSourceUrl": "https://www.ufc.com/athlete/jean-paul-lebosnoyani",
+          "excludedBecause": "UFC source-proven DWCS feeder; not an official UFC Octagon career fight"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-02-21",
+          "opponent": "Phil Rowe",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/508e622130b0a84d",
+          "nativeBoutId": "60670",
+          "nativeFighterId": "479"
+        },
+        {
+          "date": "2026-07-18",
+          "opponent": "Seokhyeon Ko",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f2eb569176e46edf",
+          "nativeBoutId": "82954",
+          "nativeFighterId": "479"
+        },
+        {
+          "date": "2026-10-31",
+          "opponent": "Farman Hasanov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a7b3c1386172d083",
+          "nativeBoutId": "93264",
+          "nativeFighterId": "479"
+        }
+      ]
+    },
+    "jonathan-micallef": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Jonathan Micallef",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/f782f953bfe7b5f2",
+      "officialFighterUrl": "https://www.ufc.com/athlete/jonathan-micallef",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Complete dated primary UFC.com athlete biographies (narrative outcome and official event results override incorrect graphical Win badges). Reconcile every historical official UFC bout against exact pinned Greco UFCStats-derived fight URL/event and original saved numeric UFCalendar native bout IDs, both athlete and opposing fighter IDs, completed winner, date and full measured rounds. Independently source-exclude native DWCS bouts. UFC 2023 Road to UFC Asia final included; prior 2022 qualifier excluded. No paid UFCalendar calls or live-cache writes."
+      },
+      "verifiedNumericFighterIds": [
+        "325"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Independently complete dated UFC.com athlete history and immutable pinned Greco UFCStats-derived fight URL for each completed UFC bout, individually mapped to original cached UFCalendar native numeric bout ID, identity, opposing corner, winner, date and measured rounds. Three verified UFC Octagon wins; DWCS 2024 Mohamed Ado submission excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/jonathan-micallef",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84173",
+          "date": "2024-10-15",
+          "opponent": "Mohamed Ado",
+          "result": "win",
+          "event": "Dana White's Contender Series",
+          "officialSourceUrl": "https://www.ufc.com/athlete/jonathan-micallef",
+          "excludedBecause": "UFC source-proven DWCS feeder; not an official UFC Octagon career fight"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2025-02-08",
+          "opponent": "Kevin Jousset",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8bc8bb0021337de7",
+          "nativeBoutId": "60989",
+          "nativeFighterId": "325"
+        },
+        {
+          "date": "2026-01-31",
+          "opponent": "Oban Elliott",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/78912b78aa946375",
+          "nativeBoutId": "65855",
+          "nativeFighterId": "325"
+        },
+        {
+          "date": "2026-05-02",
+          "opponent": "Themba Gorimbo",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/7ac4ae301ed699ab",
+          "nativeBoutId": "66074",
+          "nativeFighterId": "325"
+        }
+      ]
+    },
+    "kiefer-crosbie": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Kiefer Crosbie",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/4729c93ba705a3bf",
+      "officialFighterUrl": "https://www.ufc.com/athlete/kiefer-crosbie",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Complete dated primary UFC.com athlete biographies (narrative outcome and official event results override incorrect graphical Win badges). Reconcile every historical official UFC bout against exact pinned Greco UFCStats-derived fight URL/event and original saved numeric UFCalendar native bout IDs, both athlete and opposing fighter IDs, completed winner, date and full measured rounds. Independently source-exclude native DWCS bouts. UFC 2023 Road to UFC Asia final included; prior 2022 qualifier excluded. No paid UFCalendar calls or live-cache writes."
+      },
+      "verifiedNumericFighterIds": [
+        "272"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Independently complete dated UFC.com athlete history and immutable pinned Greco UFCStats-derived fight URL for each completed UFC bout, individually mapped to original cached UFCalendar native numeric bout ID, identity, opposing corner, winner, date and measured rounds. Three official UFC Octagon losses; 9/10 September 2023 debut calendar-day presentation normalized to original native event date.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/kiefer-crosbie",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2023-09-09",
+          "opponent": "Kevin Jousset",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/65c89e0c92e51bb8",
+          "nativeBoutId": "60064",
+          "nativeFighterId": "272"
+        },
+        {
+          "date": "2024-07-27",
+          "opponent": "Sam Patterson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3183dfe66fcdd25f",
+          "nativeBoutId": "61088",
+          "nativeFighterId": "272"
+        },
+        {
+          "date": "2025-08-23",
+          "opponent": "Taiyilake Nueraji",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1452c20d964c0a63",
+          "nativeBoutId": "65915",
+          "nativeFighterId": "272"
+        }
+      ]
     }
   }
 }
