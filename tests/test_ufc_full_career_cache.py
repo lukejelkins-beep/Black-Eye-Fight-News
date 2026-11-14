@@ -404,6 +404,90 @@ class FullCareerCacheTests(unittest.TestCase):
         self.assertEqual(profile["recentHistory"][-1]["boutId"],"603")
         self.assertTrue(any(h.get("boutId")=="99999" for h in profile["recentHistory"]))
 
+    def full_index_search_fixture(self):
+        state,research,census,approval=self.cached_whole_career_fixture()
+        # The approved surname has a numeric ID 123 already anchored to an
+        # official native fight; the source's canonical slug differs.
+        research["profiles"]["carlos-hernandez-7"]["recentHistory"]=[
+          {"date":"2025-04-01","opponent":"Opponent A","result":"win",
+           "promotion":"ufc","source":"native","boutId":"600"}]
+        independent={"schema":1,"scope":"ufc-independent-full-career-verification",
+            "fighters":{"carlos-hernandez-7":{"minimumOfficialUfcBouts":7}}}
+        return state,research,census,approval,independent
+
+    def indexed_search_row(self,id,day,opponent="Unseen Opponent",
+                           winner=123,event="UFC Fight Night: Tested"):
+        return {"id":id,"status":"completed",
+          "fighter_a":{"id":123,"slug":"carlos-hernandez","name":"Carlos Hernandez"},
+          "fighter_b":{"id":999,"slug":"unseen-opponent","name":opponent},
+          "result":{"winner_fighter_id":winner,"method":"Decision",
+                    "round":3,"time":"5:00"},
+          "event":{"id":777,"org":"ufc","title":event,
+                   "starts_at":day+"T21:00:00Z"}}
+
+    class PaginatedSearch:
+        max_calls=500
+        remaining=100
+        stopped=False
+        calls=0
+        def __init__(self,*payloads):
+            self.payloads=list(payloads)
+            self.paths=[]
+            self.errors=[]
+        def call(self,path):
+            self.calls+=1
+            self.paths.append(path)
+            return self.payloads.pop(0) if self.payloads else {"data":[],"meta":{}}
+
+    def test_paginated_numeric_ufc_search_recovers_verified_earlier_fights_and_caches_cursor(self):
+        state,research,census,approval,independent=self.full_index_search_fixture()
+        first={"data":[self.indexed_search_row(700,"2020-06-01")],
+               "meta":{"pagination":{"next_cursor":"next-25"}}}
+        second={"data":[self.indexed_search_row(701,"2021-06-01",
+                 "Other Opponent",winner=999)],"meta":{"pagination":{"next_cursor":None}}}
+        c=self.PaginatedSearch(first,second)
+        a=m.collect_approved_full_ufc_fight_search(
+            c,state,research,census,dt.date(2026,11,14),approval,independent)
+        self.assertEqual(a,{"calls":1,"fighters":0,"newFights":1,"newHistoryRows":1})
+        self.assertEqual(state["ufcApprovedFullFightSearchChecks"]["carlos-hernandez-7"]["status"],"partial")
+        b=m.collect_approved_full_ufc_fight_search(
+            c,state,research,census,dt.date(2026,11,14),approval,independent)
+        self.assertEqual(b,{"calls":1,"fighters":1,"newFights":1,"newHistoryRows":1})
+        self.assertEqual(c.paths,[
+            "/fights/search?org=ufc&fighter=123&limit=25",
+            "/fights/search?org=ufc&fighter=123&limit=25&cursor=next-25"])
+        h=research["profiles"]["carlos-hernandez-7"]["recentHistory"]
+        self.assertEqual([(r["boutId"],r["result"]) for r in h],
+                         [("600","win"),("701","loss"),("700","win")])
+        self.assertFalse(research["profiles"]["carlos-hernandez-7"]["ufcTimeline"]["complete"])
+        self.assertEqual(m.collect_approved_full_ufc_fight_search(
+            c,state,research,census,dt.date(2026,11,14),approval,independent)["calls"],0,
+            "Do not re-search a fully paginated numeric history")
+
+    def test_full_index_search_rejects_unsafe_provider_rows_without_fabricating_outcomes(self):
+        for kind in ["foreign_numeric","feeder","missing_winner","future","unapproved"]:
+            state,research,census,approval,independent=self.full_index_search_fixture()
+            row=self.indexed_search_row(703,"2021-06-01")
+            if kind=="foreign_numeric":
+                row["fighter_a"]["id"]=887
+            elif kind=="feeder":
+                row["event"]["title"]="Dana White's Contender Series"
+            elif kind=="missing_winner":
+                row["result"]["winner_fighter_id"]=None
+            elif kind=="future":
+                row["event"]["starts_at"]="2027-01-01T00:00:00Z"
+            elif kind=="unapproved":
+                approval["status"]="pending"
+            c=self.PaginatedSearch({"data":[row],"meta":{}})
+            result=m.collect_approved_full_ufc_fight_search(
+                c,state,research,census,dt.date(2026,11,14),approval,independent)
+            self.assertEqual(result["newFights"],0,kind)
+            self.assertEqual(result["newHistoryRows"],0,kind)
+            self.assertEqual(len(research["profiles"]["carlos-hernandez-7"]["recentHistory"]),1)
+            if kind=="unapproved":self.assertEqual(c.calls,0)
+            else:self.assertEqual(state["ufcApprovedFullFightSearchChecks"]["carlos-hernandez-7"]["status"],
+                                  "manual_review")
+
     def test_no_signoff_no_full_career_calls(self):
         state,research,candidate=self.fixture()
         client=Fake()
