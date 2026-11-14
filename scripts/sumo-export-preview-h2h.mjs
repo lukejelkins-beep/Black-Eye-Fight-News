@@ -58,6 +58,8 @@ export function createPreviewH2h(profiles,rosterIds,asOf){
       name:p.shikonaEn,careerWins:p.career.wins,careerLosses:p.career.losses,
       careerHigh:p.career.careerHigh?.rank||null,
       reconciledAggregateLag:p.career.sourceSummaryLagReconciled===true,
+      recentPerformance:(p.recentPerformance||[]).slice(0,10),
+      kimarite:p.kimarite||{wins:[],losses:[]},
       opponentCount:opponentSummaries.length,
       opponents:opponentSummaries.sort((a,b)=>b.meetings-a.meetings||a.id-b.id)
     };
