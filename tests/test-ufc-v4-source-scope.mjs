@@ -53,3 +53,44 @@ test("TUF finale indexed fight with saved rounds is measured, not discarded",()=
  assert.equal(out.metricBouts,1);
  assert.equal(out.fighters["carlos-hernandez-7"].careerBouts[0].metrics.sigLanded,6);
 });
+
+test("uncontested core stats survive a corroborated secondary-only dispute",()=>{
+ const b=bout(9221,"2026-10-01","UFC Test Fight Night",
+  "athlete-one","Opponent Two","opponent-two",6);
+ const old={round:1,a:{sigLanded:6,headLanded:3},b:{sigLanded:3,headLanded:1}};
+ const secondary={round:1,a:{sigLanded:6,headLanded:4},b:{sigLanded:3,headLanded:1}};
+ const a=archiveFight(b);
+ a.conflicts=[{round:1,corner:"a",metric:"headLanded",
+  chosen:3,alternative:4,source:"ufcalendar"}];
+ a.sources={cito:{rounds:[old]},ufcalendar:{rounds:[secondary]}};
+ const out=buildPostfightMetrics({bouts:{"9221":b}},
+  {fights:{one:a}},{asOf:"2026-11-14"});
+ assert.equal(out.metricBouts,1);
+ assert.equal(out.fighters["athlete-one"].careerBouts[0].metrics.sigLanded,6);
+ assert.equal(out.fighters["athlete-one"].careerBouts[0].sourceDisputeStatus,
+  "secondary_breakdowns_disputed_core_uncontested");
+});
+test("hidden core disagreement is rejected even if capped ledger lists only secondary fields",()=>{
+ const b=bout(9222,"2026-10-01","UFC Test Fight Night",
+  "athlete-one","Opponent Two","opponent-two",6);
+ const a=archiveFight(b);
+ a.conflicts=[{round:1,corner:"a",metric:"headLanded",
+  chosen:3,alternative:4,source:"ufcalendar"}];
+ a.sources={cito:{rounds:[{round:1,a:{sigLanded:6},b:{sigLanded:3}}]},
+  ufcalendar:{rounds:[{round:1,a:{sigLanded:8},b:{sigLanded:3}}]}};
+ const out=buildPostfightMetrics({bouts:{"9222":b}},
+  {fights:{one:a}},{asOf:"2026-11-14"});
+ assert.equal(out.metricBouts,0);
+ assert(out.pending.some(x=>x.boutId==="9222"&&
+  x.reason==="cross_source_core_metric_conflict"));
+});
+test("secondary dispute without retained provider originals is never silently accepted",()=>{
+ const b=bout(9223,"2026-10-01","UFC Test Fight Night",
+  "athlete-one","Opponent Two","opponent-two",6);
+ const a=archiveFight(b);
+ a.conflicts=[{round:1,corner:"a",metric:"headLanded",chosen:3,alternative:4}];
+ const out=buildPostfightMetrics({bouts:{"9223":b}},
+  {fights:{one:a}},{asOf:"2026-11-14"});
+ assert.equal(out.metricBouts,0);
+ assert(out.pending.some(x=>x.reason==="cross_source_conflict_provenance_missing"));
+});
