@@ -10,6 +10,8 @@ on:
       - 'scripts/certify-ufc-v4-independent-full-careers.mjs'
       - 'scripts/ufc-v4-targeted-greco-evidence.mjs'
       - 'scripts/ufc-v4-next20-greco-evidence.mjs'
+      - 'scripts/ufc-v4-next18-greco-evidence.mjs'
+      - 'data/ufc-v4-next18-greco-fight-links-20261114.json'
       - 'scripts/ufc-v4-wave3-greco-evidence.mjs'
       - 'scripts/audit-ufc-v4-wave3-native-evidence.mjs'
       - 'data/ufc-v4-wave3-greco-fight-links-20261114.json'
@@ -81,6 +83,8 @@ jobs:
         run: node scripts/ufc-v4-next20-greco-evidence.mjs
       - name: Reconcile pinned source links for third 17 pending UFC careers
         run: node scripts/ufc-v4-wave3-greco-evidence.mjs
+      - name: Inspect next 18 eligible UFC careers with independent pinned fight source
+        run: node scripts/ufc-v4-next18-greco-evidence.mjs
       - name: Rebuild the complete measured career cache without API calls
         run: node scripts/build-ufc-postfight-metrics.mjs
       - name: Audit next eight independent source-linked careers against native data
@@ -129,6 +133,7 @@ jobs:
             qa/ufc-v4-independent-full-career-certifications.json
             qa/ufc-v4-targeted-greco-fight-links-20261114.json
             qa/ufc-v4-next20-greco-fight-links-20261114.json
+            qa/ufc-v4-next18-greco-fight-links-20261114.json
             qa/ufc-v4-wave3-greco-fight-links-20261114.json
             qa/ufc-v4-wave3-native-evidence.json
             qa/ufc-v4-next20-native-evidence.json
