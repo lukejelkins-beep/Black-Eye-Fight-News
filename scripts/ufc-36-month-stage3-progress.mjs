@@ -77,12 +77,21 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
  const nativeMapped=given.length>0&&given.every(r=>
    numId(r?.nativeBoutId)&&numId(r?.nativeFighterId));
  const nativeIdentitySet=new Set(arr(ext.verifiedNumericFighterIds).map(numId).filter(Boolean));
+ const ufcStatsFighterId=String(ext.fighterUrl||'').match(/\/fighter-details\/([a-f0-9]+)$/i)?.[1]?.toLowerCase()||null;
+ // A historical alias such as Bruno Silva must retain the reviewed source ID.
+ // This stops an equally plausible fighter-page URL for middleweight Blindado
+ // from being substituted for flyweight Bulldog's complete career evidence.
+ const sourceFighterIdentitySafe=(
+   !arr(ext.sourceVerifiedNativeNameAliases).length||
+   (ext.disambiguation?.ufcStatsFlyweightId?.toLowerCase()===ufcStatsFighterId&&
+    ext.disambiguation?.excludedUfcStatsMiddleweightId?.toLowerCase()!==ufcStatsFighterId)
+ );
  // Explicitly reviewed historical names are allowed only together with
  // source-linked exact native IDs, opponent and outcome verification. Name
  // aliases alone never establish a fighter identity (e.g. the two Bruno Silvas).
  const reviewedNativeNames=new Set([ext.fighterName,...arr(ext.sourceVerifiedNativeNameAliases)]
    .map(normal).filter(Boolean));
- const nativeMatches=nativeMapped&&indexedBouts&&
+ const nativeMatches=nativeMapped&&indexedBouts&&sourceFighterIdentitySafe&&
    normal(ext.fighterName)===normal(profile?.name)&&
    /^https:\/\/www\.ufc\.com\/athlete\//i.test(String(ext.officialFighterUrl||''))&&
    nativeIdentitySet.size>0&&
