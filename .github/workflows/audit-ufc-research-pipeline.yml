@@ -31,6 +31,7 @@ on:
       - 'tests/test-ufc-unified-wave7-evidence.mjs'
       - 'tests/test-ufc-unified-wave6-idempotence.mjs'
       - 'tests/test-ufc-unified-wave6-evidence.mjs'
+      - 'tests/test-ufc-unified-victor-evidence.mjs'
       - 'scripts/ufc-unified-ding-exact-alias-review.mjs'
       - 'scripts/ufc-unified-victor-source-review.mjs'
       - 'data/ufc-unified-victor-valenzuela-identity-review-20261114.json'
@@ -93,6 +94,7 @@ jobs:
           node --test tests/test-ufc-unified-wave5-evidence.mjs
           node --test tests/test-ufc-unified-wave6-idempotence.mjs
           node --test tests/test-ufc-unified-wave6-evidence.mjs
+          node --test tests/test-ufc-unified-victor-evidence.mjs
           node --test tests/test-ufc-unified-wave7-evidence.mjs
           node --test tests/test-ufc-unified-mandel-evidence.mjs
           node --test tests/test-ufc-v4-stage3-import.mjs
@@ -111,10 +113,6 @@ jobs:
         if: always()
         continue-on-error: true
         run: node scripts/ufc-unified-next8b-source-review.mjs
-      - name: Current Victor Valenzuela exact source ID and native fight crosscheck (one-off)
-        if: github.event_name == 'pull_request'
-        continue-on-error: true
-        run: node scripts/ufc-unified-victor-source-review.mjs
       - name: Save report
         if: always()
         uses: actions/upload-artifact@v4
@@ -130,6 +128,5 @@ jobs:
             qa/ufc-stage3-v4-reconciliation.json
             qa/ufc-v4-stage3-blocker-diagnostics.json
             qa/ufc-unified-next8b-source-review.json
-            qa/ufc-unified-victor-source-review.json
           retention-days: 14
           if-no-files-found: warn
