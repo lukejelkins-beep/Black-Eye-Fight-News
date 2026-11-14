@@ -24494,6 +24494,164 @@
           "excludedBecause": "Official UFC biography explicitly documents DWCS decision win; saved provider history row is feeder, not official UFC Octagon career"
         }
       ]
+    },
+    "wes-schultz": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Wes Schultz",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/b4443fae47e7eb9d",
+      "officialFighterUrl": "https://www.ufc.com/athlete/wes-schultz",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived CSV, no claimed live UFCStats access",
+        "method": "Full dated official UFC.com biography and all pinned Greco full UFCStats bout URLs, original native numeric fighter/bout/corner IDs, winner, event date and measured rounds, with each source-attested DWCS feeder excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "455"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Full official UFC.com dated career biography confirms exactly three Octagon bouts through 14 November 2026: losses to Damian Pinas and Jackson McVey plus submission win over Ben Johnston. Two pre-debut Contender Series appearances separately excluded. UFC page result tiles conflict with full biography for the two losses; native result winners, detailed UFC narrative and pinned Greco results control.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/wes-schultz",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2026-02-28",
+          "opponent": "Damian Pinas",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c6a85b67fdd2ef3d",
+          "nativeBoutId": "60685",
+          "nativeFighterId": "455"
+        },
+        {
+          "date": "2026-05-02",
+          "opponent": "Ben Johnston",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/827c64369b374989",
+          "nativeBoutId": "66073",
+          "nativeFighterId": "455"
+        },
+        {
+          "date": "2026-08-22",
+          "opponent": "Jackson McVey",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/11e4a448ce1ae5e3",
+          "nativeBoutId": "82993",
+          "nativeFighterId": "455"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83988",
+          "date": "2024-08-13",
+          "opponent": "Mansur Abdul-Malik",
+          "result": "loss",
+          "event": "Dana White's Contender Series 67",
+          "officialSourceUrl": "https://www.ufc.com/athlete/wes-schultz",
+          "excludedBecause": "Official complete UFC.com biography separately lists DWCS feeder result, not an official Octagon career contest"
+        },
+        {
+          "nativeBoutId": "84108",
+          "date": "2025-10-14",
+          "opponent": "Mario Mingaj",
+          "result": "win",
+          "event": "Dana White's Contender Series 86",
+          "officialSourceUrl": "https://www.ufc.com/athlete/wes-schultz",
+          "excludedBecause": "Official complete UFC.com biography separately lists DWCS feeder result, not an official Octagon career contest"
+        }
+      ]
+    },
+    "bogdan-grad": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Bogdan Grad",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/fb37795db81f93f3",
+      "officialFighterUrl": "https://www.ufc.com/athlete/bogdan-grad",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived CSV, no claimed live UFCStats access",
+        "method": "Full dated official UFC.com biography and all pinned Greco full UFCStats bout URLs, original native numeric fighter/bout/corner IDs, winner, event date and measured rounds, with each source-attested DWCS feeder excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "383"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Full dated official UFC.com biography confirms exactly four Octagon bouts from 1 February 2025 to 1 August 2026: wins over Lucas Alexander and Dennis Buzukja, losses to Muhammad Naimov and Luke Riley. Two Contender Series bouts independently excluded; misleading UFC.com summary tile Win labels corrected by detailed UFC narratives and pinned Greco/native saved results.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/bogdan-grad",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-02-01",
+          "opponent": "Lucas Alexander",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/750257171ad29a2c",
+          "nativeBoutId": "38561",
+          "nativeFighterId": "383"
+        },
+        {
+          "date": "2025-06-21",
+          "opponent": "Muhammad Naimov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/19764211af05674c",
+          "nativeBoutId": "60276",
+          "nativeFighterId": "383"
+        },
+        {
+          "date": "2025-11-22",
+          "opponent": "Luke Riley",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5e6a74db89f5410c",
+          "nativeBoutId": "60410",
+          "nativeFighterId": "383"
+        },
+        {
+          "date": "2026-08-01",
+          "opponent": "Dennis Buzukja",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/13aa6688d0538095",
+          "nativeBoutId": "82716",
+          "nativeFighterId": "383"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83867",
+          "date": "2023-08-08",
+          "opponent": "Tom Nolan",
+          "result": "loss",
+          "event": "Dana White's Contender Series 57",
+          "officialSourceUrl": "https://www.ufc.com/athlete/bogdan-grad",
+          "excludedBecause": "Official complete UFC.com biography separately lists DWCS feeder result, not an official Octagon career contest"
+        },
+        {
+          "nativeBoutId": "84009",
+          "date": "2024-08-27",
+          "opponent": "Michael Aswell Jr.",
+          "result": "win",
+          "event": "Dana White's Contender Series 69",
+          "officialSourceUrl": "https://www.ufc.com/athlete/bogdan-grad",
+          "excludedBecause": "Official complete UFC.com biography separately lists DWCS feeder result, not an official Octagon career contest"
+        }
+      ]
     }
   }
 }
