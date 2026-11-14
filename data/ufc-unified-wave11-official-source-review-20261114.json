@@ -97,7 +97,41 @@
         }
       ],
       "reviewNote": "Complete official UFC.com dated athlete biography corroborated fight by fight with uniquely pinned Greco UFCStats-derived fighter/event/results and native saved numeric bout, both fighter corners, precise winner/draw; separate source-proved DWCS exclusion. Full independently passing 783-athlete Stage3 measured-round audit still required.",
-      "status": "source_attested_not_stage3_certified"
+      "status": "source_attested_not_stage3_certified",
+      "independentOfficialResultCrosscheck": {
+        "checkedDate": "2026-11-14",
+        "draw": {
+          "date": "2026-04-18",
+          "opponent": "John Castaneda",
+          "officialScorecardUrl": "https://www.ufc.com/news/ufc-winnipeg-official-scorecards-judges-burns-vs-malott",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-april-18-2026",
+          "score": "29-27, 28-28, 28-28",
+          "result": "majority draw",
+          "source": "UFC official scorecards and event; no winner for either corner",
+          "note": "UFC official result confirms a second-round Castaneda point deduction; do not convert draw to win/loss"
+        },
+        "loss": {
+          "date": "2026-08-01",
+          "opponent": "Borislav Nikolic",
+          "result": "loss by unanimous decision",
+          "sourceUrl": "https://www.ufc.com/athlete/mark-vologdin",
+          "sourcePriority": "Dated official UFC biography controls over contradictory athlete card 'Win' badge"
+        },
+        "excluded": {
+          "date": "2025-10-07",
+          "opponent": "Adrian Luna Martinetti",
+          "result": "DWCS unanimous decision loss",
+          "sourceUrl": "https://www.ufc.com/athlete/mark-vologdin",
+          "nativeBoutId": "88293",
+          "excludedFromOfficialUfcCareer": true
+        },
+        "certificationGranted": false,
+        "pending": [
+          "Verify both original native UFC bout IDs and paired fighter corners",
+          "Verify pinned UFCStats-derived fight-detail URLs for both UFC bouts",
+          "Verify measured rounds and strict completed Stage3 re-gate"
+        ]
+      }
     },
     "murtazali-magomedov": {
       "fighterName": "Murtazali Magomedov",
