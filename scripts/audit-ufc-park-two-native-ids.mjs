@@ -44,7 +44,7 @@ export function auditParkDoubleNative(approval,official,source,state,research){
     date:h.date,opponent:h.opponent,result:h.result,promotion:h.promotion})),
    brunoHistoryReferences:brunoHistory.filter(h=>String(h.boutId)===id).map(h=>({
     date:h.date,opponent:h.opponent,result:h.result,promotion:h.promotion})),
-   roundIndexed:state?.roundDone?.[id]!==undefined}};
+   roundIndexed:state?.roundDone?.[id]!==undefined};
  });
  const equivalent=cases.length===2&&cases.every(c=>c.indexed&&c.org==='ufc'&&c.unique&&
     c.eventDateMatches&&c.status==='completed'&&c.winnerIsBruno&&
