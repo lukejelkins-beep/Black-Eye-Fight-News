@@ -26284,6 +26284,62 @@
         }
       ],
       "sourceVerifiedExcludedFeederBouts": []
+    },
+    "baisangur-susurkaev": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Baisangur Susurkaev",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/d1feea7a4bdcd503",
+      "officialFighterUrl": "https://www.ufc.com/athlete/baisangur-susurkaev",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived historical source, not direct live UFCStats access",
+        "method": "Official UFC.com dated full career from debut plus pinned Greco UFCStats-derived fighter and fight IDs. Independently certified opponent corners preserve exact original numeric native fighter and bout IDs, outcomes, dates, measured rounds. DWCS separately excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "23"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Official UFC.com athlete biography confirms three complete UFC Octagon bouts from debut 16 Aug 2025 through 14 Nov 2026: Eric Nolan submission win 16 Aug 2025, Eric McConico KO win 15 Nov 2025, Djorden Santos submission win 9 May 2026. Separate Murtaza Talha DWCS win on 12 Aug 2025 excluded. All three source IDs exactly match already independently certified opposing fighter careers, with original numeric native IDs and opposing losses retained.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/baisangur-susurkaev",
+        "https://www.ufc.com/news/ufc-328-official-scorecards-chimaev-vs-strickland-judges",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-08-16",
+          "opponent": "Eric Nolan",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5efd13a12be06706",
+          "nativeBoutId": "60501",
+          "nativeFighterId": "23"
+        },
+        {
+          "date": "2025-11-15",
+          "opponent": "Eric McConico",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c037cf1f7b429d5e",
+          "nativeBoutId": "38207",
+          "nativeFighterId": "23"
+        },
+        {
+          "date": "2026-05-09",
+          "opponent": "Djorden Santos",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1f5d0b106385b2ac",
+          "nativeBoutId": "66061",
+          "nativeFighterId": "23"
+        }
+      ]
     }
   }
 }
