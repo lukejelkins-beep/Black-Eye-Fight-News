@@ -1,0 +1,30 @@
+name: UFC wave17 Mesquita-Bondar pinned career source/native check (research only)
+on:
+  push:
+    branches: [research/ufc-wave17-mesquita-bondar-20261114]
+    paths:
+      - 'scripts/ufc-unified-wave17-source-review.mjs'
+      - 'data/ufc-unified-wave17-official-source-review-20261114.json'
+      - '.github/workflows/ufc-unified-wave17-source-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check scripts/ufc-unified-wave17-source-review.mjs
+      - name: One-time pinned public Greco UFCStats fight/event + original native history check
+        run: node scripts/ufc-unified-wave17-source-review.mjs
+      - name: Preserve independent source evidence artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-wave17-source-only
+          path: qa/ufc-unified-wave17-source-review.json
+          if-no-files-found: warn
