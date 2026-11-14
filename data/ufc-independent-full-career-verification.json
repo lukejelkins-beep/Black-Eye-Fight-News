@@ -26340,6 +26340,70 @@
           "nativeFighterId": "23"
         }
       ]
+    },
+    "toshiomi-kazama": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Toshiomi Kazama",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/148bb103cfbf123e",
+      "officialFighterUrl": "https://www.ufc.com/athlete/toshiomi-kazama",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived historical CSV, not live UFCStats access",
+        "method": "Exhaustive UFC.com dated official athlete history (including 2023 RTU final on UFC Fight Night, excluding earlier RTU feeder rounds) crosschecked against four complete pinned historical UFCStats fight IDs, native numeric fighter/opponent identities, outcomes and fully measured rounds. Two completed bouts reciprocally verified by existing certified opponents."
+      },
+      "verifiedNumericFighterIds": [
+        "2786"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Complete dated official UFC.com biography attests exactly four UFC Octagon contests as of the approved roster cutoff: 2023-02-04 UFC Fight Night Road to UFC tournament final KO loss to Rinya Nakamura; 2023-08-26 KO loss to Garrett Armfield; 2024-08-10 triangle submission win over Charalampos Grigoriou; 2025-08-09 slam KO loss to Elijah Smith. Historical 2023-02-04 event date may appear 2023-02-05 in UTC native cache. Nonfinal 2022 Road to UFC qualifiers excluded. Each matches pinned Greco UFCStats fight-detail, original saved native bout IDs and exact results.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/toshiomi-kazama",
+        "https://www.ufc.com/athlete/toshiomi-kazama?page=1",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2023-02-04",
+          "opponent": "Rinya Nakamura",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a8067e65eb737a09",
+          "nativeBoutId": "59750",
+          "nativeFighterId": "2786"
+        },
+        {
+          "date": "2023-08-26",
+          "opponent": "Garrett Armfield",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/48231fbd1af53674",
+          "nativeBoutId": "52440",
+          "nativeFighterId": "2786"
+        },
+        {
+          "date": "2024-08-10",
+          "opponent": "Charalampos Grigoriou",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1332c1037c955d82",
+          "nativeBoutId": "60243",
+          "nativeFighterId": "2786"
+        },
+        {
+          "date": "2025-08-09",
+          "opponent": "Elijah Smith",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ae7a8f19743e8154",
+          "nativeBoutId": "60515",
+          "nativeFighterId": "2786"
+        }
+      ]
     }
   }
 }
