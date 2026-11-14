@@ -22,6 +22,8 @@ on:
       - 'scripts/diagnose-ufc-v4-stage3-blockers.mjs'
       - 'scripts/ufc-unified-next8b-source-review.mjs'
       - 'scripts/ufc-unified-wave4-source-review.mjs'
+      - 'scripts/ufc-unified-wave5-source-review.mjs'
+      - 'data/ufc-unified-wave5-official-source-review-20261114.json'
       - 'data/ufc-unified-wave4-official-source-review-20261114.json'
       - 'data/ufc-stage3-v4-consolidation-manifest-20261114.json'
       - 'tests/test-ufc-36-month-stage3-progress.mjs'
@@ -92,6 +94,10 @@ jobs:
         if: always()
         continue-on-error: true
         run: node scripts/ufc-unified-next8b-source-review.mjs
+      - name: Wave 5 official athlete history vs pinned Greco and saved native UFC proof (research only)
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        run: node scripts/ufc-unified-wave5-source-review.mjs
       - name: Save report
         if: always()
         uses: actions/upload-artifact@v4
@@ -107,5 +113,6 @@ jobs:
             qa/ufc-stage3-v4-reconciliation.json
             qa/ufc-v4-stage3-blocker-diagnostics.json
             qa/ufc-unified-next8b-source-review.json
+            qa/ufc-unified-wave5-source-review.json
           retention-days: 14
           if-no-files-found: warn
