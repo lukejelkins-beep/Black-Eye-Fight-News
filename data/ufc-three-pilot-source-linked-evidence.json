@@ -1,0 +1,205 @@
+{
+  "schema": 1,
+  "scope": "ufc-independent-three-pilot-source-link-review",
+  "rosterAsOf": "2026-11-14",
+  "researchAsOf": "2026-11-14",
+  "status": "independent_source_link_corroboration_not_certification",
+  "source": {
+    "name": "Greco1899/scrape_ufc_stats",
+    "commit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "updatedAt": "2026-11-08T18:04:23Z",
+    "origin": "https://github.com/Greco1899/scrape_ufc_stats",
+    "files": [
+      "ufc_fighter_details.csv",
+      "ufc_event_details.csv",
+      "ufc_fight_results.csv"
+    ],
+    "sourceDatasetCutoff": "2026-11-07",
+    "role": "Historical UFCStats-derived dated fight-detail URL corroboration; not a complete current official UFCStats fighter-listing attestation"
+  },
+  "officialIndependentMethod": "UFC.com official fighter biography date/opponent/result evidence crosschecked with UFCStats-derived dated event/fight link data and cached native bouts",
+  "sourceCoverageAttested": false,
+  "fullCareerIndependentlyCertified": false,
+  "fighters": {
+    "bruno-gustavo-da-silva": {
+      "fighterName": "Bruno Gustavo da Silva",
+      "ufcComUrl": "https://www.ufc.com/athlete/bruno-silva",
+      "ufcStatsFighterUrl": "https://ufcstats.com/fighter-details/294aa73dbf37d281",
+      "ufcStatsName": "Bruno Silva",
+      "ufcStatsNickname": "Bulldog",
+      "excludedHomonym": "https://ufcstats.com/fighter-details/12ebd7d157e91701",
+      "bouts": [
+        {
+          "date": "2019-10-05",
+          "opponent": "Khalid Taha",
+          "result": "no_contest",
+          "fightUrl": "https://ufcstats.com/fight-details/57ff0eb2351979c4"
+        },
+        {
+          "date": "2020-03-14",
+          "opponent": "David Dvorak",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1a2d13834696c4ab"
+        },
+        {
+          "date": "2020-10-10",
+          "opponent": "Tagir Ulanbekov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/dbb5d682a2d7f584"
+        },
+        {
+          "date": "2021-03-20",
+          "opponent": "JP Buys",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/55bf7f19a132e0fc"
+        },
+        {
+          "date": "2021-05-22",
+          "opponent": "Victor Rodriguez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b381dc272b32ce03"
+        },
+        {
+          "date": "2023-03-11",
+          "opponent": "Tyson Nam",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c3af2b6ab1262fef"
+        },
+        {
+          "date": "2024-07-20",
+          "opponent": "Cody Durden",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/94541dd979e0b4bd"
+        },
+        {
+          "date": "2024-12-14",
+          "opponent": "Manel Kape",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1a635a5e4551e7d5"
+        },
+        {
+          "date": "2025-06-07",
+          "opponent": "Joshua Van",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b6a87389bdc36a00"
+        },
+        {
+          "date": "2025-10-18",
+          "opponent": "HyunSung Park",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/668a44403a130043"
+        },
+        {
+          "date": "2026-03-14",
+          "opponent": "Charles Johnson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/fc9168fd102e2e66"
+        },
+        {
+          "date": "2026-06-06",
+          "opponent": "Edgar Chairez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/20d74ed23d3e9b3a"
+        }
+      ]
+    },
+    "carlos-hernandez-7": {
+      "fighterName": "Carlos Hernandez",
+      "ufcComUrl": "https://www.ufc.com/athlete/carlos-hernandez",
+      "ufcStatsFighterUrl": "https://ufcstats.com/fighter-details/798e48f9e7f6ba22",
+      "ufcStatsName": "Carlos Hernandez",
+      "bouts": [
+        {
+          "date": "2022-02-26",
+          "opponent": "Victor Altamirano",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/181ceedcacc01d48"
+        },
+        {
+          "date": "2023-01-14",
+          "opponent": "Allan Nascimento",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c9144a294c73b06f"
+        },
+        {
+          "date": "2023-06-17",
+          "opponent": "Denys Bondar",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8ea12c7360fa0f6b"
+        },
+        {
+          "date": "2023-12-09",
+          "opponent": "Tatsuro Taira",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/84f6de7c99779e5f"
+        },
+        {
+          "date": "2024-06-29",
+          "opponent": "Rei Tsuruya",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7856621db043423d"
+        },
+        {
+          "date": "2024-11-23",
+          "opponent": "Nyamjargal Tumendemberel",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5dab54e34c2cfe01"
+        },
+        {
+          "date": "2025-05-17",
+          "opponent": "HyunSung Park",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/18a7dc86279066f8"
+        }
+      ]
+    },
+    "park-hyun-sung": {
+      "fighterName": "HyunSung Park",
+      "ufcComUrl": "https://www.ufc.com/athlete/hyunsung-park",
+      "ufcStatsFighterUrl": "https://ufcstats.com/fighter-details/b671bdf981ad527d",
+      "ufcStatsName": "HyunSung Park",
+      "ufcStatsNickname": "Peace of Mind",
+      "policy": "Include televised Road to UFC season 1 tournament FINAL on 2023-02-04; exclude earlier Road to UFC qualifiers",
+      "bouts": [
+        {
+          "date": "2023-02-04",
+          "opponent": "SeungGuk Choi",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/98094a500529d442"
+        },
+        {
+          "date": "2023-12-09",
+          "opponent": "Shannon Ross",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/35addc4646509286"
+        },
+        {
+          "date": "2025-05-17",
+          "opponent": "Carlos Hernandez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/18a7dc86279066f8"
+        },
+        {
+          "date": "2025-08-02",
+          "opponent": "Tatsuro Taira",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/282c8c6c1ed82bfb"
+        },
+        {
+          "date": "2025-10-18",
+          "opponent": "Bruno Silva",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/668a44403a130043"
+        }
+      ]
+    }
+  },
+  "notes": [
+    "Only 24 per-fighter bout references (22 distinct bouts due cross-fighter matchups); no third-party full CSV or project code retained",
+    "Public historical CSV name matches alone cannot establish athlete identity or absence of other bouts",
+    "Bruno Silva flyweight Bulldog and middleweight Blindado are separate; verify flyweight and UFC.com opponent/date",
+    "2019 UFC243 no-contest was overturned, not a Taha win; verify actual saved outcome",
+    "Park's 2025 Bruno bout has duplicate native provider IDs 38150 and 83254 requiring exact chronology deduplication",
+    "Do not write to independent full-career attestation register without separately justified complete as-of date official fighter source chronology and strict identity audit"
+  ]
+}
