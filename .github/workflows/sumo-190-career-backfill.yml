@@ -83,11 +83,12 @@ jobs:
           node --check scripts/sumo-export-preview-h2h.mjs
           bash -n scripts/sumo-sync-h2h-preview.sh
           node --check scripts/sumo-jsa-public-spotcheck.mjs
+          node --check scripts/sumo-jsa-corrected-basho-audit.mjs
           node --check scripts/sumo-jsa-history-exceptions.mjs
           node --check scripts/sumo-weight-history-190.mjs
           node --check scripts/sumo-weight-sumodb-collector.mjs
           node --check scripts/sumo-official-bout-corrections.mjs
-          node --test tests/test-sumo-backfill-190.mjs tests/test-sumo-verify-190.mjs tests/test-sumo-jsa-reconcile.mjs tests/test-sumo-build-profile-cache.mjs tests/test-sumo-h2h-chronology.mjs tests/test-sumo-jsa-public-spotcheck.mjs tests/test-sumo-jsa-history-exceptions.mjs tests/test-sumo-weight-history-190.mjs tests/test-sumo-weight-sumodb-collector.mjs tests/test-sumo-official-bout-corrections.mjs
+          node --test tests/test-sumo-backfill-190.mjs tests/test-sumo-verify-190.mjs tests/test-sumo-jsa-reconcile.mjs tests/test-sumo-build-profile-cache.mjs tests/test-sumo-h2h-chronology.mjs tests/test-sumo-jsa-public-spotcheck.mjs tests/test-sumo-jsa-corrected-basho-audit.mjs tests/test-sumo-jsa-history-exceptions.mjs tests/test-sumo-weight-history-190.mjs tests/test-sumo-weight-sumodb-collector.mjs tests/test-sumo-official-bout-corrections.mjs
       - name: Collect only missing research data
         if: steps.preflight.outputs.run == 'true'
         env:
@@ -116,6 +117,9 @@ jobs:
           SUMO_JSA_REQUESTS_PER_RUN: '6'
           SUMO_JSA_INTERVAL_MS: '2000'
         run: node scripts/sumo-jsa-public-spotcheck.mjs
+      - name: Apply already verified official bout outcomes to JSA audit comparisons
+        if: steps.preflight.outputs.run == 'true'
+        run: node scripts/sumo-jsa-corrected-basho-audit.mjs
       - name: Rebuild itemised JSA historical exception register without new requests
         if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-jsa-history-exceptions.mjs
