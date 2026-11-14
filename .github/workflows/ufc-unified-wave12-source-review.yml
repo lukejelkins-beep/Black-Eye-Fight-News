@@ -1,0 +1,32 @@
+name: UFC wave12 six full UFC histories pinned source audit (nonproduction)
+on:
+  push:
+    branches:
+      - research/ufc-wave12-six-fastlane-20261114
+    paths:
+      - 'data/ufc-unified-wave12-official-source-review-20261114.json'
+      - 'scripts/ufc-unified-wave12-source-review.mjs'
+      - '.github/workflows/ufc-unified-wave12-source-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  pinned-source-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check source-only script
+        run: node --check scripts/ufc-unified-wave12-source-review.mjs
+      - name: One-time independent public pinned Greco UFCStats-to-original-native pass
+        run: node scripts/ufc-unified-wave12-source-review.mjs
+      - name: Save review artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-wave12-unique-source-review
+          path: qa/ufc-unified-wave12-source-review.json
+          if-no-files-found: warn
