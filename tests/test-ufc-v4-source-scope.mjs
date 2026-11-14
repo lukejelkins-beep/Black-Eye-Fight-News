@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {isOfficialUfcEvent,isFeederUfcEvent} from "../scripts/ufc-official-event-scope.mjs";
+import {isOfficialUfcEvent,isFeederUfcEvent,isOfficialUfcBout} from "../scripts/ufc-official-event-scope.mjs";
 import {buildPostfightMetrics} from "../scripts/build-ufc-postfight-metrics.mjs";
 
 const bout=(id,day,event,slug,opponent,otherSlug,significantLanded)=>({
@@ -126,4 +126,20 @@ test("a positive after-finish stat in any provider source blocks the entire figh
   {fights:{one:a}},{asOf:"2026-11-14"});
  assert.equal(out.metricBouts,0);
  assert(out.pending.some(x=>x.boutId==="9552"&&x.reason==="trailing_round_stat_conflict"));
+});
+
+test("only the source-confirmed Bruna–Shi UFC showcase qualifies within mixed Road to UFC semifinal card",()=>{
+ const mixed={id:"60900",org:"ufc",eventDate:"2025-08-22",
+  event:"Road to UFC Season 4 Semifinals",status:"completed",
+  a:{name:"Bruna Brasil",slug:"bruna-brasil"},
+  b:{name:"Shi Ming",slug:"shi-ming"},
+  result:{method:"decision_unanimous",winnerId:"1"}};
+ assert.equal(isFeederUfcEvent(mixed.event),true);
+ assert.equal(isOfficialUfcEvent(mixed.event),false);
+ assert.equal(isOfficialUfcBout(mixed),true);
+ assert.equal(isOfficialUfcBout({...mixed,id:"60901"}),false);
+ assert.equal(isOfficialUfcBout({...mixed,eventDate:"2025-08-23"}),false);
+ assert.equal(isOfficialUfcBout({...mixed,b:{name:"Other Fighter",slug:"other"}}),false);
+ assert.equal(isOfficialUfcBout({...mixed,org:"pfl"}),false);
+ assert.equal(isOfficialUfcBout({...mixed,event:"Dana White's Contender Series"}),false);
 });
