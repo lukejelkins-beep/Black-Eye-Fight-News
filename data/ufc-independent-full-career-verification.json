@@ -330,6 +330,63 @@
           "measuredRoundStatsVerified": true
         }
       ]
+    },
+    "abdul-hussein": {
+      "fighterName": "Abdul Hussein",
+      "rosterAsOf": "2026-11-14",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/0e6bc8d1d6c0ad90",
+      "officialUfcFighterUrl": "https://www.ufc.com/athlete/abdul-hussein",
+      "firstOfficialUfcFight": "2026-07-25",
+      "lastOfficialUfcFight": "2026-07-25",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNativeFighterIds": [
+        "13875"
+      ],
+      "sourceCoverage": {
+        "method": "Reviewed UFC official athlete's entire completed athlete-record list, official debut date and scheduled next appearance, plus the separately indexed Greco UFCStats-derived fighter and fight-results historical records. One completed UFC bout identified across both sources; independently crosschecked date, opponent, outcome, unique UFCStats-derived fight URL, native fighter ID and saved round statistics. CI proof required before counting as certified.",
+        "ufcOfficialDatedBouts": 1,
+        "grecoSourceLinkedBouts": 1,
+        "nativeBoutLinks": 1,
+        "measuredBoutCoverage": 1,
+        "ufcOfficialDebut": "2026-07-25",
+        "nextScheduledUfcFight": "2026-12-05",
+        "sourceSnapshotLatestUfcEvent": "2026-11-07",
+        "grecoSourceRepository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "grecoSourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "grecoFighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "grecoFightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "independentOfficialResultUrl": "https://www.ufc.com/news/ufc-abu-dhabi-prelim-results",
+        "independentOfficialEventUrl": "https://www.ufc.com/event/ufc-fight-night-july-25-2026",
+        "directUfcStatsSiteAccess": "unavailable; exact UFCStats athlete and fight URLs are independently indexed by Greco historical dataset; no claim of directly reading blocked UFCStats pages",
+        "evidenceLimit": "Greco snapshot ends 7 November 2026; independently checked UFC.com athlete page on 14 November 2026 identifies only one completed UFC fight and December 5 next upcoming booking."
+      },
+      "bouts": [
+        {
+          "date": "2026-07-25",
+          "opponent": "Cody Gibson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/532340708f0500bd",
+          "nativeFightId": "83220",
+          "nativeFighterId": "13875",
+          "event": "UFC Fight Night: Ankalaev vs Guskov",
+          "method": "submission",
+          "round": 3,
+          "time": "3:07",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-july-25-2026"
+        }
+      ],
+      "note": "One official completed UFC bout at source cut-off, Greco source-linked exact fight URL, saved bout 83220, numeric fighter 13875 and round metrics. Explicit CI independent gate mandatory; separate PR only, no production data changed."
     }
   }
 }
