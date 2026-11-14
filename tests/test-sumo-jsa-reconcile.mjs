@@ -29,3 +29,29 @@ test('spotcheck requires a source-specific official ID',()=>{
   assert.throws(()=>compareOfficialSpotcheck({...official,officialNskId:null},api),/missing valid source identity/);
   assert.throws(()=>compareOfficialSpotcheck({...official,sumoApiId:-1},api),/missing valid source identity/);
 });
+
+test('pending JSA Day 7 source cutoffs explain one-loss differences without changing records',()=>{
+ const officialSource={...official};
+ const source=structuredClone(api);
+ source.data.matches=[{bashoId:'202611',day:7,eastId:28,westId:20,winnerId:20}];
+ const cutoff={sumoApiId:28,officialNskId:3616,sourceUrl:official.officialProfileUrl,bashoId:'202611',
+   officialTournamentCompletedThroughDay:6,officialDay7ResultStatus:'not yet recorded',
+   apiCompletedDay:7,apiDay7Outcome:'loss',expectedDelta:{wins:0,losses:1}};
+ const comparison=compareOfficialSpotcheck(officialSource,source,cutoff);
+ assert.equal(comparison.status,'explained-source-cutoff');
+ assert.equal(comparison.cutoffAlignment.aligned,true);
+ assert.equal(comparison.fieldCounts.discrepant,1);
+ assert.equal(comparison.careerCertified,false);
+ assert.equal(source.data.stats.totalLosses,331);
+ assert.equal(officialSource.record.losses,330);
+});
+test('claimed cutoff explanation cannot conceal another mismatch or wrong match outcome',()=>{
+ const copy=structuredClone(api);
+ copy.data.matches=[{bashoId:'202611',day:7,eastId:28,westId:20,winnerId:28}];
+ const e={sumoApiId:28,officialNskId:3616,sourceUrl:official.officialProfileUrl,bashoId:'202611',
+   officialTournamentCompletedThroughDay:6,officialDay7ResultStatus:'not yet recorded',
+   apiCompletedDay:7,apiDay7Outcome:'loss',expectedDelta:{wins:0,losses:1}};
+ const v=compareOfficialSpotcheck(official,copy,e);
+ assert.equal(v.status,'requires-reconciliation');
+ assert.equal(v.cutoffAlignment.aligned,false);
+});
