@@ -189,7 +189,7 @@ test('null terminal page cannot conceal missing or inconsistent career outcomes'
   assert.equal(d.stages.matches.skip,1);
   assert.equal(d.stages.matches.complete,false);
   d.data.stats={totalMatches:1,totalWins:1,totalLosses:0};
-  assert.throws(()=>combinePage(d,'matches',{limit:200,skip:0,total:10,records:null},28),/Null matches page/);
+  assert.throws(()=>combinePage(d,'matches',{limit:200,skip:0,total:10,records:null},28),/Expected matches collection/);
   assert.equal(d.stages.matches.skip,1);
 });
 
