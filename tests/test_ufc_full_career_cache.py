@@ -251,6 +251,78 @@ class FullCareerCacheTests(unittest.TestCase):
           client,state,research,candidate,dt.date(2026,11,13),self.approval()),0)
         self.assertEqual(client.paths,[])
 
+    def test_cached_contender_series_event_prevents_repeating_false_ufc_lookup(self):
+        state,research,candidate=self.fixture()
+        # The provider's career history labels a DWCS bout as "ufc".
+        # That must remain in the raw professional-MMA history but never
+        # consume UFC-only backfill requests or UFC Recent Performance slots.
+        state["bouts"]["801"]={
+            "id":"801","org":"ufc","eventDate":"2008-05-01",
+            "event":"Dana White's Contender Series 49",
+            "a":{"name":"One"},"b":{"name":"Two"}}
+        client=Fake()
+        self.assertEqual(m.collect_ufc_career_bouts(
+            client,state,research,candidate,dt.date(2026,11,13),self.approval()),0)
+        self.assertEqual(client.paths,[])
+        self.assertEqual(m.approved_ufc_round_priority(
+            self.approval(),candidate,research,dt.date(2026,11,13),state),{})
+        self.assertEqual(len(research["profiles"]["veteran"]["recentHistory"]),1)
+
+    def test_official_ultimate_fighter_finale_retries_one_old_manual_id(self):
+        state,research,candidate=self.fixture()
+        state["bouts"]["801"]={
+            "id":"801","org":"ufc","eventDate":"2008-05-01",
+            "event":"The Ultimate Fighter: Team A vs Team B Finale",
+            "a":{"name":"Another"},"b":{"name":"Contestant"}}
+        state["ufcCareerBoutChecks"]["800"]={
+            "status":"requires_manual_review","checkedAt":"2026-11-13",
+            "retryAfter":"2026-11-27"}
+        client=Fake("The Ultimate Fighter: Team A vs Team B Finale")
+        self.assertEqual(m.collect_ufc_career_bouts(
+            client,state,research,candidate,dt.date(2026,11,13),self.approval()),1)
+        self.assertEqual(client.paths,["/fights/800"])
+        self.assertEqual(state["bouts"]["800"]["org"],"ufc")
+        self.assertNotIn("800",state["ufcCareerBoutChecks"])
+
+    def test_invalid_finale_response_does_not_repeat_bypass_or_accept_feeder(self):
+        state,research,candidate=self.fixture()
+        state["bouts"]["801"]={
+            "id":"801","org":"ufc","eventDate":"2008-05-01",
+            "event":"The Ultimate Fighter: Team A vs Team B Finale",
+            "a":{"name":"Another"},"b":{"name":"Contestant"}}
+        state["ufcCareerBoutChecks"]["800"]={
+            "status":"requires_manual_review","checkedAt":"2026-11-13",
+            "retryAfter":"2026-11-27"}
+        class Bad(Fake):
+            def call(self,path):
+                self.paths.append(path)
+                self.calls+=1
+                return {"data":{"id":800,"status":"completed",
+                  "fighter_a":{"id":1,"slug":"veteran","name":"Veteran"},
+                  "fighter_b":{"id":2,"slug":"opponent","name":"Opponent"},
+                  "event":{"id":500,"org":"ufc",
+                           "title":"Dana White's Contender Series 49",
+                           "starts_at":"2008-05-01T00:00:00Z"}}}
+        client=Bad()
+        self.assertEqual(m.collect_ufc_career_bouts(
+            client,state,research,candidate,dt.date(2026,11,13),self.approval()),0)
+        self.assertNotIn("800",state["bouts"])
+        self.assertTrue(state["ufcCareerBoutChecks"]["800"]["officialFinaleRetryAttempted"])
+        self.assertEqual(m.collect_ufc_career_bouts(
+            client,state,research,candidate,dt.date(2026,11,13),self.approval()),0)
+        self.assertEqual(client.paths,["/fights/800"])
+
+    def test_official_event_titles_do_not_treat_tuf_finale_as_feeder(self):
+        self.assertTrue(m.official_ufc_event_title("UFC Fight Night: Example"))
+        self.assertTrue(m.official_ufc_event_title(
+            "The Ultimate Fighter: Team Joanna vs Team Claudia Finale"))
+        self.assertTrue(m.official_ufc_event_title("TUF 28 Finale"))
+        self.assertFalse(m.official_ufc_event_title(
+            "Dana White's Contender Series 54"))
+        self.assertFalse(m.official_ufc_event_title("Road to UFC 2024"))
+        self.assertFalse(m.official_ufc_event_title("The Ultimate Fighter Season 28"))
+        self.assertFalse(m.official_ufc_event_title("UFC 999 Road to UFC"))
+
     def test_full_career_numeric_id_check_recovers_old_ufc_bout_once(self):
         state,research,candidate=self.fixture()
         today=dt.date(2026,11,14)
