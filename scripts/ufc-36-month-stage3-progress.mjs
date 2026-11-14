@@ -103,7 +103,11 @@ const nearSourceDay=(a,b)=>date(a)&&date(b)&&
 /** Independent UFC source inventory is a depth-gap detector, never a certificate. */
 export function auditOfficialCareerInventory(inventory,approved,census,profiles,bouts){
  const result={cases:[],conflicts:[],totalSourceBouts:0,matchedSaved:0,
-   sourceMissingSaved:0,sourceNewerThanRoster:0};
+   sourceMissingSaved:0,sourceNewerThanRoster:0,
+   cacheCandidatesWithVerifiedNumericIdentity:0,
+   cacheCandidatesWithConflictingNumericIdentity:0,
+   cacheCandidatesWithoutUniqueNumericAnchor:0,
+   cacheCandidatesWithVerifiedMatchingOutcome:0};
  if(inventory?.schema!==1||inventory?.scope!=='ufc-official-career-bout-inventory'||
     inventory?.rosterAsOf!==census?.asOf||!Array.isArray(approved))return result;
  for(const [slug,evidence] of Object.entries(inventory.fighters||{})){
@@ -113,6 +117,23 @@ export function auditOfficialCareerInventory(inventory,approved,census,profiles,
    const official=Array.isArray(evidence.bouts)?evidence.bouts:[];
    const seen=new Set();
    const history=arr(profile.recentHistory).filter(isUfc);
+   // Anchor a canonical numeric fighter identity only through a PREVIOUSLY
+   // SAVED native UFC fight and its matching opponent/date. A name alone is
+   // unsafe for common names and provider-disambiguated slugs.
+   const anchoredIds=new Set();
+   for(const h of history){
+     const nativeId=h.source==='native'?numId(h.boutId):null;
+     const saved=nativeId?bouts[nativeId]:null;
+     if(saved?.org!=='ufc'||isFeederTitle(saved.event)||
+        !nearSourceDay(date(h.date),date(saved.eventDate)))continue;
+     for(const [own,other] of [[saved.a,saved.b],[saved.b,saved.a]]){
+       if(!own||!other||!numId(own.id)||
+          !sameAthleteName(other.name,h.opponent))continue;
+       if(own.slug===slug||sameAthleteName(own.name,profile.name)||
+          sameAthleteName(own.name,evidence.fighterName))
+         anchoredIds.add(numId(own.id));
+     }
+   }
    const roster=census.fighters?.find(f=>f.slug===slug);
    for(const row of official){
      const day=date(row.date),opponent=String(row.opponent||''),outcome=normalizedOutcome(row.result);
@@ -129,7 +150,9 @@ export function auditOfficialCareerInventory(inventory,approved,census,profiles,
        primarySourceUrl:evidence.sourceUrl,
        rosterLastUfcFight:date(roster?.lastUfcFight),
        sourceLaterThanRoster:!!date(roster?.lastUfcFight)&&day>roster.lastUfcFight,
-       cachedFightCandidates:[]};
+       cachedFightCandidates:[],
+       verifiedSavedNumericFighterIds:[...anchoredIds].sort(),
+       cachedNativeCandidateDetails:[]};
      // A different outcome for the same source athlete/date/opponent is a
      // genuine contradiction, not proof an official fight is missing.
      if(candidates.length){
@@ -144,7 +167,45 @@ export function auditOfficialCareerInventory(inventory,approved,census,profiles,
                    (c.slug===slug&&sameAthleteName(a.name,opponent))||
                    (sameAthleteName(a.name,evidence.fighterName)&&sameAthleteName(c.name,opponent))||
                    (sameAthleteName(c.name,evidence.fighterName)&&sameAthleteName(a.name,opponent));
-       if(match)record.cachedFightCandidates.push(numId(id));
+       if(match){
+         record.cachedFightCandidates.push(numId(id));
+         const sides=[[a,c],[c,a]].filter(([own,other])=>
+           sameAthleteName(other.name,opponent)&&
+           (own.slug===slug||sameAthleteName(own.name,evidence.fighterName)||
+            sameAthleteName(own.name,profile.name)));
+         if(sides.length!==1){
+           record.cachedNativeCandidateDetails.push({id:numId(id),
+             identityStatus:'ambiguous_fighter_corner',
+             nativeFighterId:null,cachedOutcome:null,sourceOutcomeMatches:false});
+           result.cacheCandidatesWithoutUniqueNumericAnchor++;
+           continue;
+         }
+         const [own,other]=sides[0];
+         const sourceId=numId(own.id);
+         const status=b.status;
+         const winner=numId(b.result?.winnerId);
+         const ownId=numId(own.id),otherId=numId(other.id);
+         const cachedOutcome=status==='no_contest'?'no_contest':
+           status==='draw'?'draw':
+           status==='completed'&&winner&&winner===ownId?'win':
+           status==='completed'&&winner&&winner===otherId?'loss':null;
+         const identityStatus=anchoredIds.size!==1||!sourceId?
+           'no_unique_saved_numeric_anchor':
+           anchoredIds.has(sourceId)?'same_verified_numeric_id':
+           'conflicts_with_saved_numeric_id';
+         if(identityStatus==='same_verified_numeric_id'){
+           result.cacheCandidatesWithVerifiedNumericIdentity++;
+           if(cachedOutcome===outcome)
+             result.cacheCandidatesWithVerifiedMatchingOutcome++;
+         }else if(identityStatus==='conflicts_with_saved_numeric_id')
+           result.cacheCandidatesWithConflictingNumericIdentity++;
+         else result.cacheCandidatesWithoutUniqueNumericAnchor++;
+         record.cachedNativeCandidateDetails.push({
+           id:numId(id),nativeFighterId:sourceId,
+           identityStatus,cachedOutcome,
+           sourceOutcomeMatches:cachedOutcome===outcome
+         });
+       }
      }
      if(record.sourceLaterThanRoster)result.sourceNewerThanRoster++;
      result.cases.push(record);
@@ -638,6 +699,14 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     sourceInventoryOfficialUfcBouts:officialSourceInventory.totalSourceBouts,
     sourceInventoryMatchedSavedUfcBouts:officialSourceInventory.matchedSaved,
     sourceInventoryMissingSavedUfcBouts:officialSourceInventory.sourceMissingSaved,
+    sourceInventoryCachedCandidateNumericIdentitiesMatched:
+      officialSourceInventory.cacheCandidatesWithVerifiedNumericIdentity,
+    sourceInventoryCachedCandidateNumericIdentitiesConflicting:
+      officialSourceInventory.cacheCandidatesWithConflictingNumericIdentity,
+    sourceInventoryCachedCandidateNumericIdentitiesUnanchored:
+      officialSourceInventory.cacheCandidatesWithoutUniqueNumericAnchor,
+    sourceInventoryCachedCandidateIdsAndOutcomesMatched:
+      officialSourceInventory.cacheCandidatesWithVerifiedMatchingOutcome,
     sourceInventorySavedResultContradictions:officialSourceInventory.conflicts.length,
     sourceInventoryMissingBoutsLaterThanRosterLatest:officialSourceInventory.sourceNewerThanRoster,
     sourceWinnerDateSearchLinked:statusCount(officialSourceRecoveryReview.filter(r=>r.type==='winner_date_search'),'linked'),
