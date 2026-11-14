@@ -7,6 +7,7 @@ import {readFile,writeFile,mkdir,rename} from 'node:fs/promises';
 import {join} from 'node:path';
 import {ordinalRank} from '../assets/sumo-career.mjs';
 import {auditRikishi} from './sumo-verify-190.mjs';
+import {applyOfficialBoutCorrections} from './sumo-official-bout-corrections.mjs';
 const DIR='data/sumo/backfill/v1';
 const read=async(p,fallback=null)=>{try{return JSON.parse(await readFile(p,'utf8'))}catch(e){if(e.code==='ENOENT')return fallback;throw e}};
 const num=x=>Number.isSafeInteger(Number(x))?Number(x):null;
@@ -14,12 +15,15 @@ const dateId=x=>/^(18|19|20)\d{2}(01|03|05|07|09|11)$/.test(String(x||''));
 const matchKey=m=>[m.bashoId,m.day,m.matchNo,m.eastId,m.westId].join(':');
 const sortedBouts=list=>[...list].sort((a,b)=>String(b.bashoId).localeCompare(String(a.bashoId))||Number(b.day)-Number(a.day)||Number(b.matchNo)-Number(a.matchNo));
 const add=(obj,key)=>{obj[key]=(obj[key]||0)+1};
-export function buildResearchProfile(w,cache){
-  const aud=auditRikishi(w,cache);
+export function buildResearchProfile(w,cache,correctionManifest=null){
+  const aud=auditRikishi(w,cache,correctionManifest);
   if(!aud.readyForExternalCrosscheck)return {status:'not-ready',sourceId:w.sourceId,problems:aud.errors||[],warnings:aud.warnings||[]};
   const id=Number(w.sourceId),details=cache.data?.profile,stats=cache.data?.stats;
   if(!details||!stats)throw Error('Missing cached profile or statistics');
-  const all=sortedBouts(cache.data.matches||[]);
+  const sourceCorrection=applyOfficialBoutCorrections(w,cache,correctionManifest);
+  if(sourceCorrection.errors.length)return {status:'official-correction-exception',sourceId:id,
+    problems:sourceCorrection.errors,certified:false};
+  const all=sortedBouts(sourceCorrection.matches);
   const regular=all.filter(m=>m.division!=='Mae-zumo'&&Number(m.day)>=1&&Number(m.day)<=15);
   const special=all.filter(m=>m.division==='Mae-zumo'||Number(m.day)>15);
   const record={wins:regular.filter(m=>Number(m.winnerId)===id).length,
@@ -85,7 +89,9 @@ export function buildResearchProfile(w,cache){
       regularBouts:regular.length,otherBouts:special.length,totalRawBouts:all.length,
       regularWins:record.wins,regularLosses:record.losses,
       earliestBasho:all.at(-1)?.bashoId||null,latestBasho:all[0]?.bashoId||null,
-      fullPagination:true,comparison:'API career stats match 15-day non-Mae-zumo regular bouts'},
+      fullPagination:true,comparison:'Regular bouts reconciled to API career stats, including JSA official correction overlays',
+      officialBoutCorrections:sourceCorrection.applied,
+      rawSourceImmutable:true},
     specialBouts:specialEvents,perBasho:bashoSorted,headToHead:h2hSorted,
     kimarite:{wins:sortTech(winTech),losses:sortTech(lossTech)},
     recentPerformance:regular.slice(0,10).map(m=>({bashoId:m.bashoId,day:m.day,
@@ -101,13 +107,16 @@ async function main(){
   if(roster?.count!==190||roster.rikishi.length!==190)throw Error('Frozen 190-rikishi cohort mismatch');
   const outDir=join(DIR,'profile-ready');
   await mkdir(outDir,{recursive:true});
+  const correctionManifest=await read(join(DIR,'official-bout-corrections.json'),{bySourceId:{}});
   let ready=0,exceptions=0,unchanged=0;
   for(const w of roster.rikishi){
     const source=await read(join(DIR,'rikishi',w.sourceId+'.json'),null);
     if(!source)continue;
-    const p=buildResearchProfile(w,source);
+    const p=buildResearchProfile(w,source,correctionManifest);
     if(p.status==='not-ready')continue;
-    if(p.status==='stat-reconciliation-exception'){exceptions++;console.warn(w.shikonaEn+': source W-L disagreement');continue;}
+    if(p.status==='stat-reconciliation-exception'||p.status==='official-correction-exception'){
+      exceptions++;console.warn(w.shikonaEn+': source W-L disagreement or invalid official correction');continue;
+    }
     const dest=join(outDir,w.sourceId+'.json'),prev=await read(dest,null);
     if(JSON.stringify(prev)===JSON.stringify(p)){ready++;unchanged++;continue;}
     const tmp=dest+'.tmp';
