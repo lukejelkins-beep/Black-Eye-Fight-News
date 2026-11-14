@@ -329,7 +329,21 @@
           "verifiedAgainstSavedNativeFight": true,
           "measuredRoundStatsVerified": true
         }
-      ]
+      ],
+      "officialFighterUrl": "https://www.ufc.com/athlete/maryna-moroz",
+      "verifiedNumericFighterIds": [
+        "1113"
+      ],
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-14",
+        "sourceSnapshotLatestEvent": "2026-11-07",
+        "method": "Pin UFCStats-derived full fight results + fighter identity + event dates; crosscheck all 12 against official UFC chronological biography and unique measured native identities. Original UFCStats pages unavailable (502); no direct access claimed."
+      },
+      "nativeIdentityReconciliation": "All 12 unique native fights identify Maryna Moroz by numeric ID 1113 in the correct corner; date, opponent and final winner agree with independent UFCStats-derived source. Source listing includes both Joanne Wood fights, including 2015 listed by UFC biography under former name Joanne Calderwood."
     }
   }
 }
