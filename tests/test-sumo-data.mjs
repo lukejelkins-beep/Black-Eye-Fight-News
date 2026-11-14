@@ -142,6 +142,32 @@ test('live API snapshot contains exactly the current top three divisions',()=>{
   assert.equal(details.preview,true);
   assert.equal(details.bashoId,'202611');
 });
+test('JSA style evidence is explicit, source-linked and never applied to another rikishi',()=>{
+  const roster=JSON.parse(readFileSync(new URL('../data/sumo/rikishi-index.json',import.meta.url),'utf8'));
+  const style=JSON.parse(readFileSync(new URL('../data/sumo/official-style-evidence.json',import.meta.url),'utf8'));
+  assert.equal(style.schemaVersion,1);
+  assert.deepEqual(Object.keys(style.byNskId).sort(),['2892','3761','4227']);
+  for(const [nsk,rec] of Object.entries(style.byNskId)){
+    const wrestler=roster.rikishi.find(x=>x.officialNskId===Number(nsk));
+    assert.ok(wrestler,'Official style lacks matching roster identity');
+    assert.equal(rec.sumoApiId,wrestler.sourceId);
+    assert.match(rec.sourceUrl,new RegExp('^https://www[.]sumo[.]or[.]jp/EnSumoDataRikishi/profile/'+nsk+'/
+  const html=readFileSync(new URL('../sumo.html',import.meta.url),'utf8');
+  const index=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  const js=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
+  assert.match(html,/name="robots" content="noindex,nofollow"/);
+  assert.match(html,/assets\/sumo\.js/);
+  assert.match(index,/href="sumo\.html" data-nav="sumo"/);
+  assert.match(index,/befn-sumo-link/);
+  assert.match(js,/data\/sumo\/rikishi-index\.json/);
+  assert.doesNotMatch(js,/fetch\(\s*['"]https:\/\/www\.sumo-api\.com/);
+});
+));
+    assert.ok(rec.signature.every(v=>/^[a-z-]{2,40}$/.test(v)));
+  }
+  assert.deepEqual(style.byNskId['4227'].signature,['tsuki','oshi','migi-yotsu','yori']);
+});
+
 test('Sumo preview is non-deploying and links correctly to dedicated UI',()=>{
   const html=readFileSync(new URL('../sumo.html',import.meta.url),'utf8');
   const index=readFileSync(new URL('../index.html',import.meta.url),'utf8');
