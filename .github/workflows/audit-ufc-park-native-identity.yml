@@ -1,0 +1,30 @@
+name: Audit UFC Park 2025 duplicate native fight identity
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/audit-ufc-park-two-native-ids.mjs'
+      - 'tests/test-ufc-park-two-native-ids.mjs'
+      - '.github/workflows/audit-ufc-park-native-identity.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test exact fighter identities/outcomes against false aliases
+        run: node --test tests/test-ufc-park-two-native-ids.mjs
+      - name: Read-only inspect the two saved UFC native fight identities
+        run: node scripts/audit-ufc-park-two-native-ids.mjs
+      - name: Save private diagnostic for subsequent career normalization
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-park-dual-native-identity-review
+          path: qa/ufc-park-two-native-id-identity-review.json
+          retention-days: 7
