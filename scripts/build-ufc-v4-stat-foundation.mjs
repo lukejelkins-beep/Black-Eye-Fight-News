@@ -238,7 +238,9 @@ export function buildV4StatFoundation(approval,research,progress,postfight,
   manualReview:missingNativeBoutQueue.filter(x=>x.action==="manual_review").length,
   retryCooldown:missingNativeBoutQueue.filter(x=>x.action==="retry_cooldown").length,
   inspectSavedData:missingNativeBoutQueue.filter(x=>x.action==="inspect_saved_round_or_clock_data").length,
-  notIndexed:missingNativeBoutQueue.filter(x=>x.action==="review_uncached_native_id").length
+  notIndexed:missingNativeBoutQueue.filter(x=>!x.indexedInSavedProviderCache).length,
+  notIndexedAndManualReview:missingNativeBoutQueue.filter(x=>
+   !x.indexedInSavedProviderCache&&x.action==="manual_review").length
  };
  const summary={approvedFighters:stats.approved,fightersWithKnownHistory:stats.knownHistory,
   fightersWithFiveKnownBouts:stats.knownFive,
