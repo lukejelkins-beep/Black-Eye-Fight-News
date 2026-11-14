@@ -7,7 +7,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
-import {isOfficialUfcEvent} from "./ufc-official-event-scope.mjs";
+import {isOfficialUfcBout} from "./ufc-official-event-scope.mjs";
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const progressPath="data/ufcalendar-rich-progress.json";
 const archivePath="data/ufc-research-archive.json";
@@ -200,7 +200,7 @@ export function verifiedRoundReconciliation(bout,observed,evidence){
 
 export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12",roundCorroboration=null}={}){
  const complete=Object.values(progress?.bouts||{})
-  .filter(b=>b?.org==="ufc"&&isOfficialUfcEvent(b.event)&&
+  .filter(b=>b?.org==="ufc"&&isOfficialUfcBout(b)&&
    ["completed","draw","no_contest"].includes(b.status)&&
    /^\d{4}-\d\d-\d\d$/.test(b.eventDate||"")&&b.eventDate<=asOf&&
    b.a?.name&&b.b?.name);
