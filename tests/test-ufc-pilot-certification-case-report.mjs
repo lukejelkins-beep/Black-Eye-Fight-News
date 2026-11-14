@@ -42,3 +42,15 @@ test('UFC-official Korean surname order alias matches exact opponent and result,
  const homonym=comparePilot({bouts:[{date:'2025-10-18',opponent:'HyunSung Pak',result:'win'}]},saved);
  assert.equal(homonym.missingCount,1,'Different surname cannot be silently matched');
 });
+
+test('only exact UFC Vancouver bout permits Bruno Gustavo da Silva abbreviation',()=>{
+ const source={bouts:[{date:'2025-10-18',opponent:'Bruno Silva',result:'loss'}]};
+ const row=(id)=>({date:'2025-10-18',opponent:'Bruno Gustavo da Silva',result:'loss',
+  promotion:'ufc',boutId:String(id)});
+ const verified=comparePilot(source,{recentHistory:[row('83254')]});
+ assert.equal(verified.matchedCount,1);
+ assert.equal(verified.extraCount,0);
+ const unrelated=comparePilot(source,{recentHistory:[row('99999')]});
+ assert.equal(unrelated.missingCount,1,'Different native ID must not inherit potentially homonymous alias');
+ assert.equal(unrelated.extraCount,1);
+});
