@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-14T17:36:50.642Z",
-  "checkedAt": "2026-11-14T17:36:50.642Z",
-  "updatedAt": "2026-11-14T16:03:25Z",
+  "attemptedAt": "2026-11-14T18:15:36.354Z",
+  "checkedAt": "2026-11-14T18:15:36.354Z",
+  "updatedAt": "2026-11-14T18:04:33Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 3,
+  "sourcesChecked": 4,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 3,
+      "checked": 4,
       "failed": 0,
-      "configured": 3,
-      "message": "3 of 3 scheduled sources checked."
+      "configured": 4,
+      "message": "4 of 4 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 17,
+      "configured": 28,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 54,
+      "configured": 40,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 2,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,21 +55,118 @@
   "rollingScan": {
     "directoryEntries": 447,
     "scheduledEntries": 84,
-    "batchIndex": 1,
+    "batchIndex": 3,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 54,
-      "X": 17,
-      "Bluesky": 3,
-      "Threads": 10
+      "X": 28,
+      "Instagram": 40,
+      "Threads": 10,
+      "Bluesky": 4,
+      "Reddit": 2
     },
-    "directlyChecked": 3,
+    "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2c3kcnqs42k",
+      "cid": "bafyreic2xd3m3nuci6wxbumpd4mbwtycfu42adezjxszj5indbcc2bmhc4",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Alex Pereira dismisses Israel Adesanya’s criticism of his mindset ahead of UFC 335",
+      "postedAt": "2026-11-14T18:04:33Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2c3kcnqs42k",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2bzsgsuop2d",
+      "cid": "bafyreihkepvtn6yjzumqeer3yzr452h3jcy3uml3vzbhaples36i4ejg64",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Bella Mir suffers 90-second one-sided loss in second match since UFC upset cost her a contract",
+      "postedAt": "2026-11-14T17:33:19Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2bzsgsuop2d",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2bz2djqnq2a",
+      "cid": "bafyreidsg4h5xh7pku2i6xchsmftmuhqvh62is5thnkjxh2pfd7gbuzijy",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Merab Dvalishvili beats former UFC foe as he continues plea for Usman Nurmagomedov’s release after win",
+      "postedAt": "2026-11-14T17:19:50Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2bz2djqnq2a",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2bwkhd3zm23",
+      "cid": "bafyreic3xoxqp5pdbhala72dh5mvm4qbsdweuymjvlag5gz7j6ixibdg5m",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Zabit Magomedsharipov’s brother loses undefeated record in upset despite ‘top five in the UFC’ claim",
+      "postedAt": "2026-11-14T16:35:10Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2bwkhd3zm23",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2burojcxb2d",
       "cid": "bafyreicojf4egpg5iuw4h62dmu4a7walixmmjiarorwhje6dz2dx5bwe3a",
@@ -91,7 +188,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
+      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -115,7 +212,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
+      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -139,7 +236,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
+      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -163,7 +260,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
+      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -307,7 +404,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
+      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -451,7 +548,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
+      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -599,78 +696,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2a7j5myqo2a",
-      "cid": "bafyreiegrh7iihmmnm7xn2qlaz5gj4fneiqnrimmrowe4u7q3m5haw2whm",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Gable Steveson books UFC 336 return against 5-2 heavyweight after being knocked out in 12 seconds",
-      "postedAt": "2026-11-14T00:10:10Z",
-      "date": "14 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2a7j5myqo2a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2a3rn3zjg2d",
-      "cid": "bafyreiabaq43r7txtngc3baonuxexpnpasrrdxs5z3qmxq643xoxffy5pm",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Ciryl Gane branded ‘dirty cheater’ by ex-UFC star who reveals how Josh Hokit can beat him at UFC 334",
-      "postedAt": "2026-11-13T23:03:20Z",
-      "date": "14 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2a3rn3zjg2d",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2a22fqrtd2f",
-      "cid": "bafyreifff2pspzkbyifetl2gv5zx4sfyd23yqud3j3me3lanr4c2dsukzq",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "UFC champion has his title stolen after no-showing press conference featuring Pereira and Oliveira",
-      "postedAt": "2026-11-13T22:32:27Z",
-      "date": "14 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2a22fqrtd2f",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n27x7hz3ua26",
       "cid": "bafyreiadxwy24qqzysufnbrmpgm56rcgbhidhhsufycegjfapkfitfibjq",
       "platform": "Bluesky",
@@ -716,30 +741,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-14T13:23:35.228Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n27rruc7ts23",
-      "cid": "bafyreidstvqprojfdnrggooqbrzpe6xcre3lxmqahvqlzrm2gcz4ghe7bu",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Chrisean Rock punches Adam22 at Wild ‘n Out days after postponing boxing return",
-      "postedAt": "2026-11-13T20:04:30Z",
-      "date": "14 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n27rruc7ts23",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1567,7 +1568,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
+      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5188,7 +5189,7 @@
         "comments": 2,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T16:17:59.133Z",
+      "engagementCheckedAt": "2026-11-14T18:15:36.354Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
