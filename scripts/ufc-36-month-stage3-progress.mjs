@@ -30,9 +30,18 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
  const timeline=profile?.ufcTimeline||{};
  const rows=arr(history);
  const latest=date(rosterLatest),snapshot=date(asOf);
- const rosterLatestPresent=!!latest&&rows.some(r=>date(r.date)===latest);
+ // Roster activity dates use the event-local calendar day. UFCalendar's
+ // historical timestamps can roll into the next UTC day (or vice versa).
+ // A one-day difference for the MOST RECENT saved fight is not evidence
+ // of a missing fight. Larger gaps remain unresolved, never auto-closed.
+ const newestSaved=[...rows].map(r=>date(r.date)).filter(Boolean).sort().at(-1)||null;
+ const difference=latest&&newestSaved?
+   (Date.parse(latest+'T00:00:00Z')-Date.parse(newestSaved+'T00:00:00Z'))/86400000:null;
+ const utcDateShift=(difference===1||difference===-1);
+ const rosterLatestPresent=difference===0||utcDateShift;
  const providerFlag=timeline.providerTruncatedFlag===false;
- const contradictions=Boolean(timeline.missingRosterLastUfcFight||
+ const providerLatestMismatch=!!timeline.missingRosterLastUfcFight&&!rosterLatestPresent;
+ const contradictions=Boolean(providerLatestMismatch||
    timeline.savedHistoryHasAdditionalUfcBouts===true||
    Number(timeline.conflictingNativeFightIds)>0||
    arr(profile?.ufcHistoryIdConflicts).length>0);
@@ -62,7 +71,8 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
  const independentlyVerified=Boolean(checked&&rosterLatestPresent&&!contradictions);
  return {providerCertified,independentlyVerified,legacyClaim,
    explicitUntruncated:providerFlag,providerDiscrepancy:contradictions,
-   rosterLatestPresent,independentCheckAttempted:given.length>0};
+   rosterLatestPresent,utcDateShift,providerLatestMismatch,
+   newestSavedUfcFight:newestSaved,independentCheckAttempted:given.length>0};
 }
 
 export function auditApprovedStage3(approval,census,progress,research,archive={},feederEvidence={},finaleEvidence={},legacyEvidence={},independentEvidence={}){
@@ -100,6 +110,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     String(item?.sourceUrl||'').startsWith('https://www.ufc.com/'));
   let profilesWithHistory=0,fullyCertified=0,historyRows=0,nativeLinks=0,
     legacyCompleteClaims=0,independentCertified=0,providerTimelineConflicts=0,
+    rosterUtcDayAdjustments=0,providerFlagsExplainedByUtcDayShift=0,
     fightersWithFive=0,fightersWithTen=0,withMeasuredRecent=0,
     fullFiveMeasured=0,fullTenMeasured=0,unlinkedCareerRows=0,
     allKnownIndexed=0,allKnownMeasured=0,certifiedAndIndexed=0;
@@ -232,6 +243,9 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     const providerHistoryDiscrepancy=proof.providerDiscrepancy||!proof.rosterLatestPresent;
     if(proof.legacyClaim)legacyCompleteClaims++;
     if(providerHistoryDiscrepancy)providerTimelineConflicts++;
+    if(proof.utcDateShift)rosterUtcDayAdjustments++;
+    if(proof.utcDateShift&&profile.ufcTimeline?.missingRosterLastUfcFight)
+      providerFlagsExplainedByUtcDayShift++;
     if(independentFullCareer)independentCertified++;
     if(providerFullCareer){fullyCertified++;certifiedAndIndexed++;certified.push(slug);}
     const completenessStatus=!knownMeasured?'known_fight_coverage_gap':
@@ -250,10 +264,12 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
       oldCompleteFlagWithoutProviderEvidence:proof.legacyClaim,
       explicitProviderUntruncated:proof.explicitUntruncated,
       providerHistoryDiscrepancy:proof.providerDiscrepancy,
+      rosterLatestUtcDateShift:proof.utcDateShift,
+      providerLatestFightMismatch:proof.providerLatestMismatch,
       numericIdHistoryChecked:progress?.ufcFullCareerHistoryChecks?.[slug]?.status==='checked',
       providerTimelineObservedOn:date(profile.ufcTimeline?.observedOn),
       rosterLastUfcFight:date(current.get(slug)?.lastUfcFight),
-      newestSavedUfcFight:date(observed[0]?.date)
+      newestSavedUfcFight:proof.newestSavedUfcFight
     });
     const latestFive=samples.slice(0,5),latestTen=samples.slice(0,10);
     if(observed.length>=5)fightersWithFive++;
@@ -391,6 +407,8 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     independentlyVerifiedFullCareerTimelines:independentCertified,
     approvedCareersWithoutIndependentFullCareerCertification:approved.length-independentCertified,
     providerHistoryDiscrepancyCases:providerTimelineConflicts,
+    rosterLatestFightOneDayUtcDateShifts:rosterUtcDayAdjustments,
+    priorProviderLatestMismatchFlagsExplainedByDayShift:providerFlagsExplainedByUtcDayShift,
     careerVerificationStatusCounts,
     providerMetadataExplicitlyUntruncated:providerTimelineMetadata.explicitUntruncated,
     providerMetadataExplicitlyTruncated:providerTimelineMetadata.explicitTruncated,
@@ -503,6 +521,8 @@ export function markdownReport(report){
    independentlyVerifiedFullCareerTimelines:'UFC careers independently reconciled against complete external official records',
    approvedCareersWithoutIndependentFullCareerCertification:'Approved UFC careers still awaiting independent historical completeness verification',
    providerHistoryDiscrepancyCases:'Provider history and roster chronology discrepancies requiring review',
+   rosterLatestFightOneDayUtcDateShifts:'Roster latest-fight dates aligned with saved histories after one-day UTC/local normalization',
+   priorProviderLatestMismatchFlagsExplainedByDayShift:'Previous provider latest-fight mismatch flags explained by UTC calendar-day normalization',
    providerMetadataExplicitlyUntruncated:'Provider timeline responses explicitly marked untruncated (not necessarily career-certified)',
    providerMetadataExplicitlyTruncated:'Provider timeline responses explicitly marked truncated',
    providerMetadataFlagUnavailable:'Provider timeline responses observed without explicit truncation flag',
