@@ -136,6 +136,32 @@ export function dailyResults(banzuke, day) {
   }
   return results;
 }
+
+/** Shows both completed pairings and explicit upcoming opponents. An empty
+ * future slot is not a scheduled bout; duplicate sides collapse into one row.
+ */
+export function dayMatchups(banzuke, day) {
+  if (!Number.isInteger(day) || day<1 || day>15) return [];
+  const pairs=new Map();
+  for(const row of sortBanzukeEntries(banzuke)){
+    const rec=row.record?.[day-1];
+    const a=Number(row.rikishiID),b=Number(rec?.opponentID);
+    if(!Number.isSafeInteger(a)||a<=0||!Number.isSafeInteger(b)||b<=0||a===b) continue;
+    const key=[a,b].sort((x,y)=>x-y).join(':');
+    const outcome=String(rec?.result||'').toLowerCase();
+    const finished=outcome==='win'||outcome==='loss';
+    const record={
+      key,day, rikishiId:a,opponentId:b,
+      rikishi:row.shikonaEn,opponent:rec.opponentShikonaEn||'Opponent not supplied',
+      finished, winnerId:finished?(outcome==='win'?a:b):null,
+      kimarite:finished?(rec.kimarite||null):null
+    };
+    const prev=pairs.get(key);
+    if(!prev || (finished&&!prev.finished))pairs.set(key,record);
+  }
+  return [...pairs.values()];
+}
+
 export function matchResult(match, id) {
   const athleteId = Number(id);
   if (!match || !(athleteId === Number(match.eastId) || athleteId === Number(match.westId))) return null;
@@ -311,7 +337,7 @@ export function verifiedHeadToHead(record, fighterId, opponentId) {
   const idA=Number(record.rikishiId ?? record.rikishiID ?? record.id);
   const idB=Number(record.opponentId ?? record.opponentID ?? record.otherId);
   if(idA!==a || idB!==b) return null;
-  const wins=record.wins,losses=record.losses;
+  const wins=record.wins ?? record.rikishiWins,losses=record.losses ?? record.opponentWins;
   if(!Number.isInteger(wins)||!Number.isInteger(losses)||wins<0||losses<0) return null;
   return {wins,losses,total:wins+losses,source:'sumo-api head-to-head'};
 }
