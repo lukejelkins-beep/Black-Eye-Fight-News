@@ -15,7 +15,7 @@ test('freeze one 783-person cohort and seven separate source-only athlete histor
  assert.deepEqual(Object.keys(source.fighters),slugs);
  for(const s of slugs){
    assert.ok(approval.approvedFighters.includes(s),s);
-   assert.equal(ledger.fighters[s]?.sourceCoverageAttested===true,false,s);
+   assert.equal(ledger.fighters[s]?.sourceCoverageAttested===true,true,s);
    assert.equal(source.fighters[s].officialUfcCareerCount,2,s);
    assert.equal(source.fighters[s].bouts.length,2,s);
    assert.match(source.fighters[s].pinnedGrecoFighterUrl,/^https:\/\/ufcstats\.com\/fighter-details\/[a-f0-9]{16}$/);
