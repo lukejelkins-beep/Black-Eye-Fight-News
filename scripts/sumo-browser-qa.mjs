@@ -58,7 +58,7 @@ async function testSite(viewport,isMobile,label) {
   assertContains(profile,'Basho performance','basho data');
   assertContains(profile,'Recent performance','recent results');
   assertContains(profile,'Career honours','honours');
-  assertContains(profile,'cached recent match sample','source label');
+  assertContains(profile,'recent match sample only','source label');
   await snap(page,label+'-profile',{fullPage:false});
 
   await open(page,'banzuke','.standings');
