@@ -1,60 +1,13 @@
 {
-  "timestamp_utc": "2026-11-14T02:04:03+00:00",
+  "timestamp_utc": "2026-11-14T02:06:18+00:00",
   "mode": "read_only_public_report_pilot",
   "source": "https://beta.compuboxdata.com",
   "max_pdf_requests": 12,
-  "processed": [
-    {
-      "report_id": 16960,
-      "fight_date": "2026-11-08",
-      "fighters": [
-        "SIMS",
-        "PATRICO"
-      ]
-    },
-    {
-      "report_id": 16958,
-      "fight_date": "2026-11-08",
-      "fighters": [
-        "GARCIA",
-        "DELGADO"
-      ]
-    },
-    {
-      "report_id": 16957,
-      "fight_date": "2026-11-08",
-      "fighters": [
-        "NICOLSON",
-        "YOSHIDA"
-      ]
-    },
-    {
-      "report_id": 16956,
-      "fight_date": "2026-11-08",
-      "fighters": [
-        "ALI",
-        "KREPS"
-      ]
-    },
-    {
-      "report_id": 16955,
-      "fight_date": "2026-11-08",
-      "fighters": [
-        "TURHAN",
-        "BAUMGARDNER"
-      ]
-    }
-  ],
+  "processed": [],
   "skipped_existing": [
     16970,
     16971,
-    16972,
-    16992,
-    16991,
-    16973,
-    16964,
-    16963,
-    16962
+    16972
   ],
   "failed": [
     {
@@ -64,17 +17,91 @@
     {
       "report_id": 16235,
       "error_code": "redirect_not_followed"
-    },
-    {
-      "report_id": 16961,
-      "error_code": "missing_rounds_total_GARCIA"
-    },
-    {
-      "report_id": 16959,
-      "error_code": "missing_rounds_total_MALDOZHANOV"
     }
   ],
   "not_pdf": [],
-  "attempted_pdf_requests": 9,
-  "new_fights": 5
+  "discovery": [
+    {
+      "report_id": 16972,
+      "label": "BRADLEY REA vs EZRA TAYLOR 11/07/2026 View Now",
+      "roster_alias_hits": 1
+    },
+    {
+      "report_id": 16971,
+      "label": "JACK RAFFERTY vs HOVHANNES MARTIROSYAN 11/07/2026 View Now",
+      "roster_alias_hits": 1
+    },
+    {
+      "report_id": 16970,
+      "label": "JOSHUA BUATSI vs WILLIAM HUTCHINSON 11/07/2026 View Now",
+      "roster_alias_hits": 1
+    },
+    {
+      "report_id": 16992,
+      "label": "EMILIO GARCIA vs DIEGO ZUNIGA 11/13/2026 View Now",
+      "roster_alias_hits": 0
+    },
+    {
+      "report_id": 16991,
+      "label": "ELIJAH FLORES vs AXL MELENDEZ 11/13/2026 View Now",
+      "roster_alias_hits": 0
+    },
+    {
+      "report_id": 16973,
+      "label": "ZAK MILLER vs GULLY POWAR 11/07/2026 View Now",
+      "roster_alias_hits": 0
+    },
+    {
+      "report_id": 16964,
+      "label": "JOCEYLYN CAMARILLO vs NAZARENA SERRA 11/08/2026 View Now",
+      "roster_alias_hits": 0
+    },
+    {
+      "report_id": 16963,
+      "label": "JAVIER GUERRERO vs AIDEN ANDERSON 11/08/2026 View Now",
+      "roster_alias_hits": 0
+    },
+    {
+      "report_id": 16962,
+      "label": "NATALIE DOVE vs NAYELI RODRIGUEZ 11/08/2026 View Now",
+      "roster_alias_hits": 0
+    },
+    {
+      "report_id": 16961,
+      "label": "FERNANDO GARCIA (FEATHER) vs ALEXANDER CASTELLANO 11/08/2026 View Now",
+      "roster_alias_hits": 0
+    },
+    {
+      "report_id": 16960,
+      "label": "BRITTANY SIMS vs SHERA MAE PATRICO 11/08/2026 View Now",
+      "roster_alias_hits": 0
+    },
+    {
+      "report_id": 16959,
+      "label": "ALBINA MALDOZHANOVA vs KIRSTIE BAVINGTON 11/08/2026 View Now",
+      "roster_alias_hits": 0
+    },
+    {
+      "report_id": 16958,
+      "label": "IRMA GARCIA vs NATALY DELGADO 11/08/2026 View Now",
+      "roster_alias_hits": 0
+    },
+    {
+      "report_id": 16957,
+      "label": "SKYE NICOLSON vs MIYO YOSHIDA 11/08/2026 View Now",
+      "roster_alias_hits": 0
+    },
+    {
+      "report_id": 16956,
+      "label": "RAMLA ALI vs MIKIAH KREPS 11/08/2026 View Now",
+      "roster_alias_hits": 0
+    },
+    {
+      "report_id": 16955,
+      "label": "ELIF NUR TURHAN vs ALYCIA BAUMGARDNER 11/08/2026 View Now",
+      "roster_alias_hits": 0
+    }
+  ],
+  "attempted_pdf_requests": 2,
+  "new_fights": 0
 }
