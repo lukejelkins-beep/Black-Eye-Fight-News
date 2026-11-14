@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {isOfficialUfcBout} from "./ufc-official-event-scope.mjs";
 /** BEFN V4: strictly verify manually attested complete UFC career lists.
  * Offline; never calls a provider or modifies collector-owned cache.
  * Event titles are display metadata, NOT a certification criterion.
@@ -38,6 +39,14 @@ export function certifyAttestedFullCareers(approval,research,progress,postfight,
   need(slug,s.sourceCoverageAttested===true&&s.verificationMethod==='full_official_ufc_fight_listing_crosscheck'&&
    s.verifiedAt===approval.rosterAsOf,'exhaustive_independent_source_attestation');
   need(slug,sourceFighterUrl(s.fighterUrl)&&/^https:\/\/www\.ufc\.com\/athlete\//.test(s.ufcOfficialSourceUrl||''),'unverified_source_urls');
+  // Official UFC 22 Aug 2025 showcase: Bruna vs Shi on an RTU tournament card.
+  // Seven UFCStats-CSV bouts alone cannot certify her eight-fight UFC history.
+  if(slug==="bruna-brasil")need(slug,
+   Array.isArray(s.bouts)&&s.bouts.length>=8&&
+   s.bouts.some(r=>String(r.nativeBoutId)==="60900"&&r.date==="2025-08-22"&&
+    String(r.opponent).toLowerCase()==="shi ming"&&
+    r.fightUrl==="https://ufcstats.com/fight-details/abf5f4d6f777cf7b"),
+   "official_ufc_bout_bruna_shi_60900_missing");
   const p=research?.profiles?.[slug];
   // Exact UFC-verified athlete alias for this immutable approved slug only.
   // UFC officially publishes Alatengheili under /athlete/heili-alateng,
@@ -81,7 +90,7 @@ export function certifyAttestedFullCareers(approval,research,progress,postfight,
       out(x.result||x.outcome||x.status)===record.result);
    need(slug,matches.length===1,'native_history_identity_date_outcome_conflict:'+id);
    const native=progress.bouts?.[id];
-   need(slug,native?.org==='ufc'&&!feeder(native.event),'not_eligible_official_ufc_bout:'+id);
+   need(slug,native?.org==='ufc'&&isOfficialUfcBout(native),'not_eligible_official_ufc_bout:'+id);
    need(slug,Math.abs(dateDiff(native.eventDate,record.nativeSavedDate))<=1,
       'native_event_date_mismatch:'+id);
    // Intentionally do NOT require identical event names. An event's title can
