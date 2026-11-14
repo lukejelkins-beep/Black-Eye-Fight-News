@@ -41,14 +41,32 @@
       "bashoId": "202611"
     }
   },
-  "measurements": [],
+  "measurements": [
+    {
+      "bashoId": "202407",
+      "heightCm": 172,
+      "weightKg": 117,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12894",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202505",
+      "heightCm": 172,
+      "weightKg": 113,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12894",
+      "independentlyCertified": false
+    }
+  ],
   "measurementCoverage": {
     "apiPoints": 0,
-    "independentPoints": 0,
-    "extraPoints": 0,
+    "independentPoints": 2,
+    "extraPoints": 2,
     "matchingOverlapPoints": 0,
     "conflictingOverlaps": [],
-    "status": "api-only"
+    "status": "dated-independent-source-collected",
+    "independentlyCertified": false
   },
   "rankTimeline": [
     {
