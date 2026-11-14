@@ -58,6 +58,7 @@ jobs:
           node --test tests/test-ufc-profile-queue.mjs
           node --test tests/test-ufc-36-month-candidates.mjs
           node --test tests/test-ufc-postfight-metrics.mjs
+          node --test tests/test-ufc-independent-certification-queue.mjs
       - name: Build resumable UFC/PFL fight history and current card insights
         env:
           UFCALENDAR_API_KEY: ${{ secrets.UFCALENDAR_API_KEY }}
@@ -78,6 +79,17 @@ jobs:
             echo "Approved UFC Stage 3 coverage audited; see BEFN_STAGE3_PROGRESS above."
           else
             echo "::warning::Offline Stage 3 audit unavailable; preserve newly fetched records and continue."
+          fi
+      - name: Build independent UFC career certification evidence queue (offline, bounded)
+        if: success()
+        shell: bash
+        run: |
+          # Source crawling is intentionally disabled pending verified access.
+          # Never block safe archival commits when offline triage is unavailable.
+          if node scripts/build-ufc-independent-certification-queue.mjs; then
+            echo "Independent certification queue generated; source requests: 0."
+          else
+            echo "::warning::Independent certification queue unavailable; collector archive remains authoritative."
           fi
       - name: Commit sourced observations without exposing credentials
         shell: bash
