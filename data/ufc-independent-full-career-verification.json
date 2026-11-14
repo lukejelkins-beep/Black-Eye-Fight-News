@@ -21180,6 +21180,313 @@
           "nativeFighterId": "2820"
         }
       ]
+    },
+    "bia-mesquita": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Bia Mesquita",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/eff9074bc066f0f2",
+      "officialFighterUrl": "https://www.ufc.com/athlete/bia-mesquita",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Complete dated primary UFC.com athlete biographies (narrative outcome and official event results override incorrect graphical Win badges). Reconcile every historical official UFC bout against exact pinned Greco UFCStats-derived fight URL/event and original saved numeric UFCalendar native bout IDs, both athlete and opposing fighter IDs, completed winner, date and full measured rounds. Independently source-exclude native DWCS bouts. UFC 2023 Road to UFC Asia final included; prior 2022 qualifier excluded. No paid UFCalendar calls or live-cache writes."
+      },
+      "verifiedNumericFighterIds": [
+        "174"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Full dated official UFC.com athlete chronology and pinned Greco UFCStats-derived fight results independently checked against preserved native IDs, exact opposing corners, winners, dates and measured rounds. Three completed UFC submissions; scheduled 14 November 2026 Macy Chiasson bout is not counted before a completed result.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/bia-mesquita",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-10-11",
+          "opponent": "Irina Alekseeva",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/546f971f9d8e0a33",
+          "nativeBoutId": "65895",
+          "nativeFighterId": "174"
+        },
+        {
+          "date": "2026-03-14",
+          "opponent": "Montse Rendon",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8cab057e6549afd0",
+          "nativeBoutId": "60722",
+          "nativeFighterId": "174"
+        },
+        {
+          "date": "2026-06-20",
+          "opponent": "Melissa Mullins",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c0980a613f24accd",
+          "nativeBoutId": "66004",
+          "nativeFighterId": "174"
+        }
+      ]
+    },
+    "denys-bondar": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Denys Bondar",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/2526be54e6a0e62a",
+      "officialFighterUrl": "https://www.ufc.com/athlete/denys-bondar",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Complete dated primary UFC.com athlete biographies (narrative outcome and official event results override incorrect graphical Win badges). Reconcile every historical official UFC bout against exact pinned Greco UFCStats-derived fight URL/event and original saved numeric UFCalendar native bout IDs, both athlete and opposing fighter IDs, completed winner, date and full measured rounds. Independently source-exclude native DWCS bouts. UFC 2023 Road to UFC Asia final included; prior 2022 qualifier excluded. No paid UFCalendar calls or live-cache writes."
+      },
+      "verifiedNumericFighterIds": [
+        "1069"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Full dated official UFC.com athlete chronology and pinned Greco UFCStats-derived fight results independently checked against preserved native IDs, exact opposing corners, winners, dates and measured rounds. Three UFC losses; official UFC US date for Ronaldo Rodriguez fight is 24 February 2024 and preserved UFCalendar event-local date is 25 February (one-day normalization).",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/denys-bondar",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2022-02-05",
+          "opponent": "Malcolm Gordon",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1765fc442ea03873",
+          "nativeBoutId": "61633",
+          "nativeFighterId": "1069"
+        },
+        {
+          "date": "2023-06-17",
+          "opponent": "Carlos Hernandez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8ea12c7360fa0f6b",
+          "nativeBoutId": "60174",
+          "nativeFighterId": "1069"
+        },
+        {
+          "date": "2024-02-25",
+          "opponent": "Ronaldo Rodriguez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5e8c710f9f27aff8",
+          "nativeBoutId": "39038",
+          "nativeFighterId": "1069"
+        }
+      ]
+    },
+    "damian-pinas": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Damian Pinas",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/fdd22e895a70e4a8",
+      "officialFighterUrl": "https://www.ufc.com/athlete/damian-pinas",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Complete dated primary UFC.com athlete biographies (narrative outcome and official event results override incorrect graphical Win badges). Reconcile every historical official UFC bout against exact pinned Greco UFCStats-derived fight URL/event and original saved numeric UFCalendar native bout IDs, both athlete and opposing fighter IDs, completed winner, date and full measured rounds. Independently source-exclude native DWCS bouts. UFC 2023 Road to UFC Asia final included; prior 2022 qualifier excluded. No paid UFCalendar calls or live-cache writes."
+      },
+      "verifiedNumericFighterIds": [
+        "458"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Full dated official UFC.com athlete chronology and pinned Greco UFCStats-derived fight results independently checked against preserved native IDs, exact opposing corners, winners, dates and measured rounds. All three UFC knockouts independently documented; 2025 Contender Series win is separate feeder history.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/damian-pinas",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88287",
+          "date": "2025-09-30",
+          "opponent": "Vitor Costa",
+          "result": "win",
+          "event": "Dana White's Contender Series 84",
+          "officialSourceUrl": "https://www.ufc.com/athlete/damian-pinas",
+          "excludedBecause": "Officially documented DWCS feeder bout, not completed UFC Octagon fight"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-02-28",
+          "opponent": "Wes Schultz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c6a85b67fdd2ef3d",
+          "nativeBoutId": "60685",
+          "nativeFighterId": "458"
+        },
+        {
+          "date": "2026-07-11",
+          "opponent": "Cesar Almeida",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b223b10ef19f912c",
+          "nativeBoutId": "66446",
+          "nativeFighterId": "458"
+        },
+        {
+          "date": "2026-10-03",
+          "opponent": "Andrey Pulyaev",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/31b85cd63fb291ed",
+          "nativeBoutId": "83727",
+          "nativeFighterId": "458"
+        }
+      ]
+    },
+    "connor-matthews": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Connor Matthews",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/36e78278a77006d4",
+      "officialFighterUrl": "https://www.ufc.com/athlete/connor-matthews",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Complete dated primary UFC.com athlete biographies (narrative outcome and official event results override incorrect graphical Win badges). Reconcile every historical official UFC bout against exact pinned Greco UFCStats-derived fight URL/event and original saved numeric UFCalendar native bout IDs, both athlete and opposing fighter IDs, completed winner, date and full measured rounds. Independently source-exclude native DWCS bouts. UFC 2023 Road to UFC Asia final included; prior 2022 qualifier excluded. No paid UFCalendar calls or live-cache writes."
+      },
+      "verifiedNumericFighterIds": [
+        "2848"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Full dated official UFC.com athlete chronology and pinned Greco UFCStats-derived fight results independently checked against preserved native IDs, exact opposing corners, winners, dates and measured rounds. Three official UFC losses; two separate historical DWCS bouts preserved and excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/connor-matthews",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88250",
+          "date": "2022-08-02",
+          "opponent": "Francis Marshall",
+          "result": "loss",
+          "event": "Dana White's Contender Series 48",
+          "officialSourceUrl": "https://www.ufc.com/athlete/connor-matthews",
+          "excludedBecause": "Officially documented DWCS feeder bout, not completed UFC Octagon fight"
+        },
+        {
+          "nativeBoutId": "84099",
+          "date": "2023-10-10",
+          "opponent": "Jair Farias",
+          "result": "win",
+          "event": "Dana White's Contender Series 66",
+          "officialSourceUrl": "https://www.ufc.com/athlete/connor-matthews",
+          "excludedBecause": "Officially documented DWCS feeder bout, not completed UFC Octagon fight"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2024-03-30",
+          "opponent": "Dennis Buzukja",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f59cefe16905d62c",
+          "nativeBoutId": "38988",
+          "nativeFighterId": "2848"
+        },
+        {
+          "date": "2025-02-15",
+          "opponent": "Jose Delgado",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/2a493f15e079a7ff",
+          "nativeBoutId": "60996",
+          "nativeFighterId": "2848"
+        },
+        {
+          "date": "2025-05-17",
+          "opponent": "Yadier del Valle",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d6e2bc6e6c0cc4fe",
+          "nativeBoutId": "60847",
+          "nativeFighterId": "2848"
+        }
+      ]
+    },
+    "changho-lee": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "ChangHo Lee",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/117a06469813e4ef",
+      "officialFighterUrl": "https://www.ufc.com/athlete/chang-ho-lee",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Complete dated primary UFC.com athlete biographies (narrative outcome and official event results override incorrect graphical Win badges). Reconcile every historical official UFC bout against exact pinned Greco UFCStats-derived fight URL/event and original saved numeric UFCalendar native bout IDs, both athlete and opposing fighter IDs, completed winner, date and full measured rounds. Independently source-exclude native DWCS bouts. UFC 2023 Road to UFC Asia final included; prior 2022 qualifier excluded. No paid UFCalendar calls or live-cache writes."
+      },
+      "verifiedNumericFighterIds": [
+        "417"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Full dated official UFC.com athlete chronology and pinned Greco UFCStats-derived fight results independently checked against preserved native IDs, exact opposing corners, winners, dates and measured rounds. The 22 June 2024 televised Road to UFC final is a completed official UFC bout; 2023 RTU quarterfinal and semifinal are separate non-UFC tournament qualifiers. Official UFC Saudi Arabia scorecards confirm a split, not unanimous, decision over Xiao Long.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/chang-ho-lee",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da",
+        "https://www.ufc.com/news/official-judges-scorecards-ufc-saudi-arabia"
+      ],
+      "bouts": [
+        {
+          "date": "2024-06-22",
+          "opponent": "Xiao Long",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c0d6feef69ccb330",
+          "nativeBoutId": "38816",
+          "nativeFighterId": "417"
+        },
+        {
+          "date": "2025-04-05",
+          "opponent": "Cortavious Romious",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fc3825dd1b67e39d",
+          "nativeBoutId": "60298",
+          "nativeFighterId": "417"
+        },
+        {
+          "date": "2025-11-01",
+          "opponent": "Timmy Cuamba",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/58f6248da3cdf3ce",
+          "nativeBoutId": "60425",
+          "nativeFighterId": "417"
+        }
+      ]
     }
   }
 }
