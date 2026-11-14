@@ -71,6 +71,9 @@ export function buildResearchProfile(w,cache){
     },
     measurements:weightEvents.map(m=>({bashoId:m.bashoId,heightCm:m.height,weightKg:m.weight,source:'Sumo API historical change'})),
     rankTimeline:rankEvents.map(m=>({bashoId:m.bashoId,rank:m.rank,rankValue:m.rankValue??null})),
+    rankHistoryGaps:cache.stages?.ranks?.unrankedDebut
+      ?[{...cache.stages.ranks.unrankedDebut,rank:null,independentlyCertified:false}]
+      :[],
     rankAvailability:{
       evidencedUnrankedDebutBasho:cache.stages.ranks.unrankedDebut?.bashoId??null,
       note:cache.stages.ranks.unrankedDebut?
