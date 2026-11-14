@@ -1,0 +1,39 @@
+name: UFC V4 R1 release-boundary validation (read-only)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docs/ufc-v4-staged-release-control.md'
+      - 'scripts/verify-ufc-v4-r1-boundary.mjs'
+      - 'tests/test-ufc-v4-r1-boundary.mjs'
+      - '.github/workflows/verify-ufc-v4-r1.yml'
+permissions:
+  contents: read
+concurrency:
+  group: befn-ufc-v4-r1-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  r1-boundary:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify R1 boundaries and exact approved cohort
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          node scripts/verify-ufc-v4-r1-boundary.mjs "$PR_BASE_SHA" "$PR_HEAD_SHA"
+      - name: Existing main Stage 3 certification logic regression
+        run: |
+          node --test tests/test-ufc-36-month-stage3-progress.mjs
+          node --test tests/test-ufc-v4-certification-queue.mjs
+      - name: New R1 safeguards regression
+        run: node --test tests/test-ufc-v4-r1-boundary.mjs
+      - name: Assert validation never authorizes live V4 publication
+        run: echo "R1 CI is offline and read-only. Owner release approval, Render SHA verification, and live QA remain separate gates."
