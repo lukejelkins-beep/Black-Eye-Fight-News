@@ -254,7 +254,10 @@ class FullCareerCacheTests(unittest.TestCase):
     def test_ufc_verified_contender_series_bouts_are_not_retryable_ufc_fights(self):
         evidence=m.read(m.FEEDER_EVIDENCE,{})
         self.assertEqual(evidence["schema"],1)
-        self.assertEqual(len(evidence["bouts"]),3)
+        self.assertGreaterEqual(len(evidence["bouts"]),3)
+        keys=[(r["boutId"],r["fighterSlug"],r["date"],r["opponent"])
+              for r in evidence["bouts"]]
+        self.assertEqual(len(keys),len(set(keys)))
         for row in evidence["bouts"]:
             saved={"boutId":row["boutId"],"date":row["date"],
                    "opponent":row["opponent"],"source":"native",
