@@ -219,7 +219,7 @@ export function buildV4StatFoundation(approval,research,progress,postfight,
    careerCoverageStatus:independentlyCertified?"independently_verified_full_career":
     certified?"provider_certified_full_career":
     !completeMeasuredHistory?"known_fight_coverage_gap":
-    proof.providerDiscrepancy||!proof.rosterLatestPresent?
+    proof.providerDiscrepancy||(censusBySlug.has(slug)&&!proof.rosterLatestPresent)?
      "provider_history_discrepancy":
     proof.legacyClaim?"legacy_completeness_flag_unsubstantiated":
     "historical_completeness_unverified",
