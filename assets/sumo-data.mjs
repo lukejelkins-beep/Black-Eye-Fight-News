@@ -145,6 +145,34 @@ export function matchResult(match, id) {
     isFusen: /fusen/i.test(String(match.kimarite || ''))
   };
 }
+/** Completed current-basho bouts for a tracked wrestler.
+ * For Makushita, banzuke record position is a bout sequence, not a calendar
+ * day; never map the seven bout slots to days 1..7.
+ */
+export function currentBashoMatchSample(entry, bashoId) {
+  if (!entry || !Array.isArray(entry.record)) return [];
+  const div = divisionOf(entry.rank);
+  const rows = [];
+  for (const [i, rec] of entry.record.entries()) {
+    if (!['win','loss'].includes(String(rec?.result || '').toLowerCase())) continue;
+    const oppId = Number(rec.opponentID);
+    const result = String(rec.result).toLowerCase();
+    rows.push({
+      bashoId: String(bashoId || ''),
+      day: div === 'Makushita' ? null : i + 1,
+      boutSequence: i + 1,
+      opponentId: Number.isSafeInteger(oppId) && oppId > 0 ? oppId : null,
+      opponent: rec.opponentShikonaEn || 'Opponent not supplied',
+      outcome: result,
+      kimarite: rec.kimarite || null,
+      division: div,
+      isFusen: /fusen/i.test(String(rec.kimarite || '')),
+      sourceScope: 'current-basho-banzuke'
+    });
+  }
+  return rows.reverse();
+}
+
 export function validMatchSamples(detail, rikishiId) {
   if (detail?.matches?.status !== 'available' || !Array.isArray(detail?.matches?.data?.records)) return [];
   return detail.matches.data.records
