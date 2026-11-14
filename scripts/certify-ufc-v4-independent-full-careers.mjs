@@ -34,7 +34,15 @@ export function certifyAttestedFullCareers(approval,research,progress,postfight,
    s.verifiedAt===approval.rosterAsOf,'exhaustive_independent_source_attestation');
   need(slug,sourceFighterUrl(s.fighterUrl)&&/^https:\/\/www\.ufc\.com\/athlete\//.test(s.ufcOfficialSourceUrl||''),'unverified_source_urls');
   const p=research?.profiles?.[slug];
-  need(slug,p&&norm(p.name)===norm(s.fighterName),'athlete_identity_not_confirmed');
+  // Exact UFC-verified athlete alias for this immutable approved slug only.
+  // UFC officially publishes Alatengheili under /athlete/heili-alateng,
+  // while the saved cohort may identify him as Heili Alateng.
+  const confirmedAthleteAlias=slug==='heili-alateng'&&
+    s.ufcOfficialSourceUrl==='https://www.ufc.com/athlete/heili-alateng'&&
+    ['heilialateng','alatengheili'].includes(norm(p?.name))&&
+    ['heilialateng','alatengheili'].includes(norm(s.fighterName));
+  need(slug,p&&(norm(p.name)===norm(s.fighterName)||confirmedAthleteAlias),
+   'athlete_identity_not_confirmed');
   const excludedByVerifiedFeeder=(row)=>row?.source==='native'&&
     (feederEvidence?.schema===1&&Array.isArray(feederEvidence.bouts))&&
     feederEvidence.bouts.some(item=>item.fighterSlug===slug&&
