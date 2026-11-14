@@ -66,7 +66,7 @@ test("V4 Last 5/10 are chronological, not last five or ten measured bouts",()=>{
  assert.equal(f.windows.last10.totals.sigLanded,3+4+5+6+7+8+9+10+11);
  assert.equal(f.windows.last5.rates.sigAccuracyPercent.coveredBouts,4);
  assert.equal(f.windows.last5.metricCoverage.sigLanded.bouts,4);
- assert.equal(f.careerCoverageStatus,"provider_completeness_unverified");
+ assert.equal(f.careerCoverageStatus,"historical_completeness_unverified");
  assert.equal(f.v4Scores,null);
  assert.equal(f.externalCredentialBonusApplied,false);
  assert.equal(result.summary.fightersWithFiveMeasuredLatestBouts,0);
@@ -113,4 +113,29 @@ test("identities and feeder events cannot leak into the UFC-only windows",()=>{
   {asOf:"2026-11-14"});
  assert.equal(result.fighters["fighter-alpha"].knownCareerBouts,11);
  assert.equal(result.fighters["fighter-alpha"].windows.last5.totals.sigLanded,7+8+9+11);
+});
+
+test("a legacy complete flag cannot certify a career",()=>{
+ const {progress,archive,approval,research}=fixtures();
+ const f=research.profiles["fighter-alpha"];
+ f.ufcTimeline={complete:true,providerTruncatedFlag:true,observedOn:"2026-11-14",settledCount:12};
+ const census={asOf:"2026-11-14",fighters:[{slug:"fighter-alpha",lastUfcFight:"2026-10-12"}]};
+ let measured=buildPostfightMetrics(progress,archive,{asOf:"2026-11-14"});
+ let out=buildV4StatFoundation(approval,research,progress,measured,
+  {asOf:"2026-11-14",census});
+ assert.equal(out.fighters["fighter-alpha"].ufcTimelineCertified,false);
+ assert.equal(out.summary.uncertifiedLegacyCompleteFlags,1);
+ f.ufcTimeline.providerTruncatedFlag=false;
+ out=buildV4StatFoundation(approval,research,progress,measured,
+  {asOf:"2026-11-14",census});
+ assert.equal(out.fighters["fighter-alpha"].ufcTimelineCertified,false);
+ assert.equal(out.fighters["fighter-alpha"].careerCoverageStatus,"known_fight_coverage_gap");
+ // Even a provider certificate cannot be displayed until all known bouts link.
+ archive.fights["fight-512"]={...archive.fights["fight-511"],date:"2026-10-12",
+  fighterB:"Opponent 12"};
+ measured=buildPostfightMetrics(progress,archive,{asOf:"2026-11-14"});
+ out=buildV4StatFoundation(approval,research,progress,measured,
+  {asOf:"2026-11-14",census});
+ assert.equal(out.fighters["fighter-alpha"].ufcTimelineCertified,true);
+ assert.equal(out.summary.fullyProviderCertifiedTimelines,1);
 });
