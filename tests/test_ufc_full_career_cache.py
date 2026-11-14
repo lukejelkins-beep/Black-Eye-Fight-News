@@ -453,6 +453,8 @@ class FullCareerCacheTests(unittest.TestCase):
         b=m.collect_approved_full_ufc_fight_search(
             c,state,research,census,dt.date(2026,11,14),approval,independent)
         self.assertEqual(b,{"calls":1,"fighters":1,"newFights":1,"newHistoryRows":1})
+        self.assertEqual(state["ufcApprovedFullFightSearchChecks"]["carlos-hernandez-7"]["status"],
+                         "checked","A final page without a next cursor is a valid completed search")
         self.assertEqual(c.paths,[
             "/fights/search?org=ufc&fighter=123&limit=25",
             "/fights/search?org=ufc&fighter=123&limit=25&cursor=next-25"])
