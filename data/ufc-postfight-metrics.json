@@ -4,7 +4,7 @@
   "source": "Saved UFCalendar-derived UFC research observations with completed bout IDs",
   "note": "Tracked UFC bouts ONLY, not career totals. Per-metric sample counts differ when upstream round fields are absent. Fights with missing rounds, conflicting sources or unverifiable clocks are excluded rather than estimated.",
   "processedCompletedBouts": 4531,
-  "metricBouts": 4483,
+  "metricBouts": 4485,
   "pending": [
     {
       "boutId": "59836",
@@ -50,16 +50,6 @@
       "boutId": "38700",
       "date": "2024-09-28",
       "reason": "round_coverage_incomplete"
-    },
-    {
-      "boutId": "83242",
-      "date": "2025-05-17",
-      "reason": "round_data_not_available"
-    },
-    {
-      "boutId": "83254",
-      "date": "2025-10-18",
-      "reason": "round_data_not_available"
     },
     {
       "boutId": "83288",
@@ -33418,6 +33408,103 @@
         }
       ]
     },
+    "bruno-gustavo-da-silva": {
+      "name": "Bruno Gustavo da Silva",
+      "slug": "bruno-gustavo-da-silva",
+      "scope": "ufc-only",
+      "trackedBouts": 1,
+      "lastFightDate": "2025-10-18",
+      "totals": {
+        "totalLanded": {
+          "value": null,
+          "coveredBouts": 0
+        },
+        "totalAttempted": {
+          "value": null,
+          "coveredBouts": 0
+        },
+        "sigLanded": {
+          "value": 46,
+          "coveredBouts": 1
+        },
+        "sigAttempted": {
+          "value": 74,
+          "coveredBouts": 1
+        },
+        "controlSec": {
+          "value": 289,
+          "coveredBouts": 1
+        },
+        "knockdowns": {
+          "value": 1,
+          "coveredBouts": 1
+        },
+        "takedowns": {
+          "value": 5,
+          "coveredBouts": 1
+        },
+        "takedownAttempts": {
+          "value": 9,
+          "coveredBouts": 1
+        },
+        "subAttempts": {
+          "value": 1,
+          "coveredBouts": 1
+        },
+        "reversals": {
+          "value": null,
+          "coveredBouts": 0
+        },
+        "totalStrikeDifferential": {
+          "value": null,
+          "coveredBouts": 0
+        },
+        "sigStrikeDifferential": {
+          "value": 15,
+          "coveredBouts": 1
+        },
+        "controlDifferentialSec": {
+          "value": 247,
+          "coveredBouts": 1
+        },
+        "sigAbsorbed": {
+          "value": 31,
+          "coveredBouts": 1
+        },
+        "totalAbsorbed": {
+          "value": null,
+          "coveredBouts": 0
+        }
+      },
+      "recentBouts": [
+        {
+          "boutId": "83254",
+          "date": "2025-10-18",
+          "event": "UFC Vancouver: De Ridder vs Hernandez",
+          "opponent": "Park Hyun-sung",
+          "cageSec": 735,
+          "outcome": "W",
+          "finishMethod": "submission",
+          "metrics": {
+            "totalLanded": null,
+            "totalAttempted": null,
+            "sigLanded": 46,
+            "sigAttempted": 74,
+            "controlSec": 289,
+            "knockdowns": 1,
+            "takedowns": 5,
+            "takedownAttempts": 9,
+            "subAttempts": 1,
+            "reversals": null,
+            "totalStrikeDifferential": null,
+            "sigStrikeDifferential": 15,
+            "controlDifferentialSec": 247,
+            "sigAbsorbed": 31,
+            "totalAbsorbed": null
+          }
+        }
+      ]
+    },
     "bruno-korea": {
       "name": "Bruno Korea",
       "slug": "bruno-korea",
@@ -37322,7 +37409,7 @@
       "name": "Carlos Hernandez",
       "slug": "carlos-hernandez",
       "scope": "ufc-only",
-      "trackedBouts": 7,
+      "trackedBouts": 8,
       "lastFightDate": "2025-05-17",
       "totals": {
         "totalLanded": {
@@ -37334,32 +37421,32 @@
           "coveredBouts": 7
         },
         "sigLanded": {
-          "value": 255,
-          "coveredBouts": 7
+          "value": 259,
+          "coveredBouts": 8
         },
         "sigAttempted": {
-          "value": 570,
-          "coveredBouts": 7
+          "value": 587,
+          "coveredBouts": 8
         },
         "controlSec": {
           "value": 729,
-          "coveredBouts": 7
+          "coveredBouts": 8
         },
         "knockdowns": {
           "value": 0,
-          "coveredBouts": 7
+          "coveredBouts": 8
         },
         "takedowns": {
           "value": 9,
-          "coveredBouts": 7
+          "coveredBouts": 8
         },
         "takedownAttempts": {
           "value": 34,
-          "coveredBouts": 7
+          "coveredBouts": 8
         },
         "subAttempts": {
           "value": 0,
-          "coveredBouts": 7
+          "coveredBouts": 8
         },
         "reversals": {
           "value": 0,
@@ -37370,16 +37457,16 @@
           "coveredBouts": 7
         },
         "sigStrikeDifferential": {
-          "value": 4,
-          "coveredBouts": 7
+          "value": -6,
+          "coveredBouts": 8
         },
         "controlDifferentialSec": {
-          "value": -173,
-          "coveredBouts": 7
+          "value": -206,
+          "coveredBouts": 8
         },
         "sigAbsorbed": {
-          "value": 251,
-          "coveredBouts": 7
+          "value": 265,
+          "coveredBouts": 8
         },
         "totalAbsorbed": {
           "value": 334,
@@ -37411,6 +37498,32 @@
             "controlDifferentialSec": -33,
             "sigAbsorbed": 14,
             "totalAbsorbed": 17
+          }
+        },
+        {
+          "boutId": "83242",
+          "date": "2025-05-17",
+          "event": "UFC Fight Night: Burns vs Morales",
+          "opponent": "Park Hyun-sung",
+          "cageSec": 146,
+          "outcome": "L",
+          "finishMethod": "submission",
+          "metrics": {
+            "totalLanded": null,
+            "totalAttempted": null,
+            "sigLanded": 4,
+            "sigAttempted": 17,
+            "controlSec": 0,
+            "knockdowns": 0,
+            "takedowns": 0,
+            "takedownAttempts": 0,
+            "subAttempts": 0,
+            "reversals": null,
+            "totalStrikeDifferential": null,
+            "sigStrikeDifferential": -10,
+            "controlDifferentialSec": -33,
+            "sigAbsorbed": 14,
+            "totalAbsorbed": null
           }
         },
         {
@@ -37489,32 +37602,6 @@
             "controlDifferentialSec": -163,
             "sigAbsorbed": 33,
             "totalAbsorbed": 44
-          }
-        },
-        {
-          "boutId": "60174",
-          "date": "2023-06-17",
-          "event": "UFC Fight Night: Vettori vs Cannonier",
-          "opponent": "Denys Bondar",
-          "cageSec": 899,
-          "outcome": "W",
-          "finishMethod": "decision_unanimous",
-          "metrics": {
-            "totalLanded": 108,
-            "totalAttempted": 239,
-            "sigLanded": 102,
-            "sigAttempted": 233,
-            "controlSec": 40,
-            "knockdowns": 0,
-            "takedowns": 2,
-            "takedownAttempts": 7,
-            "subAttempts": 0,
-            "reversals": 0,
-            "totalStrikeDifferential": 26,
-            "sigStrikeDifferential": 26,
-            "controlDifferentialSec": 11,
-            "sigAbsorbed": 76,
-            "totalAbsorbed": 82
           }
         }
       ]
@@ -193906,6 +193993,129 @@
             "controlDifferentialSec": 13,
             "sigAbsorbed": 8,
             "totalAbsorbed": 11
+          }
+        }
+      ]
+    },
+    "park-hyun-sung": {
+      "name": "Park Hyun-sung",
+      "slug": "park-hyun-sung",
+      "scope": "ufc-only",
+      "trackedBouts": 2,
+      "lastFightDate": "2025-10-18",
+      "totals": {
+        "totalLanded": {
+          "value": null,
+          "coveredBouts": 0
+        },
+        "totalAttempted": {
+          "value": null,
+          "coveredBouts": 0
+        },
+        "sigLanded": {
+          "value": 45,
+          "coveredBouts": 2
+        },
+        "sigAttempted": {
+          "value": 130,
+          "coveredBouts": 2
+        },
+        "controlSec": {
+          "value": 75,
+          "coveredBouts": 2
+        },
+        "knockdowns": {
+          "value": 0,
+          "coveredBouts": 2
+        },
+        "takedowns": {
+          "value": 2,
+          "coveredBouts": 2
+        },
+        "takedownAttempts": {
+          "value": 5,
+          "coveredBouts": 2
+        },
+        "subAttempts": {
+          "value": 1,
+          "coveredBouts": 2
+        },
+        "reversals": {
+          "value": null,
+          "coveredBouts": 0
+        },
+        "totalStrikeDifferential": {
+          "value": null,
+          "coveredBouts": 0
+        },
+        "sigStrikeDifferential": {
+          "value": -5,
+          "coveredBouts": 2
+        },
+        "controlDifferentialSec": {
+          "value": -214,
+          "coveredBouts": 2
+        },
+        "sigAbsorbed": {
+          "value": 50,
+          "coveredBouts": 2
+        },
+        "totalAbsorbed": {
+          "value": null,
+          "coveredBouts": 0
+        }
+      },
+      "recentBouts": [
+        {
+          "boutId": "83254",
+          "date": "2025-10-18",
+          "event": "UFC Vancouver: De Ridder vs Hernandez",
+          "opponent": "Bruno Gustavo da Silva",
+          "cageSec": 735,
+          "outcome": "L",
+          "finishMethod": "submission",
+          "metrics": {
+            "totalLanded": null,
+            "totalAttempted": null,
+            "sigLanded": 31,
+            "sigAttempted": 108,
+            "controlSec": 42,
+            "knockdowns": 0,
+            "takedowns": 1,
+            "takedownAttempts": 4,
+            "subAttempts": 0,
+            "reversals": null,
+            "totalStrikeDifferential": null,
+            "sigStrikeDifferential": -15,
+            "controlDifferentialSec": -247,
+            "sigAbsorbed": 46,
+            "totalAbsorbed": null
+          }
+        },
+        {
+          "boutId": "83242",
+          "date": "2025-05-17",
+          "event": "UFC Fight Night: Burns vs Morales",
+          "opponent": "Carlos Hernandez",
+          "cageSec": 146,
+          "outcome": "W",
+          "finishMethod": "submission",
+          "metrics": {
+            "totalLanded": null,
+            "totalAttempted": null,
+            "sigLanded": 14,
+            "sigAttempted": 22,
+            "controlSec": 33,
+            "knockdowns": 0,
+            "takedowns": 1,
+            "takedownAttempts": 1,
+            "subAttempts": 1,
+            "reversals": null,
+            "totalStrikeDifferential": null,
+            "sigStrikeDifferential": 10,
+            "controlDifferentialSec": 33,
+            "sigAbsorbed": 4,
+            "totalAbsorbed": null
           }
         }
       ]
