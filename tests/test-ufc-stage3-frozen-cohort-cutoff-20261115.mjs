@@ -31,7 +31,14 @@ test('Stage3 preserves strict certified careers across midnight without fabricat
   console.log('BEFN_CERT_DIRECT_EVIDENCE_DIAGNOSTIC='+JSON.stringify({slug,trial,all,proofBouts:entry?.bouts}));
  }
  assert.equal(afterMidnight.independentlyVerifiedFullCareerTimelines,atApproved.independentlyVerifiedFullCareerTimelines);
- assert.equal(afterMidnight.independentlyVerifiedFullCareerTimelines,Object.keys(independentlyVerified.fighters).length);
+ const canonical=Object.keys(independentlyVerified.fighters);
+ const explicitlyUncertified=next.careerVerificationDecisions.filter(x=>canonical.includes(x.slug)&&!x.independentlyVerifiedFullCareer);
+ // A source proof in the register is not itself a Stage3 certificate. Previously
+ // flagged provider/native discrepancies must stay blocked until their own gate passes.
+ assert.equal(afterMidnight.independentlyVerifiedFullCareerTimelines+explicitlyUncertified.length,canonical.length);
+ for(const slug of ['shannon-ross','sean-sharaf']){
+  assert.equal(next.careerVerificationDecisions.find(x=>x.slug===slug)?.independentlyVerifiedFullCareer,true);
+ }
  assert.equal(afterMidnight.independentlyVerifiedFullCareerTimelines+afterMidnight.approvedCareersWithoutIndependentFullCareerCertification,783);
  assert.ok(Object.values(independentlyVerified.fighters).some(p=>p.verifiedAt==='2026-11-14'),'original completed proof timestamps must not be rewritten');
 });
