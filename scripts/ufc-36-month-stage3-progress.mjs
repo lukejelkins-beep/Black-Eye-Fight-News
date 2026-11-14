@@ -149,8 +149,13 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
        reviewedNativeNames.has(normal(own.name))&&opponentMatched(other));
      if(corners.length!==1)return false;
      const [own,other]=corners[0];
+     // A draw may be persisted as status=completed with a native method=draw.
+     // Require an actual native draw method AND no winner; do not infer from a null winner alone.
+     const nativeDrawWithoutWinner=!b.result?.winnerId&&
+       String(b.result?.method||'').toLowerCase()==='draw';
      const outcome=b.status==='no_contest'?'no_contest':
-       b.status==='draw'?'draw':String(b.result?.winnerId)===String(own.id)?'win':
+       b.status==='draw'||nativeDrawWithoutWinner?'draw':
+       String(b.result?.winnerId)===String(own.id)?'win':
        String(b.result?.winnerId)===String(other.id)?'loss':null;
      return outcome===normalizedOutcome(r.result);
    });
