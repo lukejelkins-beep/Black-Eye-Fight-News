@@ -2124,6 +2124,120 @@
       ],
       "excludedFromFullUfcCareer": "All six professional MMA bouts before 2025 were fought outside the UFC and excluded. A scheduled November 21, 2026 opponent is future and has not happened as of this source cutoff.",
       "note": "Exactly two official UFC bantamweight appearances from Feb to Nov 2025. UFC official site independently enumerates both wins and the Octagon Debut 2025-02-08; ESPN corroborates the full professional 8-bout record with six earlier non-UFC bouts. Both native UFC records have exact winner ID 373, opponent, event dates, paired round-stat coverage and independent Greco UFCStats fight URLs."
+    },
+    "sean-king": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Sean King",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/41523699f37d400c",
+      "officialFighterUrl": "https://www.ufc.com/athlete/sean-king-iii",
+      "firstOfficialUfcFight": "2026-09-12",
+      "lastOfficialUfcFight": "2026-09-12",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "56135"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Compared athlete-specific complete official UFC biography and debut-to-snapshot result list with pinned Greco UFCStats-derived 2026-11-07 fighter and event index, independent UFC Noche Sept 12 2026 official scorecards, exact historical fight URL, two distinct numeric native corners and mirrored measured round data. Exactly one completed official UFC fight through 14 November 2026.",
+        "officialDebut": "2026-09-12",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "UFC source full name Sean King III; provider roster/native abbreviated Sean King, unique fighter numeric ID 56135 and direct opponent/date/event links confirm same athlete. Official 12 September 2026 0:36 slam KO debut win, no completed later UFC appearances by 14 November.",
+        "officialScorecardsUrl": "https://jp.ufc.com/news/noche-ufc-official-scorecards-silva-vs-delgado",
+        "officialResultUrl": "https://www.ufc.com/event/ufc-fight-night-september-12-2026",
+        "directUfcStatsSiteAccess": "unavailable: exact fighter and fight URL identifiers are independently indexed in pinned Greco UFCStats historical dataset; no claim to direct UFCStats page inspection"
+      },
+      "bouts": [
+        {
+          "date": "2026-09-12",
+          "opponent": "Jessie Rosas",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5a91827fe8c1dc26",
+          "nativeBoutId": "92965",
+          "nativeFightId": "92965",
+          "nativeFighterId": "56135",
+          "event": "Noche UFC: Silva vs Delgado",
+          "method": "ko_tko",
+          "round": 1,
+          "time": "0:36",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-september-12-2026"
+        }
+      ],
+      "note": "Verified one unique completed UFC bout debut to 14 Nov 2026 with independent full UFCStats-derived identity and native numeric ID, UFC official narrative and scorecards, measured round statistics and explicit preservation of official display discrepancy. Source coverage must pass strict CI gate."
+    },
+    "jessie-rosas": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Jessie Rosas",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/d1026588fa65693f",
+      "officialFighterUrl": "https://www.ufc.com/athlete/jessie-rosas",
+      "firstOfficialUfcFight": "2026-09-12",
+      "lastOfficialUfcFight": "2026-09-12",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "33379"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Compared athlete-specific complete official UFC biography and debut-to-snapshot result list with pinned Greco UFCStats-derived 2026-11-07 fighter and event index, independent UFC Noche Sept 12 2026 official scorecards, exact historical fight URL, two distinct numeric native corners and mirrored measured round data. Exactly one completed official UFC fight through 14 November 2026.",
+        "officialDebut": "2026-09-12",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "UFC.com official Last fight and athlete-record UI mislabels Rosas victory; UFC detailed biography unambiguously says Sean King III knocked Rosas out in 0:36. UFC event, official scorecards and independent UFCStats-derived source confirm loss; retain original contradiction and do not change outcome.",
+        "officialScorecardsUrl": "https://jp.ufc.com/news/noche-ufc-official-scorecards-silva-vs-delgado",
+        "officialResultUrl": "https://www.ufc.com/event/ufc-fight-night-september-12-2026",
+        "directUfcStatsSiteAccess": "unavailable: exact fighter and fight URL identifiers are independently indexed in pinned Greco UFCStats historical dataset; no claim to direct UFCStats page inspection"
+      },
+      "bouts": [
+        {
+          "date": "2026-09-12",
+          "opponent": "Sean King",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5a91827fe8c1dc26",
+          "nativeBoutId": "92965",
+          "nativeFightId": "92965",
+          "nativeFighterId": "33379",
+          "event": "Noche UFC: Silva vs Delgado",
+          "method": "ko_tko",
+          "round": 1,
+          "time": "0:36",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-september-12-2026"
+        }
+      ],
+      "note": "Verified one unique completed UFC bout debut to 14 Nov 2026 with independent full UFCStats-derived identity and native numeric ID, UFC official narrative and scorecards, measured round statistics and explicit preservation of official display discrepancy. Source coverage must pass strict CI gate."
     }
   }
 }
