@@ -1,0 +1,40 @@
+name: Validate UFC independent certification queue (offline)
+on:
+  pull_request:
+    paths:
+      - 'scripts/build-ufc-independent-certification-queue.mjs'
+      - 'tests/test-ufc-independent-certification-queue.mjs'
+      - 'scripts/reconcile-ufc-independent-evidence.mjs'
+      - 'tests/test-reconcile-ufc-independent-evidence.mjs'
+      - 'scripts/audit-ufc-greco-bulk-crosscheck.mjs'
+      - 'tests/test-ufc-greco-bulk-crosscheck.mjs'
+      - '.github/workflows/ufcalendar-rich-backfill.yml'
+      - '.github/workflows/validate-ufc-independent-certification.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: befn-independent-certification-test-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate strict independent certification triage
+        run: |
+          node --check scripts/build-ufc-independent-certification-queue.mjs
+          node --test tests/test-ufc-independent-certification-queue.mjs
+          node --test tests/test-reconcile-ufc-independent-evidence.mjs
+          node --test tests/test-ufc-greco-bulk-crosscheck.mjs
+          node --test tests/test-ufc-36-month-stage3-progress.mjs
+      - name: Exercise pinned public Greco bulk evidence source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BEFN_GRECO_FORCE=1 node scripts/audit-ufc-greco-bulk-crosscheck.mjs
+          node -e 'const r=require("./qa/ufc-greco-bulk-crosscheck.json"); if(r.summary.sourceInventoryExactMatches<24||r.summary.sourceInventoryUnmatched>0)process.exit(1); console.log("Greco source-confirmed pilot",JSON.stringify(r.summary))'
