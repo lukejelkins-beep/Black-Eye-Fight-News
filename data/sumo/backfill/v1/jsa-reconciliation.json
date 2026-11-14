@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "scope": "Published JSA field spotchecks only; not full-career certifications",
   "publishedAsOf": "2026-11-15",
-  "checkedProfiles": 6,
-  "fullyMatchingPublicFields": 4,
+  "checkedProfiles": 8,
+  "fullyMatchingPublicFields": 6,
   "discrepancies": 2,
   "explainedCutoffDifferences": 2,
   "unexplainedDifferences": 0,
@@ -407,6 +407,160 @@
         "aligned": false,
         "note": "Source-cutoff explanation not fully validated."
       },
+      "careerCertified": false,
+      "notes": "Basic fields only. Bout-by-bout history, historical measurements and photographs remain separate gates."
+    },
+    "9": {
+      "sumoApiId": 9,
+      "name": "Daieisho",
+      "officialAsOf": "2026-11 day 8",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3376/",
+      "status": "public-fields-agree",
+      "fieldCounts": {
+        "matched": 10,
+        "discrepant": 0,
+        "unavailable": 0
+      },
+      "fields": [
+        {
+          "field": "sumoApiId",
+          "official": 9,
+          "api": 9,
+          "state": "match"
+        },
+        {
+          "field": "officialNskId",
+          "official": 3376,
+          "api": 3376,
+          "state": "match"
+        },
+        {
+          "field": "name",
+          "official": "Daieisho",
+          "api": "Daieisho",
+          "state": "match"
+        },
+        {
+          "field": "currentRank",
+          "official": "Maegashira 4 West",
+          "api": "Maegashira 4 West",
+          "state": "match"
+        },
+        {
+          "field": "stable",
+          "official": "Oitekaze",
+          "api": "Oitekaze",
+          "state": "match"
+        },
+        {
+          "field": "heightCm",
+          "official": 182,
+          "api": 182,
+          "state": "match"
+        },
+        {
+          "field": "weightKg",
+          "official": 163,
+          "api": 163,
+          "state": "match"
+        },
+        {
+          "field": "careerWins",
+          "official": 648,
+          "api": 648,
+          "state": "match"
+        },
+        {
+          "field": "careerLosses",
+          "official": 535,
+          "api": 535,
+          "state": "match"
+        },
+        {
+          "field": "careerAbsences",
+          "official": 17,
+          "api": 17,
+          "state": "match"
+        }
+      ],
+      "cutoffAlignment": null,
+      "careerCertified": false,
+      "notes": "Basic fields only. Bout-by-bout history, historical measurements and photographs remain separate gates."
+    },
+    "11": {
+      "sumoApiId": 11,
+      "name": "Ichiyamamoto",
+      "officialAsOf": "2026-11 day 8",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3753/",
+      "status": "public-fields-agree",
+      "fieldCounts": {
+        "matched": 10,
+        "discrepant": 0,
+        "unavailable": 0
+      },
+      "fields": [
+        {
+          "field": "sumoApiId",
+          "official": 11,
+          "api": 11,
+          "state": "match"
+        },
+        {
+          "field": "officialNskId",
+          "official": 3753,
+          "api": 3753,
+          "state": "match"
+        },
+        {
+          "field": "name",
+          "official": "Ichiyamamoto",
+          "api": "Ichiyamamoto",
+          "state": "match"
+        },
+        {
+          "field": "currentRank",
+          "official": "Maegashira 12 East",
+          "api": "Maegashira 12 East",
+          "state": "match"
+        },
+        {
+          "field": "stable",
+          "official": "Hanaregoma",
+          "api": "Hanaregoma",
+          "state": "match"
+        },
+        {
+          "field": "heightCm",
+          "official": 190,
+          "api": 190,
+          "state": "match"
+        },
+        {
+          "field": "weightKg",
+          "official": 160,
+          "api": 160,
+          "state": "match"
+        },
+        {
+          "field": "careerWins",
+          "official": 358,
+          "api": 358,
+          "state": "match"
+        },
+        {
+          "field": "careerLosses",
+          "official": 316,
+          "api": 316,
+          "state": "match"
+        },
+        {
+          "field": "careerAbsences",
+          "official": 28,
+          "api": 28,
+          "state": "match"
+        }
+      ],
+      "cutoffAlignment": null,
       "careerCertified": false,
       "notes": "Basic fields only. Bout-by-bout history, historical measurements and photographs remain separate gates."
     },

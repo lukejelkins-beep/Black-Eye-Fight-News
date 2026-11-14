@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "rikishiId": 120,
+  "nskId": 4090,
+  "sumoDbId": 12699,
+  "shikonaEn": "Osanai",
+  "source": "https://www.sumo-api.com/api",
+  "researchOnly": true,
+  "certification": "not-started",
+  "stages": {
+    "profile": {
+      "complete": true,
+      "skip": 0,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T21:56:12.019Z",
+      "source": "https://www.sumo-api.com/api/rikishi/120"
+    },
+    "stats": {
+      "complete": true,
+      "skip": 0,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T21:56:12.324Z",
+      "source": "https://www.sumo-api.com/api/rikishi/120/stats"
+    },
+    "measurements": {
+      "complete": true,
+      "skip": 1,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T21:56:12.919Z",
+      "responseShape": "direct-array",
+      "source": "https://www.sumo-api.com/api/measurements?rikishiId=120&limit=200&skip=0&sortOrder=asc"
+    },
+    "ranks": {
+      "complete": false,
+      "skip": 0,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": null
+    },
+    "shikonas": {
+      "complete": false,
+      "skip": 0,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": null
+    },
+    "matches": {
+      "complete": false,
+      "skip": 0,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": null
+    }
+  },
+  "data": {
+    "profile": {
+      "id": 120,
+      "sumodbId": 12699,
+      "nskId": 4090,
+      "shikonaEn": "Osanai",
+      "shikonaJp": "長内(おさない)",
+      "currentRank": "Makushita 11 West",
+      "heya": "Takasago",
+      "birthDate": "1999-03-01T00:00:00Z",
+      "shusshin": "Aomori-ken, Kitatsugaru-gun, Tsuruta-machi",
+      "height": 178,
+      "weight": 113,
+      "debut": "202103"
+    },
+    "stats": {
+      "absenceByDivision": {
+        "Jonidan": 0,
+        "Jonokuchi": 0,
+        "Makushita": 3,
+        "Sandanme": 0
+      },
+      "basho": 34,
+      "bashoByDivision": {
+        "Jonidan": 1,
+        "Jonokuchi": 1,
+        "Makushita": 29,
+        "Sandanme": 3
+      },
+      "lossByDivision": {
+        "Jonidan": 0,
+        "Jonokuchi": 1,
+        "Makushita": 97,
+        "Sandanme": 5
+      },
+      "sansho": {},
+      "totalAbsences": 3,
+      "totalByDivision": {
+        "Jonidan": 7,
+        "Jonokuchi": 7,
+        "Makushita": 197,
+        "Sandanme": 21
+      },
+      "totalLosses": 103,
+      "totalMatches": 232,
+      "totalWins": 129,
+      "winsByDivision": {
+        "Jonidan": 7,
+        "Jonokuchi": 6,
+        "Makushita": 100,
+        "Sandanme": 16
+      },
+      "yusho": 2,
+      "yushoByDivision": {
+        "Jonidan": 1,
+        "Makushita": 1
+      }
+    },
+    "measurements": [
+      {
+        "id": "202103-120",
+        "bashoId": "202103",
+        "rikishiId": 120,
+        "height": 174,
+        "weight": 122
+      }
+    ],
+    "ranks": [],
+    "shikonas": [],
+    "matches": []
+  },
+  "errors": []
+}

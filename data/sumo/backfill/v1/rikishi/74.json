@@ -1,0 +1,429 @@
+{
+  "schemaVersion": 1,
+  "rikishiId": 74,
+  "nskId": 4055,
+  "sumoDbId": 12664,
+  "shikonaEn": "Atamifuji",
+  "source": "https://www.sumo-api.com/api",
+  "researchOnly": true,
+  "certification": "not-started",
+  "stages": {
+    "profile": {
+      "complete": true,
+      "skip": 0,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T21:55:13.517Z",
+      "source": "https://www.sumo-api.com/api/rikishi/74"
+    },
+    "stats": {
+      "complete": true,
+      "skip": 0,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T21:55:13.823Z",
+      "source": "https://www.sumo-api.com/api/rikishi/74/stats"
+    },
+    "measurements": {
+      "complete": true,
+      "skip": 2,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T21:55:14.416Z",
+      "responseShape": "direct-array",
+      "source": "https://www.sumo-api.com/api/measurements?rikishiId=74&limit=200&skip=0&sortOrder=asc"
+    },
+    "ranks": {
+      "complete": true,
+      "skip": 37,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T21:55:14.717Z",
+      "responseShape": "direct-array",
+      "source": "https://www.sumo-api.com/api/ranks?rikishiId=74&limit=200&skip=0&sortOrder=asc"
+    },
+    "shikonas": {
+      "complete": true,
+      "skip": 2,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T21:55:15.317Z",
+      "responseShape": "direct-array",
+      "source": "https://www.sumo-api.com/api/shikonas?rikishiId=74&limit=200&skip=0&sortOrder=asc"
+    },
+    "matches": {
+      "complete": false,
+      "skip": 0,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": null
+    }
+  },
+  "data": {
+    "profile": {
+      "id": 74,
+      "sumodbId": 12664,
+      "nskId": 4055,
+      "shikonaEn": "Atamifuji",
+      "shikonaJp": "熱海富士　朔太郎",
+      "currentRank": "Sekiwake 1 West",
+      "heya": "Isegahama",
+      "birthDate": "2002-09-03T00:00:00Z",
+      "shusshin": "Shizuoka-ken, Atami-shi",
+      "height": 185,
+      "weight": 198,
+      "debut": "202011"
+    },
+    "stats": {
+      "absenceByDivision": {
+        "Jonidan": 0,
+        "Jonokuchi": 0,
+        "Juryo": 4,
+        "Makushita": 0,
+        "Makuuchi": 0,
+        "Sandanme": 0
+      },
+      "basho": 36,
+      "bashoByDivision": {
+        "Jonidan": 1,
+        "Jonokuchi": 1,
+        "Juryo": 8,
+        "Makushita": 4,
+        "Makuuchi": 21,
+        "Sandanme": 1
+      },
+      "lossByDivision": {
+        "Jonidan": 0,
+        "Jonokuchi": 1,
+        "Juryo": 48,
+        "Makushita": 7,
+        "Makuuchi": 139,
+        "Sandanme": 1
+      },
+      "sansho": {
+        "Kanto-sho": 4
+      },
+      "totalAbsences": 4,
+      "totalByDivision": {
+        "Jonidan": 7,
+        "Jonokuchi": 7,
+        "Juryo": 116,
+        "Makushita": 28,
+        "Makuuchi": 307,
+        "Sandanme": 7
+      },
+      "totalLosses": 196,
+      "totalMatches": 472,
+      "totalWins": 276,
+      "winsByDivision": {
+        "Jonidan": 7,
+        "Jonokuchi": 6,
+        "Juryo": 68,
+        "Makushita": 21,
+        "Makuuchi": 168,
+        "Sandanme": 6
+      },
+      "yusho": 3,
+      "yushoByDivision": {
+        "Jonidan": 1,
+        "Jonokuchi": 1,
+        "Juryo": 1
+      }
+    },
+    "measurements": [
+      {
+        "id": "202011-74",
+        "bashoId": "202011",
+        "rikishiId": 74,
+        "height": 185,
+        "weight": 166
+      },
+      {
+        "id": "202103-74",
+        "bashoId": "202103",
+        "rikishiId": 74,
+        "height": 185,
+        "weight": 166
+      }
+    ],
+    "ranks": [
+      {
+        "id": "202011-74",
+        "bashoId": "202011",
+        "rikishiId": 74,
+        "rankValue": 2000,
+        "rank": "Mae-zumo"
+      },
+      {
+        "id": "202101-74",
+        "bashoId": "202101",
+        "rikishiId": 74,
+        "rankValue": 1025,
+        "rank": "Jonokuchi 25 East"
+      },
+      {
+        "id": "202103-74",
+        "bashoId": "202103",
+        "rikishiId": 74,
+        "rankValue": 948,
+        "rank": "Jonidan 48 West"
+      },
+      {
+        "id": "202105-74",
+        "bashoId": "202105",
+        "rikishiId": 74,
+        "rankValue": 848,
+        "rank": "Sandanme 48 East"
+      },
+      {
+        "id": "202107-74",
+        "bashoId": "202107",
+        "rikishiId": 74,
+        "rankValue": 755,
+        "rank": "Makushita 55 West"
+      },
+      {
+        "id": "202109-74",
+        "bashoId": "202109",
+        "rikishiId": 74,
+        "rankValue": 724,
+        "rank": "Makushita 24 West"
+      },
+      {
+        "id": "202111-74",
+        "bashoId": "202111",
+        "rikishiId": 74,
+        "rankValue": 714,
+        "rank": "Makushita 14 West"
+      },
+      {
+        "id": "202201-74",
+        "bashoId": "202201",
+        "rikishiId": 74,
+        "rankValue": 701,
+        "rank": "Makushita 1 West"
+      },
+      {
+        "id": "202203-74",
+        "bashoId": "202203",
+        "rikishiId": 74,
+        "rankValue": 612,
+        "rank": "Juryo 12 West"
+      },
+      {
+        "id": "202205-74",
+        "bashoId": "202205",
+        "rikishiId": 74,
+        "rankValue": 612,
+        "rank": "Juryo 12 West"
+      },
+      {
+        "id": "202207-74",
+        "bashoId": "202207",
+        "rikishiId": 74,
+        "rankValue": 606,
+        "rank": "Juryo 6 East"
+      },
+      {
+        "id": "202209-74",
+        "bashoId": "202209",
+        "rikishiId": 74,
+        "rankValue": 603,
+        "rank": "Juryo 3 East"
+      },
+      {
+        "id": "202211-74",
+        "bashoId": "202211",
+        "rikishiId": 74,
+        "rankValue": 515,
+        "rank": "Maegashira 15 West"
+      },
+      {
+        "id": "202301-74",
+        "bashoId": "202301",
+        "rikishiId": 74,
+        "rankValue": 603,
+        "rank": "Juryo 3 East"
+      },
+      {
+        "id": "202303-74",
+        "bashoId": "202303",
+        "rikishiId": 74,
+        "rankValue": 608,
+        "rank": "Juryo 8 West"
+      },
+      {
+        "id": "202305-74",
+        "bashoId": "202305",
+        "rikishiId": 74,
+        "rankValue": 608,
+        "rank": "Juryo 8 East"
+      },
+      {
+        "id": "202307-74",
+        "bashoId": "202307",
+        "rikishiId": 74,
+        "rankValue": 601,
+        "rank": "Juryo 1 West"
+      },
+      {
+        "id": "202309-74",
+        "bashoId": "202309",
+        "rikishiId": 74,
+        "rankValue": 515,
+        "rank": "Maegashira 15 East"
+      },
+      {
+        "id": "202311-74",
+        "bashoId": "202311",
+        "rikishiId": 74,
+        "rankValue": 508,
+        "rank": "Maegashira 8 West"
+      },
+      {
+        "id": "202401-74",
+        "bashoId": "202401",
+        "rikishiId": 74,
+        "rankValue": 501,
+        "rank": "Maegashira 1 West"
+      },
+      {
+        "id": "202403-74",
+        "bashoId": "202403",
+        "rikishiId": 74,
+        "rankValue": 502,
+        "rank": "Maegashira 2 East"
+      },
+      {
+        "id": "202405-74",
+        "bashoId": "202405",
+        "rikishiId": 74,
+        "rankValue": 501,
+        "rank": "Maegashira 1 East"
+      },
+      {
+        "id": "202407-74",
+        "bashoId": "202407",
+        "rikishiId": 74,
+        "rankValue": 501,
+        "rank": "Maegashira 1 West"
+      },
+      {
+        "id": "202409-74",
+        "bashoId": "202409",
+        "rikishiId": 74,
+        "rankValue": 502,
+        "rank": "Maegashira 2 East"
+      },
+      {
+        "id": "202411-74",
+        "bashoId": "202411",
+        "rikishiId": 74,
+        "rankValue": 503,
+        "rank": "Maegashira 3 West"
+      },
+      {
+        "id": "202501-74",
+        "bashoId": "202501",
+        "rikishiId": 74,
+        "rankValue": 502,
+        "rank": "Maegashira 2 West"
+      },
+      {
+        "id": "202503-74",
+        "bashoId": "202503",
+        "rikishiId": 74,
+        "rankValue": 508,
+        "rank": "Maegashira 8 East"
+      },
+      {
+        "id": "202505-74",
+        "bashoId": "202505",
+        "rikishiId": 74,
+        "rankValue": 512,
+        "rank": "Maegashira 12 East"
+      },
+      {
+        "id": "202507-74",
+        "bashoId": "202507",
+        "rikishiId": 74,
+        "rankValue": 510,
+        "rank": "Maegashira 10 East"
+      },
+      {
+        "id": "202509-74",
+        "bashoId": "202509",
+        "rikishiId": 74,
+        "rankValue": 503,
+        "rank": "Maegashira 3 East"
+      },
+      {
+        "id": "202511-74",
+        "bashoId": "202511",
+        "rikishiId": 74,
+        "rankValue": 506,
+        "rank": "Maegashira 6 East"
+      },
+      {
+        "id": "202601-74",
+        "bashoId": "202601",
+        "rikishiId": 74,
+        "rankValue": 504,
+        "rank": "Maegashira 4 West"
+      },
+      {
+        "id": "202603-74",
+        "bashoId": "202603",
+        "rikishiId": 74,
+        "rankValue": 401,
+        "rank": "Komusubi 1 West"
+      },
+      {
+        "id": "202605-74",
+        "bashoId": "202605",
+        "rikishiId": 74,
+        "rankValue": 301,
+        "rank": "Sekiwake 1 East"
+      },
+      {
+        "id": "202607-74",
+        "bashoId": "202607",
+        "rikishiId": 74,
+        "rankValue": 301,
+        "rank": "Sekiwake 1 East"
+      },
+      {
+        "id": "202609-74",
+        "bashoId": "202609",
+        "rikishiId": 74,
+        "rankValue": 301,
+        "rank": "Sekiwake 1 East"
+      },
+      {
+        "id": "202611-74",
+        "bashoId": "202611",
+        "rikishiId": 74,
+        "rankValue": 301,
+        "rank": "Sekiwake 1 West"
+      }
+    ],
+    "shikonas": [
+      {
+        "id": "202011-74",
+        "bashoId": "202011",
+        "rikishiId": 74,
+        "shikonaEn": "Atamifuji Sakutaro",
+        "shikonaJp": ""
+      },
+      {
+        "id": "202503-74",
+        "bashoId": "202503",
+        "rikishiId": 74,
+        "shikonaEn": "Atamifuji",
+        "shikonaJp": "熱海富士　朔太郎"
+      }
+    ],
+    "matches": []
+  },
+  "errors": []
+}
