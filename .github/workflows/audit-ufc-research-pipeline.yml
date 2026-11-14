@@ -23,6 +23,8 @@ on:
       - 'tests/test-ufc-unified-ronaldo-rodriguez-full-career.mjs'
       - 'data/ufc-unified-wave24-yannis-yoo-source-review-20261114.json'
       - 'tests/test-ufc-unified-wave24-yannis-yoo-evidence.mjs'
+      - 'tests/test-ufc-unified-wave25-six-careers-20261114.mjs'
+      - 'data/ufc-unified-wave25-six-careers-source-20261114.json'
       - 'tests/test-ufc-v4-certification-queue.mjs'
       - 'tests/test-ufc-certification-consolidation-preflight.mjs'
       - 'tests/test-ufc-v4-stage3-import.mjs'
@@ -161,6 +163,7 @@ jobs:
           node --test tests/test-ufc-unified-blake-bilder-evidence.mjs
           node --test tests/test-ufc-unified-wave19-donte-kody-evidence.mjs
           node --test tests/test-ufc-unified-wave24-yannis-yoo-evidence.mjs
+          node --test tests/test-ufc-unified-wave25-six-careers-20261114.mjs
           node --test tests/test-ufc-unified-wave10-evidence.mjs
           node --test tests/test-ufc-unified-wave11-evidence.mjs
           node --test tests/test-ufc-unified-marnic-evidence.mjs

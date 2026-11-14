@@ -23653,6 +23653,384 @@
           "nativeFighterId": "203"
         }
       ]
+    },
+    "alden-coria": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Alden Coria",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/5e9ca8dd7d783a75",
+      "officialFighterUrl": "https://www.ufc.com/athlete/alden-coria",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned historical Greco UFCStats-derived sources, not live UFCStats scrape",
+        "method": "UFC.com complete dated athlete biography crossmatched to immutable pinned Greco UFCStats fighter/fight/event IDs and original UFCalendar native fighter, bout, opposing corner, result and measured-round evidence; duplicate source event aliases folded by exact fight URL."
+      },
+      "verifiedNumericFighterIds": [
+        "222"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Complete dated official UFC.com biography matches all four saved completed UFC bouts through 2026-11-14. Four eligible UFC bouts, 2026 loss to Imanol Rodriguez despite wrong Win badge; duplicated Noche UFC historical event-title alias collapsed by exact fight ID.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/alden-coria",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-09-13",
+          "opponent": "Alessandro Costa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a1e193425e716b42",
+          "nativeBoutId": "38232",
+          "nativeFighterId": "222"
+        },
+        {
+          "date": "2026-02-21",
+          "opponent": "Luis Gurule",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ac39c1f00ae31e58",
+          "nativeBoutId": "60667",
+          "nativeFighterId": "222"
+        },
+        {
+          "date": "2026-07-18",
+          "opponent": "Stewart Nicoll",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/410e6b9e01660b35",
+          "nativeBoutId": "82866",
+          "nativeFighterId": "222"
+        },
+        {
+          "date": "2026-10-03",
+          "opponent": "Imanol Rodríguez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/54bbe6d1eb248128",
+          "nativeBoutId": "83726",
+          "nativeFighterId": "222"
+        }
+      ]
+    },
+    "axel-sola": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Axel Sola",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/1d2d98ddd05b38fb",
+      "officialFighterUrl": "https://www.ufc.com/athlete/axel-sola",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned historical Greco UFCStats-derived sources, not live UFCStats scrape",
+        "method": "UFC.com complete dated athlete biography crossmatched to immutable pinned Greco UFCStats fighter/fight/event IDs and original UFCalendar native fighter, bout, opposing corner, result and measured-round evidence; duplicate source event aliases folded by exact fight URL."
+      },
+      "verifiedNumericFighterIds": [
+        "259"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Complete dated official UFC.com biography matches all four saved completed UFC bouts through 2026-11-14. Four official UFC bouts, including 2026 unanimous-decision loss to Mason Jones.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/axel-sola",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-09-06",
+          "opponent": "Rhys McKee",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a47123ae6e048f11",
+          "nativeBoutId": "60475",
+          "nativeFighterId": "259"
+        },
+        {
+          "date": "2026-03-21",
+          "opponent": "Mason Jones",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3ee578ddd071ad4c",
+          "nativeBoutId": "60565",
+          "nativeFighterId": "259"
+        },
+        {
+          "date": "2026-07-25",
+          "opponent": "Ismael Bonfim",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a122306d0ce5fbfb",
+          "nativeBoutId": "82606",
+          "nativeFighterId": "259"
+        },
+        {
+          "date": "2026-09-05",
+          "opponent": "Farès Ziam",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/55f698e5c4ed2c47",
+          "nativeBoutId": "83645",
+          "nativeFighterId": "259"
+        }
+      ]
+    },
+    "azamat-bekoev": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Azamat Bekoev",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/3bc3f60b21cddc6a",
+      "officialFighterUrl": "https://www.ufc.com/athlete/azamat-bekoev",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned historical Greco UFCStats-derived sources, not live UFCStats scrape",
+        "method": "UFC.com complete dated athlete biography crossmatched to immutable pinned Greco UFCStats fighter/fight/event IDs and original UFCalendar native fighter, bout, opposing corner, result and measured-round evidence; duplicate source event aliases folded by exact fight URL."
+      },
+      "verifiedNumericFighterIds": [
+        "138"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Complete dated official UFC.com biography matches all four saved completed UFC bouts through 2026-11-14. Losses to Tresean Gore and Yousri Belgaroui supported by dated UFC biography despite graphical Win badges.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/azamat-bekoev",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-01-18",
+          "opponent": "Zach Reese",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/938081fae11dcbbf",
+          "nativeBoutId": "60947",
+          "nativeFighterId": "138"
+        },
+        {
+          "date": "2025-05-03",
+          "opponent": "Ryan Loder",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/77ed474dfc5359ea",
+          "nativeBoutId": "60798",
+          "nativeFighterId": "138"
+        },
+        {
+          "date": "2025-10-18",
+          "opponent": "Yousri Belgaroui",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/87ac0e5face106b4",
+          "nativeBoutId": "38153",
+          "nativeFighterId": "138"
+        },
+        {
+          "date": "2026-04-04",
+          "opponent": "Tresean Gore",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e284a194fb4648a9",
+          "nativeBoutId": "60708",
+          "nativeFighterId": "138"
+        }
+      ]
+    },
+    "bekzat-almakhan": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Bekzat Almakhan",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/a4dc0f2b95df4cc1",
+      "officialFighterUrl": "https://www.ufc.com/athlete/bekzat-almakhan",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned historical Greco UFCStats-derived sources, not live UFCStats scrape",
+        "method": "UFC.com complete dated athlete biography crossmatched to immutable pinned Greco UFCStats fighter/fight/event IDs and original UFCalendar native fighter, bout, opposing corner, result and measured-round evidence; duplicate source event aliases folded by exact fight URL."
+      },
+      "verifiedNumericFighterIds": [
+        "385"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Complete dated official UFC.com biography matches all four saved completed UFC bouts through 2026-11-14. Official UFC biography confirms three losses and one Brad Katona stoppage win, graphical result labels unreliable.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/bekzat-almakhan",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2024-03-02",
+          "opponent": "Umar Nurmagomedov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/dcf5014e56649c2f",
+          "nativeBoutId": "61264",
+          "nativeFighterId": "385"
+        },
+        {
+          "date": "2025-05-10",
+          "opponent": "Brad Katona",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c20bd12ae7f04eff",
+          "nativeBoutId": "60899",
+          "nativeFighterId": "385"
+        },
+        {
+          "date": "2025-11-22",
+          "opponent": "Aleksandre Topuria",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6f0231915cc28507",
+          "nativeBoutId": "60414",
+          "nativeFighterId": "385"
+        },
+        {
+          "date": "2026-06-27",
+          "opponent": "Jean Matsumoto",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ae0a91c8f92f4758",
+          "nativeBoutId": "66371",
+          "nativeFighterId": "385"
+        }
+      ]
+    },
+    "carlos-leal": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Carlos Leal",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/28d421729451c8ca",
+      "officialFighterUrl": "https://www.ufc.com/athlete/carlos-leal",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned historical Greco UFCStats-derived sources, not live UFCStats scrape",
+        "method": "UFC.com complete dated athlete biography crossmatched to immutable pinned Greco UFCStats fighter/fight/event IDs and original UFCalendar native fighter, bout, opposing corner, result and measured-round evidence; duplicate source event aliases folded by exact fight URL."
+      },
+      "verifiedNumericFighterIds": [
+        "484"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Complete dated official UFC.com biography matches all four saved completed UFC bouts through 2026-11-14. UFC dated full career confirms Chidi Njokuani and Alex Morono wins, Muslim Salikhov and Rinat Fakhretdinov losses; outside-UFC fights excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/carlos-leal",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2024-10-26",
+          "opponent": "Rinat Fakhretdinov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6114076c689e8457",
+          "nativeBoutId": "60190",
+          "nativeFighterId": "484"
+        },
+        {
+          "date": "2025-03-08",
+          "opponent": "Alex Morono",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/cab4937435d081d0",
+          "nativeBoutId": "60328",
+          "nativeFighterId": "484"
+        },
+        {
+          "date": "2025-07-26",
+          "opponent": "Muslim Salikhov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7c075e3383198e14",
+          "nativeBoutId": "60823",
+          "nativeFighterId": "484"
+        },
+        {
+          "date": "2026-02-21",
+          "opponent": "Chidi Njokuani",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/202d3277e569ad03",
+          "nativeBoutId": "60665",
+          "nativeFighterId": "484"
+        }
+      ]
+    },
+    "daniil-donchenko": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Daniil Donchenko",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/70dd69b6a703257e",
+      "officialFighterUrl": "https://www.ufc.com/athlete/daniil-donchenko",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned historical Greco UFCStats-derived sources, not live UFCStats scrape",
+        "method": "UFC.com complete dated athlete biography crossmatched to immutable pinned Greco UFCStats fighter/fight/event IDs and original UFCalendar native fighter, bout, opposing corner, result and measured-round evidence; duplicate source event aliases folded by exact fight URL."
+      },
+      "verifiedNumericFighterIds": [
+        "132"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Complete dated official UFC.com biography matches all four saved completed UFC bouts through 2026-11-14. Televised 2025 TUF33 UFC final against Rodrigo Sezinando included exactly once despite duplicate source event alias; TUF house exhibitions excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/daniil-donchenko",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-09-13",
+          "opponent": "Rodrigo Sezinando",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3dd2fde7bff79c51",
+          "nativeBoutId": "38234",
+          "nativeFighterId": "132"
+        },
+        {
+          "date": "2026-02-07",
+          "opponent": "Alex Morono",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f964d2dda87f25f0",
+          "nativeBoutId": "60731",
+          "nativeFighterId": "132"
+        },
+        {
+          "date": "2026-06-27",
+          "opponent": "Theodor Berggren",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0e60ab32f3d03929",
+          "nativeBoutId": "82870",
+          "nativeFighterId": "132"
+        },
+        {
+          "date": "2026-09-05",
+          "opponent": "Punahele Soriano",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8300a095a4908ab1",
+          "nativeBoutId": "84181",
+          "nativeFighterId": "132"
+        }
+      ]
     }
   }
 }
