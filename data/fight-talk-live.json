@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-14T14:58:44.536Z",
-  "checkedAt": "2026-11-14T13:23:35.228Z",
+  "attemptedAt": "2026-11-14T15:37:52.926Z",
+  "checkedAt": "2026-11-14T15:37:52.926Z",
   "updatedAt": "2026-11-14T13:02:31.947534Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 0,
+  "sourcesChecked": 3,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
-      "state": "not-scheduled",
-      "checked": 0,
+      "state": "connected",
+      "checked": 3,
       "failed": 0,
-      "configured": 0,
-      "message": "0 of 0 scheduled sources checked."
+      "configured": 3,
+      "message": "3 of 3 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 9,
+      "configured": 17,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 15,
+      "configured": 54,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -54,18 +54,19 @@
   "failures": [],
   "rollingScan": {
     "directoryEntries": 447,
-    "scheduledEntries": 27,
-    "batchIndex": 5,
+    "scheduledEntries": 84,
+    "batchIndex": 1,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "X": 9,
-      "Threads": 3,
-      "Instagram": 15
+      "Instagram": 54,
+      "X": 17,
+      "Bluesky": 3,
+      "Threads": 10
     },
-    "directlyChecked": 0,
+    "directlyChecked": 3,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
