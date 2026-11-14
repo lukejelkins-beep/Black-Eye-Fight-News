@@ -127,6 +127,7 @@ export function buildV4StatFoundation(approval,research,progress,postfight,{asOf
  const day=asOf||approval.rosterAsOf;
  if(!validDay(day))throw Error("V4 requires a valid as-of date");
  const feederDates=feederDatesFrom(progress);
+ const missingByBout=new Map();
  const fighters={},stats={approved:approval.approvedFighters.length,knownHistory:0,
   knownFive:0,knownTen:0,measuredFiveOfFive:0,measuredTenOfTen:0,
   providerCertified:0,historyRows:0,linkedMeasuredRows:0,uniqueMeasuredIds:new Set(),
@@ -145,6 +146,33 @@ export function buildV4StatFoundation(approval,research,progress,postfight,{asOf
    if(!id)continue;
    if(measured.has(id))throw Error("Duplicate measured UFC fight "+id+" for "+slug);
    measured.set(id,bout);
+  }
+  // Prioritise documented missing native IDs, never infer that a new
+  // provider call is appropriate before checking saved retry status.
+  for(let position=0;position<history.length;position++){
+   const row=history[position],id=row.boutId;
+   if(!id||measured.has(id))continue;
+   const checked=progress?.ufcCareerBoutChecks?.[id]||{};
+   const current=missingByBout.get(id);
+   const priority=position<5?1:position<10?2:3;
+   const indexed=progress?.bouts?.[id]?.org==="ufc";
+   const retryAfter=validDay(checked.retryAfter)?checked.retryAfter:null;
+   const action=checked.status==="requires_manual_review"?"manual_review":
+    retryAfter&&retryAfter>day?"retry_cooldown":
+    indexed?"inspect_saved_round_or_clock_data":"review_uncached_native_id";
+   const reference={fighterSlug:slug,date:row.date,opponent:row.opponent,
+    careerPosition:position+1};
+   if(!current)missingByBout.set(id,{boutId:id,priority,
+    band:priority===1?"last5":priority===2?"last10":"career",
+    indexedInSavedProviderCache:indexed,action,
+    retryAfter,references:[reference]});
+   else{
+    current.references.push(reference);
+    if(priority<current.priority){
+     current.priority=priority;
+     current.band=priority===1?"last5":priority===2?"last10":"career";
+    }
+   }
   }
   const windows={last5:aggregate(history.slice(0,5),measured),
    last10:aggregate(history.slice(0,10),measured),
@@ -169,6 +197,20 @@ export function buildV4StatFoundation(approval,research,progress,postfight,{asOf
    knownCareerBouts:history.length,windows,
    v4Scores:null,externalCredentialBonusApplied:false};
  }
+ const missingNativeBoutQueue=[...missingByBout.values()]
+  .sort((a,b)=>a.priority-b.priority||
+   b.references[0].date.localeCompare(a.references[0].date)||
+   a.boutId.localeCompare(b.boutId));
+ const gapBreakdown={
+  distinctMissingNativeIds:missingNativeBoutQueue.length,
+  latestFive:missingNativeBoutQueue.filter(x=>x.band==="last5").length,
+  fightsSixToTen:missingNativeBoutQueue.filter(x=>x.band==="last10").length,
+  beyondTen:missingNativeBoutQueue.filter(x=>x.band==="career").length,
+  manualReview:missingNativeBoutQueue.filter(x=>x.action==="manual_review").length,
+  retryCooldown:missingNativeBoutQueue.filter(x=>x.action==="retry_cooldown").length,
+  inspectSavedData:missingNativeBoutQueue.filter(x=>x.action==="inspect_saved_round_or_clock_data").length,
+  notIndexed:missingNativeBoutQueue.filter(x=>x.action==="review_uncached_native_id").length
+ };
  const summary={approvedFighters:stats.approved,fightersWithKnownHistory:stats.knownHistory,
   fightersWithFiveKnownBouts:stats.knownFive,
   fightersWithTenKnownBouts:stats.knownTen,
@@ -179,11 +221,12 @@ export function buildV4StatFoundation(approval,research,progress,postfight,{asOf
   linkedMeasuredFighterBoutRows:stats.linkedMeasuredRows,
   distinctLinkedMeasuredUfcFights:stats.uniqueMeasuredIds.size,
   unlinkedHistoryRows:stats.unlinkedHistoryRows,
-  nativeHistoryRowsWithoutFullRoundMetrics:stats.missingNativeMetricRows};
+  nativeHistoryRowsWithoutFullRoundMetrics:stats.missingNativeMetricRows,
+  missingBoutsByPriority:gapBreakdown};
  return {schema:1,scope:"ufc-only-v4-stat-foundation",asOf:day,
   status:"offline_qa_only_not_production",population:stats.approved,
   note:"Last 5/10 reflect known chronological UFC bouts, not merely the latest measured ones. Career means all saved known UFC bouts, NOT provider-certified completeness. Per-metric absent evidence is null, never zero. No external achievement bonuses or unvalidated V4 ratings.",
-  summary,fighters};
+  summary,missingNativeBoutQueue,fighters};
 }
 function read(name){return JSON.parse(fs.readFileSync(path.join(root,name),"utf8"))}
 export function main(){
