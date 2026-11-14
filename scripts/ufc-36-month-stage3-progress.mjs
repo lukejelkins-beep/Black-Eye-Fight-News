@@ -220,6 +220,10 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     slug,...(completeFightSearchLedger[slug]||{})
   }));
   const searchStatus=status=>searchedApproved.filter(row=>row.status===status).length;
+  const sourceReasonTotal=(column,reason)=>searchedApproved.reduce((n,row)=>{
+    const val=row?.[column]?.[reason];
+    return n+(Number.isInteger(val)&&val>=0?val:0);
+  },0);
   const searchCallsRecorded=searchedApproved.filter(row=>typeof row.status==='string').length;
   const fightSearchUnattempted=approved.length-searchCallsRecorded;
   const fightSearchSourceDeficits=arr(independentEvidence?.schema===1&&
@@ -725,6 +729,15 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     fullFightIndexSearchFightersPartial:searchStatus('partial'),
     fullFightIndexSearchFightersRetry:searchStatus('retry'),
     fullFightIndexSearchFightersManualReview:searchStatus('manual_review'),
+    fullFightIndexSearchDocumentedFeederRowsSkipped:
+      sourceReasonTotal('excludedByReason','documented_ufc_feeder_event'),
+    fullFightIndexSearchNonWinnerRowsSkipped:
+      sourceReasonTotal('excludedByReason','non_winner_or_unfinished_bout'),
+    fullFightIndexSearchNumericIdentityConflicts:
+      sourceReasonTotal('rejectedByReason','numeric_fighter_identity_disagreement'),
+    fullFightIndexSearchOlderManualCasesWithoutReason:
+      searchedApproved.filter(row=>row.status==='manual_review'&&
+        (!row.rejectedByReason||Object.keys(row.rejectedByReason).length===0)).length,
     fullFightIndexSearchFightersBlockedBySourceMinimum:searchStatus('source_depth_gap'),
     fullFightIndexSearchFightersNotAttempted:fightSearchUnattempted,
     fullFightIndexSearchFightersWithAnyLedger:searchCallsRecorded,
@@ -768,6 +781,8 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
       row.status!=='checked').map(row=>({
         slug:row.slug,status:row.status,scannedRows:row.scannedRows||0,
         invalidRows:row.invalidRows||0,checkedAt:row.checkedAt||null,
+        rejectedByReason:row.rejectedByReason||{},
+        excludedByReason:row.excludedByReason||{},
         retryAfter:row.retryAfter||null,
         sourceConfirmedMinimumUfcBouts:row.officialMinimumUfcBouts||null,
         missingSourceConfirmedUfcBouts:row.missingOfficialMinimumUfcBouts||0
@@ -872,6 +887,10 @@ export function markdownReport(report){
    fullFightIndexSearchFightersPartial:'Approved UFC fighter winner-fight search awaiting further cursor pages',
    fullFightIndexSearchFightersRetry:'Approved UFC fighter winner-fight searches awaiting retry after provider error',
    fullFightIndexSearchFightersManualReview:'Approved UFC fighter winner-fight search results needing manual identity review',
+   fullFightIndexSearchDocumentedFeederRowsSkipped:'Provider numeric-history rows excluded as independently recognized DWCS or feeder events (not identity errors)',
+   fullFightIndexSearchNonWinnerRowsSkipped:'Provider numeric-history rows excluded as draws, no contests or unfinished bouts (checked separately)',
+   fullFightIndexSearchNumericIdentityConflicts:'Provider numeric-history rows rejected for wrong numeric fighter identity',
+   fullFightIndexSearchOlderManualCasesWithoutReason:'Earlier manual-review entries without retained reason details; still need separate review',
    fullFightIndexSearchFightersBlockedBySourceMinimum:'Approved winner-fight searches exhausted despite source-confirmed missing UFC career depth',
    fullFightIndexSearchFightersNotAttempted:'Approved UFC fighters not yet searched through the full numeric fight-index',
    fullFightIndexSearchFightersWithAnyLedger:'Approved UFC fighters with persisted full fight-index search state',
