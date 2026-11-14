@@ -33,6 +33,7 @@ for(const entry of cases){
  assert(e.fighterUrl===entry.fighterUrl&&e.officialFighterUrl===entry.officialFighterUrl&&n(e.fighterName)===n(entry.name),'wrong independently identified fighter '+entry.slug);
  assert(e.sourceSnapshot?.fightResultsBlobSha==='699c9b6cebb542bf458807563d93ed2406d8728f'&&e.sourceSnapshot?.fighterDetailsBlobSha==='7141332f0b319edbc10d006b229050ee947e7336','unpinned source snapshot');
  assert(e.sourceCoverage?.officialDatedBouts===1&&e.sourceCoverage?.grecoExactBoutRows===1&&e.sourceCoverage?.officialDebut==='2026-07-18','exhaustive debut-to-snapshot inventory not attested '+entry.slug);
+ assert(e.sourceSnapshot?.cutoffLastEvent==='2026-11-07'&&typeof e.sourceCoverage?.sourcePresentationException==='string'&&e.sourceCoverage.sourcePresentationException.length>25,'incomplete historical source cutoff or unresolved official UI spelling/outcome presentation QA '+entry.slug);
  assert(n(p?.name)===n(entry.name)&&!p?.ufcHistoryIdConflicts?.length,'saved fighter identity conflicted '+entry.slug);
  const h=(p.recentHistory||[]).filter(x=>String(x.promotion||x.org||'').toLowerCase()==='ufc');
  assert(h.length===1,'extra or missing official UFC bout in saved history '+entry.slug);
