@@ -15,8 +15,8 @@ const dateId=x=>/^(18|19|20)\d{2}(01|03|05|07|09|11)$/.test(String(x||''));
 const matchKey=m=>[m.bashoId,m.day,m.matchNo,m.eastId,m.westId].join(':');
 const sortedBouts=list=>[...list].sort((a,b)=>String(b.bashoId).localeCompare(String(a.bashoId))||Number(b.day)-Number(a.day)||Number(b.matchNo)-Number(a.matchNo));
 const add=(obj,key)=>{obj[key]=(obj[key]||0)+1};
-export function buildResearchProfile(w,cache,correctionManifest=null){
-  const aud=auditRikishi(w,cache,correctionManifest);
+export function buildResearchProfile(w,cache,correctionManifest=null,officialCareerSnapshot=null){
+  const aud=auditRikishi(w,cache,correctionManifest,officialCareerSnapshot);
   if(!aud.readyForExternalCrosscheck)return {status:'not-ready',sourceId:w.sourceId,problems:aud.errors||[],warnings:aud.warnings||[]};
   const id=Number(w.sourceId),details=cache.data?.profile,stats=cache.data?.stats;
   if(!details||!stats)throw Error('Missing cached profile or statistics');
@@ -28,9 +28,13 @@ export function buildResearchProfile(w,cache,correctionManifest=null){
   const special=all.filter(m=>m.division==='Mae-zumo'||Number(m.day)>15);
   const record={wins:regular.filter(m=>Number(m.winnerId)===id).length,
     losses:regular.filter(m=>Number(m.winnerId)!==id).length};
-  if(regular.length!==Number(stats.totalMatches)||record.wins!==Number(stats.totalWins)||record.losses!==Number(stats.totalLosses)){
+  const checkedTotals=aud.effectiveCareerTotals?.selected;
+  if(!checkedTotals||regular.length!==Number(checkedTotals.matches)||
+     record.wins!==Number(checkedTotals.wins)||record.losses!==Number(checkedTotals.losses)){
     return {status:'stat-reconciliation-exception',sourceId:id,regularBouts:regular.length,
-      sourceTotal:stats.totalMatches,rawWins:record.wins,rawLosses:record.losses,sourceWins:stats.totalWins,sourceLosses:stats.totalLosses};
+      sourceTotal:stats.totalMatches,rawWins:record.wins,rawLosses:record.losses,
+      sourceWins:stats.totalWins,sourceLosses:stats.totalLosses,
+      checkedTotal:checkedTotals||null};
   }
   const rankEvents=[...(cache.data.ranks||[])].filter(x=>dateId(x.bashoId));
   const weightEvents=[...(cache.data.measurements||[])].filter(x=>dateId(x.bashoId)&&num(x.weight)>0);
@@ -102,7 +106,10 @@ export function buildResearchProfile(w,cache,correctionManifest=null){
       debutBasho:details.debut},
     current:{rank:w.currentRank,weightKg:details.weight,heightCm:details.height},
     career:{
-      wins:stats.totalWins,losses:stats.totalLosses,absences:stats.totalAbsences,
+      wins:record.wins,losses:record.losses,absences:stats.totalAbsences,
+      winLossEvidence:aud.effectiveCareerTotals.source,
+      sourceSummaryLagReconciled:aud.effectiveCareerTotals.independentlyResolvedSourceDifference===true,
+      originalApiCareerTotals:{wins:stats.totalWins,losses:stats.totalLosses,matches:stats.totalMatches},
       basho:stats.basho,yusho:stats.yusho,yushoByDivision:stats.yushoByDivision,
       sansho:stats.sansho,careerHigh:topRank?{rank:topRank.rank,bashoId:topRank.bashoId}:null
     },
@@ -145,7 +152,8 @@ async function main(){
   for(const w of roster.rikishi){
     const source=await read(join(DIR,'rikishi',w.sourceId+'.json'),null);
     if(!source)continue;
-    const p=buildResearchProfile(w,source,correctionManifest);
+    const publicSnapshot=await read(join(DIR,'jsa-public','profiles',w.sourceId+'.json'),null);
+    const p=buildResearchProfile(w,source,correctionManifest,publicSnapshot);
     if(p.status==='not-ready')continue;
     if(p.status==='stat-reconciliation-exception'||p.status==='official-correction-exception'){
       exceptions++;console.warn(w.shikonaEn+': source W-L disagreement or invalid official correction');continue;
