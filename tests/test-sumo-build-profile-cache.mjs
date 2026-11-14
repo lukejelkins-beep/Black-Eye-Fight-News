@@ -45,6 +45,7 @@ test('source discrepancies do not become certified profiles',()=>{
  const {w,source}=cache(28);
  source.data.stats.totalWins=999;
  const v=buildResearchProfile(w,source);
- assert.equal(v.status,'stat-reconciliation-exception');
+ assert.equal(v.status,'not-ready');
  assert.equal(v.sourceId,28);
+ assert.ok(v.problems.includes('career-win-count-mismatch'));
 });
