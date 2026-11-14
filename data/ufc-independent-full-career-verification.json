@@ -27847,6 +27847,71 @@
         }
       ],
       "sourceVerifiedExcludedFeederBouts": []
+    },
+    "jeka-saragih": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Jeka Saragih",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/57186c150c645200",
+      "officialFighterUrl": "https://www.ufc.com/athlete/jeka-saragih",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived dataset, not direct UFCStats scrape",
+        "method": "All four dated UFC official athlete history bouts, including UFC Fight Night Lewis-Spivac Road to UFC tournament final, individually reconciled to pinned Greco UFCStats fighter/fight/event identities and saved original UFCalendar native bout IDs/corners/winners and measured rounds. Road to UFC qualifiers excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "2783"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "UFC official biography confirms four completed main-promotion UFC bouts: 2023-02-05 Road to UFC lightweight tournament final loss to Anshul Jubli, 2023-11-18 KO win over Lucas Alexander, 2024-06-15 submission loss to Westin Wilson and 2025-06-07 KO loss to JooSang Yoo (UFCalendar cached event-local 2025-06-08 UTC shift). UFC official Lewis-Spivac results explicitly list the 2023 finale on the UFC Fight Night card. Earlier June/October 2022 Road to UFC quarterfinal and semifinal were qualifying non-UFC bouts and are not included. UFC.com graphical Win tiles for losses are misleading; exact official narrative/scorecards and native winners control.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/jeka-saragih",
+        "https://www.ufc.com/news/ufc-fight-night-lewis-vs-spivac-results-highlights-winner-interviews-vegas-68",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2023-02-05",
+          "opponent": "Anshul Jubli",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b1b20c686dfe3204",
+          "nativeBoutId": "59748",
+          "nativeFighterId": "2783"
+        },
+        {
+          "date": "2023-11-18",
+          "opponent": "Lucas Alexander",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f0fe73e650b746f2",
+          "nativeBoutId": "59983",
+          "nativeFighterId": "2783"
+        },
+        {
+          "date": "2024-06-15",
+          "opponent": "Westin Wilson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e47523ac32bfa24c",
+          "nativeBoutId": "61062",
+          "nativeFighterId": "2783"
+        },
+        {
+          "date": "2025-06-07",
+          "opponent": "JooSang Yoo",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9f4a0de31375ba04",
+          "nativeBoutId": "60871",
+          "nativeFighterId": "2783"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
     }
   }
 }
