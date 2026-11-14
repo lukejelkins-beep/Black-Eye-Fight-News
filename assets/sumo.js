@@ -280,43 +280,36 @@ function formatStats(w,cur) {
   '</div>';
 }
 function recordChart(item) {
-  if(!item) return '<p class="missing">This rikishi’s current banzuke entry is not available.</p>';
-  const div=divisionOf(item.rank), lower=div==='Makushita';
-  const s=recordSummary(item.record,div);
-  const list=Array.isArray(item.record)?item.record:[];
-  return '<div class="results-grid">'+list.map((rec,i)=>{
-    const raw=String(rec?.result||'').toLowerCase();
-    const noBout=lower&&['absent','absence','kyujo'].includes(raw);
-    const label=noBout?'NO BOUT':raw?(raw==='absent'?'ABSENT':raw.toUpperCase()):'UNPLAYED';
-    const cl=raw==='win'?'win':raw==='loss'?'loss':'pending';
-    const opponent=(raw==='win'||raw==='loss')?(rec.opponentShikonaEn||'Opponent unavailable'):'—';
-    const method=raw==='win'||raw==='loss'?(rec.kimarite||'Technique not supplied'):(noBout?'Not scheduled to fight on this day':(raw==='absent'?'No bout recorded':'Future day / data unavailable'));
-    return '<div class="result-item"><div class="result-head"><span>DAY '+(i+1)+'</span><span class="outcome '+cl+'">'+e(label)+'</span></div>'+
-      '<span class="opponent">'+e(opponent)+'</span><span class="method">'+e(method)+'</span></div>';
-  }).join('')+'</div>'+
-    '<p class="footnote">Current banzuke: '+s.win+' wins, '+s.loss+' losses. '+
-    (lower?'The '+s.noBout+' non-bout days are not recorded as kyūjō; verified injury absences cannot be inferred from this source.':
-      s.absence+' recorded absence days. Future or unavailable days remain unplayed.')+'</p>';
+  if(!item) return '<p class="missing">Current tournament record is not available for this rikishi.</p>';
+  const w=wrestler(item.rikishiID),div=divisionOf(item.rank),s=recordSummary(item.record,div);
+  const rows=(item.record||[]).map((rec,i)=>({rec,i})).filter(({rec})=>
+    Number(rec?.opponentID)>0 && (rec?.opponentShikonaEn || wrestler(rec?.opponentID))
+  );
+  const completed=rows.filter(({rec})=>['win','loss'].includes(String(rec?.result||'').toLowerCase())).length;
+  return (rows.length?'<div class="sumo-result-grid">'+rows.map(({rec,i})=>opponentBoutCard(w||{sourceId:item.rikishiID},rec,i,div)).join('')+'</div>'
+    :'<p class="missing">No identified opponents are included in the current tournament snapshot.</p>')+
+    '<p class="footnote">'+s.win+' wins and '+s.loss+' losses recorded; '+completed+' completed matchups displayed. Unassigned future bouts are omitted rather than shown as empty cards. '+
+    (div==='Makushita'?'No-bout calendar days are not counted as losses or injuries.':'Results and published upcoming opponents are separated.')+'</p>';
 }
 function profileResults(w, limit) {
   const enriched=detailFor(details(),w.sourceId);
   const sourced=validMatchSamples(enriched,w.sourceId);
   const matches=sourced.length ? sourced : currentBashoMatchSample(entryFor(w),details().bashoId);
-  if(!matches.length) return '<p class="missing">No completed opponent records are available for this rikishi in the current snapshot. Missing results are not inferred.</p>';
-  const subset=matches.slice(0,limit);
-  const link=x=>Number.isSafeInteger(x.opponentId)&&x.opponentId>0&&wrestler(x.opponentId)
-    ?'<a class="method" href="#profile/'+x.opponentId+'">Opponent profile ↗</a>'
-    :'<span class="method">Opponent profile outside current tracked cohort</span>';
-  const label=x=>x.day?'Day '+x.day:(x.boutSequence?'Bout '+x.boutSequence:'Day unavailable');
-  const maxNext=limit===5?10:18;
-  return '<div class="results-grid">'+subset.map(x=>
-    '<div class="result-item"><div class="result-head"><span>'+e(bashoLabel(x.bashoId))+' · '+e(label(x))+'</span><span class="outcome '+x.outcome+'">'+e(x.outcome.toUpperCase())+'</span></div>'+
-    '<span class="opponent">'+e(x.opponent)+'</span>'+link(x)+'<p class="method">'+e(x.isFusen?'Fusen (forfeit)':x.kimarite||'Technique not supplied')+'</p></div>'
-  ).join('')+'</div>'+
-  (matches.length>limit?'<div class="more-wrap"><button class="btn light" data-profile-limit="'+maxNext+'">VIEW LATEST '+Math.min(maxNext,matches.length)+' CACHED BOUTS</button></div>':'')+
-  '<p class="footnote">'+(sourced.length
-    ?'Only '+matches.length+' recent bout records were fetched for this featured rikishi. These are not the complete career history.'
-    :'Current '+e(bashoLabel(details().bashoId))+' banzuke only: '+matches.length+' completed bouts with recorded opponents. Calendar days follow the API’s 15-day banzuke positions; non-bout days are excluded.')+'</p>';
+  if(!matches.length) return '<p class="missing">No completed opponent records are available for this rikishi in this snapshot.</p>';
+  const subset=matches.slice(0,limit),maxNext=limit===5?10:18;
+  return '<div class="sumo-result-grid">'+subset.map(x=>{
+    const opponent=wrestler(x.opponentId);
+    const h2h=headToHeadFor(w.sourceId,x.opponentId);
+    return '<article class="sumo-result-card"><div class="sumo-result-top"><span>'+e(bashoLabel(x.bashoId))+' · '+
+      e(x.day?'Day '+x.day:'Bout '+(x.boutSequence||'—'))+'</span><span class="outcome '+e(x.outcome)+'">'+e(x.outcome.toUpperCase())+'</span></div>'+
+      fighterOnCard(opponent,x.opponentId,x.opponent)+
+      '<div class="sumo-result-extra"><span>ALL-TIME H2H '+e(h2h?h2h.wins+'–'+h2h.losses:'not yet sourced')+'</span>'+
+      '<span>'+e(x.isFusen?'Forfeit':x.kimarite||'Kimarite not supplied')+'</span></div></article>';
+  }).join('')+'</div>'+
+  (matches.length>limit?'<div class="more-wrap"><button class="btn light" data-profile-limit="'+maxNext+
+    '">VIEW LATEST '+Math.min(maxNext,matches.length)+' CACHED BOUTS</button></div>':'')+
+  '<p class="footnote">'+(sourced.length?'This is a partial, recently cached bout sample, not the full career record.':
+    'These are completed opponents recorded in the current '+e(bashoLabel(details().bashoId))+' banzuke only.')+'</p>';
 }
 function profileTechniques(w) {
   const enriched=detailFor(details(),w.sourceId);
@@ -355,6 +348,7 @@ function renderProfile(id) {
   const meta=[
     ['Stable (heya)',w.heya],['Birthplace',w.birthplace],['Height',Number.isFinite(w.heightCm)?w.heightCm+' cm':null],
     ['Weight',Number.isFinite(w.weightKg)?w.weightKg+' kg':null],
+    ['Highest career rank',knownHigh(w)||'Not yet sourced'],
     ['Date of birth',dateOnly(w.birthDate)],['Professional debut',bashoLabel(w.debutBasho)]
   ];
   const cards=meta.map(([k,v])=>'<div><span>'+e(k)+'</span><strong>'+loc(v)+'</strong></div>').join('');
@@ -363,10 +357,10 @@ function renderProfile(id) {
   for(const [name,n] of Object.entries(s?.sansho||{})) honors.push([n,name+' awards']);
   const honHtml=honors.length?'<div class="tiles">'+honors.map(([val,label])=>statTile(val,label)).join('')+'</div>':'<div class="sumo-history">Awards and tournament titles will appear after full source-backed career collection and JSA reconciliation.</div>';
   return '<a class="back-link" href="#rikishi">← ALL RIKISHI</a>'+
-    '<section class="profile-hero">'+imageToken(w.currentRank,w.shikonaEn,true)+
+    '<section class="profile-hero">'+portraitFor(w,'xl')+
     '<div class="profile-title"><div class="eyebrow" style="color:#f3c332">BEFN SUMO · '+e(divisionOf(w.currentRank))+'</div>'+
-    '<h1>'+e(w.shikonaEn)+'</h1><div class="jp">'+e(w.shikonaJp||'')+'</div>'+
-    '<div class="hero-rank">'+e(w.currentRank||'Rank not supplied')+'</div><div class="profile-meta">'+cards+'</div></div>'+
+    '<h1>'+flagMark(w)+' '+e(w.shikonaEn)+'</h1><div class="jp">'+e(w.shikonaJp||'')+'</div>'+
+    '<div class="hero-rank">'+e(w.currentRank||'Rank not supplied')+' '+movementMarkup(w)+'</div><div class="profile-meta">'+cards+'</div></div>'+
     '<div class="profile-current"><span class="tag">'+e(bashoLabel(details().bashoId))+' · CURRENT BASHO</span>'+
     '<div class="big-record">'+(item?r.win+'<span>–</span>'+r.loss+(r.absence===null?'':'<small>–'+r.absence+'</small>'):'—')+'</div><p>'+e(perf)+' · '+(r.absence===null?'W–L (non-bout days excluded)':'W–L–A')+', current ranking only. '+(item?'':'Current banzuke record unavailable.')+'</p>'+
     '<div class="progress" aria-hidden="true"><div style="width:'+pct+'%"></div></div>'+
