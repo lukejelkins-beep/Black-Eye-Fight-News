@@ -81,6 +81,25 @@ export function buildResearchProfile(w,cache,correctionManifest=null,officialCar
   }
   const rankEvents=[...(cache.data.ranks||[])].filter(x=>dateId(x.bashoId));
   const weightHistory=mergeHistoricalWeights(w,cache.data.measurements||[],weightSource);
+  // The current official JSA listing is not an independently dated historical
+  // weigh-in. Represent it as a separate, clearly labelled terminal point.
+  const officialWeightDoc=officialCareerSnapshot&&
+    Number(officialCareerSnapshot.sourceId)===id&&
+    Number(officialCareerSnapshot.officialNskId)===Number(w.officialNskId)&&
+    officialCareerSnapshot.fieldComparisons?.name===true?
+    officialCareerSnapshot:null;
+  const officialWeightKg=Number(officialWeightDoc?.weightKg);
+  const officialHeightCm=Number(officialWeightDoc?.heightCm);
+  const currentOfficialMeasurement=officialWeightDoc&&
+    Number.isFinite(officialWeightKg)&&officialWeightKg>=45&&officialWeightKg<=400?
+    {weightKg:officialWeightKg,heightCm:Number.isFinite(officialHeightCm)&&officialHeightCm>0?officialHeightCm:null,
+     source:'Japan Sumo Association current published profile',
+     sourceUrl:officialWeightDoc.url,
+     officialAsOf:officialWeightDoc.officialAsOf||null,
+     snapshotType:'current-listed-weight-not-dated-weigh-in',
+     measurementDateKnown:false,
+     independentlyCertified:false,
+     agreesWithApiCurrentWeight:officialWeightKg===Number(details.weight)}:null;
   const ringNames=[...(cache.data.shikonas||[])].filter(x=>dateId(x.bashoId));
   const formal=rankEvents.map(x=>({...x,metric:ordinalRank(x.rank)})).filter(x=>x.metric!==null);
   formal.sort((a,b)=>a.metric-b.metric||String(a.bashoId).localeCompare(String(b.bashoId)));
@@ -148,6 +167,7 @@ export function buildResearchProfile(w,cache,correctionManifest=null,officialCar
       stable:details.heya,birthplace:details.shusshin,birthDate:details.birthDate,
       debutBasho:details.debut},
     current:{rank:w.currentRank,weightKg:details.weight,heightCm:details.height},
+    currentOfficialMeasurement,
     career:{
       wins:record.wins,losses:record.losses,absences:stats.totalAbsences,
       winLossEvidence:aud.effectiveCareerTotals.source,
