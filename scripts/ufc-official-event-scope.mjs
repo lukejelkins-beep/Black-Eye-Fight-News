@@ -14,3 +14,27 @@ export function isOfficialUfcEvent(title){
  const officialFinale=/\bthe\s+ultimate\s+fighter\b/i.test(text)&&/\bfinale\b/i.test(text);
  return (/\bufc\b/i.test(text)||officialFinale)&&!isFeederUfcEvent(text);
 }
+
+
+/**
+ * Some Road to UFC cards contain independently promoted, official UFC bouts
+ * alongside feeder tournament matches. The EVENT title cannot establish
+ * eligibility for every bout on that card. Only the exact official showcase
+ * match identified below is exempt; other Road to UFC fights remain excluded.
+ *
+ * Sources:
+ * https://www.ufc.com/news/road-to-ufc-live-results-season-4-semifinals-shi-vs-brasil-recaps-official-scorecards-interviews-shanghai
+ * https://www.ufc.com/athlete/bruna-brasil
+ * https://ufcstats.com/fight-details/abf5f4d6f777cf7b
+ */
+export function isOfficialUfcBout(bout){
+ if(!bout||bout.org!=="ufc")return false;
+ if(isOfficialUfcEvent(bout.event))return true;
+ const slugs=[String(bout.a?.slug||""),String(bout.b?.slug||"")].sort();
+ return String(bout.id)==="60900"&&
+  bout.eventDate==="2025-08-22"&&
+  /^Road to UFC Season 4 Semifinals$/i.test(String(bout.event||""))&&
+  slugs[0]==="bruna-brasil"&&slugs[1]==="shi-ming"&&
+  (bout.result?.method==="decision_unanimous"||
+   bout.result?.method==="decision");
+}
