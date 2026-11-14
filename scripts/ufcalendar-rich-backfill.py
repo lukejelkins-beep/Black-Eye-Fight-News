@@ -2021,7 +2021,7 @@ def recover_source_verified_ufc_non_winner_event_cards(client,state,research,cov
         # wrong ID. Only retry using 158 after *all ten* exact source-backed
         # native fights have been linked into the approved history.
         historic_id=None
-        if fighter=="bruno-gustavo-da-silva" and stable_ids=={"87","158"} and (
+        if fighter=="bruno-gustavo-da-silva" and "87" in stable_ids and stable_ids.issubset({"87","158"}) and (
             isinstance(id_exceptions,dict) and
             id_exceptions.get("scope")=="ufc-exact-official-native-fighter-id-exceptions" and
             id_exceptions.get("rosterAsOf")==(approval or {}).get("rosterAsOf")):
