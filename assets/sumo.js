@@ -78,11 +78,11 @@ function divisionTabs(active, attr, all=false) {
 function standingsTable(rows, limit=10) {
   if (!rows?.length) return '<p class="missing">No independently checked current rankings are cached.</p>';
   return '<div class="table-scroll"><table class="standings"><thead><tr><th>Rikishi</th><th>Rank</th><th>W</th><th>L</th><th>A</th></tr></thead><tbody>' +
-    rows.slice(0,limit).map(x=>'<tr><td>'+wrestlerLink(x)+'</td><td>'+e(x.rank||'—')+'</td><td class="number-win">'+x.summary.win+'</td><td class="number-loss">'+x.summary.loss+'</td><td class="number-abs">'+x.summary.absence+'</td></tr>').join('') +
+    rows.slice(0,limit).map(x=>'<tr><td>'+wrestlerLink(x)+'</td><td>'+e(x.rank||'—')+'</td><td class="number-win">'+x.summary.win+'</td><td class="number-loss">'+x.summary.loss+'</td><td class="number-abs">'+(x.summary.absence===null?'—':x.summary.absence)+'</td></tr>').join('') +
     '</tbody></table></div>';
 }
 function featureCard(w) {
-  const ent=entryFor(w), s=recordSummary(ent?.record);
+  const ent=entryFor(w), s=recordSummary(ent?.record, divisionOf(w.currentRank));
   return '<a href="#profile/'+w.sourceId+'" class="feature-card"><div class="feature-top">' +
     imageToken(w.currentRank,w.shikonaEn) +
     '<div class="feature-info"><span class="rank">'+e(w.currentRank)+'</span><h3>'+e(w.shikonaEn)+'</h3><small>'+e(w.heya||'Stable not supplied')+'</small></div></div>' +
@@ -153,7 +153,7 @@ function formatStats(w,cur) {
   // Do not imply totalMatches includes absences: keep record fields separate.
   return '<div class="tiles">'+
     statTile(w.currentRank||'—','Current banzuke rank')+
-    statTile(cur?cur.win+'-'+cur.loss+(cur.absence?'-'+cur.absence:''):'—','Current basho W–L–A')+
+    statTile(cur?cur.win+'-'+cur.loss+(cur.absence===null?'':'-'+cur.absence):'—',divisionOf(w.currentRank)==='Makushita'?'Current basho W–L':'Current basho W–L–A')+
     statTile(Number.isInteger(wins)&&Number.isInteger(losses)?wins+'-'+losses:'—','Recorded career W–L · source sample')+
     statTile(s?.winsByDivision?.Makuuchi!==undefined && s?.lossByDivision?.Makuuchi!==undefined ?
        s.winsByDivision.Makuuchi+'-'+s.lossByDivision.Makuuchi:'—','Makuuchi W–L · source sample')+
@@ -162,18 +162,23 @@ function formatStats(w,cur) {
   '</div>';
 }
 function recordChart(item) {
-  const s=recordSummary(item?.record);
   if(!item) return '<p class="missing">This rikishi’s current banzuke entry is not available.</p>';
+  const div=divisionOf(item.rank), lower=div==='Makushita';
+  const s=recordSummary(item.record,div);
   const list=Array.isArray(item.record)?item.record:[];
-  const div=divisionOf(item.rank);
-  const labelled=div==='Makushita'?'BOUT':'DAY';
-  return '<div class="results-grid">'+list.map((r,i)=>{
-    const outcome=String(r.result||'pending').toLowerCase();
-    const cl=outcome==='win'?'win':outcome==='loss'?'loss':'pending';
-    return '<div class="result-item"><div class="result-head"><span>'+labelled+' '+(i+1)+'</span><span class="outcome '+cl+'">'+e(outcome.toUpperCase())+'</span></div>'+
-      '<span class="opponent">'+e(r.opponentShikonaEn||'—')+'</span><span class="method">'+e(r.kimarite||'No technique listed')+'</span></div>';
-  }).join('')+'</div>' +
-  '<p class="footnote">Current banzuke record: '+s.win+' W / '+s.loss+' L / '+s.absence+' absences. '+(div==='Makushita'?'Lower division bout sequence is shown; exact calendar day is not inferred.':'Completed result entries only; future days may be unavailable.')+'</p>';
+  return '<div class="results-grid">'+list.map((rec,i)=>{
+    const raw=String(rec?.result||'').toLowerCase();
+    const noBout=lower&&['absent','absence','kyujo'].includes(raw);
+    const label=noBout?'NO BOUT':raw?(raw==='absent'?'ABSENT':raw.toUpperCase()):'UNPLAYED';
+    const cl=raw==='win'?'win':raw==='loss'?'loss':'pending';
+    const opponent=(raw==='win'||raw==='loss')?(rec.opponentShikonaEn||'Opponent unavailable'):'—';
+    const method=raw==='win'||raw==='loss'?(rec.kimarite||'Technique not supplied'):(noBout?'Not scheduled to fight on this day':(raw==='absent'?'No bout recorded':'Future day / data unavailable'));
+    return '<div class="result-item"><div class="result-head"><span>DAY '+(i+1)+'</span><span class="outcome '+cl+'">'+e(label)+'</span></div>'+
+      '<span class="opponent">'+e(opponent)+'</span><span class="method">'+e(method)+'</span></div>';
+  }).join('')+'</div>'+
+    '<p class="footnote">Current banzuke: '+s.win+' wins, '+s.loss+' losses. '+
+    (lower?'The '+s.noBout+' non-bout days are not recorded as kyūjō; verified injury absences cannot be inferred from this source.':
+      s.absence+' recorded absence days. Future or unavailable days remain unplayed.')+'</p>';
 }
 function profileResults(w, limit) {
   const enriched=detailFor(details(),w.sourceId);
@@ -193,7 +198,7 @@ function profileResults(w, limit) {
   (matches.length>limit?'<div class="more-wrap"><button class="btn light" data-profile-limit="'+maxNext+'">VIEW LATEST '+Math.min(maxNext,matches.length)+' CACHED BOUTS</button></div>':'')+
   '<p class="footnote">'+(sourced.length
     ?'Only '+matches.length+' recent bout records were fetched for this featured rikishi. These are not the complete career history.'
-    :'Current '+e(bashoLabel(details().bashoId))+' banzuke only: '+matches.length+' completed bouts with recorded opponents. The dates of Makushita bouts are not inferred from their sequence.')+'</p>';
+    :'Current '+e(bashoLabel(details().bashoId))+' banzuke only: '+matches.length+' completed bouts with recorded opponents. Calendar days follow the API’s 15-day banzuke positions; non-bout days are excluded.')+'</p>';
 }
 function profileTechniques(w) {
   const enriched=detailFor(details(),w.sourceId);
@@ -211,7 +216,7 @@ function profileTechniques(w) {
 function renderProfile(id) {
   const w=wrestler(id);
   if(!w) return '<a class="back-link" href="#rikishi">← All rikishi</a>'+note('That wrestler is outside the current top three tracked divisions, or is not present in this snapshot.');
-  const item=entryFor(w), r=recordSummary(item?.record), s=detailStats(w), enriched=detailFor(details(),w.sourceId);
+  const item=entryFor(w), r=recordSummary(item?.record,divisionOf(w.currentRank)), s=detailStats(w), enriched=detailFor(details(),w.sourceId);
   const perf=detailFor(details(),w.sourceId)?'Featured sample data available':'Career data collection pending';
   const pct=r.win+r.loss?Math.round(r.win/(r.win+r.loss)*100):0;
   const officialId=Number(w.officialNskId);
@@ -234,7 +239,7 @@ function renderProfile(id) {
     '<h1>'+e(w.shikonaEn)+'</h1><div class="jp">'+e(w.shikonaJp||'')+'</div>'+
     '<div class="hero-rank">'+e(w.currentRank||'Rank not supplied')+'</div><div class="profile-meta">'+cards+'</div></div>'+
     '<div class="profile-current"><span class="tag">'+e(bashoLabel(details().bashoId))+' · CURRENT BASHO</span>'+
-    '<div class="big-record">'+(item?r.win+'<span>–</span>'+r.loss+'<small>–'+r.absence+'</small>':'—')+'</div><p>'+e(perf)+' · W–L–A, current ranking only. '+(item?'':'Current banzuke record unavailable.')+'</p>'+
+    '<div class="big-record">'+(item?r.win+'<span>–</span>'+r.loss+(r.absence===null?'':'<small>–'+r.absence+'</small>'):'—')+'</div><p>'+e(perf)+' · '+(r.absence===null?'W–L (non-bout days excluded)':'W–L–A')+', current ranking only. '+(item?'':'Current banzuke record unavailable.')+'</p>'+
     '<div class="progress" aria-hidden="true"><div style="width:'+pct+'%"></div></div>'+
     '<p>Current tournament results · snapshot, not live</p></div></section>'+
     '<div class="official-source-link">'+officialLink+'<span>BEFN is independent of the Japan Sumo Association.</span></div>'+
@@ -267,16 +272,18 @@ function renderBanzuke() {
 }
 function daysPanel(d,data) {
   const lower=d==='Makushita', maxday=currentDay(data);
-  if(lower) return note('Makushita wrestlers compete across 15 days but do not fight every day. This preview shows their recorded bout sequence in the banzuke, not a fabricated daily schedule.');
-  const day = STATE.day===null ? maxday : Math.min(maxday,Math.max(1,STATE.day));
   if (!maxday) return '<p class="missing">No recorded completed tournament days.</p>';
+  const day = STATE.day===null ? maxday : Math.min(maxday,Math.max(1,STATE.day));
   const results=dailyResults(data,day);
-  return '<div class="day-select" role="group" aria-label="Basho day">' +
+  const context=lower
+    ?note('Makushita banzuke contains 15 calendar-day positions with up to seven competitive bouts. Days without a recorded bout are not automatically injury absences or losses.')
+    :'';
+  return context+'<div class="day-select" role="group" aria-label="Basho day">' +
     Array.from({length:maxday},(_,i)=>'<button type="button" data-day="'+(i+1)+'" class="'+(day===i+1?'active':'')+'" aria-pressed="'+(day===i+1)+'">'+(i+1)+'</button>').join('')+'</div>'+
     '<div class="bout-list">'+(results.length?results.map(r=>'<div class="bout"><span class="name '+(r.winnerId===r.rikishiId?'winner':'')+'"><a href="#profile/'+r.rikishiId+'">'+e(r.rikishi)+'</a></span><span class="vs">VS</span>'+
       '<span class="name '+(r.winnerId===r.opponentId?'winner':'')+'"><a href="#profile/'+r.opponentId+'">'+e(r.opponent)+'</a></span>'+
-      '<span class="kim">Winner: '+e(r.winner||'Not supplied')+' · '+e(r.kimarite||'Winning technique not supplied')+'</span></div>').join(''):'<p class="missing">No completed matches for this day in this snapshot.</p>')+'</div>'+
-    '<p class="footnote">Recorded results on day '+day+' · based on the cached banzuke; not a live event feed.</p>';
+      '<span class="kim">Winner: '+e(r.winner||'Not supplied')+' · '+e(r.kimarite||'Winning technique not supplied')+'</span></div>').join(''):'<p class="missing">No completed matches for this calendar day in the cached banzuke.</p>')+'</div>'+
+    '<p class="footnote">Recorded results on calendar day '+day+' · sourced from the current '+e(d)+' banzuke; not a live event feed.</p>';
 }
 function renderBasho() {
   const d=STATE.bashoDivision, data=getBanzuke(d), rows=data?leadingRikishi(data,20):[];
@@ -284,7 +291,7 @@ function renderBasho() {
   const lastday=data?currentDay(data):0;
   return '<section class="basho-hero"><div><div class="eyebrow" style="color:#f3c332">GRAND SUMO · SIX TOURNAMENTS EACH YEAR</div>'+
     '<h1>'+e(bashoLabel(details().bashoId))+'</h1><p>'+e(target?.startDate?dateOnly(target.startDate):'Start date unavailable')+' – '+e(target?.endDate?dateOnly(target.endDate):'End date unavailable')+' · Japan · third-party source snapshot</p></div>'+
-    '<div><span class="basho-day">'+(lastday?(d==='Makushita'?'BOUT '+lastday:'DAY '+lastday):'—')+'</span><p>'+(d==='Makushita'?'LONGEST RECORDED BOUT SEQUENCE':'LATEST RECORDED DAY')+'</p></div></section>'+
+    '<div><span class="basho-day">'+(lastday?'DAY '+lastday:'—')+'</span><p>'+'LATEST RECORDED DAY'+'</p></div></section>'+
     divisionTabs(d,'data-basho-division')+
     heading('Top of this division','Tournament standings')+
     '<div class="panel"><div class="panel-head"><h3>'+e(d)+' · '+e(bashoLabel(details().bashoId))+'</h3><span>AS-OF SNAPSHOT</span></div>'+
