@@ -35,3 +35,7 @@ Live homepage inspection succeeded, but Fights navigation and one subsequent sta
 ## Upcoming section accessibility
 
 The prior focus-fix commit passed GitHub release readiness (run 43570350522). Continued inspection found the upcoming All control referenced only the first panel despite displaying every section. QA-013 corrects the space-separated `aria-controls` relationship and checks that every referenced panel exists. Individual section controls retain their single target. The regression failed before the change and passed afterward, alongside existing upcoming UI and cancellation/merge checks. No visual layout, data, collection or scheduling change. Browser/screen-reader validation remains outstanding; this does not imply a complete accessibility pass.
+
+## Agentic browser acceptance — 14 November 2026
+
+The outstanding browser assignment is completed within the documented tooling limits. See `qa/browser-verification-190.md` and `qa/evidence-190/` for immutable source/preview revisions, desktop/mobile results, DOM-growth measurements, screenshots, full-cache editorial acceptance and current integration evidence. Source correction `0ac044f` preserves editorial stages, promotions and signing follow-up bookings in Python/JS; both readiness jobs passed in run43577693632. No source data, production service, ONE work, UFC/boxing research or automation changed. Findings remain pending owner-approved integration, not production-resolved. Full screen-reader/physical-device testing and branch-protection enforcement remain unverified.
