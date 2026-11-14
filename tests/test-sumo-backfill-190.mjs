@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {STAGES,newCache,endpoint,combinePage,fillStage,stageStatus,nextStage} from '../scripts/sumo-backfill-190.mjs';
+import {STAGES,newCache,endpoint,combinePage,fillStage,stageStatus,nextStage,chooseWork} from '../scripts/sumo-backfill-190.mjs';
 
 const sample={sourceId:28,officialNskId:3616,sumoDbId:12226,shikonaEn:'Ura'};
 test('free Sumo API history endpoints use explicit source ID and stable pagination',()=>{
@@ -104,4 +104,38 @@ test('provider ignoring the historical array skip cannot advance the cursor',()=
   d.data.ranks=Array.from({length:200},(_,i)=>({id:'old'+i,rikishiId:28}));
   assert.throws(()=>combinePage(d,'ranks',d.data.ranks.slice(),28),/Repeated/);
   assert.equal(d.stages.ranks.skip,200);
+});
+
+test('one coordinated quick/history scheduler selects only missing stages',()=>{
+  const ura={...sample};
+  const asan={sourceId:2,officialNskId:3682,shikonaEn:'Asanoyama'};
+  const docs=new Map([[28,newCache(ura)],[2,newCache(asan)]]);
+  assert.equal(chooseWork([ura,asan],docs,'quick').stage,'profile');
+  for(const s of ['profile','stats','measurements','ranks'])docs.get(28).stages[s].complete=true;
+  assert.equal(chooseWork([ura,asan],docs,'quick').stage,'shikonas');
+  assert.equal(chooseWork([ura,asan],docs,'history').w.sourceId,28);
+  docs.get(28).stages.shikonas.complete=true;
+  docs.get(28).stages.matches.skip=400;
+  docs.get(2).stages.profile.complete=true;
+  docs.get(2).stages.stats.complete=true;
+  assert.equal(chooseWork([ura,asan],docs,'history').w.sourceId,28,
+    'resume partially fetched bout pages rather than starting another career');
+  docs.get(28).stages.matches.complete=true;
+  assert.equal(chooseWork([ura,asan],docs,'history').w.sourceId,2,
+    'completed histories never request duplicate pages');
+});
+test('one failing endpoint does not block another fighter or stage',()=>{
+  const ura={...sample},next={sourceId:2,officialNskId:3682,shikonaEn:'Asanoyama'};
+  const docs=new Map([[28,newCache(ura)],[2,newCache(next)]]);
+  const attempted=new Set(['28:profile']);
+  assert.equal(chooseWork([ura,next],docs,'quick',attempted).w.sourceId,2);
+  docs.get(28).stages.profile.attempts=3;
+  assert.equal(chooseWork([ura,next],docs,'quick').stage,'stats');
+});
+test('when the quick stage is done it never needs a repeat API request',()=>{
+  const docs=new Map([[28,newCache(sample)]]);
+  for(const s of STAGES.filter(x=>x!=='matches'))docs.get(28).stages[s].complete=true;
+  assert.equal(chooseWork([sample],docs,'quick'),null);
+  docs.get(28).stages.matches.complete=true;
+  assert.equal(chooseWork([sample],docs,'history'),null);
 });
