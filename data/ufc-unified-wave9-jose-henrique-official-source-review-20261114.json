@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-jose-henrique-source-only-official-review",
+  "snapshot": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "approvedFighterSlug": "jose-henrique",
+  "approvedRosterSize": 783,
+  "canonicalUfcFighterName": "José Souza",
+  "originalSavedFighterName": "Jose Henrique",
+  "officialFighterUrl": "https://www.ufc.com/athlete/jose-souza",
+  "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/20a0e4cc5227c117",
+  "verifiedPrimaryNameReconciliation": "The official UFC page is titled José Souza and itself introduces 'José Henrique’s UFC history' and separately records official 2026 wins over Ding Meng and Jonny Parsons. Original saved native UFC athlete profile slug is jose-henrique; preserve native identity and original opponent corners. UFC.com.br also uses José Henrique in the image caption for the fighter headlined José Souza.",
+  "primaryIndependentSources": [
+    "https://www.ufc.com/athlete/jose-souza",
+    "https://www.ufc.com/athlete/jonny-parsons",
+    "https://www.ufc.com.br/index.php/news/conheca-lutadores-brasileiros-ufc-macau-2026",
+    "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-prelim-results"
+  ],
+  "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+  "sourceFighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+  "sourceFightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+  "sourceEventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+  "sourceCutoff": "2026-11-07",
+  "fullOfficialUfcCareerBoutCount": 2,
+  "bouts": [
+    {
+      "date": "2026-05-30",
+      "opponent": "Ding Meng",
+      "result": "win",
+      "method": "decision_split",
+      "officialUfcPrimaryUrl": "https://www.ufc.com/athlete/jose-souza"
+    },
+    {
+      "date": "2026-11-07",
+      "opponent": "Jonny Parsons",
+      "result": "win",
+      "method": "ko_tko",
+      "officialUfcPrimaryUrl": "https://www.ufc.com/news/ufc-fight-night-cortes-acosta-vs-walker-prelim-results"
+    }
+  ],
+  "nonUfcFeeder": "UFC.com biography separately documents 2022-08-30 DWCS loss to Yusaku Kinoshita; exclude if the original provider cache includes it, only by exact recorded native identity.",
+  "status": "primary_history_attested_pending_exact_independent_pinned_and_native_id_crosscheck",
+  "pending": [
+    "Greco pinned complete historical fighter and exact bout URLs",
+    "original saved native numeric fighter ID, bouts and opposing corners",
+    "source verified feeder exclusion if represented in provider UFC history",
+    "full strict 783-person Stage3 measurable-round audit"
+  ]
+}
