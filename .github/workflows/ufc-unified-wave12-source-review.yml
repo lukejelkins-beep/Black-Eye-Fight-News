@@ -1,12 +1,5 @@
 name: UFC wave12 six full UFC histories pinned source audit (nonproduction)
 on:
-  push:
-    branches:
-      - research/ufc-wave12-six-fastlane-20261114
-    paths:
-      - 'data/ufc-unified-wave12-official-source-review-20261114.json'
-      - 'scripts/ufc-unified-wave12-source-review.mjs'
-      - '.github/workflows/ufc-unified-wave12-source-review.yml'
   workflow_dispatch:
 permissions:
   contents: read
