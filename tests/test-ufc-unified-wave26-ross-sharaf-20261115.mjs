@@ -35,7 +35,7 @@ test('wave26: Ross DWCS feeder never counted as UFC bout, official losses overri
  assert.ok(ross.sourceVerifiedExcludedFeederBouts.some(b=>b.opponent==='Vinicius Salvador'&&b.result==='loss'&&b.date==='2022-08-02'&&b.officialSourceUrl.includes('ufc.com')));
  assert.ok(!ross.bouts.some(b=>b.opponent==='Vinicius Salvador'));
  assert.equal(ross.sourceVerifiedExcludedFeederBouts[0].nativeBoutId,'88249');
- const feeders=load('data/ufc-feeder-bout-evidence.json').bouts;
+ const feeders=read('data/ufc-feeder-bout-evidence.json').bouts;
  assert.ok(feeders.some(x=>x.fighterSlug==='shannon-ross'&&x.boutId==='88249'&&x.sourceUrl.includes('ufc.com/news/')));
 
  assert.deepEqual(sean.bouts.map(b=>b.result),['loss','loss','win']);
