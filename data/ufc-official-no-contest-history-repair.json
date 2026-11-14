@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "scope": "ufc-official-no-contest-history-repair",
+  "rosterAsOf": "2026-11-14",
+  "purpose": "Only repair 3 known official UFC no-contest bouts missing from the saved approved fighter timeline. UFCalendar native ID and official result must independently match. Never infer historical completeness.",
+  "bouts": [
+    {
+      "fightId": "59855",
+      "fighterSlug": "aliaskhab-khizriev",
+      "date": "2024-02-03",
+      "opponent": "Makhmud Muradov",
+      "result": "no_contest",
+      "sourceUrl": "https://www.ufc.com/news/ufc-fight-night-dolidze-vs-imavov-main-card-results-winner-interviews"
+    },
+    {
+      "fightId": "60458",
+      "fighterSlug": "tom-aspinall",
+      "date": "2025-10-25",
+      "opponent": "Ciryl Gane",
+      "result": "no_contest",
+      "sourceUrl": "https://www.ufc.com/event/ufc-321"
+    },
+    {
+      "fightId": "60666",
+      "fighterSlug": "alibi-idiris",
+      "date": "2026-02-21",
+      "opponent": "Ode Osbourne",
+      "result": "no_contest",
+      "sourceUrl": "https://www.ufc.com/event/ufc-fight-night-february-21-2026"
+    }
+  ]
+}
