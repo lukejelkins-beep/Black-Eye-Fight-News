@@ -195,11 +195,13 @@ function standingsTable(rows, limit=10) {
     '</tbody></table></div>';
 }
 function featureCard(w) {
-  const ent=entryFor(w), s=recordSummary(ent?.record, divisionOf(w.currentRank));
-  return '<a href="#profile/'+w.sourceId+'" class="feature-card"><div class="feature-top">' +
-    imageToken(w.currentRank,w.shikonaEn) +
-    '<div class="feature-info"><span class="rank">'+e(w.currentRank)+'</span><h3>'+e(w.shikonaEn)+'</h3><small>'+e(w.heya||'Stable not supplied')+'</small></div></div>' +
-    '<div class="feature-bottom"><span>'+e(divisionOf(w.currentRank))+'</span><span>'+(ent?e(s.win+'-'+s.loss+(s.absence?'-'+s.absence:'')):'RECORD NOT CACHED')+'</span></div></a>';
+  const ent=entryFor(w),s=recordSummary(ent?.record, divisionOf(w.currentRank));
+  return '<a href="#profile/'+w.sourceId+'" class="feature-card"><div class="feature-top">'+
+    portraitFor(w,'md')+
+    '<div class="feature-info"><span class="rank">'+e(w.currentRank)+'</span><h3>'+flagMark(w)+' '+e(w.shikonaEn)+'</h3>'+
+    '<small>'+e(w.heya||'Stable not supplied')+'</small></div></div>'+
+    '<div class="feature-bottom"><span>'+e(divisionOf(w.currentRank))+'</span><span>'+
+    (ent?e(s.win+'-'+s.loss):'RECORD NOT CACHED')+'</span></div></a>';
 }
 function previewHead() {
   const n=counts();
@@ -231,9 +233,12 @@ function renderHome() {
 }
 function directoryCard(w) {
   return '<a class="directory-card" href="#profile/'+w.sourceId+'"><div class="directory-upper">'+
-    imageToken(w.currentRank,w.shikonaEn)+'<div><small>'+e(divisionOf(w.currentRank))+'</small><h3>'+e(w.shikonaEn)+'</h3><small>'+e(w.shikonaJp||'')+'</small></div></div>' +
+    portraitFor(w,'md')+'<div><small>'+e(divisionOf(w.currentRank))+'</small>'+
+    '<h3>'+flagMark(w)+' '+e(w.shikonaEn)+'</h3>'+
+    '<small>'+e(w.shikonaJp||'')+'</small></div></div>'+
     '<div class="directory-lower"><div class="rank">'+e(w.currentRank||'Rank not supplied')+'</div>'+
-    '<div class="detail">'+e(w.heya||'Stable not supplied')+' · '+e(w.birthplace||'Origin unavailable')+'</div>'+
+    '<div class="detail">'+e(w.heya||'Stable not supplied')+'</div>'+
+    bioLine(w)+'<div class="sumo-directory-move">'+movementMarkup(w)+'</div>'+
     '<span class="cta">VIEW RIKISHI PROFILE →</span></div></a>';
 }
 function directoryMatches() {
