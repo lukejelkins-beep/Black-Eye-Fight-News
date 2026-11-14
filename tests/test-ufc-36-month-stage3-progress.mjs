@@ -517,3 +517,25 @@ test('Recoverable older UFC fights are detected from numeric fighter identities 
  assert.deepEqual(candidate.missingIndexedOfficialUfcFights.map(x=>x.id),['42']);
  assert.equal(candidate.historicalIdentityConflicts.length,0);
 });
+
+test('Full numeric fight-index search progress is distinct from complete-career certification',()=>{
+ const p={...progress,ufcApprovedFullFightSearchChecks:{
+   'fighter-1':{status:'checked',fighterId:'123',scannedRows:18,invalidRows:0},
+   'fighter-2':{status:'partial',fighterId:'456',scannedRows:25,cursor:'page2'},
+   'fighter-3':{status:'retry',fighterId:'789',scannedRows:0,retryAfter:'2026-11-21'},
+   'fighter-4':{status:'manual_review',fighterId:'987',scannedRows:3,invalidRows:1}
+ }};
+ const output=auditApprovedStage3(approval,census,p,research,archive);
+ const s=output.summary;
+ assert.equal(s.fullFightIndexSearchFightersWithAnyLedger,4);
+ assert.equal(s.fullFightIndexSearchFightersChecked,1);
+ assert.equal(s.fullFightIndexSearchFightersPartial,1);
+ assert.equal(s.fullFightIndexSearchFightersRetry,1);
+ assert.equal(s.fullFightIndexSearchFightersManualReview,1);
+ assert.equal(s.fullFightIndexSearchFightersNotAttempted,779);
+ assert.equal(s.fullFightIndexSearchProviderRowsScanned,46);
+ assert.equal(s.independentlyVerifiedFullCareerTimelines,0,
+   'Even paginated winner-fight searches cannot certify NC/draw historical completeness');
+ assert.deepEqual(output.fullFightIndexSearchReview.map(x=>x.slug),
+   ['fighter-2','fighter-3','fighter-4']);
+});
