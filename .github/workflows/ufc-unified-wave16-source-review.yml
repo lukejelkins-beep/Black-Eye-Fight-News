@@ -1,0 +1,31 @@
+name: UFC wave16 six complete careers source-native crosscheck (research only)
+on:
+  push:
+    branches: [research/ufc-wave16-amosov-hafez-20261114]
+    paths:
+      - 'data/ufc-unified-wave16-official-source-review-20261114.json'
+      - 'scripts/ufc-unified-wave16-source-review.mjs'
+      - '.github/workflows/ufc-unified-wave16-source-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-pinned-crosscheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Static code validation
+        run: node --check scripts/ufc-unified-wave16-source-review.mjs
+      - name: One-time source-only pinned public Greco UFCStats-to-unchanged-native-cache review
+        run: node scripts/ufc-unified-wave16-source-review.mjs
+      - name: Preserve source result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-wave16-independent-source-only
+          path: qa/ufc-unified-wave16-source-review.json
+          if-no-files-found: warn
