@@ -56,7 +56,7 @@ export function auditRikishi(w,cache){
         if(item.eastId!=null&&item.westId!=null&&Number(item.eastId)!==id&&Number(item.westId)!==id)
           errors.push('match-opponent-identity');
       }
-      if(stage==='ranks'&&item.rank!=='Mae-zumo'&&!banzuke.test(String(item.rank||'')))errors.push('malformed-rank-value');
+      if(stage==='ranks'&&!['Mae-zumo','Banzuke-gai'].includes(item.rank)&&!banzuke.test(String(item.rank||'')))errors.push('malformed-rank-value');
       if(stage==='measurements'&&item.weight!=null&&(!Number.isFinite(Number(item.weight))||Number(item.weight)<=0))errors.push('invalid-historical-weight');
       if(stage==='measurements'&&item.height!=null&&(!Number.isFinite(Number(item.height))||Number(item.height)<=0))errors.push('invalid-historical-height');
     }
@@ -75,7 +75,9 @@ export function auditRikishi(w,cache){
     if(regularMatches.length<Number(stats.totalMatches))errors.push('match-history-shortfall');
     if(regularMatches.length>Number(stats.totalMatches))errors.push('career-regular-bout-count-mismatch');
   }
-  const formalRanks=(cache.data?.ranks||[]).filter(x=>x.rank!=='Mae-zumo');
+  // Both Mae-zumo (debut trials) and Banzuke-gai (off-chart) are authentic
+  // non-ranked basho states; they must be retained but not counted as formal ranks.
+  const formalRanks=(cache.data?.ranks||[]).filter(x=>!['Mae-zumo','Banzuke-gai'].includes(x.rank));
   if(cache.stages?.ranks?.complete&&stats?.basho!=null&&formalRanks.length!==Number(stats.basho)){
     errors.push('rank-history-basho-count-mismatch');
   }
