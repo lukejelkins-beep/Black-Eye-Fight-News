@@ -52,6 +52,13 @@ for(const [slug,entry] of Object.entries(src.fighters)){
   explicitFeeder:/(?:contender series|road to ufc|dwcs)/i.test(progress.bouts?.[x.boutId]?.event||'')}));
  if(extrasWithScope.some(x=>!x.explicitFeeder))problems.push('unexplained_extra_native_history');
  if(fId.size!==1)problems.push('multiple_or_missing_numeric_fighter_ids');
+ if(slug==='sean-woodson')console.log('BEFN_WOODSON_EXACT_REVIEW '+JSON.stringify({
+  nativeDraw:progress.bouts?.['59846']||null,
+  archivedDraw:saved.filter(x=>String(x.boutId)==='59846'),
+  archivedDwcs:saved.filter(x=>String(x.boutId)==='84014'),
+  nativeDwcs:progress.bouts?.['84014']||null,
+  verifiedFeederEvidence:read('data/ufc-feeder-bout-evidence.json').bouts.filter(x=>x.fighterSlug===slug)
+ }));
  cases.push({slug,savedRows:saved.length,linkedSourceFights:out.length,
   measuredRows:out.filter(x=>x.measured).length,nativeFighterIds:[...fId],
   blockers:[...new Set(problems)],excludedFeederCandidates:extrasWithScope,
