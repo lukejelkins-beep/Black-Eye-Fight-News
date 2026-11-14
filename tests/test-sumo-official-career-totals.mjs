@@ -46,3 +46,27 @@ test('never use an official record when JSA identity or historic evidence disagr
  forged.career.wins++;
  assert.equal(authoritativeCareerTotals(w,raw,ledger,forged).source,'sumo-api-career-stats');
 });
+
+test('two-part JSA record never implies zero absences or an absence certificate',()=>{
+ const {w,raw,official,ledger}=gather(16);
+ const twoPart=structuredClone(official);
+ twoPart.career.absences=null;
+ twoPart.careerAbsencesPublished=false;
+ const record=authoritativeCareerTotals(w,raw,ledger,twoPart);
+ assert.equal(record.source,'official-JSA-public-WL-verified-absences-unpublished');
+ assert.deepEqual([record.selected.wins,record.selected.losses],[677,716]);
+ assert.equal(record.selected.absences,raw.data.stats.totalAbsences);
+ assert.equal(record.officialAbsencesPublished,false);
+ assert.equal(record.officialAbsencesVerified,false);
+ assert.equal(record.certifiedCareer,false);
+});
+test('two-part JSA source still rejects unverified W-L and mismatched identities',()=>{
+ const {w,raw,official,ledger}=gather(16);
+ const twoPart=structuredClone(official);
+ twoPart.career.absences=null;
+ twoPart.career.losses++;
+ assert.equal(authoritativeCareerTotals(w,raw,ledger,twoPart).source,'sumo-api-career-stats');
+ twoPart.career.losses--;
+ twoPart.url='https://www.sumo.or.jp/EnSumoDataRikishi/profile/999/';
+ assert.equal(authoritativeCareerTotals(w,raw,ledger,twoPart).source,'sumo-api-career-stats');
+});
