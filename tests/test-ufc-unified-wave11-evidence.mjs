@@ -111,9 +111,10 @@ test('Mark Vologdin retains official majority draw, never converted to win',()=>
  assert.equal(b.opponent,'John Castaneda');
  assert.equal(b.date,'2026-04-18');
 });
-test('Two unresolved complex-source candidates remain outside these certificates',()=>{
+test('wave11 historical follow-ups remain recorded while Marnic is independently re-gated',()=>{
  assert.ok(source.followUpNotCertified.some(x=>x.slug==='marnic-mann'));
  assert.ok(source.followUpNotCertified.some(x=>x.slug==='nyamjargal-tumendemberel'));
- assert.equal(registry.fighters['marnic-mann'],undefined);
+ assert.equal(registry.fighters['marnic-mann']?.sourceCoverageAttested,true);
+ assert.equal(registry.fighters['marnic-mann']?.bouts.length,2);
  assert.equal(registry.fighters['nyamjargal-tumendemberel'],undefined);
 });
