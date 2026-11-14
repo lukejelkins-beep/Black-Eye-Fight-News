@@ -124,3 +124,18 @@ test("a provider-only certification is vetoed by saved history discrepancy",()=>
  assert.equal(r.summary.providerOnlyCertified,0);
  assert.equal(r.summary.pendingCertification,783);
 });
+
+test("one-day official date offset is surfaced with saved native ID but never auto-certified",()=>{
+ const v=inputs(),slug="fighter-025";
+ v[1].fighters[slug].knownCareerBouts=1;
+ v[2].profiles[slug]={recentHistory:[{promotion:"UFC",date:"2023-02-04",
+  opponent:"SeungGuk Choi",result:"win",boutId:"native-123"}]};
+ v[6].fighters[slug]={sourceUrl:"https://www.ufc.com/athlete/test",
+  bouts:[{date:"2023-02-05",opponent:"SeungGuk Choi",result:"win"}]};
+ const r=auditCareerVerification(...v);
+ const c=r.officialCrosschecks.find(x=>x.slug===slug);
+ assert.equal(c.exactUnmatchedBouts.length,1);
+ assert.equal(c.closeCandidates[0].savedCandidates[0].boutId,"native-123");
+ assert.equal(c.closeCandidates[0].savedCandidates[0].reason,"one_day_date_offset");
+ assert.equal(r.summary.pendingCertification,783);
+});
