@@ -70,6 +70,29 @@ test('the existing paid collector reports offline Stage 3 progress without a sec
   assert.match(yaml,/Offline Stage 3 audit unavailable; preserve newly fetched records/);
 });
 
+test('exact UFC-site verified feeder bout is excluded without event cache evidence',()=>{
+ const p={...progress,bouts:{'44':fight(44,'Opponent D')}};
+ const r={profiles:{'fighter-1':{recentHistory:[
+   history(83940,'Jerome Rivera','2020-08-04'),
+   history(44,'Opponent D')
+ ]}}};
+ const proof={schema:1,bouts:[{
+   boutId:'83940',fighterSlug:'fighter-1',date:'2020-08-04',
+   opponent:'Jerome Rivera',sourceUrl:'https://www.ufc.com/athlete/luis-rodriguez'
+ }]};
+ const x=auditApprovedStage3(approval,census,p,r,archive,proof).summary;
+ assert.equal(x.additionalSourceVerifiedFeederHistoryRows,1);
+ assert.equal(x.excludedDistinctFeederNativeFightIds,1);
+ assert.equal(x.uniqueNativeFightIdsAwaitingIndex,0);
+ assert.equal(x.uniqueNativeFightIds,1);
+ assert.equal(r.profiles['fighter-1'].recentHistory.length,2);
+ // A false or incompletely matched citation cannot drop a UFC history row.
+ const invalid={schema:1,bouts:[{...proof.bouts[0],opponent:'Other Fighter'}]};
+ const y=auditApprovedStage3(approval,census,p,r,archive,invalid).summary;
+ assert.equal(y.uniqueNativeFightIdsAwaitingIndex,1);
+ assert.equal(y.additionalSourceVerifiedFeederHistoryRows,0);
+});
+
 test('corroborated Contender Series dates are excluded only from UFC-only counts',()=>{
  const p={...progress,bouts:{
    '900':{id:'900',org:'ufc',eventDate:'2022-08-09',
