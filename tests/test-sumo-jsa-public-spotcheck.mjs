@@ -48,3 +48,13 @@ test('public-text extractor strips scripts, tags and decodes entities',()=>{
  assert.ok(!htmlToPublicText(official).includes('fake injection'));
  assert.equal(htmlToPublicText('<div>A&nbsp;&amp;&nbsp;B</div>'),'A & B');
 });
+
+test('official Ozeki rank omits numeric side; grade is checked but position stays null',()=>{
+ const source=official.replace('Makushita #2','Ozeki');
+ const w2={...w,currentRank:'Ozeki 2 East'};
+ const result=parseOfficialProfile(source,w2);
+ assert.equal(result.status,'basic-fields-parsed');
+ assert.deepEqual(result.rank,{division:'Ozeki',position:null});
+ assert.equal(result.fieldComparisons.rankGrade,true);
+ assert.equal(result.certification,'not-started');
+});
