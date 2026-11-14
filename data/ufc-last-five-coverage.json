@@ -15,23 +15,23 @@
     "latestPromotionReviewRequired": 34,
     "noKnownLaterMmaOrUnknown": 685,
     "activeFighters": 719,
-    "withFiveKnown": 437,
-    "withFiveLinkedIds": 437,
+    "withFiveKnown": 438,
+    "withFiveLinkedIds": 438,
     "withThreeMeasured": 547,
-    "withShortUfcTimelineReconciled": 1,
-    "withUfcHistoryLinkedAndMeasured": 384,
+    "withShortUfcTimelineReconciled": 0,
+    "withUfcHistoryLinkedAndMeasured": 383,
     "evidenceStages": {
       "fiveLinkedMeasured": 383,
-      "fiveLinkedStatsGap": 54,
+      "fiveLinkedStatsGap": 55,
       "fiveUnlinked": 0,
-      "shortLinkedMeasuredDepthConfirmed": 1,
+      "shortLinkedMeasuredDepthConfirmed": 0,
       "shortLinkedMeasuredDepthUnconfirmed": 251,
       "shortLinkedStatsGapDepthConfirmed": 0,
       "shortLinkedStatsGap": 30,
       "shortUnlinked": 0
     },
     "needHistoryCheck": 281,
-    "needStats": 84,
+    "needStats": 85,
     "shiftedDateAliasesJoined": 343,
     "uniqueKnownBoutIds": 1731
   },
@@ -37719,13 +37719,31 @@
       "champion": false,
       "upcoming": false,
       "ranked": false,
-      "recentCount": 1,
+      "recentCount": 5,
       "measuredCount": 1,
-      "evidenceStage": "shortLinkedMeasuredDepthConfirmed",
-      "ufcTimelineDepthConfirmed": true,
+      "evidenceStage": "fiveLinkedStatsGap",
+      "ufcTimelineDepthConfirmed": false,
       "needsHistoryCheck": false,
-      "needsStats": false,
+      "needsStats": true,
       "recent": [
+        {
+          "date": "2026-06-06",
+          "opponent": "Édgar Cháirez",
+          "boutId": "66015",
+          "method": "submission",
+          "outcome": "L",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        },
+        {
+          "date": "2026-03-14",
+          "opponent": "Charles Johnson",
+          "boutId": "60716",
+          "method": "decision_split",
+          "outcome": "L",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        },
         {
           "date": "2025-10-18",
           "opponent": "Park Hyun-sung",
@@ -37734,6 +37752,24 @@
           "outcome": "W",
           "origin": "ufc-bout-index",
           "hasMeasuredTotals": true
+        },
+        {
+          "date": "2025-06-08",
+          "opponent": "Joshua Van",
+          "boutId": "60866",
+          "method": "ko_tko",
+          "outcome": "L",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
+        },
+        {
+          "date": "2024-12-15",
+          "opponent": "Manel Kape",
+          "boutId": "60370",
+          "method": "ko_tko",
+          "outcome": "L",
+          "origin": "ufc-history",
+          "hasMeasuredTotals": false
         }
       ]
     },
