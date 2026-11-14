@@ -10,6 +10,7 @@ on:
       - assets/sumo.css
       - assets/sumo-nav.css
       - scripts/sumo-build-preview.mjs
+      - scripts/sumo-coverage-report.mjs
       - data/sumo/**
       - tests/test-sumo-data.mjs
       - .github/workflows/sumo-section-qa.yml
@@ -37,6 +38,16 @@ jobs:
         run: |
           node --test tests/test-sumo-api-source.mjs
           node --test tests/test-sumo-data.mjs
+      - name: Audit 190 rikishi data coverage and movement
+        run: node scripts/sumo-coverage-report.mjs
+      - name: Upload coverage report for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-sumo-data-coverage
+          path: qa/sumo-reports/coverage.json
+          retention-days: 14
+          if-no-files-found: warn
       - name: Assert isolation from production publishing
         run: |
           test -f sumo.html
