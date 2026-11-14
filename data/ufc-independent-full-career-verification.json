@@ -20848,6 +20848,338 @@
           "nativeFighterId": "4680"
         }
       ]
+    },
+    "yaroslav-amosov": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Yaroslav Amosov",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/f139d6836efd43dd",
+      "officialFighterUrl": "https://www.ufc.com/athlete/yaroslav-amosov",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Complete dated primary UFC.com athlete biographies (narrative outcome and official event results override incorrect graphical Win badges). Reconcile every historical official UFC bout against exact pinned Greco UFCStats-derived fight URL/event and original saved numeric UFCalendar native bout IDs, both athlete and opposing fighter IDs, completed winner, date and full measured rounds. Independently source-exclude native DWCS bouts. UFC 2023 Road to UFC Asia final included; prior 2022 qualifier excluded. No paid UFCalendar calls or live-cache writes."
+      },
+      "verifiedNumericFighterIds": [
+        "14"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Independent exhaustive UFC.com dated complete official Octagon career through 14 November 2026, with 2 source fight IDs and original saved numeric native fighter/corner IDs, exact winner, outcomes and measured rounds. 0 exact source-attested DWCS historical feeder(s) separately excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/yaroslav-amosov",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43581033140",
+      "bouts": [
+        {
+          "date": "2025-12-13",
+          "opponent": "Neil Magny",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0fca825e14429c1f",
+          "nativeBoutId": "60653",
+          "nativeFighterId": "14"
+        },
+        {
+          "date": "2026-05-09",
+          "opponent": "Joel Alvarez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f88dc6e0c29cff1d",
+          "nativeBoutId": "66056",
+          "nativeFighterId": "14"
+        }
+      ]
+    },
+    "yuneisy-duben": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Yuneisy Duben",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/c3d2b9bcb4cead6b",
+      "officialFighterUrl": "https://www.ufc.com/athlete/yuneisy-duben",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Complete dated primary UFC.com athlete biographies (narrative outcome and official event results override incorrect graphical Win badges). Reconcile every historical official UFC bout against exact pinned Greco UFCStats-derived fight URL/event and original saved numeric UFCalendar native bout IDs, both athlete and opposing fighter IDs, completed winner, date and full measured rounds. Independently source-exclude native DWCS bouts. UFC 2023 Road to UFC Asia final included; prior 2022 qualifier excluded. No paid UFCalendar calls or live-cache writes."
+      },
+      "verifiedNumericFighterIds": [
+        "98"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Independent exhaustive UFC.com dated complete official Octagon career through 14 November 2026, with 2 source fight IDs and original saved numeric native fighter/corner IDs, exact winner, outcomes and measured rounds. 1 exact source-attested DWCS historical feeder(s) separately excluded. The Jeisla Chaves 2026-06-06 shared fight is reciprocally anchored to the already source-certified opposing fighter, same exact native ID 66016 and UFCStats fight URL.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/yuneisy-duben",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da",
+        "https://www.ufc.com/athlete/jeisla-chaves"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43581033140",
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83888",
+          "date": "2024-09-03",
+          "opponent": "Shannon Clark",
+          "result": "win",
+          "event": "Dana White's Contender Series, Season 8 Episode 4",
+          "officialSourceUrl": "https://www.ufc.com/athlete/yuneisy-duben",
+          "excludedBecause": "DWCS independent feeder; not a completed official UFC Octagon bout"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2025-03-15",
+          "opponent": "Carli Judice",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a8f8245096eaf0cd",
+          "nativeBoutId": "60367",
+          "nativeFighterId": "98"
+        },
+        {
+          "date": "2026-06-06",
+          "opponent": "Jeisla Chaves",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a6b211d8dab5edec",
+          "nativeBoutId": "66016",
+          "nativeFighterId": "98"
+        }
+      ]
+    },
+    "alex-reyes": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Alex Reyes",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/dc07493a87dc0a6e",
+      "officialFighterUrl": "https://www.ufc.com/athlete/alex-reyes",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Complete dated primary UFC.com athlete biographies (narrative outcome and official event results override incorrect graphical Win badges). Reconcile every historical official UFC bout against exact pinned Greco UFCStats-derived fight URL/event and original saved numeric UFCalendar native bout IDs, both athlete and opposing fighter IDs, completed winner, date and full measured rounds. Independently source-exclude native DWCS bouts. UFC 2023 Road to UFC Asia final included; prior 2022 qualifier excluded. No paid UFCalendar calls or live-cache writes."
+      },
+      "verifiedNumericFighterIds": [
+        "2681"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Independent exhaustive UFC.com dated complete official Octagon career through 14 November 2026, with 3 source fight IDs and original saved numeric native fighter/corner IDs, exact winner, outcomes and measured rounds. 0 exact source-attested DWCS historical feeder(s) separately excluded. The dated 2017 debut is included despite 36-month activity used only for cohort eligibility.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/alex-reyes",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43581033140",
+      "bouts": [
+        {
+          "date": "2017-09-16",
+          "opponent": "Mike Perry",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3dd22a9a0ea68cc6",
+          "nativeBoutId": "58567",
+          "nativeFighterId": "2681"
+        },
+        {
+          "date": "2023-09-16",
+          "opponent": "Charlie Campbell",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/58b2fdad7af9be02",
+          "nativeBoutId": "60051",
+          "nativeFighterId": "2681"
+        },
+        {
+          "date": "2024-08-17",
+          "opponent": "Tom Nolan",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ce75f5ecbc0d3dfd",
+          "nativeBoutId": "65954",
+          "nativeFighterId": "2681"
+        }
+      ]
+    },
+    "anshul-jubli": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Anshul Jubli",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/a72a2a769fa5a2be",
+      "officialFighterUrl": "https://www.ufc.com/athlete/anshul-jubli",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Complete dated primary UFC.com athlete biographies (narrative outcome and official event results override incorrect graphical Win badges). Reconcile every historical official UFC bout against exact pinned Greco UFCStats-derived fight URL/event and original saved numeric UFCalendar native bout IDs, both athlete and opposing fighter IDs, completed winner, date and full measured rounds. Independently source-exclude native DWCS bouts. UFC 2023 Road to UFC Asia final included; prior 2022 qualifier excluded. No paid UFCalendar calls or live-cache writes."
+      },
+      "verifiedNumericFighterIds": [
+        "2782"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Independent exhaustive UFC.com dated complete official Octagon career through 14 November 2026, with 3 source fight IDs and original saved numeric native fighter/corner IDs, exact winner, outcomes and measured rounds. 0 exact source-attested DWCS historical feeder(s) separately excluded. The 2023-02-04 officially held Road to UFC Asia lightweight final versus Jeka Saragih is one official UFC contest; the 2022-10-23 RTU semifinal versus KyeongPyo Kim is a non-UFC tournament qualifier and is not present in the UFC-only saved cache, so no fabricated feeder native ID is claimed.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/anshul-jubli",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43581033140",
+      "bouts": [
+        {
+          "date": "2023-02-04",
+          "opponent": "Jeka Saragih",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b1b20c686dfe3204",
+          "nativeBoutId": "59748",
+          "nativeFighterId": "2782"
+        },
+        {
+          "date": "2023-10-21",
+          "opponent": "Mike Breeden",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/75c5f923f966b53b",
+          "nativeBoutId": "60006",
+          "nativeFighterId": "2782"
+        },
+        {
+          "date": "2025-02-08",
+          "opponent": "Quillan Salkilld",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/4218d1d1ce6d322c",
+          "nativeBoutId": "60990",
+          "nativeFighterId": "2782"
+        }
+      ]
+    },
+    "ante-delija": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Ante Delija",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/7d8435c56043b0ae",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ante-delija",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Complete dated primary UFC.com athlete biographies (narrative outcome and official event results override incorrect graphical Win badges). Reconcile every historical official UFC bout against exact pinned Greco UFCStats-derived fight URL/event and original saved numeric UFCalendar native bout IDs, both athlete and opposing fighter IDs, completed winner, date and full measured rounds. Independently source-exclude native DWCS bouts. UFC 2023 Road to UFC Asia final included; prior 2022 qualifier excluded. No paid UFCalendar calls or live-cache writes."
+      },
+      "verifiedNumericFighterIds": [
+        "265"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Independent exhaustive UFC.com dated complete official Octagon career through 14 November 2026, with 3 source fight IDs and original saved numeric native fighter/corner IDs, exact winner, outcomes and measured rounds. 0 exact source-attested DWCS historical feeder(s) separately excluded. Previous PFL professional fight history is outside the present UFC-only certification scope.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/ante-delija",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43581033140",
+      "bouts": [
+        {
+          "date": "2025-09-06",
+          "opponent": "Marcin Tybura",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/23dbe713c4294c66",
+          "nativeBoutId": "60478",
+          "nativeFighterId": "265"
+        },
+        {
+          "date": "2025-11-01",
+          "opponent": "Waldo Cortes Acosta",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9d9390b550d77e06",
+          "nativeBoutId": "60419",
+          "nativeFighterId": "265"
+        },
+        {
+          "date": "2026-02-21",
+          "opponent": "Serghei Spivac",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/04b7bcc0e8488604",
+          "nativeBoutId": "60662",
+          "nativeFighterId": "265"
+        }
+      ]
+    },
+    "bassil-hafez": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Bassil Hafez",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/f4d92416da98804b",
+      "officialFighterUrl": "https://www.ufc.com/athlete/bassil-hafez",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact independently pinned Greco UFCStats-derived historical CSV, not a claimed direct UFCStats live page scrape",
+        "method": "Complete dated primary UFC.com athlete biographies (narrative outcome and official event results override incorrect graphical Win badges). Reconcile every historical official UFC bout against exact pinned Greco UFCStats-derived fight URL/event and original saved numeric UFCalendar native bout IDs, both athlete and opposing fighter IDs, completed winner, date and full measured rounds. Independently source-exclude native DWCS bouts. UFC 2023 Road to UFC Asia final included; prior 2022 qualifier excluded. No paid UFCalendar calls or live-cache writes."
+      },
+      "verifiedNumericFighterIds": [
+        "2820"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Independent exhaustive UFC.com dated complete official Octagon career through 14 November 2026, with 3 source fight IDs and original saved numeric native fighter/corner IDs, exact winner, outcomes and measured rounds. 0 exact source-attested DWCS historical feeder(s) separately excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/bassil-hafez",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43581033140",
+      "bouts": [
+        {
+          "date": "2023-07-15",
+          "opponent": "Jack Della Maddalena",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3352c65f3f6d9b2a",
+          "nativeBoutId": "60116",
+          "nativeFighterId": "2820"
+        },
+        {
+          "date": "2024-06-01",
+          "opponent": "Mickey Gall",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/7d9bb6fda0ea1ee0",
+          "nativeBoutId": "60257",
+          "nativeFighterId": "2820"
+        },
+        {
+          "date": "2024-11-16",
+          "opponent": "Oban Elliott",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9676a4e9362e4bfd",
+          "nativeBoutId": "60391",
+          "nativeFighterId": "2820"
+        }
+      ]
     }
   }
 }
