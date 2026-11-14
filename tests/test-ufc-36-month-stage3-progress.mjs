@@ -586,3 +586,38 @@ test('Official source inventory rejects changed cohort and unverified fighter UR
  assert.equal(auditOfficialCareerInventory(inv,slugs,census,{},{}).totalSourceBouts,0);
  assert.equal(auditOfficialCareerInventory({...inv,rosterAsOf:'2026-10-01'},slugs,census,{},{}).totalSourceBouts,0);
 });
+
+test('Source-confirmed UFC recovery audit separates win/loss search and non-winner event cards',()=>{
+ const p={...progress,
+   ufcOfficialSourceDateChecks:{
+      'athlete|2026-06-06|opponent':{status:'linked',nativeId:'101'},
+      'athlete|2026-03-14|opponent':{status:'not_found',reason:'no_exact_match'},
+      'athlete|2024-12-14|opponent':{status:'manual_review'},
+      'athlete|2023-02-04|opponent':{status:'non_winner_api_not_applicable'},
+      'athlete|2020-03-14|opponent':{status:'retry',retryAfter:'2026-11-21'}},
+   ufcOfficialSourceDatePages:{
+      '2026-06-06':{status:'done'},'2020-03-14':{status:'partial'}},
+   ufcOfficialSourceNonWinnerChecks:{
+      'athlete|2019-10-05|taha':{status:'linked',nativeId:'102'},
+      'athlete|2018-01-01|other':{status:'manual_review'},
+      'athlete|2017-01-01|third':{status:'not_found'},
+      'athlete|2016-01-01|fourth':{status:'retry',retryAfter:'2026-11-21'}}
+ };
+ const out=auditApprovedStage3(approval,census,p,research,archive);
+ const s=out.summary;
+ assert.equal(s.sourceWinnerDateSearchLinked,1);
+ assert.equal(s.sourceWinnerDateSearchNotFound,1);
+ assert.equal(s.sourceWinnerDateSearchManualReview,1);
+ assert.equal(s.sourceWinnerDateSearchNonWinnerExcluded,1);
+ assert.equal(s.sourceWinnerDateSearchRetry,1);
+ assert.equal(s.sourceWinnerDateSearchDateWindowsExhausted,1);
+ assert.equal(s.sourceWinnerDateSearchDateWindowsPartial,1);
+ assert.equal(s.sourceNonWinnerEventCardsLinked,1);
+ assert.equal(s.sourceNonWinnerEventCardsManualReview,1);
+ assert.equal(s.sourceNonWinnerEventCardsNotFound,1);
+ assert.equal(s.sourceNonWinnerEventCardsRetry,1);
+ assert.equal(out.officialSourceRecoveryReview.length,9);
+ assert.ok(out.officialSourceRecoveryReview.every(r=>
+   ['winner_date_search','nonwinner_event_card'].includes(r.type)));
+ assert.equal(s.independentlyVerifiedFullCareerTimelines,0);
+});
