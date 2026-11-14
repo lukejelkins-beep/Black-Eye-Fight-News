@@ -243,6 +243,79 @@ class FullCareerCacheTests(unittest.TestCase):
         self.assertIsNone(missing["providerTruncatedFlag"])
         self.assertFalse(missing["complete"])
 
+    def nc_cache_fixture(self):
+        state=m.default_progress()
+        pairs=[
+          ("59855","2024-02-03","UFC Fight Night: Dolidze vs Imavov",
+           "aliaskhab-khizriev","Aliaskhab Khizriev","muradov","Makhmud Muradov"),
+          ("60458","2025-10-25","UFC 321: Aspinall vs Gane",
+           "tom-aspinall","Tom Aspinall","ciryl-gane","Ciryl Gane"),
+          ("60666","2026-02-21","UFC Fight Night: Strickland vs Hernandez",
+           "ode-osbourne","Ode Osbourne","alibi-idiris","Alibi Idiris")
+        ]
+        for bid,date,event,slug_a,name_a,slug_b,name_b in pairs:
+            state["bouts"][bid]={
+              "id":bid,"org":"ufc","status":"no_contest",
+              "eventDate":date,"event":event,"titleFight":bid=="60458",
+              "a":{"slug":slug_a,"name":name_a},"b":{"slug":slug_b,"name":name_b}}
+        slugs=["aliaskhab-khizriev","tom-aspinall","alibi-idiris"]
+        research={"profiles":{s:{"recentHistory":[{
+          "promotion":"ufc","source":"native","result":"win",
+          "date":"2022-02-01","opponent":"Old Opponent","boutId":"9000"
+        }],"ufcTimeline":{"complete":False}} for s in slugs}}
+        census={"schema":1,"scope":"ufc","activityMonths":36,
+            "asOf":"2026-11-14","indexCompleteness":"36_month_event_scan_complete",
+            "fighters":[{"slug":s,"eligibilityStatus":"latest_observed_mma_ufc"}
+                        for s in slugs]}
+        approval={**self.approval(slugs),
+            "rosterAsOf":"2026-11-14","approvedAt":"2026-11-14"}
+        manifest=m.read(m.OFFICIAL_NC_REPAIR,{})
+        return state,research,census,approval,manifest
+
+    def test_exact_official_cached_nc_histories_are_added_once_and_keep_old_careers(self):
+        state,research,census,approval,manifest=self.nc_cache_fixture()
+        before_bouts=dict(state["bouts"])
+        first=m.reconcile_cached_official_nc_histories(
+            state,research,census,dt.date(2026,11,14),approval,manifest)
+        self.assertEqual(first,{"added":3,"blocked":0})
+        for fighter,id in [
+            ("aliaskhab-khizriev","59855"),
+            ("tom-aspinall","60458"),
+            ("alibi-idiris","60666")]:
+            history=research["profiles"][fighter]["recentHistory"]
+            self.assertEqual(len(history),2)
+            self.assertEqual(history[0]["result"],"no_contest")
+            self.assertEqual(history[0]["source"],"native")
+            self.assertEqual(history[0]["boutId"],id)
+            self.assertEqual(history[1]["opponent"],"Old Opponent")
+            self.assertFalse(research["profiles"][fighter]["ufcTimeline"]["complete"],
+                             "Source-backed NC result cannot certify full career")
+        self.assertEqual(state["bouts"],before_bouts,
+                         "Do not overwrite any archived native fight or round statistics")
+        self.assertEqual(m.reconcile_cached_official_nc_histories(
+            state,research,census,dt.date(2026,11,14),approval,manifest),
+            {"added":0,"blocked":0},"Every subsequent five-minute run is idempotent")
+
+    def test_cached_nc_identity_and_official_results_are_fail_closed(self):
+        import copy
+        state,research,census,approval,manifest=self.nc_cache_fixture()
+        for scenario in ["unapproved","wrong_native_id","wrong_opponent",
+                         "not_nc","feeder_event","wrong_date","source_unverified"]:
+            st,rs,cv,ap,ma=(copy.deepcopy(x) for x in
+                            (state,research,census,approval,manifest))
+            ma["bouts"]=ma["bouts"][:1]
+            if scenario=="unapproved":ap["status"]="pending"
+            elif scenario=="wrong_native_id":st["bouts"]["59855"]["id"]="1111"
+            elif scenario=="wrong_opponent":st["bouts"]["59855"]["b"]["name"]="Other"
+            elif scenario=="not_nc":st["bouts"]["59855"]["status"]="completed"
+            elif scenario=="feeder_event":st["bouts"]["59855"]["event"]="Dana White's Contender Series"
+            elif scenario=="wrong_date":st["bouts"]["59855"]["eventDate"]="2024-02-02"
+            elif scenario=="source_unverified":ma["bouts"][0]["sourceUrl"]="https://example.com"
+            outcome=m.reconcile_cached_official_nc_histories(
+                st,rs,cv,dt.date(2026,11,14),ap,ma)
+            self.assertEqual(outcome["added"],0,scenario)
+            self.assertEqual(len(rs["profiles"]["aliaskhab-khizriev"]["recentHistory"]),1)
+
     def test_no_signoff_no_full_career_calls(self):
         state,research,candidate=self.fixture()
         client=Fake()
