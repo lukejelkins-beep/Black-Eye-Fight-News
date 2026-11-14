@@ -139,3 +139,31 @@ test("one-day official date offset is surfaced with saved native ID but never au
  assert.equal(c.closeCandidates[0].savedCandidates[0].reason,"one_day_date_offset");
  assert.equal(r.summary.pendingCertification,783);
 });
+
+test("independent full-career certification survives stale provider-only history disagreement",()=>{
+ const v=inputs(),slug="fighter-031";
+ v[1].fighters[slug].independentlyCertifiedCareer=true;
+ v[1].fighters[slug].careerCoverageStatus="independently_verified_full_career";
+ v[2].profiles[slug]={ufcTimeline:{savedHistoryHasAdditionalUfcBouts:true,
+   missingRosterLastUfcFight:true},recentHistory:[]};
+ const r=auditCareerVerification(...v);
+ assert.equal(r.summary.independentlyCertified,1);
+ assert.equal(r.summary.pendingCertification,782);
+ assert.equal(r.summary.providerDiscrepancy,1);
+});
+test("independent career flag cannot override an actual native fighter-ID conflict",()=>{
+ const v=inputs(),slug="fighter-032";
+ v[1].fighters[slug].independentlyCertifiedCareer=true;
+ v[2].profiles[slug]={ufcHistoryIdConflicts:[{nativeId:"999",expected:"888"}]};
+ const r=auditCareerVerification(...v);
+ assert.equal(r.summary.independentlyCertified,0);
+ assert.equal(r.summary.pendingCertification,783);
+});
+test("provider-only flag remains blocked by provider history disagreement",()=>{
+ const v=inputs(),slug="fighter-033";
+ v[1].fighters[slug].ufcTimelineCertified=true;
+ v[2].profiles[slug]={ufcTimeline:{savedHistoryHasAdditionalUfcBouts:true}};
+ const r=auditCareerVerification(...v);
+ assert.equal(r.summary.providerOnlyCertified,0);
+ assert.equal(r.summary.pendingCertification,783);
+});
