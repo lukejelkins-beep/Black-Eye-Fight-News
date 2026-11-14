@@ -77,6 +77,21 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
  const nativeMapped=given.length>0&&given.every(r=>
    numId(r?.nativeBoutId)&&numId(r?.nativeFighterId));
  const nativeIdentitySet=new Set(arr(ext.verifiedNumericFighterIds).map(numId).filter(Boolean));
+ // Joanne Calderwood competed under the surname Wood later in her career.
+ // The *single* verified Maryna debut native ID permits this name change,
+ // never an unscoped alias, duplicate bout or generic source assertion.
+ const sourceOpponentMatches=(actual,expected,sourceBout)=>{
+   if(sameAthleteName(actual,expected))return true;
+   const pair=[normal(actual),normal(expected)].sort().join('|');
+   return pair==='joannecalderwood|joannewood'&&
+     String(sourceBout.nativeBoutId)==='56917'&&
+     String(sourceBout.nativeFighterId)==='1113'&&
+     sourceBout.date==='2015-04-11'&&
+     sourceBout.opponent==='Joanne Wood'&&
+     sourceBout.fightUrl==='https://ufcstats.com/fight-details/fe9a58e79d54695b'&&
+     ext.fighterUrl==='https://ufcstats.com/fighter-details/b4192a975027aab6'&&
+     ext.officialFighterUrl==='https://www.ufc.com/athlete/maryna-moroz';
+ };
  const nativeMatches=nativeMapped&&indexedBouts&&
    normal(ext.fighterName)===normal(profile?.name)&&
    /^https:\/\/www\.ufc\.com\/athlete\//i.test(String(ext.officialFighterUrl||''))&&
@@ -95,13 +110,13 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
      if(!b||b.org!=='ufc'||isFeederTitle(b.event)||
         !['completed','draw','no_contest'].includes(b.status)||
         delta(r.date,h.date)>1||delta(r.date,b.eventDate)>1||
-        !sameAthleteName(r.opponent,h.opponent)||
+        !sourceOpponentMatches(h.opponent,r.opponent,r)||
         normalizedOutcome(r.result)!==normalizedOutcome(h.result))return false;
      const corners=[[b.a,b.b],[b.b,b.a]].filter(([own,other])=>
        own&&other&&String(own.id)===String(r.nativeFighterId)&&
        nativeIdentitySet.has(String(own.id))&&
        normal(own.name)===normal(ext.fighterName)&&
-       sameAthleteName(other.name,r.opponent));
+       sourceOpponentMatches(other.name,r.opponent,r));
      if(corners.length!==1)return false;
      const [own,other]=corners[0];
      const outcome=b.status==='no_contest'?'no_contest':
