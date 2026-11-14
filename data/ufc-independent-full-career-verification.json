@@ -784,6 +784,395 @@
         "cutoffLastEvent": "2026-11-07",
         "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da"
       }
+    },
+    "sam-hughes": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "certificationStatus": "independently_verified_full_career",
+      "fighterName": "Sam Hughes",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/e94085e821bd81de",
+      "officialFighterUrl": "https://www.ufc.com/athlete/sam-hughes",
+      "earliestOfficialUfcBout": "2020-12-12",
+      "latestCompletedOfficialUfcBout": "2026-03-14",
+      "verifiedUfcRecord": {
+        "wins": 6,
+        "losses": 6,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "131"
+      ],
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-14",
+        "sourceSnapshotLatestEvent": "2026-11-07",
+        "independentFullHistoryUrl": "https://thefightalgorithm.com/fighters/sam-hughes",
+        "method": "Complete UFCStats-derived historical event/result source index crosschecked bout-by-bout against dated current official UFC.com biography and separate complete 12-fight listing; verified native corner and numeric ID, results, full roster activity date and measured-round archive. UFCStats live pages unavailable (502), individual UFCStats source URLs from historical snapshot."
+      },
+      "nativeIdentityReconciliation": "All 12 distinct UFC fights matched current and historical numeric native fighter ID 131. Official event dates preserved separately from any archived UTC shifts; original source cache unchanged.",
+      "sourceDateReconciliations": [
+        {
+          "opponent": "Yazmin Jauregui",
+          "officialEventDate": "2024-02-24",
+          "savedUtcDate": "2024-02-25",
+          "offsetDays": 1,
+          "nativeBoutId": "39032"
+        },
+        {
+          "opponent": "Tecia Pennington",
+          "officialEventDate": "2020-12-12",
+          "savedUtcDate": "2020-12-13",
+          "offsetDays": 1,
+          "nativeBoutId": "61857"
+        }
+      ],
+      "sourceCoverageSummary": {
+        "sourceRows": 12,
+        "officialUfcBiographyDatedBouts": 12,
+        "uniqueNativeBoutIds": 12,
+        "uniqueUfcStatsFightUrls": 12,
+        "measuredBouts": 12,
+        "missingOrContradictoryBouts": 0
+      },
+      "bouts": [
+        {
+          "date": "2026-03-14",
+          "opponent": "Piera Rodriguez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/244285b7fd0ddece",
+          "eventUrl": "https://ufcstats.com/event-details/babc6b5745335f18",
+          "nativeBoutId": "60724",
+          "nativeFighterId": "131",
+          "savedUtcDate": "2026-03-14",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2025-09-06",
+          "opponent": "Shauna Bannon",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a38010639e61885c",
+          "eventUrl": "https://ufcstats.com/event-details/6e380a4d73ab4f0e",
+          "nativeBoutId": "60483",
+          "nativeFighterId": "131",
+          "savedUtcDate": "2025-09-06",
+          "sourceMethod": "Submission",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2025-03-15",
+          "opponent": "Stephanie Luciano",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5fa6543868367f4b",
+          "eventUrl": "https://ufcstats.com/event-details/39f62b833e4cf126",
+          "nativeBoutId": "60364",
+          "nativeFighterId": "131",
+          "savedUtcDate": "2025-03-15",
+          "sourceMethod": "Decision - Split",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2024-08-03",
+          "opponent": "Viktoriia Dudakova",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f80143e1f3c3d319",
+          "eventUrl": "https://ufcstats.com/event-details/fe435e440b5de0ff",
+          "nativeBoutId": "61101",
+          "nativeFighterId": "131",
+          "savedUtcDate": "2024-08-03",
+          "sourceMethod": "Decision - Split",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2024-02-24",
+          "opponent": "Yazmin Jauregui",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6e4acb2aaa2cee56",
+          "eventUrl": "https://ufcstats.com/event-details/902ab9197b83d0db",
+          "nativeBoutId": "39032",
+          "nativeFighterId": "131",
+          "savedUtcDate": "2024-02-25",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2023-04-08",
+          "opponent": "Jaqueline Amorim",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/355a2f4090c0ca31",
+          "eventUrl": "https://ufcstats.com/event-details/3dc3022232b79c7a",
+          "nativeBoutId": "53837",
+          "nativeFighterId": "131",
+          "savedUtcDate": "2023-04-08",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2022-10-15",
+          "opponent": "Piera Rodriguez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/60bd4d2878c85f70",
+          "eventUrl": "https://ufcstats.com/event-details/49c29e57d4e2be6f",
+          "nativeBoutId": "61209",
+          "nativeFighterId": "131",
+          "savedUtcDate": "2022-10-15",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2022-05-21",
+          "opponent": "Elise Reed",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/bc7228d30ff5be46",
+          "eventUrl": "https://ufcstats.com/event-details/a6c32678efd4f434",
+          "nativeBoutId": "61465",
+          "nativeFighterId": "131",
+          "savedUtcDate": "2022-05-21",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2022-04-16",
+          "opponent": "Istela Nunes",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0daf776bd222daad",
+          "eventUrl": "https://ufcstats.com/event-details/8753e125f4499816",
+          "nativeBoutId": "61527",
+          "nativeFighterId": "131",
+          "savedUtcDate": "2022-04-16",
+          "sourceMethod": "Decision - Majority",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2021-11-20",
+          "opponent": "Luana Pinheiro",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8dd086e2e70144fd",
+          "eventUrl": "https://ufcstats.com/event-details/c95fbc085e17a532",
+          "nativeBoutId": "61679",
+          "nativeFighterId": "131",
+          "savedUtcDate": "2021-11-20",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2021-05-01",
+          "opponent": "Loma Lookboonmee",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d6b5a6ad27a730ae",
+          "eventUrl": "https://ufcstats.com/event-details/d57e6a8971b6d2bd",
+          "nativeBoutId": "61570",
+          "nativeFighterId": "131",
+          "savedUtcDate": "2021-05-01",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2020-12-12",
+          "opponent": "Tecia Pennington",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5ddf45e816a50fac",
+          "eventUrl": "https://ufcstats.com/event-details/d0d43cb9b14f231c",
+          "nativeBoutId": "61857",
+          "nativeFighterId": "131",
+          "savedUtcDate": "2020-12-13",
+          "sourceMethod": "TKO - Doctor's Stoppage",
+          "measuredRoundStatsVerifiedInV4": true
+        }
+      ]
+    },
+    "tabatha-ricci": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "certificationStatus": "independently_verified_full_career",
+      "fighterName": "Tabatha Ricci",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/d25240135aee03e5",
+      "officialFighterUrl": "https://www.ufc.com/athlete/tabatha-ricci",
+      "earliestOfficialUfcBout": "2021-06-05",
+      "latestCompletedOfficialUfcBout": "2026-07-18",
+      "verifiedUfcRecord": {
+        "wins": 7,
+        "losses": 5,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "590"
+      ],
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-14",
+        "sourceSnapshotLatestEvent": "2026-11-07",
+        "independentFullHistoryUrl": "https://thefightalgorithm.com/fighters/tabatha-ricci",
+        "method": "Complete UFCStats-derived historical event/result source index crosschecked bout-by-bout against dated current official UFC.com biography and separate complete 12-fight listing; verified native corner and numeric ID, results, full roster activity date and measured-round archive. UFCStats live pages unavailable (502), individual UFCStats source URLs from historical snapshot."
+      },
+      "nativeIdentityReconciliation": "All 12 distinct UFC fights matched current and historical numeric native fighter ID 590. Official event dates preserved separately from any archived UTC shifts; original source cache unchanged.",
+      "sourceDateReconciliations": [],
+      "sourceCoverageSummary": {
+        "sourceRows": 12,
+        "officialUfcBiographyDatedBouts": 12,
+        "uniqueNativeBoutIds": 12,
+        "uniqueUfcStatsFightUrls": 12,
+        "measuredBouts": 12,
+        "missingOrContradictoryBouts": 0
+      },
+      "bouts": [
+        {
+          "date": "2026-07-18",
+          "opponent": "Fatima Kline",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/52ddf20a10890b41",
+          "eventUrl": "https://ufcstats.com/event-details/f354c50b8d63d9b3",
+          "nativeBoutId": "82921",
+          "nativeFighterId": "590",
+          "savedUtcDate": "2026-07-18",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2026-04-04",
+          "opponent": "Virna Jandiroba",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/721642e7de112e9e",
+          "eventUrl": "https://ufcstats.com/event-details/9a70f67ad2187fa3",
+          "nativeBoutId": "60699",
+          "nativeFighterId": "590",
+          "savedUtcDate": "2026-04-04",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2025-07-26",
+          "opponent": "Amanda Ribas",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3e6067763978d862",
+          "eventUrl": "https://ufcstats.com/event-details/28d8638ea0a71908",
+          "nativeBoutId": "60825",
+          "nativeFighterId": "590",
+          "savedUtcDate": "2025-07-26",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2024-11-23",
+          "opponent": "Yan Xiaonan",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f0c4aff7dd1ec4e9",
+          "eventUrl": "https://ufcstats.com/event-details/e955046551f8c7dd",
+          "nativeBoutId": "38586",
+          "nativeFighterId": "590",
+          "savedUtcDate": "2024-11-23",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2024-08-24",
+          "opponent": "Angela Hill",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/70afe9e0d2422252",
+          "eventUrl": "https://ufcstats.com/event-details/be8ad887e4d674b0",
+          "nativeBoutId": "60228",
+          "nativeFighterId": "590",
+          "savedUtcDate": "2024-08-24",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2024-05-11",
+          "opponent": "Tecia Pennington",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/13d8d5cd83e5b57e",
+          "eventUrl": "https://ufcstats.com/event-details/5dfe71ade71f3a4b",
+          "nativeBoutId": "60937",
+          "nativeFighterId": "590",
+          "savedUtcDate": "2024-05-11",
+          "sourceMethod": "Decision - Split",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2023-11-11",
+          "opponent": "Loopy Godinez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a0362d60d2e1db0d",
+          "eventUrl": "https://ufcstats.com/event-details/5a558ba1ff5e9121",
+          "nativeBoutId": "59966",
+          "nativeFighterId": "590",
+          "savedUtcDate": "2023-11-11",
+          "sourceMethod": "Decision - Split",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2023-06-24",
+          "opponent": "Gillian Robertson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c22de92b9d9030dc",
+          "eventUrl": "https://ufcstats.com/event-details/a780d16cf7eed44d",
+          "nativeBoutId": "60161",
+          "nativeFighterId": "590",
+          "savedUtcDate": "2023-06-24",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2023-03-04",
+          "opponent": "Jessica Penne",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c3b9b97467f828d1",
+          "eventUrl": "https://ufcstats.com/event-details/1ccff7f0cfdf85eb",
+          "nativeBoutId": "59691",
+          "nativeFighterId": "590",
+          "savedUtcDate": "2023-03-04",
+          "sourceMethod": "Submission",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2022-05-21",
+          "opponent": "Polyana Viana",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5eaff5c832430378",
+          "eventUrl": "https://ufcstats.com/event-details/a6c32678efd4f434",
+          "nativeBoutId": "61458",
+          "nativeFighterId": "590",
+          "savedUtcDate": "2022-05-21",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2021-10-23",
+          "opponent": "Maria Oliveira",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1fe58cdab57d233b",
+          "eventUrl": "https://ufcstats.com/event-details/8a9c6c4301f6d088",
+          "nativeBoutId": "65796",
+          "nativeFighterId": "590",
+          "savedUtcDate": "2021-10-23",
+          "sourceMethod": "Decision - Unanimous",
+          "measuredRoundStatsVerifiedInV4": true
+        },
+        {
+          "date": "2021-06-05",
+          "opponent": "Manon Fiorot",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/419d1e29668b57fb",
+          "eventUrl": "https://ufcstats.com/event-details/3b2485c8d5c8b580",
+          "nativeBoutId": "59506",
+          "nativeFighterId": "590",
+          "savedUtcDate": "2021-06-05",
+          "sourceMethod": "KO/TKO",
+          "measuredRoundStatsVerifiedInV4": true
+        }
+      ]
     }
   }
 }
