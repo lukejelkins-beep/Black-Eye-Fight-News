@@ -7,12 +7,13 @@ import {readFile,writeFile,mkdir,rename} from 'node:fs/promises';
 import {join} from 'node:path';
 import {unrankedDebutEvidence} from './sumo-backfill-190.mjs';
 import {applyOfficialBoutCorrections} from './sumo-official-bout-corrections.mjs';
+import {authoritativeCareerTotals} from './sumo-official-career-totals.mjs';
 const ROOT='data/sumo/backfill/v1';
 const REQUIRED=['profile','stats','measurements','ranks','shikonas','matches'];
 const banzuke=/^(Yokozuna|Ozeki|Sekiwake|Komusubi|Maegashira|Juryo|Makushita|Sandanme|Jonidan|Jonokuchi)\s+[1-9]\d{0,2}\s+(East|West)$/;
 const basho=/^(18|19|20)\d{2}(01|03|05|07|09|11)$/;
 const read=async (file,fallback=null)=>{try{return JSON.parse(await readFile(file,'utf8'));}catch(e){if(e.code==='ENOENT')return fallback;throw e;}};
-export function auditRikishi(w,cache,officialCorrectionEvidence=null){
+export function auditRikishi(w,cache,officialCorrectionEvidence=null,officialCareerSnapshot=null){
   if(!cache)return {sourceId:w.sourceId,name:w.shikonaEn,status:'not-attempted',readyForExternalCrosscheck:false,errors:[],warnings:[],stagesCompleted:0,counts:{weights:0,ranks:0,matches:0}};
   const errors=[],warnings=[],id=Number(w.sourceId);
   if(cache.rikishiId!==id)errors.push('cache-identity');
@@ -93,17 +94,24 @@ export function auditRikishi(w,cache,officialCorrectionEvidence=null){
   boutLedger.winDifference=stats?.totalWins==null?null:boutLedger.wins-Number(stats.totalWins);
   boutLedger.lossDifference=stats?.totalLosses==null?null:boutLedger.losses-Number(stats.totalLosses);
   boutLedger.totalDifference=stats?.totalMatches==null?null:boutLedger.regularRows-Number(stats.totalMatches);
+  const effectiveTotals=authoritativeCareerTotals(w,cache,boutLedger,officialCareerSnapshot);
+  boutLedger.authoritativeWins=effectiveTotals.selected.wins;
+  boutLedger.authoritativeLosses=effectiveTotals.selected.losses;
+  boutLedger.authoritativeMatches=effectiveTotals.selected.matches;
+  boutLedger.authoritativeSource=effectiveTotals.source;
+  if(effectiveTotals.independentlyResolvedSourceDifference)
+    warnings.push('api-career-summary-lag-independent-JSA-ledger-agreement');
   if(cache.stages?.matches?.complete&&boutLedger.missingWinner>0)
     errors.push('match-winner-missing');
   // A matching total alone is insufficient: verify every reported win and
   // loss against the individually sourced regular bouts before readiness.
-  if(cache.stages?.matches?.complete&&stats?.totalWins!=null&&boutLedger.winDifference!==0)
+  if(cache.stages?.matches?.complete&&Number.isFinite(effectiveTotals.selected.wins)&&boutLedger.wins!==effectiveTotals.selected.wins)
     errors.push('career-win-count-mismatch');
-  if(cache.stages?.matches?.complete&&stats?.totalLosses!=null&&boutLedger.lossDifference!==0)
+  if(cache.stages?.matches?.complete&&Number.isFinite(effectiveTotals.selected.losses)&&boutLedger.losses!==effectiveTotals.selected.losses)
     errors.push('career-loss-count-mismatch');
-  if(cache.stages?.matches?.complete&&stats?.totalMatches!=null){
-    if(regularMatches.length<Number(stats.totalMatches))errors.push('match-history-shortfall');
-    if(regularMatches.length>Number(stats.totalMatches))errors.push('career-regular-bout-count-mismatch');
+  if(cache.stages?.matches?.complete&&Number.isFinite(effectiveTotals.selected.matches)){
+    if(regularMatches.length<effectiveTotals.selected.matches)errors.push('match-history-shortfall');
+    if(regularMatches.length>effectiveTotals.selected.matches)errors.push('career-regular-bout-count-mismatch');
   }
   // Both Mae-zumo (debut trials) and Banzuke-gai (off-chart) are authentic
   // non-ranked basho states; they must be retained but not counted as formal ranks.
@@ -123,7 +131,7 @@ export function auditRikishi(w,cache,officialCorrectionEvidence=null){
     sourceId:id,name:w.shikonaEn,status,readyForExternalCrosscheck:allComplete&&!uniqueErrors.length,
     errors:uniqueErrors,warnings:uniqueWarnings,stagesCompleted:REQUIRED.filter(s=>cache.stages?.[s]?.complete).length,
     counts:{weights:cache.data?.measurements?.length||0,ranks:cache.data?.ranks?.length||0,matches:allMatches.length,regularMatches:regularMatches.length,specialMatches:specialMatches.length,formalRanks:formalRanks.length},
-    boutLedger,appliedOfficialBoutCorrections:official.applied,careerCertified:false
+    boutLedger,effectiveCareerTotals:effectiveTotals,appliedOfficialBoutCorrections:official.applied,careerCertified:false
   };
 }
 export function crossCheckOfficial(w,cache,evidence){
@@ -163,7 +171,8 @@ async function main(){
   const audited=[],officialComparisons=[];
   for(const w of cohort.rikishi){
     const doc=await read(join(ROOT,'rikishi',w.sourceId+'.json'));
-    audited.push(auditRikishi(w,doc,correctionManifest));
+    const publicSnapshot=await read(join(ROOT,'jsa-public','profiles',w.sourceId+'.json'),null);
+    audited.push(auditRikishi(w,doc,correctionManifest,publicSnapshot));
     const checked=crossCheckOfficial(w,doc,spotchecks.bySourceId?.[String(w.sourceId)]);
     if(checked)officialComparisons.push(checked);
   }
@@ -175,6 +184,7 @@ async function main(){
     integrityException:audited.filter(x=>x.status==='source-integrity-exception').length,
     sourceReady:audited.filter(x=>x.readyForExternalCrosscheck).length,
     officiallyCorrectedSourceBouts:audited.reduce((n,x)=>n+(x.appliedOfficialBoutCorrections?.length||0),0),
+    officiallyResolvedCareerStatsLags:audited.filter(x=>x.effectiveCareerTotals?.independentlyResolvedSourceDifference).length,
     records:{weight:audited.reduce((a,b)=>a+b.counts.weights,0),rank:audited.reduce((a,b)=>a+b.counts.ranks,0),matches:audited.reduce((a,b)=>a+b.counts.matches,0)},
     independentJsaSpotchecks:{
       identityVerified:officialComparisons.filter(x=>x.identityVerified).length,
