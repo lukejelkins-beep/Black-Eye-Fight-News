@@ -1,0 +1,418 @@
+{
+  "observedAt": "2026-11-14T08:54:58.190Z",
+  "pr": {
+    "number": 190,
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "head": "0ac044fdde1fab90a2180a39172ae1f2b75d4d21",
+    "mergeable": true,
+    "mergeable_state": "clean"
+  },
+  "pinnedMain": "9e131c2c3823c257c267dc781866f3576344bb9e",
+  "qaChangedFiles": [
+    ".github/workflows/befn-release-readiness.yml",
+    ".github/workflows/verify-live-ufc-profiles.yml",
+    ".gitignore",
+    "assets/news-dedupe.js",
+    "assets/results.js",
+    "assets/upcoming-cards.js",
+    "docs/mobile-app.md",
+    "docs/qa-supervisor.md",
+    "qa/ci-measurements-20261114.json",
+    "qa/findings.json",
+    "qa/release-review-190.md",
+    "qa/supervisor-baseline-20261114.json",
+    "qa/supervisor-baseline-20261114.md",
+    "qa/supervisor-followup-20261114.md",
+    "qa/supervisor-inventory-20261114.json",
+    "scripts/build-mobile.mjs",
+    "scripts/news_dedupe.py",
+    "scripts/qa-supervisor.py",
+    "tests/test-mobile-build.mjs",
+    "tests/test-news-dedupe.cjs",
+    "tests/test-qa-supervisor.py",
+    "tests/test-results-card-order.cjs",
+    "tests/test-results-ui.cjs",
+    "tests/test-upcoming-cards.cjs",
+    "tests/test_news_dedupe.py"
+  ],
+  "otherOpenPrOverlap": [
+    {
+      "number": 193,
+      "head": "0cc009be44f7916a47a2f4101407cecc7b177cb9",
+      "files": [
+        ".github/workflows/ufc-unified-wave10-source-review.yml",
+        "data/ufc-unified-wave10-official-source-review-20261114.json",
+        "scripts/ufc-unified-wave10-source-review.mjs",
+        "tests/test-ufc-unified-wave10-source-review.mjs"
+      ],
+      "error": false,
+      "overlap": []
+    },
+    {
+      "number": 192,
+      "head": "f41ee3cb1e9211b0c490bdb9dea56cda1a5eea5e",
+      "files": [
+        ".github/workflows/ufc-unified-wave9-jose-source-review.yml",
+        ".github/workflows/ufc-unified-wave9-jose-strict-stage3.yml",
+        "data/ufc-feeder-bout-evidence.json",
+        "data/ufc-independent-full-career-verification.json",
+        "data/ufc-unified-wave9-jose-henrique-official-source-review-20261114.json",
+        "scripts/ufc-unified-wave9-jose-source-review.mjs",
+        "tests/test-ufc-unified-wave9-jose-evidence.mjs"
+      ],
+      "error": false,
+      "overlap": []
+    },
+    {
+      "number": 191,
+      "head": "db216ccf045b92d16903d72a59eb69a99e7fc7eb",
+      "files": [
+        ".github/workflows/ufc-unified-wave8-source-review.yml",
+        ".github/workflows/ufc-unified-wave8-strict-stage3.yml",
+        "data/ufc-feeder-bout-evidence.json",
+        "data/ufc-independent-full-career-verification.json",
+        "data/ufc-unified-wave8-official-source-review-20261114.json",
+        "scripts/ufc-unified-jonny-native-alias-review.mjs",
+        "scripts/ufc-unified-wave8-source-review.mjs",
+        "tests/test-ufc-unified-wave8-evidence.mjs"
+      ],
+      "error": false,
+      "overlap": []
+    },
+    {
+      "number": 189,
+      "head": "69920a9be6c2a9a7da7514f6af2b49ac1be012b7",
+      "files": [
+        ".github/workflows/audit-ufc-research-pipeline.yml",
+        ".github/workflows/ufc-next8-pinned-source-review.yml",
+        "data/ufc-feeder-bout-evidence.json",
+        "data/ufc-independent-full-career-verification.json",
+        "data/ufc-stage3-v4-consolidation-manifest-20261114.json",
+        "data/ufc-unified-mandel-official-source-review-20261114.json",
+        "data/ufc-unified-next-two-official-source-review-20261114.json",
+        "data/ufc-unified-victor-valenzuela-identity-review-20261114.json",
+        "data/ufc-unified-wave10-official-source-review-20261114.json",
+        "data/ufc-unified-wave3-official-source-review-20261114.json",
+        "data/ufc-unified-wave4-official-source-review-20261114.json",
+        "data/ufc-unified-wave5-official-source-review-20261114.json",
+        "data/ufc-unified-wave6-official-source-review-20261114.json",
+        "data/ufc-unified-wave7-official-source-review-20261114.json",
+        "docs/ufc-unified-career-certification-workstream.md",
+        "scripts/diagnose-ufc-v4-stage3-blockers.mjs",
+        "scripts/ufc-36-month-stage3-progress.mjs",
+        "scripts/ufc-reconcile-stage3-v4-certifications.mjs",
+        "scripts/ufc-unified-ding-exact-alias-review.mjs",
+        "scripts/ufc-unified-mandel-source-review.mjs",
+        "scripts/ufc-unified-next8-source-review.mjs",
+        "scripts/ufc-unified-next8b-source-review.mjs",
+        "scripts/ufc-unified-victor-source-review.mjs",
+        "scripts/ufc-unified-wave3-source-review.mjs",
+        "scripts/ufc-unified-wave4-source-review.mjs",
+        "scripts/ufc-unified-wave5-source-review.mjs",
+        "scripts/ufc-unified-wave6-source-review.mjs",
+        "scripts/ufc-unified-wave7-source-review.mjs",
+        "tests/test-ufc-36-month-stage3-progress.mjs",
+        "tests/test-ufc-stage3-v4-reconciliation.mjs",
+        "tests/test-ufc-unified-mandel-evidence.mjs",
+        "tests/test-ufc-unified-next-two-official-source-review.mjs",
+        "tests/test-ufc-unified-victor-evidence.mjs",
+        "tests/test-ufc-unified-wave10-evidence.mjs",
+        "tests/test-ufc-unified-wave3-evidence.mjs",
+        "tests/test-ufc-unified-wave4-evidence.mjs",
+        "tests/test-ufc-unified-wave5-evidence.mjs",
+        "tests/test-ufc-unified-wave6-evidence.mjs",
+        "tests/test-ufc-unified-wave6-idempotence.mjs",
+        "tests/test-ufc-unified-wave7-evidence.mjs",
+        "tests/test-ufc-unified-wave8-wave9-evidence.mjs",
+        "tests/test-ufc-v4-stage3-import.mjs"
+      ],
+      "error": false,
+      "overlap": []
+    },
+    {
+      "number": 186,
+      "head": "59a192eefb18acd1c8bb5c51714074efc273c52b",
+      "files": [
+        "data/ufc-independent-full-career-verification.json"
+      ],
+      "error": false,
+      "overlap": []
+    },
+    {
+      "number": 179,
+      "head": "4c148613e7591d7f8acc910e903264cf3328f44f",
+      "files": [
+        "data/ufc-independent-full-career-verification.json",
+        "research/ufc-v4-exceptions/2026-11-14-motta-ogden-bellato.md"
+      ],
+      "error": false,
+      "overlap": []
+    },
+    {
+      "number": 141,
+      "head": "a62b77e050846e8125f6d525a50ae84e0b433a28",
+      "files": [
+        ".github/workflows/verify-ufc-v4-maryna-certification.yml",
+        "data/ufc-independent-full-career-verification.json",
+        "scripts/verify-ufc-v4-maryna-certification.mjs"
+      ],
+      "error": false,
+      "overlap": []
+    },
+    {
+      "number": 137,
+      "head": "31bd5b99ecf848c27b9e0d1fd4c215f9e920760a",
+      "files": [
+        ".github/workflows/audit-ufc-official-reverse-native-evidence.yml",
+        "scripts/audit-ufc-official-reverse-native-evidence.mjs",
+        "tests/test-ufc-official-reverse-native-evidence.mjs"
+      ],
+      "error": false,
+      "overlap": []
+    },
+    {
+      "number": 136,
+      "head": "c69b0d48c971793796427e2a9a700ff2ddb2045c",
+      "files": [
+        ".github/workflows/review-ufc-pilot-career-certification.yml",
+        "scripts/ufc-next-career-certification-candidates.mjs",
+        "scripts/ufc-pilot-certification-case-report.mjs",
+        "tests/test-ufc-next-career-certification-candidates.mjs",
+        "tests/test-ufc-pilot-certification-case-report.mjs"
+      ],
+      "error": false,
+      "overlap": []
+    },
+    {
+      "number": 133,
+      "head": "5e738834238249b9708bc231bbfd4772085c1206",
+      "files": [
+        ".github/workflows/ufcalendar-rich-backfill.yml",
+        ".github/workflows/validate-ufc-independent-certification.yml",
+        "data/ufc-greco-crosscheck-checkpoint.json",
+        "docs/ufc-independent-career-verification.md",
+        "scripts/audit-ufc-greco-bulk-crosscheck.mjs",
+        "scripts/build-ufc-independent-certification-queue.mjs",
+        "scripts/reconcile-ufc-independent-evidence.mjs",
+        "tests/test-reconcile-ufc-independent-evidence.mjs",
+        "tests/test-ufc-greco-bulk-crosscheck.mjs",
+        "tests/test-ufc-independent-certification-queue.mjs"
+      ],
+      "error": false,
+      "overlap": []
+    },
+    {
+      "number": 109,
+      "head": "002e2c26f0b52fcd415f7c75416e3f539e9518a1",
+      "files": [
+        ".github/workflows/validate-ufc-v4-stat-foundation.yml",
+        "data/ufc-feeder-bout-evidence.json",
+        "data/ufc-v4-bill-algeo-fight-evidence-20261114.json",
+        "data/ufc-v4-bout-classification-exceptions-20261114.json",
+        "data/ufc-v4-first-two-official-career-evidence.json",
+        "data/ufc-v4-import-stage3-source-proof-candidates-20261114.json",
+        "data/ufc-v4-independent-full-career-certification-batch-20261114.json",
+        "data/ufc-v4-next18-greco-fight-links-20261114.json",
+        "data/ufc-v4-next20-greco-fight-links-20261114.json",
+        "data/ufc-v4-official-nc-source-recovery-candidates-20261114.json",
+        "data/ufc-v4-stage3-reuse-exceptions-20261114.json",
+        "data/ufc-v4-targeted-greco-fight-links-20261114.json",
+        "data/ufc-v4-targeted-round-corroboration.json",
+        "data/ufc-v4-wave3-greco-fight-links-20261114.json",
+        "data/ufc-v4-wave4-greco-fight-links-20261114.json",
+        "data/ufc-v4-wave5-greco-fight-links-20261114.json",
+        "data/ufc-v4-wave6-greco-fight-links-20261114.json",
+        "docs/ufc-v4-unified-certification-workstream.md",
+        "qa/ufc-v4-fastlane-adrian-luna-martinetti-source-review-20261114.md",
+        "qa/ufc-v4-fastlane-cameron-nelson-source-review-20261114.md",
+        "qa/ufc-v4-fastlane-crosswalk-id-review-20261114.md",
+        "qa/ufc-v4-first-three-independent-source-crosscheck.md",
+        "scripts/audit-ufc-v4-bill-algeo-direct.mjs",
+        "scripts/audit-ufc-v4-career-verification.mjs",
+        "scripts/audit-ufc-v4-eight-candidate-native-evidence.mjs",
+        "scripts/audit-ufc-v4-exception-causes.mjs",
+        "scripts/audit-ufc-v4-first-two-certification-attempt.mjs",
+        "scripts/audit-ufc-v4-main-stage3-source-reuse.mjs",
+        "scripts/audit-ufc-v4-metric-availability.mjs",
+        "scripts/audit-ufc-v4-next18-native-evidence.mjs",
+        "scripts/audit-ufc-v4-next20-blocked-source-details.mjs",
+        "scripts/audit-ufc-v4-next20-native-evidence.mjs",
+        "scripts/audit-ufc-v4-release-gates.mjs",
+        "scripts/audit-ufc-v4-source-conflicts.mjs",
+        "scripts/audit-ufc-v4-wave3-native-evidence.mjs",
+        "scripts/audit-ufc-v4-wave4-native-evidence.mjs",
+        "scripts/audit-ufc-v4-wave5-native-evidence.mjs",
+        "scripts/audit-ufc-v4-wave6-native-evidence.mjs",
+        "scripts/build-ufc-postfight-metrics.mjs",
+        "scripts/build-ufc-v4-shadow-ratings.mjs",
+        "scripts/build-ufc-v4-stat-foundation.mjs",
+        "scripts/certify-ufc-v4-independent-full-careers.mjs",
+        "scripts/ufc-next-career-certification-candidates.mjs",
+        "scripts/ufc-official-event-scope.mjs",
+        "scripts/ufc-v4-next18-greco-evidence.mjs",
+        "scripts/ufc-v4-next20-greco-evidence.mjs",
+        "scripts/ufc-v4-next20-pinned-source-links.mjs",
+        "scripts/ufc-v4-targeted-greco-evidence.mjs",
+        "scripts/ufc-v4-wave3-greco-evidence.mjs",
+        "scripts/ufc-v4-wave4-greco-evidence.mjs",
+        "scripts/ufc-v4-wave5-greco-evidence.mjs",
+        "scripts/ufc-v4-wave6-greco-evidence.mjs",
+        "tests/test-ufc-next-career-certification-candidates.mjs",
+        "tests/test-ufc-postfight-metrics.mjs",
+        "tests/test-ufc-v4-career-verification.mjs",
+        "tests/test-ufc-v4-exception-causes.mjs",
+        "tests/test-ufc-v4-independent-full-careers.mjs",
+        "tests/test-ufc-v4-metric-availability.mjs",
+        "tests/test-ufc-v4-release-gates.mjs",
+        "tests/test-ufc-v4-round-corroboration.mjs",
+        "tests/test-ufc-v4-shadow-ratings.mjs",
+        "tests/test-ufc-v4-source-conflicts.mjs",
+        "tests/test-ufc-v4-source-scope.mjs",
+        "tests/test-ufc-v4-stat-foundation.mjs"
+      ],
+      "error": false,
+      "overlap": []
+    },
+    {
+      "number": 106,
+      "head": "fdafa1f127dec815fa7ca3ad5a3e20c802d989a7",
+      "files": [
+        "docs/continuous-ufc-profiles.md",
+        "docs/ufc-external-achievements-research-project.md",
+        "docs/ufc-v4-algorithms-credentials-deployment-plan.md"
+      ],
+      "error": false,
+      "overlap": []
+    },
+    {
+      "number": 95,
+      "head": "f8bbbcc6bf37d22e8639c4b237622c47bfbbf157",
+      "files": [
+        "data/ufc-feeder-bout-evidence.json",
+        "scripts/ufc-36-month-stage3-progress.mjs",
+        "scripts/ufcalendar-rich-backfill.py",
+        "tests/test-ufc-36-month-stage3-progress.mjs",
+        "tests/test_ufc_full_career_cache.py"
+      ],
+      "error": false,
+      "overlap": []
+    },
+    {
+      "number": 77,
+      "head": "eec868c906061cf40807e7f7490592734aa32f4c",
+      "files": [
+        "data/ufc-36-month-reviewed-evidence.json"
+      ],
+      "error": false,
+      "overlap": []
+    },
+    {
+      "number": 48,
+      "head": "f0955669d890c06298f0cb104f9e2c8f24f33faf",
+      "files": [
+        ".github/workflows/qa-ufc-performance-periods.yml",
+        "assets/fighter-insights.js",
+        "assets/fighter-profile-v3-layout-preview.css",
+        "assets/ufc-stat-leaderboards.css",
+        "docs/approved-ufc-v3-5-10-career-design.md",
+        "scripts/audit-ufc-career-period-cache.mjs",
+        "scripts/build-ufc-postfight-metrics.mjs",
+        "scripts/ufc-performance-periods.mjs",
+        "tests/test-ufc-career-period-cache.mjs",
+        "tests/test-ufc-leaderboards-page.mjs",
+        "tests/test-ufc-performance-periods.mjs"
+      ],
+      "error": false,
+      "overlap": []
+    },
+    {
+      "number": 47,
+      "head": "f41795cd70b78e9ede827c199e933eb1472fc67b",
+      "files": [
+        "scripts/build-ufc-fighter-v3.mjs",
+        "tests/test-ufc-fighter-v3.mjs"
+      ],
+      "error": false,
+      "overlap": []
+    },
+    {
+      "number": 11,
+      "head": "bcadd359a0e862387b2010d796ed70f6376b5f7c",
+      "files": [
+        ".github/workflows/boxerbook-source-qa.yml",
+        "docs/boxerbook-source.md",
+        "scripts/boxerbook_source.py",
+        "tests/test_boxerbook_source.py"
+      ],
+      "error": false,
+      "overlap": []
+    },
+    {
+      "number": 9,
+      "head": "e35d280ce9b7eb47d8998f47ab780d9145c2e672",
+      "files": [
+        "data/grappling-events.json"
+      ],
+      "error": false,
+      "overlap": []
+    }
+  ],
+  "protection": "Still unknown: prior authenticated branch-protection GET403; public rulesets[] does not establish classic protection absent.",
+  "scope": "Read-only integration check. No source/worktree/ref/PR mutation or deployment. Only Git object history fetched.",
+  "localComparison": {
+    "qa": "0ac044fdde1fab90a2180a39172ae1f2b75d4d21",
+    "main": "9e131c2c3823c257c267dc781866f3576344bb9e",
+    "mergeBase": "90f084dc35ddc81c964ac53e8390228ec65ae6ed",
+    "mainAhead": 29,
+    "qaAhead": 16,
+    "mainChangedFiles": [
+      "data/fight-film.json",
+      "data/fight-talk-embedded.json",
+      "data/fight-talk-industry-discovery.json",
+      "data/fight-talk-live.json",
+      "data/fight-talk-profile-discovery.json",
+      "data/fight-talk-x-api.json",
+      "data/fight-talk-x-budget.json",
+      "data/news-live.json",
+      "data/pfl-research-archive.json",
+      "data/ufc-profile-research-queue.json",
+      "data/ufc-research-archive.json",
+      "data/ufcalendar-card-enhancements.json",
+      "data/ufcalendar-rich-progress.json",
+      "data/upcoming-cards.json"
+    ],
+    "qaChangedFiles": [
+      ".github/workflows/befn-release-readiness.yml",
+      ".github/workflows/verify-live-ufc-profiles.yml",
+      ".gitignore",
+      "assets/news-dedupe.js",
+      "assets/results.js",
+      "assets/upcoming-cards.js",
+      "docs/mobile-app.md",
+      "docs/qa-supervisor.md",
+      "qa/ci-measurements-20261114.json",
+      "qa/findings.json",
+      "qa/release-review-190.md",
+      "qa/supervisor-baseline-20261114.json",
+      "qa/supervisor-baseline-20261114.md",
+      "qa/supervisor-followup-20261114.md",
+      "qa/supervisor-inventory-20261114.json",
+      "scripts/build-mobile.mjs",
+      "scripts/news_dedupe.py",
+      "scripts/qa-supervisor.py",
+      "tests/test-mobile-build.mjs",
+      "tests/test-news-dedupe.cjs",
+      "tests/test-qa-supervisor.py",
+      "tests/test-results-card-order.cjs",
+      "tests/test-results-ui.cjs",
+      "tests/test-upcoming-cards.cjs",
+      "tests/test_news_dedupe.py"
+    ],
+    "sharedChangedPaths": [],
+    "mergeTreeConflictMarkers": 0,
+    "mergeTreeChangedInBoth": 0,
+    "mergeTreeExit": 0
+  }
+}

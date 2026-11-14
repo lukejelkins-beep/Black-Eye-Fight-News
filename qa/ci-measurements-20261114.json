@@ -1,0 +1,665 @@
+{
+  "method": "Three latest sampled scheduled main runs per workflow; API job/step elapsed seconds, not billing or CPU time. Zero reflects timestamp resolution.",
+  "runs": [
+    {
+      "run": 43566933642,
+      "workflow": ".github/workflows/refresh-results.yml",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566933642",
+      "started": "2026-11-14T06:33:37Z",
+      "jobs": [
+        {
+          "name": "refresh",
+          "conclusion": "success",
+          "seconds": 14,
+          "steps": [
+            {
+              "name": "Set up job",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "seconds": 3,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run python -m unittest discover -s tests -p 'test_results.py'",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run python -m unittest discover -s tests -p 'test_fighter_records.py'",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Check sourced results every 30 seconds during live cards",
+              "seconds": 5,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "seconds": 0,
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 43566355634,
+      "workflow": ".github/workflows/refresh-news.yml",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566355634",
+      "started": "2026-11-14T06:26:37Z",
+      "jobs": [
+        {
+          "name": "refresh",
+          "conclusion": "success",
+          "seconds": 83,
+          "steps": [
+            {
+              "name": "Set up job",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "seconds": 4,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Python test dependencies",
+              "seconds": 5,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run python -m unittest discover -s tests",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node tests/test-desk.cjs",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Refresh and publish against latest data",
+              "seconds": 67,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "seconds": 0,
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 43559133742,
+      "workflow": ".github/workflows/refresh-results.yml",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559133742",
+      "started": "2026-11-14T04:57:09Z",
+      "jobs": [
+        {
+          "name": "refresh",
+          "conclusion": "success",
+          "seconds": 9,
+          "steps": [
+            {
+              "name": "Set up job",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "seconds": 3,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run python -m unittest discover -s tests -p 'test_results.py'",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run python -m unittest discover -s tests -p 'test_fighter_records.py'",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Check sourced results every 30 seconds during live cards",
+              "seconds": 3,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "seconds": 0,
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 43561573730,
+      "workflow": ".github/workflows/refresh-news.yml",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561573730",
+      "started": "2026-11-14T05:26:56Z",
+      "jobs": [
+        {
+          "name": "refresh",
+          "conclusion": "success",
+          "seconds": 33,
+          "steps": [
+            {
+              "name": "Set up job",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "seconds": 3,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Python test dependencies",
+              "seconds": 3,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run python -m unittest discover -s tests",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node tests/test-desk.cjs",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Refresh and publish against latest data",
+              "seconds": 21,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "seconds": 0,
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 43556860052,
+      "workflow": ".github/workflows/refresh-news.yml",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43556860052",
+      "started": "2026-11-14T04:28:58Z",
+      "jobs": [
+        {
+          "name": "refresh",
+          "conclusion": "success",
+          "seconds": 72,
+          "steps": [
+            {
+              "name": "Set up job",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "seconds": 3,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Install Python test dependencies",
+              "seconds": 3,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run python -m unittest discover -s tests",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node tests/test-desk.cjs",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Refresh and publish against latest data",
+              "seconds": 61,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "seconds": 0,
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 43563773727,
+      "workflow": ".github/workflows/verify-live-ufc-profiles.yml",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43563773727",
+      "started": "2026-11-14T05:54:46Z",
+      "jobs": [
+        {
+          "name": "production-profiles",
+          "conclusion": "success",
+          "seconds": 142,
+          "steps": [
+            {
+              "name": "Set up job",
+              "seconds": 2,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "seconds": 4,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "seconds": 3,
+              "conclusion": "success"
+            },
+            {
+              "name": "Confirm source JSON is valid and algorithmic labels are consistent",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Verify reviewed UFC facts survive reversed async response orders",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Regression-test old HTML/JS with new profile JSON",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Check Render deployment freshness before browser installation",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Install browser test dependency (CI only)",
+              "seconds": 30,
+              "conclusion": "success"
+            },
+            {
+              "name": "Check the actual production domain and every reviewed fighter",
+              "seconds": 98,
+              "conclusion": "success"
+            },
+            {
+              "name": "Upload per-fighter desktop/mobile screenshots and reports",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Report production QA separately from editorial fact checks",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "seconds": 0,
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 43559164675,
+      "workflow": ".github/workflows/verify-live-ufc-profiles.yml",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559164675",
+      "started": "2026-11-14T04:57:35Z",
+      "jobs": [
+        {
+          "name": "production-profiles",
+          "conclusion": "success",
+          "seconds": 113,
+          "steps": [
+            {
+              "name": "Set up job",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "seconds": 3,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Confirm source JSON is valid and algorithmic labels are consistent",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Verify reviewed UFC facts survive reversed async response orders",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Regression-test old HTML/JS with new profile JSON",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Check Render deployment freshness before browser installation",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Install browser test dependency (CI only)",
+              "seconds": 21,
+              "conclusion": "success"
+            },
+            {
+              "name": "Check the actual production domain and every reviewed fighter",
+              "seconds": 81,
+              "conclusion": "success"
+            },
+            {
+              "name": "Upload per-fighter desktop/mobile screenshots and reports",
+              "seconds": 2,
+              "conclusion": "success"
+            },
+            {
+              "name": "Report production QA separately from editorial fact checks",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "seconds": 0,
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 43562922182,
+      "workflow": ".github/workflows/refresh-results.yml",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562922182",
+      "started": "2026-11-14T05:43:46Z",
+      "jobs": [
+        {
+          "name": "refresh",
+          "conclusion": "success",
+          "seconds": 16,
+          "steps": [
+            {
+              "name": "Set up job",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "seconds": 4,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run python -m unittest discover -s tests -p 'test_results.py'",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run python -m unittest discover -s tests -p 'test_fighter_records.py'",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Check sourced results every 30 seconds during live cards",
+              "seconds": 8,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "seconds": 1,
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 43569406669,
+      "workflow": ".github/workflows/verify-live-ufc-profiles.yml",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43569406669",
+      "started": "2026-11-14T07:05:12Z",
+      "jobs": [
+        {
+          "name": "production-profiles",
+          "conclusion": "success",
+          "seconds": 151,
+          "steps": [
+            {
+              "name": "Set up job",
+              "seconds": 3,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "seconds": 7,
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "seconds": 5,
+              "conclusion": "success"
+            },
+            {
+              "name": "Confirm source JSON is valid and algorithmic labels are consistent",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Verify reviewed UFC facts survive reversed async response orders",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Regression-test old HTML/JS with new profile JSON",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Check Render deployment freshness before browser installation",
+              "seconds": 1,
+              "conclusion": "success"
+            },
+            {
+              "name": "Install browser test dependency (CI only)",
+              "seconds": 34,
+              "conclusion": "success"
+            },
+            {
+              "name": "Check the actual production domain and every reviewed fighter",
+              "seconds": 96,
+              "conclusion": "success"
+            },
+            {
+              "name": "Upload per-fighter desktop/mobile screenshots and reports",
+              "seconds": 2,
+              "conclusion": "success"
+            },
+            {
+              "name": "Report production QA separately from editorial fact checks",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "seconds": 0,
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "seconds": 0,
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

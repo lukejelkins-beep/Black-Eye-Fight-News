@@ -2,6 +2,8 @@ name: BEFN release readiness
 # This is the *pre-deployment* gate. It must not fetch the live Render site.
 # The separate production browser workflow checks the deployed release later.
 on:
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
   workflow_dispatch:
@@ -25,6 +27,10 @@ jobs:
           node --check assets/fighter-insights.js
           node --check assets/ufc-prospect-contender.js
           node --check assets/upcoming-cards.js
+      - name: Validate native packaging without collecting data
+        run: |
+          node --test tests/test-mobile-build.mjs
+          npm run build
       - name: Verify reviewed UFC profile integrity and scoring
         run: |
           node --test tests/test-ufc-fighter-v3.mjs
@@ -40,14 +46,50 @@ jobs:
           node --test tests/test-ufc-qa-freshness.mjs
       - name: Validate fight cards and results without API calls
         run: |
+          node tests/test-event-status.cjs
+          node tests/test-results-card-order.cjs
+          node tests/test-results-ui.cjs
+          node tests/test-upcoming-cards.cjs
           node tests/test-upcoming-ui.cjs
           node tests/test-upcoming-merge.cjs
           python -m unittest discover -s tests -p 'test_results.py'
           python -m unittest discover -s tests -p 'test_fighter_records.py'
           python -m unittest discover -s tests -p 'test_upcoming_cards.py'
+      - name: Verify conservative news deduplication without collection
+        run: |
+          python -m unittest discover -s tests -p 'test_news_dedupe.py'
+          node --test tests/test-news-dedupe.cjs
       - name: Record validated source revision
         if: success()
         run: |
           echo "## BEFN pre-deployment approval" >> "$GITHUB_STEP_SUMMARY"
           echo "Validated source commit: \$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
           echo "Only source integrity passed. Production deployment and live UI QA are separate." >> "$GITHUB_STEP_SUMMARY"
+  qa-inventory:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check PyYAML==6.0.2
+      - name: Test read-only QA reporting
+        run: python tests/test-qa-supervisor.py
+      - name: Inventory source checks and saved feed diagnostics
+        run: python scripts/qa-supervisor.py
+      - name: Publish advisory QA summary
+        if: always()
+        run: |
+          if test -f qa/supervisor/qa-status.md; then
+            cat qa/supervisor/qa-status.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: befn-qa-source-inventory
+          path: qa/supervisor/
+          retention-days: 14
+          if-no-files-found: warn

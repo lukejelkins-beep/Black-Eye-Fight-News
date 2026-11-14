@@ -1,0 +1,4000 @@
+{
+  "pulls": [
+    {
+      "number": 189,
+      "title": "UFC certification: unify 87 V4-only source proofs into existing Stage3 register and one 783-fighter audit",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/189",
+      "head": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "sha": "5f69950a4786ef1671dbeba8315746623d8441d3",
+      "base": "main",
+      "draft": true,
+      "files": [
+        ".github/workflows/audit-ufc-research-pipeline.yml",
+        "data/ufc-feeder-bout-evidence.json",
+        "data/ufc-independent-full-career-verification.json",
+        "data/ufc-stage3-v4-consolidation-manifest-20261114.json",
+        "docs/ufc-unified-career-certification-workstream.md",
+        "scripts/diagnose-ufc-v4-stage3-blockers.mjs",
+        "scripts/ufc-36-month-stage3-progress.mjs",
+        "scripts/ufc-reconcile-stage3-v4-certifications.mjs",
+        "tests/test-ufc-36-month-stage3-progress.mjs",
+        "tests/test-ufc-stage3-v4-reconciliation.mjs",
+        "tests/test-ufc-v4-stage3-import.mjs"
+      ]
+    },
+    {
+      "number": 186,
+      "title": "UFC V4: independently attest Harrison, Milošević, Schmid and Delano (9 bouts)",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/186",
+      "head": "research/ufc-v4-kayla-nina-ollie-delano-20261114",
+      "sha": "59a192eefb18acd1c8bb5c51714074efc273c52b",
+      "base": "main",
+      "draft": true,
+      "files": [
+        "data/ufc-independent-full-career-verification.json"
+      ]
+    },
+    {
+      "number": 179,
+      "title": "UFC V4 exceptions: independently reconcile Motta and Ogden; isolate Bellato blocker",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/179",
+      "head": "research/ufc-v4-exceptions-motta-ogden-bellato-20261114",
+      "sha": "4c148613e7591d7f8acc910e903264cf3328f44f",
+      "base": "main",
+      "draft": true,
+      "files": [
+        "data/ufc-independent-full-career-verification.json",
+        "research/ufc-v4-exceptions/2026-11-14-motta-ogden-bellato.md"
+      ]
+    },
+    {
+      "number": 141,
+      "title": "BEFN UFC V4 — first independently certified full career: Maryna Moroz (12/12)",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/141",
+      "head": "research/ufc-v4-maryna-first-full-career-certification-20261114",
+      "sha": "a62b77e050846e8125f6d525a50ae84e0b433a28",
+      "base": "main",
+      "draft": true,
+      "files": [
+        ".github/workflows/verify-ufc-v4-maryna-certification.yml",
+        "data/ufc-independent-full-career-verification.json",
+        "scripts/verify-ufc-v4-maryna-certification.mjs"
+      ]
+    },
+    {
+      "number": 137,
+      "title": "BEFN UFC V4: recover historical fight IDs from official-source reciprocal opponent archive",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/137",
+      "head": "research/ufc-reverse-official-bout-reconciliation-20261114",
+      "sha": "31bd5b99ecf848c27b9e0d1fd4c215f9e920760a",
+      "base": "main",
+      "draft": false,
+      "files": [
+        ".github/workflows/audit-ufc-official-reverse-native-evidence.yml",
+        "scripts/audit-ufc-official-reverse-native-evidence.mjs",
+        "tests/test-ufc-official-reverse-native-evidence.mjs"
+      ]
+    },
+    {
+      "number": 136,
+      "title": "UFC V4: reconcile three official careers and surface exact certification blockers",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/136",
+      "head": "research/ufc-pilot-certification-reconciliation-20261114",
+      "sha": "c69b0d48c971793796427e2a9a700ff2ddb2045c",
+      "base": "main",
+      "draft": false,
+      "files": [
+        ".github/workflows/review-ufc-pilot-career-certification.yml",
+        "scripts/ufc-next-career-certification-candidates.mjs",
+        "scripts/ufc-pilot-certification-case-report.mjs",
+        "tests/test-ufc-next-career-certification-candidates.mjs",
+        "tests/test-ufc-pilot-certification-case-report.mjs"
+      ]
+    },
+    {
+      "number": 133,
+      "title": "BEFN UFC V4 — daily Greco historical crosscheck and bounded career certification queue",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/133",
+      "head": "feat/ufc-independent-certification-queue-20261114",
+      "sha": "5e738834238249b9708bc231bbfd4772085c1206",
+      "base": "main",
+      "draft": true,
+      "files": [
+        ".github/workflows/ufcalendar-rich-backfill.yml",
+        ".github/workflows/validate-ufc-independent-certification.yml",
+        "data/ufc-greco-crosscheck-checkpoint.json",
+        "docs/ufc-independent-career-verification.md",
+        "scripts/audit-ufc-greco-bulk-crosscheck.mjs",
+        "scripts/build-ufc-independent-certification-queue.mjs",
+        "scripts/reconcile-ufc-independent-evidence.mjs",
+        "tests/test-reconcile-ufc-independent-evidence.mjs",
+        "tests/test-ufc-greco-bulk-crosscheck.mjs",
+        "tests/test-ufc-independent-certification-queue.mjs"
+      ]
+    },
+    {
+      "number": 109,
+      "title": "BEFN UFC V4 — known-fight stats, historical verification and offline shadow ratings",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/109",
+      "head": "feat/ufc-v4-career-stat-foundation-20261114",
+      "sha": "002e2c26f0b52fcd415f7c75416e3f539e9518a1",
+      "base": "main",
+      "draft": true,
+      "files": [
+        ".github/workflows/validate-ufc-v4-stat-foundation.yml",
+        "data/ufc-feeder-bout-evidence.json",
+        "data/ufc-v4-bill-algeo-fight-evidence-20261114.json",
+        "data/ufc-v4-bout-classification-exceptions-20261114.json",
+        "data/ufc-v4-first-two-official-career-evidence.json",
+        "data/ufc-v4-import-stage3-source-proof-candidates-20261114.json",
+        "data/ufc-v4-independent-full-career-certification-batch-20261114.json",
+        "data/ufc-v4-next18-greco-fight-links-20261114.json",
+        "data/ufc-v4-next20-greco-fight-links-20261114.json",
+        "data/ufc-v4-official-nc-source-recovery-candidates-20261114.json",
+        "data/ufc-v4-stage3-reuse-exceptions-20261114.json",
+        "data/ufc-v4-targeted-greco-fight-links-20261114.json",
+        "data/ufc-v4-targeted-round-corroboration.json",
+        "data/ufc-v4-wave3-greco-fight-links-20261114.json",
+        "data/ufc-v4-wave4-greco-fight-links-20261114.json",
+        "data/ufc-v4-wave5-greco-fight-links-20261114.json",
+        "data/ufc-v4-wave6-greco-fight-links-20261114.json",
+        "docs/ufc-v4-unified-certification-workstream.md",
+        "qa/ufc-v4-fastlane-adrian-luna-martinetti-source-review-20261114.md",
+        "qa/ufc-v4-fastlane-cameron-nelson-source-review-20261114.md",
+        "qa/ufc-v4-fastlane-crosswalk-id-review-20261114.md",
+        "qa/ufc-v4-first-three-independent-source-crosscheck.md",
+        "scripts/audit-ufc-v4-bill-algeo-direct.mjs",
+        "scripts/audit-ufc-v4-career-verification.mjs",
+        "scripts/audit-ufc-v4-eight-candidate-native-evidence.mjs",
+        "scripts/audit-ufc-v4-exception-causes.mjs",
+        "scripts/audit-ufc-v4-first-two-certification-attempt.mjs",
+        "scripts/audit-ufc-v4-main-stage3-source-reuse.mjs",
+        "scripts/audit-ufc-v4-metric-availability.mjs",
+        "scripts/audit-ufc-v4-next18-native-evidence.mjs",
+        "scripts/audit-ufc-v4-next20-blocked-source-details.mjs",
+        "scripts/audit-ufc-v4-next20-native-evidence.mjs",
+        "scripts/audit-ufc-v4-release-gates.mjs",
+        "scripts/audit-ufc-v4-source-conflicts.mjs",
+        "scripts/audit-ufc-v4-wave3-native-evidence.mjs",
+        "scripts/audit-ufc-v4-wave4-native-evidence.mjs",
+        "scripts/audit-ufc-v4-wave5-native-evidence.mjs",
+        "scripts/audit-ufc-v4-wave6-native-evidence.mjs",
+        "scripts/build-ufc-postfight-metrics.mjs",
+        "scripts/build-ufc-v4-shadow-ratings.mjs",
+        "scripts/build-ufc-v4-stat-foundation.mjs",
+        "scripts/certify-ufc-v4-independent-full-careers.mjs",
+        "scripts/ufc-next-career-certification-candidates.mjs",
+        "scripts/ufc-official-event-scope.mjs",
+        "scripts/ufc-v4-next18-greco-evidence.mjs",
+        "scripts/ufc-v4-next20-greco-evidence.mjs",
+        "scripts/ufc-v4-next20-pinned-source-links.mjs",
+        "scripts/ufc-v4-targeted-greco-evidence.mjs",
+        "scripts/ufc-v4-wave3-greco-evidence.mjs",
+        "scripts/ufc-v4-wave4-greco-evidence.mjs",
+        "scripts/ufc-v4-wave5-greco-evidence.mjs",
+        "scripts/ufc-v4-wave6-greco-evidence.mjs",
+        "tests/test-ufc-next-career-certification-candidates.mjs",
+        "tests/test-ufc-postfight-metrics.mjs",
+        "tests/test-ufc-v4-career-verification.mjs",
+        "tests/test-ufc-v4-exception-causes.mjs",
+        "tests/test-ufc-v4-independent-full-careers.mjs",
+        "tests/test-ufc-v4-metric-availability.mjs",
+        "tests/test-ufc-v4-release-gates.mjs",
+        "tests/test-ufc-v4-round-corroboration.mjs",
+        "tests/test-ufc-v4-shadow-ratings.mjs",
+        "tests/test-ufc-v4-source-conflicts.mjs",
+        "tests/test-ufc-v4-source-scope.mjs",
+        "tests/test-ufc-v4-stat-foundation.mjs"
+      ]
+    },
+    {
+      "number": 106,
+      "title": "V4 approved direction — UFC-first stats, separate future achievements project",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/106",
+      "head": "plan/ufc-v4-credentials-2026-11-14",
+      "sha": "fdafa1f127dec815fa7ca3ad5a3e20c802d989a7",
+      "base": "main",
+      "draft": true,
+      "files": [
+        "docs/continuous-ufc-profiles.md",
+        "docs/ufc-external-achievements-research-project.md",
+        "docs/ufc-v4-algorithms-credentials-deployment-plan.md"
+      ]
+    },
+    {
+      "number": 95,
+      "title": "Apply UFC-verified DWCS bout classification to both fighters' shared native records",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/95",
+      "head": "fix/ufc-stage3-feeder-both-corners-20261114",
+      "sha": "f8bbbcc6bf37d22e8639c4b237622c47bfbbf157",
+      "base": "main",
+      "draft": false,
+      "files": [
+        "data/ufc-feeder-bout-evidence.json",
+        "scripts/ufc-36-month-stage3-progress.mjs",
+        "scripts/ufcalendar-rich-backfill.py",
+        "tests/test-ufc-36-month-stage3-progress.mjs",
+        "tests/test_ufc_full_career_cache.py"
+      ]
+    },
+    {
+      "number": 77,
+      "title": "Resolve final UFC 36-month roster exception: Danny Barlow boxing and official status",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/77",
+      "head": "review/ufc36-danny-barlow-boxing-status-20261114",
+      "sha": "eec868c906061cf40807e7f7490592734aa32f4c",
+      "base": "main",
+      "draft": true,
+      "files": [
+        "data/ufc-36-month-reviewed-evidence.json"
+      ]
+    },
+    {
+      "number": 48,
+      "title": "Approved UFC V3 5/10/Career design and offline period-stat engine",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/48",
+      "head": "feature/ufc-v3-period-analytics-design-20261113",
+      "sha": "f0955669d890c06298f0cb104f9e2c8f24f33faf",
+      "base": "main",
+      "draft": true,
+      "files": [
+        ".github/workflows/qa-ufc-performance-periods.yml",
+        "assets/fighter-insights.js",
+        "assets/fighter-profile-v3-layout-preview.css",
+        "assets/ufc-stat-leaderboards.css",
+        "docs/approved-ufc-v3-5-10-career-design.md",
+        "scripts/audit-ufc-career-period-cache.mjs",
+        "scripts/build-ufc-postfight-metrics.mjs",
+        "scripts/ufc-performance-periods.mjs",
+        "tests/test-ufc-career-period-cache.mjs",
+        "tests/test-ufc-leaderboards-page.mjs",
+        "tests/test-ufc-performance-periods.mjs"
+      ]
+    },
+    {
+      "number": 47,
+      "title": "Guard UFC V3 leaderboard publication against stale and ineligible roster entries",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/47",
+      "head": "fix/ufc-v3-official-roster-publication-guard-20261113",
+      "sha": "f41795cd70b78e9ede827c199e933eb1472fc67b",
+      "base": "main",
+      "draft": false,
+      "files": [
+        "scripts/build-ufc-fighter-v3.mjs",
+        "tests/test-ufc-fighter-v3.mjs"
+      ]
+    },
+    {
+      "number": 11,
+      "title": "Add Boxerbook boxing data source adapter (QA-only, licence-gated)",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/11",
+      "head": "feature/boxerbook-boxing-source",
+      "sha": "bcadd359a0e862387b2010d796ed70f6376b5f7c",
+      "base": "main",
+      "draft": true,
+      "files": [
+        ".github/workflows/boxerbook-source-qa.yml",
+        "docs/boxerbook-source.md",
+        "scripts/boxerbook_source.py",
+        "tests/test_boxerbook_source.py"
+      ]
+    },
+    {
+      "number": 9,
+      "title": "Update grappling calendar: RAF replacement and November–December coverage",
+      "url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/9",
+      "head": "calendar/grappling-review-2026-11-12",
+      "sha": "e35d280ce9b7eb47d8998f47ab780d9145c2e672",
+      "base": "main",
+      "draft": false,
+      "files": [
+        "data/grappling-events.json"
+      ]
+    }
+  ],
+  "branches": [
+    {
+      "name": "audit/ufcalendar-era-coverage-20261113",
+      "sha": "d248d9dc4c7a0ef7d0d0a86d4903adcc9d2f7a5e"
+    },
+    {
+      "name": "calendar/grappling-review-2026-11-12",
+      "sha": "e35d280ce9b7eb47d8998f47ab780d9145c2e672"
+    },
+    {
+      "name": "cert/ufc-maryna-moroz-exhaustive-20261114",
+      "sha": "a5d6d577e1c7f3083c3fc86b154fb0e37debf087"
+    },
+    {
+      "name": "data/ufc-stage3-resolve-six-to-ten-dwcs-evidence-20261114",
+      "sha": "5d28ce79b5b32c6ab8581f22b9bcb68588c30e80"
+    },
+    {
+      "name": "feat/ufc-bruno-2019-nc-verified-historical-id-20261114",
+      "sha": "daf02f14dbd3785078fd69f3d5c059b326098cad"
+    },
+    {
+      "name": "feat/ufc-bruno-2019-official-nc-recheck-20261114",
+      "sha": "6f7da03440a7e75afeca9d6e3b3df094081406d7"
+    },
+    {
+      "name": "feat/ufc-bruno-ten-official-native-bout-recovery-20261114",
+      "sha": "8edf145a9c52f5f757e5d06717702d1c98535d1e"
+    },
+    {
+      "name": "feat/ufc-cache-reconcile-full-history-20261114",
+      "sha": "d55e4e5af58413e7e17257aac36722fc10b44114"
+    },
+    {
+      "name": "feat/ufc-data-coverage-evidence-stages-20261113",
+      "sha": "9f4fa20f97c450bc86c785e4c0b5e608c308a4c5"
+    },
+    {
+      "name": "feat/ufc-exact-official-fight-native-id-alias-recovery-20261114",
+      "sha": "f0b2fc0381dd1a74d8899d9ae4e3176ad8037b37"
+    },
+    {
+      "name": "feat/ufc-final-round-gap-audit-rebased-20261114",
+      "sha": "500f7caa4a3e93c4a0214cd7d83e0d029be06ab6"
+    },
+    {
+      "name": "feat/ufc-full-career-cache-identity-crosswalk-20261114",
+      "sha": "f773dec6d30e178c05b6b86a320c2651d4793d4b"
+    },
+    {
+      "name": "feat/ufc-full-fight-search-progress-audit-20261114",
+      "sha": "f22bfbd0471f5644607b0835da313e06262ca02b"
+    },
+    {
+      "name": "feat/ufc-independent-career-gap-evidence-20261114",
+      "sha": "5b995c6ea40c17cc2c2c0e3f855c2cbf9ff7ab03"
+    },
+    {
+      "name": "feat/ufc-independent-certification-queue-20261114",
+      "sha": "5e738834238249b9708bc231bbfd4772085c1206"
+    },
+    {
+      "name": "feat/ufc-legacy-cache-crosswalk-20261114",
+      "sha": "125b869e9ad4816e5f287cce9738914e88342329"
+    },
+    {
+      "name": "feat/ufc-legacy-event-date-recovery-20261114",
+      "sha": "7078078de993705eb103c47f81796a9c36571660"
+    },
+    {
+      "name": "feat/ufc-legacy-official-evidence-20261114",
+      "sha": "d91801625c3a6d1ba4b7f873d1cb8801df588db5"
+    },
+    {
+      "name": "feat/ufc-legacy-provider-search-audit-20261114",
+      "sha": "a424c9b02897b037378e0765d23a33b4946ae4f9"
+    },
+    {
+      "name": "feat/ufc-official-bout-cache-safe-reconciliation-20261114",
+      "sha": "80c110033ff20d2ce9aa594a9dc55d4bb1d2b99d"
+    },
+    {
+      "name": "feat/ufc-official-three-career-bout-recovery-20261114",
+      "sha": "af04cca1456eee1378100ed72e919f0818071638"
+    },
+    {
+      "name": "feat/ufc-paginated-career-fight-search-20261114",
+      "sha": "6663caca30b8db96f0c1bd8b68a0783e2f3ff4ba"
+    },
+    {
+      "name": "feat/ufc-primary-source-date-targeted-recovery-20261114",
+      "sha": "b089a51c7885967712351126a3b4e1e19c92c51c"
+    },
+    {
+      "name": "feat/ufc-provider-completeness-evidence-20261114",
+      "sha": "5f42f088c87c044dd3c4d08cf140477f4eccd9f0"
+    },
+    {
+      "name": "feat/ufc-short-career-timeline-reconciliation-20261113",
+      "sha": "bee31be80bcca59e3254874b0a9916eeb930ea08"
+    },
+    {
+      "name": "feat/ufc-source-candidate-numeric-identity-audit-20261114",
+      "sha": "683707682bf4351e15ef13a25f3f48f23d8a980d"
+    },
+    {
+      "name": "feat/ufc-source-nc-event-card-recovery-20261114",
+      "sha": "147af26938c291ad8588823915db29b6266f7570"
+    },
+    {
+      "name": "feat/ufc-source-targeted-recovery-audit-20261114",
+      "sha": "58856d04261e207e58ff38bf1a2915c7e1bc2ea5"
+    },
+    {
+      "name": "feat/ufc-stage3-evidence-exceptions-20261114",
+      "sha": "b10d839ecb4b4622d383619ff7a17e399835ef5f"
+    },
+    {
+      "name": "feat/ufc-stage3-final-round-gap-evidence-20261114",
+      "sha": "2556ec2c889bf518acb6f9b2db4a9a0b0ad4c6ea"
+    },
+    {
+      "name": "feat/ufc-two-round-stats-verified-fallback-20261114",
+      "sha": "f19a793b6cd74abcdd06e9b8ac852f25c921af06"
+    },
+    {
+      "name": "feat/ufc-v4-career-stat-foundation-20261114",
+      "sha": "002e2c26f0b52fcd415f7c75416e3f539e9518a1"
+    },
+    {
+      "name": "feature/activate-approved-ufc36-stage3-20261114",
+      "sha": "f4b99cd100329ecba7b2cf4f42328a91cd58a1ba"
+    },
+    {
+      "name": "feature/api-connection-recovery-20261111",
+      "sha": "f1895e247f90ca86843bbbb8c1fff21d9692faa6"
+    },
+    {
+      "name": "feature/boxerbook-boxing-source",
+      "sha": "bcadd359a0e862387b2010d796ed70f6376b5f7c"
+    },
+    {
+      "name": "feature/enable-ufc-stats-noncommercial-20261111",
+      "sha": "4dc0ac63f5781ed6fc9749e794268a07faabaab2"
+    },
+    {
+      "name": "feature/fighter-intelligence-apis-20261111",
+      "sha": "08e38058c559feeead128aa8817ce88fa63fabe0"
+    },
+    {
+      "name": "feature/pace-ufcalendar-requests-20261111",
+      "sha": "d6cd5bfda8af02a6c49517f4a247d444311f7ffe"
+    },
+    {
+      "name": "feature/quota-aware-ufcalendar-intelligence-20261111",
+      "sha": "b1ff6022533a8895644447b4943c0b6ee71b6a45"
+    },
+    {
+      "name": "feature/responsive-sports-layout",
+      "sha": "1300e1f78786243f93c999758a4e91f4b2be3f97"
+    },
+    {
+      "name": "feature/ufc36-each-run-coverage-telemetry-20261114",
+      "sha": "f415e71e73a1846cfbd0235b019cd890111e96f7"
+    },
+    {
+      "name": "feature/ufc36-full-career-id-crosschecks-20261114",
+      "sha": "203cee5f6678748218fc0b73eb6000d956ada6a8"
+    },
+    {
+      "name": "feature/ufc36-preserve-full-career-histories-20261114",
+      "sha": "5984de0105b71cbbeadec07b7b10adc155cad1bc"
+    },
+    {
+      "name": "feature/ufc36-prioritize-missing-career-fights-20261114",
+      "sha": "efd2428dfe2c22e023eda9865cd1206f0aeb7f72"
+    },
+    {
+      "name": "feature/ufc36-readonly-signoff-report-20261114",
+      "sha": "c74bd2725c696c624fe0822f795e050f744db756"
+    },
+    {
+      "name": "feature/ufc36-roster-approval-cache-gate-20261114",
+      "sha": "0d5270c9bf31a43d12d83a1d0afb21307175aabe"
+    },
+    {
+      "name": "feature/ufc36-stage3-cache-hydration-20261114",
+      "sha": "ff1bdfbce88f8f54094c4876f93261acc5b97218"
+    },
+    {
+      "name": "feature/ufc36-stage3-coverage-audit-20261114",
+      "sha": "98c69137669480a0c3fd9567c835711076820281"
+    },
+    {
+      "name": "feature/ufc36-stage3-metric-quality-audit-20261114",
+      "sha": "29038f862a1be5b39c936105350e0f3c6010a511"
+    },
+    {
+      "name": "feature/ufc36-stage3-round-priority-20261114",
+      "sha": "abb98495f6deceb70415b5ebdd37a2e52417a01f"
+    },
+    {
+      "name": "feature/ufc36-verified-finale-recovery-20261114",
+      "sha": "d0d3abb8cb3ce41c27bad8d25fa971d7b3623930"
+    },
+    {
+      "name": "feature/ufc-36-month-career-cache-20261113",
+      "sha": "5d9c95a25b79def40e76304faeac6d0aa7910e2d"
+    },
+    {
+      "name": "feature/ufc-last-five-coverage-audit-20261113",
+      "sha": "716764dc88e713d57f9e92a319fdccb30756362b"
+    },
+    {
+      "name": "feature/ufc-last-five-gap-cost-audit-20261113",
+      "sha": "1481dd9d75f01ed328bd341a827f6fc19a831222"
+    },
+    {
+      "name": "feature/ufc-stage3-blocker-diagnostics-20261114",
+      "sha": "cb901274edd99dccb49a30d2c262e1ab42c9c185"
+    },
+    {
+      "name": "feature/ufc-targeted-historical-backfill-20261113",
+      "sha": "ad971a3a8863f97eb526297b905230fa0936e616"
+    },
+    {
+      "name": "feature/ufc-v3-leaderboards-page-20261113",
+      "sha": "83cdaa26fd845746b91fa5fe2892798f6dca57cf"
+    },
+    {
+      "name": "feature/ufc-v3-offline-stats-snapshot-20261113",
+      "sha": "a103ff6d9114386e2cca87c5d0386480d22e2581"
+    },
+    {
+      "name": "feature/ufc-v3-period-analytics-design-20261113",
+      "sha": "f0955669d890c06298f0cb104f9e2c8f24f33faf"
+    },
+    {
+      "name": "feature/ufcalendar-public-probe-20261111",
+      "sha": "dc1b0051fad132522df76c16d5efc5c2853c49da"
+    },
+    {
+      "name": "fix/boxerbook-qa-main-sync",
+      "sha": "927f3787f0cdfc29620ed6fa69f7949142fa9ff0"
+    },
+    {
+      "name": "fix/fight-card-integrity-2026-11-12",
+      "sha": "23c7e53279d01ff45b69421b5a8ae15b1447b668"
+    },
+    {
+      "name": "fix/render-data-only-recovery-20261113",
+      "sha": "de85508ae7201fe41b3a6b4165e50f8d529586e7"
+    },
+    {
+      "name": "fix/render-recovery-404-recheck-20261113",
+      "sha": "88f6df4c611de900acb26c1ccb96c616cca4d2ab"
+    },
+    {
+      "name": "fix/render-recovery-data-head-race-20261113",
+      "sha": "22b27869b170e5fca4c562f31a6303a62d8a306a"
+    },
+    {
+      "name": "fix/render-recovery-missing-new-assets-20261113",
+      "sha": "4427b09734b968a829e3132aa04c33ed90df9ad2"
+    },
+    {
+      "name": "fix/render-recovery-race-atomic-fetch-20261113",
+      "sha": "f817bc14b6c80c831eef7532fad8b4e231a12c12"
+    },
+    {
+      "name": "fix/ufc-24m-strict-latest-mma-unified-20261113",
+      "sha": "7556357c492762f785b69d1b8953de1ac215c752"
+    },
+    {
+      "name": "fix/ufc-36-month-detail-completeness-20261114",
+      "sha": "96c3135f1f4bc5a1e5ee9134daaa507b3577874d"
+    },
+    {
+      "name": "fix/ufc-36m-verified-nonmma-rulesets-20261114",
+      "sha": "9df34d6f5ed12133ab1f280a18de099c8e9c7e68"
+    },
+    {
+      "name": "fix/ufc-active-roster-latest-pro-mma-20261113",
+      "sha": "360f9511a73de7871141dac33bae417bd22542a2"
+    },
+    {
+      "name": "fix/ufc-all-indexed-nc-career-history-20261114",
+      "sha": "e02470bfdcbaa11025384820723310a05a1ea2af"
+    },
+    {
+      "name": "fix/ufc-career-certification-evidence-gate-20261114",
+      "sha": "599a83cd448fe44275e3ffabadd9e596b2cf4ee7"
+    },
+    {
+      "name": "fix/ufc-champion-v3-belt-match-20261113",
+      "sha": "938b333d08e435f44dbcd764d49d3e0e4107e7cb"
+    },
+    {
+      "name": "fix/ufc-current-professional-mma-eligibility-20261113",
+      "sha": "3673482587718a4a7a83a1e0e6ea30d37319112b"
+    },
+    {
+      "name": "fix/ufc-dwcs-six-ten-proof-20261114",
+      "sha": "ce4c660bc3a73ec55aaf8dd42dd3b7b1a5a835d4"
+    },
+    {
+      "name": "fix/ufc-feeder-manifest-growth-20261114",
+      "sha": "21411b3a024605fd0a69904b9a315146b86d7772"
+    },
+    {
+      "name": "fix/ufc-fight-search-unmet-official-minimum-20261114",
+      "sha": "5ae6fce170912019f411ef1079ed710ceace983c"
+    },
+    {
+      "name": "fix/ufc-five-history-one-day-reconciliation-20261113",
+      "sha": "dc4f98e14c335a3ce36ce5da75f7f9e89ef4cae4"
+    },
+    {
+      "name": "fix/ufc-full-index-benign-exclusions-vs-identity-conflicts-20261114",
+      "sha": "4063da0c094efddf8b6adbba7f00255e279c46b1"
+    },
+    {
+      "name": "fix/ufc-gap-recovery-20261113",
+      "sha": "6ea48e825df9e499c9cb824cc47321d48979ebb7"
+    },
+    {
+      "name": "fix/ufc-incomplete-round-retries-20261113",
+      "sha": "c200b10da9dbb42aa0ff8724d4123f17bd439bea"
+    },
+    {
+      "name": "fix/ufc-independent-certification-provider-disagreement-20261114",
+      "sha": "f44f0aabe58046c487241bf6c1a82ec4c9a21073"
+    },
+    {
+      "name": "fix/ufc-last-ten-dwcs-two-corners-20261114",
+      "sha": "150cb063bc326f9fcac017b8f66fd9cfe23af6b9"
+    },
+    {
+      "name": "fix/ufc-latest-professional-mma-eligibility-20261113",
+      "sha": "399c40ba08f05ca2f240f8590534fec736fe1231"
+    },
+    {
+      "name": "fix/ufc-leaderboard-internal-links-release-gate-20261113",
+      "sha": "b4b8d2633a7eabbaf17fac0c8017bdd2d04f35da"
+    },
+    {
+      "name": "fix/ufc-luke-flores-dwcs-evidence-20261114",
+      "sha": "94a6da26f355d8ab0b39c4a9aa5aa772c90478c2"
+    },
+    {
+      "name": "fix/ufc-luke-flores-dwcs-proof-20261114",
+      "sha": "a3d6a87ba3e87e35acb864bd0f76304258fb4084"
+    },
+    {
+      "name": "fix/ufc-maryna-2015-source-alias-certification-20261114",
+      "sha": "16561474a27d719347550545a435e8b29cf213d1"
+    },
+    {
+      "name": "fix/ufc-native-history-ids-20261113",
+      "sha": "320a4bf125e7e01068b2311d627e55be55b497b7"
+    },
+    {
+      "name": "fix/ufc-official-card-feeder-eligibility-20261113",
+      "sha": "88a24e924e74b9dd09297b91f7872c95f2b7f832"
+    },
+    {
+      "name": "fix/ufc-old-career-dwcs-evidence-20261114",
+      "sha": "2b6a5c76f90ea3831a7651274c5b5208698c3ddb"
+    },
+    {
+      "name": "fix/ufc-postfight-before-coverage-20261113",
+      "sha": "3ae8fda41ae35404a9ec90ea3b57d17795b18f72"
+    },
+    {
+      "name": "fix/ufc-postfight-date-join-20261113",
+      "sha": "27e1905ed9d0a20325944a71e6d953cb906f4ae1"
+    },
+    {
+      "name": "fix/ufc-stage3-feeder-both-corners-20261114",
+      "sha": "f8bbbcc6bf37d22e8639c4b237622c47bfbbf157"
+    },
+    {
+      "name": "fix/ufc-stage3-feeder-events-and-finale-recovery-20261114",
+      "sha": "40f2c40879e0dba65118d7af7afd764bc0f373c9"
+    },
+    {
+      "name": "fix/ufc-stage3-full-dwcs-evidence-20261114",
+      "sha": "a70e6f02e26e88193be04d829323857221e3b5d5"
+    },
+    {
+      "name": "fix/ufc-stage3-identity-anchor-20261114",
+      "sha": "5dd48fa930bdaefd9993af19754d50d341a26812"
+    },
+    {
+      "name": "fix/ufc-stage3-source-verified-tuf-finale-recovery-20261114",
+      "sha": "8b72e11082d493b2b456de36e8a80f6519e6610f"
+    },
+    {
+      "name": "fix/ufc-stage3-three-officially-documented-dwcs-bouts-20261114",
+      "sha": "0b4083bde7e132ddded738829bdfeb374f355362"
+    },
+    {
+      "name": "fix/ufc-three-missing-no-contest-histories-20261114",
+      "sha": "26f80057fdc7625a3b346d7df50ef74bc4b1a3a3"
+    },
+    {
+      "name": "fix/ufc-v3-official-roster-publication-guard-20261113",
+      "sha": "f41795cd70b78e9ede827c199e933eb1472fc67b"
+    },
+    {
+      "name": "fix/ufc-v3-reviewed-history-authority-20261113",
+      "sha": "2518255e86f349c9a60703f8bf351b4540fab1f3"
+    },
+    {
+      "name": "fix/ufcalendar-stable-id-gap-recovery-20261113",
+      "sha": "4ad0f1770ae5a52388dbf08d3f55f7e516bedb6f"
+    },
+    {
+      "name": "main",
+      "sha": "90f084dc35ddc81c964ac53e8390228ec65ae6ed"
+    },
+    {
+      "name": "perf/ufc-numeric-history-first-pass-20-20261114",
+      "sha": "b6ef9d1a8d5e206bcc71b0ae9a8664876d491697"
+    },
+    {
+      "name": "plan/ufc-v4-credentials-2026-11-14",
+      "sha": "fdafa1f127dec815fa7ca3ad5a3e20c802d989a7"
+    },
+    {
+      "name": "qa/ufc-36-month-independent-evidence-integrity-20261114",
+      "sha": "188492b8fd428c8da69e7d96902c74ec043471ba"
+    },
+    {
+      "name": "release/ufc-profile-v3-structure-20261113",
+      "sha": "f7eea477dbbc9e3daf07eddb7f23f5e232e9980e"
+    },
+    {
+      "name": "release/ufc-targeted-history-clean-20261113",
+      "sha": "b93709ae36935f7fdd12e3218573e84acc24c1ce"
+    },
+    {
+      "name": "release/ufc-v3-schema4-snapshot-20261113",
+      "sha": "7269c0f7a5322a25a73c38039e83ed94e738b516"
+    },
+    {
+      "name": "release/ufc-v3-stats-page-20261113",
+      "sha": "e82ae496e3ab2b24de872369bd501b5937724dce"
+    },
+    {
+      "name": "release/ufc-v3-stats-page-after-reviewed-qa-20261113",
+      "sha": "c117cc031c7b8ccda108586744c3005f2f1150c0"
+    },
+    {
+      "name": "release/ufc-v4-r1-certification-safety-20261114",
+      "sha": "7ec5eae29669fbc8cb9de1cbdb2c077aa3d745ac"
+    },
+    {
+      "name": "release/v1.0.0",
+      "sha": "66150b52a5be50f8680a41ccd5d8214078e53738"
+    },
+    {
+      "name": "release/v1.0.1",
+      "sha": "528ee3504881dceef3e236264e38b958bee1e47e"
+    },
+    {
+      "name": "release/v1.0.3",
+      "sha": "6e4cdfe7ae6e1e39e61bc5705a8a91a19b76bcfa"
+    },
+    {
+      "name": "research/boxing-2026-11-cohort",
+      "sha": "b1e6de51d4f3cb0db04d2e8aee63859ab19b12fa"
+    },
+    {
+      "name": "research/ufc-aleksandre-topuria-two-fight-certification-20261114",
+      "sha": "9f4a97117d5b985012661f6df8b70b979d4a8d23"
+    },
+    {
+      "name": "research/ufc-bruno-complete-career-certificate-20261114",
+      "sha": "0deb9f6a8ae2a65aeffbf2b58dd5836e1eaa619a"
+    },
+    {
+      "name": "research/ufc-carlos-independent-career-certificate-20261114",
+      "sha": "a57f6b5f78fd21342db2da48e61e2c64dba3d72f"
+    },
+    {
+      "name": "research/ufc-certification-attempt-exception-router-20261114",
+      "sha": "7481b76eb70e8c30609d07489c8953fed8134f2e"
+    },
+    {
+      "name": "research/ufc-independent-2013-2026-census-20261114",
+      "sha": "5f47de88e737e108d4d8b5a966bf776b6f703724"
+    },
+    {
+      "name": "research/ufc-park-five-fight-duplicate-id-certification-20261114",
+      "sha": "845ab1a1741bef8ee4f150534b0512e8a23375f8"
+    },
+    {
+      "name": "research/ufc-park-native-fight-identity-review-20261114",
+      "sha": "0cb871c0f156a945dc47832abcfb292d43b7f501"
+    },
+    {
+      "name": "research/ufc-pilot-certification-reconciliation-20261114",
+      "sha": "c69b0d48c971793796427e2a9a700ff2ddb2045c"
+    },
+    {
+      "name": "research/ufc-reverse-official-bout-reconciliation-20261114",
+      "sha": "31bd5b99ecf848c27b9e0d1fd4c215f9e920760a"
+    },
+    {
+      "name": "research/ufc-three-pilot-source-linked-careers-20261114",
+      "sha": "9e21589fd306b22d4958f6ccb38def7a4427209e"
+    },
+    {
+      "name": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "sha": "5f69950a4786ef1671dbeba8315746623d8441d3"
+    },
+    {
+      "name": "research/ufc-v4-abdul-hussein-independent-cert-20261114",
+      "sha": "069b5e4dd4e3c22f3de57d32d77ce5e014e904fb"
+    },
+    {
+      "name": "research/ufc-v4-baku-tahir-jefferson-full-career-cert-20261114",
+      "sha": "9faa250fb16509b578d47f14a8a16142de993570"
+    },
+    {
+      "name": "research/ufc-v4-completed-ci-certificate-proof-register-20261114",
+      "sha": "33c6d61f94abdd780ce8941b86560b647a9b1b14"
+    },
+    {
+      "name": "research/ufc-v4-elliott-anderson-paired-debut-cert-20261114",
+      "sha": "7201fc8ab569677a7930839c2b0b392c63e79bb8"
+    },
+    {
+      "name": "research/ufc-v4-exceptions-motta-ogden-bellato-20261114",
+      "sha": "4c148613e7591d7f8acc910e903264cf3328f44f"
+    },
+    {
+      "name": "research/ufc-v4-fastlane-exception-triage-20261114",
+      "sha": "f49539f67d800f898a851fee828cf127686317bd"
+    },
+    {
+      "name": "research/ufc-v4-finalize-tuf34-proof-20261114",
+      "sha": "fd8678dc483abe8c2c2642880a7d8dcf3afa4da4"
+    },
+    {
+      "name": "research/ufc-v4-four-official-source-careers-20261114",
+      "sha": "7fbc37f8f1ad65c5af54c799b64f72882d0f72a6"
+    },
+    {
+      "name": "research/ufc-v4-four-onebout-conflict-safe-20261114",
+      "sha": "6bcf3af9c42e551c46e244b5267182cd49532989"
+    },
+    {
+      "name": "research/ufc-v4-four-onebout-main-proof-reuse-20261114",
+      "sha": "28bf64c24276c5c6efd5f2438dc3dc2f837acd18"
+    },
+    {
+      "name": "research/ufc-v4-four-ufc332-careers-20261114",
+      "sha": "a14487021eaf3af944289535eefeeaf8b62be5fe"
+    },
+    {
+      "name": "research/ufc-v4-four-ufc-shanghai-careers-20261114",
+      "sha": "2bb1ce02e8f917ef012381e605cbdd0760c71274"
+    },
+    {
+      "name": "research/ufc-v4-jean-silva-eight-bout-cert-20261114",
+      "sha": "aa7460b2cdc5600d2546c85f2390120547d7e6f3"
+    },
+    {
+      "name": "research/ufc-v4-jean-silva-eight-bout-certification-20261114",
+      "sha": "ebfe27da193a0bce1582b7eb4886e76fe6bedf31"
+    },
+    {
+      "name": "research/ufc-v4-kayla-nina-ollie-delano-20261114",
+      "sha": "59a192eefb18acd1c8bb5c51714074efc273c52b"
+    },
+    {
+      "name": "research/ufc-v4-lucia-faglier-verified-careers-20261114",
+      "sha": "dc8ab7bba503d5aacd04707ce1c9cf0ff92ef36c"
+    },
+    {
+      "name": "research/ufc-v4-maryna-first-full-career-certification-20261114",
+      "sha": "a62b77e050846e8125f6d525a50ae84e0b433a28"
+    },
+    {
+      "name": "research/ufc-v4-noche-sean-jessie-paired-cert-20261114",
+      "sha": "0a7a3f33a2b9b1960c16a37997616d1a43613f91"
+    },
+    {
+      "name": "research/ufc-v4-paris-sintes-aljarouj-paired-cert-20261114",
+      "sha": "7e39ea56a6c63e637398b59431bd047da9b2c462"
+    },
+    {
+      "name": "research/ufc-v4-sacramento-merge-safe-audit-concurrency-20261114",
+      "sha": "42a362f4912b8aa793bcfc9f80615f6ec95a2a02"
+    },
+    {
+      "name": "research/ufc-v4-sacramento-triple-career-cert-20261114",
+      "sha": "3cc0ffa83a235ab5308ce1ff6263be9d8eaded27"
+    },
+    {
+      "name": "research/ufc-v4-seven-51-bout-career-cert-20261114",
+      "sha": "dbe592b1c6560f7c2daf43455aac3d8794bf84f3"
+    },
+    {
+      "name": "research/ufc-v4-seven-51-bout-conflict-safe-20261114",
+      "sha": "88dda77f7838b50a6321aa7aadaef96ba4ad47a5"
+    },
+    {
+      "name": "research/ufc-v4-seven-fastlane-first-careers-20261114",
+      "sha": "b01299205c6357fb7ac3cee16624e63389157b86"
+    },
+    {
+      "name": "research/ufc-v4-seven-multibout-official-careers-20261114",
+      "sha": "3fb1a63c9dfa38d06ed965bfff4c8e26992a5609"
+    },
+    {
+      "name": "research/ufc-v4-seven-paris-vegas-official-careers-20261114",
+      "sha": "7fde7c9f424717460ab209fce5e26ff2596881de"
+    },
+    {
+      "name": "research/ufc-v4-shanghai-conflict-reconciled-20261114",
+      "sha": "153626b3d2d6a9aff04c8e6c6d07fc14e98408da"
+    },
+    {
+      "name": "research/ufc-v4-six-multibout-source-cert-20261114",
+      "sha": "8c94fbbf0e52d5feeeddc33001bda6e9ad42a1c3"
+    },
+    {
+      "name": "research/ufc-v4-six-one-bout-careers-20261114",
+      "sha": "e314077a8a54ec2dc4a984f62b5f4366e2d94bf2"
+    },
+    {
+      "name": "research/ufc-v4-stage3-mixed-careers-batch-20261114",
+      "sha": "c5529bfe8085b9b0074a4baa9f657b5677955549"
+    },
+    {
+      "name": "research/ufc-v4-stage3-reuse-one-bout-wave-20261114",
+      "sha": "8753bd3dc7c66164da15e9c22c72b003f8b1a378"
+    },
+    {
+      "name": "research/ufc-v4-stage3-source-reuse-bulk-attempt-20261114",
+      "sha": "aabea9f8676c46304e27f92e4e22a9d83ae229f9"
+    },
+    {
+      "name": "research/ufc-v4-three-exception-careers-20261114",
+      "sha": "52c7d137ef421a8059b1c63d83633c942c9536ce"
+    },
+    {
+      "name": "research/ufc-v4-three-source-verified-single-bout-20261114",
+      "sha": "2d066fa8d9689667a240bf678830e330a8a4ca86"
+    },
+    {
+      "name": "research/ufc-v4-tuf34-finale-akylbek-osmanli-cert-20261114",
+      "sha": "fd511e9701b61b82235efc419e5feea1281e6cff"
+    },
+    {
+      "name": "review/ufc36-batch12-verified-remaining-20261114",
+      "sha": "6527211cc1d4575f83c9ca87b32cd847d0b0b752"
+    },
+    {
+      "name": "review/ufc36-danny-barlow-boxing-status-20261114",
+      "sha": "eec868c906061cf40807e7f7490592734aa32f4c"
+    },
+    {
+      "name": "review/ufc36-direct-external-mma-xfc-20261114",
+      "sha": "b6ae4ae34e5e479d2bf2427fba501914d1e66337"
+    },
+    {
+      "name": "review/ufc36-direct-mma-exclusion-rebased-20261114",
+      "sha": "977911999c1348926bc048a682ee459e203985a4"
+    },
+    {
+      "name": "review/ufc36-later-bout-verification-batch9-20261114",
+      "sha": "fbbe19a2908e7419c0a42d0f31c378dc6137b21c"
+    },
+    {
+      "name": "review/ufc36-later-bout-verification-batch10-20261114",
+      "sha": "e8701dd3acbad7fab5535566a1e5bf7b7ff1051e"
+    },
+    {
+      "name": "review/ufc36-later-mma-and-nonmma-batch11-20261114",
+      "sha": "f662bdc892bb5c47826d250f37a246d75cade047"
+    },
+    {
+      "name": "review/ufc36-official-active-status-batch1-20261114",
+      "sha": "b87d2588728d18292e942f06f5cd24eed80a7f58"
+    },
+    {
+      "name": "review/ufc36-official-not-fighting-status-20261114",
+      "sha": "0b193663deabd436f567743d27b8ce2fe0a0811f"
+    },
+    {
+      "name": "review/ufc36-seungwoo-choi-2025-roster-exit-20261114",
+      "sha": "ab32f38f178696554ded3148b94fecd6887d3986"
+    },
+    {
+      "name": "review/ufc36-status-and-victoria-20261114",
+      "sha": "b251f8155d5fe0b963c75659e21989388566eb36"
+    },
+    {
+      "name": "review/ufc36-zac-pauga-xfc-and-karate-20261114",
+      "sha": "90e56399dce8a2b261b0c0192d00572880bd046c"
+    },
+    {
+      "name": "review/ufc36-zero-exceptions-reconcile-20261114",
+      "sha": "65d66aa3d6d0d8e91e7c96858d000253163a9892"
+    },
+    {
+      "name": "review/ufc-36-month-evidence-batch2-20261113",
+      "sha": "85a4289da23bca4934ee1b161b6b3a5a93bb2d8c"
+    },
+    {
+      "name": "review/ufc-36-month-evidence-batch3-20261114",
+      "sha": "734ee4bcf7a9370382918301dbf9e26badd8f80a"
+    },
+    {
+      "name": "review/ufc-36-month-evidence-batch4-20261114",
+      "sha": "5cec43fb2b00a7e1b028ec4739d23e10eb638ea3"
+    },
+    {
+      "name": "review/ufc-36-month-evidence-batch5-20261114",
+      "sha": "c7f7004c8fe91e9c03dd3b837a5d250a12d7c926"
+    },
+    {
+      "name": "review/ufc-36-month-evidence-batch6-20261114",
+      "sha": "67f8971bb3a02c82adb0548868914f74fcdd7b02"
+    },
+    {
+      "name": "review/ufc-36-month-evidence-batch7-20261114",
+      "sha": "cedd9310788252902a177bed754523d85e2ec69a"
+    },
+    {
+      "name": "review/ufc-36-month-source-evidence-20261113",
+      "sha": "a41f03ab5d9df6763a70f570b1f009a5a5884bec"
+    },
+    {
+      "name": "review/ufc-36m-eligibility-batch8-20261114",
+      "sha": "0cf543f475f46d425e8ed3cdf892b1582dc41f22"
+    },
+    {
+      "name": "review/ufc-36m-grappling-wrestling-retirements-20261114",
+      "sha": "8417d1752aa3662d475051b2365599a4095da175"
+    },
+    {
+      "name": "review/ufc-36m-regional-mma-20261114",
+      "sha": "4685209b398c1fff769be573e27452cd68c93f76"
+    },
+    {
+      "name": "review/ufc-36m-vince-morales-puja-tomar-20261114",
+      "sha": "26a84c408794830a816057d17102427c68f54173"
+    },
+    {
+      "name": "roster/ufc-24-month-review-20261113",
+      "sha": "a370c902ea6ed0fd8fdeb53a08efbea76a755423"
+    },
+    {
+      "name": "test/big-balls-boxing-api-probe-20261114",
+      "sha": "1530fe5fbb643b46fce80f23adfcfb67d0d5f6f4"
+    }
+  ],
+  "runSample": [
+    {
+      "id": 43567961299,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "5c33e28609b2054009cbc7c417515a5cd245d72b",
+      "status": "in_progress",
+      "conclusion": null,
+      "created_at": "2026-11-14T06:46:26Z",
+      "updated_at": "2026-11-14T06:46:33Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567961299"
+    },
+    {
+      "id": 43567747234,
+      "path": ".github/workflows/refresh-fight-talk.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "5c33e28609b2054009cbc7c417515a5cd245d72b",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:43:42Z",
+      "updated_at": "2026-11-14T06:43:54Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567747234"
+    },
+    {
+      "id": 43567553324,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "e63fd692879565115e89c73bcb592849b664aa95",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:41:13Z",
+      "updated_at": "2026-11-14T06:46:30Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567553324"
+    },
+    {
+      "id": 43567123650,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "2123a19196e1a9b1fbd1090687f04e4f563bd13a",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:35:55Z",
+      "updated_at": "2026-11-14T06:41:17Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567123650"
+    },
+    {
+      "id": 43566933642,
+      "path": ".github/workflows/refresh-results.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "2123a19196e1a9b1fbd1090687f04e4f563bd13a",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:33:37Z",
+      "updated_at": "2026-11-14T06:33:54Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566933642"
+    },
+    {
+      "id": 43566694965,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "4d9df3faee72161850ce577e18ff8ee710a007df",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:30:45Z",
+      "updated_at": "2026-11-14T06:35:58Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566694965"
+    },
+    {
+      "id": 43566474117,
+      "path": ".github/workflows/watch-ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "4d9df3faee72161850ce577e18ff8ee710a007df",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:28:05Z",
+      "updated_at": "2026-11-14T06:28:15Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566474117"
+    },
+    {
+      "id": 43566394421,
+      "path": ".github/workflows/refresh-meta-embeds.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "877211952c488dba8df3097b9f1bdbd6bd45002b",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:27:06Z",
+      "updated_at": "2026-11-14T06:27:22Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566394421"
+    },
+    {
+      "id": 43566355634,
+      "path": ".github/workflows/refresh-news.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "877211952c488dba8df3097b9f1bdbd6bd45002b",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:26:37Z",
+      "updated_at": "2026-11-14T06:28:03Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566355634"
+    },
+    {
+      "id": 43566271946,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "8e0b00459087c67b6cdebaee6947bd0c0b069aea",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:25:34Z",
+      "updated_at": "2026-11-14T06:30:48Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566271946"
+    },
+    {
+      "id": 43565846950,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "c7442b1d36da0bf7093d759850f58aa71d629e0f",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:20:23Z",
+      "updated_at": "2026-11-14T06:25:38Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43565846950"
+    },
+    {
+      "id": 43565411979,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "0fd6a92d2dfa58e8b11f894ca716514c770ebf98",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:15:09Z",
+      "updated_at": "2026-11-14T06:20:26Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43565411979"
+    },
+    {
+      "id": 43565378998,
+      "path": ".github/workflows/refresh-fight-film.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "3400371d64cfef3b50a5265a120a9d08bfaf3074",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:14:46Z",
+      "updated_at": "2026-11-14T06:15:06Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43565378998"
+    },
+    {
+      "id": 43564984561,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "f2784a35344ec96130156fca4820bb32ef4012d4",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:10:00Z",
+      "updated_at": "2026-11-14T06:15:13Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43564984561"
+    },
+    {
+      "id": 43564903618,
+      "path": ".github/workflows/verify-live-ufc-profiles.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "f2784a35344ec96130156fca4820bb32ef4012d4",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:09:01Z",
+      "updated_at": "2026-11-14T06:11:20Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43564903618"
+    },
+    {
+      "id": 43564676415,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "f2784a35344ec96130156fca4820bb32ef4012d4",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:06:11Z",
+      "updated_at": "2026-11-14T06:09:03Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43564676415"
+    },
+    {
+      "id": 43564662838,
+      "path": ".github/workflows/build-ufc-fighter-v3.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "b9c995bda7fa5c3e9989cf2285b6e0552cdb1d7c",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:06:01Z",
+      "updated_at": "2026-11-14T06:06:14Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43564662838"
+    },
+    {
+      "id": 43564560962,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "11f068cba2e43f632a4f805d51e80664c14683d3",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:04:51Z",
+      "updated_at": "2026-11-14T06:10:03Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43564560962"
+    },
+    {
+      "id": 43564134339,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "7330b153ae9208088d871eb40c28bd378300bbaa",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:59:41Z",
+      "updated_at": "2026-11-14T06:04:54Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43564134339"
+    },
+    {
+      "id": 43563773727,
+      "path": ".github/workflows/verify-live-ufc-profiles.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "1512b0465b89245f777fc5195907046f8bcf1673",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:54:46Z",
+      "updated_at": "2026-11-14T05:57:11Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43563773727"
+    },
+    {
+      "id": 43563757515,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "7f5155476f32a4ace9bcd5f0435f090d2db0edb8",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:54:33Z",
+      "updated_at": "2026-11-14T05:59:45Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43563757515"
+    },
+    {
+      "id": 43563739895,
+      "path": ".github/workflows/build-ufc-profile-queue.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "7f5155476f32a4ace9bcd5f0435f090d2db0edb8",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:54:19Z",
+      "updated_at": "2026-11-14T05:54:37Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43563739895"
+    },
+    {
+      "id": 43563598147,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "7f5155476f32a4ace9bcd5f0435f090d2db0edb8",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:52:25Z",
+      "updated_at": "2026-11-14T05:52:48Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43563598147"
+    },
+    {
+      "id": 43563559066,
+      "path": ".github/workflows/refresh-fight-talk.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "34f066fcd1524faf6f169f5d0b22eb55b917b9c0",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:51:56Z",
+      "updated_at": "2026-11-14T05:52:18Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43563559066"
+    },
+    {
+      "id": 43563362052,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "5ec7491e0c895148966c4b1630511580f6394262",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:49:24Z",
+      "updated_at": "2026-11-14T05:54:36Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43563362052"
+    },
+    {
+      "id": 43563123115,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "5ec7491e0c895148966c4b1630511580f6394262",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:46:19Z",
+      "updated_at": "2026-11-14T05:46:34Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43563123115"
+    },
+    {
+      "id": 43563087674,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "5ec7491e0c895148966c4b1630511580f6394262",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:45:52Z",
+      "updated_at": "2026-11-14T05:46:17Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43563087674"
+    },
+    {
+      "id": 43562954630,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "336e649f29f8b4e7493c431f75d972f8c25b689e",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:44:12Z",
+      "updated_at": "2026-11-14T05:49:26Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562954630"
+    },
+    {
+      "id": 43562922182,
+      "path": ".github/workflows/refresh-results.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "336e649f29f8b4e7493c431f75d972f8c25b689e",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:43:46Z",
+      "updated_at": "2026-11-14T05:44:06Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562922182"
+    },
+    {
+      "id": 43562874917,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "336e649f29f8b4e7493c431f75d972f8c25b689e",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:43:10Z",
+      "updated_at": "2026-11-14T05:43:23Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562874917"
+    },
+    {
+      "id": 43562845626,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "336e649f29f8b4e7493c431f75d972f8c25b689e",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:42:46Z",
+      "updated_at": "2026-11-14T05:43:03Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562845626"
+    },
+    {
+      "id": 43562845649,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "336e649f29f8b4e7493c431f75d972f8c25b689e",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:42:46Z",
+      "updated_at": "2026-11-14T05:43:07Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562845649"
+    },
+    {
+      "id": 43562580081,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "0b3f82005c015da0032cb224051fb792c7280be1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:39:24Z",
+      "updated_at": "2026-11-14T05:39:39Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562580081"
+    },
+    {
+      "id": 43562557258,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "0b3f82005c015da0032cb224051fb792c7280be1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:39:07Z",
+      "updated_at": "2026-11-14T05:39:22Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562557258"
+    },
+    {
+      "id": 43562557229,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "0b3f82005c015da0032cb224051fb792c7280be1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:39:07Z",
+      "updated_at": "2026-11-14T05:39:22Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562557229"
+    },
+    {
+      "id": 43562550337,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "93c61e80bd489e1ec2d8396cb8b93e6c1dfdaf9a",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:39:02Z",
+      "updated_at": "2026-11-14T05:44:17Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562550337"
+    },
+    {
+      "id": 43562280864,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "93c61e80bd489e1ec2d8396cb8b93e6c1dfdaf9a",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:35:34Z",
+      "updated_at": "2026-11-14T05:35:46Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562280864"
+    },
+    {
+      "id": 43562261033,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "93c61e80bd489e1ec2d8396cb8b93e6c1dfdaf9a",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:35:20Z",
+      "updated_at": "2026-11-14T05:35:33Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562261033"
+    },
+    {
+      "id": 43562261005,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "93c61e80bd489e1ec2d8396cb8b93e6c1dfdaf9a",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:35:20Z",
+      "updated_at": "2026-11-14T05:35:34Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562261005"
+    },
+    {
+      "id": 43562138572,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "a1e4241a452396d92bee1993a2fced4c6335ee77",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:33:51Z",
+      "updated_at": "2026-11-14T05:39:05Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562138572"
+    },
+    {
+      "id": 43562133099,
+      "path": ".github/workflows/refresh-twitterapi-io.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "a1e4241a452396d92bee1993a2fced4c6335ee77",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:33:47Z",
+      "updated_at": "2026-11-14T05:34:03Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562133099"
+    },
+    {
+      "id": 43562073744,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "a1e4241a452396d92bee1993a2fced4c6335ee77",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:33:03Z",
+      "updated_at": "2026-11-14T05:33:16Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562073744"
+    },
+    {
+      "id": 43562031119,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "a1e4241a452396d92bee1993a2fced4c6335ee77",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:32:32Z",
+      "updated_at": "2026-11-14T05:32:56Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562031119"
+    },
+    {
+      "id": 43562031029,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "a1e4241a452396d92bee1993a2fced4c6335ee77",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:32:32Z",
+      "updated_at": "2026-11-14T05:33:00Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562031029"
+    },
+    {
+      "id": 43561910004,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "4506f5c72457e73177f3868b701cf250cce6ef9b",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:31:06Z",
+      "updated_at": "2026-11-14T05:31:41Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561910004"
+    },
+    {
+      "id": 43561874639,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "4506f5c72457e73177f3868b701cf250cce6ef9b",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:30:43Z",
+      "updated_at": "2026-11-14T05:31:04Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561874639"
+    },
+    {
+      "id": 43561874695,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "4506f5c72457e73177f3868b701cf250cce6ef9b",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:30:43Z",
+      "updated_at": "2026-11-14T05:30:55Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561874695"
+    },
+    {
+      "id": 43561706514,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "61710779c57413801a2e0e93fda55d4798fcba58",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:28:39Z",
+      "updated_at": "2026-11-14T05:33:55Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561706514"
+    },
+    {
+      "id": 43561681617,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "61710779c57413801a2e0e93fda55d4798fcba58",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:28:20Z",
+      "updated_at": "2026-11-14T05:31:24Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561681617"
+    },
+    {
+      "id": 43561650908,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "61710779c57413801a2e0e93fda55d4798fcba58",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:27:56Z",
+      "updated_at": "2026-11-14T05:28:18Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561650908"
+    },
+    {
+      "id": 43561650866,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "61710779c57413801a2e0e93fda55d4798fcba58",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:27:56Z",
+      "updated_at": "2026-11-14T05:28:17Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561650866"
+    },
+    {
+      "id": 43561598664,
+      "path": ".github/workflows/refresh-meta-embeds.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "f93a3d8d74c4603ba796550982bb2ed7a58a3229",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:27:15Z",
+      "updated_at": "2026-11-14T05:27:37Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561598664"
+    },
+    {
+      "id": 43561587882,
+      "path": ".github/workflows/watch-ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "f93a3d8d74c4603ba796550982bb2ed7a58a3229",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:27:07Z",
+      "updated_at": "2026-11-14T05:27:20Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561587882"
+    },
+    {
+      "id": 43561573730,
+      "path": ".github/workflows/refresh-news.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "f93a3d8d74c4603ba796550982bb2ed7a58a3229",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:26:56Z",
+      "updated_at": "2026-11-14T05:27:31Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561573730"
+    },
+    {
+      "id": 43561474990,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "f93a3d8d74c4603ba796550982bb2ed7a58a3229",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:25:39Z",
+      "updated_at": "2026-11-14T05:28:35Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561474990"
+    },
+    {
+      "id": 43561453298,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "f93a3d8d74c4603ba796550982bb2ed7a58a3229",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:25:23Z",
+      "updated_at": "2026-11-14T05:25:36Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561453298"
+    },
+    {
+      "id": 43561453233,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "f93a3d8d74c4603ba796550982bb2ed7a58a3229",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:25:22Z",
+      "updated_at": "2026-11-14T05:25:37Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561453233"
+    },
+    {
+      "id": 43561345312,
+      "path": ".github/workflows/refresh-fight-film.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "86b65ded02c5573491a1b51fd51712b5881c496d",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:24:00Z",
+      "updated_at": "2026-11-14T05:24:21Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561345312"
+    },
+    {
+      "id": 43561304046,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "86b65ded02c5573491a1b51fd51712b5881c496d",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:23:29Z",
+      "updated_at": "2026-11-14T05:28:43Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561304046"
+    },
+    {
+      "id": 43561261590,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "86b65ded02c5573491a1b51fd51712b5881c496d",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:22:58Z",
+      "updated_at": "2026-11-14T05:23:10Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561261590"
+    },
+    {
+      "id": 43561243517,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "86b65ded02c5573491a1b51fd51712b5881c496d",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:22:44Z",
+      "updated_at": "2026-11-14T05:22:56Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561243517"
+    },
+    {
+      "id": 43561243474,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "86b65ded02c5573491a1b51fd51712b5881c496d",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:22:44Z",
+      "updated_at": "2026-11-14T05:22:56Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561243474"
+    },
+    {
+      "id": 43561156889,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "a132a8378581f0a74814d48c37d5bb86d7c35491",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:21:42Z",
+      "updated_at": "2026-11-14T05:22:00Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561156889"
+    },
+    {
+      "id": 43561133540,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "a132a8378581f0a74814d48c37d5bb86d7c35491",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:21:24Z",
+      "updated_at": "2026-11-14T05:21:41Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561133540"
+    },
+    {
+      "id": 43561133461,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "a132a8378581f0a74814d48c37d5bb86d7c35491",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:21:24Z",
+      "updated_at": "2026-11-14T05:21:40Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561133461"
+    },
+    {
+      "id": 43560932135,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "49f3d9d66ae1e2dc9780b6ce7b4f6062f72eeb76",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:19:00Z",
+      "updated_at": "2026-11-14T05:19:11Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560932135"
+    },
+    {
+      "id": 43560894373,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "49f3d9d66ae1e2dc9780b6ce7b4f6062f72eeb76",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:18:31Z",
+      "updated_at": "2026-11-14T05:18:56Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560894373"
+    },
+    {
+      "id": 43560877444,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "9cfba3527b7d710c210df25d18a471fb1584afd1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:18:19Z",
+      "updated_at": "2026-11-14T05:23:32Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560877444"
+    },
+    {
+      "id": 43560726113,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "9cfba3527b7d710c210df25d18a471fb1584afd1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:16:25Z",
+      "updated_at": "2026-11-14T05:16:42Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560726113"
+    },
+    {
+      "id": 43560460835,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "8650d83cc944071fbdf5afe8e455f9a734b7e947",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:13:11Z",
+      "updated_at": "2026-11-14T05:13:30Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560460835"
+    },
+    {
+      "id": 43560455897,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "8650d83cc944071fbdf5afe8e455f9a734b7e947",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:13:08Z",
+      "updated_at": "2026-11-14T05:18:22Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560455897"
+    },
+    {
+      "id": 43560441377,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "8650d83cc944071fbdf5afe8e455f9a734b7e947",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:12:58Z",
+      "updated_at": "2026-11-14T05:13:09Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560441377"
+    },
+    {
+      "id": 43560329684,
+      "path": ".github/workflows/build-ufc-fighter-v3.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "a7b98545e58fa3ee328b0982d8944fff37f5da10",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:11:38Z",
+      "updated_at": "2026-11-14T05:11:48Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560329684"
+    },
+    {
+      "id": 43560131415,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "a7b98545e58fa3ee328b0982d8944fff37f5da10",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:09:18Z",
+      "updated_at": "2026-11-14T05:09:34Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560131415"
+    },
+    {
+      "id": 43560107028,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "2c797c0b99e174d4461aad89b640f3389d97640a",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:09:01Z",
+      "updated_at": "2026-11-14T05:09:14Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560107028"
+    },
+    {
+      "id": 43560022287,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "e106a1c39925fccf8c056f17016c7605ebb262aa",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:07:58Z",
+      "updated_at": "2026-11-14T05:13:12Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560022287"
+    },
+    {
+      "id": 43559913402,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "e106a1c39925fccf8c056f17016c7605ebb262aa",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:06:40Z",
+      "updated_at": "2026-11-14T05:06:53Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559913402"
+    },
+    {
+      "id": 43559893670,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "e106a1c39925fccf8c056f17016c7605ebb262aa",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:06:25Z",
+      "updated_at": "2026-11-14T05:06:38Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559893670"
+    },
+    {
+      "id": 43559701948,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "e36fedec7eb24c8750574cb6e932925729908bd1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:04:10Z",
+      "updated_at": "2026-11-14T05:04:49Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559701948"
+    },
+    {
+      "id": 43559666288,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "2d9c30f6489382497b3c3981211f221239330b86",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:03:44Z",
+      "updated_at": "2026-11-14T05:04:06Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559666288"
+    },
+    {
+      "id": 43559583480,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "e8248c3866b7e9e6d0994153d1d7696ee9fbcfe0",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:02:44Z",
+      "updated_at": "2026-11-14T05:08:01Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559583480"
+    },
+    {
+      "id": 43559501306,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "e8248c3866b7e9e6d0994153d1d7696ee9fbcfe0",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:01:45Z",
+      "updated_at": "2026-11-14T05:04:32Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559501306"
+    },
+    {
+      "id": 43559474144,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "e8248c3866b7e9e6d0994153d1d7696ee9fbcfe0",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:01:25Z",
+      "updated_at": "2026-11-14T05:01:43Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559474144"
+    },
+    {
+      "id": 43559448124,
+      "path": ".github/workflows/refresh-fight-talk.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "1ed7a6e100c77497a62b849a57c6a004f3174ee1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:01:07Z",
+      "updated_at": "2026-11-14T05:01:20Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559448124"
+    },
+    {
+      "id": 43559436269,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "1ed7a6e100c77497a62b849a57c6a004f3174ee1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:00:59Z",
+      "updated_at": "2026-11-14T05:01:16Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559436269"
+    },
+    {
+      "id": 43559394290,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "1ed7a6e100c77497a62b849a57c6a004f3174ee1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:00:34Z",
+      "updated_at": "2026-11-14T05:00:57Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559394290"
+    },
+    {
+      "id": 43559394479,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "1ed7a6e100c77497a62b849a57c6a004f3174ee1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T05:00:34Z",
+      "updated_at": "2026-11-14T05:08:45Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559394479"
+    },
+    {
+      "id": 43559272219,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "ddb1abb3c667961a8cd9a9c9ad2f21b12337d74c",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T04:59:03Z",
+      "updated_at": "2026-11-14T04:59:19Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559272219"
+    },
+    {
+      "id": 43559257816,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "ddb1abb3c667961a8cd9a9c9ad2f21b12337d74c",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T04:58:52Z",
+      "updated_at": "2026-11-14T04:59:09Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559257816"
+    },
+    {
+      "id": 43559256002,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "ddb1abb3c667961a8cd9a9c9ad2f21b12337d74c",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T04:58:50Z",
+      "updated_at": "2026-11-14T04:59:02Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559256002"
+    },
+    {
+      "id": 43559255969,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "ddb1abb3c667961a8cd9a9c9ad2f21b12337d74c",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "created_at": "2026-11-14T04:58:50Z",
+      "updated_at": "2026-11-14T05:00:40Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559255969"
+    },
+    {
+      "id": 43559236319,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "a599cd6c9f151641115a32a4b5bf2cc91e394d16",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T04:58:34Z",
+      "updated_at": "2026-11-14T04:58:49Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559236319"
+    },
+    {
+      "id": 43559169478,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "408be3f35b16bc62a8531122f0d9000e23950af8",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T04:57:39Z",
+      "updated_at": "2026-11-14T04:57:54Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559169478"
+    },
+    {
+      "id": 43559164675,
+      "path": ".github/workflows/verify-live-ufc-profiles.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "408be3f35b16bc62a8531122f0d9000e23950af8",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T04:57:35Z",
+      "updated_at": "2026-11-14T04:59:31Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559164675"
+    },
+    {
+      "id": 43559162137,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "408be3f35b16bc62a8531122f0d9000e23950af8",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T04:57:33Z",
+      "updated_at": "2026-11-14T05:02:48Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559162137"
+    },
+    {
+      "id": 43559152426,
+      "path": ".github/workflows/befn-release-readiness.yml",
+      "head_branch": "main",
+      "event": "push",
+      "head_sha": "408be3f35b16bc62a8531122f0d9000e23950af8",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T04:57:25Z",
+      "updated_at": "2026-11-14T04:57:37Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559152426"
+    },
+    {
+      "id": 43559133742,
+      "path": ".github/workflows/refresh-results.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "de75f601a943dbdf368dc2368fe37d1e56b82138",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T04:57:09Z",
+      "updated_at": "2026-11-14T04:57:21Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559133742"
+    },
+    {
+      "id": 43559128026,
+      "path": ".github/workflows/build-ufc-profile-queue.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "de75f601a943dbdf368dc2368fe37d1e56b82138",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "created_at": "2026-11-14T04:57:05Z",
+      "updated_at": "2026-11-14T04:57:14Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559128026"
+    },
+    {
+      "id": 43559006757,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "de75f601a943dbdf368dc2368fe37d1e56b82138",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T04:55:28Z",
+      "updated_at": "2026-11-14T04:55:40Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43559006757"
+    },
+    {
+      "id": 43558892399,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "de75f601a943dbdf368dc2368fe37d1e56b82138",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T04:54:00Z",
+      "updated_at": "2026-11-14T04:54:20Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43558892399"
+    },
+    {
+      "id": 43567897945,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "5f69950a4786ef1671dbeba8315746623d8441d3",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:45:36Z",
+      "updated_at": "2026-11-14T06:45:51Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567897945"
+    },
+    {
+      "id": 43567897861,
+      "path": ".github/workflows/verify-ufc-v4-tuf34-finale-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "5f69950a4786ef1671dbeba8315746623d8441d3",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:45:36Z",
+      "updated_at": "2026-11-14T06:45:47Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567897861"
+    },
+    {
+      "id": 43567897830,
+      "path": ".github/workflows/verify-ufc-v4-noche-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "5f69950a4786ef1671dbeba8315746623d8441d3",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:45:36Z",
+      "updated_at": "2026-11-14T06:45:50Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567897830"
+    },
+    {
+      "id": 43567897808,
+      "path": ".github/workflows/verify-ufc-v4-paris-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "5f69950a4786ef1671dbeba8315746623d8441d3",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:45:36Z",
+      "updated_at": "2026-11-14T06:45:52Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567897808"
+    },
+    {
+      "id": 43567897807,
+      "path": ".github/workflows/verify-ufc-v4-elliott-anderson-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "5f69950a4786ef1671dbeba8315746623d8441d3",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:45:36Z",
+      "updated_at": "2026-11-14T06:45:49Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567897807"
+    },
+    {
+      "id": 43567897798,
+      "path": ".github/workflows/verify-ufc-v4-abdul-hussein-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "5f69950a4786ef1671dbeba8315746623d8441d3",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:45:36Z",
+      "updated_at": "2026-11-14T06:45:57Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567897798"
+    },
+    {
+      "id": 43567897770,
+      "path": ".github/workflows/verify-ufc-v4-baku-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "5f69950a4786ef1671dbeba8315746623d8441d3",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:45:36Z",
+      "updated_at": "2026-11-14T06:45:50Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567897770"
+    },
+    {
+      "id": 43567844647,
+      "path": ".github/workflows/verify-ufc-v4-baku-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "d750f5e4425579d0e9924582feaa707e03f5ea05",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:44:59Z",
+      "updated_at": "2026-11-14T06:45:20Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567844647"
+    },
+    {
+      "id": 43567844640,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "d750f5e4425579d0e9924582feaa707e03f5ea05",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:44:59Z",
+      "updated_at": "2026-11-14T06:45:13Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567844640"
+    },
+    {
+      "id": 43567844636,
+      "path": ".github/workflows/verify-ufc-v4-paris-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "d750f5e4425579d0e9924582feaa707e03f5ea05",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:44:59Z",
+      "updated_at": "2026-11-14T06:45:14Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567844636"
+    },
+    {
+      "id": 43567844631,
+      "path": ".github/workflows/verify-ufc-v4-elliott-anderson-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "d750f5e4425579d0e9924582feaa707e03f5ea05",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:44:59Z",
+      "updated_at": "2026-11-14T06:45:11Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567844631"
+    },
+    {
+      "id": 43567844621,
+      "path": ".github/workflows/verify-ufc-v4-abdul-hussein-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "d750f5e4425579d0e9924582feaa707e03f5ea05",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:44:59Z",
+      "updated_at": "2026-11-14T06:45:19Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567844621"
+    },
+    {
+      "id": 43567844599,
+      "path": ".github/workflows/verify-ufc-v4-tuf34-finale-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "d750f5e4425579d0e9924582feaa707e03f5ea05",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:44:59Z",
+      "updated_at": "2026-11-14T06:45:13Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567844599"
+    },
+    {
+      "id": 43567844597,
+      "path": ".github/workflows/verify-ufc-v4-noche-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "d750f5e4425579d0e9924582feaa707e03f5ea05",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:44:59Z",
+      "updated_at": "2026-11-14T06:45:13Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567844597"
+    },
+    {
+      "id": 43567809501,
+      "path": ".github/workflows/verify-ufc-v4-paris-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "1f2c335009dbe26b5f41f59c373a499bbd4a1644",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:44:30Z",
+      "updated_at": "2026-11-14T06:44:41Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567809501"
+    },
+    {
+      "id": 43567809360,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "1f2c335009dbe26b5f41f59c373a499bbd4a1644",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:44:30Z",
+      "updated_at": "2026-11-14T06:44:50Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567809360"
+    },
+    {
+      "id": 43567809352,
+      "path": ".github/workflows/verify-ufc-v4-noche-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "1f2c335009dbe26b5f41f59c373a499bbd4a1644",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:44:30Z",
+      "updated_at": "2026-11-14T06:44:42Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567809352"
+    },
+    {
+      "id": 43567809336,
+      "path": ".github/workflows/verify-ufc-v4-tuf34-finale-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "1f2c335009dbe26b5f41f59c373a499bbd4a1644",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:44:30Z",
+      "updated_at": "2026-11-14T06:44:54Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567809336"
+    },
+    {
+      "id": 43567809333,
+      "path": ".github/workflows/verify-ufc-v4-baku-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "1f2c335009dbe26b5f41f59c373a499bbd4a1644",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:44:30Z",
+      "updated_at": "2026-11-14T06:44:41Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567809333"
+    },
+    {
+      "id": 43567809329,
+      "path": ".github/workflows/verify-ufc-v4-abdul-hussein-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "1f2c335009dbe26b5f41f59c373a499bbd4a1644",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:44:30Z",
+      "updated_at": "2026-11-14T06:44:51Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567809329"
+    },
+    {
+      "id": 43567809324,
+      "path": ".github/workflows/verify-ufc-v4-elliott-anderson-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "1f2c335009dbe26b5f41f59c373a499bbd4a1644",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:44:30Z",
+      "updated_at": "2026-11-14T06:44:43Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567809324"
+    },
+    {
+      "id": 43567613845,
+      "path": ".github/workflows/verify-ufc-v4-elliott-anderson-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "f876fd43ef338b218f87d84e5d383f817ed685ed",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:41:59Z",
+      "updated_at": "2026-11-14T06:42:12Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567613845"
+    },
+    {
+      "id": 43567613820,
+      "path": ".github/workflows/verify-ufc-v4-tuf34-finale-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "f876fd43ef338b218f87d84e5d383f817ed685ed",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:41:59Z",
+      "updated_at": "2026-11-14T06:42:18Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567613820"
+    },
+    {
+      "id": 43567613812,
+      "path": ".github/workflows/verify-ufc-v4-abdul-hussein-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "f876fd43ef338b218f87d84e5d383f817ed685ed",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:41:59Z",
+      "updated_at": "2026-11-14T06:42:20Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567613812"
+    },
+    {
+      "id": 43567613797,
+      "path": ".github/workflows/verify-ufc-v4-paris-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "f876fd43ef338b218f87d84e5d383f817ed685ed",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:41:59Z",
+      "updated_at": "2026-11-14T06:42:25Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567613797"
+    },
+    {
+      "id": 43567613788,
+      "path": ".github/workflows/verify-ufc-v4-baku-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "f876fd43ef338b218f87d84e5d383f817ed685ed",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:41:59Z",
+      "updated_at": "2026-11-14T06:42:12Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567613788"
+    },
+    {
+      "id": 43567613783,
+      "path": ".github/workflows/verify-ufc-v4-noche-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "f876fd43ef338b218f87d84e5d383f817ed685ed",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:41:59Z",
+      "updated_at": "2026-11-14T06:42:15Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567613783"
+    },
+    {
+      "id": 43567613777,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "f876fd43ef338b218f87d84e5d383f817ed685ed",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:41:59Z",
+      "updated_at": "2026-11-14T06:42:30Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567613777"
+    },
+    {
+      "id": 43567581984,
+      "path": ".github/workflows/verify-ufc-v4-noche-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "c81d170d42d48cb23ddb88ebb9da2d3dcb28c099",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:41:35Z",
+      "updated_at": "2026-11-14T06:41:47Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567581984"
+    },
+    {
+      "id": 43567581821,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "c81d170d42d48cb23ddb88ebb9da2d3dcb28c099",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "created_at": "2026-11-14T06:41:35Z",
+      "updated_at": "2026-11-14T06:42:06Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567581821"
+    },
+    {
+      "id": 43567581820,
+      "path": ".github/workflows/verify-ufc-v4-elliott-anderson-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "c81d170d42d48cb23ddb88ebb9da2d3dcb28c099",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:41:35Z",
+      "updated_at": "2026-11-14T06:41:58Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567581820"
+    },
+    {
+      "id": 43567581815,
+      "path": ".github/workflows/verify-ufc-v4-tuf34-finale-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "c81d170d42d48cb23ddb88ebb9da2d3dcb28c099",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:41:35Z",
+      "updated_at": "2026-11-14T06:42:00Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567581815"
+    },
+    {
+      "id": 43567581812,
+      "path": ".github/workflows/verify-ufc-v4-abdul-hussein-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "c81d170d42d48cb23ddb88ebb9da2d3dcb28c099",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:41:35Z",
+      "updated_at": "2026-11-14T06:41:47Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567581812"
+    },
+    {
+      "id": 43567581807,
+      "path": ".github/workflows/verify-ufc-v4-baku-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "c81d170d42d48cb23ddb88ebb9da2d3dcb28c099",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:41:35Z",
+      "updated_at": "2026-11-14T06:41:55Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567581807"
+    },
+    {
+      "id": 43567581790,
+      "path": ".github/workflows/verify-ufc-v4-paris-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "c81d170d42d48cb23ddb88ebb9da2d3dcb28c099",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:41:35Z",
+      "updated_at": "2026-11-14T06:41:47Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567581790"
+    },
+    {
+      "id": 43567342475,
+      "path": ".github/workflows/verify-ufc-v4-baku-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "241b8a9e0c350e30f9f0a539c076d6c676fd59c1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:38:39Z",
+      "updated_at": "2026-11-14T06:38:55Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567342475"
+    },
+    {
+      "id": 43567342390,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "241b8a9e0c350e30f9f0a539c076d6c676fd59c1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:38:39Z",
+      "updated_at": "2026-11-14T06:38:54Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567342390"
+    },
+    {
+      "id": 43567342389,
+      "path": ".github/workflows/verify-ufc-v4-paris-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "241b8a9e0c350e30f9f0a539c076d6c676fd59c1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:38:39Z",
+      "updated_at": "2026-11-14T06:38:52Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567342389"
+    },
+    {
+      "id": 43567342378,
+      "path": ".github/workflows/verify-ufc-v4-noche-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "241b8a9e0c350e30f9f0a539c076d6c676fd59c1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:38:39Z",
+      "updated_at": "2026-11-14T06:39:00Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567342378"
+    },
+    {
+      "id": 43567342360,
+      "path": ".github/workflows/verify-ufc-v4-abdul-hussein-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "241b8a9e0c350e30f9f0a539c076d6c676fd59c1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:38:39Z",
+      "updated_at": "2026-11-14T06:38:53Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567342360"
+    },
+    {
+      "id": 43567342353,
+      "path": ".github/workflows/verify-ufc-v4-tuf34-finale-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "241b8a9e0c350e30f9f0a539c076d6c676fd59c1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:38:39Z",
+      "updated_at": "2026-11-14T06:38:54Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567342353"
+    },
+    {
+      "id": 43567342349,
+      "path": ".github/workflows/verify-ufc-v4-elliott-anderson-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "241b8a9e0c350e30f9f0a539c076d6c676fd59c1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:38:39Z",
+      "updated_at": "2026-11-14T06:38:52Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567342349"
+    },
+    {
+      "id": 43567317533,
+      "path": ".github/workflows/verify-ufc-v4-abdul-hussein-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "20ee8128627d755707eb63ec7271e1ac457fc375",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:38:20Z",
+      "updated_at": "2026-11-14T06:38:41Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567317533"
+    },
+    {
+      "id": 43567317515,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "20ee8128627d755707eb63ec7271e1ac457fc375",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:38:20Z",
+      "updated_at": "2026-11-14T06:38:39Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567317515"
+    },
+    {
+      "id": 43567317513,
+      "path": ".github/workflows/verify-ufc-v4-paris-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "20ee8128627d755707eb63ec7271e1ac457fc375",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:38:20Z",
+      "updated_at": "2026-11-14T06:38:31Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567317513"
+    },
+    {
+      "id": 43567317493,
+      "path": ".github/workflows/verify-ufc-v4-tuf34-finale-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "20ee8128627d755707eb63ec7271e1ac457fc375",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:38:20Z",
+      "updated_at": "2026-11-14T06:38:32Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567317493"
+    },
+    {
+      "id": 43567317489,
+      "path": ".github/workflows/verify-ufc-v4-elliott-anderson-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "20ee8128627d755707eb63ec7271e1ac457fc375",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:38:20Z",
+      "updated_at": "2026-11-14T06:38:39Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567317489"
+    },
+    {
+      "id": 43567317486,
+      "path": ".github/workflows/verify-ufc-v4-baku-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "20ee8128627d755707eb63ec7271e1ac457fc375",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:38:20Z",
+      "updated_at": "2026-11-14T06:38:35Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567317486"
+    },
+    {
+      "id": 43567317470,
+      "path": ".github/workflows/verify-ufc-v4-noche-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "20ee8128627d755707eb63ec7271e1ac457fc375",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:38:20Z",
+      "updated_at": "2026-11-14T06:38:41Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567317470"
+    },
+    {
+      "id": 43567172462,
+      "path": ".github/workflows/verify-ufc-v4-baku-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "b3bf93320898ae51b3cd36b09833f57f1c07e4f5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:36:32Z",
+      "updated_at": "2026-11-14T06:36:58Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567172462"
+    },
+    {
+      "id": 43567172423,
+      "path": ".github/workflows/verify-ufc-v4-abdul-hussein-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "b3bf93320898ae51b3cd36b09833f57f1c07e4f5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:36:32Z",
+      "updated_at": "2026-11-14T06:36:47Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567172423"
+    },
+    {
+      "id": 43567172418,
+      "path": ".github/workflows/verify-ufc-v4-paris-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "b3bf93320898ae51b3cd36b09833f57f1c07e4f5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:36:32Z",
+      "updated_at": "2026-11-14T06:36:52Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567172418"
+    },
+    {
+      "id": 43567172400,
+      "path": ".github/workflows/verify-ufc-v4-elliott-anderson-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "b3bf93320898ae51b3cd36b09833f57f1c07e4f5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:36:32Z",
+      "updated_at": "2026-11-14T06:36:43Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567172400"
+    },
+    {
+      "id": 43567172389,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "b3bf93320898ae51b3cd36b09833f57f1c07e4f5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:36:32Z",
+      "updated_at": "2026-11-14T06:37:01Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567172389"
+    },
+    {
+      "id": 43567172377,
+      "path": ".github/workflows/verify-ufc-v4-tuf34-finale-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "b3bf93320898ae51b3cd36b09833f57f1c07e4f5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:36:32Z",
+      "updated_at": "2026-11-14T06:36:55Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567172377"
+    },
+    {
+      "id": 43567172373,
+      "path": ".github/workflows/verify-ufc-v4-noche-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "b3bf93320898ae51b3cd36b09833f57f1c07e4f5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:36:32Z",
+      "updated_at": "2026-11-14T06:36:59Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567172373"
+    },
+    {
+      "id": 43567154906,
+      "path": ".github/workflows/verify-ufc-v4-paris-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "3fbf5488cb9f304c1e8368964933eb7f87a66d8b",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:36:19Z",
+      "updated_at": "2026-11-14T06:36:35Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567154906"
+    },
+    {
+      "id": 43567154815,
+      "path": ".github/workflows/verify-ufc-v4-noche-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "3fbf5488cb9f304c1e8368964933eb7f87a66d8b",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:36:19Z",
+      "updated_at": "2026-11-14T06:36:31Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567154815"
+    },
+    {
+      "id": 43567154803,
+      "path": ".github/workflows/verify-ufc-v4-elliott-anderson-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "3fbf5488cb9f304c1e8368964933eb7f87a66d8b",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:36:19Z",
+      "updated_at": "2026-11-14T06:36:32Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567154803"
+    },
+    {
+      "id": 43567154782,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "3fbf5488cb9f304c1e8368964933eb7f87a66d8b",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "created_at": "2026-11-14T06:36:19Z",
+      "updated_at": "2026-11-14T06:36:37Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567154782"
+    },
+    {
+      "id": 43567154778,
+      "path": ".github/workflows/verify-ufc-v4-baku-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "3fbf5488cb9f304c1e8368964933eb7f87a66d8b",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:36:19Z",
+      "updated_at": "2026-11-14T06:36:36Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567154778"
+    },
+    {
+      "id": 43567154769,
+      "path": ".github/workflows/verify-ufc-v4-tuf34-finale-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "3fbf5488cb9f304c1e8368964933eb7f87a66d8b",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:36:19Z",
+      "updated_at": "2026-11-14T06:36:37Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567154769"
+    },
+    {
+      "id": 43567154751,
+      "path": ".github/workflows/verify-ufc-v4-abdul-hussein-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "3fbf5488cb9f304c1e8368964933eb7f87a66d8b",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:36:19Z",
+      "updated_at": "2026-11-14T06:36:31Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43567154751"
+    },
+    {
+      "id": 43566910500,
+      "path": ".github/workflows/verify-ufc-v4-baku-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "21d0625b6458e76bc659fdd3ba740a2bd6226863",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:33:20Z",
+      "updated_at": "2026-11-14T06:33:34Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566910500"
+    },
+    {
+      "id": 43566910486,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "21d0625b6458e76bc659fdd3ba740a2bd6226863",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:33:20Z",
+      "updated_at": "2026-11-14T06:33:34Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566910486"
+    },
+    {
+      "id": 43566910465,
+      "path": ".github/workflows/verify-ufc-v4-elliott-anderson-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "21d0625b6458e76bc659fdd3ba740a2bd6226863",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:33:20Z",
+      "updated_at": "2026-11-14T06:33:39Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566910465"
+    },
+    {
+      "id": 43566910454,
+      "path": ".github/workflows/verify-ufc-v4-noche-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "21d0625b6458e76bc659fdd3ba740a2bd6226863",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:33:20Z",
+      "updated_at": "2026-11-14T06:33:37Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566910454"
+    },
+    {
+      "id": 43566910447,
+      "path": ".github/workflows/verify-ufc-v4-tuf34-finale-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "21d0625b6458e76bc659fdd3ba740a2bd6226863",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:33:20Z",
+      "updated_at": "2026-11-14T06:33:35Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566910447"
+    },
+    {
+      "id": 43566910419,
+      "path": ".github/workflows/verify-ufc-v4-abdul-hussein-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "21d0625b6458e76bc659fdd3ba740a2bd6226863",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:33:20Z",
+      "updated_at": "2026-11-14T06:33:40Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566910419"
+    },
+    {
+      "id": 43566910402,
+      "path": ".github/workflows/verify-ufc-v4-paris-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "21d0625b6458e76bc659fdd3ba740a2bd6226863",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:33:20Z",
+      "updated_at": "2026-11-14T06:33:33Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566910402"
+    },
+    {
+      "id": 43566854817,
+      "path": ".github/workflows/verify-ufc-v4-tuf34-finale-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "4428b019c157c77aad26e992fb6100612005511e",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:41Z",
+      "updated_at": "2026-11-14T06:33:04Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566854817"
+    },
+    {
+      "id": 43566854814,
+      "path": ".github/workflows/verify-ufc-v4-baku-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "4428b019c157c77aad26e992fb6100612005511e",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:41Z",
+      "updated_at": "2026-11-14T06:32:53Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566854814"
+    },
+    {
+      "id": 43566854804,
+      "path": ".github/workflows/verify-ufc-v4-noche-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "4428b019c157c77aad26e992fb6100612005511e",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:41Z",
+      "updated_at": "2026-11-14T06:33:02Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566854804"
+    },
+    {
+      "id": 43566854796,
+      "path": ".github/workflows/verify-ufc-v4-elliott-anderson-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "4428b019c157c77aad26e992fb6100612005511e",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:41Z",
+      "updated_at": "2026-11-14T06:32:57Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566854796"
+    },
+    {
+      "id": 43566854779,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "4428b019c157c77aad26e992fb6100612005511e",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:41Z",
+      "updated_at": "2026-11-14T06:33:04Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566854779"
+    },
+    {
+      "id": 43566854773,
+      "path": ".github/workflows/verify-ufc-v4-abdul-hussein-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "4428b019c157c77aad26e992fb6100612005511e",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:41Z",
+      "updated_at": "2026-11-14T06:32:58Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566854773"
+    },
+    {
+      "id": 43566854766,
+      "path": ".github/workflows/verify-ufc-v4-paris-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "4428b019c157c77aad26e992fb6100612005511e",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:41Z",
+      "updated_at": "2026-11-14T06:33:04Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566854766"
+    },
+    {
+      "id": 43566839671,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "24970a9d997ce01c80848fc6ff05c738b369a761",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "created_at": "2026-11-14T06:32:28Z",
+      "updated_at": "2026-11-14T06:32:45Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566839671"
+    },
+    {
+      "id": 43566839668,
+      "path": ".github/workflows/verify-ufc-v4-noche-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "24970a9d997ce01c80848fc6ff05c738b369a761",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:28Z",
+      "updated_at": "2026-11-14T06:32:41Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566839668"
+    },
+    {
+      "id": 43566839666,
+      "path": ".github/workflows/verify-ufc-v4-paris-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "24970a9d997ce01c80848fc6ff05c738b369a761",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:28Z",
+      "updated_at": "2026-11-14T06:32:43Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566839666"
+    },
+    {
+      "id": 43566839656,
+      "path": ".github/workflows/verify-ufc-v4-tuf34-finale-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "24970a9d997ce01c80848fc6ff05c738b369a761",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:28Z",
+      "updated_at": "2026-11-14T06:32:44Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566839656"
+    },
+    {
+      "id": 43566839624,
+      "path": ".github/workflows/verify-ufc-v4-elliott-anderson-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "24970a9d997ce01c80848fc6ff05c738b369a761",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:28Z",
+      "updated_at": "2026-11-14T06:32:47Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566839624"
+    },
+    {
+      "id": 43566839616,
+      "path": ".github/workflows/verify-ufc-v4-abdul-hussein-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "24970a9d997ce01c80848fc6ff05c738b369a761",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:28Z",
+      "updated_at": "2026-11-14T06:32:42Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566839616"
+    },
+    {
+      "id": 43566839596,
+      "path": ".github/workflows/verify-ufc-v4-baku-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "24970a9d997ce01c80848fc6ff05c738b369a761",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:28Z",
+      "updated_at": "2026-11-14T06:32:39Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566839596"
+    },
+    {
+      "id": 43566816785,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "8a18db2930785bbce0f986d16ad731f89a4f6fa5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:10Z",
+      "updated_at": "2026-11-14T06:32:25Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566816785"
+    },
+    {
+      "id": 43566816742,
+      "path": ".github/workflows/verify-ufc-v4-paris-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "8a18db2930785bbce0f986d16ad731f89a4f6fa5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:10Z",
+      "updated_at": "2026-11-14T06:32:22Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566816742"
+    },
+    {
+      "id": 43566816733,
+      "path": ".github/workflows/verify-ufc-v4-abdul-hussein-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "8a18db2930785bbce0f986d16ad731f89a4f6fa5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:10Z",
+      "updated_at": "2026-11-14T06:32:21Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566816733"
+    },
+    {
+      "id": 43566816716,
+      "path": ".github/workflows/verify-ufc-v4-elliott-anderson-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "8a18db2930785bbce0f986d16ad731f89a4f6fa5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:10Z",
+      "updated_at": "2026-11-14T06:32:22Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566816716"
+    },
+    {
+      "id": 43566816692,
+      "path": ".github/workflows/verify-ufc-v4-baku-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "8a18db2930785bbce0f986d16ad731f89a4f6fa5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:10Z",
+      "updated_at": "2026-11-14T06:32:22Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566816692"
+    },
+    {
+      "id": 43566816690,
+      "path": ".github/workflows/verify-ufc-v4-noche-debut-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "8a18db2930785bbce0f986d16ad731f89a4f6fa5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:10Z",
+      "updated_at": "2026-11-14T06:32:24Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566816690"
+    },
+    {
+      "id": 43566816676,
+      "path": ".github/workflows/verify-ufc-v4-tuf34-finale-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "8a18db2930785bbce0f986d16ad731f89a4f6fa5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:32:10Z",
+      "updated_at": "2026-11-14T06:32:24Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566816676"
+    },
+    {
+      "id": 43566790484,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "a8956e45dc521541f0990a7f2ee2ecfe66244268",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:31:51Z",
+      "updated_at": "2026-11-14T06:32:08Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566790484"
+    },
+    {
+      "id": 43566790479,
+      "path": ".github/workflows/verify-ufc-v4-elliott-anderson-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "a8956e45dc521541f0990a7f2ee2ecfe66244268",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:31:51Z",
+      "updated_at": "2026-11-14T06:32:04Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566790479"
+    },
+    {
+      "id": 43566790478,
+      "path": ".github/workflows/verify-ufc-v4-abdul-hussein-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "a8956e45dc521541f0990a7f2ee2ecfe66244268",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:31:51Z",
+      "updated_at": "2026-11-14T06:32:10Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566790478"
+    },
+    {
+      "id": 43566790476,
+      "path": ".github/workflows/verify-ufc-v4-tuf34-finale-certification.yml",
+      "head_branch": "research/ufc-unified-stage3-v4-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "a8956e45dc521541f0990a7f2ee2ecfe66244268",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-14T06:31:51Z",
+      "updated_at": "2026-11-14T06:32:09Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43566790476"
+    },
+    {
+      "id": 43562872623,
+      "path": ".github/workflows/validate-ufc-v4-stat-foundation.yml",
+      "head_branch": "research/ufc-v4-stage3-reuse-one-bout-wave-20261114",
+      "event": "pull_request",
+      "head_sha": "b3082feb7c28c001365ed6064c454dc922841535",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T05:43:08Z",
+      "updated_at": "2026-11-14T05:43:30Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43562872623"
+    },
+    {
+      "id": 43561254779,
+      "path": ".github/workflows/validate-ufc-v4-stat-foundation.yml",
+      "head_branch": "feat/ufc-v4-career-stat-foundation-20261114",
+      "event": "pull_request",
+      "head_sha": "9a57a3aee141c415610cc59ffa0e9dc03e00fb74",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T05:22:52Z",
+      "updated_at": "2026-11-14T05:23:11Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43561254779"
+    },
+    {
+      "id": 43560933865,
+      "path": ".github/workflows/validate-ufc-v4-stat-foundation.yml",
+      "head_branch": "feat/ufc-v4-career-stat-foundation-20261114",
+      "event": "pull_request",
+      "head_sha": "d5551a6bac87f5ba19545053e9aa1a8a2b2cda97",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T05:19:01Z",
+      "updated_at": "2026-11-14T05:19:16Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560933865"
+    },
+    {
+      "id": 43560881225,
+      "path": ".github/workflows/validate-ufc-v4-stat-foundation.yml",
+      "head_branch": "feat/ufc-v4-career-stat-foundation-20261114",
+      "event": "pull_request",
+      "head_sha": "53d624724cb8c7c21ece7380a140e9dfb8ef019d",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T05:18:22Z",
+      "updated_at": "2026-11-14T05:18:34Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560881225"
+    },
+    {
+      "id": 43560833630,
+      "path": ".github/workflows/validate-ufc-v4-stat-foundation.yml",
+      "head_branch": "feat/ufc-v4-career-stat-foundation-20261114",
+      "event": "pull_request",
+      "head_sha": "aff90916f6b38d168a9d37daf10bd82eb86fafca",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T05:17:45Z",
+      "updated_at": "2026-11-14T05:18:15Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43560833630"
+    },
+    {
+      "id": 43557985340,
+      "path": ".github/workflows/validate-ufc-v4-stat-foundation.yml",
+      "head_branch": "feat/ufc-v4-career-stat-foundation-20261114",
+      "event": "pull_request",
+      "head_sha": "89be2af9280899eaa51e6072e00d1cea7f752a03",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T04:42:35Z",
+      "updated_at": "2026-11-14T04:42:57Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43557985340"
+    },
+    {
+      "id": 43557891010,
+      "path": ".github/workflows/validate-ufc-v4-stat-foundation.yml",
+      "head_branch": "feat/ufc-v4-career-stat-foundation-20261114",
+      "event": "pull_request",
+      "head_sha": "aecea679048a80e280b3e470bdc107a7aa195c11",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T04:41:25Z",
+      "updated_at": "2026-11-14T04:41:40Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43557891010"
+    },
+    {
+      "id": 43557680449,
+      "path": ".github/workflows/audit-ufc-park-native-identity.yml",
+      "head_branch": "research/ufc-park-native-fight-identity-review-20261114",
+      "event": "pull_request",
+      "head_sha": "ad6d2982cf37459d8bdb04ad99edf5953e2e048e",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T04:38:47Z",
+      "updated_at": "2026-11-14T04:38:58Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43557680449"
+    },
+    {
+      "id": 43557556022,
+      "path": ".github/workflows/verify-ufc-v4-maryna-certification.yml",
+      "head_branch": "research/ufc-v4-maryna-first-full-career-certification-20261114",
+      "event": "pull_request",
+      "head_sha": "c400c8077eb41e03438b46d14cf9504c67d32050",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T04:37:12Z",
+      "updated_at": "2026-11-14T04:37:23Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43557556022"
+    },
+    {
+      "id": 43557490272,
+      "path": ".github/workflows/verify-ufc-v4-maryna-certification.yml",
+      "head_branch": "research/ufc-v4-maryna-first-full-career-certification-20261114",
+      "event": "pull_request",
+      "head_sha": "e14e0b4c95146a972de5215ac5d4b5ad74db5861",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T04:36:25Z",
+      "updated_at": "2026-11-14T04:36:37Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43557490272"
+    },
+    {
+      "id": 43557387341,
+      "path": ".github/workflows/verify-ufc-v4-maryna-certification.yml",
+      "head_branch": "research/ufc-v4-maryna-first-full-career-certification-20261114",
+      "event": "pull_request",
+      "head_sha": "01f17eabb64a78cb44c082b527df9912abf1d831",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T04:35:12Z",
+      "updated_at": "2026-11-14T04:35:22Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43557387341"
+    },
+    {
+      "id": 43556561864,
+      "path": ".github/workflows/validate-ufc-bruno-native-history-recovery.yml",
+      "head_branch": "feat/ufc-bruno-2019-official-nc-recheck-20261114",
+      "event": "pull_request",
+      "head_sha": "9d1ca85358f295541b88ec3266305ac0c690acf0",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T04:25:15Z",
+      "updated_at": "2026-11-14T04:25:25Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43556561864"
+    },
+    {
+      "id": 43556561871,
+      "path": ".github/workflows/validate-ufc-last-five-coverage.yml",
+      "head_branch": "feat/ufc-bruno-2019-official-nc-recheck-20261114",
+      "event": "pull_request",
+      "head_sha": "9d1ca85358f295541b88ec3266305ac0c690acf0",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T04:25:15Z",
+      "updated_at": "2026-11-14T04:25:27Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43556561871"
+    },
+    {
+      "id": 43556561940,
+      "path": ".github/workflows/validate-ufc-bruno-nc-retry.yml",
+      "head_branch": "feat/ufc-bruno-2019-official-nc-recheck-20261114",
+      "event": "pull_request",
+      "head_sha": "9d1ca85358f295541b88ec3266305ac0c690acf0",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T04:25:15Z",
+      "updated_at": "2026-11-14T04:25:28Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43556561940"
+    },
+    {
+      "id": 43554340366,
+      "path": ".github/workflows/backfill-mma-results.yml",
+      "head_branch": "main",
+      "event": "schedule",
+      "head_sha": "c6eeadce4ad34930fd7f70fffb53612ad12ee0e2",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T03:59:01Z",
+      "updated_at": "2026-11-14T03:59:20Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43554340366"
+    },
+    {
+      "id": 43551596110,
+      "path": ".github/workflows/validate-ufc-independent-certification.yml",
+      "head_branch": "feat/ufc-independent-certification-queue-20261114",
+      "event": "pull_request",
+      "head_sha": "e4afed537cdbf482622796134fe792b1d7531248",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T03:25:52Z",
+      "updated_at": "2026-11-14T03:26:12Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43551596110"
+    },
+    {
+      "id": 43551365848,
+      "path": ".github/workflows/validate-ufc-independent-certification.yml",
+      "head_branch": "feat/ufc-independent-certification-queue-20261114",
+      "event": "pull_request",
+      "head_sha": "21543fb9690f6d7d43d23188c1eb4cd42e2f092c",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T03:23:12Z",
+      "updated_at": "2026-11-14T03:23:31Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43551365848"
+    },
+    {
+      "id": 43551335744,
+      "path": ".github/workflows/validate-ufc-independent-certification.yml",
+      "head_branch": "feat/ufc-independent-certification-queue-20261114",
+      "event": "pull_request",
+      "head_sha": "66b7d1d5f33ac2b8437be7cb26d845ec2e1333e0",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T03:22:52Z",
+      "updated_at": "2026-11-14T03:23:03Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43551335744"
+    },
+    {
+      "id": 43549881713,
+      "path": ".github/workflows/validate-ufc-last-five-coverage.yml",
+      "head_branch": "fix/ufc-full-index-benign-exclusions-vs-identity-conflicts-20261114",
+      "event": "pull_request",
+      "head_sha": "4e680bf6859e00dfbab6ea4b0114f50cc8e8ff19",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T03:06:37Z",
+      "updated_at": "2026-11-14T03:06:50Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43549881713"
+    },
+    {
+      "id": 43548446052,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "2059b2c5ab7d86a5c6d7b439dd1107f771534345",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T02:50:07Z",
+      "updated_at": "2026-11-14T02:57:19Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43548446052"
+    },
+    {
+      "id": 43547138184,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "feat/ufc-official-three-career-bout-recovery-20261114",
+      "event": "pull_request",
+      "head_sha": "4ea5438f5e9d652ba3e2e7c9dc111acbb6dd4d4d",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T02:35:18Z",
+      "updated_at": "2026-11-14T02:35:32Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43547138184"
+    },
+    {
+      "id": 43546027501,
+      "path": ".github/workflows/validate-ufc-last-five-coverage.yml",
+      "head_branch": "fix/ufc-fight-search-unmet-official-minimum-20261114",
+      "event": "pull_request",
+      "head_sha": "854051417844e7ced667569ba4ee6daa9fa832a5",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T02:23:25Z",
+      "updated_at": "2026-11-14T02:23:35Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43546027501"
+    },
+    {
+      "id": 43545916513,
+      "path": ".github/workflows/validate-ufc-last-five-coverage.yml",
+      "head_branch": "fix/ufc-fight-search-unmet-official-minimum-20261114",
+      "event": "pull_request",
+      "head_sha": "1c2ee7abb4c38e613efaf3991cf67cc17dad37f3",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T02:22:12Z",
+      "updated_at": "2026-11-14T02:22:23Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43545916513"
+    },
+    {
+      "id": 43544989400,
+      "path": ".github/workflows/build-ufc-profile-queue.yml",
+      "head_branch": "feat/ufc-v4-career-stat-foundation-20261114",
+      "event": "pull_request",
+      "head_sha": "f8589f500a9b5626f251a8bd9d8dfb9f541d2156",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T02:12:31Z",
+      "updated_at": "2026-11-14T02:12:40Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43544989400"
+    },
+    {
+      "id": 43544989426,
+      "path": ".github/workflows/validate-ufc-v4-stat-foundation.yml",
+      "head_branch": "feat/ufc-v4-career-stat-foundation-20261114",
+      "event": "pull_request",
+      "head_sha": "f8589f500a9b5626f251a8bd9d8dfb9f541d2156",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T02:12:31Z",
+      "updated_at": "2026-11-14T02:12:50Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43544989426"
+    },
+    {
+      "id": 43543948438,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "feat/ufc-independent-career-gap-evidence-20261114",
+      "event": "pull_request",
+      "head_sha": "4866a4e601fc4458acd77e585ce751ca1ee79a4c",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T02:01:28Z",
+      "updated_at": "2026-11-14T02:01:39Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43543948438"
+    },
+    {
+      "id": 43543592504,
+      "path": ".github/workflows/validate-ufc-v4-stat-foundation.yml",
+      "head_branch": "feat/ufc-v4-career-stat-foundation-20261114",
+      "event": "pull_request",
+      "head_sha": "600ba30c1abbfdd9f9783212f0b20aa48aea251e",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T01:57:38Z",
+      "updated_at": "2026-11-14T01:57:50Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43543592504"
+    },
+    {
+      "id": 43543498148,
+      "path": ".github/workflows/validate-ufc-v4-stat-foundation.yml",
+      "head_branch": "feat/ufc-v4-career-stat-foundation-20261114",
+      "event": "pull_request",
+      "head_sha": "d3371df8c81d8f3b00b8274bcb13fefb6254e802",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T01:56:33Z",
+      "updated_at": "2026-11-14T01:56:46Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43543498148"
+    },
+    {
+      "id": 43543480838,
+      "path": ".github/workflows/validate-ufc-v4-stat-foundation.yml",
+      "head_branch": "feat/ufc-v4-career-stat-foundation-20261114",
+      "event": "pull_request",
+      "head_sha": "0d35b2e13a86e4cb2c82477b667c9b1885d79c59",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T01:56:21Z",
+      "updated_at": "2026-11-14T01:56:31Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43543480838"
+    },
+    {
+      "id": 43543449730,
+      "path": ".github/workflows/validate-ufc-v4-stat-foundation.yml",
+      "head_branch": "feat/ufc-v4-career-stat-foundation-20261114",
+      "event": "pull_request",
+      "head_sha": "4ca12b53a0b7f336b43fd876b50577690f177456",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T01:56:00Z",
+      "updated_at": "2026-11-14T01:56:21Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43543449730"
+    },
+    {
+      "id": 43543350735,
+      "path": ".github/workflows/validate-ufc-v4-stat-foundation.yml",
+      "head_branch": "feat/ufc-v4-career-stat-foundation-20261114",
+      "event": "pull_request",
+      "head_sha": "786551f0b151f22fc9bdfea03b3c6f0e93ddb62a",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T01:54:54Z",
+      "updated_at": "2026-11-14T01:55:17Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43543350735"
+    },
+    {
+      "id": 43543302512,
+      "path": ".github/workflows/validate-ufc-v4-stat-foundation.yml",
+      "head_branch": "feat/ufc-v4-career-stat-foundation-20261114",
+      "event": "pull_request",
+      "head_sha": "851f64febcca6e4de21860df725e956d1049804c",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T01:54:22Z",
+      "updated_at": "2026-11-14T01:54:32Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43543302512"
+    },
+    {
+      "id": 43542842034,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "fix/ufc-career-certification-evidence-gate-20261114",
+      "event": "pull_request",
+      "head_sha": "9b7601e34a35a3740c7466897a4710916e4bb94e",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T01:49:21Z",
+      "updated_at": "2026-11-14T01:49:45Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43542842034"
+    },
+    {
+      "id": 43542798643,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "fix/ufc-career-certification-evidence-gate-20261114",
+      "event": "pull_request",
+      "head_sha": "74704ea06f32334907909fb2cd26e7e70d4b9cdb",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T01:48:53Z",
+      "updated_at": "2026-11-14T01:49:06Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43542798643"
+    },
+    {
+      "id": 43542741877,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "fix/ufc-career-certification-evidence-gate-20261114",
+      "event": "pull_request",
+      "head_sha": "011fe52157f3a73adc49689ebd0e0e10603fa0e4",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T01:48:16Z",
+      "updated_at": "2026-11-14T01:48:39Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43542741877"
+    },
+    {
+      "id": 43537067751,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "fix/ufc-dwcs-six-ten-proof-20261114",
+      "event": "pull_request",
+      "head_sha": "0617f3bf5514a73a665193101ea90e8e94f866b3",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T00:52:48Z",
+      "updated_at": "2026-11-14T00:53:03Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43537067751"
+    },
+    {
+      "id": 43535727514,
+      "path": ".github/workflows/audit-ufc-research-pipeline.yml",
+      "head_branch": "fix/ufc-stage3-feeder-both-corners-20261114",
+      "event": "pull_request",
+      "head_sha": "f8bbbcc6bf37d22e8639c4b237622c47bfbbf157",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T00:40:10Z",
+      "updated_at": "2026-11-14T00:40:35Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43535727514"
+    },
+    {
+      "id": 43535334715,
+      "path": ".github/workflows/ufcalendar-rich-backfill.yml",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "head_sha": "a49fac8d8f2fcd6a1417ed12292ba63fc9d8ce02",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T00:36:35Z",
+      "updated_at": "2026-11-14T00:37:03Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43535334715"
+    },
+    {
+      "id": 43533828839,
+      "path": ".github/workflows/validate-ufc-last-five-coverage.yml",
+      "head_branch": "feature/ufc36-verified-finale-recovery-20261114",
+      "event": "pull_request",
+      "head_sha": "76491f0a3e66bf7b332fa5ca83aef2751ee1a5b7",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T00:23:10Z",
+      "updated_at": "2026-11-14T00:23:20Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43533828839"
+    },
+    {
+      "id": 43533038027,
+      "path": ".github/workflows/validate-ufc-last-five-coverage.yml",
+      "head_branch": "fix/ufc-stage3-feeder-events-and-finale-recovery-20261114",
+      "event": "pull_request",
+      "head_sha": "485dc9c51e80379ac9609b6a1d6775a0dacb05b0",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-14T00:16:13Z",
+      "updated_at": "2026-11-14T00:16:26Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43533038027"
+    },
+    {
+      "id": 43530524387,
+      "path": ".github/workflows/validate-ufc-last-five-coverage.yml",
+      "head_branch": "fix/ufc-stage3-identity-anchor-20261114",
+      "event": "pull_request",
+      "head_sha": "2fe610f1295ec9b03c0de5b9c577508c0e80038b",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-13T23:54:31Z",
+      "updated_at": "2026-11-13T23:54:40Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43530524387"
+    },
+    {
+      "id": 43529283429,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "07c553505c786299a66508b3a557213b60aecc1f",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-13T23:43:58Z",
+      "updated_at": "2026-11-13T23:51:14Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43529283429"
+    },
+    {
+      "id": 43525185985,
+      "path": ".github/workflows/validate-ufcalendar-targeted-history.yml",
+      "head_branch": "feature/ufc36-preserve-full-career-histories-20261114",
+      "event": "pull_request",
+      "head_sha": "c1fc441fc64da49fb7e0c1e31d45c4c5a4f5334c",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-13T23:11:12Z",
+      "updated_at": "2026-11-13T23:11:21Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43525185985"
+    },
+    {
+      "id": 43525186065,
+      "path": ".github/workflows/validate-ufc-last-five-coverage.yml",
+      "head_branch": "feature/ufc36-preserve-full-career-histories-20261114",
+      "event": "pull_request",
+      "head_sha": "c1fc441fc64da49fb7e0c1e31d45c4c5a4f5334c",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-13T23:11:12Z",
+      "updated_at": "2026-11-13T23:11:26Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43525186065"
+    },
+    {
+      "id": 43521453299,
+      "path": ".github/workflows/approve-ufc-36-month-roster.yml",
+      "head_branch": "feature/activate-approved-ufc36-stage3-20261114",
+      "event": "pull_request",
+      "head_sha": "dfc4892a0893d9bf7ff85b863c5f03b9005836c4",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-13T22:42:26Z",
+      "updated_at": "2026-11-13T22:43:03Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43521453299"
+    },
+    {
+      "id": 43518361776,
+      "path": ".github/workflows/validate-ufc-last-five-coverage.yml",
+      "head_branch": "review/ufc36-direct-external-mma-xfc-20261114",
+      "event": "pull_request",
+      "head_sha": "8d17eba99d0c22ceefbd4a28748a7abd0b4daa8a",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-13T22:19:42Z",
+      "updated_at": "2026-11-13T22:19:55Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43518361776"
+    },
+    {
+      "id": 43518257426,
+      "path": ".github/workflows/validate-ufc-last-five-coverage.yml",
+      "head_branch": "review/ufc36-official-not-fighting-status-20261114",
+      "event": "pull_request",
+      "head_sha": "4ef932f5e57f5c906cf407c377354a5822126df7",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-13T22:18:57Z",
+      "updated_at": "2026-11-13T22:19:21Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43518257426"
+    },
+    {
+      "id": 43501392080,
+      "path": ".github/workflows/befn-render-deploy-recovery.yml",
+      "head_branch": "main",
+      "event": "workflow_run",
+      "head_sha": "ecd81c16a20298f34cc30bc852484d875a46b9a3",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-13T20:25:17Z",
+      "updated_at": "2026-11-13T20:32:39Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43501392080"
+    },
+    {
+      "id": 43418951844,
+      "path": ".github/workflows/validate-ufc-leaderboards-page.yml",
+      "head_branch": "feature/ufc-v3-period-analytics-design-20261113",
+      "event": "pull_request",
+      "head_sha": "88333c48bceb6f2bf45e2c83e5e031a84dff5815",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-13T11:40:33Z",
+      "updated_at": "2026-11-13T11:40:50Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43418951844"
+    },
+    {
+      "id": 43418923958,
+      "path": ".github/workflows/validate-ufc-leaderboards-page.yml",
+      "head_branch": "feature/ufc-v3-period-analytics-design-20261113",
+      "event": "pull_request",
+      "head_sha": "a82328c01311363ca45d7e8cf19fdcc16b642470",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-13T11:40:21Z",
+      "updated_at": "2026-11-13T11:40:29Z",
+      "html_url": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43418923958"
+    }
+  ],
+  "historyScope": "Latest 100 all-branch runs, latest 100 main runs, and latest 50 failures; bounded deduplicated samples. Per-workflow history endpoint rejected by connector. No inferred billing."
+}

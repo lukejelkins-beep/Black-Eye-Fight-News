@@ -1,0 +1,113 @@
+{
+  "input_sha256": "e1c25a7a1791d1a03d22e84824185c4c769c76a327cf32829b2bcdf2208a954e",
+  "buckets": {
+    "articles": {
+      "before": 280,
+      "after": 279,
+      "removed": [
+        {
+          "removed": {
+            "id": "5c7d367e4c89cad34c8c",
+            "title": "UFC signs Mike Perry after five-year split",
+            "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/13/ufc-news-mike-perry-signs-return/92765419007/",
+            "source": "MMA Junkie",
+            "sport": "mma",
+            "publishedAt": "2026-11-13T13:28:00+00:00",
+            "score": 1,
+            "sourceMethod": "Bing News indexed MMA Junkie original",
+            "timeBasis": "Bing News feed timestamp",
+            "image": null,
+            "summaryPoints": [
+              "Perry (15-9 MMA, 7-8 UFC) has not competed in the UFC since April 2021.",
+              "The promotion parted ways after Perry lost back-to-back fights to Tim Means and Daniel Rodriguez."
+            ],
+            "summaryCheckedAt": "2026-11-13T22:49:14.545622+00:00",
+            "summaryQualityVersion": 3,
+            "firstSeenAt": "2026-11-13T22:49:14.545622+00:00"
+          },
+          "kept": {
+            "id": "aa4042a6375e831183e3",
+            "title": "Mike Perry re-signs with UFC",
+            "url": "https://www.mmafighting.com/ufc/520949/mike-perry-re-signs-with-ufc",
+            "source": "MMA Fighting",
+            "sport": "mma",
+            "publishedAt": "2026-11-13T20:02:19+00:00",
+            "score": 1,
+            "image": {
+              "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2276637534.jpg?quality=90&strip=all&crop=0,0,100,100",
+              "alt": "Mike Perry",
+              "credit": "Getty Images for Netflix",
+              "sourceUrl": "https://www.mmafighting.com/ufc/520949/mike-perry-re-signs-with-ufc",
+              "kind": "publisher",
+              "checkedAt": "2026-11-13T20:17:43.128725+00:00"
+            },
+            "summaryPoints": [
+              "Mike Perry is returning to the UFC octagon.",
+              "\u201cPlatinum\u201d officially announced that he\u2019s re-signed with the UFC on Friday.",
+              "Perry hasn\u2019t competed for the promotion since losing a unanimous decision to Daniel Rodriguez at UFC Vegas 23 in April 2021."
+            ],
+            "summaryCheckedAt": "2026-11-13T20:17:43.128725+00:00",
+            "summaryQualityVersion": 3,
+            "firstSeenAt": "2026-11-13T20:17:43.128725+00:00"
+          },
+          "methods": [
+            "matching_return_signing"
+          ]
+        }
+      ],
+      "idempotent": true,
+      "retained_records_unchanged": true
+    },
+    "resultReports": {
+      "before": 19,
+      "after": 19,
+      "removed": [],
+      "idempotent": true,
+      "retained_records_unchanged": true
+    }
+  },
+  "current_headline_pairs": [
+    {
+      "left": "Mike Perry re-signs with UFC",
+      "right": "UFC signs Mike Perry after five-year split",
+      "expected_duplicate": true,
+      "actual_duplicate": true,
+      "passed": true
+    },
+    {
+      "left": "Dana White rips RAF\u2019s security protocols following Usman Nurmagomedov\u2019s attack on Merab Dvalishvili",
+      "right": "Dana White warns fighters after Usman Nurmagomedov-Merab Dvalishvili brawl",
+      "expected_duplicate": false,
+      "actual_duplicate": false,
+      "passed": true
+    },
+    {
+      "left": "UFC 334 press conference video",
+      "right": "UFC 334 video: Dana White steps in to end Kayla Harrison, Amanda Nunes faceoff",
+      "expected_duplicate": false,
+      "actual_duplicate": false,
+      "passed": true
+    },
+    {
+      "left": "Brandon Royval says he's UFC 336 backup for Van vs. Kape title fight",
+      "right": "MMA Junkie Radio #3719: Guests Jim Miller and Brandon Royval, UFC 334 preview",
+      "expected_duplicate": false,
+      "actual_duplicate": false,
+      "passed": true
+    },
+    {
+      "left": "UFC announcer Jon Anik signs long-term contract extension",
+      "right": "Jon Anik on what makes Ciryl Gane's legacy 'a little bit weird' before UFC 334",
+      "expected_duplicate": false,
+      "actual_duplicate": false,
+      "passed": true
+    },
+    {
+      "left": "Dana White turns down press secretary role, President Trump admits he was \u2018sort of kidding\u2019 about job offer",
+      "right": "Donald Trump says Dana White \u2018loved\u2019 his White House press secretary idea",
+      "expected_duplicate": false,
+      "actual_duplicate": false,
+      "passed": true
+    }
+  ]
+}

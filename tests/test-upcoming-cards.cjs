@@ -1,42 +1,47 @@
-const fs=require('node:fs');
-const vm=require('node:vm');
-const assert=require('node:assert/strict');
-const data=JSON.parse(fs.readFileSync('data/upcoming-cards.json','utf8'));
-const script=fs.readFileSync('assets/upcoming-cards.js','utf8');
-const docs={addEventListener(){},getElementById(id){
-  return id==='fighter-portrait-registry'?{textContent:'{"fighters":{}}'}:null;
-}};
-const context={
-  window:{},document:docs,location:{hash:'#calendar'},setInterval(){},
-  Date,URL,AbortSignal,console,
-  fetch:async()=>({ok:true,json:async()=>data})
-};
-vm.runInNewContext(script,context);
+// Synthetic cards keep this UI regression independent of changing research and dates.
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const now=Date.parse('2026-11-14T00:00:00Z');
+class Clock extends Date{constructor(...args){super(...(args.length?args:[now]))}static now(){return now}}
+const bout=(id,section)=>({id,section,fighters:[id+' Alpha',id+' Beta'],records:['3-0',null],division:'Lightweight',source:'https://example.org/'+id});
+const event=(id,sport,date,extra={})=>({id,sport,date,title:id+' title',promotion:sport==='mma'?'UFC':'Boxing promoter',location:'Test venue',source:'https://example.org/'+id,bouts:[bout(id+'-main','main'),bout(id+'-prelim','prelims'),bout(id+'-early','early')],...extra});
+const fixture={reviewedAt:'2026-11-14',events:[
+ event('confirmed-mma','mma','2026-11-15'),
+ event('reported-mma','mma','2026-12-05',{sourceStatus:'reported',bouts:[bout('reported-a','announced'),bout('reported-b','announced')]}),
+ event('confirmed-boxing','boxing','2026-12-06'),
+ event('past-card','mma','2026-10-01'),
+ event('completed-card','mma','2026-11-15',{status:'completed'}),
+ event('cancelled-card','mma','2026-11-15',{status:'cancelled'}),
+ event('recent-unconfirmed','mma','2026-11-13')
+]};
+const handlers={};
+const document={hidden:false,addEventListener:(name,fn)=>{(handlers[name]??=[]).push(fn)},querySelectorAll:()=>[],getElementById:id=>id==='fighter-portrait-registry'?{textContent:'{"fighters":{}}'}:null};
+const context={window:{},document,location:{hash:'#fights'},setInterval(){},Date:Clock,URL,Intl,AbortSignal,console,
+ fetch:async url=>({ok:true,json:async()=>url.includes('upcoming-cards.json')?structuredClone(fixture):{}})};
+for(const file of ['local-time.js','upcoming-cards.js'])vm.runInNewContext(fs.readFileSync('assets/'+file,'utf8'),context);
 (async()=>{
-  await context.window.UpcomingCards.load();
-  const boxing=context.window.UpcomingCards.render('boxing');
-  const mma=context.window.UpcomingCards.render('mma');
-  const all=[...data.events];
-  assert(all.length>=15,'Expected broad coverage of confirmed upcoming cards');
-  assert(all.every(e=>e.bouts.length>0&&e.bouts.every(b=>b.source&&b.division)));
-  for(const e of all.filter(e=>e.date>='2026-11-08')){
-    assert((e.sport==='boxing'?boxing:mma).includes(e.title),'Missing '+e.title);
-  }
-  assert(boxing.includes('David Benavidez vs Michał Cieślak'));
-  assert(boxing.includes('5 announced fights'),'Complete December 5 PBC main card expected');
-  assert(mma.includes('UFC Fight Night: Adesanya vs Magomedov'));
-  assert(mma.includes('UFC CONFIRMATION PENDING'),'December 5 UFC must remain provisional');
-  assert(mma.includes('9 reported bouts'),'All sourced Riyadh pairings must be labelled as reported, not confirmed');
-  assert(!mma.includes('9 announced fights'),'Provisional UFC card must not be called announced');
-  const ufc334=all.find(e=>e.id==='ufc-334-2026-11-14');
-  assert.equal(ufc334.bouts.length,13,'Official UFC 334 lists 13 bouts including early prelims');
-  assert(ufc334.bouts.some(b=>b.section==='early'&&b.fighters.includes('Evan Elder')));
-  const sydney=all.find(e=>e.title==='UFC Fight Night: Salkilld vs Saint Denis');
-  assert.equal(sydney.date,'2027-02-07','Australian venue-local date must be Sunday February 7');
-  assert.equal(sydney.bouts.length,4,'Preserve all four sourced Australian UFC matchups');
-  assert(mma.includes('data-upcoming-section="prelims"'));
-  assert(mma.includes('data-upcoming-section="announced"'));
-  assert(boxing.includes('data-upcoming-section="main"'));
-  assert(!boxing.includes('undefined')&&!mma.includes('undefined'));
-  console.log('Upcoming calendar coverage, Dec 5 UFC/PBC, Main/Prelims tabs and verification labels passed');
+ await context.window.UpcomingCards.load();
+ const boxing=context.window.UpcomingCards.render('boxing'),mma=context.window.UpcomingCards.render('mma');
+ assert(boxing.includes('confirmed-boxing title')&&!boxing.includes('confirmed-mma title'),'Boxing filter excludes MMA');
+ assert(mma.includes('confirmed-mma title')&&!mma.includes('confirmed-boxing title'),'MMA filter excludes boxing');
+ assert(!mma.includes('past-card title'),'Past cards are removed from upcoming');
+ assert(!mma.includes('completed-card title'),'Completed cards are removed from upcoming');
+ assert(!mma.includes('cancelled-card title'),'Cancelled cards are removed from upcoming');
+ assert(mma.includes('recent-unconfirmed title'),'A passed date alone cannot establish completion');
+ assert(mma.includes('reported-mma title')&&mma.includes('Reported · UFC confirmation pending'),'Reported event remains explicitly provisional');
+ for(const section of ['main','prelims','early'])assert(mma.includes('data-upcoming-panel="'+section+'"'),'Preserve '+section+' bouts');
+ assert(mma.includes('reported-a Alpha')&&mma.includes('reported-b Alpha'),'All reported pairings retained');
+ // Each control must identify exactly the panels its click action shows.
+ const ids=new Set([...mma.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]));
+ for(const match of mma.matchAll(/<button[^>]*data-upcoming-tab="([^"]+)"[^>]*data-upcoming-section="([^"]+)"[^>]*aria-controls="([^"]+)"/g)){
+  const [,eventId,section,controls]=match;
+  const expected=section==='all'?['main','prelims','early']: [section];
+  // The reported fixture has one section and therefore no toggle controls.
+  assert.deepEqual(controls.split(' '),expected.map(key=>'upcoming-'+eventId+'-'+key),'Control names every panel it reveals');
+  for(const id of controls.split(' '))assert(ids.has(id),'Controlled panel exists: '+id);
+ }
+ assert(mma.includes('data-upcoming-section="all"'),'Fixture exercises All sections control');
+ assert(mma.includes('Start time TBC · venue date'),'Unknown start is not converted into a made-up local time');
+ assert(mma.includes('Record not verified'),'Missing record stays unknown');
+ assert(!mma.includes('undefined')&&!boxing.includes('undefined'));
+ console.log('Upcoming UI: sport filters, provisional status, full card sections, unknown time/record and date exclusion passed');
 })().catch(e=>{console.error(e);process.exitCode=1});

@@ -4,6 +4,8 @@ window.ResultsDesk=(()=>{
  let data=null,error='',pending=null,lastPollAt=0;
  let posters={},posterPending=null,posterLastChecked=0;
  const activeCardSection=new Map();
+ const eventBatchSize=12;
+ let visibleEvents=eventBatchSize,lastSelection='';
  const attemptedPortraits=new Set(),portraitJobs=[];
  let portraitActive=0;
  const filters={sport:'All',query:'',clips:false,promotion:'ufc'};
@@ -208,7 +210,9 @@ window.ResultsDesk=(()=>{
 }
   function content(){if(!data)return `<div class="empty" role="status">${error?'Results could not be loaded. <button id="results-retry">Try again</button>':'Loading sourced results…'}</div>`;
 
- const rows=selected(),events=groups(rows);
+ const selection=JSON.stringify([window.BEFNSport?.get(),window.BEFNFightsUI?.promotion,window.BEFNFightsUI?.query,filters]);
+ if(selection!==lastSelection){visibleEvents=eventBatchSize;lastSelection=selection;}
+ const rows=selected(),allEvents=groups(rows),events=allEvents.slice(0,visibleEvents);
  const cutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
  const recent=events.filter(e=>e[0].date>=cutoff),earlier=events.filter(e=>e[0].date<cutoff);
  function dated(items){
@@ -227,7 +231,8 @@ window.ResultsDesk=(()=>{
  const empty=isSearching?'<div class="empty">No results match your search. Try another event or fighter.</div>':
   '<div class="empty">'+(sport==='mma'?'No verified '+promotionLabel+' results are currently available in this feed.':'No completed fight results are currently available in this category.')+'</div>';
  return (error?'<p role="status">Refresh unavailable. Showing the last loaded results.</p>':'')+
-  (events.length?group('This Week',recent)+group('Earlier Results',earlier):empty);
+  (events.length?group('This Week',recent)+group('Earlier Results',earlier):empty)+
+  (allEvents.length>events.length?`<button type="button" id="results-more" aria-controls="results-content">Show more events (${allEvents.length-events.length} remaining)</button>`:'');
 
  }
 function hydrateResultPhotos(){
@@ -254,11 +259,20 @@ function hydrateResultPhotos(){
  function update(){
  const el=document.getElementById('results-content');
  if(el){
+  // Re-rendering removes the active section button. Preserve keyboard position
+  // only inside this list; background refreshes must not steal outside focus.
+  const focused=document.activeElement;
+  const focusedTab=focused&&el.contains(focused)?focused.dataset:null;
   const closed=new Set([...el.querySelectorAll('details[data-card]:not([open])')].map(x=>x.dataset.card));
   const expanded=new Set([...el.querySelectorAll('.befn-result-list-event[open]')].map(x=>x.dataset.resultEvent));
   el.innerHTML=content();
   el.querySelectorAll('details[data-card]').forEach(x=>{if(closed.has(x.dataset.card))x.open=false});
   el.querySelectorAll('.befn-result-list-event').forEach(x=>{if(expanded.has(x.dataset.resultEvent))x.open=true});
+  if(focusedTab?.resultEventTab){
+   [...el.querySelectorAll('[data-result-event-tab]')].find(x=>
+    x.dataset.resultEventTab===focusedTab.resultEventTab&&
+    x.dataset.resultCardSection===focusedTab.resultCardSection)?.focus({preventScroll:true});
+  }
   hydrateResultPhotos();
  }
 }
@@ -319,6 +333,12 @@ function hydrateResultPhotos(){
  document.addEventListener('input',e=>{if(e.target.id==='results-search'){filters.query=e.target.value;update()}});
  document.addEventListener('change',e=>{if(e.target.id==='results-clips')filters.clips=e.target.checked;else return;update()});
  document.addEventListener('click',e=>{
+  if(e.target.closest('#results-more')){
+   const previous=visibleEvents;visibleEvents+=eventBatchSize;update();
+   // Continue keyboard navigation at the first newly revealed event.
+   document.getElementById('results-content')?.querySelectorAll('.befn-result-list-event > summary')[previous]?.focus({preventScroll:true});
+   return;
+  }
   const promotion=e.target.closest('[data-result-promotion]');if(promotion){filters.promotion=promotion.dataset.resultPromotion;document.querySelectorAll('[data-result-promotion]').forEach(b=>{b.classList.toggle('selected',b.dataset.resultPromotion===filters.promotion);b.setAttribute('aria-pressed',String(b.dataset.resultPromotion===filters.promotion))});update();return;}
   const tab=e.target.closest('[data-result-event-tab]');
   if(tab){
