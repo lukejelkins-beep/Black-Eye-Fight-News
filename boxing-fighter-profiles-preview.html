@@ -180,6 +180,11 @@ function open(p){
       append(wrap,'p','Archived results require independent bout-history reconciliation before performance calculations.','archive');
     }
   }
+  if(p.verified_bouts&&p.verified_bouts.length){
+    append(wrap,'h3','Verified recent professional results');
+    table(wrap,['Date','Opponent','Result','Method'],p.verified_bouts.map(x=>[x.date,x.opponent,x.outcome,x.method+' R'+x.final_round]));
+    append(wrap,'p','Verified individual results; not yet a complete recent-five or career history.','archive');
+  }
   if(p.compubox.report_count){
     append(wrap,'h3','Recorded punch performance — covered bouts only');
     p.compubox.verified_report_fights.forEach(f=>{
