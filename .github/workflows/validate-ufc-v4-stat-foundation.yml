@@ -10,6 +10,7 @@ on:
       - 'scripts/certify-ufc-v4-independent-full-careers.mjs'
       - 'scripts/ufc-v4-targeted-greco-evidence.mjs'
       - 'scripts/ufc-v4-next20-greco-evidence.mjs'
+      - 'scripts/audit-ufc-v4-next20-native-evidence.mjs'
       - 'data/ufc-v4-next20-greco-fight-links-20261114.json'
       - 'scripts/audit-ufc-v4-eight-candidate-native-evidence.mjs'
       - 'scripts/audit-ufc-v4-bill-algeo-direct.mjs'
@@ -78,6 +79,8 @@ jobs:
         run: node scripts/audit-ufc-v4-eight-candidate-native-evidence.mjs
       - name: Reconcile Bill Algeo official ten UFC fights to cached native stats
         run: node scripts/audit-ufc-v4-bill-algeo-direct.mjs
+      - name: Audit next 20 source-linked candidate careers with native metrics
+        run: node scripts/audit-ufc-v4-next20-native-evidence.mjs
       - name: Audit the approved 783-fighter Last 5 / Last 10 / Career windows
         run: node scripts/build-ufc-v4-stat-foundation.mjs
       - name: Classify saved-data gaps without provider calls
@@ -112,6 +115,7 @@ jobs:
             qa/ufc-v4-independent-full-career-certifications.json
             qa/ufc-v4-targeted-greco-fight-links-20261114.json
             qa/ufc-v4-next20-greco-fight-links-20261114.json
+            qa/ufc-v4-next20-native-evidence.json
             qa/ufc-v4-eight-candidate-native-evidence.json
             qa/ufc-v4-bill-algeo-source-native-reconciliation.json
             qa/ufc-v4-shadow-ratings.json
