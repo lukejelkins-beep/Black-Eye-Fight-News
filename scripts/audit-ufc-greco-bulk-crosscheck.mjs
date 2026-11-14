@@ -171,9 +171,15 @@ async function main(){
    inventory:read('data/ufc-official-career-bout-inventory.json'),commit});
  const qa=path.join(root,'qa');fs.mkdirSync(qa,{recursive:true});
  fs.writeFileSync(path.join(qa,'ufc-greco-bulk-crosscheck.json'),JSON.stringify(report,null,2)+'\n');
- fs.writeFileSync(checkpointPath,JSON.stringify({schema:1,checkedOn:utcDay,
+ fs.writeFileSync(checkpointPath,JSON.stringify({schema:1,scope:'ufc-greco-bulk-crosscheck-checkpoint',
+   rosterAsOf:report.snapshotAsOf,checkedOn:utcDay,
    sourceCommit:commit,latestEvent:report.sourceLatestEvent,
-   summary:report.summary},null,2)+'\n');
+   summary:report.summary,
+   candidateAlerts:report.cohortCandidates.filter(x=>
+     x.sourceCandidateNotSaved>0||x.identityReviewRequired).map(x=>({
+       slug:x.slug,sourceCandidateNotSaved:x.sourceCandidateNotSaved,
+       identityReviewRequired:x.identityReviewRequired}))
+ },null,2)+'\n');
  console.log('BEFN_GRECO '+JSON.stringify(report.summary));
  if(process.env.GITHUB_STEP_SUMMARY)fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,
    '\n### Greco UFCStats historical CSV crosscheck (not certification)\n'+
