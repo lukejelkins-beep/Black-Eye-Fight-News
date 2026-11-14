@@ -22,9 +22,13 @@ test('JSA-documented one-result aggregate lag does not hide Fujiseiun and Nishik
 });
 test('the full Sumo research cohort exports active pair previews plus every archived opponent meeting',()=>{
   const profiles=roster.rikishi.map(x=>read('data/sumo/backfill/v1/profile-ready/'+x.sourceId+'.json'));
-  const {summary,history}=createPreviewH2h(profiles,roster.rikishi.map(w=>w.sourceId),roster.collectedAt);
+  const {summary,history,opponents}=createPreviewH2h(profiles,roster.rikishi.map(w=>w.sourceId),roster.collectedAt);
   assert.equal(summary.profileCount,190);
   assert.equal(summary.cohortSize,190);
+  assert.equal(opponents.profileCount,190);
+  assert.ok(Array.isArray(opponents.profiles["28"]));
+  assert.equal(opponents.profiles["28"].length,summary.profiles["28"].opponentCount);
+  assert.equal(summary.profiles["28"].opponents,undefined,"bulky opponent directory must not be in the initial payload");
   assert.ok(summary.activePairCount>300,'Expected extensive source-backed active pair history');
   assert.ok(history.pairCount>=summary.activePairCount);
   assert.ok(summary.profiles['82'].reconciledAggregateLag);
