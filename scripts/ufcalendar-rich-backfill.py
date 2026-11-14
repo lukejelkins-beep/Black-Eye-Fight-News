@@ -2261,7 +2261,12 @@ def collect_approved_full_ufc_fight_search(client,state,research,coverage,today,
         # Mandatory source-confirmed shortfalls first, then long known careers.
         candidate.append((-deficit,-known,f,fid))
     candidate.sort()
-    cap=max(1,min(12,int(client.max_calls*.035)))
+    # The remaining ~700 first-pass numeric-ID histories are already roster-
+    # approved. A 20-search ceiling allows more of them per five-minute hop
+    # without a competing worker, while leaving room for event recovery,
+    # measured-round hydration and the existing provider RPM/monthly reserve.
+    # Client.call() still enforces the 500-run / 27k-month guard centrally.
+    cap=max(1,min(20,int(client.max_calls*.045)))
     calls=completed=new_fights=new_links=0
     for _,_,f,fid in candidate:
         if calls>=cap or client.stopped or client.remaining<=0 or client.calls>=client.max_calls-30:
