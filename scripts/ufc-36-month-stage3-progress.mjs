@@ -19,7 +19,7 @@ const isUfc=row=>String(row?.promotion||row?.org||'').toLowerCase()==='ufc'&&
   ['win','loss','draw','no_contest','w','l','d','nc'].includes(
     String(row?.result||row?.outcome||row?.status||'').toLowerCase());
 
-export function auditApprovedStage3(approval,census,progress,research,archive={},feederEvidence={},finaleEvidence={}){
+export function auditApprovedStage3(approval,census,progress,research,archive={},feederEvidence={},finaleEvidence={},legacyEvidence={}){
   if(approval?.status!=='approved'||approval?.approvedBy!=='user'||approval?.schema!==1||
      approval?.scope!=='ufc-36-month-roster')throw Error('Stage 3 roster not approved');
   const approved=arr(approval.approvedFighters);
@@ -179,6 +179,13 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     String(item?.sourceUrl||'').startsWith('https://www.ufc.com/')&&
     refs.some(r=>r.fighterSlug===item.fighterSlug&&
       r.date===date(item.date)&&normal(r.opponent)===normal(item.opponent)));
+  const verifiedLegacy=arr(legacyEvidence?.schema===1&&
+    legacyEvidence?.scope==='ufc-official-legacy-evidence'?legacyEvidence.bouts:[]);
+  const legacyProof=(id,refs)=>verifiedLegacy.some(item=>
+    numId(item?.fightId)===id&&
+    String(item?.sourceUrl||'').startsWith('https://www.ufc.com/')&&
+    refs.some(r=>r.fighterSlug===item.fighterSlug&&
+      r.date===date(item.date)&&normal(r.opponent)===normal(item.opponent)));
   // Only audit native IDs referenced by the approved roster. A saved
   // retry date is data, not permission to assume a failed lookup succeeded.
   const missingDiagnostics=[...missingIndex].map(id=>{
@@ -193,6 +200,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
       retryAfter:retryAfter||null,
       savedReviewReason:typeof check.reason==='string'?check.reason.slice(0,120):null,
       sourceVerifiedOfficialFinale:finaleProof(id,references),
+      sourceVerifiedOfficialLegacy:legacyProof(id,references),
       references};
   }).sort((a,b)=>(b.priorityTier-a.priorityTier)||
     (a.action==='not_yet_attempted'?-1:0)-(b.action==='not_yet_attempted'?-1:0)||
@@ -223,6 +231,8 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     manualReviewOfficialFinaleFightIds:new Set(officialFinaleGaps).size,
     sourceVerifiedOfficialFinaleFightIdsAwaitingIndex:
       missingDiagnostics.filter(x=>x.sourceVerifiedOfficialFinale).length,
+    sourceVerifiedOfficialLegacyFightIdsAwaitingIndex:
+      missingDiagnostics.filter(x=>x.sourceVerifiedOfficialLegacy).length,
     indexedFightsWithArchivedRounds:linkedRounds.size,
     indexedFightsWithMeasuredRoundMetrics:linkedMetrics.size,
     indexedNativeFightsWithoutConfirmedMeasuredRounds:indexedNative.size-linkedMetrics.size,
@@ -294,6 +304,7 @@ export function markdownReport(report){
    additionalSourceVerifiedFeederHistoryRows:'Additional feeder history entries excluded using exact UFC official-source evidence',
    manualReviewOfficialFinaleFightIds:'Missing UFC fight IDs with independently cached Finale event dates',
    sourceVerifiedOfficialFinaleFightIdsAwaitingIndex:'Missing official UFC Finale fight IDs independently confirmed from exact UFC-source evidence',
+   sourceVerifiedOfficialLegacyFightIdsAwaitingIndex:'Missing older UFC fight identities corroborated by official source, but provider-native indexing remains unresolved',
    profilesWithAllKnownUfcBoutsIndexed:'Profiles with every currently known UFC bout indexed (not career-certified)',
    profilesWithAllKnownUfcBoutsMeasured:'Profiles with measured rounds for every currently known UFC bout',
    providerCertifiedProfilesWithAllKnownBoutsIndexed:'Provider-certified careers with all known bouts indexed',
@@ -341,7 +352,8 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
    read('data/ufcalendar-fighter-research.json'),
    read('data/ufc-research-archive.json'),
    read('data/ufc-feeder-bout-evidence.json'),
-   read('data/ufc-official-finale-recovery.json'));
+   read('data/ufc-official-finale-recovery.json'),
+   read('data/ufc-official-legacy-evidence.json'));
  const qa=path.join(root,'qa');fs.mkdirSync(qa,{recursive:true});
  fs.writeFileSync(path.join(qa,'ufc-36-month-stage3-progress.json'),JSON.stringify(r,null,2)+'\n');
  fs.writeFileSync(path.join(qa,'ufc-36-month-stage3-progress.md'),markdownReport(r));
