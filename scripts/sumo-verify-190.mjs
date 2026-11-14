@@ -5,6 +5,7 @@
  */
 import {readFile,writeFile,mkdir,rename} from 'node:fs/promises';
 import {join} from 'node:path';
+import {unrankedDebutEvidence} from './sumo-backfill-190.mjs';
 const ROOT='data/sumo/backfill/v1';
 const REQUIRED=['profile','stats','measurements','ranks','shikonas','matches'];
 const banzuke=/^(Yokozuna|Ozeki|Sekiwake|Komusubi|Maegashira|Juryo|Makushita|Sandanme|Jonidan|Jonokuchi)\s+[1-9]\d{0,2}\s+(East|West)$/;
@@ -98,9 +99,15 @@ export function auditRikishi(w,cache){
   // Both Mae-zumo (debut trials) and Banzuke-gai (off-chart) are authentic
   // non-ranked basho states; they must be retained but not counted as formal ranks.
   const formalRanks=(cache.data?.ranks||[]).filter(x=>!['Mae-zumo','Banzuke-gai'].includes(x.rank));
-  if(cache.stages?.ranks?.complete&&stats?.basho!=null&&formalRanks.length!==Number(stats.basho)){
+  const documentedDebut=unrankedDebutEvidence(cache);
+  const permittedDebutGap=!!documentedDebut&&
+    cache.stages?.ranks?.unrankedDebut?.bashoId===documentedDebut.bashoId&&
+    formalRanks.length+1===Number(stats?.basho);
+  if(cache.stages?.ranks?.complete&&stats?.basho!=null&&
+     formalRanks.length!==Number(stats.basho)&&!permittedDebutGap){
     errors.push('rank-history-basho-count-mismatch');
   }
+  if(permittedDebutGap)warnings.push('documented-unranked-debut-basho');
   const uniqueErrors=[...new Set(errors)],uniqueWarnings=[...new Set(warnings)];
   const status=!allComplete?'still-collecting':uniqueErrors.length?'source-integrity-exception':'source-collected-needs-independent-verification';
   return {
