@@ -75,3 +75,25 @@ test("invalid cohort or nonmatching official evidence snapshot cannot certify",(
  v[6].rosterAsOf="2026-11-13";
  assert.throws(()=>auditCareerVerification(...v),/snapshot/);
 });
+
+test("independent certification is reported separately from provider-only claims",()=>{
+ const v=inputs();
+ v[1].fighters["fighter-001"].ufcTimelineCertified=true;
+ v[1].fighters["fighter-002"].independentlyCertifiedCareer=true;
+ const r=auditCareerVerification(...v);
+ assert.equal(r.summary.verifiedComplete,2);
+ assert.equal(r.summary.providerOnlyCertified,1);
+ assert.equal(r.summary.independentlyCertified,1);
+ assert.equal(r.summary.pendingCertification,781);
+});
+test("contradictory outcomes for the same UFC bout are flagged, not silently deduplicated",()=>{
+ const v=inputs(),slug="fighter-003";
+ v[2].profiles[slug]={recentHistory:[
+  {promotion:"UFC",date:"2025-01-01",opponent:"Test Opponent",result:"win"},
+  {promotion:"UFC",date:"2025-01-01",opponent:"Test Opponent",result:"no_contest"}
+ ]};
+ const r=auditCareerVerification(...v);
+ assert.equal(r.summary.conflictingSavedOutcomes,1);
+ assert.equal(r.priorityQueue[0].slug,slug);
+ assert.deepEqual(r.priorityQueue[0].contradictorySavedOutcomes[0].outcomes,["win","no_contest"]);
+});
