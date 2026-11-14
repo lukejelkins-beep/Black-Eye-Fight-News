@@ -4,13 +4,60 @@
   "cohortSize": 190,
   "certified": 0,
   "notAttempted": 180,
-  "collecting": 8,
-  "integrityException": 2,
+  "collecting": 10,
+  "integrityException": 0,
   "sourceReady": 0,
   "records": {
     "weight": 4,
     "rank": 134,
-    "matches": 400
+    "matches": 800
+  },
+  "independentJsaSpotchecks": {
+    "identityVerified": 2,
+    "measurementsVerified": 2,
+    "currentRecordMatches": 1,
+    "comparisons": [
+      {
+        "sourceId": 2,
+        "name": "Asanoyama",
+        "officialSource": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3682/",
+        "officialAsOf": "2026-11 day 7",
+        "identityVerified": true,
+        "measurementsVerified": true,
+        "careerTotalsMatchAtSourceSnapshots": true,
+        "sourceTotals": {
+          "wins": 442,
+          "losses": 223,
+          "absences": 159
+        },
+        "officialTotals": {
+          "wins": 442,
+          "losses": 223,
+          "absences": 159
+        },
+        "note": "Totals matched the provided official snapshot"
+      },
+      {
+        "sourceId": 28,
+        "name": "Ura",
+        "officialSource": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3616/",
+        "officialAsOf": "2026-11 day 7",
+        "identityVerified": true,
+        "measurementsVerified": true,
+        "careerTotalsMatchAtSourceSnapshots": false,
+        "sourceTotals": {
+          "wins": 432,
+          "losses": 331,
+          "absences": 96
+        },
+        "officialTotals": {
+          "wins": 432,
+          "losses": 330,
+          "absences": 96
+        },
+        "note": "Totals differ between source captures. Reconcile result-cutoff dates before certification."
+      }
+    ]
   },
   "pendingExternalChecks": [
     "JSA identity/current profile",
@@ -34,39 +81,6 @@
         "weights": 0,
         "ranks": 0,
         "matches": 0
-      }
-    },
-    {
-      "sourceId": 2,
-      "name": "Asanoyama",
-      "status": "source-integrity-exception",
-      "readyForExternalCrosscheck": false,
-      "errors": [
-        "source-career-totals-identity"
-      ],
-      "warnings": [],
-      "stagesCompleted": 6,
-      "counts": {
-        "weights": 2,
-        "ranks": 64,
-        "matches": 200
-      }
-    },
-    {
-      "sourceId": 28,
-      "name": "Ura",
-      "status": "source-integrity-exception",
-      "readyForExternalCrosscheck": false,
-      "errors": [
-        "source-career-totals-identity",
-        "malformed-rank-value"
-      ],
-      "warnings": [],
-      "stagesCompleted": 6,
-      "counts": {
-        "weights": 2,
-        "ranks": 70,
-        "matches": 200
       }
     },
     {
