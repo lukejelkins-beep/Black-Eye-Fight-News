@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "purpose": "JSA independent spot-checks for individual public fields. NOT full-career certificates.",
   "retrievedDate": "2026-11-15",
-  "note": "The official pages identify records as November 2026 Day 7. API research snapshots may represent a different result cutoff; differing fight totals remain unresolved until synchronized, not silently corrected.",
+  "note": "JSA figures are captured with their displayed November 2026 tournament-day cutoff. Do not treat an API total match as same-day career certification unless individual bout history and date cutoffs also reconcile.",
   "bySourceId": {
     "2": {
       "name": "Asanoyama",
@@ -60,6 +60,44 @@
       },
       "sourceEvidence": "JSA official profile and East/West banzuke list",
       "pending": "Historical per-basho results independently certified only after full chronological source reconciliation."
+    },
+    "7": {
+      "name": "Kirishima",
+      "sumoApiId": 7,
+      "officialNskId": 3622,
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3622/",
+      "officialBanzukeUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/search",
+      "officialAsOf": "2026-11 day 8",
+      "currentRank": "Ozeki 2 East",
+      "stable": "Otowayama",
+      "heightCm": 186,
+      "weightKg": 150,
+      "record": {
+        "wins": 494,
+        "losses": 317,
+        "absences": 25
+      },
+      "sourceEvidence": "JSA public profile (day 8), tournament record East Ozeki; https://www.sumo.or.jp/EnSumoDataRikishi/profile/3622/",
+      "pending": "Historical measurements, each banzuke, and all match dates must be independently reconciled before certification."
+    },
+    "8": {
+      "name": "Kotoshoho",
+      "sumoApiId": 8,
+      "officialNskId": 3840,
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3840/",
+      "officialBanzukeUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/search",
+      "officialAsOf": "2026-11 day 8",
+      "currentRank": "Maegashira 6 East",
+      "stable": "Sadogatake",
+      "heightCm": 189,
+      "weightKg": 170,
+      "record": {
+        "wins": 359,
+        "losses": 316,
+        "absences": 24
+      },
+      "sourceEvidence": "JSA official profile retrieved as November 2026 day 8; East Maegashira #6, https://sumo.or.jp/EnSumoDataRikishi/profile/3840/",
+      "pending": "Historical measurements, each banzuke, and all match dates must be independently reconciled before certification."
     },
     "28": {
       "name": "Ura",
