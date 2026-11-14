@@ -28,28 +28,28 @@
       "complete": false,
       "skip": 0,
       "total": null,
-      "attempts": 1,
+      "attempts": 2,
       "updatedAt": null
     },
     "ranks": {
       "complete": false,
       "skip": 0,
       "total": null,
-      "attempts": 1,
+      "attempts": 2,
       "updatedAt": null
     },
     "shikonas": {
       "complete": false,
       "skip": 0,
       "total": null,
-      "attempts": 1,
+      "attempts": 2,
       "updatedAt": null
     },
     "matches": {
       "complete": false,
       "skip": 0,
       "total": null,
-      "attempts": 1,
+      "attempts": 2,
       "updatedAt": null
     }
   },
@@ -177,6 +177,30 @@
       "at": "2026-11-14T21:09:24.929Z",
       "stage": "matches",
       "message": "Expected paginated matches response",
+      "transient": false
+    },
+    {
+      "at": "2026-11-14T21:12:16.728Z",
+      "stage": "measurements",
+      "message": "Expected paginated measurements response; shape=array",
+      "transient": false
+    },
+    {
+      "at": "2026-11-14T21:12:16.780Z",
+      "stage": "ranks",
+      "message": "Expected paginated ranks response; shape=array",
+      "transient": false
+    },
+    {
+      "at": "2026-11-14T21:12:16.832Z",
+      "stage": "shikonas",
+      "message": "Expected paginated shikonas response; shape=array",
+      "transient": false
+    },
+    {
+      "at": "2026-11-14T21:12:16.898Z",
+      "stage": "matches",
+      "message": "Expected paginated matches response; shape=limit,skip,total,records",
       "transient": false
     }
   ],
