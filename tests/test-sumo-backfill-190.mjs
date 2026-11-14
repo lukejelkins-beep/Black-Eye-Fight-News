@@ -69,3 +69,39 @@ test('failing source stage cannot hide other six-stage collection opportunities'
   doc.stages.stats.complete=true;
   assert.equal(nextStage(doc),'measurements');
 });
+
+test('real provider shape: historical changes arrive as raw arrays',()=>{
+  const d=newCache(sample);
+  combinePage(d,'measurements',[
+    {id:'202103-28',rikishiId:28,bashoId:'202103',height:173,weight:136},
+    {id:'202611-28',rikishiId:28,bashoId:'202611',height:173,weight:138}
+  ],28);
+  combinePage(d,'ranks',[{id:'202611-28',rikishiId:28,bashoId:'202611',rank:'Maegashira 2 East'}],28);
+  combinePage(d,'shikonas',[{id:'201503-28',rikishiId:28,bashoId:'201503',shikonaEn:'Ura'}],28);
+  assert.deepEqual(d.data.measurements.map(x=>x.weight),[136,138]);
+  assert.equal(d.stages.measurements.complete,true);
+  assert.equal(d.stages.ranks.complete,true);
+  assert.equal(d.stages.shikonas.complete,true);
+  assert.equal(d.stages.measurements.responseShape,'direct-array');
+});
+test('real provider shape: fighter match pages contain records, not matches',()=>{
+  const d=newCache(sample);
+  combinePage(d,'matches',{limit:2,skip:0,total:3,records:[
+    {bashoId:'202611',day:1,eastId:28,westId:10,matchNo:5},
+    {bashoId:'202611',day:2,eastId:28,westId:12,matchNo:6}
+  ]},28);
+  assert.equal(d.stages.matches.complete,false);
+  assert.equal(d.stages.matches.skip,2);
+  combinePage(d,'matches',{limit:2,skip:2,total:3,records:[
+    {bashoId:'202611',day:3,eastId:28,westId:11,matchNo:7}
+  ]},28);
+  assert.equal(d.stages.matches.complete,true);
+  assert.equal(d.data.matches.length,3);
+});
+test('provider ignoring the historical array skip cannot advance the cursor',()=>{
+  const d=newCache(sample);
+  d.stages.ranks.skip=200;
+  d.data.ranks=Array.from({length:200},(_,i)=>({id:'old'+i,rikishiId:28}));
+  assert.throws(()=>combinePage(d,'ranks',d.data.ranks.slice(),28),/Repeated/);
+  assert.equal(d.stages.ranks.skip,200);
+});
