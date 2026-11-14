@@ -53,6 +53,31 @@ export function newCache(r){
     errors:[]
   };
 }
+export function nextBashoId(value){
+  const raw=String(value||'');
+  if(!/^\d{4}(01|03|05|07|09|11)$/.test(raw))return null;
+  const y=Number(raw.slice(0,4)),m=Number(raw.slice(-2));
+  return String(m===11?y+1:y)+String(m===11?1:m+2).padStart(2,'0');
+}
+/**
+ * Source-evidenced unranked debut: a wrestler's first basho includes actual
+ * Makushita bouts, but their first published banzuke rank arrives at the NEXT
+ * tournament. Do not invent a rank for the debut tournament.
+ */
+export function unrankedDebutEvidence(doc){
+  const debut=String(doc?.data?.profile?.debut||'');
+  const firstPublished=doc?.data?.ranks?.map(x=>String(x.bashoId||'')).sort()[0];
+  const actual=doc?.data?.ranks?.filter(x=>x.rank!=='Mae-zumo'&&x.rank!=='Banzuke-gai').length;
+  const officialTotal=Number(doc?.data?.stats?.basho);
+  const hasDebutBouts=doc?.stages?.matches?.complete&&
+    doc.data.matches.some(x=>String(x.bashoId)===debut&&x.division==='Makushita');
+  if(!hasDebutBouts||!nextBashoId(debut)||firstPublished!==nextBashoId(debut)||
+     !Number.isSafeInteger(officialTotal)||officialTotal-actual!==1||
+     doc.data.ranks.some(x=>String(x.bashoId)===debut))return null;
+  return {bashoId:debut,firstPublishedRankBasho:firstPublished,
+    status:'competed-before-first-published-banzuke-rank',
+    evidence:'API debut basho, same-basho Makushita bouts, next-basho first rank, career basho count'};
+}
 export function nextStage(doc){
   return STAGES.find(s=>!doc.stages?.[s]?.complete&&(doc.stages?.[s]?.attempts||0)<3)||null;
 }
@@ -271,6 +296,17 @@ async function ensureCache(w){
       stored.errors.push({at:clock(),stage:'ranks',message:'Reopened provider-capped 100-entry ranking history',transient:false});
     }
     stored.rankPaginationContract=2;
+  }
+  if(stored.rankDebutContract!==1){
+    const evidence=unrankedDebutEvidence(stored),stage=stored.stages.ranks;
+    if(evidence&&!stage.complete){
+      stage.complete=true;
+      stage.attempts=0;
+      stage.unrankedDebut=evidence;
+      stored.errors.push({at:clock(),stage:'ranks',message:'Confirmed documented unranked debut tournament; no rank invented',transient:false});
+    }
+    stored.rankDebutContract=1;
+    if(evidence)await saveJson(filePath(w.sourceId),stored);
   }
   return stored;
 }
