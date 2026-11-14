@@ -101,9 +101,6 @@ jobs:
       - name: Reconcile public JSA spotchecks without certifying careers
         if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-jsa-reconcile.mjs
-      - name: Build complete research-only profile projections
-        if: steps.preflight.outputs.run == 'true'
-        run: node scripts/sumo-build-profile-cache.mjs
       - name: Reconstruct every opponent H2H meeting and audit each winning technique
         if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-audit-h2h-chronology.mjs
@@ -127,6 +124,9 @@ jobs:
       - name: Refresh dated weight-source coverage without external requests
         if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-weight-history-190.mjs
+      - name: Build complete research-only profile projections
+        if: steps.preflight.outputs.run == 'true'
+        run: node scripts/sumo-build-profile-cache.mjs
       - name: Checkpoint cached results on research branch only
         if: steps.preflight.outputs.run == 'true'
         env:
