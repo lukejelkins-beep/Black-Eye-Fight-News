@@ -1,0 +1,694 @@
+{
+  "schemaVersion": 1,
+  "sourceId": 9086,
+  "officialNskId": 4346,
+  "shikonaEn": "Kakueizan",
+  "previewOnly": true,
+  "certification": "not-started",
+  "status": "source-regular-bouts-reconciled-external-verification-pending",
+  "sourceUrl": "https://www.sumo-api.com/api/rikishi/9086",
+  "jsaUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4346/",
+  "identity": {
+    "shikonaEn": "Kakueizan",
+    "shikonaJp": "鶴英山(かくえいざん)",
+    "stable": "Otowayama",
+    "birthplace": "Toyama",
+    "birthDate": "2003-01-22T15:00:00Z",
+    "debutBasho": "202505"
+  },
+  "current": {
+    "rank": "Makushita 40 East",
+    "weightKg": 173.9,
+    "heightCm": 184
+  },
+  "career": {
+    "wins": 32,
+    "losses": 21,
+    "absences": 13,
+    "basho": 10,
+    "yusho": 0,
+    "yushoByDivision": {},
+    "sansho": {},
+    "careerHigh": {
+      "rank": "Makushita 20 East",
+      "bashoId": "202605"
+    }
+  },
+  "measurements": [
+    {
+      "bashoId": "202505",
+      "heightCm": 184,
+      "weightKg": 170,
+      "source": "Sumo API historical change"
+    }
+  ],
+  "rankTimeline": [
+    {
+      "bashoId": "202507",
+      "rank": "Makushita 50 West",
+      "rankValue": 750
+    },
+    {
+      "bashoId": "202509",
+      "rank": "Sandanme 30 West",
+      "rankValue": 830
+    },
+    {
+      "bashoId": "202511",
+      "rank": "Jonidan 12 West",
+      "rankValue": 912
+    },
+    {
+      "bashoId": "202601",
+      "rank": "Sandanme 9 East",
+      "rankValue": 809
+    },
+    {
+      "bashoId": "202603",
+      "rank": "Makushita 48 East",
+      "rankValue": 748
+    },
+    {
+      "bashoId": "202605",
+      "rank": "Makushita 20 East",
+      "rankValue": 720
+    },
+    {
+      "bashoId": "202607",
+      "rank": "Makushita 45 East",
+      "rankValue": 745
+    },
+    {
+      "bashoId": "202609",
+      "rank": "Makushita 31 East",
+      "rankValue": 731
+    },
+    {
+      "bashoId": "202611",
+      "rank": "Makushita 40 East",
+      "rankValue": 740
+    }
+  ],
+  "rankHistoryGaps": [
+    {
+      "bashoId": "202505",
+      "firstPublishedRankBasho": "202507",
+      "status": "competed-before-first-published-banzuke-rank",
+      "evidence": "API debut basho, same-basho Makushita bouts, next-basho first rank, career basho count",
+      "rank": null,
+      "independentlyCertified": false
+    }
+  ],
+  "rankAvailability": {
+    "evidencedUnrankedDebutBasho": "202505",
+    "note": "Debut bouts documented before first published banzuke rank; no rank assigned for the debut basho"
+  },
+  "ringNameHistory": [
+    {
+      "bashoId": "202505",
+      "shikonaEn": "Urayama",
+      "shikonaJp": "浦山(うらやま)"
+    },
+    {
+      "bashoId": "202507",
+      "shikonaEn": "Kakueizan",
+      "shikonaJp": "鶴英山(かくえいざん)"
+    }
+  ],
+  "boutHistory": {
+    "rawCachePath": "data/sumo/backfill/v1/rikishi/9086.json",
+    "regularBouts": 53,
+    "otherBouts": 1,
+    "totalRawBouts": 54,
+    "regularWins": 32,
+    "regularLosses": 21,
+    "earliestBasho": "202505",
+    "latestBasho": "202611",
+    "fullPagination": true,
+    "comparison": "API career stats match 15-day non-Mae-zumo regular bouts"
+  },
+  "specialBouts": [
+    {
+      "bashoId": "202511",
+      "day": 16,
+      "division": "Jonidan",
+      "opponentId": 9099,
+      "outcome": "loss",
+      "kimarite": "sukuinage",
+      "sourceMatchKey": "202511:16:1:9086:9099"
+    }
+  ],
+  "perBasho": [
+    {
+      "bashoId": "202505",
+      "division": "Makushita",
+      "wins": 4,
+      "losses": 3,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202507",
+      "division": "Makushita",
+      "wins": 0,
+      "losses": 1,
+      "scheduledBoutRows": 1
+    },
+    {
+      "bashoId": "202511",
+      "division": "Jonidan",
+      "wins": 7,
+      "losses": 0,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202601",
+      "division": "Sandanme",
+      "wins": 5,
+      "losses": 2,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202603",
+      "division": "Makushita",
+      "wins": 6,
+      "losses": 1,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202605",
+      "division": "Makushita",
+      "wins": 1,
+      "losses": 6,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202607",
+      "division": "Makushita",
+      "wins": 5,
+      "losses": 2,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202609",
+      "division": "Makushita",
+      "wins": 3,
+      "losses": 4,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202611",
+      "division": "Makushita",
+      "wins": 1,
+      "losses": 2,
+      "scheduledBoutRows": 3
+    }
+  ],
+  "headToHead": [
+    {
+      "opponentId": 136,
+      "opponentName": "Tochiseiryu",
+      "wins": 3,
+      "losses": 0,
+      "regularBouts": 3
+    },
+    {
+      "opponentId": 69,
+      "opponentName": "Kaisho",
+      "wins": 0,
+      "losses": 2,
+      "regularBouts": 2
+    },
+    {
+      "opponentId": 84,
+      "opponentName": "Hananofuji",
+      "wins": 1,
+      "losses": 1,
+      "regularBouts": 2
+    },
+    {
+      "opponentId": 194,
+      "opponentName": "Oshoryu",
+      "wins": 1,
+      "losses": 1,
+      "regularBouts": 2
+    },
+    {
+      "opponentId": 252,
+      "opponentName": "Goosho",
+      "wins": 2,
+      "losses": 0,
+      "regularBouts": 2
+    },
+    {
+      "opponentId": 274,
+      "opponentName": "Gyokuozan",
+      "wins": 1,
+      "losses": 1,
+      "regularBouts": 2
+    },
+    {
+      "opponentId": 9085,
+      "opponentName": "Hanaoka",
+      "wins": 0,
+      "losses": 2,
+      "regularBouts": 2
+    },
+    {
+      "opponentId": 63,
+      "opponentName": "Takakento",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 65,
+      "opponentName": "Shimanoumi",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 94,
+      "opponentName": "Fujinoyama",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 96,
+      "opponentName": "Akinoyama",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 106,
+      "opponentName": "Yago",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 118,
+      "opponentName": "Ikawasakura",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 123,
+      "opponentName": "Tosamidori",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 132,
+      "opponentName": "Chiyoraizan",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 145,
+      "opponentName": "Nihonyanagi",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 154,
+      "opponentName": "Dewataikai",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 155,
+      "opponentName": "Ohata",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 176,
+      "opponentName": "Awanokuni",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 179,
+      "opponentName": "Kaiseijo",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 180,
+      "opponentName": "Kaishin",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 197,
+      "opponentName": "Hananoumi",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 214,
+      "opponentName": "Oka",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 217,
+      "opponentName": "Daishinkai",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 241,
+      "opponentName": "Denuma",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 253,
+      "opponentName": "Rinko",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 283,
+      "opponentName": "Hodaka",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 290,
+      "opponentName": "Kawamura",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 339,
+      "opponentName": "Wakaterumoto",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 351,
+      "opponentName": "Hidano",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 376,
+      "opponentName": "Yamato",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 380,
+      "opponentName": "Nikko",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 402,
+      "opponentName": "Fujimusashi",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 467,
+      "opponentName": "Kyokumizuno",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 609,
+      "opponentName": "Satorufuji",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 8852,
+      "opponentName": "Goseizan",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 8862,
+      "opponentName": "Haruyama",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 8863,
+      "opponentName": "Anosho",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 8876,
+      "opponentName": "Anhibiki",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 8883,
+      "opponentName": "Anryukai",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 8892,
+      "opponentName": "Uzumasa",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 8902,
+      "opponentName": "Seiyu",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 8943,
+      "opponentName": "Gonosho",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 8951,
+      "opponentName": "Ikarigata",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1
+    },
+    {
+      "opponentId": 9055,
+      "opponentName": "Wakajin",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1
+    }
+  ],
+  "kimarite": {
+    "wins": [
+      {
+        "kimarite": "yorikiri",
+        "count": 13
+      },
+      {
+        "kimarite": "oshidashi",
+        "count": 9
+      },
+      {
+        "kimarite": "okuridashi",
+        "count": 2
+      },
+      {
+        "kimarite": "yoritaoshi",
+        "count": 2
+      },
+      {
+        "kimarite": "uwatenage",
+        "count": 2
+      },
+      {
+        "kimarite": "sukuinage",
+        "count": 1
+      },
+      {
+        "kimarite": "hatakikomi",
+        "count": 1
+      },
+      {
+        "kimarite": "tsukidashi",
+        "count": 1
+      },
+      {
+        "kimarite": "oshitaoshi",
+        "count": 1
+      }
+    ],
+    "losses": [
+      {
+        "kimarite": "yorikiri",
+        "count": 5
+      },
+      {
+        "kimarite": "hatakikomi",
+        "count": 4
+      },
+      {
+        "kimarite": "uwatenage",
+        "count": 3
+      },
+      {
+        "kimarite": "oshidashi",
+        "count": 2
+      },
+      {
+        "kimarite": "yoritaoshi",
+        "count": 1
+      },
+      {
+        "kimarite": "sotogake",
+        "count": 1
+      },
+      {
+        "kimarite": "tsukitaoshi",
+        "count": 1
+      },
+      {
+        "kimarite": "katasukashi",
+        "count": 1
+      },
+      {
+        "kimarite": "tsukiotoshi",
+        "count": 1
+      },
+      {
+        "kimarite": "shitatenage",
+        "count": 1
+      }
+    ]
+  },
+  "recentPerformance": [
+    {
+      "bashoId": "202611",
+      "day": 6,
+      "opponentId": 217,
+      "opponentName": "Daishinkai",
+      "outcome": "win",
+      "kimarite": "oshidashi"
+    },
+    {
+      "bashoId": "202611",
+      "day": 4,
+      "opponentId": 118,
+      "opponentName": "Ikawasakura",
+      "outcome": "loss",
+      "kimarite": "yoritaoshi"
+    },
+    {
+      "bashoId": "202611",
+      "day": 2,
+      "opponentId": 8892,
+      "opponentName": "Uzumasa",
+      "outcome": "loss",
+      "kimarite": "uwatenage"
+    },
+    {
+      "bashoId": "202609",
+      "day": 14,
+      "opponentId": 155,
+      "opponentName": "Ohata",
+      "outcome": "win",
+      "kimarite": "yorikiri"
+    },
+    {
+      "bashoId": "202609",
+      "day": 11,
+      "opponentId": 179,
+      "opponentName": "Kaiseijo",
+      "outcome": "win",
+      "kimarite": "sukuinage"
+    },
+    {
+      "bashoId": "202609",
+      "day": 9,
+      "opponentId": 136,
+      "opponentName": "Tochiseiryu",
+      "outcome": "win",
+      "kimarite": "yorikiri"
+    },
+    {
+      "bashoId": "202609",
+      "day": 8,
+      "opponentId": 197,
+      "opponentName": "Hananoumi",
+      "outcome": "loss",
+      "kimarite": "yorikiri"
+    },
+    {
+      "bashoId": "202609",
+      "day": 5,
+      "opponentId": 69,
+      "opponentName": "Kaisho",
+      "outcome": "loss",
+      "kimarite": "hatakikomi"
+    },
+    {
+      "bashoId": "202609",
+      "day": 3,
+      "opponentId": 274,
+      "opponentName": "Gyokuozan",
+      "outcome": "loss",
+      "kimarite": "oshidashi"
+    },
+    {
+      "bashoId": "202609",
+      "day": 2,
+      "opponentId": 180,
+      "opponentName": "Kaishin",
+      "outcome": "loss",
+      "kimarite": "hatakikomi"
+    }
+  ],
+  "releaseGates": {
+    "independentJsaRecord": false,
+    "fullHistoricCrosscheck": false,
+    "historicMeasurementProvenance": false,
+    "photoRights": false,
+    "certified": false
+  }
+}

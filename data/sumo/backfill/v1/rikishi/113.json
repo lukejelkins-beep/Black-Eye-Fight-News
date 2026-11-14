@@ -52,15 +52,21 @@
       "source": "https://www.sumo-api.com/api/shikonas?rikishiId=113&limit=200&skip=0&sortOrder=asc"
     },
     "matches": {
-      "complete": false,
+      "complete": true,
       "skip": 400,
       "total": null,
-      "attempts": 3,
+      "attempts": 0,
       "updatedAt": "2026-11-14T22:00:40.493Z",
       "historyShortfall": 0,
       "lastReportedPageTotal": 200,
       "responseShape": "paginated-envelope",
-      "source": "https://www.sumo-api.com/api/rikishi/113/matches?limit=200&skip=200"
+      "source": "https://www.sumo-api.com/api/rikishi/113/matches?limit=200&skip=200",
+      "terminalEmptyPage": {
+        "regularBouts": 391,
+        "rawRows": 400,
+        "earliestBasho": "201605",
+        "source": "source regular W-L totals and earliest debut match"
+      }
     }
   },
   "data": {
@@ -7020,6 +7026,12 @@
       "at": "2026-11-14T22:05:05.956Z",
       "stage": "matches",
       "message": "Expected matches collection; shape=limit,skip,total,records",
+      "transient": false
+    },
+    {
+      "at": "2026-11-14T22:12:04.453Z",
+      "stage": "matches",
+      "message": "Terminal null records page accepted after strict regular W-L and debut-source reconciliation",
       "transient": false
     }
   ],

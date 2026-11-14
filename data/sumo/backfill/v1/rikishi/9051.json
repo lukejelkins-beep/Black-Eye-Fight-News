@@ -34,13 +34,19 @@
       "source": "https://www.sumo-api.com/api/measurements?rikishiId=9051&limit=200&skip=0&sortOrder=asc"
     },
     "ranks": {
-      "complete": false,
+      "complete": true,
       "skip": 10,
       "total": null,
-      "attempts": 1,
+      "attempts": 0,
       "updatedAt": "2026-11-14T22:04:14.247Z",
       "responseShape": "direct-array",
-      "source": "https://www.sumo-api.com/api/ranks?rikishiId=9051&limit=200&skip=0&sortOrder=asc"
+      "source": "https://www.sumo-api.com/api/ranks?rikishiId=9051&limit=200&skip=0&sortOrder=asc",
+      "unrankedDebut": {
+        "bashoId": "202503",
+        "firstPublishedRankBasho": "202505",
+        "status": "competed-before-first-published-banzuke-rank",
+        "evidence": "API debut basho, same-basho Makushita bouts, next-basho first rank, career basho count"
+      }
     },
     "shikonas": {
       "complete": true,
@@ -2221,10 +2227,17 @@
       "stage": "ranks",
       "message": "Empty ranks page despite more records",
       "transient": false
+    },
+    {
+      "at": "2026-11-14T22:12:04.544Z",
+      "stage": "ranks",
+      "message": "Confirmed documented unranked debut tournament; no rank invented",
+      "transient": false
     }
   ],
   "profileRequestContract": 2,
   "historyResponseContract": 2,
   "matchPaginationContract": 3,
-  "rankPaginationContract": 2
+  "rankPaginationContract": 2,
+  "rankDebutContract": 1
 }

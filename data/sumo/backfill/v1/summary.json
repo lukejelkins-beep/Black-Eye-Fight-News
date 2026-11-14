@@ -6,14 +6,14 @@
   "certified": 0,
   "counts": {
     "pending": 0,
-    "partial": 9,
-    "exception": 1,
-    "collected": 180
+    "partial": 0,
+    "exception": 0,
+    "collected": 190
   },
   "weightSnapshots": 415,
   "rankEntries": 8711,
   "matchEntries": 76532,
-  "outstandingStages": 9,
+  "outstandingStages": 0,
   "stageTotals": {
     "profile": {
       "completed": 190,
@@ -28,7 +28,7 @@
       "blocked": 0
     },
     "ranks": {
-      "completed": 181,
+      "completed": 190,
       "blocked": 0
     },
     "shikonas": {
@@ -36,25 +36,13 @@
       "blocked": 0
     },
     "matches": {
-      "completed": 189,
-      "blocked": 1
+      "completed": 190,
+      "blocked": 0
     }
   },
-  "exceptions": [
-    "Tokunomusashi"
-  ],
-  "partialExamples": [
-    "Fujitensei",
-    "Fujiryoga",
-    "Gyotoku",
-    "Hanahibiki",
-    "Kakueizan",
-    "Ryusho",
-    "Fudoho",
-    "Omori",
-    "Honoikazuchi"
-  ],
-  "lastCheckedAt": "2026-11-14T22:05:07.540Z",
+  "exceptions": [],
+  "partialExamples": [],
+  "lastCheckedAt": "2026-11-14T22:12:04.697Z",
   "source": "https://www.sumo-api.com/api",
   "maximumCallsPerScheduledRun": null,
   "note": "Collected means API pagination completed. It does not imply historical accuracy, JSA agreement, official weight confirmation, copyright permission for photos, or certification.",
@@ -63,66 +51,15 @@
   "requestIntervalMs": 200,
   "cooldownUntil": null,
   "lastRun": {
-    "at": "2026-11-14T22:05:07.540Z",
-    "elapsedSeconds": 2,
-    "apiCalls": 10,
-    "updatedRikishi": 10,
+    "at": "2026-11-14T22:12:04.697Z",
+    "elapsedSeconds": 0,
+    "apiCalls": 0,
+    "updatedRikishi": 0,
     "laneCalls": {
       "quick": 0,
       "history": 0
     },
-    "failures": [
-      {
-        "rikishiId": 9050,
-        "stage": "ranks",
-        "error": "Empty ranks page despite more records"
-      },
-      {
-        "rikishiId": 9051,
-        "stage": "ranks",
-        "error": "Empty ranks page despite more records"
-      },
-      {
-        "rikishiId": 113,
-        "stage": "matches",
-        "error": "Expected matches collection; shape=limit,skip,total,records"
-      },
-      {
-        "rikishiId": 9084,
-        "stage": "ranks",
-        "error": "Empty ranks page despite more records"
-      },
-      {
-        "rikishiId": 9085,
-        "stage": "ranks",
-        "error": "Empty ranks page despite more records"
-      },
-      {
-        "rikishiId": 9086,
-        "stage": "ranks",
-        "error": "Empty ranks page despite more records"
-      },
-      {
-        "rikishiId": 9097,
-        "stage": "ranks",
-        "error": "Empty ranks page despite more records"
-      },
-      {
-        "rikishiId": 9115,
-        "stage": "ranks",
-        "error": "Empty ranks page despite more records"
-      },
-      {
-        "rikishiId": 9135,
-        "stage": "ranks",
-        "error": "Empty ranks page despite more records"
-      },
-      {
-        "rikishiId": 9136,
-        "stage": "ranks",
-        "error": "Empty ranks page despite more records"
-      }
-    ],
+    "failures": [],
     "stoppedReason": null,
     "queuesExhausted": true
   }
