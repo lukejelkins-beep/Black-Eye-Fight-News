@@ -289,7 +289,7 @@ function recordChart(item) {
   return (rows.length?'<div class="sumo-result-grid">'+rows.map(({rec,i})=>opponentBoutCard(w||{sourceId:item.rikishiID},rec,i,div)).join('')+'</div>'
     :'<p class="missing">No identified opponents are included in the current tournament snapshot.</p>')+
     '<p class="footnote">'+s.win+' wins and '+s.loss+' losses recorded; '+completed+' completed matchups displayed. Unassigned future bouts are omitted rather than shown as empty cards. '+
-    (div==='Makushita'?'No-bout calendar days are not counted as losses or injuries.':'Results and published upcoming opponents are separated.')+'</p>';
+    (div==='Makushita'?'Makushita non-bout days are not counted as losses or injuries.':'Results and published upcoming opponents are separated.')+'</p>';
 }
 function profileResults(w, limit) {
   const enriched=detailFor(details(),w.sourceId);
@@ -500,12 +500,13 @@ async function loadJson(url){
 }
 async function init(){
   try {
-    const [roster,details,styles]=await Promise.all([loadJson('data/sumo/rikishi-index.json'),loadJson('data/sumo/preview-details.json'),loadJson('data/sumo/official-style-evidence.json')]);
+    const [roster,details,styles,photos]=await Promise.all([loadJson('data/sumo/rikishi-index.json'),loadJson('data/sumo/preview-details.json'),loadJson('data/sumo/official-style-evidence.json'),loadJson('data/sumo/approved-photos.json')]);
     if(!Array.isArray(roster?.rikishi)||!Array.isArray(details?.featured)||roster?.count!==roster.rikishi.length) throw new Error('Sumo cache schema or roster total not valid');
     if((roster?.trackedDivisions||[]).join(',')!==DIVS.join(','))throw new Error('Sumo cache does not match the approved three-division scope');
     if(roster.rikishi.some(x=>!DIVS.includes(divisionOf(x.currentRank))))throw new Error('Out-of-scope division in Sumo index');
     if(styles?.schemaVersion!==1||!styles.byNskId)throw new Error('Official style evidence cache unavailable or malformed');
-    STATE.roster=roster;STATE.details=details;STATE.officialStyles=styles;
+    if(photos?.schemaVersion!==1||!photos.bySourceId||typeof photos.bySourceId!=='object')throw new Error('Licensed Sumo photo manifest missing or malformed');
+    STATE.roster=roster;STATE.details=details;STATE.officialStyles=styles;STATE.photoIndex=photos.bySourceId;
     render();
   } catch(error){
     STATE.error=error.message || 'Unable to load the preview dataset';
