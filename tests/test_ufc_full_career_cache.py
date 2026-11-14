@@ -546,6 +546,70 @@ class FullCareerCacheTests(unittest.TestCase):
             c,state,research,candidate,today,a)["attempts"],0)
         self.assertEqual(len(c.paths),1)
 
+    def test_curated_ufc_finale_retries_one_verified_cooldown_id(self):
+        state,research,candidate=self.fixture()
+        today=dt.date(2026,11,13)
+        state.setdefault("ufcCareerBoutChecks",{})["800"]={
+            "status":"requires_manual_review","checkedAt":today.isoformat(),
+            "retryAfter":"2026-11-27"}
+        manifest={"schema":1,"scope":"ufc-official-finale-recovery","bouts":[{
+            "fightId":"800","date":"2008-05-01",
+            "fighterSlug":"veteran","opponent":"Opponent",
+            "sourceUrl":"https://www.ufc.com/event/official-ufc-final"}]}
+        class Finale(Fake):
+            def __init__(self):super().__init__("The Ultimate Fighter 28 Finale")
+        c=Finale()
+        count=m.collect_ufc_career_bouts(
+            c,state,research,candidate,today,self.approval(),manifest)
+        self.assertEqual(count,1)
+        self.assertEqual(c.paths,["/fights/800"])
+        self.assertEqual(state["bouts"]["800"]["org"],"ufc")
+        self.assertEqual(m.collect_ufc_career_bouts(
+            c,state,research,candidate,today,self.approval(),manifest),0)
+
+    def test_curated_finale_requires_exact_saved_bout_opponent_and_official_url(self):
+        state,research,candidate=self.fixture()
+        today=dt.date(2026,11,13)
+        state.setdefault("ufcCareerBoutChecks",{})["800"]={
+            "status":"requires_manual_review","retryAfter":"2026-11-27"}
+        base={"fightId":"800","date":"2008-05-01","fighterSlug":"veteran",
+              "opponent":"Opponent",
+              "sourceUrl":"https://www.ufc.com/event/official-tuf-final"}
+        for change in ({"opponent":"Unrelated"},{"fighterSlug":"different"},
+                       {"date":"2008-05-02"},{"sourceUrl":"https://not-ufc.example/event"}):
+            trial={"schema":1,"scope":"ufc-official-finale-recovery",
+                   "bouts":[{**base,**change}]}
+            c=Fake("The Ultimate Fighter 28 Finale")
+            self.assertEqual(m.collect_ufc_career_bouts(
+                c,state,research,candidate,today,self.approval(),trial),0)
+            self.assertEqual(c.paths,[])
+        self.assertNotIn("800",state["bouts"])
+
+    def test_curated_finale_provider_identity_mismatch_is_not_saved_or_repeated(self):
+        state,research,candidate=self.fixture()
+        today=dt.date(2026,11,13)
+        state.setdefault("ufcCareerBoutChecks",{})["800"]={
+            "status":"requires_manual_review","retryAfter":"2026-11-27"}
+        manifest={"schema":1,"scope":"ufc-official-finale-recovery","bouts":[{
+          "fightId":"800","date":"2008-05-01","fighterSlug":"veteran",
+          "opponent":"Opponent","sourceUrl":"https://www.ufc.com/event/tuf"}]}
+        class WrongCorner(Fake):
+            def __init__(self):super().__init__("The Ultimate Fighter 28 Finale")
+            def call(self,path):
+                x=super().call(path)
+                x["data"]["fighter_a"]["name"]="Unrelated Person"
+                return x
+        c=WrongCorner()
+        self.assertEqual(m.collect_ufc_career_bouts(
+            c,state,research,candidate,today,self.approval(),manifest),0)
+        self.assertEqual(c.paths,["/fights/800"])
+        self.assertNotIn("800",state["bouts"])
+        self.assertEqual(state["ufcCareerBoutChecks"]["800"]["reason"],
+                         "verified_finale_provider_identity_disagreement")
+        self.assertEqual(m.collect_ufc_career_bouts(
+            c,state,research,candidate,today,self.approval(),manifest),0)
+        self.assertEqual(c.paths,["/fights/800"])
+
     def test_feeder_bouts_are_not_cached_as_official_ufc_fights(self):
         state,research,candidate=self.fixture()
         client=Fake("Dana White's Contender Series 99")
