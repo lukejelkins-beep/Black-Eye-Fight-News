@@ -3453,6 +3453,150 @@
           "originalOfficialDate": "2020-07-25"
         }
       ]
+    },
+    "kyoji-horiguchi": {
+      "fighterName": "Kyoji Horiguchi",
+      "ufcOfficialSourceUrl": "https://www.ufc.com/athlete/kyoji-horiguchi",
+      "fighterUrl": "https://ufcstats.com/fighter-details/98aa60cf58071fd6",
+      "verifiedAt": "2026-11-14",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "sourceCoverageAttested": true,
+      "completeOfficialUfcCareerCount": 11,
+      "uniqueNativeFighterId": "114",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/kyoji-horiguchi",
+        "https://www.ufc.com/athlete/chico-camus",
+        "https://www.ufc.com/news/fight-night-japan-results-see-who-won",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceScopeVerified": "Official UFC athlete biography enumerates 11 complete UFC appearances across 2013–2016 and 2025–2026; June 2026 Kape loss included. UFC Japan Sep 27 2015 official event report proves Horiguchi–Camus unanimous decision, independently reconciled against native saved bout 62812, Sep 28 cache UTC artifact and Greco US Sept 26 archival day. All other sourced UFCStats fight links matched native opponent/result/date identities. No exhibition, feeder or duplicate fights counted.",
+      "dateDiscrepancies": [
+        {
+          "boutId": "62812",
+          "officialLocalDate": "2015-09-27",
+          "nativeSavedDate": "2015-09-28",
+          "reason": "Independent UFC Japan event-local date and source time-zone discrepancy reconciled"
+        },
+        {
+          "boutId": "63267",
+          "officialLocalDate": "2014-09-20",
+          "nativeSavedDate": "2014-09-19",
+          "reason": "source event local date versus cache UTC shift"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-06-20",
+          "sourceArchivedDate": "2026-06-20",
+          "opponent": "Manel Kape",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/33afdd7ad43a2756",
+          "nativeBoutId": "65999",
+          "nativeSavedDate": "2026-06-20",
+          "originalOfficialDate": "2026-06-20"
+        },
+        {
+          "date": "2026-02-07",
+          "sourceArchivedDate": "2026-02-07",
+          "opponent": "Amir Albazi",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/dbbf8334a2600895",
+          "nativeBoutId": "60726",
+          "nativeSavedDate": "2026-02-07",
+          "originalOfficialDate": "2026-02-07"
+        },
+        {
+          "date": "2025-11-22",
+          "sourceArchivedDate": "2025-11-22",
+          "opponent": "Tagir Ulanbekov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/00ee51bba08b7a08",
+          "nativeBoutId": "60409",
+          "nativeSavedDate": "2025-11-22",
+          "originalOfficialDate": "2025-11-22"
+        },
+        {
+          "date": "2016-11-19",
+          "sourceArchivedDate": "2016-11-19",
+          "opponent": "Ali Bagautinov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ad0bac98558900af",
+          "nativeBoutId": "62791",
+          "nativeSavedDate": "2016-11-19",
+          "originalOfficialDate": "2016-11-19"
+        },
+        {
+          "date": "2016-05-08",
+          "sourceArchivedDate": "2016-05-08",
+          "opponent": "Neil Seery",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d37ed975c2b70fd2",
+          "nativeBoutId": "62637",
+          "nativeSavedDate": "2016-05-08",
+          "originalOfficialDate": "2016-05-08"
+        },
+        {
+          "date": "2015-09-27",
+          "sourceArchivedDate": "2015-09-26",
+          "opponent": "Chico Camus",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/26ac85fc4bee63a6",
+          "nativeBoutId": "62812",
+          "nativeSavedDate": "2015-09-28",
+          "originalOfficialDate": "2015-09-27",
+          "independentDateResolution": "Japanese event local date 2015-09-27 confirmed by UFC event report; Greco US source calendar date 2015-09-26, cached provider date 2015-09-28. Identical official opponent, result and native event identity."
+        },
+        {
+          "date": "2015-04-25",
+          "sourceArchivedDate": "2015-04-25",
+          "opponent": "Demetrious Johnson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6c2097664ac1bf16",
+          "nativeBoutId": "56902",
+          "nativeSavedDate": "2015-04-25",
+          "originalOfficialDate": "2015-04-25"
+        },
+        {
+          "date": "2015-01-03",
+          "sourceArchivedDate": "2015-01-03",
+          "opponent": "Louis Gaudinot",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f81cd5b3903bccf8",
+          "nativeBoutId": "62918",
+          "nativeSavedDate": "2015-01-03",
+          "originalOfficialDate": "2015-01-03"
+        },
+        {
+          "date": "2014-09-20",
+          "sourceArchivedDate": "2014-09-20",
+          "opponent": "Jon Delos Reyes",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c2a36e996bba3a4a",
+          "nativeBoutId": "63267",
+          "nativeSavedDate": "2014-09-19",
+          "originalOfficialDate": "2014-09-20"
+        },
+        {
+          "date": "2014-05-10",
+          "sourceArchivedDate": "2014-05-10",
+          "opponent": "Darrell Montague",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8ea70cfd5d3aa5ee",
+          "nativeBoutId": "58386",
+          "nativeSavedDate": "2014-05-10",
+          "originalOfficialDate": "2014-05-10"
+        },
+        {
+          "date": "2013-10-19",
+          "sourceArchivedDate": "2013-10-19",
+          "opponent": "Dustin Pague",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e1ccf09c055bac01",
+          "nativeBoutId": "58358",
+          "nativeSavedDate": "2013-10-19",
+          "originalOfficialDate": "2013-10-19"
+        }
+      ]
     }
   }
 }
