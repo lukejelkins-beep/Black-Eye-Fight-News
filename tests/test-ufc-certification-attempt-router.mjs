@@ -73,3 +73,15 @@ test('collector-recoverable cached omissions stay in the exception queue, never 
    ['existing_cached_ufc_fights_not_linked','duplicate_or_conflicting_native_bout_identity']);
  assert.equal(r.summary.certified,0);
 });
+
+test('a passed independent career gate is not falsely demoted by a legacy numeric identity ambiguity',()=>{
+ const s=setup(),slug=s.slugs[7];
+ s.audit.careerVerificationDecisions[7].independentlyVerifiedFullCareer=true;
+ s.audit.profilesWithAmbiguousNumericIdentity=[{slug,reason:'legacy identity alias'}];
+ s.progress.ufcApprovedFullFightSearchChecks[slug]={status:'manual_review'};
+ s.registry.fighters[slug]={sourceCoverageAttested:true,
+   verificationMethod:'full_official_ufc_fight_listing_crosscheck',bouts:[{nativeBoutId:'999'}]};
+ const r=routeCertificationAttempts(s.approval,s.audit,s.registry,s.progress);
+ assert.equal(r.summary.certified,1);
+ assert.equal(r.summary.exceptions,0);
+});
