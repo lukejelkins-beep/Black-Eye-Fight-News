@@ -151,18 +151,7 @@ test('JSA style evidence is explicit, source-linked and never applied to another
     const wrestler=roster.rikishi.find(x=>x.officialNskId===Number(nsk));
     assert.ok(wrestler,'Official style lacks matching roster identity');
     assert.equal(rec.sumoApiId,wrestler.sourceId);
-    assert.match(rec.sourceUrl,new RegExp('^https://www[.]sumo[.]or[.]jp/EnSumoDataRikishi/profile/'+nsk+'/
-  const html=readFileSync(new URL('../sumo.html',import.meta.url),'utf8');
-  const index=readFileSync(new URL('../index.html',import.meta.url),'utf8');
-  const js=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
-  assert.match(html,/name="robots" content="noindex,nofollow"/);
-  assert.match(html,/assets\/sumo\.js/);
-  assert.match(index,/href="sumo\.html" data-nav="sumo"/);
-  assert.match(index,/befn-sumo-link/);
-  assert.match(js,/data\/sumo\/rikishi-index\.json/);
-  assert.doesNotMatch(js,/fetch\(\s*['"]https:\/\/www\.sumo-api\.com/);
-});
-));
+    assert.equal(rec.sourceUrl,'https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+nsk+'/');
     assert.ok(rec.signature.every(v=>/^[a-z-]{2,40}$/.test(v)));
   }
   assert.deepEqual(style.byNskId['4227'].signature,['tsuki','oshi','migi-yotsu','yori']);
