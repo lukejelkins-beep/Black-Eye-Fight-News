@@ -24,6 +24,19 @@ if(approval.status!=='approved'||approval.approvedFighters.length!==783||
  new Set(approval.approvedFighters).size!==783)throw Error('Immutable approved cohort required');
 // This one-time pinned source extraction must never re-fetch after all seven
 // athlete careers have been separately certified by the full Stage3 gate.
+// Never repeatedly download the pinned source for an already partially completed
+// wave. Its remaining athlete requires a separate bounded, one-time research case.
+const completed=candidates.filter(([slug])=>prior.fighters?.[slug]?.sourceCoverageAttested===true);
+if(completed.length>0){
+ console.log('BEFN_WAVE6_SUMMARY '+JSON.stringify({
+  status:completed.length===candidates.length?'already_certified_source_wave':'partially_certified_wave_deferred',
+  candidates:candidates.length,completed:completed.map(([slug])=>slug),
+  remaining:candidates.filter(([slug])=>!prior.fighters?.[slug]?.sourceCoverageAttested).map(([slug])=>slug),
+  outboundRequests:0,paidUfcalendarCalls:0,certificationGrantedByThisScript:false,
+  note:'No repeated pinned-source download; use distinct bounded source review for remaining athletes.'
+ }));
+ process.exit(0);
+}
 if(candidates.every(([slug])=>prior.fighters?.[slug]?.sourceCoverageAttested===true)){
  console.log('BEFN_WAVE6_SUMMARY '+JSON.stringify({
   status:'already_certified_source_wave',candidates:candidates.length,
