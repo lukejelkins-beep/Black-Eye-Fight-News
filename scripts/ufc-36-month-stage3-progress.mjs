@@ -75,7 +75,69 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
    newestSavedUfcFight:newestSaved,independentCheckAttempted:given.length>0};
 }
 
-export function auditApprovedStage3(approval,census,progress,research,archive={},feederEvidence={},finaleEvidence={},legacyEvidence={},independentEvidence={}){
+
+const tokens=value=>String(value??'').replace(/([a-z])([A-Z])/g,'$1 $2')
+ .normalize('NFKD').replace(/[\u0300-\u036f]/g,'')
+ .toLowerCase().split(/[^a-z0-9]+/).filter(Boolean).sort().join(':');
+const sameAthleteName=(a,b)=>normal(a)===normal(b)||Boolean(tokens(a)&&tokens(a)===tokens(b));
+const nearSourceDay=(a,b)=>date(a)&&date(b)&&
+ Math.abs(Date.parse(a+'T00:00:00Z')-Date.parse(b+'T00:00:00Z'))<=86400000;
+
+/** Independent UFC source inventory is a depth-gap detector, never a certificate. */
+export function auditOfficialCareerInventory(inventory,approved,census,profiles,bouts){
+ const result={cases:[],conflicts:[],totalSourceBouts:0,matchedSaved:0,
+   sourceMissingSaved:0,sourceNewerThanRoster:0};
+ if(inventory?.schema!==1||inventory?.scope!=='ufc-official-career-bout-inventory'||
+    inventory?.rosterAsOf!==census?.asOf||!Array.isArray(approved))return result;
+ for(const [slug,evidence] of Object.entries(inventory.fighters||{})){
+   if(!approved.includes(slug)||!evidence||!String(evidence.sourceUrl||'').startsWith('https://www.ufc.com/athlete/'))
+     continue;
+   const profile=profiles[slug]||{};
+   const official=Array.isArray(evidence.bouts)?evidence.bouts:[];
+   const seen=new Set();
+   const history=arr(profile.recentHistory).filter(isUfc);
+   const roster=census.fighters?.find(f=>f.slug===slug);
+   for(const row of official){
+     const day=date(row.date),opponent=String(row.opponent||''),outcome=normalizedOutcome(row.result);
+     const fingerprint=[day,tokens(opponent),outcome].join('|');
+     if(!day||!tokens(opponent)||!outcome||day>census.asOf||seen.has(fingerprint))continue;
+     seen.add(fingerprint);
+     result.totalSourceBouts++;
+     const candidates=history.filter(h=>nearSourceDay(day,date(h.date))&&
+       sameAthleteName(opponent,h.opponent));
+     const agreed=candidates.find(h=>normalizedOutcome(h.result)===outcome);
+     if(agreed){result.matchedSaved++;continue;}
+     const record={slug,fighterName:evidence.fighterName||profile.name||slug,
+       officialDate:day,officialOpponent:opponent,officialOutcome:outcome,
+       primarySourceUrl:evidence.sourceUrl,
+       rosterLastUfcFight:date(roster?.lastUfcFight),
+       sourceLaterThanRoster:!!date(roster?.lastUfcFight)&&day>roster.lastUfcFight,
+       cachedFightCandidates:[]};
+     // A different outcome for the same source athlete/date/opponent is a
+     // genuine contradiction, not proof an official fight is missing.
+     if(candidates.length){
+       record.savedOutcomes=candidates.map(h=>({date:h.date,
+         outcome:normalizedOutcome(h.result),nativeId:numId(h.boutId)}));
+       result.conflicts.push(record);continue;
+     }
+     for(const [id,b] of Object.entries(bouts||{})){
+       if(b?.org!=='ufc'||isFeederTitle(b.event)||!nearSourceDay(day,date(b.eventDate)))continue;
+       const a=b.a||{},c=b.b||{};
+       const match=(a.slug===slug&&sameAthleteName(c.name,opponent))||
+                   (c.slug===slug&&sameAthleteName(a.name,opponent))||
+                   (sameAthleteName(a.name,evidence.fighterName)&&sameAthleteName(c.name,opponent))||
+                   (sameAthleteName(c.name,evidence.fighterName)&&sameAthleteName(a.name,opponent));
+       if(match)record.cachedFightCandidates.push(numId(id));
+     }
+     if(record.sourceLaterThanRoster)result.sourceNewerThanRoster++;
+     result.cases.push(record);
+     result.sourceMissingSaved++;
+   }
+ }
+ return result;
+}
+
+export function auditApprovedStage3(approval,census,progress,research,archive={},feederEvidence={},finaleEvidence={},legacyEvidence={},independentEvidence={},officialInventory={}){
   if(approval?.status!=='approved'||approval?.approvedBy!=='user'||approval?.schema!==1||
      approval?.scope!=='ufc-36-month-roster')throw Error('Stage 3 roster not approved');
   const approved=arr(approval.approvedFighters);
@@ -88,6 +150,8 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     f?.eligibilityStatus==='latest_observed_mma_ufc').map(f=>f.slug));
   const bouts=progress?.bouts||{},roundDone=progress?.roundDone||{},
     fights=archive?.fights||{},profiles=research?.profiles||{};
+  const officialSourceInventory=auditOfficialCareerInventory(
+    officialInventory,approved,census,profiles,bouts);
   const titlesByDate=new Map();
   for(const bout of Object.values(bouts)){
     if(bout?.org!=='ufc'||!date(bout.eventDate)||!bout.event)continue;
@@ -534,6 +598,11 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     profilesWithoutSavedUfcHistory:missingHistory.length,
     fullyProviderCertifiedTimelines:fullyCertified,
     legacyTimelineCompleteClaimsWithoutRetainedProof:legacyCompleteClaims,
+    sourceInventoryOfficialUfcBouts:officialSourceInventory.totalSourceBouts,
+    sourceInventoryMatchedSavedUfcBouts:officialSourceInventory.matchedSaved,
+    sourceInventoryMissingSavedUfcBouts:officialSourceInventory.sourceMissingSaved,
+    sourceInventorySavedResultContradictions:officialSourceInventory.conflicts.length,
+    sourceInventoryMissingBoutsLaterThanRosterLatest:officialSourceInventory.sourceNewerThanRoster,
     sourceConfirmedIncompleteCareerHistories:sourceConfirmedIncompleteCareers,
     sourceConfirmedMinimumMissingHistoricalUfcBouts:sourceConfirmedMinimumMissingUfcBouts,
     independentlyVerifiedFullCareerTimelines:independentCertified,
@@ -648,7 +717,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
         approvedFighterSlugs:refs};
     }),
     profilesWithKnownRoundGaps:cohorts.filter(c=>c.missingMeasuredFightIds.length>0),
-    careerVerificationDecisions,rosterLastBoutSourceGaps,
+    careerVerificationDecisions,rosterLastBoutSourceGaps,officialSourceInventory,
     fullFightIndexSearchReview:searchedApproved.filter(row=>row.status&&
       row.status!=='checked').map(row=>({
         slug:row.slug,status:row.status,scannedRows:row.scannedRows||0,
@@ -673,6 +742,11 @@ export function markdownReport(report){
    profilesWithoutSavedUfcHistory:'Profiles without saved UFC history',
    fullyProviderCertifiedTimelines:'Full UFC timelines with strict explicit provider completeness evidence',
    legacyTimelineCompleteClaimsWithoutRetainedProof:'Historic complete flags lacking retained provider proof (not certified)',
+   sourceInventoryOfficialUfcBouts:'Official UFC athlete-site bout identities independently listed for targeted historical recovery',
+   sourceInventoryMatchedSavedUfcBouts:'Officially listed bout identities already matched to saved UFC fighter histories',
+   sourceInventoryMissingSavedUfcBouts:'Official UFC bouts missing from saved fighter history, regardless of current native fight-ID coverage',
+   sourceInventorySavedResultContradictions:'Saved UFC result disagrees with independent official fighter history',
+   sourceInventoryMissingBoutsLaterThanRosterLatest:'Official UFC fights later than the last-UFC activity date in the approved snapshot',
    sourceConfirmedIncompleteCareerHistories:'Independent UFC source confirms missing saved historical fights',
    sourceConfirmedMinimumMissingHistoricalUfcBouts:'Minimum confirmed historical UFC fights still absent from saved approved careers',
    independentlyVerifiedFullCareerTimelines:'UFC careers independently reconciled against complete external official records',
@@ -769,7 +843,8 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
    read('data/ufc-feeder-bout-evidence.json'),
    read('data/ufc-official-finale-recovery.json'),
    read('data/ufc-official-legacy-evidence.json'),
-   read('data/ufc-independent-full-career-verification.json'));
+   read('data/ufc-independent-full-career-verification.json'),
+   read('data/ufc-official-career-bout-inventory.json'));
  const qa=path.join(root,'qa');fs.mkdirSync(qa,{recursive:true});
  fs.writeFileSync(path.join(qa,'ufc-36-month-stage3-progress.json'),JSON.stringify(r,null,2)+'\n');
  fs.writeFileSync(path.join(qa,'ufc-36-month-stage3-progress.md'),markdownReport(r));
