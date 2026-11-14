@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave29-barez-temirov-full-career-review",
+  "asOf": "2026-11-15",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07",
+    "evidenceCutoff": "2026-11-14",
+    "directUfcStatsAccess": "Pinned Greco UFCStats-derived CSV, not claimed live UFCStats access",
+    "method": "UFC.com complete dated athlete biography and Greco pinned historical UFCStats fighter/fight URLs, paired original native numeric fighter IDs/opponent corners, dates, outcomes, and fully saved measured rounds; DWCS separately excluded."
+  },
+  "sourceMethod": "Full official UFC.com athlete chronology independently checked against exact pinned Greco UFCStats-derived source rows, original native numeric IDs/opponent/winner/date and measured rounds; strict independent Stage3 783-person audit required.",
+  "fighters": {
+    "daniel-barez": {
+      "name": "Daniel Barez",
+      "officialFighterUrl": "https://www.ufc.com/athlete/daniel-barez",
+      "ufcStatsFighterId": "e8fe9c15d348e778",
+      "nativeFighterId": "47",
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Complete dated official UFC.com athlete biography confirms four completed UFC bouts: Jafel Filho submission loss 2023, Victor Altamirano decision win 2024, Andre Lima submission loss 2025, Luis Gurule unanimous decision loss May 2026. Opponent UFC.com biography independently confirms Gurule result. UFC 'Win' card tiles for losses are erroneous; full official narrative, pinned Greco fight outcomes and original native winner corners agree.",
+      "bouts": [
+        {
+          "date": "2023-07-22",
+          "opponent": "Jafel Filho",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d918da575ee1bc35",
+          "nativeBoutId": "60114",
+          "nativeFighterId": "47",
+          "originalOpponentNumericId": "170",
+          "pinnedSourceEventTitle": "UFC Fight Night: Aspinall vs. Tybura",
+          "sourceOutcome": "W/L",
+          "roundsObserved": 1
+        },
+        {
+          "date": "2024-09-28",
+          "opponent": "Victor Altamirano",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/47d978a984a163aa",
+          "nativeBoutId": "38711",
+          "nativeFighterId": "47",
+          "originalOpponentNumericId": "1094",
+          "pinnedSourceEventTitle": "UFC Fight Night: Moicano vs. Saint Denis",
+          "sourceOutcome": "W/L",
+          "roundsObserved": 3
+        },
+        {
+          "date": "2025-03-15",
+          "opponent": "André Lima",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5d8af316413ea2f7",
+          "nativeBoutId": "60365",
+          "nativeFighterId": "47",
+          "originalOpponentNumericId": "117",
+          "pinnedSourceEventTitle": "UFC Fight Night: Vettori vs. Dolidze 2",
+          "sourceOutcome": "L/W",
+          "roundsObserved": 3
+        },
+        {
+          "date": "2026-05-16",
+          "opponent": "Luis Gurule",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b482d4452e4d0eee",
+          "nativeBoutId": "66125",
+          "nativeFighterId": "47",
+          "originalOpponentNumericId": "48",
+          "pinnedSourceEventTitle": "UFC Fight Night: Allen vs. Costa",
+          "sourceOutcome": "L/W",
+          "roundsObserved": 3
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84130",
+          "date": "2021-10-05",
+          "opponent": "Carlos Hernandez",
+          "result": "loss",
+          "event": "Dana White's Contender Series 42",
+          "officialSourceUrl": "https://www.ufc.com/athlete/daniel-barez",
+          "excludedBecause": "UFC.com official biography lists this as Dana White's Contender Series, not an official completed UFC Octagon bout"
+        }
+      ]
+    },
+    "ramazan-temirov": {
+      "name": "Ramazan Temirov",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ramazan-temirov",
+      "ufcStatsFighterId": "7d0a1968b38ca439",
+      "nativeFighterId": "2861",
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Complete official UFC.com dated athlete biography enumerates four Octagon bouts through 14 November 2026: knockout win CJ Vergara, decision win Charles Johnson, knockout win Steve Erceg, knockout loss to Lone'er Kavanagh. The October 2026 UFC.com result tile misleadingly says Win, overridden by detailed official narrative and agreeing pinned Greco and native opposing-corner winners.",
+      "bouts": [
+        {
+          "date": "2024-10-12",
+          "opponent": "CJ Vergara",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f1cc9169813c4a3e",
+          "nativeBoutId": "61121",
+          "nativeFighterId": "2861",
+          "originalOpponentNumericId": "958",
+          "pinnedSourceEventTitle": "UFC Fight Night: Royval vs. Taira",
+          "sourceOutcome": "L/W",
+          "roundsObserved": 1
+        },
+        {
+          "date": "2025-03-01",
+          "opponent": "Charles Johnson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/206b8c14546d71f1",
+          "nativeBoutId": "60340",
+          "nativeFighterId": "2861",
+          "originalOpponentNumericId": "279",
+          "pinnedSourceEventTitle": "UFC Fight Night: Kape vs. Almabayev",
+          "sourceOutcome": "L/W",
+          "roundsObserved": 3
+        },
+        {
+          "date": "2026-07-25",
+          "opponent": "Steve Erceg",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c36cd04f8f560f0a",
+          "nativeBoutId": "82604",
+          "nativeFighterId": "2861",
+          "originalOpponentNumericId": "554",
+          "pinnedSourceEventTitle": "UFC Fight Night: Ankalaev vs. Guskov",
+          "sourceOutcome": "L/W",
+          "roundsObserved": 1
+        },
+        {
+          "date": "2026-10-24",
+          "opponent": "Lone'er Kavanagh",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b9004bd72276a190",
+          "nativeBoutId": "83681",
+          "nativeFighterId": "2861",
+          "originalOpponentNumericId": "270",
+          "pinnedSourceEventTitle": "UFC 333: Volkanovski vs. Evloev",
+          "sourceOutcome": "W/L",
+          "roundsObserved": 1
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    }
+  }
+}

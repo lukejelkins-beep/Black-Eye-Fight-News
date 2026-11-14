@@ -31,6 +31,8 @@ on:
       - 'tests/test-ufc-unified-wave27-aj-anton-20261115.mjs'
       - 'data/ufc-unified-wave28-wes-schultz-bogdan-grad-source-review-20261115.json'
       - 'tests/test-ufc-unified-wave28-wes-grad-20261115.mjs'
+      - 'data/ufc-unified-wave29-barez-temirov-source-review-20261115.json'
+      - 'tests/test-ufc-unified-wave29-barez-temirov-20261115.mjs'
       - 'data/ufc-unified-wave29-yousri-nyamjargal-source-review-20261115.json'
       - 'tests/test-ufc-unified-wave29-yousri-nyamjargal-20261115.mjs'
       - 'data/ufc-unified-wave30-five-four-bout-careers-20261115.json'
@@ -184,6 +186,7 @@ jobs:
           node --test tests/test-ufc-unified-wave26-ross-sharaf-20261115.mjs
           node --test tests/test-ufc-unified-wave27-aj-anton-20261115.mjs
           node --test tests/test-ufc-unified-wave28-wes-grad-20261115.mjs
+          node --test tests/test-ufc-unified-wave29-barez-temirov-20261115.mjs
           node --test tests/test-ufc-unified-wave29-yousri-nyamjargal-20261115.mjs
           node --test tests/test-ufc-unified-wave30-five-four-bout-careers-20261115.mjs
           node --test tests/test-ufc-unified-wave29-yakhyaev-quinonez-20261115.mjs
