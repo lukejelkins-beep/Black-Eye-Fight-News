@@ -1,0 +1,36 @@
+name: UFC Pico and Keita independent full-career Stage3 (research only)
+on:
+  push:
+    branches: [research/ufc-pico-keita-20261114]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  strict-cohort:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify complete source/native identity and mirrored outcomes
+        run: node --test tests/test-ufc-unified-pico-keita-evidence.mjs
+      - name: Run unmodified strict cohort audit tests
+        run: node --test tests/test-ufc-36-month-stage3-progress.mjs
+      - name: Apply strict 783-fighter measured-round certification and queue audit
+        run: |
+          node scripts/ufc-36-month-stage3-progress.mjs
+          node scripts/ufc-v4-certification-queue.mjs
+          node scripts/ufc-reconcile-stage3-v4-certifications.mjs
+      - name: Preserve research audit reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-pico-keita-strict-stage3
+          path: |
+            qa/ufc-36-month-stage3-progress.json
+            qa/ufc-v4-certification-queue.json
+            qa/ufc-stage3-v4-reconciliation.json
+          retention-days: 14
+          if-no-files-found: warn

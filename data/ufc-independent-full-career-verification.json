@@ -22844,6 +22844,134 @@
           "nativeFighterId": "519"
         }
       ]
+    },
+    "aaron-pico": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "verifiedAt": "2026-11-14",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent Greco UFCStats-derived historical CSV, not a claimed direct live UFCStats scrape",
+        "method": "Complete dated official UFC athlete histories and UFC 333 official results independently matched to pinned UFCStats-derived fighter/fight source identities, five original UFCalendar native completed bout IDs, both fighter corners and winners; stage3 validates archived measured rounds. Cancelled fights and outside-UFC histories excluded; no paid calls."
+      },
+      "officialUfcCareerBoutCount": 3,
+      "sourceCoverage": {
+        "officialDatedBouts": 3,
+        "grecoExactBoutRows": 3,
+        "pinnedLastEvent": "2026-11-07",
+        "sourcePresentationException": "Official UFC athlete record top tiles can show Win for a loss; dated full biography results, UFCStats outcome and original native winner ID control the final result."
+      },
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/aaron-pico",
+        "https://www.ufc.com/athlete/losene-keita",
+        "https://www.ufc.com/news/ufc-333-volkanovski-vs-evloev-official-scorecards",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "fighterName": "Aaron Pico",
+      "fighterUrl": "https://ufcstats.com/fighter-details/5537efc6e496dd84",
+      "officialFighterUrl": "https://www.ufc.com/athlete/aaron-pico",
+      "verifiedNumericFighterIds": [
+        "576"
+      ],
+      "sourceScopeVerified": "Exactly 3 completed official UFC Octagon bouts in complete dated UFC.com athlete narrative and pinned Greco source through 2026-11-07. 2025-08-16 Murphy loss, 2026-04-11 Pitbull decision win and 2026-10-24 Keita TKO win, each with unique original native numeric fighter/corner and measured bout; UTC provider event date for Murphy may fall on 2025-08-17. Earlier Bellator/PFL bouts and unclassified cross-promotion 2026 Lance Palmer row are outside UFC-only scope.",
+      "bouts": [
+        {
+          "date": "2025-08-16",
+          "opponent": "Lerone Murphy",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9fa6a029f7f8241c",
+          "nativeBoutId": "60497",
+          "nativeFighterId": "576"
+        },
+        {
+          "date": "2026-04-11",
+          "opponent": "Patricio Pitbull",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/10ab34056720b6b4",
+          "nativeBoutId": "65990",
+          "nativeFighterId": "576"
+        },
+        {
+          "date": "2026-10-24",
+          "opponent": "Losene Keita",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8271c52b2987e021",
+          "nativeBoutId": "93414",
+          "nativeFighterId": "576"
+        }
+      ]
+    },
+    "losene-keita": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "verifiedAt": "2026-11-14",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent Greco UFCStats-derived historical CSV, not a claimed direct live UFCStats scrape",
+        "method": "Complete dated official UFC athlete histories and UFC 333 official results independently matched to pinned UFCStats-derived fighter/fight source identities, five original UFCalendar native completed bout IDs, both fighter corners and winners; stage3 validates archived measured rounds. Cancelled fights and outside-UFC histories excluded; no paid calls."
+      },
+      "officialUfcCareerBoutCount": 3,
+      "sourceCoverage": {
+        "officialDatedBouts": 3,
+        "grecoExactBoutRows": 3,
+        "pinnedLastEvent": "2026-11-07",
+        "sourcePresentationException": "Official UFC athlete record top tiles can show Win for a loss; dated full biography results, UFCStats outcome and original native winner ID control the final result."
+      },
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/aaron-pico",
+        "https://www.ufc.com/athlete/losene-keita",
+        "https://www.ufc.com/news/ufc-333-volkanovski-vs-evloev-official-scorecards",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "fighterName": "Losene Keita",
+      "fighterUrl": "https://ufcstats.com/fighter-details/5b43d68174b6e2ab",
+      "officialFighterUrl": "https://www.ufc.com/athlete/losene-keita",
+      "verifiedNumericFighterIds": [
+        "529"
+      ],
+      "sourceScopeVerified": "Exactly 3 completed official UFC Octagon bouts in complete dated UFC.com athlete narrative and pinned Greco source through 2026-11-07. Lost split decision to Nathaniel Wood 2026-03-21, KO win against Muhammad Naimov 2026-09-05 and TKO loss to Aaron Pico 2026-10-24. The planned 2025 bout with Patricio Pitbull was cancelled before UFC debut and is not a completed fight; earlier OKTAGON and other professional histories are not UFC bouts.",
+      "bouts": [
+        {
+          "date": "2026-03-21",
+          "opponent": "Nathaniel Wood",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3b9f50f07d9a1601",
+          "nativeBoutId": "60566",
+          "nativeFighterId": "529"
+        },
+        {
+          "date": "2026-09-05",
+          "opponent": "Muhammad Naimov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b90b099c1f47bb93",
+          "nativeBoutId": "83646",
+          "nativeFighterId": "529"
+        },
+        {
+          "date": "2026-10-24",
+          "opponent": "Aaron Pico",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8271c52b2987e021",
+          "nativeBoutId": "93414",
+          "nativeFighterId": "529"
+        }
+      ]
     }
   }
 }
