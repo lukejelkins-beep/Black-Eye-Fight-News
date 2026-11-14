@@ -247,8 +247,8 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     const minVerified=independentRow.scope==='minimum_count_evidence_only'&&
       independentRow.sourceCoverageAttested===false&&
       date(independentRow.verifiedAt)>=date(census.asOf)&&
-      /^https://www.ufc.com/athlete/[a-z0-9-]+$/.test(
-        String(independentRow.fighterUrl||''))&&
+      String(independentRow.fighterUrl||'').startsWith(
+        'https://www.ufc.com/athlete/')&&
       Number.isSafeInteger(independentRow.minimumOfficialUfcBouts)&&
       independentRow.minimumOfficialUfcBouts>0;
     const sourceMinimum=minVerified?independentRow.minimumOfficialUfcBouts:null;
