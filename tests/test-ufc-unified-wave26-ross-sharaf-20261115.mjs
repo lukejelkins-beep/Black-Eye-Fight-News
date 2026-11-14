@@ -23,8 +23,8 @@ test('wave26: Ross and Sharaf source-complete 3-bout UFC careers match independe
    assert.equal(other.id,b.originalOpponentNumericId);assert.equal(other.name,b.opponent);
    assert.equal(n.result.winnerId===own.id?'win':n.result.winnerId===other.id?'loss':null,b.result);
    assert.ok(Math.abs(Date.parse(n.eventDate)-Date.parse(b.date))<=86400000);
-   assert.ok(cache.roundDone[b.nativeBoutId]>0);assert.match(b.fightUrl,/^https:\\/\\/ufcstats\\.com\\/fight-details\\/[0-9a-f]+$/);
-   assert.match(b.pinnedSourceEventUrl,/^https:\\/\\/ufcstats\\.com\\/event-details\\/[0-9a-f]+$/);matched++;
+   assert.ok(cache.roundDone[b.nativeBoutId]>0);assert.match(b.fightUrl,/^https:\/\/ufcstats\.com\/fight-details\/[0-9a-f]+$/);
+   assert.match(b.pinnedSourceEventUrl,/^https:\/\/ufcstats\.com\/event-details\/[0-9a-f]+$/);matched++;
   }
  }
  assert.equal(matched,6);
