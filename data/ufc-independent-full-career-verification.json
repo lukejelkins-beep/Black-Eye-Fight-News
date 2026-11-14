@@ -23543,6 +23543,116 @@
           "nativeFighterId": "2855"
         }
       ]
+    },
+    "john-yannis": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "John Yannis",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/450bcab0968562c4",
+      "officialFighterUrl": "https://www.ufc.com/athlete/john-yannis",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact pinned Greco UFCStats-derived source, not a claimed live direct UFCStats scrape",
+        "method": "Every completed official UFC bout in the dated UFC.com athlete biography reconciled to unique pinned Greco UFCStats fight URL, saved UFCalendar numeric bout IDs/own and opposing corners, official W/L and measured rounds; booked fights and non-UFC histories excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "543"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Complete 2025-08-02 UFC debut through 2026-06-06: loss to Austin Bashi, UFC stoppage win over Jamie Siraj, official decision loss to Marcus McGhee. UFC.com misleading graphical Win tiles corrected using dated official narrative and result/corner evidence; all three native fights, opposing identities and complete measured rounds independently matched; no DWCS appearance in dated UFC official chronology.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/john-yannis",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-08-02",
+          "opponent": "Austin Bashi",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/07c2af68b6dbc4ec",
+          "nativeBoutId": "60761",
+          "nativeFighterId": "543"
+        },
+        {
+          "date": "2026-04-18",
+          "opponent": "Jamie Siraj",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/32087c183dffcae0",
+          "nativeBoutId": "66100",
+          "nativeFighterId": "543"
+        },
+        {
+          "date": "2026-06-06",
+          "opponent": "Marcus McGhee",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/90940d93d6e0998f",
+          "nativeBoutId": "66473",
+          "nativeFighterId": "543"
+        }
+      ]
+    },
+    "joosang-yoo": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "JooSang Yoo",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/a44020ea2e8cd026",
+      "officialFighterUrl": "https://www.ufc.com/athlete/joosang-yoo",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact pinned Greco UFCStats-derived source, not a claimed live direct UFCStats scrape",
+        "method": "Every completed official UFC bout in the dated UFC.com athlete biography reconciled to unique pinned Greco UFCStats fight URL, saved UFCalendar numeric bout IDs/own and opposing corners, official W/L and measured rounds; booked fights and non-UFC histories excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "203"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "Complete official UFC debut 2025-06-07 through 2026-09-19: UFC KO win over Jeka Saragih; UFC stoppage loss to Daniel Santos; UFC split-decision loss to Michael Aswell Jr. Dated UFC.com narrative corrects three misleading graphical Win tiles. Upcoming 2027 Rahiki match not a completed fight. All UFCStats-derived IDs, saved numeric original bouts, opposing corners, results and measured rounds matched.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/joosang-yoo",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-06-07",
+          "opponent": "Jeka Saragih",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9f4a0de31375ba04",
+          "nativeBoutId": "60871",
+          "nativeFighterId": "203"
+        },
+        {
+          "date": "2025-10-04",
+          "opponent": "Daniel Santos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7b34aa1eb09b8301",
+          "nativeBoutId": "60744",
+          "nativeFighterId": "203"
+        },
+        {
+          "date": "2026-09-19",
+          "opponent": "Michael Aswell Jr.",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d89cc2cb92cd8407",
+          "nativeBoutId": "83424",
+          "nativeFighterId": "203"
+        }
+      ]
     }
   }
 }
