@@ -140,26 +140,78 @@ export function dailyResults(banzuke, day) {
 /** Shows both completed pairings and explicit upcoming opponents. An empty
  * future slot is not a scheduled bout; duplicate sides collapse into one row.
  */
+/**
+ * Completed bouts from the current banzuke. This source can contain
+ * unplayed future opponent IDs. Never promote those into "scheduled" fixtures:
+ * only the separately published torikumi endpoint can confirm a pairing.
+ */
 export function dayMatchups(banzuke, day) {
-  if (!Number.isInteger(day) || day<1 || day>15) return [];
+  if (!Number.isInteger(day) || day < 1 || day > 15) return [];
   const pairs=new Map();
-  for(const row of sortBanzukeEntries(banzuke)){
+  for(const row of sortBanzukeEntries(banzuke)) {
     const rec=row.record?.[day-1];
+    const outcome=String(rec?.result||'').toLowerCase();
+    if (outcome!=='win' && outcome!=='loss') continue;
     const a=Number(row.rikishiID),b=Number(rec?.opponentID);
     if(!Number.isSafeInteger(a)||a<=0||!Number.isSafeInteger(b)||b<=0||a===b) continue;
     const key=[a,b].sort((x,y)=>x-y).join(':');
-    const outcome=String(rec?.result||'').toLowerCase();
-    const finished=outcome==='win'||outcome==='loss';
-    const record={
-      key,day, rikishiId:a,opponentId:b,
-      rikishi:row.shikonaEn,opponent:rec.opponentShikonaEn||'Opponent not supplied',
-      finished, winnerId:finished?(outcome==='win'?a:b):null,
-      kimarite:finished?(rec.kimarite||null):null
-    };
-    const prev=pairs.get(key);
-    if(!prev || (finished&&!prev.finished))pairs.set(key,record);
+    if(pairs.has(key))continue;
+    pairs.set(key,{
+      key,day,rikishiId:a,opponentId:b,rikishi:row.shikonaEn,
+      opponent:rec.opponentShikonaEn||'Opponent not supplied',
+      finished:true,winnerId:outcome==='win'?a:b,kimarite:rec.kimarite||null,
+      sourceType:'completed-banzuke-result'
+    });
   }
   return [...pairs.values()];
+}
+
+/** Source-confirmed torikumi only, with matchup IDs, day and division validated.
+ * Never infer "upcoming" from a banzuke record with no outcome.
+ */
+export function announcedTorikumiMatches(source, {bashoId,division,day}={}){
+  if(!source||!Array.isArray(source.torikumi)||
+    String(source.date)!==String(bashoId)||!TRACKED_DIVISIONS.includes(division)||
+    !Number.isInteger(day)||day<1||day>15) return [];
+  const pairs=new Map();
+  for(const row of source.torikumi){
+    const a=Number(row?.eastId),b=Number(row?.westId),winner=Number(row?.winnerId);
+    if(String(row?.bashoId)!==String(bashoId)||row?.division!==division||
+      Number(row?.day)!==day||!Number.isSafeInteger(a)||a<=0||!Number.isSafeInteger(b)||b<=0||a===b)continue;
+    if(![0,a,b].includes(winner))continue;
+    const key=[a,b].sort((x,y)=>x-y).join(':');
+    if(pairs.has(key))continue;
+    pairs.set(key,{
+      key,day,rikishiId:a,opponentId:b,
+      rikishi:row.eastShikona||'Opponent name unavailable',
+      opponent:row.westShikona||'Opponent name unavailable',
+      finished:winner!==0,winnerId:winner||null,
+      kimarite:winner!==0?(row.kimarite||null):null,
+      sourceType:'announced-torikumi',matchNo:Number(row.matchNo)||null
+    });
+  }
+  return [...pairs.values()].sort((a,b)=>(a.matchNo||999)-(b.matchNo||999));
+}
+
+/** A completed result wins over any schedule copy of the same bout.
+ * This is the only source-composition path used in public match cards.
+ */
+export function verifiedDayMatchups(banzuke,torikumi,options){
+  const completed=dayMatchups(banzuke,options.day);
+  const merged=new Map();
+  for(const pairing of announcedTorikumiMatches(torikumi,options))merged.set(pairing.key,pairing);
+  for(const pairing of completed)merged.set(pairing.key,pairing);
+  return [...merged.values()].sort((a,b)=>(a.matchNo||999)-(b.matchNo||999));
+}
+
+export function lastCompletedBashoDay(banzuke){
+  let day=0;
+  for(const row of sortBanzukeEntries(banzuke)){
+    for(const [i,rec] of (row.record||[]).entries()){
+      if(['win','loss'].includes(String(rec?.result||'').toLowerCase()))day=Math.max(day,i+1);
+    }
+  }
+  return day;
 }
 
 export function matchResult(match, id) {
