@@ -13,6 +13,7 @@ const key=(day,a,b)=>day&&normal(a)&&normal(b)&&normal(a)!==normal(b)?
   day+':'+[normal(a),normal(b)].sort().join(':'):null;
 const ratio=(n,d)=>d?Number((100*n/d).toFixed(1)):null;
 const sorted=(set)=>[...set].sort();
+const givenKnownCount=entry=>Array.isArray(entry?.bouts)?entry.bouts.length:0;
 const isFeederTitle=title=>/(?:contender\s+series|road\s+to\s+ufc|\bdwcs\b)/i.test(String(title||''));
 const isFinaleTitle=title=>/(?:the\s+ultimate\s+fighter|\btuf\s*\d+).*finale/i.test(String(title||''));
 const isUfc=row=>String(row?.promotion||row?.org||'').toLowerCase()==='ufc'&&
@@ -74,32 +75,59 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
  // corners, the officially dated event and the correct final result. This also
  // permits documented one-day UTC shifts and name-token-order variations,
  // WITHOUT silently deduplicating, rewriting or dropping any cached rows.
- const nativeMapped=given.length>0&&given.every(r=>
+ // A source bout may carry two separate historical/current native IDs when
+ // a provider changed the underlying fighter identities. The exact additional
+ // representation must be explicitly named and fully corroborated; it never
+ // becomes a sixth official contest or permits silent cache-row deletion.
+ const representations=given.flatMap(r=>[
+   {...r,isAlternateNativeRepresentation:false},
+   ...arr(r.alternateNativeRepresentations).map(alias=>({
+     ...r,nativeBoutId:alias?.nativeBoutId,nativeFighterId:alias?.nativeFighterId,
+     isAlternateNativeRepresentation:true
+   }))
+ ]);
+ const nativeMapped=representations.length>0&&representations.every(r=>
    numId(r?.nativeBoutId)&&numId(r?.nativeFighterId));
  const nativeIdentitySet=new Set(arr(ext.verifiedNumericFighterIds).map(numId).filter(Boolean));
  const ufcStatsFighterId=String(ext.fighterUrl||'').match(/\/fighter-details\/([a-f0-9]+)$/i)?.[1]?.toLowerCase()||null;
- // A historical alias such as Bruno Silva must retain the reviewed source ID.
- // This stops an equally plausible fighter-page URL for middleweight Blindado
- // from being substituted for flyweight Bulldog's complete career evidence.
+ const reviewedStatsId=String(ext.disambiguation?.verifiedUfcStatsFighterId||
+   ext.disambiguation?.ufcStatsFlyweightId||'').toLowerCase();
+ // Source-verified aliases must retain the attested UFCStats identity:
+ // Bruno Bulldog is not Bruno Blindado; Park Hyun-sung is HyunSung Park.
  const sourceFighterIdentitySafe=(
    !arr(ext.sourceVerifiedNativeNameAliases).length||
-   (ext.disambiguation?.ufcStatsFlyweightId?.toLowerCase()===ufcStatsFighterId&&
+   (reviewedStatsId===ufcStatsFighterId&&
     ext.disambiguation?.excludedUfcStatsMiddleweightId?.toLowerCase()!==ufcStatsFighterId)
  );
- // Explicitly reviewed historical names are allowed only together with
- // source-linked exact native IDs, opponent and outcome verification. Name
- // aliases alone never establish a fighter identity (e.g. the two Bruno Silvas).
  const reviewedNativeNames=new Set([ext.fighterName,...arr(ext.sourceVerifiedNativeNameAliases)]
    .map(normal).filter(Boolean));
+ const nativeIds=representations.map(r=>String(r.nativeBoutId));
+ const sourceIds=given.map(r=>String(r.fightUrl));
+ const savedNativeIds=rows.map(r=>String(r.boutId||''));
  const nativeMatches=nativeMapped&&indexedBouts&&sourceFighterIdentitySafe&&
    normal(ext.fighterName)===normal(profile?.name)&&
    /^https:\/\/www\.ufc\.com\/athlete\//i.test(String(ext.officialFighterUrl||''))&&
    nativeIdentitySet.size>0&&
    ext.sourceSnapshot?.fightResultsBlobSha?.match(/^[a-f0-9]{40}$/i)&&
    ext.sourceSnapshot?.fighterDetailsBlobSha?.match(/^[a-f0-9]{40}$/i)&&
-   new Set(given.map(r=>String(r.nativeBoutId))).size===given.length&&
-   new Set(given.map(r=>String(r.fightUrl))).size===given.length&&
-   given.length===rows.length&&given.every(r=>{
+   new Set(sourceIds).size===given.length&&
+   new Set(nativeIds).size===representations.length&&
+   representations.length===rows.length&&
+   [...nativeIds].sort().every((id,i)=>id===[...savedNativeIds].sort()[i])&&
+   given.every(r=>{
+     const primary=indexedBouts[String(r.nativeBoutId)];
+     if(!primary)return false;
+     return arr(r.alternateNativeRepresentations).every(alt=>{
+       const b=indexedBouts[String(alt.nativeBoutId)];
+       return b&&b.org==='ufc'&&primary.org==='ufc'&&
+         b.eventId===primary.eventId&&b.eventDate===primary.eventDate&&
+         b.event===primary.event&&b.status===primary.status&&
+         b.result?.method===primary.result?.method&&
+         b.result?.round===primary.result?.round&&
+         b.result?.time===primary.result?.time;
+     });
+   })&&
+   representations.every(r=>{
      const id=String(r.nativeBoutId);
      const matches=rows.filter(h=>String(h.boutId||'')===id&&h.source==='native');
      if(matches.length!==1)return false;
@@ -109,13 +137,16 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
      if(!b||b.org!=='ufc'||isFeederTitle(b.event)||
         !['completed','draw','no_contest'].includes(b.status)||
         delta(r.date,h.date)>1||delta(r.date,b.eventDate)>1||
-        !sameAthleteName(r.opponent,h.opponent)||
         normalizedOutcome(r.result)!==normalizedOutcome(h.result))return false;
+     const opponentMatched=other=>
+       sameAthleteName(other.name,r.opponent)||
+       (arr(r.sourceVerifiedNativeOpponentAliases).some(alias=>
+         sameAthleteName(other.name,alias))&&
+        arr(r.verifiedOpponentNativeFighterIds).map(String).includes(String(other.id)));
      const corners=[[b.a,b.b],[b.b,b.a]].filter(([own,other])=>
        own&&other&&String(own.id)===String(r.nativeFighterId)&&
        nativeIdentitySet.has(String(own.id))&&
-       reviewedNativeNames.has(normal(own.name))&&
-       sameAthleteName(other.name,r.opponent));
+       reviewedNativeNames.has(normal(own.name))&&opponentMatched(other));
      if(corners.length!==1)return false;
      const [own,other]=corners[0];
      const outcome=b.status==='no_contest'?'no_contest':
@@ -562,7 +593,8 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     careerVerificationDecisions.push({
       slug,status:completenessStatus,
       allKnownFightsIndexed:knownIndexed,allKnownFightsMeasured:knownMeasured,
-      knownOfficialUfcFightCount:observed.length,
+      knownOfficialUfcFightCount:independentFullCareer?givenKnownCount(independentRow):observed.length,
+      savedNativeUfcHistoryRepresentations:observed.length,
       sourceVerifiedMinimumOfficialUfcBouts:sourceMinimum,
       minimumConfirmedMissingHistoricalUfcBouts:confirmedMissing,
       independentlyVerifiedFullCareer:independentFullCareer,
