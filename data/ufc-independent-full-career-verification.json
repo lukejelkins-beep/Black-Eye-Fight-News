@@ -2,7 +2,7 @@
   "schema": 1,
   "scope": "ufc-independent-full-career-verification",
   "rosterAsOf": "2026-11-14",
-  "status": "career_certification_in_progress",
+  "status": "research_certification_verified_offline_not_merged",
   "description": "Separate from provider UFCalendar metadata. Only independently checked complete UFC fight listings with source-linked bout-by-bout identities may establish full-career verification. No fighter is independently certified merely because every currently known UFC fight is indexed and measured. Minimum-count evidence may prove historical omissions but cannot certify full-career completeness, even if its minimum is met.",
   "fighters": {
     "bruno-gustavo-da-silva": {
@@ -152,8 +152,20 @@
           "aliasVerificationUrl": "https://www.ufc.com/athlete/joanne-wood"
         }
       ],
-      "certificationStatus": "source_verified_full_career_pending_independent_ci_gate",
-      "note": "Manual UFC.com full-biography review + UFCStats-derived individual fight IDs + 12 distinct native UFCalendar fight records and matched outcome/round metrics. The full-career certification is recorded only if offline CI independently recomputes the strict Stage 3 gate. No production deploy or merge."
+      "certificationStatus": "independently_certified_full_career",
+      "note": "12/12 source-linked UFC fights verified against saved native IDs, distinct numeric fighter identity, official UFC event eligibility, outcomes and round metrics. Independent career completeness gate passed in GitHub Actions run 43557661033. Held only on draft research PR, not merged or released.",
+      "certificationProof": {
+        "workflowRunId": 43557661033,
+        "workflowUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43557661033",
+        "artifactId": 14099165544,
+        "artifactName": "befn-ufc-v4-first-independently-certified-career",
+        "nativeFighterId": "1113",
+        "officialBoutsReconciled": 12,
+        "nativeBoutsReconciled": 12,
+        "fullyMeasuredBouts": 12,
+        "gate": "evaluateCareerEvidence.independentlyVerified = true",
+        "originalProofCommit": "7472e0e870aa257fc7452d3c81cfa2d99a6e7275"
+      }
     }
   }
 }
