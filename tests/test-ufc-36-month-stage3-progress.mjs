@@ -336,3 +336,25 @@ test('Historical cache crosswalk suggests a same-bout candidate but never certif
  assert.equal(output.legacyCacheCandidates[0].archivedRounds[0].roundRows,1);
  assert.equal(output.summary.profilesWithAllKnownUfcBoutsIndexed,0);
 });
+
+test('Final measured-round exceptions retain identity and provider retry evidence without imputing stats',()=>{
+ const b=fight(42,'Opponent B');
+ b.event='UFC 99';b.result={round:3};
+ const p={...progress,bouts:{'42':b},
+   roundDone:{'42':0},roundRetry:{'42':{
+     attempts:2,checkedAt:'2026-11-14',retryAfter:'2026-11-28'}}};
+ const r={profiles:{'fighter-1':{recentHistory:[history(42,'Opponent B')]}}};
+ const result=auditApprovedStage3(approval,census,p,r,archive);
+ const s=result.summary;
+ assert.equal(s.uniquelyIndexedNativeFightIds,1);
+ assert.equal(s.indexedNativeFightsWithoutConfirmedMeasuredRounds,1);
+ assert.equal(s.profilesWithKnownFightRoundGaps,1);
+ assert.deepEqual(result.unmeasuredIndexedEvidence,[{
+   id:'42',event:'UFC 99',date:'2015-01-01',
+   fighterA:'Fighter 1',fighterB:'Opponent B',
+   expectedRounds:3,observedRoundRows:0,retryAttempts:2,
+   retryAfter:'2026-11-28',approvedFighterSlugs:['fighter-1']
+ }]);
+ assert.equal(result.profilesWithKnownRoundGaps[0].slug,'fighter-1');
+ assert.equal(s.fullyProviderCertifiedTimelines,0);
+});
