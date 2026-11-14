@@ -91,7 +91,20 @@ export function auditCareerVerification(approval,foundation,research,progress,
   let unmatched=[];
   if(approvedBoutInventory.length){
    unmatched=approvedBoutInventory.filter(row=>!timeline.some(x=>exactMatch(x,row)));
+   // Expose near matches for human reconciliation; never silently accept them.
+   const oneDayApart=(a,b)=>Math.abs(Date.parse(a+"T00:00:00Z")-
+    Date.parse(b+"T00:00:00Z"))===86400000;
+   const closeCandidates=unmatched.map(row=>({
+    official:{date:row.date,opponent:row.opponent,result:result(row.result)},
+    savedCandidates:timeline.filter(x=>norm(x.opponent)===norm(row.opponent)&&
+     (x.date===row.date||oneDayApart(x.date,row.date))).map(x=>({
+      boutId:x.boutId,date:x.date,opponent:x.opponent,result:x.result,
+      reason:x.date!==row.date?"one_day_date_offset":
+       x.result!==result(row.result)?"outcome_conflict":"candidate_not_exact"
+     }))
+   })).filter(x=>x.savedCandidates.length);
    officialReview.push({slug,officialSourceUrl:source.sourceUrl,
+    closeCandidates,
     independentlyListedBouts:approvedBoutInventory.length,
     currentlySavedKnownUfcBouts:f.knownCareerBouts,
     exactUnmatchedBouts:unmatched.map(x=>({
