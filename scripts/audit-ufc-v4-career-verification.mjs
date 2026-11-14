@@ -120,13 +120,21 @@ export function auditCareerVerification(approval,foundation,research,progress,
     Boolean(profile.ufcTimeline?.savedHistoryHasAdditionalUfcBouts||
      profile.ufcTimeline?.missingRosterLastUfcFight||
      (profile.ufcHistoryIdConflicts||[]).length);
-  // A saved certification flag cannot override newly discovered official omissions.
-  // This remains a conservative veto, not a way to grant new certification.
-  const certificationBlocked=contradictorySavedRows.length>0||hasOfficialOmission||mismatch;
+  // Independent source-attested and native-verified completeness can supersede
+  // stale provider history flags. It CANNOT supersede a real official omission,
+  // contradictory result or an unresolved numeric fighter-ID collision.
+  // The V4 foundation sets independentlyCertifiedCareer only after strict
+  // per-fight source URL, native ID, identity, result and measured stats gates.
+  const unresolvedIdentityConflicts=Boolean(
+    (profile.ufcHistoryIdConflicts||[]).length||
+    Number(profile.ufcTimeline?.conflictingNativeFightIds)>0);
+  const sourceContradiction=contradictorySavedRows.length>0||
+    hasOfficialOmission||unresolvedIdentityConflicts;
   const independentlyCertified=f.independentlyCertifiedCareer===true&&
-    !certificationBlocked;
+    !sourceContradiction;
+  // A provider-only certificate remains blocked by all provider mismatches.
   const providerCertified=f.ufcTimelineCertified===true&&
-    !certificationBlocked;
+    !sourceContradiction&&!mismatch;
   const verified=providerCertified||independentlyCertified;
   const noFullSearch=checked.status===undefined;
   const incompleteSearch=checked.status&&checked.status!=="checked";
