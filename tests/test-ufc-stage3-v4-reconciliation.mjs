@@ -22,8 +22,10 @@ test('two overlapping proof sources never double-count a fighter as two certific
  assert.equal(r.certified,2);
  assert.equal(r.sourceReconciliation.priorMainShared.stage3Certified,1);
  assert.equal(r.sourceReconciliation.importedV4Only.stage3Certified,1);
- assert.equal(r.proofCoverage.knownUncertifiedFromEvidence,151);
- assert.equal(r.proofCoverage.withoutConsolidatedSourceEvidence,630);
+ assert.equal(r.proofCoverage.knownUncertifiedFromEvidence,Object.keys(evidence.fighters).length-2);
+ assert.equal(r.proofCoverage.withoutConsolidatedSourceEvidence,783-Object.keys(evidence.fighters).length);
+ assert.equal(r.sourceReconciliation.subsequentStage3Evidence.evidenceEntries,
+  Object.keys(evidence.fighters).length-153);
  assert.equal(r.proofCoverage.total,783);
  assert.equal(r.previousV4IsNotAdded,true);
 });
