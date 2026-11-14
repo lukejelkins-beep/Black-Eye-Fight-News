@@ -1817,8 +1817,8 @@ def collect_approved_full_ufc_fight_search(client,state,research,coverage,today,
         # especially when an independent official source proves additional UFC
         # fights. Record an actionable conflict instead of declaring success.
         status=("partial" if next_cursor else
-                "source_depth_gap" if unresolved_minimum>0 else
-                "manual_review" if invalid else "checked")
+                "manual_review" if invalid else
+                "source_depth_gap" if unresolved_minimum>0 else "checked")
         ledger[f]={
             "status":status,
             "fighterId":fid,"checkedAt":today.isoformat(),
