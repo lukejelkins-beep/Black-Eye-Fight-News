@@ -48,10 +48,23 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
   const excludedFeederFightIds=new Set();
   let excludedFeederHistoryRows=0,sourceVerifiedFeederHistoryRows=0;
   const curated=arr(feederEvidence?.schema===1?feederEvidence.bouts:[]);
-  const sourceVerified=(slug,row)=>curated.some(item=>
-    item?.boutId===numId(row?.boutId)&&item?.fighterSlug===slug&&
-    item?.date===date(row?.date)&&normal(item?.opponent)===normal(row?.opponent)&&
-    String(item?.sourceUrl||'').startsWith('https://www.ufc.com/'));
+  const evidenceById=new Map();
+  for(const item of curated){
+    const id=numId(item?.boutId);
+    if(!id||!date(item?.date)||!item?.fighterSlug||!normal(item?.opponent)||
+       !isFeederTitle(item?.event)||
+       !String(item?.sourceUrl||'').startsWith('https://www.ufc.com/'))continue;
+    if(evidenceById.has(id)){
+      // Fail closed if a source file has conflicting or duplicated native IDs.
+      evidenceById.set(id,null);
+    }else evidenceById.set(id,item);
+  }
+  const sourceVerified=(slug,row)=>{
+    if(row?.source!=='native')return false;
+    const id=numId(row?.boutId),item=evidenceById.get(id);
+    // One verified fight ID and dated event covers both fighter corners.
+    return !!item&&item.date===date(row?.date);
+  };
   let profilesWithHistory=0,fullyCertified=0,historyRows=0,nativeLinks=0,
     fightersWithFive=0,fightersWithTen=0,withMeasuredRecent=0,
     fullFiveMeasured=0,fullTenMeasured=0,unlinkedCareerRows=0,
