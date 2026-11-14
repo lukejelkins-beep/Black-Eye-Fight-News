@@ -24031,6 +24031,128 @@
           "nativeFighterId": "132"
         }
       ]
+    },
+    "shannon-ross": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Shannon Ross",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/51c655162e462ceb",
+      "officialFighterUrl": "https://www.ufc.com/athlete/shannon-ross",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact pinned Greco UFCStats-derived CSV at immutable source commit, not direct live UFCStats scrape",
+        "method": "Complete official UFC.com dated fighter biographies and official result narratives, Greco historical source fighter/fight IDs, saved native UFCalendar fighter/bout/corner IDs, winner and full measured rounds, ±1 UTC day; DWCS exhibitions excluded, true televised TUF final included."
+      },
+      "verifiedNumericFighterIds": [
+        "2780"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "UFC's dated biography confirms exactly three completed UFC bouts, all losses: Kleydson Rodrigues (UFC 284), Jesus Aguilar (UFC 290) and HyunSung Park (December 2023). The graphical UFC Win tiles are misleading; detailed official narrative, pinned independent fight outcomes and original saved opposing winner IDs agree on losses. A separate 2022 DWCS loss to Vinicius Salvador is source-attested but outside the three-bout UFC Octagon record; no unsupported native feeder ID is invented.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/shannon-ross",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da",
+        "https://www.ufc.com/news/season-6-week-2-results-dana-whites-contender-series"
+      ],
+      "bouts": [
+        {
+          "date": "2023-02-11",
+          "opponent": "Kleydson Rodrigues",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/16dbe70eb7007f17",
+          "nativeBoutId": "59737",
+          "nativeFighterId": "2780"
+        },
+        {
+          "date": "2023-07-08",
+          "opponent": "Jesus Aguilar",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/420f7e6530dbc727",
+          "nativeBoutId": "60139",
+          "nativeFighterId": "2780"
+        },
+        {
+          "date": "2023-12-09",
+          "opponent": "HyunSung Park",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/35addc4646509286",
+          "nativeBoutId": "59943",
+          "nativeFighterId": "2780"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "date": "2022-08-02",
+          "opponent": "Vinicius Salvador",
+          "result": "loss",
+          "event": "Dana White's Contender Series, Season 6 Week 2",
+          "officialSourceUrl": "https://www.ufc.com/news/season-6-week-2-results-dana-whites-contender-series",
+          "excludedBecause": "Independently confirmed DWCS feeder TKO loss; outside official UFC Octagon history, and no saved native UFC bout ID is asserted"
+        }
+      ]
+    },
+    "sean-sharaf": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Sean Sharaf",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/0f3a990526c5e706",
+      "officialFighterUrl": "https://www.ufc.com/athlete/sean-sharaf",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact pinned Greco UFCStats-derived CSV at immutable source commit, not direct live UFCStats scrape",
+        "method": "Complete official UFC.com dated fighter biographies and official result narratives, Greco historical source fighter/fight IDs, saved native UFCalendar fighter/bout/corner IDs, winner and full measured rounds, ±1 UTC day; DWCS exhibitions excluded, true televised TUF final included."
+      },
+      "verifiedNumericFighterIds": [
+        "339"
+      ],
+      "officialUfcCareerBoutCount": 3,
+      "sourceScopeVerified": "UFC's complete dated athlete narrative confirms three UFC contests through 14 November 2026: 2024 loss to Junior Tafa; December 2025 loss to Steven Asplund (saved provider UTC date one day later than local event); and 2026 UFC 331 12-second knockout win over Gable Steveson. Independently pinned Greco source links, saved numeric bout IDs and paired opponent corners match all three outcomes with full measured rounds.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/sean-sharaf",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2024-10-12",
+          "opponent": "Junior Tafa",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/85854504ce1aa97a",
+          "nativeBoutId": "61124",
+          "nativeFighterId": "339"
+        },
+        {
+          "date": "2025-12-13",
+          "opponent": "Steven Asplund",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a2523a8565fe4361",
+          "nativeBoutId": "60655",
+          "nativeFighterId": "339"
+        },
+        {
+          "date": "2026-09-19",
+          "opponent": "Gable Steveson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/023ce4fa7b7b76f9",
+          "nativeBoutId": "83414",
+          "nativeFighterId": "339"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
     }
   }
 }
