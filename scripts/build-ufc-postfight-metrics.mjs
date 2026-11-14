@@ -121,7 +121,8 @@ export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12"}={}){
   const k=key(f.date,f.fighterA,f.fighterB);
   if(!archiveFights.has(k))archiveFights.set(k,f);
  }
- const fighters=new Map(),matchedBouts=new Set(),pending=[];
+ const fighters=new Map(),matchedBouts=new Set(),pending=[],
+  recoveredSecondaryOnlyDisputes=new Set();
  function entry(name,slug){
   // Names are NOT unique identities: two different athletes can share the
   // same display name. Prefer the immutable source athlete slug and never
@@ -144,6 +145,7 @@ export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12"}={}){
   if(conflictAudit.blocked){
    pending.push({boutId:id,date:b.eventDate,reason:conflictAudit.reason});continue;
   }
+  if(conflictAudit.secondaryOnly)recoveredSecondaryOnlyDisputes.add(id);
   const minutes=elapsed(b.result);
   const roundCount=b.result?.round;
   if(minutes===null||!Number.isInteger(roundCount)||roundCount<1||roundCount>5){
@@ -189,7 +191,8 @@ export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12"}={}){
  }
  const output={schema:1,scope:"ufc-only",
   source:"Saved UFCalendar-derived UFC research observations with completed bout IDs",
-  note:"Tracked UFC bouts ONLY, not career totals. Per-metric sample counts differ when upstream round fields are absent. Fights with missing rounds, conflicting sources or unverifiable clocks are excluded rather than estimated.",
+  note:"Tracked UFC bouts ONLY, not certified career totals. Per-metric missing values are null. Core source conflicts and unverified source lineage remain quarantined. Secondary-only conflicts are allowed only after all retained provider rounds have matching core values.",
+  recoveredSecondaryOnlyConflictedBouts:recoveredSecondaryOnlyDisputes.size,
   processedCompletedBouts:matchedBouts.size,
   metricBouts:[...fighters.values()].reduce((sum,f)=>sum+f.bouts.length,0)/2,
   pending:pending.slice(-200).sort((a,b)=>a.date.localeCompare(b.date)||a.boutId.localeCompare(b.boutId)),
@@ -229,6 +232,7 @@ export function main(){
  fs.writeFileSync(dest,next);
  console.log("Post-fight sample:",Object.keys(output.fighters).length,
   "fighters,",output.metricBouts,"unique completed bouts with rounds,",
-  output.pending.length,"pending validation");
+  output.pending.length,"pending validation;",
+  output.recoveredSecondaryOnlyConflictedBouts,"secondary-dispute fights passed all-source core-field comparison");
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))main();
