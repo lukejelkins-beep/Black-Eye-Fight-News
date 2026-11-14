@@ -44,12 +44,45 @@ export function buildResearchProfile(w,cache,correctionManifest=null){
     const opponent=id===Number(m.eastId)?Number(m.westId):Number(m.eastId);
     if(!Number.isSafeInteger(opponent)||opponent<1)throw Error('Opponent identity missing for '+id+' '+matchKey(m));
     const opponentName=id===Number(m.eastId)?m.westShikona:m.eastShikona;
-    if(!h2h.has(opponent))h2h.set(opponent,{opponentId:opponent,opponentName:opponentName||null,wins:0,losses:0,regularBouts:0});
+    if(!h2h.has(opponent))h2h.set(opponent,{opponentId:opponent,opponentName:opponentName||null,wins:0,losses:0,regularBouts:0,
+      meetings:[],playoffsAndTrialBouts:[],techniqueKnown:0,forfeitCount:0,techniqueMissing:0,
+      historicalSourceStatus:'full-cached-API-career-not-JSA-certified'});
     const pair=h2h.get(opponent);pair.regularBouts++;pair[victory?'wins':'losses']++;
+    // Retain EVERY bout in the source ledger, with winner/kimarite and
+    // source provenance; an aggregate W-L is not a historical H2H timeline.
+    const kimarite=typeof m.kimarite==='string'&&m.kimarite.trim()?m.kimarite.trim():null;
+    const resultKind=kimarite===null?'technique-not-recorded':/^fusen/i.test(kimarite)?'forfeit':'kimarite';
+    if(resultKind==='technique-not-recorded')pair.techniqueMissing++;
+    else if(resultKind==='forfeit')pair.forfeitCount++;
+    else pair.techniqueKnown++;
+    pair.meetings.push({bashoId:String(m.bashoId),day:Number(m.day),
+      matchNo:Number.isSafeInteger(Number(m.matchNo))?Number(m.matchNo):null,
+      division:m.division||null,eastId:Number(m.eastId),westId:Number(m.westId),
+      winnerId:Number(m.winnerId),opponentId:opponent,
+      outcome:victory?'win':'loss',kimarite,resultKind,
+      sourceMatchKey:matchKey(m),
+      officialCorrection:m.officialResultCorrection||null});
     if(m.kimarite&&m.kimarite!=='fusen')add(victory?winTech:lossTech,m.kimarite);
     const b=String(m.bashoId);
     if(!basho.has(b))basho.set(b,{bashoId:b,division:m.division||null,wins:0,losses:0,scheduledBoutRows:0});
     const entry=basho.get(b);entry.scheduledBoutRows++;entry[victory?'wins':'losses']++;
+  }
+  // Playoffs and Mae-zumo are authentic meetings but excluded from ordinary
+  // W-L and regular head-to-head totals; keep them visibly separate.
+  for(const m of special){
+    const opponent=id===Number(m.eastId)?Number(m.westId):Number(m.eastId);
+    if(!Number.isSafeInteger(opponent)||opponent<1)continue;
+    const opponentName=id===Number(m.eastId)?m.westShikona:m.eastShikona;
+    if(!h2h.has(opponent))h2h.set(opponent,{opponentId:opponent,opponentName:opponentName||null,wins:0,losses:0,regularBouts:0,
+      meetings:[],playoffsAndTrialBouts:[],techniqueKnown:0,forfeitCount:0,techniqueMissing:0,
+      historicalSourceStatus:'full-cached-API-career-not-JSA-certified'});
+    h2h.get(opponent).playoffsAndTrialBouts.push({bashoId:String(m.bashoId),
+      day:Number(m.day),matchNo:Number.isSafeInteger(Number(m.matchNo))?Number(m.matchNo):null,
+      division:m.division||null,winnerId:Number(m.winnerId)||null,
+      kimarite:typeof m.kimarite==='string'&&m.kimarite.trim()?m.kimarite.trim():null,
+      outcome:Number(m.winnerId)===id?'win':'loss',
+      eventType:m.division==='Mae-zumo'?'mae-zumo':'playoff',
+      countedInRegularHeadToHead:false,sourceMatchKey:matchKey(m)});
   }
   const h2hSorted=[...h2h.values()].sort((a,b)=>b.regularBouts-a.regularBouts||a.opponentId-b.opponentId);
   const bashoSorted=[...basho.values()].sort((a,b)=>String(a.bashoId).localeCompare(String(b.bashoId)));
