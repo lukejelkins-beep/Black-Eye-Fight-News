@@ -2041,14 +2041,14 @@ def recover_source_verified_ufc_non_winner_event_cards(client,state,research,cov
                     b=native.get(bid)
                     sig=(date_str(evidence.get("date")),
                          parts(evidence.get("opponent")),evidence.get("result"))
-                    linked=any(isinstance(h,dict) and
+                    historical_row_saved=any(isinstance(h,dict) and
                         str(h.get("promotion") or "").lower()=="ufc" and
                         str(h.get("boutId") or "")==bid and
                         close(h.get("date"),evidence.get("date")) and
                         same(h.get("opponent"),evidence.get("opponent")) and
                         h.get("result")==evidence.get("result")
                         for h in profile.get("recentHistory",[]))
-                    if (sig not in source_rows or not linked or
+                    if (sig not in source_rows or not historical_row_saved or
                         not isinstance(b,dict) or b.get("org")!="ufc" or
                         b.get("status")!="completed" or
                         not official_ufc_event_title(b.get("event") or "") or
