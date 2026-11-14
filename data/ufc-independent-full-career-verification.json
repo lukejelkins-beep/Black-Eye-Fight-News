@@ -265,12 +265,115 @@
       "note": "Seven completed official UFC flyweight fights and seven unique, measured native links, with no source-only or cache-only UFC bouts. Official UFC.com 2026-11-14 career narrative separately lists the earlier DWCS bout; it is excluded. One native 2023-12-10 date reflects UTC displacement relative to 2023-12-09 UFCStats event date; name-order difference HyunSung Park / Park Hyun-sung is independently reconciled through one native fight ID and both corners. No claim of direct access to blocked UFCStats pages."
     },
     "park-hyun-sung": {
-      "sourceCoverageAttested": false,
-      "scope": "minimum_count_evidence_only",
-      "minimumOfficialUfcBouts": 5,
-      "fighterUrl": "https://www.ufc.com/athlete/hyunsung-park",
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Park Hyun-sung",
+      "officialFighterName": "HyunSung Park",
       "verifiedAt": "2026-11-14",
-      "note": "Official UFC history shows five UFC fights across 2023-2025. Two 2022 Road to UFC qualifying bouts are excluded from UFC-only count. Only two UFC bouts currently saved."
+      "fighterUrl": "https://ufcstats.com/fighter-details/b671bdf981ad527d",
+      "officialFighterUrl": "https://www.ufc.com/athlete/hyunsung-park",
+      "sourceVerifiedNativeNameAliases": [
+        "HyunSung Park"
+      ],
+      "disambiguation": {
+        "verifiedUfcStatsFighterId": "b671bdf981ad527d",
+        "officialNickname": "Peace of Mind"
+      },
+      "firstOfficialUfcBout": "2023-02-04",
+      "latestCompletedOfficialUfcBout": "2025-10-18",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "method": "Exhaustive five-bout UFCStats-derived fighter and event-source rows independently matched the official UFC.com biography listing across 2023-25. The 2023 Road to UFC final is a completed official UFC card; June/October 2022 Road to UFC qualifying bouts not included. Preserve both official historic/current native Park identities. UFCStats URLs are from source-linked pinned Greco CSVs and were not directly rendered.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "146",
+        "102972"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "nativeHistoryRepresentationCount": 6,
+      "excludedFromOfficialUfc": [
+        {
+          "date": "2022-06-10",
+          "opponent": "Jeremia Siregar",
+          "event": "Road to UFC 1 qualifier",
+          "sourceUrl": "https://www.ufc.com/athlete/hyunsung-park",
+          "reason": "Road to UFC qualifying contest, not a UFC full-career bout"
+        },
+        {
+          "date": "2022-10-23",
+          "opponent": "Top Noi Kiwram",
+          "event": "Road to UFC 1 qualifier",
+          "sourceUrl": "https://www.ufc.com/athlete/hyunsung-park",
+          "reason": "Road to UFC qualifying contest, not a UFC full-career bout"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2023-02-04",
+          "opponent": "SeungGuk Choi",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/98094a500529d442",
+          "eventUrl": "https://ufcstats.com/event-details/d26394fc0e8e880a",
+          "nativeBoutId": "59751",
+          "nativeFighterId": "146"
+        },
+        {
+          "date": "2023-12-09",
+          "opponent": "Shannon Ross",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/35addc4646509286",
+          "eventUrl": "https://ufcstats.com/event-details/5ef0088c1b19beeb",
+          "nativeBoutId": "59943",
+          "nativeFighterId": "146"
+        },
+        {
+          "date": "2025-05-17",
+          "opponent": "Carlos Hernandez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/18a7dc86279066f8",
+          "eventUrl": "https://ufcstats.com/event-details/8ad022dd81224f61",
+          "nativeBoutId": "83242",
+          "nativeFighterId": "102972"
+        },
+        {
+          "date": "2025-08-02",
+          "opponent": "Tatsuro Taira",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/282c8c6c1ed82bfb",
+          "eventUrl": "https://ufcstats.com/event-details/f2c934689243fe4e",
+          "nativeBoutId": "60752",
+          "nativeFighterId": "146"
+        },
+        {
+          "date": "2025-10-18",
+          "opponent": "Bruno Silva",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/668a44403a130043",
+          "eventUrl": "https://ufcstats.com/event-details/38e5d9dcb0fddc42",
+          "nativeBoutId": "83254",
+          "nativeFighterId": "102972",
+          "alternateNativeRepresentations": [
+            {
+              "nativeBoutId": "38150",
+              "nativeFighterId": "146"
+            }
+          ],
+          "sourceVerifiedNativeOpponentAliases": [
+            "Bruno Gustavo da Silva"
+          ],
+          "verifiedOpponentNativeFighterIds": [
+            "87",
+            "158"
+          ],
+          "duplicationReason": "UFCalendar stores two records for UFC Vancouver 18 October 2025 with the same event 781, 3rd-round 2:15 submission and winner Bruno: modern native bout 83254 (Park ID 102972, Bruno ID 87), historical native bout 38150 (Park ID 146, Bruno ID 158). One UFCStats fight URL, not two fights."
+        }
+      ],
+      "note": "Five source-verified official UFC bouts and six UFCalendar native history representations. Two distinct native bout IDs 38150 and 83254 for 18 October 2025 are explicitly reconciled to the SAME UFCStats fight and event result, not counted as two official bouts. All six saved links retained and their statistics preserved. Timezone offsets (2023 finale, Dec 2023 and Aug 2025) accepted only with full native corroboration. UFC Road to UFC 2023 FINAL counts; 2022 qualifier fights excluded."
     },
     "maryna-moroz": {
       "fighterName": "Maryna Moroz",

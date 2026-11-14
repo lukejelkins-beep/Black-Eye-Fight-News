@@ -807,3 +807,39 @@ test('Bruno flyweight official twelve-bout career retains overturned UFC 243 NC 
   'Historical name alias must be tied to the source-reviewed fighter identity');
  assert.equal(proof(evidence,{}),false);
 });
+
+
+test('Park five-bout career reconciles both UFC Vancouver native representations without counting a sixth bout',()=>{
+ const load=p=>JSON.parse(readFileSync(new URL('../data/'+p,import.meta.url),'utf8'));
+ const e=load('ufc-independent-full-career-verification.json').fighters['park-hyun-sung'];
+ const profile=load('ufcalendar-fighter-research.json').profiles['park-hyun-sung'];
+ const fights=load('ufcalendar-rich-progress.json').bouts;
+ const history=profile.recentHistory.filter(x=>x.promotion==='ufc');
+ const proof=(source,cache=fights)=>evaluateCareerEvidence(profile,history,
+  '2025-10-18','2026-11-14',source,cache).independentlyVerified;
+ assert.equal(e.bouts.length,5);
+ assert.equal(history.length,6);
+ assert.equal(proof(e),true);
+ const last=e.bouts.find(b=>b.opponent==='Bruno Silva');
+ assert.deepEqual(last.alternateNativeRepresentations,
+  [{nativeBoutId:'38150',nativeFighterId:'146'}]);
+ assert.equal(last.fightUrl,'https://ufcstats.com/fight-details/668a44403a130043');
+ const mutateLast=fn=>({...e,bouts:e.bouts.map(b=>
+  b.opponent==='Bruno Silva'?fn(b):b)});
+ assert.equal(proof(mutateLast(b=>({...b,alternateNativeRepresentations:[]}))),false,
+  'The second cached record must be individually reconciled, not dropped');
+ assert.equal(proof(mutateLast(b=>({...b,alternateNativeRepresentations:[
+  {nativeBoutId:'38150',nativeFighterId:'102972'}]}))),false);
+ assert.equal(proof(mutateLast(b=>({...b,verifiedOpponentNativeFighterIds:['158']}))),false,
+  'The modern Bruno identity must remain source-anchored');
+ assert.equal(proof(mutateLast(b=>({...b,sourceVerifiedNativeOpponentAliases:[]}))),false);
+ assert.equal(proof(mutateLast(b=>({...b,result:'win'}))),false);
+ assert.equal(proof({...e,bouts:e.bouts.slice(1)}),false);
+ assert.equal(proof({...e,disambiguation:undefined}),false);
+ assert.equal(proof(e,{...fights,'38150':{...fights['38150'],
+  result:{...fights['38150'].result,time:'2:14'}}}),false,
+  'The native duplicate must have identical official round/time');
+ assert.equal(proof(e,{...fights,'38150':{...fights['38150'],
+  eventId:'999'}}),false,
+  'The duplicate must come from the exact same official event');
+});
