@@ -32,7 +32,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: befn-ufc-research-audit
+  group: befn-ufc-research-audit-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   audit:
