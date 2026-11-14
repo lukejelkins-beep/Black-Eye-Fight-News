@@ -71,6 +71,12 @@ export function buildResearchProfile(w,cache){
     },
     measurements:weightEvents.map(m=>({bashoId:m.bashoId,heightCm:m.height,weightKg:m.weight,source:'Sumo API historical change'})),
     rankTimeline:rankEvents.map(m=>({bashoId:m.bashoId,rank:m.rank,rankValue:m.rankValue??null})),
+    rankAvailability:{
+      evidencedUnrankedDebutBasho:cache.stages.ranks.unrankedDebut?.bashoId??null,
+      note:cache.stages.ranks.unrankedDebut?
+        'Debut bouts documented before first published banzuke rank; no rank assigned for the debut basho':
+        'Published historical ranks only; do not infer missing tournament measurements or ranks'
+    },
     ringNameHistory:ringNames.map(m=>({bashoId:m.bashoId,shikonaEn:m.shikonaEn,shikonaJp:m.shikonaJp})),
     boutHistory:{rawCachePath:'data/sumo/backfill/v1/rikishi/'+id+'.json',
       regularBouts:regular.length,otherBouts:special.length,totalRawBouts:all.length,
