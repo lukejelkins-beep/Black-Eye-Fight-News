@@ -274,7 +274,7 @@ class FullCareerCacheTests(unittest.TestCase):
             "id":"801","org":"ufc","eventDate":"2008-05-01",
             "event":"The Ultimate Fighter: Team A vs Team B Finale",
             "a":{"name":"Another"},"b":{"name":"Contestant"}}
-        state["ufcCareerBoutChecks"]["800"]={
+        state.setdefault("ufcCareerBoutChecks",{})["800"]={
             "status":"requires_manual_review","checkedAt":"2026-11-13",
             "retryAfter":"2026-11-27"}
         client=Fake("The Ultimate Fighter: Team A vs Team B Finale")
@@ -290,7 +290,7 @@ class FullCareerCacheTests(unittest.TestCase):
             "id":"801","org":"ufc","eventDate":"2008-05-01",
             "event":"The Ultimate Fighter: Team A vs Team B Finale",
             "a":{"name":"Another"},"b":{"name":"Contestant"}}
-        state["ufcCareerBoutChecks"]["800"]={
+        state.setdefault("ufcCareerBoutChecks",{})["800"]={
             "status":"requires_manual_review","checkedAt":"2026-11-13",
             "retryAfter":"2026-11-27"}
         class Bad(Fake):
