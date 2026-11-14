@@ -100,3 +100,27 @@ test("contradictory outcomes for the same UFC bout are flagged, not silently ded
  assert.equal(r.priorityQueue[0].slug,slug);
  assert.deepEqual(r.priorityQueue[0].contradictorySavedOutcomes[0].outcomes,["win","no_contest"]);
 });
+
+test("a stale certified flag is vetoed by independently listed missing UFC bouts",()=>{
+ const v=inputs(),slug="fighter-021";
+ v[1].fighters[slug].independentlyCertifiedCareer=true;
+ v[1].fighters[slug].knownCareerBouts=1;
+ v[2].profiles[slug]={recentHistory:[{promotion:"UFC",date:"2025-01-01",
+  opponent:"First Opponent",result:"win"}]};
+ v[6].fighters[slug]={sourceUrl:"https://www.ufc.com/athlete/test",
+  bouts:[{date:"2025-01-01",opponent:"First Opponent",result:"win"},
+   {date:"2024-01-01",opponent:"Second Opponent",result:"no_contest"}]};
+ const r=auditCareerVerification(...v);
+ assert.equal(r.summary.independentlyCertified,0);
+ assert.equal(r.summary.pendingCertification,783);
+ assert.equal(r.priorityQueue[0].slug,slug);
+ assert.equal(r.priorityQueue[0].officialInventoryUnmatched,1);
+});
+test("a provider-only certification is vetoed by saved history discrepancy",()=>{
+ const v=inputs(),slug="fighter-022";
+ v[1].fighters[slug].ufcTimelineCertified=true;
+ v[1].fighters[slug].careerCoverageStatus="provider_history_discrepancy";
+ const r=auditCareerVerification(...v);
+ assert.equal(r.summary.providerOnlyCertified,0);
+ assert.equal(r.summary.pendingCertification,783);
+});
