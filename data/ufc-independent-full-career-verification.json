@@ -22414,6 +22414,64 @@
           "nativeFighterId": "184"
         }
       ]
+    },
+    "josias-musasa": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Josias Musasa",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/723b64c0e9a8f348",
+      "officialFighterUrl": "https://www.ufc.com/athlete/josias-musasa",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Exact pinned Greco UFCStats-derived independent historical source, not claimed live page scrape",
+        "method": "Complete primary UFC.com dated athlete biographies and UFC event outcomes crosschecked against immutable Greco UFCStats fight URLs, original paired numeric UFCalendar native fighter/bout IDs, correct result/dates and complete measured rounds; exclude separately attested DWCS and cancelled/non-UFC bouts; require strict Stage3 audit."
+      },
+      "verifiedNumericFighterIds": [
+        "209"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Exhaustive independent completed UFC Octagon chronology through 14 Nov 2026. Both UFC completed appearances are losses per dated UFC.com narrative, despite graphical Win badges. Independent 2024 DWCS split-decision win over Otari Tanzilovi is excluded; 2026-08-01 cancelled Mark Vologdin bout is excluded. Original saved native numeric fighter/paired-corner/bout outcomes and measured rounds pinned to each sourced independent UFCStats fight. Strict Stage3 gate is separate.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/josias-musasa",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-03-15",
+          "opponent": "Carlos Vera",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/cb3eb07b7152366e",
+          "nativeBoutId": "60363",
+          "nativeFighterId": "209"
+        },
+        {
+          "date": "2025-09-27",
+          "opponent": "Colby Thicknesse",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/81127436605d3c88",
+          "nativeBoutId": "38217",
+          "nativeFighterId": "209"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88275",
+          "date": "2024-09-10",
+          "opponent": "Otari Tanzilovi",
+          "result": "win",
+          "event": "Dana White's Contender Series 71",
+          "officialSourceUrl": "https://www.ufc.com/athlete/josias-musasa",
+          "excludedBecause": "DWCS is a feeder event, not a completed official UFC Octagon bout"
+        }
+      ]
     }
   }
 }
