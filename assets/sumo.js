@@ -180,7 +180,7 @@ function recordLabels(s) {
   return '<span class="number-win">'+s.win+' W</span> · <span class="number-loss">'+s.loss+' L</span>'+(s.absence?' · <span class="number-abs">'+s.absence+' A</span>':'');
 }
 function wrestlerLink(row,small=false) {
-  return '<a href="#profile/'+Number(row.sourceId||row.rikishiID)+'">'+e(row.shikonaEn || 'Name unavailable')+(small?' ↗':'')+'</a>';
+  return '<a href="#profile/'+Number(row.sourceId||row.rikishiID)+'">'+flagMark(wrestler(row.sourceId||row.rikishiID))+' '+e(row.shikonaEn || 'Name unavailable')+(small?' ↗':'')+'</a>';
 }
 function divisionTabs(active, attr, all=false) {
   return '<div class="division-tabs" role="group" aria-label="Choose division">' +
@@ -382,31 +382,47 @@ function renderProfile(id) {
     '<div class="sumo-history">Historical promotion, rank progression and full per-basho results are planned. They will remain unavailable until the relevant source records are fetched and verified. Current rank: <strong>'+e(w.currentRank||'—')+'</strong>.</div>'+
     sourceFooter();
 }
+function banzukeCard(row) {
+  const w=wrestler(row.rikishiID);
+  if(!w)return '';
+  const m=movementFor(w),size=weightHeight(w);
+  return '<article class="sumo-rank-card"><div class="sumo-rank-card-head"><span>'+e(divisionOf(w.currentRank))+'</span>'+
+    '<span>'+recordLabels(row.summary)+'</span></div>'+
+    '<div class="sumo-rank-card-body">'+portraitFor(w,'lg')+
+    '<div class="sumo-rank-card-data"><div class="sumo-rank-name">'+flagMark(w)+
+    '<a href="#profile/'+Number(w.sourceId)+'">'+e(w.shikonaEn)+'</a></div>'+
+    '<div class="sumo-rank-strong">'+e(w.currentRank||'Rank not supplied')+'</div>'+
+    '<div class="sumo-rank-info"><span>Highest rank: <b>'+e(knownHigh(w)||'Not yet sourced')+'</b></span>'+
+    '<span>Height: <b>'+e(size.h)+'</b></span><span>Weight: <b>'+e(size.mass)+'</b></span></div>'+
+    '<div class="sumo-rank-change">'+movementMarkup(w)+
+    '<span>'+e(m.previousRank?'Previous: '+m.previousRank:m.status==='new'?'Not on the previous top-three banzuke':'Previous rank not available')+'</span></div></div></div></article>';
+}
 function renderBanzuke() {
-  const d=STATE.banzukeDivision, data=getBanzuke(d);
-  const rows=data?rankTable(data):[];
-  return heading('Grand Sumo · Current rankings','Official-format banzuke')+
-    '<p class="section-intro">The banzuke is sumo’s tournament ranking list, with ranks assigned East and West. BEFN tracks every current Makuuchi, Jūryō and Makushita wrestler. Rank lists are from the API and await JSA reconciliation.</p>'+
+  const d=STATE.banzukeDivision,data=getBanzuke(d),rows=data?rankTable(data):[];
+  const previous=details().previousBashoId;
+  return heading('Grand Sumo · Current rankings','Banzuke')+
+    '<p class="section-intro">Every active '+e(d)+' rikishi is shown with their origin flag, image-ready portrait, current rank, measurements and movement since '+
+    e(bashoLabel(previous))+' (when both banzuke entries are available). Movement counts refer to individual East/West positions across the combined three-division banzuke, not a change in world ranking. Career-high ranks remain unfilled until independently sourced.</p>'+
     divisionTabs(d,'data-banzuke-division')+
-    '<div class="panel"><div class="panel-head"><h3>'+e(bashoLabel(details().bashoId))+' · '+e(d)+'</h3><span>'+rows.length+' RIKISHI</span></div>'+
-    '<div class="panel-body">'+standingsTable(rows,rows.length)+'</div></div>'+
-    '<p class="footnote">Lower division competitors typically take seven bouts throughout 15 days; absence, forfeits and unanswered matches must not be transformed into assumed losses.</p>'+
+    '<div class="panel-head"><h3>'+e(bashoLabel(details().bashoId))+' · '+e(d)+'</h3><span>'+rows.length+' RIKISHI · CURRENT BANZUKE</span></div>'+
+    (rows.length?'<div class="sumo-rank-grid">'+rows.map(banzukeCard).join('')+'</div>':
+      '<p class="missing">The current banzuke for this division is unavailable.</p>')+
+    '<p class="footnote">Green ↑ = promotion, red ↓ = demotion, ↔ = unchanged. NEW indicates an entry not present in the previous top-three banzuke, which must not be treated as a verified career debut. Flags refer to the source-recorded birthplace country, not nationality.</p>'+
     sourceFooter();
 }
 function daysPanel(d,data) {
-  const lower=d==='Makushita', maxday=currentDay(data);
-  if (!maxday) return '<p class="missing">No recorded completed tournament days.</p>';
-  const day = STATE.day===null ? maxday : Math.min(maxday,Math.max(1,STATE.day));
-  const results=dailyResults(data,day);
-  const context=lower
-    ?note('Makushita banzuke contains 15 calendar-day positions with up to seven competitive bouts. Days without a recorded bout are not automatically injury absences or losses.')
-    :'';
-  return context+'<div class="day-select" role="group" aria-label="Basho day">' +
-    Array.from({length:maxday},(_,i)=>'<button type="button" data-day="'+(i+1)+'" class="'+(day===i+1?'active':'')+'" aria-pressed="'+(day===i+1)+'">'+(i+1)+'</button>').join('')+'</div>'+
-    '<div class="bout-list">'+(results.length?results.map(r=>'<div class="bout"><span class="name '+(r.winnerId===r.rikishiId?'winner':'')+'"><a href="#profile/'+r.rikishiId+'">'+e(r.rikishi)+'</a></span><span class="vs">VS</span>'+
-      '<span class="name '+(r.winnerId===r.opponentId?'winner':'')+'"><a href="#profile/'+r.opponentId+'">'+e(r.opponent)+'</a></span>'+
-      '<span class="kim">Winner: '+e(r.winner||'Not supplied')+' · '+e(r.kimarite||'Winning technique not supplied')+'</span></div>').join(''):'<p class="missing">No completed matches for this calendar day in the cached banzuke.</p>')+'</div>'+
-    '<p class="footnote">Recorded results on calendar day '+day+' · sourced from the current '+e(d)+' banzuke; not a live event feed.</p>';
+  const completedDay=currentDay(data);
+  const day=STATE.day===null?Math.max(1,completedDay):Math.min(15,Math.max(1,STATE.day));
+  const pairings=dayMatchups(data,day);
+  const upcoming=pairings.filter(m=>!m.finished).length;
+  return '<p class="section-intro">Select any tournament day to view source-recorded matches and announced opponents. Each card identifies both rikishi with flags, rank, highest rank (where available), height, weight and verified all-time H2H where cached. Pending bouts are not counted as results.</p>'+
+    '<div class="day-select" role="group" aria-label="Basho calendar day">'+
+    Array.from({length:15},(_,i)=>'<button type="button" data-day="'+(i+1)+'" class="'+(day===i+1?'active':'')+
+      '" aria-pressed="'+(day===i+1)+'">'+(i+1)+'</button>').join('')+'</div>'+
+    (d==='Makushita'?note('Makushita rikishi generally fight seven times across 15 tournament days. Days without recorded matches are not counted as losses or injury absences.'):'')+
+    '<div class="sumo-match-list">'+(pairings.length?pairings.map(matchupCard).join(''):
+      '<p class="sumo-empty-bout">No completed matches or individually named upcoming opponents are in this API snapshot for day '+day+'. Unannounced bouts are not invented.</p>')+'</div>'+
+    '<p class="footnote">Calendar day '+day+' · '+pairings.length+' source-recorded pairings ('+upcoming+' pending). Head-to-head totals are displayed only when the full pair-specific API response is cached; missing H2H does not mean 0–0. Image placeholders await licensing.</p>';
 }
 function renderBasho() {
   const d=STATE.bashoDivision, data=getBanzuke(d), rows=data?leadingRikishi(data,20):[];
