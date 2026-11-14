@@ -72,6 +72,11 @@ test("V4 Last 5/10 are chronological, not last five or ten measured bouts",()=>{
  assert.equal(result.summary.fightersWithFiveMeasuredLatestBouts,0);
  assert.equal(result.summary.fightersWithTenMeasuredLatestBouts,0);
  assert.equal(result.summary.distinctLinkedMeasuredUfcFights,11);
+ assert.equal(result.summary.missingBoutsByPriority.distinctMissingNativeIds,1);
+ assert.equal(result.summary.missingBoutsByPriority.latestFive,1);
+ assert.equal(result.missingNativeBoutQueue[0].boutId,"512");
+ assert.equal(result.missingNativeBoutQueue[0].action,"inspect_saved_round_or_clock_data");
+ assert.equal(result.missingNativeBoutQueue[0].references[0].careerPosition,1);
  const unknown=result.fighters["unknown-fighter"];
  assert.equal(unknown.windows.last5.knownBouts,0);
  assert.equal(unknown.windows.last5.totals.sigLanded,null);
