@@ -36,7 +36,8 @@ export function createPreviewH2h(profiles,rosterIds,asOf){
       if(!positive(b)||b===a||!Array.isArray(opponent.meetings)||
          opponent.meetings.length!==opponent.regularBouts)throw Error('Incomplete opponent history '+key);
       const regular=opponent.meetings.map(m=>normalize(m,lo,hi)).sort(recentFirst);
-      const special=(opponent.playoffsAndTrialBouts||[]).map(m=>normalize(m,lo,hi,true)).sort(recentFirst);
+      const special=(opponent.playoffsAndTrialBouts||[]).map(m=>normalize({...m,
+        winnerId:m.winnerId??(m.outcome==='win'?a:m.outcome==='loss'?b:null)},lo,hi,true)).sort(recentFirst);
       const winsA=regular.filter(m=>m[2]===lo).length,winsB=regular.length-winsA;
       if(regular.filter(m=>m[2]===a).length!==opponent.wins||
          regular.filter(m=>m[2]===b).length!==opponent.losses)
