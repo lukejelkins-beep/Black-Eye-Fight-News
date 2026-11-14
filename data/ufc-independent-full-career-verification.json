@@ -3068,6 +3068,126 @@
         "distinctNativeFightId": "83025",
         "doNotTreatUnlinkedSourceHistoryAsCertified": true
       }
+    },
+    "lucia-szabova": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Lucia Szabová",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/184f6ec4ee712e9f",
+      "officialFighterUrl": "https://www.ufc.com/athlete/lucia-szabova",
+      "firstOfficialUfcFight": "2026-10-31",
+      "lastOfficialUfcFight": "2026-10-31",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedNumericFighterIds": [
+        "3029"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "latestGrecoEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "not directly accessible; full fighter and fight URL attested from pinned independently sourced Greco UFCStats rows, verified with official UFC athlete/event results"
+      },
+      "sourceCoverage": {
+        "method": "Exhaustively checked full official UFC athlete fight history (one recorded bout; UFC debut Oct 31 2026), UFC October 31 event card, official Nov 1 scorecards and weigh-in, and fighter-specific one-result Greco UFCStats historical CSV pinned through Nov 7 2026. Both UFCStats source identity and dated opponent/outcome matched saved native bout 86003; all three measured rounds are cached.",
+        "officialDebut": "2026-10-31",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-october-31-2026",
+        "officialScorecardUrl": "https://www.ufc.com/news/ufc-fight-night-moicano-vs-nolan-official-scorecards",
+        "officialWeighinUrl": "https://www.ufc.com/news/official-weigh-results-ufc-fight-night-moicano-vs-nolan",
+        "sourceIdentity": "UFC displays Lucia Szabová (accent); Greco source and UFCStats fighter index Lucia Szabova. Same dated opponent Tainara Lisboa and TKO result; normalized diacritic identity matches native fighter ID 3029."
+      },
+      "bouts": [
+        {
+          "date": "2026-10-31",
+          "opponent": "Tainara Lisboa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1bf2edb30de4c976",
+          "nativeBoutId": "86003",
+          "nativeFightId": "86003",
+          "nativeFighterId": "3029",
+          "event": "UFC Fight Night: Moicano vs Nolan",
+          "method": "ko_tko",
+          "round": 3,
+          "time": "3:20",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-october-31-2026"
+        }
+      ],
+      "note": "Only one completed official UFC contest before 14 Nov 2026; Greco fight source W/L, UFC official history TKO winner, native winnerId 3029, 3 completed measured rounds. No feeder fights in official UFC career."
+    },
+    "joel-faglier": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Joel Faglier",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/6188ad39d85a8bf8",
+      "officialFighterUrl": "https://www.ufc.com/athlete/joel-faglier",
+      "firstOfficialUfcFight": "2026-10-17",
+      "lastOfficialUfcFight": "2026-10-17",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedNumericFighterIds": [
+        "24946"
+      ],
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "latestGrecoEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "not directly accessible; full fighter and fight URL attested from pinned independently sourced Greco UFCStats rows, verified with official UFC athlete/event results"
+      },
+      "sourceCoverage": {
+        "method": "Exhaustively checked full UFC athlete bout history and Oct 17 2026 debut; official UFC event result shows Faglier TKO victory over Javad Mahjoub in round 2 at 2:11. Greco pinned full UFCStats-derived results indexed exactly one UFC fight under separate fighter URL and exact bout URL through Nov 7 2026. Native cached bout 93413 has matching opponent, winnerId 24946 and two measured rounds.",
+        "officialDebut": "2026-10-17",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-october-17-2026",
+        "sourceIdentity": "Greco Faglier source L/W denotes Javad Mahjoub losing, Joel Faglier winning; matches official event card and native outcome. UFC opponent's athlete overview can display stale last-fight Win icon: the official fight result and source corners resolve it."
+      },
+      "bouts": [
+        {
+          "date": "2026-10-17",
+          "opponent": "Javad Mahjoub",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/88247eaef34c209b",
+          "nativeBoutId": "93413",
+          "nativeFightId": "93413",
+          "nativeFighterId": "24946",
+          "event": "UFC Fight Night: Buckley vs Malott",
+          "method": "ko_tko",
+          "round": 2,
+          "time": "2:11",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-october-17-2026"
+        }
+      ],
+      "note": "Only one completed official UFC bout through 14 Nov 2026, one source-linked independent UFCStats result and official UFC debut; no separate feeder contest counted."
     }
   }
 }
