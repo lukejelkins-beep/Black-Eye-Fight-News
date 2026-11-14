@@ -41,6 +41,7 @@ on:
       - 'tests/test-ufc-unified-gantt-xiong-six-evidence.mjs'
       - 'tests/test-ufc-unified-wave16-amosov-hafez-evidence.mjs'
       - 'tests/test-ufc-unified-seven-careers-evidence.mjs'
+      - 'tests/test-ufc-unified-five-careers-evidence.mjs'
       - 'tests/test-ufc-unified-wave17-three-debut-evidence.mjs'
       - 'tests/test-ufc-unified-josias-musasa-evidence.mjs'
       - 'tests/test-ufc-unified-wave19-three-careers-evidence.mjs'
@@ -131,6 +132,7 @@ jobs:
           node --test tests/test-ufc-unified-gantt-xiong-six-evidence.mjs
           node --test tests/test-ufc-unified-wave16-amosov-hafez-evidence.mjs
           node --test tests/test-ufc-unified-seven-careers-evidence.mjs
+          node --test tests/test-ufc-unified-five-careers-evidence.mjs
           node --test tests/test-ufc-unified-wave17-three-debut-evidence.mjs
           node --test tests/test-ufc-unified-josias-musasa-evidence.mjs
           node --test tests/test-ufc-unified-wave19-three-careers-evidence.mjs
