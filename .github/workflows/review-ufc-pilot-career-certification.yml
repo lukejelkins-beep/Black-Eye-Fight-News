@@ -1,0 +1,30 @@
+name: Review exact UFC pilot career certification blockers
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/ufc-pilot-certification-case-report.mjs'
+      - 'tests/test-ufc-pilot-certification-case-report.mjs'
+      - '.github/workflows/review-ufc-pilot-career-certification.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-pilot-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test exact official UFC source crosswalk
+        run: node --test tests/test-ufc-pilot-certification-case-report.mjs
+      - name: Identify precise source history blockers without external requests
+        run: node scripts/ufc-pilot-certification-case-report.mjs
+      - name: Save nonproduction case diagnostic
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-pilot-career-case-review
+          path: qa/ufc-pilot-certification-case-review.json
+          retention-days: 7
