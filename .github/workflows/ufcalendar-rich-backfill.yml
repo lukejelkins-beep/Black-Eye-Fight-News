@@ -102,6 +102,17 @@ jobs:
           else
             echo "::warning::Independent source crosswalk unavailable; archived provider data preserved."
           fi
+      - name: Preserve independent certification triage as non-production QA artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-independent-certification-qa
+          path: |
+            qa/ufc-36-month-stage3-progress.json
+            qa/ufc-independent-certification-queue.json
+            qa/ufc-independent-source-reconciliation.json
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Commit sourced observations without exposing credentials
         shell: bash
         run: |
