@@ -2238,6 +2238,120 @@
         }
       ],
       "note": "Verified one unique completed UFC bout debut to 14 Nov 2026 with independent full UFCStats-derived identity and native numeric ID, UFC official narrative and scorecards, measured round statistics and explicit preservation of official display discrepancy. Source coverage must pass strict CI gate."
+    },
+    "fabia-sintes": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Fabia Sintes",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/9911989cf48b195d",
+      "officialFighterUrl": "https://www.ufc.com/athlete/fabia-sintes",
+      "firstOfficialUfcFight": "2026-09-05",
+      "lastOfficialUfcFight": "2026-09-05",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "37790"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Reviewed complete official UFC athlete record beginning debut 5 September 2026, UFC Paris official full event results, independently enumerated Greco UFCStats-derived source fighter index and fight results through 7 November 2026, distinct per-corner athlete source IDs, exact one Greco fight source link, native UFC opponent/ID outcome and measured round metrics.",
+        "officialDebut": "2026-09-05",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "Official UFC athlete page explicitly says Sept 5 2026 Octagon debut, sole completed UFC bout and unanimous-decision win over Michael Aljarouj. Exact official event results and Greco source corroborate.",
+        "officialResultUrl": "https://www.ufc.com/index.php/news/ufc-paris-prelim-results-hooker-vs-parnasse",
+        "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-september-05-2026",
+        "directUfcStatsSiteAccess": "blocked/unavailable; independently pinned Greco UFCStats-derived fighter and fight URLs are source citations not claims of direct UFCStats page inspection"
+      },
+      "bouts": [
+        {
+          "date": "2026-09-05",
+          "opponent": "Michael Aljarouj",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1f973e21581b082a",
+          "nativeBoutId": "83815",
+          "nativeFightId": "83815",
+          "nativeFighterId": "37790",
+          "event": "UFC Fight Night: Hooker vs Parnasse",
+          "method": "decision_unanimous",
+          "round": 3,
+          "time": "5:00",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-september-05-2026"
+        }
+      ],
+      "note": "Crosschecked full completed official UFC career through 14 Nov 2026: one fight, one native ID, no feeder contamination, verified Greco source-linked result, 900-second measurement record, official written outcome preserved."
+    },
+    "michael-aljarouj": {
+      "rosterAsOf": "2026-11-14",
+      "fighterName": "Michael Aljarouj",
+      "certificationStatus": "independently_verified_full_career_pending_offline_ci",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "scope": "full_ufc_career_from_debut_to_snapshot",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/22e3458965d5d08a",
+      "officialFighterUrl": "https://www.ufc.com/athlete/michael-aljarouj",
+      "firstOfficialUfcFight": "2026-09-05",
+      "lastOfficialUfcFight": "2026-09-05",
+      "verifiedOfficialUfcBoutCount": 1,
+      "verifiedUfcRecord": {
+        "wins": 0,
+        "losses": 1,
+        "draws": 0,
+        "noContests": 0
+      },
+      "verifiedNumericFighterIds": [
+        "21764"
+      ],
+      "sourceSnapshot": {
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "cutoffLastEvent": "2026-11-07"
+      },
+      "sourceCoverage": {
+        "method": "Reviewed complete official UFC athlete record beginning debut 5 September 2026, UFC Paris official full event results, independently enumerated Greco UFCStats-derived source fighter index and fight results through 7 November 2026, distinct per-corner athlete source IDs, exact one Greco fight source link, native UFC opponent/ID outcome and measured round metrics.",
+        "officialDebut": "2026-09-05",
+        "officialDatedBouts": 1,
+        "grecoExactBoutRows": 1,
+        "sourceSnapshotLastEvent": "2026-11-07",
+        "sourcePresentationException": "Official UFC.com Last fight card falsely says Win and page incorrectly contains Dan Hooker generic intro, while official result card, full athlete fight record context and UFC Paris premarket written results explicitly report Sintes defeating Aljarouj by unanimous decision. Do not silently rewrite result.",
+        "officialResultUrl": "https://www.ufc.com/index.php/news/ufc-paris-prelim-results-hooker-vs-parnasse",
+        "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-september-05-2026",
+        "directUfcStatsSiteAccess": "blocked/unavailable; independently pinned Greco UFCStats-derived fighter and fight URLs are source citations not claims of direct UFCStats page inspection"
+      },
+      "bouts": [
+        {
+          "date": "2026-09-05",
+          "opponent": "Fabia Sintes",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1f973e21581b082a",
+          "nativeBoutId": "83815",
+          "nativeFightId": "83815",
+          "nativeFighterId": "21764",
+          "event": "UFC Fight Night: Hooker vs Parnasse",
+          "method": "decision_unanimous",
+          "round": 3,
+          "time": "5:00",
+          "officialEventUrl": "https://www.ufc.com/event/ufc-fight-night-september-05-2026"
+        }
+      ],
+      "note": "Crosschecked full completed official UFC career through 14 Nov 2026: one fight, one native ID, no feeder contamination, verified Greco source-linked result, 900-second measurement record, official written outcome preserved."
     }
   }
 }
