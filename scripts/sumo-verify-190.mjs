@@ -6,12 +6,13 @@
 import {readFile,writeFile,mkdir,rename} from 'node:fs/promises';
 import {join} from 'node:path';
 import {unrankedDebutEvidence} from './sumo-backfill-190.mjs';
+import {applyOfficialBoutCorrections} from './sumo-official-bout-corrections.mjs';
 const ROOT='data/sumo/backfill/v1';
 const REQUIRED=['profile','stats','measurements','ranks','shikonas','matches'];
 const banzuke=/^(Yokozuna|Ozeki|Sekiwake|Komusubi|Maegashira|Juryo|Makushita|Sandanme|Jonidan|Jonokuchi)\s+[1-9]\d{0,2}\s+(East|West)$/;
 const basho=/^(18|19|20)\d{2}(01|03|05|07|09|11)$/;
 const read=async (file,fallback=null)=>{try{return JSON.parse(await readFile(file,'utf8'));}catch(e){if(e.code==='ENOENT')return fallback;throw e;}};
-export function auditRikishi(w,cache){
+export function auditRikishi(w,cache,officialCorrectionEvidence=null){
   if(!cache)return {sourceId:w.sourceId,name:w.shikonaEn,status:'not-attempted',readyForExternalCrosscheck:false,errors:[],warnings:[],stagesCompleted:0,counts:{weights:0,ranks:0,matches:0}};
   const errors=[],warnings=[],id=Number(w.sourceId);
   if(cache.rikishiId!==id)errors.push('cache-identity');
@@ -68,7 +69,9 @@ export function auditRikishi(w,cache){
   // The upstream career-stat total counts regular tournament bouts only.
   // This reconciles Ura's 772 raw records to 763 (2 Mae-zumo + 7 day-16)
   // and Asanoyama's 667 to 665 (2 day-16 playoff bouts).
-  const allMatches=Array.isArray(cache.data?.matches)?cache.data.matches:[];
+  const official=applyOfficialBoutCorrections(w,cache,officialCorrectionEvidence);
+  if(official.errors.length)errors.push('unverified-official-bout-correction');
+  const allMatches=official.matches;
   const regularMatches=allMatches.filter(m=>m.division!=='Mae-zumo'&&
     Number.isInteger(Number(m.day))&&Number(m.day)>=1&&Number(m.day)<=15);
   const specialMatches=allMatches.filter(m=>m.division==='Mae-zumo'||Number(m.day)>15);
@@ -120,7 +123,7 @@ export function auditRikishi(w,cache){
     sourceId:id,name:w.shikonaEn,status,readyForExternalCrosscheck:allComplete&&!uniqueErrors.length,
     errors:uniqueErrors,warnings:uniqueWarnings,stagesCompleted:REQUIRED.filter(s=>cache.stages?.[s]?.complete).length,
     counts:{weights:cache.data?.measurements?.length||0,ranks:cache.data?.ranks?.length||0,matches:allMatches.length,regularMatches:regularMatches.length,specialMatches:specialMatches.length,formalRanks:formalRanks.length},
-    boutLedger,careerCertified:false
+    boutLedger,appliedOfficialBoutCorrections:official.applied,careerCertified:false
   };
 }
 export function crossCheckOfficial(w,cache,evidence){
@@ -156,10 +159,11 @@ async function main(){
   const cohort=await read('data/sumo/rikishi-index.json');
   if(cohort?.count!==190||cohort.rikishi?.length!==190)throw Error('Frozen 190-rikishi cohort mismatch');
   const spotchecks=await read(join(ROOT,'jsa-spotchecks.json'),{bySourceId:{}});
+  const correctionManifest=await read(join(ROOT,'official-bout-corrections.json'),{bySourceId:{}});
   const audited=[],officialComparisons=[];
   for(const w of cohort.rikishi){
     const doc=await read(join(ROOT,'rikishi',w.sourceId+'.json'));
-    audited.push(auditRikishi(w,doc));
+    audited.push(auditRikishi(w,doc,correctionManifest));
     const checked=crossCheckOfficial(w,doc,spotchecks.bySourceId?.[String(w.sourceId)]);
     if(checked)officialComparisons.push(checked);
   }
@@ -170,6 +174,7 @@ async function main(){
     collecting:audited.filter(x=>x.status==='still-collecting').length,
     integrityException:audited.filter(x=>x.status==='source-integrity-exception').length,
     sourceReady:audited.filter(x=>x.readyForExternalCrosscheck).length,
+    officiallyCorrectedSourceBouts:audited.reduce((n,x)=>n+(x.appliedOfficialBoutCorrections?.length||0),0),
     records:{weight:audited.reduce((a,b)=>a+b.counts.weights,0),rank:audited.reduce((a,b)=>a+b.counts.ranks,0),matches:audited.reduce((a,b)=>a+b.counts.matches,0)},
     independentJsaSpotchecks:{
       identityVerified:officialComparisons.filter(x=>x.identityVerified).length,
