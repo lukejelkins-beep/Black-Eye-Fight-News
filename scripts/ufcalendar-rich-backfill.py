@@ -789,7 +789,9 @@ def ufc_timeline_evidence(payload,today):
     """Require an explicitly untruncated full timeline before certifying depth."""
     rows=response_rows(payload)
     meta=payload.get("meta") if isinstance(payload,dict) else None
-    complete=isinstance(meta,dict) and meta.get("truncated") is False
+    raw_flag=meta.get("truncated") if isinstance(meta,dict) else None
+    explicit_flag=raw_flag if type(raw_flag) is bool else None
+    complete=explicit_flag is False
     count=0
     seen=set()
     for row in rows:
@@ -820,6 +822,8 @@ def ufc_timeline_evidence(payload,today):
         seen.add(key)
         count+=1
     return {"settledCount":count,"complete":bool(complete),
+            "providerTruncatedFlag":explicit_flag,
+            "providerHistoryRowCount":len(rows),
             "observedOn":today.isoformat()}
 
 
