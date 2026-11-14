@@ -6,7 +6,7 @@ import {
   rankPositions, confirmedCareerHigh
 } from './sumo-data.mjs';
 import { careerGraphs } from './sumo-career.mjs';
-import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, techniqueText } from './sumo-matchup.mjs';
+import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
 
 const ROOT = document.querySelector('#sumo-main');
 const tabs = [...document.querySelectorAll('[data-page]')];
@@ -14,7 +14,8 @@ const DIVS = ['Makuuchi','Juryo','Makushita'];
 const STATE = {
   roster: null, details: null, careerHistory: null, officialStyles: null, photoIndex: null, error: null, query: '', division: 'All',
   visible: 24, bashoDivision: 'Makuuchi', banzukeDivision: 'Makuuchi',
-  day: null, profileLimit: 5, h2hOldestFirst: false
+  day: null, profileLimit: 5, h2hOldestFirst: false, h2hOpponentLimit: 16,
+  h2hSummary: null, h2hFull: null, h2hLoading: false, h2hLoadFailed: false
 };
 const TERMS = [
   {term:'Yorikiri',label:'Frontal force-out',detail:'The wrestler drives the opponent out while holding the mawashi (belt).'},
@@ -64,6 +65,8 @@ function portraitFor(w,size='sm'){
     '<span aria-hidden="true">相</span></div>';
 }
 function knownHigh(w){
+  const research=STATE.h2hSummary?.profiles?.[String(w?.sourceId)];
+  if(typeof research?.careerHigh==='string'&&research.careerHigh.trim())return research.careerHigh;
   const rich=details()?.featuredExtras?.find(x=>Number(x.id)===Number(w?.sourceId))?.rikishi;
   const official=rich?.status==='available'?rich.data:null;
   const curated=details()?.careerHighs?.[String(w?.sourceId)];
@@ -105,7 +108,14 @@ function movementMarkup(w) {
   return '<span class="sumo-move '+clazz+'" title="'+e(m.label+detail)+'"><span aria-hidden="true">'+symbol+'</span> '+e(m.status==='up'||m.status==='down'?m.places+' places':m.status==='new'?'NEW':m.status==='same'?'0':'—')+'</span>';
 }
 function headToHeadFor(a,b) {
-  return h2hHistory(details(),a,b);
+  return researchedHeadToHead(STATE.h2hSummary,STATE.h2hFull,a,b)||h2hHistory(details(),a,b);
+}
+function headToHeadName(id,a,b){
+  const current=wrestler(id);
+  if(current)return current.shikonaEn;
+  const fromFirst=STATE.h2hSummary?.profiles?.[String(a)]?.opponents?.find(x=>Number(x.id)===Number(id));
+  const fromSecond=STATE.h2hSummary?.profiles?.[String(b)]?.opponents?.find(x=>Number(x.id)===Number(id));
+  return fromFirst?.name||fromSecond?.name||('Rikishi #'+id);
 }
 function headToHeadUrl(a,b) {
   return '#headtohead/'+Number(a)+'/'+Number(b);
@@ -115,7 +125,7 @@ function historyRowsMarkup(h2h,a,b,limit=5,reverse=false) {
   const rows=reverse?[...h2h.rows].reverse():h2h.rows;
   if(!rows.length)return '<p class="missing">No individually sourced historical bouts are cached for this pairing.</p>';
   return '<ol class="sumo-h2h-timeline">'+rows.slice(0,limit).map(m=>{
-    const winner=wrestler(m.winnerId)?.shikonaEn||(m.winnerId===Number(a)?(wrestler(a)?.shikonaEn||'First rikishi'):(wrestler(b)?.shikonaEn||'Second rikishi'));
+    const winner=headToHeadName(m.winnerId,a,b);
     const firstWon=m.winnerId===Number(a);
     return '<li class="sumo-h2h-bout"><span class="sumo-h2h-date">'+e(bashoLabel(m.bashoId))+' · Day '+e(m.day)+'</span>'+
       '<span class="sumo-h2h-winner '+(firstWon?'won':'lost')+'">WINNER · '+e(winner)+'</span>'+
@@ -129,7 +139,7 @@ function headToHeadPreview(a,b,h2h) {
   return '<div class="sumo-h2h-preview"><div class="sumo-h2h-title">LAST '+Math.min(5,h2h.rows.length)+' HEAD-TO-HEAD RESULTS</div>'+
     historyRowsMarkup(h2h,a,b,5)+
     '<a class="sumo-h2h-link" href="'+link+'">VIEW ALL '+h2h.total+' MEETINGS ↗</a>'+
-    (!h2h.complete?'<p class="footnote">Only '+h2h.rows.length+' bout details cached; the individual history is incomplete.</p>':'')+
+    (!h2h.complete?'<p class="footnote">'+(h2h.source.includes('190-rikishi')?'Showing five recent source-recorded meetings. Open the full matchup to see every career meeting.':'Only '+h2h.rows.length+' bout details cached; the individual history is incomplete.')+'</p>':'')+
     '</div>';
 }
 function bioLine(w){
@@ -286,7 +296,10 @@ function renderDirectory() {
 }
 function detailStats(w) {
   const enriched=detailFor(details(),w.sourceId);
-  return enriched?.stats?.status==='available'?enriched.stats.data:null;
+  const fromApi=enriched?.stats?.status==='available'?enriched.stats.data:null;
+  const research=STATE.h2hSummary?.profiles?.[String(w.sourceId)];
+  return research?{...fromApi,totalWins:research.careerWins,totalLosses:research.careerLosses,
+    totalMatches:research.careerWins+research.careerLosses,researchCareerSource:true}:fromApi;
 }
 function formatStats(w,cur) {
   const s=detailStats(w), total=s?.totalMatches, wins=s?.totalWins, losses=s?.totalLosses;
@@ -294,7 +307,7 @@ function formatStats(w,cur) {
   return '<div class="tiles">'+
     statTile(w.currentRank||'—','Current banzuke rank')+
     statTile(cur?cur.win+'-'+cur.loss+(cur.absence===null?'':'-'+cur.absence):'—',divisionOf(w.currentRank)==='Makushita'?'Current basho W–L':'Current basho W–L–A')+
-    statTile(Number.isInteger(wins)&&Number.isInteger(losses)?wins+'-'+losses:'—','Recorded career W–L · source sample')+
+    statTile(Number.isInteger(wins)&&Number.isInteger(losses)?wins+'-'+losses:'—',s?.researchCareerSource?'Career W–L · full source ledger':'Recorded career W–L · source sample')+
     statTile(s?.winsByDivision?.Makuuchi!==undefined && s?.lossByDivision?.Makuuchi!==undefined ?
        s.winsByDivision.Makuuchi+'-'+s.lossByDivision.Makuuchi:'—','Makuuchi W–L · source sample')+
     statTile(s?.yushoByDivision?.Makuuchi ?? '—','Makuuchi championships')+
@@ -313,38 +326,52 @@ function recordChart(item) {
     '<p class="footnote">'+s.win+' wins and '+s.loss+' losses recorded; '+completed+' completed matchups displayed. Unassigned future bouts are omitted rather than shown as empty cards. '+
     (div==='Makushita'?'Makushita non-bout days are not counted as losses or injuries.':'Results and published upcoming opponents are separated.')+'</p>';
 }
-function profileResults(w, limit) {
+function profileResults(w,limit){
   const enriched=detailFor(details(),w.sourceId);
+  const research=STATE.h2hSummary?.profiles?.[String(w.sourceId)];
+  const careerRecent=Array.isArray(research?.recentPerformance)?research.recentPerformance.map(m=>({
+    bashoId:m.bashoId,day:m.day,opponentId:m.opponentId,opponent:m.opponentName,
+    outcome:m.outcome,kimarite:m.kimarite
+  })):[];
   const sourced=validMatchSamples(enriched,w.sourceId);
-  const matches=sourced.length ? sourced : currentBashoMatchSample(entryFor(w),details().bashoId);
-  if(!matches.length) return '<p class="missing">No completed opponent records are available for this rikishi in this snapshot.</p>';
+  const matches=careerRecent.length?careerRecent:(sourced.length?sourced:currentBashoMatchSample(entryFor(w),details().bashoId));
+  if(!matches.length)return '<p class="missing">No completed source-backed opponent records are available for this rikishi.</p>';
   const subset=matches.slice(0,limit),maxNext=limit===5?10:18;
   return '<div class="sumo-result-grid">'+subset.map(x=>{
-    const opponent=wrestler(x.opponentId);
-    const h2h=headToHeadFor(w.sourceId,x.opponentId);
+    const opponent=wrestler(x.opponentId),h2h=headToHeadFor(w.sourceId,x.opponentId);
     return '<article class="sumo-result-card"><div class="sumo-result-top"><span>'+e(bashoLabel(x.bashoId))+' · '+
       e(x.day?'Day '+x.day:'Bout '+(x.boutSequence||'—'))+'</span><span class="outcome '+e(x.outcome)+'">'+e(x.outcome.toUpperCase())+'</span></div>'+
       fighterOnCard(opponent,x.opponentId,x.opponent)+
-      '<div class="sumo-result-extra"><a href="'+headToHeadUrl(w.sourceId,x.opponentId)+'">ALL-TIME H2H '+e(h2h?h2h.wins+'–'+h2h.losses:'not yet sourced')+' ↗</a>'+
+      '<div class="sumo-result-extra"><a href="'+headToHeadUrl(w.sourceId,x.opponentId)+'">ALL-TIME H2H '+e(h2h?h2h.wins+'–'+h2h.losses:'history loading')+' ↗</a>'+
       '<span>'+e(techniqueText(x.kimarite))+'</span></div></article>';
   }).join('')+'</div>'+
   (matches.length>limit?'<div class="more-wrap"><button class="btn light" data-profile-limit="'+maxNext+
     '">VIEW LATEST '+Math.min(maxNext,matches.length)+' CACHED BOUTS</button></div>':'')+
-  '<p class="footnote">'+(sourced.length?'This is a partial, recently cached bout sample, not the full career record.':
-    'These are completed opponents recorded in the current '+e(bashoLabel(details().bashoId))+' banzuke only.')+'</p>';
+  '<p class="footnote">'+(careerRecent.length?'Recent results from a source-collected complete career ledger; independent JSA certification remains outstanding.':
+    sourced.length?'This is a partial, recently cached bout sample, not the full career record.':
+    'Current '+e(bashoLabel(details().bashoId))+' banzuke bouts only.')+'</p>';
 }
-function profileTechniques(w) {
+function profileTechniques(w){
+  const research=STATE.h2hSummary?.profiles?.[String(w.sourceId)];
+  const careerWins=research?.kimarite?.wins;
+  if(Array.isArray(careerWins)&&careerWins.length){
+    const counted=careerWins.reduce((n,x)=>n+(Number(x.count)||0),0);
+    return '<div>'+careerWins.slice(0,7).map(x=>{
+      const percentage=counted?Math.round(1000*Number(x.count)/counted)/10:0;
+      return '<div class="chart-row"><span class="name">'+e(x.kimarite)+'</span><div class="bar-bg" role="meter" aria-label="'+e(x.kimarite)+' percentage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+percentage+'"><div style="width:'+percentage+'%"></div></div><strong>'+percentage+'%</strong></div>';
+    }).join('')+'</div><p class="footnote">'+counted+' career wins with source-recorded kimarite; forfeits excluded. Independent JSA full-history certification remains pending.</p>';
+  }
   const enriched=detailFor(details(),w.sourceId);
   const direct=Array.isArray(enriched?.matches?.data?.records)?enriched.matches.data.records:[];
   const fallback=currentBashoMatchSample(entryFor(w),details().bashoId)
     .filter(x=>x.outcome==='win').map(x=>({winnerId:w.sourceId,kimarite:x.kimarite}));
   const sample=direct.length?direct:fallback;
   const dist=techniqueDistribution(sample,w.sourceId);
-  if(!dist.sampleWins) return '<p class="missing">Not enough recorded non-forfeit wins to calculate a meaningful technique breakdown. No fighting-style scores are inferred.</p>';
+  if(!dist.sampleWins)return '<p class="missing">Not enough recorded non-forfeit wins to calculate a meaningful technique breakdown.</p>';
   const scope=direct.length?'cached recent bout sample':'current '+bashoLabel(details().bashoId)+' tournament only';
   return '<div>'+dist.techniques.slice(0,7).map(x=>
     '<div class="chart-row"><span class="name">'+e(x.technique)+'</span><div class="bar-bg" role="meter" aria-label="'+e(x.technique)+' percentage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+x.percentage+'"><div style="width:'+x.percentage+'%"></div></div><strong>'+x.percentage+'%</strong></div>'
-  ).join('')+'</div><p class="footnote">Distribution of '+dist.sampleWins+' recorded winning techniques from the <strong>'+e(scope)+'</strong>. These are not career percentages or verified stylistic preferences. Forfeits excluded.</p>';
+  ).join('')+'</div><p class="footnote">Distribution of '+dist.sampleWins+' winning techniques in the '+e(scope)+'. Not career percentages. Forfeits excluded.</p>';
 }
 function renderProfile(id) {
   const w=wrestler(id);
