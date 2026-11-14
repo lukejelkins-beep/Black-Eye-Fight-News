@@ -12,6 +12,21 @@ This extension is **offline-only, non-production**, using the existing five-minu
 4. `scripts/reconcile-ufc-independent-evidence.mjs` optionally reads independently obtained **authorized** source export data and writes `qa/ufc-independent-source-reconciliation.json`, without changing the certification register.
 5. GitHub Actions preserves QA outputs for seven days as a private, non-production workflow artifact.
 
+### Greco1899 public historical dataset integration
+
+The collector now performs a **GitHub-only bulk CSV crosscheck**, using `scripts/audit-ufc-greco-bulk-crosscheck.mjs`. On the first eligible collector run each UTC day, it requests the source commit metadata and exactly two version-pinned CSV files from `Greco1899/scrape_ufc_stats`:
+
+- `ufc_event_details.csv` supplies authoritative date candidates for the source's UFC event names.
+- `ufc_fight_results.csv` supplies fight-detail URLs, outcomes and corner names.
+
+This stage **does not request UFCStats pages**, use the UFCalendar paid key, or write any original source CSV into the BEFN repository. It places a private QA report in `qa/ufc-greco-bulk-crosscheck.json` and a compact daily resume checkpoint in `data/ufc-greco-crosscheck-checkpoint.json`. Later five-minute collector runs reuse the checkpoint and make **zero Greco requests** that UTC day. On a public GitHub source error, the existing UFCalendar archive/relay continues.
+
+The source repository declares **GPL-3.0 for its project**; this does not establish standalone rights over every underlying statistical fact or the upstream website. BEFN does not copy its code or raw dataset, and limits this integration to source-linked research deltas pending confirmation of any relevant reuse requirements. Attribution: https://github.com/Greco1899/scrape_ufc_stats .
+
+**Verified pilot on 14 November 2026:** the 8 November 2026 source snapshot contained 8,988 fight-result records across 796 events. It name-matched 770 of the 783 approved fighters (768 names unique within that roster), and matched **24/24** independently verified source-inventory bouts for Bruno Gustavo da Silva, Carlos Hernandez and HyunSung Park. This was a *historical candidate match*, not a claim of restored native UFCalendar records or completed full-career certifications. The source event list ended on 7 November 2026 and cannot certify the 14 November 2026 snapshot by itself.
+
+For all other fighters, Greco matches are **identity candidates** only. The queue prioritizes unlinked source bouts for review; it does not infer two same-name records belong to one fighter, populate round statistics, change records, or set independent `sourceCoverageAttested`.
+
 ### Source export input
 
 An external-source acquisition process may provide `data/ufc-authorized-independent-source-export.json` only after access rights are verified. **Do not commit restricted source material, credentials, raw HTML, or paid licensed datasets to a public repository.** The script does not automatically download or create this file.
