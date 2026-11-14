@@ -5,7 +5,7 @@
  */
 import { mkdir, writeFile, rename } from 'node:fs/promises';
 import { createSumoClient, collectRoster, buildRikishiIndex, SUMO_API_BASE } from './sumo-api-source.mjs';
-import { divisionOf } from '../assets/sumo-data.mjs';
+import { TRACKED_DIVISIONS, trackedBanzukeCohort } from '../assets/sumo-data.mjs';
 
 const PICKS = ['Onosato', 'Wakatakakage', 'Nishikigi'];
 const CURRENT_BASHO = '202611';
@@ -29,10 +29,6 @@ async function save(path, value) {
 
 const all = await collectRoster(client, { pageSize: 250, maxPages: 5 });
 const base = buildRikishiIndex(all, capturedAt);
-const TRACKED_DIVISIONS = ['Makuuchi', 'Juryo', 'Makushita'];
-const tracked = base.rikishi.filter(x => TRACKED_DIVISIONS.includes(divisionOf(x.currentRank)));
-const counts = Object.fromEntries(TRACKED_DIVISIONS.map(d => [d, tracked.filter(x => divisionOf(x.currentRank) === d).length]));
-console.log('Current eligible cohort: ' + tracked.length + ' (' + JSON.stringify(counts) + ')');
 const picked = PICKS
   .map(name => all.find(x => x.shikonaEn?.toLowerCase() === name.toLowerCase()))
   .filter(Boolean);
@@ -47,6 +43,15 @@ const banzuke = {};
 for (const div of TRACKED_DIVISIONS) {
   banzuke[div] = await collectOptional(() => client.banzuke(CURRENT_BASHO, div), div + ' banzuke');
 }
+const availableBanzuke = {};
+for (const division of TRACKED_DIVISIONS) {
+  if (banzuke[division]?.status !== 'available') {
+    throw new Error('Cannot publish incomplete three-division banzuke: ' + division);
+  }
+  availableBanzuke[division] = banzuke[division].data;
+}
+const { rikishi: tracked, divisionCounts: counts } = trackedBanzukeCohort(base.rikishi, availableBanzuke);
+console.log('Current banzuke cohort: ' + tracked.length + ' (' + JSON.stringify(counts) + ')');
 const roster = {
   ...base,
   count: tracked.length,
