@@ -163,7 +163,7 @@ export function buildV4StatFoundation(approval,research,progress,postfight,{asOf
   stats.missingNativeMetricRows+=history.filter(x=>x.boutId&&!measured.has(x.boutId)).length;
   for(const row of history)if(row.boutId&&measured.has(row.boutId))
    stats.uniqueMeasuredIds.add(row.boutId);
-  fighters[slug]={name:profile?.name||null,slug,ucfTimelineCertified:certified,
+  fighters[slug]={name:profile?.name||null,slug,ufcTimelineCertified:certified,
    // A complete history is never inferred from how many observations were saved.
    careerCoverageStatus:certified?"provider_certified":"provider_completeness_unverified",
    knownCareerBouts:history.length,windows,
