@@ -145,7 +145,7 @@ export function crosscheckGreco({events,results,approval,research,inventory,comm
 }
 async function requestText(url,max=MAX_BYTES){
  const response=await fetch(url,{signal:AbortSignal.timeout(18000),
-  headers:{'user-agent':'BEFN-UFC-history-crosscheck/1.0','accept':'text/plain'}});
+  headers:{'user-agent':'BEFN-UFC-history-crosscheck/1.0','accept':'*/*'}});
  if(!response.ok)throw Error('Public Github source request failed: '+response.status);
  const bytes=await response.arrayBuffer();
  if(bytes.byteLength>max)throw Error('Public source exceeds size cap');
