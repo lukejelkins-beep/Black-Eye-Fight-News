@@ -53,10 +53,21 @@ function feederDatesFrom(progress){
  return new Set([...byDay].filter(([,titles])=>
   titles.size&&[...titles].every(isFeederUfcEvent)).map(([day])=>day));
 }
-function timeline(profile,asOf,feederDates){
+function verifiedFeederRecord(slug,row,evidence){
+ if(evidence?.schema!==1||!Array.isArray(evidence.bouts))return false;
+ return evidence.bouts.some(item=>
+  item?.fighterSlug===slug&&
+  String(item.boutId||"")===String(row.boutId||"")&&
+  row.source==="native"&&
+  item.date===row.date&&norm(item.opponent)===norm(row.opponent)&&
+  isFeederUfcEvent(item.event)&&
+  /^https:\/\/(?:www\.)?ufc\.com\//i.test(String(item.sourceUrl||""))
+ );
+}
+function timeline(profile,asOf,feederDates,slug,feederEvidence){
  const rows=(Array.isArray(profile?.recentHistory)?profile.recentHistory:[])
   .filter(x=>isHistoryRow(x)&&validDay(x.date)&&x.date<=asOf&&
-   !feederDates.has(x.date));
+   !feederDates.has(x.date)&&!verifiedFeederRecord(slug,x,feederEvidence));
  rows.sort((a,b)=>b.date.localeCompare(a.date)||
   Number(b.source==="native")-Number(a.source==="native")||
   String(a.opponent||"").localeCompare(String(b.opponent||"")));
@@ -118,7 +129,7 @@ function aggregate(rows,measured){
   totals,metricCoverage:coverage,rates:calculatedRates};
 }
 export function buildV4StatFoundation(approval,research,progress,postfight,
-  {asOf,census=null,independentEvidence=null}={}){
+  {asOf,census=null,independentEvidence=null,feederEvidence=null}={}){
  if(approval?.schema!==1||approval?.scope!=="ufc-36-month-roster"||
     approval?.status!=="approved"||approval?.approvedBy!=="user"||
     !Array.isArray(approval.approvedFighters)||
@@ -144,10 +155,18 @@ export function buildV4StatFoundation(approval,research,progress,postfight,
   knownFive:0,knownTen:0,measuredFiveOfFive:0,measuredTenOfTen:0,
   providerCertified:0,independentCertified:0,legacyClaims:0,
   historyRows:0,linkedMeasuredRows:0,uniqueMeasuredIds:new Set(),
-  unlinkedHistoryRows:0,missingNativeMetricRows:0};
+  unlinkedHistoryRows:0,missingNativeMetricRows:0,
+  excludedFeederHistoryRows:0,excludedFeederFightIds:new Set()};
  for(const slug of approval.approvedFighters){
   const profile=research?.profiles?.[slug]||{};
-  const history=timeline(profile,day,feederDates);
+  const history=timeline(profile,day,feederDates,slug,feederEvidence);
+  const excludedExactFeederRows=(Array.isArray(profile?.recentHistory)?
+   profile.recentHistory:[]).filter(x=>
+   isHistoryRow(x)&&validDay(x.date)&&x.date<=day&&
+   (feederDates.has(x.date)||verifiedFeederRecord(slug,x,feederEvidence)));
+  stats.excludedFeederHistoryRows+=excludedExactFeederRows.length;
+  for(const row of excludedExactFeederRows)if(row.boutId)
+   stats.excludedFeederFightIds.add(String(row.boutId));
   const sampled=postfight.fighters?.[slug];
   // An old five-bout-only cache cannot claim comprehensive V4 career coverage.
   if(sampled&&!Array.isArray(sampled.careerBouts))
@@ -255,6 +274,8 @@ export function buildV4StatFoundation(approval,research,progress,postfight,
   distinctLinkedMeasuredUfcFights:stats.uniqueMeasuredIds.size,
   unlinkedHistoryRows:stats.unlinkedHistoryRows,
   nativeHistoryRowsWithoutFullRoundMetrics:stats.missingNativeMetricRows,
+  excludedKnownFeederHistoryRows:stats.excludedFeederHistoryRows,
+  excludedDistinctKnownFeederBoutIds:stats.excludedFeederFightIds.size,
   missingBoutsByPriority:gapBreakdown};
  return {schema:1,scope:"ufc-only-v4-stat-foundation",asOf:day,
   status:"offline_qa_only_not_production",population:stats.approved,
@@ -270,7 +291,8 @@ export function main(){
   read("data/ufc-postfight-metrics.json"),
   {asOf:new Date().toISOString().slice(0,10),
    census:read("data/ufc-36-month-candidates.json"),
-   independentEvidence:read("data/ufc-independent-full-career-verification.json")}
+   independentEvidence:read("data/ufc-independent-full-career-verification.json"),
+   feederEvidence:read("data/ufc-feeder-bout-evidence.json")}
  );
  if(out.population!==783)throw Error("Immutable BEFN cohort must contain 783 fighters");
  const file=path.join(root,"qa/ufc-v4-stat-foundation.json");
