@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#151115">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Sumo | Black Eye Fight News — Testing Preview</title>
+  <meta name="description" content="BEFN development preview: Japanese sumo wrestlers, rankings, bout results and winning techniques in the top three divisions.">
+  <link rel="icon" href="assets/site-favicon-192.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/sumo.css?v=20261114-test1">
+  <script type="module" src="assets/sumo.js?v=20261114-test1"></script>
+</head>
+<body>
+  <a class="skip" href="#sumo-main">Skip to content</a>
+  <div class="utility"><div class="frame utility-inner"><span class="live-dot"></span><span>BLACK EYE FIGHT NEWS</span><span class="utility-right">INDEPENDENT COMBAT SPORTS</span></div></div>
+  <header class="masthead">
+    <div class="frame masthead-inner">
+      <a class="logo" href="index.html#home" aria-label="Black Eye Fight News home">
+        <img src="assets/app-icon-source.webp" width="58" height="58" alt="">
+        <span><strong>BLACK EYE</strong><strong>FIGHT NEWS</strong><small>RESULTS · RANKINGS · FIGHTERS</small></span>
+      </a>
+      <div class="header-right"><span class="preview-chip">TEST BRANCH · PREVIEW</span><a href="index.html#home">BACK TO BEFN</a></div>
+    </div>
+  </header>
+  <nav class="site-nav" aria-label="BEFN primary navigation">
+    <div class="frame primary-links">
+      <a href="index.html#home">News</a><a href="index.html#champions">Champions</a>
+      <a href="index.html#fighters">Fighter Scout</a><a href="index.html#leaderboards">UFC Stats</a>
+      <a href="index.html#fights">Fights</a><a href="index.html#highlights">Fight Film</a>
+      <a href="sumo.html" class="selected" aria-current="page">Sumo</a>
+    </div>
+  </nav>
+  <div class="sports" aria-label="Combat sports">
+    <div class="frame sports-inner">
+      <a class="sport-all" href="index.html#home">ALL SPORTS</a>
+      <a class="sport-option" href="index.html#fights" title="Boxing"><b>🥊</b><span>BOXING</span></a>
+      <a class="sport-option" href="index.html#fights" title="MMA"><b>🥋</b><span>MMA</span></a>
+      <a class="sport-option" href="index.html#fights" title="Grappling"><b>🤼</b><span>GRAPPLING</span></a>
+      <span class="sport-option current"><b class="kanji">相</b><span>SUMO</span></span>
+    </div>
+  </div>
+  <div class="subnav"><nav class="frame subnav-inner" aria-label="Sumo pages">
+    <a href="#home" data-page="home">Overview</a>
+    <a href="#rikishi" data-page="rikishi">Rikishi</a>
+    <a href="#basho" data-page="basho">Basho Centre</a>
+    <a href="#banzuke" data-page="banzuke">Banzuke</a>
+    <a href="#kimarite" data-page="kimarite">Kimarite</a>
+  </nav></div>
+  <div class="testing-note"><div class="frame">
+    <strong>SUMO DEVELOPMENT PREVIEW</strong>
+    <span>Third-party API snapshot. Results and records are not independently certified against the Japan Sumo Association. No automatic live refresh.</span>
+  </div></div>
+  <main id="sumo-main" class="frame main" tabindex="-1" aria-live="polite">
+    <div class="loading">Loading tracked wrestler profiles and tournament data…</div>
+  </main>
+  <footer class="footer"><div class="frame footer-grid">
+    <div><strong>BEFN <em>SUMO</em></strong><p>Dedicated coverage of Makuuchi, Jūryō and Makushita. A testing preview, not a production release.</p></div>
+    <div><a href="https://www.sumo.or.jp/EnSumoDataRikishi/search" target="_blank" rel="noopener noreferrer">Japan Sumo Association ↗</a><a href="https://www.sumo-api.com/api-guide" target="_blank" rel="noopener noreferrer">Sumo API data source ↗</a><a href="index.html#home">BEFN homepage</a></div>
+  </div></footer>
+</body>
+</html>
