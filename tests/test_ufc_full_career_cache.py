@@ -490,7 +490,7 @@ class FullCareerCacheTests(unittest.TestCase):
             else:
                 saved=state["ufcApprovedFullFightSearchChecks"]["carlos-hernandez-7"]
                 self.assertEqual(saved["status"],
-                                 "checked" if kind=="feeder" else "manual_review")
+                                 "source_depth_gap" if kind=="feeder" else "manual_review")
                 if kind=="feeder":
                     self.assertEqual(saved["excludedByReason"]["documented_ufc_feeder_event"],1)
                     self.assertEqual(saved["invalidRows"],0)
@@ -511,7 +511,9 @@ class FullCareerCacheTests(unittest.TestCase):
             self.assertEqual(summary["newHistoryRows"],0)
             self.assertNotIn("710",state["bouts"])
             checked=state["ufcApprovedFullFightSearchChecks"]["carlos-hernandez-7"]
-            self.assertEqual(checked["status"],"checked")
+            self.assertEqual(checked["status"],"source_depth_gap",
+                "The official-source minimum still blocks historical completion")
+            self.assertEqual(checked["missingOfficialMinimumUfcBouts"],2)
             self.assertEqual(checked["invalidRows"],0)
             self.assertEqual(
                 checked["excludedByReason"]["non_winner_or_unfinished_bout"],1)
