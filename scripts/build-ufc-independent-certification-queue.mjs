@@ -40,7 +40,12 @@ export function buildCertificationQueue(approval,report,registry,{batchSize=20}=
    const cached=cache.get(slug);
    const certified=d.independentlyVerifiedFullCareer===true&&
      proof.sourceCoverageAttested===true&&
-     proof.verificationMethod==='full_official_ufc_fight_listing_crosscheck';
+     proof.verificationMethod==='full_official_ufc_fight_listing_crosscheck'&&
+     number(d.minimumConfirmedMissingHistoricalUfcBouts)===0&&
+     !officialMissing.has(slug)&&!ambiguous.has(slug)&&
+     number(cached?.missingIndexedOfficialUfcFights?.length)===0&&
+     number(cached?.historicalIdentityConflicts?.length)===0&&
+     d.allKnownFightsIndexed===true&&d.allKnownFightsMeasured===true;
    let state='source_listing_review',priority=4;
    if(certified){state='independent_history_certified';priority=99;}
    else if(number(d.minimumConfirmedMissingHistoricalUfcBouts)>0||
