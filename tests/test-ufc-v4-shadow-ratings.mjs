@@ -86,6 +86,8 @@ test("shadow export never calls credential bonuses or certifies incomplete caree
  assert.equal(out.summary.approved,783);
  assert.equal(out.summary.historicalCareersCertified,0);
  assert.equal(out.summary.scoredLast5,1);
+ assert.equal(out.summary.scoredLast5FullHorizon,0);
+ assert.equal(out.summary.scoredLast10FullHorizon,0);
  assert.equal(out.summary.fewerThanThreeOfficialUfcBouts,782);
  assert.equal(out.summary.officialUfcHistoryLengthBands["3plus"],1);
  assert.equal(out.summary.atLeastThreeOfficialUfcBoutsUnrated,0);
