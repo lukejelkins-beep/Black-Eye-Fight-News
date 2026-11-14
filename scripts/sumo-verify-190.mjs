@@ -78,12 +78,45 @@ export function auditRikishi(w,cache){
     counts:{weights:cache.data?.measurements?.length||0,ranks:cache.data?.ranks?.length||0,matches:cache.data?.matches?.length||0}
   };
 }
+export function crossCheckOfficial(w,cache,evidence){
+  if(!cache?.data?.profile||!evidence)return null;
+  const p=cache.data.profile,s=cache.data.stats;
+  const id=Number(w.sourceId),nsk=Number(w.officialNskId);
+  const base='https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+nsk+'/';
+  const identityVerified=
+    Number(p.id)===id&&Number(p.nskId)===nsk&&
+    Number(evidence.sumoApiId)===id&&Number(evidence.officialNskId)===nsk&&
+    evidence.officialProfileUrl===base&&
+    p.heya===evidence.stable&&p.currentRank===evidence.currentRank;
+  const measurementsVerified=identityVerified&&
+    Number(p.height)===Number(evidence.heightCm)&&
+    Number(p.weight)===Number(evidence.weightKg);
+  const totalsMatch=s&&s.totalWins!=null&&s.totalLosses!=null&&s.totalAbsences!=null?
+    Number(s.totalWins)===Number(evidence.record.wins)&&
+    Number(s.totalLosses)===Number(evidence.record.losses)&&
+    Number(s.totalAbsences)===Number(evidence.record.absences):false;
+  const sourceTotals=s?{
+    wins:s.totalWins,losses:s.totalLosses,absences:s.totalAbsences
+  }:null;
+  return {
+    sourceId:id,name:w.shikonaEn,officialSource:evidence.officialProfileUrl,
+    officialAsOf:evidence.officialAsOf,
+    identityVerified,measurementsVerified,careerTotalsMatchAtSourceSnapshots:totalsMatch,
+    sourceTotals,officialTotals:evidence.record,
+    note:totalsMatch?'Totals matched the provided official snapshot':
+      'Totals differ between source captures. Reconcile result-cutoff dates before certification.'
+  };
+}
 async function main(){
   const cohort=await read('data/sumo/rikishi-index.json');
   if(cohort?.count!==190||cohort.rikishi?.length!==190)throw Error('Frozen 190-rikishi cohort mismatch');
-  const audited=[];
+  const spotchecks=await read(join(ROOT,'jsa-spotchecks.json'),{bySourceId:{}});
+  const audited=[],officialComparisons=[];
   for(const w of cohort.rikishi){
-    audited.push(auditRikishi(w,await read(join(ROOT,'rikishi',w.sourceId+'.json'))));
+    const doc=await read(join(ROOT,'rikishi',w.sourceId+'.json'));
+    audited.push(auditRikishi(w,doc));
+    const checked=crossCheckOfficial(w,doc,spotchecks.bySourceId?.[String(w.sourceId)]);
+    if(checked)officialComparisons.push(checked);
   }
   const overview={
     schemaVersion:1,scope:'Research API response integrity only — NEVER a JSA or full-career certificate',
@@ -93,6 +126,12 @@ async function main(){
     integrityException:audited.filter(x=>x.status==='source-integrity-exception').length,
     sourceReady:audited.filter(x=>x.readyForExternalCrosscheck).length,
     records:{weight:audited.reduce((a,b)=>a+b.counts.weights,0),rank:audited.reduce((a,b)=>a+b.counts.ranks,0),matches:audited.reduce((a,b)=>a+b.counts.matches,0)},
+    independentJsaSpotchecks:{
+      identityVerified:officialComparisons.filter(x=>x.identityVerified).length,
+      measurementsVerified:officialComparisons.filter(x=>x.measurementsVerified).length,
+      currentRecordMatches:officialComparisons.filter(x=>x.careerTotalsMatchAtSourceSnapshots).length,
+      comparisons:officialComparisons
+    },
     pendingExternalChecks:['JSA identity/current profile','JSA/independent chronological career crosscheck',
       'Published height and weight provenance','Cross-source fight-history totals','Photo licensing'],
     cases:audited.filter(x=>x.errors.length||x.warnings.length||x.readyForExternalCrosscheck).slice(0,190)
