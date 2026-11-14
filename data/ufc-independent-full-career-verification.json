@@ -26743,6 +26743,71 @@
         }
       ],
       "sourceVerifiedExcludedFeederBouts": []
+    },
+    "ozzy-diaz": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Ozzy Diaz",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/6967153c7edb4d87",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ozzy-diaz",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Historical Greco UFCStats-derived CSV snapshot pinned; no direct live UFCStats access",
+        "method": "Complete primary UFC.com chronological athlete record and independent Greco UFCStats-derived exact source fight IDs, crosschecked with immutable saved native numeric ID, original both corners, event dates, outcomes and measured statistics. Separately excluded 2022 DWCS feeder."
+      },
+      "verifiedNumericFighterIds": [
+        "550"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Complete official UFC.com dated biography reports exactly four completed UFC bouts as of 14 Nov 2026, starting 2024-11-23 Zhang Mingyang KO loss, 2025-03-08 Djorden Santos unanimous decision win, 2026-05-09 Ateba Gautier KO loss, 2026-09-19 Ryan Gandra KO loss. The 2022-07-26 DWCS Joe Pyfer loss is feeder competition and is excluded. Two of the exact official source/native fight IDs are independently reciprocated by already strict-certified Ryan Gandra and Djorden Santos. Native fighter ID 550 is separately recorded in Djorden Santos's pinned official source fixture.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/ozzy-diaz",
+        "https://www.ufc.com/athlete/ryan-gandra",
+        "https://www.ufc.com/news/ufc-328-official-scorecards-chimaev-vs-strickland-judges",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2024-11-23",
+          "opponent": "Zhang Mingyang",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/56d2c00dfd391fcf",
+          "nativeBoutId": "38590",
+          "nativeFighterId": "550"
+        },
+        {
+          "date": "2025-03-08",
+          "opponent": "Djorden Santos",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/96c2f85b46e98e91",
+          "nativeBoutId": "60330",
+          "nativeFighterId": "550"
+        },
+        {
+          "date": "2026-05-09",
+          "opponent": "Ateba Gautier",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/770c5302e32916ea",
+          "nativeBoutId": "66055",
+          "nativeFighterId": "550"
+        },
+        {
+          "date": "2026-09-19",
+          "opponent": "Ryan Gandra",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/51789f77811b1817",
+          "nativeBoutId": "83416",
+          "nativeFighterId": "550"
+        }
+      ]
     }
   }
 }
