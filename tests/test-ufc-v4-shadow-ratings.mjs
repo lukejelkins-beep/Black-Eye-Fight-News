@@ -91,3 +91,24 @@ test("shadow export never calls credential bonuses or certifies incomplete caree
  assert.equal(out.fighters["fighter-1"].windows.last5.overall,null);
  assert.equal(out.status,"experimental_not_calibrated_not_public");
 });
+
+test("no-contests retain a chronological Last 5 slot and do not backfill older decisions",()=>{
+ const rows=[
+  bout(901,"2026-09-01","a","op-nc","NC"),
+  bout(902,"2026-08-01","a","op1","W"),
+  bout(903,"2026-07-01","a","op2","W"),
+  bout(904,"2026-06-01","a","op3","W"),
+  bout(905,"2026-05-01","a","op4","W"),
+  bout(906,"2026-04-01","a","op5","L")
+ ];
+ const actual=scoreFighter(rows,new Map(),"2026-11-14",5);
+ assert.equal(actual.fightsInChronologicalWindow,5);
+ assert.equal(actual.noContestsInWindow,1);
+ assert.equal(actual.bouts,4);
+ assert.notEqual(actual.overall,null);
+ const substituted=scoreFighter(rows.slice(1),new Map(),"2026-11-14",5);
+ assert.equal(substituted.noContestsInWindow,0);
+ assert.equal(substituted.bouts,5);
+ assert.notEqual(actual.skills.form,substituted.skills.form,
+  "a previously overlooked older loss must not enter the actual Last5 window");
+});
