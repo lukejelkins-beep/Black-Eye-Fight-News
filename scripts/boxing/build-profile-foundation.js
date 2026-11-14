@@ -235,5 +235,73 @@ const qa=[
 '5. Review profile design on the research preview before promoting a tested batch to production.',
 ''
 ];
+
+function csvValue(value){
+  const s=String(value===null||value===undefined?'':value);
+  return /[,"\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;
+}
+function isoDate(text){
+  const months={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+  const m=String(text||'').match(/^(\d{1,2})\s+([A-Za-z]{3})\s+(\d{4})$/);
+  if(!m)return null;
+  const month=months[m[2].toLowerCase()];
+  if(!month)return null;
+  const year=Number(m[3]),day=Number(m[1]);
+  const actual=new Date(Date.UTC(year,month-1,day));
+  if(actual.getUTCFullYear()!==year||actual.getUTCMonth()!==month-1||actual.getUTCDate()!==day)return null;
+  return actual.toISOString().slice(0,10);
+}
+const queue=[];
+for(const p of profiles){
+  if(!p.archived_scouting)continue;
+  const weight=p.titles.length?1:p.rankings.some(r=>r.organisation==='RING')?2:p.rankings.length?3:4;
+  const source_urls=p.archived_scouting.source_links.map(x=>x.url).filter(x=>!x.includes('google.com/search'));
+  p.archived_scouting.recent_bouts.forEach((bout,i)=>{
+    // Some legacy opponents include internally generated initials; do not
+    // guess identities when populating a verified professional fight ledger.
+    const opponent_candidate = String(bout.opponent_text||'').replace(/^[A-Z]{2}\s+(?=[A-Za-z])/,'');
+    queue.push({
+      priority:weight,
+      boxer:p.name,
+      boxer_id:p.id,
+      division:p.primary_division||p.divisions.join('; '),
+      ranking_scout_status:p.status,
+      legacy_recency_position:i+1,
+      date_text:bout.date_text,
+      fight_date_iso:isoDate(bout.date_text),
+      opponent_raw:bout.opponent_text,
+      opponent_candidate:opponent_candidate,
+      outcome_archived:bout.outcome,
+      method_archived:bout.method_text,
+      source_urls:source_urls,
+      ledger_status:'NEEDS_INDEPENDENT_VERIFICATION',
+      opponent_id:null,
+      compubox_report_id:null,
+      official_outcome:null,
+      verified_bout_id:null
+    });
+  });
+}
+if(queue.length!==345)fail('Unexpected archived fight queue count: '+queue.length);
+queue.sort((a,b)=>a.priority-b.priority||
+  String(b.fight_date_iso).localeCompare(String(a.fight_date_iso))||
+  a.boxer.localeCompare(b.boxer)||a.legacy_recency_position-b.legacy_recency_position);
+const ledgerCols=['priority','boxer','boxer_id','division','ranking_scout_status',
+  'legacy_recency_position','date_text','fight_date_iso','opponent_raw','opponent_candidate',
+  'outcome_archived','method_archived','source_urls','ledger_status',
+  'opponent_id','compubox_report_id','official_outcome','verified_bout_id'];
+const ledgerCsv=[ledgerCols.join(','),...queue.map(x=>ledgerCols.map(col=>csvValue(col==='source_urls'?x[col].join('; '):x[col])).join(','))].join('\n')+'\n';
+write('research/boxing/generated/archived-bout-verification-queue.csv', ledgerCsv);
+const badDates=queue.filter(x=>!x.fight_date_iso).length;
+write('research/boxing/generated/archived-bout-verification-qa.json',
+  JSON.stringify({as_of:roster.snapshot_date,entries:queue.length,provisional:queue.length,
+    fighters_in_queue:unique(queue.map(x=>x.boxer)).length,
+    unresolved_date_format:badDates,priority_1:queue.filter(x=>x.priority===1).length,
+    priority_2:queue.filter(x=>x.priority===2).length,
+    priority_3:queue.filter(x=>x.priority===3).length,
+    priority_4:queue.filter(x=>x.priority===4).length,
+    records_verified:0,compubox_links_verified_to_ledger:0,
+    note:'Previous site research entries are not verified professional fight records.'},null,2)+'\n');
+
 write('research/boxing/generated/profile-foundation-qa.md',qa.join('\n'));
 process.stdout.write('Foundation build complete: '+JSON.stringify(result.summary)+'\n');
