@@ -161,7 +161,12 @@ export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12"}={}){
    name:f.name,slug:f.slug,scope:"ufc-only",
    trackedBouts:expected,lastFightDate:f.bouts[0].date,
    totals,
-   recentBouts:f.bouts.slice(0,5)
+   // Backward-compatible V3 window, retained unchanged.
+   recentBouts:f.bouts.slice(0,5),
+   // Full measured UFC sample for offline V4 processing. This is NOT proof
+   // of a complete career: the verified fight timeline must supply missing
+   // and unmeasured bouts before computing Last 5/Last 10/Career windows.
+   careerBouts:f.bouts
   };
  }
  return output;
