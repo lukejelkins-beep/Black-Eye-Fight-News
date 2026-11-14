@@ -63,14 +63,32 @@ export function conservativeRobotsAllow(robots,path='/Rikishi.aspx'){
  */
 export function sourceIdentityEvidence(html,w,raw){
  const plain=String(html).replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,' ')
-   .replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').toLowerCase();
+   .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi,' ')
+   .replace(/<[^>]*>/g,' ').replace(/&nbsp;|&#160;/gi,' ')
+   .replace(/\s+/g,' ').trim();
+ // Only the rikishi's header may establish identity; later match/opponent
+ // listings must not create an accidental name association.
+ const beforeRecord=plain.search(/\bCareer\s+Record\b/i);
+ const head=beforeRecord>=0?plain.slice(0,beforeRecord):plain.slice(0,1300);
  const names=[w?.shikonaEn,raw?.data?.profile?.shikonaEn,
    ...(raw?.data?.shikonas||[]).map(x=>x.shikonaEn)]
    .filter(x=>typeof x==='string'&&x.trim().length>=4);
- const matching=names.find(x=>plain.includes(x.trim().toLowerCase()))||null;
- return {valid:!!matching&&/\brikishi\b/i.test(plain),matchedShikona:matching,
-  matchedCurrentName:matching!=null&&matching===w.shikonaEn,
-  recordedAliasCount:new Set(names).size};
+ const matching=names.find(x=>head.toLowerCase().includes(x.trim().toLowerCase()))||null;
+ const rosterDob=w?.birthDate||raw?.data?.profile?.birthDate||null;
+ const birth=head.match(/\bBirth\s+Date\s+((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+(?:18|19|20)\d{2})\b/i);
+ const publishedDob=birth?.[1]?.replace(/\s+/g,' ')||null;
+ const expectedDob=rosterDob?new Intl.DateTimeFormat('en-US',
+   {timeZone:'Asia/Tokyo',month:'long',day:'numeric',year:'numeric'}).format(new Date(rosterDob)):null;
+ const comparable=x=>String(x).replace(/,/g,'').replace(/\s+/g,' ').trim().toLowerCase();
+ const birthDateStatus=!rosterDob?'roster-birth-date-unavailable':
+   !publishedDob?'source-birth-date-missing':
+   comparable(publishedDob)===comparable(expectedDob)?'match':'mismatch';
+ const matched=!!matching&&/\brikishi\b/i.test(head);
+ return {valid:matched&&birthDateStatus!=='mismatch'&&birthDateStatus!=='source-birth-date-missing',
+  matchedShikona:matching,matchedCurrentName:matching!=null&&matching===w.shikonaEn,
+  recordedAliasCount:new Set(names).size,
+  birthDateStatus,publishedDob,expectedDob,
+  evidenceWindow:'profile-header-before-career-record'};
 }
 export function recoveryCooldown(error){
  const s=String(error||'');
@@ -137,7 +155,7 @@ async function main(){
     const raw=await read(join(ROOT,'rikishi',w.sourceId+'.json'));
     const identity=sourceIdentityEvidence(html,w,raw);
     if(!identity.valid)
-      throw Error('Source page name not evidenced by current or recorded historical shikonas');
+      throw Error('Source rikishi name/birth-date does not match current or historical roster identity');
     const rows=parseSumoDbDatedMeasurements(html);
     if(!rows.length)throw Error('No dated measurement rows found (parser/source review)');
     const datedEvidence=rows.map(x=>({...x,sourceUrl:SOURCE_URL+w.sumoDbId,independentlyCertified:false}));
