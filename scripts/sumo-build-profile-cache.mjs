@@ -8,6 +8,7 @@ import {join} from 'node:path';
 import {ordinalRank} from '../assets/sumo-career.mjs';
 import {auditRikishi} from './sumo-verify-190.mjs';
 import {applyOfficialBoutCorrections} from './sumo-official-bout-corrections.mjs';
+import {reconcileWeightHistory} from './sumo-weight-history-190.mjs';
 const DIR='data/sumo/backfill/v1';
 const read=async(p,fallback=null)=>{try{return JSON.parse(await readFile(p,'utf8'))}catch(e){if(e.code==='ENOENT')return fallback;throw e}};
 const num=x=>Number.isSafeInteger(Number(x))?Number(x):null;
@@ -15,7 +16,49 @@ const dateId=x=>/^(18|19|20)\d{2}(01|03|05|07|09|11)$/.test(String(x||''));
 const matchKey=m=>[m.bashoId,m.day,m.matchNo,m.eastId,m.westId].join(':');
 const sortedBouts=list=>[...list].sort((a,b)=>String(b.bashoId).localeCompare(String(a.bashoId))||Number(b.day)-Number(a.day)||Number(b.matchNo)-Number(a.matchNo));
 const add=(obj,key)=>{obj[key]=(obj[key]||0)+1};
-export function buildResearchProfile(w,cache,correctionManifest=null,officialCareerSnapshot=null){
+/**
+ * Add only explicitly dated, identity-matched SumoDB observations. The original
+ * API record is authoritative for conflicts until a separate source resolution.
+ * This is a research read model, never a certified or production deployment.
+ */
+export function mergeHistoricalWeights(w,apiRows,independentDoc=null){
+ const sorted=(apiRows||[]).filter(x=>dateId(x.bashoId)&&
+  Number.isFinite(Number(x.weight))&&Number(x.weight)>0)
+  .map(x=>({bashoId:String(x.bashoId),
+   heightCm:x.height==null?null:Number(x.height),
+   weightKg:Number(x.weight),source:'Sumo API historical change',
+   sourceUrl:'https://www.sumo-api.com/api/measurements?rikishiId='+w.sourceId,
+   independentlyCertified:false}));
+ const points=new Map(sorted.map(x=>[x.bashoId,x]));
+ const baseline={apiPoints:sorted.length,independentPoints:0,extraPoints:0,
+  matchingOverlapPoints:0,conflictingOverlaps:[],status:'api-only'};
+ if(!independentDoc)return {measurements:[...points.values()].sort((a,b)=>a.bashoId.localeCompare(b.bashoId)),coverage:baseline};
+ if(Number(independentDoc.sourceId)!==Number(w.sourceId)||
+    Number(independentDoc.sumoDbId)!==Number(w.sumoDbId))
+   throw Error('Independent weight identity mismatch for '+w.sourceId);
+ const result=reconcileWeightHistory(apiRows,independentDoc.datedEvidence||[],Number(w.sumoDbId));
+ const conflicts=new Set(result.conflictingOverlaps.map(x=>x.bashoId));
+ const added=new Set(result.additional.map(x=>x.bashoId));
+ for(const m of result.independent){
+  if(conflicts.has(m.bashoId))continue;
+  if(added.has(m.bashoId)){
+   points.set(m.bashoId,{bashoId:m.bashoId,heightCm:m.heightCm,weightKg:m.weightKg,
+    source:'SumoDB dated tournament measurement',sourceUrl:m.sourceUrl,
+    independentlyCertified:false});
+  }else{
+   const original=points.get(m.bashoId);
+   if(original)original.independentSourceConfirmed=m.sourceUrl;
+  }
+ }
+ const measurements=[...points.values()].sort((a,b)=>a.bashoId.localeCompare(b.bashoId));
+ return {measurements,coverage:{apiPoints:sorted.length,
+  independentPoints:result.independentDatedPoints,extraPoints:result.additionalDatedPoints,
+  matchingOverlapPoints:result.matchingOverlaps,
+  conflictingOverlaps:result.conflictingOverlaps,
+  status:result.conflictingOverlaps.length?'needs-overlap-review':'dated-independent-source-collected',
+  independentlyCertified:false}};
+}
+export function buildResearchProfile(w,cache,correctionManifest=null,officialCareerSnapshot=null,weightSource=null){
   const aud=auditRikishi(w,cache,correctionManifest,officialCareerSnapshot);
   if(!aud.readyForExternalCrosscheck)return {status:'not-ready',sourceId:w.sourceId,problems:aud.errors||[],warnings:aud.warnings||[]};
   const id=Number(w.sourceId),details=cache.data?.profile,stats=cache.data?.stats;
@@ -37,7 +80,7 @@ export function buildResearchProfile(w,cache,correctionManifest=null,officialCar
       checkedTotal:checkedTotals||null};
   }
   const rankEvents=[...(cache.data.ranks||[])].filter(x=>dateId(x.bashoId));
-  const weightEvents=[...(cache.data.measurements||[])].filter(x=>dateId(x.bashoId)&&num(x.weight)>0);
+  const weightHistory=mergeHistoricalWeights(w,cache.data.measurements||[],weightSource);
   const ringNames=[...(cache.data.shikonas||[])].filter(x=>dateId(x.bashoId));
   const formal=rankEvents.map(x=>({...x,metric:ordinalRank(x.rank)})).filter(x=>x.metric!==null);
   formal.sort((a,b)=>a.metric-b.metric||String(a.bashoId).localeCompare(String(b.bashoId)));
@@ -113,7 +156,8 @@ export function buildResearchProfile(w,cache,correctionManifest=null,officialCar
       basho:stats.basho,yusho:stats.yusho,yushoByDivision:stats.yushoByDivision,
       sansho:stats.sansho,careerHigh:topRank?{rank:topRank.rank,bashoId:topRank.bashoId}:null
     },
-    measurements:weightEvents.map(m=>({bashoId:m.bashoId,heightCm:m.height,weightKg:m.weight,source:'Sumo API historical change'})),
+    measurements:weightHistory.measurements,
+    measurementCoverage:weightHistory.coverage,
     rankTimeline:rankEvents.map(m=>({bashoId:m.bashoId,rank:m.rank,rankValue:m.rankValue??null})),
     rankHistoryGaps:cache.stages?.ranks?.unrankedDebut
       ?[{...cache.stages.ranks.unrankedDebut,rank:null,independentlyCertified:false}]
@@ -153,7 +197,17 @@ async function main(){
     const source=await read(join(DIR,'rikishi',w.sourceId+'.json'),null);
     if(!source)continue;
     const publicSnapshot=await read(join(DIR,'jsa-public','profiles',w.sourceId+'.json'),null);
-    const p=buildResearchProfile(w,source,correctionManifest,publicSnapshot);
+    const independentWeight=await read(join(DIR,'weight-source-crosschecks',w.sourceId+'.json'),null);
+    let p;
+    try {
+      p=buildResearchProfile(w,source,correctionManifest,publicSnapshot,independentWeight);
+    } catch(e){
+      if(independentWeight){
+        console.warn(w.shikonaEn+': independent weight overlay review '+String(e.message||e).slice(0,160));
+        p=buildResearchProfile(w,source,correctionManifest,publicSnapshot,null);
+        if(p&&p.measurementCoverage)p.measurementCoverage.status='source-overlay-requires-review';
+      }else throw e;
+    }
     if(p.status==='not-ready')continue;
     if(p.status==='stat-reconciliation-exception'||p.status==='official-correction-exception'){
       exceptions++;console.warn(w.shikonaEn+': source W-L disagreement or invalid official correction');continue;
