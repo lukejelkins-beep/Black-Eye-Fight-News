@@ -1,0 +1,352 @@
+{
+  "schemaVersion": 1,
+  "rikishiId": 251,
+  "nskId": 4162,
+  "sumoDbId": 12771,
+  "shikonaEn": "Toshunryu",
+  "source": "https://www.sumo-api.com/api",
+  "researchOnly": true,
+  "certification": "not-started",
+  "stages": {
+    "profile": {
+      "complete": true,
+      "skip": 0,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T22:01:01.505Z",
+      "source": "https://www.sumo-api.com/api/rikishi/251"
+    },
+    "stats": {
+      "complete": true,
+      "skip": 0,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T22:01:01.810Z",
+      "source": "https://www.sumo-api.com/api/rikishi/251/stats"
+    },
+    "measurements": {
+      "complete": true,
+      "skip": 1,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T22:01:02.405Z",
+      "responseShape": "direct-array",
+      "source": "https://www.sumo-api.com/api/measurements?rikishiId=251&limit=200&skip=0&sortOrder=asc"
+    },
+    "ranks": {
+      "complete": true,
+      "skip": 28,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T22:01:02.706Z",
+      "responseShape": "direct-array",
+      "source": "https://www.sumo-api.com/api/ranks?rikishiId=251&limit=200&skip=0&sortOrder=asc"
+    },
+    "shikonas": {
+      "complete": true,
+      "skip": 3,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T22:01:03.303Z",
+      "responseShape": "direct-array",
+      "source": "https://www.sumo-api.com/api/shikonas?rikishiId=251&limit=200&skip=0&sortOrder=asc"
+    },
+    "matches": {
+      "complete": false,
+      "skip": 0,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": null
+    }
+  },
+  "data": {
+    "profile": {
+      "id": 251,
+      "sumodbId": 12771,
+      "nskId": 4162,
+      "shikonaEn": "Toshunryu",
+      "shikonaJp": "東俊隆(とうしゅんりゅう)",
+      "currentRank": "Makushita 14 East",
+      "heya": "Tamanoi",
+      "birthDate": "1999-04-16T00:00:00Z",
+      "shusshin": "Tokyo-to, Minato-ku - Tokyo-to, Chuo-ku",
+      "height": 174,
+      "weight": 103,
+      "debut": "202205"
+    },
+    "stats": {
+      "absenceByDivision": {
+        "Jonidan": 0,
+        "Jonokuchi": 1,
+        "Makushita": 8,
+        "Sandanme": 2
+      },
+      "basho": 27,
+      "bashoByDivision": {
+        "Jonidan": 2,
+        "Jonokuchi": 1,
+        "Makushita": 21,
+        "Sandanme": 3
+      },
+      "lossByDivision": {
+        "Jonidan": 2,
+        "Jonokuchi": 2,
+        "Makushita": 67,
+        "Sandanme": 2
+      },
+      "sansho": {},
+      "totalAbsences": 11,
+      "totalByDivision": {
+        "Jonidan": 14,
+        "Jonokuchi": 6,
+        "Makushita": 135,
+        "Sandanme": 19
+      },
+      "totalLosses": 73,
+      "totalMatches": 174,
+      "totalWins": 101,
+      "winsByDivision": {
+        "Jonidan": 12,
+        "Jonokuchi": 4,
+        "Makushita": 68,
+        "Sandanme": 17
+      },
+      "yusho": 1,
+      "yushoByDivision": {
+        "Sandanme": 1
+      }
+    },
+    "measurements": [
+      {
+        "id": "202205-251",
+        "bashoId": "202205",
+        "rikishiId": 251,
+        "height": 172,
+        "weight": 95
+      }
+    ],
+    "ranks": [
+      {
+        "id": "202205-251",
+        "bashoId": "202205",
+        "rikishiId": 251,
+        "rankValue": 2000,
+        "rank": "Mae-zumo"
+      },
+      {
+        "id": "202207-251",
+        "bashoId": "202207",
+        "rikishiId": 251,
+        "rankValue": 1017,
+        "rank": "Jonokuchi 17 East"
+      },
+      {
+        "id": "202209-251",
+        "bashoId": "202209",
+        "rikishiId": 251,
+        "rankValue": 987,
+        "rank": "Jonidan 87 West"
+      },
+      {
+        "id": "202211-251",
+        "bashoId": "202211",
+        "rikishiId": 251,
+        "rankValue": 911,
+        "rank": "Jonidan 11 East"
+      },
+      {
+        "id": "202301-251",
+        "bashoId": "202301",
+        "rikishiId": 251,
+        "rankValue": 841,
+        "rank": "Sandanme 41 West"
+      },
+      {
+        "id": "202303-251",
+        "bashoId": "202303",
+        "rikishiId": 251,
+        "rankValue": 824,
+        "rank": "Sandanme 24 West"
+      },
+      {
+        "id": "202305-251",
+        "bashoId": "202305",
+        "rikishiId": 251,
+        "rankValue": 715,
+        "rank": "Makushita 15 West"
+      },
+      {
+        "id": "202307-251",
+        "bashoId": "202307",
+        "rikishiId": 251,
+        "rankValue": 722,
+        "rank": "Makushita 22 East"
+      },
+      {
+        "id": "202309-251",
+        "bashoId": "202309",
+        "rikishiId": 251,
+        "rankValue": 730,
+        "rank": "Makushita 30 West"
+      },
+      {
+        "id": "202311-251",
+        "bashoId": "202311",
+        "rikishiId": 251,
+        "rankValue": 736,
+        "rank": "Makushita 36 East"
+      },
+      {
+        "id": "202401-251",
+        "bashoId": "202401",
+        "rikishiId": 251,
+        "rankValue": 730,
+        "rank": "Makushita 30 East"
+      },
+      {
+        "id": "202403-251",
+        "bashoId": "202403",
+        "rikishiId": 251,
+        "rankValue": 718,
+        "rank": "Makushita 18 East"
+      },
+      {
+        "id": "202405-251",
+        "bashoId": "202405",
+        "rikishiId": 251,
+        "rankValue": 730,
+        "rank": "Makushita 30 East"
+      },
+      {
+        "id": "202407-251",
+        "bashoId": "202407",
+        "rikishiId": 251,
+        "rankValue": 723,
+        "rank": "Makushita 23 East"
+      },
+      {
+        "id": "202409-251",
+        "bashoId": "202409",
+        "rikishiId": 251,
+        "rankValue": 713,
+        "rank": "Makushita 13 East"
+      },
+      {
+        "id": "202411-251",
+        "bashoId": "202411",
+        "rikishiId": 251,
+        "rankValue": 708,
+        "rank": "Makushita 8 West"
+      },
+      {
+        "id": "202501-251",
+        "bashoId": "202501",
+        "rikishiId": 251,
+        "rankValue": 722,
+        "rank": "Makushita 22 West"
+      },
+      {
+        "id": "202503-251",
+        "bashoId": "202503",
+        "rikishiId": 251,
+        "rankValue": 738,
+        "rank": "Makushita 38 West"
+      },
+      {
+        "id": "202505-251",
+        "bashoId": "202505",
+        "rikishiId": 251,
+        "rankValue": 730,
+        "rank": "Makushita 30 West"
+      },
+      {
+        "id": "202507-251",
+        "bashoId": "202507",
+        "rikishiId": 251,
+        "rankValue": 723,
+        "rank": "Makushita 23 West"
+      },
+      {
+        "id": "202509-251",
+        "bashoId": "202509",
+        "rikishiId": 251,
+        "rankValue": 727,
+        "rank": "Makushita 27 East"
+      },
+      {
+        "id": "202511-251",
+        "bashoId": "202511",
+        "rikishiId": 251,
+        "rankValue": 720,
+        "rank": "Makushita 20 East"
+      },
+      {
+        "id": "202601-251",
+        "bashoId": "202601",
+        "rikishiId": 251,
+        "rankValue": 748,
+        "rank": "Makushita 48 West"
+      },
+      {
+        "id": "202603-251",
+        "bashoId": "202603",
+        "rikishiId": 251,
+        "rankValue": 823,
+        "rank": "Sandanme 23 West"
+      },
+      {
+        "id": "202605-251",
+        "bashoId": "202605",
+        "rikishiId": 251,
+        "rankValue": 744,
+        "rank": "Makushita 44 West"
+      },
+      {
+        "id": "202607-251",
+        "bashoId": "202607",
+        "rikishiId": 251,
+        "rankValue": 718,
+        "rank": "Makushita 18 East"
+      },
+      {
+        "id": "202609-251",
+        "bashoId": "202609",
+        "rikishiId": 251,
+        "rankValue": 711,
+        "rank": "Makushita 11 West"
+      },
+      {
+        "id": "202611-251",
+        "bashoId": "202611",
+        "rikishiId": 251,
+        "rankValue": 714,
+        "rank": "Makushita 14 East"
+      }
+    ],
+    "shikonas": [
+      {
+        "id": "202205-251",
+        "bashoId": "202205",
+        "rikishiId": 251,
+        "shikonaEn": "Imazeki Shunsuke",
+        "shikonaJp": ""
+      },
+      {
+        "id": "202207-251",
+        "bashoId": "202207",
+        "rikishiId": 251,
+        "shikonaEn": "Toshunryu Shunsuke",
+        "shikonaJp": ""
+      },
+      {
+        "id": "202503-251",
+        "bashoId": "202503",
+        "rikishiId": 251,
+        "shikonaEn": "Toshunryu",
+        "shikonaJp": "東俊隆(とうしゅんりゅう)"
+      }
+    ],
+    "matches": []
+  },
+  "errors": []
+}

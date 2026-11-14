@@ -35,12 +35,12 @@
     },
     "ranks": {
       "complete": true,
-      "skip": 100,
+      "skip": 123,
       "total": null,
       "attempts": 0,
-      "updatedAt": "2026-11-14T21:53:53.718Z",
+      "updatedAt": "2026-11-14T21:59:20.968Z",
       "responseShape": "direct-array",
-      "source": "https://www.sumo-api.com/api/ranks?rikishiId=15&limit=200&skip=0&sortOrder=asc"
+      "source": "https://www.sumo-api.com/api/ranks?rikishiId=15&limit=200&skip=100&sortOrder=asc"
     },
     "shikonas": {
       "complete": true,
@@ -909,6 +909,167 @@
         "rikishiId": 15,
         "rankValue": 505,
         "rank": "Maegashira 5 East"
+      },
+      {
+        "id": "202303-15",
+        "bashoId": "202303",
+        "rikishiId": 15,
+        "rankValue": 502,
+        "rank": "Maegashira 2 West"
+      },
+      {
+        "id": "202305-15",
+        "bashoId": "202305",
+        "rikishiId": 15,
+        "rankValue": 510,
+        "rank": "Maegashira 10 East"
+      },
+      {
+        "id": "202307-15",
+        "bashoId": "202307",
+        "rikishiId": 15,
+        "rankValue": 515,
+        "rank": "Maegashira 15 East"
+      },
+      {
+        "id": "202309-15",
+        "bashoId": "202309",
+        "rikishiId": 15,
+        "rankValue": 506,
+        "rank": "Maegashira 6 West"
+      },
+      {
+        "id": "202311-15",
+        "bashoId": "202311",
+        "rikishiId": 15,
+        "rankValue": 510,
+        "rank": "Maegashira 10 East"
+      },
+      {
+        "id": "202401-15",
+        "bashoId": "202401",
+        "rikishiId": 15,
+        "rankValue": 505,
+        "rank": "Maegashira 5 East"
+      },
+      {
+        "id": "202403-15",
+        "bashoId": "202403",
+        "rikishiId": 15,
+        "rankValue": 513,
+        "rank": "Maegashira 13 East"
+      },
+      {
+        "id": "202405-15",
+        "bashoId": "202405",
+        "rikishiId": 15,
+        "rankValue": 514,
+        "rank": "Maegashira 14 East"
+      },
+      {
+        "id": "202407-15",
+        "bashoId": "202407",
+        "rikishiId": 15,
+        "rankValue": 508,
+        "rank": "Maegashira 8 East"
+      },
+      {
+        "id": "202409-15",
+        "bashoId": "202409",
+        "rikishiId": 15,
+        "rankValue": 514,
+        "rank": "Maegashira 14 East"
+      },
+      {
+        "id": "202411-15",
+        "bashoId": "202411",
+        "rikishiId": 15,
+        "rankValue": 513,
+        "rank": "Maegashira 13 East"
+      },
+      {
+        "id": "202501-15",
+        "bashoId": "202501",
+        "rikishiId": 15,
+        "rankValue": 603,
+        "rank": "Juryo 3 East"
+      },
+      {
+        "id": "202503-15",
+        "bashoId": "202503",
+        "rikishiId": 15,
+        "rankValue": 514,
+        "rank": "Maegashira 14 East"
+      },
+      {
+        "id": "202505-15",
+        "bashoId": "202505",
+        "rikishiId": 15,
+        "rankValue": 515,
+        "rank": "Maegashira 15 East"
+      },
+      {
+        "id": "202507-15",
+        "bashoId": "202507",
+        "rikishiId": 15,
+        "rankValue": 601,
+        "rank": "Juryo 1 West"
+      },
+      {
+        "id": "202509-15",
+        "bashoId": "202509",
+        "rikishiId": 15,
+        "rankValue": 517,
+        "rank": "Maegashira 17 East"
+      },
+      {
+        "id": "202511-15",
+        "bashoId": "202511",
+        "rikishiId": 15,
+        "rankValue": 514,
+        "rank": "Maegashira 14 East"
+      },
+      {
+        "id": "202601-15",
+        "bashoId": "202601",
+        "rikishiId": 15,
+        "rankValue": 515,
+        "rank": "Maegashira 15 East"
+      },
+      {
+        "id": "202603-15",
+        "bashoId": "202603",
+        "rikishiId": 15,
+        "rankValue": 601,
+        "rank": "Juryo 1 East"
+      },
+      {
+        "id": "202605-15",
+        "bashoId": "202605",
+        "rikishiId": 15,
+        "rankValue": 516,
+        "rank": "Maegashira 16 West"
+      },
+      {
+        "id": "202607-15",
+        "bashoId": "202607",
+        "rikishiId": 15,
+        "rankValue": 603,
+        "rank": "Juryo 3 East"
+      },
+      {
+        "id": "202609-15",
+        "bashoId": "202609",
+        "rikishiId": 15,
+        "rankValue": 608,
+        "rank": "Juryo 8 East"
+      },
+      {
+        "id": "202611-15",
+        "bashoId": "202611",
+        "rikishiId": 15,
+        "rankValue": 605,
+        "rank": "Juryo 5 East"
       }
     ],
     "shikonas": [
@@ -20402,5 +20563,16 @@
       }
     ]
   },
-  "errors": []
+  "errors": [
+    {
+      "at": "2026-11-14T21:59:20.489Z",
+      "stage": "ranks",
+      "message": "Reopened provider-capped 100-entry ranking history",
+      "transient": false
+    }
+  ],
+  "profileRequestContract": 2,
+  "historyResponseContract": 2,
+  "matchPaginationContract": 3,
+  "rankPaginationContract": 2
 }

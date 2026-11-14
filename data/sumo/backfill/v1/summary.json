@@ -5,57 +5,57 @@
   "status": "research-data-only",
   "certified": 0,
   "counts": {
-    "pending": 116,
-    "partial": 35,
+    "pending": 53,
+    "partial": 45,
     "exception": 0,
-    "collected": 39
+    "collected": 92
   },
-  "weightSnapshots": 222,
-  "rankEntries": 4533,
-  "matchEntries": 33187,
-  "outstandingStages": 733,
+  "weightSnapshots": 363,
+  "rankEntries": 7862,
+  "matchEntries": 59444,
+  "outstandingStages": 363,
   "stageTotals": {
     "profile": {
-      "completed": 74,
+      "completed": 137,
       "blocked": 0
     },
     "stats": {
-      "completed": 74,
+      "completed": 137,
       "blocked": 0
     },
     "measurements": {
-      "completed": 74,
+      "completed": 137,
       "blocked": 0
     },
     "ranks": {
-      "completed": 73,
+      "completed": 133,
       "blocked": 0
     },
     "shikonas": {
-      "completed": 73,
+      "completed": 137,
       "blocked": 0
     },
     "matches": {
-      "completed": 39,
+      "completed": 96,
       "blocked": 0
     }
   },
   "exceptions": [],
   "partialExamples": [
-    "Takakento",
-    "Shimanoumi",
-    "Kitanowaka",
-    "Kaisho",
-    "Kotokuzan",
-    "Churanoumi",
-    "Tochimusashi",
-    "Akua",
-    "Atamifuji",
-    "Mineyaiba",
-    "Hatsuyama",
-    "Kazekeno"
+    "Tokunomusashi",
+    "Kitaharima",
+    "Tsurubayashi",
+    "Asakoki",
+    "Kototsubasa",
+    "Kaiseijo",
+    "Kaishin",
+    "Hinataryu",
+    "Chiyotora",
+    "Asonoyama",
+    "Hamayutaka",
+    "Oshoryu"
   ],
-  "lastCheckedAt": "2026-11-14T21:56:13.160Z",
+  "lastCheckedAt": "2026-11-14T22:01:46.595Z",
   "source": "https://www.sumo-api.com/api",
   "maximumCallsPerScheduledRun": null,
   "note": "Collected means API pagination completed. It does not imply historical accuracy, JSA agreement, official weight confirmation, copyright permission for photos, or certification.",
@@ -64,15 +64,21 @@
   "requestIntervalMs": 300,
   "cooldownUntil": null,
   "lastRun": {
-    "at": "2026-11-14T21:56:13.160Z",
+    "at": "2026-11-14T22:01:46.595Z",
     "elapsedSeconds": 146,
-    "apiCalls": 484,
-    "updatedRikishi": 68,
+    "apiCalls": 486,
+    "updatedRikishi": 104,
     "laneCalls": {
-      "quick": 323,
+      "quick": 324,
       "history": 161
     },
-    "failures": [],
+    "failures": [
+      {
+        "rikishiId": 113,
+        "stage": "matches",
+        "error": "Expected matches collection; shape=limit,skip,total,records"
+      }
+    ],
     "stoppedReason": null,
     "queuesExhausted": false
   }

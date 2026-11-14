@@ -3,14 +3,14 @@
   "scope": "Research API response integrity only — NEVER a JSA or full-career certificate",
   "cohortSize": 190,
   "certified": 0,
-  "notAttempted": 116,
-  "collecting": 35,
-  "integrityException": 6,
-  "sourceReady": 33,
+  "notAttempted": 53,
+  "collecting": 45,
+  "integrityException": 2,
+  "sourceReady": 90,
   "records": {
-    "weight": 222,
-    "rank": 4533,
-    "matches": 33187
+    "weight": 363,
+    "rank": 7862,
+    "matches": 59444
   },
   "independentJsaSpotchecks": {
     "identityVerified": 8,
@@ -205,6 +205,23 @@
       }
     },
     {
+      "sourceId": 71,
+      "name": "Churanoumi",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 64,
+        "matches": 772,
+        "regularMatches": 768,
+        "specialMatches": 4,
+        "formalRanks": 63
+      }
+    },
+    {
       "sourceId": 2,
       "name": "Asanoyama",
       "status": "source-collected-needs-independent-verification",
@@ -241,20 +258,18 @@
     {
       "sourceId": 44,
       "name": "Takayasu",
-      "status": "source-integrity-exception",
-      "readyForExternalCrosscheck": false,
-      "errors": [
-        "rank-history-basho-count-mismatch"
-      ],
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
       "warnings": [],
       "stagesCompleted": 6,
       "counts": {
         "weights": 11,
-        "ranks": 100,
+        "ranks": 129,
         "matches": 1485,
         "regularMatches": 1481,
         "specialMatches": 4,
-        "formalRanks": 99
+        "formalRanks": 128
       }
     },
     {
@@ -360,6 +375,23 @@
       }
     },
     {
+      "sourceId": 86,
+      "name": "Shishi",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 41,
+        "matches": 433,
+        "regularMatches": 431,
+        "specialMatches": 2,
+        "formalRanks": 39
+      }
+    },
+    {
       "sourceId": 37,
       "name": "Takanosho",
       "status": "source-collected-needs-independent-verification",
@@ -394,22 +426,37 @@
       }
     },
     {
+      "sourceId": 83,
+      "name": "Tokihayate",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 46,
+        "matches": 474,
+        "regularMatches": 472,
+        "specialMatches": 2,
+        "formalRanks": 45
+      }
+    },
+    {
       "sourceId": 14,
       "name": "Tamawashi",
-      "status": "source-integrity-exception",
-      "readyForExternalCrosscheck": false,
-      "errors": [
-        "rank-history-basho-count-mismatch"
-      ],
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
       "warnings": [],
       "stagesCompleted": 6,
       "counts": {
         "weights": 13,
-        "ranks": 100,
+        "ranks": 136,
         "matches": 1831,
         "regularMatches": 1831,
         "specialMatches": 0,
-        "formalRanks": 99
+        "formalRanks": 135
       }
     },
     {
@@ -444,6 +491,42 @@
         "regularMatches": 781,
         "specialMatches": 4,
         "formalRanks": 65
+      }
+    },
+    {
+      "sourceId": 74,
+      "name": "Atamifuji",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 37,
+        "matches": 482,
+        "regularMatches": 472,
+        "specialMatches": 10,
+        "formalRanks": 36
+      }
+    },
+    {
+      "sourceId": 82,
+      "name": "Fujiseiun",
+      "status": "source-integrity-exception",
+      "readyForExternalCrosscheck": false,
+      "errors": [
+        "career-regular-bout-count-mismatch"
+      ],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 1,
+        "ranks": 35,
+        "matches": 339,
+        "regularMatches": 337,
+        "specialMatches": 2,
+        "formalRanks": 34
       }
     },
     {
@@ -498,6 +581,23 @@
       }
     },
     {
+      "sourceId": 112,
+      "name": "Kotoeiho",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 1,
+        "ranks": 30,
+        "matches": 299,
+        "regularMatches": 294,
+        "specialMatches": 5,
+        "formalRanks": 29
+      }
+    },
+    {
       "sourceId": 50,
       "name": "Kinbozan",
       "status": "source-collected-needs-independent-verification",
@@ -529,6 +629,23 @@
         "regularMatches": 680,
         "specialMatches": 8,
         "formalRanks": 60
+      }
+    },
+    {
+      "sourceId": 164,
+      "name": "Asakoryu",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 1,
+        "ranks": 34,
+        "matches": 380,
+        "regularMatches": 379,
+        "specialMatches": 1,
+        "formalRanks": 34
       }
     },
     {
@@ -566,22 +683,71 @@
       }
     },
     {
+      "sourceId": 135,
+      "name": "Dewanoryu",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 43,
+        "matches": 321,
+        "regularMatches": 317,
+        "specialMatches": 4,
+        "formalRanks": 41
+      }
+    },
+    {
+      "sourceId": 66,
+      "name": "Kitanowaka",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 46,
+        "matches": 499,
+        "regularMatches": 495,
+        "specialMatches": 4,
+        "formalRanks": 45
+      }
+    },
+    {
       "sourceId": 39,
       "name": "Chiyoshoma",
-      "status": "source-integrity-exception",
-      "readyForExternalCrosscheck": false,
-      "errors": [
-        "rank-history-basho-count-mismatch"
-      ],
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
       "warnings": [],
       "stagesCompleted": 6,
       "counts": {
         "weights": 7,
-        "ranks": 100,
+        "ranks": 104,
         "matches": 1213,
         "regularMatches": 1206,
         "specialMatches": 7,
-        "formalRanks": 98
+        "formalRanks": 102
+      }
+    },
+    {
+      "sourceId": 78,
+      "name": "Kazekeno",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 1,
+        "ranks": 29,
+        "matches": 285,
+        "regularMatches": 283,
+        "specialMatches": 2,
+        "formalRanks": 28
       }
     },
     {
@@ -604,20 +770,18 @@
     {
       "sourceId": 15,
       "name": "Ryuden",
-      "status": "source-integrity-exception",
-      "readyForExternalCrosscheck": false,
-      "errors": [
-        "rank-history-basho-count-mismatch"
-      ],
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
       "warnings": [],
       "stagesCompleted": 6,
       "counts": {
         "weights": 10,
-        "ranks": 100,
+        "ranks": 123,
         "matches": 1217,
         "regularMatches": 1211,
         "specialMatches": 6,
-        "formalRanks": 99
+        "formalRanks": 122
       }
     },
     {
@@ -689,6 +853,23 @@
       }
     },
     {
+      "sourceId": 102,
+      "name": "Tomokaze",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 57,
+        "matches": 571,
+        "regularMatches": 567,
+        "specialMatches": 4,
+        "formalRanks": 56
+      }
+    },
+    {
       "sourceId": 38,
       "name": "Meisei",
       "status": "source-collected-needs-independent-verification",
@@ -703,6 +884,23 @@
         "regularMatches": 1084,
         "specialMatches": 5,
         "formalRanks": 92
+      }
+    },
+    {
+      "sourceId": 77,
+      "name": "Hatsuyama",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 1,
+        "ranks": 29,
+        "matches": 290,
+        "regularMatches": 290,
+        "specialMatches": 0,
+        "formalRanks": 29
       }
     },
     {
@@ -740,6 +938,23 @@
       }
     },
     {
+      "sourceId": 142,
+      "name": "Kayo",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 1,
+        "ranks": 28,
+        "matches": 312,
+        "regularMatches": 308,
+        "specialMatches": 4,
+        "formalRanks": 28
+      }
+    },
+    {
       "sourceId": 12,
       "name": "Wakatakakage",
       "status": "source-collected-needs-independent-verification",
@@ -754,6 +969,40 @@
         "regularMatches": 688,
         "specialMatches": 3,
         "formalRanks": 58
+      }
+    },
+    {
+      "sourceId": 117,
+      "name": "Nabatame",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 41,
+        "matches": 303,
+        "regularMatches": 297,
+        "specialMatches": 6,
+        "formalRanks": 40
+      }
+    },
+    {
+      "sourceId": 111,
+      "name": "Hitoshi",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 1,
+        "ranks": 34,
+        "matches": 303,
+        "regularMatches": 296,
+        "specialMatches": 7,
+        "formalRanks": 33
       }
     },
     {
@@ -774,22 +1023,71 @@
       }
     },
     {
+      "sourceId": 98,
+      "name": "Shirokuma",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 1,
+        "ranks": 28,
+        "matches": 337,
+        "regularMatches": 331,
+        "specialMatches": 6,
+        "formalRanks": 27
+      }
+    },
+    {
       "sourceId": 35,
       "name": "Sadanoumi",
-      "status": "source-integrity-exception",
-      "readyForExternalCrosscheck": false,
-      "errors": [
-        "rank-history-basho-count-mismatch"
-      ],
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
       "warnings": [],
       "stagesCompleted": 6,
       "counts": {
         "weights": 13,
-        "ranks": 100,
+        "ranks": 141,
         "matches": 1631,
         "regularMatches": 1630,
         "specialMatches": 1,
-        "formalRanks": 99
+        "formalRanks": 140
+      }
+    },
+    {
+      "sourceId": 101,
+      "name": "Tamashoho",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 5,
+        "ranks": 92,
+        "matches": 810,
+        "regularMatches": 806,
+        "specialMatches": 4,
+        "formalRanks": 90
+      }
+    },
+    {
+      "sourceId": 140,
+      "name": "Tokifudo",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 46,
+        "matches": 318,
+        "regularMatches": 316,
+        "specialMatches": 2,
+        "formalRanks": 45
       }
     },
     {
@@ -798,18 +1096,34 @@
       "status": "source-integrity-exception",
       "readyForExternalCrosscheck": false,
       "errors": [
-        "career-regular-bout-count-mismatch",
-        "rank-history-basho-count-mismatch"
+        "career-regular-bout-count-mismatch"
       ],
       "warnings": [],
       "stagesCompleted": 6,
       "counts": {
         "weights": 10,
-        "ranks": 100,
+        "ranks": 123,
         "matches": 1399,
         "regularMatches": 1393,
         "specialMatches": 6,
-        "formalRanks": 99
+        "formalRanks": 122
+      }
+    },
+    {
+      "sourceId": 88,
+      "name": "Gojinyu",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 1,
+        "ranks": 29,
+        "matches": 201,
+        "regularMatches": 201,
+        "specialMatches": 0,
+        "formalRanks": 29
       }
     },
     {
@@ -830,22 +1144,445 @@
       }
     },
     {
+      "sourceId": 93,
+      "name": "Hokutenkai",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 45,
+        "matches": 282,
+        "regularMatches": 278,
+        "specialMatches": 4,
+        "formalRanks": 43
+      }
+    },
+    {
       "sourceId": 70,
       "name": "Kotokuzan",
-      "status": "still-collecting",
-      "readyForExternalCrosscheck": false,
-      "errors": [
-        "rank-history-basho-count-mismatch"
-      ],
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
       "warnings": [],
-      "stagesCompleted": 5,
+      "stagesCompleted": 6,
       "counts": {
         "weights": 7,
-        "ranks": 100,
-        "matches": 0,
-        "regularMatches": 0,
+        "ranks": 102,
+        "matches": 817,
+        "regularMatches": 812,
+        "specialMatches": 5,
+        "formalRanks": 101
+      }
+    },
+    {
+      "sourceId": 145,
+      "name": "Nihonyanagi",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 42,
+        "matches": 273,
+        "regularMatches": 269,
+        "specialMatches": 4,
+        "formalRanks": 41
+      }
+    },
+    {
+      "sourceId": 65,
+      "name": "Shimanoumi",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 4,
+        "ranks": 87,
+        "matches": 924,
+        "regularMatches": 918,
+        "specialMatches": 6,
+        "formalRanks": 86
+      }
+    },
+    {
+      "sourceId": 84,
+      "name": "Hananofuji",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 1,
+        "ranks": 26,
+        "matches": 139,
+        "regularMatches": 139,
         "specialMatches": 0,
-        "formalRanks": 99
+        "formalRanks": 26
+      }
+    },
+    {
+      "sourceId": 170,
+      "name": "Asanoryu",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 40,
+        "matches": 269,
+        "regularMatches": 268,
+        "specialMatches": 1,
+        "formalRanks": 40
+      }
+    },
+    {
+      "sourceId": 63,
+      "name": "Takakento",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 77,
+        "matches": 628,
+        "regularMatches": 624,
+        "specialMatches": 4,
+        "formalRanks": 76
+      }
+    },
+    {
+      "sourceId": 176,
+      "name": "Awanokuni",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 47,
+        "matches": 324,
+        "regularMatches": 319,
+        "specialMatches": 5,
+        "formalRanks": 46
+      }
+    },
+    {
+      "sourceId": 75,
+      "name": "Mineyaiba",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 46,
+        "matches": 282,
+        "regularMatches": 278,
+        "specialMatches": 4,
+        "formalRanks": 45
+      }
+    },
+    {
+      "sourceId": 118,
+      "name": "Ikawasakura",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 4,
+        "ranks": 89,
+        "matches": 582,
+        "regularMatches": 577,
+        "specialMatches": 5,
+        "formalRanks": 88
+      }
+    },
+    {
+      "sourceId": 69,
+      "name": "Kaisho",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 3,
+        "ranks": 82,
+        "matches": 638,
+        "regularMatches": 635,
+        "specialMatches": 3,
+        "formalRanks": 81
+      }
+    },
+    {
+      "sourceId": 155,
+      "name": "Ohata",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 72,
+        "matches": 498,
+        "regularMatches": 494,
+        "specialMatches": 4,
+        "formalRanks": 71
+      }
+    },
+    {
+      "sourceId": 97,
+      "name": "Asagyokusei",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 65,
+        "matches": 468,
+        "regularMatches": 466,
+        "specialMatches": 2,
+        "formalRanks": 64
+      }
+    },
+    {
+      "sourceId": 81,
+      "name": "Tochitaikai",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 54,
+        "matches": 474,
+        "regularMatches": 468,
+        "specialMatches": 6,
+        "formalRanks": 53
+      }
+    },
+    {
+      "sourceId": 91,
+      "name": "Mudoho",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 42,
+        "matches": 293,
+        "regularMatches": 287,
+        "specialMatches": 6,
+        "formalRanks": 41
+      }
+    },
+    {
+      "sourceId": 89,
+      "name": "Nishinoryu",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 48,
+        "matches": 378,
+        "regularMatches": 374,
+        "specialMatches": 4,
+        "formalRanks": 47
+      }
+    },
+    {
+      "sourceId": 159,
+      "name": "Daikisho",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 47,
+        "matches": 293,
+        "regularMatches": 289,
+        "specialMatches": 4,
+        "formalRanks": 46
+      }
+    },
+    {
+      "sourceId": 166,
+      "name": "Tochikodai",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 58,
+        "matches": 396,
+        "regularMatches": 391,
+        "specialMatches": 5,
+        "formalRanks": 57
+      }
+    },
+    {
+      "sourceId": 167,
+      "name": "Otsuji",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 46,
+        "matches": 316,
+        "regularMatches": 312,
+        "specialMatches": 4,
+        "formalRanks": 45
+      }
+    },
+    {
+      "sourceId": 120,
+      "name": "Osanai",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 1,
+        "ranks": 35,
+        "matches": 234,
+        "regularMatches": 232,
+        "specialMatches": 2,
+        "formalRanks": 34
+      }
+    },
+    {
+      "sourceId": 152,
+      "name": "Nobehara",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 1,
+        "ranks": 34,
+        "matches": 223,
+        "regularMatches": 220,
+        "specialMatches": 3,
+        "formalRanks": 33
+      }
+    },
+    {
+      "sourceId": 100,
+      "name": "Kurohimeyama",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 51,
+        "matches": 344,
+        "regularMatches": 341,
+        "specialMatches": 3,
+        "formalRanks": 50
+      }
+    },
+    {
+      "sourceId": 141,
+      "name": "Kitadaichi",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 76,
+        "matches": 525,
+        "regularMatches": 521,
+        "specialMatches": 4,
+        "formalRanks": 75
+      }
+    },
+    {
+      "sourceId": 72,
+      "name": "Tochimusashi",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 1,
+        "ranks": 35,
+        "matches": 254,
+        "regularMatches": 253,
+        "specialMatches": 1,
+        "formalRanks": 35
+      }
+    },
+    {
+      "sourceId": 107,
+      "name": "Tochimaru",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 5,
+        "ranks": 93,
+        "matches": 634,
+        "regularMatches": 628,
+        "specialMatches": 6,
+        "formalRanks": 92
+      }
+    },
+    {
+      "sourceId": 73,
+      "name": "Akua",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 5,
+        "ranks": 95,
+        "matches": 884,
+        "regularMatches": 875,
+        "specialMatches": 9,
+        "formalRanks": 94
       }
     },
     {
@@ -866,6 +1603,108 @@
       }
     },
     {
+      "sourceId": 165,
+      "name": "Kamito",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 58,
+        "matches": 395,
+        "regularMatches": 392,
+        "specialMatches": 3,
+        "formalRanks": 57
+      }
+    },
+    {
+      "sourceId": 131,
+      "name": "Toseiryu",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 1,
+        "ranks": 30,
+        "matches": 201,
+        "regularMatches": 198,
+        "specialMatches": 3,
+        "formalRanks": 29
+      }
+    },
+    {
+      "sourceId": 85,
+      "name": "Mienofuji",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 1,
+        "ranks": 34,
+        "matches": 245,
+        "regularMatches": 240,
+        "specialMatches": 5,
+        "formalRanks": 33
+      }
+    },
+    {
+      "sourceId": 95,
+      "name": "Oshoumi",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 40,
+        "matches": 338,
+        "regularMatches": 335,
+        "specialMatches": 3,
+        "formalRanks": 39
+      }
+    },
+    {
+      "sourceId": 137,
+      "name": "Yoshiyasu",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 58,
+        "matches": 391,
+        "regularMatches": 389,
+        "specialMatches": 2,
+        "formalRanks": 57
+      }
+    },
+    {
+      "sourceId": 175,
+      "name": "Oyamatoumi",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 70,
+        "matches": 466,
+        "regularMatches": 463,
+        "specialMatches": 3,
+        "formalRanks": 69
+      }
+    },
+    {
       "sourceId": 59,
       "name": "Hakuyozan",
       "status": "source-collected-needs-independent-verification",
@@ -880,6 +1719,40 @@
         "regularMatches": 872,
         "specialMatches": 5,
         "formalRanks": 92
+      }
+    },
+    {
+      "sourceId": 154,
+      "name": "Dewataikai",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 4,
+        "ranks": 88,
+        "matches": 526,
+        "regularMatches": 519,
+        "specialMatches": 7,
+        "formalRanks": 85
+      }
+    },
+    {
+      "sourceId": 136,
+      "name": "Tochiseiryu",
+      "status": "source-collected-needs-independent-verification",
+      "readyForExternalCrosscheck": true,
+      "errors": [],
+      "warnings": [],
+      "stagesCompleted": 6,
+      "counts": {
+        "weights": 2,
+        "ranks": 76,
+        "matches": 515,
+        "regularMatches": 513,
+        "specialMatches": 2,
+        "formalRanks": 75
       }
     }
   ]

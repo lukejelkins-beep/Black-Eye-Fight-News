@@ -35,12 +35,12 @@
     },
     "ranks": {
       "complete": true,
-      "skip": 100,
+      "skip": 104,
       "total": null,
       "attempts": 0,
-      "updatedAt": "2026-11-14T21:54:25.225Z",
+      "updatedAt": "2026-11-14T21:59:22.466Z",
       "responseShape": "direct-array",
-      "source": "https://www.sumo-api.com/api/ranks?rikishiId=39&limit=200&skip=0&sortOrder=asc"
+      "source": "https://www.sumo-api.com/api/ranks?rikishiId=39&limit=200&skip=100&sortOrder=asc"
     },
     "shikonas": {
       "complete": true,
@@ -881,6 +881,34 @@
         "rikishiId": 39,
         "rankValue": 514,
         "rank": "Maegashira 14 East"
+      },
+      {
+        "id": "202605-39",
+        "bashoId": "202605",
+        "rikishiId": 39,
+        "rankValue": 507,
+        "rank": "Maegashira 7 East"
+      },
+      {
+        "id": "202607-39",
+        "bashoId": "202607",
+        "rikishiId": 39,
+        "rankValue": 510,
+        "rank": "Maegashira 10 West"
+      },
+      {
+        "id": "202609-39",
+        "bashoId": "202609",
+        "rikishiId": 39,
+        "rankValue": 514,
+        "rank": "Maegashira 14 West"
+      },
+      {
+        "id": "202611-39",
+        "bashoId": "202611",
+        "rikishiId": 39,
+        "rankValue": 601,
+        "rank": "Juryo 1 East"
       }
     ],
     "shikonas": [
@@ -20317,5 +20345,16 @@
       }
     ]
   },
-  "errors": []
+  "errors": [
+    {
+      "at": "2026-11-14T21:59:20.542Z",
+      "stage": "ranks",
+      "message": "Reopened provider-capped 100-entry ranking history",
+      "transient": false
+    }
+  ],
+  "profileRequestContract": 2,
+  "historyResponseContract": 2,
+  "matchPaginationContract": 3,
+  "rankPaginationContract": 2
 }

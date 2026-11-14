@@ -1,0 +1,441 @@
+{
+  "schemaVersion": 1,
+  "rikishiId": 300,
+  "nskId": 4024,
+  "sumoDbId": 12633,
+  "shikonaEn": "Ieshima",
+  "source": "https://www.sumo-api.com/api",
+  "researchOnly": true,
+  "certification": "not-started",
+  "stages": {
+    "profile": {
+      "complete": true,
+      "skip": 0,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T22:01:26.111Z",
+      "source": "https://www.sumo-api.com/api/rikishi/300"
+    },
+    "stats": {
+      "complete": true,
+      "skip": 0,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T22:01:26.713Z",
+      "source": "https://www.sumo-api.com/api/rikishi/300/stats"
+    },
+    "measurements": {
+      "complete": true,
+      "skip": 2,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T22:01:27.011Z",
+      "responseShape": "direct-array",
+      "source": "https://www.sumo-api.com/api/measurements?rikishiId=300&limit=200&skip=0&sortOrder=asc"
+    },
+    "ranks": {
+      "complete": true,
+      "skip": 40,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T22:01:27.609Z",
+      "responseShape": "direct-array",
+      "source": "https://www.sumo-api.com/api/ranks?rikishiId=300&limit=200&skip=0&sortOrder=asc"
+    },
+    "shikonas": {
+      "complete": true,
+      "skip": 3,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": "2026-11-14T22:01:27.910Z",
+      "responseShape": "direct-array",
+      "source": "https://www.sumo-api.com/api/shikonas?rikishiId=300&limit=200&skip=0&sortOrder=asc"
+    },
+    "matches": {
+      "complete": false,
+      "skip": 0,
+      "total": null,
+      "attempts": 0,
+      "updatedAt": null
+    }
+  },
+  "data": {
+    "profile": {
+      "id": 300,
+      "sumodbId": 12633,
+      "nskId": 4024,
+      "shikonaEn": "Ieshima",
+      "shikonaJp": "家島(いえしま)",
+      "currentRank": "Makushita 46 West",
+      "heya": "Yamahibiki",
+      "birthDate": "2005-01-26T00:00:00Z",
+      "shusshin": "Hyogo-ken, Himeji-shi",
+      "height": 177,
+      "weight": 148.5,
+      "debut": "202003"
+    },
+    "stats": {
+      "absenceByDivision": {
+        "Jonidan": 7,
+        "Jonokuchi": 0,
+        "Makushita": 0,
+        "Sandanme": 0
+      },
+      "basho": 39,
+      "bashoByDivision": {
+        "Jonidan": 9,
+        "Jonokuchi": 1,
+        "Makushita": 9,
+        "Sandanme": 20
+      },
+      "lossByDivision": {
+        "Jonidan": 24,
+        "Jonokuchi": 1,
+        "Makushita": 34,
+        "Sandanme": 64
+      },
+      "sansho": {},
+      "totalAbsences": 7,
+      "totalByDivision": {
+        "Jonidan": 56,
+        "Jonokuchi": 7,
+        "Makushita": 59,
+        "Sandanme": 140
+      },
+      "totalLosses": 123,
+      "totalMatches": 262,
+      "totalWins": 139,
+      "winsByDivision": {
+        "Jonidan": 32,
+        "Jonokuchi": 6,
+        "Makushita": 25,
+        "Sandanme": 76
+      },
+      "yusho": 0,
+      "yushoByDivision": {}
+    },
+    "measurements": [
+      {
+        "id": "202003-300",
+        "bashoId": "202003",
+        "rikishiId": 300,
+        "height": 176,
+        "weight": 146
+      },
+      {
+        "id": "202103-300",
+        "bashoId": "202103",
+        "rikishiId": 300,
+        "height": 176,
+        "weight": 135
+      }
+    ],
+    "ranks": [
+      {
+        "id": "202003-300",
+        "bashoId": "202003",
+        "rikishiId": 300,
+        "rankValue": 2000,
+        "rank": "Mae-zumo"
+      },
+      {
+        "id": "202007-300",
+        "bashoId": "202007",
+        "rikishiId": 300,
+        "rankValue": 1034,
+        "rank": "Jonokuchi 34 East"
+      },
+      {
+        "id": "202009-300",
+        "bashoId": "202009",
+        "rikishiId": 300,
+        "rankValue": 962,
+        "rank": "Jonidan 62 West"
+      },
+      {
+        "id": "202011-300",
+        "bashoId": "202011",
+        "rikishiId": 300,
+        "rankValue": 982,
+        "rank": "Jonidan 82 East"
+      },
+      {
+        "id": "202101-300",
+        "bashoId": "202101",
+        "rikishiId": 300,
+        "rankValue": 937,
+        "rank": "Jonidan 37 East"
+      },
+      {
+        "id": "202103-300",
+        "bashoId": "202103",
+        "rikishiId": 300,
+        "rankValue": 956,
+        "rank": "Jonidan 56 West"
+      },
+      {
+        "id": "202105-300",
+        "bashoId": "202105",
+        "rikishiId": 300,
+        "rankValue": 956,
+        "rank": "Jonidan 56 West"
+      },
+      {
+        "id": "202107-300",
+        "bashoId": "202107",
+        "rikishiId": 300,
+        "rankValue": 923,
+        "rank": "Jonidan 23 East"
+      },
+      {
+        "id": "202109-300",
+        "bashoId": "202109",
+        "rikishiId": 300,
+        "rankValue": 887,
+        "rank": "Sandanme 87 East"
+      },
+      {
+        "id": "202111-300",
+        "bashoId": "202111",
+        "rikishiId": 300,
+        "rankValue": 901,
+        "rank": "Jonidan 1 East"
+      },
+      {
+        "id": "202201-300",
+        "bashoId": "202201",
+        "rikishiId": 300,
+        "rankValue": 922,
+        "rank": "Jonidan 22 East"
+      },
+      {
+        "id": "202203-300",
+        "bashoId": "202203",
+        "rikishiId": 300,
+        "rankValue": 901,
+        "rank": "Jonidan 1 West"
+      },
+      {
+        "id": "202205-300",
+        "bashoId": "202205",
+        "rikishiId": 300,
+        "rankValue": 883,
+        "rank": "Sandanme 83 West"
+      },
+      {
+        "id": "202207-300",
+        "bashoId": "202207",
+        "rikishiId": 300,
+        "rankValue": 825,
+        "rank": "Sandanme 25 East"
+      },
+      {
+        "id": "202209-300",
+        "bashoId": "202209",
+        "rikishiId": 300,
+        "rankValue": 848,
+        "rank": "Sandanme 48 East"
+      },
+      {
+        "id": "202211-300",
+        "bashoId": "202211",
+        "rikishiId": 300,
+        "rankValue": 862,
+        "rank": "Sandanme 62 West"
+      },
+      {
+        "id": "202301-300",
+        "bashoId": "202301",
+        "rikishiId": 300,
+        "rankValue": 842,
+        "rank": "Sandanme 42 West"
+      },
+      {
+        "id": "202303-300",
+        "bashoId": "202303",
+        "rikishiId": 300,
+        "rankValue": 861,
+        "rank": "Sandanme 61 West"
+      },
+      {
+        "id": "202305-300",
+        "bashoId": "202305",
+        "rikishiId": 300,
+        "rankValue": 843,
+        "rank": "Sandanme 43 West"
+      },
+      {
+        "id": "202307-300",
+        "bashoId": "202307",
+        "rikishiId": 300,
+        "rankValue": 869,
+        "rank": "Sandanme 69 West"
+      },
+      {
+        "id": "202309-300",
+        "bashoId": "202309",
+        "rikishiId": 300,
+        "rankValue": 840,
+        "rank": "Sandanme 40 West"
+      },
+      {
+        "id": "202311-300",
+        "bashoId": "202311",
+        "rikishiId": 300,
+        "rankValue": 825,
+        "rank": "Sandanme 25 East"
+      },
+      {
+        "id": "202401-300",
+        "bashoId": "202401",
+        "rikishiId": 300,
+        "rankValue": 842,
+        "rank": "Sandanme 42 East"
+      },
+      {
+        "id": "202403-300",
+        "bashoId": "202403",
+        "rikishiId": 300,
+        "rankValue": 815,
+        "rank": "Sandanme 15 West"
+      },
+      {
+        "id": "202405-300",
+        "bashoId": "202405",
+        "rikishiId": 300,
+        "rankValue": 839,
+        "rank": "Sandanme 39 East"
+      },
+      {
+        "id": "202407-300",
+        "bashoId": "202407",
+        "rikishiId": 300,
+        "rankValue": 826,
+        "rank": "Sandanme 26 East"
+      },
+      {
+        "id": "202409-300",
+        "bashoId": "202409",
+        "rikishiId": 300,
+        "rankValue": 840,
+        "rank": "Sandanme 40 West"
+      },
+      {
+        "id": "202411-300",
+        "bashoId": "202411",
+        "rikishiId": 300,
+        "rankValue": 754,
+        "rank": "Makushita 54 East"
+      },
+      {
+        "id": "202501-300",
+        "bashoId": "202501",
+        "rikishiId": 300,
+        "rankValue": 805,
+        "rank": "Sandanme 5 East"
+      },
+      {
+        "id": "202503-300",
+        "bashoId": "202503",
+        "rikishiId": 300,
+        "rankValue": 755,
+        "rank": "Makushita 55 East"
+      },
+      {
+        "id": "202505-300",
+        "bashoId": "202505",
+        "rikishiId": 300,
+        "rankValue": 822,
+        "rank": "Sandanme 22 West"
+      },
+      {
+        "id": "202507-300",
+        "bashoId": "202507",
+        "rikishiId": 300,
+        "rankValue": 758,
+        "rank": "Makushita 58 East"
+      },
+      {
+        "id": "202509-300",
+        "bashoId": "202509",
+        "rikishiId": 300,
+        "rankValue": 749,
+        "rank": "Makushita 49 East"
+      },
+      {
+        "id": "202511-300",
+        "bashoId": "202511",
+        "rikishiId": 300,
+        "rankValue": 801,
+        "rank": "Sandanme 1 West"
+      },
+      {
+        "id": "202601-300",
+        "bashoId": "202601",
+        "rikishiId": 300,
+        "rankValue": 751,
+        "rank": "Makushita 51 East"
+      },
+      {
+        "id": "202603-300",
+        "bashoId": "202603",
+        "rikishiId": 300,
+        "rankValue": 740,
+        "rank": "Makushita 40 West"
+      },
+      {
+        "id": "202605-300",
+        "bashoId": "202605",
+        "rikishiId": 300,
+        "rankValue": 756,
+        "rank": "Makushita 56 East"
+      },
+      {
+        "id": "202607-300",
+        "bashoId": "202607",
+        "rikishiId": 300,
+        "rankValue": 807,
+        "rank": "Sandanme 7 East"
+      },
+      {
+        "id": "202609-300",
+        "bashoId": "202609",
+        "rikishiId": 300,
+        "rankValue": 756,
+        "rank": "Makushita 56 West"
+      },
+      {
+        "id": "202611-300",
+        "bashoId": "202611",
+        "rikishiId": 300,
+        "rankValue": 746,
+        "rank": "Makushita 46 West"
+      }
+    ],
+    "shikonas": [
+      {
+        "id": "202003-300",
+        "bashoId": "202003",
+        "rikishiId": 300,
+        "shikonaEn": "Yagi Kenshin",
+        "shikonaJp": ""
+      },
+      {
+        "id": "202007-300",
+        "bashoId": "202007",
+        "rikishiId": 300,
+        "shikonaEn": "Ieshima Kenshin",
+        "shikonaJp": ""
+      },
+      {
+        "id": "202503-300",
+        "bashoId": "202503",
+        "rikishiId": 300,
+        "shikonaEn": "Ieshima",
+        "shikonaJp": "家島(いえしま)"
+      }
+    ],
+    "matches": []
+  },
+  "errors": []
+}
