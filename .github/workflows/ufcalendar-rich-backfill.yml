@@ -82,6 +82,17 @@ jobs:
           else
             echo "::warning::Offline Stage 3 audit unavailable; preserve newly fetched records and continue."
           fi
+      - name: Crosscheck Greco historical UFC CSVs at most once per UTC day
+        if: success()
+        shell: bash
+        run: |
+          # GitHub public source only; 1 metadata + 2 bounded CSV requests/day.
+          # No UFCStats page requests, no raw CSV copies, no certification writes.
+          if node scripts/audit-ufc-greco-bulk-crosscheck.mjs; then
+            echo "Secondary historical source audited when due."
+          else
+            echo "::warning::Greco audit unavailable; preserve primary UFCalendar archive."
+          fi
       - name: Build independent UFC career certification evidence queue (offline, bounded)
         if: success()
         shell: bash
@@ -115,17 +126,6 @@ jobs:
             qa/ufc-greco-bulk-crosscheck.json
           if-no-files-found: ignore
           retention-days: 7
-      - name: Crosscheck Greco historical UFC CSVs at most once per UTC day
-        if: success()
-        shell: bash
-        run: |
-          # GitHub public source only; 1 metadata + 2 bounded CSV requests/day.
-          # No UFCStats page requests, no raw CSV copies, no certification writes.
-          if node scripts/audit-ufc-greco-bulk-crosscheck.mjs; then
-            echo "Secondary historical source audited when due."
-          else
-            echo "::warning::Greco audit unavailable; preserve primary UFCalendar archive."
-          fi
       - name: Commit sourced observations without exposing credentials
         shell: bash
         run: |
