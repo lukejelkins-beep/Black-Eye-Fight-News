@@ -70,6 +70,30 @@ test('the existing paid collector reports offline Stage 3 progress without a sec
   assert.match(yaml,/Offline Stage 3 audit unavailable; preserve newly fetched records/);
 });
 
+test('one sourced DWCS native ID excludes both approved fighters without losing pro MMA history',()=>{
+ const p={...progress,bouts:{}};
+ const r={profiles:{
+   'fighter-1':{recentHistory:[history(83929,'Punahele Soriano','2019-06-18')]},
+   'fighter-2':{recentHistory:[history(83929,'Jamie Pickett','2019-06-18')]},
+   'fighter-3':{recentHistory:[history(77,'Official Opponent','2019-06-18')]}
+ }};
+ const proof={schema:1,bouts:[{
+   boutId:'83929',fighterSlug:'fighter-1',date:'2019-06-18',
+   opponent:'Punahele Soriano',event:"Dana White's Contender Series",
+   sourceUrl:'https://www.ufc.com/news/results-dana-whites-contender-series-season-3-episode-1'
+ }]};
+ const out=auditApprovedStage3(approval,census,p,r,archive,proof).summary;
+ assert.equal(out.additionalSourceVerifiedFeederHistoryRows,2);
+ assert.equal(out.excludedDistinctFeederNativeFightIds,1);
+ assert.equal(out.uniqueNativeFightIds,1,'Unrelated official UFC fight remains');
+ assert.equal(out.uniqueNativeFightIdsAwaitingIndex,1);
+ assert.equal(r.profiles['fighter-1'].recentHistory.length,1);
+ assert.equal(r.profiles['fighter-2'].recentHistory.length,1);
+ const incomplete={schema:1,bouts:[{...proof.bouts[0],event:'UFC 999'}]};
+ const bad=auditApprovedStage3(approval,census,p,r,archive,incomplete).summary;
+ assert.equal(bad.uniqueNativeFightIds,2,'Bad event proof must not exclude either corner');
+});
+
 test('exact UFC-site verified feeder bout is excluded without event cache evidence',()=>{
  const p={...progress,bouts:{'44':fight(44,'Opponent D')}};
  const r={profiles:{'fighter-1':{recentHistory:[
@@ -198,7 +222,7 @@ test('UFCalendar DWCS exclusion evidence is unique, precisely identified and pri
  const raw=JSON.parse(readFileSync(new URL('../data/ufc-feeder-bout-evidence.json',
                                        import.meta.url),'utf8'));
  assert.equal(raw.schema,1);
- assert.ok(raw.bouts.length>=16);
+ assert.ok(raw.bouts.length>=17);
  const ids=raw.bouts.map(r=>r.boutId);
  assert.equal(new Set(ids).size,ids.length,'A native bout ID cannot be excluded twice');
  const added=['88222','84039','83878','88218','88200','83916','84037',
