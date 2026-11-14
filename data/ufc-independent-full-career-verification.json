@@ -14,12 +14,105 @@
       "note": "UFC official flyweight Bruno Silva (NOT middleweight Bruno Silva 'Blindado') lists 12 UFC appearances through 6 June 2026, including losses to Charles Johnson and Edgar Chairez in 2026; the immutable approved roster snapshot has a stale 2025-10-18 most-recent UFC date. This is a minimum count/source-confirmed gap, never independent full-career certification. The complete dated bout inventory lives in data/ufc-official-career-bout-inventory.json."
     },
     "carlos-hernandez-7": {
-      "sourceCoverageAttested": false,
-      "scope": "minimum_count_evidence_only",
-      "minimumOfficialUfcBouts": 7,
-      "fighterUrl": "https://www.ufc.com/athlete/carlos-hernandez",
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Carlos Hernandez",
       "verifiedAt": "2026-11-14",
-      "note": "Official UFC history lists seven UFC fights between 2022 and May 2025; only one saved under the approved disambiguated slug."
+      "fighterUrl": "https://ufcstats.com/fighter-details/798e48f9e7f6ba22",
+      "officialFighterUrl": "https://www.ufc.com/athlete/carlos-hernandez",
+      "latestCompletedOfficialUfcBout": "2025-05-17",
+      "latestIndependentSourceFight": "2025-05-17",
+      "earliestOfficialUfcBout": "2022-02-26",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "method": "Cross-checked all seven relevant complete UFCStats-derived Greco fight-result rows and event dates against the current seven-bout detailed official UFC.com career biography, distinct from UFCalendar's native research cache. UFCStats URLs are linked from the historical source CSV and were not directly rendered.",
+        "independentNameCandidates": "One Carlos Hernandez fighter identity in the pinned UFCStats fighter-details CSV; verified against exact seven UFC.com bouts, flyweight class, event dates and outcomes.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "1071",
+        "102973"
+      ],
+      "nativeIdentityReconciliation": "Six older UFC bouts carry historical UFCalendar numeric fighter ID 1071; 2025-05-17 Park bout carries new ID 102973. Exact dates, opponent names, official results, individual source links and native corner/winner identities independently reconcile these as one athlete. Preserve both source identities without overwriting provider records.",
+      "excludedFromUfcCareer": [
+        {
+          "date": "2021-10-05",
+          "opponent": "Daniel Barez",
+          "event": "Dana White's Contender Series",
+          "sourceUrl": "https://www.ufc.com/athlete/carlos-hernandez",
+          "reason": "DWCS audition, not official UFC career bout"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2025-05-17",
+          "opponent": "HyunSung Park",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/18a7dc86279066f8",
+          "eventUrl": "https://ufcstats.com/event-details/8ad022dd81224f61",
+          "nativeBoutId": "83242",
+          "nativeFighterId": "102973"
+        },
+        {
+          "date": "2024-11-23",
+          "opponent": "Nyamjargal Tumendemberel",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5dab54e34c2cfe01",
+          "eventUrl": "https://ufcstats.com/event-details/e955046551f8c7dd",
+          "nativeBoutId": "38594",
+          "nativeFighterId": "1071"
+        },
+        {
+          "date": "2024-06-29",
+          "opponent": "Rei Tsuruya",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7856621db043423d",
+          "eventUrl": "https://ufcstats.com/event-details/f3743d8ef5dde970",
+          "nativeBoutId": "61052",
+          "nativeFighterId": "1071"
+        },
+        {
+          "date": "2023-12-09",
+          "opponent": "Tatsuro Taira",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/84f6de7c99779e5f",
+          "eventUrl": "https://ufcstats.com/event-details/5ef0088c1b19beeb",
+          "nativeBoutId": "59946",
+          "nativeFighterId": "1071"
+        },
+        {
+          "date": "2023-06-17",
+          "opponent": "Denys Bondar",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8ea12c7360fa0f6b",
+          "eventUrl": "https://ufcstats.com/event-details/b9415726dc3ec526",
+          "nativeBoutId": "60174",
+          "nativeFighterId": "1071"
+        },
+        {
+          "date": "2023-01-14",
+          "opponent": "Allan Nascimento",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c9144a294c73b06f",
+          "eventUrl": "https://ufcstats.com/event-details/2e2cdb6e9eb84bb9",
+          "nativeBoutId": "59762",
+          "nativeFighterId": "1071"
+        },
+        {
+          "date": "2022-02-26",
+          "opponent": "Victor Altamirano",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/181ceedcacc01d48",
+          "eventUrl": "https://ufcstats.com/event-details/f6a7b02c42e9fc5b",
+          "nativeBoutId": "61392",
+          "nativeFighterId": "1071"
+        }
+      ],
+      "note": "Seven completed official UFC flyweight fights and seven unique, measured native links, with no source-only or cache-only UFC bouts. Official UFC.com 2026-11-14 career narrative separately lists the earlier DWCS bout; it is excluded. One native 2023-12-10 date reflects UTC displacement relative to 2023-12-09 UFCStats event date; name-order difference HyunSung Park / Park Hyun-sung is independently reconciled through one native fight ID and both corners. No claim of direct access to blocked UFCStats pages."
     },
     "park-hyun-sung": {
       "sourceCoverageAttested": false,

@@ -26,7 +26,7 @@ const normalizedOutcome=value=>({
 })[String(value||'').toLowerCase()]||null;
 
 /** Full-career proof must be independently grounded, not inferred from index coverage. */
-export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,independentEntry){
+export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,independentEntry,indexedBouts=null){
  const timeline=profile?.ufcTimeline||{};
  const rows=arr(history);
  const latest=date(rosterLatest),snapshot=date(asOf);
@@ -68,6 +68,50 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
    normalizedOutcome(r.result)].join('|'));
  const givenKeys=given.map(r=>[date(r.date),normal(r.opponent),
    normalizedOutcome(r.result)].join('|'));
+ // A directly identified source-to-native mapping is stronger than comparing
+ // display names and UTC dates as raw strings. It is only accepted when every
+ // cited UFCStats bout URL maps one-to-one to a saved native fight, both native
+ // corners, the officially dated event and the correct final result. This also
+ // permits documented one-day UTC shifts and name-token-order variations,
+ // WITHOUT silently deduplicating, rewriting or dropping any cached rows.
+ const nativeMapped=given.length>0&&given.every(r=>
+   numId(r?.nativeBoutId)&&numId(r?.nativeFighterId));
+ const nativeIdentitySet=new Set(arr(ext.verifiedNumericFighterIds).map(numId).filter(Boolean));
+ const nativeMatches=nativeMapped&&indexedBouts&&
+   normal(ext.fighterName)===normal(profile?.name)&&
+   /^https:\/\/www\.ufc\.com\/athlete\//i.test(String(ext.officialFighterUrl||''))&&
+   nativeIdentitySet.size>0&&
+   ext.sourceSnapshot?.fightResultsBlobSha?.match(/^[a-f0-9]{40}$/i)&&
+   ext.sourceSnapshot?.fighterDetailsBlobSha?.match(/^[a-f0-9]{40}$/i)&&
+   new Set(given.map(r=>String(r.nativeBoutId))).size===given.length&&
+   new Set(given.map(r=>String(r.fightUrl))).size===given.length&&
+   given.length===rows.length&&given.every(r=>{
+     const id=String(r.nativeBoutId);
+     const matches=rows.filter(h=>String(h.boutId||'')===id&&h.source==='native');
+     if(matches.length!==1)return false;
+     const h=matches[0],b=indexedBouts[id];
+     const delta=(a,c)=>date(a)&&date(c)?
+       Math.abs((Date.parse(a+'T00:00:00Z')-Date.parse(c+'T00:00:00Z'))/86400000):999;
+     if(!b||b.org!=='ufc'||isFeederTitle(b.event)||
+        !['completed','draw','no_contest'].includes(b.status)||
+        delta(r.date,h.date)>1||delta(r.date,b.eventDate)>1||
+        !sameAthleteName(r.opponent,h.opponent)||
+        normalizedOutcome(r.result)!==normalizedOutcome(h.result))return false;
+     const corners=[[b.a,b.b],[b.b,b.a]].filter(([own,other])=>
+       own&&other&&String(own.id)===String(r.nativeFighterId)&&
+       nativeIdentitySet.has(String(own.id))&&
+       normal(own.name)===normal(ext.fighterName)&&
+       sameAthleteName(other.name,r.opponent));
+     if(corners.length!==1)return false;
+     const [own,other]=corners[0];
+     const outcome=b.status==='no_contest'?'no_contest':
+       b.status==='draw'?'draw':String(b.result?.winnerId)===String(own.id)?'win':
+       String(b.result?.winnerId)===String(other.id)?'loss':null;
+     return outcome===normalizedOutcome(r.result);
+   });
+ const exactMatches=savedKeys.length===givenKeys.length&&
+   new Set(givenKeys).size===givenKeys.length&&
+   givenKeys.slice().sort().every((v,i)=>v===savedKeys.slice().sort()[i]);
  const checked=ext.sourceCoverageAttested===true&&
    ext.verificationMethod==='full_official_ufc_fight_listing_crosscheck'&&
    snapshot&&date(ext.verifiedAt)>=snapshot&&
@@ -75,9 +119,7 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
    given.length>0&&given.every(r=>date(r?.date)&&normal(r?.opponent)&&
      normalizedOutcome(r?.result)&&
      /^https:\/\/ufcstats\.com\/fight-details\/[a-f0-9]+$/i.test(String(r?.fightUrl||'')))&&
-   savedKeys.length===givenKeys.length&&
-   new Set(givenKeys).size===givenKeys.length&&
-   givenKeys.slice().sort().every((v,i)=>v===savedKeys.slice().sort()[i]);
+   (nativeMapped?Boolean(nativeMatches):exactMatches);
  // Incomplete /fighters/{id}/history is a *provider* contradiction,
  // not a contradiction of an independently checked complete UFC fight list.
  // A separately reconciled, exact full UFCStats chronology can certify even
@@ -450,7 +492,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     if(knownIndexed)allKnownIndexed++;
     if(knownMeasured)allKnownMeasured++;
     const proof=evaluateCareerEvidence(profile,history,
-      current.get(slug)?.lastUfcFight,census.asOf,independentRegistry[slug]);
+      current.get(slug)?.lastUfcFight,census.asOf,independentRegistry[slug],bouts);
     const independentFullCareer=knownMeasured&&proof.independentlyVerified;
     const providerFullCareer=knownMeasured&&proof.providerCertified;
     const providerHistoryDiscrepancy=proof.providerDiscrepancy||!proof.rosterLatestPresent;

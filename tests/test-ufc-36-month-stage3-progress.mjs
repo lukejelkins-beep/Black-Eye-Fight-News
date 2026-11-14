@@ -749,3 +749,31 @@ test('Official UFC biography cache crosswalk requires stable numeric fighter ide
  assert.equal(wrong.cachedNativeCandidateDetails[0].nativeFighterId,'501');
  assert.equal(wrong.cachedNativeCandidateDetails[0].sourceOutcomeMatches,true);
 });
+
+
+test('Carlos Hernandez complete 7-fight UFC source listing is independently tied to native corners and statistics',()=>{
+ const load=p=>JSON.parse(readFileSync(new URL('../data/'+p,import.meta.url),'utf8'));
+ const register=load('ufc-independent-full-career-verification.json');
+ const researchData=load('ufcalendar-fighter-research.json');
+ const indexed=load('ufcalendar-rich-progress.json').bouts;
+ const fighter=researchData.profiles['carlos-hernandez-7'];
+ const timeline=fighter.recentHistory.filter(x=>x.promotion==='ufc');
+ const evidence=register.fighters['carlos-hernandez-7'];
+ assert.equal(evidence.bouts.length,7);
+ assert.deepEqual(evidence.verifiedNumericFighterIds.slice().sort(),['102973','1071'].sort());
+ const proof=(source,native=indexed)=>evaluateCareerEvidence(
+  fighter,timeline,'2025-05-17','2026-11-14',source,native).independentlyVerified;
+ assert.equal(proof(evidence),true,
+  'seven complete official UFC bouts must each map to one measured native identity');
+ assert.equal(proof({...evidence,sourceCoverageAttested:false}),false);
+ assert.equal(proof({...evidence,bouts:evidence.bouts.slice(1)}),false);
+ assert.equal(proof({...evidence,bouts:evidence.bouts.map((b,i)=>
+  i?b:{...b,nativeBoutId:'999999999'})}),false);
+ assert.equal(proof({...evidence,bouts:evidence.bouts.map((b,i)=>
+  i?b:{...b,nativeFighterId:'1071'})}),false);
+ assert.equal(proof({...evidence,bouts:evidence.bouts.map((b,i)=>
+  i?b:{...b,result:'win'})}),false);
+ assert.equal(proof({...evidence,bouts:evidence.bouts.map((b,i)=>
+  i?b:{...b,opponent:'Unknown person'})}),false);
+ assert.equal(proof(evidence,{}),false);
+});
