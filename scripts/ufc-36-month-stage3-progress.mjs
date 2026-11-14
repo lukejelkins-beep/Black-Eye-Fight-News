@@ -19,7 +19,53 @@ const isUfc=row=>String(row?.promotion||row?.org||'').toLowerCase()==='ufc'&&
   ['win','loss','draw','no_contest','w','l','d','nc'].includes(
     String(row?.result||row?.outcome||row?.status||'').toLowerCase());
 
-export function auditApprovedStage3(approval,census,progress,research,archive={},feederEvidence={},finaleEvidence={},legacyEvidence={}){
+
+const normalizedOutcome=value=>({
+ win:'win',w:'win',loss:'loss',l:'loss',draw:'draw',d:'draw',
+ nc:'no_contest',no_contest:'no_contest'
+})[String(value||'').toLowerCase()]||null;
+
+/** Full-career proof must be independently grounded, not inferred from index coverage. */
+export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,independentEntry){
+ const timeline=profile?.ufcTimeline||{};
+ const rows=arr(history);
+ const latest=date(rosterLatest),snapshot=date(asOf);
+ const rosterLatestPresent=!!latest&&rows.some(r=>date(r.date)===latest);
+ const providerFlag=timeline.providerTruncatedFlag===false;
+ const contradictions=Boolean(timeline.missingRosterLastUfcFight||
+   timeline.savedHistoryHasAdditionalUfcBouts===true||
+   Number(timeline.conflictingNativeFightIds)>0||
+   arr(profile?.ufcHistoryIdConflicts).length>0);
+ const legacyClaim=timeline.complete===true&&!providerFlag;
+ const providerCertified=Boolean(timeline.complete===true&&providerFlag&&
+   snapshot&&date(timeline.observedOn)>=snapshot&&
+   Number.isInteger(timeline.settledCount)&&timeline.settledCount>0&&
+   rosterLatestPresent&&!contradictions);
+ // A manually checked independent UFCStats fighter-history listing must
+ // cover exactly the same complete bout identities, not a partial sample.
+ const ext=independentEntry||{};
+ const given=arr(ext.bouts);
+ const savedKeys=rows.map(r=>[date(r.date),normal(r.opponent),
+   normalizedOutcome(r.result)].join('|'));
+ const givenKeys=given.map(r=>[date(r.date),normal(r.opponent),
+   normalizedOutcome(r.result)].join('|'));
+ const checked=ext.sourceCoverageAttested===true&&
+   ext.verificationMethod==='full_official_ufc_fight_listing_crosscheck'&&
+   snapshot&&date(ext.verifiedAt)>=snapshot&&
+   /^https:\/\/ufcstats\.com\/fighter-details\/[a-f0-9]+$/i.test(String(ext.fighterUrl||''))&&
+   given.length>0&&given.every(r=>date(r?.date)&&normal(r?.opponent)&&
+     normalizedOutcome(r?.result)&&
+     /^https:\/\/ufcstats\.com\/fight-details\/[a-f0-9]+$/i.test(String(r?.fightUrl||'')))&&
+   savedKeys.length===givenKeys.length&&
+   new Set(givenKeys).size===givenKeys.length&&
+   givenKeys.slice().sort().every((v,i)=>v===savedKeys.slice().sort()[i]);
+ const independentlyVerified=Boolean(checked&&rosterLatestPresent&&!contradictions);
+ return {providerCertified,independentlyVerified,legacyClaim,
+   explicitUntruncated:providerFlag,providerDiscrepancy:contradictions,
+   rosterLatestPresent,independentCheckAttempted:given.length>0};
+}
+
+export function auditApprovedStage3(approval,census,progress,research,archive={},feederEvidence={},finaleEvidence={},legacyEvidence={},independentEvidence={}){
   if(approval?.status!=='approved'||approval?.approvedBy!=='user'||approval?.schema!==1||
      approval?.scope!=='ufc-36-month-roster')throw Error('Stage 3 roster not approved');
   const approved=arr(approval.approvedFighters);
@@ -479,7 +525,8 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
    read('data/ufc-research-archive.json'),
    read('data/ufc-feeder-bout-evidence.json'),
    read('data/ufc-official-finale-recovery.json'),
-   read('data/ufc-official-legacy-evidence.json'));
+   read('data/ufc-official-legacy-evidence.json'),
+   read('data/ufc-independent-full-career-verification.json'));
  const qa=path.join(root,'qa');fs.mkdirSync(qa,{recursive:true});
  fs.writeFileSync(path.join(qa,'ufc-36-month-stage3-progress.json'),JSON.stringify(r,null,2)+'\n');
  fs.writeFileSync(path.join(qa,'ufc-36-month-stage3-progress.md'),markdownReport(r));
