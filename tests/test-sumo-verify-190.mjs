@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {newCache,STAGES} from '../scripts/sumo-backfill-190.mjs';
-import {auditRikishi} from '../scripts/sumo-verify-190.mjs';
+import {auditRikishi,crossCheckOfficial} from '../scripts/sumo-verify-190.mjs';
 
 const w={sourceId:28,officialNskId:3616,sumoDbId:12226,shikonaEn:'Ura',currentRank:'Maegashira 2 East'};
 function complete(){
@@ -62,4 +62,20 @@ test('source Mae-zumo is an authentic unranked debut status, not a malformed ban
   const result=auditRikishi(w,d);
   assert.equal(result.readyForExternalCrosscheck,true);
   assert.ok(!result.errors.includes('malformed-rank-value'));
+});
+
+test('independently checks JSA identity and physical measurements without certifying career',()=>{
+  const d=complete();
+  const evidence={sumoApiId:28,officialNskId:3616,
+    officialProfileUrl:'https://www.sumo.or.jp/EnSumoDataRikishi/profile/3616/',
+    officialAsOf:'2026-11 day 7',stable:'Kise',currentRank:w.currentRank,
+    heightCm:173,weightKg:138,record:{wins:432,losses:330,absences:96}};
+  d.data.profile.heya='Kise';d.data.profile.height=173;d.data.profile.weight=138;
+  d.data.stats.totalWins=432;d.data.stats.totalLosses=331;d.data.stats.totalAbsences=96;
+  const verified=crossCheckOfficial(w,d,evidence);
+  assert.equal(verified.identityVerified,true);
+  assert.equal(verified.measurementsVerified,true);
+  assert.equal(verified.careerTotalsMatchAtSourceSnapshots,false);
+  assert.match(verified.note,/result-cutoff dates/);
+  assert.equal(crossCheckOfficial(w,d,{...evidence,officialNskId:9999}).identityVerified,false);
 });
