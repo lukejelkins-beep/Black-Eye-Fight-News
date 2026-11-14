@@ -53,15 +53,62 @@
       "bashoId": "201503",
       "heightCm": 172,
       "weightKg": 113,
-      "source": "Sumo API historical change"
+      "source": "Sumo API historical change",
+      "sourceUrl": "https://www.sumo-api.com/api/measurements?rikishiId=28",
+      "independentlyCertified": false,
+      "independentSourceConfirmed": "https://sumodb.sumogames.de/Rikishi.aspx?r=12226"
     },
     {
       "bashoId": "202103",
       "heightCm": 175,
       "weightKg": 136,
-      "source": "Sumo API historical change"
+      "source": "Sumo API historical change",
+      "sourceUrl": "https://www.sumo-api.com/api/measurements?rikishiId=28",
+      "independentlyCertified": false,
+      "independentSourceConfirmed": "https://sumodb.sumogames.de/Rikishi.aspx?r=12226"
+    },
+    {
+      "bashoId": "202205",
+      "heightCm": 173,
+      "weightKg": 148,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12226",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202305",
+      "heightCm": 175,
+      "weightKg": 143,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12226",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202405",
+      "heightCm": 175,
+      "weightKg": 142,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12226",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202505",
+      "heightCm": 175,
+      "weightKg": 139,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12226",
+      "independentlyCertified": false
     }
   ],
+  "measurementCoverage": {
+    "apiPoints": 2,
+    "independentPoints": 6,
+    "extraPoints": 4,
+    "matchingOverlapPoints": 2,
+    "conflictingOverlaps": [],
+    "status": "dated-independent-source-collected",
+    "independentlyCertified": false
+  },
   "rankTimeline": [
     {
       "bashoId": "201503",

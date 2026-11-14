@@ -46,12 +46,64 @@
   },
   "measurements": [
     {
+      "bashoId": "201809",
+      "heightCm": 183,
+      "weightKg": 135,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12516",
+      "independentlyCertified": false
+    },
+    {
       "bashoId": "202103",
       "heightCm": 184,
       "weightKg": 143,
-      "source": "Sumo API historical change"
+      "source": "Sumo API historical change",
+      "sourceUrl": "https://www.sumo-api.com/api/measurements?rikishiId=55",
+      "independentlyCertified": false,
+      "independentSourceConfirmed": "https://sumodb.sumogames.de/Rikishi.aspx?r=12516"
+    },
+    {
+      "bashoId": "202205",
+      "heightCm": 184,
+      "weightKg": 152,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12516",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202305",
+      "heightCm": 185,
+      "weightKg": 155,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12516",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202405",
+      "heightCm": 184,
+      "weightKg": 152,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12516",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202505",
+      "heightCm": 184,
+      "weightKg": 156,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12516",
+      "independentlyCertified": false
     }
   ],
+  "measurementCoverage": {
+    "apiPoints": 1,
+    "independentPoints": 6,
+    "extraPoints": 5,
+    "matchingOverlapPoints": 1,
+    "conflictingOverlaps": [],
+    "status": "dated-independent-source-collected",
+    "independentlyCertified": false
+  },
   "rankTimeline": [
     {
       "bashoId": "201809",

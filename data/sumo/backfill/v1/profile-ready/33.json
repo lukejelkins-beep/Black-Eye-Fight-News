@@ -54,15 +54,27 @@
       "bashoId": "201403",
       "heightCm": 182,
       "weightKg": 150,
-      "source": "Sumo API historical change"
+      "source": "Sumo API historical change",
+      "sourceUrl": "https://www.sumo-api.com/api/measurements?rikishiId=33",
+      "independentlyCertified": false
     },
     {
       "bashoId": "202103",
       "heightCm": 184,
       "weightKg": 170,
-      "source": "Sumo API historical change"
+      "source": "Sumo API historical change",
+      "sourceUrl": "https://www.sumo-api.com/api/measurements?rikishiId=33",
+      "independentlyCertified": false
     }
   ],
+  "measurementCoverage": {
+    "apiPoints": 2,
+    "independentPoints": 0,
+    "extraPoints": 0,
+    "matchingOverlapPoints": 0,
+    "conflictingOverlaps": [],
+    "status": "api-only"
+  },
   "rankTimeline": [
     {
       "bashoId": "201403",

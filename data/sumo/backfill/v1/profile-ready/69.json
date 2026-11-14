@@ -25,7 +25,7 @@
     "wins": 326,
     "losses": 309,
     "absences": 24,
-    "winLossEvidence": "sumo-api-career-stats",
+    "winLossEvidence": "official-JSA-public-record-verified-against-bout-ledger",
     "sourceSummaryLagReconciled": false,
     "originalApiCareerTotals": {
       "wins": 326,
@@ -48,21 +48,35 @@
       "bashoId": "201303",
       "heightCm": 177,
       "weightKg": 121,
-      "source": "Sumo API historical change"
+      "source": "Sumo API historical change",
+      "sourceUrl": "https://www.sumo-api.com/api/measurements?rikishiId=69",
+      "independentlyCertified": false
     },
     {
       "bashoId": "201311",
       "heightCm": 177,
       "weightKg": 120,
-      "source": "Sumo API historical change"
+      "source": "Sumo API historical change",
+      "sourceUrl": "https://www.sumo-api.com/api/measurements?rikishiId=69",
+      "independentlyCertified": false
     },
     {
       "bashoId": "202103",
       "heightCm": 182,
       "weightKg": 155,
-      "source": "Sumo API historical change"
+      "source": "Sumo API historical change",
+      "sourceUrl": "https://www.sumo-api.com/api/measurements?rikishiId=69",
+      "independentlyCertified": false
     }
   ],
+  "measurementCoverage": {
+    "apiPoints": 3,
+    "independentPoints": 0,
+    "extraPoints": 0,
+    "matchingOverlapPoints": 0,
+    "conflictingOverlaps": [],
+    "status": "api-only"
+  },
   "rankTimeline": [
     {
       "bashoId": "201303",
