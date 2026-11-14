@@ -86,7 +86,11 @@ export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12"}={}){
  }
  const fighters=new Map(),matchedBouts=new Set(),pending=[];
  function entry(name,slug){
-  const k=norm(name);
+  // Names are NOT unique identities: two different athletes can share the
+  // same display name. Prefer the immutable source athlete slug and never
+  // collapse two fighter histories merely because their names match.
+  const stableSlug=String(slug||"").trim();
+  const k=stableSlug?"slug:"+stableSlug:"unnamed:"+norm(name);
   if(!fighters.has(k))fighters.set(k,{name:safe(name),slug:safe(slug),
    bouts:[],_ids:new Set()});
   return fighters.get(k);
