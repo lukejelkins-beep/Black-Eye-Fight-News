@@ -9,6 +9,8 @@ on:
       - 'scripts/audit-ufc-research-pipeline.mjs'
       - 'scripts/ufc-36-month-review-report.mjs'
       - 'scripts/ufc-36-month-stage3-progress.mjs'
+      - 'scripts/ufc-v4-certification-queue.mjs'
+      - 'tests/test-ufc-v4-certification-queue.mjs'
       - 'tests/test-ufc-36-month-stage3-progress.mjs'
       - 'tests/test-ufc-36-month-review-report.mjs'
       - 'tests/test-ufc-research-pipeline.mjs'
@@ -20,6 +22,8 @@ on:
       - 'data/ufc-research-workers/**'
       - 'scripts/audit-ufc-research-pipeline.mjs'
       - 'scripts/ufc-36-month-stage3-progress.mjs'
+      - 'scripts/ufc-v4-certification-queue.mjs'
+      - 'tests/test-ufc-v4-certification-queue.mjs'
       - 'tests/test-ufc-research-pipeline.mjs'
       - 'tests/test-ufc-36-month-stage3-progress.mjs'
       - '.github/workflows/audit-ufc-research-pipeline.yml'
@@ -57,6 +61,12 @@ jobs:
         run: |
           node --test tests/test-ufc-36-month-stage3-progress.mjs
           node scripts/ufc-36-month-stage3-progress.mjs
+      - name: Attempt all 783 UFC career certifications offline and queue exceptions
+        if: always()
+        run: |
+          node --test tests/test-ufc-v4-certification-queue.mjs
+          test -s qa/ufc-36-month-stage3-progress.json
+          node scripts/ufc-v4-certification-queue.mjs
       - name: Save report
         if: always()
         uses: actions/upload-artifact@v4
@@ -68,5 +78,6 @@ jobs:
             qa/ufc-36-month-roster-review.md
             qa/ufc-36-month-stage3-progress.json
             qa/ufc-36-month-stage3-progress.md
+            qa/ufc-v4-certification-queue.json
           retention-days: 14
           if-no-files-found: warn
