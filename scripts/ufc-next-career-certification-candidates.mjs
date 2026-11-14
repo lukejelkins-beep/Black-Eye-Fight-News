@@ -55,7 +55,9 @@ function main(){
  fs.mkdirSync(path.dirname(dest),{recursive:true});
  fs.writeFileSync(dest,JSON.stringify(out,null,2)+'\n');
  console.log('BEFN_V4_NONPILOT_TRIAGE '+JSON.stringify({candidateCount:out.candidateCount,
-  top10:out.candidates.slice(0,10).map(x=>({slug:x.slug,known:x.knownCareerBouts,
-   index:x.fullIndexStatus,identity:x.identityStatus,blockers:x.blockers}))}));
+  certified:out.candidates.filter(x=>x.independentlyCertified).length,
+  nextPending20:out.candidates.filter(x=>!x.independentlyCertified).slice(0,20).map(x=>({
+   slug:x.slug,known:x.knownCareerBouts,index:x.fullIndexStatus,
+   identity:x.identityStatus,blockers:x.blockers}))}));
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))main();
