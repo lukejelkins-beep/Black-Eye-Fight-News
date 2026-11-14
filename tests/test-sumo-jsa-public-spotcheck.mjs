@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {htmlToPublicText,parseOfficialProfile} from '../scripts/sumo-jsa-public-spotcheck.mjs';
+import {htmlToPublicText,parseOfficialProfile,parseJsaBashoResults,reconcileJsaBashoResults} from '../scripts/sumo-jsa-public-spotcheck.mjs';
 const w={sourceId:16,officialNskId:2892,shikonaEn:'Nishikigi',
  currentRank:'Makushita 2 East',heya:'Isenoumi',heightCm:186,weightKg:184};
 const official=String.raw`<!doctype html><html><head><script>fake injection</script></head><body>
@@ -57,4 +57,46 @@ test('official Ozeki rank omits numeric side; grade is checked but position stay
  assert.deepEqual(result.rank,{division:'Ozeki',position:null});
  assert.equal(result.fieldComparisons.rankGrade,true);
  assert.equal(result.certification,'not-started');
+});
+
+test('parse official previous-basho W-L with historical dates and absences',()=>{
+ const html=official.replace('</body>',
+  '<h2>Tournament Records</h2><div>2026 November West Makushita #18 Nishikigi 2-2 | Day results</div>'+
+  '<div>2026 September West Makushita #24 Nishikigi 4-3 | Recorded outcomes</div>'+
+  '<div>2026 July East Makushita #21 Nishikigi 4-1-2 | Injury absences</div></body>');
+ const v=parseJsaBashoResults(html);
+ assert.deepEqual(v.map(x=>[x.bashoId,x.wins,x.losses,x.absences]),
+  [['202607',4,1,2],['202609',4,3,null],['202611',2,2,null]]);
+});
+test('compare prior official tournament W-L without confusing current basho cutoffs',()=>{
+ const officialRows=[
+  {bashoId:'202605',wins:2,losses:0,absences:null},
+  {bashoId:'202609',wins:1,losses:1,absences:null},
+  {bashoId:'202611',wins:5,losses:1,absences:null}];
+ const ledger={rikishiId:16,stages:{matches:{complete:true}},data:{matches:[
+  {bashoId:'202605',division:'Makushita',day:1,winnerId:16},
+  {bashoId:'202605',division:'Makushita',day:3,winnerId:16},
+  {bashoId:'202609',division:'Makushita',day:1,winnerId:16},
+  {bashoId:'202609',division:'Makushita',day:2,winnerId:99},
+  {bashoId:'202611',division:'Makushita',day:1,winnerId:99}
+ ]}};
+ const report=reconcileJsaBashoResults(officialRows,ledger,{monthYear:'November 2026',day:7});
+ assert.equal(report.comparedBasho,2);
+ assert.equal(report.agreeingBasho,2);
+ assert.equal(report.discrepantBasho,0);
+ assert.equal(report.excludedCurrentBasho,'202611');
+ assert.equal(report.certified,false);
+ ledger.data.matches.find(x=>x.bashoId==='202609'&&x.day===2).winnerId=16;
+ const drift=reconcileJsaBashoResults(officialRows,ledger,{monthYear:'November 2026',day:7});
+ assert.equal(drift.discrepantBasho,1);
+ assert.deepEqual(drift.discrepancies.map(x=>x.bashoId),['202609']);
+ assert.equal(drift.status,'historical-results-disagree');
+});
+test('missing source tournaments do not become certification',()=>{
+ const out=reconcileJsaBashoResults([{bashoId:'202509',wins:4,losses:3}],null,
+    {monthYear:'November 2026',day:8});
+ assert.equal(out.comparedBasho,0);
+ assert.equal(out.unmatchedOfficialBasho.length,1);
+ assert.notEqual(out.status,'historical-tournaments-agree');
+ assert.equal(out.certified,false);
 });
