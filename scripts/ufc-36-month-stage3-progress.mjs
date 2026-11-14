@@ -110,6 +110,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     String(item?.sourceUrl||'').startsWith('https://www.ufc.com/'));
   let profilesWithHistory=0,fullyCertified=0,historyRows=0,nativeLinks=0,
     legacyCompleteClaims=0,independentCertified=0,providerTimelineConflicts=0,
+    sourceConfirmedIncompleteCareers=0,sourceConfirmedMinimumMissingUfcBouts=0,
     rosterUtcDayAdjustments=0,providerFlagsExplainedByUtcDayShift=0,
     fightersWithFive=0,fightersWithTen=0,withMeasuredRecent=0,
     fullFiveMeasured=0,fullTenMeasured=0,unlinkedCareerRows=0,
@@ -132,6 +133,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
   const cohorts=[],careerVerificationDecisions=[],rosterLastBoutSourceGaps=[];
   const careerVerificationStatusCounts={
     independently_verified_full_career:0,provider_certified_full_career:0,
+    official_source_confirms_missing_historical_bouts:0,
     known_fight_coverage_gap:0,provider_history_discrepancy:0,
     legacy_completeness_flag_unsubstantiated:0,
     all_known_fights_complete_historical_unverified:0
@@ -241,6 +243,21 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     const independentFullCareer=knownMeasured&&proof.independentlyVerified;
     const providerFullCareer=knownMeasured&&proof.providerCertified;
     const providerHistoryDiscrepancy=proof.providerDiscrepancy||!proof.rosterLatestPresent;
+    const independentRow=independentRegistry[slug]||{};
+    const minVerified=independentRow.scope==='minimum_count_evidence_only'&&
+      independentRow.sourceCoverageAttested===false&&
+      date(independentRow.verifiedAt)>=date(census.asOf)&&
+      /^https://www.ufc.com/athlete/[a-z0-9-]+$/.test(
+        String(independentRow.fighterUrl||''))&&
+      Number.isSafeInteger(independentRow.minimumOfficialUfcBouts)&&
+      independentRow.minimumOfficialUfcBouts>0;
+    const sourceMinimum=minVerified?independentRow.minimumOfficialUfcBouts:null;
+    const confirmedMissing=minVerified?
+      Math.max(0,sourceMinimum-observed.length):0;
+    if(confirmedMissing>0){
+      sourceConfirmedIncompleteCareers++;
+      sourceConfirmedMinimumMissingUfcBouts+=confirmedMissing;
+    }
     if(proof.legacyClaim)legacyCompleteClaims++;
     if(providerHistoryDiscrepancy)providerTimelineConflicts++;
     if(proof.utcDateShift)rosterUtcDayAdjustments++;
@@ -267,6 +284,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     if(independentFullCareer)independentCertified++;
     if(providerFullCareer){fullyCertified++;certifiedAndIndexed++;certified.push(slug);}
     const completenessStatus=!knownMeasured?'known_fight_coverage_gap':
+      confirmedMissing>0?'official_source_confirms_missing_historical_bouts':
       independentFullCareer?'independently_verified_full_career':
       providerFullCareer?'provider_certified_full_career':
       providerHistoryDiscrepancy?'provider_history_discrepancy':
@@ -277,6 +295,8 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
       slug,status:completenessStatus,
       allKnownFightsIndexed:knownIndexed,allKnownFightsMeasured:knownMeasured,
       knownOfficialUfcFightCount:observed.length,
+      sourceVerifiedMinimumOfficialUfcBouts:sourceMinimum,
+      minimumConfirmedMissingHistoricalUfcBouts:confirmedMissing,
       independentlyVerifiedFullCareer:independentFullCareer,
       providerCertifiedFullCareer:providerFullCareer,
       oldCompleteFlagWithoutProviderEvidence:proof.legacyClaim,
@@ -422,6 +442,8 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     profilesWithoutSavedUfcHistory:missingHistory.length,
     fullyProviderCertifiedTimelines:fullyCertified,
     legacyTimelineCompleteClaimsWithoutRetainedProof:legacyCompleteClaims,
+    sourceConfirmedIncompleteCareerHistories:sourceConfirmedIncompleteCareers,
+    sourceConfirmedMinimumMissingHistoricalUfcBouts:sourceConfirmedMinimumMissingUfcBouts,
     independentlyVerifiedFullCareerTimelines:independentCertified,
     approvedCareersWithoutIndependentFullCareerCertification:approved.length-independentCertified,
     providerHistoryDiscrepancyCases:providerTimelineConflicts,
@@ -536,6 +558,8 @@ export function markdownReport(report){
    profilesWithoutSavedUfcHistory:'Profiles without saved UFC history',
    fullyProviderCertifiedTimelines:'Full UFC timelines with strict explicit provider completeness evidence',
    legacyTimelineCompleteClaimsWithoutRetainedProof:'Historic complete flags lacking retained provider proof (not certified)',
+   sourceConfirmedIncompleteCareerHistories:'Independent UFC source confirms missing saved historical fights',
+   sourceConfirmedMinimumMissingHistoricalUfcBouts:'Minimum confirmed historical UFC fights still absent from saved approved careers',
    independentlyVerifiedFullCareerTimelines:'UFC careers independently reconciled against complete external official records',
    approvedCareersWithoutIndependentFullCareerCertification:'Approved UFC careers still awaiting independent historical completeness verification',
    providerHistoryDiscrepancyCases:'Provider history and roster chronology discrepancies requiring review',
