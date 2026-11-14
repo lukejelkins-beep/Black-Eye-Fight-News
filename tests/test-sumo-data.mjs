@@ -292,7 +292,7 @@ test('other rikishi charts never inherit Ura history or invent weights',()=>{
 test('Sumo preview profiles load source-linked career cache and accessible charts',()=>{
   const html=readFileSync(new URL('../sumo.html',import.meta.url),'utf8');
   const script=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
-  assert.match(html,/assets\/sumo\.css\?v=20261115-matchups1/);
+  assert.match(html,/assets\/sumo\.css\?v=20261115-career-h2h2/);
   assert.match(script,/data\/sumo\/career-history\.json/);
   assert.match(script,/careerGraphs\(w,STATE\.careerHistory/);
   assert.doesNotMatch(script,/fetch\(\s*['"]https:\/\/www\.sumo-api\.com/);
