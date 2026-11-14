@@ -1,11 +1,5 @@
 name: UFC wave16 six complete careers source-native crosscheck (research only)
 on:
-  push:
-    branches: [research/ufc-wave16-amosov-hafez-20261114]
-    paths:
-      - 'data/ufc-unified-wave16-official-source-review-20261114.json'
-      - 'scripts/ufc-unified-wave16-source-review.mjs'
-      - '.github/workflows/ufc-unified-wave16-source-review.yml'
   workflow_dispatch:
 permissions:
   contents: read
