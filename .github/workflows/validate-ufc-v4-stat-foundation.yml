@@ -8,6 +8,8 @@ on:
       - 'scripts/ufc-official-event-scope.mjs'
       - 'scripts/build-ufc-v4-stat-foundation.mjs'
       - 'scripts/certify-ufc-v4-independent-full-careers.mjs'
+      - 'scripts/ufc-v4-targeted-greco-evidence.mjs'
+      - 'data/ufc-v4-targeted-greco-fight-links-20261114.json'
       - 'data/ufc-v4-independent-full-career-certification-batch-20261114.json'
       - 'tests/test-ufc-postfight-metrics.mjs'
       - 'tests/test-ufc-v4-round-corroboration.mjs'
@@ -61,6 +63,8 @@ jobs:
           node --test tests/test-ufc-v4-source-scope.mjs
           node --test tests/test-ufc-v4-metric-availability.mjs
           node --test tests/test-ufc-v4-source-conflicts.mjs
+      - name: Review pinned Greco source links for next eight fighters (skip after checkpoint commit)
+        run: node scripts/ufc-v4-targeted-greco-evidence.mjs
       - name: Rebuild the complete measured career cache without API calls
         run: node scripts/build-ufc-postfight-metrics.mjs
       - name: Audit the approved 783-fighter Last 5 / Last 10 / Career windows
@@ -95,6 +99,7 @@ jobs:
             qa/ufc-v4-nonpilot-certification-triage.json
             qa/ufc-v4-first-two-certification-attempt.json
             qa/ufc-v4-independent-full-career-certifications.json
+            qa/ufc-v4-targeted-greco-fight-links-20261114.json
             qa/ufc-v4-shadow-ratings.json
             qa/ufc-v4-release-readiness.json
           retention-days: 14
