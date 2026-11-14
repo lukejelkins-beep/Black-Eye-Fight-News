@@ -10,6 +10,7 @@ on:
       - 'scripts/ufc-36-month-review-report.mjs'
       - 'scripts/ufc-36-month-stage3-progress.mjs'
       - 'scripts/ufc-v4-certification-queue.mjs'
+      - 'data/ufc-independent-full-career-verification.json'
       - 'tests/test-ufc-v4-certification-queue.mjs'
       - 'tests/test-ufc-36-month-stage3-progress.mjs'
       - 'tests/test-ufc-36-month-review-report.mjs'
@@ -19,6 +20,7 @@ on:
     branches: [main]
     paths:
       - 'data/ufc-*-profiles.json'
+      - 'data/ufc-independent-full-career-verification.json'
       - 'data/ufc-research-workers/**'
       - 'scripts/audit-ufc-research-pipeline.mjs'
       - 'scripts/ufc-36-month-stage3-progress.mjs'
