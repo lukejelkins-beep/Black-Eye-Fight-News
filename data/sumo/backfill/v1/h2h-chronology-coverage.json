@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "scope": "Completed API careers and source-derived H2H; not JSA-certified",
+  "cohortSize": 190,
+  "profilesChecked": 188,
+  "sourceRegularBoutAppearances": 74173,
+  "uniqueSourceRegularBouts": 56788,
+  "allTimePairComparisons": "Regular tournaments only; playoff and Mae-zumo results separately retained",
+  "h2hResultFields": [
+    "bashoId",
+    "day",
+    "division",
+    "matchNo",
+    "eastId",
+    "westId",
+    "winnerId",
+    "opponentId",
+    "outcome",
+    "kimarite",
+    "resultKind",
+    "sourceMatchKey"
+  ],
+  "techniqueCoverage": {
+    "sourceAppearances": {
+      "recorded": 73629,
+      "forfeits": 544,
+      "missing": 0
+    },
+    "uniqueRows": {
+      "known": 56383,
+      "forfeits": 405,
+      "missing": 0
+    }
+  },
+  "specialBoutAppearances": 621,
+  "counterpartConflicts": 0,
+  "counterpartGaps": 0,
+  "discrepancies": {
+    "conflicts": [],
+    "counterpartGaps": []
+  },
+  "integrityStatus": "incomplete-profile-projections-require-review",
+  "certified": 0,
+  "notes": [
+    "A win/loss tally is not enough; every historical bout retains the recorded kimarite or a missing/forfeit label",
+    "Historical bouts are source-complete for a wrestler only if that full career passed the existing independent API totals audit",
+    "Cross-fighter mismatches are preserved as exceptions, not silently marked verified",
+    "JSA independent bout-by-bout certification remains outstanding"
+  ],
+  "missingProfiles": [
+    {
+      "sourceId": 82,
+      "name": "Fujiseiun",
+      "reason": "profile projection withheld pending source reconciliation"
+    },
+    {
+      "sourceId": 16,
+      "name": "Nishikigi",
+      "reason": "profile projection withheld pending source reconciliation"
+    }
+  ],
+  "profilesNotYetCrosscheckReady": 2
+}
