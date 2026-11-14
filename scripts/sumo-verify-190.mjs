@@ -71,6 +71,26 @@ export function auditRikishi(w,cache){
   const regularMatches=allMatches.filter(m=>m.division!=='Mae-zumo'&&
     Number.isInteger(Number(m.day))&&Number(m.day)>=1&&Number(m.day)<=15);
   const specialMatches=allMatches.filter(m=>m.division==='Mae-zumo'||Number(m.day)>15);
+  // Keep a lossless reconciliation of historical bout rows vs the provider's
+  // aggregate W-L totals. An out-of-sync aggregate is an explicit exception,
+  // not permission to delete a sourced bout.
+  const boutsWithWinner=regularMatches.filter(m=>
+    Number.isSafeInteger(Number(m.winnerId))&&Number(m.winnerId)>0);
+  const boutLedger={
+    regularRows:regularMatches.length,
+    wins:boutsWithWinner.filter(m=>Number(m.winnerId)===id).length,
+    losses:boutsWithWinner.filter(m=>Number(m.winnerId)!==id).length,
+    missingWinner:regularMatches.length-boutsWithWinner.length,
+    specialRows:specialMatches.length,
+    apiStatsWins:stats?.totalWins??null,
+    apiStatsLosses:stats?.totalLosses??null,
+    apiStatsMatches:stats?.totalMatches??null
+  };
+  boutLedger.winDifference=stats?.totalWins==null?null:boutLedger.wins-Number(stats.totalWins);
+  boutLedger.lossDifference=stats?.totalLosses==null?null:boutLedger.losses-Number(stats.totalLosses);
+  boutLedger.totalDifference=stats?.totalMatches==null?null:boutLedger.regularRows-Number(stats.totalMatches);
+  if(cache.stages?.matches?.complete&&boutLedger.missingWinner>0)
+    errors.push('match-winner-missing');
   if(cache.stages?.matches?.complete&&stats?.totalMatches!=null){
     if(regularMatches.length<Number(stats.totalMatches))errors.push('match-history-shortfall');
     if(regularMatches.length>Number(stats.totalMatches))errors.push('career-regular-bout-count-mismatch');
@@ -86,7 +106,8 @@ export function auditRikishi(w,cache){
   return {
     sourceId:id,name:w.shikonaEn,status,readyForExternalCrosscheck:allComplete&&!uniqueErrors.length,
     errors:uniqueErrors,warnings:uniqueWarnings,stagesCompleted:REQUIRED.filter(s=>cache.stages?.[s]?.complete).length,
-    counts:{weights:cache.data?.measurements?.length||0,ranks:cache.data?.ranks?.length||0,matches:allMatches.length,regularMatches:regularMatches.length,specialMatches:specialMatches.length,formalRanks:formalRanks.length}
+    counts:{weights:cache.data?.measurements?.length||0,ranks:cache.data?.ranks?.length||0,matches:allMatches.length,regularMatches:regularMatches.length,specialMatches:specialMatches.length,formalRanks:formalRanks.length},
+    boutLedger,careerCertified:false
   };
 }
 export function crossCheckOfficial(w,cache,evidence){
