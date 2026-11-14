@@ -1,0 +1,46 @@
+name: Route UFC V4 certification attempts and exceptions (offline)
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/ufc-certification-attempt-exception-router-20261114
+    paths:
+      - 'scripts/ufc-certification-attempt-router.mjs'
+      - 'tests/test-ufc-certification-attempt-router.mjs'
+      - '.github/workflows/route-ufc-certification-exceptions.yml'
+  pull_request:
+    paths:
+      - 'scripts/ufc-certification-attempt-router.mjs'
+      - 'tests/test-ufc-certification-attempt-router.mjs'
+      - '.github/workflows/route-ufc-certification-exceptions.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ufc-v4-exception-router-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  route:
+    name: Attempt 783 offline checks and split research exceptions
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test strict fail-closed classification
+        run: node --test tests/test-ufc-certification-attempt-router.mjs
+      - name: Attempt all approved careers without API calls or cache writes
+        run: node scripts/ufc-certification-attempt-router.mjs
+      - name: Publish ephemeral research outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: ufc-v4-certification-attempt-exceptions
+          path: |
+            qa/ufc-v4-attempt-routing.json
+            qa/ufc-v4-certification-exceptions.json
+          retention-days: 7
+          if-no-files-found: error
