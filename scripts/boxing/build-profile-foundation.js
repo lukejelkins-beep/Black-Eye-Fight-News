@@ -86,6 +86,20 @@ if(fs.existsSync(reportDir)){
     }
   }
 }
+const curatedBouts=JSON.parse(read('research/boxing/verified-bout-core-20261114.json')).records;
+const outcomes=new Map();
+for(const bout of curatedBouts){
+  if(!reportIds.includes(bout.report_id))fail('Missing CompuBox basis for curated verified bout '+bout.report_id);
+  for(const [name,opponent] of Object.entries(bout.opponent_display)){
+    if(!roster.fighters.some(f=>f.fighter===name))continue;
+    const items=outcomes.get(name)||[];
+    items.push({date:bout.date,opponent, outcome:name===bout.winner?'W':'L',method:bout.method,
+      final_round:bout.rounds,report_id:bout.report_id,source_url:bout.source_url,
+      verification:'result_verified_against_compubox_report',
+      career_record_inferred:false});
+    outcomes.set(name,items);
+  }
+}
 function baseLegacy(f){
   if(!f) return null;
   const recent=(f.latest||[]).slice(0,5).map(b=>({
@@ -141,6 +155,7 @@ function build(f,extra=false){
     titles,
     ranked_by:[...sources],
     archived_scouting:archive,
+    verified_bouts:(outcomes.get(name)||[]).sort((a,b)=>b.date.localeCompare(a.date)),
     professional_record:{
       wins:null,losses:null,draws:null,knockouts:null,
       display:archive?.archive_record||null,
@@ -201,6 +216,7 @@ const result={
     fighters_with_validated_compubox_bouts:withPunch,
     validated_compubox_bout_reports:reportIds.length,
     matched_report_performances:storedPunchAppearances,
+    verified_bout_results:profiles.reduce((n,p)=>n+p.verified_bouts.length,0),
     published_profiles:0
   },
   profiles
