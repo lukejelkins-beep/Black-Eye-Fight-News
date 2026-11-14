@@ -17750,6 +17750,74 @@
           "nativeFighterId": "317"
         }
       ]
+    },
+    "ding-meng": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Ding Meng",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/e0664abaa023fd6f",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ding-meng",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned UFCStats-derived Greco source URLs; no direct UFCStats access claimed",
+        "method": "Exhaustive official UFC.com athlete fight list plus two independent exact UFCStats-derived source fight links, original cached native ID and both corners, and two separately primary-source-attested athlete aliases with verified native opponent IDs."
+      },
+      "verifiedNumericFighterIds": [
+        "67"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Both official UFC losses: 2026-05-30 to José Souza (also published as José Henrique), and 2026-08-29 to Cam Nelson (also published as Cameron Nelson). Two source-linked pinned UFCStats IDs and original native numeric IDs/corners/outcomes fully reconciled. Separate 2024 DWCS Rami Hamed bout is excluded by direct official UFC.com source.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/ding-meng",
+        "https://www.ufc.com/athlete/jose-souza",
+        "https://www.ufc.com/athlete/cam-nelson",
+        "https://www.ufc.com/news/ufc-fight-night-song-vs-figueiredo-official-judges-scorecards-macau",
+        "https://www.ufc.com/news/ufc-shanghai-official-scorecards-nurmagomedov-vs-song",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceResearchRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43574925575",
+      "bouts": [
+        {
+          "date": "2026-05-30",
+          "opponent": "Jose Souza",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/bc0b3c16246e0d1d",
+          "nativeBoutId": "66109",
+          "nativeFighterId": "67",
+          "sourceVerifiedNativeOpponentAliases": [
+            "Jose Henrique"
+          ],
+          "verifiedOpponentNativeFighterIds": [
+            "286"
+          ],
+          "sourceVerifiedAliasPrimaryUfcFighterUrl": "https://www.ufc.com/athlete/jose-souza",
+          "sourceVerifiedAliasOfficialResultUrl": "https://www.ufc.com/news/ufc-fight-night-song-vs-figueiredo-official-judges-scorecards-macau"
+        },
+        {
+          "date": "2026-08-29",
+          "opponent": "Cam Nelson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6cd4457edf4089f9",
+          "nativeBoutId": "83785",
+          "nativeFighterId": "67",
+          "sourceVerifiedNativeOpponentAliases": [
+            "Cameron Nelson"
+          ],
+          "verifiedOpponentNativeFighterIds": [
+            "53075"
+          ],
+          "sourceVerifiedAliasPrimaryUfcFighterUrl": "https://www.ufc.com/athlete/cam-nelson",
+          "sourceVerifiedAliasOfficialResultUrl": "https://www.ufc.com/news/ufc-shanghai-official-scorecards-nurmagomedov-vs-song"
+        }
+      ]
     }
   }
 }
