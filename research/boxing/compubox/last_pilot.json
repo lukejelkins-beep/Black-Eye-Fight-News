@@ -1,9 +1,18 @@
 {
-  "timestamp_utc": "2026-11-14T02:12:16+00:00",
+  "timestamp_utc": "2026-11-14T03:31:57+00:00",
   "mode": "read_only_public_report_pilot",
   "source": "https://beta.compuboxdata.com",
   "max_pdf_requests": 12,
-  "processed": [],
+  "processed": [
+    {
+      "report_id": 16989,
+      "fight_date": "2026-11-13",
+      "fighters": [
+        "ERDENEBAT",
+        "YAQUBOV"
+      ]
+    }
+  ],
   "skipped_existing": [
     16970,
     16971,
@@ -12,31 +21,41 @@
   "failed": [
     {
       "report_id": 15965,
-      "error_code": "official_hosts_unavailable: ValueError_beta.compuboxdata.com, ValueError_app2.compuboxdata.com"
+      "error_code": "official_hosts_unavailable: ValueError_beta.compuboxdata.com, ValueError_api2.compuboxdata.com, ValueError_app2.compubox"
     },
     {
       "report_id": 16918,
-      "error_code": "official_hosts_unavailable: ValueError_beta.compuboxdata.com, ValueError_app2.compuboxdata.com"
+      "error_code": "official_hosts_unavailable: ValueError_beta.compuboxdata.com, ValueError_api2.compuboxdata.com, ValueError_app2.compubox"
     },
     {
       "report_id": 16920,
-      "error_code": "official_hosts_unavailable: ValueError_beta.compuboxdata.com, ValueError_app2.compuboxdata.com"
+      "error_code": "official_hosts_unavailable: ValueError_beta.compuboxdata.com, ValueError_api2.compuboxdata.com, ValueError_app2.compubox"
     },
     {
       "report_id": 16256,
-      "error_code": "official_hosts_unavailable: ValueError_beta.compuboxdata.com, ValueError_app2.compuboxdata.com"
+      "error_code": "official_hosts_unavailable: ValueError_beta.compuboxdata.com, ValueError_api2.compuboxdata.com, ValueError_app2.compubox"
     },
     {
       "report_id": 16941,
-      "error_code": "official_hosts_unavailable: ValueError_beta.compuboxdata.com, ValueError_app2.compuboxdata.com"
+      "error_code": "official_hosts_unavailable: ValueError_beta.compuboxdata.com, ValueError_api2.compuboxdata.com, ValueError_app2.compubox"
     },
     {
       "report_id": 16943,
-      "error_code": "official_hosts_unavailable: ValueError_beta.compuboxdata.com, ValueError_app2.compuboxdata.com"
+      "error_code": "official_hosts_unavailable: ValueError_beta.compuboxdata.com, ValueError_api2.compuboxdata.com, ValueError_app2.compubox"
     }
   ],
   "not_pdf": [],
   "discovery": [
+    {
+      "report_id": 16970,
+      "label": "JOSHUA BUATSI vs WILLIAM HUTCHINSON 11/07/2026 View Now",
+      "roster_alias_hits": 2
+    },
+    {
+      "report_id": 16989,
+      "label": "TSENDBAATAR ERDENEBAT vs MUHAMMAD YAQUBOV 11/13/2026 View Now",
+      "roster_alias_hits": 1
+    },
     {
       "report_id": 16972,
       "label": "BRADLEY REA vs EZRA TAYLOR 11/07/2026 View Now",
@@ -48,11 +67,6 @@
       "roster_alias_hits": 1
     },
     {
-      "report_id": 16970,
-      "label": "JOSHUA BUATSI vs WILLIAM HUTCHINSON 11/07/2026 View Now",
-      "roster_alias_hits": 1
-    },
-    {
       "report_id": 16992,
       "label": "EMILIO GARCIA vs DIEGO ZUNIGA 11/13/2026 View Now",
       "roster_alias_hits": 0
@@ -60,6 +74,11 @@
     {
       "report_id": 16991,
       "label": "ELIJAH FLORES vs AXL MELENDEZ 11/13/2026 View Now",
+      "roster_alias_hits": 0
+    },
+    {
+      "report_id": 16990,
+      "label": "RUBEN AGUILAR vs GUIDO SCHRAMM 11/13/2026 View Now",
       "roster_alias_hits": 0
     },
     {
@@ -118,6 +137,6 @@
       "roster_alias_hits": 0
     }
   ],
-  "attempted_pdf_requests": 6,
-  "new_fights": 0
+  "attempted_pdf_requests": 7,
+  "new_fights": 1
 }
