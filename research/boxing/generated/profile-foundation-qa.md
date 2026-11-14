@@ -1,6 +1,6 @@
 # Boxing profile foundation build QA
 
-Research branch only; no site deployment. Generated: 2026-11-14T03:30:48.130Z
+Research branch only; no site deployment. Generated: 2026-11-14T03:33:43.737Z
 
 | Measure | Count |
 |---|---:|
@@ -10,9 +10,10 @@ Research branch only; no site deployment. Generated: 2026-11-14T03:30:48.130Z
 | existing profiles reused | 78 |
 | existing ranked profiles reused | 68 |
 | archival recent bout entries | 345 |
-| fighters with validated compubox bouts | 3 |
-| validated compubox bout reports | 14 |
-| matched report performances | 3 |
+| fighters with validated compubox bouts | 5 |
+| validated compubox bout reports | 15 |
+| matched report performances | 5 |
+| verified bout results | 4 |
 | published profiles | 0 |
 
 ## Rules
