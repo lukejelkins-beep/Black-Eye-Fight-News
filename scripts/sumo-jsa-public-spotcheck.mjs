@@ -145,7 +145,13 @@ async function main(){
   console.log(JSON.stringify({status:'official-source-cooldown',nextAllowedAt:prior.nextAllowedAt}));
   return;
  }
- const cases=roster.rikishi.filter(w=>w.officialNskId).sort((a,b)=>a.sourceId-b.sourceId);
+ // Prioritise the independently identified source discrepancies before the
+ // remaining sorted cohort; completed parser-v3 snapshots are still skipped.
+ const priority=[242,82,16];
+ const cases=roster.rikishi.filter(w=>w.officialNskId).sort((a,b)=>{
+  const pa=priority.indexOf(a.sourceId),pb=priority.indexOf(b.sourceId);
+  return (pa<0?priority.length:pa)-(pb<0?priority.length:pb)||a.sourceId-b.sourceId;
+ });
  let requested=0,succeeded=0,review=0,reason=null,nextAllowedAt=null;
  for(const w of cases){
   if(requested>=MAX_REQUESTS)break;
