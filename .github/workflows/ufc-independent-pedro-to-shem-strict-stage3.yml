@@ -1,0 +1,42 @@
+name: UFC six official complete careers strict Stage3 (research only)
+on:
+  push:
+    branches:
+      - research/ufc-wave12-six-fastlane-20261114
+    paths:
+      - 'data/ufc-independent-full-career-verification.json'
+      - 'data/ufc-feeder-bout-evidence.json'
+      - 'data/ufc-unified-wave12-official-source-review-20261114.json'
+      - 'tests/test-ufc-independent-pedro-to-shem-evidence.mjs'
+      - '.github/workflows/ufc-independent-pedro-to-shem-strict-stage3.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  full-cohort-strict:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Protect six independent biographies, two excluded feeders, original native fight IDs and prior history
+        run: |
+          node --test tests/test-ufc-independent-pedro-to-shem-evidence.mjs
+          node --test tests/test-ufc-unified-wave8-wave9-evidence.mjs
+          node --test tests/test-ufc-36-month-stage3-progress.mjs
+          node --test tests/test-ufc-v4-certification-queue.mjs
+      - name: Full 783-fighter independent strict Stage3, original measured rounds and queue
+        run: |
+          node scripts/ufc-36-month-stage3-progress.mjs
+          node scripts/ufc-v4-certification-queue.mjs
+      - name: Research-only audit artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-six-complete-career-strict-stage3
+          path: |
+            qa/ufc-36-month-stage3-progress.json
+            qa/ufc-v4-certification-queue.json
+          if-no-files-found: warn
