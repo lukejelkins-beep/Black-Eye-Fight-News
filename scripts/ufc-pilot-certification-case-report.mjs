@@ -14,17 +14,23 @@ const feederTitle=s=>/\b(?:dana\s+white[’']?s\s+)?contender\s+series\b|\bdwcs\
 // Explicit UFC.com-vetted Korean given/family name order; do not generalize
 // to unrelated homonymous fighters without independent event/fight evidence.
 const reviewedOpponentAliases=new Set(['hyunsungpark|parkhyunsung']);
-const sameOpponent=(a,b)=>{
+const sameOpponent=(a,b,exactNativeId)=>{
  const na=clean(a),nb=clean(b);
- return Boolean(na&&nb&&(na===nb||(tokens(a)&&tokens(a)===tokens(b))||
-  reviewedOpponentAliases.has([na,nb].sort().join('|'))));
+ if(!na||!nb)return false;
+ if(na===nb||(tokens(a)&&tokens(a)===tokens(b)))return true;
+ const alias=[na,nb].sort().join('|');
+ // Middleweight Bruno Silva is a different athlete. Only source-confirmed
+ // 2025-10-18 UFC Vancouver bout 83254 authorises this abbreviated name.
+ if(alias==='brunogustavodasilva|brunosilva')
+  return String(exactNativeId)==='83254';
+ return reviewedOpponentAliases.has(alias);
 };
 export function comparePilot(official,profile,nativeBouts={}){
  const source=official?.bouts||[];
  const saved=(profile?.recentHistory||[]).filter(h=>String(h.promotion||h.org||'').toLowerCase()==='ufc'&&result(h.result||h.outcome||h.status));
  const seen=new Set(),matched=[],missing=[];
  for(const bout of source){
-  const ix=saved.findIndex((h,i)=>!seen.has(i)&&near(bout.date,h.date)&&sameOpponent(bout.opponent,h.opponent)&&
+  const ix=saved.findIndex((h,i)=>!seen.has(i)&&near(bout.date,h.date)&&sameOpponent(bout.opponent,h.opponent,h.boutId)&&
    result(bout.result)===result(h.result||h.outcome||h.status));
   if(ix<0)missing.push({date:bout.date,opponent:bout.opponent,result:result(bout.result)});
   else {seen.add(ix);matched.push({date:bout.date,opponent:bout.opponent,nativeBoutId:String(saved[ix].boutId||'')});}
