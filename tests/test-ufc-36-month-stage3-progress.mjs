@@ -705,3 +705,47 @@ test('Full native UFC fight-index audit separates harmless exclusions from real 
  assert.equal(s.independentlyVerifiedFullCareerTimelines,0,
    'Excluding nonwinner and feeder rows never certifies an entire UFC history');
 });
+
+test('Official UFC biography cache crosswalk requires stable numeric fighter identity and result, not a name alone',()=>{
+ const inventory={schema:1,scope:'ufc-official-career-bout-inventory',
+   rosterAsOf:'2026-11-14',fighters:{'fighter-1':{
+     fighterName:'Fighter 1',sourceUrl:'https://www.ufc.com/athlete/fighter-one',
+     bouts:[
+       {date:'2025-08-01',opponent:'Opponent B',result:'win'},
+       {date:'2025-07-01',opponent:'Opponent C',result:'loss'}
+     ]}}};
+ const c={asOf:'2026-11-14',fighters:[{
+   slug:'fighter-1',lastUfcFight:'2025-09-01'}]};
+ const r={'fighter-1':{name:'Fighter 1',recentHistory:[{
+   promotion:'ufc',source:'native',boutId:'41',date:'2025-09-01',
+   opponent:'Opponent A',result:'win'}]}};
+ const bouts={
+   '41':{id:'41',org:'ufc',event:'UFC Fight Night',eventDate:'2025-09-01',
+     status:'completed',a:{id:'500',name:'Fighter 1',slug:'fighter-1'},
+     b:{id:'901',name:'Opponent A'},result:{winnerId:'500'}},
+   '42':{id:'42',org:'ufc',event:'UFC Fight Night',eventDate:'2025-08-01',
+     status:'completed',a:{id:'500',name:'Fighter 1',slug:'fighter-1'},
+     b:{id:'902',name:'Opponent B'},result:{winnerId:'500'}},
+   '43':{id:'43',org:'ufc',event:'UFC Fight Night',eventDate:'2025-07-01',
+     status:'completed',a:{id:'501',name:'Fighter 1',slug:'another-fighter'},
+     b:{id:'903',name:'Opponent C'},result:{winnerId:'903'}}
+ };
+ const a=auditOfficialCareerInventory(inventory,['fighter-1'],c,r,bouts);
+ assert.equal(a.sourceMissingSaved,2);
+ assert.equal(a.cacheCandidatesWithVerifiedNumericIdentity,1);
+ assert.equal(a.cacheCandidatesWithVerifiedMatchingOutcome,1);
+ assert.equal(a.cacheCandidatesWithConflictingNumericIdentity,1);
+ assert.equal(a.cacheCandidatesWithoutUniqueNumericAnchor,0);
+ const good=a.cases.find(x=>x.officialOpponent==='Opponent B');
+ assert.deepEqual(good.verifiedSavedNumericFighterIds,['500']);
+ assert.deepEqual(good.cachedFightCandidates,['42']);
+ assert.equal(good.cachedNativeCandidateDetails[0].identityStatus,'same_verified_numeric_id');
+ assert.equal(good.cachedNativeCandidateDetails[0].sourceOutcomeMatches,true);
+ const wrong=a.cases.find(x=>x.officialOpponent==='Opponent C');
+ assert.deepEqual(wrong.cachedFightCandidates,['43'],
+   'Name/date alone can still surface a tempting but unsafe bout');
+ assert.equal(wrong.cachedNativeCandidateDetails[0].identityStatus,
+   'conflicts_with_saved_numeric_id');
+ assert.equal(wrong.cachedNativeCandidateDetails[0].nativeFighterId,'501');
+ assert.equal(wrong.cachedNativeCandidateDetails[0].sourceOutcomeMatches,true);
+});
