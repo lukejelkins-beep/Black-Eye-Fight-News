@@ -1,11 +1,5 @@
 name: UFC next six Gantt-Xiong pinned source/native audit (research only)
 on:
-  push:
-    branches: [research/ufc-next6-gantt-xiong-20261114]
-    paths:
-      - 'data/ufc-unified-next6-gantt-xiong-official-source-review-20261114.json'
-      - 'scripts/ufc-unified-next6-gantt-xiong-source-review.mjs'
-      - '.github/workflows/ufc-next6-gantt-xiong-source-review.yml'
   workflow_dispatch:
 permissions:
   contents: read
