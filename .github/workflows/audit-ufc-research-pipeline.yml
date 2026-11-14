@@ -13,6 +13,8 @@ on:
       - 'data/ufc-independent-full-career-verification.json'
       - 'tests/test-ufc-v4-certification-queue.mjs'
       - 'tests/test-ufc-v4-stage3-import.mjs'
+      - 'tests/test-ufc-stage3-v4-reconciliation.mjs'
+      - 'scripts/ufc-reconcile-stage3-v4-certifications.mjs'
       - 'data/ufc-stage3-v4-consolidation-manifest-20261114.json'
       - 'tests/test-ufc-36-month-stage3-progress.mjs'
       - 'tests/test-ufc-36-month-review-report.mjs'
@@ -66,6 +68,8 @@ jobs:
           node --test tests/test-ufc-v4-stage3-import.mjs
           node --test tests/test-ufc-36-month-stage3-progress.mjs
           node scripts/ufc-36-month-stage3-progress.mjs
+          node --test tests/test-ufc-stage3-v4-reconciliation.mjs
+          node scripts/ufc-reconcile-stage3-v4-certifications.mjs
       - name: Attempt all 783 UFC career certifications offline and queue exceptions
         if: always()
         run: |
@@ -84,5 +88,6 @@ jobs:
             qa/ufc-36-month-stage3-progress.json
             qa/ufc-36-month-stage3-progress.md
             qa/ufc-v4-certification-queue.json
+            qa/ufc-stage3-v4-reconciliation.json
           retention-days: 14
           if-no-files-found: warn
