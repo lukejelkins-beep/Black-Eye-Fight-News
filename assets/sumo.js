@@ -471,8 +471,8 @@ function daysPanel(d,data) {
   const pending=pairings.filter(x=>!x.finished).length;
   return '<p class="section-intro">Completed results come from the source banzuke. Upcoming pairings appear only when the separate day-specific torikumi list has been fetched. Cards show wrestler flags, ranks, height, weight and sourced all-time head-to-head records when available.</p>'+
     '<div class="sumo-day-quick">'+
-      (today>=1&&today<=15?'<button type="button" data-day="'+today+'">TODAY · DAY '+today+'</button>':'')+
-      (tomorrow?'<button type="button" data-day="'+tomorrow+'" class="'+(day===tomorrow?'active':'')+'">TOMORROW · DAY '+tomorrow+'</button>':'')+
+      (today>=1&&today<=15?'<button type="button" data-jump-day="'+today+'">TODAY · DAY '+today+'</button>':'')+
+      (tomorrow?'<button type="button" data-jump-day="'+tomorrow+'" class="'+(day===tomorrow?'active':'')+'">TOMORROW · DAY '+tomorrow+'</button>':'')+
       '<span>Dates follow Japan Standard Time (JST)</span></div>'+
     '<div class="day-select" role="group" aria-label="Basho calendar day">'+
     Array.from({length:15},(_,i)=>'<button type="button" data-day="'+(i+1)+'" class="'+(day===i+1?'active':'')+
@@ -544,13 +544,13 @@ document.addEventListener('input',ev=>{
   }
 });
 document.addEventListener('click',ev=>{
-  const el=ev.target.closest?.('[data-directory-division],[data-more-rikishi],[data-banzuke-division],[data-basho-division],[data-day],[data-profile-limit],[data-h2h-order]');
+  const el=ev.target.closest?.('[data-directory-division],[data-more-rikishi],[data-banzuke-division],[data-basho-division],[data-day],[data-jump-day],[data-profile-limit],[data-h2h-order]');
   if(!el) return;
   if(el.dataset.directoryDivision){STATE.division=el.dataset.directoryDivision;STATE.visible=24;refreshDir();}
   if(el.hasAttribute('data-more-rikishi')){STATE.visible+=24;refreshDir();}
   if(el.dataset.banzukeDivision){STATE.banzukeDivision=el.dataset.banzukeDivision;render();}
   if(el.dataset.bashoDivision){STATE.bashoDivision=el.dataset.bashoDivision;STATE.day=null;render();}
-  if(el.dataset.day){STATE.day=Number(el.dataset.day);render();}
+  if(el.dataset.day||el.dataset.jumpDay){STATE.day=Number(el.dataset.day||el.dataset.jumpDay);render();}
   if(el.dataset.profileLimit){STATE.profileLimit=Number(el.dataset.profileLimit);render();}
   if(el.dataset.h2hOrder){STATE.h2hOldestFirst=el.dataset.h2hOrder==='oldest';render();}
 });
