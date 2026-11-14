@@ -15,6 +15,7 @@ on:
       - 'data/ufc-v4-next18-greco-fight-links-20261114.json'
       - 'scripts/ufc-v4-wave3-greco-evidence.mjs'
       - 'scripts/ufc-v4-wave4-greco-evidence.mjs'
+      - 'scripts/audit-ufc-v4-wave4-native-evidence.mjs'
       - 'data/ufc-v4-wave4-greco-fight-links-20261114.json'
       - 'scripts/audit-ufc-v4-wave3-native-evidence.mjs'
       - 'data/ufc-v4-wave3-greco-fight-links-20261114.json'
@@ -106,6 +107,8 @@ jobs:
         run: node scripts/audit-ufc-v4-wave3-native-evidence.mjs
       - name: Reconcile next18 source bouts with native fighter IDs and metrics
         run: node scripts/audit-ufc-v4-next18-native-evidence.mjs
+      - name: Strictly audit fourth-wave source fight IDs against cached metrics
+        run: node scripts/audit-ufc-v4-wave4-native-evidence.mjs
       - name: Audit the approved 783-fighter Last 5 / Last 10 / Career windows
         run: node scripts/build-ufc-v4-stat-foundation.mjs
       - name: Classify saved-data gaps without provider calls
@@ -144,6 +147,7 @@ jobs:
             qa/ufc-v4-next18-native-evidence.json
             qa/ufc-v4-wave3-greco-fight-links-20261114.json
             qa/ufc-v4-wave4-greco-fight-links-20261114.json
+            qa/ufc-v4-wave4-native-evidence.json
             qa/ufc-v4-wave3-native-evidence.json
             qa/ufc-v4-next20-native-evidence.json
             qa/ufc-v4-import-stage3-source-proof-audit.json
