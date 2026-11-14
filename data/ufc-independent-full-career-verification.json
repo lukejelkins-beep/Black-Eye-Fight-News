@@ -19455,6 +19455,274 @@
           "nativeFighterId": "175"
         }
       ]
+    },
+    "manolo-zecchini": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Manolo Zecchini",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/fd7ab338e4953644",
+      "officialFighterUrl": "https://www.ufc.com/athlete/manolo-zecchini",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived CSV files; no direct UFCStats page access claimed",
+        "method": "Complete official UFC.com dated athlete biography corroborated fight by fight with uniquely pinned Greco UFCStats-derived fighter/event/results and native saved numeric bout, both fighter corners, precise winner/draw; separate source-proved DWCS exclusion. Full independently passing 783-athlete Stage3 measured-round audit still required."
+      },
+      "verifiedNumericFighterIds": [
+        "593"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Independently dated UFC.com full athlete fight chronology through frozen 14 Nov 2026, exact 2 pinned independent UFCStats-derived UFC fight URLs, original native IDs/paired corners, correct draw/win/loss; 0 independently verified DWCS exclusion(s).",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/manolo-zecchini",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2023-09-02",
+          "opponent": "Morgan Charriere",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0d41a3fa5efef91b",
+          "nativeBoutId": "60070",
+          "nativeFighterId": "593"
+        },
+        {
+          "date": "2026-04-04",
+          "opponent": "Tommy McMillen",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c27bec45d5a29a2c",
+          "nativeBoutId": "60702",
+          "nativeFighterId": "593"
+        }
+      ]
+    },
+    "mantas-kondratavicius": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Mantas Kondratavicius",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/3cc506f115cbb9d5",
+      "officialFighterUrl": "https://www.ufc.com/athlete/mantas-kondratavicius",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived CSV files; no direct UFCStats page access claimed",
+        "method": "Complete official UFC.com dated athlete biography corroborated fight by fight with uniquely pinned Greco UFCStats-derived fighter/event/results and native saved numeric bout, both fighter corners, precise winner/draw; separate source-proved DWCS exclusion. Full independently passing 783-athlete Stage3 measured-round audit still required."
+      },
+      "verifiedNumericFighterIds": [
+        "527"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Independently dated UFC.com full athlete fight chronology through frozen 14 Nov 2026, exact 2 pinned independent UFCStats-derived UFC fight URLs, original native IDs/paired corners, correct draw/win/loss; 1 independently verified DWCS exclusion(s).",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/mantas-kondratavicius",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88282",
+          "date": "2025-09-23",
+          "opponent": "Đani Barbir",
+          "result": "win",
+          "event": "Dana White's Contender Series 83",
+          "officialSourceUrl": "https://www.ufc.com/athlete/mantas-kondratavicius",
+          "excludedBecause": "DWCS feeder appearance; not an official UFC career fight"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-03-21",
+          "opponent": "Antonio Trocoli",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8817bd21b6d0a989",
+          "nativeBoutId": "60568",
+          "nativeFighterId": "527"
+        },
+        {
+          "date": "2026-11-07",
+          "opponent": "Andre Petroski",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/869c3394cadfb23c",
+          "nativeBoutId": "93562",
+          "nativeFighterId": "527"
+        }
+      ]
+    },
+    "mark-vologdin": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Mark Vologdin",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/0e6b611451a9a7d8",
+      "officialFighterUrl": "https://www.ufc.com/athlete/mark-vologdin",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived CSV files; no direct UFCStats page access claimed",
+        "method": "Complete official UFC.com dated athlete biography corroborated fight by fight with uniquely pinned Greco UFCStats-derived fighter/event/results and native saved numeric bout, both fighter corners, precise winner/draw; separate source-proved DWCS exclusion. Full independently passing 783-athlete Stage3 measured-round audit still required."
+      },
+      "verifiedNumericFighterIds": [
+        "558"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Independently dated UFC.com full athlete fight chronology through frozen 14 Nov 2026, exact 2 pinned independent UFCStats-derived UFC fight URLs, original native IDs/paired corners, correct draw/win/loss; 1 independently verified DWCS exclusion(s).",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/mark-vologdin",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88293",
+          "date": "2025-10-07",
+          "opponent": "Adrian Luna Martinetti",
+          "result": "loss",
+          "event": "Dana White's Contender Series 85",
+          "officialSourceUrl": "https://www.ufc.com/athlete/mark-vologdin",
+          "excludedBecause": "DWCS feeder appearance; not an official UFC career fight"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-04-18",
+          "opponent": "John Castaneda",
+          "result": "draw",
+          "fightUrl": "https://ufcstats.com/fight-details/552f7cdaf93e1055",
+          "nativeBoutId": "66099",
+          "nativeFighterId": "558"
+        },
+        {
+          "date": "2026-08-01",
+          "opponent": "Borislav Nikolic",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/4350abb4f1933f88",
+          "nativeBoutId": "83276",
+          "nativeFighterId": "558"
+        }
+      ]
+    },
+    "murtazali-magomedov": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Murtazali Magomedov",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/d436f5d55156a521",
+      "officialFighterUrl": "https://www.ufc.com/athlete/murtazali-magomedov",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived CSV files; no direct UFCStats page access claimed",
+        "method": "Complete official UFC.com dated athlete biography corroborated fight by fight with uniquely pinned Greco UFCStats-derived fighter/event/results and native saved numeric bout, both fighter corners, precise winner/draw; separate source-proved DWCS exclusion. Full independently passing 783-athlete Stage3 measured-round audit still required."
+      },
+      "verifiedNumericFighterIds": [
+        "2987"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Independently dated UFC.com full athlete fight chronology through frozen 14 Nov 2026, exact 2 pinned independent UFCStats-derived UFC fight URLs, original native IDs/paired corners, correct draw/win/loss; 1 independently verified DWCS exclusion(s).",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/murtazali-magomedov",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88283",
+          "date": "2025-09-23",
+          "opponent": "Brahyam Zurcher",
+          "result": "win",
+          "event": "Dana White's Contender Series 83",
+          "officialSourceUrl": "https://www.ufc.com/athlete/murtazali-magomedov",
+          "excludedBecause": "DWCS feeder appearance; not an official UFC career fight"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-06-20",
+          "opponent": "Melsik Baghdasaryan",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e4849375d1949c74",
+          "nativeBoutId": "66453",
+          "nativeFighterId": "2987"
+        },
+        {
+          "date": "2026-11-07",
+          "opponent": "Jose Delano",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9f33576489a0370c",
+          "nativeBoutId": "93284",
+          "nativeFighterId": "2987"
+        }
+      ]
+    },
+    "noah-gugnon": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Noah Gugnon",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/6266abf6e4245c72",
+      "officialFighterUrl": "https://www.ufc.com/athlete/noah-gugnon",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived CSV files; no direct UFCStats page access claimed",
+        "method": "Complete official UFC.com dated athlete biography corroborated fight by fight with uniquely pinned Greco UFCStats-derived fighter/event/results and native saved numeric bout, both fighter corners, precise winner/draw; separate source-proved DWCS exclusion. Full independently passing 783-athlete Stage3 measured-round audit still required."
+      },
+      "verifiedNumericFighterIds": [
+        "36074"
+      ],
+      "officialUfcCareerBoutCount": 2,
+      "sourceScopeVerified": "Independently dated UFC.com full athlete fight chronology through frozen 14 Nov 2026, exact 2 pinned independent UFCStats-derived UFC fight URLs, original native IDs/paired corners, correct draw/win/loss; 0 independently verified DWCS exclusion(s).",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/noah-gugnon",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2026-08-01",
+          "opponent": "Milos Janicic",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fec91da886d80200",
+          "nativeBoutId": "83275",
+          "nativeFighterId": "36074"
+        },
+        {
+          "date": "2026-10-24",
+          "opponent": "Kody Steele",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/02df66c779a72260",
+          "nativeBoutId": "93509",
+          "nativeFighterId": "36074"
+        }
+      ]
     }
   }
 }
