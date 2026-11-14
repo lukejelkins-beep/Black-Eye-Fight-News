@@ -10,6 +10,11 @@ export function authoritativeCareerTotals(w,cache,ledger,jsa=null){
   matches:Number(stats.totalMatches),absences:Number(stats.totalAbsences)
  };
  const official=jsa?.career;
+ // Some JSA profile pages publish only W-L and omit absences entirely.
+ // Absence verification must never treat an absent field as numeric zero.
+ const officialAbsencesPublished=official?.absences!==null&&official?.absences!==undefined;
+ const officialAbsencesAgree=officialAbsencesPublished?
+   Number(official.absences)===provider.absences:true;
  const validOfficial=jsa?.sourceId===Number(w.sourceId)&&
   jsa?.officialNskId===Number(w.officialNskId)&&
   jsa?.url==='https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+w.officialNskId+'/'&&
@@ -23,17 +28,21 @@ export function authoritativeCareerTotals(w,cache,ledger,jsa=null){
   Number.isSafeInteger(Number(official?.losses))&&
   Number(official.wins)===ledger.wins&&
   Number(official.losses)===ledger.losses&&
-  Number(official.absences)===provider.absences;
+  officialAbsencesAgree;
  const selected=validOfficial?{
   wins:Number(official.wins),losses:Number(official.losses),
   matches:Number(official.wins)+Number(official.losses),
-  absences:Number(official.absences)
+  absences:officialAbsencesPublished?Number(official.absences):provider.absences
  }:provider;
  const differs=selected.wins!==provider.wins||selected.losses!==provider.losses||
   selected.matches!==provider.matches||selected.absences!==provider.absences;
  return {
   selected,originalApi:provider,
-  source:validOfficial?'official-JSA-public-record-verified-against-bout-ledger':'sumo-api-career-stats',
+  source:validOfficial?
+   (officialAbsencesPublished?'official-JSA-public-record-verified-against-bout-ledger':
+    'official-JSA-public-WL-verified-absences-unpublished'):'sumo-api-career-stats',
+  officialAbsencesPublished:validOfficial?officialAbsencesPublished:null,
+  officialAbsencesVerified:validOfficial&&officialAbsencesPublished,
   independentlyResolvedSourceDifference:validOfficial&&differs,
   historicBashoCompared:validOfficial?jsa.bashoReconciliation.comparedBasho:0,
   officialUrl:validOfficial?jsa.url:null,
