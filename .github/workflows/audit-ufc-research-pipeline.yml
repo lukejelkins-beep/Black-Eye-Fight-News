@@ -23,6 +23,8 @@ on:
       - 'scripts/ufc-unified-next8b-source-review.mjs'
       - 'scripts/ufc-unified-wave4-source-review.mjs'
       - 'scripts/ufc-unified-wave5-source-review.mjs'
+      - 'scripts/ufc-unified-wave6-source-review.mjs'
+      - 'data/ufc-unified-wave6-official-source-review-20261114.json'
       - 'data/ufc-unified-wave5-official-source-review-20261114.json'
       - 'data/ufc-unified-wave4-official-source-review-20261114.json'
       - 'data/ufc-stage3-v4-consolidation-manifest-20261114.json'
@@ -94,10 +96,10 @@ jobs:
         if: always()
         continue-on-error: true
         run: node scripts/ufc-unified-next8b-source-review.mjs
-      - name: Wave 5 official athlete history vs pinned Greco and saved native UFC proof (research only)
+      - name: Wave 6 official athlete and scorecard vs pinned Greco native reconciliation (research only)
         if: github.event_name == 'pull_request'
         continue-on-error: true
-        run: node scripts/ufc-unified-wave5-source-review.mjs
+        run: node scripts/ufc-unified-wave6-source-review.mjs
       - name: Mandel Nallo independent two-bout pinned Greco/native reconciliation (research-only)
         if: github.event_name == 'pull_request'
         continue-on-error: true
@@ -117,7 +119,7 @@ jobs:
             qa/ufc-stage3-v4-reconciliation.json
             qa/ufc-v4-stage3-blocker-diagnostics.json
             qa/ufc-unified-next8b-source-review.json
-            qa/ufc-unified-wave5-source-review.json
+            qa/ufc-unified-wave6-source-review.json
             qa/ufc-unified-mandel-source-review.json
           retention-days: 14
           if-no-files-found: warn
