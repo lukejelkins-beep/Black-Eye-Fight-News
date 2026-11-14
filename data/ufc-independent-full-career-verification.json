@@ -25303,6 +25303,130 @@
           "excludedBecause": "UFC.com complete dated athlete biography explicitly documents this Dana White's Contender Series feeder bout separately from ordinary Octagon career."
         }
       ]
+    },
+    "quang-le": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Quang Le",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/32feae6d9a1e5047",
+      "officialFighterUrl": "https://www.ufc.com/athlete/quang-le",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent Greco UFCStats-derived dataset; no direct live UFCStats access asserted"
+      },
+      "verifiedNumericFighterIds": [
+        "227"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Complete official UFC.com dated Octagon history since 2024 debut: loss Chris Gutierrez, loss Xiao Long, win Gaston Bolanos and loss Santiago Luna. Exact source/native opponent, fighter/bout identity, outcomes and measured rounds confirmed. Pinned Greco duplicated the same Santiago Luna fight URL in two event-title rows; count once.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/quang-le",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2024-08-10",
+          "opponent": "Chris Gutierrez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6aa89b7b5350b8e2",
+          "nativeBoutId": "60241",
+          "nativeFighterId": "227"
+        },
+        {
+          "date": "2024-11-23",
+          "opponent": "Xiao Long",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f5f28a8b472b8012",
+          "nativeBoutId": "38596",
+          "nativeFighterId": "227"
+        },
+        {
+          "date": "2025-05-03",
+          "opponent": "Gaston Bolanos",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/97b32ff27fd457a8",
+          "nativeBoutId": "60800",
+          "nativeFighterId": "227"
+        },
+        {
+          "date": "2025-09-13",
+          "opponent": "Santiago Luna",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8a884a7930d75ca9",
+          "nativeBoutId": "38225",
+          "nativeFighterId": "227"
+        }
+      ]
+    },
+    "tuco-tokkos": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Tuco Tokkos",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/3e8118c1ab52f211",
+      "officialFighterUrl": "https://www.ufc.com/athlete/tuco-tokkos",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned independent Greco UFCStats-derived dataset; no direct live UFCStats access asserted"
+      },
+      "verifiedNumericFighterIds": [
+        "37"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Complete official UFC.com dated Octagon history: loss Oumar Sy, loss Navajo Stirling, submission win Junior Tafa, loss Ivan Erslan. Source local Dec 14/Jul 12 versus saved UTC Dec 15/Jul 13 are documented one-day shifts with exact native identity/outcome/round crosschecks. Original 2022 Road To UFC qualifier loss Zhang Mingyang excluded from completed Octagon history.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/tuco-tokkos",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2024-05-18",
+          "opponent": "Oumar Sy",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/68ee31dd0853cdc9",
+          "nativeBoutId": "61021",
+          "nativeFighterId": "37"
+        },
+        {
+          "date": "2024-12-14",
+          "opponent": "Navajo Stirling",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/2b6a75175bbca4e9",
+          "nativeBoutId": "60373",
+          "nativeFighterId": "37"
+        },
+        {
+          "date": "2025-07-12",
+          "opponent": "Junior Tafa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b19bf99c7eb796bc",
+          "nativeBoutId": "60834",
+          "nativeFighterId": "37"
+        },
+        {
+          "date": "2026-05-16",
+          "opponent": "Ivan Erslan",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6242cda790f2085d",
+          "nativeBoutId": "66120",
+          "nativeFighterId": "37"
+        }
+      ]
     }
   }
 }
