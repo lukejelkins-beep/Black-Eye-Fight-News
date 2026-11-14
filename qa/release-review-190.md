@@ -32,3 +32,9 @@ The cached news feed contains both Mike Perry signing headlines observed in prod
 ## Boundaries
 
 ONE remains deferred. Fighter cohort, certification standards, research evidence and collection schedules are unchanged. No fresh live mobile or screen-reader pass is claimed; the previous browser inspection timed out on Fights navigation. Broader security/dependency review remains open.
+
+## Results rendering follow-up
+
+A fresh live tab loaded Homepage and Upcoming. Selecting Results succeeded, but full DOM inspection timed out; a minimal DOM read succeeded and measured 110,282 descendants inside Results, including 886 bouts. This supports a size-related inspection limitation, not a demonstrated navigation failure. User latency remains unmeasured.
+
+QA-015 limits initial rendering to 12 event cards and provides Show more. Search filters the complete cached dataset before pagination. The existing card-order suite now verifies reaching all 76 cached events, searching an older event and resetting pagination on search change. All local release-preflight checks passed. No stored records are removed. Repeated expansion can still grow the DOM; approved-preview mobile, focus and runtime verification remains required.

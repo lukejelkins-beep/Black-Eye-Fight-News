@@ -41,6 +41,25 @@ function chooseSection(section){
 }
 (async()=>{
  await new Promise(resolve=>setImmediate(resolve));
+ const initial=window.ResultsDesk.render();
+ const count=html=>(html.match(/class="result-event befn-result-list-event"/g)||[]).length;
+ assert(count(initial)<=12,'Initial event rendering is bounded');
+ let html=initial,passes=0;
+ while(html.includes('id="results-more"')){
+  for(const callback of listeners.click||[])callback({target:{closest:s=>s==='#results-more'?{}:null}});
+  html=window.ResultsDesk.render();
+  assert(++passes<100,'Pagination terminates');
+ }
+ assert(count(html)>12,'Older events remain reachable');
+ const lastId=[...html.matchAll(/data-result-event="([^"]+)"/g)].at(-1)[1];
+ const older=fixture.results.find(r=>r.eventId===lastId);
+ assert(older,'Older event fixture exists');
+ for(const callback of listeners.input||[])callback({target:{id:'results-search',value:older.event}});
+ const searched=window.ResultsDesk.render();
+ assert(searched.includes('data-result-event="'+lastId+'"'),'Search reaches beyond first batch');
+ for(const callback of listeners.input||[])callback({target:{id:'results-search',value:''}});
+ assert(count(window.ResultsDesk.render())<=12,'Changing search resets batch');
+ console.log('Rendered event batches:',count(initial),'initial,',count(html),'after expansion');
  chooseSection('main');
  const main=cardRows();
  assert.equal(main.length,6,'Six main card bouts');

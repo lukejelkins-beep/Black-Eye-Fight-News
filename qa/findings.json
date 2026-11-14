@@ -245,5 +245,22 @@
     "branch": "qa/quality-supervisor-20261114",
     "issueOrPR": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/190",
     "verificationRequired": "Four reporter tests and generation against cached feeds pass; PR CI must pass before merge."
+  },
+  {
+    "id": "QA-015",
+    "severity": "P2",
+    "subsystem": "Results performance",
+    "title": "All historical event cards render upfront",
+    "status": "bounded rendering implemented; preview verification outstanding",
+    "evidence": "Live DOM read: 110282 Results descendants and 886 bouts with disclosures closed. Full snapshot timed out while small reads succeeded. Cached regression renders 12 initial cards and reaches all 76.",
+    "rootCause": "content rendered every selected event including closed card contents.",
+    "impact": "Large initial DOM; inspection timeout association observed, user latency not measured.",
+    "remediation": "Render 12 event cards per batch; search all rows before pagination; reset batch on selection change; focus first newly revealed event.",
+    "effort": "small",
+    "risks": "Browser keyboard/mobile verification still needed; repeated expansion can still produce a large DOM.",
+    "dependenciesAndConflicts": "No results.js overlap in latest inspected research PR; no data changes.",
+    "branch": "qa/quality-supervisor-20261114",
+    "issueOrPR": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/pull/190",
+    "verificationRequired": "All batches reachable, older search and reset, ordering and full release preflight pass; preview mobile/keyboard and runtime measurements before deployment."
   }
 ]
