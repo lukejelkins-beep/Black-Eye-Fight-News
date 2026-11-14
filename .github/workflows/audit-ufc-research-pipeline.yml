@@ -42,6 +42,7 @@ on:
       - 'tests/test-ufc-unified-wave18-three-careers.mjs'
       - 'data/ufc-unified-wave18-official-career-source-review-20261114.json'
       - 'tests/test-ufc-unified-blake-bilder-evidence.mjs'
+      - 'tests/test-ufc-unified-wave19-donte-kody-evidence.mjs'
       - 'tests/test-ufc-unified-wave10-evidence.mjs'
       - 'tests/test-ufc-unified-wave11-evidence.mjs'
       - 'tests/test-ufc-unified-marnic-evidence.mjs'
@@ -124,6 +125,7 @@ jobs:
           node --test tests/test-ufc-unified-waves17-18-evidence.mjs
           node --test tests/test-ufc-unified-wave18-three-careers.mjs
           node --test tests/test-ufc-unified-blake-bilder-evidence.mjs
+          node --test tests/test-ufc-unified-wave19-donte-kody-evidence.mjs
           node --test tests/test-ufc-unified-wave10-evidence.mjs
           node --test tests/test-ufc-unified-wave11-evidence.mjs
           node --test tests/test-ufc-unified-marnic-evidence.mjs
