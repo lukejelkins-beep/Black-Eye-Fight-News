@@ -84,6 +84,12 @@ export function diagnoseMissingUfcBouts(foundation,progress,archive){
   const bout=progress?.bouts?.[item.boutId]||null;
   const reason=causeFor(bout,index);
   const archived=bout?matching(index,bout)[0]||null:null;
+  const extraRounds=Array.isArray(archived?.rounds)?archived.rounds.filter(
+   x=>Number.isInteger(bout?.result?.round)&&x.round>bout.result.round):[];
+  const trailingNonzero=extraRounds.flatMap(row=>["a","b"].flatMap(corner=>
+   Object.entries(row?.[corner]||{}).filter(([field,val])=>
+    field!=="sourceByMetric"&&typeof val==="number"&&val>0).map(
+     ([field,value])=>({round:row.round,corner,field,value}))));
   const check=progress?.ufcCareerBoutChecks?.[item.boutId]||{};
   const retry=progress?.roundRetry?.[item.boutId]||{};
   const action=item.action||"manual_review";
@@ -116,6 +122,8 @@ export function diagnoseMissingUfcBouts(foundation,progress,archive){
    expectedRounds:bout?.result?.round??null,
    roundsReportedComplete:progress?.roundDone?.[item.boutId]??null,
    archivedRoundNumbers:archived?.rounds?.map(x=>x.round)||[],
+   extraRoundNonzeroValues:trailingNonzero.slice(0,18),
+   extraRoundHasPositiveValues:trailingNonzero.length>0,
    archivedSourceNames:Object.keys(archived?.sources||{}),
    roundRetryAfter:retry.retryAfter||null,
    roundRetryAttempts:retry.attempts??null,
@@ -149,6 +157,8 @@ export function main(){
   out.cases.filter(x=>x.cause==="missing_or_incomplete_round_rows").map(
    x=>({boutId:x.boutId,event:x.event,date:x.date,expectedRounds:x.expectedRounds,
     recordedRounds:x.archivedRoundNumbers,sources:x.archivedSourceNames,
+    hasExtraRoundPositiveValues:x.extraRoundHasPositiveValues,
+    extraRoundNonzeroValues:x.extraRoundNonzeroValues,
     fighterReferences:x.references?.map(v=>v.fighterSlug)}))));
  console.log("BEFN_V4_UNEXPECTED_JOIN "+JSON.stringify(
   out.cases.filter(x=>x.cause==="unexpected_postfight_join_gap").map(x=>{
