@@ -89,3 +89,30 @@ test('four additional frozen-roster official UFC debut careers retain one-to-one
  assert.ok(registry.fighters['matthieu-duclos'].sourceScopeVerified.includes('DWCS'));
  assert.ok(registry.fighters['marina-spasic'].sourceScopeVerified.includes('loss'));
 });
+
+test('five additional full debut histories preserve exact independent source and native identity',()=>{
+ const expected={
+ 'yi-sak-lee':['66376','294','loss'],
+ 'milos-janicic':['83275','3376','loss'],
+ 'vlasto-cepo':['66468','2989','loss'],
+ 'shane-collins':['82830','39070','win'],
+ 'muhammad-saidov':['83261','24796','win']
+ };
+ for(const [slug,[boutId,numericId,outcome]] of Object.entries(expected)){
+  assert.ok(roster.approvedFighters.includes(slug));
+  const r=registry.fighters[slug];
+  assert.equal(r.sourceCoverageAttested,true);
+  assert.equal(r.scope,'complete_official_ufc_career');
+  assert.equal(r.officialUfcCareerBoutCount,1);
+  assert.equal(r.bouts.length,1);
+  assert.equal(r.verifiedNumericFighterIds.length,1);
+  assert.equal(r.verifiedNumericFighterIds[0],numericId);
+  assert.equal(r.bouts[0].nativeBoutId,boutId);
+  assert.equal(r.bouts[0].nativeFighterId,numericId);
+  assert.equal(r.bouts[0].result,outcome);
+  assert.ok(r.fighterUrl.startsWith('https://ufcstats.com/fighter-details/'));
+  assert.ok(r.bouts[0].fightUrl.startsWith('https://ufcstats.com/fight-details/'));
+  assert.equal(r.sourceSnapshot.cutoffLastEvent,'2026-11-07');
+ }
+ assert.equal(registry.fighters['muhammad-saidov'].officialFighterUrl,'https://www.ufc.com/athlete/muhammad-said');
+});
