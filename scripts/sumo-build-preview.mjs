@@ -5,11 +5,12 @@
  */
 import { mkdir, writeFile, rename } from 'node:fs/promises';
 import { createSumoClient, collectRoster, buildRikishiIndex, SUMO_API_BASE } from './sumo-api-source.mjs';
+import { divisionOf } from '../assets/sumo-data.mjs';
 
-const PICKS = ['Onosato', 'Hoshoryu', 'Aonishiki', 'Kirishima'];
+const PICKS = ['Onosato', 'Wakatakakage', 'Nishikigi'];
 const CURRENT_BASHO = '202611';
 const capturedAt = new Date().toISOString();
-const client = createSumoClient({ maxCalls: 12, timeoutMs: 15000 });
+const client = createSumoClient({ maxCalls: 16, timeoutMs: 15000 });
 const note = 'Developer preview; third-party source; cross-check results against the Japan Sumo Association before production.';
 
 async function collectOptional(fn, label) {
@@ -28,6 +29,10 @@ async function save(path, value) {
 
 const all = await collectRoster(client, { pageSize: 250, maxPages: 5 });
 const base = buildRikishiIndex(all, capturedAt);
+const TRACKED_DIVISIONS = ['Makuuchi', 'Juryo', 'Makushita'];
+const tracked = base.rikishi.filter(x => TRACKED_DIVISIONS.includes(divisionOf(x.currentRank)));
+const counts = Object.fromEntries(TRACKED_DIVISIONS.map(d => [d, tracked.filter(x => divisionOf(x.currentRank) === d).length]));
+console.log('Current eligible cohort: ' + tracked.length + ' (' + JSON.stringify(counts) + ')');
 const picked = PICKS
   .map(name => all.find(x => x.shikonaEn?.toLowerCase() === name.toLowerCase()))
   .filter(Boolean);
@@ -38,9 +43,17 @@ for (const r of picked.slice(0, 3)) {
   featured.push({ id: r.id, shikonaEn: r.shikonaEn, stats, matches });
 }
 const basho = await collectOptional(() => client.basho(CURRENT_BASHO), 'basho');
-const banzuke = await collectOptional(() => client.banzuke(CURRENT_BASHO, 'Makuuchi'), 'banzuke');
+const banzuke = {};
+for (const div of TRACKED_DIVISIONS) {
+  banzuke[div] = await collectOptional(() => client.banzuke(CURRENT_BASHO, div), div + ' banzuke');
+}
 const roster = {
   ...base,
+  count: tracked.length,
+  sourceRosterCount: all.length,
+  trackedDivisions: TRACKED_DIVISIONS,
+  divisionCounts: counts,
+  rikishi: tracked,
   preview: true,
   notice: note,
   officialJsa: 'https://www.sumo.or.jp/EnSumoDataRikishi/search'
@@ -52,6 +65,7 @@ const details = {
   collectedAt: capturedAt,
   notice: note,
   bashoId: CURRENT_BASHO,
+  trackedDivisions: TRACKED_DIVISIONS,
   featured,
   basho,
   banzuke
@@ -59,8 +73,8 @@ const details = {
 await save('data/sumo/rikishi-index.json', roster);
 await save('data/sumo/preview-details.json', details);
 console.log(JSON.stringify({
-  status: 'ok', count: roster.count, featured: featured.map(f => f.shikonaEn), basho: basho.status,
-  banzuke: banzuke.status, apiCalls: client.callCount,
+  status: 'ok', count: roster.count, divisions: counts, featured: featured.map(f => f.shikonaEn), basho: basho.status,
+  banzuke: Object.fromEntries(Object.entries(banzuke).map(([key,value]) => [key,value.status])), apiCalls: client.callCount,
   exampleStatsKeys: Object.keys(featured[0]?.stats?.data ?? {}).slice(0, 30),
   exampleMatchKeys: Object.keys(featured[0]?.matches?.data ?? {}).slice(0, 30)
 }));
