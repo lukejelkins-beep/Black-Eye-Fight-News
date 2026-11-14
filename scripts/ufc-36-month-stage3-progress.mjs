@@ -161,7 +161,7 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
    ext.verificationMethod==='full_official_ufc_fight_listing_crosscheck'&&
    snapshot&&date(ext.verifiedAt)>=snapshot&&
    /^https:\/\/ufcstats\.com\/fighter-details\/[a-f0-9]+$/i.test(String(ext.fighterUrl||''))&&
-   given.length>0&&given.every(r=>date(r?.date)&&normal(r?.opponent)&&
+   given.length>0&&given.every(r=>date(r?.date)&&r.date<=snapshot&&normal(r?.opponent)&&
      normalizedOutcome(r?.result)&&
      /^https:\/\/ufcstats\.com\/fight-details\/[a-f0-9]+$/i.test(String(r?.fightUrl||'')))&&
    (nativeMapped?Boolean(nativeMatches):exactMatches);
