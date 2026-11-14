@@ -1,11 +1,11 @@
 {
-  "checkedAt": "2026-11-14T01:48:48.483Z",
+  "checkedAt": "2026-11-14T07:46:33.334Z",
   "source": "Wikidata P2002/P2003/P11892 + official athlete structured links",
   "discoveredThisRun": 0,
   "promotersAdded": 0,
-  "candidatesChecked": 0,
+  "candidatesChecked": 28,
   "mode": "bulk",
-  "wikiBatches": 0,
+  "wikiBatches": 2,
   "searchChecked": 0,
   "officialChecked": 50,
   "counts": {
@@ -17,11 +17,19 @@
     "withThreads": 39
   },
   "rateLimited": true,
-  "conflicts": [],
+  "conflicts": [
+    {
+      "name": "Abdullah Mason",
+      "platform": "Instagram",
+      "username": "abdullah_mason",
+      "evidenceUrl": "https://www.wikidata.org/wiki/Q127315638",
+      "reason": "Conflicts with an already linked identity; never overwrite automatically"
+    }
+  ],
   "errors": [
-    "Wikidata batch 0: HTTP 429 www.wikidata.org"
+    "Wikidata batch 50: HTTP 429 www.wikidata.org"
   ],
   "nextSearchOffset": 42,
-  "nextOfficialOffset": 14,
+  "nextOfficialOffset": 9,
   "note": "Profile metadata discovery is not a social timeline feed. Original post collection still depends on public publisher-linked posts or permitted platform APIs. Missing names are not guessed."
 }
