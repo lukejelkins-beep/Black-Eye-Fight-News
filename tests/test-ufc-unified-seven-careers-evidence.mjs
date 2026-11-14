@@ -133,7 +133,7 @@ test('seven distinct complete official UFC careers preserve native identity, sou
   assert.equal(new Set(proof.bouts.map(b=>b.fightUrl)).size,expected.b.length,slug);
   for(const bout of proof.bouts){
    assert.equal(bout.nativeFighterId,expected.id,slug);
-   assert.match(bout.fightUrl,/^https:\\/\\/ufcstats\\.com\\/fight-details\\/[a-f0-9]{16}$/i,slug);
+   assert.match(bout.fightUrl,new RegExp('^https://ufcstats[.]com/fight-details/[a-f0-9]{16}$','i'),slug);
    assert.equal(review.bouts.filter(x=>x.date===bout.date&&x.opponent===bout.opponent&&x.result===bout.result&&x.fightUrl===bout.fightUrl).length,1,slug);
   }
   count+=proof.bouts.length;
