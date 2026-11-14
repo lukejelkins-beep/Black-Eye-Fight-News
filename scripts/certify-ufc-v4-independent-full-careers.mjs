@@ -80,7 +80,8 @@ export function certifyAttestedFullCareers(approval,research,progress,postfight,
    need(slug,stats&&required.every(f=>Number.isFinite(stats.metrics?.[f]))&&
       Number.isFinite(stats.cageSec)&&stats.cageSec>0,'required_statistics_missing:'+id);
    usedIds.add(id);usedUrls.add(record.fightUrl);
-   bouts.push({date:record.nativeSavedDate,officialLocalDate:record.date,opponent:record.opponent,
+   bouts.push({date:record.nativeSavedDate,officialLocalDate:record.date,
+     opponent:matches[0].opponent,officialSourceOpponent:record.opponent,
      result:record.result,fightUrl:record.fightUrl,nativeBoutId:id,
      eventTitleForDisplay:native.event});
   }
