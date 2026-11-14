@@ -37,5 +37,20 @@ jobs:
             echo "No snapshot change"
             exit 0
           fi
-          git commit -m "Update bounded Sumo testing snapshot [skip ci]"
-          git push origin HEAD:feat/sumo-section-test-20261114
+          git commit -m "Update bounded Sumo testing snapshot"
+          for attempt in 1 2 3; do
+            # Integrate any concurrent Sumo design commits without rewriting
+            # their history. Stop rather than force-push if a conflict occurs.
+            git fetch origin feat/sumo-section-test-20261114
+            if ! git rebase origin/feat/sumo-section-test-20261114; then
+              git rebase --abort || true
+              echo "Concurrent snapshot conflict; preserving remote branch" >&2
+              exit 1
+            fi
+            if git push origin HEAD:feat/sumo-section-test-20261114; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Could not commit source snapshot after three safe attempts" >&2
+          exit 1
