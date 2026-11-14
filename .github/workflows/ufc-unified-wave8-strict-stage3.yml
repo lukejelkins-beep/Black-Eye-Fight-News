@@ -7,6 +7,7 @@ on:
       - 'data/ufc-independent-full-career-verification.json'
       - 'data/ufc-feeder-bout-evidence.json'
       - 'tests/test-ufc-unified-wave8-evidence.mjs'
+      - 'scripts/ufc-unified-jonny-native-alias-review.mjs'
       - '.github/workflows/ufc-unified-wave8-strict-stage3.yml'
   workflow_dispatch:
 permissions:
@@ -20,6 +21,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Inspect unchanged native 2026 Parsons opponent alias
+        run: node scripts/ufc-unified-jonny-native-alias-review.mjs
       - name: Verify wave8 full-bout evidence and existing strict invariants
         run: |
           node --test tests/test-ufc-unified-wave8-evidence.mjs
