@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {auditApprovedStage3} from '../scripts/ufc-36-month-stage3-progress.mjs';
+import {auditApprovedStage3,evaluateCareerEvidence} from '../scripts/ufc-36-month-stage3-progress.mjs';
 const read=p=>JSON.parse(readFileSync(new URL('../data/'+p, import.meta.url),'utf8'));
 const approval=read('ufc-36-month-roster-approval.json');
 const census=read('ufc-36-month-candidates.json');
@@ -23,6 +23,13 @@ test('Stage3 preserves strict certified careers across midnight without fabricat
  assert.equal(afterMidnight.asOf,'2026-11-15');
  assert.equal(afterMidnight.approvedSnapshotAsOf,'2026-11-14');
  assert.equal(afterMidnight.certificationEvidenceCutoff,'2026-11-14');
+ for(const slug of ['saygid-izagakhmaev','shem-rock','shannon-ross','sean-sharaf']){
+  const prof=research.profiles[slug],historic=prof.recentHistory.filter(x=>x.promotion==='ufc');
+  const entry=independentlyVerified.fighters[slug],date=census.fighters.find(x=>x.slug===slug).lastUfcFight;
+  const trial=evaluateCareerEvidence(prof,historic,date,approval.rosterAsOf,entry,cache.bouts);
+  const all=historic.map(b=>({id:b.boutId,date:b.date,opponent:b.opponent,result:b.result,src:b.source}));
+  console.log('BEFN_CERT_DIRECT_EVIDENCE_DIAGNOSTIC='+JSON.stringify({slug,trial,all,proofBouts:entry?.bouts}));
+ }
  assert.equal(afterMidnight.independentlyVerifiedFullCareerTimelines,atApproved.independentlyVerifiedFullCareerTimelines);
  assert.equal(afterMidnight.independentlyVerifiedFullCareerTimelines,Object.keys(independentlyVerified.fighters).length);
  assert.equal(afterMidnight.independentlyVerifiedFullCareerTimelines+afterMidnight.approvedCareersWithoutIndependentFullCareerCertification,783);
