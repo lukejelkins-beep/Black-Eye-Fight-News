@@ -25,7 +25,10 @@ OUT = ROOT / "bouts"
 ROSTER = Path("research/boxing/2026-11-14-cohort-preview.json")
 MAX_PDFS = max(1, min(int(os.getenv("COMPUBOX_PILOT_MAX", "12")), 15))
 WAIT_SECONDS = 2.0
-SEED_IDS = (16970, 16971, 16972, 16942, 16235)
+# Historical report links found in the official CompuBox public research sample.
+# Never infer report numbers by incrementing/decrementing numeric IDs.
+# Some archived links redirect or expire; failures remain visible for review.
+SEED_IDS = (15965, 16918, 16920, 16256, 16941, 16943, 16970, 16971, 16972)
 PAIR = re.compile(r"(?<!\d)(\d+)\s*/\s*(\d+)(?!\d)|(-/-)")
 TOTAL_RE = re.compile(
     r"^\s*([A-Z][A-Z .'-]{1,60}?)\s+"
