@@ -149,6 +149,8 @@ test('missing UFC fight IDs are classified from saved retry evidence without any
    '43':{checkedAt:'2026-11-13',retryAfter:'2026-11-19'},
    '44':{checkedAt:'2026-11-13',status:'requires_manual_review',retryAfter:'2026-11-27',reason:'provider_identity_mismatch'},
    '45':{checkedAt:'2026-11-12',retryAfter:'2026-11-13'}
+ },ufcLegacyDateSearchChecks:{
+   '45':{status:'alternative_id_manual_review',candidateId:'999',checkedAt:'2026-11-14'}
  }};
  const r={profiles:{'fighter-1':{recentHistory:[
    history(41,'Opponent A'),history(42,'Opponent B'),
@@ -182,6 +184,11 @@ test('missing UFC fight IDs are classified from saved retry evidence without any
  assert.equal(s.sourceVerifiedOfficialLegacyFightIdsAwaitingIndex,1);
  assert.equal(out.priorityMissingIdDiagnostics.find(x=>x.id==='45').sourceVerifiedOfficialLegacy,true);
  assert.equal(s.uniqueNativeFightIdsAwaitingIndex,5,'Official source proof must not fake successful indexing');
+ assert.equal(s.sourceVerifiedLegacyProviderSearchAlternativeIds,1);
+ assert.equal(s.sourceVerifiedLegacyProviderSearchNotAttempted,0);
+ assert.equal(s.sourceVerifiedLegacyProviderSearchExactIds,0);
+ assert.equal(out.legacyProviderSearchReview[0].matchedAlternativeNativeId,'999');
+ assert.equal(out.priorityMissingIdDiagnostics.find(x=>x.id==='45').legacyProviderSearchStatus,'alternative_id_manual_review');
 });
 
 test('A single metric does not imply complete statistics; all-known indexing does not certify a full career',()=>{
