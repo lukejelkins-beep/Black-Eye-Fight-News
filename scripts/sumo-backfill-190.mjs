@@ -106,11 +106,44 @@ export function endpoint(id,stage,skip=0){
   q.set('sortOrder','asc');
   return SOURCE+'/'+stage+'?'+q;
 }
+export function terminalHistoryEvidence(doc){
+  const id=Number(doc?.rikishiId),matches=doc?.data?.matches;
+  const stats=doc?.data?.stats,stage=doc?.stages?.matches;
+  const debut=String(doc?.data?.profile?.debut||'');
+  if(!stage||!Array.isArray(matches)||!matches.length||
+     !stage.skip||stage.skip!==matches.length||!stats||!debut||
+     !matches.some(m=>String(m.bashoId)===debut))return null;
+  const regular=matches.filter(m=>m.division!=='Mae-zumo'&&
+    Number.isInteger(Number(m.day))&&Number(m.day)>=1&&Number(m.day)<=15);
+  const wins=regular.filter(m=>Number(m.winnerId)===id).length;
+  const losses=regular.filter(m=>Number(m.winnerId)!==id).length;
+  if(regular.length!==Number(stats.totalMatches)||wins!==Number(stats.totalWins)||
+     losses!==Number(stats.totalLosses))return null;
+  return {regularBouts:regular.length,rawRows:matches.length,
+    earliestBasho:debut,source:'source regular W-L totals and earliest debut match'};
+}
 export function combinePage(doc,stage,result,id){
   // Confirmed provider response contracts (GitHub runner, Nov 2026):
   // - measurement / rank / shikona change endpoints return bare arrays;
   // - rikishi matches returns {limit,skip,total,records}.
   // Supporting both full envelopes and arrays protects existing test fixtures.
+  // The provider sometimes returns records:null at exactly the final
+  // out-of-range match page. Treat as exhausted ONLY where every regular
+  // career bout and the earliest debut match already reconcile independently.
+  if(stage==='matches'&&isObject(result)&&result.records===null&&
+     Number.isSafeInteger(Number(result.total))&&Number(result.total)>=0&&
+     Number.isSafeInteger(Number(result.limit))&&Number(result.limit)>0){
+    const proof=terminalHistoryEvidence(doc);
+    if(!proof)throw Error('Null matches page without independently reconciled career evidence');
+    const state=doc.stages.matches;
+    state.complete=true;
+    state.terminalEmptyPage=proof;
+    state.total=null;
+    state.attempts=0;
+    state.updatedAt=clock();
+    state.source=endpoint(id,stage,state.skip);
+    return;
+  }
   const direct=Array.isArray(result);
   const collection=stage==='matches'?'records':stage;
   const provided=direct?result:result?.[collection]??(stage==='matches'?result?.matches:undefined);
@@ -307,6 +340,22 @@ async function ensureCache(w){
     }
     stored.rankDebutContract=1;
     if(evidence)await saveJson(filePath(w.sourceId),stored);
+  }
+  if(stored.matchTerminalContract!==1){
+    const stage=stored.stages.matches;
+    const evidence=terminalHistoryEvidence(stored);
+    const hasTerminalResponse=stored.errors?.some(x=>x.stage==='matches'&&
+      /Expected matches collection; shape=limit,skip,total,records/.test(x.message));
+    if(!stage.complete&&hasTerminalResponse&&evidence){
+      stage.complete=true;
+      stage.attempts=0;
+      stage.total=null;
+      stage.terminalEmptyPage=evidence;
+      stored.errors.push({at:clock(),stage:'matches',
+        message:'Terminal null records page accepted after strict regular W-L and debut-source reconciliation',transient:false});
+      await saveJson(filePath(w.sourceId),stored);
+    }
+    stored.matchTerminalContract=1;
   }
   return stored;
 }
