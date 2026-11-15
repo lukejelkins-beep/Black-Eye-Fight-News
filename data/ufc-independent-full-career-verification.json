@@ -32181,6 +32181,86 @@
         }
       ],
       "note": "Seven UFC fights from February 2023 Jamie Mullarkey through October 2026 Ismael Bonfim. April 2026 Charles Radtke unanimous decision loss independently confirmed by UFC 327 official scorecards. UTC source-day variants retained."
+    },
+    "mohammed-usman": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Mohammed Usman",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/da7f113b5ea39c43",
+      "officialFighterUrl": "https://www.ufc.com/athlete/mohammed-usman",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco historical UFCStats-derived source; not a live UFCStats scrape",
+        "method": "Complete dated official UFC.com athlete biographies and UFC.com page-1 history, pinned Greco UFCStats fight/fighter/event IDs, exact native fighter/bout/opponent corners and winners, dates ±1 day and measured rounds. Excludes uncompleted, non-UFC and feeder bouts."
+      },
+      "verifiedNumericFighterIds": [
+        "2799"
+      ],
+      "officialUfcCareerBoutCount": 6,
+      "sourceScopeVerified": "UFC.com dated athlete biography exhaustively lists six official Octagon contests from the 2022-08-06 TUF 30 heavyweight FINAL win over Zac Pauga through the 2025-06-21 unanimous-decision win over Hamdy Abdelwahab (four UFC wins, two losses). TUF house/exhibition rounds are not UFC Octagon bouts. The official dated biography corrects misleading graphical 'Win' tiles on the Petersen and Parkin losses; both are independently confirmed by Greco UFCStats-derived winner/result records. No Nov 2026 bout is listed.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/mohammed-usman",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2025-06-21",
+          "opponent": "Hamdy Abdelwahab",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a12d3a6c8aaf87ca",
+          "nativeBoutId": "60282",
+          "nativeFighterId": "2799"
+        },
+        {
+          "date": "2024-07-20",
+          "opponent": "Thomas Petersen",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/836e9bc5c1f6acd3",
+          "nativeBoutId": "65933",
+          "nativeFighterId": "2799"
+        },
+        {
+          "date": "2024-03-23",
+          "opponent": "Mick Parkin",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3223b7e196a07224",
+          "nativeBoutId": "39004",
+          "nativeFighterId": "2799"
+        },
+        {
+          "date": "2023-09-23",
+          "opponent": "Jake Collier",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/49ede01b061cfae3",
+          "nativeBoutId": "60039",
+          "nativeFighterId": "2799"
+        },
+        {
+          "date": "2023-04-22",
+          "opponent": "Junior Tafa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8beab5f941dae8e0",
+          "nativeBoutId": "61280",
+          "nativeFighterId": "2799"
+        },
+        {
+          "date": "2022-08-06",
+          "opponent": "Zac Pauga",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/36f38c2534ef646b",
+          "nativeBoutId": "59549",
+          "nativeFighterId": "2799"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
     }
   }
 }
