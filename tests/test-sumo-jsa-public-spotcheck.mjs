@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {htmlToPublicText,parseOfficialProfile,parseJsaBashoResults,reconcileJsaBashoResults,cohortCurrentBasho,parseJsaBashoRanks,reconcileJsaBashoRanks} from '../scripts/sumo-jsa-public-spotcheck.mjs';
+import {htmlToPublicText,parseOfficialProfile,parseJsaBashoResults,reconcileJsaBashoResults,cohortCurrentBasho,parseJsaBashoRanks,reconcileJsaBashoRanks,officialSpotcheckPriority} from '../scripts/sumo-jsa-public-spotcheck.mjs';
 const w={sourceId:16,officialNskId:2892,shikonaEn:'Nishikigi',
  currentRank:'Makushita 2 East',heya:'Isenoumi',heightCm:186,weightKg:184};
 const official=String.raw`<!doctype html><html><head><script>fake injection</script></head><body>
@@ -198,4 +198,22 @@ test('missing source rank cannot be silently counted as an agreement or career c
  assert.equal(out.comparedBasho,0);
  assert.deepEqual(out.missingSourceRankBasho,['202509']);
  assert.equal(out.certification,'not-started');
+});
+
+test('prioritise current top-division JSA official profile checks without repeating cached snapshots',()=>{
+ const rows=[
+  {sourceId:8001,currentRank:'Juryo 2 East'},
+  {sourceId:8002,currentRank:'Makushita 2 West'},
+  {sourceId:8003,currentRank:'Maegashira 5 West'},
+  {sourceId:8004,currentRank:'Yokozuna 1 East'},
+  {sourceId:8005,currentRank:'Ozeki 1 West'},
+  {sourceId:8006,currentRank:'Maegashira 2 East'},
+  {sourceId:242,currentRank:'Makushita 50 East'},
+  {sourceId:82,currentRank:'Maegashira 1 East'},
+ ];
+ const ordered=rows.sort(officialSpotcheckPriority).map(x=>x.sourceId);
+ assert.deepEqual(ordered,[242,82,8004,8005,8006,8003,8001,8002]);
+ assert.equal(officialSpotcheckPriority(
+  {sourceId:1,currentRank:'Juryo 1 East'},
+  {sourceId:2,currentRank:'Juryo 1 West'})<0,true);
 });
