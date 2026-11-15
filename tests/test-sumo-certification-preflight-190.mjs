@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {preflightRikishi,summarizePreflight,planPreflightNextAction,documentedDebutRankGap,supplementalHistoricalBashoCoverage,independentHistoricalRankCoverage,independentlyVerifiedCurrentBashoCutoff}
+import {preflightRikishi,summarizePreflight,planPreflightNextAction,documentedDebutRankGap,supplementalHistoricalBashoCoverage,independentHistoricalRankCoverage,independentlyVerifiedCurrentBashoCutoff,proveZeroCareerAbsencesFromCompleteBasho}
  from '../scripts/sumo-certification-preflight-190.mjs';
 const get=path=>JSON.parse(readFileSync(new URL('../'+path,import.meta.url),'utf8'));
 const roster=get('data/sumo/rikishi-index.json');
@@ -282,4 +282,65 @@ test('dated JSA current-basho outcome can reconcile exactly one later W/L withou
   const altered=structuredClone(j);change(altered);
   assert.equal(independentlyVerifiedCurrentBashoCutoff(p,altered,'202611').passed,false);
  }
+});
+
+test('native zero absences needs independently verified FULL numbered-rank tournament attendance',()=>{
+ const p={career:{wins:5,losses:5,absences:0},
+  perBasho:[
+   {bashoId:'202609',wins:3,losses:4,scheduledBoutRows:7},
+   {bashoId:'202611',wins:2,losses:1,scheduledBoutRows:3}],
+  rankTimeline:[{bashoId:'202609',rank:'Makushita 10 East'},
+   {bashoId:'202611',rank:'Makushita 6 East'}],
+  rankHistoryGaps:[],
+  headToHead:[{meetings:[{bashoId:'202611',day:1},
+   {bashoId:'202611',day:3},{bashoId:'202611',day:5}]}]};
+ const j={rawHtmlSha256:'a'.repeat(64),
+  officialAsOf:{monthYear:'November 2026',day:8},
+  career:{wins:5,losses:5,absences:null},
+  officialBashoRecords:[{bashoId:'202609',wins:3,losses:4},
+   {bashoId:'202611',wins:2,losses:1}],
+  bashoReconciliation:{comparedBasho:1,agreeingBasho:1,discrepantBasho:0}};
+ const ok=proveZeroCareerAbsencesFromCompleteBasho(p,j,null,'202611');
+ assert.equal(ok.passed,true);
+ assert.equal(ok.completedBashoProven,1);
+ assert.equal(ok.officialCareerAbsencesPublished,false);
+ // Confirm no missing aggregate is rewritten to a made-up numeric zero.
+ assert.equal(j.career.absences,null);
+ assert.equal(p.career.absences,0);
+ const changedP=structuredClone(p);
+ changedP.perBasho[0].losses=3;
+ changedP.perBasho[0].scheduledBoutRows=6;
+ assert.equal(proveZeroCareerAbsencesFromCompleteBasho(changedP,j,null,'202611').passed,false);
+ const missingP=structuredClone(p);
+ missingP.perBasho=missingP.perBasho.slice(1);
+ assert.equal(proveZeroCareerAbsencesFromCompleteBasho(missingP,j,null,'202611').passed,false);
+ const a=structuredClone(j);
+ a.officialBashoRecords[0].losses=3;
+ assert.equal(proveZeroCareerAbsencesFromCompleteBasho(p,a,null,'202611').passed,false);
+ const conflict=structuredClone(j);
+ conflict.career.absences=1;
+ assert.equal(proveZeroCareerAbsencesFromCompleteBasho(p,conflict,null,'202611').passed,false);
+ const nonzero=structuredClone(p);nonzero.career.absences=2;
+ assert.equal(proveZeroCareerAbsencesFromCompleteBasho(nonzero,j,null,'202611').passed,false);
+ const next=structuredClone(j);
+ next.officialAsOf.day=3;
+ assert.equal(proveZeroCareerAbsencesFromCompleteBasho(p,next,null,'202611').passed,true,
+  'same W/L snapshot does not require inventing a later bout');
+});
+test('current-basho lag is documented separately and cannot conceal two missing bouts',()=>{
+ const p={career:{wins:5,losses:5,absences:0},
+  perBasho:[{bashoId:'202609',wins:3,losses:4,scheduledBoutRows:7},
+   {bashoId:'202611',wins:2,losses:1,scheduledBoutRows:3}],
+  rankTimeline:[{bashoId:'202609',rank:'Jonidan 10 West'},
+   {bashoId:'202611',rank:'Jonidan 4 West'}],
+  rankHistoryGaps:[],headToHead:[{meetings:[{bashoId:'202611',day:5}]}]};
+ const j={rawHtmlSha256:'a'.repeat(64),
+  officialAsOf:{monthYear:'November 2026',day:8},
+  career:{wins:6,losses:5,absences:null},
+  officialBashoRecords:[{bashoId:'202609',wins:3,losses:4},
+   {bashoId:'202611',wins:3,losses:1}],
+  bashoReconciliation:{comparedBasho:1,agreeingBasho:1,discrepantBasho:0}};
+ assert.equal(proveZeroCareerAbsencesFromCompleteBasho(p,j,null,'202611').passed,true);
+ j.career.wins=7;j.officialBashoRecords[1].wins=4;
+ assert.equal(proveZeroCareerAbsencesFromCompleteBasho(p,j,null,'202611').passed,false);
 });
