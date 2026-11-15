@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "parserVersion": 4,
+  "source": "Japan Sumo Association official public Rikishi Profile",
+  "sourceId": 9121,
+  "officialNskId": 4370,
+  "url": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4370/",
+  "profileName": "Hakugetsuro Katsuyori",
+  "stable": "Asahiyama",
+  "rank": {
+    "division": "Makushita",
+    "position": 44
+  },
+  "heightCm": 178,
+  "weightKg": 136.4,
+  "career": {
+    "wins": 21,
+    "losses": 4,
+    "absences": null
+  },
+  "careerAbsencesPublished": false,
+  "officialAsOf": {
+    "monthYear": "November 2026",
+    "day": 8
+  },
+  "fieldComparisons": {
+    "name": true,
+    "stable": true,
+    "rankGrade": true,
+    "height": true,
+    "weight": true
+  },
+  "measurementComparisonDetails": {
+    "height": {
+      "match": true,
+      "method": "exact",
+      "published": 178,
+      "api": 178
+    },
+    "weight": {
+      "match": true,
+      "method": "exact",
+      "published": 136.4,
+      "api": 136.4
+    }
+  },
+  "measurementComparisonMethod": "published-integer-precision",
+  "historicMeasurementsChanged": false,
+  "status": "basic-fields-parsed",
+  "certification": "not-started",
+  "notice": "Basic current public fields only. Does NOT verify complete historical bouts, official historical weigh-ins, image rights, or career certification.",
+  "officialBashoRecords": [
+    {
+      "bashoId": "202605",
+      "wins": 7,
+      "losses": 0,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202607",
+      "wins": 7,
+      "losses": 0,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202609",
+      "wins": 5,
+      "losses": 2,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202611",
+      "wins": 2,
+      "losses": 2,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    }
+  ],
+  "officialRankRecords": [
+    {
+      "bashoId": "202605",
+      "division": "Jonokuchi",
+      "side": "East",
+      "position": 15,
+      "rank": "Jonokuchi 15 East",
+      "source": "JSA tournament banzuke rank"
+    },
+    {
+      "bashoId": "202607",
+      "division": "Jonidan",
+      "side": "East",
+      "position": 6,
+      "rank": "Jonidan 6 East",
+      "source": "JSA tournament banzuke rank"
+    },
+    {
+      "bashoId": "202609",
+      "division": "Sandanme",
+      "side": "East",
+      "position": 3,
+      "rank": "Sandanme 3 East",
+      "source": "JSA tournament banzuke rank"
+    },
+    {
+      "bashoId": "202611",
+      "division": "Makushita",
+      "side": "East",
+      "position": 44,
+      "rank": "Makushita 44 East",
+      "source": "JSA tournament banzuke rank"
+    }
+  ],
+  "rankReconciliation": {
+    "officialRankRows": 4,
+    "comparedBasho": 4,
+    "agreedBasho": 4,
+    "mismatches": [],
+    "missingSourceRankBasho": [],
+    "certification": "not-started",
+    "note": "Public JSA banzuke rank comparison is independent QA, not final career certification."
+  },
+  "bashoReconciliation": {
+    "officialBashoRows": 4,
+    "comparedBasho": 3,
+    "agreeingBasho": 3,
+    "discrepantBasho": 0,
+    "unmatchedOfficialBasho": [],
+    "discrepancies": [],
+    "excludedCurrentBasho": "202611",
+    "currentBashoExclusionEvidence": "official-as-of",
+    "status": "historical-tournaments-agree",
+    "certified": false,
+    "note": "Only completed prior tournaments compared. Agreement cannot by itself certify an entire rikishi career.",
+    "ledgerProvenance": "unaltered-sumo-api-bouts",
+    "officialOutcomeOverlays": [],
+    "rawSourceMatchesChanged": false,
+    "careerCertified": false
+  },
+  "capturedAt": "2026-11-15T05:36:01.255Z",
+  "rawHtmlSha256": "b910d08fed9228c7619828c8f0cc7e304a427d8ef523957b6a945c13f288831c"
+}
