@@ -165,3 +165,17 @@ test('missing full JSA aggregate may be independently corroborated only alongsid
  f.official.bashoReconciliation.comparedBasho=0;
  assert.equal(strictCareerAudit(f).careerResultsCertified,false);
 });
+
+test('strict audit accepts an official-results-proven debut lacking a published numbered rank',()=>{
+ const f=fixture();
+ f.p.rankHistoryGaps=[{bashoId:'202609',
+  firstPublishedRankBasho:'202611',
+  status:'competed-before-first-published-banzuke-rank',
+  rank:null,independentlyCertified:false}];
+ f.p.rankTimeline=[{bashoId:'202611',rank:'Jonidan 22 East'}];
+ f.official.officialRankRecords=[{bashoId:'202611',rank:'Jonidan 22 East'}];
+ assert.equal(strictCareerAudit(f).careerResultsCertified,true);
+ assert.equal(strictCareerAudit(f).missingDebutRankPreservedAsNull,true);
+ f.official.officialBashoRecords=f.official.officialBashoRecords.filter(x=>x.bashoId!=='202609');
+ assert.ok(strictCareerAudit(f).blockers.includes('dated-career-rank-history-incomplete'));
+});
