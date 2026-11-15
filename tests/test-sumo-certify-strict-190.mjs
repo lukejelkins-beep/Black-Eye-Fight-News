@@ -122,3 +122,46 @@ test('summary never certifies more than preflight candidates or a reduced cohort
  assert.throws(()=>strictSummary(rows,{candidateForStrictAudit:0}),/cannot exceed/);
  assert.throws(()=>strictSummary(rows.slice(1),{candidateForStrictAudit:1}),/exactly/);
 });
+
+test('third-party career totals can supplement unpublished JSA absences only with exact W-L-A and identity proof',()=>{
+ const f=fixture();f.official.career.absences=null;
+ f.weight.careerRecordCrosscheck={
+  sourceUrl:'https://sumodb.sumogames.de/Rikishi.aspx?r=20',
+  rawHtmlSha256:'b'.repeat(64),
+  identityVerified:true,originalMeasurementsUnchanged:true,
+  independentOfApi:true,career:{wins:1,losses:1,absences:0,providerReportedBoutCount:2}};
+ const ok=strictCareerAudit(f);
+ assert.equal(ok.careerResultsCertified,true);
+ assert.equal(ok.careerTotalsEvidenceBasis,
+   'separate-SumoDB-career-WLA-plus-published-JSA-basho');
+ assert.ok(!ok.independentlyVerifiedBy.includes('JSA published W-L-A'));
+ f.weight.careerRecordCrosscheck.career.absences=null;
+ assert.equal(strictCareerAudit(f).careerResultsCertified,false);
+ f.weight.careerRecordCrosscheck.career.absences=0;
+ f.weight.careerRecordCrosscheck.identityVerified=false;
+ assert.equal(strictCareerAudit(f).careerResultsCertified,false);
+});
+test('never use supplemental records to override explicitly conflicting JSA career totals',()=>{
+ const f=fixture();f.official.career.absences=1;
+ f.weight.careerRecordCrosscheck={
+  sourceUrl:'https://sumodb.sumogames.de/Rikishi.aspx?r=20',
+  rawHtmlSha256:'c'.repeat(64),identityVerified:true,
+  originalMeasurementsUnchanged:true,independentOfApi:true,
+  career:{wins:1,losses:1,absences:0,providerReportedBoutCount:2}};
+ const result=strictCareerAudit(f);
+ assert.equal(result.careerResultsCertified,false);
+ assert.ok(result.blockers.includes('independent-published-career-wins-losses-absences'));
+ f.official.career={wins:10,losses:1,absences:null};
+ assert.equal(strictCareerAudit(f).careerResultsCertified,false);
+});
+test('missing full JSA aggregate may be independently corroborated only alongside official tournament ledger',()=>{
+ const f=fixture();f.official.career=null;
+ f.weight.careerRecordCrosscheck={
+  sourceUrl:'https://sumodb.sumogames.de/Rikishi.aspx?r=20',
+  rawHtmlSha256:'d'.repeat(64),identityVerified:true,
+  originalMeasurementsUnchanged:true,independentOfApi:true,
+  career:{wins:1,losses:1,absences:0,providerReportedBoutCount:2}};
+ assert.equal(strictCareerAudit(f).careerResultsCertified,true);
+ f.official.bashoReconciliation.comparedBasho=0;
+ assert.equal(strictCareerAudit(f).careerResultsCertified,false);
+});
