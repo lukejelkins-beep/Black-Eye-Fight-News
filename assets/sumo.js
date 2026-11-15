@@ -411,15 +411,19 @@ function profileTechniques(w){
 function resultKey(row) {return boutKey(row);}
 function currentProfileBouts(w) {
   const entry=entryFor(w),date=details().bashoId;
+  const division=divisionOf(w.currentRank);
   const completed=(entry?.record||[]).flatMap((rec,i)=>{
     const status=String(rec?.result||'').toLowerCase();
+    if(['absent','absence','kyujo'].includes(status)&&division!=='Makushita')
+      return [{bashoId:date,day:i+1,opponentId:null,opponent:null,outcome:'absence',
+        kimarite:null,scope:'Source-recorded upper-division absence; no bout or opponent inferred'}];
     if(!['win','loss'].includes(status))return [];
     const opponentId=Number(rec.opponentID);
     if(!Number.isSafeInteger(opponentId)||opponentId<1)return [];
     return [{bashoId:date,day:i+1,opponentId,opponent:rec.opponentShikonaEn||wrestler(opponentId)?.shikonaEn||'Opponent',
       outcome:status,kimarite:rec.kimarite||null,scope:'Current banzuke result'}];
   });
-  const division=divisionOf(w.currentRank),next=Number(details().announcedDay);
+  const next=Number(details().announcedDay);
   const announcements=verifiedDayMatchups(getBanzuke(division),getAnnouncedTorikumi(division,next),
     {bashoId:date,division,day:next}).filter(x=>!x.finished&&[x.rikishiId,x.opponentId].includes(Number(w.sourceId)));
   const scheduled=announcements.map(x=>{
@@ -463,12 +467,12 @@ function profileBouts(w){return mergeProfileBouts(currentProfileBouts(w),sourceC
 
 function profileBoutRow(w,row){
   const id=Number(row.opponentId),opponent=wrestler(id);
-  const outcome=String(row.outcome||'').toLowerCase();
-  const label=outcome==='win'?'W':outcome==='loss'?'L':outcome==='scheduled'?'Scheduled':'Not available';
-  const technique=outcome==='scheduled'?'Result pending':row.kimarite?techniqueText(row.kimarite):'Technique unavailable';
-  const name=opponent?.shikonaEn||row.opponent||'Opponent unavailable';
-  const h2h=headToHeadFor(w.sourceId,id);
-  const personal=opponent?bioLine(opponent):'Only the opponent identity is available in this snapshot.';
+  const outcome=String(row.outcome||'').toLowerCase(),absence=outcome==='absence';
+  const label=outcome==='win'?'W':outcome==='loss'?'L':outcome==='scheduled'?'Scheduled':absence?'A':'Not available';
+  const technique=outcome==='scheduled'?'Result pending':absence?'Source-recorded absence — no bout':row.kimarite?techniqueText(row.kimarite):'Technique unavailable';
+  const name=absence?'No opponent — recorded absence':opponent?.shikonaEn||row.opponent||'Opponent unavailable';
+  const h2h=absence?null:headToHeadFor(w.sourceId,id);
+  const personal=opponent?bioLine(opponent):absence?'No opponent is assigned to a sourced absence.':'Only the opponent identity is available in this snapshot.';
   return '<article class="sumo-ed-row" id="sumo-bout-'+e(resultKey(row))+'">'+
     '<div class="sumo-ed-row-main"><div class="sumo-ed-date"><strong>Day '+e(row.day||'N/A')+'</strong><small>'+e(bashoLabel(row.bashoId))+'</small></div>'+
     '<div class="sumo-ed-result '+e(outcome)+'">'+e(label)+'</div>'+
@@ -476,9 +480,9 @@ function profileBoutRow(w,row){
     (opponent?'<a href="#profile/'+id+'">'+e(name)+'</a>':'<span>'+e(name)+'</span>')+'</div>'+
     '<div class="sumo-ed-rank"><span>'+e(opponent?.currentRank||'Not available')+'</span><small>Current rank only</small></div>'+
     '<div class="sumo-ed-tech">'+(row.eventType?'<small>'+e(row.eventType)+' · non-regular</small>':'')+e(technique)+'</div>'+
-    '<div class="sumo-ed-h2h"><a href="'+headToHeadUrl(w.sourceId,id)+'" aria-label="Head to head: '+e(w.shikonaEn)+' versus '+e(name)+'">H2H '+e(h2h?h2h.wins+'–'+h2h.losses:'↗')+'</a></div></div>'+
+    '<div class="sumo-ed-h2h">'+(absence?'No H2H':'<a href="'+headToHeadUrl(w.sourceId,id)+'" aria-label="Head to head: '+e(w.shikonaEn)+' versus '+e(name)+'">H2H '+e(h2h?h2h.wins+'–'+h2h.losses:'↗')+'</a>')+'</div></div>'+
     '<details class="sumo-ed-extra"><summary>Opponent details · '+e(name)+'</summary><div class="sumo-details-grid">'+personal+
-    '<span>Source: '+e(row.scope)+'</span><span>Completed result: '+e(outcome==='scheduled'?'No — confirmed scheduled pairing':'Yes')+'</span></div></details></article>';
+    '<span>Source: '+e(row.scope)+'</span><span>Completed result: '+e(outcome==='scheduled'?'No — confirmed scheduled pairing':absence?'No — recorded absence':'Yes')+'</span></div></details></article>';
 }
 function resultDesk(w){
   const all=profileBouts(w),mode=STATE.profileMode,period=STATE.profilePeriod;
