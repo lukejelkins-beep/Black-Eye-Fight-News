@@ -76,6 +76,7 @@ jobs:
         with:
           node-version: '22'
       - name: Validate bounded source backfill
+        id: validation
         if: steps.preflight.outputs.run == 'true'
         run: |
           node --check scripts/sumo-backfill-190.mjs
@@ -117,6 +118,7 @@ jobs:
           node --test tests/test-sumo-export-preview-h2h.mjs
           node scripts/sumo-export-preview-h2h.mjs
       - name: Source-check public JSA profile fields without certifying careers
+        id: official_jsa
         if: steps.preflight.outputs.run == 'true'
         env:
           SUMO_JSA_REQUESTS_PER_RUN: '8'
@@ -129,6 +131,7 @@ jobs:
         if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-jsa-history-exceptions.mjs
       - name: Collect independent historical weights only if source permissions are documented
+        id: weight_collector
         if: steps.preflight.outputs.run == 'true'
         env:
           # Up to ten pages per pass, four per minute, with a strict 160s
@@ -139,12 +142,15 @@ jobs:
         if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-weight-history-190.mjs
       - name: Build complete research-only profile projections
+        id: profile_builder
         if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-build-profile-cache.mjs
       - name: Save auditable successful Sumo research run checkpoint
+        id: health_snapshot
         if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-research-run-health.mjs
       - name: Checkpoint cached results on research branch only
+        id: research_push
         if: steps.preflight.outputs.run == 'true'
         env:
           TARGET_BRANCH: research/sumo-190-career-cache-20261114
@@ -175,3 +181,39 @@ jobs:
         if: steps.preflight.outputs.run == 'true'
         shell: bash
         run: bash scripts/sumo-sync-h2h-preview.sh
+
+      - name: Record failed research job stage for diagnosis
+        if: ${{ failure() && steps.preflight.outputs.run == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_BRANCH: research/sumo-190-career-cache-20261114
+          VALIDATE_STATUS: ${{ steps.validation.outcome }}
+          OFFICIAL_STATUS: ${{ steps.official_jsa.outcome }}
+          WEIGHTS_STATUS: ${{ steps.weight_collector.outcome }}
+          PROFILE_STATUS: ${{ steps.profile_builder.outcome }}
+          HEALTH_STATUS: ${{ steps.health_snapshot.outcome }}
+          PUSH_STATUS: ${{ steps.research_push.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          path='data/sumo/backfill/v1/workflow-last-failure.json'
+          stamp=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          payload=$(jq -n --arg at "$stamp" --arg run "$GITHUB_RUN_ID" \
+            --arg sha "$GITHUB_SHA" --arg check "$VALIDATE_STATUS" \
+            --arg jsa "$OFFICIAL_STATUS" --arg weights "$WEIGHTS_STATUS" \
+            --arg profiles "$PROFILE_STATUS" --arg health "$HEALTH_STATUS" \
+            --arg push "$PUSH_STATUS" \
+            '{schemaVersion:1,status:"research-run-incomplete",at:$at,
+              runId:$run,workflowCommit:$sha,
+              actionsUrl:("https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/"+$run),
+              stepOutcomes:{validation:$check,officialJsa:$jsa,
+                sumoDbCollector:$weights,profileBuild:$profiles,
+                healthCheckpoint:$health,gitPush:$push},
+              note:"This is an incomplete Actions run. Do not advance certification or claim a completed checkpoint."}')
+          encoded=$(printf '%s\n' "$payload" | base64 -w0)
+          existing=$(gh api "repos/${GITHUB_REPOSITORY}/contents/$path?ref=$TARGET_BRANCH" --jq '.sha' 2>/dev/null || true)
+          args=(-f "message=Research: flag incomplete Sumo worker run [skip ci]"
+            -f "branch=$TARGET_BRANCH" -f "content=$encoded")
+          if [[ -n "$existing" ]]; then args+=(-f "sha=$existing"); fi
+          gh api -X PUT "repos/${GITHUB_REPOSITORY}/contents/$path" "${args[@]}" ||
+            echo 'Could not persist failed-run marker; consult Actions logs for run ID.' >&2
