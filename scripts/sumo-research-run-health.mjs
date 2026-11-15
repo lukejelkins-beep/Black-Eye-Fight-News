@@ -9,7 +9,7 @@ const ROOT='data/sumo/backfill/v1';
 const read=async p=>JSON.parse(await readFile(p,'utf8'));
 const optional=async p=>{try{return await read(p)}catch(e){if(e.code==='ENOENT')return null;throw e;}};
 const num=n=>Number.isFinite(Number(n))?Number(n):0;
-export function buildSumoHealth({cohort,api,weights,collection,jsa,official,profiles,
+export function buildSumoHealth({cohort,api,weights,collection,jsa,official,profiles,preflight,
  runId,workflowSha,completedAt}){
  if(cohort?.count!==190||cohort.rikishi?.length!==190)throw Error('Expected frozen 190-rikishi cohort');
  if(!api||!weights||!jsa||!collection)throw Error('Missing core checkpoint data');
@@ -44,6 +44,7 @@ export function buildSumoHealth({cohort,api,weights,collection,jsa,official,prof
    providerCooldownUntil:collection.nextAllowedAt||null,
    reviewCases:collection.reviewCases?.length||0},
   officialJsa:{checked:jsa.checked,pending:jsa.pending,
+   historicalRankRechecksThisRun:jsa.historicalRankRechecksThisRun||0,
    comparedHistoricalTournaments:jsa.historicalBashoCompared||0,
    unresolvedHistoricalDiscrepancies:jsa.historicalDiscrepancies||0,
    reconciledOutcomeOverlays:jsa.officialOutcomeOverlaysUsed||0,
@@ -52,6 +53,10 @@ export function buildSumoHealth({cohort,api,weights,collection,jsa,official,prof
    genuineParserOrFieldReviews:official?.genuineParserOrFieldReviewCases||0,
    officialHistoricalRanksCompared:official?.officialBanzukeRanksCompared||0,
    officialHistoricalRankDiscrepancies:official?.officialBanzukeRankDiscrepancies||0},
+  strictPreflight:{eligible:preflight?.candidateForStrictAudit||0,
+    blocked:preflight?.needsSourceOrManualReview??190,
+    blockerCounts:preflight?.blockerCounts||{},
+    certified:0,neverSelfCertifies:true},
   researchProfileProjections:{available:profiles.available||0,sourceLinkedWeightGraphs:profiles.weightGraphs||0,
    currentOfficialWeightSnapshots:profiles.currentOfficial||0},
   sourceReadyProfiles:num(profiles.sourceReady),
@@ -68,14 +73,15 @@ export function resolvePreviousResearchFailure(previous,success){
    note:'Previous run failed before a complete data checkpoint. A later validated run completed the collection, data audit, projections and checkpoint. Original outcomes retained for traceability.'};
 }
 async function main(){
- const [cohort,api,weights,collection,jsa,official,audit]=await Promise.all([
+ const [cohort,api,weights,collection,jsa,official,audit,preflight]=await Promise.all([
   read('data/sumo/rikishi-index.json'),
   read(join(ROOT,'summary.json')),
   read(join(ROOT,'weight-source-coverage.json')),
   read(join(ROOT,'sumodb-collection-status.json')),
   read(join(ROOT,'jsa-public','summary.json')),
   optional(join(ROOT,'jsa-public','exception-register.json')),
-  read(join(ROOT,'audit.json'))]);
+  read(join(ROOT,'audit.json')),
+  optional(join(ROOT,'career-certification-preflight.json'))]);
  const stats={available:0,weightGraphs:0,currentOfficial:0,sourceReady:audit.sourceReady};
  for(const w of cohort.rikishi){
   const p=await optional(join(ROOT,'profile-ready',w.sourceId+'.json'));
@@ -85,7 +91,7 @@ async function main(){
   if(p.currentOfficialMeasurement?.measurementDateKnown===false)stats.currentOfficial++;
  }
  const data=buildSumoHealth({
-  cohort,api,weights,collection,jsa,official,profiles:stats,
+  cohort,api,weights,collection,jsa,official,profiles:stats,preflight,
   completedAt:new Date().toISOString(),
   runId:process.env.GITHUB_RUN_ID||null,
   workflowSha:process.env.GITHUB_SHA||null});
