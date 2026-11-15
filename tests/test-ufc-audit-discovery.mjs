@@ -16,6 +16,7 @@ test('central audit discovers every existing Stage 3 research test without pulli
  for(const name of [
   'test-ufc-unified-wave71-ten-careers-20261115.mjs',
   'test-ufc-unified-wave72-thirty-careers-20261115.mjs',
+  'test-ufc-unified-wave73-six-fastlane-careers-20261115.mjs',
   'test-ufc-three-11-bout-career-source-gates-20261115.mjs'
  ])if(available.includes(name))assert.ok(selected.includes(name),
    'newly staged UFC source-gate regression must run in central strict audit: '+name);
