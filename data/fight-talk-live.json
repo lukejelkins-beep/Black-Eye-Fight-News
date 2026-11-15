@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-15T11:39:21.395Z",
-  "checkedAt": "2026-11-15T11:39:21.395Z",
-  "updatedAt": "2026-11-15T08:21:33.220704Z",
+  "attemptedAt": "2026-11-15T12:21:47.089Z",
+  "checkedAt": "2026-11-15T12:21:47.089Z",
+  "updatedAt": "2026-11-15T12:03:01Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 3,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 3,
+      "checked": 6,
       "failed": 0,
-      "configured": 3,
-      "message": "3 of 3 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 18,
+      "configured": 34,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 53,
+      "configured": 36,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 1,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,21 +55,46 @@
   "rollingScan": {
     "directoryEntries": 448,
     "scheduledEntries": 84,
-    "batchIndex": 1,
+    "batchIndex": 4,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 53,
-      "X": 18,
-      "Bluesky": 3,
-      "Threads": 10
+      "X": 34,
+      "Instagram": 36,
+      "Bluesky": 6,
+      "Threads": 7,
+      "Reddit": 1
     },
-    "directlyChecked": 3,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2dxsqghx424",
+      "cid": "bafyreidzdbcbxywa6wwh5b5bzllfsftcnx2xrkr3xqaqmuzvxl7vluvcce",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Darius Fulghum Stuns Diego Pacheco, Fulfills WBN Prediction #boxing #boxingnews",
+      "postedAt": "2026-11-15T12:03:01Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2dxsqghx424",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2dlgrfbs722",
       "cid": "bafyreicqtmagzckgjgn7clnhspxtfgkpmcjgxq7cwzeunyhr4mqvqngjty",
@@ -91,7 +116,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -115,7 +140,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -139,7 +164,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -163,7 +188,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -187,7 +212,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -211,7 +236,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -235,7 +260,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -259,7 +284,7 @@
         "comments": 3,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -283,7 +308,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -307,7 +332,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -331,7 +356,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -355,7 +380,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -379,7 +404,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -399,11 +424,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
       "engagement": {
-        "likes": 0,
+        "likes": 1,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -471,11 +496,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
       "engagement": {
-        "likes": 0,
+        "likes": 1,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -643,7 +668,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -691,7 +716,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -715,7 +740,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -859,7 +884,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -955,7 +980,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -979,7 +1004,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1004,30 +1029,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2bk5cvbeg2t",
-      "cid": "bafyreidctqds5l7dai74ccbqwgkm346r67yc2n2mwh6qebt5jmgvxw32li",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Former Miss Deutschland Tatjana Genrich, 33, has weighed in for her professional boxing debut tonight in Magdeburg.\n\nA former amateur champion returning after 15 years, she faces Andrea Hajnal with ambitions of becoming a world champion. 👑🥊🇩🇪",
-      "postedAt": "2026-11-14T12:53:04Z",
-      "date": "14 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2bk5cvbeg2t",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
