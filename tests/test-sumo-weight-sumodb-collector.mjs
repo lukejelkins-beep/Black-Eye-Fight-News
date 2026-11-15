@@ -174,10 +174,10 @@ test('old SumoDB banzuke records provide only explicit tournament-dated W-L-A',(
   '</table><div>Career Record 432-331-96/759</div>';
  const actual=parseSumoDbBashoRecords(html);
  assert.deepEqual(actual,[
-  {bashoId:'200505',wins:4,losses:3,absences:null},
-  {bashoId:'200507',wins:5,losses:2,absences:null},
-  {bashoId:'201709',wins:1,losses:2,absences:12},
-  {bashoId:'202611',wins:6,losses:1,absences:null}
+  {bashoId:'200505',wins:4,losses:3,absences:null,rankEn:'Jonokuchi 17 East'},
+  {bashoId:'200507',wins:5,losses:2,absences:null,rankEn:'Jonidan 19 East'},
+  {bashoId:'201709',wins:1,losses:2,absences:12,rankEn:'Maegashira 4 West'},
+  {bashoId:'202611',wins:6,losses:1,absences:null,rankEn:'Maegashira 3 West'}
  ]);
 });
 test('do not fabricate old tournaments, fake dates or contradicting results',()=>{
@@ -199,4 +199,12 @@ test('missing older JSA basho rows receive a second one-time source check',()=>{
  assert.equal(requiresCareerRecordCrosscheck(saved,jsaGap),false);
  assert.equal(requiresCareerRecordCrosscheck(saved,{
   classification:'candidate-for-strict-audit',blockers:[]}),false);
+});
+
+test('unpublished or nonstandard debut rank cannot create a numbered banzuke entry',()=>{
+ const html='<tr><td>2023.05</td><td>Ms10TD</td><td>6-1</td></tr>'+
+  '<tr><td>2023.07</td><td>Ms3e</td><td>4-3</td></tr>'+
+  '<tr><td>2025.07</td><td>Y1wYO</td><td>11-4</td></tr>';
+ const rows=parseSumoDbBashoRecords(html);
+ assert.deepEqual(rows.map(x=>x.rankEn),[null,'Makushita 3 East','Yokozuna 1 West']);
 });
