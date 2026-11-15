@@ -1,0 +1,124 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {strictCareerAudit,strictSummary} from '../scripts/sumo-certify-strict-190.mjs';
+const copy=x=>structuredClone(x);
+function fixture(){
+ const w={sourceId:1,officialNskId:10,sumoDbId:20,shikonaEn:'Test Rikishi'};
+ const p={
+  sourceId:1,officialNskId:10,certification:'not-started',
+  releaseGates:{certified:false},career:{wins:1,losses:1,absences:0},
+  boutHistory:{fullPagination:true,rawSourceImmutable:true,regularBouts:2,
+    otherBouts:0,totalRawBouts:2,regularWins:1,regularLosses:1},
+  perBasho:[{bashoId:'202609',wins:1,losses:0,scheduledBoutRows:1},
+    {bashoId:'202611',wins:0,losses:1,scheduledBoutRows:1}],
+  rankTimeline:[{bashoId:'202609',rank:'Jonidan 17 East'},
+    {bashoId:'202611',rank:'Jonidan 22 East'}],
+  rankHistoryGaps:[],measurementCoverage:{conflictingOverlaps:[]},
+  headToHead:[{opponentId:2,wins:1,losses:1,regularBouts:2,
+    meetings:[{winnerId:1,kimarite:'oshidashi',resultKind:'kimarite'},
+      {winnerId:2,kimarite:'yorikiri',resultKind:'kimarite'}]}]
+ };
+ const raw={rikishiId:1,nskId:10,researchOnly:true,certification:'not-started',
+  stages:Object.fromEntries(['profile','stats','measurements','ranks',
+   'shikonas','matches'].map(x=>[x,{complete:true}])),
+  data:{matches:[{bashoId:'202609',day:5},{bashoId:'202611',day:1}]}};
+ const official={sourceId:1,officialNskId:10,
+  url:'https://www.sumo.or.jp/EnSumoDataRikishi/profile/10/',
+  rawHtmlSha256:'a'.repeat(64),
+  fieldComparisons:{name:true,stable:true,rankGrade:true,weight:true,height:true},
+  career:{wins:1,losses:1,absences:0},
+  officialBashoRecords:[{bashoId:'202609',wins:1,losses:0},
+   {bashoId:'202611',wins:0,losses:1}],
+  bashoReconciliation:{discrepantBasho:0,agreeingBasho:1,comparedBasho:1,
+   unmatchedOfficialBasho:[],rawSourceMatchesChanged:false},
+  officialRankRecords:[{bashoId:'202609',rank:'Jonidan 17 East'}],
+  rankReconciliation:{comparedBasho:1,agreedBasho:1,mismatches:[],
+   missingSourceRankBasho:[]}
+ };
+ const weight={sourceId:1,officialNskId:10,sumoDbId:20,
+  identityEvidence:{valid:true,birthDateStatus:'match'},
+  datedEvidence:[{bashoId:'202609',weightKg:125}],
+  sourcePageUrl:'https://sumodb.sumogames.de/Rikishi.aspx?r=20'};
+ const preflight={sourceId:1,classification:'candidate-for-strict-audit',blockers:[]};
+ const sourceAudit={sourceId:1,readyForExternalCrosscheck:true,
+  errors:[],boutLedger:{missingWinner:0,authoritativeWins:1,authoritativeLosses:1}};
+ const h2h={cohortSize:190,profilesChecked:190,counterpartConflicts:0,
+  counterpartGaps:0,integrityStatus:'source-pair-reconciled'};
+ return {w,p,raw,official,weight,preflight,sourceAudit,h2h,activeBasho:'202611'};
+}
+test('strict gate can certify career result ledger but does not certify full profile or techniques',()=>{
+ const result=strictCareerAudit(fixture());
+ assert.equal(result.careerResultsCertified,true);
+ assert.equal(result.status,'career-results-strictly-certified');
+ assert.deepEqual(result.blockers,[]);
+ assert.equal(result.fullProfileCertified,false);
+ assert.equal(result.independentBoutByBoutKimariteCertified,false);
+ assert.equal(result.historicalWeightTimelineCertified,false);
+ assert.equal(result.releaseApproved,false);
+ assert.equal(result.checks.completedTournamentResultsCrosschecked,1);
+ assert.match(result.evidenceDigest,/^[0-9a-f]{64}$/);
+});
+test('not enough to merely pass preflight',()=>{
+ const f=fixture();
+ f.preflight.blockers=['official-JSA-career-totals-unpublished-or-disagree'];
+ assert.equal(strictCareerAudit(f).careerResultsCertified,false);
+});
+test('never certify source without full pagination and raw native-bout count match',()=>{
+ const f=fixture();f.raw.stages.matches.complete=false;
+ assert.ok(strictCareerAudit(f).blockers.includes('incomplete-source-pagination-or-identity'));
+ f.raw.stages.matches.complete=true;f.p.boutHistory.totalRawBouts=20;
+ assert.ok(strictCareerAudit(f).blockers.includes('full-per-basho-and-regular-bout-ledger-reconciliation'));
+});
+test('JSA career absences are required and must not be substituted with zero',()=>{
+ const f=fixture();f.official.career.absences=null;
+ assert.ok(strictCareerAudit(f).blockers.includes('independent-published-career-wins-losses-absences'));
+ f.official.career.absences=1;
+ assert.equal(strictCareerAudit(f).careerResultsCertified,false);
+});
+test('a JSA prior-tournament discrepancy blocks certification despite current-basho exclusion',()=>{
+ const f=fixture();f.official.officialBashoRecords[0].wins=0;
+ assert.ok(strictCareerAudit(f).blockers.includes('independent-official-completed-tournament-results'));
+ f.official.officialBashoRecords[0].wins=1;
+ f.official.bashoReconciliation.discrepantBasho=1;
+ assert.equal(strictCareerAudit(f).careerResultsCertified,false);
+});
+test('JSA historical rank mismatch or inadequate rank coverage blocks certification',()=>{
+ const f=fixture();
+ f.official.rankReconciliation.mismatches=[{bashoId:'202609'}];
+ assert.ok(strictCareerAudit(f).blockers.includes('independent-official-banzuke-rank-coverage'));
+});
+test('conflicting official field blocks the result',()=>{
+ const f=fixture();f.official.fieldComparisons.weight=false;
+ assert.ok(strictCareerAudit(f).blockers.includes('independent-official-profile-identity-or-fields'));
+});
+test('unverified birth date or conflicting weight dates blocks source identity',()=>{
+ const f=fixture();f.weight.identityEvidence.birthDateStatus='source-birth-date-missing';
+ assert.ok(strictCareerAudit(f).blockers.includes('independent-source-identity-or-measurement-conflict'));
+ f.weight.identityEvidence.birthDateStatus='match';
+ f.p.measurementCoverage.conflictingOverlaps=[{bashoId:'202609'}];
+ assert.equal(strictCareerAudit(f).careerResultsCertified,false);
+});
+test('H2H must have all source bouts and a nonmissing recorded technique or forfeit',()=>{
+ const f=fixture();f.p.headToHead[0].meetings[0].kimarite=null;
+ assert.ok(strictCareerAudit(f).blockers.includes('complete-native-h2h-or-kimarite-provenance'));
+ f.p.headToHead[0].meetings[0].kimarite='oshidashi';
+ f.h2h.counterpartConflicts=1;
+ assert.equal(strictCareerAudit(f).careerResultsCertified,false);
+});
+test('strict evidence digest changes when an official source result changes',()=>{
+ const f=fixture(),a=strictCareerAudit(f);
+ const modified=copy(f);modified.official.career.absences=2;
+ const b=strictCareerAudit(modified);
+ assert.notEqual(a.evidenceDigest,b.evidenceDigest);
+ assert.equal(b.careerResultsCertified,false);
+});
+test('summary never certifies more than preflight candidates or a reduced cohort',()=>{
+ const rows=Array.from({length:190},(_,i)=>({sourceId:i+1,
+  careerResultsCertified:i===0,blockers:i===0?[]:['missing']}));
+ const summary=strictSummary(rows,{candidateForStrictAudit:1});
+ assert.equal(summary.strictCareerResultsCertified,1);
+ assert.equal(summary.fullProfilesCertified,0);
+ assert.equal(summary.productionApproved,false);
+ assert.throws(()=>strictSummary(rows,{candidateForStrictAudit:0}),/cannot exceed/);
+ assert.throws(()=>strictSummary(rows.slice(1),{candidateForStrictAudit:1}),/exactly/);
+});
