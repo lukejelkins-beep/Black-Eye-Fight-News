@@ -432,6 +432,14 @@ function sourceCareerBouts(w) {
         opponent:headToHeadName(opponentId,id,opponentId),outcome:Number(m[2])===id?'win':'loss',
         kimarite:m[3]||null,scope:'API full career research ledger',matchNo:m[5]||null});
     }
+    // Keep playoffs and trial bouts available, separately from the regular career W–L.
+    for(const m of pair.special||[]){
+      if(!Array.isArray(m)||m.length<7||![a,b].includes(Number(m[2])))continue;
+      rows.push({bashoId:String(m[0]),day:Number(m[1]),opponentId,
+        opponent:headToHeadName(opponentId,id,opponentId),outcome:Number(m[2])===id?'win':'loss',
+        kimarite:m[3]||null,matchNo:m[5]||null,eventType:String(m[6]),
+        scope:'API non-regular meeting · excluded from regular career W–L'});
+    }
   }
   if(rows.length)return rows;
   const research=STATE.h2hSummary?.profiles?.[String(id)];
@@ -458,7 +466,7 @@ function profileBoutRow(w,row){
     '<div class="sumo-ed-person">'+portraitFor(opponent,'sm')+
     (opponent?'<a href="#profile/'+id+'">'+e(name)+'</a>':'<span>'+e(name)+'</span>')+'</div>'+
     '<div class="sumo-ed-rank"><span>'+e(opponent?.currentRank||'Not available')+'</span><small>Current rank only</small></div>'+
-    '<div class="sumo-ed-tech">'+e(technique)+'</div>'+
+    '<div class="sumo-ed-tech">'+(row.eventType?'<small>'+e(row.eventType)+' · non-regular</small>':'')+e(technique)+'</div>'+
     '<div class="sumo-ed-h2h"><a href="'+headToHeadUrl(w.sourceId,id)+'" aria-label="Head to head: '+e(w.shikonaEn)+' versus '+e(name)+'">H2H '+e(h2h?h2h.wins+'–'+h2h.losses:'↗')+'</a></div></div>'+
     '<details class="sumo-ed-extra"><summary>Opponent details · '+e(name)+'</summary><div class="sumo-details-grid">'+personal+
     '<span>Source: '+e(row.scope)+'</span><span>Completed result: '+e(outcome==='scheduled'?'No — confirmed scheduled pairing':'Yes')+'</span></div></details></article>';
