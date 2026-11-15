@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "scope": "Completed research-cache job checkpoint only; excludes post-checkpoint H2H preview sync",
-  "lastResearchCheckpointAt": "2026-11-15T08:08:18.197Z",
-  "runId": "43692833437",
-  "workflowRef": "4d4be8db7a194a1aaa52bbd18238a6d59a1ff477",
-  "workflowRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43692833437",
+  "lastResearchCheckpointAt": "2026-11-15T08:14:40.822Z",
+  "runId": "43693383228",
+  "workflowRef": "91d6285e0d1d4b5d180a99c39afd45111900bf3a",
+  "workflowRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43693383228",
   "dataCommitPending": true,
   "status": "research-validation-and-projections-completed",
   "api": {
@@ -19,10 +19,13 @@
     "independentDatedWeights": 1027,
     "additionalDatedWeights": 622,
     "conflictingOverlaps": 0,
-    "lastFetchAt": "2026-11-15T08:08:13.743Z",
+    "lastFetchAt": "2026-11-15T08:14:37.842Z",
     "requestedThisRun": 10,
     "updatedThisRun": 0,
     "identityRechecksThisRun": 0,
+    "careerEvidenceChecksThisRun": 10,
+    "careerEvidenceChecksOutstanding": 48,
+    "publishedIndependentCareerRecords": 20,
     "historicalIdentityRechecks": 78,
     "historicalWeightObservationsRecorroborated": 449,
     "birthDateMatchedProfiles": 190,
@@ -33,7 +36,7 @@
   "officialJsa": {
     "checked": 190,
     "pending": 0,
-    "historicalRankRechecksThisRun": 16,
+    "historicalRankRechecksThisRun": 0,
     "comparedHistoricalTournaments": 7900,
     "unresolvedHistoricalDiscrepancies": 0,
     "reconciledOutcomeOverlays": 1,
@@ -44,10 +47,10 @@
     "officialHistoricalRankDiscrepancies": 0
   },
   "strictPreflight": {
-    "eligible": 70,
-    "blocked": 120,
+    "eligible": 71,
+    "documentedRanklessDebutExceptions": 9,
+    "blocked": 119,
     "blockerCounts": {
-      "complete-rank-timeline-not-evidenced": 9,
       "independent-JSA-historical-ranks-not-compared": 59,
       "official-JSA-career-totals-unpublished-or-disagree": 22,
       "official-JSA-profile-field-disagreement": 1,
@@ -63,7 +66,8 @@
     "currentOfficialWeightSnapshots": 190
   },
   "sourceReadyProfiles": 190,
-  "careerResultsStrictlyCertified": 70,
+  "careerResultsStrictlyCertified": 71,
+  "strictlyVerifiedDebutRankGaps": 1,
   "strictCareerAuditPassed": true,
   "fullProfilesCertified": 0,
   "certifiedCareers": 0,
