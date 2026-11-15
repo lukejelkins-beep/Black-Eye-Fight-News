@@ -175,7 +175,11 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
  });
  add(missingRecords.length===0,'official-nonabsence-basho-rows-unreconciled');
  const ranks=jsa?.rankReconciliation||null;
- add(ranks&&Number(ranks.comparedBasho)>0&&
+ // Match the strict gate's minimum independently compared rank-history
+ // coverage; otherwise a historical profile with a short public JSA excerpt
+ // must remain in the source-coverage queue, not the fast certification lane.
+ const minimumRankRows=Math.max(1,Math.floor((p.rankTimeline?.length||0)*0.75));
+ add(ranks&&Number(ranks.comparedBasho)>=minimumRankRows&&
    ranks.mismatches?.length===0,
   'independent-JSA-historical-ranks-not-compared');
  // Photo rights are a separate display/release gate, never an invented source
