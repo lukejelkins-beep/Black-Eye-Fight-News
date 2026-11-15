@@ -2,16 +2,25 @@
   "schemaVersion": 1,
   "cohortSize": 190,
   "scope": "Research-only strict Sumo career preflight; never self-certifies",
-  "candidateForStrictAudit": 26,
-  "needsSourceOrManualReview": 164,
+  "candidateForStrictAudit": 34,
+  "needsSourceOrManualReview": 156,
   "blockerCounts": {
     "complete-rank-timeline-not-evidenced": 9,
-    "independent-JSA-historical-ranks-not-compared": 115,
-    "independent-SumoDB-birth-date-not-verified": 25,
+    "independent-JSA-historical-ranks-not-compared": 107,
+    "independent-SumoDB-birth-date-not-verified": 15,
     "official-JSA-career-totals-unpublished-or-disagree": 22,
     "official-JSA-profile-field-disagreement": 1,
     "official-absence-total-unpublished-or-disagree": 61,
     "official-completed-basho-ledger-coverage-incomplete": 11
+  },
+  "certificationLanes": {
+    "absence-proof-review": 39,
+    "api-rank-history-gap": 9,
+    "career-totals-review": 17,
+    "fast-lane-strict-audit": 34,
+    "official-rank-recheck": 79,
+    "official-tournament-gap": 11,
+    "profile-source-conflict": 1
   },
   "certified": 0,
   "productionApproved": false,
@@ -21,6 +30,9 @@
       "sourceId": 8850,
       "name": "Onosato",
       "division": "Yokozuna",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 20,
@@ -37,6 +49,9 @@
       "sourceId": 8854,
       "name": "Aonishiki",
       "division": "Ozeki",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 17,
@@ -53,13 +68,14 @@
       "sourceId": 7,
       "name": "Kirishima",
       "division": "Ozeki",
-      "classification": "needs-source-or-manual-review",
-      "blockers": [
-        "independent-JSA-historical-ranks-not-compared"
-      ],
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
+      "classification": "candidate-for-strict-audit",
+      "blockers": [],
       "completedHistoricalBoutTournaments": 66,
       "officialBashoCompared": 66,
-      "JsaHistoricalRankCompared": 0,
+      "JsaHistoricalRankCompared": 68,
       "independentBirthDateMatch": true,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
@@ -71,6 +87,9 @@
       "sourceId": 615,
       "name": "Fujinokawa",
       "division": "Sekiwake",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 22,
@@ -87,13 +106,14 @@
       "sourceId": 71,
       "name": "Churanoumi",
       "division": "Komusubi",
-      "classification": "needs-source-or-manual-review",
-      "blockers": [
-        "independent-JSA-historical-ranks-not-compared"
-      ],
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
+      "classification": "candidate-for-strict-audit",
+      "blockers": [],
       "completedHistoricalBoutTournaments": 62,
       "officialBashoCompared": 62,
-      "JsaHistoricalRankCompared": 0,
+      "JsaHistoricalRankCompared": 63,
       "independentBirthDateMatch": true,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
@@ -105,6 +125,9 @@
       "sourceId": 2,
       "name": "Asanoyama",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -123,6 +146,9 @@
       "sourceId": 28,
       "name": "Ura",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -141,6 +167,9 @@
       "sourceId": 44,
       "name": "Takayasu",
       "division": "Maegashira",
+      "certificationLane": "official-tournament-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Review which completed tournament results lack independent official comparison, preserving absence-only and unranked tournament distinctions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-completed-basho-ledger-coverage-incomplete",
@@ -160,6 +189,9 @@
       "sourceId": 5,
       "name": "Takerufuji",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -178,6 +210,9 @@
       "sourceId": 24,
       "name": "Hiradoumi",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -196,6 +231,9 @@
       "sourceId": 8,
       "name": "Kotoshoho",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -214,6 +252,9 @@
       "sourceId": 13,
       "name": "Wakamotoharu",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -232,6 +273,9 @@
       "sourceId": 55,
       "name": "Roga",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -250,6 +294,9 @@
       "sourceId": 61,
       "name": "Oshoma",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -268,6 +315,9 @@
       "sourceId": 86,
       "name": "Shishi",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -286,6 +336,9 @@
       "sourceId": 37,
       "name": "Takanosho",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -304,6 +357,9 @@
       "sourceId": 11,
       "name": "Ichiyamamoto",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -322,6 +378,9 @@
       "sourceId": 8866,
       "name": "Toshinofuji",
       "division": "Maegashira",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -340,6 +399,9 @@
       "sourceId": 83,
       "name": "Tokihayate",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -358,6 +420,9 @@
       "sourceId": 14,
       "name": "Tamawashi",
       "division": "Maegashira",
+      "certificationLane": "official-tournament-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Review which completed tournament results lack independent official comparison, preserving absence-only and unranked tournament distinctions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-completed-basho-ledger-coverage-incomplete",
@@ -377,6 +442,9 @@
       "sourceId": 8858,
       "name": "Arashifuji",
       "division": "Maegashira",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 16,
@@ -393,6 +461,9 @@
       "sourceId": 378,
       "name": "Daiseizan",
       "division": "Maegashira",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 26,
@@ -409,13 +480,14 @@
       "sourceId": 19,
       "name": "Hoshoryu",
       "division": "Yokozuna",
-      "classification": "needs-source-or-manual-review",
-      "blockers": [
-        "independent-JSA-historical-ranks-not-compared"
-      ],
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
+      "classification": "candidate-for-strict-audit",
+      "blockers": [],
       "completedHistoricalBoutTournaments": 50,
       "officialBashoCompared": 50,
-      "JsaHistoricalRankCompared": 0,
+      "JsaHistoricalRankCompared": 52,
       "independentBirthDateMatch": true,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
@@ -427,13 +499,14 @@
       "sourceId": 20,
       "name": "Kotozakura",
       "division": "Ozeki",
-      "classification": "needs-source-or-manual-review",
-      "blockers": [
-        "independent-JSA-historical-ranks-not-compared"
-      ],
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
+      "classification": "candidate-for-strict-audit",
+      "blockers": [],
       "completedHistoricalBoutTournaments": 64,
       "officialBashoCompared": 64,
-      "JsaHistoricalRankCompared": 0,
+      "JsaHistoricalRankCompared": 65,
       "independentBirthDateMatch": true,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
@@ -445,13 +518,14 @@
       "sourceId": 74,
       "name": "Atamifuji",
       "division": "Sekiwake",
-      "classification": "needs-source-or-manual-review",
-      "blockers": [
-        "independent-JSA-historical-ranks-not-compared"
-      ],
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
+      "classification": "candidate-for-strict-audit",
+      "blockers": [],
       "completedHistoricalBoutTournaments": 35,
       "officialBashoCompared": 35,
-      "JsaHistoricalRankCompared": 0,
+      "JsaHistoricalRankCompared": 36,
       "independentBirthDateMatch": true,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
@@ -463,6 +537,9 @@
       "sourceId": 8857,
       "name": "Yoshinofuji",
       "division": "Komusubi",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -481,6 +558,9 @@
       "sourceId": 9051,
       "name": "Fujiryoga",
       "division": "Maegashira",
+      "certificationLane": "api-rank-history-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Identify missing banzuke rank dates and seek dated official archive evidence; never interpolate unrecorded positions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "complete-rank-timeline-not-evidenced",
@@ -500,13 +580,14 @@
       "sourceId": 82,
       "name": "Fujiseiun",
       "division": "Maegashira",
-      "classification": "needs-source-or-manual-review",
-      "blockers": [
-        "independent-JSA-historical-ranks-not-compared"
-      ],
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
+      "classification": "candidate-for-strict-audit",
+      "blockers": [],
       "completedHistoricalBoutTournaments": 30,
       "officialBashoCompared": 30,
-      "JsaHistoricalRankCompared": 0,
+      "JsaHistoricalRankCompared": 34,
       "independentBirthDateMatch": true,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
@@ -518,6 +599,9 @@
       "sourceId": 3,
       "name": "Hakunofuji",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -536,6 +620,9 @@
       "sourceId": 9,
       "name": "Daieisho",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -554,6 +641,9 @@
       "sourceId": 56,
       "name": "Gonoyama",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -572,6 +662,9 @@
       "sourceId": 112,
       "name": "Kotoeiho",
       "division": "Maegashira",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree",
@@ -591,6 +684,9 @@
       "sourceId": 50,
       "name": "Kinbozan",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -609,6 +705,9 @@
       "sourceId": 40,
       "name": "Nishikifuji",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -627,6 +726,9 @@
       "sourceId": 164,
       "name": "Asakoryu",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -645,6 +747,9 @@
       "sourceId": 41,
       "name": "Oho",
       "division": "Maegashira",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree",
@@ -664,6 +769,9 @@
       "sourceId": 607,
       "name": "Asahakuryu",
       "division": "Maegashira",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -682,6 +790,9 @@
       "sourceId": 22,
       "name": "Abi",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -700,6 +811,9 @@
       "sourceId": 8859,
       "name": "Asasuiryu",
       "division": "Maegashira",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -718,6 +832,9 @@
       "sourceId": 135,
       "name": "Dewanoryu",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -736,6 +853,9 @@
       "sourceId": 66,
       "name": "Kitanowaka",
       "division": "Maegashira",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -754,6 +874,9 @@
       "sourceId": 8855,
       "name": "Kyokukaiyu",
       "division": "Maegashira",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -772,6 +895,9 @@
       "sourceId": 39,
       "name": "Chiyoshoma",
       "division": "Juryo",
+      "certificationLane": "official-tournament-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Review which completed tournament results lack independent official comparison, preserving absence-only and unranked tournament distinctions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-completed-basho-ledger-coverage-incomplete",
@@ -791,6 +917,9 @@
       "sourceId": 78,
       "name": "Kazekeno",
       "division": "Juryo",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -809,6 +938,9 @@
       "sourceId": 29,
       "name": "Kagayaki",
       "division": "Juryo",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree",
@@ -828,6 +960,9 @@
       "sourceId": 8865,
       "name": "Kazuma",
       "division": "Juryo",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 10,
@@ -844,6 +979,9 @@
       "sourceId": 15,
       "name": "Ryuden",
       "division": "Juryo",
+      "certificationLane": "official-tournament-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Review which completed tournament results lack independent official comparison, preserving absence-only and unranked tournament distinctions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-completed-basho-ledger-coverage-incomplete",
@@ -863,6 +1001,9 @@
       "sourceId": 49,
       "name": "Shonannoumi",
       "division": "Juryo",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree",
@@ -882,6 +1023,9 @@
       "sourceId": 287,
       "name": "Tanji",
       "division": "Juryo",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 27,
@@ -898,6 +1042,9 @@
       "sourceId": 34,
       "name": "Midorifuji",
       "division": "Juryo",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -916,6 +1063,9 @@
       "sourceId": 26,
       "name": "Mitakeumi",
       "division": "Juryo",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -934,6 +1084,9 @@
       "sourceId": 62,
       "name": "Enho",
       "division": "Juryo",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -952,6 +1105,9 @@
       "sourceId": 102,
       "name": "Tomokaze",
       "division": "Juryo",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -970,15 +1126,17 @@
       "sourceId": 9103,
       "name": "Asahifuji",
       "division": "Juryo",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
-        "independent-SumoDB-birth-date-not-verified",
         "official-absence-total-unpublished-or-disagree"
       ],
       "completedHistoricalBoutTournaments": 5,
       "officialBashoCompared": 5,
       "JsaHistoricalRankCompared": 6,
-      "independentBirthDateMatch": false,
+      "independentBirthDateMatch": true,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
       "certified": false,
@@ -989,15 +1147,17 @@
       "sourceId": 38,
       "name": "Meisei",
       "division": "Juryo",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
-        "independent-SumoDB-birth-date-not-verified",
         "independent-JSA-historical-ranks-not-compared"
       ],
       "completedHistoricalBoutTournaments": 91,
       "officialBashoCompared": 91,
       "JsaHistoricalRankCompared": 0,
-      "independentBirthDateMatch": false,
+      "independentBirthDateMatch": true,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
       "certified": false,
@@ -1008,15 +1168,17 @@
       "sourceId": 77,
       "name": "Hatsuyama",
       "division": "Juryo",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
-        "independent-SumoDB-birth-date-not-verified",
         "independent-JSA-historical-ranks-not-compared"
       ],
       "completedHistoricalBoutTournaments": 28,
       "officialBashoCompared": 28,
       "JsaHistoricalRankCompared": 0,
-      "independentBirthDateMatch": false,
+      "independentBirthDateMatch": true,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
       "certified": false,
@@ -1027,14 +1189,15 @@
       "sourceId": 8853,
       "name": "Onokatsu",
       "division": "Juryo",
-      "classification": "needs-source-or-manual-review",
-      "blockers": [
-        "independent-SumoDB-birth-date-not-verified"
-      ],
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
+      "classification": "candidate-for-strict-audit",
+      "blockers": [],
       "completedHistoricalBoutTournaments": 18,
       "officialBashoCompared": 18,
       "JsaHistoricalRankCompared": 18,
-      "independentBirthDateMatch": false,
+      "independentBirthDateMatch": true,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
       "certified": false,
@@ -1045,15 +1208,17 @@
       "sourceId": 21,
       "name": "Tobizaru",
       "division": "Juryo",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
-        "independent-SumoDB-birth-date-not-verified",
         "independent-JSA-historical-ranks-not-compared"
       ],
       "completedHistoricalBoutTournaments": 69,
       "officialBashoCompared": 69,
       "JsaHistoricalRankCompared": 0,
-      "independentBirthDateMatch": false,
+      "independentBirthDateMatch": true,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
       "certified": false,
@@ -1064,15 +1229,17 @@
       "sourceId": 33,
       "name": "Shodai",
       "division": "Juryo",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
-        "independent-SumoDB-birth-date-not-verified",
         "independent-JSA-historical-ranks-not-compared"
       ],
       "completedHistoricalBoutTournaments": 74,
       "officialBashoCompared": 74,
       "JsaHistoricalRankCompared": 0,
-      "independentBirthDateMatch": false,
+      "independentBirthDateMatch": true,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
       "certified": false,
@@ -1083,16 +1250,18 @@
       "sourceId": 142,
       "name": "Kayo",
       "division": "Juryo",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
-        "independent-SumoDB-birth-date-not-verified",
         "official-absence-total-unpublished-or-disagree",
         "independent-JSA-historical-ranks-not-compared"
       ],
       "completedHistoricalBoutTournaments": 27,
       "officialBashoCompared": 27,
       "JsaHistoricalRankCompared": 0,
-      "independentBirthDateMatch": false,
+      "independentBirthDateMatch": true,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
       "certified": false,
@@ -1103,15 +1272,17 @@
       "sourceId": 12,
       "name": "Wakatakakage",
       "division": "Juryo",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
-        "independent-SumoDB-birth-date-not-verified",
         "independent-JSA-historical-ranks-not-compared"
       ],
       "completedHistoricalBoutTournaments": 51,
       "officialBashoCompared": 51,
       "JsaHistoricalRankCompared": 0,
-      "independentBirthDateMatch": false,
+      "independentBirthDateMatch": true,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
       "certified": false,
@@ -1122,15 +1293,17 @@
       "sourceId": 117,
       "name": "Nabatame",
       "division": "Juryo",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
-        "independent-SumoDB-birth-date-not-verified",
         "independent-JSA-historical-ranks-not-compared"
       ],
       "completedHistoricalBoutTournaments": 36,
       "officialBashoCompared": 36,
       "JsaHistoricalRankCompared": 0,
-      "independentBirthDateMatch": false,
+      "independentBirthDateMatch": true,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
       "certified": false,
@@ -1141,15 +1314,17 @@
       "sourceId": 111,
       "name": "Hitoshi",
       "division": "Juryo",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
-        "independent-SumoDB-birth-date-not-verified",
         "independent-JSA-historical-ranks-not-compared"
       ],
       "completedHistoricalBoutTournaments": 29,
       "officialBashoCompared": 29,
       "JsaHistoricalRankCompared": 0,
-      "independentBirthDateMatch": false,
+      "independentBirthDateMatch": true,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
       "certified": false,
@@ -1160,6 +1335,9 @@
       "sourceId": 54,
       "name": "Tohakuryu",
       "division": "Juryo",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-SumoDB-birth-date-not-verified",
@@ -1179,6 +1357,9 @@
       "sourceId": 98,
       "name": "Shirokuma",
       "division": "Juryo",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-SumoDB-birth-date-not-verified",
@@ -1199,6 +1380,9 @@
       "sourceId": 195,
       "name": "Wakanosho",
       "division": "Juryo",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-SumoDB-birth-date-not-verified",
@@ -1218,6 +1402,9 @@
       "sourceId": 35,
       "name": "Sadanoumi",
       "division": "Juryo",
+      "certificationLane": "official-tournament-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Review which completed tournament results lack independent official comparison, preserving absence-only and unranked tournament distinctions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-SumoDB-birth-date-not-verified",
@@ -1238,6 +1425,9 @@
       "sourceId": 101,
       "name": "Tamashoho",
       "division": "Juryo",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-SumoDB-birth-date-not-verified",
@@ -1258,6 +1448,9 @@
       "sourceId": 140,
       "name": "Tokifudo",
       "division": "Juryo",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-SumoDB-birth-date-not-verified",
@@ -1277,6 +1470,9 @@
       "sourceId": 9099,
       "name": "Ryuho",
       "division": "Juryo",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-SumoDB-birth-date-not-verified",
@@ -1296,6 +1492,9 @@
       "sourceId": 8860,
       "name": "Inami",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-SumoDB-birth-date-not-verified",
@@ -1315,15 +1514,17 @@
       "sourceId": 16,
       "name": "Nishikigi",
       "division": "Makushita",
+      "certificationLane": "official-tournament-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Review which completed tournament results lack independent official comparison, preserving absence-only and unranked tournament distinctions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-SumoDB-birth-date-not-verified",
-        "official-completed-basho-ledger-coverage-incomplete",
-        "independent-JSA-historical-ranks-not-compared"
+        "official-completed-basho-ledger-coverage-incomplete"
       ],
       "completedHistoricalBoutTournaments": 121,
       "officialBashoCompared": 97,
-      "JsaHistoricalRankCompared": 0,
+      "JsaHistoricalRankCompared": 98,
       "independentBirthDateMatch": false,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
@@ -1335,6 +1536,9 @@
       "sourceId": 88,
       "name": "Gojinyu",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-SumoDB-birth-date-not-verified",
@@ -1355,6 +1559,9 @@
       "sourceId": 9050,
       "name": "Fujitensei",
       "division": "Makushita",
+      "certificationLane": "api-rank-history-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Identify missing banzuke rank dates and seek dated official archive evidence; never interpolate unrecorded positions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "complete-rank-timeline-not-evidenced",
@@ -1375,6 +1582,9 @@
       "sourceId": 9115,
       "name": "Fudoho",
       "division": "Makushita",
+      "certificationLane": "api-rank-history-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Identify missing banzuke rank dates and seek dated official archive evidence; never interpolate unrecorded positions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "complete-rank-timeline-not-evidenced",
@@ -1395,6 +1605,9 @@
       "sourceId": 58,
       "name": "Tsushimanada",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-SumoDB-birth-date-not-verified",
@@ -1414,6 +1627,9 @@
       "sourceId": 9097,
       "name": "Ryusho",
       "division": "Makushita",
+      "certificationLane": "api-rank-history-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Identify missing banzuke rank dates and seek dated official archive evidence; never interpolate unrecorded positions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "complete-rank-timeline-not-evidenced",
@@ -1434,6 +1650,9 @@
       "sourceId": 8868,
       "name": "Okaryu",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-SumoDB-birth-date-not-verified",
@@ -1453,6 +1672,9 @@
       "sourceId": 8856,
       "name": "Mita",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 11,
@@ -1469,6 +1691,9 @@
       "sourceId": 212,
       "name": "Wakamiyabi",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree",
@@ -1488,6 +1713,9 @@
       "sourceId": 9135,
       "name": "Omori",
       "division": "Makushita",
+      "certificationLane": "api-rank-history-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Identify missing banzuke rank dates and seek dated official archive evidence; never interpolate unrecorded positions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "complete-rank-timeline-not-evidenced",
@@ -1507,6 +1735,9 @@
       "sourceId": 8874,
       "name": "Fujisodai",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -1525,6 +1756,9 @@
       "sourceId": 93,
       "name": "Hokutenkai",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -1543,6 +1777,9 @@
       "sourceId": 251,
       "name": "Toshunryu",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 26,
@@ -1559,6 +1796,9 @@
       "sourceId": 9059,
       "name": "Koseiryu",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 9,
@@ -1575,6 +1815,9 @@
       "sourceId": 70,
       "name": "Kotokuzan",
       "division": "Makushita",
+      "certificationLane": "official-tournament-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Review which completed tournament results lack independent official comparison, preserving absence-only and unranked tournament distinctions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-completed-basho-ledger-coverage-incomplete",
@@ -1594,6 +1837,9 @@
       "sourceId": 145,
       "name": "Nihonyanagi",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -1612,6 +1858,9 @@
       "sourceId": 263,
       "name": "Daiyusho",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 43,
@@ -1628,6 +1877,9 @@
       "sourceId": 220,
       "name": "Mikazuchiyama",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree",
@@ -1647,6 +1899,9 @@
       "sourceId": 8876,
       "name": "Anhibiki",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -1665,6 +1920,9 @@
       "sourceId": 65,
       "name": "Shimanoumi",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -1683,6 +1941,9 @@
       "sourceId": 8905,
       "name": "Yumenofuji",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 21,
@@ -1699,6 +1960,9 @@
       "sourceId": 382,
       "name": "Ikazuchido",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -1717,6 +1981,9 @@
       "sourceId": 8928,
       "name": "Yonezawaryu",
       "division": "Makushita",
+      "certificationLane": "career-totals-review",
+      "owner": "historical manual source review",
+      "nextAction": "Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree",
@@ -1736,6 +2003,9 @@
       "sourceId": 9100,
       "name": "Tatsubayama",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 7,
@@ -1752,6 +2022,9 @@
       "sourceId": 84,
       "name": "Hananofuji",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -1770,6 +2043,9 @@
       "sourceId": 170,
       "name": "Asanoryu",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -1788,6 +2064,9 @@
       "sourceId": 224,
       "name": "Aratakayama",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 44,
@@ -1804,6 +2083,9 @@
       "sourceId": 197,
       "name": "Hananoumi",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -1822,6 +2104,9 @@
       "sourceId": 194,
       "name": "Oshoryu",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -1840,6 +2125,9 @@
       "sourceId": 230,
       "name": "Oyamada",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 26,
@@ -1856,6 +2144,9 @@
       "sourceId": 293,
       "name": "Kaigo",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 50,
@@ -1872,6 +2163,9 @@
       "sourceId": 8877,
       "name": "Ryuji",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -1890,6 +2184,9 @@
       "sourceId": 63,
       "name": "Takakento",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -1908,6 +2205,9 @@
       "sourceId": 176,
       "name": "Awanokuni",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree",
@@ -1927,6 +2227,9 @@
       "sourceId": 75,
       "name": "Mineyaiba",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -1945,6 +2248,9 @@
       "sourceId": 8904,
       "name": "Shoryu",
       "division": "Makushita",
+      "certificationLane": "career-totals-review",
+      "owner": "historical manual source review",
+      "nextAction": "Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree"
@@ -1963,6 +2269,9 @@
       "sourceId": 215,
       "name": "Kiyota",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -1981,6 +2290,9 @@
       "sourceId": 9039,
       "name": "Tenrosei",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -1999,6 +2311,9 @@
       "sourceId": 9086,
       "name": "Kakueizan",
       "division": "Makushita",
+      "certificationLane": "api-rank-history-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Identify missing banzuke rank dates and seek dated official archive evidence; never interpolate unrecorded positions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "complete-rank-timeline-not-evidenced",
@@ -2018,6 +2333,9 @@
       "sourceId": 118,
       "name": "Ikawasakura",
       "division": "Makushita",
+      "certificationLane": "career-totals-review",
+      "owner": "historical manual source review",
+      "nextAction": "Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree",
@@ -2038,6 +2356,9 @@
       "sourceId": 8869,
       "name": "Daimasakari",
       "division": "Makushita",
+      "certificationLane": "career-totals-review",
+      "owner": "historical manual source review",
+      "nextAction": "Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree",
@@ -2057,6 +2378,9 @@
       "sourceId": 113,
       "name": "Tokunomusashi",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2075,6 +2399,9 @@
       "sourceId": 9121,
       "name": "Hakugetsuro",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -2093,6 +2420,9 @@
       "sourceId": 69,
       "name": "Kaisho",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2111,6 +2441,9 @@
       "sourceId": 181,
       "name": "Hinataryu",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2129,6 +2462,9 @@
       "sourceId": 179,
       "name": "Kaiseijo",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2147,6 +2483,9 @@
       "sourceId": 376,
       "name": "Yamato",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 27,
@@ -2163,6 +2502,9 @@
       "sourceId": 172,
       "name": "Kototsubasa",
       "division": "Makushita",
+      "certificationLane": "official-tournament-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Review which completed tournament results lack independent official comparison, preserving absence-only and unranked tournament distinctions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree",
@@ -2184,6 +2526,9 @@
       "sourceId": 188,
       "name": "Asonoyama",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2202,6 +2547,9 @@
       "sourceId": 155,
       "name": "Ohata",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree",
@@ -2221,6 +2569,9 @@
       "sourceId": 97,
       "name": "Asagyokusei",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2239,6 +2590,9 @@
       "sourceId": 200,
       "name": "Tendozan",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2257,6 +2611,9 @@
       "sourceId": 8943,
       "name": "Gonosho",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -2275,6 +2632,9 @@
       "sourceId": 8861,
       "name": "Tokitenran",
       "division": "Makushita",
+      "certificationLane": "career-totals-review",
+      "owner": "historical manual source review",
+      "nextAction": "Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree",
@@ -2294,6 +2654,9 @@
       "sourceId": 292,
       "name": "Hogasho",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -2312,6 +2675,9 @@
       "sourceId": 280,
       "name": "Hamanoumi",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -2330,6 +2696,9 @@
       "sourceId": 8852,
       "name": "Goseizan",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 13,
@@ -2346,6 +2715,9 @@
       "sourceId": 286,
       "name": "Hakuonada",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 43,
@@ -2362,6 +2734,9 @@
       "sourceId": 613,
       "name": "Gonoumi",
       "division": "Makushita",
+      "certificationLane": "career-totals-review",
+      "owner": "historical manual source review",
+      "nextAction": "Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree"
@@ -2380,6 +2755,9 @@
       "sourceId": 9104,
       "name": "Tenshoyama",
       "division": "Makushita",
+      "certificationLane": "profile-source-conflict",
+      "owner": "historical manual source review",
+      "nextAction": "Investigate the exact official/API current profile disagreement and document which publication is newer; do not overwrite either raw source.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-profile-field-disagreement",
@@ -2399,6 +2777,9 @@
       "sourceId": 8951,
       "name": "Ikarigata",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -2417,6 +2798,9 @@
       "sourceId": 81,
       "name": "Tochitaikai",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2435,6 +2819,9 @@
       "sourceId": 91,
       "name": "Mudoho",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2453,6 +2840,9 @@
       "sourceId": 89,
       "name": "Nishinoryu",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree",
@@ -2472,6 +2862,9 @@
       "sourceId": 159,
       "name": "Daikisho",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2490,6 +2883,9 @@
       "sourceId": 166,
       "name": "Tochikodai",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2508,6 +2904,9 @@
       "sourceId": 611,
       "name": "Himukamaru",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -2526,6 +2925,9 @@
       "sourceId": 167,
       "name": "Otsuji",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2544,6 +2946,9 @@
       "sourceId": 219,
       "name": "Sazanami",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree",
@@ -2563,6 +2968,9 @@
       "sourceId": 120,
       "name": "Osanai",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2581,6 +2989,9 @@
       "sourceId": 8862,
       "name": "Haruyama",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 21,
@@ -2597,6 +3008,9 @@
       "sourceId": 9084,
       "name": "Gyotoku",
       "division": "Makushita",
+      "certificationLane": "api-rank-history-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Identify missing banzuke rank dates and seek dated official archive evidence; never interpolate unrecorded positions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "complete-rank-timeline-not-evidenced"
@@ -2615,6 +3029,9 @@
       "sourceId": 152,
       "name": "Nobehara",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2633,6 +3050,9 @@
       "sourceId": 9085,
       "name": "Hanahibiki",
       "division": "Makushita",
+      "certificationLane": "api-rank-history-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Identify missing banzuke rank dates and seek dated official archive evidence; never interpolate unrecorded positions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "complete-rank-timeline-not-evidenced",
@@ -2652,6 +3072,9 @@
       "sourceId": 8867,
       "name": "Daikosho",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 15,
@@ -2668,6 +3091,9 @@
       "sourceId": 100,
       "name": "Kurohimeyama",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2686,13 +3112,14 @@
       "sourceId": 242,
       "name": "Obara",
       "division": "Makushita",
-      "classification": "needs-source-or-manual-review",
-      "blockers": [
-        "independent-JSA-historical-ranks-not-compared"
-      ],
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
+      "classification": "candidate-for-strict-audit",
+      "blockers": [],
       "completedHistoricalBoutTournaments": 66,
       "officialBashoCompared": 66,
-      "JsaHistoricalRankCompared": 0,
+      "JsaHistoricalRankCompared": 69,
       "independentBirthDateMatch": true,
       "sourceEligibilityChecked": true,
       "strictAuditPassed": false,
@@ -2704,6 +3131,9 @@
       "sourceId": 141,
       "name": "Kitadaichi",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree",
@@ -2723,6 +3153,9 @@
       "sourceId": 72,
       "name": "Tochimusashi",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2741,6 +3174,9 @@
       "sourceId": 107,
       "name": "Tochimaru",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2759,6 +3195,9 @@
       "sourceId": 467,
       "name": "Kyokumizuno",
       "division": "Makushita",
+      "certificationLane": "career-totals-review",
+      "owner": "historical manual source review",
+      "nextAction": "Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree"
@@ -2777,6 +3216,9 @@
       "sourceId": 612,
       "name": "Kobayashi",
       "division": "Makushita",
+      "certificationLane": "career-totals-review",
+      "owner": "historical manual source review",
+      "nextAction": "Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree"
@@ -2795,6 +3237,9 @@
       "sourceId": 274,
       "name": "Gyokuozan",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 27,
@@ -2811,6 +3256,9 @@
       "sourceId": 73,
       "name": "Akua",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2829,6 +3277,9 @@
       "sourceId": 57,
       "name": "Shimazuumi",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2847,6 +3298,9 @@
       "sourceId": 9109,
       "name": "Shosei",
       "division": "Makushita",
+      "certificationLane": "career-totals-review",
+      "owner": "historical manual source review",
+      "nextAction": "Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree",
@@ -2866,6 +3320,9 @@
       "sourceId": 8863,
       "name": "Anosho",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -2884,6 +3341,9 @@
       "sourceId": 165,
       "name": "Kamito",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2902,6 +3362,9 @@
       "sourceId": 9088,
       "name": "Kaki",
       "division": "Makushita",
+      "certificationLane": "career-totals-review",
+      "owner": "historical manual source review",
+      "nextAction": "Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree"
@@ -2920,6 +3383,9 @@
       "sourceId": 267,
       "name": "Nishiomoto",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -2938,6 +3404,9 @@
       "sourceId": 9098,
       "name": "Takahara",
       "division": "Makushita",
+      "certificationLane": "career-totals-review",
+      "owner": "historical manual source review",
+      "nextAction": "Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree",
@@ -2957,6 +3426,9 @@
       "sourceId": 131,
       "name": "Toseiryu",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2975,6 +3447,9 @@
       "sourceId": 209,
       "name": "Ienoshima",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -2993,6 +3468,9 @@
       "sourceId": 85,
       "name": "Mienofuji",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -3011,6 +3489,9 @@
       "sourceId": 8864,
       "name": "Shiroma",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 19,
@@ -3027,6 +3508,9 @@
       "sourceId": 9136,
       "name": "Honoikazuchi",
       "division": "Makushita",
+      "certificationLane": "api-rank-history-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Identify missing banzuke rank dates and seek dated official archive evidence; never interpolate unrecorded positions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "complete-rank-timeline-not-evidenced",
@@ -3047,6 +3531,9 @@
       "sourceId": 180,
       "name": "Kaishin",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -3065,6 +3552,9 @@
       "sourceId": 124,
       "name": "Kitaharima",
       "division": "Makushita",
+      "certificationLane": "official-tournament-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Review which completed tournament results lack independent official comparison, preserving absence-only and unranked tournament distinctions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-completed-basho-ledger-coverage-incomplete",
@@ -3084,6 +3574,9 @@
       "sourceId": 8892,
       "name": "Uzumasa",
       "division": "Makushita",
+      "certificationLane": "career-totals-review",
+      "owner": "historical manual source review",
+      "nextAction": "Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree",
@@ -3103,6 +3596,9 @@
       "sourceId": 210,
       "name": "Seigo",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -3121,6 +3617,9 @@
       "sourceId": 95,
       "name": "Oshoumi",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -3139,6 +3638,9 @@
       "sourceId": 217,
       "name": "Daishinkai",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -3157,6 +3659,9 @@
       "sourceId": 137,
       "name": "Yoshiyasu",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -3175,6 +3680,9 @@
       "sourceId": 175,
       "name": "Oyamatoumi",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -3193,6 +3701,9 @@
       "sourceId": 300,
       "name": "Ieshima",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 37,
@@ -3209,6 +3720,9 @@
       "sourceId": 8882,
       "name": "Inanoyama",
       "division": "Makushita",
+      "certificationLane": "career-totals-review",
+      "owner": "historical manual source review",
+      "nextAction": "Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree",
@@ -3228,6 +3742,9 @@
       "sourceId": 125,
       "name": "Tsurubayashi",
       "division": "Makushita",
+      "certificationLane": "official-tournament-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Review which completed tournament results lack independent official comparison, preserving absence-only and unranked tournament distinctions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree",
@@ -3249,6 +3766,9 @@
       "sourceId": 185,
       "name": "Chiyotora",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -3267,6 +3787,9 @@
       "sourceId": 59,
       "name": "Hakuyozan",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -3285,6 +3808,9 @@
       "sourceId": 355,
       "name": "Marusho",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 42,
@@ -3301,6 +3827,9 @@
       "sourceId": 154,
       "name": "Dewataikai",
       "division": "Makushita",
+      "certificationLane": "career-totals-review",
+      "owner": "historical manual source review",
+      "nextAction": "Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree",
@@ -3321,6 +3850,9 @@
       "sourceId": 281,
       "name": "Akiyoshi",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -3339,6 +3871,9 @@
       "sourceId": 128,
       "name": "Asakoki",
       "division": "Makushita",
+      "certificationLane": "official-tournament-gap",
+      "owner": "historical manual source review",
+      "nextAction": "Review which completed tournament results lack independent official comparison, preserving absence-only and unranked tournament distinctions.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree",
@@ -3360,6 +3895,9 @@
       "sourceId": 8902,
       "name": "Seiyu",
       "division": "Makushita",
+      "certificationLane": "career-totals-review",
+      "owner": "historical manual source review",
+      "nextAction": "Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree",
@@ -3379,6 +3917,9 @@
       "sourceId": 136,
       "name": "Tochiseiryu",
       "division": "Makushita",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "independent-JSA-historical-ranks-not-compared"
@@ -3397,6 +3938,9 @@
       "sourceId": 586,
       "name": "Kazeeidai",
       "division": "Makushita",
+      "certificationLane": "absence-proof-review",
+      "owner": "historical manual source review",
+      "nextAction": "Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-absence-total-unpublished-or-disagree"
@@ -3415,6 +3959,9 @@
       "sourceId": 290,
       "name": "Kawamura",
       "division": "Makushita",
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
       "classification": "candidate-for-strict-audit",
       "blockers": [],
       "completedHistoricalBoutTournaments": 47,
@@ -3431,6 +3978,9 @@
       "sourceId": 190,
       "name": "Hamayutaka",
       "division": "Makushita",
+      "certificationLane": "career-totals-review",
+      "owner": "historical manual source review",
+      "nextAction": "Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree",
@@ -3451,6 +4001,9 @@
       "sourceId": 557,
       "name": "Izumifuji",
       "division": "Makushita",
+      "certificationLane": "career-totals-review",
+      "owner": "historical manual source review",
+      "nextAction": "Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
         "official-JSA-career-totals-unpublished-or-disagree"
