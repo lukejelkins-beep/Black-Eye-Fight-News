@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {buildSumoHealth} from '../scripts/sumo-research-run-health.mjs';
+import {buildSumoHealth,resolvePreviousResearchFailure} from '../scripts/sumo-research-run-health.mjs';
 const cohort={count:190,rikishi:Array.from({length:190},(_,i)=>({
  sourceId:i+1,sumoDbId:12000+i}))};
 const api={counts:{collected:190},weightSnapshots:415,rankEntries:8711,matchEntries:76532};
@@ -29,4 +29,17 @@ test('refuse stale coverage and duplicate or missing SumoDB IDs',()=>{
  const broken={count:190,rikishi:cohort.rikishi.map(x=>({...x}))};
  broken.rikishi[15].sumoDbId=12000;
  assert.throws(()=>buildSumoHealth({...input,cohort:broken}),/mapping incomplete/);
+});
+
+test('a successful and committed Sumo research checkpoint resolves an old failure marker',()=>{
+ const prior={schemaVersion:1,status:'research-run-incomplete',runId:'123456789',
+  stepOutcomes:{validation:'failure',sumoDbCollector:'skipped'}};
+ const success=buildSumoHealth(input);
+ const resolved=resolvePreviousResearchFailure(prior,success);
+ assert.equal(resolved.status,'resolved-after-successful-retry');
+ assert.equal(resolved.resolvedByRunId,'123456789');
+ assert.equal(resolved.resolvedAt,'2026-11-15T00:00:00.000Z');
+ assert.equal(resolved.stepOutcomes.validation,'failure','audit history is retained');
+ assert.equal(resolvePreviousResearchFailure({...prior,status:'resolved-after-successful-retry'},success),null);
+ assert.equal(resolvePreviousResearchFailure(prior,{...success,runId:null}),null);
 });
