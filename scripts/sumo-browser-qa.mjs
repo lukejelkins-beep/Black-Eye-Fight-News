@@ -33,6 +33,10 @@ async function testSite(viewport,isMobile,label) {
   const response=await page.request.get('http://127.0.0.1:8765/data/sumo/research-h2h-summary.json');
   assert.ok(response.ok(),'190-rikishi H2H research summary must be cached on preview branch');
   const research=await response.json();
+  const rosterResponse=await page.request.get('http://127.0.0.1:8765/data/sumo/rikishi-index.json');
+  assert.ok(rosterResponse.ok(),'Preview 190-rikishi index must be available');
+  const roster=await rosterResponse.json();
+  assert.equal(roster.count,190,'Expected 190 tracked rikishi on the preview');
   assert.equal(research.profileCount,190,'All 190 career research records should be available');
   assert.equal(research.certified,false,'Research cache must not imply JSA certification');
   await open(page,'home','.hero');
@@ -145,6 +149,28 @@ async function testSite(viewport,isMobile,label) {
   assertContains(await page.locator('#sumo-main').innerText(),'Yorikiri','technique');
   await snap(page,label+'-kimarite',{fullPage:false});
 
+  // Exercise every current wrestler on both desktop and mobile, not only
+  // the feature cards. The source ID attribute prevents a stale page from
+  // satisfying the next route's assertion.
+  const checkedIds=new Set();
+  for(const w of roster.rikishi){
+    assert.ok(!checkedIds.has(w.sourceId),'Duplicate Sumo browser QA source ID '+w.sourceId);
+    checkedIds.add(w.sourceId);
+    await page.evaluate(id=>{ location.hash='#profile/'+id; },w.sourceId);
+    await page.waitForSelector('.sumo-api-quality[data-sumo-source-id="'+w.sourceId+'"]',{timeout:15000});
+    const headingText=await page.locator('.profile-hero h1').innerText();
+    assertContains(headingText,w.shikonaEn,'Loaded wrestler '+w.sourceId);
+    const qualityText=await page.locator('.sumo-api-quality').innerText();
+    assertContains(qualityText,'API-TRUSTED','source designation for '+w.sourceId);
+    assertContains(qualityText,'Career results:','independent career evidence for '+w.sourceId);
+    assert.equal(await page.locator('.sumo-rank-svg').count(),1,'Dated career-rank graph '+w.sourceId);
+    assert.equal(await page.locator('.sumo-weight-svg').count(),1,'Dated weight graph '+w.sourceId);
+    if(isMobile){
+      const width=await page.evaluate(()=>({viewport:innerWidth,document:document.documentElement.scrollWidth}));
+      assert.ok(width.document<=width.viewport+6,'Mobile overflow on rikishi '+w.sourceId+': '+JSON.stringify(width));
+    }
+  }
+  assert.equal(checkedIds.size,190,'Every source ID reached a working profile route');
   if (isMobile){
     for(const route of ['home','rikishi','profile/8850','basho','banzuke','kimarite']){
       await open(page,route,'#sumo-main');
