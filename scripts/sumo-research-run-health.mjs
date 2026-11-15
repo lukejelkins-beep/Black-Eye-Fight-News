@@ -9,7 +9,7 @@ const ROOT='data/sumo/backfill/v1';
 const read=async p=>JSON.parse(await readFile(p,'utf8'));
 const optional=async p=>{try{return await read(p)}catch(e){if(e.code==='ENOENT')return null;throw e;}};
 const num=n=>Number.isFinite(Number(n))?Number(n):0;
-export function buildSumoHealth({cohort,api,weights,collection,jsa,official,profiles,preflight,
+export function buildSumoHealth({cohort,api,weights,collection,jsa,official,profiles,preflight,strict,
  runId,workflowSha,completedAt}){
  if(cohort?.count!==190||cohort.rikishi?.length!==190)throw Error('Expected frozen 190-rikishi cohort');
  if(!api||!weights||!jsa||!collection)throw Error('Missing core checkpoint data');
@@ -19,6 +19,9 @@ export function buildSumoHealth({cohort,api,weights,collection,jsa,official,prof
  if(weights.mappedSumoDbRikishi!==190||weights.rawApiWeightEntries!==api.weightSnapshots)
   throw Error('Historical weight coverage not in sync with current cohort and API cache');
  if(jsa.checked>190||weights.checkedIndependentRikishi>190)throw Error('Invalid coverage count');
+ if(strict&&(strict.cohortSize!==190||strict.strictAuditSuccessful!==true||
+   strict.strictCareerResultsCertified>Number(preflight?.candidateForStrictAudit||0)))
+  throw Error('Strict certification checkpoint must pass frozen-cohort audit');
  return {
   schemaVersion:1,scope:'Completed research-cache job checkpoint only; excludes post-checkpoint H2H preview sync',
   lastResearchCheckpointAt:completedAt,runId:runId||null,
@@ -60,8 +63,11 @@ export function buildSumoHealth({cohort,api,weights,collection,jsa,official,prof
   researchProfileProjections:{available:profiles.available||0,sourceLinkedWeightGraphs:profiles.weightGraphs||0,
    currentOfficialWeightSnapshots:profiles.currentOfficial||0},
   sourceReadyProfiles:num(profiles.sourceReady),
+  careerResultsStrictlyCertified:num(strict?.strictCareerResultsCertified),
+  strictCareerAuditPassed:strict?.strictAuditSuccessful===true,
+  fullProfilesCertified:0,
   certifiedCareers:0,productionPublished:false,
-  note:'This checkpoint is only visible once committed to the research branch. No full career certification or live production changes.'
+  note:'Strict career-result summaries are distinct from full-profile certification, individual-kimarite corroboration, licensed photos and production approval.'
  };
 }
 export function resolvePreviousResearchFailure(previous,success){
@@ -73,7 +79,7 @@ export function resolvePreviousResearchFailure(previous,success){
    note:'Previous run failed before a complete data checkpoint. A later validated run completed the collection, data audit, projections and checkpoint. Original outcomes retained for traceability.'};
 }
 async function main(){
- const [cohort,api,weights,collection,jsa,official,audit,preflight]=await Promise.all([
+ const [cohort,api,weights,collection,jsa,official,audit,preflight,strict]=await Promise.all([
   read('data/sumo/rikishi-index.json'),
   read(join(ROOT,'summary.json')),
   read(join(ROOT,'weight-source-coverage.json')),
@@ -81,7 +87,8 @@ async function main(){
   read(join(ROOT,'jsa-public','summary.json')),
   optional(join(ROOT,'jsa-public','exception-register.json')),
   read(join(ROOT,'audit.json')),
-  optional(join(ROOT,'career-certification-preflight.json'))]);
+  optional(join(ROOT,'career-certification-preflight.json')),
+  optional(join(ROOT,'career-certification-strict.json'))]);
  const stats={available:0,weightGraphs:0,currentOfficial:0,sourceReady:audit.sourceReady};
  for(const w of cohort.rikishi){
   const p=await optional(join(ROOT,'profile-ready',w.sourceId+'.json'));
@@ -91,7 +98,7 @@ async function main(){
   if(p.currentOfficialMeasurement?.measurementDateKnown===false)stats.currentOfficial++;
  }
  const data=buildSumoHealth({
-  cohort,api,weights,collection,jsa,official,profiles:stats,preflight,
+  cohort,api,weights,collection,jsa,official,profiles:stats,preflight,strict,
   completedAt:new Date().toISOString(),
   runId:process.env.GITHUB_RUN_ID||null,
   workflowSha:process.env.GITHUB_SHA||null});
@@ -110,7 +117,8 @@ async function main(){
  console.log(JSON.stringify({status:data.status,weightProfiles:data.sumoDb.checked,
   extraWeightPoints:data.sumoDb.additionalDatedWeights,
   jsa:data.officialJsa.checked,projections:data.researchProfileProjections,
-  runId:data.runId,certified:0}));
+  runId:data.runId,careerResultsStrictlyCertified:data.careerResultsStrictlyCertified,
+  fullProfilesCertified:0}));
 }
 if(process.argv[1]&&import.meta.url===new URL('file://'+process.argv[1]).href)
  main().catch(e=>{console.error(e);process.exitCode=1;});
