@@ -19,10 +19,24 @@ export function auditJsaSnapshot(rosterItem,doc){
    .filter(([_,v])=>v===false).map(([field])=>field);
  if(Number(rec.discrepantBasho||0)!==differences.length)
    throw Error('JSA discrepancy count mismatch for '+sourceId);
+ // A JSA profile with matched identity/basic fields and validated completed
+ // tournament rows may simply omit a Career Record aggregate. This remains
+ // a FULL-CAREER VERIFICATION GAP, not a historical bout discrepancy.
+ const careerTotalsNotFound=doc.career==null&&
+   doc.status==='parse-review'&&publicFields.length===0&&
+   Number(rec.comparedBasho||0)>0&&differences.length===0;
+ const reviewClassification=careerTotalsNotFound?
+   'official-career-totals-not-found':
+   differences.length?'historical-tournament-disagreement':
+   publicFields.length?'official-profile-field-disagreement':
+   doc.status!=='basic-fields-parsed'?'official-parser-review':'none';
  return {
   sourceId,name:rosterItem.shikonaEn,officialProfileUrl:doc.url,
   asOf:doc.officialAsOf||null,
   publicProfileStatus:doc.status||'unclassified',
+  reviewClassification,
+  officialCareerTotalsNotFound:careerTotalsNotFound,
+  officialCareerTotalSourceUnresolved:careerTotalsNotFound,
   publicFieldDisagreements:publicFields,
   tournamentRowsCompared:Number(rec.comparedBasho||0),
   tournamentRowsAgreed:Number(rec.agreeingBasho||0),
@@ -57,10 +71,12 @@ export function buildJsaExceptionReport(roster,cache){
   historicalTournamentsDisagree:checked.reduce((n,x)=>n+x.unreconciledTournamentCount,0),
   historicalCases:review.filter(x=>x.unreconciledTournamentCount>0).map(x=>x.sourceId),
   profileReviewCases:review.length,
+  officialCareerTotalsNotFoundCases:review.filter(x=>x.officialCareerTotalsNotFound).length,
+  genuineParserOrFieldReviewCases:review.filter(x=>!x.officialCareerTotalsNotFound&&x.unreconciledTournamentCount===0).length,
   cases:review.sort((a,b)=>b.unreconciledTournamentCount-a.unreconciledTournamentCount||a.sourceId-b.sourceId),
   sourceBashoResultsIndependentlyCertified:0,
   certifiedCareers:0,
-  note:'Current partially completed November 2026 basho is excluded by the source reconciler; absence-only tournaments may have no individual bout rows.'};
+  note:'Current partially completed November 2026 basho is excluded. A missing official career aggregate is classified separately from verified per-basho results and does not enable career certification.'};
 }
 async function main(){
  const roster=await parse('data/sumo/rikishi-index.json'),docs=new Map();
