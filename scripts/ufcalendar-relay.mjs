@@ -53,7 +53,7 @@ export async function getCollectorRuns({token,repository,fetcher=fetch}){
 }
 
 export function activeCollectorRun(runs,currentRunId){
-  return runs.find(run=>String(run.id)!==String(currentRunId)&&['queued','in_progress','waiting','pending','requested'].includes(run.status));
+  return runs.find(run=>(currentRunId==null||String(run.id)!==String(currentRunId))&&['queued','in_progress','waiting','pending','requested'].includes(run.status));
 }
 
 export async function dispatchRelay({token,repository,hop,sourceRunId='',checkpointSha='',fetcher=fetch}){
