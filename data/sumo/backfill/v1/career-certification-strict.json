@@ -3,11 +3,11 @@
   "scope": "Research-only canonical career-result verification decision register",
   "cohortSize": 190,
   "strictAuditSuccessful": true,
-  "strictCareerResultsCertified": 58,
-  "blocked": 132,
+  "strictCareerResultsCertified": 70,
+  "blocked": 120,
   "fullProfilesCertified": 0,
   "productionApproved": false,
-  "meaning": "Certifies source-complete regular-bout career result ledgers independently corroborated by JSA per-basho W-L, career totals, dated ranks and SumoDB identity. Does NOT independently certify individual kimarite, historical weigh-ins, images or full profile publication.",
+  "meaning": "Certifies source-complete regular-bout career result ledgers against JSA published tournament W-L and dated ranks plus JSA career W-L-A when available; if JSA omits an aggregate, independently published exact-match SumoDB W-L-A may supply missing components. Does NOT independently certify individual kimarite, historical weigh-ins, images or full profile publication.",
   "certificationMethod": "JSA crosscheck + complete API native-bout ledger + reciprocal H2H + dated identity evidence",
   "rows": [
     {
@@ -15,8 +15,9 @@
       "name": "Onosato",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -39,15 +40,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4227/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12836"
       },
-      "evidenceDigest": "2d60ec1e6b0269de90694fc28e9c21e3624aea5580b53d44800eb61caac9b846"
+      "evidenceDigest": "3233b95c089605761e15ddc37db6b223adf4b46e9e168300c17a58ed5f462787"
     },
     {
       "sourceId": 8854,
       "name": "Aonishiki",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -70,15 +72,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4230/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12839"
       },
-      "evidenceDigest": "57e7857da8d582c30064e24408850a4432976a7dbc96e661c1876abbb98283f5"
+      "evidenceDigest": "3d56b9e1b231e0a4be8af6f09eb8b70a8eaa20c4d76c08d16eb3615081c78b00"
     },
     {
       "sourceId": 7,
       "name": "Kirishima",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -101,15 +104,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3622/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12231"
       },
-      "evidenceDigest": "06cd1288633cebd3613af3f4c6fd8058212874b6b454ad80218056e31c9fa320"
+      "evidenceDigest": "63395287c2029f7c2fa1c4569321059bb3ab7e4727a379e5d109aa3a8cff7ace"
     },
     {
       "sourceId": 615,
       "name": "Fujinokawa",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -132,15 +136,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4191/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12800"
       },
-      "evidenceDigest": "0fe1344ea366c9d8e008bea7a199a7619240d6c68e32b12a53a1c6ae355a020f"
+      "evidenceDigest": "2495cf8ad8556f3079343acff9d0c73a310519e6e78c0e8a59823cddfd7954a7"
     },
     {
       "sourceId": 71,
       "name": "Churanoumi",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -163,15 +168,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3711/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12320"
       },
-      "evidenceDigest": "278f0a6843ee0ce8aa10ba547ba872ff239c1e8195dec0add4ae772015add097"
+      "evidenceDigest": "f21d56d22aad4bf3a57cc8bb40aa7631c2bcde47f71f7ef50b6a3a5fe9873ba9"
     },
     {
       "sourceId": 2,
       "name": "Asanoyama",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -194,15 +200,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3682/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12291"
       },
-      "evidenceDigest": "f06a5e246ad0d13e9a343829196c853c898bb598d903c2fedb06910d15a14d1d"
+      "evidenceDigest": "75d3e631826ce1e3ed1639c53151056fd3e2748c96d3c42f91b5409d41b0fa4a"
     },
     {
       "sourceId": 28,
       "name": "Ura",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -225,13 +232,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3616/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12226"
       },
-      "evidenceDigest": "482ea29dacf51bd32078f9a822164637642c2766b9f398e084902d861bd021ce"
+      "evidenceDigest": "a4d1e38507df61031d4917e23a20caafb89f474be81d5bf5cc8133100bb83f87"
     },
     {
       "sourceId": 44,
       "name": "Takayasu",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -254,15 +262,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/2775/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=6480"
       },
-      "evidenceDigest": "e957636721b9e2ef8c4d7fb8ef939e5fd17e00a70a8f588fcf56e2a5bb23419b"
+      "evidenceDigest": "108e9fcbe3dfd15a258053a7f190aa1bab8e2dbb45c7751ab6f139ba83e54906"
     },
     {
       "sourceId": 5,
       "name": "Takerufuji",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -285,15 +294,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4171/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12780"
       },
-      "evidenceDigest": "f99fda50a53b94e58a2afd0500675a6a3966395a8b31400e3cc5e2906793d160"
+      "evidenceDigest": "42666df5a086e6fd241a2f82dd5e5aef37cb23ffef4414debb16b1fcaf3cd290"
     },
     {
       "sourceId": 24,
       "name": "Hiradoumi",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -316,15 +326,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3705/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12314"
       },
-      "evidenceDigest": "9841bbaa739435a5417e1e3d8c037419488d14d3d02535e875c09575b8c2ed9f"
+      "evidenceDigest": "83044a64bef8ae59e6c5ac96c6c4950e11623a3ce77af8a2965e245f420280ea"
     },
     {
       "sourceId": 8,
       "name": "Kotoshoho",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -347,15 +358,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3840/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12449"
       },
-      "evidenceDigest": "5209d0f8460d7ad66ecfe08807dcb6ae48a79ba709ab01388c60469d699786ca"
+      "evidenceDigest": "db414b0aec2cec7d768c24a27731e46e7b1c8069e224a6c7e2c812e784551a28"
     },
     {
       "sourceId": 13,
       "name": "Wakamotoharu",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -378,15 +390,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3371/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11980"
       },
-      "evidenceDigest": "75a7c9dc328eaf8e00340cb1fbadadcfbe5519d3a3fd46347fbad2da6677b74b"
+      "evidenceDigest": "a973324a80cc9149fcfee149ef0fa384f06124c9b47423bda41f0b5096097f31"
     },
     {
       "sourceId": 55,
       "name": "Roga",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -409,15 +422,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3907/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12516"
       },
-      "evidenceDigest": "87d2d5fccb478af55fd676d50d3c18371591401de6bae6e1025e5de9d81adff8"
+      "evidenceDigest": "7c43f2bab21769367f0e5dc38abcb30ad41f944229e0f27e6971ddfd1bb17f43"
     },
     {
       "sourceId": 61,
       "name": "Oshoma",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -440,15 +454,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4108/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12717"
       },
-      "evidenceDigest": "4536f47b6cd9ea7aaf5c23c308861a7eb498df9c62971f552355681bbe61143c"
+      "evidenceDigest": "19a67588cf7a194f109edb46010b68715214af9d1f78e5a7cfa1ec764efd3500"
     },
     {
       "sourceId": 86,
       "name": "Shishi",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -471,15 +486,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3990/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12599"
       },
-      "evidenceDigest": "d856975f4e0a64186285d0fb4127eef53ec96530bf7aad9de5b13d5fb12a25eb"
+      "evidenceDigest": "db74b25616c4ae388e3a58e53901dc05272b3c629700e272fedfcb2e94a0550a"
     },
     {
       "sourceId": 37,
       "name": "Takanosho",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -502,15 +518,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3265/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11855"
       },
-      "evidenceDigest": "df63994ab33e0f790e42b01a59a561649de0ae631e4a3fbd9f4bf6f1e9d640cb"
+      "evidenceDigest": "699b2462a6414c67db7186ef041ad8638d5907394a919be5a4ba4549ded0454b"
     },
     {
       "sourceId": 11,
       "name": "Ichiyamamoto",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -533,13 +550,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3753/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12362"
       },
-      "evidenceDigest": "c114676548f1076124819a70bc8a5b505cff4877d2565bd7b5c80073b3a5e123"
+      "evidenceDigest": "d1ca9dd72c6cdcf07c33c3bb8725d4e50950e79f45960f3aec90b7560ee4a0cf"
     },
     {
       "sourceId": 8866,
       "name": "Toshinofuji",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -562,15 +580,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4243/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12852"
       },
-      "evidenceDigest": "f2d8023e33b8e34fbb7fb28ec7657229fc3939cc03e5f8e18c59c0806698a8bb"
+      "evidenceDigest": "269dcd90609f5596587dd678b200f60c40990f6bcef046c95cb400471375b5ff"
     },
     {
       "sourceId": 83,
       "name": "Tokihayate",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -593,13 +612,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3933/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12542"
       },
-      "evidenceDigest": "28f2f906ff9d8767118a0f21826a340e2201175be2c03f225bf281fcf0a870e4"
+      "evidenceDigest": "f7fc54f82bceeacd53210b835875b0a66236ea893d7430b8e0a059fa555373f3"
     },
     {
       "sourceId": 14,
       "name": "Tamawashi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -623,15 +643,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/2629/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=5944"
       },
-      "evidenceDigest": "7bafaaa0ab3977b1b6fa08f842b5a3834399b59438912e29c307295744847610"
+      "evidenceDigest": "3caf989796aaf4f5ae8980276592f5a3dafe08324f2f21d5069e68e4929d96ca"
     },
     {
       "sourceId": 8858,
       "name": "Arashifuji",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -654,15 +675,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4267/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12876"
       },
-      "evidenceDigest": "2721ed86c689976a24578cf910e3c059c0b4a5080ab558f77a24c5dcc8fde72c"
+      "evidenceDigest": "ee5604703ead2cf3c9c5fa9501fc09f0053c56d4d99d4a39de9994217e62924c"
     },
     {
       "sourceId": 378,
       "name": "Daiseizan",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -685,15 +707,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4116/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12725"
       },
-      "evidenceDigest": "332fe24b00730a9eb768b6f338af0a1c85d52d889b4070879189959ae97a78ea"
+      "evidenceDigest": "8207a67736f8c03668a48638331d64cb113ebc3d696ca54f3316abcf741e0c53"
     },
     {
       "sourceId": 19,
       "name": "Hoshoryu",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -716,15 +739,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3842/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12451"
       },
-      "evidenceDigest": "af3d0e6befd56f09dccbf07bf4cd3527cd53ff65c671e05530981c594d642b74"
+      "evidenceDigest": "6952614af5cd47793f677fd7491d3529c755468c80475173ce2c679159b9c54c"
     },
     {
       "sourceId": 20,
       "name": "Kotozakura",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -747,15 +771,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3661/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12270"
       },
-      "evidenceDigest": "38afec6c2cc2daa48864cca56fdd1da368dd6d2a7e10ede3b128ea2f3b24ec5a"
+      "evidenceDigest": "5a191adefb2101a323f562f72c088e465374703b4be7c461dfa8de613fe8151c"
     },
     {
       "sourceId": 74,
       "name": "Atamifuji",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -778,13 +803,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4055/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12664"
       },
-      "evidenceDigest": "382033266c59c0b2b81ab62337839510b19937bfc4bd90b44341661e7055e9df"
+      "evidenceDigest": "f0ebe17f8f228b47d055828c247af158ba0b28c5ecaa39140a41f99b825cadf5"
     },
     {
       "sourceId": 8857,
       "name": "Yoshinofuji",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -807,13 +833,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4279/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12884"
       },
-      "evidenceDigest": "6e30155e54492c9063b4d6a1131333bd79b3d9eb50b5770f4191b3e423bc57f4"
+      "evidenceDigest": "3028532167e2e13b2c9bd7e9b512964d173b74ab26512b0e849864695d7733b9"
     },
     {
       "sourceId": 9051,
       "name": "Fujiryoga",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -837,15 +864,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4336/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12945"
       },
-      "evidenceDigest": "5e9b24894e0e718475d7e9559693c140e9a08a06c4f20a988bd93bd7933fe87a"
+      "evidenceDigest": "972cf35d40ca8b1a3904c141b25f2088861f62ae81c3e156c8d0e02f6d00536b"
     },
     {
       "sourceId": 82,
       "name": "Fujiseiun",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -868,15 +896,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4093/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12702"
       },
-      "evidenceDigest": "c541033375c882b70169105c2b98347f108c8fdbb25a75eeae8826244c178477"
+      "evidenceDigest": "daa3f1633240d54660ecf7cd9d3cadd78010056589eb59f0043a782aba4ab353"
     },
     {
       "sourceId": 3,
       "name": "Hakunofuji",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -899,15 +928,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4187/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12796"
       },
-      "evidenceDigest": "b25dba14adf41574595a8c962800845454024b10c6e85190b18b65c7d5542831"
+      "evidenceDigest": "ea5f50d9de8113a367fd47b36b378342528f7959eea6e0a223dba52f41998ec7"
     },
     {
       "sourceId": 9,
       "name": "Daieisho",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -930,15 +960,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3376/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11985"
       },
-      "evidenceDigest": "dbe46ac19529d06ea2d2c9d84091ff09dd772bfa153465b346d2c93d7edb334e"
+      "evidenceDigest": "f2e38341510e01d79a2c3def87c2308f09536b5561ef807773c267f3174adb34"
     },
     {
       "sourceId": 56,
       "name": "Gonoyama",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -961,13 +992,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4079/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12688"
       },
-      "evidenceDigest": "39996f63bd2cd9fa95baf0cb153e29a87cb10aefa9db19508d5d1bf56c82d48b"
+      "evidenceDigest": "9d47888b83eea375ae82088122829b7db6381dee3b0024957f8c506a60360fbd"
     },
     {
       "sourceId": 112,
       "name": "Kotoeiho",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -990,15 +1022,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4120/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12729"
       },
-      "evidenceDigest": "1a93bece3b1fa5ac53d6479a9a10e55920df8a1b2534e88c8d18f3907986710e"
+      "evidenceDigest": "c335bb5194f096995faf0f905c63160123610f7247121c04020c97a41f38fcd6"
     },
     {
       "sourceId": 50,
       "name": "Kinbozan",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -1021,15 +1054,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4112/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12721"
       },
-      "evidenceDigest": "5ba8b405c327d983156b3bcfd0b9f047af84b70663c1a62fec4eb13b51f136c9"
+      "evidenceDigest": "383a24f5c0324b9cd224cdc046a124194548a2b582b122b575ea63b1a4a5313c"
     },
     {
       "sourceId": 40,
       "name": "Nishikifuji",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -1052,15 +1086,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3742/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12351"
       },
-      "evidenceDigest": "661754ee85b34b2557660cfdfc1698df917c840197726811af4bcd9da2401774"
+      "evidenceDigest": "295927cf735851ef703d43e653bc2dfc62a268c5b941b8c8af2c8c4b076122d5"
     },
     {
       "sourceId": 164,
       "name": "Asakoryu",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -1083,13 +1118,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4101/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12710"
       },
-      "evidenceDigest": "08ee07106f9df1e79313219861b64ab0115b13c8d261401fe0eb4c0c81e8414b"
+      "evidenceDigest": "55d7638afcf307036291e06b144137e51003e3c73f7cf22dcc9990223b519e13"
     },
     {
       "sourceId": 41,
       "name": "Oho",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -1112,13 +1148,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3844/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12453"
       },
-      "evidenceDigest": "0d9085ac1c3409164215e9a9515e928b8c602a579e7ea455f620fd96a1685041"
+      "evidenceDigest": "1b378e81e1635ce7ebe2145e93e0811b31d1cd54a2f4ad717fff9c9068d81444"
     },
     {
       "sourceId": 607,
       "name": "Asahakuryu",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -1141,15 +1178,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4175/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12784"
       },
-      "evidenceDigest": "818b02b0b74b853d23d579dedaf40fa141a8c50c44ca9afa22c00f103bd4907a"
+      "evidenceDigest": "8d97f784165129aa5f2855ef1a1b89e0c56afbd9dd86787fac82cf1f76c7a181"
     },
     {
       "sourceId": 22,
       "name": "Abi",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -1172,13 +1210,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3485/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12094"
       },
-      "evidenceDigest": "cf3971ff67c06fe5c2009e77c13618802a34ca095fb20022aec428508720d7ed"
+      "evidenceDigest": "2428ebc2c8910a76bce47a59d521d38e4a4f02135a5922ff36af1b4c037235be"
     },
     {
       "sourceId": 8859,
       "name": "Asasuiryu",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -1201,15 +1240,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4285/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12894"
       },
-      "evidenceDigest": "9ff5ac1665e9e42a59eaaf0fd30c26783ad481a3f06dbc93280b3b0224b4364a"
+      "evidenceDigest": "db4c3c578b8b4584577fc4d0c3a6dc34cc8abeca2b1b56047b4c2870055f1575"
     },
     {
       "sourceId": 135,
       "name": "Dewanoryu",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -1232,15 +1272,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3983/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12592"
       },
-      "evidenceDigest": "f3e2b385b8e0ba73927c7a3088e0576627662844040a7355186950a315129bd9"
+      "evidenceDigest": "8b83d6b5ca52e7f928668970d8e9146a0ff394aac2ca8533ef40ababe1cf5324"
     },
     {
       "sourceId": 66,
       "name": "Kitanowaka",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -1263,13 +1304,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3939/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12548"
       },
-      "evidenceDigest": "11428aae4548e0d77eedf6758f563166dd44d460993d034d072bb4852d1a5561"
+      "evidenceDigest": "26bc522309220bece2e110c34583892761590fa2b69ce0656f20fb2159728886"
     },
     {
       "sourceId": 8855,
       "name": "Kyokukaiyu",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -1292,13 +1334,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4232/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12841"
       },
-      "evidenceDigest": "e6532fea420ce9912ef6b987ebe4a937224d7dbe33e693851c1c514052f1c96a"
+      "evidenceDigest": "04ff7d9b67b7592df9ffb3df42da6082070e873b65496c0563d9b942f52d6c8a"
     },
     {
       "sourceId": 39,
       "name": "Chiyoshoma",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -1321,15 +1364,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3207/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11785"
       },
-      "evidenceDigest": "91785468d44d39ab5b4aef2535fb69b65c9d8a87640a30d441562877349a51ac"
+      "evidenceDigest": "ab824b2ce2d03a70d74571c0e96545151db269aef0f57e6fa1bd9dbbb26cb00a"
     },
     {
       "sourceId": 78,
       "name": "Kazekeno",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -1352,13 +1396,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4158/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12767"
       },
-      "evidenceDigest": "7684e84d82cb3cf0ea2911a9cc2da72988c9be5b5f8c725d57d6fe030a9b2755"
+      "evidenceDigest": "f6a55dca531b0878f54d4742cb8f3a2bdfe84bd0c7cc8e84f2b76a9f93e90601"
     },
     {
       "sourceId": 29,
       "name": "Kagayaki",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -1381,15 +1426,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3255/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11845"
       },
-      "evidenceDigest": "a54c0ad4adebfd6537dbe3e5a19c1df4bf82b3ebba6e7a33aea87a79e822c66b"
+      "evidenceDigest": "348581e009b038ef8bcb321db24ba39c4f969a614f4660ef7145df4595311406"
     },
     {
       "sourceId": 8865,
       "name": "Kazuma",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -1412,13 +1458,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4287/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12896"
       },
-      "evidenceDigest": "b5de0efcb86c5015fa8095bb250d2a7d4cdb3e925dd0a33e5ff673f623b99daf"
+      "evidenceDigest": "1d8548b4fbefe454aecdf53db98234638a5e69dba87a54f6a540a50d8e3c9264"
     },
     {
       "sourceId": 15,
       "name": "Ryuden",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -1441,13 +1488,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/2890/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=6594"
       },
-      "evidenceDigest": "8ccac3939fea320e87a50407718e583543077b65bd7d8297808e0154aa294231"
+      "evidenceDigest": "c549a8c849b172c1df932c5c8b806356aea79592918b575914e761ef62780cf3"
     },
     {
       "sourceId": 49,
       "name": "Shonannoumi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -1456,13 +1504,12 @@
       "releaseApproved": false,
       "blockers": [
         "preflight-prerequisites-not-met",
-        "independent-published-career-wins-losses-absences",
-        "independent-official-banzuke-rank-coverage"
+        "independent-published-career-wins-losses-absences"
       ],
       "checks": {
         "regularBouts": 709,
         "completedTournamentResultsCrosschecked": 74,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 75,
         "allTimeOpponents": 278,
         "independentWeightDates": 6
       },
@@ -1471,15 +1518,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3553/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12162"
       },
-      "evidenceDigest": "bc5c1bad487b36f8e9848ec6a6b5f00c4a392c543926f098bd381c67e4a4a449"
+      "evidenceDigest": "aa698657fe1c50a819d8f9ddd0df9223e6f1d6d36c7380c914d53925beda77aa"
     },
     {
       "sourceId": 287,
       "name": "Tanji",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -1502,27 +1550,30 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4142/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12751"
       },
-      "evidenceDigest": "6ea40eb27cb0c3ba1541af0509467cff797c602a1f2d6475b999e05245898eb5"
+      "evidenceDigest": "6a3207417d4e9354040c67694560c1f2e6215945ff4f63c3230419e37670a094"
     },
     {
       "sourceId": 34,
       "name": "Midorifuji",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
+      "independentlyVerifiedBy": [
+        "JSA published W-L-A",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 702,
         "completedTournamentResultsCrosschecked": 57,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 60,
         "allTimeOpponents": 189,
         "independentWeightDates": 6
       },
@@ -1531,27 +1582,30 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3743/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12352"
       },
-      "evidenceDigest": "6cfe5be5eddf35425add36adb875ea9d1376644449c007bfd36233cdcf42d865"
+      "evidenceDigest": "8e30b3ff943abbc866f84a37bd9796818d79819527c5d5e055010950a9805d19"
     },
     {
       "sourceId": 26,
       "name": "Mitakeumi",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
+      "independentlyVerifiedBy": [
+        "JSA published W-L-A",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 1013,
         "completedTournamentResultsCrosschecked": 69,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 69,
         "allTimeOpponents": 137,
         "independentWeightDates": 6
       },
@@ -1560,27 +1614,30 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3620/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12210"
       },
-      "evidenceDigest": "fae823ad56538202fb017729fc2029fe0ab928c4d0b8eb46d39b7404d3db83ae"
+      "evidenceDigest": "2c7ffade565a561d0ca84a4abd48bfbe2c5a96b850e3722a37260579e583c365"
     },
     {
       "sourceId": 62,
       "name": "Enho",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
+      "independentlyVerifiedBy": [
+        "JSA published W-L-A",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 575,
         "completedTournamentResultsCrosschecked": 48,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 57,
         "allTimeOpponents": 200,
         "independentWeightDates": 6
       },
@@ -1589,27 +1646,30 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3803/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12412"
       },
-      "evidenceDigest": "0c39956924493739cc45e869b1e98d8a3b4a884ee5eb8baea3c56e9de2f54469"
+      "evidenceDigest": "ab9486885f76fccbcfbac3edb328db6a284504b62d38b9420f9f5173007bb072"
     },
     {
       "sourceId": 102,
       "name": "Tomokaze",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
+      "independentlyVerifiedBy": [
+        "JSA published W-L-A",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 567,
         "completedTournamentResultsCrosschecked": 49,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 56,
         "allTimeOpponents": 202,
         "independentWeightDates": 6
       },
@@ -1618,13 +1678,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3818/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12427"
       },
-      "evidenceDigest": "fcfc5cf54783537221a01b6fc2a40ca834570aa5ad8ec9401c0d194765b30f9d"
+      "evidenceDigest": "7e0ede6aa1d7ef5a7d1d449f7a5cd088269e2f4bf16619beb4cc6ddfbd3bd46e"
     },
     {
       "sourceId": 9103,
       "name": "Asahifuji",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -1647,27 +1708,30 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4358/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12967"
       },
-      "evidenceDigest": "123ffc26a841ac15e62a35cba0cc67ea6d663650d6ac3688cb39b0adecf86207"
+      "evidenceDigest": "9066033a28cd1fa22aaf891239d949b6eb24f091d8a5fc477802096a8d6a320c"
     },
     {
       "sourceId": 38,
       "name": "Meisei",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
+      "independentlyVerifiedBy": [
+        "JSA published W-L-A",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 1084,
         "completedTournamentResultsCrosschecked": 91,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 92,
         "allTimeOpponents": 277,
         "independentWeightDates": 9
       },
@@ -1676,27 +1740,30 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3337/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11946"
       },
-      "evidenceDigest": "ba90369bbf9e71cc8ba160c1fe652bb4daaf0efbee12f860831f003023a08ef9"
+      "evidenceDigest": "8a6b205b3fed47111130bd36cb5e489d9ce63d854ccf328849db9d7aa186a5bb"
     },
     {
       "sourceId": 77,
       "name": "Hatsuyama",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
+      "independentlyVerifiedBy": [
+        "JSA published W-L-A",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 290,
         "completedTournamentResultsCrosschecked": 28,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 28,
         "allTimeOpponents": 141,
         "independentWeightDates": 5
       },
@@ -1705,15 +1772,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4124/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12732"
       },
-      "evidenceDigest": "cd995ce571559fc54a592a651e370357741ebb283495fbf5415781a7018648d7"
+      "evidenceDigest": "588ec081f20b1a80b03ae0c301b11323b57bf5ed7b9f4b9c3e0dbc8b9ad0451e"
     },
     {
       "sourceId": 8853,
       "name": "Onokatsu",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -1736,15 +1804,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4231/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12840"
       },
-      "evidenceDigest": "e23dbc571ef539b9c3f24c6fd33f1574745b423278191feb4aae0909be551a6a"
+      "evidenceDigest": "f3a93442460cd42858982c9915e21216d7e740db4af54ff4cf3211607a6f426e"
     },
     {
       "sourceId": 21,
       "name": "Tobizaru",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -1767,15 +1836,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3594/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12203"
       },
-      "evidenceDigest": "bd3e77f0ab30b6119563e913b12a27bf06df0232b85a67d25e246a185a59dc0b"
+      "evidenceDigest": "5db4e90f01179bd16f7768ed57186f2bbc49bd996f808e3c773c7df4c928eb40"
     },
     {
       "sourceId": 33,
       "name": "Shodai",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -1798,13 +1868,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3521/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12130"
       },
-      "evidenceDigest": "4f3e3d23a4d8e04cdb1b54b4826fadcbe86b8a7723c8141c2279ba4cd8c985ed"
+      "evidenceDigest": "4b3795535b87e54d3befd2164de4d542b035d8ff10e91efeb79e64bdfab0758a"
     },
     {
       "sourceId": 142,
       "name": "Kayo",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -1827,27 +1898,30 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4165/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12774"
       },
-      "evidenceDigest": "fba2a37dae59d9085d4b8cfbf7ad1cd07389b10cef7f37d59af04fdd994909ac"
+      "evidenceDigest": "7d7156e18f18ee52ef2df7e1fd7965a69603e0d81d427f87aee83380328e0762"
     },
     {
       "sourceId": 12,
       "name": "Wakatakakage",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
+      "independentlyVerifiedBy": [
+        "JSA published W-L-A",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 688,
         "completedTournamentResultsCrosschecked": 51,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 57,
         "allTimeOpponents": 150,
         "independentWeightDates": 6
       },
@@ -1856,27 +1930,30 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3761/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12370"
       },
-      "evidenceDigest": "97508d845f43a93943eaf422be2aebb22c55b8985c1c558c40d8da5fe105d1e6"
+      "evidenceDigest": "3fda1878f3ff339c5eea41c36ba9c4ffa744b80cd48715476573e9129e1767fb"
     },
     {
       "sourceId": 117,
       "name": "Nabatame",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
+      "independentlyVerifiedBy": [
+        "JSA published W-L-A",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 297,
         "completedTournamentResultsCrosschecked": 36,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 40,
         "allTimeOpponents": 180,
         "independentWeightDates": 6
       },
@@ -1885,27 +1962,30 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3988/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12597"
       },
-      "evidenceDigest": "3743e796102f21284ee14eb9dec6273142a68b85dac295bd8401c82c94bbee33"
+      "evidenceDigest": "a01c6b0993ec13678862825663d0d306e4cfa5469045b1b2a6950695a2d0c147"
     },
     {
       "sourceId": 111,
       "name": "Hitoshi",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
+      "independentlyVerifiedBy": [
+        "JSA published W-L-A",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 296,
         "completedTournamentResultsCrosschecked": 29,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 33,
         "allTimeOpponents": 133,
         "independentWeightDates": 5
       },
@@ -1914,27 +1994,30 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4095/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12704"
       },
-      "evidenceDigest": "232d8db2da43a53d49b2bcb1cb408f10ba20cf30c0dc710490bb5ef9baad8353"
+      "evidenceDigest": "40a9c004a1d7d89f9f939402cd7bd7046d6c2184f509ffbd6662ed8f63380808"
     },
     {
       "sourceId": 54,
       "name": "Tohakuryu",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
+      "independentlyVerifiedBy": [
+        "JSA published W-L-A",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 582,
         "completedTournamentResultsCrosschecked": 43,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 44,
         "allTimeOpponents": 149,
         "independentWeightDates": 6
       },
@@ -1943,13 +2026,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3969/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12575"
       },
-      "evidenceDigest": "ebd65af56f7026786d09782be729e29c65576ef4bc2ffc3f715d004721c9765f"
+      "evidenceDigest": "f346fc1c3c0f108220ddf48bdbda22c2fee95a0ef3c02640c97a20f1757dc1ab"
     },
     {
       "sourceId": 98,
       "name": "Shirokuma",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -1958,13 +2042,12 @@
       "releaseApproved": false,
       "blockers": [
         "preflight-prerequisites-not-met",
-        "independent-published-career-wins-losses-absences",
-        "independent-official-banzuke-rank-coverage"
+        "independent-published-career-wins-losses-absences"
       ],
       "checks": {
         "regularBouts": 331,
         "completedTournamentResultsCrosschecked": 26,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 27,
         "allTimeOpponents": 119,
         "independentWeightDates": 4
       },
@@ -1973,27 +2056,30 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4164/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12773"
       },
-      "evidenceDigest": "585903f0d408835208d697c8e13f76735c4cda39926327b6059d2f249a25dad6"
+      "evidenceDigest": "e5245a5093a404a7c2b9a79930437b1983d1fbfedb0d38aa24dd97cee9c8495f"
     },
     {
       "sourceId": 195,
       "name": "Wakanosho",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
+      "independentlyVerifiedBy": [
+        "JSA published W-L-A",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 232,
         "completedTournamentResultsCrosschecked": 27,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 29,
         "allTimeOpponents": 137,
         "independentWeightDates": 5
       },
@@ -2002,13 +2088,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4121/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12730"
       },
-      "evidenceDigest": "048a8c2c776de215110958057f3de4e1de90b47cda9e74ca2995bbab989345fc"
+      "evidenceDigest": "624fea40e24ba3e208034e546f8c388798309af3d2fbd16c239651584052b070"
     },
     {
       "sourceId": 35,
       "name": "Sadanoumi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2023,7 +2110,7 @@
       "checks": {
         "regularBouts": 1630,
         "completedTournamentResultsCrosschecked": 96,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 98,
         "allTimeOpponents": 395,
         "independentWeightDates": 17
       },
@@ -2032,13 +2119,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/2565/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=2879"
       },
-      "evidenceDigest": "038c561977d13b49da7aa9405659cdf699f311904ba7ce3d9d9fca4168b4e016"
+      "evidenceDigest": "28bbdc71e957722a499ddcf077175c8d3e7f3c961339eb72410765b004f05bf8"
     },
     {
       "sourceId": 101,
       "name": "Tamashoho",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2047,13 +2135,12 @@
       "releaseApproved": false,
       "blockers": [
         "preflight-prerequisites-not-met",
-        "independent-published-career-wins-losses-absences",
-        "independent-official-banzuke-rank-coverage"
+        "independent-published-career-wins-losses-absences"
       ],
       "checks": {
         "regularBouts": 806,
         "completedTournamentResultsCrosschecked": 89,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 90,
         "allTimeOpponents": 314,
         "independentWeightDates": 9
       },
@@ -2062,27 +2149,30 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3367/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11976"
       },
-      "evidenceDigest": "da2a3fcb29631c3a6732915ef3708b04805cdd7e357f3c7511018603c8f706d2"
+      "evidenceDigest": "64f6fad3e8770cc17f00c9dac48133127df812508265ce0cfded4acfc2ac1dfe"
     },
     {
       "sourceId": 140,
       "name": "Tokifudo",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
+      "independentlyVerifiedBy": [
+        "JSA published W-L-A",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 316,
         "completedTournamentResultsCrosschecked": 43,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 45,
         "allTimeOpponents": 184,
         "independentWeightDates": 6
       },
@@ -2091,13 +2181,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3927/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12536"
       },
-      "evidenceDigest": "41879b0bf57c137579faafc0b1b98af93b28f8325eb9d8754d2c5f0883545a92"
+      "evidenceDigest": "2d8280beb0e8847e70524660bda175069f088dfee802890f79e14a694da6cd13"
     },
     {
       "sourceId": 9099,
       "name": "Ryuho",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2120,13 +2211,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4356/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12965"
       },
-      "evidenceDigest": "2330381668240d5c1c9a4a5083a0a698b5e19cec3292a84151c8ed82803edb67"
+      "evidenceDigest": "dff0554facc24b69a020d19734d28ed30e18ffe89539c491c6a9726797061e06"
     },
     {
       "sourceId": 8860,
       "name": "Inami",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2149,13 +2241,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4242/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12851"
       },
-      "evidenceDigest": "4cd1007a486acc6a38781f9452653f60e7192983b33235dcb2f89b5fa0e8d431"
+      "evidenceDigest": "54598d60bd8841bdddf76613e86b762ecb922415b57616a80257f10a1dfd2981"
     },
     {
       "sourceId": 16,
       "name": "Nishikigi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2178,13 +2271,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/2892/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=6596"
       },
-      "evidenceDigest": "8ab132788489baa1eae7d82d7e1d897c8f119247032324763a4e560d5c27d284"
+      "evidenceDigest": "f751baac7b01b6245c8edee5d23971ca251e8bb1ab231457be2f70e8ffd3c72b"
     },
     {
       "sourceId": 88,
       "name": "Gojinyu",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2208,13 +2302,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4123/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12733"
       },
-      "evidenceDigest": "514dedb12a449a5198d874a12832ab72d53bb85ef1f4cb29c7b6d2f65109b0f7"
+      "evidenceDigest": "484fab3b4431dd6c2e9adf04ab595580afffdc051a08888ec78b8ed5e2d25699"
     },
     {
       "sourceId": 9050,
       "name": "Fujitensei",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2238,13 +2333,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4337/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12946"
       },
-      "evidenceDigest": "6aa2c6baa9f88da342ca16c46ff03cae7d5f9d91a8ac18ee20109b0bb8094bdc"
+      "evidenceDigest": "ffe223cf2154520b27f90b8069ce75a89e38dcd4c729cbd0c5aef3e447299739"
     },
     {
       "sourceId": 9115,
       "name": "Fudoho",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2268,13 +2364,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4376/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12985"
       },
-      "evidenceDigest": "eb9d0a812e5f6edeaf06d4e47d5d84c3c6806a58ad3667838938869d0cf08ba6"
+      "evidenceDigest": "7b89e9ab100c6f0c5425e31decfec1ea6ad3a7b1a72c77d1701e6eb3661e0030"
     },
     {
       "sourceId": 58,
       "name": "Tsushimanada",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2297,13 +2394,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3733/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12342"
       },
-      "evidenceDigest": "b5a694f04305ad2be0d3e9b5ed23227dc48b041f0865f1e91807fdc1a1f9dcb6"
+      "evidenceDigest": "339aa9344816c0c540d1063d0b6594982c5b74df540e7c42ae65022c3d77378d"
     },
     {
       "sourceId": 9097,
       "name": "Ryusho",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2327,13 +2425,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4353/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12962"
       },
-      "evidenceDigest": "457e372ef33fddbbdd123bd9d8c34d8b93d5b42738129c4be11d5acd904c3d16"
+      "evidenceDigest": "20bf4100ddd691fa8e63412c75cec90a3faa39f90439bfc6325afaf9b2827510"
     },
     {
       "sourceId": 8868,
       "name": "Okaryu",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2356,15 +2455,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4275/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12885"
       },
-      "evidenceDigest": "6dc641dfbec97763d4595a16c847e06a210213f7f047d2716178e61bdee7615d"
+      "evidenceDigest": "1d4d5cd079856efea614c07a58d4ce68f88e9d7d612149adf84cfceff9b9d5e2"
     },
     {
       "sourceId": 8856,
       "name": "Mita",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -2387,13 +2487,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4289/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12898"
       },
-      "evidenceDigest": "7a8813740e778bc78381e97ebb10548c73dc08e32334b07731e1a0b62cd93fc1"
+      "evidenceDigest": "2c7af789083e4e7f42c40b3de0df0dfef00d086bd5102ba0a0bcc11a39f92c04"
     },
     {
       "sourceId": 212,
       "name": "Wakamiyabi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2417,13 +2518,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4127/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12736"
       },
-      "evidenceDigest": "df8a9b1a1cd0885d03861d4f5d25c79198fd0d208653da0742abef128c4df36f"
+      "evidenceDigest": "9fa3f123934d7a5e9c22be93a3b27ebbc0941dea87ff0d03122a21b11a0ee34a"
     },
     {
       "sourceId": 9135,
       "name": "Omori",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2447,13 +2549,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4394/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=13003"
       },
-      "evidenceDigest": "52909bf3f72cbf152a41480618c11c98e83c13b4ba177c66f804a408926582f1"
+      "evidenceDigest": "990435c15087977bb29d3b08722d4b9b29fa93bcaa2ca1feb0bf3443a0ff23bb"
     },
     {
       "sourceId": 8874,
       "name": "Fujisodai",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2476,13 +2579,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4259/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12868"
       },
-      "evidenceDigest": "82b1b18dabf708bad0a162fdc3211c0e87cae999a6ea693e059413d0281f82f0"
+      "evidenceDigest": "9e08b87e3a8fd0891096534f7b682c853405dbf02662a3051d6a3034fc80eeb0"
     },
     {
       "sourceId": 93,
       "name": "Hokutenkai",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2505,15 +2609,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3976/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12585"
       },
-      "evidenceDigest": "9152aff1087876625706eb9c7338da0210cb69fc870cdf8c85010dccab22e3a6"
+      "evidenceDigest": "07c6713953854f48e132f21763d55f87c5ee46e43c7148ac84d3e1912c5c76ce"
     },
     {
       "sourceId": 251,
       "name": "Toshunryu",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -2536,15 +2641,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4162/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12771"
       },
-      "evidenceDigest": "6b95d7ac2f3f610e5ea426a8f249ea862756375c8261346938e9ed8022e74a1f"
+      "evidenceDigest": "15ad0a990c9bcc803014911f0c3230860b7f1f302a58bd0c8316365906c24b50"
     },
     {
       "sourceId": 9059,
       "name": "Koseiryu",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -2567,13 +2673,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4338/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12947"
       },
-      "evidenceDigest": "09567910e2894f82cdf9f04433cbe3594a5547ab90ca1f99cdde425a92cb151a"
+      "evidenceDigest": "19cc959cb6a72503b25774a75fa866093c9cbee22a86aa62e07d3f9111bb63e2"
     },
     {
       "sourceId": 70,
       "name": "Kotokuzan",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2597,13 +2704,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3218/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11809"
       },
-      "evidenceDigest": "2d44124ec729b557d3cd9ccba16842cafe36ee360f5d3ac705077c8aed377d73"
+      "evidenceDigest": "69871be4f56b8570d73625ccb6f18963753c208e9e202230c6340cc6a6401a35"
     },
     {
       "sourceId": 145,
       "name": "Nihonyanagi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2626,15 +2734,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3985/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12594"
       },
-      "evidenceDigest": "80481154340302e4fecbe506d15b0732e8ab2970ea43aefe6e07bc1e77602c4b"
+      "evidenceDigest": "c7f3b0b3ea0f35b603a4a9dfe0c2f7744f6aa439e367a4cc95915bb3b380a99e"
     },
     {
       "sourceId": 263,
       "name": "Daiyusho",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -2657,13 +2766,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3857/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12466"
       },
-      "evidenceDigest": "c2173b6bef576a03757860c7dce4027d2ed0c91f6b03d20678106230370a63a0"
+      "evidenceDigest": "6f2d68f3233b0ecddd111df0e8be38578fc62f225117ed5c17a6c917d52dd8c2"
     },
     {
       "sourceId": 220,
       "name": "Mikazuchiyama",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2687,13 +2797,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4026/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12635"
       },
-      "evidenceDigest": "00c657d6bcbd5e36505936b544dba9fea02069c7cab4e8e4136ae919a326523f"
+      "evidenceDigest": "af044af97b787b8680b61dca1c1c13b471cd43481829dfa13f35e81d0ea5c495"
     },
     {
       "sourceId": 8876,
       "name": "Anhibiki",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2716,13 +2827,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4235/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12844"
       },
-      "evidenceDigest": "e64d48c701df7c35efaa150d0a668859e3821b5e4f37b22da6790ff985ec8313"
+      "evidenceDigest": "be781ec8afe46d3a98f7f882c48701b2f59ffd7e6dfe9b86b9d1e2eee1388f94"
     },
     {
       "sourceId": 65,
       "name": "Shimanoumi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2745,15 +2857,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3415/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12024"
       },
-      "evidenceDigest": "289014a942549a64b9f6e76f581794b742e7aee4fffbdf5bb76dfd5a0e0731b8"
+      "evidenceDigest": "fc43dad63f03c98032ff50134127d8e88f0ad5cbeec67444fcc529cc286ebc23"
     },
     {
       "sourceId": 8905,
       "name": "Yumenofuji",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -2776,13 +2889,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4194/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12803"
       },
-      "evidenceDigest": "62185397350bda5cf4efad9c34ce606258126a6bab8c748f7b7bc5208d879547"
+      "evidenceDigest": "56dc2aec0faffa27be6776e4eff00aceb30fff9a52c300332669b93e91bafcf8"
     },
     {
       "sourceId": 382,
       "name": "Ikazuchido",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2805,13 +2919,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4163/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12772"
       },
-      "evidenceDigest": "492338ecf9f3f1a8b8fa05335a5fc319566e5c5cd49e3a719f779ea616fc8359"
+      "evidenceDigest": "8ecd276ddb72c8199ad7853dbb60c93dbd753eb4468ece517bf593beecb22d4e"
     },
     {
       "sourceId": 8928,
       "name": "Yonezawaryu",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2834,15 +2949,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4278/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12888"
       },
-      "evidenceDigest": "9c27f03f4711ebd8048481a114b1de7015e1224834e42a165d7334ae6ec36180"
+      "evidenceDigest": "c3b80a81be8d88bf8c7df8017f5f8406c9fb79b56b68a681aa461966be01c16e"
     },
     {
       "sourceId": 9100,
       "name": "Tatsubayama",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -2865,13 +2981,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4342/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12951"
       },
-      "evidenceDigest": "e83bc75f874e1fe84c6dabbaf66ebd6de62b012d46c10f6279ad0f24e2139266"
+      "evidenceDigest": "fe88d389008880689e840d3163ca377bb12be1a42fb55326fa07687b8efa254c"
     },
     {
       "sourceId": 84,
       "name": "Hananofuji",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2894,13 +3011,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4170/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12779"
       },
-      "evidenceDigest": "b2f11ad0f16654d9ab3469879bc8bb726ac7666b436d42bc9e646bb56c5306dd"
+      "evidenceDigest": "67fc8940db46b1b3120a767666c17b5e25a199b12566029e2281c05ec75750c8"
     },
     {
       "sourceId": 170,
       "name": "Asanoryu",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2923,15 +3041,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4001/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12610"
       },
-      "evidenceDigest": "f18473ba6028c5c8883cde72f688e85fd433ce08787f5872efecd3c9229a4e0f"
+      "evidenceDigest": "21ef42a413ebebfbc0dddbe293432db98a77370412f8fb5e0d0b9f5fc6ea915f"
     },
     {
       "sourceId": 224,
       "name": "Aratakayama",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -2954,13 +3073,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3950/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12559"
       },
-      "evidenceDigest": "04ba578d6929538f37becb81477f90d90437e4ac34dbcae2606b26360385c233"
+      "evidenceDigest": "52c2eb647be1f436bfeeba62e141650a69be1e5d24f5de20c0265cdcbfeb8992"
     },
     {
       "sourceId": 197,
       "name": "Hananoumi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -2983,13 +3103,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4118/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12727"
       },
-      "evidenceDigest": "07323a894c0afbf9de7caab4b91f04c846a58dafa601f5e65abfdb582045662b"
+      "evidenceDigest": "09f3c96b6a6622bca79e0cb07cb1b5b68a05ae74b15381dd3e971c909b47878c"
     },
     {
       "sourceId": 194,
       "name": "Oshoryu",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3012,15 +3133,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3978/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12587"
       },
-      "evidenceDigest": "a638ca38b3e5fbec38e62f4f58a2f88cc84fd71dd263d78228a0e2c666525309"
+      "evidenceDigest": "fc4bdf8fcd414fc92a6db9770061021d8760f6a81470ea5a292962b6b9ecea91"
     },
     {
       "sourceId": 230,
       "name": "Oyamada",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -3043,15 +3165,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4166/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12775"
       },
-      "evidenceDigest": "9bcc85ad7592fd1e7154f3d3586b73c898e69b605c14285d6a2d8acd47ec001a"
+      "evidenceDigest": "4409a4945bc6ed55e0d1064c7ae6d9305767dd49864b7f09259397476a1622ab"
     },
     {
       "sourceId": 293,
       "name": "Kaigo",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -3074,13 +3197,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3879/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12488"
       },
-      "evidenceDigest": "cbd2190723a43ecdb9b945a47f4d6b28d51a53ee7d3ddd1e9b311941318aba18"
+      "evidenceDigest": "9a665b197852f9f59efe063588dfed6c5d451cb6dccb2f1cae152b3de02dc273"
     },
     {
       "sourceId": 8877,
       "name": "Ryuji",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3103,13 +3227,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4219/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12828"
       },
-      "evidenceDigest": "d34301da204993a337eeeae5f5a840382ad6885709afb7583fa33197085d243b"
+      "evidenceDigest": "e58cd381ef0068214947fc60c827e363ce9941ff3202e7d4aa9b47eb0c1f7da9"
     },
     {
       "sourceId": 63,
       "name": "Takakento",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3132,13 +3257,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3505/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12114"
       },
-      "evidenceDigest": "3e8ca49f25ba9c393b261afc2dc2916c4ec3c1febf9c94f849bc9690303f07e0"
+      "evidenceDigest": "62bfc723e255f7708968010bd186cd52c517df6b52e485fba7037c9ee87076d6"
     },
     {
       "sourceId": 176,
       "name": "Awanokuni",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3162,13 +3288,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3921/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12530"
       },
-      "evidenceDigest": "c36ece0cb62a783f8a012f01c49e114b7a930091018dbb4c0661caf4650bd136"
+      "evidenceDigest": "e943826df4a1567aecf704295fcbf10bb50c1f9d99f945806a6fc9a57779ff3b"
     },
     {
       "sourceId": 75,
       "name": "Mineyaiba",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3191,13 +3318,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3948/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12557"
       },
-      "evidenceDigest": "8efe9268bd2aef129b63634e8a3966542d9dd8d1c895cacb79854770317edbcf"
+      "evidenceDigest": "81ee7a81f40172d789b5d6d04f9e9652861b60f51ea392fbd41406eec8ce7bf5"
     },
     {
       "sourceId": 8904,
       "name": "Shoryu",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3220,13 +3348,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4274/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12883"
       },
-      "evidenceDigest": "723d0448dd981de29efb2a4623a3bedccbec435dabeb6b23fb481e8c68aaf61f"
+      "evidenceDigest": "3cb7c97917b8226c2034652cd98ba4a0c6ab0891ef95c13c541da287d618ffd7"
     },
     {
       "sourceId": 215,
       "name": "Kiyota",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3249,13 +3378,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3946/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12555"
       },
-      "evidenceDigest": "b07f3565d7fb266527842c12625c511075404a78a86dfb4c36d942610c64d542"
+      "evidenceDigest": "51bd1865433c1c8b0f1ed84ac4d4e1c1c0d169f9c920b7cb533fc98244b8690d"
     },
     {
       "sourceId": 9039,
       "name": "Tenrosei",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3278,13 +3408,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4292/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12901"
       },
-      "evidenceDigest": "3a3b028b1dbb637cb4187402d5cde256ea7e48f7e1a8651cfa3f5c0c85012147"
+      "evidenceDigest": "40e5f6efe458d4a9ce429ab11c93a2a32d80262f2c55ce2e6b6b0db2b5c6dc33"
     },
     {
       "sourceId": 9086,
       "name": "Kakueizan",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3308,13 +3439,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4346/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12955"
       },
-      "evidenceDigest": "df96738434221ec83cf1f73d0cfe85ecfb1905fa37120645bbf787981beeeb47"
+      "evidenceDigest": "30bdbc7284fbd077b0399722a565c265846b257d13fac26c0f8acb763f5e3f50"
     },
     {
       "sourceId": 118,
       "name": "Ikawasakura",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3338,13 +3470,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3379/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11988"
       },
-      "evidenceDigest": "ddbef9673be5941cb15f4fd537d4144b0965a0043f5042b93eb3f191d348f47e"
+      "evidenceDigest": "a99a62bf48c7950cb146fae4d85f22cfb618353f7096c7170182b2c252827a7e"
     },
     {
       "sourceId": 8869,
       "name": "Daimasakari",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3367,13 +3500,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4240/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12849"
       },
-      "evidenceDigest": "57d3189a0f976673f034f95cd1c9a0757842df2df35ba5c59504eba0134f558b"
+      "evidenceDigest": "63a482a15f9f9148f5b7b7ec9b9d16823fbe1e373e8c35310c9e6f6ecccd893e"
     },
     {
       "sourceId": 113,
       "name": "Tokunomusashi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3396,13 +3530,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3724/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12333"
       },
-      "evidenceDigest": "97264f45cfd7d8a1e21a9bbbdfc34c838c1b9d94db7be787f8478e56a6fd2408"
+      "evidenceDigest": "7ecda30c647a6b0a16095f1edf8f79e8a933cb5dd19e757c9408b6b8ce82c118"
     },
     {
       "sourceId": 9121,
       "name": "Hakugetsuro",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3425,13 +3560,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4370/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12979"
       },
-      "evidenceDigest": "1bdbe78a2d75a95303096fd96cbb1b6e4865934668efb2484537f1bad2e09fef"
+      "evidenceDigest": "2d66f47d9a73391c5e1f629bcfbc09e2a5021d3766bf60c2080b3245f3a57658"
     },
     {
       "sourceId": 69,
       "name": "Kaisho",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3454,13 +3590,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3466/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12075"
       },
-      "evidenceDigest": "8bd909a3a40ba8ebdb8bc0e6df43f325d06bbb7c0582e45095d50d1a18bb6044"
+      "evidenceDigest": "9031ade9840444f4924ada2129d6ea300c6df31724a392585e6d9e5c2d9bf175"
     },
     {
       "sourceId": 181,
       "name": "Hinataryu",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3483,13 +3620,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3846/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12455"
       },
-      "evidenceDigest": "6402148d8d34c95bbcbc4c8bc60b5199e4a4e1ba0d0127b0f29bbee2d10119cb"
+      "evidenceDigest": "497596a8584adade9be747b099ea6efe8f504b3e2ddff472ac922d51058a580b"
     },
     {
       "sourceId": 179,
       "name": "Kaiseijo",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3512,15 +3650,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3528/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12137"
       },
-      "evidenceDigest": "3c7adcf7bf6f5e249c408932476135a09a8b912ab77af1df4db928396109cc3c"
+      "evidenceDigest": "e10f3d924f925e100af6c448fdd4a1795945adf30138470792bd5cb6941da280"
     },
     {
       "sourceId": 376,
       "name": "Yamato",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -3543,13 +3682,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4135/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12744"
       },
-      "evidenceDigest": "ea97d4ca3fea9f4589770cacbe391cd4a9c968a75b5aeb80843fdbeb63408c8f"
+      "evidenceDigest": "cba2421eff4d408fe31634f2db8d033a48ad416f459137c33a2d0e40eeb3631d"
     },
     {
       "sourceId": 172,
       "name": "Kototsubasa",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3574,13 +3714,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3023/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=7164"
       },
-      "evidenceDigest": "b9a2e49843d83d92a6d245cc35ebae60e46664223970fe96bd93f873298c11b2"
+      "evidenceDigest": "0a2a8f19197efbae0969341c01215abcd8944c4a255d0dfbbbf4c6dd862e8b2d"
     },
     {
       "sourceId": 188,
       "name": "Asonoyama",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3603,13 +3744,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3849/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12458"
       },
-      "evidenceDigest": "d425416f8baeb77dd9f82c1c9353979edf4cd3dee74327977373003f5891fc33"
+      "evidenceDigest": "49beb59aa0a396df107ebf5487b4ee44c9017ff142cdcabb6c4f754023ad6223"
     },
     {
       "sourceId": 155,
       "name": "Ohata",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3633,13 +3775,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3583/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12192"
       },
-      "evidenceDigest": "a2712f325d4bae11e830215531d9eb328653c28bc6268ef8ac127ef40a6d5921"
+      "evidenceDigest": "9444ca9b3eaae83429b8648c7369ce96383e7a6eba6fdb92c849a1de80e0cfb6"
     },
     {
       "sourceId": 97,
       "name": "Asagyokusei",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3662,13 +3805,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3676/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12285"
       },
-      "evidenceDigest": "79f7a486d887e30ddb0b9d4a709ef3673fec6c2cf3472e7a206e9b04d4c3c13b"
+      "evidenceDigest": "b28409244c808ca78387b3679e5f3a54851fa420bdad8e20f77ceb594c1cbd78"
     },
     {
       "sourceId": 200,
       "name": "Tendozan",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3691,13 +3835,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3992/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12601"
       },
-      "evidenceDigest": "aca233ba5bc13b4d562cec60ef707936fb4d5badfd0190825833af339c85284a"
+      "evidenceDigest": "30a9ef26fa03c5582368477bac9b1b0e218b506d021b0da7bb6293ac8a9abaa3"
     },
     {
       "sourceId": 8943,
       "name": "Gonosho",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3720,13 +3865,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4293/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12902"
       },
-      "evidenceDigest": "20bad6c353472748996bfa0ea62f8207fa014e4e48639ed3b55510e8073f7919"
+      "evidenceDigest": "bec92a37687266a99640b2b58f34c22a979950799c21b274c9c158c1a9850d5e"
     },
     {
       "sourceId": 8861,
       "name": "Tokitenran",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3749,13 +3895,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4270/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12879"
       },
-      "evidenceDigest": "d3b063cd692c200093f8e5bf5485caa2a5d82c9852210fb5f9e4bae0e55cc891"
+      "evidenceDigest": "b205d8a2add836cc3bb1e673bdb4b41b4885f825b7ebcffcd2e7d8fa33cfbc89"
     },
     {
       "sourceId": 292,
       "name": "Hogasho",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3778,13 +3925,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4062/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12671"
       },
-      "evidenceDigest": "9b4e3bf2100ad64592a08df5e43cf80b3e6c7fa0520154a8f968c30276602954"
+      "evidenceDigest": "cbaf4a13576fab1cb4486d0a21c615acd816028eb4337469c4090c3b6b214caf"
     },
     {
       "sourceId": 280,
       "name": "Hamanoumi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3807,15 +3955,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3765/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12375"
       },
-      "evidenceDigest": "b0d2e34498e92479799df65e7ed2805a1e56ea571d26f4d5f22fb09afe842e54"
+      "evidenceDigest": "861f3d3ba8d0a1b0dd2c8abe701556a638ed1560ed937f5dd19b11b693543140"
     },
     {
       "sourceId": 8852,
       "name": "Goseizan",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -3838,15 +3987,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4280/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12889"
       },
-      "evidenceDigest": "a0f44eb11db833f5f840969f9519de639981fd386d52304db5ed6d59feadec38"
+      "evidenceDigest": "ed666593e12f4563168c5fe3f1dcefb90ecec51c76dc526bce4d3b1976c55bbe"
     },
     {
       "sourceId": 286,
       "name": "Hakuonada",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -3869,13 +4019,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3955/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12564"
       },
-      "evidenceDigest": "506804ba34054be301781582d02634fb237f5373854026bbc2fdb9634cec71f0"
+      "evidenceDigest": "57b1c430e81743117294cc9f2909843bc1503904f70ff2e14d50bdca2f3a4c0e"
     },
     {
       "sourceId": 613,
       "name": "Gonoumi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3898,13 +4049,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4189/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12798"
       },
-      "evidenceDigest": "2ba10a918b593158e5744348b0f940fbbab29e986fe723cd5ddbdecd3937dc73"
+      "evidenceDigest": "daa87a3ddc23a2b23f1c7154a4c8e3c9d9351dfbf3d5ebae606885b0f64e45bb"
     },
     {
       "sourceId": 9104,
       "name": "Tenshoyama",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3928,13 +4080,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4357/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12966"
       },
-      "evidenceDigest": "a1f56355cee7cf4313aa909741bbccb73c020d289ca9f0b65f0f015bbe869bae"
+      "evidenceDigest": "338f2887ac783b14f56e975e0ee5ecbd2d528ec2773780efc11ed13ab066c13e"
     },
     {
       "sourceId": 8951,
       "name": "Ikarigata",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3957,13 +4110,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4302/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12911"
       },
-      "evidenceDigest": "a1dfac8d08b681b0bb92f7af401479cb17574da7115259a3f89826929615a3c4"
+      "evidenceDigest": "943811d160a2e02bb91864aac6e07cb696f6b4649c02cfa284f61113e83fc11b"
     },
     {
       "sourceId": 81,
       "name": "Tochitaikai",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -3986,13 +4140,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3839/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12448"
       },
-      "evidenceDigest": "b14f4d1389c2cad3ba13ec3dbc4565df22bbbceff4472191833380941c92fcf7"
+      "evidenceDigest": "6a5d7efbba06cddfbae421230a0fdd2ecf27402b571f536847808a2232768a77"
     },
     {
       "sourceId": 91,
       "name": "Mudoho",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4015,13 +4170,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3984/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12593"
       },
-      "evidenceDigest": "a70da8316a55814da93c015d75b39eb41efa74d786f09912ce846148560fb3ab"
+      "evidenceDigest": "439864a3ef5f9b412df7143d4d92b56a105c1d6f4727f376311eda8f6e41f413"
     },
     {
       "sourceId": 89,
       "name": "Nishinoryu",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4045,13 +4201,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3914/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12523"
       },
-      "evidenceDigest": "69f995135efafd5d758f63ca4e8ab8328e5aad9670af9728c660a8d1ce09b5ea"
+      "evidenceDigest": "e831035971b78c372b42d8fb6a1922ad8edc6958e15e92c31c177c958d994325"
     },
     {
       "sourceId": 159,
       "name": "Daikisho",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4074,13 +4231,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3917/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12526"
       },
-      "evidenceDigest": "f9e7e84faf8ddea2fbd7be20cf8cede1187394cff97b7dd1011038060a451859"
+      "evidenceDigest": "82e25e5c1138a4c5e4d10048374e50e1d5a3ca11d64145a5a1e4696f25e871c3"
     },
     {
       "sourceId": 166,
       "name": "Tochikodai",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4103,13 +4261,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3763/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12373"
       },
-      "evidenceDigest": "e1626f9ec0443b03c7f1698d4fc864629b81ace409776633e34de6f7f685b697"
+      "evidenceDigest": "cb4f539e4061837c8b4bda284732ceeb672770b9dc39dd92752e1ed5dacad7de"
     },
     {
       "sourceId": 611,
       "name": "Himukamaru",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4132,13 +4291,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4186/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12795"
       },
-      "evidenceDigest": "0d78ded4a72f32adbebb382b0a53a9307c1714606fda2c85e5d3c5bcb049ecba"
+      "evidenceDigest": "a1fd9299066bcc6919d4aac15757355b9ef6c1a629c904b2c06b19b439969d20"
     },
     {
       "sourceId": 167,
       "name": "Otsuji",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4161,13 +4321,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3952/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12561"
       },
-      "evidenceDigest": "0371f81b40a787ccaf9837817019afaf163abffbb599e6beed3811d6f8f48556"
+      "evidenceDigest": "91b664cc145ee6ab327af5b7bd3b1760e9b0ca751d2f41f91750fe76238604ea"
     },
     {
       "sourceId": 219,
       "name": "Sazanami",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4191,13 +4352,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3615/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12225"
       },
-      "evidenceDigest": "30fa87967e8f71e4e016572a32323c2249180952f50e720821ac116e6d0660dd"
+      "evidenceDigest": "557c555cfbdca9bfeada726c5fde5e3c8193d7ff1a6e82d8eab7ab33d6dd4665"
     },
     {
       "sourceId": 120,
       "name": "Osanai",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4220,15 +4382,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4090/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12699"
       },
-      "evidenceDigest": "cb9ea713dd9cdab370b20afef8236fc90d253a02c4112eb0ec8e67af43131f62"
+      "evidenceDigest": "7daac20f49c3c46c8a9abbad77d23ac8ab2af19f9f24cdb55f240375e7f69768"
     },
     {
       "sourceId": 8862,
       "name": "Haruyama",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -4251,13 +4414,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4223/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12832"
       },
-      "evidenceDigest": "da98cab19810d82dcdda2d715f121bdb83adb128e2df23b0c9eb14fca8c19ea1"
+      "evidenceDigest": "8465ae68a558eed91f50ac5e956aa6513fe03a32f99f341370debf9e9a94cdd9"
     },
     {
       "sourceId": 9084,
       "name": "Gyotoku",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4280,13 +4444,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4345/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12954"
       },
-      "evidenceDigest": "b27f9fe3ad7f2c2b642e96f904916544bc7104dcae89bec07b0735ea7e9de475"
+      "evidenceDigest": "db5cfb9abef8867a18d543a0a44b2b506785f0b5c997645ee37b66aa7e75a4e8"
     },
     {
       "sourceId": 152,
       "name": "Nobehara",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4309,13 +4474,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4099/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12708"
       },
-      "evidenceDigest": "8481f83a889ed9f46eeaf047ede9346637d2379f34fa14b748984d2f545b38d7"
+      "evidenceDigest": "ed338ec86e31f22a4ff8b4ed7f6933f6b0ccc563f994b328f9487506a34ca570"
     },
     {
       "sourceId": 9085,
       "name": "Hanahibiki",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4339,15 +4505,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4347/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12956"
       },
-      "evidenceDigest": "b10c6313ce7b8eb47e2dbda3f56afb216bc70d40806c14a5dbec2e5930e240e2"
+      "evidenceDigest": "6914a9a82c6ad5b448f4730fd30ce4b7019ea7ee4d97082a12c17f7367cd6080"
     },
     {
       "sourceId": 8867,
       "name": "Daikosho",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -4370,13 +4537,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4249/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12858"
       },
-      "evidenceDigest": "eeac52310d02774023103c72405b7d6d8f6741c6879d6bb61edb5132533a1ed6"
+      "evidenceDigest": "3d1090111770c364c1d4b27cf6852c6eeb7d02c575bde9107d7d303b6a7223da"
     },
     {
       "sourceId": 100,
       "name": "Kurohimeyama",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4399,15 +4567,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3906/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12515"
       },
-      "evidenceDigest": "0558e7a262dd4566105fc25152771627f63637ef6d3c2f487788def5de9aabef"
+      "evidenceDigest": "0342b9ef848d7a081015307ef2dcae874f633eed6b3bc628158a5e3c3e392a2d"
     },
     {
       "sourceId": 242,
       "name": "Obara",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -4430,13 +4599,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3610/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12220"
       },
-      "evidenceDigest": "730ec1a635dc8c7e41ce44b2a36fe55bf8168a978da14a481762562cbc06499a"
+      "evidenceDigest": "797007bd0c91c65fcd1439a89d6616a8be6f97c2e925d29db6121729ef920268"
     },
     {
       "sourceId": 141,
       "name": "Kitadaichi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4460,13 +4630,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3546/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12155"
       },
-      "evidenceDigest": "d95f200867dc23ee9b4be0611d6a4d6abe52a4a9e5063e449f57599eb7b0d9c2"
+      "evidenceDigest": "641987e9c8e9a047a4ad65c1c6c0b95450329ace70f74a3884c59d6d417e2f73"
     },
     {
       "sourceId": 72,
       "name": "Tochimusashi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4489,13 +4660,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4065/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12674"
       },
-      "evidenceDigest": "ab63a8ba63f5365ba8502d7d958902fb52fff430f6ebb75a00b0c53af893b818"
+      "evidenceDigest": "164f7e8cb3a8115a2a3dc2f5bb6670a4e0c4415db6cfca8ac9b0a71596316015"
     },
     {
       "sourceId": 107,
       "name": "Tochimaru",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4518,13 +4690,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3356/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11965"
       },
-      "evidenceDigest": "cf24a07f1e117b2970fccfb06178adb7574c6d722edbfd11211fde2236c21b30"
+      "evidenceDigest": "dc487326b0323a5abd88ba4bf369fad792d024024d562fcc28195add62a2a5d9"
     },
     {
       "sourceId": 467,
       "name": "Kyokumizuno",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4547,13 +4720,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4128/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12737"
       },
-      "evidenceDigest": "51eeef3d9f6571dbb37019e42aede774db9fa127abf071211d3621918f668e2e"
+      "evidenceDigest": "66b424da4228a42f3a1178ac31d6a97aa6230f68654ce656b7fc384fb5642641"
     },
     {
       "sourceId": 612,
       "name": "Kobayashi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4576,15 +4750,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4188/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12797"
       },
-      "evidenceDigest": "60090353111668ff3ac6dff18e70479a2f48de7e758ba362c7463bd2f8e70eca"
+      "evidenceDigest": "a5f2d7d694a90059a13c6f5766b4f9c6af3c5162bcd1e666703b8db9ff0b545d"
     },
     {
       "sourceId": 274,
       "name": "Gyokuozan",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -4607,13 +4782,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4130/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12739"
       },
-      "evidenceDigest": "bc35124dc4eca186e5a5719d724139a49dbacbb8cab60aaf6ab32558ae229d07"
+      "evidenceDigest": "2bf7386d973faf2770af83e53e6ba40ac3ce00b2dad50ceef1e97244733ac644"
     },
     {
       "sourceId": 73,
       "name": "Akua",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4636,13 +4812,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3312/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11918"
       },
-      "evidenceDigest": "cc0245aa44e3311d75cb935dbbb351f891ac139c35d84523f4e9d64dbb514d6a"
+      "evidenceDigest": "e1b5c5d23054b2c68f3590703f4f08477aa2cfeb661b0c79f41e4747eda8fe54"
     },
     {
       "sourceId": 57,
       "name": "Shimazuumi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4665,13 +4842,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3404/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12013"
       },
-      "evidenceDigest": "e03a2c43288e24a302eb2af5e1a8b2d9d09c5d312f1a1e401f037c67ad8cdc03"
+      "evidenceDigest": "d96eae44f097b837ef73fa4bc47ff651687a48bd18a3a417f6172183f4f3625f"
     },
     {
       "sourceId": 9109,
       "name": "Shosei",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4694,13 +4872,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4364/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12973"
       },
-      "evidenceDigest": "6157faeddb565770d39608398ab1a13a05d4387fc6d1bfde38c667f6089cca4e"
+      "evidenceDigest": "de99cba37354532ce2d5d4f18fa7da02be85625ac6347044db52170799b742c0"
     },
     {
       "sourceId": 8863,
       "name": "Anosho",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4723,13 +4902,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4225/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12834"
       },
-      "evidenceDigest": "f622eaea2913dbb4bd51112c770e6d3f48984bec2edbe77e0d837c6e4aab0e22"
+      "evidenceDigest": "9a7cda529bdf72d63c8a7b8db0cd876decb64f385039ed9f40a547bc4091dafb"
     },
     {
       "sourceId": 165,
       "name": "Kamito",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4752,13 +4932,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3807/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12416"
       },
-      "evidenceDigest": "fc0f4bda209a21e13673d3366968a238b93e9f388c3c4173463752ca86d436cf"
+      "evidenceDigest": "d0ff978868cf5fde80f55decc653c6e6f3ac6f598a0cc3014501963e661bff36"
     },
     {
       "sourceId": 9088,
       "name": "Kaki",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4781,13 +4962,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4339/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12948"
       },
-      "evidenceDigest": "552b4010c9866e47fbbd80355c9a840066695c35ed6dee1248cb48566018738e"
+      "evidenceDigest": "8f6ebaef31f9318021987e6058efabdd8df3fbf904aee345101de3f28650faa6"
     },
     {
       "sourceId": 267,
       "name": "Nishiomoto",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4810,13 +4992,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4032/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12641"
       },
-      "evidenceDigest": "0e7463a197384ae2bb3214b0c33ba80d237a66f35a02ec9faad1c96b8dc9c267"
+      "evidenceDigest": "11344cc21f6741a3c3dbf7d45af447f25da5345833f1f8c8e315be7b096c358e"
     },
     {
       "sourceId": 9098,
       "name": "Takahara",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4839,13 +5022,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4354/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12964"
       },
-      "evidenceDigest": "404fa32518777436d6a74c77f9f776fac2eb56a0dd4d3a0ce5384483c7c1c651"
+      "evidenceDigest": "0a861c5d689cfdd94a4a55a0054fa45acad1ca250a97cded1442e62277b6d431"
     },
     {
       "sourceId": 131,
       "name": "Toseiryu",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4868,13 +5052,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4122/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12731"
       },
-      "evidenceDigest": "d4c08008779472f44ef5a64b3ec184e110b0f7432484cdc1345461ef2d1c80e6"
+      "evidenceDigest": "7435f533b47ea9cab96b723e41eaea2b6143e356dc04d6db98d72b012cf13dae"
     },
     {
       "sourceId": 209,
       "name": "Ienoshima",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4897,13 +5082,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3956/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12565"
       },
-      "evidenceDigest": "bc18cb290fdc6923202c28f5afe8434338dc9175fc8f1080e140a93a5b3d68e8"
+      "evidenceDigest": "2f7c3a9d66c636ad762d623fe6a0b6fb4218aad2ea4b3124d883a49e9ff99341"
     },
     {
       "sourceId": 85,
       "name": "Mienofuji",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4926,15 +5112,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4100/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12709"
       },
-      "evidenceDigest": "85a28fb99126e2cf437bdbea2dd02f045e15926218379e0b850ad6a30c7fbf0d"
+      "evidenceDigest": "8ff0518abe45da85ed4f924e52756cd5127e166dc63d4bf21b1b35611b584033"
     },
     {
       "sourceId": 8864,
       "name": "Shiroma",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -4957,13 +5144,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4224/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12833"
       },
-      "evidenceDigest": "fde37082565a1b33ab47d66676ad0fd32845b372e769d57e728fe61e01873476"
+      "evidenceDigest": "6624c92674b07d8a652feba0e56efb85043a2f65f0cf0ee689364828d5999a98"
     },
     {
       "sourceId": 9136,
       "name": "Honoikazuchi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -4987,13 +5175,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4395/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=13004"
       },
-      "evidenceDigest": "19ad8801233cbe3c64e6abc9ab0fe0fdeef97e6bf6d3ab5f0c03bca73efa9e4c"
+      "evidenceDigest": "e9f3056643346707fc8b6208364756446b2fb74c66387fc0bf7f0bfd6a431988"
     },
     {
       "sourceId": 180,
       "name": "Kaishin",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5016,13 +5205,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3791/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12400"
       },
-      "evidenceDigest": "a703db35c4c06443c475d63b8fecc1eb825ed55001209a77ac7c457efc6941e3"
+      "evidenceDigest": "a97d3af0117c6b3ec6dcaeef09f4f6149ede3bb52462c93ac0c8f408a95ebf03"
     },
     {
       "sourceId": 124,
       "name": "Kitaharima",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5046,13 +5236,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/2448/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=1241"
       },
-      "evidenceDigest": "21c33bd258e630e9b777e87a823d5dfd65d16757c34c1981f77061688b72f148"
+      "evidenceDigest": "46c1001c7c2ce889bf5aa35f87d2abe1ca38c14cbad9756130b6fc87d84d658c"
     },
     {
       "sourceId": 8892,
       "name": "Uzumasa",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5075,13 +5266,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4253/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12862"
       },
-      "evidenceDigest": "23b33ce37ce0793b5aa63148580a753188e1e68f5c654d169f90a408bc68b765"
+      "evidenceDigest": "c27c30e4fce9788d462c7acd86d9fff3af46024b734c520a12221e4842ca698d"
     },
     {
       "sourceId": 210,
       "name": "Seigo",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5104,13 +5296,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3784/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12393"
       },
-      "evidenceDigest": "8fa75dfe0006118b4fc26c366eda04a87f527eb2de39b4112f3f378eb373a28e"
+      "evidenceDigest": "bf28b944855bbc55f0db57f17a3914c53d916d6f9ea30ebcc0ed07ea9d18fb44"
     },
     {
       "sourceId": 95,
       "name": "Oshoumi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5133,13 +5326,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4025/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12634"
       },
-      "evidenceDigest": "ac7c60547d97664fe48f190e64ea503740cbe73482be9aadb658844f0850ebd1"
+      "evidenceDigest": "5895568075ee29cfd8216fd5bd69ee474c7e0d8e351fcaf5775924cadbfc2f8a"
     },
     {
       "sourceId": 217,
       "name": "Daishinkai",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5162,13 +5356,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3936/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12545"
       },
-      "evidenceDigest": "bcbef56ef7d276cfb71e442d44f1cc7bce52c2e80ab0618966c63f821ab0f6b4"
+      "evidenceDigest": "9b0896ff00f7f9a562cb01066979860fc6055c2d191d3717501c5526fa05c9db"
     },
     {
       "sourceId": 137,
       "name": "Yoshiyasu",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5191,13 +5386,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3770/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12379"
       },
-      "evidenceDigest": "b1177cc3629de839b91f78170850bc08e69db8368edd1b9b4f4c10a7da2876db"
+      "evidenceDigest": "9ca833581554b7dc246e64a9e9a973ef8dec824b53a8557f8698602213bc804f"
     },
     {
       "sourceId": 175,
       "name": "Oyamatoumi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5220,15 +5416,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3627/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12236"
       },
-      "evidenceDigest": "184b038e33fb6946bed4f57717656dcd1d230356ff945e74ca2a7dcc8a1635ca"
+      "evidenceDigest": "378e64c1a0700311a53018cbdf7c1388060a8623e06b5394f9c9e0bfbc830685"
     },
     {
       "sourceId": 300,
       "name": "Ieshima",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -5251,13 +5448,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4024/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12633"
       },
-      "evidenceDigest": "3dc9267eee501424e8d0bf77deb20d2e528cc1a16aa3fbefd769ebf0a5d0ea66"
+      "evidenceDigest": "2b693b7efc49a142a3f6e4b43a3e69e959e60369919352f7a45625232bed4233"
     },
     {
       "sourceId": 8882,
       "name": "Inanoyama",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5280,13 +5478,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4272/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12881"
       },
-      "evidenceDigest": "7037e0b97a6000ff1f96fac0c823a69b27fe1a18fc3d59b4492a0aef79db4583"
+      "evidenceDigest": "cad2a0f21894cac8376afe1b385a94bb58b5f49409d490c205eece3a21753f30"
     },
     {
       "sourceId": 125,
       "name": "Tsurubayashi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5311,13 +5510,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3177/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11755"
       },
-      "evidenceDigest": "8fee7df5f39ddf6aca3f7e61a432be3009ddf113860574d6beeff0294861b45e"
+      "evidenceDigest": "6b5a6796b8c96c6b354ee40785a23a7a619d3f48bce7a621c400142fcf27aa52"
     },
     {
       "sourceId": 185,
       "name": "Chiyotora",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5340,13 +5540,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3966/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12576"
       },
-      "evidenceDigest": "11c544308dc149d95ff46d79ed9a213a16f7d9c5266cf33e0e48fb19939a9980"
+      "evidenceDigest": "e7d7f4671bdc8705036eeb6e7c6a94dc76c88b285670bb18b5ee8871388bf692"
     },
     {
       "sourceId": 59,
       "name": "Hakuyozan",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5369,15 +5570,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3334/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11943"
       },
-      "evidenceDigest": "1334b8489e1ac4f3d919774f29e51e71b61527bf151cf992c22d0659c976ce39"
+      "evidenceDigest": "11b26cb5ad86821d31d12a5186bfdb1da0e1acd3f6c6f530ad0df4f23cc3991e"
     },
     {
       "sourceId": 355,
       "name": "Marusho",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -5400,13 +5602,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3970/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12579"
       },
-      "evidenceDigest": "b72eebff5ef4357158d0e80fab786ed91b66d2473879315b9547fd285d546251"
+      "evidenceDigest": "c5336573682a13397d84569e8f27d6249f52d0e905fcd1c39651163417e082e8"
     },
     {
       "sourceId": 154,
       "name": "Dewataikai",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5430,13 +5633,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3396/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12006"
       },
-      "evidenceDigest": "841f0bd1ee5793283ab77010a41c5a68fec431d6ac808e0182b5fad07b2ee4dd"
+      "evidenceDigest": "f959b270b4d80e7b9cfccda3a25133bba9cd8da1db325000270e92ab02ad4af3"
     },
     {
       "sourceId": 281,
       "name": "Akiyoshi",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5459,13 +5663,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4046/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12655"
       },
-      "evidenceDigest": "bf87b2748f69678a9ae2d1a4413b64a3e6aebbfdf15a6b57db568cf74ab9d687"
+      "evidenceDigest": "fe1b70883eabe7991b30aac62b913109856f40d9f4929cb5f0773179cf4e8e3a"
     },
     {
       "sourceId": 128,
       "name": "Asakoki",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5490,13 +5695,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3165/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11743"
       },
-      "evidenceDigest": "e20ec2d28e544ff4a3dadee67d8dd10f3c88e84b1115e52b17e8ef0b32160646"
+      "evidenceDigest": "a915bb622b455dc80df7c8e188f6e0aadf7706935053b6b5e26420b32084372d"
     },
     {
       "sourceId": 8902,
       "name": "Seiyu",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5519,13 +5725,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4260/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12869"
       },
-      "evidenceDigest": "538aef7cd2d506501ee4be1f7ebb007d36ade8c617dc3101405a5328ee2e2b35"
+      "evidenceDigest": "d8d1f83a40fd7caae79f5ac3433cfc6d470ac66c4f0dbb317c926feb866db3fe"
     },
     {
       "sourceId": 136,
       "name": "Tochiseiryu",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5548,13 +5755,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3523/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12132"
       },
-      "evidenceDigest": "6563fa062055dfb81b1c6e8a539d847aebe1109f8f1a3d29de4827fd7b963626"
+      "evidenceDigest": "27ae5fb00bcd5b3aa436d34d700d7f5fdb347fe37258acb05407a3c9c692c6f9"
     },
     {
       "sourceId": 586,
       "name": "Kazeeidai",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5577,15 +5785,16 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4178/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12787"
       },
-      "evidenceDigest": "cee70df2ef22f5e9bab24780189e19fdd9cbd2b81522141690865b8596950607"
+      "evidenceDigest": "f4799b3643bbd7218ffb0ae2dd5bf1475be846a67b6ae898082b9f7d3c1d7934"
     },
     {
       "sourceId": 290,
       "name": "Kawamura",
       "status": "career-results-strictly-certified",
       "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "published-JSA-career-WLA",
       "independentlyVerifiedBy": [
-        "JSA published career totals",
+        "JSA published W-L-A",
         "JSA completed tournament W-L",
         "JSA dated banzuke ranks",
         "SumoDB matching wrestler identity"
@@ -5608,13 +5817,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3898/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12507"
       },
-      "evidenceDigest": "3caec74a4e70f6fe01e30d89739550ffcc1f6c1a24355eddfeabd0ec29cfc84b"
+      "evidenceDigest": "d135c9d0824c5f134e00395f96235329ffd1676cee41cfc77e27c3ddea73435e"
     },
     {
       "sourceId": 190,
       "name": "Hamayutaka",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5638,13 +5848,14 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3327/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11936"
       },
-      "evidenceDigest": "3518c35383040f6ad80f6dcd36e91baeab7bf10dd68cee4c705bd1b0ee13f68e"
+      "evidenceDigest": "7ee0f0bb34e97b0a431df88ad1f2275affa42ba759b0b606449cfa7bb041d59b"
     },
     {
       "sourceId": 557,
       "name": "Izumifuji",
       "status": "strict-audit-blocked",
       "careerResultsCertified": false,
+      "careerTotalsEvidenceBasis": null,
       "independentlyVerifiedBy": [],
       "sourceNativeBoutLedgerReconciled": false,
       "independentBoutByBoutKimariteCertified": false,
@@ -5667,7 +5878,7 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4156/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12765"
       },
-      "evidenceDigest": "32df5e1ee5c971482402ab1986af9ed5d4b2751767e8feb1a9dd6c1e691b2b29"
+      "evidenceDigest": "0e1f7d34e6ade28f3096c50afd6bff4c3a8a7692d789cad3f15acd88f15758ec"
     }
   ]
 }
