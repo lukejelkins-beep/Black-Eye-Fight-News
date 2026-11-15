@@ -28,9 +28,9 @@
     "stable": true,
     "rankGrade": true,
     "height": true,
-    "weight": false
+    "weight": true
   },
-  "status": "field-disagreement",
+  "status": "basic-fields-parsed",
   "certification": "not-started",
   "notice": "Basic current public fields only. Does NOT verify complete historical bouts, official historical weigh-ins, image rights, or career certification.",
   "officialBashoRecords": [
@@ -184,5 +184,21 @@
     "careerCertified": false
   },
   "capturedAt": "2026-11-15T03:44:46.354Z",
-  "rawHtmlSha256": "bd687e71971a279bcda665566c633b9bbcd239b544817d88190289376b140b6b"
+  "rawHtmlSha256": "bd687e71971a279bcda665566c633b9bbcd239b544817d88190289376b140b6b",
+  "measurementComparisonDetails": {
+    "height": {
+      "match": true,
+      "method": "exact",
+      "published": 175,
+      "api": 175
+    },
+    "weight": {
+      "match": true,
+      "method": "integer-display-rounding-compatible",
+      "published": 160,
+      "api": 160.1
+    }
+  },
+  "measurementComparisonMethod": "published-integer-precision",
+  "historicMeasurementsChanged": false
 }
