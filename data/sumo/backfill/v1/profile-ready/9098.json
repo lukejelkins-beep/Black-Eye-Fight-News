@@ -44,6 +44,14 @@
   },
   "measurements": [
     {
+      "bashoId": "202507",
+      "heightCm": 178,
+      "weightKg": 119,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12964",
+      "independentlyCertified": false
+    },
+    {
       "bashoId": "202509",
       "heightCm": 178,
       "weightKg": 119,
@@ -54,11 +62,12 @@
   ],
   "measurementCoverage": {
     "apiPoints": 1,
-    "independentPoints": 0,
-    "extraPoints": 0,
+    "independentPoints": 1,
+    "extraPoints": 1,
     "matchingOverlapPoints": 0,
     "conflictingOverlaps": [],
-    "status": "api-only"
+    "status": "dated-independent-source-collected",
+    "independentlyCertified": false
   },
   "rankTimeline": [
     {
