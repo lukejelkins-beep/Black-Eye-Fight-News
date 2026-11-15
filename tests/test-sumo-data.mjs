@@ -272,7 +272,7 @@ test('Ura career graphs show dated historical weights and all 69 published banzu
   assert.match(markup,/113 kg/);
   assert.match(markup,/138 kg/);
   assert.match(markup,/Historical observations remain subject to independent verification/);
-  assert.match(markup,/Currently listed: 138 kg \(undated\)/);
+  assert.match(markup,/JSA currently listed: 138 kg \(undated\)/);
   assert.match(markup,/Highest rank: Komusubi 1 West/);
 });
 test('rank score preserves tier, number and East-West distinction',()=>{
