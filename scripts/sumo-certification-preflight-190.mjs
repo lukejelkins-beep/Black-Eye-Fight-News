@@ -232,7 +232,8 @@ export function proveZeroCareerAbsencesFromCompleteBasho(p,jsa,sdb,activeBasho){
   .filter(x=>x.bashoId===b).map(x=>Number(x.day)||0);
  const latestNativeDay=Math.max(0,...currentNativeDays);
  const exactCurrent=winShift===0&&lossShift===0&&
-  currentWinShift===0&&currentLossShift===0;
+  currentWinShift===0&&currentLossShift===0&&latestNativeDay>0&&
+  jsa.officialAsOf.day>=latestNativeDay;
  const laterOneBout=(winShift===1&&lossShift===0||
   winShift===0&&lossShift===1)&&
   winShift===currentWinShift&&lossShift===currentLossShift&&
