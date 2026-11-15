@@ -143,14 +143,47 @@ export function parseSumoDbCareerRecord(html){
  return {wins:values[0],losses:values[1],absences:values[2],
   providerReportedBoutCount:values[3]};
 }
+/** All dated SumoDB tournament W-L-A rows, including old tournaments
+ * omitted by a public JSA profile's recent-history window. The active
+ * basho is never used for independent completed-tournament certification. */
+export function parseSumoDbBashoRecords(html){
+ if(typeof html!=='string'||html.length>2_000_000)throw Error('Invalid SumoDB basho source');
+ const pageRows=html.match(/<tr\b[^>]*>[\s\S]*?<\/tr>/gi)||[];
+ const dated=new Map();
+ for(const row of pageRows){
+  const plain=row.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,' ')
+   .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi,' ')
+   .replace(/<[^>]+>/g,' ').replace(/&nbsp;|&#160;/gi,' ')
+   .replace(/\s+/g,' ').trim();
+  const dates=[...plain.matchAll(/\b((?:18|19|20)\d{2})\.(01|03|05|07|09|11)\b/g)];
+  if(dates.length!==1)continue;
+  const records=[...plain.matchAll(/\b(\d{1,2})\s*-\s*(\d{1,2})(?:\s*-\s*(\d{1,2}))?\b/g)];
+  if(records.length!==1)continue;
+  const x=records[0],wins=Number(x[1]),losses=Number(x[2]),
+   absences=x[3]===undefined?null:Number(x[3]);
+  if(wins>15||losses>15||absences!==null&&absences>15)continue;
+  const bashoId=dates[0][1]+dates[0][2];
+  const record={bashoId,wins,losses,absences};
+  const before=dated.get(bashoId);
+  if(before&&JSON.stringify(before)!==JSON.stringify(record))
+   throw Error('Contradictory SumoDB published basho W-L for '+bashoId);
+  dated.set(bashoId,record);
+ }
+ return [...dated.values()].sort((a,b)=>a.bashoId.localeCompare(b.bashoId));
+}
+
 /** Require an existing preflight blocker and never repeat one-time research capture. */
 export function requiresCareerRecordCrosscheck(doc,preflight){
- if(!doc||doc.careerRecordCrosscheck||
-    preflight?.classification==='candidate-for-strict-audit')return false;
+ if(!doc||preflight?.classification==='candidate-for-strict-audit')return false;
  const blockers=preflight?.blockers||[];
- return Array.isArray(blockers)&&blockers.some(x=>
-  x==='official-absence-total-unpublished-or-disagree'||
-  x==='official-JSA-career-totals-unpublished-or-disagree');
+ if(!Array.isArray(blockers))return false;
+ const needsCareer=blockers.some(x=>
+   x==='official-absence-total-unpublished-or-disagree'||
+   x==='official-JSA-career-totals-unpublished-or-disagree')&&
+   !doc.careerRecordCrosscheck;
+ const needsOldBasho=blockers.includes('official-completed-basho-ledger-coverage-incomplete')&&
+   !Array.isArray(doc.careerRecordCrosscheck?.independentBashoRows);
+ return needsCareer||needsOldBasho;
 }
 
 export function recoveryCooldown(error){
@@ -340,14 +373,28 @@ async function main(){
     if(!unchanged.ok)throw Error('Historical measurements changed during career totals check: '+
       unchanged.issues.join('; '));
     const published=parseSumoDbCareerRecord(html);
-    const check={
+    const historical=parseSumoDbBashoRecords(html);
+    const oldCheck=saved.careerRecordCrosscheck;
+    const sourceSha=createHash('sha256').update(html).digest('hex');
+    const careerRecordChanged=!!oldCheck&&
+      JSON.stringify(oldCheck.career)!==JSON.stringify(published);
+    // Never replace prior W-L-A evidence with a newer, differently cut off
+    // source page. Save the independently dated historical rows separately.
+    const check=oldCheck?{
+      ...oldCheck,independentBashoRows:historical,
+      datedBashoLedgerCapturedAt:now(),datedBashoLedgerSourceSha256:sourceSha,
+      careerRecordDiffersFromPriorSnapshot:careerRecordChanged
+    }:{
       sourceUrl:SOURCE_URL+w.sumoDbId,capturedAt:now(),
-      rawHtmlSha256:createHash('sha256').update(html).digest('hex'),
+      rawHtmlSha256:sourceSha,
       identityVerified:true,originalMeasurementsUnchanged:true,
       corroboratedWeightDates:unchanged.corroborated,
       sourceRecordPublished:published!==null,
       career:published,sourceAsOf:'retrieval-date; active-basho cutoff not independently established',
-      independentOfApi:true,careerStrictlyCertified:false
+      independentOfApi:true,careerStrictlyCertified:false,
+      independentBashoRows:historical,
+      datedBashoLedgerCapturedAt:now(),datedBashoLedgerSourceSha256:sourceSha,
+      careerRecordDiffersFromPriorSnapshot:false
     };
     await save(dest,{...saved,careerRecordCrosscheck:check});
     careerAudits++;
