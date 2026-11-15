@@ -759,31 +759,140 @@ function render() {
 }
 function refreshDir() {
   const target=document.getElementById('directory-results');
-  if (target) target.innerHTML=directoryResults();
+  if(target)target.innerHTML=directoryResults();
   document.querySelectorAll('[data-directory-division]').forEach(el=>{
-    el.classList.toggle('active',el.dataset.directoryDivision===STATE.division);
+    const selected=el.dataset.directoryDivision===STATE.division;
+    el.classList.toggle('active',selected);el.setAttribute('aria-pressed',String(selected));
   });
 }
+function refreshOpponents(){
+  const id=Number(location.hash.split('/')[1]?.split('?')[0]);
+  const w=wrestler(id),target=document.getElementById('sumo-opponent-results');
+  if(w&&target)target.innerHTML=opponentResults(w);
+}
+function activeProfileSection(name){
+  document.querySelectorAll('[data-profile-section]').forEach(a=>{
+    if(a.dataset.profileSection===name)a.setAttribute('aria-current','location');
+    else a.removeAttribute('aria-current');
+  });
+  const sel=document.getElementById('sumo-profile-section');
+  if(sel&&sel.value!==name)sel.value=name;
+}
+function navigateSection(name){
+  const target=document.getElementById('sumo-'+name);
+  if(!target)return;
+  activeProfileSection(name);
+  // Keep the canonical #profile/{id} route, not a competing #results hash route.
+  const id=location.hash.slice(1).split('?')[0];
+  history.replaceState(null,'','#'+id+'?section='+name);
+  target.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+}
+function updateSectionFromScroll(){
+  if(!location.hash.startsWith('#profile/'))return;
+  const nodes=[...document.querySelectorAll('.sumo-section')];
+  const selected=nodes.filter(x=>x.getBoundingClientRect().top<=110).at(-1)||nodes[0];
+  if(selected)activeProfileSection(selected.id.replace('sumo-',''));
+}
+window.addEventListener('scroll',updateSectionFromScroll,{passive:true});
 document.addEventListener('input',ev=>{
-  if(ev.target?.id==='sumo-search') {
-    STATE.query=ev.target.value;
-    STATE.visible=24;
-    refreshDir();
+  if(ev.target?.id==='sumo-search'){
+    STATE.query=ev.target.value;STATE.visible=24;refreshDir();
+  }
+  if(ev.target?.id==='sumo-opponent-search'){
+    STATE.opponentQuery=ev.target.value;STATE.h2hOpponentLimit=16;refreshOpponents();
   }
 });
+document.addEventListener('change',ev=>{
+  const t=ev.target;
+  if(t?.id==='sumo-period'){
+    STATE.profilePeriod=t.value;
+    if(t.value==='all'&&!STATE.h2hFull&&!STATE.h2hLoading&&!STATE.h2hLoadFailed)void loadCompleteH2h();
+    render();
+    document.getElementById('sumo-period')?.focus({preventScroll:true});
+  }
+  if(t?.id==='sumo-opponent-sort'){
+    STATE.opponentSort=t.value;STATE.h2hOpponentLimit=16;refreshOpponents();
+    document.getElementById('sumo-opponent-sort')?.focus({preventScroll:true});
+  }
+  if(t?.id==='sumo-profile-section')navigateSection(t.value);
+});
 document.addEventListener('click',ev=>{
-  const el=ev.target.closest?.('[data-directory-division],[data-more-rikishi],[data-banzuke-division],[data-basho-division],[data-day],[data-jump-day],[data-profile-limit],[data-h2h-order],[data-h2h-more]');
-  if(!el) return;
+  const h2hLink=ev.target.closest?.('a[href^="#headtohead/"]');
+  if(h2hLink&&location.hash.startsWith('#profile/')){
+    STATE.h2hReturn={hash:location.hash.split('?')[0],scrollY:window.scrollY,
+      period:STATE.profilePeriod,mode:STATE.profileMode};
+  }
+  const jump=ev.target.closest?.('[data-profile-section]');
+  if(jump){ev.preventDefault();navigateSection(jump.dataset.profileSection);return;}
+  const last=ev.target.closest?.('[data-result-link]');
+  if(last){
+    ev.preventDefault();STATE.profileMode='bouts';
+    STATE.profilePeriod=last.dataset.resultPeriod===String(details().bashoId)?'current':last.dataset.resultPeriod;
+    render();
+    document.getElementById('sumo-bout-'+last.dataset.resultLink)?.scrollIntoView({block:'center'});
+    document.getElementById('sumo-bout-'+last.dataset.resultLink)?.querySelector('a')?.focus({preventScroll:true});
+    return;
+  }
+  const el=ev.target.closest?.('[data-directory-division],[data-more-rikishi],[data-fewer-rikishi],[data-banzuke-division],[data-basho-division],[data-day],[data-jump-day],[data-profile-limit],[data-h2h-order],[data-h2h-more],[data-h2h-fewer],[data-results-mode],[data-rank-range],[data-rank-ladder],[data-h2h-retry],[data-opponent-retry]');
+  if(!el)return;
   if(el.dataset.directoryDivision){STATE.division=el.dataset.directoryDivision;STATE.visible=24;refreshDir();}
-  if(el.hasAttribute('data-more-rikishi')){STATE.visible+=24;refreshDir();}
+  if(el.hasAttribute('data-more-rikishi')){
+    const before=STATE.visible;STATE.visible+=24;refreshDir();
+    document.querySelectorAll('#directory-results .directory-card')[before]?.focus({preventScroll:true});
+  }
+  if(el.hasAttribute('data-fewer-rikishi')){
+    STATE.visible=24;refreshDir();
+    document.querySelector('[data-more-rikishi]')?.focus({preventScroll:true});
+  }
   if(el.dataset.banzukeDivision){STATE.banzukeDivision=el.dataset.banzukeDivision;render();}
   if(el.dataset.bashoDivision){STATE.bashoDivision=el.dataset.bashoDivision;STATE.day=null;render();}
   if(el.dataset.day||el.dataset.jumpDay){STATE.day=Number(el.dataset.day||el.dataset.jumpDay);render();}
   if(el.dataset.profileLimit){STATE.profileLimit=Number(el.dataset.profileLimit);render();}
   if(el.dataset.h2hOrder){STATE.h2hOldestFirst=el.dataset.h2hOrder==='oldest';render();}
-  if(el.hasAttribute('data-h2h-more')){STATE.h2hOpponentLimit+=32;render();}
+  if(el.dataset.resultsMode){
+    STATE.profileMode=el.dataset.resultsMode;render();
+    document.querySelector('[data-results-mode="'+STATE.profileMode+'"]')?.focus({preventScroll:true});
+  }
+  if(el.dataset.rankRange){
+    STATE.rankRange=el.dataset.rankRange;render();
+    document.querySelector('[data-rank-range="'+STATE.rankRange+'"]')?.focus({preventScroll:true});
+  }
+  if(el.hasAttribute('data-rank-ladder')){
+    STATE.fullRankLadder=!STATE.fullRankLadder;render();
+    document.querySelector('[data-rank-ladder]')?.focus({preventScroll:true});
+  }
+  if(el.hasAttribute('data-h2h-more')){
+    STATE.h2hOpponentLimit+=32;refreshOpponents();
+    document.querySelector('[data-h2h-more],[data-h2h-fewer]')?.focus({preventScroll:true});
+  }
+  if(el.hasAttribute('data-h2h-fewer')){
+    STATE.h2hOpponentLimit=16;refreshOpponents();
+    document.querySelector('[data-h2h-more]')?.focus({preventScroll:true});
+  }
+  if(el.hasAttribute('data-h2h-retry')){
+    STATE.h2hLoadFailed=false;void loadCompleteH2h();render();
+  }
+  if(el.hasAttribute('data-opponent-retry')){
+    STATE.h2hOpponentsFailed=false;void loadOpponentIndex();refreshOpponents();
+  }
 });
-window.addEventListener('hashchange',()=>{STATE.profileLimit=5;STATE.h2hOpponentLimit=16;STATE.h2hOldestFirst=false;render();window.scrollTo({top:0,behavior:'instant'});});
+let lastRoute=location.hash.slice(1).split('?')[0];
+window.addEventListener('hashchange',()=>{
+  const route=location.hash.slice(1).split('?')[0];
+  if(route!==lastRoute&&route.startsWith('profile/')&&STATE.h2hReturn?.hash==='#'+route){
+    STATE.profilePeriod=STATE.h2hReturn.period;
+    STATE.profileMode=STATE.h2hReturn.mode;
+  }else if(route!==lastRoute&&route.startsWith('profile/')){
+    STATE.profilePeriod='current';STATE.profileMode='bouts';
+    STATE.opponentQuery='';STATE.h2hOpponentLimit=16;
+    STATE.rankRange='career';STATE.fullRankLadder=false;
+  }
+  lastRoute=route;STATE.h2hOldestFirst=false;render();
+  if(route.startsWith('profile/')&&STATE.h2hReturn?.hash==='#'+route){
+    const prior=STATE.h2hReturn.scrollY;
+    requestAnimationFrame(()=>window.scrollTo({top:prior,behavior:'instant'}));
+  }else window.scrollTo({top:0,behavior:'instant'});
+});
 async function loadJson(url){
   const response=await fetch(url,{cache:'no-cache'});
   if(!response.ok)throw new Error('Cached Sumo data returned HTTP '+response.status);
@@ -816,7 +925,7 @@ async function loadCompleteH2h(){
     STATE.h2hLoadFailed=true;
   } finally {
     STATE.h2hLoading=false;
-    if(location.hash.startsWith('#headtohead/'))render();
+    if(location.hash.startsWith('#headtohead/')||(location.hash.startsWith('#profile/')&&STATE.profilePeriod==='all'))render();
   }
 }
 async function init(){
