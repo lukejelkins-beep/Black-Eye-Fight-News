@@ -316,6 +316,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   for(const route of ['kimarite','banzuke','basho','rikishi','home']){
     await page.locator('.subnav [data-page="'+route+'"]').press('Enter');
     await page.waitForURL('**#'+route);
+    await page.waitForSelector('.subnav [data-page="'+route+'"][aria-current="page"]');
     assert.equal(await page.locator('.subnav [data-page="'+route+'"]').getAttribute('aria-current'),'page');
   }
   if (isMobile){
