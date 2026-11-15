@@ -71,7 +71,7 @@ function rollup(parts,field){
  }
  return {value:covered?sum:null,coveredBouts:covered};
 }
-export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12"}={}){
+export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12",includeCareerBouts=false}={}){
  const complete=Object.values(progress?.bouts||{})
   .filter(b=>b?.org==="ufc"&&isOfficialUfcEvent(b.event)&&
    ["completed","draw","no_contest"].includes(b.status)&&
@@ -161,7 +161,8 @@ export function buildPostfightMetrics(progress,archive,{asOf="2026-11-12"}={}){
    name:f.name,slug:f.slug,scope:"ufc-only",
    trackedBouts:expected,lastFightDate:f.bouts[0].date,
    totals,
-   recentBouts:f.bouts.slice(0,5)
+   recentBouts:f.bouts.slice(0,5),
+   ...(includeCareerBouts?{careerBouts:f.bouts}: {})
   };
  }
  return output;
