@@ -36,3 +36,15 @@ test('no official correction means no implied result adjustment',()=>{
  assert.equal(unadjusted.bashoReconciliation.officialOutcomeOverlays.length,0);
  assert.equal(unadjusted.bashoReconciliation.discrepancies[0].bashoId,'202207');
 });
+
+test('corrected JSA comparison uses frozen active-basho cutoff when career as-of missing',()=>{
+ const copied=structuredClone(official);
+ copied.officialAsOf=null;
+ copied.officialBashoRecords=[...copied.officialBashoRecords,
+  {bashoId:'202611',wins:9,losses:4,absences:null}];
+ const report=auditCorrectedJsaTournament(w,copied,api,manifest,'202611');
+ assert.equal(report.bashoReconciliation.excludedCurrentBasho,'202611');
+ assert.equal(report.bashoReconciliation.currentBashoExclusionEvidence,'frozen-cohort-basho');
+ assert.ok(!report.bashoReconciliation.discrepancies.some(x=>x.bashoId==='202611'));
+ assert.equal(report.bashoReconciliation.certified,false);
+});
