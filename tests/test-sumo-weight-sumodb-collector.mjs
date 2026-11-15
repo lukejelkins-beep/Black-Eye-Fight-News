@@ -2,7 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {permissionAllowsCollection,conservativeRobotsAllow,sourceIdentityEvidence,
- corroborateSavedMeasurements,requiresIdentityRecheck}
+ corroborateSavedMeasurements,requiresIdentityRecheck,
+ parseSumoDbCareerRecord,requiresCareerRecordCrosscheck}
  from '../scripts/sumo-weight-sumodb-collector.mjs';
 
 test('no automated historical collection without documented provider permission',()=>{
@@ -132,4 +133,34 @@ test('reverify only legacy identity evidence, once, after source collection',()=
  assert.equal(requiresIdentityRecheck({identityEvidence:{birthDateStatus:'source-birth-date-missing'}}),false);
  assert.equal(requiresIdentityRecheck({identityRecheck:{sourceParserVersion:4}}),false);
  assert.equal(requiresIdentityRecheck(null),false);
+});
+
+test('parse separately published SumoDB career W-L-A without assuming /N counts all bouts',()=>{
+ const html='<h2>Onosato Daiki</h2><p>Career Record 207-73-26/278 (22 basho)</p>'+
+  '<div>In Makuuchi 173-63-26/234</div>';
+ assert.deepEqual(parseSumoDbCareerRecord(html),{
+  wins:207,losses:73,absences:26,providerReportedBoutCount:278
+ });
+ const thousands='<h2>Test</h2> Career Record 1,207-1,073-140/2,275 (130 basho)';
+ assert.equal(parseSumoDbCareerRecord(thousands).wins,1207);
+ assert.equal(parseSumoDbCareerRecord(thousands).absences,140);
+});
+test('unpublished SumoDB absences remain null; no guessing or leaking division record',()=>{
+ const withoutAbsences='<p>Career Record 175-189/364</p>';
+ const parsed=parseSumoDbCareerRecord(withoutAbsences);
+ assert.deepEqual(parsed,{wins:175,losses:189,absences:null,providerReportedBoutCount:364});
+ assert.equal(parseSumoDbCareerRecord('<p>In Juryo 22-7-0/29</p>'),null);
+ assert.equal(parseSumoDbCareerRecord('Career Record unknown'),null);
+});
+test('run SumoDB career crosscheck only for unresolved official totals and only once',()=>{
+ const missing={blockers:['official-absence-total-unpublished-or-disagree'],
+  classification:'needs-source-or-manual-review'};
+ const other={blockers:['independent-JSA-historical-ranks-not-compared'],
+  classification:'needs-source-or-manual-review'};
+ assert.equal(requiresCareerRecordCrosscheck({identityEvidence:{valid:true}},missing),true);
+ assert.equal(requiresCareerRecordCrosscheck({careerRecordCrosscheck:{sourceRecordPublished:false}},missing),false);
+ assert.equal(requiresCareerRecordCrosscheck({identityEvidence:{valid:true}},other),false);
+ assert.equal(requiresCareerRecordCrosscheck({},{
+  classification:'candidate-for-strict-audit',blockers:['official-absence-total-unpublished-or-disagree']}),false);
+ assert.equal(requiresCareerRecordCrosscheck(null,missing),false);
 });
