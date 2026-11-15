@@ -110,6 +110,39 @@ export function supplementalHistoricalBashoCoverage(p,jsa,sdb,activeBasho){
    missingOfficialBasho:missing.length,sourceOverlapConflicts:overlapConflicts};
 }
 
+/** Use only exact date-and-numbered-rank matches from an independently
+ * captured source to extend JSA's bounded public historical banzuke view.
+ * Official JSA mismatches and independently conflicting ranks always block.
+ */
+export function independentHistoricalRankCoverage(p,jsa,sdb){
+ const history=p?.rankTimeline||[], ranks=jsa?.rankReconciliation||null;
+ const officialRows=jsa?.officialRankRecords||[];
+ const minimum=Math.max(1,Math.floor(history.length*0.75));
+ const current=Number(ranks?.comparedBasho||0);
+ const officialDates=new Set(officialRows.map(x=>String(x.bashoId)));
+ const src=sdb?.careerRecordCrosscheck||null;
+ const valid=src?.identityVerified===true&&
+   src?.originalMeasurementsUnchanged===true&&src?.independentOfApi===true&&
+   src?.careerRecordDiffersFromPriorSnapshot!==true&&
+   /^[a-f0-9]{64}$/.test(String(src?.datedBashoLedgerSourceSha256||''))&&
+   src?.sourceUrl==='https://sumodb.sumogames.de/Rikishi.aspx?r='+sdb?.sumoDbId&&
+   Array.isArray(src.independentBashoRows);
+ const sourceRanks=valid?new Map(src.independentBashoRows.filter(x=>x.rankEn!=null)
+   .map(x=>[String(x.bashoId),String(x.rankEn)])):new Map();
+ const additional=history.filter(x=>!officialDates.has(x.bashoId)&&
+   sourceRanks.get(x.bashoId)===x.rank).length;
+ const conflicts=history.filter(x=>sourceRanks.has(x.bashoId)&&
+   sourceRanks.get(x.bashoId)!==x.rank).length;
+ const validJsa=!!ranks&&ranks.mismatches?.length===0&&
+   ranks.agreedBasho===ranks.comparedBasho&&
+   officialRows.length===current&&
+   (ranks.missingSourceRankBasho||[]).length===0;
+ return {passed:validJsa&&
+   (current>=minimum||(valid&&current+additional>=minimum&&conflicts===0)),
+   jsaCompared:current,independentAdditional:additional,sourceConflicts:conflicts,
+   quota:minimum,independentEvidenceValid:!!valid};
+}
+
 export function preflightRikishi(w,p,jsa,sdb,activeBasho){
  if(!id(w?.sourceId)||!id(w?.officialNskId)||!id(w?.sumoDbId)||
    !p||p.sourceId!==w.sourceId||p.officialNskId!==w.officialNskId||
@@ -175,13 +208,8 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
  });
  add(missingRecords.length===0,'official-nonabsence-basho-rows-unreconciled');
  const ranks=jsa?.rankReconciliation||null;
- // Match the strict gate's minimum independently compared rank-history
- // coverage; otherwise a historical profile with a short public JSA excerpt
- // must remain in the source-coverage queue, not the fast certification lane.
- const minimumRankRows=Math.max(1,Math.floor((p.rankTimeline?.length||0)*0.75));
- add(ranks&&Number(ranks.comparedBasho)>=minimumRankRows&&
-   ranks.mismatches?.length===0,
-  'independent-JSA-historical-ranks-not-compared');
+ const sourceRankCoverage=independentHistoricalRankCoverage(p,jsa,sdb);
+ add(sourceRankCoverage.passed,'independent-JSA-historical-ranks-not-compared');
  // Photo rights are a separate display/release gate, never an invented source
  // for records or a reason to alter the strictly verified career history.
  const plan=planPreflightNextAction(problems);
@@ -194,6 +222,9 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
   missingJsaOlderBasho:completedBasho.missingOfficialBasho,
   historicalSourceOverlapConflicts:completedBasho.sourceOverlapConflicts,
   JsaHistoricalRankCompared:Number(ranks?.comparedBasho||0),
+  independentAdditionalRankPositions:sourceRankCoverage.passed&&
+   sourceRankCoverage.jsaCompared<sourceRankCoverage.quota?
+   sourceRankCoverage.independentAdditional:0,
   documentedNoPublishedNumberedDebutRank:justifiedDebutGap,
   debutRankStillUnpublished:justifiedDebutGap?String(p.rankHistoryGaps[0].bashoId):null,
   careerTotalsEvidence:jsaWinLossMatches&&jsaAbsencesPresent?
