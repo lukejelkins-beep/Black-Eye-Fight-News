@@ -195,10 +195,18 @@ export function requiresCareerRecordCrosscheck(doc,preflight,strictRow=null){
  const needsOldBasho=!candidate&&
    blockers.includes('official-completed-basho-ledger-coverage-incomplete')&&
    !Array.isArray(doc.careerRecordCrosscheck?.independentBashoRows);
- // Only the few current strict fast-lane rank-coverage failures get an
- // extra bounded rank-notational source check, not the entire frozen cohort.
- const missingRankEvidence=strictRow?.blockers?.length===1&&
-   strictRow.blockers[0]==='independent-official-banzuke-rank-coverage'&&
+ // Rank-only strict blockers need one independent dated source pass even
+ // when preflight also has the umbrella 'prerequisites-not-met' blocker.
+ // Do not bypass any other blocker or repeat an already saved rank snapshot,
+ // including source rows with a deliberately null rankEn.
+ const rankOnlyPreflight=blockers.length===0||
+   (blockers.length===1&&
+    blockers[0]==='independent-JSA-historical-ranks-not-compared');
+ const strictReasons=strictRow?.blockers||[];
+ const rankOnlyStrict=strictReasons.includes('independent-official-banzuke-rank-coverage')&&
+   strictReasons.every(x=>x==='preflight-prerequisites-not-met'||
+    x==='independent-official-banzuke-rank-coverage');
+ const missingRankEvidence=rankOnlyPreflight&&rankOnlyStrict&&
    !(doc.careerRecordCrosscheck?.independentBashoRows||[]).some(x=>
      Object.prototype.hasOwnProperty.call(x,'rankEn'));
  return needsCareer||needsOldBasho||missingRankEvidence;
