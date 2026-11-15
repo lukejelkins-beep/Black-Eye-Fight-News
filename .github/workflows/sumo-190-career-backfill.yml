@@ -190,6 +190,9 @@ jobs:
         if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-certification-preflight-190.mjs
 
+      # Older ranks may use independently dated, exactly matched SumoDB
+      # numbered banzuke positions when the public JSA extract is truncated;
+      # source overlaps must match and all unmatched ranks stay explicitly null.
       # One canonical research audit after provider evidence collection and
       # JSA preflight. The gate fails on a lost prior certificate, even when
       # the total count rises. Documented unpublished debut ranks remain null;
