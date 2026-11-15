@@ -10,6 +10,46 @@ const read=async p=>JSON.parse(await readFile(p,'utf8'));
 const maybe=async p=>{try{return await read(p);}catch(e){if(e.code==='ENOENT')return null;throw e;}};
 const id=n=>Number.isSafeInteger(Number(n))&&Number(n)>0;
 const numeric=n=>n!=null&&Number.isInteger(Number(n))&&Number(n)>=0;
+const ACTIONS=Object.freeze({
+ 'independent-JSA-historical-ranks-not-compared':{
+  lane:'official-rank-recheck',owner:'existing JSA source worker',
+  nextAction:'Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.'},
+ 'independent-SumoDB-birth-date-not-verified':{
+  lane:'source-identity-recheck',owner:'existing SumoDB source worker',
+  nextAction:'Crosscheck original SumoDB profile header name, date of birth and all saved measurements without replacing original source values.'},
+ 'official-absence-total-unpublished-or-disagree':{
+  lane:'absence-proof-review',owner:'historical manual source review',
+  nextAction:'Locate independently published career absences or documented tournament absences. Never turn an unreported absence total into zero.'},
+ 'official-JSA-career-totals-unpublished-or-disagree':{
+  lane:'career-totals-review',owner:'historical manual source review',
+  nextAction:'Separate absent JSA career totals from as-of-date mismatches and true historic record conflicts; preserve both sources until reconciled.'},
+ 'official-completed-basho-ledger-coverage-incomplete':{
+  lane:'official-tournament-gap',owner:'historical manual source review',
+  nextAction:'Review which completed tournament results lack independent official comparison, preserving absence-only and unranked tournament distinctions.'},
+ 'complete-rank-timeline-not-evidenced':{
+  lane:'api-rank-history-gap',owner:'historical manual source review',
+  nextAction:'Identify missing banzuke rank dates and seek dated official archive evidence; never interpolate unrecorded positions.'},
+ 'official-JSA-profile-field-disagreement':{
+  lane:'profile-source-conflict',owner:'historical manual source review',
+  nextAction:'Investigate the exact official/API current profile disagreement and document which publication is newer; do not overwrite either raw source.'}
+});
+const ACTION_PRIORITY=[
+ 'official-JSA-profile-field-disagreement',
+ 'official-completed-basho-ledger-coverage-incomplete',
+ 'complete-rank-timeline-not-evidenced',
+ 'official-JSA-career-totals-unpublished-or-disagree',
+ 'official-absence-total-unpublished-or-disagree',
+ 'independent-JSA-historical-ranks-not-compared',
+ 'independent-SumoDB-birth-date-not-verified'
+];
+export function planPreflightNextAction(blockers){
+ if(!Array.isArray(blockers)||!blockers.length)
+  return {lane:'fast-lane-strict-audit',owner:'strict audit reviewer',
+   nextAction:'Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.'};
+ const issue=ACTION_PRIORITY.find(x=>blockers.includes(x))||blockers[0];
+ return ACTIONS[issue]||{lane:'manual-triage',owner:'historical source reviewer',
+  nextAction:'Investigate unclassified source verification issue without changing original data.'};
+}
 export function preflightRikishi(w,p,jsa,sdb,activeBasho){
  if(!id(w?.sourceId)||!id(w?.officialNskId)||!id(w?.sumoDbId)||
    !p||p.sourceId!==w.sourceId||p.officialNskId!==w.officialNskId||
@@ -66,7 +106,9 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
   'independent-JSA-historical-ranks-not-compared');
  // Photo rights are a separate display/release gate, never an invented source
  // for records or a reason to alter the strictly verified career history.
+ const plan=planPreflightNextAction(problems);
  return {sourceId:w.sourceId,name:w.shikonaEn,division:p.current?.rank?.split(' ')[0],
+  certificationLane:plan.lane,owner:plan.owner,nextAction:plan.nextAction,
   classification:problems.length?'needs-source-or-manual-review':'candidate-for-strict-audit',
   blockers:problems,completedHistoricalBoutTournaments:prior.length,
   officialBashoCompared:Number(historical?.comparedBasho||0),
@@ -80,10 +122,13 @@ export function summarizePreflight(rows){
   throw Error('Certification preflight must cover exactly 190 immutable source IDs');
  const count=x=>rows.filter(r=>r.blockers.includes(x)).length;
  const all=[...new Set(rows.flatMap(x=>x.blockers))].sort();
+ const laneCount=Object.fromEntries([...new Set(rows.map(x=>x.certificationLane))]
+   .sort().map(lane=>[lane,rows.filter(x=>x.certificationLane===lane).length]));
  return {schemaVersion:1,cohortSize:190,scope:'Research-only strict Sumo career preflight; never self-certifies',
   candidateForStrictAudit:rows.filter(x=>x.classification==='candidate-for-strict-audit').length,
   needsSourceOrManualReview:rows.filter(x=>x.blockers.length>0).length,
   blockerCounts:Object.fromEntries(all.map(x=>[x,count(x)])),
+  certificationLanes:laneCount,
   certified:0,productionApproved:false,
   note:'Candidate status means only that source prerequisites pass. Final strict audit, exceptions, photos and explicit release approval are separate.',
   rows};
