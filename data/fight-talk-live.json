@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-15T01:40:10.638Z",
-  "checkedAt": "2026-11-15T01:40:10.638Z",
+  "attemptedAt": "2026-11-15T02:33:52.902Z",
+  "checkedAt": "2026-11-15T02:33:52.902Z",
   "updatedAt": "2026-11-14T23:57:51Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 4,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 4,
+      "checked": 6,
       "failed": 0,
-      "configured": 4,
-      "message": "4 of 4 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 26,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 42,
+      "configured": 43,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 2,
+      "configured": 0,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -53,21 +53,20 @@
   "threadsStatus": "Original public Threads links discovered from trusted fight coverage; no account-level Meta API or OAuth required.",
   "failures": [],
   "rollingScan": {
-    "directoryEntries": 447,
+    "directoryEntries": 448,
     "scheduledEntries": 84,
-    "batchIndex": 2,
+    "batchIndex": 0,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "X": 26,
-      "Instagram": 42,
-      "Bluesky": 4,
-      "Threads": 10,
-      "Reddit": 2
+      "Instagram": 43,
+      "Bluesky": 6,
+      "X": 27,
+      "Threads": 8
     },
-    "directlyChecked": 4,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
@@ -117,6 +116,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-15T00:21:40.607Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2cnjfzk3n2q",
+      "cid": "bafyreic5tl5zsep55yumktdyu2p5xa3nb5tn2pdt4ztoe5zpxztxbvucdi",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Aaron Bronsteter",
+      "handle": "@aaron.report",
+      "role": "media",
+      "quote": "With her fourth submission win, Mesquita surpasses Ronda Rousey for the most submission wins in UFC women’s bantamweight history.",
+      "postedAt": "2026-11-14T23:26:11.399Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/aaron.report/post/3n2cnjfzk3n2q",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -333,6 +356,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-15T00:21:40.607Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2cgdsfo5e2d",
+      "cid": "bafyreididngxgka4cugzl5nurmn3qpilfmq32venjx77ubcafu34hnerau",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Zuffa’s Matchmaking Promise Exposed by ‘Embarrassing’ Fight #boxing #boxingnews",
+      "postedAt": "2026-11-14T21:17:46Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2cgdsfo5e2d",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -624,6 +671,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2c5asmido2t",
+      "cid": "bafyreie37gnmimqvr3lqrymscn5uurqujssw7i75ckrpspjrvwdmfk6hfu",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Aaron Bronsteter",
+      "handle": "@aaron.report",
+      "role": "media",
+      "quote": "UFC 334 picks\n\nAlmeida/Johnson O1.5 -135\n\nGane/Hokit U3.5 -155\n\nBorralho -155\n\nDober/Duncan O1.5 -125\n\nDarts 🎯 \n\nAlmeida wins by decision +800\n\nGane wins by KO/TKO in Rd 2/3 +440\n\nChiasson wins by decision +470",
+      "postedAt": "2026-11-14T18:35:02.753Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/aaron.report/post/3n2c5asmido2t",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
+      "engagement": {
+        "likes": 3,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2c52zundm2u",
       "cid": "bafyreig6avcfh5araw43lrpmvcbmzkopkxry2ynwwjdcairrtlnwozf7z4",
       "platform": "Bluesky",
@@ -669,6 +740,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-15T00:21:40.607Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2c4hkjhzi26",
+      "cid": "bafyreidmntutuf66uq6qh5trj7isuaznaooo474qmrynfzknpmpib6y6la",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Real-Life Rocky Battered by 2-0 Heavyweight on Zuffa Debut #boxing #boxingnews",
+      "postedAt": "2026-11-14T18:20:55Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2c4hkjhzi26",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -816,6 +911,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2bsl5ybsq2g",
+      "cid": "bafyreicsdpyxdyhtbz22l2vqnjhzkrpcv25e5a6wdwnohsxtizlpm6yi2q",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Bruno Surace vs. Kamil Bednarek Live Scorecard #boxing #boxingnews",
+      "postedAt": "2026-11-14T15:23:58Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2bsl5ybsq2g",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2bk5cvbeg2t",
       "cid": "bafyreidctqds5l7dai74ccbqwgkm346r67yc2n2mwh6qebt5jmgvxw32li",
       "platform": "Bluesky",
@@ -864,6 +983,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2bioobamb2g",
+      "cid": "bafyreidixlp7fmyrwxuytuhtcpnmcvazj3ovsxilm3x4o2qoiyhfm3vzju",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "KO’d by Mike Tyson in 39 Seconds, Later Shot and Killed a Man #boxing #boxingnews",
+      "postedAt": "2026-11-14T12:26:59Z",
+      "date": "14 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2bioobamb2g",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n2b32xajjk2k",
       "cid": "bafyreifwxpkeqpbphjizfakb4ht4hdkhoxqtwxf2l75oocf43szucmya4q",
       "platform": "Bluesky",
@@ -884,7 +1027,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -908,7 +1051,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -930,9 +1073,9 @@
       "engagement": {
         "likes": 1,
         "comments": 0,
-        "shares": 0
+        "shares": 1
       },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -956,7 +1099,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -980,7 +1123,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1004,7 +1147,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1028,7 +1171,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1052,7 +1195,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1076,7 +1219,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1100,31 +1243,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n24nmgdwan2z",
-      "cid": "bafyreigf2jntgls26qgeieqotsijfhot5lhxmtk6snd76r6vvpp45atpqy",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Bam Rodriguez Looks Huge as WBC Confirms Naoya Inoue Talks #boxing #boxingnews",
-      "postedAt": "2026-11-12T14:11:53Z",
-      "date": "13 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n24nmgdwan2z",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1148,7 +1267,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1172,7 +1291,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1196,7 +1315,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3178,7 +3297,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3401,7 +3520,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3793,30 +3912,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3mzy7jfqr3422",
-      "cid": "bafyreig2cee5odqrjsgpy4jaodxpanq2kwj6m4zj2m7enrgw33zpz3hkuu",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Claressa Shields Says MVP Is Blocking Chantelle Cameron Fight \n\nMY WBN Story: https://www.worldbox...",
-      "postedAt": "2026-11-10T19:49:01Z",
-      "date": "11 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3mzy7jfqr3422",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "platform": "Instagram",
       "sport": "boxing",
       "type": "post",
@@ -4122,30 +4217,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3mzxq4zel7e2n",
-      "cid": "bafyreigpirbachxhq2atbntgavfjhgnz6qg4p74z5vzsvyrbsntdoaqabi",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Angel Perez Talks November 13 Fight, Calls Out Emiliano Vargas\n\nMy Exclusive WBN Story: https://www.worldbox...",
-      "postedAt": "2026-11-10T15:13:39Z",
-      "date": "11 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3mzxq4zel7e2n",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "platform": "Instagram",
       "sport": "boxing",
       "type": "post",
@@ -4309,30 +4380,6 @@
       "postedAt": "2026-11-10T12:47:58+0000",
       "url": "https://www.instagram.com/reel/Dfj8KHGSHEv/",
       "photo": "https://scontent-sea5-1.xx.fbcdn.net/v/t51.82787-15/778074004_18621605812031211_8925570489490121189_n.jpg?_nc_cat=109&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=ybGThpjWHIQQ7kNvwE2MpQI&_nc_oc=AdrjN5cdL2_Wxp69DmF_5uLAcFN8lq37pe9Po9Boj6I_j_XxYSkU4I7SU7lTVwhuxWM&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AL-3X8kEAAAA&_nc_gid=x_7GoGhJkfkphvGJa8duRQ&oh=00_AQT339TFv53p-4MGPojjxYMdlfGJh4VpKks-0U5km5mQxQ&oe=6AFAD77B",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3mzxfc65qif2n",
-      "cid": "bafyreicw3tzhkbcbcou7q5rdkrzhqkhiclzuhxwv5g5dfkh7iu4v5s4xcu",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Fury vs. Joshua Decision Costs Heavyweight Champion Title Status \n\nMy WBN Story: https://www.worldbox...",
-      "postedAt": "2026-11-10T11:59:41Z",
-      "date": "10 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3mzxfc65qif2n",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4982,7 +5029,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-14T08:34:40.464Z",
+      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5399,37 +5446,6 @@
       "postedAt": "2026-11-08T12:00:11+0000",
       "url": "https://www.instagram.com/reel/DfetOGAzjty/",
       "photo": "https://scontent-iad6-1.xx.fbcdn.net/v/t51.82787-15/670048644_18571354540003412_970172249870866445_n.jpg?_nc_cat=110&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=4JoZyQ0boL4Q7kNvwEiZfyP&_nc_oc=AdrVoK2-9bxkh8s4hCb4TaLn2qbwGr0ri4uQbbWIrxtIru4Hoccfk81s2vDXoSlT-sU&_nc_zt=23&_nc_ht=scontent-iad6-1.xx&edm=AL-3X8kEAAAA&_nc_gid=BXjiM2wVzPLiHdlzKxDHBg&oh=00_AQSI_jC01ODyMiD2splgB6ordzoQTUkk2gRl8YiknbHTyA&oe=6AFACAC4",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "platform": "Instagram",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Tenshin Nasukawa",
-      "handle": "@tenshin.nasukawa",
-      "role": "fighter",
-      "fighterTier": "contender",
-      "source": "Instagram original author API",
-      "id": "18136624333588903",
-      "quote": "みんなちがって みんないい！💕\n\n本当の事は口伝で伝えていく\n\nチラシ配る為に自分でコピー\nもちろん自分で配ったよ\n\n答え合わせの時間\n\n読み方もなまってる\n\n写真は白黒だけど思想は中立\n\nウンチ踏んだ🤟\n\nカッコいい納豆\n\nBeats360 だから360°付けても良いよね\n\nふらっと入った牛タン屋さん\n新聞で自分の事をよく見るらしい\nあまり良い事書かれてないからどんな奴かと思ってたけど\n話したらめちゃ良い奴じゃないか！と言われて\n新聞に抗議すると言ってくれた🤣\n\n文化⭐︎横丁\n\n開けなかったら100万円\n開けたら0円\n僕はもちろん後者だよん😇\n\n地方に行ってもサウナは欠かせない\n挨拶みたいなもん\n\n夢の追憶\n\n誰もいない所で走った",
-      "postedAt": "2026-11-08T11:34:27+0000",
-      "url": "https://www.instagram.com/p/DfeqQ7tGk1X/",
-      "photo": "https://scontent-sea5-1.xx.fbcdn.net/v/t51.82787-15/883558562_18656321662035644_6845189562230409541_n.jpg?_nc_cat=105&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=QNRRNz_fphwQ7kNvwGFqStP&_nc_oc=AdrQsAX8-qKO7L4k4Z35fHpXd7qlZ-tN5IfZiI9_Ix3HUQ8LPJPKuqaxFuYhlCb4QfM&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AL-3X8kEAAAA&_nc_gid=EHwQ8JlhFt1c8GYXYy3grw&oh=00_AQQS-FQRzHP3VqoDaQwkFVdFEQYeyVMRAVMtOJnbEbtI_w&oe=6AFADA70",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "platform": "Instagram",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Junto Nakatani",
-      "handle": "@junto.n",
-      "role": "fighter",
-      "source": "Instagram original author API",
-      "id": "18123628012940532",
-      "quote": "東京！名古屋！\n2日間あっという間に過ぎてしまいました、\nお越しいただきました皆様ありがとうございました。\nたくさんの方々の温かい想いに触れ、\n皆様のおかげでボクシングができていると改めて感じさせてもらえる幸せな時間を過ごさせていただきました。\n中谷潤人のストーリーは続きます!\n強くなった姿を表現できるよう引き続き頑張ります。\n\n感謝！感謝！\n\n#BeYourOwnBOSS\n\nboss",
-      "postedAt": "2026-11-08T11:04:34+0000",
-      "url": "https://www.instagram.com/p/Dfem2EIGT2W/",
-      "photo": "https://scontent-ord5-2.xx.fbcdn.net/v/t51.82787-15/703467491_18391568782095930_8495639239188447646_n.jpg?_nc_cat=103&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=gMLXQHy7G7UQ7kNvwHX-gSO&_nc_oc=AdrMBdLCuHaI7mliFyQdwUqGaWYCQrN5CYWl-0zCMEKS9i3j0Obiv_CNaPoCdQ0IVRo&_nc_zt=23&_nc_ht=scontent-ord5-2.xx&edm=AL-3X8kEAAAA&_nc_gid=FhJ3Fj3Zg4if4rw5NyDGTw&oh=00_AQT-01enxQbyBYIMnHhflPJi7IGmmijcmzp380lfWfERIw&oe=6AFAC772",
       "topic": "Original source post · claims may need confirmation"
     }
   ],
