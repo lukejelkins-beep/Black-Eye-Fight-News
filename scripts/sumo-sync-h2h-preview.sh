@@ -19,7 +19,7 @@ if(c.schemaVersion!==1||c.cohortSize!==190||c.certified!==false||c.productionPub
    Object.keys(c.bySourceId||{}).length!==190||
    Object.values(c.bySourceId).some(p=>
       p.certified!==false||!Array.isArray(p.weight)||!Array.isArray(p.rank)||
-      p.weight.some(m=>!/^(18|19|20)\\d{2}(01|03|05|07|09|11)$/.test(m.basho)||
+      p.weight.some(m=>!/^(18|19|20)[0-9]{2}(01|03|05|07|09|11)$/.test(m.basho)||
          !(m.kg>=45&&m.kg<=400)||m.independentlyCertified!==false)||
       p.currentListedWeight?.datedMeasurement===true))process.exit(3);
 if(a.cohortSize!==190||a.profileCount!==190||b.cohortSize!==190||b.certified!==false||o.profileCount!==190||
