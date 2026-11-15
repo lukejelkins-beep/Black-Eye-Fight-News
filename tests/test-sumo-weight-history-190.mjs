@@ -88,3 +88,24 @@ test('report distinguishes DOB-checked and older unverified historical weight ev
   'prior-check-needs-birthdate-proof');
  assert.equal(report.certifiedWeightHistories,0);
 });
+
+test('legacy DOB recheck strengthens identity coverage without increasing historical weight dots',()=>{
+ const roster={count:190,rikishi:Array.from({length:190},(_,i)=>({
+  sourceId:i+1,shikonaEn:'Wrestler '+i,sumoDbId:500+i}))};
+ const apis=new Map(roster.rikishi.map(x=>[x.sourceId,{data:{
+  measurements:[{bashoId:'202405',weight:143,height:180}]}}]));
+ const saved={sourceId:1,sumoDbId:500,datedEvidence:[{
+  bashoId:'202405',weightKg:143,heightCm:180,
+  sourceUrl:'https://sumodb.sumogames.de/Rikishi.aspx?r=500'}],
+  identityRecheck:{originalEvidencePreserved:true,unchangedSavedMeasurements:1,
+   identityEvidence:{valid:true,birthDateStatus:'match'}}};
+ const report=summarizeWeightCoverage(roster,apis,new Map([[1,saved]]));
+ assert.equal(report.independentDatedPoints,1);
+ assert.equal(report.additionalDatedPoints,0);
+ assert.equal(report.historicalSourceIdentityRechecks,1);
+ assert.equal(report.corroboratedLegacyWeightObservations,1);
+ assert.equal(report.independentIdentityBirthDateVerified,1);
+ assert.equal(report.independentIdentityBirthDatePending,0);
+ assert.equal(report.entries[0].sourceIdentityRechecked,true);
+ assert.equal(report.entries[0].weightTimelineCertified,false);
+});
