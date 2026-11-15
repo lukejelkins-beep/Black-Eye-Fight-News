@@ -183,17 +183,25 @@ export function parseSumoDbBashoRecords(html){
 }
 
 /** Require an existing preflight blocker and never repeat one-time research capture. */
-export function requiresCareerRecordCrosscheck(doc,preflight){
- if(!doc||preflight?.classification==='candidate-for-strict-audit')return false;
+export function requiresCareerRecordCrosscheck(doc,preflight,strictRow=null){
+ if(!doc)return false;
  const blockers=preflight?.blockers||[];
  if(!Array.isArray(blockers))return false;
- const needsCareer=blockers.some(x=>
+ const candidate=preflight?.classification==='candidate-for-strict-audit';
+ const needsCareer=!candidate&&blockers.some(x=>
    x==='official-absence-total-unpublished-or-disagree'||
    x==='official-JSA-career-totals-unpublished-or-disagree')&&
    !doc.careerRecordCrosscheck;
- const needsOldBasho=blockers.includes('official-completed-basho-ledger-coverage-incomplete')&&
+ const needsOldBasho=!candidate&&
+   blockers.includes('official-completed-basho-ledger-coverage-incomplete')&&
    !Array.isArray(doc.careerRecordCrosscheck?.independentBashoRows);
- return needsCareer||needsOldBasho;
+ // Only the few current strict fast-lane rank-coverage failures get an
+ // extra bounded rank-notational source check, not the entire frozen cohort.
+ const missingRankEvidence=strictRow?.blockers?.length===1&&
+   strictRow.blockers[0]==='independent-official-banzuke-rank-coverage'&&
+   !(doc.careerRecordCrosscheck?.independentBashoRows||[]).some(x=>
+     Object.prototype.hasOwnProperty.call(x,'rankEn'));
+ return needsCareer||needsOldBasho||missingRankEvidence;
 }
 
 export function recoveryCooldown(error){
@@ -354,11 +362,13 @@ async function main(){
   // dates or totals as a positive certification.
   const preflight=await optional(join(ROOT,'career-certification-preflight.json'));
   const pendingById=new Map((preflight?.rows||[]).map(x=>[Number(x.sourceId),x]));
+  const lastStrict=await optional(join(ROOT,'career-certification-strict.json'));
+  const strictById=new Map((lastStrict?.rows||[]).map(x=>[Number(x.sourceId),x]));
   for(const w of roster.rikishi){
    if(requests>=limit||cooldown)break;
    const dest=join(ROOT,'weight-source-crosschecks',w.sourceId+'.json');
    const saved=await optional(dest);
-   if(!requiresCareerRecordCrosscheck(saved,pendingById.get(Number(w.sourceId))))continue;
+   if(!requiresCareerRecordCrosscheck(saved,pendingById.get(Number(w.sourceId)),strictById.get(Number(w.sourceId))))continue;
    const alreadyBlocked=(prior.reviewCases||[]).some(x=>x.sourceId===w.sourceId&&
     x.permanent&&Number(x.parserVersion||0)>=SOURCE_PARSER_VERSION);
    if(alreadyBlocked)continue;
@@ -427,6 +437,8 @@ async function main(){
  // keep a distinct outstanding count for the existing GitHub scheduler.
  const checkpoint=await optional(join(ROOT,'career-certification-preflight.json'));
  const outstanding=new Map((checkpoint?.rows||[]).map(x=>[Number(x.sourceId),x]));
+ const previousStrict=await optional(join(ROOT,'career-certification-strict.json'));
+ const rankedById=new Map((previousStrict?.rows||[]).map(x=>[Number(x.sourceId),x]));
  let outstandingCareerCrosschecks=0,careerRecordsCaptured=0;
  for(const w of roster.rikishi){
   const doc=await optional(join(ROOT,'weight-source-crosschecks',w.sourceId+'.json'));
@@ -436,7 +448,7 @@ async function main(){
      Number(x.parserVersion||0)>=SOURCE_PARSER_VERSION);
   const birth=doc?.identityRecheck?.identityEvidence||doc?.identityEvidence||{};
   if(!block&&birth.valid===true&&birth.birthDateStatus==='match'&&
-    requiresCareerRecordCrosscheck(doc,item))outstandingCareerCrosschecks++;
+    requiresCareerRecordCrosscheck(doc,item,rankedById.get(Number(w.sourceId))))outstandingCareerCrosschecks++;
  }
  const result={schemaVersion:1,scope:'Research-only SumoDB collection progress',
   lastRunAt:now(),source:'https://sumodb.sumogames.de',
