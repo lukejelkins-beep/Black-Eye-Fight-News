@@ -383,7 +383,7 @@ function profileTechniques(w){
 function renderApiQuality(w){
  const quality=wrestlerQuality(w,STATE.apiTrust);
  if(!quality)return '<p class="footnote">Source data status is unavailable; this profile has not been independently certified.</p>';
- return '<aside class="sumo-api-quality" aria-label="Research data quality">'+
+ return '<aside class="sumo-api-quality" data-sumo-source-id="'+Number(w.sourceId)+'" aria-label="Research data quality">'+
   '<div class="sumo-api-quality-label">API-TRUSTED · NON-PRODUCTION PREVIEW</div>'+
   '<strong>'+e(quality.careerResultsStatus)+'</strong>'+
   '<p>Complete cached Sumo API career data is accepted for development. This is not full-profile certification, bout-by-bout JSA certification or production approval.</p>'+
