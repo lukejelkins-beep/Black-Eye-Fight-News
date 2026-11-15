@@ -9,6 +9,7 @@ import {dirname} from 'node:path';
 const CANDIDATES=process.env.SUMO_CC_CANDIDATES;
 const PHOTO_MANIFEST='data/sumo/approved-photos.json';
 const CREDITS='sumo-photo-credits.html';
+const SYNC_STATUS='data/sumo/photo-import-status.json';
 const UA='BEFN-Sumo-Preview/0.1 (Wikimedia Commons licence verification; admin@blackeyefightnews.com.au)';
 const LICENSE='https://creativecommons.org/licenses/by-sa/4.0/';
 const read=async p=>JSON.parse(await readFile(p,'utf8'));
@@ -112,6 +113,18 @@ async function main(){
  const manifest=await optional(PHOTO_MANIFEST)||{
   schemaVersion:1,description:'Approved, locally hosted Sumo photographs with proper attribution',
   bySourceId:{}};
+ const pending=data.candidates.filter(c=>manifest.bySourceId?.[String(c.sourceId)]?.approved!==true);
+ if(!pending.length){
+  console.log(JSON.stringify({status:'all-vetted-portraits-already-staged',
+    previewOnly:true,photoCount:data.candidates.length,production:false}));
+  return;
+ }
+ const prior=await optional(SYNC_STATUS);
+ if(prior?.nextAttemptAfter&&Date.now()<Date.parse(prior.nextAttemptAfter)){
+  console.log(JSON.stringify({status:'photo-source-cooldown',until:prior.nextAttemptAfter,
+    pending:pending.length,previewOnly:true}));
+  return;
+ }
  let newlyApproved=0,errors=[];
  for(const c of data.candidates){
   const id=String(c.sourceId);
@@ -142,6 +155,17 @@ async function main(){
  const approved=Object.values(manifest.bySourceId).filter(x=>x.approved).length;
  await writeIfChanged(PHOTO_MANIFEST,JSON.stringify(manifest,null,2)+'\n');
  await writeIfChanged(CREDITS,creditsDocument(manifest));
+ const now=new Date();
+ await writeIfChanged(SYNC_STATUS,JSON.stringify({
+  schemaVersion:1,at:now.toISOString(),
+  status:errors.length?'partial-source-verification-or-download-failure':'source-validated',
+  approvedLocalPhotos:approved,
+  unresolved:data.candidates.filter(c=>!manifest.bySourceId?.[String(c.sourceId)]?.approved)
+    .map(c=>c.sourceId),
+  errors,productionPublished:false,
+  nextAttemptAfter:errors.length?new Date(now.getTime()+6*60*60*1000).toISOString():null,
+  note:'A source/rights error never counts as approval, and existing local assets remain untouched.'
+ },null,2)+'\n');
  console.log(JSON.stringify({previewOnly:true,verifiedNewPhotos:newlyApproved,
    totalLocalApprovedPhotos:approved,skippedOrBlocked:errors,production:false}));
 }
