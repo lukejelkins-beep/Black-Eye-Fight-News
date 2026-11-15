@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "batch": 26,
+  "date": "2026-11-15",
+  "scope": "Research-only integration of previously corroborated batch-25 evidence; not new independent verification",
+  "archive": "research/boxing/generated/archived-bout-verification-queue.csv",
+  "evidence": "research/boxing/generated/2026-11-15-independent-bout-evidence-batch-25.json",
+  "prior_crosswalks": [
+    22,
+    24
+  ],
+  "new_archive_rows_crosswalked": 1,
+  "cumulative_archive_rows_crosswalked": 12,
+  "archive_total_rows": 345,
+  "cumulative_distinct_archived_bouts_crosswalked": 8,
+  "entries": [
+    {
+      "archive_line": 7,
+      "boxer_id": "boxing-willy-hutchinson",
+      "opponent": "Mark Jeffers",
+      "fight_date_iso": "2025-10-04",
+      "outcome": "W",
+      "archive_method": "TKO R7",
+      "evidence_method": "TKO",
+      "stoppage_round": 7,
+      "stoppage_time": "2:15",
+      "source_urls": [
+        "https://www.boxingscene.com/articles/hutch-train-back-on-track-as-willy-hutchinson-scores-stoppage-of-mark-jeffers",
+        "https://boxingnewsonline.net/news/willy-hutchinson-knocks-out-mark-jeffers-in-round-seven/"
+      ],
+      "status": "RESULT_CORROBORATED_EXTERNAL_IDENTITIES_PENDING",
+      "external_opponent_id": null,
+      "canonical_bout_id": null,
+      "full_career_certified": false
+    }
+  ],
+  "checks": {
+    "archive_line_boxer_date_opponent_outcome_method_match": true,
+    "prior_crosswalk_line_overlap": false,
+    "distinct_bout_count_increment": 1,
+    "external_participant_ids_verified": 0,
+    "full_careers_certified": 0,
+    "profiles_pending": 509,
+    "compubox_imports": 0,
+    "paid_api_requests": 0,
+    "production_changes": 0
+  },
+  "next": "Continue independent source and stable external participant-ID reconciliation; preserve incomplete career status and do not reimport cached CompuBox."
+}
