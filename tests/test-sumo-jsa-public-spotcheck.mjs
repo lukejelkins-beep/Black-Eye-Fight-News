@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {htmlToPublicText,parseOfficialProfile,parseJsaBashoResults,reconcileJsaBashoResults,cohortCurrentBasho} from '../scripts/sumo-jsa-public-spotcheck.mjs';
+import {htmlToPublicText,parseOfficialProfile,parseJsaBashoResults,reconcileJsaBashoResults,cohortCurrentBasho,parseJsaBashoRanks,reconcileJsaBashoRanks} from '../scripts/sumo-jsa-public-spotcheck.mjs';
 const w={sourceId:16,officialNskId:2892,shikonaEn:'Nishikigi',
  currentRank:'Makushita 2 East',heya:'Isenoumi',heightCm:186,weightKg:184};
 const official=String.raw`<!doctype html><html><head><script>fake injection</script></head><body>
@@ -159,4 +159,43 @@ test('official dated current tournament takes precedence over fallback frozen co
  assert.equal(r.excludedCurrentBasho,'202609');
  assert.equal(r.currentBashoExclusionEvidence,'official-as-of');
  assert.deepEqual(r.unmatchedOfficialBasho,['202607']);
+});
+
+test('JSA per-basho rank parser respects tournament dates and does not use current profile banner',()=>{
+ const html=official.replace('</body>',
+  '<h2>Tournament Records</h2>'+
+  '<div>2026 November East Makushita #41 Ikawasakura Ryota 2-1</div>'+
+  '<div>2026 September East Sandanme #1 Kanpuzan Ryota 5-2</div>'+
+  '<div>2026 July West Ozeki Wrestler 3-4</div>'+
+  '<div>2026 May West Jonidan #88 Wrestler 4-3</div></body>');
+ const rows=parseJsaBashoRanks(html);
+ assert.deepEqual(rows.map(x=>[x.bashoId,x.rank]),[
+  ['202605','Jonidan 88 West'],['202607','Ozeki West'],
+  ['202609','Sandanme 1 East'],['202611','Makushita 41 East']]);
+ assert.equal(rows.find(x=>x.bashoId==='202607').position,null);
+ assert.equal(rows.length,4);
+});
+test('JSA ranks compare source banzuke exactly where numbered and preserve disagreement review',()=>{
+ const rows=[
+  {bashoId:'202609',division:'Sandanme',side:'East',position:1,rank:'Sandanme 1 East'},
+  {bashoId:'202611',division:'Makushita',side:'East',position:41,rank:'Makushita 41 East'},
+  {bashoId:'202607',division:'Ozeki',side:'West',position:null,rank:'Ozeki West'}
+ ];
+ const cached={data:{ranks:[
+  {bashoId:'202607',rank:'Ozeki 2 West'},
+  {bashoId:'202609',rank:'Sandanme 1 East'},
+  {bashoId:'202611',rank:'Makushita 40 East'}
+ ]}};
+ const report=reconcileJsaBashoRanks(rows,cached);
+ assert.equal(report.comparedBasho,3);
+ assert.equal(report.agreedBasho,2);
+ assert.deepEqual(report.mismatches.map(x=>x.bashoId),['202611']);
+ assert.equal(report.certification,'not-started');
+});
+test('missing source rank cannot be silently counted as an agreement or career certificate',()=>{
+ const rows=[{bashoId:'202509',division:'Juryo',side:'East',position:8,rank:'Juryo 8 East'}];
+ const out=reconcileJsaBashoRanks(rows,{data:{ranks:[]}});
+ assert.equal(out.comparedBasho,0);
+ assert.deepEqual(out.missingSourceRankBasho,['202509']);
+ assert.equal(out.certification,'not-started');
 });
