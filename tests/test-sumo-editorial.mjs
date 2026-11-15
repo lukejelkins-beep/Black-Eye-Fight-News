@@ -75,3 +75,16 @@ test('opponent search remains complete, deterministic and exact directory names 
  assert.equal(exactNamePriority({shikonaEn:'Ura'},'ura'),0);
  assert.equal(exactNamePriority({shikonaEn:'Other Ura',heya:'Ura'},'ura'),1);
 });
+
+test('distinct same-day regular, playoff and trial bouts are preserved under complete career merge',()=>{
+ const regular={bashoId:'202611',day:14,opponentId:28,outcome:'win',kimarite:'yorikiri',matchNo:14};
+ const another={...regular,outcome:'loss',kimarite:'uwatenage',matchNo:18};
+ const playoff={...regular,eventType:'playoff',matchNo:32};
+ const current={bashoId:'202611',day:14,opponentId:28,outcome:'win',kimarite:'yorikiri'};
+ const result=mergeProfileBouts([current],[regular,another,playoff]);
+ assert.equal(result.length,3,'One matching regular bout is replaced, others retained');
+ assert.equal(result.filter(x=>x.eventType==='playoff').length,1);
+ assert.ok(result.some(x=>x.matchNo===18));
+ assert.ok(result.some(x=>x===current));
+ assert.ok(boutKey(playoff).includes('special-playoff'));
+});
