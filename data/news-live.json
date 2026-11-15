@@ -1,14 +1,13 @@
 {
-  "attemptedAt": "2026-11-15T16:59:47.559133+00:00",
-  "lastSuccessfulAt": "2026-11-15T16:59:47.559133+00:00",
+  "attemptedAt": "2026-11-15T17:40:07.827439+00:00",
+  "lastSuccessfulAt": "2026-11-15T17:40:07.827439+00:00",
   "sources": [
     {
       "name": "World Boxing News",
       "sport": "boxing",
-      "ok": true,
-      "items": 10,
-      "feedUrl": "https://www.worldboxingnews.net/feed/",
-      "lastSuccessfulAt": "2026-11-15T16:59:47.559133+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-15T16:59:47.559133+00:00",
+      "error": "www.worldboxingnews.net: mismatched tag: line 93, column 2"
     },
     {
       "name": "MMA Fighting",
@@ -16,7 +15,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-15T16:59:47.559133+00:00"
+      "lastSuccessfulAt": "2026-11-15T17:40:07.827439+00:00"
     },
     {
       "name": "MMA Junkie",
@@ -24,7 +23,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-15T16:59:47.559133+00:00"
+      "lastSuccessfulAt": "2026-11-15T17:40:07.827439+00:00"
     },
     {
       "name": "Sherdog",
@@ -32,7 +31,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.sherdog.com/rss/news.xml",
-      "lastSuccessfulAt": "2026-11-15T16:59:47.559133+00:00"
+      "lastSuccessfulAt": "2026-11-15T17:40:07.827439+00:00"
     },
     {
       "name": "UFC",
@@ -40,7 +39,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-15T16:59:47.559133+00:00"
+      "lastSuccessfulAt": "2026-11-15T17:40:07.827439+00:00"
     },
     {
       "name": "ONE MMA",
@@ -55,15 +54,15 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/feed/",
-      "lastSuccessfulAt": "2026-11-15T16:59:47.559133+00:00"
+      "lastSuccessfulAt": "2026-11-15T17:40:07.827439+00:00"
     },
     {
       "name": "Cage Warriors",
       "sport": "mma",
       "ok": true,
-      "items": 2,
+      "items": 3,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Acagewarriors.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-15T16:59:47.559133+00:00"
+      "lastSuccessfulAt": "2026-11-15T17:40:07.827439+00:00"
     },
     {
       "name": "RIZIN",
@@ -71,7 +70,7 @@
       "ok": true,
       "items": 8,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-15T16:59:47.559133+00:00"
+      "lastSuccessfulAt": "2026-11-15T17:40:07.827439+00:00"
     },
     {
       "name": "KSW",
@@ -85,7 +84,7 @@
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "adcombat.com: No recent, source-verified articles | www.bing.com: No recent, source-verified articles"
+      "error": "adcombat.com: mismatched tag: line 93, column 2 | www.bing.com: No recent, source-verified articles"
     },
     {
       "name": "NCAA Division I Wrestling",
@@ -121,7 +120,7 @@
       "ok": true,
       "items": 3,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Aflograppling.com%2Farticles&format=rss",
-      "lastSuccessfulAt": "2026-11-15T16:59:47.559133+00:00"
+      "lastSuccessfulAt": "2026-11-15T17:40:07.827439+00:00"
     },
     {
       "name": "Real American Freestyle",
@@ -143,10 +142,35 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/category/live-results/feed/",
-      "lastSuccessfulAt": "2026-11-15T16:59:47.559133+00:00"
+      "lastSuccessfulAt": "2026-11-15T17:40:07.827439+00:00"
     }
   ],
   "articles": [
+    {
+      "id": "ee87c485a9f74c96a59c",
+      "title": "Josh Hokit releases statement following UFC 334 title fight loss to Ciryl Gane",
+      "url": "https://www.mmafighting.com/ufc/521591/josh-hokit-releases-statement-following-ufc-334-title-fight-loss-to-ciryl-gane",
+      "source": "MMA Fighting",
+      "sport": "mma",
+      "publishedAt": "2026-11-15T17:00:00+00:00",
+      "score": 4,
+      "image": {
+        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2305179787.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "alt": "Josh Hokit and Ciryl Gane",
+        "credit": "Jeff Bottari, Zuffa LLC",
+        "sourceUrl": "https://www.mmafighting.com/ufc/521591/josh-hokit-releases-statement-following-ufc-334-title-fight-loss-to-ciryl-gane",
+        "kind": "publisher",
+        "checkedAt": "2026-11-15T17:40:07.827439+00:00"
+      },
+      "summaryCheckedAt": "2026-11-15T17:40:07.827439+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Josh Hokit isn’t taking his UFC 334 loss lying down.",
+        "Shortly after the conclusion of Saturday’s show, Hokit hopped onto to call for another crack at Gane.",
+        "See Hokit’s post below: View this post on Instagram “Immediate rematch,” Hokit wrote."
+      ],
+      "firstSeenAt": "2026-11-15T17:40:07.827439+00:00"
+    },
     {
       "id": "54dce3ceb0012ebcae8c",
       "title": "Dana White blasts the majority draw in UFC 334 clash: ‘Clearly, Kevin Holland won the fight’",
@@ -163,13 +187,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-15T16:15:45.623945+00:00"
       },
-      "summaryCheckedAt": "2026-11-15T16:15:45.623945+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Obviously, White vehemently disagreed and he was shocked to find out Holland didn’t win when he first heard about the decision.",
         "“So what had happened, from what I understand, the judge took the point away on the wrong [scorecard],” White said after the fight was announced as a draw.",
         "“That decision is absolutely insane to me."
       ],
+      "summaryCheckedAt": "2026-11-15T16:15:45.623945+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-15T16:15:45.623945+00:00"
     },
     {
@@ -971,12 +995,12 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-15T16:59:47.559133+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-15T04:16:56.945009+00:00",
       "summaryPoints": [
         "In a fight that took about 45 New York Minutes, Kevin Holland and Uros Medic left with a draw that few expected."
-      ]
+      ],
+      "summaryCheckedAt": "2026-11-15T16:59:47.559133+00:00",
+      "summaryQualityVersion": 3,
+      "firstSeenAt": "2026-11-15T04:16:56.945009+00:00"
     },
     {
       "id": "c34687236ac138178454",
@@ -1063,12 +1087,12 @@
         "kind": "publisher",
         "checkedAt": "2026-11-15T04:16:56.945009+00:00"
       },
-      "summaryCheckedAt": "2026-11-15T16:59:47.559133+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "This is what dreams are made of ✨ #UFC337 is headed to Orlando!",
         "Register your interest: https://t.co/16sDDCBtoU [ FEB 20 | LIVE on @paramountplus ] https://t.co/VQfTgzeUZv"
       ],
+      "summaryCheckedAt": "2026-11-15T16:59:47.559133+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-15T04:16:56.945009+00:00"
     },
     {
@@ -1410,11 +1434,11 @@
       "sourceMethod": "Original official domain indexed by Bing News",
       "score": 1,
       "image": null,
-      "summaryCheckedAt": "2026-11-15T16:59:47.559133+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Nik Bagley remains the Cage Warriors featherweight world champion after a no-contest ruling brought an unfortunate end to the CW 213 London main event."
       ],
+      "summaryCheckedAt": "2026-11-15T16:59:47.559133+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-15T04:16:56.945009+00:00"
     },
     {
@@ -1625,7 +1649,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-15T05:17:04.725453+00:00",
+      "summaryCheckedAt": "2026-11-15T17:40:07.827439+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-14T16:24:41.275485+00:00"
     },
@@ -2456,12 +2480,12 @@
       "sourceMethod": "Original official domain indexed by Bing News",
       "score": 1,
       "image": null,
-      "summaryCheckedAt": "2026-11-15T15:25:29.925436+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-15T03:09:20.469070+00:00",
       "summaryPoints": [
         "We’re back in London with a brand new immersive viewing experience LIVE from the BBC Studioworks Television Centre!"
-      ]
+      ],
+      "summaryCheckedAt": "2026-11-15T15:25:29.925436+00:00",
+      "summaryQualityVersion": 3,
+      "firstSeenAt": "2026-11-15T03:09:20.469070+00:00"
     },
     {
       "id": "f5532e10e1b8e0ddcdff",
@@ -2883,7 +2907,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-15T05:17:04.725453+00:00",
+      "summaryCheckedAt": "2026-11-15T17:40:07.827439+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-13T16:18:20.918097+00:00",
       "summaryPoints": [
@@ -2963,7 +2987,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-15T05:17:04.725453+00:00",
+      "summaryCheckedAt": "2026-11-15T17:40:07.827439+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-13T16:18:20.918097+00:00"
     },
@@ -5201,7 +5225,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-15T04:16:56.945009+00:00",
+      "summaryCheckedAt": "2026-11-15T17:40:07.827439+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-12T00:05:21.805777+00:00",
       "summaryPoints": [
@@ -5855,7 +5879,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-15T04:16:56.945009+00:00",
+      "summaryCheckedAt": "2026-11-15T17:40:07.827439+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-11T13:08:16.244677+00:00",
       "summaryPoints": [
@@ -6060,7 +6084,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-15T04:16:56.945009+00:00",
+      "summaryCheckedAt": "2026-11-15T17:40:07.827439+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-11T00:09:59.149583+00:00",
       "summaryPoints": [
@@ -6078,7 +6102,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-15T04:16:56.945009+00:00",
+      "summaryCheckedAt": "2026-11-15T17:40:07.827439+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-11T00:09:59.149583+00:00",
       "summaryPoints": [
@@ -6121,7 +6145,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-15T05:17:04.725453+00:00",
+      "summaryCheckedAt": "2026-11-15T17:40:07.827439+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-10T23:22:33.620522+00:00",
       "summaryPoints": [
@@ -6207,7 +6231,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-15T05:17:04.725453+00:00",
+      "summaryCheckedAt": "2026-11-15T17:40:07.827439+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-10T23:22:33.620522+00:00",
       "summaryPoints": [
@@ -6341,24 +6365,6 @@
       "summaryCheckedAt": "2026-11-15T09:22:39.443830+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-10T17:33:43.352232+00:00"
-    },
-    {
-      "id": "e1f05714e2ef71bf33b1",
-      "title": "Ollie Schmid employs Hooker mentality after UFC Fight Night 293 war",
-      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/10/ufc-fight-night-las-vegas-video-ollie-schmid-tough-dan-hooker-mentality-just-scratch/92701873007/",
-      "source": "MMA Junkie",
-      "sport": "mma",
-      "publishedAt": "2026-11-10T08:21:00+00:00",
-      "score": 1,
-      "sourceMethod": "Bing News indexed MMA Junkie original",
-      "timeBasis": "Bing News feed timestamp",
-      "image": null,
-      "summaryCheckedAt": "2026-11-15T09:22:39.443830+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-10T16:38:00.624614+00:00",
-      "summaryPoints": [
-        "Ollie Schmid was a little worse for the wear Saturday, but left Las Vegas with his first win in the UFC – and some ideas about the future."
-      ]
     }
   ],
   "resultReports": [
@@ -7279,7 +7285,7 @@
     }
   ],
   "deduplication": {
-    "checkedAt": "2026-11-15T16:59:47.559133+00:00",
+    "checkedAt": "2026-11-15T17:40:07.827439+00:00",
     "removedArticles": 0,
     "removedResultReports": 0,
     "examples": []
