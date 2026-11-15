@@ -184,6 +184,8 @@ jobs:
         id: profile_builder
         if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-build-profile-cache.mjs
+      # Use the same minimum official rank-history coverage in fast-lane
+      # classification as in the independent strict career-result audit.
       - name: Classify source-complete Sumo histories for strict certification audit without issuing certificates
         if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-certification-preflight-190.mjs
