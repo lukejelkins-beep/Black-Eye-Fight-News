@@ -78,5 +78,5 @@ test('wave74 retains both official UFC draws for Lando Vannata',()=>{
  const proof=proofs['lando-vannata'];
  assert.equal(proof.bouts.filter(b=>b.result==='draw').length,2);
  assert.deepEqual(proof.bouts.filter(b=>b.result==='draw').map(b=>b.opponent).sort(),
-  ['Bobby Green','Matt Frevola']);
+  ['King Green','Matt Frevola']);
 });
