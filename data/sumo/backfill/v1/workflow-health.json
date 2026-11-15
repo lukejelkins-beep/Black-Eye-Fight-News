@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "scope": "Completed research-cache job checkpoint only; excludes post-checkpoint H2H preview sync",
-  "lastResearchCheckpointAt": "2026-11-15T07:46:30.234Z",
-  "runId": "43691215824",
-  "workflowRef": "d4571789c6963a28530f553bad01d176bfbe697f",
-  "workflowRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43691215824",
+  "lastResearchCheckpointAt": "2026-11-15T07:49:02.251Z",
+  "runId": "43691322416",
+  "workflowRef": "299bb8797fea34b4b060faa4327fcae1d2473a69",
+  "workflowRunUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43691322416",
   "dataCommitPending": true,
   "status": "research-validation-and-projections-completed",
   "api": {
@@ -19,14 +19,14 @@
     "independentDatedWeights": 1027,
     "additionalDatedWeights": 622,
     "conflictingOverlaps": 0,
-    "lastFetchAt": "2026-11-15T07:46:25.660Z",
-    "requestedThisRun": 10,
+    "lastFetchAt": "2026-11-15T07:48:57.868Z",
+    "requestedThisRun": 5,
     "updatedThisRun": 0,
-    "identityRechecksThisRun": 10,
-    "historicalIdentityRechecks": 73,
-    "historicalWeightObservationsRecorroborated": 437,
-    "birthDateMatchedProfiles": 185,
-    "birthDateNotYetVerifiedProfiles": 5,
+    "identityRechecksThisRun": 5,
+    "historicalIdentityRechecks": 78,
+    "historicalWeightObservationsRecorroborated": 449,
+    "birthDateMatchedProfiles": 190,
+    "birthDateNotYetVerifiedProfiles": 0,
     "providerCooldownUntil": null,
     "reviewCases": 0
   },
@@ -40,16 +40,15 @@
     "officialReviewCases": 7,
     "officialCareerTotalsNotFound": 6,
     "genuineParserOrFieldReviews": 1,
-    "officialHistoricalRanksCompared": 2473,
+    "officialHistoricalRanksCompared": 2844,
     "officialHistoricalRankDiscrepancies": 0
   },
   "strictPreflight": {
-    "eligible": 41,
-    "blocked": 149,
+    "eligible": 48,
+    "blocked": 142,
     "blockerCounts": {
       "complete-rank-timeline-not-evidenced": 9,
-      "independent-JSA-historical-ranks-not-compared": 99,
-      "independent-SumoDB-birth-date-not-verified": 5,
+      "independent-JSA-historical-ranks-not-compared": 91,
       "official-JSA-career-totals-unpublished-or-disagree": 22,
       "official-JSA-profile-field-disagreement": 1,
       "official-absence-total-unpublished-or-disagree": 61,
@@ -64,7 +63,10 @@
     "currentOfficialWeightSnapshots": 190
   },
   "sourceReadyProfiles": 190,
+  "careerResultsStrictlyCertified": 48,
+  "strictCareerAuditPassed": true,
+  "fullProfilesCertified": 0,
   "certifiedCareers": 0,
   "productionPublished": false,
-  "note": "This checkpoint is only visible once committed to the research branch. No full career certification or live production changes."
+  "note": "Strict career-result summaries are distinct from full-profile certification, individual-kimarite corroboration, licensed photos and production approval."
 }
