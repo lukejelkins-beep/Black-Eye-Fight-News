@@ -333,6 +333,26 @@ export function originCountry(birthplace) {
   return JAPAN_PREFECTURES.has(pref) ? COUNTRIES.japan : null;
 }
 
+/** Resolve a visible *current listing*, never a historical weighed-in dot. */
+export function publishedCurrentWeight(w,careerCache){
+ const api=Number(w?.weightKg);
+ const apiKg=Number.isFinite(api)&&api>0?api:null;
+ const entry=careerCache?.bySourceId?.[String(w?.sourceId)];
+ const matched=entry&&Number(entry.sumoApiId)===Number(w?.sourceId)&&
+   Number(entry.officialNskId)===Number(w?.officialNskId);
+ const official=matched?entry.currentListedWeight:null;
+ const kg=Number(official?.kg);
+ const validOfficial=official?.datedMeasurement===false&&
+   Number.isFinite(kg)&&kg>0&&
+   /^https:\/\/www\.sumo\.or\.jp\//.test(String(official?.source||''));
+ return {kg:validOfficial?kg:apiKg===null?null:Math.round(apiKg),
+  source:validOfficial?'JSA current listing':'Sumo API roster listing',
+  sourceUrl:validOfficial?official.source:null,
+  apiKg,
+  underReview:!!validOfficial&&apiKg!==null&&Math.round(apiKg)!==kg,
+  datedWeighIn:false};
+}
+
 /** East and West occupy different rank slots. We compare actual positions in
  * the combined three-division banzuke (1..190), never raw rankValue values.
  * Cross-division changes are explicitly named and unavailable histories stay null.
