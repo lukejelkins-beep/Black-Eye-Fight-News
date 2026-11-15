@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {preflightRikishi,summarizePreflight,planPreflightNextAction}
+import {preflightRikishi,summarizePreflight,planPreflightNextAction,documentedDebutRankGap}
  from '../scripts/sumo-certification-preflight-190.mjs';
 const get=path=>JSON.parse(readFileSync(new URL('../'+path,import.meta.url),'utf8'));
 const roster=get('data/sumo/rikishi-index.json');
@@ -117,4 +117,23 @@ test('an explicit JSA disagreement blocks preflight even when SumoDB matches the
  const row=preflightRikishi(w,p,j,independent,'202611');
  assert.ok(row.blockers.includes('official-JSA-career-totals-unpublished-or-disagree'));
  assert.equal(row.classification,'needs-source-or-manual-review');
+});
+
+test('JSA-documented collegiate debut can precede numbered banzuke without inventing a rank',()=>{
+ const entrant=roster.rikishi.find(x=>x.sourceId===9084);
+ const p=get('data/sumo/backfill/v1/profile-ready/9084.json');
+ const j=get('data/sumo/backfill/v1/jsa-public/profiles/9084.json');
+ const s=get('data/sumo/backfill/v1/weight-source-crosschecks/9084.json');
+ assert.equal(p.rankHistoryGaps[0].rank,null);
+ assert.equal(documentedDebutRankGap(p,j),true);
+ const row=preflightRikishi(entrant,p,j,s,'202611');
+ assert.equal(row.documentedNoPublishedNumberedDebutRank,true);
+ assert.equal(row.debutRankStillUnpublished,p.rankHistoryGaps[0].bashoId);
+ assert.ok(!row.blockers.includes('complete-rank-timeline-not-evidenced'));
+ const changed=structuredClone(j);
+ changed.officialBashoRecords=changed.officialBashoRecords.filter(x=>
+  x.bashoId!==p.rankHistoryGaps[0].bashoId);
+ assert.equal(documentedDebutRankGap(p,changed),false);
+ const blocked=preflightRikishi(entrant,p,changed,s,'202611');
+ assert.ok(blocked.blockers.includes('complete-rank-timeline-not-evidenced'));
 });
