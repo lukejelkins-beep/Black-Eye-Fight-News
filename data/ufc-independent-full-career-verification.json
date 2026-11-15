@@ -32663,6 +32663,87 @@
         }
       ],
       "sourceVerifiedExcludedFeederBouts": []
+    },
+    "trevor-peek": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Trevor Peek",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/0bc697c5936a2d0a",
+      "officialFighterUrl": "https://www.ufc.com/athlete/trevor-peek",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived source; no direct UFCStats scrape or paid requests",
+        "method": "Complete official UFC athlete dated career narrative plus UFC Paris scorecard; pinned source fight identities, exact native paired corner IDs, results and measured round evidence; exclude DWCS."
+      },
+      "verifiedNumericFighterIds": [
+        "2772"
+      ],
+      "officialUfcCareerBoutCount": 6,
+      "sourceScopeVerified": "Official UFC athlete dated six-bout chronology (Feb 25 2023 to Sep 5 2026) verified alongside official Sept 5 2026 UFC Paris scorecard; six distinct Greco UFCStats results match saved native fighter/opponent IDs, winners, rounds, methods, event dates and measured round observations. Distinct September 13 2022 DWCS bout vs Malik Lewis is excluded. Graphical UFC athlete Win tiles are not authoritative when dated official fight narrative confirms losses.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/trevor-peek",
+        "https://www.ufc.com/news/ufc-paris-official-scorecards-hooker-vs-parnasse",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "bouts": [
+        {
+          "date": "2026-09-05",
+          "opponent": "Kurtis Campbell",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/cbf9063d23513661",
+          "nativeBoutId": "83070",
+          "nativeFighterId": "2772"
+        },
+        {
+          "date": "2024-09-07",
+          "opponent": "Yanal Ashmouz",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/75fa9c0bb31caaa3",
+          "nativeBoutId": "61108",
+          "nativeFighterId": "2772"
+        },
+        {
+          "date": "2024-04-06",
+          "opponent": "Charlie Campbell",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/47f8812a335b6ce9",
+          "nativeBoutId": "61253",
+          "nativeFighterId": "2772"
+        },
+        {
+          "date": "2023-10-21",
+          "opponent": "Mohammad Yahya",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3c6fb6bf9b7afd40",
+          "nativeBoutId": "60003",
+          "nativeFighterId": "2772"
+        },
+        {
+          "date": "2023-06-24",
+          "opponent": "Chepe Mariscal",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f18d44292036d5de",
+          "nativeBoutId": "60163",
+          "nativeFighterId": "2772"
+        },
+        {
+          "date": "2023-02-25",
+          "opponent": "Erick Gonzalez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/83fa3a382acc7bdc",
+          "nativeBoutId": "59709",
+          "nativeFighterId": "2772"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
     }
   }
 }
