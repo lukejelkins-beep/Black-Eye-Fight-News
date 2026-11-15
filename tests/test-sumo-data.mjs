@@ -255,7 +255,10 @@ test('Ura career graphs show dated historical weights and all 69 published banzu
   const ura={sourceId:28,officialNskId:3616,currentRank:'Maegashira 2 East',weightKg:138};
   const data=careerPoints(ura,cached,'202611','202609','Maegashira 9 East');
   assert.equal(data.ranks.length,69);
-  assert.deepEqual(data.weight.map(p=>p.kg),[113,136,138]);
+  assert.deepEqual(data.weight.map(p=>p.kg),[113,136,148,143,142,139]);
+  assert.deepEqual(data.weight.map(p=>p.basho),['201503','202103','202205','202305','202405','202505']);
+  assert.equal(data.currentListedWeightKg,138);
+  assert.ok(!data.weight.some(p=>p.basho==='202611'), 'undated JSA November listing must not be plotted');
   assert.equal(data.ranks[0].basho,'201505');
   assert.equal(data.ranks[0].rank,'Jonokuchi 9 West');
   assert.equal(data.ranks.find(p=>p.basho==='201911')?.rank,'Jonidan 106 West');
@@ -268,7 +271,9 @@ test('Ura career graphs show dated historical weights and all 69 published banzu
   assert.match(markup,/Career rank movement/);
   assert.match(markup,/113 kg/);
   assert.match(markup,/138 kg/);
-  assert.match(markup,/source-reported and require independent official archive verification/);
+  assert.match(markup,/Historical observations remain subject to independent verification/);
+  assert.match(markup,/Currently listed: 138 kg \(undated\)/);
+  assert.match(markup,/Highest rank: Komusubi 1 West/);
 });
 test('rank score preserves tier, number and East-West distinction',()=>{
   assert.deepEqual(parseBanzukeRank('Jonidan 106 West'),{tier:8,place:106,side:'West'});
@@ -283,9 +288,10 @@ test('other rikishi charts never inherit Ura history or invent weights',()=>{
   const other={sourceId:3001,officialNskId:4001,currentRank:'Juryo 3 East',weightKg:150};
   const series=careerPoints(other,cached,'202611','202609','Juryo 7 West');
   assert.equal(series.entry,null);
-  assert.deepEqual(series.weight.map(p=>p.kg),[150]);
+  assert.deepEqual(series.weight.map(p=>p.kg),[]);
+  assert.equal(series.currentListedWeightKg,150);
   assert.deepEqual(series.ranks.map(p=>p.rank),['Juryo 7 West','Juryo 3 East']);
-  assert.match(careerGraphs(other,cached,'202611','202609','Juryo 7 West'),/missing measurements have not been estimated/);
+  assert.match(careerGraphs(other,cached,'202611','202609','Juryo 7 West'),/No dated historical weigh-ins are available yet/);
   const wrongId={sourceId:28,officialNskId:9999,currentRank:'Maegashira 2 East',weightKg:138};
   assert.equal(careerPoints(wrongId,cached,'202611','202609',null).ranks.length,1);
 });
@@ -316,4 +322,40 @@ test('the cached upcoming tournament list must contain verified torikumi identit
       assert.ok(fight.rikishiId>0&&fight.opponentId>0);
     }
   }
+});
+
+test('Sumo preview all-190 career dates stay source-labelled and uncertified',()=>{
+  const data=JSON.parse(readFileSync(new URL('../data/sumo/career-history.json',import.meta.url),'utf8'));
+  const ids=Object.keys(data.bySourceId||{});
+  assert.equal(data.schemaVersion,1);
+  assert.equal(data.cohortSize,190);
+  assert.equal(ids.length,190);
+  assert.equal(data.certified,false);
+  assert.equal(data.productionPublished,false);
+  assert.equal(data.independentAdditionalDatedWeightPoints>=300,true);
+  const idsUnique=new Set(ids);
+  assert.equal(idsUnique.size,190);
+  let plotted=0;
+  for(const id of ids){
+    const p=data.bySourceId[id];
+    assert.equal(Number(p.sumoApiId),Number(id));
+    assert.ok(Number.isSafeInteger(Number(p.officialNskId))&&Number(p.officialNskId)>0);
+    assert.equal(p.certified,false);
+    assert.ok(p.rank.length>0);
+    const dates=new Set();
+    for(const m of p.weight){
+      assert.match(m.basho,/^(18|19|20)\d{2}(01|03|05|07|09|11)$/);
+      assert.ok(Number.isFinite(m.kg)&&m.kg>=45&&m.kg<=400);
+      assert.equal(m.independentlyCertified,false);
+      assert.match(m.source,/^https:\/\/(sumodb\.sumogames\.de|www\.sumo-api\.com)\//);
+      assert.ok(!dates.has(m.basho),id+' duplicates date '+m.basho);
+      dates.add(m.basho);plotted++;
+    }
+    if(p.currentListedWeight){
+      assert.equal(p.currentListedWeight.datedMeasurement,false);
+      assert.ok(!p.weight.some(m=>m.source===p.currentListedWeight.source),
+        'undated JSA current-listing source cannot masquerade as a measured point');
+    }
+  }
+  assert.equal(plotted,data.datedWeightPoints);
 });
