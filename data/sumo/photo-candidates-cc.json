@@ -4,7 +4,7 @@
   "checkedAt": "2026-11-15",
   "license": "CC BY-SA 4.0",
   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-  "publicationRule": "Confirm image identity, retain source link, photographer credit, license link and changes notice; host a local image file. DO NOT hotlink or publish this candidate list automatically.",
+  "publicationRule": "On isolated Sumo test branch only: verify Wikimedia Commons machine-readable CC BY-SA 4.0 licence metadata and source file identity, save unmodified JPEG locally, publish photographer/source/licence credits; no external hotlinks. An asset failing any gate stays unpublished.",
   "approvedForPublication": false,
   "productionPublished": false,
   "candidates": [
@@ -22,7 +22,7 @@
       "desiredLocalPath": "assets/sumo-photos/onosato-8850.jpg",
       "credit": "TSUBAME98 / Wikimedia Commons",
       "changes": "Not yet processed",
-      "status": "candidate-licensed-source-not-published"
+      "status": "candidate-eligible-for-test-stage-only-after-remote-license-and-local-file-validation"
     },
     {
       "sourceId": 28,
@@ -38,7 +38,7 @@
       "desiredLocalPath": "assets/sumo-photos/ura-28.jpg",
       "credit": "FourTildes / Wikimedia Commons",
       "changes": "Not yet processed",
-      "status": "candidate-licensed-source-not-published"
+      "status": "candidate-eligible-for-test-stage-only-after-remote-license-and-local-file-validation"
     },
     {
       "sourceId": 8853,
@@ -54,7 +54,8 @@
       "desiredLocalPath": "assets/sumo-photos/onokatsu-8853.jpg",
       "credit": "TSUBAME98 / Wikimedia Commons",
       "changes": "Not yet processed",
-      "status": "candidate-licensed-source-not-published"
+      "status": "candidate-eligible-for-test-stage-only-after-remote-license-and-local-file-validation"
     }
-  ]
+  ],
+  "mayStageForTestPreviewAfterVerification": true
 }
