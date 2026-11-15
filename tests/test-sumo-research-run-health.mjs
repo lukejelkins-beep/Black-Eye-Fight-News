@@ -118,3 +118,15 @@ test('health reports independent career record checks separately from source wei
  assert.equal(r.strictlyVerifiedDebutRankGaps,1);
  assert.equal(r.fullProfilesCertified,0);
 });
+
+test('existing health report exposes missing early JSA bouts as a source coverage gap, not conflicting match results',()=>{
+ const r=buildSumoHealth({...input,official:{
+  profileReviewCases:11,
+  sourceCoverageCases:11,
+  missingOfficialHistoricalBashoTotal:217,
+  historicalTournamentsDisagree:0}});
+ assert.equal(r.officialJsa.incompleteOfficialHistoryProfiles,11);
+ assert.equal(r.officialJsa.missingOfficialHistoricalTournaments,217);
+ assert.equal(r.officialJsa.unresolvedHistoricalDiscrepancies,0);
+ assert.equal(r.certifiedCareers,0);
+});
