@@ -55,3 +55,21 @@ test('run health independently displays JSA source-omission and banzuke rank QA'
  assert.equal(r.officialJsa.officialHistoricalRankDiscrepancies,1);
  assert.equal(r.certifiedCareers,0);
 });
+
+test('Run health keeps source identity rechecks separate from new collection',()=>{
+ const values=buildSumoHealth({...input,
+  collection:{...collection,updatedThisRun:0,identityAuditsThisRun:8},
+  weights:{...weights,
+   historicalSourceIdentityRechecks:8,
+   corroboratedLegacyWeightObservations:29,
+   independentIdentityBirthDateVerified:123,
+   independentIdentityBirthDatePending:67}});
+ assert.equal(values.sumoDb.updatedThisRun,0);
+ assert.equal(values.sumoDb.identityRechecksThisRun,8);
+ assert.equal(values.sumoDb.historicalIdentityRechecks,8);
+ assert.equal(values.sumoDb.historicalWeightObservationsRecorroborated,29);
+ assert.equal(values.sumoDb.birthDateMatchedProfiles,123);
+ assert.equal(values.sumoDb.birthDateNotYetVerifiedProfiles,67);
+ assert.equal(values.sumoDb.additionalDatedWeights,205);
+ assert.equal(values.certifiedCareers,0);
+});
