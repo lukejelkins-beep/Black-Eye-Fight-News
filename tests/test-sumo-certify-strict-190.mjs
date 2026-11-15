@@ -194,3 +194,22 @@ test('old certificates cannot silently disappear when a new source or parser dis
  assert.throws(()=>preventSilentCertificationRegression(previous,losing),/regression requires independent review/);
  assert.equal(preventSilentCertificationRegression(null,same),true);
 });
+
+test('strict W-L audit can independently cover an older basho missing from JSA history',()=>{
+ const f=fixture();
+ f.official.officialBashoRecords=f.official.officialBashoRecords.filter(x=>x.bashoId!=='202609');
+ f.official.bashoReconciliation.comparedBasho=0;
+ f.official.bashoReconciliation.agreeingBasho=0;
+ f.weight.careerRecordCrosscheck={
+  sourceUrl:'https://sumodb.sumogames.de/Rikishi.aspx?r=20',
+  identityVerified:true,originalMeasurementsUnchanged:true,
+  independentOfApi:true,datedBashoLedgerSourceSha256:'f'.repeat(64),
+  independentBashoRows:[{bashoId:'202609',wins:1,losses:0}],
+  careerRecordDiffersFromPriorSnapshot:false
+ };
+ const r=strictCareerAudit(f);
+ assert.equal(r.careerResultsCertified,true);
+ assert.equal(r.independentlyCrosscheckedOlderBashoFromSumoDB,1);
+ f.weight.careerRecordCrosscheck.independentBashoRows[0].losses=1;
+ assert.ok(strictCareerAudit(f).blockers.includes('independent-official-completed-tournament-results'));
+});
