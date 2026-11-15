@@ -53,6 +53,63 @@ export function parseJsaBashoResults(html){
  }
  return results.sort((a,b)=>a.bashoId.localeCompare(b.bashoId));
 }
+/**
+ * Read only explicit tournament-dated rank strings from the public JSA page.
+ * Current banner rank is not a historical rank. Missing positions are null,
+ * never generated from an approximate rank or a neighbouring tournament.
+ */
+export function parseJsaBashoRanks(html){
+ const text=htmlToPublicText(html);
+ const i=text.indexOf('Tournament Records');
+ if(i<0)return [];
+ const section=text.slice(i+'Tournament Records'.length);
+ const dateRx=/\b((?:18|19|20)\d{2})\s+(January|March|May|July|September|November)\b/g;
+ const dates=[...section.matchAll(dateRx)],byBasho=new Map();
+ for(let j=0;j<dates.length;j++){
+  const d=dates[j],bashoId=d[1]+MONTH_INDEX[d[2]];
+  const end=dates[j+1]?.index??section.length;
+  const content=section.slice(d.index+d[0].length,Math.min(end,d.index+d[0].length+220));
+  const m=content.match(/\b(East|West)\s+(Yokozuna|Ozeki|Sekiwake|Komusubi|Maegashira|Juryo|Makushita|Sandanme|Jonidan|Jonokuchi)(?:\s*#\s*(\d{1,3}))?\b/i);
+  if(!m)continue;
+  const position=m[3]!=null?Number(m[3]):null;
+  if(position!=null&&(position<1||position>120))continue;
+  const row={bashoId,division:m[2],side:m[1],position,
+    rank:m[2]+(position!=null?' '+position:'')+' '+m[1],
+    source:'JSA tournament banzuke rank'};
+  const prior=byBasho.get(bashoId);
+  if(prior&&(prior.rank!==row.rank))throw Error('Contradictory official rank for '+bashoId);
+  byBasho.set(bashoId,row);
+ }
+ return [...byBasho.values()].sort((a,b)=>a.bashoId.localeCompare(b.bashoId));
+}
+/** Check exact rank where possible; grade and side only for unnumbered sanyaku. */
+export function reconcileJsaBashoRanks(officialRows,source){
+ const ranks=new Map();
+ for(const r of source?.data?.ranks||[]){
+  if(/^(18|19|20)\d{2}(01|03|05|07|09|11)$/.test(String(r.bashoId||'')))
+   ranks.set(String(r.bashoId),String(r.rank||''));
+ }
+ const compared=[],unavailable=[];
+ const rx=/^(Yokozuna|Ozeki|Sekiwake|Komusubi|Maegashira|Juryo|Makushita|Sandanme|Jonidan|Jonokuchi)\s+(\d+)\s+(East|West)$/i;
+ for(const official of officialRows||[]){
+  const stored=ranks.get(official.bashoId);
+  if(!stored){unavailable.push(official.bashoId);continue;}
+  const got=stored.match(rx);
+  if(!got){unavailable.push(official.bashoId);continue;}
+  const match=official.division.toLowerCase()===got[1].toLowerCase()&&
+    official.side.toLowerCase()===got[3].toLowerCase()&&
+    (official.position===null||official.position===Number(got[2]));
+  compared.push({bashoId:official.bashoId,officialRank:official.rank,
+    sourceRank:stored,status:match?'agree':'review'});
+ }
+ return {officialRankRows:officialRows?.length||0,
+  comparedBasho:compared.length,
+  agreedBasho:compared.filter(x=>x.status==='agree').length,
+  mismatches:compared.filter(x=>x.status==='review'),
+  missingSourceRankBasho:unavailable,
+  certification:'not-started',
+  note:'Public JSA banzuke rank comparison is independent QA, not final career certification.'};
+}
 /** Compare the same completed tournament against the complete source bout ledger. */
 export function cohortCurrentBasho(roster){
  const raw=roster?.collectedAt;
@@ -202,6 +259,8 @@ async function main(){
    const doc=parseOfficialProfile(html,w);
    const cachedHistory=await load(join('data/sumo/backfill/v1/rikishi',w.sourceId+'.json'));
    doc.officialBashoRecords=parseJsaBashoResults(html);
+   doc.officialRankRecords=parseJsaBashoRanks(html);
+   doc.rankReconciliation=reconcileJsaBashoRanks(doc.officialRankRecords,cachedHistory);
    doc.bashoReconciliation=reconcileJsaBashoResults(
      doc.officialBashoRecords,cachedHistory,doc.officialAsOf,cohortCurrentBasho(roster));
    doc.capturedAt=now();
