@@ -31839,6 +31839,99 @@
         }
       ],
       "note": "Official UFC biography identifies Aug 2024 An Tuan Ho DWCS KO separately; exactly six Octagon bouts, from Nov 2024 Jose Ochoa through Oct 2026 Ramazan Temirov."
+    },
+    "julia-polastri": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Julia Polastri",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/abb68e3c7ca128f2",
+      "officialFighterUrl": "https://www.ufc.com/athlete/julia-polastri",
+      "earliestOfficialUfcBout": "2024-06-15",
+      "latestCompletedOfficialUfcBout": "2026-08-29",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-15",
+        "method": "Exact official UFC.com complete dated Octagon biography, six Greco UFCStats native fight URLs and original UFCalendar opposite corners and results, two independently documented DWCS exclusions and source-verified opponent long-name variations."
+      },
+      "verifiedNumericFighterIds": [
+        "176"
+      ],
+      "officialUfcCareerBoutCount": 6,
+      "bouts": [
+        {
+          "date": "2024-06-15",
+          "opponent": "Josefine Lindgren Knutsson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/06713afc60301c0c",
+          "nativeBoutId": "61064",
+          "nativeFighterId": "176"
+        },
+        {
+          "date": "2024-10-12",
+          "opponent": "Cory McKenna",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/48dd2c9cb39bd2d4",
+          "nativeBoutId": "61125",
+          "nativeFighterId": "176"
+        },
+        {
+          "date": "2025-03-29",
+          "opponent": "Loopy Godinez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7efca050bc7be8ac",
+          "nativeBoutId": "61011",
+          "nativeFighterId": "176"
+        },
+        {
+          "date": "2025-10-11",
+          "opponent": "Karolina Kowalkiewicz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c547b3e95bcc5f24",
+          "nativeBoutId": "65897",
+          "nativeFighterId": "176"
+        },
+        {
+          "date": "2026-04-25",
+          "opponent": "Talita Alencar",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0df4f4ac27cf2d26",
+          "nativeBoutId": "66088",
+          "nativeFighterId": "176"
+        },
+        {
+          "date": "2026-08-29",
+          "opponent": "Xiong Jing Nan",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6206c62fc8f0b71b",
+          "nativeBoutId": "83411",
+          "nativeFighterId": "176"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "boutId": "83967",
+          "fighterSlug": "julia-polastri",
+          "date": "2021-09-14",
+          "opponent": "Jasmine Jasudavicius",
+          "event": "Dana White's Contender Series 39",
+          "sourceUrl": "https://www.ufc.com/athlete/julia-polastri"
+        },
+        {
+          "boutId": "84122",
+          "fighterSlug": "julia-polastri",
+          "date": "2023-09-12",
+          "opponent": "Patricia Alujas",
+          "event": "Dana White's Contender Series 62",
+          "sourceUrl": "https://www.ufc.com/news/week-6-results-scorecards-dana-whites-contender-series-season-7"
+        }
+      ],
+      "note": "Official UFC profile lists six complete Octagon results from June 2024 Josefine Knutsson through August 2026 Xiong Jingnan, plus both 2021 and 2023 DWCS fights excluded. Opponent-name formatting variants use unchanged paired native numeric fighter IDs and exact pinned Greco bout URLs."
     }
   }
 }
