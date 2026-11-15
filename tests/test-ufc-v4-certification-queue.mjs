@@ -34,6 +34,22 @@ test('manual review, native identity, missing source and coverage gaps do not bl
  assert.equal(q.totals.fastLane,778);
  assert.equal(q.lanes.exceptions.find(x=>x.slug==='fighter-005').numericIds.length,2);
 });
+test('documented unresolved source cases are deferred only for source-research priority, not recertified or reclassified',()=>{
+ const r=fixture();
+ r.careerVerificationDecisions[1].slug='zhu-kangjie';
+ r.careerVerificationDecisions[2].slug='dan-argueta';
+ r.careerVerificationDecisions[3].slug='rei-tsuruya';
+ const q=buildCertificationQueue(r);
+ assert.deepEqual(q.totals,{certified:1,fastLane:782,exceptions:0,approved:783});
+ assert.deepEqual(q.researchPriority.deferredKnown.map(x=>x.slug),
+   ['dan-argueta','rei-tsuruya','zhu-kangjie']);
+ assert.equal(q.researchPriority.nextSourceAttestation[0].slug,'fighter-004');
+ assert.equal(q.researchPriority.nextSourceAttestation.length,40);
+ assert.equal(q.lanes.fastLane.some(x=>x.slug==='zhu-kangjie'),true);
+ assert.equal(q.lanes.certified.some(x=>x.slug==='zhu-kangjie'),false);
+ assert.equal(q.researchPriority.nextSourceAttestation.every(x=>
+   !q.researchPriority.deferredKnown.some(d=>d.slug===x.slug)),true);
+});
 test('incomplete or stale certification audits fail closed',()=>{
  const r=fixture();r.careerVerificationDecisions.pop();
  assert.throws(()=>buildCertificationQueue(r),/783-fighter audit/);
