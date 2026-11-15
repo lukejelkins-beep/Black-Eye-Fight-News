@@ -54,3 +54,32 @@ test('rank chart names real Sumo API source and does not claim full JSA verifica
  assert.match(html,/per-basho certification remains underway/);
  assert.doesNotMatch(html,/latest rank is cross-checked with/);
 });
+
+test('official current listed weight is presented separately from dated history',()=>{
+ const c=structuredClone(history);
+ c.bySourceId['28'].currentListedWeight={
+  kg:145,datedMeasurement:false,
+  source:'https://www.sumo.or.jp/EnSumoDataRikishi/profile/3616/'};
+ const p=careerPoints({...w,weightKg:144.8},c,'202611','202609','Maegashira 9 West');
+ assert.equal(p.currentListedWeightKg,145);
+ assert.equal(p.currentListedWeightSource,'JSA current published profile');
+ assert.equal(p.currentWeightApiDiscrepancy,null,'decimal source matches JSA integer display');
+ assert.deepEqual(p.weight.map(x=>x.basho),['201503','202405']);
+ assert.match(careerGraphs({...w,weightKg:144.8},c,'202611','202609','Maegashira 9 West'),
+   /JSA currently listed: 145 kg \(undated\)/);
+});
+test('JSA and API current weights that disagree by a full kilogram are both shown as under review',()=>{
+ const c=structuredClone(history);
+ c.bySourceId['28'].currentListedWeight={
+  kg:173,datedMeasurement:false,
+  source:'https://www.sumo.or.jp/EnSumoDataRikishi/profile/3616/'};
+ const w2={...w,weightKg:172};
+ const p=careerPoints(w2,c,'202611','202609','Maegashira 9 West');
+ assert.deepEqual(p.currentWeightApiDiscrepancy,{
+  officialKg:173,apiKg:172,
+  note:'Current measurement discrepancy pending source reconciliation'});
+ const html=careerGraphs(w2,c,'202611','202609','Maegashira 9 West');
+ assert.match(html,/Weight review: JSA 173 kg, Sumo API 172 kg/);
+ assert.ok(!html.includes('Nov 2026 — 173 kg'));
+ assert.equal(p.weight.length,2,'official current weight must not add a historical dot');
+});
