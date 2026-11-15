@@ -34,6 +34,8 @@ test('190 profiles export only actual dated weights; current listed weight stays
  assert.equal(example.independentRankReference,'https://sumodb.sumogames.de/Rikishi.aspx?r='+
    roster.rikishi[0].sumoDbId);
  assert.equal(example.currentListedWeight.kg,172);
+ assert.equal(example.currentListedWeight.heightCm,undefined,
+  'No JSA listed height can be fabricated from a current weight alone');
  assert.equal(example.currentListedWeight.datedMeasurement,false);
  const view=careerPoints({...roster.rikishi[0],weightKg:172},report,'202611','202609','Jonidan 9 West');
  assert.equal(view.weight.length,1,'current displayed listing must not create a dot');
@@ -48,6 +50,7 @@ test('historically dated independent records do enter the weight curve but never
  assert.equal(weight.find(x=>x.basho==='202205')?.kg,148);
  assert.ok(!weight.some(x=>x.basho==='202611'));
  assert.equal(view.bySourceId['28'].currentListedWeight.kg,138);
+ assert.equal(view.bySourceId['28'].currentListedWeight.heightCm,173);
  assert.equal(weight.some(x=>x.independentlyCertified),false);
  assert.equal(w.sumoDbId,12226);
 });
