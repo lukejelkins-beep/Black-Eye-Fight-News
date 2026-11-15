@@ -4,7 +4,13 @@ import {readFileSync} from 'node:fs';
 import {evaluateCareerEvidence} from '../scripts/ufc-36-month-stage3-progress.mjs';
 const read=x=>JSON.parse(readFileSync(new URL('../data/'+x,import.meta.url),'utf8'));
 const approval=read('ufc-36-month-roster-approval.json'),census=read('ufc-36-month-candidates.json'),cache=read('ufcalendar-rich-progress.json'),profiles=read('ufcalendar-fighter-research.json').profiles,register=read('ufc-independent-full-career-verification.json').fighters,source=read('ufc-unified-wave54-miller-matsumoto-source-review-20261115.json'),metrics=read('ufc-postfight-metrics.json').fighters;
-const history=s=>profiles[s].recentHistory.filter(h=>h.promotion==='ufc'&&h.boutId&&h.date<=census.asOf);
+const rawHistory=s=>profiles[s].recentHistory.filter(h=>h.promotion==='ufc'&&h.boutId&&h.date<=census.asOf);
+// Filter only individually corroborated feeder bouts with their original source, native ID,
+// exact date/opponent and cached Contender Series event; never mutate raw provider data.
+const history=s=>rawHistory(s).filter(h=>!source.fighters[s].sourceVerifiedExcludedFeederBouts.some(ex=>
+ String(h.boutId)===String(ex.nativeBoutId)&&h.date===ex.date&&h.opponent===ex.opponent&&
+ cache.bouts[String(h.boutId)]?.event===ex.event&&/Contender Series/i.test(ex.event)&&
+ /^https:\/\/www\.ufc\.com\/athlete\//.test(ex.officialSourceUrl)));
 const strict=(s,p)=>evaluateCareerEvidence(profiles[s],history(s),census.fighters.find(x=>x.slug===s)?.lastUfcFight,approval.rosterAsOf,p,cache.bouts).independentlyVerified;
 test('wave54: 12 original official full-career UFC fights independently reconciled across sources, native IDs and rounds',()=>{
  assert.equal(approval.approvedFighters.length,783);assert.equal(source.certificationGranted,false);
@@ -16,7 +22,8 @@ test('wave54: 12 original official full-career UFC fights independently reconcil
   assert.equal(p.officialUfcCareerBoutCount,6);assert.equal(p.bouts.length,6);assert.equal(metrics[slug].trackedBouts,6);
   assert.deepEqual(p.verifiedNumericFighterIds,[c.nativeFighterId]);assert.equal(p.sourceSnapshot.sourceCommit,source.pinnedSource.sourceCommit);
   assert.equal(p.fighterUrl,'https://ufcstats.com/fighter-details/'+c.ufcStatsFighterId);assert.equal(p.officialFighterUrl,c.officialFighterUrl);
-  assert.equal(history(slug).length,6+c.sourceVerifiedExcludedFeederBouts.length);
+  assert.equal(rawHistory(slug).length,6+c.sourceVerifiedExcludedFeederBouts.length);
+  assert.equal(history(slug).length,6);
   for(const b of c.bouts){
    const {originalOpponentNumericId,...expected}=b;assert.deepEqual(p.bouts.find(x=>x.nativeBoutId===b.nativeBoutId),expected);
    const n=cache.bouts[b.nativeBoutId];assert.equal(n?.org,'ufc');assert.equal(n?.status,'completed');assert.ok(Number(cache.roundDone[b.nativeBoutId])>0);
