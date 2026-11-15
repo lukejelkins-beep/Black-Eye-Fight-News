@@ -14,5 +14,6 @@ node --check assets/sumo-data.mjs
 node --check assets/sumo-career.mjs
 node --test tests/test-sumo-api-source.mjs
 node --test tests/test-sumo-data.mjs
+node --test tests/test-sumo-photo-credits.mjs
 node --test tests/test-sumo-career-no-synthetic-weights.mjs
 echo "Sumo preview branch passed Render-equivalent source and 190-rikishi career tests."
