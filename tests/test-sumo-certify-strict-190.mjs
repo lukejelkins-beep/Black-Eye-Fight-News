@@ -273,3 +273,24 @@ test('strict audit can use fully sourced dated ranks when JSA publishes no histo
  assert.ok(strictCareerAudit(f).blockers.includes('independent-official-banzuke-rank-coverage'),
   'an available but unverified official rank comparison cannot be bypassed');
 });
+
+test('strict audit only resolves a later JSA W-L on a dated single current-basho bout',()=>{
+ const f=fixture();
+ f.p.headToHead[0].meetings[1].bashoId='202611';
+ f.p.headToHead[0].meetings[1].day=1;
+ f.official.officialAsOf={monthYear:'November 2026',day:2};
+ f.official.officialBashoRecords[1].losses=2;
+ f.official.career.losses=2;
+ const ok=strictCareerAudit(f);
+ assert.equal(ok.careerResultsCertified,true);
+ assert.equal(ok.datedJsaCareerCutoffReconciled,true);
+ assert.equal(ok.datedJsaCareerCutoffEvidence.extraLosses,1);
+ f.official.career.absences=null;
+ assert.ok(strictCareerAudit(f).blockers.includes('independent-published-career-wins-losses-absences'));
+ f.official.career.absences=0;
+ f.official.career.losses=3;
+ assert.ok(strictCareerAudit(f).blockers.includes('independent-published-career-wins-losses-absences'));
+ f.official.career.losses=2;
+ f.official.officialAsOf.day=1;
+ assert.ok(strictCareerAudit(f).blockers.includes('independent-published-career-wins-losses-absences'));
+});
