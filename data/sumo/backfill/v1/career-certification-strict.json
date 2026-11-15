@@ -3,8 +3,8 @@
   "scope": "Research-only canonical career-result verification decision register",
   "cohortSize": 190,
   "strictAuditSuccessful": true,
-  "strictCareerResultsCertified": 48,
-  "blocked": 142,
+  "strictCareerResultsCertified": 58,
+  "blocked": 132,
   "fullProfilesCertified": 0,
   "productionApproved": false,
   "meaning": "Certifies source-complete regular-bout career result ledgers independently corroborated by JSA per-basho W-L, career totals, dated ranks and SumoDB identity. Does NOT independently certify individual kimarite, historical weigh-ins, images or full profile publication.",
@@ -445,22 +445,24 @@
     {
       "sourceId": 86,
       "name": "Shishi",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "independentlyVerifiedBy": [
+        "JSA published career totals",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 431,
         "completedTournamentResultsCrosschecked": 38,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 39,
         "allTimeOpponents": 162,
         "independentWeightDates": 6
       },
@@ -469,27 +471,29 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3990/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12599"
       },
-      "evidenceDigest": "34becb66413a78f3c1415590fa0eb72f342de17093a902cb583f37fc7f27fe9d"
+      "evidenceDigest": "d856975f4e0a64186285d0fb4127eef53ec96530bf7aad9de5b13d5fb12a25eb"
     },
     {
       "sourceId": 37,
       "name": "Takanosho",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "independentlyVerifiedBy": [
+        "JSA published career totals",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 1087,
         "completedTournamentResultsCrosschecked": 97,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 98,
         "allTimeOpponents": 273,
         "independentWeightDates": 10
       },
@@ -498,27 +502,29 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3265/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11855"
       },
-      "evidenceDigest": "d7d1daeab326587431ce34775f198ec91ccbb7ae190b2791ca98d9f1bc8737d0"
+      "evidenceDigest": "df63994ab33e0f790e42b01a59a561649de0ae631e4a3fbd9f4bf6f1e9d640cb"
     },
     {
       "sourceId": 11,
       "name": "Ichiyamamoto",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "independentlyVerifiedBy": [
+        "JSA published career totals",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 674,
         "completedTournamentResultsCrosschecked": 56,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 58,
         "allTimeOpponents": 175,
         "independentWeightDates": 6
       },
@@ -527,7 +533,7 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3753/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12362"
       },
-      "evidenceDigest": "c0a825b436c046c01c8a99ec64d6bb35b0239bf34de6db2c510fe3093c727af9"
+      "evidenceDigest": "c114676548f1076124819a70bc8a5b505cff4877d2565bd7b5c80073b3a5e123"
     },
     {
       "sourceId": 8866,
@@ -561,22 +567,24 @@
     {
       "sourceId": 83,
       "name": "Tokihayate",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "independentlyVerifiedBy": [
+        "JSA published career totals",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 472,
         "completedTournamentResultsCrosschecked": 44,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 45,
         "allTimeOpponents": 172,
         "independentWeightDates": 6
       },
@@ -585,7 +593,7 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3933/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12542"
       },
-      "evidenceDigest": "478e84248ce94ae30ae952ef72240b40f1fda63ae7d6814cfe3d392257ffdda5"
+      "evidenceDigest": "28f2f906ff9d8767118a0f21826a340e2201175be2c03f225bf281fcf0a870e4"
     },
     {
       "sourceId": 14,
@@ -606,7 +614,7 @@
       "checks": {
         "regularBouts": 1831,
         "completedTournamentResultsCrosschecked": 97,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 98,
         "allTimeOpponents": 309,
         "independentWeightDates": 17
       },
@@ -615,7 +623,7 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/2629/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=5944"
       },
-      "evidenceDigest": "3bd62f3c1348df8b47aba1a22867a261c84f633ded89a24a9f1e69a071d52c0e"
+      "evidenceDigest": "7bafaaa0ab3977b1b6fa08f842b5a3834399b59438912e29c307295744847610"
     },
     {
       "sourceId": 8858,
@@ -1090,13 +1098,12 @@
       "releaseApproved": false,
       "blockers": [
         "preflight-prerequisites-not-met",
-        "independent-published-career-wins-losses-absences",
-        "independent-official-banzuke-rank-coverage"
+        "independent-published-career-wins-losses-absences"
       ],
       "checks": {
         "regularBouts": 636,
         "completedTournamentResultsCrosschecked": 51,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 52,
         "allTimeOpponents": 162,
         "independentWeightDates": 6
       },
@@ -1105,7 +1112,7 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3844/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12453"
       },
-      "evidenceDigest": "86268aa5b22b05c4a6bc09949a6883aa3c96320876113546057e19db260c27b5"
+      "evidenceDigest": "0d9085ac1c3409164215e9a9515e928b8c602a579e7ea455f620fd96a1685041"
     },
     {
       "sourceId": 607,
@@ -1139,22 +1146,24 @@
     {
       "sourceId": 22,
       "name": "Abi",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "independentlyVerifiedBy": [
+        "JSA published career totals",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 943,
         "completedTournamentResultsCrosschecked": 75,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 80,
         "allTimeOpponents": 208,
         "independentWeightDates": 7
       },
@@ -1163,7 +1172,7 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3485/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12094"
       },
-      "evidenceDigest": "3538ed97527aab09569eb204d1cd844c20c0623c2f095def219866c261710cfc"
+      "evidenceDigest": "cf3971ff67c06fe5c2009e77c13618802a34ca095fb20022aec428508720d7ed"
     },
     {
       "sourceId": 8859,
@@ -1197,22 +1206,24 @@
     {
       "sourceId": 135,
       "name": "Dewanoryu",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "independentlyVerifiedBy": [
+        "JSA published career totals",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 317,
         "completedTournamentResultsCrosschecked": 39,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 41,
         "allTimeOpponents": 168,
         "independentWeightDates": 6
       },
@@ -1221,27 +1232,29 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3983/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12592"
       },
-      "evidenceDigest": "2e86f48987b9eec71936b909ace236737a5a6508b90014ec34093b0a8367a2ed"
+      "evidenceDigest": "f3e2b385b8e0ba73927c7a3088e0576627662844040a7355186950a315129bd9"
     },
     {
       "sourceId": 66,
       "name": "Kitanowaka",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "independentlyVerifiedBy": [
+        "JSA published career totals",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 495,
         "completedTournamentResultsCrosschecked": 43,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 45,
         "allTimeOpponents": 160,
         "independentWeightDates": 6
       },
@@ -1250,7 +1263,7 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3939/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12548"
       },
-      "evidenceDigest": "085351cd18abb7ec2f7797f0389539c56687bae9f13cd049f62f6bd504059d2e"
+      "evidenceDigest": "11428aae4548e0d77eedf6758f563166dd44d460993d034d072bb4852d1a5561"
     },
     {
       "sourceId": 8855,
@@ -1294,13 +1307,12 @@
       "releaseApproved": false,
       "blockers": [
         "preflight-prerequisites-not-met",
-        "independent-official-completed-tournament-results",
-        "independent-official-banzuke-rank-coverage"
+        "independent-official-completed-tournament-results"
       ],
       "checks": {
         "regularBouts": 1206,
         "completedTournamentResultsCrosschecked": 96,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 98,
         "allTimeOpponents": 302,
         "independentWeightDates": 11
       },
@@ -1309,27 +1321,29 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3207/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11785"
       },
-      "evidenceDigest": "85d8ac45353aee58f5302ea42647e31473d9058b4f983a8c3962c0549dd21080"
+      "evidenceDigest": "91785468d44d39ab5b4aef2535fb69b65c9d8a87640a30d441562877349a51ac"
     },
     {
       "sourceId": 78,
       "name": "Kazekeno",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "independentlyVerifiedBy": [
+        "JSA published career totals",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 283,
         "completedTournamentResultsCrosschecked": 27,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 28,
         "allTimeOpponents": 118,
         "independentWeightDates": 5
       },
@@ -1338,7 +1352,7 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4158/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12767"
       },
-      "evidenceDigest": "debdd0c13487cda55e2391f7449bc136d6a8ee94adec7ef5861a29147d9a3e35"
+      "evidenceDigest": "7684e84d82cb3cf0ea2911a9cc2da72988c9be5b5f8c725d57d6fe030a9b2755"
     },
     {
       "sourceId": 29,
@@ -1353,13 +1367,12 @@
       "releaseApproved": false,
       "blockers": [
         "preflight-prerequisites-not-met",
-        "independent-published-career-wins-losses-absences",
-        "independent-official-banzuke-rank-coverage"
+        "independent-published-career-wins-losses-absences"
       ],
       "checks": {
         "regularBouts": 1254,
         "completedTournamentResultsCrosschecked": 97,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 98,
         "allTimeOpponents": 262,
         "independentWeightDates": 10
       },
@@ -1368,7 +1381,7 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3255/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=11845"
       },
-      "evidenceDigest": "00192962cab9fe7640955486189a1a7945a4c4cc174d6660f5b399ebf83b8f42"
+      "evidenceDigest": "a54c0ad4adebfd6537dbe3e5a19c1df4bf82b3ebba6e7a33aea87a79e822c66b"
     },
     {
       "sourceId": 8865,
@@ -1414,13 +1427,12 @@
       "releaseApproved": false,
       "blockers": [
         "preflight-prerequisites-not-met",
-        "independent-official-completed-tournament-results",
-        "independent-official-banzuke-rank-coverage"
+        "independent-official-completed-tournament-results"
       ],
       "checks": {
         "regularBouts": 1211,
         "completedTournamentResultsCrosschecked": 90,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 98,
         "allTimeOpponents": 357,
         "independentWeightDates": 14
       },
@@ -1429,7 +1441,7 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/2890/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=6594"
       },
-      "evidenceDigest": "2a5b4d16b487c1d5c3fd8a61982effce6ff3f7170194e12a121320f36b0f74c6"
+      "evidenceDigest": "8ccac3939fea320e87a50407718e583543077b65bd7d8297808e0154aa294231"
     },
     {
       "sourceId": 49,
@@ -1729,22 +1741,24 @@
     {
       "sourceId": 21,
       "name": "Tobizaru",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "independentlyVerifiedBy": [
+        "JSA published career totals",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 902,
         "completedTournamentResultsCrosschecked": 69,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 70,
         "allTimeOpponents": 174,
         "independentWeightDates": 6
       },
@@ -1753,27 +1767,29 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3594/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12203"
       },
-      "evidenceDigest": "8789882c44eb1343f461d43ccab546c1b8c4c0cdd9106493511e2084b716ed1d"
+      "evidenceDigest": "bd3e77f0ab30b6119563e913b12a27bf06df0232b85a67d25e246a185a59dc0b"
     },
     {
       "sourceId": 33,
       "name": "Shodai",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "independentlyVerifiedBy": [
+        "JSA published career totals",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-official-banzuke-rank-coverage"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 1043,
         "completedTournamentResultsCrosschecked": 74,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 75,
         "allTimeOpponents": 156,
         "independentWeightDates": 6
       },
@@ -1782,7 +1798,7 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3521/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12130"
       },
-      "evidenceDigest": "06d8226ffc9d75257aa8492931d4de147092d2519cedee77e4831a9ae20518c5"
+      "evidenceDigest": "4f3e3d23a4d8e04cdb1b54b4826fadcbe86b8a7723c8141c2279ba4cd8c985ed"
     },
     {
       "sourceId": 142,
@@ -1797,13 +1813,12 @@
       "releaseApproved": false,
       "blockers": [
         "preflight-prerequisites-not-met",
-        "independent-published-career-wins-losses-absences",
-        "independent-official-banzuke-rank-coverage"
+        "independent-published-career-wins-losses-absences"
       ],
       "checks": {
         "regularBouts": 308,
         "completedTournamentResultsCrosschecked": 27,
-        "historicalRanksCrosschecked": 0,
+        "historicalRanksCrosschecked": 27,
         "allTimeOpponents": 124,
         "independentWeightDates": 4
       },
@@ -1812,7 +1827,7 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4165/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12774"
       },
-      "evidenceDigest": "ef3a21479b691c080d4ae4c33b6dec805c70426b42d55a95b5a339e1191b7d13"
+      "evidenceDigest": "fba2a37dae59d9085d4b8cfbf7ad1cd07389b10cef7f37d59af04fdd994909ac"
     },
     {
       "sourceId": 12,
