@@ -73,8 +73,9 @@ test('enforce birth date in profile header to avoid similarly named wrestlers',(
  assert.equal(wrong.valid,false);
  assert.equal(wrong.birthDateStatus,'mismatch');
  const withoutDate=sourceIdentityEvidence(page.replace('Birth Date June 22, 1992',''),wrestler,source);
- assert.equal(withoutDate.valid,false);
+ assert.equal(withoutDate.valid,true,'missing DOB remains separately flagged, not misreported as mismatch');
  assert.equal(withoutDate.birthDateStatus,'source-birth-date-missing');
+ assert.equal(withoutDate.publishedDob,null);
 });
 test('source birth date is compared in Japan time for UTC entries at 15:00Z',()=>{
  const wrestler={sourceId:9103,shikonaEn:'Asahifuji',birthDate:'2002-05-16T15:00:00Z'};
@@ -90,4 +91,14 @@ test('names appearing only in opponents section never establish a source identit
    '<p>Career Record 4-5</p><p>won against Ura Kazuki in May</p>';
  const check=sourceIdentityEvidence(sample,w,{data:{shikonas:[]}});
  assert.equal(check.valid,false);
+});
+
+test('missing DOB still accepts a fully mapped and header-matched rikishi but does not claim DOB verification',()=>{
+ const wrestler={sourceId:28,shikonaEn:'Ura',birthDate:'1992-06-22T00:00:00Z'};
+ const page='<h1>Ura Kazuki Rikishi Information</h1><p>Career Record 10-2</p>';
+ const r=sourceIdentityEvidence(page,wrestler,{data:{profile:{shikonaEn:'Ura'},shikonas:[]}});
+ assert.equal(r.valid,true);
+ assert.equal(r.birthDateStatus,'source-birth-date-missing');
+ assert.equal(r.matchedCurrentName,true);
+ assert.equal(r.publishedDob,null);
 });
