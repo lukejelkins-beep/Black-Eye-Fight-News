@@ -231,3 +231,26 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .sumo-ed-row-main{column-gap:5px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:0s!important;animation-duration:0s!important}}
+
+/* Hero areas use direct grid children so the facts can span the screen on mobile. */
+@media(min-width:1024px){
+ .profile-hero>.profile-icon{grid-column:1;grid-row:1/span 2}
+ .profile-hero>.profile-title{grid-column:2;grid-row:1}
+ .profile-hero>.profile-facts{grid-column:2;grid-row:2}
+ .profile-hero>.profile-current{grid-column:3;grid-row:1/span 2}
+}
+@media(min-width:600px) and (max-width:1023px){
+ .profile-hero>.profile-icon{grid-column:1;grid-row:1}
+ .profile-hero>.profile-title{grid-column:2;grid-row:1}
+ .profile-hero>.profile-facts{grid-column:1/-1;grid-row:2}
+ .profile-hero>.profile-current{grid-column:1/-1;grid-row:3}
+}
+@media(max-width:599px){
+ .profile-hero>.profile-icon{grid-column:1;grid-row:1}
+ .profile-hero>.profile-title{grid-column:2;grid-row:1}
+ .profile-hero>.profile-facts{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .profile-hero>.profile-current{grid-column:1/-1;grid-row:3}
+}
+.profile-hero .sumo-photo-fallback{font-size:13px;position:absolute;bottom:8px;left:0;right:0;text-align:center;color:#21191c;background:#f6f2eadb;padding:4px;z-index:2}
+.profile-hero .profile-icon:not(.has-photo){background:#e4d9cc}
+.profile-hero .profile-icon:not(.has-photo):before,.profile-hero .profile-icon:not(.has-photo):after{opacity:.18}
