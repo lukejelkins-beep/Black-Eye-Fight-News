@@ -71,6 +71,45 @@ export function documentedDebutRankGap(p,jsa){
    jsa?.rankReconciliation?.mismatches?.length===0;
 }
 
+/** For older careers, public JSA pages sometimes omit the earliest basho
+ * rows. Those dates may be independently corroborated by a one-time SumoDB
+ * snapshot if ALL missing dated W-L values and overlapping years agree.
+ * No inference of ranks, results or absence totals is permitted.
+ */
+export function supplementalHistoricalBashoCoverage(p,jsa,sdb,activeBasho){
+ const prior=(p?.perBasho||[]).filter(x=>x.bashoId!==activeBasho&&
+   Number(x.scheduledBoutRows||0)>0);
+ const bh=jsa?.bashoReconciliation||null;
+ const baseline=!!bh&&bh.discrepantBasho===0&&
+   Number(bh.comparedBasho)>=prior.length;
+ if(baseline)return {passed:true,baselineJsa:true,
+   otherSourceBasho:0,missingOfficialBasho:0,sourceOverlapConflicts:0};
+ const official=new Map((jsa?.officialBashoRecords||[]).map(x=>[String(x.bashoId),x]));
+ const missing=prior.filter(x=>!official.has(x.bashoId));
+ const snapshot=sdb?.careerRecordCrosscheck||null;
+ const goodSource=snapshot?.identityVerified===true&&
+   snapshot?.originalMeasurementsUnchanged===true&&
+   snapshot?.independentOfApi===true&&
+   snapshot?.careerRecordDiffersFromPriorSnapshot!==true&&
+   /^[0-9a-f]{64}$/.test(String(snapshot?.datedBashoLedgerSourceSha256||''))&&
+   snapshot?.sourceUrl==='https://sumodb.sumogames.de/Rikishi.aspx?r='+sdb?.sumoDbId&&
+   Array.isArray(snapshot.independentBashoRows);
+ const independent=goodSource?
+   new Map(snapshot.independentBashoRows.map(x=>[String(x.bashoId),x])):new Map();
+ const exact=(r,x)=>r&&r.wins===x.wins&&r.losses===x.losses;
+ const supplementalMatch=missing.length>0&&goodSource&&
+   missing.every(x=>exact(independent.get(x.bashoId),x));
+ const overlapConflicts=prior.filter(x=>official.has(x.bashoId)&&
+   independent.has(x.bashoId)&&
+   (!exact(official.get(x.bashoId),x)||!exact(independent.get(x.bashoId),x))).length;
+ const passed=supplementalMatch&&overlapConflicts===0&&
+   bh?.discrepantBasho===0&&bh?.agreeingBasho===bh?.comparedBasho&&
+   prior.every(x=>exact(official.get(x.bashoId)||independent.get(x.bashoId),x));
+ return {passed:!!passed,baselineJsa:false,
+   otherSourceBasho:passed?missing.length:0,
+   missingOfficialBasho:missing.length,sourceOverlapConflicts:overlapConflicts};
+}
+
 export function preflightRikishi(w,p,jsa,sdb,activeBasho){
  if(!id(w?.sourceId)||!id(w?.officialNskId)||!id(w?.sumoDbId)||
    !p||p.sourceId!==w.sourceId||p.officialNskId!==w.officialNskId||
@@ -128,9 +167,8 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
  const prior=(p.perBasho||[]).filter(x=>x.bashoId!==activeBasho&&
   Number(x.scheduledBoutRows||0)>0);
  const historical=jsa?.bashoReconciliation||null;
- add(historical&&historical.discrepantBasho===0&&
-   Number(historical.comparedBasho)>=prior.length,
-  'official-completed-basho-ledger-coverage-incomplete');
+ const completedBasho=supplementalHistoricalBashoCoverage(p,jsa,sdb,activeBasho);
+ add(completedBasho.passed,'official-completed-basho-ledger-coverage-incomplete');
  const missingRecords=(historical?.unmatchedOfficialBasho||[]).filter(basho=>{
   const row=jsa?.officialBashoRecords?.find(x=>x.bashoId===basho);
   return !row||Number(row.wins||0)>0||Number(row.losses||0)>0;
@@ -148,6 +186,9 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
   classification:problems.length?'needs-source-or-manual-review':'candidate-for-strict-audit',
   blockers:problems,completedHistoricalBoutTournaments:prior.length,
   officialBashoCompared:Number(historical?.comparedBasho||0),
+  independentlyReconciledOlderBasho:completedBasho.otherSourceBasho,
+  missingJsaOlderBasho:completedBasho.missingOfficialBasho,
+  historicalSourceOverlapConflicts:completedBasho.sourceOverlapConflicts,
   JsaHistoricalRankCompared:Number(ranks?.comparedBasho||0),
   documentedNoPublishedNumberedDebutRank:justifiedDebutGap,
   debutRankStillUnpublished:justifiedDebutGap?String(p.rankHistoryGaps[0].bashoId):null,
