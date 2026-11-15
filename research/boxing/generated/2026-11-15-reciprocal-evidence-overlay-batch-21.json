@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "scope": "research-only evidence overlay; NOT canonical bout ledger",
+  "generated_date": "2026-11-15",
+  "deduplication_rule": "Distinct bouts require independently validated participant IDs plus event date; names are not identity keys. No automatic merging.",
+  "evidence_status": "POSTFIGHT_RESULT_CORROBORATED_FROM_PRIOR_BATCH_REPORTS",
+  "source_reports": [
+    "batch-15",
+    "batch-16",
+    "batch-19",
+    "batch-20"
+  ],
+  "counts": {
+    "overlay_distinct_bouts": 6,
+    "reciprocal_archive_pairs": 4,
+    "full_careers_certified": 0,
+    "profiles_pending": 509
+  },
+  "bouts": [
+    {
+      "event_date": "2024-09-21",
+      "winner_name": "Joshua Buatsi",
+      "loser_name": "Willy Hutchinson",
+      "result_method": "SD",
+      "scheduled_or_completed_rounds": 12,
+      "evidence_urls": [
+        "https://www.skysports.com/boxing/news/13219408/spiteful-buatsi-drops-and-defeats-hutchinson"
+      ],
+      "category": "RECIPROCAL_ARCHIVE_PAIR",
+      "identity_status": "STABLE_PARTICIPANT_IDS_PENDING",
+      "career_status": "NOT_CERTIFIED",
+      "compubox_status": "NO_NEW_IMPORT"
+    },
+    {
+      "event_date": "2025-10-25",
+      "winner_name": "Fabio Wardley",
+      "loser_name": "Joseph Parker",
+      "result_method": "TKO",
+      "scheduled_or_completed_rounds": 11,
+      "evidence_urls": [
+        "https://www.bbc.co.uk/sport/boxing/articles/c8jrgwlrxnzo",
+        "https://www.skysports.com/boxing/news/12183/13457468/fabio-wardley-stuns-joseph-parker-with-11th-round-stoppage-victory-to-win-right-to-challenge-oleksandr-usyk"
+      ],
+      "category": "RECIPROCAL_ARCHIVE_PAIR",
+      "identity_status": "STABLE_PARTICIPANT_IDS_PENDING",
+      "career_status": "NOT_CERTIFIED",
+      "compubox_status": "NO_NEW_IMPORT"
+    },
+    {
+      "event_date": "2025-02-24",
+      "winner_name": "Tenshin Nasukawa",
+      "loser_name": "Jason Moloney",
+      "result_method": "UD",
+      "scheduled_or_completed_rounds": 10,
+      "evidence_urls": [
+        "https://www.ringmagazine.com/news/tenshin-nasukawa-outpoints-former-titlist-jason-moloney-over-ten-rounds-2S4rGcWV9BwYVI2h4i4h30",
+        "https://www.boxingscene.com/articles/tenshin-nasukawa-becomes-a-man-with-victory-over-jason-maloney"
+      ],
+      "category": "RECIPROCAL_ARCHIVE_PAIR",
+      "identity_status": "STABLE_PARTICIPANT_IDS_PENDING",
+      "career_status": "NOT_CERTIFIED",
+      "compubox_status": "NO_NEW_IMPORT"
+    },
+    {
+      "event_date": "2025-07-12",
+      "winner_name": "David Morrell Jr.",
+      "loser_name": "Imam Khataev",
+      "result_method": "SD",
+      "scheduled_or_completed_rounds": 10,
+      "evidence_urls": [
+        "https://www.ringmagazine.com/news/david-morrell-jr-overcomes-5th-round-knockdown-edges-imam-khataev-by-split-decision-7nMsh3crvP1MjffVTXHhIJ",
+        "https://www.boxingscene.com/fights/david-morrell-vs-imam-khataev"
+      ],
+      "category": "RECIPROCAL_ARCHIVE_PAIR",
+      "identity_status": "STABLE_PARTICIPANT_IDS_PENDING",
+      "career_status": "NOT_CERTIFIED",
+      "compubox_status": "NO_NEW_IMPORT"
+    },
+    {
+      "event_date": "2024-06-01",
+      "winner_name": "Willy Hutchinson",
+      "loser_name": "Craig Richards",
+      "result_method": "UD",
+      "scheduled_or_completed_rounds": 12,
+      "evidence_urls": [
+        "https://boxrec.com/wiki/index.php?title=Fight%3A3151966",
+        "https://www.ringmagazine.com/news/willy-hutchinson-outpoints-craig-richards-queensberry-takes-early-lead-in-5-vs-5-2ss6azR3oOHiYb7wSQ1YVa"
+      ],
+      "category": "ARCHIVE_PRIORITY_ONE",
+      "identity_status": "STABLE_PARTICIPANT_IDS_PENDING",
+      "career_status": "NOT_CERTIFIED",
+      "compubox_status": "NO_NEW_IMPORT"
+    },
+    {
+      "event_date": "2026-11-07",
+      "winner_name": "Willy Hutchinson",
+      "loser_name": "Joshua Buatsi",
+      "result_method": "UD",
+      "scheduled_or_completed_rounds": 12,
+      "evidence_urls": [
+        "https://www.reuters.com/sports/britains-hutchinson-beats-buatsi-take-vacant-wbc-light-heavyweight-title-2026-11-08/"
+      ],
+      "category": "ALREADY_IN_CURATED_CORE_16970",
+      "identity_status": "STABLE_PARTICIPANT_IDS_PENDING",
+      "career_status": "NOT_CERTIFIED",
+      "compubox_status": "NO_NEW_IMPORT"
+    }
+  ]
+}
