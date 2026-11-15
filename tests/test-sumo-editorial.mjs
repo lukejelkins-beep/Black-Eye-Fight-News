@@ -43,7 +43,7 @@ test('rank ranges and source observation counts preserve first/latest without in
  const output=editorialRankChart(all,{range:'2y'});
  assert.match(output,/121 recorded rank observations/);
  assert.match(output,/All 121 recorded rank observations/);
- assert.match(output,/Nov 2025/);
+ assert.match(output,/Jan 2025/);
  assert.equal((output.match(/class="sumo-rank-overview"/g)||[]).length,1);
  assert.equal((output.match(/class="sumo-rank-svg"/g)||[]).length,1);
  assert.ok(rankRangePoints(all,'2y').length<all.length);
