@@ -156,6 +156,49 @@ export function independentHistoricalRankCoverage(p,jsa,sdb){
    quota:minimum,independentEvidenceValid:!!valid,evidenceBasis};
 }
 
+/** Verify that a later official source snapshot differs ONLY by an explicitly
+ * dated, already completed CURRENT-basho bout. The native cache is never
+ * mutated or assumed to be as current as the JSA's live page.
+ * Missing absences are never supplied or inferred.
+ */
+export function independentlyVerifiedCurrentBashoCutoff(p,jsa,activeBasho){
+ const months=['January','February','March','April','May','June','July',
+  'August','September','October','November','December'];
+ const year=Number(String(activeBasho).slice(0,4));
+ const month=Number(String(activeBasho).slice(4,6));
+ const monthYear=months[month-1]+' '+year;
+ const asOf=jsa?.officialAsOf||{};
+ const publishedDay=asOf.day;
+ const cache=(p?.perBasho||[]).find(x=>x.bashoId===activeBasho);
+ const official=(jsa?.officialBashoRecords||[]).find(x=>x.bashoId===activeBasho);
+ const matches=(p?.headToHead||[]).flatMap(x=>x.meetings||[])
+  .filter(x=>x.bashoId===activeBasho);
+ const latestNativeDay=matches.reduce((n,x)=>Math.max(n,Number(x.day)||0),0);
+ const diffWins=Number(official?.wins)-Number(cache?.wins);
+ const diffLosses=Number(official?.losses)-Number(cache?.losses);
+ const career=jsa?.career,baseline=p?.career;
+ const publishedAbsences=career?.absences!=null&&
+  Number.isSafeInteger(career.absences)&&career.absences>=0;
+ const sourceValid=asOf.monthYear===monthYear&&
+  Number.isInteger(publishedDay)&&publishedDay>=1&&publishedDay<=15&&
+  latestNativeDay>=1&&publishedDay>latestNativeDay&&
+  /^[a-f0-9]{64}$/.test(String(jsa?.rawHtmlSha256||''))&&
+  jsa?.bashoReconciliation?.discrepantBasho===0;
+ const deltaValid=(diffWins===1&&diffLosses===0||
+  diffWins===0&&diffLosses===1);
+ const totalsValid=Number.isSafeInteger(career?.wins)&&
+  Number.isSafeInteger(career?.losses)&&
+  Number.isSafeInteger(baseline?.wins)&&Number.isSafeInteger(baseline?.losses)&&
+  career.wins-baseline.wins===diffWins&&
+  career.losses-baseline.losses===diffLosses;
+ const passed=!!(sourceValid&&cache&&official&&publishedAbsences&&
+  career.absences===baseline?.absences&&deltaValid&&totalsValid);
+ return {passed,activeBasho,sourceDay:sourceValid?publishedDay:null,
+  lastCachedBoutDay:latestNativeDay||null,
+  extraWins:passed?diffWins:0,extraLosses:passed?diffLosses:0,
+  evidenceBasis:passed?'dated-JSA-current-basho-WLA-cutoff':null};
+}
+
 export function preflightRikishi(w,p,jsa,sdb,activeBasho){
  if(!id(w?.sourceId)||!id(w?.officialNskId)||!id(w?.sumoDbId)||
    !p||p.sourceId!==w.sourceId||p.officialNskId!==w.officialNskId||
@@ -201,8 +244,10 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
   totals.wins===p.career?.wins&&totals.losses===p.career?.losses&&
   totals.absences===p.career?.absences;
  const jsaHasCareer=officialId&&jsa.career!==null&&jsa.career!==undefined;
- const jsaWinLossMatches=jsaHasCareer&&
-  jsa.career.wins===p.career?.wins&&jsa.career.losses===p.career?.losses;
+ const currentCutoff=independentlyVerifiedCurrentBashoCutoff(p,jsa,activeBasho);
+ const jsaWinLossMatches=jsaHasCareer&&(
+  jsa.career.wins===p.career?.wins&&jsa.career.losses===p.career?.losses||
+  currentCutoff.passed);
  add(jsaHasCareer?jsaWinLossMatches:officialId&&independentlyMatched,
   'official-JSA-career-totals-unpublished-or-disagree');
  const jsaAbsencesPresent=jsaHasCareer&&jsa.career.absences!=null;
@@ -241,7 +286,8 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
   documentedNoPublishedNumberedDebutRank:justifiedDebutGap,
   debutRankStillUnpublished:justifiedDebutGap?String(p.rankHistoryGaps[0].bashoId):null,
   careerTotalsEvidence:jsaWinLossMatches&&jsaAbsencesPresent?
-   'published-JSA-three-part-career-record':independentlyMatched&&
+   (currentCutoff.passed?'published-JSA-three-part-WLA-as-of-reconciled':
+    'published-JSA-three-part-career-record'):independentlyMatched&&
    (!jsaHasCareer||jsaWinLossMatches)?
    'independent-SumoDB-three-part-career-record-plus-JSA-basho':'incomplete-or-conflicting',
   independentBirthDateMatch:rawIdentity?.birthDateStatus==='match',
