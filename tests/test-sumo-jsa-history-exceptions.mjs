@@ -38,3 +38,31 @@ test('completed tournament mismatch and malformed profiles go to review, no curr
  assert.equal(audit.profileReviewCases,2);
  assert.equal(audit.certifiedCareers,0);
 });
+
+test('career record absent on official page is distinct from checked tournament mismatch',()=>{
+ const doc={...base,
+  status:'parse-review',career:null,officialAsOf:null,
+  bashoReconciliation:{comparedBasho:94,agreeingBasho:94,
+   discrepantBasho:0,discrepancies:[],unmatchedOfficialBasho:[]}};
+ const row=auditJsaSnapshot(rosterItem,doc);
+ assert.equal(row.reviewClassification,'official-career-totals-not-found');
+ assert.equal(row.officialCareerTotalsNotFound,true);
+ assert.equal(row.tournamentRowsCompared,94);
+ assert.equal(row.unreconciledTournamentCount,0);
+ assert.equal(row.certification,'not-started');
+ const roster={count:190,rikishi:[rosterItem,...Array.from({length:189},(_,i)=>({
+  sourceId:1000+i,shikonaEn:'Wrestler '+i,officialNskId:3000+i}))]};
+ const report=buildJsaExceptionReport(roster,new Map([[42,doc]]));
+ assert.equal(report.officialCareerTotalsNotFoundCases,1);
+ assert.equal(report.genuineParserOrFieldReviewCases,0);
+ assert.equal(report.historicalTournamentsDisagree,0);
+ assert.equal(report.certifiedCareers,0);
+});
+test('a missing official total plus a field error remains a genuine field review',()=>{
+ const doc={...base,career:null,status:'parse-review',fieldComparisons:{name:false},
+  bashoReconciliation:{comparedBasho:3,agreeingBasho:3,
+   discrepantBasho:0,discrepancies:[]}};
+ const row=auditJsaSnapshot(rosterItem,doc);
+ assert.equal(row.officialCareerTotalsNotFound,false);
+ assert.equal(row.reviewClassification,'official-profile-field-disagreement');
+});
