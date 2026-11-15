@@ -260,6 +260,11 @@ export function officialSpotcheckPriority(a,b){
  const x=rankParts(a),y=rankParts(b);
  return x[0]-y[0]||x[1]-y[1]||x[2]-y[2]||x[3]-y[3];
 }
+/** Revisit earlier JSA snapshots once, only to add dated banzuke QA. */
+export function requiresJsaRankRecheck(doc){
+ return !!doc&&doc.rankReconciliation==null&&doc.rankRecheck==null&&
+  Number(doc.sourceId)>0&&Number(doc.officialNskId)>0;
+}
 async function main(){
  const roster=await load('data/sumo/rikishi-index.json');
  if(roster?.count!==190||roster.rikishi?.length!==190)throw Error('Frozen 190-rikishi cohort mismatch');
@@ -308,6 +313,67 @@ async function main(){
    break;
   }
  }
+ let oldRankChecks=0;
+ // Only after primary profile collection is complete, use the remaining
+ // request quota to investigate older snapshots missing a rank crosscheck.
+ // Preserve original public bio, career totals, source W-L and raw source hash.
+ if(!reason&&requested<MAX_REQUESTS){
+  let primaryOutstanding=false;
+  for(const w of cases){
+   const priorDoc=await load(join(ROOT,'profiles',w.sourceId+'.json'));
+   if(!priorDoc||priorDoc.parserVersion<4&&
+      !(priorDoc.parserVersion===3&&priorDoc.career!==null)){
+    primaryOutstanding=true;break;
+   }
+  }
+  if(!primaryOutstanding){
+   for(const w of cases){
+    if(requested>=MAX_REQUESTS)break;
+    const path=join(ROOT,'profiles',w.sourceId+'.json');
+    const cached=await load(path);
+    if(!requiresJsaRankRecheck(cached))continue;
+    requested++;
+    const url='https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+w.officialNskId+'/';
+    try{
+     const resp=await fetch(url,{headers:{Accept:'text/html',
+       'User-Agent':'BlackEyeFightNews/1.0 (bounded historical rank fact checking)'},
+       signal:AbortSignal.timeout(WAIT_MS)});
+     if(!resp.ok){
+      reason='JSA rank evidence HTTP '+resp.status;
+      nextAllowedAt=new Date(Date.now()+
+        (resp.status===429||resp.status===403?12*3600_000:3600_000)).toISOString();
+      break;
+     }
+     const html=await resp.text();
+     if(html.length<500||html.length>2_000_000)
+      throw Error('Unexpected JSA rank source HTML length');
+     const check=parseOfficialProfile(html,w);
+     if(check.fieldComparisons?.name!==true||
+        check.fieldComparisons?.stable===false||
+        check.fieldComparisons?.rankGrade===false)
+      throw Error('Source current wrestler identity or grade changed');
+     const raw=await load(join('data/sumo/backfill/v1/rikishi',w.sourceId+'.json'));
+     const officialRankRecords=parseJsaBashoRanks(html);
+     const rankReconciliation=reconcileJsaBashoRanks(officialRankRecords,raw);
+     const rankRecheck={schemaVersion:1,sourceUrl:url,capturedAt:now(),
+       parserVersion:1,originalPublicFieldsPreserved:true,
+       rawHtmlSha256:createHash('sha256').update(html).digest('hex'),
+       status:rankReconciliation.comparedBasho>0?
+         'source-ranks-compared':'dated-official-ranks-not-parseable',
+       rankRowsCompared:rankReconciliation.comparedBasho,
+       rankConflicts:rankReconciliation.mismatches.length,
+       certification:'not-started'};
+     await put(path,{...cached,officialRankRecords,rankReconciliation,rankRecheck});
+     oldRankChecks++;
+     await new Promise(r=>setTimeout(r,INTERVAL_MS));
+    }catch(e){
+     reason='JSA historical rank recheck unavailable: '+String(e.message||e).slice(0,135);
+     nextAllowedAt=new Date(Date.now()+3600_000).toISOString();
+     break;
+    }
+   }
+  }
+ }
  let done=0,matched=0,exceptions=0,bashoChecked=0,historicalDiscrepancies=0;
  for(const w of cases){
   const d=await load(join(ROOT,'profiles',w.sourceId+'.json'));
@@ -324,7 +390,8 @@ async function main(){
   pending:190-done,historicalBashoCompared:bashoChecked,
   historicalDiscrepancies,
   lastRunAt:now(),requestsThisRun:requested,goodThisRun:succeeded,
-  reviewThisRun:review,stoppedReason:reason,nextAllowedAt,certified:0,
+  reviewThisRun:review,historicalRankRechecksThisRun:oldRankChecks,
+  stoppedReason:reason,nextAllowedAt,certified:0,
   photoUseRights:'not obtained or inferred'};
  await put(metaPath,summary);
  console.log(JSON.stringify(summary));
