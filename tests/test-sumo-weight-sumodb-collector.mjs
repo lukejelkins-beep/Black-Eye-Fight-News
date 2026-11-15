@@ -182,7 +182,7 @@ test('old SumoDB banzuke records provide only explicit tournament-dated W-L-A',(
 });
 test('do not fabricate old tournaments, fake dates or contradicting results',()=>{
  const bad='<tr><td>2026.02</td><td>J3e</td><td>4-3</td></tr>'+
- '<tr><td>2026.03</td><td>5-12</td></tr>'+
+ '<tr><td>2026.03</td><td>5-16</td></tr>'+
  '<tr><td>2026.05</td><td>2017.07</td><td>4-3</td></tr>';
  assert.deepEqual(parseSumoDbBashoRecords(bad),[]);
  const duplicate='<tr><td>2025.09</td><td>4-3</td></tr>'+
