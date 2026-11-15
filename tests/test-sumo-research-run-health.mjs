@@ -86,3 +86,18 @@ test('health checkpoint publishes only strict-preflight candidates and JSA rank 
  assert.equal(v.strictPreflight.certified,0);
  assert.equal(v.certifiedCareers,0);
 });
+
+test('reports strict career-result certificates without declaring full profiles certified',()=>{
+ const report=buildSumoHealth({...input,
+  preflight:{candidateForStrictAudit:34,needsSourceOrManualReview:156},
+  strict:{cohortSize:190,strictAuditSuccessful:true,strictCareerResultsCertified:28}});
+ assert.equal(report.careerResultsStrictlyCertified,28);
+ assert.equal(report.strictCareerAuditPassed,true);
+ assert.equal(report.fullProfilesCertified,0);
+ assert.equal(report.certifiedCareers,0);
+ assert.equal(report.productionPublished,false);
+ assert.throws(()=>buildSumoHealth({...input,
+  preflight:{candidateForStrictAudit:3},
+  strict:{cohortSize:190,strictAuditSuccessful:true,strictCareerResultsCertified:28}}),
+  /Strict certification checkpoint/);
+});
