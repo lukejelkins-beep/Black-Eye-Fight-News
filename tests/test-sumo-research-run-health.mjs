@@ -101,3 +101,20 @@ test('reports strict career-result certificates without declaring full profiles 
   strict:{cohortSize:190,strictAuditSuccessful:true,strictCareerResultsCertified:28}}),
   /Strict certification checkpoint/);
 });
+
+test('health reports independent career record checks separately from source weight rechecks',()=>{
+ const r=buildSumoHealth({...input,
+  collection:{...collection,careerRecordCrosschecksThisRun:10,
+   careerRecordCrosschecksOutstanding:58,
+   independentlyPublishedCareerRecordsCaptured:10},
+  preflight:{candidateForStrictAudit:70,needsSourceOrManualReview:120,
+   sourceCorroboratedDebutRankGaps:9},
+  strict:{cohortSize:190,strictAuditSuccessful:true,
+   strictCareerResultsCertified:70,confirmedNumberedRankAbsentAtDebut:1}});
+ assert.equal(r.sumoDb.careerEvidenceChecksThisRun,10);
+ assert.equal(r.sumoDb.careerEvidenceChecksOutstanding,58);
+ assert.equal(r.sumoDb.publishedIndependentCareerRecords,10);
+ assert.equal(r.strictPreflight.documentedRanklessDebutExceptions,9);
+ assert.equal(r.strictlyVerifiedDebutRankGaps,1);
+ assert.equal(r.fullProfilesCertified,0);
+});
