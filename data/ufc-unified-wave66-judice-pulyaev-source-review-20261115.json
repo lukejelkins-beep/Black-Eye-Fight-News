@@ -1,0 +1,231 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave66-source-only-crosscheck",
+  "reviewedOn": "2026-11-15",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "approvedRosterAsOf": "2026-11-14",
+  "approvalCohort": 783,
+  "sourceOnly": true,
+  "pendingOfficialBiographyCrosscheck": true,
+  "notes": [
+    "Two non-certified, nonblocked short careers selected from the existing approved cohort without altering the canonical proof register.",
+    "Pinned UFCStats-derived Greco fighter, fight, and event rows are independently crosschecked against cached original numeric UFC fighter/bout identities, both native corners, final results and measured rounds.",
+    "Historical UFCStats-listed contest counts are not automatically exhaustive official UFC.com biographies: independently verify official UFC career scope and feeder exclusions before promoting any certificate.",
+    "No paid provider request, release, roster modification, data imputation, main merge or new certification register."
+  ],
+  "pinnedHistoricalSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "latestEventDate": "2026-11-07"
+  },
+  "fighters": {
+    "carli-judice": {
+      "name": "Carli Judice",
+      "sourceFighterUrl": "https://ufcstats.com/fighter-details/f1ab6f37492c630a",
+      "nativeFighterId": "454",
+      "sourceListedUfcBouts": 5,
+      "nativeCompletedUfcBouts": 5,
+      "sourceNativeExactMatches": 5,
+      "sourceOutcomeConflicts": 0,
+      "nativeRoundGaps": 0,
+      "officialUfcBiographyExhaustivenessVerified": false,
+      "certificationStatus": "source_reconciled_pending_official_full_career_scope_and_strict_stage3_gate",
+      "bouts": [
+        {
+          "date": "2026-08-22",
+          "sourceEventDate": "2026-08-22",
+          "sourceEvent": "UFC Fight Night: Hernandez vs. Rodrigues",
+          "sourceEventUrl": "https://ufcstats.com/event-details/a0a69dc9914ef6e1",
+          "opponent": "Jeisla Chaves",
+          "result": "win",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/a4b3becc0cc394d7",
+          "sourceWeightClass": "Women's Flyweight Bout",
+          "nativeBoutId": "82992",
+          "originalNativeFighterId": "454",
+          "originalOpponentFighterId": "97",
+          "nativeEventDate": "2026-08-22",
+          "measuredRounds": 1
+        },
+        {
+          "date": "2026-02-21",
+          "sourceEventDate": "2026-02-21",
+          "sourceEvent": "UFC Fight Night: Strickland vs. Hernandez",
+          "sourceEventUrl": "https://ufcstats.com/event-details/79ab17db3b40831a",
+          "opponent": "Juliana Miller",
+          "result": "win",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/6e78d874097a3d22",
+          "sourceWeightClass": "Women's Flyweight Bout",
+          "nativeBoutId": "60672",
+          "originalNativeFighterId": "454",
+          "originalOpponentFighterId": "459",
+          "nativeEventDate": "2026-02-21",
+          "measuredRounds": 3
+        },
+        {
+          "date": "2025-07-19",
+          "sourceEventDate": "2025-07-19",
+          "sourceEvent": "UFC 318: Holloway vs. Poirier 3",
+          "sourceEventUrl": "https://ufcstats.com/event-details/b8e2f10efb6eca85",
+          "opponent": "Nicolle Caliari",
+          "result": "win",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/a602c68147b752b2",
+          "sourceWeightClass": "Women's Flyweight Bout",
+          "nativeBoutId": "60816",
+          "originalNativeFighterId": "454",
+          "originalOpponentFighterId": "50",
+          "nativeEventDate": "2025-07-20",
+          "measuredRounds": 3
+        },
+        {
+          "date": "2025-03-15",
+          "sourceEventDate": "2025-03-15",
+          "sourceEvent": "UFC Fight Night: Vettori vs. Dolidze 2",
+          "sourceEventUrl": "https://ufcstats.com/event-details/39f62b833e4cf126",
+          "opponent": "Yuneisy Duben",
+          "result": "win",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/a8f8245096eaf0cd",
+          "sourceWeightClass": "Women's Flyweight Bout",
+          "nativeBoutId": "60367",
+          "originalNativeFighterId": "454",
+          "originalOpponentFighterId": "98",
+          "nativeEventDate": "2025-03-15",
+          "measuredRounds": 1
+        },
+        {
+          "date": "2024-06-15",
+          "sourceEventDate": "2024-06-15",
+          "sourceEvent": "UFC Fight Night: Perez vs. Taira",
+          "sourceEventUrl": "https://ufcstats.com/event-details/9c5828c6fd9dc948",
+          "opponent": "Gabriella Fernandes",
+          "result": "loss",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/19ef5890b20f903a",
+          "sourceWeightClass": "Women's Flyweight Bout",
+          "nativeBoutId": "61061",
+          "originalNativeFighterId": "454",
+          "originalOpponentFighterId": "515",
+          "nativeEventDate": "2024-06-15",
+          "measuredRounds": 3
+        }
+      ],
+      "excludedFeederAppearances": [
+        {
+          "nativeBoutId": "83950",
+          "date": "2023-09-26",
+          "event": "Dana White's Contender Series 64",
+          "opponent": "Ernesta Kareckaite",
+          "originalNativeFighterId": "454",
+          "originalOpponentFighterId": "468",
+          "result": "loss",
+          "excludedReason": "Dana White's Contender Series is not an official UFC Octagon career fight"
+        }
+      ],
+      "nextAction": "Crosscheck dated full official UFC.com athlete biography, then submit one complete canonical proof and fail-closed negative tests to the existing research branch for a successful 783-fighter strict Stage 3 audit."
+    },
+    "andrey-pulyaev": {
+      "name": "Andrey Pulyaev",
+      "sourceFighterUrl": "https://ufcstats.com/fighter-details/22e07d3da1aa3475",
+      "nativeFighterId": "334",
+      "sourceListedUfcBouts": 5,
+      "nativeCompletedUfcBouts": 5,
+      "sourceNativeExactMatches": 5,
+      "sourceOutcomeConflicts": 0,
+      "nativeRoundGaps": 0,
+      "officialUfcBiographyExhaustivenessVerified": false,
+      "certificationStatus": "source_reconciled_pending_official_full_career_scope_and_strict_stage3_gate",
+      "bouts": [
+        {
+          "date": "2026-10-03",
+          "sourceEventDate": "2026-10-03",
+          "sourceEvent": "UFC 332: Silva vs. Wang",
+          "sourceEventUrl": "https://ufcstats.com/event-details/ad3fdba28a7540cf",
+          "opponent": "Damian Pinas",
+          "result": "loss",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/31b85cd63fb291ed",
+          "sourceWeightClass": "Middleweight Bout",
+          "nativeBoutId": "83727",
+          "originalNativeFighterId": "334",
+          "originalOpponentFighterId": "458",
+          "nativeEventDate": "2026-10-03",
+          "measuredRounds": 1
+        },
+        {
+          "date": "2026-06-27",
+          "sourceEventDate": "2026-06-27",
+          "sourceEvent": "UFC Fight Night: Fiziev vs. Torres",
+          "sourceEventUrl": "https://ufcstats.com/event-details/31e1ea6fe6b682f8",
+          "opponent": "Nursulton Ruziboev",
+          "result": "loss",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/5e7f4ba1210f433d",
+          "sourceWeightClass": "Middleweight Bout",
+          "nativeBoutId": "66368",
+          "originalNativeFighterId": "334",
+          "originalOpponentFighterId": "2822",
+          "nativeEventDate": "2026-06-27",
+          "measuredRounds": 1
+        },
+        {
+          "date": "2026-01-24",
+          "sourceEventDate": "2026-01-24",
+          "sourceEvent": "UFC 324: Gaethje vs. Pimblett",
+          "sourceEventUrl": "https://ufcstats.com/event-details/00e11b5c8b7bfeeb",
+          "opponent": "Ateba Gautier",
+          "result": "loss",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/33be2456161c14c3",
+          "sourceWeightClass": "Middleweight Bout",
+          "nativeBoutId": "60642",
+          "originalNativeFighterId": "334",
+          "originalOpponentFighterId": "11",
+          "nativeEventDate": "2026-01-24",
+          "measuredRounds": 3
+        },
+        {
+          "date": "2025-08-02",
+          "sourceEventDate": "2025-08-02",
+          "sourceEvent": "UFC Fight Night: Taira vs. Park",
+          "sourceEventUrl": "https://ufcstats.com/event-details/f2c934689243fe4e",
+          "opponent": "Nick Klein",
+          "result": "win",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/b3c695728e177fd4",
+          "sourceWeightClass": "Middleweight Bout",
+          "nativeBoutId": "60760",
+          "originalNativeFighterId": "334",
+          "originalOpponentFighterId": "2863",
+          "nativeEventDate": "2025-08-03",
+          "measuredRounds": 2
+        },
+        {
+          "date": "2025-03-22",
+          "sourceEventDate": "2025-03-22",
+          "sourceEvent": "UFC Fight Night: Edwards vs. Brady",
+          "sourceEventUrl": "https://ufcstats.com/event-details/cc2ad11b1f9d818b",
+          "opponent": "Christian Leroy Duncan",
+          "result": "loss",
+          "sourceFightUrl": "https://ufcstats.com/fight-details/8af2b589d5e9c1ae",
+          "sourceWeightClass": "Middleweight Bout",
+          "nativeBoutId": "60317",
+          "originalNativeFighterId": "334",
+          "originalOpponentFighterId": "426",
+          "nativeEventDate": "2025-03-22",
+          "measuredRounds": 3
+        }
+      ],
+      "excludedFeederAppearances": [
+        {
+          "nativeBoutId": "84008",
+          "date": "2024-08-27",
+          "event": "Dana White's Contender Series 69",
+          "opponent": "Liam Anderson",
+          "originalNativeFighterId": "334",
+          "originalOpponentFighterId": "12209",
+          "result": "win",
+          "excludedReason": "Dana White's Contender Series is not an official UFC Octagon career fight"
+        }
+      ],
+      "nextAction": "Crosscheck dated full official UFC.com athlete biography, then submit one complete canonical proof and fail-closed negative tests to the existing research branch for a successful 783-fighter strict Stage 3 audit."
+    }
+  }
+}
