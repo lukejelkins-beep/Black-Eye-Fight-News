@@ -87,6 +87,7 @@ jobs:
           node --check scripts/sumo-audit-h2h-chronology.mjs
           node --check scripts/sumo-export-preview-h2h.mjs
           bash -n scripts/sumo-sync-h2h-preview.sh
+          bash -n scripts/sumo-sync-licensed-photos-preview.sh
           bash -n scripts/sumo-verify-preview-build.sh
           node --check scripts/sumo-jsa-public-spotcheck.mjs
           node --check scripts/sumo-jsa-reconcile-measurement-precision.mjs
@@ -95,13 +96,14 @@ jobs:
           node --check assets/sumo-career.mjs
           node --check scripts/sumo-export-preview-career.mjs
           node --check scripts/sumo-webpage-readiness-190.mjs
+          node --check scripts/sumo-stage-cc-photos-preview.mjs
           node --check scripts/sumo-check-live-preview.mjs
           node --check scripts/sumo-jsa-history-exceptions.mjs
           node --check scripts/sumo-weight-history-190.mjs
           node --check scripts/sumo-weight-sumodb-collector.mjs
           node --check scripts/sumo-official-bout-corrections.mjs
           node --check scripts/sumo-official-career-totals.mjs
-          node --test tests/test-sumo-backfill-190.mjs tests/test-sumo-verify-190.mjs tests/test-sumo-jsa-reconcile.mjs tests/test-sumo-build-profile-cache.mjs tests/test-sumo-h2h-chronology.mjs tests/test-sumo-jsa-public-spotcheck.mjs tests/test-sumo-jsa-reconcile-measurement-precision.mjs tests/test-sumo-jsa-corrected-basho-audit.mjs tests/test-sumo-research-run-health.mjs tests/test-sumo-career-no-synthetic-weights.mjs tests/test-sumo-export-preview-career.mjs tests/test-sumo-webpage-readiness-190.mjs tests/test-sumo-check-live-preview.mjs tests/test-sumo-jsa-history-exceptions.mjs tests/test-sumo-weight-history-190.mjs tests/test-sumo-weight-sumodb-collector.mjs tests/test-sumo-official-bout-corrections.mjs tests/test-sumo-official-career-totals.mjs
+          node --test tests/test-sumo-backfill-190.mjs tests/test-sumo-verify-190.mjs tests/test-sumo-jsa-reconcile.mjs tests/test-sumo-build-profile-cache.mjs tests/test-sumo-h2h-chronology.mjs tests/test-sumo-jsa-public-spotcheck.mjs tests/test-sumo-jsa-reconcile-measurement-precision.mjs tests/test-sumo-jsa-corrected-basho-audit.mjs tests/test-sumo-research-run-health.mjs tests/test-sumo-career-no-synthetic-weights.mjs tests/test-sumo-export-preview-career.mjs tests/test-sumo-webpage-readiness-190.mjs tests/test-sumo-stage-cc-photos-preview.mjs tests/test-sumo-check-live-preview.mjs tests/test-sumo-jsa-history-exceptions.mjs tests/test-sumo-weight-history-190.mjs tests/test-sumo-weight-sumodb-collector.mjs tests/test-sumo-official-bout-corrections.mjs tests/test-sumo-official-career-totals.mjs
       - name: Collect only missing API histories
         if: steps.preflight.outputs.run == 'true' && steps.preflight.outputs.histories_complete != 'true'
         env:
@@ -202,6 +204,11 @@ jobs:
         if: steps.preflight.outputs.run == 'true'
         shell: bash
         run: bash scripts/sumo-sync-h2h-preview.sh
+
+      - name: Stage strictly licensed wrestler portraits only to isolated Sumo preview branch
+        if: steps.preflight.outputs.run == 'true'
+        shell: bash
+        run: bash scripts/sumo-sync-licensed-photos-preview.sh
 
       - name: Validate isolated Sumo test branch with Render-equivalent build tests
         id: preview_qa
