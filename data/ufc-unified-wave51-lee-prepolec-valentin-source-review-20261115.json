@@ -1,0 +1,188 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave51-three-frozen-cohort-five-bout-careers",
+  "asOf": "2026-11-15",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "evidenceCutoff": "2026-11-15",
+    "method": "Independent complete dated official UFC.com narratives reconciled against exact pinned Greco UFCStats-derived bout and fighter IDs, saved unchanged UFCalendar paired corners/winners, event-local ±1 UTC shift and measured rounds. Official TUF/RTU televised finales included, house bouts/qualifying rounds and other-promotions histories excluded."
+  },
+  "sourceMethod": "Full career official narratives plus pinned Greco UFCStats original dated fights and native fighter IDs, winners, corners and measured rounds. Approved frozen cohort membership verified before adding any evidence.",
+  "fighters": {
+    "jeongyeong-lee": {
+      "name": "JeongYeong Lee",
+      "officialFighterUrl": "https://www.ufc.com/athlete/jeongyeong-lee",
+      "ufcStatsFighterId": "d008d785f6347dc2",
+      "nativeFighterId": "2785",
+      "officialUfcCareerBoutCount": 5,
+      "bouts": [
+        {
+          "date": "2023-02-04",
+          "opponent": "Yizha",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/765482eb58e8db48",
+          "nativeBoutId": "59749",
+          "nativeFighterId": "2785",
+          "originalOpponentNumericId": "281"
+        },
+        {
+          "date": "2024-02-03",
+          "opponent": "Blake Bilder",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e1930496b33fa636",
+          "nativeBoutId": "59860",
+          "nativeFighterId": "2785",
+          "originalOpponentNumericId": "2779"
+        },
+        {
+          "date": "2024-07-20",
+          "opponent": "Hyder Amil",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6e6567a98ea78891",
+          "nativeBoutId": "65928",
+          "nativeFighterId": "2785",
+          "originalOpponentNumericId": "119"
+        },
+        {
+          "date": "2025-05-10",
+          "opponent": "Daniel Santos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0e0a4282cd6c86d7",
+          "nativeBoutId": "60898",
+          "nativeFighterId": "2785",
+          "originalOpponentNumericId": "30"
+        },
+        {
+          "date": "2026-10-31",
+          "opponent": "Julian Erosa",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/52d61656f77f6650",
+          "nativeBoutId": "93266",
+          "nativeFighterId": "2785",
+          "originalOpponentNumericId": "522"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "note": "The official 2023-02-04 Road to UFC Season 1 featherweight title final vs Yizha is a completed Octagon bout. The June/October 2022 RTU qualifiers are not Octagon results. Native source's 2023-02-05 final and 2025-05-11 Santos entries are UTC day shifts of the official local results. Full UFC narrative overrides misleading graphical wins on 2024/25/26 losses."
+    },
+    "kyle-prepolec": {
+      "name": "Kyle Prepolec",
+      "officialFighterUrl": "https://www.ufc.com/athlete/kyle-prepolec",
+      "ufcStatsFighterId": "873626e5547b5235",
+      "nativeFighterId": "156",
+      "officialUfcCareerBoutCount": 5,
+      "bouts": [
+        {
+          "date": "2019-05-04",
+          "opponent": "Nordine Taleb",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/003c84fc7c3fa028",
+          "nativeBoutId": "62166",
+          "nativeFighterId": "156",
+          "originalOpponentNumericId": "2242"
+        },
+        {
+          "date": "2019-09-14",
+          "opponent": "Austin Hubbard",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/acf658afda38d8af",
+          "nativeBoutId": "65635",
+          "nativeFighterId": "156",
+          "originalOpponentNumericId": "269"
+        },
+        {
+          "date": "2025-05-10",
+          "opponent": "Benoit Saint Denis",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c7190cd03e53fb61",
+          "nativeBoutId": "60892",
+          "nativeFighterId": "156",
+          "originalOpponentNumericId": "254"
+        },
+        {
+          "date": "2025-10-18",
+          "opponent": "Drew Dober",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ecdbb3a5216b815e",
+          "nativeBoutId": "38148",
+          "nativeFighterId": "156",
+          "originalOpponentNumericId": "148"
+        },
+        {
+          "date": "2026-08-01",
+          "opponent": "Mateusz Rębecki",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5425c577ed4f50b3",
+          "nativeBoutId": "83051",
+          "nativeFighterId": "156",
+          "originalOpponentNumericId": "16"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "note": "Official UFC.com narrative explicitly covers first UFC tenure in 2019 and second UFC tenure after return in 2025: five actual Octagon losses across both stints. Non-UFC fights during hiatus are excluded. UFC.com's current Octagon Debut date is inconsistent with its own May 2019 dated debut biography; historical source and native IDs resolve it."
+    },
+    "robert-valentin": {
+      "name": "Robert Valentin",
+      "officialFighterUrl": "https://www.ufc.com/athlete/robert-valentin-frey",
+      "ufcStatsFighterId": "0cd0456d6029cec2",
+      "nativeFighterId": "563",
+      "officialUfcCareerBoutCount": 5,
+      "bouts": [
+        {
+          "date": "2024-08-24",
+          "opponent": "Ryan Loder",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5c5523a6bf83e44f",
+          "nativeBoutId": "60229",
+          "nativeFighterId": "563",
+          "originalOpponentNumericId": "370"
+        },
+        {
+          "date": "2025-04-05",
+          "opponent": "Torrez Finney",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d1368ca941c1fefc",
+          "nativeBoutId": "60301",
+          "nativeFighterId": "563",
+          "originalOpponentNumericId": "320"
+        },
+        {
+          "date": "2025-07-19",
+          "opponent": "Ateba Gautier",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/72e477b41f44e358",
+          "nativeBoutId": "60811",
+          "nativeFighterId": "563",
+          "originalOpponentNumericId": "11"
+        },
+        {
+          "date": "2026-04-18",
+          "opponent": "Julien Leblanc",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9fab4b0ad082f670",
+          "nativeBoutId": "66095",
+          "nativeFighterId": "563",
+          "originalOpponentNumericId": "567"
+        },
+        {
+          "date": "2026-08-01",
+          "opponent": "Dusko Todorovic",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f425b7a527dd53aa",
+          "nativeBoutId": "66467",
+          "nativeFighterId": "563",
+          "originalOpponentNumericId": "226"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "note": "UFC.com full narrative confirms five official fights: televised TUF 32 finale against Ryan Loder is counted, TUF house quarterfinal and semifinal exhibitions are excluded. 2025-07-19 Gautier official local date differs from 2025-07-20 native UTC. Native source spelling Dusko Todorovic corresponds to official Duško Todorović."
+    }
+  }
+}

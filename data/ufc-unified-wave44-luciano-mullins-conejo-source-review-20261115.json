@@ -1,0 +1,191 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave44-official-source-only-review",
+  "asOf": "2026-11-15",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "approvedCohortSize": 783,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07",
+    "evidenceCutoff": "2026-11-14",
+    "directUfcStatsAccess": "Pinned Greco UFCStats-derived CSV, not a direct UFCStats scrape",
+    "method": "Complete dated official UFC.com biography crosschecked against pinned Greco fighter/fight/event identities and outcomes, original immutable UFCalendar numeric bout and both fighter corner IDs, and all measured rounds. Explicit source-proven DWCS exclusions. Stage3 full-cohort CI alone grants certification."
+  },
+  "sourceMethod": "Independently reviewed complete official UFC.com dated athlete biographies; pinned Greco UFCStats-derived fight result IDs and original UFCalendar native fighter/opponent corners, dates, outcomes and measured rounds. Official narratives override misleading graphical result badges. Strict full-cohort Stage3 CI required.",
+  "fighters": {
+    "stephanie-luciano": {
+      "name": "Stephanie Luciano",
+      "officialFighterUrl": "https://www.ufc.com/athlete/stephanie-bruna-luciano",
+      "ufcStatsFighterId": "1b35af4d1529adf6",
+      "nativeFighterId": "160",
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "UFC.com dated full biography independently lists exactly four official UFC contests from August 2024 to August 2026. The 19 September 2023 three-round draw with Talita Alencar was on Dana White's Contender Series Season 7 Episode 7 and is separately excluded, not a fifth UFC Octagon bout. Official UFC.com 1 August 2026 narrative gives 3:30 while saved native result and UFC athlete result tile show 3:20; winner and first-round submission agree and the immutable native measured round is preserved.",
+      "bouts": [
+        {
+          "date": "2024-08-10",
+          "opponent": "Talita Alencar",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1b5d5af1bc0a34c7",
+          "nativeBoutId": "60247",
+          "nativeFighterId": "160",
+          "originalOpponentNumericId": "302"
+        },
+        {
+          "date": "2025-03-15",
+          "opponent": "Sam Hughes",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5fa6543868367f4b",
+          "nativeBoutId": "60364",
+          "nativeFighterId": "160",
+          "originalOpponentNumericId": "131"
+        },
+        {
+          "date": "2025-10-18",
+          "opponent": "Ravena Oliveira",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8d9458121f0c4b95",
+          "nativeBoutId": "38152",
+          "nativeFighterId": "160",
+          "originalOpponentNumericId": "145"
+        },
+        {
+          "date": "2026-08-01",
+          "opponent": "Marina Spasić",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/878a7e6fec3e4573",
+          "nativeBoutId": "83278",
+          "nativeFighterId": "160",
+          "originalOpponentNumericId": "41158"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83935",
+          "date": "2023-09-19",
+          "opponent": "Talita Alencar",
+          "result": "draw",
+          "event": "Dana White's Contender Series Season 7 Episode 7",
+          "officialSourceUrl": "https://www.ufc.com/athlete/stephanie-bruna-luciano",
+          "excludedBecause": "The official UFC athlete biography independently places this 2023 draw in DWCS, not in the official UFC Octagon career. Its saved native bout ID is unresolved in the current cache; it must not be invented or treated as a measured UFC fight."
+        }
+      ]
+    },
+    "melissa-mullins": {
+      "name": "Melissa Mullins",
+      "officialFighterUrl": "https://www.ufc.com/athlete/melissa-mullins",
+      "ufcStatsFighterId": "bd532e9a2b93870c",
+      "nativeFighterId": "122",
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "Complete official UFC.com dated five-bout chronology October 2023 to June 2026. Losses to Nora Cornolle, Daria Zhelezniakova and Bia Mesquita; wins over Irina Alekseeva and Klaudia Sygula. The UFC.com graphical Win badge for the June 2026 Bia Mesquita contest is incorrect; authoritative detailed narrative, pinned UFCStats result and native opposing winner ID confirm Melissa's loss. No additional UFC or feeder contests claimed.",
+      "bouts": [
+        {
+          "date": "2023-10-14",
+          "opponent": "Irina Alekseeva",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1ba282da76ca82ad",
+          "nativeBoutId": "60018",
+          "nativeFighterId": "122",
+          "originalOpponentNumericId": "166"
+        },
+        {
+          "date": "2024-04-06",
+          "opponent": "Nora Cornolle",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1685eecc7ef37fb5",
+          "nativeBoutId": "61260",
+          "nativeFighterId": "122",
+          "originalOpponentNumericId": "481"
+        },
+        {
+          "date": "2024-11-09",
+          "opponent": "Klaudia Sygula",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/32f2965b4f4c4ebf",
+          "nativeBoutId": "65833",
+          "nativeFighterId": "122",
+          "originalOpponentNumericId": "453"
+        },
+        {
+          "date": "2025-06-21",
+          "opponent": "Daria Zhelezniakova",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/fff3218758c513b8",
+          "nativeBoutId": "60279",
+          "nativeFighterId": "122",
+          "originalOpponentNumericId": "560"
+        },
+        {
+          "date": "2026-06-20",
+          "opponent": "Bia Mesquita",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c0980a613f24accd",
+          "nativeBoutId": "66004",
+          "nativeFighterId": "122",
+          "originalOpponentNumericId": "174"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    },
+    "montserrat-conejo-ruiz": {
+      "name": "Montserrat Conejo Ruiz",
+      "officialFighterUrl": "https://www.ufc.com/athlete/montserrat-conejo",
+      "ufcStatsFighterId": "1235b31de15d0c6e",
+      "nativeFighterId": "406",
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "Official UFC.com complete dated five-bout Octagon biography March 2021 to November 2025, four losses after a debut decision win. The original opponent Cheyanne Buys is the same fighter currently listed in the saved native record and pinned Greco source as Cheyanne Vlismas; original native opposing numeric ID 1178 retained. Misleading graphical Win badges on losses to Alice Ardelean, Eduarda Moura and Jaqueline Amorim overridden by UFC dated narrative and original native winner IDs.",
+      "bouts": [
+        {
+          "date": "2021-03-20",
+          "opponent": "Cheyanne Vlismas",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/dd7f3f91ea6067d4",
+          "nativeBoutId": "66314",
+          "nativeFighterId": "406",
+          "originalOpponentNumericId": "1178"
+        },
+        {
+          "date": "2021-07-17",
+          "opponent": "Amanda Lemos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c5e71fbf22f669f7",
+          "nativeBoutId": "59467",
+          "nativeFighterId": "406",
+          "originalOpponentNumericId": "224"
+        },
+        {
+          "date": "2023-08-12",
+          "opponent": "Jaqueline Amorim",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ca2aa660bea0cb60",
+          "nativeBoutId": "60086",
+          "nativeFighterId": "406",
+          "originalOpponentNumericId": "76"
+        },
+        {
+          "date": "2023-11-04",
+          "opponent": "Eduarda Moura",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9e2bb8d5961b44d4",
+          "nativeBoutId": "59995",
+          "nativeFighterId": "406",
+          "originalOpponentNumericId": "493"
+        },
+        {
+          "date": "2025-11-01",
+          "opponent": "Alice Ardelean",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/32927d50acedb507",
+          "nativeBoutId": "60428",
+          "nativeFighterId": "406",
+          "originalOpponentNumericId": "45"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    }
+  }
+}

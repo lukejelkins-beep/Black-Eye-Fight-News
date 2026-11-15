@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave26-two-verified-official-full-careers",
+  "asOf": "2026-11-15",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "sourceMethod": "Official UFC.com complete dated career narratives and separate feeder results, compared one-to-one with pinned historical Greco UFCStats-derived fighter, fight and event IDs and exact original saved UFCalendar fighter/opponent numeric corner IDs, winners, local ±1 UTC dates and measured rounds. Research-only until strict Stage3 full cohort gate succeeds.",
+  "fighters": {
+    "shannon-ross": {
+      "name": "Shannon Ross",
+      "officialFighterUrl": "https://www.ufc.com/athlete/shannon-ross",
+      "ufcStatsFighterId": "51c655162e462ceb",
+      "nativeFighterId": "2780",
+      "officialUfcCareerBoutCount": 3,
+      "bouts": [
+        {
+          "date": "2023-02-11",
+          "opponent": "Kleydson Rodrigues",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/16dbe70eb7007f17",
+          "nativeBoutId": "59737",
+          "nativeFighterId": "2780",
+          "originalOpponentNumericId": "957",
+          "pinnedSourceEvent": "UFC 284: Makhachev vs. Volkanovski",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/01dd4cdc2446f665"
+        },
+        {
+          "date": "2023-07-08",
+          "opponent": "Jesus Aguilar",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/420f7e6530dbc727",
+          "nativeBoutId": "60139",
+          "nativeFighterId": "2780",
+          "originalOpponentNumericId": "232",
+          "pinnedSourceEvent": "UFC 290: Volkanovski vs. Rodriguez",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/6085ceb59087514b"
+        },
+        {
+          "date": "2023-12-09",
+          "opponent": "HyunSung Park",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/35addc4646509286",
+          "nativeBoutId": "59943",
+          "nativeFighterId": "2780",
+          "originalOpponentNumericId": "146",
+          "pinnedSourceEvent": "UFC Fight Night: Song vs. Gutierrez",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/5ef0088c1b19beeb"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "date": "2022-08-02",
+          "opponent": "Vinicius Salvador",
+          "result": "loss",
+          "event": "Dana White's Contender Series, Season 6 Week 2",
+          "officialSourceUrl": "https://www.ufc.com/news/season-6-week-2-results-dana-whites-contender-series",
+          "excludedBecause": "Independently confirmed DWCS feeder TKO loss; outside official UFC Octagon history, and no saved native UFC bout ID is asserted"
+        }
+      ]
+    },
+    "sean-sharaf": {
+      "name": "Sean Sharaf",
+      "officialFighterUrl": "https://www.ufc.com/athlete/sean-sharaf",
+      "ufcStatsFighterId": "0f3a990526c5e706",
+      "nativeFighterId": "339",
+      "officialUfcCareerBoutCount": 3,
+      "bouts": [
+        {
+          "date": "2024-10-12",
+          "opponent": "Junior Tafa",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/85854504ce1aa97a",
+          "nativeBoutId": "61124",
+          "nativeFighterId": "339",
+          "originalOpponentNumericId": "322",
+          "pinnedSourceEvent": "UFC Fight Night: Royval vs. Taira",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/5bdcbd8dd681a257"
+        },
+        {
+          "date": "2025-12-13",
+          "opponent": "Steven Asplund",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a2523a8565fe4361",
+          "nativeBoutId": "60655",
+          "nativeFighterId": "339",
+          "originalOpponentNumericId": "337",
+          "pinnedSourceEvent": "UFC Fight Night: Royval vs. Kape",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/bc0f994de0521926"
+        },
+        {
+          "date": "2026-09-19",
+          "opponent": "Gable Steveson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/023ce4fa7b7b76f9",
+          "nativeBoutId": "83414",
+          "nativeFighterId": "339",
+          "originalOpponentNumericId": "2985",
+          "pinnedSourceEvent": "UFC 331: Van vs. Pantoja 2",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/8a0a35e7c74bebcc"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    }
+  }
+}

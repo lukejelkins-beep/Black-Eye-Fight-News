@@ -1,0 +1,138 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave34-source-linked-full-career-batch",
+  "asOf": "2026-11-15",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07",
+    "evidenceCutoff": "2026-11-14",
+    "directUfcStatsAccess": "Pinned Greco UFCStats-derived dataset, not directly scraped UFCStats",
+    "method": "Official UFC full dated biography from debut through cutoff, exact pinned historical Greco fight result/URL per bout, immutable cached numeric native IDs/corners/outcomes and all required measured rounds. DWCS and announced bookings excluded."
+  },
+  "sourceMethod": "Exact full official UFC.com dated biographies, pinned Greco UFCStats fighter/fight result URLs, saved native numeric paired corners and outcomes and full measured-round observations; separately exclude verified DWCS feeder and scheduled future bookings. Strict Stage3 gate required.",
+  "fighters": {
+    "luan-lacerda": {
+      "name": "Luan Lacerda",
+      "ufcStatsFighterId": "6fc506e1099afe20",
+      "nativeFighterId": "140",
+      "officialFighterUrl": "https://www.ufc.com/athlete/luan-lacerda",
+      "sourceScopeVerified": "Official full dated UFC.com biography lists four Octagon bouts: 2023-01-21 decision loss Cody Stamann, 2023-06-03 ground-strike TKO loss Da'Mon Blackshear, 2025-10-11 armbar win Saimon Oliveira, 2026-03-14 decision loss Hecher Sosa. UFC official Emmett-Vallejos scorecard independently resolves Hecher result; misleading generic Win graphics do not override narrative/verified winner.",
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2023-01-21",
+          "opponent": "Cody Stamann",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/354dc211166a3982",
+          "nativeBoutId": "59725",
+          "nativeFighterId": "140",
+          "originalOpponentNumericId": "1085",
+          "sourceEventTitle": "UFC 283: Teixeira vs. Hill"
+        },
+        {
+          "date": "2023-06-03",
+          "opponent": "Da'Mon Blackshear",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/72bb7605e340a8fe",
+          "nativeBoutId": "61318",
+          "nativeFighterId": "140",
+          "originalOpponentNumericId": "2752",
+          "sourceEventTitle": "UFC Fight Night: Kara-France vs. Albazi"
+        },
+        {
+          "date": "2025-10-11",
+          "opponent": "Saimon Oliveira",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0f9e7d0d04e24b74",
+          "nativeBoutId": "65898",
+          "nativeFighterId": "140",
+          "originalOpponentNumericId": "135",
+          "sourceEventTitle": "UFC Fight Night: Oliveira vs. Gamrot"
+        },
+        {
+          "date": "2026-03-14",
+          "opponent": "Hecher Sosa",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/32d371462c539bee",
+          "nativeBoutId": "60723",
+          "nativeFighterId": "140",
+          "originalOpponentNumericId": "508",
+          "sourceEventTitle": "UFC Fight Night: Emmett vs. Vallejos"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "excludedAnnouncedNativeBoutIds": []
+    },
+    "mario-pinto": {
+      "name": "Mario Pinto",
+      "ufcStatsFighterId": "39d309957c5c210d",
+      "nativeFighterId": "183",
+      "officialFighterUrl": "https://www.ufc.com/athlete/mario-pinto",
+      "sourceScopeVerified": "Official complete UFC.com dated biography lists four Octagon victories: KO Austen Lane March 2025, KO Jhonata Diniz October 2025, unanimous decision Felipe Franco March 2026, KO Ryan Spann September 2026. Official UFC 2024 DWCS Week 9 results separately confirm feeder knockout of Lucas Camacho, excluded. December 5, 2026 announced Spivac contest is not a completed career fight.",
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2025-03-01",
+          "opponent": "Austen Lane",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a857acedb53ee959",
+          "nativeBoutId": "60336",
+          "nativeFighterId": "183",
+          "originalOpponentNumericId": "533",
+          "sourceEventTitle": "UFC Fight Night: Kape vs. Almabayev"
+        },
+        {
+          "date": "2025-10-11",
+          "opponent": "Jhonata Diniz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/03377f7bf8a2d5ff",
+          "nativeBoutId": "65890",
+          "nativeFighterId": "183",
+          "originalOpponentNumericId": "182",
+          "sourceEventTitle": "UFC Fight Night: Oliveira vs. Gamrot"
+        },
+        {
+          "date": "2026-03-21",
+          "opponent": "Felipe Franco",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/90187edeeda7e6d6",
+          "nativeBoutId": "60567",
+          "nativeFighterId": "183",
+          "originalOpponentNumericId": "528",
+          "sourceEventTitle": "UFC Fight Night: Evloev vs. Murphy"
+        },
+        {
+          "date": "2026-09-05",
+          "opponent": "Ryan Spann",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b1c6ea7d7d413bd5",
+          "nativeBoutId": "83071",
+          "nativeFighterId": "183",
+          "originalOpponentNumericId": "556",
+          "sourceEventTitle": "UFC Fight Night: Hooker vs. Parnasse"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84054",
+          "date": "2024-10-08",
+          "opponent": "Lucas Camacho",
+          "result": "win",
+          "event": "Dana White's Contender Series 75",
+          "officialSourceUrl": "https://www.ufc.com/news/week-9-results-scorecards-dana-whites-contender-series-season-8",
+          "excludedBecause": "UFC's official DWCS results classify this as a Contender Series feeder appearance, not a completed official UFC Octagon fight"
+        }
+      ],
+      "excludedAnnouncedNativeBoutIds": [
+        "93763"
+      ]
+    }
+  }
+}

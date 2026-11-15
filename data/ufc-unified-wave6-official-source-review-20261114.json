@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave6-official-career-source-review",
+  "snapshot": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "sourceAuthority": "Exact dated UFC.com fighter history and event results; winner tiles not authoritative when inconsistent with scorecard or official narrative",
+  "sourceSnapshot": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "fighters": {
+    "charalampos-grigoriou": {
+      "ufcOfficialAthleteUrl": "https://www.ufc.com/athlete/charalampos-grigoriou",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/68b8ebdfce9dbb61",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2024-03-16",
+          "opponent": "Chad Anheliger",
+          "result": "loss"
+        },
+        {
+          "date": "2024-08-10",
+          "opponent": "Toshiomi Kazama",
+          "result": "loss"
+        }
+      ],
+      "scopeNotes": "2023-08-15 DWCS Cameron Smotherman excluded",
+      "status": "source_evidence_only_not_certified",
+      "pending": [
+        "reconcile pinned complete UFCStats-derived exact fight URLs against athlete career count",
+        "verify original saved native fighter IDs, bout IDs, both corners and results",
+        "exclude source-verifiable feeder bouts and test measured-round strict gate"
+      ]
+    },
+    "christian-edwards": {
+      "ufcOfficialAthleteUrl": "https://www.ufc.com/athlete/christian-edwards",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/f5d82eccdea4e2dd",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-05-16",
+          "opponent": "Modestas Bukauskas",
+          "result": "loss"
+        },
+        {
+          "date": "2026-09-26",
+          "opponent": "Rodolfo Bellato",
+          "result": "win"
+        }
+      ],
+      "scopeNotes": "Correct first fight result using UFC May 16 official scorecards",
+      "status": "source_evidence_only_not_certified",
+      "pending": [
+        "reconcile pinned complete UFCStats-derived exact fight URLs against athlete career count",
+        "verify original saved native fighter IDs, bout IDs, both corners and results",
+        "exclude source-verifiable feeder bouts and test measured-round strict gate"
+      ]
+    },
+    "dakota-hope": {
+      "ufcOfficialAthleteUrl": "https://www.ufc.com/athlete/dakota-hope",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/6142edbd477d20c9",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-04-04",
+          "opponent": "Kai Kamaka III",
+          "result": "loss"
+        },
+        {
+          "date": "2026-10-31",
+          "opponent": "Francis Marshall",
+          "result": "win"
+        }
+      ],
+      "scopeNotes": "UFC Apr 4 scorecard confirms loss to Kamaka III, despite misleading profile tile",
+      "status": "source_evidence_only_not_certified",
+      "pending": [
+        "reconcile pinned complete UFCStats-derived exact fight URLs against athlete career count",
+        "verify original saved native fighter IDs, bout IDs, both corners and results",
+        "exclude source-verifiable feeder bouts and test measured-round strict gate"
+      ]
+    },
+    "denzel-freeman": {
+      "ufcOfficialAthleteUrl": "https://www.ufc.com/athlete/denzel-freeman",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/b5c19c34f12c917e",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2025-11-22",
+          "opponent": "Marek Bujlo",
+          "result": "win"
+        },
+        {
+          "date": "2026-01-24",
+          "opponent": "Josh Hokit",
+          "result": "loss"
+        }
+      ],
+      "scopeNotes": "Official UFC full chronology confirms 2026 Hokit loss",
+      "status": "source_evidence_only_not_certified",
+      "pending": [
+        "reconcile pinned complete UFCStats-derived exact fight URLs against athlete career count",
+        "verify original saved native fighter IDs, bout IDs, both corners and results",
+        "exclude source-verifiable feeder bouts and test measured-round strict gate"
+      ]
+    },
+    "ding-meng": {
+      "ufcOfficialAthleteUrl": "https://www.ufc.com/athlete/ding-meng",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/e0664abaa023fd6f",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-05-30",
+          "opponent": "Jose Souza",
+          "result": "loss"
+        },
+        {
+          "date": "2026-08-29",
+          "opponent": "Cam Nelson",
+          "result": "loss"
+        }
+      ],
+      "scopeNotes": "2024-08-13 DWCS Rami Hamed loss excluded; UFC narrative confirms two Octagon losses",
+      "status": "source_evidence_only_not_certified",
+      "pending": [
+        "reconcile pinned complete UFCStats-derived exact fight URLs against athlete career count",
+        "verify original saved native fighter IDs, bout IDs, both corners and results",
+        "exclude source-verifiable feeder bouts and test measured-round strict gate"
+      ]
+    },
+    "dom-mar-fan": {
+      "ufcOfficialAthleteUrl": "https://www.ufc.com/athlete/dom-mar-fan",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/530af2900b5a1693",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-01-31",
+          "opponent": "SangWook Kim",
+          "result": "win"
+        },
+        {
+          "date": "2026-05-02",
+          "opponent": "Kody Steele",
+          "result": "loss"
+        }
+      ],
+      "scopeNotes": "Jan 2026 tournament Final official UFC 325 eligible; prior Road to UFC rounds excluded",
+      "status": "source_evidence_only_not_certified",
+      "pending": [
+        "reconcile pinned complete UFCStats-derived exact fight URLs against athlete career count",
+        "verify original saved native fighter IDs, bout IDs, both corners and results",
+        "exclude source-verifiable feeder bouts and test measured-round strict gate"
+      ]
+    }
+  }
+}

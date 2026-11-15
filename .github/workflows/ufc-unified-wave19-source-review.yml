@@ -1,0 +1,24 @@
+name: UFC wave19 Donte/Kody one-time source-native review (research only)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check scripts/ufc-unified-wave19-source-review.mjs
+      - name: One pinned Greco UFCStats-derived to original numeric native cache pass
+        run: node scripts/ufc-unified-wave19-source-review.mjs
+      - name: Preserve source artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-wave19-source-only
+          path: qa/ufc-unified-wave19-source-review.json
+          if-no-files-found: warn
