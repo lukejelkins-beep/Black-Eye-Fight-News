@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-15T17:46:23.111Z",
-  "checkedAt": "2026-11-15T17:46:23.111Z",
-  "updatedAt": "2026-11-15T17:01:48Z",
+  "attemptedAt": "2026-11-15T18:22:04.321Z",
+  "checkedAt": "2026-11-15T18:22:04.321Z",
+  "updatedAt": "2026-11-15T18:02:34.686669Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 4,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 4,
+      "checked": 6,
       "failed": 0,
-      "configured": 4,
-      "message": "4 of 4 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 27,
+      "configured": 34,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 40,
+      "configured": 36,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 2,
+      "configured": 1,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,22 +55,94 @@
   "rollingScan": {
     "directoryEntries": 448,
     "scheduledEntries": 84,
-    "batchIndex": 3,
+    "batchIndex": 4,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Threads": 11,
-      "X": 27,
-      "Instagram": 40,
-      "Bluesky": 4,
-      "Reddit": 2
+      "X": 34,
+      "Instagram": 36,
+      "Bluesky": 6,
+      "Threads": 7,
+      "Reddit": 1
     },
-    "directlyChecked": 4,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2elvptjgz2t",
+      "cid": "bafyreieecvg3qji5apzcdml5jq6aavcyrqur3y5ey3opuji5k6tb22snsu",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Stephen ‘Wonderboy’ Thompson’s perfect ending to career made Joe Rogan emotional at UFC 334: ‘I’ve never seen that guy cry in my life’ www.mmafighting.com/ufc/521580/s...",
+      "postedAt": "2026-11-15T18:02:34.686669Z",
+      "date": "16 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2elvptjgz2t",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2ellql76424",
+      "cid": "bafyreiaex42b6yypfj3is5wucgheab4dgx4znyubtlr2hobblv3egnjn2y",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Max Kellerman Invents Another Title for Jai Opetaia #boxing #boxingnews",
+      "postedAt": "2026-11-15T17:57:01Z",
+      "date": "16 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2ellql76424",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2eimf46of2y",
+      "cid": "bafyreiep7lqphbamot6dc5byznxi2n3lcnl7qh3ikvz3fcm2p74jcoxzjq",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Josh Hokit releases statement following UFC 334 title fight loss to Ciryl Gane www.mmafighting.com/ufc/521591/j...",
+      "postedAt": "2026-11-15T17:03:39.689166Z",
+      "date": "16 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2eimf46of2y",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2eiiytmnh2s",
       "cid": "bafyreicoi2wrkhkbp4psiz6q37pevrg2obencdhr2frz5bwcriqefiyb6q",
@@ -93,6 +165,54 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-15T17:46:23.111Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2eiairpqt24",
+      "cid": "bafyreihvpjju3e3sqo36zggfjyjp4lptc4ad2l4qg75ymyiibcshym3k6y",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Harlem Eubank, who lost to David Papot in his last fight and is returning to face Greg Outlaw following two defeats in his last three, has called out Devin Haney and Ryan Garcia. 😳",
+      "postedAt": "2026-11-15T16:57:03Z",
+      "date": "16 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2eiairpqt24",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2egr6nnig2h",
+      "cid": "bafyreidvk6r4h2gg455vl7xvdcfkjivmgs2xody5v2zce6xjo44vyuxffe",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Dana White believes Kevin Holland got HOSED at #UFC334 and RIPS the scoring of the majority draw bout vs. Uros Medic\n\n📰 mma-fighting.visitlink.me/-jHsWe",
+      "postedAt": "2026-11-15T16:30:33.512880Z",
+      "date": "16 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2egr6nnig2h",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -140,7 +260,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -160,11 +280,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
       "engagement": {
-        "likes": 0,
+        "likes": 1,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -188,7 +308,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -236,7 +356,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -260,7 +380,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -284,7 +404,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -356,7 +476,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -380,7 +500,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -500,7 +620,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -600,54 +720,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2deq6mtbk2z",
-      "cid": "bafyreiczl4bjvvscakkcp36k2s75kguuebqm4p2323etnxmthssxljnbbe",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "‘RIP to the fat heavyweights’: Pros react to Ciryl Gane beating Josh Hokit in wild UFC 334 main event www.mmafighting.com/ufc/521542/r...",
-      "postedAt": "2026-11-15T06:21:33.045677Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2deq6mtbk2z",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2de6dcl2c2z",
-      "cid": "bafyreig7tb3h2ka6drzopph76ao3wabgjxv5537jtzjlpw2uzelpxi4bzm",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "UFC 334 post-fight press conference video www.mmafighting.com/ufc/521258/u...",
-      "postedAt": "2026-11-15T06:11:33.289233Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2de6dcl2c2z",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2ddzqn5h72c",
       "cid": "bafyreidms762zrz7qvah2kzwvqiw42ivqwhxxra3kiqlafurqic7v2b2pu",
       "platform": "Bluesky",
@@ -669,30 +741,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2ddvfprt52l",
-      "cid": "bafyreicbycwqfadt6xab3deh5ufrzdruv5pj4eytn2ddijsurfsavcskiu",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Ciryl Gane survives frantic pace, punishes Josh Hokit late to defend title in UFC 334 main event www.mmafighting.com/ufc/521484/c...",
-      "postedAt": "2026-11-15T06:06:33.195822Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2ddvfprt52l",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -736,11 +784,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:unvcg6ib22cqfozxjrhn63ds",
       "engagement": {
-        "likes": 10,
+        "likes": 11,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -836,7 +884,7 @@
         "comments": 3,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1052,7 +1100,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1124,7 +1172,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1172,7 +1220,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1244,7 +1292,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1292,7 +1340,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1316,31 +1364,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2c4hkmwyu25",
-      "cid": "bafyreidmntutuf66uq6qh5trj7isuaznaooo474qmrynfzknpmpib6y6la",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Real-Life Rocky Battered by 2-0 Heavyweight on Zuffa Debut #boxing #boxingnews",
-      "postedAt": "2026-11-14T18:20:55Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2c4hkmwyu25",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
+      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1365,30 +1389,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2bzacdme227",
-      "cid": "bafyreiejtnswd6aoopk3cwkmpqvkkkv5hg3sg3aqeb4cnt7ftqrphvbqwy",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Gervonta Davis wants Devin Haney at 145 pounds. 🥊\n\nThe proposed showdown could have two welterweight world titles on the line if Haney defeats Brian Norman Jr. in December.\n\nDavis vs. Haney would be a massive fight, with the unified championship potentially at stake in 2027. 👑",
-      "postedAt": "2026-11-14T17:23:10Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2bzacdme227",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T16:22:20.928Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
