@@ -927,7 +927,8 @@ async function loadOpponentIndex(){
     STATE.h2hOpponentsFailed=true;
   } finally {
     STATE.h2hOpponentsLoading=false;
-    if(location.hash.startsWith('#profile/')||location.hash.startsWith('#headtohead/'))render();
+    if(location.hash.startsWith('#profile/'))refreshOpponents();
+    else if(location.hash.startsWith('#headtohead/'))render();
   }
 }
 async function loadCompleteH2h(){
