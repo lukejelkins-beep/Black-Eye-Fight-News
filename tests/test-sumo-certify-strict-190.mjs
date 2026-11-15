@@ -243,3 +243,33 @@ test('older SumoDB rank corroboration can meet strict rank threshold only with e
  f.weight.careerRecordCrosscheck.independentBashoRows[1].rankEn=null;
  assert.ok(strictCareerAudit(f).blockers.includes('independent-official-banzuke-rank-coverage'));
 });
+
+test('strict audit can use fully sourced dated ranks when JSA publishes no historical ranks',()=>{
+ const f=fixture();
+ delete f.official.rankReconciliation;
+ delete f.official.officialRankRecords;
+ const missing=strictCareerAudit(f);
+ assert.ok(missing.blockers.includes('independent-official-banzuke-rank-coverage'));
+ f.weight.careerRecordCrosscheck={
+  sourceUrl:'https://sumodb.sumogames.de/Rikishi.aspx?r=20',
+  identityVerified:true,originalMeasurementsUnchanged:true,independentOfApi:true,
+  datedBashoLedgerSourceSha256:'d'.repeat(64),
+  independentBashoRows:[
+   {bashoId:'202609',rankEn:'Jonidan 17 East'},
+   {bashoId:'202611',rankEn:'Jonidan 22 East'}],
+  careerRecordDiffersFromPriorSnapshot:false};
+ const proved=strictCareerAudit(f);
+ assert.equal(proved.careerResultsCertified,true);
+ assert.equal(proved.rankHistoryEvidenceBasis,
+  'SumoDB-dated-ranks-JSA-historical-ranks-unavailable');
+ assert.equal(proved.independentlyCrosscheckedOlderRanksFromSumoDB,2);
+ assert.ok(proved.independentlyVerifiedBy.some(x=>
+  x.includes('JSA historical ranks unavailable')));
+ assert.equal(proved.fullProfileCertified,false);
+ f.weight.careerRecordCrosscheck.independentBashoRows[0].rankEn='Jonidan 19 East';
+ assert.ok(strictCareerAudit(f).blockers.includes('independent-official-banzuke-rank-coverage'));
+ f.weight.careerRecordCrosscheck.independentBashoRows[0].rankEn='Jonidan 17 East';
+ f.official.officialRankRecords=[{bashoId:'202609',rank:'Jonidan 17 East'}];
+ assert.ok(strictCareerAudit(f).blockers.includes('independent-official-banzuke-rank-coverage'),
+  'an available but unverified official rank comparison cannot be bypassed');
+});
