@@ -29,6 +29,10 @@ test('190 profiles export only actual dated weights; current listed weight stays
  const example=report.bySourceId[String(roster.rikishi[0].sourceId)];
  assert.deepEqual(example.weight.map(x=>x.basho),['202405']);
  assert.equal(example.weight[0].kg,141.5);
+ assert.equal(example.rankSource,'https://www.sumo-api.com/api/ranks?rikishiId='+
+   roster.rikishi[0].sourceId+'&limit=200&skip=0&sortOrder=asc');
+ assert.equal(example.independentRankReference,'https://sumodb.sumogames.de/Rikishi.aspx?r='+
+   roster.rikishi[0].sumoDbId);
  assert.equal(example.currentListedWeight.kg,172);
  assert.equal(example.currentListedWeight.datedMeasurement,false);
  const view=careerPoints({...roster.rikishi[0],weightKg:172},report,'202611','202609','Jonidan 9 West');
