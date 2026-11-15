@@ -128,6 +128,31 @@ export function requiresIdentityRecheck(doc){
  return status!== 'match'&&status!=='source-birth-date-missing'&&
    status!=='roster-birth-date-unavailable'&&status!=='mismatch';
 }
+/** Read the separately published SumoDB career totals, not the division totals.
+ * The /N value is source-specific and is not presumed equal to raw API bouts. */
+export function parseSumoDbCareerRecord(html){
+ if(typeof html!=='string'||html.length>2_000_000)throw Error('Invalid SumoDB career source');
+ const plain=html.replace(/<script\\b[^>]*>[\\s\\S]*?<\\/script>/gi,' ')
+  .replace(/<style\\b[^>]*>[\\s\\S]*?<\\/style>/gi,' ')
+  .replace(/<[^>]+>/g,' ').replace(/&nbsp;|&#160;/gi,' ')
+  .replace(/\\s+/g,' ').trim();
+ const m=plain.match(/\\bCareer\\s+Record\\s+([\\d,]+)\\s*-\\s*([\\d,]+)(?:\\s*-\\s*([\\d,]+))?\\s*\\/\\s*([\\d,]+)\\b/i);
+ if(!m)return null;
+ const values=[m[1],m[2],m[3],m[4]].map(v=>v==null?null:Number(v.replace(/,/g,'')));
+ if(values.some(v=>v!==null&&(!Number.isSafeInteger(v)||v<0||v>20000)))return null;
+ return {wins:values[0],losses:values[1],absences:values[2],
+  providerReportedBoutCount:values[3]};
+}
+/** Require an existing preflight blocker and never repeat one-time research capture. */
+export function requiresCareerRecordCrosscheck(doc,preflight){
+ if(!doc||doc.careerRecordCrosscheck||
+    preflight?.classification==='candidate-for-strict-audit')return false;
+ const blockers=preflight?.blockers||[];
+ return Array.isArray(blockers)&&blockers.some(x=>
+  x==='official-absence-total-unpublished-or-disagree'||
+  x==='official-JSA-career-totals-unpublished-or-disagree');
+}
+
 export function recoveryCooldown(error){
  const s=String(error||'');
  if(/robots|HTTP (403|429|451)/i.test(s))return 24*3600;
@@ -154,7 +179,7 @@ async function main(){
   console.log(JSON.stringify({status:'provider-cooldown',nextAllowedAt:prior.nextAllowedAt,requests:0}));
   return;
  }
- let error=null,cooldown=0,updated=0,requests=0,identityAudits=0;
+ let error=null,cooldown=0,updated=0,requests=0,identityAudits=0,careerAudits=0;
  const failed=[];
  try{
   const robots=await fetch('https://sumodb.sumogames.de/robots.txt',{
@@ -280,6 +305,60 @@ async function main(){
    }
   }
  }
+  // Target only currently blocked career records after historical weight and
+  // birth-date checks. Reuse the SAME cached source document path/identity.
+  // Never revise previously stored measurements, and never treat conflicting
+  // dates or totals as a positive certification.
+  const preflight=await optional(join(ROOT,'career-certification-preflight.json'));
+  const pendingById=new Map((preflight?.rows||[]).map(x=>[Number(x.sourceId),x]));
+  for(const w of roster.rikishi){
+   if(requests>=limit||cooldown)break;
+   const dest=join(ROOT,'weight-source-crosschecks',w.sourceId+'.json');
+   const saved=await optional(dest);
+   if(!requiresCareerRecordCrosscheck(saved,pendingById.get(Number(w.sourceId))))continue;
+   const alreadyBlocked=(prior.reviewCases||[]).some(x=>x.sourceId===w.sourceId&&
+    x.permanent&&Number(x.parserVersion||0)>=SOURCE_PARSER_VERSION);
+   if(alreadyBlocked)continue;
+   const identity=saved?.identityRecheck?.identityEvidence||saved?.identityEvidence;
+   if(identity?.valid!==true||identity.birthDateStatus!=='match')continue;
+   const delay=Math.max(0,lastAt+interval-Date.now());
+   if(Date.now()+delay+19000>workerDeadline)break;
+   if(delay)await sleep(delay);
+   lastAt=Date.now();requests++;
+   try{
+    if(Number(saved.sumoDbId)!==Number(w.sumoDbId)||
+       Number(saved.sourceId)!==Number(w.sourceId)||
+       Number(saved.officialNskId)!==Number(w.officialNskId))
+      throw Error('Historical career source identity mismatch');
+    const html=await fetchHtml(SOURCE_URL+w.sumoDbId);
+    const raw=await read(join(ROOT,'rikishi',w.sourceId+'.json'));
+    const sourceIdentity=sourceIdentityEvidence(html,w,raw);
+    if(sourceIdentity.valid!==true||sourceIdentity.birthDateStatus!=='match')
+     throw Error('Historical career source birth date not independently verified');
+    const freshMeasurements=parseSumoDbDatedMeasurements(html);
+    const unchanged=corroborateSavedMeasurements(saved.datedEvidence,freshMeasurements);
+    if(!unchanged.ok)throw Error('Historical measurements changed during career totals check: '+
+      unchanged.issues.join('; '));
+    const published=parseSumoDbCareerRecord(html);
+    const check={
+      sourceUrl:SOURCE_URL+w.sumoDbId,capturedAt:now(),
+      rawHtmlSha256:createHash('sha256').update(html).digest('hex'),
+      identityVerified:true,originalMeasurementsUnchanged:true,
+      corroboratedWeightDates:unchanged.corroborated,
+      sourceRecordPublished:published!==null,
+      career:published,sourceAsOf:'retrieval-date; active-basho cutoff not independently established',
+      independentOfApi:true,careerStrictlyCertified:false
+    };
+    await save(dest,{...saved,careerRecordCrosscheck:check});
+    careerAudits++;
+   }catch(e){
+    const msg=String(e.message||e).slice(0,180);
+    const wait=recoveryCooldown(msg);
+    if(wait){error=msg;cooldown=wait;break;}
+    failed.push({sourceId:w.sourceId,name:w.shikonaEn,
+      issue:'Career source check: '+msg,permanent:true,parserVersion:SOURCE_PARSER_VERSION});
+   }
+  }
  const reviews=[...(prior.reviewCases||[])].filter(x=>
    !Number.isFinite(Number(x.parserVersion))||
    Number(x.parserVersion)>=SOURCE_PARSER_VERSION);
@@ -291,12 +370,13 @@ async function main(){
   lastRunAt:now(),source:'https://sumodb.sumogames.de',
   permission:'user-reported-confirmation',requestsThisRun:requests,
   updatedThisRun:updated,identityAuditsThisRun:identityAudits,
+  careerRecordCrosschecksThisRun:careerAudits,
   cooldownReason:error,nextAllowedAt:cooldown?
     new Date(Date.now()+cooldown*1000).toISOString():null,
   reviewCases:reviews,certifiedWeightHistories:0,productionPublished:0};
  await save(STATUS,result);
  console.log(JSON.stringify({status:cooldown?'cooldown':failed.length?'needs-manual-review':'ok',
-  requests,updated,identityAudits,reviewCases:reviews.length,nextAllowedAt:result.nextAllowedAt,
+  requests,updated,identityAudits,careerAudits,reviewCases:reviews.length,nextAllowedAt:result.nextAllowedAt,
   error,certified:0}));
 }
 if(process.argv[1]&&import.meta.url===new URL('file://'+process.argv[1]).href)
