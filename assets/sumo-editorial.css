@@ -1,0 +1,233 @@
+/* BEFN SUMO — Editorial Profile + Results Desk. Scoped visual overrides, no data pipeline changes. */
+:root{--cream:#F6F2EA;--card:#fff;--ink:#21191C;--panel:#21191C;--border:#D9D1C8;--muted:#625A5D;--gold:#D3AA46;--red:#84243A;--green:#17664F;--shadow:none}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font:400 16px/1.5 'DM Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink)}
+button,input,select,summary{font-size:16px;line-height:1.5}
+:where(a,button,input,select,summary,[tabindex]):focus-visible{outline:3px solid #17664F;outline-offset:3px}
+.frame{max-width:1280px;padding-inline:clamp(16px,3vw,48px)}
+.main{padding-top:20px;padding-bottom:64px}
+.utility{display:none}
+.masthead-inner{min-height:64px}
+.logo img{width:42px;height:42px}
+.logo strong{font-size:25px}
+.logo small{font-size:10px;margin-top:5px;letter-spacing:.06em}
+.header-right{font-size:13px}
+.preview-chip{font-size:11px;padding:6px 10px}
+.primary-links a{font-size:13px;padding:10px 13px}
+.primary-links{justify-content:center}
+.befn-global-sports-inner{padding-top:5px!important;padding-bottom:5px!important;min-height:48px!important}
+.befn-sumo-link{min-height:40px}
+.subnav a{font-size:13px;padding:8px 14px}
+.testing-note{font-size:13px}
+.testing-note .frame{display:block;padding-block:6px}
+.testing-note summary{cursor:pointer;font-size:13px;line-height:1.4}
+.testing-note p{max-width:95ch;margin:6px 0}
+.mobile-site-menu{display:none}
+.section-head{margin:40px 0 14px;border-bottom:1px solid var(--border);padding-bottom:10px;align-items:center}
+.section-head h2{font:800 clamp(28px,2.4vw,32px)/1.15 'Barlow Condensed',Impact,sans-serif;margin:2px 0;text-transform:none}
+.section-head .eyebrow{font-size:13px;letter-spacing:.06em}
+.section-intro,.footnote,.notice,.missing{font-size:14px;line-height:1.55}
+.back-link{font-size:14px}
+.btn,.pill{font-size:14px;min-height:44px}
+.profile-hero{background:var(--ink);color:#fff;border:0;border-radius:12px;display:grid;grid-template-columns:210px minmax(0,1fr) 238px;align-items:start;gap:24px;padding:24px;min-width:0;box-shadow:none}
+.profile-hero :where(a,a:visited){color:#fff0d6}
+.profile-hero .profile-title{min-width:0}
+.profile-hero h1{font:900 clamp(48px,4.1vw,56px)/1.05 'Barlow Condensed',Impact,sans-serif;margin:3px 0;overflow-wrap:anywhere}
+.profile-hero .jp{font-size:18px;color:#ede4de}
+.profile-hero .hero-rank{font-size:19px;font-weight:700;margin:7px 0 11px}
+.profile-hero .sumo-country{font-size:14px;color:#fff0d6}
+.profile-hero .sumo-move{background:rgba(255,255,255,.13);color:#fff;display:inline-flex;align-items:center;font-size:13px;padding:3px 6px;border:1px solid #aaa}
+.profile-hero .profile-icon{width:100%;aspect-ratio:4/5;min-height:0;margin:0;overflow:hidden;background:#eee5d8;border-radius:8px}
+.profile-hero .profile-icon img{width:100%;height:100%;object-fit:cover}
+.profile-hero .profile-icon:not(.has-photo){display:flex;align-items:center;justify-content:center}
+.profile-hero .profile-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px;margin-top:14px}
+.profile-hero .profile-meta>div{min-width:0;padding:0;border:0}
+.profile-hero .profile-meta span{font-size:13px;display:block;color:#d8cecc}
+.profile-hero .profile-meta strong{font-size:15px;font-weight:700;color:#fff;overflow-wrap:anywhere}
+.profile-hero .profile-current{background:#30272b;border:1px solid #6c555e;padding:16px;border-radius:8px;min-width:0}
+.profile-hero .profile-current .tag{color:#f0cc75;font-size:14px}
+.sumo-current-record{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:12px 0 9px}
+.sumo-current-record>span{display:flex;flex-direction:column;align-items:start;gap:2px;min-width:0}
+.sumo-current-record b{font:800 32px/1.1 'DM Sans',system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.sumo-current-record small{font-size:13px;color:#e4d5d5}
+.sumo-current-record .unavailable{font-size:17px}
+.profile-hero .profile-current p{font-size:13px;line-height:1.5;color:#eee0df;margin-bottom:0}
+.sumo-summary-strip{margin-top:12px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.sumo-summary-strip .sumo-summary-stat{padding:16px 18px;border-right:1px solid var(--border);min-width:0}
+.sumo-summary-strip .sumo-summary-stat:last-child{border-right:0}
+.sumo-summary-stat strong{display:block;font:800 clamp(23px,2.3vw,31px)/1.15 'Barlow Condensed',Impact,sans-serif;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.sumo-summary-stat span{display:block;font-size:13px;color:var(--muted);margin-top:3px}
+.sumo-recent-strip{margin-top:15px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.sumo-recent-strip .label{font-size:13px;font-weight:800;color:var(--muted);margin-right:4px}
+.sumo-recent-strip a{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:55px;min-height:45px;text-decoration:none;border:1px solid var(--border);border-radius:6px;background:#fff;font-variant-numeric:tabular-nums;font-weight:800;font-size:15px}
+.sumo-recent-strip a small{font-size:13px;font-weight:500}
+.sumo-recent-strip a.win{color:var(--green);border-bottom:3px solid var(--green)}
+.sumo-recent-strip a.loss{color:var(--red);border-bottom:3px solid var(--red)}
+.sumo-section-nav{display:flex;gap:0;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:12;background:var(--ink);color:#fff;border-radius:6px;margin:18px 0 16px}
+.sumo-section-nav a{color:#fff8f0!important;display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;font-size:14px;font-weight:700;text-decoration:none}
+.sumo-section-nav a:focus-visible,.sumo-section-nav a:hover{background:#84243A;outline-color:#fff}
+.sumo-section-menu{display:none}
+.sumo-section{scroll-margin-top:76px;min-width:0}
+.sumo-section .section-head{margin-top:38px}
+.sumo-workspace-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.sumo-workspace-controls label{font-size:14px;font-weight:700}
+.sumo-workspace-controls select{background:#fff;color:var(--ink);border:1px solid #8e8384;padding:9px;border-radius:6px;min-height:44px;max-width:100%}
+.sumo-segmented{display:inline-flex;border:1px solid #8e8384;border-radius:6px;overflow:hidden}
+.sumo-segmented button{background:#fff;color:var(--ink);border:0;padding:8px 14px;min-height:44px;font-weight:700}
+.sumo-segmented button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.sumo-results-desk{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.sumo-result-header,.sumo-ed-row-main{display:grid;grid-template-columns:84px 74px minmax(180px,1.6fr) minmax(110px,1fr) minmax(150px,1.2fr) 105px;gap:12px;align-items:center}
+.sumo-result-header{background:#f0eae3;font-size:13px;color:var(--muted);font-weight:800;padding:10px 16px}
+.sumo-ed-row{border-bottom:1px solid var(--border);min-width:0;scroll-margin-top:82px}
+.sumo-ed-row:last-child{border-bottom:0}
+.sumo-ed-row-main{padding:11px 16px;min-height:72px;font-size:14px}
+.sumo-ed-row-main :where(a){color:#84243A;font-weight:700}
+.sumo-ed-date small,.sumo-ed-rank small,.sumo-ed-tech small{display:block;font-size:13px;color:var(--muted)}
+.sumo-ed-result{font-weight:800;font-variant-numeric:tabular-nums}
+.sumo-ed-result.win{color:var(--green)}.sumo-ed-result.loss{color:var(--red)}
+.sumo-ed-person{display:flex;align-items:center;gap:9px;min-width:0}
+.sumo-ed-person .profile-icon{width:40px;height:50px;min-height:0;flex:none;border-radius:4px;overflow:hidden}
+.sumo-ed-person .profile-icon img{width:100%;height:100%;object-fit:cover}
+.sumo-ed-person a{overflow-wrap:anywhere}
+.sumo-ed-extra{border-top:1px solid var(--border);background:#faf7f3;padding:12px 16px}
+.sumo-ed-extra summary{font-size:14px;font-weight:700;cursor:pointer;min-height:36px;display:flex;align-items:center}
+.sumo-ed-extra[open] .sumo-details-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding-top:8px;font-size:14px}
+.sumo-section .sumo-results-desk+.footnote{margin-top:10px}
+.sumo-tournament-list details{border-bottom:1px solid var(--border);padding:12px 16px}
+.sumo-tournament-list summary{cursor:pointer;font-size:15px;font-weight:700;min-height:44px}
+.sumo-tournament-list summary span{font-weight:400;color:var(--muted)}
+.sumo-career-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--border);background:#fff;border-radius:8px}
+.sumo-career-strip>div{padding:16px;border-right:1px solid var(--border);min-width:0}
+.sumo-career-strip>div:last-child{border-right:0}
+.sumo-career-strip strong{display:block;font-size:20px;font-variant-numeric:tabular-nums}
+.sumo-career-strip span{font-size:13px;color:var(--muted)}
+.sumo-career-facts{background:#fff;padding:16px;border:1px solid var(--border);border-top:0}
+.sumo-career-facts summary{cursor:pointer;font-size:15px;font-weight:700}
+.sumo-career-facts dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.sumo-career-facts dt{font-size:13px;color:var(--muted)}
+.sumo-career-facts dd{margin:0;font-size:15px;overflow-wrap:anywhere}
+.sumo-career-panels{display:flex;flex-direction:column;gap:16px}
+.sumo-career-panel{background:#fff;border:1px solid var(--border);border-radius:8px;min-width:0;box-shadow:none}
+.sumo-career-panel-head{background:#f0eae3;color:var(--ink);padding:12px 16px}
+.sumo-career-panel-head h3{font:800 23px/1.2 'Barlow Condensed',sans-serif;margin:2px 0}
+.sumo-career-panel-head small{font-size:13px;color:var(--muted)}
+.sumo-career-panel-main{padding:12px 16px}
+.sumo-career-summary{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px;font-size:14px}
+.sumo-career-source,.sumo-chart-note{font-size:13px;line-height:1.5;color:var(--muted);padding:0 16px}
+.sumo-chart-note{padding:0}
+.sumo-weight-scroll,.sumo-rank-scroll{overflow:hidden;width:100%}
+.sumo-weight-svg,.sumo-rank-svg,.sumo-rank-overview{display:block;width:100%;height:auto;max-height:300px}
+.sumo-weight-connector{stroke:var(--red);stroke-width:1.8;stroke-dasharray:5 6;fill:none}
+.sumo-rank-connector{stroke:var(--red);stroke-width:1.8;fill:none}
+.sumo-weight-point,.sumo-rank-point{fill:var(--red);stroke:#fff;stroke-width:1.4}
+.sumo-chart-axis,.sumo-chart-ranklabel{fill:#4f4248;font-size:14px}
+.sumo-chart-number{fill:#342326;font-size:14px;font-weight:700}
+.sumo-chart-grid{stroke:#e5ded6}
+.sumo-career-overview{border:1px solid var(--border);border-radius:6px;padding:10px 12px;margin:8px 0}
+.sumo-career-overview span{font-size:13px;font-weight:700}
+.sumo-rank-overview{max-height:84px}
+.sumo-chart-controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.sumo-chart-controls button{background:#fff;border:1px solid #8e8384;border-radius:6px;padding:8px 12px;min-height:44px;font-size:14px}
+.sumo-chart-controls button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.sumo-data-table summary{font-size:14px;font-weight:700;cursor:pointer;padding:10px 0;min-height:44px}
+.sumo-data-table table{border-collapse:collapse;width:100%;font-size:14px}
+.sumo-data-table th,.sumo-data-table td{border-bottom:1px solid var(--border);padding:9px;text-align:left}
+.sumo-opponent-controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:12px 0}
+.sumo-opponent-controls label{font-size:14px;font-weight:700}
+.sumo-opponent-controls input,.sumo-opponent-controls select{border:1px solid #8e8384;border-radius:6px;padding:9px;background:#fff;min-height:44px}
+.sumo-rival-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--border);background:#fff;border-radius:8px;overflow:hidden}
+.sumo-rival{background:#fff;border:0;border-bottom:1px solid var(--border);padding:13px 16px;color:var(--ink);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 12px;align-items:center;min-width:0}
+.sumo-rival strong{font-size:15px;font-variant-numeric:tabular-nums}
+.sumo-rival small{font-size:13px;color:var(--muted);grid-column:1/-1}
+.sumo-rival-name{font-size:15px;overflow-wrap:anywhere}
+.sumo-rival:hover{background:#f8f1ed}
+.sumo-techniques-list{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px 16px}
+.sumo-techniques-list .chart-row{display:grid;grid-template-columns:minmax(110px,1fr) minmax(70px,2fr) minmax(90px,auto);gap:10px;align-items:center;margin:8px 0;font-size:14px}
+.sumo-techniques-list .bar-bg{background:#ece6de;height:12px;border-radius:3px;overflow:hidden}
+.sumo-techniques-list .bar-bg>div{background:var(--red);height:100%}
+.sumo-techniques-list .footnote{margin-top:12px}
+.sumo-sources{background:#fff;padding:18px 20px;border:1px solid var(--border);border-radius:8px;overflow-wrap:anywhere}
+.sumo-sources details summary{cursor:pointer;font-size:15px;font-weight:700;min-height:44px}
+.sumo-sources a{color:var(--red)}
+.sumo-h2h-hero{background:var(--ink)!important;color:#fff!important}
+.sumo-h2h-hero :where(a,a:link,a:visited){color:#fff7e5!important;text-decoration:underline;text-underline-offset:3px}
+.sumo-h2h-hero :where(a:hover,a:focus-visible){color:#fff1b4!important}
+.sumo-h2h-hero .sumo-match-name,.sumo-h2h-hero .sumo-match-name *{color:#fff7e5!important}
+.sumo-h2h-hero .sumo-bio-line,.sumo-h2h-hero small,.sumo-h2h-score span{color:#e5d5d5!important}
+.sumo-h2h-hero a:focus-visible{outline-color:#fff}
+.sumo-rank-card,.directory-card{box-shadow:none;border:1px solid var(--border)}
+.directory-card h3{font-size:24px}
+.directory-count{font-size:14px}
+.sumo-rank-card-info,.sumo-rank-info{font-size:14px}
+.footer p,.footer-grid>div:last-child{font-size:13px}
+@media(max-width:1023px){
+ .profile-hero{grid-template-columns:160px minmax(0,1fr);gap:20px}
+ .profile-hero .profile-current{grid-column:1/-1}
+ .sumo-rival-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .sumo-result-header,.sumo-ed-row-main{grid-template-columns:64px 55px minmax(125px,1.7fr) minmax(85px,1fr) minmax(100px,1.1fr) 70px;gap:7px}
+ .frame{padding-inline:24px}
+}
+@media(max-width:599px){
+ .frame{padding-inline:16px}
+ .masthead-inner{min-height:56px}
+ .logo img{width:36px;height:36px}
+ .logo strong{font-size:21px}
+ .logo small,.header-right{display:none}
+ .mobile-site-menu{display:block;background:var(--ink);color:#fff}
+ .mobile-site-menu summary{padding:8px 16px;min-height:44px;cursor:pointer;font-weight:700}
+ .mobile-site-menu nav{display:grid;grid-template-columns:1fr 1fr;padding:8px 12px}
+ .mobile-site-menu a{color:#fff!important;padding:10px;font-size:14px;min-height:44px}
+ .site-nav{display:none}
+ .befn-global-sports-inner{gap:8px!important}
+ .subnav-inner{justify-content:start}
+ .subnav a{padding:8px 11px}
+ .main{padding-top:12px;padding-bottom:40px}
+ .profile-hero{grid-template-columns:96px minmax(0,1fr);gap:12px;padding:14px;border-radius:8px}
+ .profile-hero .profile-icon{grid-row:1}
+ .profile-hero h1{font-size:clamp(34px,9vw,40px);line-height:1.05}
+ .profile-hero .profile-title .jp{font-size:14px}
+ .profile-hero .profile-title .hero-rank{font-size:14px}
+ .profile-hero .profile-meta{grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:8px}
+ .profile-hero .profile-current{grid-column:1/-1;padding:12px}
+ .sumo-current-record b{font-size:26px}
+ .sumo-summary-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .sumo-summary-strip .sumo-summary-stat{padding:10px 12px;border-bottom:1px solid var(--border)}
+ .sumo-summary-strip .sumo-summary-stat:nth-child(even){border-right:0}
+ .sumo-summary-stat strong{font-size:25px}
+ .sumo-recent-strip{gap:6px}
+ .sumo-recent-strip .label{flex-basis:100%}
+ .sumo-recent-strip a{min-width:49px}
+ .sumo-section-nav{display:none}
+ .sumo-section-menu{display:block;position:sticky;top:0;z-index:12;background:var(--ink);color:#fff;margin:12px 0;border-radius:6px}
+ .sumo-section-menu label{display:flex;align-items:center;justify-content:space-between;padding:3px 12px;font-size:13px}
+ .sumo-section-menu select{width:62%;background:#fff;color:var(--ink);min-height:44px;border-radius:4px;border:1px solid #70666b;padding:5px;font-size:14px}
+ .sumo-section .section-head{margin-top:28px}
+ .section-head h2{font-size:26px}
+ .sumo-result-header{display:none}
+ .sumo-ed-row-main{display:grid;grid-template-columns:44px minmax(0,1fr) auto;grid-template-areas:"result person h2h" "date rank technique";column-gap:9px;row-gap:5px;padding:10px 12px;min-height:70px}
+ .sumo-ed-result{grid-area:result}
+ .sumo-ed-person{grid-area:person}
+ .sumo-ed-h2h{grid-area:h2h}
+ .sumo-ed-date{grid-area:date;font-size:13px}
+ .sumo-ed-rank{grid-area:rank;font-size:13px}
+ .sumo-ed-tech{grid-area:technique;text-align:right;font-size:13px}
+ .sumo-ed-person .profile-icon{width:30px;height:38px}
+ .sumo-ed-extra[open] .sumo-details-grid{grid-template-columns:1fr}
+ .sumo-career-strip{grid-template-columns:1fr 1fr}
+ .sumo-career-strip>div{padding:10px;border-bottom:1px solid var(--border)}
+ .sumo-career-facts dl{grid-template-columns:1fr}
+ .sumo-rival-grid{grid-template-columns:1fr}
+ .sumo-opponent-controls input{max-width:100%}
+ .sumo-career-panel-main{padding:10px}
+ .sumo-chart-axis,.sumo-chart-ranklabel,.sumo-chart-number{font-size:16px}
+ .sumo-chart-controls button{font-size:13px}
+ .sumo-rank-svg,.sumo-weight-svg{max-height:260px}
+ .sumo-data-table .table-scroll{overflow-x:auto}
+ .sumo-techniques-list .chart-row{grid-template-columns:minmax(100px,1fr) minmax(40px,1fr) auto}
+}
+@media(max-width:359px){
+ .profile-hero{grid-template-columns:88px minmax(0,1fr)}
+ .profile-hero h1{font-size:34px}
+ .sumo-ed-row-main{column-gap:5px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:0s!important;animation-duration:0s!important}}
