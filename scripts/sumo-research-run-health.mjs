@@ -57,6 +57,8 @@ export function buildSumoHealth({cohort,api,weights,collection,jsa,official,prof
    officialReviewCases:official?.profileReviewCases||0,
    officialCareerTotalsNotFound:official?.officialCareerTotalsNotFoundCases||0,
    genuineParserOrFieldReviews:official?.genuineParserOrFieldReviewCases||0,
+   incompleteOfficialHistoryProfiles:official?.sourceCoverageCases||0,
+   missingOfficialHistoricalTournaments:official?.missingOfficialHistoricalBashoTotal||0,
    officialHistoricalRanksCompared:official?.officialBanzukeRanksCompared||0,
    officialHistoricalRankDiscrepancies:official?.officialBanzukeRankDiscrepancies||0},
   strictPreflight:{eligible:preflight?.candidateForStrictAudit||0,
