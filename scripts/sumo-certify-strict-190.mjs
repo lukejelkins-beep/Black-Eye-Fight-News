@@ -180,7 +180,9 @@ export function strictSummary(rows,preflight){
   schemaVersion:1,scope:'Research-only canonical career-result verification decision register',
   cohortSize:190,strictAuditSuccessful:true,
   strictCareerResultsCertified:certified.length,
-  blocked:blocked.length,fullProfilesCertified:0,productionApproved:false,
+  blocked:blocked.length,
+  confirmedNumberedRankAbsentAtDebut:certified.filter(x=>x.documentedNoPublishedNumberedDebutRank).length,
+  fullProfilesCertified:0,productionApproved:false,
   meaning:'Certifies source-complete regular-bout career result ledgers against JSA published tournament W-L and dated ranks plus JSA career W-L-A when available; if JSA omits an aggregate, independently published exact-match SumoDB W-L-A may supply missing components. Does NOT independently certify individual kimarite, historical weigh-ins, images or full profile publication.',
   certificationMethod:'JSA crosscheck + complete API native-bout ledger + reciprocal H2H + dated identity evidence',
   rows
