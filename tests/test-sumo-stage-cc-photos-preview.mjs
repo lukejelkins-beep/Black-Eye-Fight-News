@@ -11,7 +11,7 @@ const api={query:{pages:{'123':{title:'File:Ura Kazuki 2017.jpg',
  extmetadata:{LicenseShortName:{value:'CC BY-SA 4.0'}}}]}}}};
 test('vetted photo candidates have exact identity, Creative Commons source and local destination',()=>{
  assert.equal(validatePhotoCandidates(data,roster),true);
- assert.equal(data.candidates.length,3);
+ assert.equal(data.candidates.length,4);
  assert.equal(data.productionPublished,false);
  assert.equal(data.approvedForPublication,false);
  assert.throws(()=>validatePhotoCandidates({...data,
