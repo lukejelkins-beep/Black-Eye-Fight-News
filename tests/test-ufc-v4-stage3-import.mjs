@@ -91,7 +91,9 @@ test('source consolidation does not create a second paid collector or public rel
   const w=readFileSync(new URL('../.github/workflows/audit-ufc-research-pipeline.yml',import.meta.url),'utf8');
   assert.match(w,/node scripts\/ufc-36-month-stage3-progress\.mjs/);
   assert.match(w,/node scripts\/ufc-v4-certification-queue\.mjs/);
-  assert.match(w,/node --test tests\/test-ufc-v4-stage3-import\.mjs/);
+  assert.match(w,/node scripts\/run-ufc-stage3-tests\.mjs/);
+  const runner=readFileSync(new URL('../scripts/run-ufc-stage3-tests.mjs',import.meta.url),'utf8');
+  assert.match(runner,/test-ufc-v4-stage3-import/);
   assert.equal(manifest.mainRegistryIsCanonical,true);
   assert.equal(manifest.productionReleaseAuthorized,false);
 });
