@@ -14,6 +14,8 @@ const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'],
   ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
     ? {executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH} : {}) });
 const failures = [];
+const viewportResults = [];
+let screenshotCount=0;
 
 function assertContains(haystack,needle,label){
   assert.ok(String(haystack).toLocaleLowerCase().includes(String(needle).toLocaleLowerCase()), label+': '+needle+' not present');
@@ -25,6 +27,7 @@ async function open(page, route, ready) {
 }
 async function snap(page,name,{fullPage=true}={}){
   await page.screenshot({path:OUT+'/'+name+'.png',fullPage,animations:'disabled'});
+  screenshotCount++;
 }
 async function testSite(viewport,isMobile,label,fullCohort=true) {
   const ctx = await browser.newContext({viewport,isMobile,hasTouch:isMobile,deviceScaleFactor:1,
@@ -32,6 +35,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   const page=await ctx.newPage();
   page.on('pageerror',err=>failures.push(label+': page JS exception: '+err.message));
 
+  try {
   const response=await page.request.get('http://127.0.0.1:8765/data/sumo/research-h2h-summary.json');
   assert.ok(response.ok(),'190-rikishi H2H research summary must be cached on preview branch');
   const research=await response.json();
@@ -93,6 +97,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.locator('#sumo-opponent-sort').selectOption('name');
   assert.ok(await page.locator('.sumo-rival').count()>0,'Sort keeps catalogue accessible');
   assert.ok(await page.locator('.sumo-country').count()>0,'Profile shows birthplace-country flag');
+  await page.evaluate(()=>scrollTo(0,0));
   await snap(page,label+'-profile',{fullPage:false});
   // Full pair-specific history is distinct from a single basho's opponent record.
   await open(page,'headtohead/8850/8857','.sumo-h2h-hero');
@@ -212,8 +217,65 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     await open(page,'profile/'+id,'.profile-hero');
     assert.equal(await page.locator('.sumo-rank-svg').count(),1);
     assert.equal(await page.locator('.sumo-weight-svg').count(),1);
-    await snap(page,label+'-profile-'+id,{fullPage:false});
+    await snap(page,label+'-profile-'+id);
+    if(id===28){
+      await page.locator('#sumo-charts').screenshot({path:OUT+'/'+label+'-charts.png',animations:'disabled'});
+      screenshotCount++;
+    }
   }
+
+  // Exercise the redesigned controls, including native keyboard disclosures.
+  await open(page,'profile/28','.profile-hero');
+  if(isMobile){
+    await page.locator('.mobile-site-menu summary').press('Enter');
+    assert.equal(await page.locator('.mobile-site-menu').getAttribute('open'),'');
+    assert.equal(await page.locator('.mobile-site-menu nav a').count(),7);
+    await page.locator('.mobile-site-menu summary').press('Enter');
+  }
+  const currentRows=await page.locator('.sumo-ed-row').count();
+  await page.locator('[data-results-mode="tournaments"]').click();
+  await page.locator('.sumo-tournament-list>details>summary').first().press('Enter');
+  assert.equal(await page.locator('.sumo-tournament-list .sumo-ed-row').count(),currentRows);
+  await page.locator('[data-results-mode="bouts"]').click();
+  await page.locator('#sumo-period').selectOption('all');
+  await page.waitForFunction(n=>document.querySelectorAll('.sumo-ed-row').length>n,currentRows);
+  const allRows=await page.locator('.sumo-ed-row').count();
+  const rowIds=await page.locator('.sumo-ed-row').evaluateAll(ns=>ns.map(n=>n.id));
+  assert.equal(new Set(rowIds).size,allRows,'Every source bout has one unique anchor');
+  await page.locator('#sumo-period').selectOption('current');
+  assert.equal(await page.locator('.sumo-ed-row').count(),currentRows);
+  await page.locator('.sumo-ed-extra summary').first().press('Enter');
+  assert.equal(await page.locator('.sumo-ed-extra').first().getAttribute('open'),'');
+  await page.locator('#sumo-results').screenshot({path:OUT+'/'+label+'-results.png',animations:'disabled'});
+  screenshotCount++;
+  const careerPoints=await page.locator('.sumo-rank-svg .sumo-rank-point').count();
+  await page.locator('[data-rank-range="2y"]').click();
+  assert.ok(await page.locator('.sumo-rank-svg .sumo-rank-point').count()<careerPoints);
+  await page.locator('[data-rank-range="5y"]').click();
+  assert.equal(await page.locator('[data-rank-range="5y"]').getAttribute('aria-pressed'),'true');
+  await page.locator('[data-rank-range="career"]').click();
+  assert.equal(await page.locator('.sumo-rank-svg .sumo-rank-point').count(),careerPoints);
+  await page.locator('[data-rank-ladder]').click();
+  assert.equal(await page.locator('[data-rank-ladder]').getAttribute('aria-pressed'),'true');
+  await page.locator('[data-rank-ladder]').click();
+  for(const disclosure of await page.locator('.sumo-data-table summary').all()){
+    await disclosure.press('Enter');
+    assert.equal(await disclosure.locator('..').getAttribute('open'),'');
+    await disclosure.press('Enter');
+  }
+  await page.locator('#sumo-opponent-search').fill('Ura-does-not-exist');
+  assert.equal(await page.locator('.sumo-rival').count(),0);
+  await page.locator('#sumo-opponent-search').fill('');
+  const initialOpponents=await page.locator('.sumo-rival').count();
+  await page.locator('[data-h2h-more]').click();
+  assert.ok(await page.locator('.sumo-rival').count()>initialOpponents);
+  await page.locator('[data-h2h-fewer]').click();
+  assert.equal(await page.locator('.sumo-rival').count(),initialOpponents);
+  await page.locator('.sumo-rival').first().click();
+  await page.waitForSelector('.sumo-h2h-hero');
+  await page.getByRole('link',{name:'Back to originating profile'}).click();
+  await page.waitForSelector('.sumo-api-quality[data-sumo-source-id="28"]');
+  assert.equal(await page.locator('#sumo-period').inputValue(),'current');
 
   if (isMobile){
     for(const route of ['home','rikishi','profile/8850','basho','banzuke','kimarite']){
@@ -222,7 +284,12 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
       assert.ok(widths.scroll<=widths.viewport+6,route+' horizontal overflow '+JSON.stringify(widths));
     }
   }
-  await ctx.close();
+  viewportResults.push({width:viewport.width,status:'pass',profiles:checkedIds.size});
+  } catch(error) {
+    await snap(page,label+'-failure',{fullPage:false}).catch(()=>{});
+    viewportResults.push({width:viewport.width,status:'fail',error:String(error.stack||error)});
+    failures.push(label+': '+String(error.stack||error));
+  } finally { await ctx.close(); }
 }
 await mkdir(OUT,{recursive:true});
 try {
@@ -231,10 +298,10 @@ try {
   await testSite({width:390,height:844},true,'mobile',true);
   await testSite({width:320,height:740},true,'reflow320',false);
   if(failures.length)throw new Error(failures.join('\n'));
-  await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'pass',views:['home','rikishi','profiles','banzuke','basho','kimarite','headtohead'],viewportWidths:[1440,768,390,320],realTouchTest:false},null,2));
+  await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'pass',browser:browser.version(),viewportResults,screenshotCount,views:['home','rikishi','profiles','banzuke','basho','kimarite','headtohead'],viewportWidths:[1440,768,390,320],realTouchTest:false},null,2));
   console.log('Sumo editorial browser QA passed: 1440/768/390/320, five key wrestlers, H2H chronology, charts and no JS exceptions. Real-device touch remains separate.');
 } catch(error) {
-  await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'fail',error:String(error.stack||error),failures},null,2));
+  await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'fail',browser:browser.version(),viewportResults,screenshotCount,error:String(error.stack||error),failures},null,2));
   throw error;
 } finally {
   await browser.close();
