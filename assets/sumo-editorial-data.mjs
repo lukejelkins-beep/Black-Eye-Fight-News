@@ -14,7 +14,7 @@ function validDisplayBout(row){
   // Explicit upper-division absences are source rows without an opponent,
   // unlike unscheduled Makushita non-bout days. Never create fake opponent IDs.
   return row?.outcome==='absence'&&row?.opponentId===null&&
-    /^\\d{6}$/.test(String(row?.bashoId))&&Number.isInteger(Number(row?.day));
+    /^\d{6}$/.test(String(row?.bashoId))&&Number.isInteger(Number(row?.day));
 }
 export function mergeProfileBouts(current=[],historical=[]){
   const rows=new Map();
