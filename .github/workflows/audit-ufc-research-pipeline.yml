@@ -12,6 +12,8 @@ on:
       - 'scripts/ufc-v4-certification-queue.mjs'
       - 'scripts/ufc-certification-consolidation-preflight.mjs'
       - 'data/ufc-independent-full-career-verification.json'
+      - 'data/ufc-unified-ikram-kavanagh-source-review-20261115.json'
+      - 'tests/test-ufc-unified-ikram-kavanagh-20261115.mjs'
       - 'tests/test-ufc-unified-wave45-nick-klein-20261115.mjs'
       - 'data/ufc-unified-wave46-bannon-xiao-source-review-20261115.json'
       - 'tests/test-ufc-unified-wave46-bannon-xiao-20261115.mjs'
@@ -280,6 +282,7 @@ jobs:
           node --test tests/test-ufc-unified-wave56-iwo-tallison-20261115.mjs
           node --test tests/test-ufc-unified-wave57-fugitt-shayilan-yazmin-20261115.mjs
           node --test tests/test-ufc-unified-wave58-cavalcanti-rinya-20261115.mjs
+          node --test tests/test-ufc-unified-ikram-kavanagh-20261115.mjs
           node scripts/ufc-36-month-stage3-progress.mjs
           node --test tests/test-ufc-stage3-v4-reconciliation.mjs
           node scripts/ufc-reconcile-stage3-v4-certifications.mjs
