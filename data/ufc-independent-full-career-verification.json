@@ -33416,6 +33416,178 @@
         }
       ],
       "sourceVerifiedExcludedFeederBouts": []
+    },
+    "carli-judice": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Carli Judice",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/f1ab6f37492c630a",
+      "officialFighterUrl": "https://www.ufc.com/athlete/carli-judice",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned original Greco UFCStats-derived GitHub CSV and preexisting original native cache; no paid requests",
+        "method": "Exhaustive dated official UFC.com athlete biography, paired reciprocal UFC.com result narratives, independently pinned five UFCStats fighter/fight identities, exact saved numeric fighter/bout/opponent corners, winners, original source event dates ±1 UTC day and measured round sets. One independently attested DWCS feeder bout explicitly excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "454"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "UFC.com official full five-bout chronology: 2024 split-decision loss to Gabriella Fernandes; 2025 finishes over Yuneisy Duben and Nicolle Caliari; 2026 unanimous decision over Juliana Miller and finish over Jeisla Chaves. The separate 2023 DWCS split-decision loss to Ernesta Kareckaite is excluded. The UFC athlete tiles are unreliable on losses; dated narrative, original winning corners and reciprocal official biographies control.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/carli-judice",
+        "https://www.ufc.com/athlete/carli-judice?page=1",
+        "https://www.ufc.com/news/week-8-results-scorecards-dana-whites-contender-series-season-7",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83950",
+          "date": "2023-09-26",
+          "opponent": "Ernesta Kareckaite",
+          "result": "loss",
+          "event": "Dana White's Contender Series 64",
+          "officialSourceUrl": "https://www.ufc.com/athlete/carli-judice",
+          "excludedBecause": "Dana White's Contender Series is not an official UFC Octagon career fight",
+          "originalNativeFighterId": "454",
+          "originalOpponentFighterId": "468"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-08-22",
+          "opponent": "Jeisla Chaves",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a4b3becc0cc394d7",
+          "nativeBoutId": "82992",
+          "nativeFighterId": "454"
+        },
+        {
+          "date": "2026-02-21",
+          "opponent": "Juliana Miller",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6e78d874097a3d22",
+          "nativeBoutId": "60672",
+          "nativeFighterId": "454"
+        },
+        {
+          "date": "2025-07-19",
+          "opponent": "Nicolle Caliari",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a602c68147b752b2",
+          "nativeBoutId": "60816",
+          "nativeFighterId": "454"
+        },
+        {
+          "date": "2025-03-15",
+          "opponent": "Yuneisy Duben",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a8f8245096eaf0cd",
+          "nativeBoutId": "60367",
+          "nativeFighterId": "454"
+        },
+        {
+          "date": "2024-06-15",
+          "opponent": "Gabriella Fernandes",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/19ef5890b20f903a",
+          "nativeBoutId": "61061",
+          "nativeFighterId": "454"
+        }
+      ]
+    },
+    "andrey-pulyaev": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Andrey Pulyaev",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/22e07d3da1aa3475",
+      "officialFighterUrl": "https://www.ufc.com/athlete/andrey-pulyaev",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "directUfcStatsAccess": "Pinned original Greco UFCStats-derived GitHub CSV and preexisting original native cache; no paid requests",
+        "method": "Exhaustive dated official UFC.com athlete biography, paired reciprocal UFC.com result narratives, independently pinned five UFCStats fighter/fight identities, exact saved numeric fighter/bout/opponent corners, winners, original source event dates ±1 UTC day and measured round sets. One independently attested DWCS feeder bout explicitly excluded."
+      },
+      "verifiedNumericFighterIds": [
+        "334"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "UFC.com official complete five-bout Octagon chronology: 2025 decision loss to Christian Leroy Duncan and TKO win over Nick Klein; 2026 unanimous decision loss to Ateba Gautier, submission loss to Nursulton Ruziboev and knockout loss to Damian Pinas. The independently stated 2024 DWCS decision over Liam Anderson is feeder-only. Misleading UFC athlete summary Win badges do not override dated UFC narratives and native winners.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/andrey-pulyaev",
+        "https://www.ufc.com/athlete/andrey-pulyaev?page=1",
+        "https://www.ufc.com/athlete/damian-pinas",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84008",
+          "date": "2024-08-27",
+          "opponent": "Liam Anderson",
+          "result": "win",
+          "event": "Dana White's Contender Series 69",
+          "officialSourceUrl": "https://www.ufc.com/athlete/andrey-pulyaev",
+          "excludedBecause": "Dana White's Contender Series is not an official UFC Octagon career fight",
+          "originalNativeFighterId": "334",
+          "originalOpponentFighterId": "12209"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-10-03",
+          "opponent": "Damian Pinas",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/31b85cd63fb291ed",
+          "nativeBoutId": "83727",
+          "nativeFighterId": "334"
+        },
+        {
+          "date": "2026-06-27",
+          "opponent": "Nursulton Ruziboev",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5e7f4ba1210f433d",
+          "nativeBoutId": "66368",
+          "nativeFighterId": "334"
+        },
+        {
+          "date": "2026-01-24",
+          "opponent": "Ateba Gautier",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/33be2456161c14c3",
+          "nativeBoutId": "60642",
+          "nativeFighterId": "334"
+        },
+        {
+          "date": "2025-08-02",
+          "opponent": "Nick Klein",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b3c695728e177fd4",
+          "nativeBoutId": "60760",
+          "nativeFighterId": "334"
+        },
+        {
+          "date": "2025-03-22",
+          "opponent": "Christian Leroy Duncan",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8af2b589d5e9c1ae",
+          "nativeBoutId": "60317",
+          "nativeFighterId": "334"
+        }
+      ]
     }
   }
 }

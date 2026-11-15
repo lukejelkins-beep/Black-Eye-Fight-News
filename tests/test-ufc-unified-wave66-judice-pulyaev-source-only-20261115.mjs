@@ -87,3 +87,32 @@ test('wave66 source review cannot itself promote certificates; any later canonic
   } else assert.equal(evidence.fighters[slug].certificationStatus,'source_reconciled_pending_official_full_career_scope_and_strict_stage3_gate');
  }
 });
+
+test('wave66: official UFC.com exhaustive five-bout careers and excluded DWCS appearances now require strict canonical proof',()=>{
+ const attested={
+  'carli-judice':{id:'454',bio:'https://www.ufc.com/athlete/carli-judice',feeder:'83950',losses:1},
+  'andrey-pulyaev':{id:'334',bio:'https://www.ufc.com/athlete/andrey-pulyaev',feeder:'84008',losses:4}
+ };
+ for(const [slug,v] of Object.entries(attested)){
+  const p=registry[slug],review=evidence.fighters[slug],h=history(slug);
+  assert.ok(p,'officially reconciled source-only candidate must have one canonical certificate proof');
+  assert.equal(p.scope,'complete_official_ufc_career');
+  assert.equal(p.verificationMethod,'full_official_ufc_fight_listing_crosscheck');
+  assert.equal(p.officialFighterUrl,v.bio);
+  assert.equal(p.officialUfcCareerBoutCount,5);
+  assert.equal(p.sourceCoverageAttested,true);
+  assert.equal(p.verifiedNumericFighterIds.length,1);
+  assert.equal(p.verifiedNumericFighterIds[0],v.id);
+  assert.equal(p.bouts.length,5);
+  assert.deepEqual(p.bouts.map(x=>x.nativeBoutId).sort(),h.map(x=>x.boutId).sort());
+  assert.equal(p.bouts.filter(x=>x.result==='loss').length,v.losses);
+  assert.deepEqual(p.sourceVerifiedExcludedFeederBouts.map(x=>x.nativeBoutId),[v.feeder]);
+  assert.ok(p.independentSourceCrosschecks.includes(v.bio));
+  assert.deepEqual(new Set(p.bouts.map(x=>x.fightUrl)).size,5);
+  assert.equal(gate(slug,p),true,'official chronology/source/native/round strict Stage3 proof');
+  assert.equal(gate(slug,{...p,bouts:p.bouts.slice(1)}),false);
+  assert.equal(gate(slug,{...p,verifiedNumericFighterIds:['999999']}),false);
+  assert.equal(gate(slug,{...p,bouts:p.bouts.map((b,i)=>i===0?{...b,result:b.result==='win'?'loss':'win'}:b)}),false);
+  assert.equal(gate(slug,{...p,bouts:[...p.bouts,p.bouts[0]]}),false);
+ }
+});
