@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "status": "resolved-after-successful-retry",
-  "at": "2026-11-15T00:07:42Z",
-  "runId": "43656607209",
-  "workflowCommit": "e369db4d7a2feca5750eb2f5834ba46679b5c874",
-  "actionsUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43656607209",
+  "status": "research-run-incomplete",
+  "at": "2026-11-15T01:15:30Z",
+  "runId": "43662210947",
+  "workflowCommit": "85a43476459087e4bd179f1fc7cf2f69a755f9ae",
+  "actionsUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43662210947",
   "stepOutcomes": {
     "validation": "failure",
     "officialJsa": "skipped",
@@ -13,8 +13,5 @@
     "healthCheckpoint": "skipped",
     "gitPush": "skipped"
   },
-  "note": "Original failure: research-health test asserted an unexported field. Test fixed; same workflow run retried successfully and new data, health, and JSA audit checkpoint were committed. Original step outcomes remain for audit.",
-  "resolvedByRunId": "43656607209",
-  "resolvedAt": "2026-11-15T00:45:14.890Z",
-  "successEvidencePath": "data/sumo/backfill/v1/workflow-health.json"
+  "note": "This is an incomplete Actions run. Do not advance certification or claim a completed checkpoint."
 }
