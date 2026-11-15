@@ -14,7 +14,8 @@
   <link rel="stylesheet" href="assets/global-sport-v1.0.3.css?v=103b">
   <link rel="stylesheet" href="assets/sumo.css?v=20261115-career-h2h2">
   <link rel="stylesheet" href="assets/sumo-nav.css?v=20261114-sumo-preview">
-  <script type="module" src="assets/sumo.js?v=20261115-career-h2h2"></script>
+  <link rel="stylesheet" href="assets/sumo-editorial.css?v=20261116-qa">
+  <script type="module" src="assets/sumo.js?v=20261116-qa"></script>
 </head>
 <body>
   <a class="skip" href="#sumo-main">Skip to content</a>
@@ -36,6 +37,9 @@
       <a href="sumo.html" class="selected" aria-current="page">Sumo</a>
     </div>
   </nav>
+  <details class="mobile-site-menu"><summary>BEFN menu · all sections</summary>
+    <nav aria-label="Mobile primary navigation"><a href="index.html#home">News</a><a href="index.html#champions">Champions</a><a href="index.html#fighters">Fighter Scout</a><a href="index.html#leaderboards">UFC Stats</a><a href="index.html#fights">Fights</a><a href="index.html#highlights">Fight Film</a><a href="sumo.html" aria-current="page">Sumo</a></nav>
+  </details>
   <section class="befn-global-sports" aria-label="Combat sports">
     <div class="befn-global-sports-inner">
       <a class="befn-sport-all" href="index.html#home">ALL SPORTS</a>
@@ -53,8 +57,9 @@
     <a href="#kimarite" data-page="kimarite">Kimarite</a>
   </nav></div>
   <div class="testing-note"><div class="frame">
-    <strong>SUMO DEVELOPMENT PREVIEW</strong>
-    <span>Third-party API snapshot, not live. Tomorrow’s confirmed bouts display only when sourced. Full career head-to-head results, opponents and kimarite are pulled from a separate research cache; these records are not independently JSA-certified. Awaiting Japan Sumo Association cross-check.</span>
+    <details><summary><strong>SUMO PREVIEW</strong> · Snapshot data, not live · Source details</summary>
+      <p>Current rankings, results and measurements are third-party API snapshots. Confirmed future pairings appear only where sourced. Cached career opponents, head-to-head chronology and kimarite are accepted for development but are not blanket JSA-certified. Field-specific review status is retained within profiles.</p>
+    </details>
   </div></div>
   <main id="sumo-main" class="frame main" tabindex="-1" aria-live="polite">
     <div class="loading">Loading tracked wrestler profiles and tournament data…</div>
