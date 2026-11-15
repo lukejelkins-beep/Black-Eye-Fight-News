@@ -13,7 +13,7 @@ import {readFile,writeFile,rename,mkdir} from 'node:fs/promises';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {cohortCurrentBasho} from './sumo-jsa-public-spotcheck.mjs';
-import {documentedDebutRankGap,supplementalHistoricalBashoCoverage,independentHistoricalRankCoverage} from './sumo-certification-preflight-190.mjs';
+import {documentedDebutRankGap,supplementalHistoricalBashoCoverage,independentHistoricalRankCoverage,independentlyVerifiedCurrentBashoCutoff} from './sumo-certification-preflight-190.mjs';
 
 const ROOT='data/sumo/backfill/v1';
 const load=async p=>JSON.parse(await readFile(p,'utf8'));
@@ -88,8 +88,10 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
  // independent SumoDB three-part record only to fill unpublished components,
  // and still require agreement with all completed JSA per-basho outcomes.
  const jsaCareerPresent=j.career!=null;
- const jsaWLMatches=jsaCareerPresent&&
-  j.career.wins===p?.career?.wins&&j.career.losses===p?.career?.losses;
+ const currentCutoff=independentlyVerifiedCurrentBashoCutoff(p,j,activeBasho);
+ const jsaWLMatches=jsaCareerPresent&&(
+  j.career.wins===p?.career?.wins&&j.career.losses===p?.career?.losses||
+  currentCutoff.passed);
  const jsaAbsencePresent=jsaCareerPresent&&j.career.absences!=null;
  const basis=jsaWLMatches&&jsaAbsencePresent&&
   j.career.absences===p?.career?.absences?'published-JSA-career-WLA':
@@ -145,6 +147,9 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
   status:careerResultsCertified?'career-results-strictly-certified':'strict-audit-blocked',
   careerResultsCertified,
   careerTotalsEvidenceBasis:careerResultsCertified?basis:null,
+  datedJsaCareerCutoffReconciled:careerResultsCertified&&currentCutoff.passed,
+  datedJsaCareerCutoffEvidence:careerResultsCertified&&currentCutoff.passed?
+   currentCutoff:null,
   documentedNoPublishedNumberedDebutRank:evidencedDebutGap,
   independentlyCrosscheckedOlderBashoFromSumoDB:careerResultsCertified?
     historicalProof.otherSourceBasho:0,
