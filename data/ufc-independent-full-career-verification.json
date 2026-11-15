@@ -30949,6 +30949,213 @@
         }
       ],
       "note": "Full six official UFC fights confirmed since April 2024; independent 2023-09-12 Kasey Tanner DWCS is excluded under native 84123, and Basharat 2026-02-07 loss confirmed by detailed result."
+    },
+    "billy-ray-goff": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Billy Ray Goff",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/fa07345cc9db5cc9",
+      "officialFighterUrl": "https://www.ufc.com/athlete/billy-goff",
+      "earliestOfficialUfcBout": "2023-08-26",
+      "latestCompletedOfficialUfcBout": "2026-08-08",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-15",
+        "method": "Complete UFC.com dated biography + official scorecard where summaries mislabel outcome; pinned Greco UFCStats fights/corners and unchanged UFCalendar numeric IDs, reciprocal winners, event-local vs UTC day tolerance and measured round evidence. DWCS feeder history excluded by separately attested exact native ID."
+      },
+      "verifiedNumericFighterIds": [
+        "2816"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2023-08-26",
+          "opponent": "Yusaku Kinoshita",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/977250a28d3b8a3f",
+          "nativeBoutId": "52443",
+          "nativeFighterId": "2816"
+        },
+        {
+          "date": "2024-05-11",
+          "opponent": "Trey Waters",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ec5d705232983b87",
+          "nativeBoutId": "60938",
+          "nativeFighterId": "2816"
+        },
+        {
+          "date": "2025-05-31",
+          "opponent": "Ramiz Brahimaj",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/305d8c85b35a7d4e",
+          "nativeBoutId": "38398",
+          "nativeFighterId": "2816"
+        },
+        {
+          "date": "2026-08-08",
+          "opponent": "Ty Miller",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f44ab9e9e4a89735",
+          "nativeBoutId": "83256",
+          "nativeFighterId": "2816"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "boutId": "88252",
+          "fighterSlug": "billy-ray-goff",
+          "date": "2022-08-02",
+          "opponent": "Shimon Smotritsky",
+          "event": "Dana White's Contender Series 48",
+          "sourceUrl": "https://www.ufc.com/athlete/billy-goff"
+        }
+      ],
+      "note": "Official athlete biography details four UFC fights and a 2022 DWCS feeder bout; separate official scorecards and pinned Greco confirm the Ty Miller loss despite misleading UFC.com summary Win badges. 2025 Ramiz fight uses local May 31, native June 1 UTC."
+    },
+    "danny-silva": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Danny Silva",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/d964a59c48381cb6",
+      "officialFighterUrl": "https://www.ufc.com/athlete/danny-silva",
+      "earliestOfficialUfcBout": "2024-03-16",
+      "latestCompletedOfficialUfcBout": "2026-03-21",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-15",
+        "method": "Complete UFC.com dated biography + official scorecard where summaries mislabel outcome; pinned Greco UFCStats fights/corners and unchanged UFCalendar numeric IDs, reciprocal winners, event-local vs UTC day tolerance and measured round evidence. DWCS feeder history excluded by separately attested exact native ID."
+      },
+      "verifiedNumericFighterIds": [
+        "536"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2024-03-16",
+          "opponent": "Josh Culibao",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c26f27667c230391",
+          "nativeBoutId": "61245",
+          "nativeFighterId": "536"
+        },
+        {
+          "date": "2025-03-01",
+          "opponent": "Lucas Almeida",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1de799f17556b501",
+          "nativeBoutId": "60338",
+          "nativeFighterId": "536"
+        },
+        {
+          "date": "2025-08-02",
+          "opponent": "Kevin Vallejos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/111e66eb922449e4",
+          "nativeBoutId": "60757",
+          "nativeFighterId": "536"
+        },
+        {
+          "date": "2026-03-21",
+          "opponent": "Kurtis Campbell",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/4e58bcc0d27042fd",
+          "nativeBoutId": "60564",
+          "nativeFighterId": "536"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "boutId": "83949",
+          "fighterSlug": "danny-silva",
+          "date": "2023-09-26",
+          "opponent": "Angel Pacheco",
+          "event": "Dana White's Contender Series 64",
+          "sourceUrl": "https://www.ufc.com/athlete/danny-silva"
+        }
+      ],
+      "note": "Official 2025 Taira vs Park scorecards show Kevin Vallejos defeating Danny Silva, despite graphical athlete-site Win tiles; 2023 Angel Pacheco DWCS match excluded, 2025 local Aug 2/native UTC Aug 3 reconciled."
+    },
+    "rafael-estevam": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Rafael Estevam",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/83455a9d17f57dae",
+      "officialFighterUrl": "https://www.ufc.com/athlete/rafael-estevam",
+      "earliestOfficialUfcBout": "2023-11-18",
+      "latestCompletedOfficialUfcBout": "2026-04-04",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-15",
+        "method": "Complete UFC.com dated biography + official scorecard where summaries mislabel outcome; pinned Greco UFCStats fights/corners and unchanged UFCalendar numeric IDs, reciprocal winners, event-local vs UTC day tolerance and measured round evidence. DWCS feeder history excluded by separately attested exact native ID."
+      },
+      "verifiedNumericFighterIds": [
+        "591"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2023-11-18",
+          "opponent": "Charles Johnson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9abf0b60a44a82d1",
+          "nativeBoutId": "59986",
+          "nativeFighterId": "591"
+        },
+        {
+          "date": "2025-02-15",
+          "opponent": "Jesus Aguilar",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2ae33fce63a75df9",
+          "nativeBoutId": "60998",
+          "nativeFighterId": "591"
+        },
+        {
+          "date": "2025-08-02",
+          "opponent": "Felipe Bunes",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b47db03affb279c3",
+          "nativeBoutId": "60762",
+          "nativeFighterId": "591"
+        },
+        {
+          "date": "2026-04-04",
+          "opponent": "Ethyn Ewing",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/fef80c98b2fba70c",
+          "nativeBoutId": "60701",
+          "nativeFighterId": "591"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "boutId": "83981",
+          "fighterSlug": "rafael-estevam",
+          "date": "2022-09-27",
+          "opponent": "João Elias",
+          "event": "Dana White's Contender Series 56",
+          "sourceUrl": "https://www.ufc.com/athlete/rafael-estevam"
+        }
+      ],
+      "note": "UFC official prelim report attests 2025 Felipe Bunes win; official fighter narrative and pinned Greco separately confirm 2026 Ethyn Ewing TKO loss even if summary badge says Win. DWCS 2022 João Elias excluded, 2025 Aug local/UTC one-day offset retained."
     }
   }
 }

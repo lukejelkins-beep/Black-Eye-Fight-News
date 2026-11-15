@@ -24,6 +24,8 @@ on:
       - 'tests/test-ufc-unified-wave52-page-sy-walker-20261115.mjs'
       - 'tests/test-ufc-unified-wave53-morales-mariscal-nunes-20261115.mjs'
       - 'tests/test-ufc-unified-wave54-miller-matsumoto-20261115.mjs'
+      - 'data/ufc-unified-wave55-goff-silva-estevam-source-review-20261115.json'
+      - 'tests/test-ufc-unified-wave55-goff-silva-estevam-20261115.mjs'
       - 'tests/test-ufc-unified-daria-zhelezniakova-20261115.mjs'
       - 'tests/test-ufc-unified-jeka-saragih-20261115.mjs'
       - 'tests/test-ufc-unified-wave38-kline-armfield-ochoa-20261115.mjs'
@@ -268,6 +270,7 @@ jobs:
           node --test tests/test-ufc-unified-wave52-page-sy-walker-20261115.mjs
           node --test tests/test-ufc-unified-wave53-morales-mariscal-nunes-20261115.mjs
           node --test tests/test-ufc-unified-wave54-miller-matsumoto-20261115.mjs
+          node --test tests/test-ufc-unified-wave55-goff-silva-estevam-20261115.mjs
           node scripts/ufc-36-month-stage3-progress.mjs
           node --test tests/test-ufc-stage3-v4-reconciliation.mjs
           node scripts/ufc-reconcile-stage3-v4-certifications.mjs
