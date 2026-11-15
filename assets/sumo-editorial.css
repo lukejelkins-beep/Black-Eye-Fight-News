@@ -285,3 +285,35 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .profile-hero>.profile-icon.sumo-photo.xl{width:88px}
  .sumo-ed-row-main{grid-template-columns:36px minmax(0,1fr) auto}
 }
+
+/* Banzuke editorial results table: one readable aligned row per wrestler. */
+.sumo-rank-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:0;background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:16px 0}
+.sumo-rank-card{display:grid;grid-template-columns:155px minmax(0,1fr);gap:0;border:0;border-bottom:1px solid var(--border);border-radius:0;box-shadow:none;background:#fff}
+.sumo-rank-card:last-child{border-bottom:0}
+.sumo-rank-card-head{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:5px;padding:12px 14px;background:#f1eae3;color:var(--ink);font-size:13px;letter-spacing:0}
+.sumo-rank-card-head .number-win{color:var(--green)}
+.sumo-rank-card-head .number-loss{color:var(--red)}
+.sumo-rank-card-body{min-height:90px;display:flex;align-items:center;gap:14px;padding:9px 16px}
+.sumo-rank-card-body .profile-icon.sumo-photo.lg{width:54px;height:68px;min-height:0;flex:none}
+.sumo-rank-name{font:800 23px/1.08 'Barlow Condensed',Impact,sans-serif}
+.sumo-rank-name a{color:var(--ink)}
+.sumo-rank-name .sumo-country-name{display:inline;font:400 13px/1.4 'DM Sans',sans-serif}
+.sumo-rank-strong{font-size:14px;font-weight:800;color:var(--red);margin:3px 0}
+.sumo-rank-info{font-size:13px;color:var(--muted);gap:3px 14px}
+.sumo-rank-change{font-size:13px;color:var(--muted);margin-top:4px}
+.sumo-rank-change .sumo-move{font-size:13px}
+.sumo-directory-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 10px;margin-top:8px}
+.sumo-directory-facts span{font-size:13px;line-height:1.45;color:var(--muted)}
+.sumo-directory-facts b{color:var(--ink)}
+.directory-upper small,.directory-lower .detail,.directory-lower .rank{font-size:13px}
+.directory-lower .rank{font-size:16px;font-weight:800}
+.directory-card .sumo-move,.directory-card .cta{font-size:13px}
+@media(max-width:599px){
+ .sumo-rank-card{grid-template-columns:minmax(0,1fr)}
+ .sumo-rank-card-head{display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:7px 12px;flex-wrap:wrap}
+ .sumo-rank-card-body{padding:10px 12px;align-items:flex-start}
+ .sumo-rank-card-body .profile-icon.sumo-photo.lg{width:50px;height:63px}
+ .sumo-rank-name{font-size:22px}
+ .sumo-rank-info{flex-wrap:wrap;gap:2px 8px}
+ .sumo-directory-facts{grid-template-columns:minmax(0,1fr)}
+}
