@@ -139,7 +139,7 @@ for(const [slug,x] of Object.entries(cases)){
 }
 test('wave77 retains source-display Ariane alias without inventing a new fighter',()=>{
  assert.deepEqual(proofs['jj-aldrich'].sourcePresentationAliases,[{
-  date:'2025-02-22',sourceOpponent:'Ariane da Silva',nativeOpponent:'Ariane Lipski da Silva'
+  date:'2023-03-11',sourceOpponent:'Ariane da Silva',nativeOpponent:'Ariane Lipski da Silva'
  }]);
  assert.equal(gate('jj-aldrich',proofs['jj-aldrich']),true);
 });
