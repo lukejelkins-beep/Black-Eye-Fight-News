@@ -83,7 +83,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-ed-row-main{padding:11px 16px;min-height:72px;font-size:14px}
 .sumo-ed-row-main :where(a){color:#84243A;font-weight:700}
 .sumo-ed-date small,.sumo-ed-rank small,.sumo-ed-tech small{display:block;font-size:13px;color:var(--muted)}
-.sumo-ed-result{font-weight:800;font-variant-numeric:tabular-nums}
+.sumo-ed-result{font-weight:800;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .sumo-ed-result.win{color:var(--green)}.sumo-ed-result.loss{color:var(--red)}
 .sumo-ed-person{display:flex;align-items:center;gap:9px;min-width:0}
 .sumo-ed-person .profile-icon{width:40px;height:50px;min-height:0;flex:none;border-radius:4px;overflow:hidden}
@@ -164,7 +164,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .profile-hero{grid-template-columns:160px minmax(0,1fr);gap:20px}
  .profile-hero .profile-current{grid-column:1/-1}
  .sumo-rival-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
- .sumo-result-header,.sumo-ed-row-main{grid-template-columns:64px 55px minmax(125px,1.7fr) minmax(85px,1fr) minmax(100px,1.1fr) 70px;gap:7px}
+ .sumo-result-header,.sumo-ed-row-main{grid-template-columns:64px 82px minmax(125px,1.7fr) minmax(85px,1fr) minmax(100px,1.1fr) 70px;gap:7px}
  .frame{padding-inline:24px}
 }
 @media(max-width:599px){

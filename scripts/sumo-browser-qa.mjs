@@ -257,7 +257,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
          Math.min(a.rect.bottom,b.rect.bottom)-Math.max(a.rect.top,b.rect.top)>1)
         problems.push(a.name+' overlaps '+b.name);
     }
-    for(const el of row.querySelectorAll('.sumo-ed-date small,.sumo-ed-person a')){
+    for(const el of row.querySelectorAll('.sumo-ed-result,.sumo-ed-date small,.sumo-ed-person a')){
       if(el.scrollWidth>el.clientWidth+1)problems.push(el.className+' text overflows');
     }
     return problems;
