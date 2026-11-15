@@ -4,17 +4,24 @@ on:
     # Fallback only: this runs no paid API calls. GitHub's cron is best effort.
     - cron: '9,24,39,54 * * 11 *'
   workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - scripts/ufcalendar-relay.mjs
+      - scripts/ufcalendar-watchdog.mjs
+      - tests/test-ufcalendar-relay.mjs
+      - .github/workflows/ufcalendar-rich-backfill.yml
+      - .github/workflows/watch-ufcalendar-rich-backfill.yml
 
 permissions:
   contents: read
-  actions: write
 
 concurrency:
   group: befn-ufc-watchdog
   cancel-in-progress: false
 
 jobs:
-  ensure:
+  tests:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
@@ -24,6 +31,19 @@ jobs:
           node-version: '22'
       - name: Test bounded relay and fail-safe watchdog
         run: node --test tests/test-ufcalendar-relay.mjs
+  ensure:
+    needs: tests
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - name: Restart stalled UFC collection without paid API usage
         env:
           GH_TOKEN: ${{ github.token }}
