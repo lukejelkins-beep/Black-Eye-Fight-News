@@ -243,10 +243,11 @@ test('missing JSA historical rank table requires >=75% exact independent dated r
  assert.equal(independentHistoricalRankCoverage(p,j,s).passed,false,
   'less than 75% exact dated ranks must remain blocked');
  s.careerRecordCrosscheck.independentBashoRows.push(rows[rows.length-1]);
+ const correctRank=rows[0].rankEn;
  s.careerRecordCrosscheck.independentBashoRows[0].rankEn='Jonidan 999 East';
  assert.equal(independentHistoricalRankCoverage(p,j,s).passed,false,
   'a dated rank contradiction must never be ignored');
- s.careerRecordCrosscheck.independentBashoRows[0].rankEn=rows[0].rankEn;
+ s.careerRecordCrosscheck.independentBashoRows[0].rankEn=correctRank;
  j.officialRankRecords=[{bashoId:'202611',rank:'Jonidan 22 East'}];
  assert.equal(independentHistoricalRankCoverage(p,j,s).passed,false,
   'published JSA ranks lacking a validated reconciliation cannot be bypassed');
