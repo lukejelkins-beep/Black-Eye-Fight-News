@@ -50,6 +50,14 @@ export function buildSumoHealth({cohort,api,weights,collection,jsa,official,prof
   note:'This checkpoint is only visible once committed to the research branch. No full career certification or live production changes.'
  };
 }
+export function resolvePreviousResearchFailure(previous,success){
+ if(!previous||previous.status!=='research-run-incomplete')return null;
+ if(!success?.runId||!success?.lastResearchCheckpointAt)return null;
+ return {...previous,status:'resolved-after-successful-retry',
+   resolvedByRunId:success.runId,resolvedAt:success.lastResearchCheckpointAt,
+   successEvidencePath:'data/sumo/backfill/v1/workflow-health.json',
+   note:'Previous run failed before a complete data checkpoint. A later validated run completed the collection, data audit, projections and checkpoint. Original outcomes retained for traceability.'};
+}
 async function main(){
  const [cohort,api,weights,collection,jsa,official,audit]=await Promise.all([
   read('data/sumo/rikishi-index.json'),
@@ -76,6 +84,13 @@ async function main(){
  if(JSON.stringify(prev)!==JSON.stringify(data)){
   await mkdir(ROOT,{recursive:true});const temp=dest+'.tmp';
   await writeFile(temp,JSON.stringify(data,null,2)+'\n');await rename(temp,dest);
+ }
+ const failPath=join(ROOT,'workflow-last-failure.json');
+ const previousFailure=await optional(failPath);
+ const resolved=resolvePreviousResearchFailure(previousFailure,data);
+ if(resolved&&JSON.stringify(previousFailure)!==JSON.stringify(resolved)){
+  const temp=failPath+'.tmp';await writeFile(temp,JSON.stringify(resolved,null,2)+'\n');
+  await rename(temp,failPath);
  }
  console.log(JSON.stringify({status:data.status,weightProfiles:data.sumoDb.checked,
   extraWeightPoints:data.sumoDb.additionalDatedWeights,
