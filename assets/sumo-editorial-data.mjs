@@ -8,14 +8,22 @@ export const boutKey=row=>{
 /** Source identity, day, opponent, optional match number and special-bout type
  * remain distinct. A current result supersedes exactly one matching historical
  * copy; ambiguous double bouts are preserved rather than silently discarded. */
+function validDisplayBout(row){
+  const id=Number(row?.opponentId);
+  if(Number.isSafeInteger(id)&&id>0)return true;
+  // Explicit upper-division absences are source rows without an opponent,
+  // unlike unscheduled Makushita non-bout days. Never create fake opponent IDs.
+  return row?.outcome==='absence'&&row?.opponentId===null&&
+    /^\\d{6}$/.test(String(row?.bashoId))&&Number.isInteger(Number(row?.day));
+}
 export function mergeProfileBouts(current=[],historical=[]){
   const rows=new Map();
   for(const row of historical){
-    if(!Number.isSafeInteger(Number(row?.opponentId))||Number(row.opponentId)<1)continue;
+    if(!validDisplayBout(row))continue;
     rows.set(boutKey(row),row);
   }
   for(const row of current){
-    if(!Number.isSafeInteger(Number(row?.opponentId))||Number(row.opponentId)<1)continue;
+    if(!validDisplayBout(row))continue;
     const candidates=[...rows.entries()].filter(([key,old])=>
       !old.eventType&&boutBaseKey(old)===boutBaseKey(row));
     const exact=candidates.filter(([,old])=>old.outcome===row.outcome&&String(old.kimarite??'')===String(row.kimarite??''));
