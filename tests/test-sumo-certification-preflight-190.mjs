@@ -87,3 +87,34 @@ test('190-fighter preflight lane counts reconcile with candidates and manual blo
  assert.equal(report.certificationLanes['official-rank-recheck'],1);
  assert.equal(report.certified,0);
 });
+
+test('independent SumoDB W-L-A fills only unpublished JSA career fields',()=>{
+ const {p,j,s:independent}=sample();
+ independent.careerRecordCrosscheck={
+  sourceUrl:'https://sumodb.sumogames.de/Rikishi.aspx?r='+w.sumoDbId,
+  rawHtmlSha256:'a'.repeat(64),identityVerified:true,
+  originalMeasurementsUnchanged:true,independentOfApi:true,
+  career:{wins:p.career.wins,losses:p.career.losses,absences:p.career.absences}
+ };
+ j.career={...j.career,absences:null};
+ let row=preflightRikishi(w,p,j,independent,'202611');
+ assert.equal(row.classification,'candidate-for-strict-audit');
+ assert.equal(row.careerTotalsEvidence,'independent-SumoDB-three-part-career-record-plus-JSA-basho');
+ j.career=null;
+ row=preflightRikishi(w,p,j,independent,'202611');
+ assert.equal(row.classification,'candidate-for-strict-audit');
+ independent.careerRecordCrosscheck.career.absences=null;
+ row=preflightRikishi(w,p,j,independent,'202611');
+ assert.ok(row.blockers.includes('official-absence-total-unpublished-or-disagree'));
+});
+test('an explicit JSA disagreement blocks preflight even when SumoDB matches the cache',()=>{
+ const {p,j,s:independent}=sample();
+ independent.careerRecordCrosscheck={
+  identityVerified:true,originalMeasurementsUnchanged:true,independentOfApi:true,
+  career:{wins:p.career.wins,losses:p.career.losses,absences:p.career.absences}
+ };
+ j.career={wins:p.career.wins+1,losses:p.career.losses,absences:p.career.absences};
+ const row=preflightRikishi(w,p,j,independent,'202611');
+ assert.ok(row.blockers.includes('official-JSA-career-totals-unpublished-or-disagree'));
+ assert.equal(row.classification,'needs-source-or-manual-review');
+});
