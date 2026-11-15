@@ -367,27 +367,26 @@ function profileResults(w,limit){
 }
 function profileTechniques(w){
   const research=STATE.h2hSummary?.profiles?.[String(w.sourceId)];
-  const careerWins=research?.kimarite?.wins;
-  if(Array.isArray(careerWins)&&careerWins.length){
-    const counted=careerWins.reduce((n,x)=>n+(Number(x.count)||0),0);
-    return '<div>'+careerWins.slice(0,7).map(x=>{
-      const percentage=counted?Math.round(1000*Number(x.count)/counted)/10:0;
-      return '<div class="chart-row"><span class="name">'+e(x.kimarite)+'</span><div class="bar-bg" role="meter" aria-label="'+e(x.kimarite)+' percentage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+percentage+'"><div style="width:'+percentage+'%"></div></div><strong>'+percentage+'%</strong></div>';
-    }).join('')+'</div><p class="footnote">'+counted+' career wins with source-recorded kimarite; forfeits excluded. Individual winning techniques are API-sourced and not independently confirmed bout by bout.</p>';
+  const all=research?.kimarite?.wins;
+  const total=Array.isArray(all)?all.reduce((n,x)=>n+(Number.isFinite(Number(x.count))&&Number(x.count)>0?Number(x.count):0),0):0;
+  if(Array.isArray(all)&&total>0){
+    const filtered=all.filter(x=>Number.isFinite(Number(x.count))&&Number(x.count)>0&&
+      !/^(fusen|unknown)$/i.test(String(x.kimarite))).slice().sort((a,b)=>Number(b.count)-Number(a.count)||String(a.kimarite).localeCompare(String(b.kimarite)));
+    const denominator=filtered.reduce((n,x)=>n+Number(x.count),0);
+    return '<p class="footnote">'+denominator+' recorded non-forfeit winning techniques across the source career ledger. Percentages use wins with a named physical kimarite, not every career victory. Unknown technique wins and forfeits are not assigned a technique.</p>'+
+      filtered.map(x=>{const n=Number(x.count),pct=denominator?Math.round(n/denominator*1000)/10:0;
+        return '<div class="chart-row"><span class="name">'+e(x.kimarite)+'</span><div class="bar-bg" role="meter" aria-label="'+e(x.kimarite)+' '+n+' of '+denominator+' recorded non-forfeit technique wins" aria-valuemin="0" aria-valuemax="'+denominator+'" aria-valuenow="'+n+'"><div style="width:'+pct+'%"></div></div>'+
+          '<strong>'+n+' · '+pct+'%</strong></div>';
+      }).join('')+'<p class="footnote">API-trusted career source, not independent bout-by-bout certification. <a href="#kimarite">Kimarite reference</a> provides sourced explanations where available.</p>';
   }
-  const enriched=detailFor(details(),w.sourceId);
-  const direct=Array.isArray(enriched?.matches?.data?.records)?enriched.matches.data.records:[];
+  const enriched=detailFor(details(),w.sourceId),direct=Array.isArray(enriched?.matches?.data?.records)?enriched.matches.data.records:[];
   const fallback=currentBashoMatchSample(entryFor(w),details().bashoId)
     .filter(x=>x.outcome==='win').map(x=>({winnerId:w.sourceId,kimarite:x.kimarite}));
-  const sample=direct.length?direct:fallback;
-  const dist=techniqueDistribution(sample,w.sourceId);
-  if(!dist.sampleWins)return '<p class="missing">Not enough recorded non-forfeit wins to calculate a meaningful technique breakdown.</p>';
-  const scope=direct.length?'cached recent bout sample':'current '+bashoLabel(details().bashoId)+' tournament only';
-  return '<div>'+dist.techniques.slice(0,7).map(x=>
-    '<div class="chart-row"><span class="name">'+e(x.technique)+'</span><div class="bar-bg" role="meter" aria-label="'+e(x.technique)+' percentage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+x.percentage+'"><div style="width:'+x.percentage+'%"></div></div><strong>'+x.percentage+'%</strong></div>'
-  ).join('')+'</div><p class="footnote">Distribution of '+dist.sampleWins+' winning techniques in the '+e(scope)+'. Not career percentages. Forfeits excluded.</p>';
+  const dist=techniqueDistribution(direct.length?direct:fallback,w.sourceId);
+  if(!dist.sampleWins)return '<p class="missing">No supported, non-forfeit winning-technique breakdown is available for this period.</p>';
+  return '<p class="footnote">'+dist.sampleWins+' wins with recorded techniques · '+e(direct.length?'recent cached sample':'current tournament')+' · not career percentages.</p>'+
+    dist.techniques.map(x=>'<div class="chart-row"><span class="name">'+e(x.technique)+'</span><div class="bar-bg" role="meter" aria-label="'+e(x.technique)+' '+x.percentage+' percent" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+x.percentage+'"><div style="width:'+x.percentage+'%"></div></div><strong>'+x.percentage+'%</strong></div>').join('');
 }
-
 /* Presentation-only results model. One canonical renderer; no cache records are rewritten. */
 function resultKey(row) {return [row.bashoId,row.day,row.opponentId].map(v=>String(v??'unknown')).join('-');}
 function currentProfileBouts(w) {
