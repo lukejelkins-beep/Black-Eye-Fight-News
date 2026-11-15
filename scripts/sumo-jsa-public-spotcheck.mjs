@@ -265,6 +265,20 @@ export function requiresJsaRankRecheck(doc){
  return !!doc&&doc.rankReconciliation==null&&doc.rankRecheck==null&&
   Number(doc.sourceId)>0&&Number(doc.officialNskId)>0;
 }
+/** The scheduled worker may stop only after all one-time cached JSA rank checks
+ * have either been independently compared or explicitly flagged for review.
+ * Never retry a documented unparseable official page on every five-minute run. */
+export function summarizeJsaRankCoverage(docs){
+ const profiles=Array.isArray(docs)?docs:[];
+ const comparedBasho=x=>Number(x?.rankReconciliation?.comparedBasho||0);
+ return {
+  historicalRankRechecksOutstanding:profiles.filter(requiresJsaRankRecheck).length,
+  historicalRankProfilesCompared:profiles.filter(x=>comparedBasho(x)>0).length,
+  historicalRankRowsCompared:profiles.reduce((n,x)=>n+comparedBasho(x),0),
+  historicalRankManualReview:profiles.filter(x=>
+   x?.rankRecheck?.status==='dated-official-ranks-not-parseable').length
+ };
+}
 async function main(){
  const roster=await load('data/sumo/rikishi-index.json');
  if(roster?.count!==190||roster.rikishi?.length!==190)throw Error('Frozen 190-rikishi cohort mismatch');
@@ -375,9 +389,11 @@ async function main(){
   }
  }
  let done=0,matched=0,exceptions=0,bashoChecked=0,historicalDiscrepancies=0;
+ const rankDocuments=[];
  for(const w of cases){
   const d=await load(join(ROOT,'profiles',w.sourceId+'.json'));
   if(d){
+   rankDocuments.push(d);
    done++;if(d.status==='basic-fields-parsed')matched++;else exceptions++;
    if(d.bashoReconciliation){
     bashoChecked+=d.bashoReconciliation.comparedBasho||0;
@@ -388,7 +404,7 @@ async function main(){
  const summary={schemaVersion:1,scope:'JSA public profile field snapshots; NOT career certifications',
   cohort:190,checked:done,parsedFields:matched,fieldOrParsingReview:exceptions,
   pending:190-done,historicalBashoCompared:bashoChecked,
-  historicalDiscrepancies,
+  historicalDiscrepancies,...summarizeJsaRankCoverage(rankDocuments),
   lastRunAt:now(),requestsThisRun:requested,goodThisRun:succeeded,
   reviewThisRun:review,historicalRankRechecksThisRun:oldRankChecks,
   stoppedReason:reason,nextAllowedAt,certified:0,
