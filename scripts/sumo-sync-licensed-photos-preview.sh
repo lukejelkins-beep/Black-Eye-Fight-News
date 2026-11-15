@@ -15,7 +15,7 @@ git worktree add --detach "$PREVIEW_ROOT" "origin/$PREVIEW_BRANCH"
 cd "$PREVIEW_ROOT"
 SUMO_ISOLATED_TEST_WORKTREE=true SUMO_CC_CANDIDATES="$CANDIDATES" \
  node "$SOURCE_ROOT/scripts/sumo-stage-cc-photos-preview.mjs"
-git add data/sumo/approved-photos.json sumo-photo-credits.html
+git add data/sumo/approved-photos.json data/sumo/photo-import-status.json sumo-photo-credits.html
 if [[ -d assets/sumo-photos ]]; then git add assets/sumo-photos; fi
 if git diff --cached --quiet; then
  echo "Licensed image and credit files already current; no repeat download or commit."
