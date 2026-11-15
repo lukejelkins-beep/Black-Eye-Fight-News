@@ -222,6 +222,23 @@ export function parseOfficialProfile(html,roster){
   notice:'Basic current public fields only. Does NOT verify complete historical bouts, official historical weigh-ins, image rights, or career certification.'
  };
 }
+export function officialSpotcheckPriority(a,b){
+ // Source corrections first, then highest-division active wrestlers. The
+ // stable deterministic order prevents completed snapshots from re-fetching.
+ const specific=[242,82,16];
+ const ia=specific.indexOf(a.sourceId),ib=specific.indexOf(b.sourceId);
+ const pa=ia<0?specific.length:ia,pb=ib<0?specific.length:ib;
+ if(pa!==pb)return pa-pb;
+ const rankParts=w=>{
+  const m=String(w.currentRank||'').match(/^(Yokozuna|Ozeki|Sekiwake|Komusubi|Maegashira|Juryo|Makushita)\s+(\d+)\s+(East|West)$/i);
+  const levels=['Yokozuna','Ozeki','Sekiwake','Komusubi','Maegashira','Juryo','Makushita'];
+  const division=m?levels.indexOf(m[1]):99;
+  return [division<0?99:division,m?Number(m[2]):999,
+   m?.[3]?.toLowerCase()==='east'?0:1,Number(w.sourceId)];
+ };
+ const x=rankParts(a),y=rankParts(b);
+ return x[0]-y[0]||x[1]-y[1]||x[2]-y[2]||x[3]-y[3];
+}
 async function main(){
  const roster=await load('data/sumo/rikishi-index.json');
  if(roster?.count!==190||roster.rikishi?.length!==190)throw Error('Frozen 190-rikishi cohort mismatch');
@@ -230,13 +247,9 @@ async function main(){
   console.log(JSON.stringify({status:'official-source-cooldown',nextAllowedAt:prior.nextAllowedAt}));
   return;
  }
- // Prioritise the independently identified source discrepancies before the
- // remaining sorted cohort; completed parser-v3 snapshots are still skipped.
- const priority=[242,82,16];
- const cases=roster.rikishi.filter(w=>w.officialNskId).sort((a,b)=>{
-  const pa=priority.indexOf(a.sourceId),pb=priority.indexOf(b.sourceId);
-  return (pa<0?priority.length:pa)-(pb<0?priority.length:pb)||a.sourceId-b.sourceId;
- });
+ // Explicit result disputes are checked first. All other uncached pages
+ // are prioritised Makuuchi -> Juryo -> Makushita, not arbitrary source ID.
+ const cases=roster.rikishi.filter(w=>w.officialNskId).sort(officialSpotcheckPriority);
  let requested=0,succeeded=0,review=0,reason=null,nextAllowedAt=null;
  for(const w of cases){
   if(requested>=MAX_REQUESTS)break;
