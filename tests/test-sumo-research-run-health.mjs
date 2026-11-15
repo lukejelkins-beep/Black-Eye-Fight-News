@@ -18,7 +18,7 @@ test('report links exact successful research checkpoint, never claims certificat
  const r=buildSumoHealth(input);
  assert.equal(r.sumoDb.mapped,190);
  assert.equal(r.sumoDb.additionalDatedWeights,205);
- assert.equal(r.researchProfileProjections.weightGraphs,58);
+ assert.equal(r.researchProfileProjections.sourceLinkedWeightGraphs,58);
  assert.equal(r.officialJsa.checked,66);
  assert.equal(r.workflowRunUrl,'https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/123456789');
  assert.equal(r.certifiedCareers,0);
