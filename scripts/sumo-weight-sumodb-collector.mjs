@@ -132,11 +132,11 @@ export function requiresIdentityRecheck(doc){
  * The /N value is source-specific and is not presumed equal to raw API bouts. */
 export function parseSumoDbCareerRecord(html){
  if(typeof html!=='string'||html.length>2_000_000)throw Error('Invalid SumoDB career source');
- const plain=html.replace(/<script\\b[^>]*>[\\s\\S]*?<\\/script>/gi,' ')
-  .replace(/<style\\b[^>]*>[\\s\\S]*?<\\/style>/gi,' ')
+ const plain=html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,' ')
+  .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi,' ')
   .replace(/<[^>]+>/g,' ').replace(/&nbsp;|&#160;/gi,' ')
-  .replace(/\\s+/g,' ').trim();
- const m=plain.match(/\\bCareer\\s+Record\\s+([\\d,]+)\\s*-\\s*([\\d,]+)(?:\\s*-\\s*([\\d,]+))?\\s*\\/\\s*([\\d,]+)\\b/i);
+  .replace(/\s+/g,' ').trim();
+ const m=plain.match(/\bCareer\s+Record\s+([\d,]+)\s*-\s*([\d,]+)(?:\s*-\s*([\d,]+))?\s*\/\s*([\d,]+)\b/i);
  if(!m)return null;
  const values=[m[1],m[2],m[3],m[4]].map(v=>v==null?null:Number(v.replace(/,/g,'')));
  if(values.some(v=>v!==null&&(!Number.isSafeInteger(v)||v<0||v>20000)))return null;
