@@ -30,6 +30,8 @@ on:
       - 'tests/test-ufc-unified-wave56-iwo-tallison-20261115.mjs'
       - 'data/ufc-unified-wave57-fugitt-shayilan-yazmin-source-review-20261115.json'
       - 'tests/test-ufc-unified-wave57-fugitt-shayilan-yazmin-20261115.mjs'
+      - 'data/ufc-unified-wave58-cavalcanti-rinya-source-review-20261115.json'
+      - 'tests/test-ufc-unified-wave58-cavalcanti-rinya-20261115.mjs'
       - 'tests/test-ufc-unified-daria-zhelezniakova-20261115.mjs'
       - 'tests/test-ufc-unified-jeka-saragih-20261115.mjs'
       - 'tests/test-ufc-unified-wave38-kline-armfield-ochoa-20261115.mjs'
@@ -277,6 +279,7 @@ jobs:
           node --test tests/test-ufc-unified-wave55-goff-silva-estevam-20261115.mjs
           node --test tests/test-ufc-unified-wave56-iwo-tallison-20261115.mjs
           node --test tests/test-ufc-unified-wave57-fugitt-shayilan-yazmin-20261115.mjs
+          node --test tests/test-ufc-unified-wave58-cavalcanti-rinya-20261115.mjs
           node scripts/ufc-36-month-stage3-progress.mjs
           node --test tests/test-ufc-stage3-v4-reconciliation.mjs
           node scripts/ufc-reconcile-stage3-v4-certifications.mjs
