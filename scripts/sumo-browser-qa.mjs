@@ -64,6 +64,8 @@ async function testSite(viewport,isMobile,label) {
   assertContains(profile,'Recent performance','recent results');
   assertContains(profile,'Career honours','honours');
   assertContains(profile,'Full source career record cached','full historical source availability');
+  assertContains(profile,'API-TRUSTED','development-data method is displayed');
+  assertContains(profile,'Career results: independently corroborated','career evidence is labelled separately');
   assertContains(profile,'All recorded opponents','full career opponent catalogue');
   await page.waitForSelector('.sumo-rival',{timeout:25000});
   assert.ok(await page.locator('.sumo-rival').count()>=10,'Complete sourced opponent directory available');
@@ -81,7 +83,7 @@ async function testSite(viewport,isMobile,label) {
   assert.equal(await page.locator('.sumo-h2h-hero+.section-head').count(),1,'Head-to-head history heading shown');
   assert.equal(await page.locator('.sumo-h2h-order+ol li').count(),6,'Every source-confirmed bout is shown');
   assertContains(history,'Tsukiotoshi','actual kimarite recorded');
-  assertContains(history,'Independent JSA full-career certification remains pending','research is not mislabeled as JSA-certified');
+  assertContains(history,'Individual career bout details are API-sourced','history is not mislabeled as bout-certified');
   assertContains(history,'Fusen (forfeit; no technique)','forfeit is not a winning technique');
   await page.locator('[data-h2h-order="oldest"]').click();
   assertContains(await page.locator('.sumo-h2h-order+ol li').first().innerText(),'November 2025','chronological oldest-first sort');
@@ -92,6 +94,7 @@ async function testSite(viewport,isMobile,label) {
   const unfeatured=await page.locator('#sumo-main').innerText();
   assertContains(unfeatured,'Full source career record cached','all tracked profiles use researched career data');
   assertContains(unfeatured,'All recorded opponents','opponent directory section');
+  assertContains(unfeatured,'API-TRUSTED','API-trusted status shown on nonfeatured profile');
   await page.waitForSelector('.sumo-rival',{timeout:25000});
   assert.ok(await page.locator('.sumo-rival').count()>0,'Unfeatured rikishi has complete opponent library');
   assert.equal(await page.locator('.style-tags span').count(),0,'No speculative official style on unverified profiles');
