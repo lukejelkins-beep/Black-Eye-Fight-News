@@ -208,3 +208,15 @@ test('unpublished or nonstandard debut rank cannot create a numbered banzuke ent
  const rows=parseSumoDbBashoRecords(html);
  assert.deepEqual(rows.map(x=>x.rankEn),[null,'Makushita 3 East','Yokozuna 1 West']);
 });
+
+test('only unresolved strict fast-lane rank coverage gets a second rank-source request',()=>{
+ const candidate={classification:'candidate-for-strict-audit',blockers:[]};
+ const rankFailure={blockers:['independent-official-banzuke-rank-coverage']};
+ const before={careerRecordCrosscheck:{independentBashoRows:[{bashoId:'202509',wins:8,losses:7}]}};
+ assert.equal(requiresCareerRecordCrosscheck(before,candidate,rankFailure),true);
+ const after={careerRecordCrosscheck:{independentBashoRows:[{
+  bashoId:'202509',wins:8,losses:7,rankEn:null}]}};
+ assert.equal(requiresCareerRecordCrosscheck(after,candidate,rankFailure),false);
+ assert.equal(requiresCareerRecordCrosscheck(before,candidate,{blockers:[
+  'preflight-prerequisites-not-met','independent-official-banzuke-rank-coverage']}),false);
+});
