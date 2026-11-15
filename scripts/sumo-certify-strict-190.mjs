@@ -13,7 +13,7 @@ import {readFile,writeFile,rename,mkdir} from 'node:fs/promises';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {cohortCurrentBasho} from './sumo-jsa-public-spotcheck.mjs';
-import {documentedDebutRankGap,supplementalHistoricalBashoCoverage,independentHistoricalRankCoverage,independentlyVerifiedCurrentBashoCutoff} from './sumo-certification-preflight-190.mjs';
+import {documentedDebutRankGap,supplementalHistoricalBashoCoverage,independentHistoricalRankCoverage,independentlyVerifiedCurrentBashoCutoff,proveZeroCareerAbsencesFromCompleteBasho} from './sumo-certification-preflight-190.mjs';
 
 const ROOT='data/sumo/backfill/v1';
 const load=async p=>JSON.parse(await readFile(p,'utf8'));
@@ -89,12 +89,15 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
  // and still require agreement with all completed JSA per-basho outcomes.
  const jsaCareerPresent=j.career!=null;
  const currentCutoff=independentlyVerifiedCurrentBashoCutoff(p,j,activeBasho);
+ const zeroAbsenceProof=proveZeroCareerAbsencesFromCompleteBasho(p,j,weight,activeBasho);
  const jsaWLMatches=jsaCareerPresent&&(
   j.career.wins===p?.career?.wins&&j.career.losses===p?.career?.losses||
-  currentCutoff.passed);
+  currentCutoff.passed||zeroAbsenceProof.passed);
  const jsaAbsencePresent=jsaCareerPresent&&j.career.absences!=null;
  const basis=jsaWLMatches&&jsaAbsencePresent&&
   j.career.absences===p?.career?.absences?'published-JSA-career-WLA':
+  zeroAbsenceProof.passed?
+   'source-complete-ranked-basho-prove-zero-native-absences':
   exactIndependent&&(!jsaCareerPresent||jsaWLMatches)&&
    (!jsaAbsencePresent||j.career.absences===p?.career?.absences)?
    'separate-SumoDB-career-WLA-plus-published-JSA-basho':null;
@@ -150,6 +153,10 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
   datedJsaCareerCutoffReconciled:careerResultsCertified&&currentCutoff.passed,
   datedJsaCareerCutoffEvidence:careerResultsCertified&&currentCutoff.passed?
    currentCutoff:null,
+  zeroAbsenceIndependentlyProvedByAllRankedBasho:
+   careerResultsCertified&&zeroAbsenceProof.passed,
+  zeroAbsenceCompletedBashoCompared:careerResultsCertified&&zeroAbsenceProof.passed?
+   zeroAbsenceProof.completedBashoProven:0,
   documentedNoPublishedNumberedDebutRank:evidencedDebutGap,
   independentlyCrosscheckedOlderBashoFromSumoDB:careerResultsCertified?
     historicalProof.otherSourceBasho:0,
@@ -158,7 +165,9 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
   rankHistoryEvidenceBasis:careerResultsCertified?rankCoverage.evidenceBasis:null,
   missingDebutRankPreservedAsNull:evidencedDebutGap,
   independentlyVerifiedBy:careerResultsCertified?[
-    basis==='published-JSA-career-WLA'?'JSA published W-L-A':'SumoDB published W-L-A',
+    basis==='published-JSA-career-WLA'?'JSA published W-L-A':
+    zeroAbsenceProof.passed?'Full independent numbered-rank basho W-L proving native zero absences':
+    'SumoDB published W-L-A',
     'JSA completed tournament W-L',
     rankCoverage.evidenceBasis==='SumoDB-dated-ranks-JSA-historical-ranks-unavailable'?
       'SumoDB dated banzuke ranks (JSA historical ranks unavailable)':
