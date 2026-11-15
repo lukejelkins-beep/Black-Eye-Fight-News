@@ -13,6 +13,7 @@ import {readFile,writeFile,rename,mkdir} from 'node:fs/promises';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {cohortCurrentBasho} from './sumo-jsa-public-spotcheck.mjs';
+import {documentedDebutRankGap} from './sumo-certification-preflight-190.mjs';
 
 const ROOT='data/sumo/backfill/v1';
 const load=async p=>JSON.parse(await readFile(p,'utf8'));
@@ -59,8 +60,10 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
   sourceAudit?.boutLedger?.authoritativeLosses===p.career.losses,
   'career-totals-not-backed-by-source-ledger');
  const history=p?.rankTimeline||[];
+ const evidencedDebutGap=documentedDebutRankGap(p,official);
  add(history.length>0&&Array.isArray(p?.rankHistoryGaps)&&
-  p.rankHistoryGaps.length===0&&history.every(r=>/^(18|19|20)\d{2}(01|03|05|07|09|11)$/.test(String(r.bashoId))&&
+  (p.rankHistoryGaps.length===0||evidencedDebutGap)&&
+  history.every(r=>/^(18|19|20)\d{2}(01|03|05|07|09|11)$/.test(String(r.bashoId))&&
   typeof r.rank==='string'&&r.rank.length>4),
   'dated-career-rank-history-incomplete');
  const j=official||{},basic=j.fieldComparisons||{},bh=j.bashoReconciliation||{},rank=j.rankReconciliation||{};
@@ -140,6 +143,8 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
   status:careerResultsCertified?'career-results-strictly-certified':'strict-audit-blocked',
   careerResultsCertified,
   careerTotalsEvidenceBasis:careerResultsCertified?basis:null,
+  documentedNoPublishedNumberedDebutRank:evidencedDebutGap,
+  missingDebutRankPreservedAsNull:evidencedDebutGap,
   independentlyVerifiedBy:careerResultsCertified?[
     basis==='published-JSA-career-WLA'?'JSA published W-L-A':'SumoDB published W-L-A',
     'JSA completed tournament W-L','JSA dated banzuke ranks',
