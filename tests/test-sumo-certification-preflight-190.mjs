@@ -324,8 +324,8 @@ test('native zero absences needs independently verified FULL numbered-rank tourn
  assert.equal(proveZeroCareerAbsencesFromCompleteBasho(nonzero,j,null,'202611').passed,false);
  const next=structuredClone(j);
  next.officialAsOf.day=3;
- assert.equal(proveZeroCareerAbsencesFromCompleteBasho(p,next,null,'202611').passed,true,
-  'same W/L snapshot does not require inventing a later bout');
+ assert.equal(proveZeroCareerAbsencesFromCompleteBasho(p,next,null,'202611').passed,false,
+  'an official earlier-day snapshot cannot verify later cached bouts');
 });
 test('current-basho lag is documented separately and cannot conceal two missing bouts',()=>{
  const p={career:{wins:5,losses:5,absences:0},
