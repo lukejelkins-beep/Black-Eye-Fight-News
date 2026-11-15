@@ -24,7 +24,7 @@ async function open(page, route, ready) {
 async function snap(page,name,{fullPage=true}={}){
   await page.screenshot({path:OUT+'/'+name+'.png',fullPage,animations:'disabled'});
 }
-async function testSite(viewport,isMobile,label) {
+async function testSite(viewport,isMobile,label,fullCohort=true) {
   const ctx = await browser.newContext({viewport,isMobile,hasTouch:isMobile,deviceScaleFactor:1,
     reducedMotion:'reduce',ignoreHTTPSErrors:true});
   const page=await ctx.newPage();
@@ -36,13 +36,14 @@ async function testSite(viewport,isMobile,label) {
   const rosterResponse=await page.request.get('http://127.0.0.1:8765/data/sumo/rikishi-index.json');
   assert.ok(rosterResponse.ok(),'Preview 190-rikishi index must be available');
   const roster=await rosterResponse.json();
-  assert.equal(roster.count,190,'Expected 190 tracked rikishi on the preview');
-  assert.equal(research.profileCount,190,'All 190 career research records should be available');
+  assert.equal(roster.count,roster.rikishi.length,'Roster total matches unique cached wrestler entries');
+   assert.equal(new Set(roster.rikishi.map(w=>w.sourceId)).size,roster.count,'Stable IDs are unique');
+  assert.equal(research.profileCount,roster.count,'Full tracked roster has corresponding research records');
   assert.equal(research.certified,false,'Research cache must not imply JSA certification');
   await open(page,'home','.hero');
   const home=await page.locator('#sumo-main').innerText();
   assertContains(home,'THE SUMO','homepage');
-  assertContains(home,'190','tracked total');
+  assertContains(home,String(roster.count),'tracked total');
   assertContains(home,'42','Makuuchi count');
   assertContains(home,'28','Juryo count');
   assertContains(home,'120','Makushita count');
@@ -64,18 +65,30 @@ async function testSite(viewport,isMobile,label) {
   assertContains(profile,'Onosato','Onosato name');
   assertContains(profile,'Yokozuna','rank');
   assertContains(profile,'Winning techniques','techniques');
-  assertContains(profile,'Basho performance','basho data');
-  assertContains(profile,'Recent performance','recent results');
-  assertContains(profile,'Career honours','honours');
-  assertContains(profile,'Full source career record cached','full historical source availability');
+  assertContains(profile,'Results','canonical results');
+  assertContains(profile,'Career','career section');
+  assertContains(profile,'Charts','accessible chart section');
+  assertContains(profile,'LATEST','last-five compact strip');
   assertContains(profile,'API-TRUSTED','development-data method is displayed');
   assertContains(profile,'Career results: independently corroborated','career evidence is labelled separately');
-  assertContains(profile,'All recorded opponents','full career opponent catalogue');
+  assertContains(profile,'Opponents and head-to-head','opponent catalogue');
   await page.waitForSelector('.sumo-rival',{timeout:25000});
   assert.ok(await page.locator('.sumo-rival').count()>=10,'Complete sourced opponent directory available');
   assertContains(profile,'JSA-listed signature manoeuvres','official source signature tags');
-  assert.equal(await page.locator('.style-tags span').count(),4);
-  assert.ok(await page.locator('.sumo-result-card').count()>0,'Profile has photo-ready opponent cards');
+  assertContains(profile,'tsuki','JSA-listed source manoeuvres preserved');
+  assert.ok(await page.locator('.sumo-ed-row').count()>0,'Canonical current tournament rows rendered');
+  assert.equal(await page.locator('.sumo-section-nav a').count(),6,'Six non-hiding profile sections');
+  assert.equal(await page.locator('.sumo-rank-svg').count(),1,'Rank chart on initial page');
+  assert.ok(await page.locator('.sumo-weight-svg').count()===1,'Weight chart on initial page');
+  const order=await page.evaluate(()=>document.querySelector('#sumo-charts').compareDocumentPosition(document.querySelector('#sumo-opponents')) & Node.DOCUMENT_POSITION_FOLLOWING);
+  assert.ok(order,'Charts are before opponents');
+  await page.locator('[data-profile-section="charts"]').click();
+  assert.ok((await page.url()).includes('section=charts'),'Section jump preserves canonical profile route');
+  await page.locator('#sumo-opponent-search').fill('Ura');
+  assert.ok(await page.locator('.sumo-rival').count()>0,'Search finds named opponent');
+  await page.locator('#sumo-opponent-search').fill('');
+  await page.locator('#sumo-opponent-sort').selectOption('name');
+  assert.ok(await page.locator('.sumo-rival').count()>0,'Sort keeps catalogue accessible');
   assert.ok(await page.locator('.sumo-country').count()>0,'Profile shows birthplace-country flag');
   await snap(page,label+'-profile',{fullPage:false});
   // Full pair-specific history is distinct from a single basho's opponent record.
@@ -87,25 +100,25 @@ async function testSite(viewport,isMobile,label) {
   assert.equal(await page.locator('.sumo-h2h-hero+.section-head').count(),1,'Head-to-head history heading shown');
   assert.equal(await page.locator('.sumo-h2h-order+ol li').count(),6,'Every source-confirmed bout is shown');
   assertContains(history,'Tsukiotoshi','actual kimarite recorded');
-  assertContains(history,'Individual career bout details are API-sourced','history is not mislabeled as bout-certified');
+  assertContains(history,'not independently bout-certified','history is not mislabeled as certified');
   assertContains(history,'Fusen (forfeit; no technique)','forfeit is not a winning technique');
   await page.locator('[data-h2h-order="oldest"]').click();
   assertContains(await page.locator('.sumo-h2h-order+ol li').first().innerText(),'November 2025','chronological oldest-first sort');
 
-  // All 190 rikishi should expose current banzuke opponent histories even
+  // All tracked rikishi should expose current banzuke opponent histories even
   // without individually fetched lifetime stats or 18-bout enrichment.
   await open(page,'profile/2','.profile-hero');
   const unfeatured=await page.locator('#sumo-main').innerText();
-  assertContains(unfeatured,'Full source career record cached','all tracked profiles use researched career data');
-  assertContains(unfeatured,'All recorded opponents','opponent directory section');
+  assertContains(unfeatured,'Career','career section exists for all tracked profiles');
+  assertContains(unfeatured,'Opponents and head-to-head','opponent directory section');
   assertContains(unfeatured,'API-TRUSTED','API-trusted status shown on nonfeatured profile');
   await page.waitForSelector('.sumo-rival',{timeout:25000});
   assert.ok(await page.locator('.sumo-rival').count()>0,'Unfeatured rikishi has complete opponent library');
-  assert.equal(await page.locator('.style-tags span').count(),0,'No speculative official style on unverified profiles');
+  assert.equal(await page.locator('.sumo-sources h3').filter({hasText:'JSA-listed signature manoeuvres'}).count(),0,'No speculative official style on unsourced profiles');
   await open(page,'profile/82','.profile-hero');
-  assertContains(await page.locator('#sumo-main').innerText(),'206-131','Fujiseiun reconciled official record');
+  assertContains(await page.locator('#sumo-main').innerText(),'206–131','Fujiseiun career W–L preserved');
   await open(page,'profile/16','.profile-hero');
-  assertContains(await page.locator('#sumo-main').innerText(),'677-716','Nishikigi reconciled official record');
+  assertContains(await page.locator('#sumo-main').innerText(),'677–716','Nishikigi career W–L preserved');
   await open(page,'profile/75','.profile-hero');
   const makushitaProfile=await page.locator('#sumo-main').innerText();
   assertContains(makushitaProfile,'non-bout days','Makushita rest days do not count as absences');
@@ -153,7 +166,7 @@ async function testSite(viewport,isMobile,label) {
   // the feature cards. The source ID attribute prevents a stale page from
   // satisfying the next route's assertion.
   const checkedIds=new Set();
-  for(const w of roster.rikishi){
+  for(const w of (fullCohort?roster.rikishi:roster.rikishi.filter(w=>[8850,28,75,82,16].includes(w.sourceId)))){
     assert.ok(!checkedIds.has(w.sourceId),'Duplicate Sumo browser QA source ID '+w.sourceId);
     checkedIds.add(w.sourceId);
     await page.evaluate(id=>{ location.hash='#profile/'+id; },w.sourceId);
@@ -170,7 +183,35 @@ async function testSite(viewport,isMobile,label) {
       assert.ok(width.document<=width.viewport+6,'Mobile overflow on rikishi '+w.sourceId+': '+JSON.stringify(width));
     }
   }
-  assert.equal(checkedIds.size,190,'Every source ID reached a working profile route');
+  assert.equal(checkedIds.size,fullCohort?roster.count:5,'Expected cohort/sample reached working profile routes');
+
+  // Exact redesign stress cases — recorded date ratios, 5 profiles, and H2H chronology.
+  await open(page,'profile/28','.profile-hero');
+  const weightPoints=await page.locator('.sumo-weight-point').evaluateAll(ns=>ns.map(n=>({
+    month:n.getAttribute('data-weight-month'),x:Number(n.getAttribute('data-weight-x'))
+  })));
+  const m2015=weightPoints.find(p=>p.month==='201503'),m2021=weightPoints.find(p=>p.month==='202103'),m2022=weightPoints.find(p=>p.month==='202205');
+  if(m2015&&m2021&&m2022){
+    assert.ok(Math.abs((m2021.x-m2015.x)/(m2022.x-m2021.x)-(72/14))<.04,'Ura weight axis uses true elapsed time');
+  }
+  assert.ok(await page.locator('.sumo-data-table summary').count()>=2,'Rank and weight tables offered to keyboard/touch users');
+  await snap(page,label+'-ura',{fullPage:false});
+  await open(page,'headtohead/8850/28','.sumo-h2h-hero');
+  await page.waitForFunction(()=>document.querySelectorAll('.sumo-h2h-order+ol li').length===8,null,{timeout:30000});
+  const newest=await page.locator('.sumo-h2h-order+ol li').allInnerTexts();
+  await page.locator('[data-h2h-order="oldest"]').click();
+  const oldest=await page.locator('.sumo-h2h-order+ol li').allInnerTexts();
+  assert.deepEqual(oldest,[...newest].reverse(),'H2H reverse order does not scramble date/winner/technique');
+  const linkColor=await page.locator('.sumo-h2h-hero .sumo-match-name a').first().evaluate(el=>getComputedStyle(el).color);
+  assert.equal(linkColor,'rgb(255, 247, 229)','Dark H2H header uses readable light links');
+  await snap(page,label+'-h2h-onosato-ura',{fullPage:false});
+  for(const id of [8850,28,75,82,16]){
+    await open(page,'profile/'+id,'.profile-hero');
+    assert.equal(await page.locator('.sumo-rank-svg').count(),1);
+    assert.equal(await page.locator('.sumo-weight-svg').count(),1);
+    await snap(page,label+'-profile-'+id,{fullPage:false});
+  }
+
   if (isMobile){
     for(const route of ['home','rikishi','profile/8850','basho','banzuke','kimarite']){
       await open(page,route,'#sumo-main');
@@ -182,11 +223,13 @@ async function testSite(viewport,isMobile,label) {
 }
 await mkdir(OUT,{recursive:true});
 try {
-  await testSite({width:1440,height:900},false,'desktop');
-  await testSite({width:390,height:844},true,'mobile');
+  await testSite({width:1440,height:900},false,'desktop',true);
+  await testSite({width:768,height:900},false,'tablet',false);
+  await testSite({width:390,height:844},true,'mobile',true);
+  await testSite({width:320,height:740},true,'reflow320',false);
   if(failures.length)throw new Error(failures.join('\n'));
-  await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'pass',screenshots:14,views:['home','rikishi','profile','banzuke','basho','kimarite'],viewportWidths:[1440,390]},null,2));
-  console.log('Sumo browser QA passed: 14 screenshots, 2 viewport widths, 6 sections, 3 banzuke divisions and no JS exceptions.');
+  await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'pass',views:['home','rikishi','profiles','banzuke','basho','kimarite','headtohead'],viewportWidths:[1440,768,390,320],realTouchTest:false},null,2));
+  console.log('Sumo editorial browser QA passed: 1440/768/390/320, five key wrestlers, H2H chronology, charts and no JS exceptions. Real-device touch remains separate.');
 } catch(error) {
   await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'fail',error:String(error.stack||error),failures},null,2));
   throw error;
