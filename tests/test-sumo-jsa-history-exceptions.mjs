@@ -66,3 +66,21 @@ test('a missing official total plus a field error remains a genuine field review
  assert.equal(row.officialCareerTotalsNotFound,false);
  assert.equal(row.reviewClassification,'official-profile-field-disagreement');
 });
+
+test('record exact independent JSA rank disagreements without overwriting original rank history',()=>{
+ const roster={count:190,rikishi:[rosterItem,...Array.from({length:189},(_,i)=>({
+  sourceId:1000+i,officialNskId:3000+i,shikonaEn:'Other '+i}))]};
+ const sample={...base,status:'basic-fields-parsed',career:{wins:10,losses:8},
+  bashoReconciliation:{comparedBasho:3,agreeingBasho:3,
+   discrepantBasho:0,discrepancies:[]},
+  rankReconciliation:{comparedBasho:3,agreedBasho:2,
+   mismatches:[{bashoId:'202609',officialRank:'Makushita 20 East',
+      sourceRank:'Makushita 21 East',status:'review'}]}};
+ const report=buildJsaExceptionReport(roster,new Map([[42,sample]]));
+ assert.equal(report.officialBanzukeRanksCompared,3);
+ assert.equal(report.officialBanzukeRankDiscrepancies,1);
+ assert.equal(report.historicalTournamentsDisagree,0);
+ assert.equal(report.profileReviewCases,1);
+ assert.deepEqual(report.cases[0].rankDiscrepancies.map(x=>x.bashoId),['202609']);
+ assert.equal(report.certifiedCareers,0);
+});
