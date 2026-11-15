@@ -1,6 +1,6 @@
 {
-  "attemptedAt": "2026-11-15T22:14:33.535231+00:00",
-  "lastSuccessfulAt": "2026-11-15T22:14:33.535231+00:00",
+  "attemptedAt": "2026-11-15T22:56:52.145510+00:00",
+  "lastSuccessfulAt": "2026-11-15T22:56:52.145510+00:00",
   "sources": [
     {
       "name": "World Boxing News",
@@ -8,7 +8,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.worldboxingnews.net/feed/",
-      "lastSuccessfulAt": "2026-11-15T22:14:33.535231+00:00"
+      "lastSuccessfulAt": "2026-11-15T22:56:52.145510+00:00"
     },
     {
       "name": "MMA Fighting",
@@ -16,14 +16,15 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-15T22:14:33.535231+00:00"
+      "lastSuccessfulAt": "2026-11-15T22:56:52.145510+00:00"
     },
     {
       "name": "MMA Junkie",
       "sport": "mma",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-15T21:23:38.026787+00:00",
-      "error": "mmajunkie.usatoday.com: HTTP Error 402: Payment Required | mmajunkie.com: HTTP Error 402: Payment Required | api.gdeltproject.org: No recent, source-verified ar"
+      "ok": true,
+      "items": 10,
+      "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
+      "lastSuccessfulAt": "2026-11-15T22:56:52.145510+00:00"
     },
     {
       "name": "Sherdog",
@@ -31,7 +32,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.sherdog.com/rss/news.xml",
-      "lastSuccessfulAt": "2026-11-15T22:14:33.535231+00:00"
+      "lastSuccessfulAt": "2026-11-15T22:56:52.145510+00:00"
     },
     {
       "name": "UFC",
@@ -39,7 +40,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-15T22:14:33.535231+00:00"
+      "lastSuccessfulAt": "2026-11-15T22:56:52.145510+00:00"
     },
     {
       "name": "ONE MMA",
@@ -54,15 +55,14 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/feed/",
-      "lastSuccessfulAt": "2026-11-15T22:14:33.535231+00:00"
+      "lastSuccessfulAt": "2026-11-15T22:56:52.145510+00:00"
     },
     {
       "name": "Cage Warriors",
       "sport": "mma",
-      "ok": true,
-      "items": 2,
-      "feedUrl": "https://www.bing.com/news/search?q=site%3Acagewarriors.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-15T22:14:33.535231+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-15T22:14:33.535231+00:00",
+      "error": "cagewarriors.com: HTTP Error 403: Forbidden | www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "RIZIN",
@@ -70,7 +70,7 @@
       "ok": true,
       "items": 5,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-15T22:14:33.535231+00:00"
+      "lastSuccessfulAt": "2026-11-15T22:56:52.145510+00:00"
     },
     {
       "name": "KSW",
@@ -91,7 +91,7 @@
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "www.ncaa.com: HTTP Error 400: Bad Request | www.bing.com: No recent, source-verified articles"
+      "error": "www.ncaa.com: HTTP Error 400: Bad Request | www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "NCAA Division II Wrestling",
@@ -105,7 +105,7 @@
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
+      "error": "www.bing.com: No recent, source-verified articles"
     },
     {
       "name": "IBJJF",
@@ -120,7 +120,7 @@
       "ok": true,
       "items": 3,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Aflograppling.com%2Farticles&format=rss",
-      "lastSuccessfulAt": "2026-11-15T22:14:33.535231+00:00"
+      "lastSuccessfulAt": "2026-11-15T22:56:52.145510+00:00"
     },
     {
       "name": "Real American Freestyle",
@@ -134,7 +134,7 @@
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "www.bing.com: No recent, source-verified articles"
+      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "ONE Live Results",
@@ -142,7 +142,7 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/category/live-results/feed/",
-      "lastSuccessfulAt": "2026-11-15T22:14:33.535231+00:00"
+      "lastSuccessfulAt": "2026-11-15T22:56:52.145510+00:00"
     }
   ],
   "articles": [
@@ -162,13 +162,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-15T22:14:33.535231+00:00"
       },
-      "summaryCheckedAt": "2026-11-15T22:14:33.535231+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Gable Steveson looks to bounce back from his first UFC loss.",
         "Steveson stopped his first four opponents in the first round to start his MMA career, including a TKO victory over Elisha Ellison in his octagon debut at July’s UFC 329 event.",
         "In his most recent bout, Steveson was knocked out by Sean Sharaf in just 12 seconds in one of the sport’s biggest upsets at UFC 331 in September."
       ],
+      "summaryCheckedAt": "2026-11-15T22:14:33.535231+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-15T22:14:33.535231+00:00"
     },
     {
@@ -187,13 +187,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-15T22:14:33.535231+00:00"
       },
-      "summaryCheckedAt": "2026-11-15T22:14:33.535231+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Getting A Little Deeper Into What Transpired On Saturday Night At Madison Square Garden Read the Full Article Here",
         "POLYMARKET UFC 334: Official Results & Highlights",
         "Rewatch Ciryl Gane vs Josh Hokit On Paramount+"
       ],
+      "summaryCheckedAt": "2026-11-15T22:14:33.535231+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-15T22:14:33.535231+00:00"
     },
     {
@@ -536,6 +536,24 @@
       "firstSeenAt": "2026-11-15T15:25:29.925436+00:00"
     },
     {
+      "id": "988e59624b4d1f3298bb",
+      "title": "Kayla Harrison says future uncertain, but Amanda Nunes rematch or 'easy money' Ronda Rousey appealing",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/15/ufc-334-kayla-harrison-future-next-fight-amanda-nunes-ronda-rousey/92798720007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-15T14:09:00+00:00",
+      "score": 0,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryCheckedAt": "2026-11-15T22:56:52.145510+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "The victory was made even sweeter by the adversity she went through to get back to the cage."
+      ],
+      "firstSeenAt": "2026-11-15T22:56:52.145510+00:00"
+    },
+    {
       "id": "83005508dc6d8342b3d2",
       "title": "Dana White credits Josh Hokit for the ‘perfect fight’ but he still lost to Ciryl Gane",
       "url": "https://www.mmafighting.com/ufc/521595/dana-white-credits-josh-hokit-for-the-perfect-fight-but-he-still-lost-to-ciryl-gane",
@@ -561,6 +579,24 @@
       "firstSeenAt": "2026-11-15T15:25:29.925436+00:00"
     },
     {
+      "id": "0c1442831899a1c9e97f",
+      "title": "UFC 334 matchmaker: Is Kayla Harrison vs. Amanda Nunes rematch a must?",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/15/ufc-334-matchmaker-is-kayla-harrison-vs-amanda-nunes-rematch-title/92797108007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-15T13:21:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryCheckedAt": "2026-11-15T22:56:52.145510+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "After nearly seven years of build, Kayla Harrison and Amanda Nunes shared the octagon at UFC 334, and it was the reigning champion who prevailed."
+      ],
+      "firstSeenAt": "2026-11-15T22:56:52.145510+00:00"
+    },
+    {
       "id": "f4bcea87214df7b03072",
       "title": "Jon Jones celebrates Ciryl Gane winning over Josh Hokit at UFC 334: ‘Same coaches, different results’",
       "url": "https://www.mmafighting.com/ufc/521582/jon-jones-celebrates-ciryl-gane-winning-over-josh-hokit-at-ufc-334-same-coaches-different-results",
@@ -584,6 +620,24 @@
       "summaryCheckedAt": "2026-11-15T13:55:00.178173+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-15T13:55:00.178173+00:00"
+    },
+    {
+      "id": "f295e0184dce2e91f9a6",
+      "title": "Josh Hokit says he 'saw triple the whole fight' after UFC 334 eye poke",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/15/ufc-334-josh-hokit-eye-poke-ciryl-gane-statement/92796403007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-15T11:40:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryCheckedAt": "2026-11-15T22:56:52.145510+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Early in the UFC 334 main event, Hokit (10-1 MMA, 4-1 UFC) appeared to take a Gane (15-2 MMA, 12-2 UFC) finger to the eye."
+      ],
+      "firstSeenAt": "2026-11-15T22:56:52.145510+00:00"
     },
     {
       "id": "0f3f2ff791b0ded2b490",
@@ -1287,12 +1341,12 @@
         "kind": "publisher",
         "checkedAt": "2026-11-14T22:22:28.746350+00:00"
       },
-      "summaryPoints": [
-        "Sergey Bilostenniy was the superior fighter in the main event of PFL Dubai ."
-      ],
-      "summaryCheckedAt": "2026-11-15T10:23:02.288062+00:00",
+      "summaryCheckedAt": "2026-11-15T22:56:52.145510+00:00",
       "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-14T22:22:28.746350+00:00"
+      "firstSeenAt": "2026-11-14T22:22:28.746350+00:00",
+      "summaryPoints": [
+        "Sergey Bilostenniy was the superior fighter in the main event of PFL Dubai."
+      ]
     },
     {
       "id": "86c560468a668c509382",
@@ -1305,7 +1359,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-15T10:23:02.288062+00:00",
+      "summaryCheckedAt": "2026-11-15T22:56:52.145510+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-14T21:39:32.520089+00:00"
     },
@@ -3118,7 +3172,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-15T10:23:02.288062+00:00",
+      "summaryCheckedAt": "2026-11-15T22:56:52.145510+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-13T21:11:53.153534+00:00",
       "summaryPoints": [
@@ -3715,7 +3769,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-13T21:11:53.153534+00:00"
       },
-      "summaryCheckedAt": "2026-11-15T10:23:02.288062+00:00",
+      "summaryCheckedAt": "2026-11-15T22:56:52.145510+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-12T20:27:34.484903+00:00",
       "summaryPoints": [
@@ -4230,7 +4284,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-15T10:23:02.288062+00:00",
+      "summaryCheckedAt": "2026-11-15T22:56:52.145510+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-12T20:27:34.484903+00:00",
       "summaryPoints": [
@@ -4409,7 +4463,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-15T10:23:02.288062+00:00",
+      "summaryCheckedAt": "2026-11-15T22:56:52.145510+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-12T20:27:34.484903+00:00",
       "summaryPoints": [
@@ -5027,7 +5081,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-11T19:37:09.653755+00:00"
       },
-      "summaryCheckedAt": "2026-11-15T10:23:02.288062+00:00",
+      "summaryCheckedAt": "2026-11-15T22:56:52.145510+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-11T19:37:09.653755+00:00",
       "summaryPoints": [
@@ -5074,7 +5128,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-11T19:37:09.653755+00:00"
       },
-      "summaryCheckedAt": "2026-11-15T10:23:02.288062+00:00",
+      "summaryCheckedAt": "2026-11-15T22:56:52.145510+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-11T19:37:09.653755+00:00",
       "summaryPoints": [
@@ -5145,7 +5199,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-11T19:37:09.653755+00:00"
       },
-      "summaryCheckedAt": "2026-11-15T10:23:02.288062+00:00",
+      "summaryCheckedAt": "2026-11-15T22:56:52.145510+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-11T19:37:09.653755+00:00"
     },
@@ -5759,7 +5813,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-15T10:23:02.288062+00:00",
+      "summaryCheckedAt": "2026-11-15T22:56:52.145510+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-11T19:37:09.653755+00:00",
       "summaryPoints": [
@@ -6347,74 +6401,6 @@
       "summaryCheckedAt": "2026-11-10T17:33:43.352232+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-10T17:33:43.352232+00:00"
-    },
-    {
-      "id": "433c484c96b2a29b2219",
-      "title": "UFC Store Celebrates 10 Years at Madison Square Garden With New Merch Collection",
-      "url": "https://www.ufc.com/news/ufc-store-celebrates-10-years-madison-square-garden-new-merch-collection",
-      "source": "UFC",
-      "sport": "mma",
-      "publishedAt": "2026-11-10T17:00:00+00:00",
-      "score": 1,
-      "image": {
-        "url": "https://ufc.com/images/styles/card/s3/2026-11/ufc-334-ufc-store-cp-THUMB.jpg?itok=gWE5DV7L",
-        "alt": "Article image: UFC Store Celebrates 10 Years at Madison Square Garden With New Merch Collection",
-        "credit": "",
-        "sourceUrl": "https://www.ufc.com/news/ufc-store-celebrates-10-years-madison-square-garden-new-merch-collection",
-        "kind": "publisher",
-        "checkedAt": "2026-11-11T18:27:39.794175+00:00"
-      },
-      "summaryPoints": [
-        "From UFC 205 To UFC 309, Celebrate The Fights And Milestones That Shaped UFC History In New York City Read the Full Article Here",
-        "Shop the new UFC in NYC 10-Year Anniversary Collection on UFCStore.com and revisit some of the Octagon's biggest moments at Madison Square Garden from the past decade.",
-        "Created to celebrate the 10-year anniversary of UFC's first event at Madison Square Garden in New York City, the collection highlights landmark events and moments from the venue's UFC history."
-      ],
-      "summaryCheckedAt": "2026-11-10T17:33:43.352232+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-10T17:33:43.352232+00:00"
-    },
-    {
-      "id": "6a670a4bc8d45cbdbbcb",
-      "title": "Ciryl Gane rejects fouling criticism before UFC 334: ‘I’m not here to try and convince anyone’",
-      "url": "https://www.mmafighting.com/ufc/520312/ciryl-gane-rejects-fouling-criticism-before-ufc-334-im-not-here-to-try-and-convince-anyone",
-      "source": "MMA Fighting",
-      "sport": "mma",
-      "publishedAt": "2026-11-10T16:00:00+00:00",
-      "score": 1,
-      "image": {
-        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2242967202.jpg?quality=90&strip=all&crop=0,0,100,100",
-        "alt": "Tom Aspinall and Ciryl Gane",
-        "credit": "(Photo by Waleed Zein/Anadolu via Getty Images)",
-        "sourceUrl": "https://www.mmafighting.com/ufc/520312/ciryl-gane-rejects-fouling-criticism-before-ufc-334-im-not-here-to-try-and-convince-anyone",
-        "kind": "publisher",
-        "checkedAt": "2026-11-11T17:33:24.665368+00:00"
-      },
-      "summaryPoints": [
-        "Ciryl Gane doesn’t care about the criticism before UFC 334.",
-        "This weekend, Gane makes the first defense of his heavyweight title when he takes on Josh Hokit in the main event.",
-        "But for Gane, the controversy surrounding his many fouls is all nonsense."
-      ],
-      "summaryCheckedAt": "2026-11-10T16:38:00.624614+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-10T16:38:00.624614+00:00"
-    },
-    {
-      "id": "e2fc348944b667c4f160",
-      "title": "UFC 334 faceoff: Kayla Harrison, Amanda Nunes exchange serious stares in Times Square",
-      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/10/kayla-harrison-amanda-nunes-ufc-334-faceoff-times-square/92715520007/",
-      "source": "MMA Junkie",
-      "sport": "mma",
-      "publishedAt": "2026-11-10T15:08:00+00:00",
-      "score": 1,
-      "sourceMethod": "Bing News indexed MMA Junkie original",
-      "timeBasis": "Bing News feed timestamp",
-      "image": null,
-      "summaryCheckedAt": "2026-11-15T17:40:07.827439+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-11T00:09:59.149583+00:00",
-      "summaryPoints": [
-        "With fight week activities now underway, the main and co-main event title fight competitors faced off at Times Square on Tuesday evening."
-      ]
     }
   ],
   "resultReports": [
@@ -7354,7 +7340,7 @@
     }
   ],
   "deduplication": {
-    "checkedAt": "2026-11-15T22:14:33.535231+00:00",
+    "checkedAt": "2026-11-15T22:56:52.145510+00:00",
     "removedArticles": 0,
     "removedResultReports": 0,
     "examples": []
