@@ -7,7 +7,9 @@ import {readFile,writeFile,mkdir,rename} from 'node:fs/promises';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 const ROOT='data/sumo/backfill/v1/jsa-public';
-const MAX_REQUESTS=Math.min(8,Math.max(1,Number(process.env.SUMO_JSA_REQUESTS_PER_RUN||6)));
+// Bounded one-time rank rechecks: 16 per run with >=2s between public JSA requests.
+// Stop immediately on 403/429 or any unexpected response and honour the saved cooldown.
+const MAX_REQUESTS=Math.min(16,Math.max(1,Number(process.env.SUMO_JSA_REQUESTS_PER_RUN||8)));
 const INTERVAL_MS=Math.max(1200,Number(process.env.SUMO_JSA_INTERVAL_MS||2000));
 const WAIT_MS=10000;
 const now=()=>new Date().toISOString();
