@@ -284,17 +284,22 @@ function directoryCard(w) {
 }
 function directoryMatches() {
   const found=searchRikishi(ranks(),{query:STATE.query,division:STATE.division});
+  const exact=STATE.query.trim().toLocaleLowerCase();
   // Preserve upstream order (source identity) unless rank rankValue exists in full banzuke.
   const indexed=new Map();
   for(const d of DIVS) for(const [i,row] of (getBanzuke(d)?rankTable(getBanzuke(d)):[]).entries()) indexed.set(Number(row.rikishiID), DIVS.indexOf(d)*1000+i);
-  found.sort((a,b)=>(indexed.get(a.sourceId)??9999)-(indexed.get(b.sourceId)??9999)||a.shikonaEn.localeCompare(b.shikonaEn));
+  found.sort((a,b)=>{
+    const priority=w=>exact&&(String(w.shikonaEn).toLocaleLowerCase()===exact||String(w.shikonaJp).toLocaleLowerCase()===exact)?0:1;
+    return priority(a)-priority(b)||(indexed.get(a.sourceId)??9999)-(indexed.get(b.sourceId)??9999)||a.shikonaEn.localeCompare(b.shikonaEn);
+  });
   return found;
 }
 function directoryResults() {
   const found=directoryMatches(), selected=found.slice(0,STATE.visible);
   return '<p class="directory-count">'+found.length+' matching current wrestler'+(found.length===1?'':'s')+' · '+selected.length+' shown</p>' +
     (selected.length?'<div class="directory-grid">'+selected.map(directoryCard).join('')+'</div>':note('No matching rikishi in the three tracked divisions.')) +
-    (found.length>STATE.visible?'<div class="more-wrap"><button type="button" class="btn light" data-more-rikishi>SHOW MORE ('+(found.length-STATE.visible)+' REMAIN)</button></div>':'');
+    (found.length>STATE.visible?'<div class="more-wrap"><button type="button" class="btn light" data-more-rikishi>SHOW MORE ('+(found.length-STATE.visible)+' REMAIN)</button></div>':'')+
+    (STATE.visible>24?'<div class="more-wrap"><button type="button" class="btn light" data-fewer-rikishi>SHOW FEWER</button></div>':'');
 }
 function renderDirectory() {
   return heading('Banzuke-based eligibility','Rikishi directory') +
@@ -576,22 +581,39 @@ function renderProfile(id) {
     '<p><a href="'+e(officialLink)+'" target="_blank" rel="noopener noreferrer">Official JSA wrestler profile or directory</a> · <a href="'+SOURCE_URL+'" target="_blank" rel="noopener noreferrer">Sumo API guide</a> · <a href="sumo-photo-credits.html">Photo credits & licences</a></p>'+
     '<p>Recorded source data may be trusted for preview without independent per-bout or full-profile corroboration. Historical JSA comparisons retain the scopes and dates described in the quality register.</p></details></div></section>';
 }
-function profileRivalries(w){
+function opponentResults(w){
   const profile=STATE.h2hSummary?.profiles?.[String(w.sourceId)];
-  const opponents=STATE.h2hOpponents?.profiles?.[String(w.sourceId)];
-  if(!profile||!Array.isArray(opponents))
-    return note(STATE.h2hOpponentsFailed?'Opponent index currently unavailable; please try again later.':'Loading the full source-backed opponent directory…');
-  const subset=opponents.slice(0,STATE.h2hOpponentLimit);
-  return '<p class="section-intro">'+profile.opponentCount+' distinct opponents recorded across the full API source career. Select any rival for a complete bout-by-bout history with winner, basho and kimarite. Individual career bout details are API-sourced; full-profile certification has not been granted.</p>'+
-    '<div class="sumo-rival-grid">'+subset.map(r=>{
-      const opponent=wrestler(r.id),name=opponent?.shikonaEn||r.name||'Rikishi #'+r.id;
+  const original=STATE.h2hOpponents?.profiles?.[String(w.sourceId)];
+  if(!profile||!Array.isArray(original))
+    return '<p role="status">'+e(STATE.h2hOpponentsFailed?'Opponent directory could not load.':'Loading the complete opponent index…')+'</p>'+
+      (STATE.h2hOpponentsFailed?'<button type="button" data-opponent-retry>Retry opponent index</button>':'');
+  const q=STATE.opponentQuery.trim().toLocaleLowerCase();
+  const matches=original.filter(r=>!q||String(wrestler(r.id)?.shikonaEn||r.name||'').toLocaleLowerCase().includes(q));
+  const name=r=>String(wrestler(r.id)?.shikonaEn||r.name||'Rikishi #'+r.id);
+  const compareName=(a,b)=>name(a).localeCompare(name(b),'en');
+  matches.sort((a,b)=>STATE.opponentSort==='name'?compareName(a,b):
+    STATE.opponentSort==='record'?(b.wins-b.losses)-(a.wins-a.losses)||compareName(a,b):
+    (b.meetings-a.meetings)||compareName(a,b));
+  const shown=matches.slice(0,STATE.h2hOpponentLimit);
+  return '<p class="directory-count" role="status" aria-live="polite">'+shown.length+' shown of '+matches.length+
+    ' matching opponents · '+original.length+' recorded opponents total</p>'+
+    '<div class="sumo-rival-grid">'+shown.map(r=>{
+      const opponent=wrestler(r.id),label=name(r);
       return '<a class="sumo-rival" href="'+headToHeadUrl(w.sourceId,r.id)+'">'+
-        '<span class="sumo-rival-name">'+e(name)+'</span>'+
-        '<strong>'+e(r.wins+'–'+r.losses)+'</strong>'+
-        '<small>'+e(r.meetings+' regular meetings')+'</small></a>';
+        '<span class="sumo-rival-name">'+e(label)+'</span><strong>'+e(r.wins)+' W · '+e(r.losses)+' L</strong>'+
+        '<small>'+e(r.meetings)+' recorded meetings · open full chronology</small></a>';
     }).join('')+'</div>'+
-    (opponents.length>STATE.h2hOpponentLimit?
-      '<div class="more-wrap"><button type="button" class="btn light" data-h2h-more>SHOW MORE OPPONENTS ('+(opponents.length-STATE.h2hOpponentLimit)+' REMAIN)</button></div>':'');
+    (shown.length<matches.length?'<button type="button" class="btn light" data-h2h-more>Show more opponents ('+(matches.length-shown.length)+' remain)</button>':'')+
+    (STATE.h2hOpponentLimit>16?'<button type="button" class="btn light" data-h2h-fewer>Show fewer opponents</button>':'');
+}
+function profileRivalries(w){
+  return '<p class="section-intro">All source-recorded opponents remain available for search and head-to-head comparison. Records are API research data, not blanket JSA certification.</p>'+
+    '<div class="sumo-opponent-controls"><label for="sumo-opponent-search">Search opponent</label>'+
+    '<input id="sumo-opponent-search" type="search" value="'+e(STATE.opponentQuery)+'" placeholder="Ring name…" autocomplete="off">'+
+    '<label for="sumo-opponent-sort">Sort opponents</label><select id="sumo-opponent-sort">'+
+    [['meetings','Most meetings'],['name','Name A–Z'],['record','Best W–L difference']].map(([val,text])=>
+      '<option value="'+val+'"'+(STATE.opponentSort===val?' selected':'')+'>'+text+'</option>').join('')+'</select></div>'+
+    '<div id="sumo-opponent-results">'+opponentResults(w)+'</div>';
 }
 function banzukeCard(row) {
   const w=wrestler(row.rikishiID);
@@ -613,7 +635,7 @@ function renderBanzuke() {
   const previous=details().previousBashoId;
   return heading('Grand Sumo · Current rankings','Banzuke')+
     '<p class="section-intro">Every active '+e(d)+' rikishi is shown with their origin flag, image-ready portrait, current rank, measurements and movement since '+
-    e(bashoLabel(previous))+' (when both banzuke entries are available). Movement counts refer to individual East/West positions across the combined three-division banzuke, not a change in world ranking. Career-high ranks remain unfilled until independently sourced.</p>'+
+    e(bashoLabel(previous))+' (when both banzuke entries are available). Movement counts refer to individual East/West positions across the combined three-division banzuke, not a change in world ranking. Highest ranks are shown when supported by source data; unavailable fields remain explicitly unavailable. NEW means new to the tracked top three, not career debut.</p>'+
     divisionTabs(d,'data-banzuke-division')+
     '<div class="panel-head"><h3>'+e(bashoLabel(details().bashoId))+' · '+e(d)+'</h3><span>'+rows.length+' RIKISHI · CURRENT BANZUKE</span></div>'+
     (rows.length?'<div class="sumo-rank-grid">'+rows.map(banzukeCard).join('')+'</div>':
@@ -623,29 +645,37 @@ function renderBanzuke() {
 }
 function renderHeadToHead(a,b) {
   const first=wrestler(a),second=wrestler(b);
-  if(!first&&!second)return '<a class="back-link" href="#rikishi">← RIKISHI DIRECTORY</a>'+note('Neither wrestler is in the current tracked roster.');
+  if(!first&&!second)return '<a href="#rikishi">← Rikishi directory</a>'+note('Neither wrestler is in this tracked roster.');
   const firstName=first?.shikonaEn||headToHeadName(a,b,a);
   const secondName=second?.shikonaEn||headToHeadName(b,a,b);
   const history=headToHeadFor(a,b);
-  return '<a class="back-link" href="#basho">← BASHO CENTRE</a>'+
+  const back=STATE.h2hReturn&&STATE.h2hReturn.hash?.startsWith('#profile/')?
+    '<a class="back-link" href="'+e(STATE.h2hReturn.hash)+'">← Back to originating profile</a> · ':'';
+  let coverage;
+  if(history?.complete) coverage='All '+history.rows.length+' of '+history.total+' regular cached meetings shown. API-sourced, not independently bout-certified.';
+  else if(STATE.h2hLoading)coverage='Loading '+(history?.rows.length||0)+' of '+(history?.total||'available')+' recorded meetings…';
+  else if(STATE.h2hLoadFailed)coverage='Full chronology could not load. Showing '+(history?.rows.length||0)+' of '+(history?.total||'unknown')+' meetings; retry to retrieve cached rows.';
+  else coverage='Showing '+(history?.rows.length||0)+' of '+(history?.total||'unknown')+' source-recorded meetings. Full cached chronology has not loaded.';
+  return '<div>'+back+'<a class="back-link" href="#basho">Basho Centre</a></div>'+
     heading('Rikishi versus rikishi','Career head-to-head')+
     '<div class="sumo-h2h-hero"><div>'+fighterOnCard(first,a,firstName)+'</div>'+
-    '<div class="sumo-h2h-score"><span>CAREER SERIES</span><strong>'+e(history?history.wins+'–'+history.losses:'NOT YET SOURCED')+'</strong>'+
-    '<small>'+e(history?history.total+' career meetings':'Awaiting pair-specific history')+'</small></div>'+
+    '<div class="sumo-h2h-score"><span>API CAREER SERIES · REGULAR BOUTS</span>'+
+    '<strong>'+e(history?history.wins+'–'+history.losses:'Not available')+'</strong>'+
+    '<small>'+e(firstName)+' wins: '+e(history?history.wins:'Not available')+'</small>'+
+    '<small>'+e(secondName)+' wins: '+e(history?history.losses:'Not available')+'</small>'+
+    '<small>'+e(history?history.total+' recorded meetings':'Series loading')+'</small></div>'+
     '<div>'+fighterOnCard(second,b,secondName)+'</div></div>'+
-    heading('Source-recorded bouts','Every historical meeting')+
-    '<p class="section-intro">Each result shows the basho, day, winner and kimarite (winning technique) when recorded. Fusen forfeits are labelled separately. The sequence defaults to most recent first.</p>'+
-    (history?'<div class="sumo-h2h-order"><button type="button" data-h2h-order="newest" class="'+(!STATE.h2hOldestFirst?'active':'')+'">Newest first</button>'+
-      '<button type="button" data-h2h-order="oldest" class="'+(STATE.h2hOldestFirst?'active':'')+'">Oldest first</button></div>'+
-      historyRowsMarkup(history,a,b,Number.MAX_SAFE_INTEGER,STATE.h2hOldestFirst)+
-      (!history.complete?note(history.source.includes('190-rikishi')?'Showing '+history.rows.length+' most recent of '+history.total+' career meetings. Full historical cache is '+(STATE.h2hLoading?'loading':'not yet loaded')+'.':'The API reports '+history.total+' meetings, but only '+history.rows.length+' individual matches are cached. The chronology is incomplete.'):
-       note('All '+history.total+' regular source-recorded meetings are represented in this cache. '+(history.special?.length?history.special.length+' non-regular meetings are stored separately. ':'')+'Individual career bout details are API-sourced; full-profile certification has not been granted.')):
-      note('The full career series is still loading or has not been sourced for this pairing. No totals are inferred from an isolated tournament.'))+
-    (history?.complete&&history.special?.length?
-      heading('Outside regular career W–L','Playoff and trial meetings')+
-      historyRowsMarkup({rows:history.special},a,b,Number.MAX_SAFE_INTEGER,STATE.h2hOldestFirst)+
-      note('Playoffs and Mae-zumo trials are preserved separately and do not inflate regular career head-to-head records.'):'')+
-    sourceFooter();
+    heading('Calendar chronology','Every historical meeting')+
+    '<p class="section-intro">Each source-recorded match retains basho, calendar day, winner and original kimarite; forfeits and special meetings remain distinct.</p>'+
+    '<p role="status" aria-live="polite">'+e(coverage)+'</p>'+
+    (history?'<div class="sumo-h2h-order" role="group" aria-label="Chronology order">'+
+      '<button type="button" data-h2h-order="newest" aria-pressed="'+(!STATE.h2hOldestFirst)+'" class="'+(!STATE.h2hOldestFirst?'active':'')+'">Newest first</button>'+
+      '<button type="button" data-h2h-order="oldest" aria-pressed="'+(STATE.h2hOldestFirst)+'" class="'+(STATE.h2hOldestFirst?'active':'')+'">Oldest first</button></div>'+
+      historyRowsMarkup(history,a,b,Number.MAX_SAFE_INTEGER,STATE.h2hOldestFirst):'<p>No pair-specific history is currently available.</p>')+
+    (STATE.h2hLoadFailed?'<button type="button" data-h2h-retry class="btn light">Retry cached chronology</button>':'')+
+    (history?.complete&&history.special?.length?heading('Non-regular meetings','Playoffs and trials')+
+      historyRowsMarkup({rows:history.special},a,b,Number.MAX_SAFE_INTEGER,STATE.h2hOldestFirst):'')+
+    '<p class="footnote">A complete cache does not establish independent JSA certification. Data source scope and individual review flags are preserved.</p>'+sourceFooter();
 }
 function getAnnouncedTorikumi(div,day){
   const next=Number(details().announcedDay);
