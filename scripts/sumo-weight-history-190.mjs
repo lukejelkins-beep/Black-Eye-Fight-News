@@ -86,6 +86,7 @@ export function summarizeWeightCoverage(cohort,apiDocs,sourceDocs){
   checkedIndependentRikishi:0,independentDatedPoints:0,matchedOverlaps:0,
   independentIdentityBirthDateVerified:0,independentIdentityBirthDatePending:0,
   independentIdentityBirthDateMismatch:0,
+  historicalSourceIdentityRechecks:0,corroboratedLegacyWeightObservations:0,
   additionalDatedPoints:0,conflictingOverlaps:0,sourceReusePermissionConfirmed:false,
   publishedAdditionalPoints:0,certifiedWeightHistories:0,entries:[]};
  for(const r of cohort.rikishi){
@@ -100,7 +101,12 @@ export function summarizeWeightCoverage(cohort,apiDocs,sourceDocs){
   const checked=s?reconcileWeightHistory(api,s.datedEvidence,Number(r.sumoDbId)):null;
   if(checked){
    result.checkedIndependentRikishi++;
-   const birthStatus=s.identityEvidence?.birthDateStatus||null;
+   const birthStatus=s.identityRecheck?.identityEvidence?.birthDateStatus||
+     s.identityEvidence?.birthDateStatus||null;
+   if(s.identityRecheck?.originalEvidencePreserved===true){
+    result.historicalSourceIdentityRechecks++;
+    result.corroboratedLegacyWeightObservations+=Number(s.identityRecheck.unchangedSavedMeasurements)||0;
+   }
    if(birthStatus==='match')result.independentIdentityBirthDateVerified++;
    else if(birthStatus==='mismatch')result.independentIdentityBirthDateMismatch++;
    else result.independentIdentityBirthDatePending++;
@@ -111,7 +117,10 @@ export function summarizeWeightCoverage(cohort,apiDocs,sourceDocs){
   }
   result.entries.push({sourceId,name:r.shikonaEn,sumoDbId:r.sumoDbId||null,
    apiWeightEntries:api.length,independentChecked:!!checked,
-   independentSourceBirthDateStatus:checked?(s.identityEvidence?.birthDateStatus||'prior-check-needs-birthdate-proof'):null,
+   independentSourceBirthDateStatus:checked?(
+     s.identityRecheck?.identityEvidence?.birthDateStatus||
+     s.identityEvidence?.birthDateStatus||'prior-check-needs-birthdate-proof'):null,
+   sourceIdentityRechecked:!!s?.identityRecheck?.originalEvidencePreserved,
    sourcedIndependentPoints:checked?.independentDatedPoints||0,
    additionalDatedPoints:checked?.additionalDatedPoints||0,
    conflictingOverlapCount:checked?.conflictingOverlaps.length||0,
