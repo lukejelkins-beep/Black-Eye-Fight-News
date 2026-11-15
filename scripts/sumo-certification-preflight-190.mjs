@@ -50,6 +50,27 @@ export function planPreflightNextAction(blockers){
  return ACTIONS[issue]||{lane:'manual-triage',owner:'historical source reviewer',
   nextAction:'Investigate unclassified source verification issue without changing original data.'};
 }
+/** An independently documented debut may precede any published numbered
+ * banzuke entry. Preserve the actual debut rank as null, never interpolate. */
+export function documentedDebutRankGap(p,jsa){
+ const gaps=p?.rankHistoryGaps,ranks=p?.rankTimeline;
+ if(!Array.isArray(gaps)||gaps.length!==1||!Array.isArray(ranks)||!ranks.length)return false;
+ const g=gaps[0],first=ranks.slice().sort((a,b)=>String(a.bashoId).localeCompare(String(b.bashoId)))[0];
+ const debut=(p.perBasho||[]).slice().sort((a,b)=>a.bashoId.localeCompare(b.bashoId))[0];
+ if(g.status!=='competed-before-first-published-banzuke-rank'||
+    g.rank!==null||g.independentlyCertified!==false||
+    g.bashoId!==debut?.bashoId||g.firstPublishedRankBasho!==first.bashoId||
+    !(debut.wins+debut.losses>0))return false;
+ const officialBasho=jsa?.officialBashoRecords||[],officialRanks=jsa?.officialRankRecords||[];
+ const officialDebut=officialBasho.find(x=>x.bashoId===g.bashoId);
+ const officialFirstRank=officialRanks.find(x=>x.bashoId===g.firstPublishedRankBasho);
+ return officialDebut?.wins===debut.wins&&officialDebut.losses===debut.losses&&
+   !!officialFirstRank&&
+   !officialRanks.some(x=>x.bashoId===g.bashoId)&&
+   jsa?.bashoReconciliation?.discrepantBasho===0&&
+   jsa?.rankReconciliation?.mismatches?.length===0;
+}
+
 export function preflightRikishi(w,p,jsa,sdb,activeBasho){
  if(!id(w?.sourceId)||!id(w?.officialNskId)||!id(w?.sumoDbId)||
    !p||p.sourceId!==w.sourceId||p.officialNskId!==w.officialNskId||
@@ -64,8 +85,9 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
   ledger.regularWins===p.career?.wins&&ledger.regularLosses===p.career?.losses&&
   ledger.regularWins+ledger.regularLosses===ledger.regularBouts,
   'career-win-loss-and-complete-bout-ledger-not-reconciled');
+ const justifiedDebutGap=documentedDebutRankGap(p,jsa);
  add(Array.isArray(p.rankTimeline)&&p.rankTimeline.length>0&&
-    (!p.rankHistoryGaps||p.rankHistoryGaps.length===0),
+    (!p.rankHistoryGaps||p.rankHistoryGaps.length===0||justifiedDebutGap),
   'complete-rank-timeline-not-evidenced');
  add(Array.isArray(p.measurements)&&p.measurements.length>0&&
    p.measurementCoverage?.conflictingOverlaps?.length===0,
@@ -127,6 +149,8 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
   blockers:problems,completedHistoricalBoutTournaments:prior.length,
   officialBashoCompared:Number(historical?.comparedBasho||0),
   JsaHistoricalRankCompared:Number(ranks?.comparedBasho||0),
+  documentedNoPublishedNumberedDebutRank:justifiedDebutGap,
+  debutRankStillUnpublished:justifiedDebutGap?String(p.rankHistoryGaps[0].bashoId):null,
   careerTotalsEvidence:jsaWinLossMatches&&jsaAbsencesPresent?
    'published-JSA-three-part-career-record':independentlyMatched&&
    (!jsaHasCareer||jsaWinLossMatches)?
