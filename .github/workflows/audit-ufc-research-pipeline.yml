@@ -19,6 +19,7 @@ on:
     paths:
       - 'data/ufc-*-profiles.json'
       - 'data/ufc-independent-full-career-verification.json'
+      - 'data/ufc-official-career-bout-inventory.json'
       - 'data/ufc-research-workers/**'
       - 'scripts/audit-ufc-research-pipeline.mjs'
       - 'scripts/run-ufc-stage3-tests.mjs'
@@ -27,6 +28,7 @@ on:
       - 'tests/test-ufc-v4-certification-queue.mjs'
       - 'tests/test-ufc-research-pipeline.mjs'
       - 'tests/test-ufc-36-month-stage3-progress.mjs'
+      - 'tests/test-ufc-unified-*.mjs'
       - '.github/workflows/audit-ufc-research-pipeline.yml'
 permissions:
   contents: read
