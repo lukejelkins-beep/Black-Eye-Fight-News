@@ -188,6 +188,23 @@ export function strictSummary(rows,preflight){
   rows
  };
 }
+/** Do not silently discard a previously audited certificate when one
+ * source later drifts or a parser changes. Require investigation before a
+ * formerly certified career loses strict status, even if another newly passes.
+ */
+export function preventSilentCertificationRegression(previous,current){
+ if(!previous)return true;
+ if(previous.cohortSize!==190||!Array.isArray(previous.rows)||
+    current?.cohortSize!==190||!Array.isArray(current?.rows))
+  throw Error('Certification checkpoint shape mismatch');
+ const latest=new Map(current.rows.map(x=>[Number(x.sourceId),x]));
+ const previousPasses=previous.rows.filter(x=>x.careerResultsCertified);
+ const lost=previousPasses.filter(x=>latest.get(Number(x.sourceId))?.careerResultsCertified!==true);
+ if(lost.length)throw Error('Strict certification regression requires independent review: '+
+   lost.slice(0,8).map(x=>x.name||x.sourceId).join(', '));
+ return true;
+}
+
 async function main(){
  const roster=await load('data/sumo/rikishi-index.json');
  const pre=await load(join(ROOT,'career-certification-preflight.json'));
@@ -212,6 +229,8 @@ async function main(){
  }
  const report=strictSummary(rows,pre);
  const target=join(ROOT,'career-certification-strict.json');
+ const earlier=await readFile(target,'utf8').catch(e=>e.code==='ENOENT'?null:Promise.reject(e));
+ preventSilentCertificationRegression(earlier?JSON.parse(earlier):null,report);
  await mkdir(ROOT,{recursive:true});
  const body=JSON.stringify(report,null,2)+'\n';
  const old=await readFile(target,'utf8').catch(e=>e.code==='ENOENT'?null:Promise.reject(e));
