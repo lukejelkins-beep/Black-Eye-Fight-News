@@ -161,6 +161,8 @@ jobs:
       - name: Apply already verified official bout outcomes to JSA audit comparisons
         if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-jsa-corrected-basho-audit.mjs
+      # Account for historically truncated public JSA profiles in the existing
+      # research exception register; these missing bouts remain uncertified.
       - name: Rebuild itemised JSA historical exception register without new requests
         if: steps.preflight.outputs.run == 'true'
         run: node scripts/sumo-jsa-history-exceptions.mjs
