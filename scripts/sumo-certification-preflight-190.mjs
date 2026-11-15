@@ -9,7 +9,7 @@ const ROOT='data/sumo/backfill/v1';
 const read=async p=>JSON.parse(await readFile(p,'utf8'));
 const maybe=async p=>{try{return await read(p);}catch(e){if(e.code==='ENOENT')return null;throw e;}};
 const id=n=>Number.isSafeInteger(Number(n))&&Number(n)>0;
-const numeric=n=>Number.isInteger(Number(n))&&Number(n)>=0;
+const numeric=n=>n!=null&&Number.isInteger(Number(n))&&Number(n)>=0;
 export function preflightRikishi(w,p,jsa,sdb,activeBasho){
  if(!id(w?.sourceId)||!id(w?.officialNskId)||!id(w?.sumoDbId)||
    !p||p.sourceId!==w.sourceId||p.officialNskId!==w.officialNskId||
