@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "batch": 25,
+  "date": "2026-11-15",
+  "scope": "research-only independent bout corroboration; no complete-career certification",
+  "archive": "research/boxing/generated/archived-bout-verification-queue.csv",
+  "newly_corroborated_distinct_bouts": 1,
+  "entries": [
+    {
+      "archive_line": 7,
+      "boxer_id": "boxing-willy-hutchinson",
+      "opponent_name": "Mark Jeffers",
+      "date": "2025-10-04",
+      "outcome": "W",
+      "method": "TKO",
+      "stoppage_round": 7,
+      "stoppage_time": "2:15",
+      "scheduled_rounds": 10,
+      "venue": "Braehead Arena, Glasgow",
+      "sources": [
+        "https://www.boxingscene.com/articles/hutch-train-back-on-track-as-willy-hutchinson-scores-stoppage-of-mark-jeffers",
+        "https://boxingnewsonline.net/news/willy-hutchinson-knocks-out-mark-jeffers-in-round-seven/",
+        "https://www.boxingscene.com/fights/willy-hutchinson-vs-mark-jeffers"
+      ],
+      "source_agreement": "Date, participants, winner, method, round and stoppage time consistent across contemporary independent reports",
+      "archive_match": "Archive line 7: boxing-willy-hutchinson, 2025-10-04, Mark Jeffers, W, TKO R7",
+      "status": "POSTFIGHT_RESULT_CORROBORATED_EXTERNAL_ID_PENDING",
+      "external_participant_ids_verified": false,
+      "full_career_certified": false
+    }
+  ],
+  "safety": {
+    "full_careers_certified": 0,
+    "profiles_pending": 509,
+    "archive_rows_modified": 0,
+    "compubox_imports": 0,
+    "paid_api_requests": 0,
+    "production_changes": 0
+  }
+}
