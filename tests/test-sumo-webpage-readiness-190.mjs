@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {approvedPortrait,webpageReadinessRow,summarizeWebpageReadiness}
+import {approvedPortrait,webpageReadinessRow,summarizeWebpageReadiness,buildApiTrustedReadiness}
  from '../scripts/sumo-webpage-readiness-190.mjs';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url),'utf8'));
 const roster=read('data/sumo/rikishi-index.json');
@@ -53,4 +53,38 @@ test('frozen 190-profile audit counts missing publication permission separately'
  assert.equal(report.approvedForProduction,false);
  assert.equal(report.certifiedProfiles,0);
  assert.throws(()=>summarizeWebpageReadiness([...entries,entries[0]]),/190/);
+});
+
+test('API-trusted methodology accepts completed source ledgers without inflating certifications',()=>{
+ const web=read('data/sumo/backfill/v1/webpage-readiness.json');
+ const audit=read('data/sumo/backfill/v1/audit.json');
+ const strict=read('data/sumo/backfill/v1/career-certification-strict.json');
+ const spotchecks=read('data/sumo/backfill/v1/jsa-reconciliation.json');
+ const result=buildApiTrustedReadiness(web,audit,strict,spotchecks);
+ assert.equal(result.apiTrustedReadyForNonProductionPreview,190);
+ assert.equal(result.strictCareerResultsCertified,strict.strictCareerResultsCertified);
+ assert.equal(result.fullProfilesCertified,0);
+ assert.equal(result.productionReleaseApproved,false);
+ assert.equal(result.rows.filter(r=>r.strictCareerResultsCertified).length,
+   strict.strictCareerResultsCertified);
+ assert.equal(result.rows.some(r=>r.reviewFlags.includes('legacy-JSA-spotcheck-needs-current-cutoff-review')),true);
+});
+test('API-trusted readiness blocks genuine missing data or source integrity failures',()=>{
+ const web=read('data/sumo/backfill/v1/webpage-readiness.json');
+ const audit=read('data/sumo/backfill/v1/audit.json');
+ const strict=read('data/sumo/backfill/v1/career-certification-strict.json');
+ const bad=structuredClone(web);
+ bad.rows[0].dataFieldsReady=false;
+ bad.rows[0].missingDataFields=['careerRecord'];
+ const result=buildApiTrustedReadiness(bad,audit,strict);
+ assert.equal(result.apiTrustedReadyForNonProductionPreview,189);
+ assert.ok(result.rows[0].blockers.includes('missing-core-display-fields'));
+ const badSource=structuredClone(audit);
+ badSource.cases[0].boutLedger.missingWinner=1;
+ const sourceResult=buildApiTrustedReadiness(web,badSource,strict);
+ assert.equal(sourceResult.apiTrustedReadyForNonProductionPreview,189);
+ assert.ok(sourceResult.rows[0].blockers.includes('source-integrity-review'));
+ const mismatched=structuredClone(audit);
+ mismatched.cases[0].sourceId=999999;
+ assert.throws(()=>buildApiTrustedReadiness(web,mismatched,strict),/identity/);
 });
