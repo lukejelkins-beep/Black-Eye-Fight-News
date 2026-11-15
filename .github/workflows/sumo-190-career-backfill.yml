@@ -142,7 +142,7 @@ jobs:
         id: official_jsa
         if: steps.preflight.outputs.run == 'true'
         env:
-          SUMO_JSA_REQUESTS_PER_RUN: '8'
+          SUMO_JSA_REQUESTS_PER_RUN: '16'
           SUMO_JSA_INTERVAL_MS: '2000'
         run: node scripts/sumo-jsa-public-spotcheck.mjs
       - name: Reconcile JSA rounded listed measurements without changing cached source values
