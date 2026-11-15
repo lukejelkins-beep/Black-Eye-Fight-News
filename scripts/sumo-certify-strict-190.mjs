@@ -110,7 +110,27 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
   bh.rawSourceMatchesChanged===false,
   'independent-official-completed-tournament-results');
  const publishedRanks=j.officialRankRecords||[];
- add(goodInt(rank.comparedBasho)&&rank.comparedBasho>=Math.max(1,Math.floor(history.length*0.75))&&
+ const rankQuota=Math.max(1,Math.floor(history.length*0.75));
+ const jsaDates=new Set(publishedRanks.map(x=>String(x.bashoId)));
+ const extraRankSource=weight?.careerRecordCrosscheck||null;
+ const validRankSource=extraRankSource?.identityVerified===true&&
+  extraRankSource?.originalMeasurementsUnchanged===true&&
+  extraRankSource?.independentOfApi===true&&
+  extraRankSource?.careerRecordDiffersFromPriorSnapshot!==true&&
+  /^[a-f0-9]{64}$/.test(String(extraRankSource.datedBashoLedgerSourceSha256||''))&&
+  extraRankSource.sourceUrl==='https://sumodb.sumogames.de/Rikishi.aspx?r='+w?.sumoDbId&&
+  Array.isArray(extraRankSource.independentBashoRows);
+ const independentRankByDate=validRankSource?new Map(
+  extraRankSource.independentBashoRows.filter(x=>x.rankEn!=null)
+   .map(x=>[String(x.bashoId),String(x.rankEn)])):new Map();
+ const additionalRankMatches=history.filter(x=>!jsaDates.has(x.bashoId)&&
+  independentRankByDate.get(x.bashoId)===x.rank).length;
+ const independentRankConflicts=history.filter(x=>independentRankByDate.has(x.bashoId)&&
+  independentRankByDate.get(x.bashoId)!==x.rank).length;
+ const originalOfficialCoverage=rank.comparedBasho>=rankQuota;
+ add(goodInt(rank.comparedBasho)&&
+  (originalOfficialCoverage||validRankSource&&
+   rank.comparedBasho+additionalRankMatches>=rankQuota&&independentRankConflicts===0)&&
   rank.agreedBasho===rank.comparedBasho&&rank.mismatches?.length===0&&
   rank.missingSourceRankBasho?.length===0&&
   publishedRanks.length===rank.comparedBasho,
@@ -148,6 +168,8 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
   documentedNoPublishedNumberedDebutRank:evidencedDebutGap,
   independentlyCrosscheckedOlderBashoFromSumoDB:careerResultsCertified?
     historicalProof.otherSourceBasho:0,
+  independentlyCrosscheckedOlderRanksFromSumoDB:careerResultsCertified&&
+    !originalOfficialCoverage?additionalRankMatches:0,
   missingDebutRankPreservedAsNull:evidencedDebutGap,
   independentlyVerifiedBy:careerResultsCertified?[
     basis==='published-JSA-career-WLA'?'JSA published W-L-A':'SumoDB published W-L-A',
