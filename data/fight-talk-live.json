@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-15T07:36:51.951Z",
-  "checkedAt": "2026-11-15T07:36:51.951Z",
-  "updatedAt": "2026-11-15T06:21:33.045677Z",
+  "attemptedAt": "2026-11-15T09:20:39.113Z",
+  "checkedAt": "2026-11-15T09:20:39.113Z",
+  "updatedAt": "2026-11-15T08:21:33.220704Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 3,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 3,
+      "checked": 6,
       "failed": 0,
-      "configured": 3,
-      "message": "3 of 3 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 18,
+      "configured": 34,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 53,
+      "configured": 36,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 1,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,21 +55,46 @@
   "rollingScan": {
     "directoryEntries": 448,
     "scheduledEntries": 84,
-    "batchIndex": 1,
+    "batchIndex": 4,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 53,
-      "X": 18,
-      "Bluesky": 3,
-      "Threads": 10
+      "X": 34,
+      "Instagram": 36,
+      "Bluesky": 6,
+      "Threads": 7,
+      "Reddit": 1
     },
-    "directlyChecked": 3,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2dlgrfbs722",
+      "cid": "bafyreicqtmagzckgjgn7clnhspxtfgkpmcjgxq7cwzeunyhr4mqvqngjty",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "UFC 334 post-fight show: Reaction to Ciryl Gane’s gutsy win over Josh Hokit in wild brawl www.mmafighting.com/ufc/521601/u...",
+      "postedAt": "2026-11-15T08:21:33.220704Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2dlgrfbs722",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2deq6mtbk2z",
       "cid": "bafyreiczl4bjvvscakkcp36k2s75kguuebqm4p2323etnxmthssxljnbbe",
@@ -91,7 +116,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -115,7 +140,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -135,11 +160,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
       "engagement": {
-        "likes": 0,
+        "likes": 1,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -163,7 +188,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -183,11 +208,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:unvcg6ib22cqfozxjrhn63ds",
       "engagement": {
-        "likes": 5,
+        "likes": 9,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -207,11 +232,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
       "engagement": {
-        "likes": 2,
+        "likes": 3,
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -235,7 +260,7 @@
         "comments": 3,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -259,7 +284,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -283,7 +308,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -307,7 +332,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -331,31 +356,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2d5zn42cb2p",
-      "cid": "bafyreifxkiwacld66ctmb6zfr7nuebt6q3f4aspufudj3tyrsrqoblswke",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "UFC 334 live blog: Kayla Harrison vs. Amanda Nunes www.mmafighting.com/ufc/521232/u...",
-      "postedAt": "2026-11-15T04:21:32.921487Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2d5zn42cb2p",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -379,7 +380,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -403,7 +404,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -475,7 +476,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -643,7 +644,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -691,7 +692,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -715,7 +716,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -859,7 +860,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -955,7 +956,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -979,7 +980,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1027,7 +1028,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T06:22:16.693Z",
+      "engagementCheckedAt": "2026-11-15T09:20:39.113Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
