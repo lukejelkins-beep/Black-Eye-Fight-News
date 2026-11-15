@@ -60,3 +60,14 @@ Other endpoints exist (ranks, measurements, shikona histories), but are not yet 
 4. Verify live results accuracy and mobile experience, then explicitly approve production merge/deploy.
 
 This adapter is a **technical connection**, not a claim that the finished Sumo website section is already live.
+
+
+## Independent November 2026 career-absence follow-up (research only)
+
+Rechecked 15 November 2026 against public pages and the existing 190-rikishi non-production strict checkpoint (133 career-result histories strictly certified, 57 blocked; 0 full profiles). These are **observations only**, not certification grants. Each live page has a potentially different tournament-day cutoff. Preserve the original JSA and SumoDB research snapshots, including hashes, rather than overwriting or treating a missing absence as 0.
+
+- **Toshinofuji, API ID 8866:** [JSA](https://www.sumo.or.jp/EnSumoDataRikishi/profile/4243/) displays 96–49 as of November Day 8 with **no published absence component**. [SumoDB](https://sumodb.sumogames.de/Rikishi.aspx?r=12852) also shows 96–49/145 without an absence count. The previously saved Day-8 JSA page read 95–49. **Next:** independently establish cutoff and publishable career absences before certification; no inferred zero.
+- **Kotoeiho, API ID 112:** [JSA public page](https://www.sumo.or.jp/EnSumoDataRikishi/profile/4120/) displays 174–120–4, explicitly labelled November Day 6. The previously captured JSA Day-8 snapshot reads 174–120–6 and the existing SumoDB research snapshot reads 174–120–5; [SumoDB public page](https://sumodb.sumogames.de/Rikishi.aspx?r=12729) has another cutoff. **Next:** compare dated kyūjō/fusen and scheduled-versus-non-bout records at a common source cutoff, not as competing timeless totals.
+- **Shirokuma, API ID 98:** [Public JSA page](https://www.sumo.or.jp/EnSumoDataRikishi/profile/4164/) captured from an earlier source view has 178–152–4 without a displayed day; stored JSA Day-8 evidence reads 178–153–11 while cached SumoDB evidence reads 178–153–10. **Next:** independently date-match the changes and absence definitions; leave blocked.
+
+The strict gate additionally requires dated independent historical-rank evidence for **Mikazuchiyama** and **Awanokuni**, and an official profile-field conflict review for **Tenshoyama**. Continue in the **existing exception workstream**, without a duplicate register. Only a new successful 190-person strict audit may increase certified counts. Never merge, deploy, fill missing absences with zero, or claim independently validated kimarite/weights/photos from these notes.
