@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {strictCareerAudit,strictSummary} from '../scripts/sumo-certify-strict-190.mjs';
+import {strictCareerAudit,strictSummary,preventSilentCertificationRegression} from '../scripts/sumo-certify-strict-190.mjs';
 const copy=x=>structuredClone(x);
 function fixture(){
  const w={sourceId:1,officialNskId:10,sumoDbId:20,shikonaEn:'Test Rikishi'};
@@ -178,4 +178,19 @@ test('strict audit accepts an official-results-proven debut lacking a published 
  assert.equal(strictCareerAudit(f).missingDebutRankPreservedAsNull,true);
  f.official.officialBashoRecords=f.official.officialBashoRecords.filter(x=>x.bashoId!=='202609');
  assert.ok(strictCareerAudit(f).blockers.includes('dated-career-rank-history-incomplete'));
+});
+
+test('old certificates cannot silently disappear when a new source or parser disagrees',()=>{
+ const previous={cohortSize:190,rows:[
+  {sourceId:1,name:'Previously certified',careerResultsCertified:true},
+  {sourceId:2,name:'Previously blocked',careerResultsCertified:false}]};
+ const same={cohortSize:190,rows:[
+  {sourceId:1,name:'Previously certified',careerResultsCertified:true},
+  {sourceId:2,name:'Previously blocked',careerResultsCertified:true}]};
+ assert.equal(preventSilentCertificationRegression(previous,same),true);
+ const losing={cohortSize:190,rows:[
+  {sourceId:1,name:'Previously certified',careerResultsCertified:false},
+  {sourceId:2,name:'Previously blocked',careerResultsCertified:true}]};
+ assert.throws(()=>preventSilentCertificationRegression(previous,losing),/regression requires independent review/);
+ assert.equal(preventSilentCertificationRegression(null,same),true);
 });
