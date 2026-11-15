@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {htmlToPublicText,parseOfficialProfile,parseJsaBashoResults,reconcileJsaBashoResults} from '../scripts/sumo-jsa-public-spotcheck.mjs';
+import {htmlToPublicText,parseOfficialProfile,parseJsaBashoResults,reconcileJsaBashoResults,cohortCurrentBasho} from '../scripts/sumo-jsa-public-spotcheck.mjs';
 const w={sourceId:16,officialNskId:2892,shikonaEn:'Nishikigi',
  currentRank:'Makushita 2 East',heya:'Isenoumi',heightCm:186,weightKg:184};
 const official=String.raw`<!doctype html><html><head><script>fake injection</script></head><body>
@@ -118,4 +118,45 @@ test('official career records with thousands separators parse as numbers',()=>{
  const result=parseOfficialProfile(official.replace('677-716-2','1,244-1,029'),w);
  assert.deepEqual(result.career,{wins:1244,losses:1029,absences:null});
  assert.equal(result.status,'basic-fields-parsed');
+});
+
+test('cohort snapshot exclusion without JSA as-of prevents counting ongoing November tournament',()=>{
+ const matchSource={rikishiId:16,stages:{matches:{complete:true}},data:{matches:[
+  {bashoId:'202609',division:'Makushita',day:2,winnerId:16},
+  {bashoId:'202611',division:'Makushita',day:2,winnerId:2}
+ ]}};
+ const rows=[{bashoId:'202609',wins:1,losses:0},
+  {bashoId:'202611',wins:3,losses:1}];
+ const cohortBasho=cohortCurrentBasho({collectedAt:'2026-10-31T15:05:00Z'});
+ assert.equal(cohortBasho,'202611','Japan time is Nov 1, not Oct 31');
+ const report=reconcileJsaBashoResults(rows,matchSource,null,cohortBasho);
+ assert.equal(report.comparedBasho,1);
+ assert.equal(report.agreeingBasho,1);
+ assert.equal(report.discrepantBasho,0);
+ assert.equal(report.excludedCurrentBasho,'202611');
+ assert.equal(report.currentBashoExclusionEvidence,'frozen-cohort-basho');
+ assert.equal(report.certified,false);
+});
+test('without JSA as-of or cohort hint, exclude latest source tournament conservatively',()=>{
+ const source={rikishiId:16,stages:{matches:{complete:true}},data:{matches:[
+  {bashoId:'202605',division:'Makushita',day:1,winnerId:16},
+  {bashoId:'202609',division:'Makushita',day:1,winnerId:2}
+ ]}};
+ const rows=[{bashoId:'202605',wins:1,losses:0},
+  {bashoId:'202609',wins:2,losses:0}];
+ const report=reconcileJsaBashoResults(rows,source,null);
+ assert.equal(report.comparedBasho,1);
+ assert.equal(report.discrepantBasho,0);
+ assert.equal(report.excludedCurrentBasho,'202609');
+ assert.equal(report.currentBashoExclusionEvidence,'conservative-latest-source-basho');
+ assert.equal(report.certified,false);
+});
+test('official dated current tournament takes precedence over fallback frozen cohort date',()=>{
+ const rows=[{bashoId:'202607',wins:3,losses:4},
+  {bashoId:'202609',wins:2,losses:5}];
+ const empty={rikishiId:16,stages:{matches:{complete:true}},data:{matches:[]}};
+ const r=reconcileJsaBashoResults(rows,empty,{monthYear:'September 2026',day:7},'202611');
+ assert.equal(r.excludedCurrentBasho,'202609');
+ assert.equal(r.currentBashoExclusionEvidence,'official-as-of');
+ assert.deepEqual(r.unmatchedOfficialBasho,['202607']);
 });
