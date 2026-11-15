@@ -174,11 +174,17 @@ test('fast-lane preflight requires at least three quarters of the numbered rank 
  const {p,j,s}=sample();
  const threshold=Math.max(1,Math.floor(p.rankTimeline.length*0.75));
  assert.ok(threshold>1);
+ const independentRanks=p.rankTimeline.slice(0,threshold).map(x=>({
+  bashoId:x.bashoId,rank:x.rank}));
  j.rankReconciliation.comparedBasho=threshold-1;
+ j.rankReconciliation.agreedBasho=threshold-1;
+ j.officialRankRecords=independentRanks.slice(0,threshold-1);
  const short=preflightRikishi(w,p,j,s,'202611');
  assert.ok(short.blockers.includes('independent-JSA-historical-ranks-not-compared'));
  assert.equal(short.classification,'needs-source-or-manual-review');
  j.rankReconciliation.comparedBasho=threshold;
+ j.rankReconciliation.agreedBasho=threshold;
+ j.officialRankRecords=independentRanks;
  const adequate=preflightRikishi(w,p,j,s,'202611');
  assert.ok(!adequate.blockers.includes('independent-JSA-historical-ranks-not-compared'));
 });
@@ -187,10 +193,14 @@ test('old JSA rank-window gaps require exact dated independent rank observations
  const p=get('data/sumo/backfill/v1/profile-ready/14.json');
  const j=get('data/sumo/backfill/v1/jsa-public/profiles/14.json');
  const source=get('data/sumo/backfill/v1/weight-source-crosschecks/14.json');
- const standard=independentHistoricalRankCoverage(p,j,source);
+ // Source snapshots evolve while scheduled workers progress. Test the
+ // JSA-only baseline independently of already cached supplementary evidence.
+ const noSupplement=structuredClone(source);
+ delete noSupplement.careerRecordCrosscheck;
+ const standard=independentHistoricalRankCoverage(p,j,noSupplement);
  assert.equal(standard.passed,false,'official rank excerpt alone is too short');
  const officialDates=new Set(j.officialRankRecords.map(x=>x.bashoId));
- const supplemented=structuredClone(source);
+ const supplemented=structuredClone(noSupplement);
  supplemented.careerRecordCrosscheck={
   sourceUrl:'https://sumodb.sumogames.de/Rikishi.aspx?r='+source.sumoDbId,
   identityVerified:true,originalMeasurementsUnchanged:true,
