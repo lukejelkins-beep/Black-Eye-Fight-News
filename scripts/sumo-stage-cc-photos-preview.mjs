@@ -113,8 +113,27 @@ async function main(){
  const manifest=await optional(PHOTO_MANIFEST)||{
   schemaVersion:1,description:'Approved, locally hosted Sumo photographs with proper attribution',
   bySourceId:{}};
- const pending=data.candidates.filter(c=>manifest.bySourceId?.[String(c.sourceId)]?.approved!==true);
+ const pending=[];
+ for(const c of data.candidates){
+  const entry=manifest.bySourceId?.[String(c.sourceId)];
+  if(entry?.approved!==true||entry.path!==c.desiredLocalPath){
+   pending.push(c);continue;
+  }
+  try{
+   const file=await stat(c.desiredLocalPath);
+   if(file.size<30000||file.size>8000000)pending.push(c);
+  }catch(e){
+   if(e.code!=='ENOENT')throw e;
+   pending.push(c);
+  }
+ }
  if(!pending.length){
+  await writeIfChanged(SYNC_STATUS,JSON.stringify({
+    schemaVersion:1,status:'source-validated',
+    approvedLocalPhotos:data.candidates.length,unresolved:[],errors:[],
+    nextAttemptAfter:null,productionPublished:false,
+    note:'All candidate original JPEGs are locally staged and manifest-approved; additional QA independently verifies image hashes and attribution.'
+  },null,2)+'\n');
   console.log(JSON.stringify({status:'all-vetted-portraits-already-staged',
     previewOnly:true,photoCount:data.candidates.length,production:false}));
   return;
