@@ -1,19 +1,19 @@
 {
-  "attemptedAt": "2026-11-15T14:16:52.392Z",
-  "checkedAt": "2026-11-15T14:16:52.392Z",
+  "attemptedAt": "2026-11-15T15:00:08.813Z",
+  "checkedAt": "2026-11-15T15:00:08.813Z",
   "updatedAt": "2026-11-15T14:02:21Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 4,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 4,
+      "checked": 6,
       "failed": 0,
-      "configured": 4,
-      "message": "4 of 4 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 40,
+      "configured": 43,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 2,
+      "configured": 0,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,19 +55,18 @@
   "rollingScan": {
     "directoryEntries": 448,
     "scheduledEntries": 84,
-    "batchIndex": 3,
+    "batchIndex": 0,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Threads": 11,
+      "Instagram": 43,
+      "Bluesky": 6,
       "X": 27,
-      "Instagram": 40,
-      "Bluesky": 4,
-      "Reddit": 2
+      "Threads": 8
     },
-    "directlyChecked": 4,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
@@ -144,6 +143,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2dxsomy3b26",
+      "cid": "bafyreia25wkm2likkik5bessr3mp3k25ll5zyngwh235om22x7tak7i6qy",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Darius Fulghum Stuns Diego Pacheco, Fulfills WBN Prediction #boxing #boxingnews",
+      "postedAt": "2026-11-15T12:02:59Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2dxsomy3b26",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 1,
+        "comments": 1,
+        "shares": 1
+      },
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2dxpznytu22",
       "cid": "bafyreihaeujkghfrgomdyh3f6cqrso66d44fvf27mimtbnjbumfgtez2cq",
       "platform": "Bluesky",
@@ -189,6 +212,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-15T14:16:52.392Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n2drsprhv22e",
+      "cid": "bafyreiawipaivr522z56sdbq5is7uzjldbxkregewobpaw2rphebbkuhoq",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Dan Rafael",
+      "handle": "@danrafael1.bsky.social",
+      "role": "commentator",
+      "quote": "Darius Fulghum outfights Diego Pacheco, scores major upset in 168 title eliminator; Olascuaga edges Martinez to retain 112 title in slugfest; more undercard action. Read my story & sign up for my #boxing Substack! danrafael.substack.com/p/fulghum-ou... #PachecoFulghum",
+      "postedAt": "2026-11-15T10:15:38.330Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/danrafael1.bsky.social/post/3n2drsprhv22e",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:ukajoiyhrbbiiu7qpcz43aha/bafkreifun33dacusv726vgtqm3jhyo44mqkzgax2esadqlh67jcvwz5hga",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -384,6 +431,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2ddzqn5h72c",
+      "cid": "bafyreidms762zrz7qvah2kzwvqiw42ivqwhxxra3kiqlafurqic7v2b2pu",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Aaron Bronsteter",
+      "handle": "@aaron.report",
+      "role": "media",
+      "quote": "Performances of the Night: Harrison and Thompson\n\nFight of the Night: Gane vs Hokit",
+      "postedAt": "2026-11-15T06:09:01.715Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/aaron.report/post/3n2ddzqn5h72c",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
+      "engagement": {
+        "likes": 3,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2ddvfprt52l",
       "cid": "bafyreicbycwqfadt6xab3deh5ufrzdruv5pj4eytn2ddijsurfsavcskiu",
       "platform": "Bluesky",
@@ -405,6 +476,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2ddm3tikb2b",
+      "cid": "bafyreihieny2zh7zarcq3tai7dx5cgvyrkmsvpa3n3wvzoz2pqhhrokr5m",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Aaron Bronsteter",
+      "handle": "@aaron.report",
+      "role": "media",
+      "quote": "#UFC334\n\nAnnounced Live Gate: $10,345,506 (6th highest gate in arena history behind five prior UFC events)\n \nAttendance: 19,740 (sold out)",
+      "postedAt": "2026-11-15T06:01:23.698Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/aaron.report/post/3n2ddm3tikb2b",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -477,6 +572,78 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2dcxvnrse22",
+      "cid": "bafyreigbhzut2egyas4kwrg4grornpp2a3u5veffi7ibgmfi27zgz765oa",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Aaron Bronsteter",
+      "handle": "@aaron.report",
+      "role": "media",
+      "quote": "I have it 48-47 Hokit\n\nVery close fight that could go either way. I think that rounds 1 and 5 are the swing rounds.\n\nAbsolutely wild fight.",
+      "postedAt": "2026-11-15T05:50:06.131Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/aaron.report/post/3n2dcxvnrse22",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
+      "engagement": {
+        "likes": 1,
+        "comments": 1,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:u6b6v2jhqpe6hfezjffq7zrh/app.bsky.feed.post/3n2dcum6zbs2m",
+      "cid": "bafyreialtuba5eaxbemxnbiro2wi7bc3vbnkqbh2yaleswacycp5eca5ma",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Jack Wannan",
+      "handle": "@jackwannan.bsky.social",
+      "role": "commentator",
+      "quote": "This is an incredible R5 from Gane. He's fighting his fight here. This is what he was hoping all 25 minutes would be like",
+      "postedAt": "2026-11-15T05:48:15.563Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/jackwannan.bsky.social/post/3n2dcum6zbs2m",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:u6b6v2jhqpe6hfezjffq7zrh/bafkreieqcjv6rcvaozy2eikgm52rql3rmtpyj4w5l7r3hhbvmm65zyiks4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:u6b6v2jhqpe6hfezjffq7zrh",
+      "engagement": {
+        "likes": 3,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2dcaxoocf27",
+      "cid": "bafyreihnmxyrb5xnzinvwgdsxzdoy66s23y5ul4w47bzthlumflcfd6k3e",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Aaron Bronsteter",
+      "handle": "@aaron.report",
+      "role": "media",
+      "quote": "I have it 30-27 Hokit entering the championship rounds\n\nThis fight is bonkers",
+      "postedAt": "2026-11-15T05:37:16.506Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/aaron.report/post/3n2dcaxoocf27",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -600,6 +767,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2da74caig2n",
+      "cid": "bafyreibrlnd3axrgy4c3nxhwla4anqq4unavjk3wwdh5muziqcvkl2dhjy",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Aaron Bronsteter",
+      "handle": "@aaron.report",
+      "role": "media",
+      "quote": "Unless a fight with Valentina Shevchenko present itself, I would not be surprised if that is the final time that we see Kayla Harrison compete as a bantamweight.\n\nShe’s not putting herself through that to fight Joselyne Edwards.",
+      "postedAt": "2026-11-15T05:00:26.722Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/aaron.report/post/3n2da74caig2n",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
+      "engagement": {
+        "likes": 3,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2da5bdgui2o",
       "cid": "bafyreigm3gz7zfolea3tkgowxxrsgmrddnytpff52eubu6sav7hkqbgeim",
       "platform": "Bluesky",
@@ -648,6 +839,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2d7vh75fk2c",
+      "cid": "bafyreicztyy54j3prbhag7stwhqfob7so2wbxxxgra4vu63tza4sh4cllq",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Aaron Bronsteter",
+      "handle": "@aaron.report",
+      "role": "media",
+      "quote": "Harrison takes advantage of another Nunes error, snatches the neck and she is STILL the undisputed bantamweight champion.\n\nHarrison was an absolute beast tonight. She was the better fighter and showed incredible fight IQ and resolve.",
+      "postedAt": "2026-11-15T04:55:02.637Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/aaron.report/post/3n2d7vh75fk2c",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
+      "engagement": {
+        "likes": 5,
+        "comments": 2,
+        "shares": 1
+      },
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:xnqusxspoktnv66raetv2vl2/app.bsky.feed.post/3n2d7v4lfjn2b",
       "cid": "bafyreihxrirfdkd2j7zuw4p7si2e4i3mjpbbwqvzceit4yvg37hcrsv2ae",
       "platform": "Bluesky",
@@ -672,6 +887,54 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2d7dhov3h2c",
+      "cid": "bafyreich3nna6sx7vw2jdk3jbeets23wrplhw7sp5rnhlapxazd5tvm4c4",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Aaron Bronsteter",
+      "handle": "@aaron.report",
+      "role": "media",
+      "quote": "20-18 Harrison\n\nThat’s twice that Nunes has fallen into Kayla’s trap. She needs to avoid clinching and grappling at all costs and strike at distance.",
+      "postedAt": "2026-11-15T04:44:59.174Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/aaron.report/post/3n2d7dhov3h2c",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2d6dp54cr2q",
+      "cid": "bafyreibzyclaasakv6ojk72wxfb6mdvvpsqx234uxtwsq4v7o3hyn2dnqy",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Aaron Bronsteter",
+      "handle": "@aaron.report",
+      "role": "media",
+      "quote": "Very excited for this one.\n\nBig fight feel.\n\nGreat to have Amanda Nunes back and this is the perfect matchup.",
+      "postedAt": "2026-11-15T04:27:13.236Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/aaron.report/post/3n2d6dp54cr2q",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2d5zn263k2a",
       "cid": "bafyreifygxodbrxtybbdxi2gskkhy6dx4qxsv4hugyusln5zk37tnvgsem",
       "platform": "Bluesky",
@@ -693,6 +956,54 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2cza4dehx22",
+      "cid": "bafyreig55omujip6bqzz54yec34dwbp26yyaxkoxwovqtsncjwazqor4hy",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Aaron Bronsteter",
+      "handle": "@aaron.report",
+      "role": "media",
+      "quote": "UFC 337 will take place in Orlando, Florida on February 20 per the broadcast",
+      "postedAt": "2026-11-15T02:55:44.125Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/aaron.report/post/3n2cza4dehx22",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2cz3mcmgn2n",
+      "cid": "bafyreie5ddypttzi5sxrmicflcomj56ab3ryhrvlh7hgfpicfpgrftviim",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Aaron Bronsteter",
+      "handle": "@aaron.report",
+      "role": "media",
+      "quote": "Undefeated fighters are 1-2 tonight following Hasan’s loss.\n\nJosh Hokit is the last remaining undefeated fighter on the card.",
+      "postedAt": "2026-11-15T02:53:13.106Z",
+      "date": "15 Nov 2026",
+      "url": "https://bsky.app/profile/aaron.report/post/3n2cz3mcmgn2n",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
+      "engagement": {
+        "likes": 4,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -789,30 +1100,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-15T12:21:47.089Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2cnjfzk3n2q",
-      "cid": "bafyreic5tl5zsep55yumktdyu2p5xa3nb5tn2pdt4ztoe5zpxztxbvucdi",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Aaron Bronsteter",
-      "handle": "@aaron.report",
-      "role": "media",
-      "quote": "With her fourth submission win, Mesquita surpasses Ronda Rousey for the most submission wins in UFC women’s bantamweight history.",
-      "postedAt": "2026-11-14T23:26:11.399Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/aaron.report/post/3n2cnjfzk3n2q",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -956,7 +1243,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1008,30 +1295,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2c5asmido2t",
-      "cid": "bafyreie37gnmimqvr3lqrymscn5uurqujssw7i75ckrpspjrvwdmfk6hfu",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Aaron Bronsteter",
-      "handle": "@aaron.report",
-      "role": "media",
-      "quote": "UFC 334 picks\n\nAlmeida/Johnson O1.5 -135\n\nGane/Hokit U3.5 -155\n\nBorralho -155\n\nDober/Duncan O1.5 -125\n\nDarts 🎯 \n\nAlmeida wins by decision +800\n\nGane wins by KO/TKO in Rd 2/3 +440\n\nChiasson wins by decision +470",
-      "postedAt": "2026-11-14T18:35:02.753Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/aaron.report/post/3n2c5asmido2t",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
-      "engagement": {
-        "likes": 3,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2c4hkmwyu25",
       "cid": "bafyreidmntutuf66uq6qh5trj7isuaznaooo474qmrynfzknpmpib6y6la",
       "platform": "Bluesky",
@@ -1076,7 +1339,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1148,7 +1411,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1172,7 +1435,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1196,7 +1459,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1220,7 +1483,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1244,7 +1507,7 @@
         "comments": 0,
         "shares": 1
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1268,7 +1531,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1292,7 +1555,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1316,7 +1579,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1340,7 +1603,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1364,7 +1627,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1388,31 +1651,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n24xj2f5gb2v",
-      "cid": "bafyreibq6cdrrs4xsv3wq6blwadxxls4aptjmm3d3hdki3iflxmldd27yq",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Dana White Takes Fury vs Joshua Undercard, Eddie Hearn Out #boxing #boxingnews",
-      "postedAt": "2026-11-12T17:08:58Z",
-      "date": "13 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n24xj2f5gb2v",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1436,7 +1675,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1460,7 +1699,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1484,7 +1723,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3466,7 +3705,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -3689,7 +3928,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5198,7 +5437,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T02:33:52.902Z",
+      "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5345,169 +5584,6 @@
       "postedAt": "2026-11-08T22:48:01+0000",
       "url": "https://www.instagram.com/p/Dff3WFGu3qk/",
       "photo": "https://scontent-sea5-2.xx.fbcdn.net/v/t51.2885-15/189692362_1746833495510078_3007043078313645481_n.jpg?_nc_cat=101&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=47md6WaWzq8Q7kNvwEG4_2l&_nc_oc=AdqfO6CEoSgk3CCSpQW3XZsP3ikuEPmLVKX11iqggP5HbmPe8bezQzEKikkXA8c4wDA&_nc_zt=23&_nc_ht=scontent-sea5-2.xx&edm=AL-3X8kEAAAA&oh=00_AQR6GgQ8yESQWhj26noSsKPVKnaFtZIFUBdQCU8OERrouA&oe=6AFABCE2",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "platform": "Instagram",
-      "sport": "mma",
-      "type": "post",
-      "name": "Alexander Volkanovski",
-      "handle": "@alexvolkanovski",
-      "role": "fighter",
-      "source": "Instagram original author API",
-      "id": "18252312430311194",
-      "quote": "Love getting into the finer details of this stuff officialfightlab",
-      "postedAt": "2026-11-08T22:28:12+0000",
-      "url": "https://www.instagram.com/reel/Dff08YJynSk/",
-      "photo": "https://scontent-iad6-1.xx.fbcdn.net/v/t51.82787-15/591162564_18547365376045046_2726666650341686579_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=7d201b&_nc_ohc=okrLe819A7AQ7kNvwGhMd_y&_nc_oc=Adq-mhff0kzpuP1m2wMxIM-pSoQqUXTrvPw0P8TPyE1Izy88DDpZSfwbwxYbPjjPbMY&_nc_zt=23&_nc_ht=scontent-iad6-1.xx&edm=AL-3X8kEAAAA&_nc_gid=j3o4wrVrTvHLiCm4RbESiw&oh=00_AQRNAnwqOKY-4k2x_25ntVTa_AOfR3f9Rel77besMmbYww&oe=6AFAE752",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "platform": "Instagram",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Danny Garcia",
-      "handle": "@dannyswiftgarcia",
-      "role": "fighter",
-      "source": "Instagram original author API",
-      "id": "17918080689542555",
-      "quote": "Don’t let the money blind you 💵",
-      "postedAt": "2026-11-08T22:24:55+0000",
-      "url": "https://www.instagram.com/p/Dff0tH5H-F5/",
-      "photo": "https://scontent-sea5-1.xx.fbcdn.net/v/t51.82787-15/587603815_18545604169014800_3513600508613737215_n.jpg?_nc_cat=107&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=P3umKXPJeFoQ7kNvwH2QdgY&_nc_oc=AdopLMnRJEheSiUnxkGXFPF7HwMaDC4MmoxudTg66WO0W5_0Q_ITKVZKsMzWQ4rWlxg&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AL-3X8kEAAAA&_nc_gid=Gxf5IrWfXtjvZg4paC36oA&oh=00_AQQnEFtaQWvA-v6fjLsstud1_An-vBiGqSrYs0Tlo-VrOA&oe=6AFAD467",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "platform": "Instagram",
-      "sport": "mma",
-      "type": "post",
-      "name": "Kevin Vallejos",
-      "handle": "@chino_vallejos19",
-      "role": "fighter",
-      "fighterTier": "contender",
-      "source": "Instagram original author API",
-      "id": "18120996571977256",
-      "quote": "Si no es por talento,sera por ambición...\n\nzonacero.raw 📷📷",
-      "postedAt": "2026-11-08T22:10:41+0000",
-      "url": "https://www.instagram.com/p/DffzE3JGX-B/",
-      "photo": "https://scontent-sea5-1.xx.fbcdn.net/v/t51.82787-15/641296015_18106052797846628_4077076195998934276_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=7d201b&_nc_ohc=GRZygLe5uTsQ7kNvwHmRYM9&_nc_oc=Adq7W_VudAEdB3zJ0Qakmz70rC4rO_bkFMqJbe7SK6JT8CUUJ55VzD3UYJJGRgtTom0&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AL-3X8kEAAAA&_nc_gid=oTPYqrgHbA3oeY7ZJwOCIw&oh=00_AQSRPHuzKXeRZKUpbbCODAege5XK67FgeP9bpNRojxF7tw&oe=6AFAC9E8",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "platform": "Instagram",
-      "sport": "mma",
-      "type": "post",
-      "name": "Melquizael Costa",
-      "handle": "@melk_cauthymma",
-      "role": "fighter",
-      "fighterTier": "prospect",
-      "source": "Instagram original author API",
-      "id": "18081649349398104",
-      "quote": "Nota de repúdio 😡!!!!",
-      "postedAt": "2026-11-08T21:04:59+0000",
-      "url": "https://www.instagram.com/reel/DffrSzkS_HA/",
-      "photo": "https://scontent-ord5-2.xx.fbcdn.net/v/t51.75761-15/498757406_18490142596071323_6421710639863775573_n.jpg?_nc_cat=102&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=cN4tcPwUeocQ7kNvwHi0WP8&_nc_oc=AdpRqM6P6V73ig-DINJf8JMX_WU5nA8vRscArBTaISUwMuNQs-diDZOWm0wgpGosbbU&_nc_zt=23&_nc_ht=scontent-ord5-2.xx&edm=AL-3X8kEAAAA&_nc_gid=tVDFHrmGVUkaceP2qc8QMw&oh=00_AQTsYfN--RMOMso9eeHgSNRmeeoXXx9WlTH55mN5ZF5DTA&oe=6AFADDB6",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "platform": "Instagram",
-      "sport": "mma",
-      "type": "post",
-      "name": "Luana Santos",
-      "handle": "@luanasantosmma",
-      "role": "fighter",
-      "fighterTier": "contender",
-      "source": "Instagram original author API",
-      "id": "18090036695321750",
-      "quote": "Uma semana da minha sétima vitória no UFC! ✨❤️‍🔥 \n\nE o sentimento é de muita felicidade, gratidão e orgulho por tudo que venho construindo até aqui. Cada luta é uma oportunidade de mostrar que eu tenho meu lugar entre as melhores do mundo!\n\nJá enfrentei e venci grandes nomes, venho me consolidando cada vez mais na categoria e mostrando que estou aqui para fazer história.\n\nE o mais incrível é saber que isso é só o começo! Sou muito nova, tenho muito a aprender, evoluir e, principalmente, MUITA coisa para viver e conquistar ainda.\n\nEstou aproveitando cada etapa dessa caminhada, mas com os olhos sempre voltados para onde quero chegar. Tenho sonhos grandes e muita vontade de realizá-los!\n\nO futuro é brilhante, e eu estou só começando! 🚀✨",
-      "postedAt": "2026-11-08T20:48:18+0000",
-      "url": "https://www.instagram.com/p/DffppeGj_BM/",
-      "photo": "https://scontent-sea5-1.xx.fbcdn.net/v/t51.82787-15/885258098_18645057085023605_7497550399139763328_n.jpg?_nc_cat=109&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=fDrFN8UJuswQ7kNvwE1LxRG&_nc_oc=Adqidaz9DR5tcu3RcpA9Gt3ZYxaEEyAwTg6l6J7vbRf8UbuXAUhwbcla8R2Gdj_b4vY&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AL-3X8kEAAAA&_nc_gid=ovJLhgt7XhSDuN20PscBQA&oh=00_AQSDg9aSwLPIwgjUGSSvanSvDMaDpyoqzQs8FAuDQ3XIKA&oe=6AFAE262",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "platform": "Instagram",
-      "sport": "mma",
-      "type": "post",
-      "name": "Natália Silva",
-      "handle": "@nataliasilvaufc",
-      "role": "fighter",
-      "fighterTier": "champion",
-      "source": "Instagram original author API",
-      "id": "18029418140700603",
-      "quote": "Dump de fotos dessa viagem incrível pro Mato Grosso do Sul com minha amiga lilianresendede . Folguis, foi tão incrível conhecer mais esse destino com você . Rimos tanto , vencemos medos juntas, colecionamos momentos e experiências inesquecíveis!!! Obrigada por esses dias, e por sua amizade . Te amo muitoo \n❤️",
-      "postedAt": "2026-11-08T19:40:23+0000",
-      "url": "https://www.instagram.com/p/Dffh4Gvmp1q/",
-      "photo": "https://scontent-ord5-1.xx.fbcdn.net/v/t51.82787-15/844557258_18502775998102959_8070114928142943024_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=7d201b&_nc_ohc=FJ1VCeZrgmkQ7kNvwHwTrJn&_nc_oc=AdopMwH8ZlJm5hzCfH7O95vol5ORpzArCQOstC74XKU_8-tWjECw3bobsO_8592zeNc&_nc_zt=23&_nc_ht=scontent-ord5-1.xx&edm=AL-3X8kEAAAA&_nc_gid=d-oCf6i9BHF4sedP3CVNCw&oh=00_AQSv4CiPrTXB63DJirnQ2Ebb5c9jx0MdOSmP4Mc5os2IMg&oe=6AFAC1FB",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "platform": "Instagram",
-      "sport": "mma",
-      "type": "post",
-      "name": "Ian Machado Garry",
-      "handle": "@iangarry",
-      "role": "fighter",
-      "source": "Instagram original author API",
-      "id": "18112346828237147",
-      "quote": "Anyone. Anytime.",
-      "postedAt": "2026-11-08T19:30:09+0000",
-      "url": "https://www.instagram.com/p/DffgkQSI7SC/",
-      "photo": "https://scontent-sea5-1.xx.fbcdn.net/v/t51.2885-15/278106050_704934484024570_4460548853789095298_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=7d201b&_nc_ohc=UPoOvAqeXvAQ7kNvwErqf-D&_nc_oc=AdpHiUIIDa7f8SOLtdGvTtVpC4_TcWH6nXOLUBZDJ_DWH5clsbz1TpKwjpNELOkIdYE&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AL-3X8kEAAAA&oh=00_AQSChj7GvGTCpkph722eL56xpL51caY20MvWpax0mO_sIw&oe=6AFAB13C",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:q3k4mwmengzciq2ytpf3ckoa/app.bsky.feed.post/3mzt55c55gc2a",
-      "cid": "bafyreiasg55adgvyznhprlggwyzannu4whcs4d5zxh5xbekhxrc42iktjm",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Brent Brookhouse",
-      "handle": "@pridefightingchampionships.com",
-      "role": "media",
-      "quote": "My theory is that someone halfheartedly floated the OTHER Dana White, Trump heard the name, thought they meant UFC Dana White and wouldn't listen to the \"actually we were talking about...\" and now UFC Dana has to go \"meet\" before formally declining to kinda paint over the situation being a mistake.",
-      "postedAt": "2026-11-08T19:23:08.742Z",
-      "date": "9 Nov 2026",
-      "url": "https://bsky.app/profile/pridefightingchampionships.com/post/3mzt55c55gc2a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:q3k4mwmengzciq2ytpf3ckoa/bafkreigdy2dezq35jr5pidrilhbx5rbe6nytft5o7irl47faclxctaepfu",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:q3k4mwmengzciq2ytpf3ckoa",
-      "engagement": {
-        "likes": 3,
-        "comments": 2,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T14:16:52.392Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "platform": "Instagram",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Willy Hutchinson",
-      "handle": "@willyhutchinson",
-      "role": "fighter",
-      "source": "Instagram original author API",
-      "id": "18102166538553110",
-      "quote": "From the age of 9, when I first stepped into a boxing gym, to becoming Amateur World Champion at 18, and now winning the WBC World Championship at just 28. It’s honestly unbelievable.\n\nThe ups and downs, the highs and lows, the sacrifices and everything in between. I can genuinely say I’m incredibly grateful for the journey so far. \n\nA massive thank you to everyone who sent their best wishes before the fight and to the thousands of people who have sent messages of congratulations since. I’ve read so many of them, and I appreciate every single one of you. Your support means more than you know. \n\nTwo chapters of the book are now complete. Amateur World Champion. Professional WBC World Champion.\n\nBut the story is far from finished…\n\nNow it’s time to push on and unify the division.\n\n#worldchampion #wbc #boxing #lifeisgood #thefuture",
-      "postedAt": "2026-11-08T19:00:57+0000",
-      "url": "https://www.instagram.com/p/DffdSgBEcYi/",
-      "photo": "https://scontent-iad3-2.xx.fbcdn.net/v/t51.2885-15/489857342_1230666408653259_967287912478916800_n.jpg?_nc_cat=109&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=xR991Tl7JlIQ7kNvwFDtBZ3&_nc_oc=AdrQTsK6viyEVbM1cw2t88IVJ3F1O6ekDNf3ao1eQFyl1uiE3iBuY4mkZZRmNcQQm9Y&_nc_zt=23&_nc_ht=scontent-iad3-2.xx&edm=AL-3X8kEAAAA&oh=00_AQRC6ucPxiWpbUjNG_XhETw0_Akk-1NXJoX8cuGm3XR9fg&oe=6AFAD7E0",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "platform": "Instagram",
-      "sport": "mma",
-      "type": "post",
-      "name": "Jiří Procházka",
-      "handle": "@jirkaprochazka",
-      "role": "fighter",
-      "source": "Instagram original author API",
-      "id": "17915663826288146",
-      "quote": "In my latest video I have introduced my new trainer Danny de Vries. \nReally enjoying all the challenges and skills this new chapter and teamwork is bringing //\\\\\n\nFull video streaming now exclusively on BJP.TV ✊\nShort version now on my YouTube channel!",
-      "postedAt": "2026-11-08T18:06:11+0000",
-      "url": "https://www.instagram.com/reel/DffXASlmSUX/",
-      "photo": "https://scontent-iad6-1.xx.fbcdn.net/v/t51.2885-15/107451555_580650825986481_5457884377238757129_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=7d201b&_nc_ohc=Xm35ywrdBKcQ7kNvwHG0t9N&_nc_oc=AdrNB6UC-VtI5xCudICaAPK--Iym4kjsrwa6p71m22UhCvjwfRzodExxN-7jqpO8wkA&_nc_zt=23&_nc_ht=scontent-iad6-1.xx&edm=AL-3X8kEAAAA&oh=00_AQQAd37pM1HA9lARgE04U5j3M_vBTLjA1S8Cf3F31Mo52w&oe=6AFAE127",
       "topic": "Original source post · claims may need confirmation"
     }
   ],
