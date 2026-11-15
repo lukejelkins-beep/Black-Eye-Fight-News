@@ -6,13 +6,14 @@ import {
   rankPositions, confirmedCareerHigh, publishedCurrentWeight
 } from './sumo-data.mjs';
 import { careerGraphs } from './sumo-career.mjs';
+import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verification.mjs';
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
 
 const ROOT = document.querySelector('#sumo-main');
 const tabs = [...document.querySelectorAll('[data-page]')];
 const DIVS = ['Makuuchi','Juryo','Makushita'];
 const STATE = {
-  roster: null, details: null, careerHistory: null, officialStyles: null, photoIndex: null, error: null, query: '', division: 'All',
+  roster: null, details: null, careerHistory: null, officialStyles: null, photoIndex: null, apiTrust: null, error: null, query: '', division: 'All',
   visible: 24, bashoDivision: 'Makuuchi', banzukeDivision: 'Makuuchi',
   day: null, profileLimit: 5, h2hOldestFirst: false, h2hOpponentLimit: 16,
   h2hSummary: null, h2hFull: null, h2hLoading: false, h2hLoadFailed: false,
@@ -353,7 +354,7 @@ function profileResults(w,limit){
   }).join('')+'</div>'+
   (matches.length>limit?'<div class="more-wrap"><button class="btn light" data-profile-limit="'+maxNext+
     '">VIEW LATEST '+Math.min(maxNext,matches.length)+' CACHED BOUTS</button></div>':'')+
-  '<p class="footnote">'+(careerRecent.length?'Recent results from a source-collected complete career ledger; independent JSA certification remains outstanding.':
+  '<p class="footnote">'+(careerRecent.length?'Recent results from the complete API career ledger; historical career-result verification status is shown above.':
     sourced.length?'This is a partial, recently cached bout sample, not the full career record.':
     'Current '+e(bashoLabel(details().bashoId))+' banzuke bouts only.')+'</p>';
 }
@@ -365,7 +366,7 @@ function profileTechniques(w){
     return '<div>'+careerWins.slice(0,7).map(x=>{
       const percentage=counted?Math.round(1000*Number(x.count)/counted)/10:0;
       return '<div class="chart-row"><span class="name">'+e(x.kimarite)+'</span><div class="bar-bg" role="meter" aria-label="'+e(x.kimarite)+' percentage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+percentage+'"><div style="width:'+percentage+'%"></div></div><strong>'+percentage+'%</strong></div>';
-    }).join('')+'</div><p class="footnote">'+counted+' career wins with source-recorded kimarite; forfeits excluded. Independent JSA full-history certification remains pending.</p>';
+    }).join('')+'</div><p class="footnote">'+counted+' career wins with source-recorded kimarite; forfeits excluded. Individual winning techniques are API-sourced and not independently confirmed bout by bout.</p>';
   }
   const enriched=detailFor(details(),w.sourceId);
   const direct=Array.isArray(enriched?.matches?.data?.records)?enriched.matches.data.records:[];
@@ -378,6 +379,16 @@ function profileTechniques(w){
   return '<div>'+dist.techniques.slice(0,7).map(x=>
     '<div class="chart-row"><span class="name">'+e(x.technique)+'</span><div class="bar-bg" role="meter" aria-label="'+e(x.technique)+' percentage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+x.percentage+'"><div style="width:'+x.percentage+'%"></div></div><strong>'+x.percentage+'%</strong></div>'
   ).join('')+'</div><p class="footnote">Distribution of '+dist.sampleWins+' winning techniques in the '+e(scope)+'. Not career percentages. Forfeits excluded.</p>';
+}
+function renderApiQuality(w){
+ const quality=wrestlerQuality(w,STATE.apiTrust);
+ if(!quality)return '<p class="footnote">Source data status is unavailable; this profile has not been independently certified.</p>';
+ return '<aside class="sumo-api-quality" aria-label="Research data quality">'+
+  '<div class="sumo-api-quality-label">API-TRUSTED · NON-PRODUCTION PREVIEW</div>'+
+  '<strong>'+e(quality.careerResultsStatus)+'</strong>'+
+  '<p>Complete cached Sumo API career data is accepted for development. This is not full-profile certification, bout-by-bout JSA certification or production approval.</p>'+
+  (quality.historicalReview?'<p class="sumo-api-review">Review: an older JSA career-record snapshot needs a matched-date follow-up. The current API record remains available for preview.</p>':'')+
+  '</aside>';
 }
 function renderProfile(id) {
   const w=wrestler(id);
@@ -427,7 +438,8 @@ function renderProfile(id) {
     '<div class="progress" aria-hidden="true"><div style="width:'+pct+'%"></div></div>'+
     '<p>Current tournament results · snapshot, not live</p></div></section>'+
     '<div class="official-source-link">'+officialLink+'<span>BEFN is independent of the Japan Sumo Association.</span></div>'+
-    formatStats(w,item?r:null)+
+    renderApiQuality(w)+
+     formatStats(w,item?r:null)+
     heading('Latest tournament · source-backed','Basho performance')+
     (item?recordChart(item):'<p class="missing">No current tournament data cached.</p>')+
     heading('Kimarite · source-backed career sample','Winning techniques')+
@@ -436,7 +448,7 @@ function renderProfile(id) {
     '<p><strong>BEFN overall:</strong> withheld pending a defensible, sumo-specific model. No invented technique or strength scores.</p>'+
     '<a class="btn light" href="#kimarite">LEARN THE KIMARITE</a></div></section></div>'+
     heading('Recorded opponents','Recent performance')+
-    '<p class="section-intro">Current-basho results and up to ten recent matches from the complete source-collected career history. These are research records, pending independent JSA certification.</p>'+
+    '<p class="section-intro">Current-basho results and up to ten recent matches from the complete source-collected career history. These are API-trusted research records; the independent career-result status is displayed above.</p>'+
     profileResults(w,STATE.profileLimit)+
     heading('Complete career ledger · research only','All recorded opponents')+
     profileRivalries(w)+
@@ -451,7 +463,7 @@ function profileRivalries(w){
   if(!profile||!Array.isArray(opponents))
     return note(STATE.h2hOpponentsFailed?'Opponent index currently unavailable; please try again later.':'Loading the full source-backed opponent directory…');
   const subset=opponents.slice(0,STATE.h2hOpponentLimit);
-  return '<p class="section-intro">'+profile.opponentCount+' distinct opponents recorded across the full API source career. Select any rival for a complete bout-by-bout history with winner, basho and kimarite. JSA full-career certification remains pending.</p>'+
+  return '<p class="section-intro">'+profile.opponentCount+' distinct opponents recorded across the full API source career. Select any rival for a complete bout-by-bout history with winner, basho and kimarite. Individual career bout details are API-sourced; full-profile certification has not been granted.</p>'+
     '<div class="sumo-rival-grid">'+subset.map(r=>{
       const opponent=wrestler(r.id),name=opponent?.shikonaEn||r.name||'Rikishi #'+r.id;
       return '<a class="sumo-rival" href="'+headToHeadUrl(w.sourceId,r.id)+'">'+
@@ -508,7 +520,7 @@ function renderHeadToHead(a,b) {
       '<button type="button" data-h2h-order="oldest" class="'+(STATE.h2hOldestFirst?'active':'')+'">Oldest first</button></div>'+
       historyRowsMarkup(history,a,b,Number.MAX_SAFE_INTEGER,STATE.h2hOldestFirst)+
       (!history.complete?note(history.source.includes('190-rikishi')?'Showing '+history.rows.length+' most recent of '+history.total+' career meetings. Full historical cache is '+(STATE.h2hLoading?'loading':'not yet loaded')+'.':'The API reports '+history.total+' meetings, but only '+history.rows.length+' individual matches are cached. The chronology is incomplete.'):
-       note('All '+history.total+' regular source-recorded meetings are represented in this cache. '+(history.special?.length?history.special.length+' non-regular meetings are stored separately. ':'')+'Independent JSA full-career certification remains pending.')):
+       note('All '+history.total+' regular source-recorded meetings are represented in this cache. '+(history.special?.length?history.special.length+' non-regular meetings are stored separately. ':'')+'Individual career bout details are API-sourced; full-profile certification has not been granted.')):
       note('The full career series is still loading or has not been sourced for this pairing. No totals are inferred from an isolated tournament.'))+
     (history?.complete&&history.special?.length?
       heading('Outside regular career W–L','Playoff and trial meetings')+
@@ -661,8 +673,8 @@ async function loadCompleteH2h(){
 }
 async function init(){
   try {
-    const [roster,details,styles,photos,careerHistory,h2hSummary]=await Promise.all([loadJson('data/sumo/rikishi-index.json'),loadJson('data/sumo/preview-details.json'),loadJson('data/sumo/official-style-evidence.json'),loadJson('data/sumo/approved-photos.json'),loadJson('data/sumo/career-history.json'),
-      loadJson('data/sumo/research-h2h-summary.json').catch(()=>null)]);
+    const [roster,details,styles,photos,careerHistory,h2hSummary,readiness]=await Promise.all([loadJson('data/sumo/rikishi-index.json'),loadJson('data/sumo/preview-details.json'),loadJson('data/sumo/official-style-evidence.json'),loadJson('data/sumo/approved-photos.json'),loadJson('data/sumo/career-history.json'),
+      loadJson('data/sumo/research-h2h-summary.json').catch(()=>null),loadJson('data/sumo/api-trusted-status.json')]);
     if(!Array.isArray(roster?.rikishi)||!Array.isArray(details?.featured)||roster?.count!==roster.rikishi.length) throw new Error('Sumo cache schema or roster total not valid');
     if((roster?.trackedDivisions||[]).join(',')!==DIVS.join(','))throw new Error('Sumo cache does not match the approved three-division scope');
     if(roster.rikishi.some(x=>!DIVS.includes(divisionOf(x.currentRank))))throw new Error('Out-of-scope division in Sumo index');
@@ -670,7 +682,8 @@ async function init(){
     if(photos?.schemaVersion!==1||!photos.bySourceId||typeof photos.bySourceId!=='object')throw new Error('Licensed Sumo photo manifest missing or malformed');
     if(careerHistory?.schemaVersion!==1||!careerHistory.bySourceId)throw new Error('Sumo career timeline snapshot invalid');
     if(h2hSummary&&(h2hSummary.schemaVersion!==1||h2hSummary.cohortSize!==190||h2hSummary.certified!==false))throw new Error('Research H2H summary failed schema validation');
-    STATE.roster=roster;STATE.details=details;STATE.officialStyles=styles;STATE.photoIndex=photos.bySourceId;STATE.careerHistory=careerHistory;STATE.h2hSummary=h2hSummary;
+    validateSumoPreviewReadiness(readiness,roster);
+    STATE.roster=roster;STATE.details=details;STATE.officialStyles=styles;STATE.photoIndex=photos.bySourceId;STATE.careerHistory=careerHistory;STATE.h2hSummary=h2hSummary;STATE.apiTrust=readiness;
     render();
   } catch(error){
     STATE.error=error.message || 'Unable to load the preview dataset';
