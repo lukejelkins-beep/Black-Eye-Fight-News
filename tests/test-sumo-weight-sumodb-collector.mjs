@@ -209,14 +209,27 @@ test('unpublished or nonstandard debut rank cannot create a numbered banzuke ent
  assert.deepEqual(rows.map(x=>x.rankEn),[null,'Makushita 3 East','Yokozuna 1 West']);
 });
 
-test('only unresolved strict fast-lane rank coverage gets a second rank-source request',()=>{
+test('rank-only strict failures receive one bounded dated-rank source check',()=>{
  const candidate={classification:'candidate-for-strict-audit',blockers:[]};
  const rankFailure={blockers:['independent-official-banzuke-rank-coverage']};
- const before={careerRecordCrosscheck:{independentBashoRows:[{bashoId:'202509',wins:8,losses:7}]}};
+ const rankAndUmbrella={blockers:[
+  'preflight-prerequisites-not-met','independent-official-banzuke-rank-coverage']};
+ const rankOnlyPreflight={classification:'needs-source-or-manual-review',
+  blockers:['independent-JSA-historical-ranks-not-compared']};
+ const before={careerRecordCrosscheck:{independentBashoRows:[{
+  bashoId:'202509',wins:8,losses:7}]}};
  assert.equal(requiresCareerRecordCrosscheck(before,candidate,rankFailure),true);
+ assert.equal(requiresCareerRecordCrosscheck(before,rankOnlyPreflight,rankAndUmbrella),true);
  const after={careerRecordCrosscheck:{independentBashoRows:[{
   bashoId:'202509',wins:8,losses:7,rankEn:null}]}};
  assert.equal(requiresCareerRecordCrosscheck(after,candidate,rankFailure),false);
- assert.equal(requiresCareerRecordCrosscheck(before,candidate,{blockers:[
-  'preflight-prerequisites-not-met','independent-official-banzuke-rank-coverage']}),false);
+ assert.equal(requiresCareerRecordCrosscheck(after,rankOnlyPreflight,rankAndUmbrella),false);
+ // Source evidence cannot bypass a second unresolved official blocker.
+ const otherBlocked={classification:'needs-source-or-manual-review',blockers:[
+  'independent-JSA-historical-ranks-not-compared',
+  'official-absence-total-unpublished-or-disagree']};
+ assert.equal(requiresCareerRecordCrosscheck(before,otherBlocked,rankAndUmbrella),false);
+ assert.equal(requiresCareerRecordCrosscheck(before,rankOnlyPreflight,{blockers:[
+  'preflight-prerequisites-not-met','independent-official-banzuke-rank-coverage',
+  'independent-official-completed-tournament-results']}),false);
 });
