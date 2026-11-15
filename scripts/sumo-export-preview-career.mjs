@@ -70,6 +70,7 @@ export function createPreviewCareer(roster,profiles,asOf){
    rankCrosscheck:'https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+w.officialNskId+'/',
    currentListedWeight:currentOfficial?{
      kg:currentOfficial.weightKg,
+     heightCm:currentOfficial.heightCm,
      source:currentOfficial.sourceUrl,
      officialAsOf:currentOfficial.officialAsOf,
      datedMeasurement:false
