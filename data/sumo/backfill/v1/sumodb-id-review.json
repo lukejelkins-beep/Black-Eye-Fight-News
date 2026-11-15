@@ -51,8 +51,11 @@
       "matchedRank": "Makushita 5 East",
       "matchEvidence": "November 2026 SumoDB banzuke rank slot and shikona link resolve to this numbered SumoDB wrestler page; ID unique across frozen 190",
       "confirmedForCollection": true,
-      "profileSourceChecked": false,
-      "profileCheckNote": "Correct banzuke slot's outgoing wrestler-profile URL verified; profile fetch hit 403 and requires later identity check"
+      "profileSourceChecked": true,
+      "profileCheckNote": "Direct SumoDB wrestler profile rechecked successfully on 2026-11-15: header name, Japan-local DOB, and heya agree with frozen roster; previous 403 was temporary.",
+      "verifiedBirthDate": "August 4, 2003",
+      "verifiedHeya": "Tokitsukaze",
+      "identityEvidenceStatus": "matched-direct-profile-header"
     },
     {
       "sourceId": 9135,
@@ -99,8 +102,11 @@
       "matchedRank": "Makushita 44 East",
       "matchEvidence": "November 2026 SumoDB banzuke rank slot and shikona link resolve to this numbered SumoDB wrestler page; ID unique across frozen 190",
       "confirmedForCollection": true,
-      "profileSourceChecked": false,
-      "profileCheckNote": "Correct banzuke slot's outgoing wrestler-profile URL verified; profile fetch hit 403 and requires later identity check"
+      "profileSourceChecked": true,
+      "profileCheckNote": "Direct SumoDB wrestler profile rechecked successfully on 2026-11-15: header name, Japan-local DOB, and heya agree with frozen roster; previous 403 was temporary.",
+      "verifiedBirthDate": "October 29, 2001",
+      "verifiedHeya": "Asahiyama",
+      "identityEvidenceStatus": "matched-direct-profile-header"
     },
     {
       "sourceId": 9104,
@@ -181,8 +187,11 @@
     "No date interpolation and no uncertified public results",
     "Review source using current and former ring names"
   ],
-  "status": "seven-sumodb-ids-resolved; current data ready for automated source-identity safeguards",
+  "status": "all-seven-previously-unmapped-IDs-now-individually-verified-against-SumoDB-profiles",
   "mappedCount": 7,
   "reviewedAt": "2026-11-15",
-  "note": "Identity mapping is not a career or weight certification; routine collector validates current or historical shikona before recording measurements. Responses 403 at two profile URLs were not bypassed."
+  "note": "Identity mapping is not a career or weight certification; routine collector validates current or historical shikona before recording measurements. Responses 403 at two profile URLs were not bypassed.",
+  "individualProfilesSourceChecked": 7,
+  "remainingIndividualProfileChecks": 0,
+  "updatedAt": "2026-11-15"
 }
