@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-15T13:39:07.921Z",
-  "checkedAt": "2026-11-15T13:39:07.921Z",
+  "attemptedAt": "2026-11-15T14:29:08.335Z",
+  "checkedAt": "2026-11-15T14:29:08.335Z",
   "windowDays": 28,
   "articlesChecked": 31,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 46,
   "publisherSourcesConfigured": 32,
-  "linksFound": 14,
-  "newEmbedsVerified": 0,
+  "linksFound": 15,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -325,6 +325,27 @@
       "embedVerified": true,
       "linkPriority": 12,
       "url": "https://www.threads.com/t/DfvYoHnmdi1/"
+    },
+    {
+      "type": "post",
+      "platform": "X",
+      "sport": "boxing",
+      "name": "The Ring",
+      "role": "media",
+      "handle": "@RingMagazine",
+      "nativeEmbed": true,
+      "originalDateUnverified": false,
+      "postedAt": "2026-11-14T01:29:05.185Z",
+      "sourceLinkedAt": "2026-11-15T11:11:03.000Z",
+      "discoveredAt": "2026-11-15T14:29:08.335Z",
+      "sourcePublisher": "Boxing News",
+      "evidenceUrl": "https://boxingnewsonline.net/news/devin-haney-on-garcia-lopez-winner/",
+      "summary": "Original social post linked in Boxing News coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://x.com/ringmagazine/status/2121415086166212617"
     },
     {
       "type": "post",
@@ -2167,22 +2188,6 @@
       "summary": "Original social post linked in Fight Talk curated original link coverage. Its author, caption and publication date appear in the official embed.",
       "source": "Public publisher link + official Meta oEmbed verification",
       "url": "https://www.instagram.com/p/DfdZjeGIliA/"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "mma",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-06T19:51:05+00:00",
-      "discoveredAt": "2026-11-09T03:36:56.892Z",
-      "sourcePublisher": "UFC",
-      "evidenceUrl": "https://www.ufc.com/news/davey-grant-moving-to-las-vegas-was-best-decision-ufc-vegas-124",
-      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher link + official Meta oEmbed verification",
-      "url": "https://www.instagram.com/reel/DfSX-KQp3uB/"
     }
   ],
   "seenOriginals": [
@@ -2725,6 +2730,10 @@
     {
       "url": "https://www.threads.com/t/DfwFEXjm58o/",
       "firstSeen": "2026-11-15T08:42:12.563Z"
+    },
+    {
+      "url": "https://x.com/ringmagazine/status/2121415086166212617",
+      "firstSeen": "2026-11-15T14:29:08.335Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
