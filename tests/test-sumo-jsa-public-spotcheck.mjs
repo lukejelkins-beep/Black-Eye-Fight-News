@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {htmlToPublicText,parseOfficialProfile,parseJsaBashoResults,reconcileJsaBashoResults,cohortCurrentBasho,parseJsaBashoRanks,reconcileJsaBashoRanks,officialSpotcheckPriority} from '../scripts/sumo-jsa-public-spotcheck.mjs';
+import {htmlToPublicText,parseOfficialProfile,parseJsaBashoResults,reconcileJsaBashoResults,cohortCurrentBasho,parseJsaBashoRanks,reconcileJsaBashoRanks,officialSpotcheckPriority,compareJsaListedMeasurement} from '../scripts/sumo-jsa-public-spotcheck.mjs';
 const w={sourceId:16,officialNskId:2892,shikonaEn:'Nishikigi',
  currentRank:'Makushita 2 East',heya:'Isenoumi',heightCm:186,weightKg:184};
 const official=String.raw`<!doctype html><html><head><script>fake injection</script></head><body>
@@ -216,4 +216,30 @@ test('prioritise current top-division JSA official profile checks without repeat
  assert.equal(officialSpotcheckPriority(
   {sourceId:1,currentRank:'Juryo 1 East'},
   {sourceId:2,currentRank:'Juryo 1 West'})<0,true);
+});
+
+test('numeric JSA display precision versus decimal API retains source differences',()=>{
+ assert.deepEqual(compareJsaListedMeasurement(192,191.5),{
+  match:true,method:'integer-display-rounding-compatible',published:192,api:191.5});
+ assert.equal(compareJsaListedMeasurement(162,161.6).match,true);
+ assert.equal(compareJsaListedMeasurement(160,160.1).match,true);
+ assert.equal(compareJsaListedMeasurement(152,152.3).match,true);
+ assert.deepEqual(compareJsaListedMeasurement(173,172),{
+  match:false,method:'disagreement',published:173,api:172});
+ assert.equal(compareJsaListedMeasurement(null,172).match,null);
+ assert.equal(compareJsaListedMeasurement(172,null).match,null);
+ assert.equal(compareJsaListedMeasurement(171,171).method,'exact');
+});
+test('official public profile reports rounding compatibility without modifying decimal API measurement',()=>{
+ const api={...w,heightCm:191.5,weightKg:161.6};
+ const html=official.replace('186.0cm','192cm').replace('184.0kg','162kg');
+ const p=parseOfficialProfile(html,api);
+ assert.equal(p.status,'basic-fields-parsed');
+ assert.equal(p.fieldComparisons.height,true);
+ assert.equal(p.fieldComparisons.weight,true);
+ assert.equal(p.measurementComparisonDetails.height.method,'integer-display-rounding-compatible');
+ assert.equal(p.measurementComparisonDetails.weight.method,'integer-display-rounding-compatible');
+ assert.equal(api.heightCm,191.5);
+ assert.equal(api.weightKg,161.6);
+ assert.equal(p.historicMeasurementsChanged,false);
 });
