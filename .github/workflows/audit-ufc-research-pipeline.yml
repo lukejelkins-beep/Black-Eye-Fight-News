@@ -14,7 +14,8 @@ on:
       - 'tests/test-ufc-*.mjs'
       - '.github/workflows/audit-ufc-research-pipeline.yml'
   push:
-    branches: [main]
+    # Existing offline Stage 3 audit only; research branch is non-production.
+    branches: [main, research/ufc-334-six-bout-recheck-20261115]
     paths:
       - 'data/ufc-*-profiles.json'
       - 'data/ufc-independent-full-career-verification.json'
