@@ -1,0 +1,37 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {careerPoints,careerGraphs} from '../assets/sumo-career.mjs';
+
+const w={sourceId:28,officialNskId:3617,weightKg:145,currentRank:'Maegashira 5 East'};
+const history={
+ bySourceId:{28:{sumoApiId:28,officialNskId:3617,
+   weight:[{basho:'201503',kg:113},{basho:'202405',kg:142}],
+   rank:[{basho:'201503',rank:'Jonokuchi 15 West'},
+    {basho:'202405',rank:'Maegashira 5 West'}],
+   rankSource:'https://sumodb.sumogames.de/Rikishi.aspx?r=12226',
+   rankCrosscheck:'https://www.sumo.or.jp/EnSumoDataRikishi/profile/3617/'}}};
+test('current listed weight is NOT a historical tournament weigh-in',()=>{
+ const points=careerPoints(w,structuredClone(history),'202611','202609','Maegashira 9 West');
+ assert.deepEqual(points.weight.map(x=>x.basho),['201503','202405']);
+ assert.deepEqual(points.weight.map(x=>x.kg),[113,142]);
+ assert.equal(points.currentListedWeightKg,145);
+ assert.equal(points.ranks.at(-1).basho,'202611');
+});
+test('without dated source weights, graph has no invented dots and labels current weight separately',()=>{
+ const point=careerPoints({...w,sourceId:999},null,'202611','202609','Maegashira 9 West');
+ assert.equal(point.weight.length,0);
+ assert.equal(point.currentListedWeightKg,145);
+ const html=careerGraphs({...w,sourceId:999},null,'202611','202609','Maegashira 9 West');
+ assert.ok(html.includes('Historical weight measurements have not been sourced'));
+ assert.ok(html.includes('Currently listed: 145 kg (undated)'));
+ assert.ok(!html.includes('Nov 2026 — 145 kg'));
+});
+test('sourced dates stay unchanged, no extra present-basho dot or fabricated highest rank',()=>{
+ const input=structuredClone(history);
+ const html=careerGraphs(w,input,'202611','202609','Maegashira 9 West');
+ assert.ok(html.includes('May 2024 — 142 kg'));
+ assert.ok(!html.includes('Nov 2026 — 145 kg'));
+ assert.ok(html.includes('Currently listed: 145 kg (undated)'));
+ assert.ok(html.includes('Highest rank: Maegashira 5 East'));
+ assert.deepEqual(input,history,'source cache must be immutable');
+});
