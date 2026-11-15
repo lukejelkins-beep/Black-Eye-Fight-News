@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {preflightRikishi,summarizePreflight,planPreflightNextAction,documentedDebutRankGap,supplementalHistoricalBashoCoverage,independentHistoricalRankCoverage}
+import {preflightRikishi,summarizePreflight,planPreflightNextAction,documentedDebutRankGap,supplementalHistoricalBashoCoverage,independentHistoricalRankCoverage,independentlyVerifiedCurrentBashoCutoff}
  from '../scripts/sumo-certification-preflight-190.mjs';
 const get=path=>JSON.parse(readFileSync(new URL('../'+path,import.meta.url),'utf8'));
 const roster=get('data/sumo/rikishi-index.json');
@@ -251,4 +251,35 @@ test('missing JSA historical rank table requires >=75% exact independent dated r
  j.officialRankRecords=[{bashoId:'202611',rank:'Jonidan 22 East'}];
  assert.equal(independentHistoricalRankCoverage(p,j,s).passed,false,
   'published JSA ranks lacking a validated reconciliation cannot be bypassed');
+});
+
+test('dated JSA current-basho outcome can reconcile exactly one later W/L without mutating past results',()=>{
+ const p={career:{wins:60,losses:41,absences:7},
+  perBasho:[{bashoId:'202611',wins:0,losses:3}],
+  headToHead:[{meetings:[{bashoId:'202611',day:1},{bashoId:'202611',day:4},
+   {bashoId:'202611',day:5}]}]};
+ const j={rawHtmlSha256:'a'.repeat(64),
+  officialAsOf:{monthYear:'November 2026',day:8},
+  career:{wins:60,losses:42,absences:7},
+  officialBashoRecords:[{bashoId:'202611',wins:0,losses:4}],
+  bashoReconciliation:{discrepantBasho:0}};
+ const result=independentlyVerifiedCurrentBashoCutoff(p,j,'202611');
+ assert.equal(result.passed,true);
+ assert.equal(result.extraLosses,1);
+ assert.equal(result.lastCachedBoutDay,5);
+ assert.equal(result.sourceDay,8);
+ // Never use publication lag to hide contradictory historical aggregates,
+ // omitted absence totals, an undated source or two new bouts.
+ for(const change of [
+  x=>{x.career.absences=null;},
+  x=>{x.career.losses=43;},
+  x=>{x.officialBashoRecords[0].losses=5;},
+  x=>{x.officialAsOf.day=5;},
+  x=>{x.officialAsOf.monthYear='September 2026';},
+  x=>{x.rawHtmlSha256='bad';},
+  x=>{x.bashoReconciliation.discrepantBasho=1;}
+ ]){
+  const altered=structuredClone(j);change(altered);
+  assert.equal(independentlyVerifiedCurrentBashoCutoff(p,altered,'202611').passed,false);
+ }
 });
