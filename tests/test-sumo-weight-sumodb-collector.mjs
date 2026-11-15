@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {permissionAllowsCollection,conservativeRobotsAllow,sourceIdentityEvidence,
  corroborateSavedMeasurements,requiresIdentityRecheck,
- parseSumoDbCareerRecord,requiresCareerRecordCrosscheck}
+ parseSumoDbCareerRecord,parseSumoDbBashoRecords,requiresCareerRecordCrosscheck}
  from '../scripts/sumo-weight-sumodb-collector.mjs';
 
 test('no automated historical collection without documented provider permission',()=>{
@@ -163,4 +163,40 @@ test('run SumoDB career crosscheck only for unresolved official totals and only 
  assert.equal(requiresCareerRecordCrosscheck({},{
   classification:'candidate-for-strict-audit',blockers:['official-absence-total-unpublished-or-disagree']}),false);
  assert.equal(requiresCareerRecordCrosscheck(null,missing),false);
+});
+
+test('old SumoDB banzuke records provide only explicit tournament-dated W-L-A',()=>{
+ const html='<table>'+
+  '<tr><td>2005.05</td><td>Jk17e</td><td><a>4-3</a></td></tr>'+
+  '<tr><td>2005.07</td><td>Jd19e</td><td>5-2</td></tr>'+
+  '<tr><td>2017.09</td><td>M4w</td><td>1-2-12</td></tr>'+
+  '<tr><td>2026.11</td><td>M3w</td><td>6-1</td></tr>'+
+  '</table><div>Career Record 432-331-96/759</div>';
+ const actual=parseSumoDbBashoRecords(html);
+ assert.deepEqual(actual,[
+  {bashoId:'200505',wins:4,losses:3,absences:null},
+  {bashoId:'200507',wins:5,losses:2,absences:null},
+  {bashoId:'201709',wins:1,losses:2,absences:12},
+  {bashoId:'202611',wins:6,losses:1,absences:null}
+ ]);
+});
+test('do not fabricate old tournaments, fake dates or contradicting results',()=>{
+ const bad='<tr><td>2026.02</td><td>J3e</td><td>4-3</td></tr>'+
+ '<tr><td>2026.03</td><td>5-12</td></tr>'+
+ '<tr><td>2026.05</td><td>2017.07</td><td>4-3</td></tr>';
+ assert.deepEqual(parseSumoDbBashoRecords(bad),[]);
+ const duplicate='<tr><td>2025.09</td><td>4-3</td></tr>'+
+  '<tr><td>2025.09</td><td>3-4</td></tr>';
+ assert.throws(()=>parseSumoDbBashoRecords(duplicate),/Contradictory/);
+});
+test('missing older JSA basho rows receive a second one-time source check',()=>{
+ const jsaGap={classification:'needs-source-or-manual-review',
+  blockers:['official-completed-basho-ledger-coverage-incomplete']};
+ const old={careerRecordCrosscheck:{career:{wins:100,losses:20,absences:0}}};
+ assert.equal(requiresCareerRecordCrosscheck(old,jsaGap),true);
+ const saved={careerRecordCrosscheck:{...old.careerRecordCrosscheck,
+  independentBashoRows:[]}};
+ assert.equal(requiresCareerRecordCrosscheck(saved,jsaGap),false);
+ assert.equal(requiresCareerRecordCrosscheck(saved,{
+  classification:'candidate-for-strict-audit',blockers:[]}),false);
 });
