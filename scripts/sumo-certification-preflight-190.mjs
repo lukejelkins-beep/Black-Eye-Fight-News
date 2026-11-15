@@ -168,6 +168,7 @@ export function summarizePreflight(rows){
    .sort().map(lane=>[lane,rows.filter(x=>x.certificationLane===lane).length]));
  return {schemaVersion:1,cohortSize:190,scope:'Research-only strict Sumo career preflight; never self-certifies',
   candidateForStrictAudit:rows.filter(x=>x.classification==='candidate-for-strict-audit').length,
+  sourceCorroboratedDebutRankGaps:rows.filter(x=>x.documentedNoPublishedNumberedDebutRank).length,
   needsSourceOrManualReview:rows.filter(x=>x.blockers.length>0).length,
   blockerCounts:Object.fromEntries(all.map(x=>[x,count(x)])),
   certificationLanes:laneCount,
