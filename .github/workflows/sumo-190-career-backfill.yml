@@ -86,6 +86,7 @@ jobs:
           node --check scripts/sumo-audit-h2h-chronology.mjs
           node --check scripts/sumo-export-preview-h2h.mjs
           bash -n scripts/sumo-sync-h2h-preview.sh
+          bash -n scripts/sumo-verify-preview-build.sh
           node --check scripts/sumo-jsa-public-spotcheck.mjs
           node --check scripts/sumo-jsa-corrected-basho-audit.mjs
           node --check scripts/sumo-research-run-health.mjs
@@ -186,6 +187,12 @@ jobs:
         if: steps.preflight.outputs.run == 'true'
         shell: bash
         run: bash scripts/sumo-sync-h2h-preview.sh
+
+      - name: Validate isolated Sumo test branch with Render-equivalent build tests
+        id: preview_qa
+        if: steps.preflight.outputs.run == 'true'
+        shell: bash
+        run: bash scripts/sumo-verify-preview-build.sh
 
       - name: Record failed research job stage for diagnosis
         if: ${{ failure() && steps.preflight.outputs.run == 'true' }}
