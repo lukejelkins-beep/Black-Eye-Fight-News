@@ -363,7 +363,7 @@ test('Sumo preview all-190 career dates stay source-labelled and uncertified',()
 test('current measurement cards use JSA publication separately from source API measurements',()=>{
  const wrestler={sourceId:9104,officialNskId:4357,weightKg:172};
  const history={bySourceId:{9104:{sumoApiId:9104,officialNskId:4357,
-   currentListedWeight:{kg:173,datedMeasurement:false,
+   currentListedWeight:{kg:173,heightCm:197,datedMeasurement:false,
     source:'https://www.sumo.or.jp/EnSumoDataRikishi/profile/4357/'}}}};
  const current=publishedCurrentWeight(wrestler,history);
  assert.equal(current.kg,173);
@@ -371,15 +371,34 @@ test('current measurement cards use JSA publication separately from source API m
  assert.equal(current.underReview,true);
  assert.equal(current.apiKg,172);
  assert.equal(current.datedWeighIn,false);
+ assert.equal(current.heightCm,197);
+ assert.equal(current.heightSource,'JSA current listing');
+ assert.equal(current.heightUnderReview,false);
  const rounded=publishedCurrentWeight({...wrestler,weightKg:172.6},history);
  assert.equal(rounded.underReview,false,'rounded source value is compatible');
  const unknown=publishedCurrentWeight({...wrestler,officialNskId:1},history);
  assert.equal(unknown.source,'Sumo API roster listing');
  assert.equal(unknown.kg,172,'mismatched identity must not import official data');
+ assert.equal(unknown.heightSource,'Sumo API roster listing');
 });
 test('current listed weights feed both Sumo profile information and matchup cards with provenance',()=>{
  const js=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
  assert.match(js,/publishedCurrentWeight\(w,STATE\.careerHistory\)/);
  assert.match(js,/Weight review/);
  assert.match(js,/currentListing\.weightSource/);
+});
+
+test('differing official JSA height remains labelled and reviewable; cannot generate an historical weigh-in',()=>{
+ const w={sourceId:8860,officialNskId:4310,heightCm:190.1,weightKg:161.6};
+ const doc={bySourceId:{8860:{sumoApiId:8860,officialNskId:4310,
+  currentListedWeight:{kg:162,heightCm:192,datedMeasurement:false,
+    source:'https://www.sumo.or.jp/EnSumoDataRikishi/profile/4310/'}}}};
+ const listed=publishedCurrentWeight(w,doc);
+ assert.equal(listed.heightCm,192);
+ assert.equal(listed.heightUnderReview,true);
+ assert.equal(listed.apiHeightCm,190.1);
+ assert.equal(listed.underReview,false);
+ assert.equal(listed.datedWeighIn,false);
+ const wrong={bySourceId:{8860:{...doc.bySourceId[8860],officialNskId:1111}}};
+ assert.equal(publishedCurrentWeight(w,wrong).heightSource,'Sumo API roster listing');
 });
