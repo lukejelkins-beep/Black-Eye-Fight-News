@@ -40,6 +40,10 @@ export function auditJsaSnapshot(rosterItem,doc){
   officialCareerTotalsNotFound:careerTotalsNotFound,
   officialCareerTotalSourceUnresolved:careerTotalsNotFound,
   publicFieldDisagreements:publicFields,
+  roundedCompatiblePublicMeasurements:Object.entries(doc.measurementComparisonDetails||{})
+    .filter(([_,d])=>d?.method==='integer-display-rounding-compatible')
+    .map(([field,d])=>({field,officialDisplayed:d.published,apiPrecise:d.api,
+      status:'compatible-with-official-integer-display-not-a-new-weigh-in'})),
   tournamentRowsCompared:Number(rec.comparedBasho||0),
   tournamentRowsAgreed:Number(rec.agreeingBasho||0),
   unreconciledTournamentCount:differences.length,
@@ -79,6 +83,10 @@ export function buildJsaExceptionReport(roster,cache){
   historicalCases:review.filter(x=>x.unreconciledTournamentCount>0).map(x=>x.sourceId),
   profileReviewCases:review.length,
   officialCareerTotalsNotFoundCases:review.filter(x=>x.officialCareerTotalsNotFound).length,
+  roundedCompatibleProfileCount:checked.filter(x=>
+    x.roundedCompatiblePublicMeasurements.length>0).length,
+  roundedCompatibleMeasurements:checked.reduce((n,x)=>
+    n+x.roundedCompatiblePublicMeasurements.length,0),
   genuineParserOrFieldReviewCases:review.filter(x=>!x.officialCareerTotalsNotFound&&x.unreconciledTournamentCount===0).length,
   cases:review.sort((a,b)=>b.unreconciledTournamentCount-a.unreconciledTournamentCount||a.sourceId-b.sourceId),
   sourceBashoResultsIndependentlyCertified:0,
