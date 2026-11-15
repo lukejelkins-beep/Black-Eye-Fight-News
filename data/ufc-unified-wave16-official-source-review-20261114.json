@@ -1,0 +1,195 @@
+{
+  "schema": 1,
+  "scope": "ufc-wave16-amosov-hafez-official-biography-source-only-review",
+  "snapshot": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "sourceMethod": "Complete dated UFC.com athlete biography and official dated fight narratives, not misleading graphical Win tiles; pinned independent Greco UFCStats-derived fighter/event/fight URLs; native numbered original full fight history and measured rounds must pass strict Stage3 separately.",
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "fighters": {
+    "yaroslav-amosov": {
+      "fighterName": "Yaroslav Amosov",
+      "officialFighterUrl": "https://www.ufc.com/athlete/yaroslav-amosov",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/f139d6836efd43dd",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2025-12-13",
+          "opponent": "Neil Magny",
+          "result": "win"
+        },
+        {
+          "date": "2026-05-09",
+          "opponent": "Joel Alvarez",
+          "result": "win"
+        }
+      ],
+      "reviewNote": "Complete dated UFC.com narrative (two UFC submission wins); former Bellator events do not count in UFC measured career.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "unique original native fight IDs and paired corners",
+        "source match every completed UFC event/outcome and career completeness",
+        "feeder DWCS/RTU qualifier source exclusions",
+        "full frozen 783-person strict Stage3 successful audit"
+      ]
+    },
+    "yuneisy-duben": {
+      "fighterName": "Yuneisy Duben",
+      "officialFighterUrl": "https://www.ufc.com/athlete/yuneisy-duben",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/c3d2b9bcb4cead6b",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2025-03-15",
+          "opponent": "Carli Judice",
+          "result": "loss"
+        },
+        {
+          "date": "2026-06-06",
+          "opponent": "Jeisla Chaves",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "UFC athlete 'Win' graphical tiles misleading. Both complete UFC bouts are losses per official dated narrative; 2024-09-03 DWCS Shannon Clark win is feeder only.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "unique original native fight IDs and paired corners",
+        "source match every completed UFC event/outcome and career completeness",
+        "feeder DWCS/RTU qualifier source exclusions",
+        "full frozen 783-person strict Stage3 successful audit"
+      ]
+    },
+    "alex-reyes": {
+      "fighterName": "Alex Reyes",
+      "officialFighterUrl": "https://www.ufc.com/athlete/alex-reyes",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/dc07493a87dc0a6e",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2017-09-16",
+          "opponent": "Mike Perry",
+          "result": "loss"
+        },
+        {
+          "date": "2023-09-16",
+          "opponent": "Charlie Campbell",
+          "result": "loss"
+        },
+        {
+          "date": "2024-08-17",
+          "opponent": "Tom Nolan",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "Entire three-UFC-bout career all losses; athlete card has mislabeled graphical Win tiles. Original 2017 bout must not be discarded due to 36-month eligibility.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "unique original native fight IDs and paired corners",
+        "source match every completed UFC event/outcome and career completeness",
+        "feeder DWCS/RTU qualifier source exclusions",
+        "full frozen 783-person strict Stage3 successful audit"
+      ]
+    },
+    "anshul-jubli": {
+      "fighterName": "Anshul Jubli",
+      "officialFighterUrl": "https://www.ufc.com/athlete/anshul-jubli",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/a72a2a769fa5a2be",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2023-02-04",
+          "opponent": "Jeka Saragih",
+          "result": "win"
+        },
+        {
+          "date": "2023-10-21",
+          "opponent": "Mike Breeden",
+          "result": "loss"
+        },
+        {
+          "date": "2025-02-08",
+          "opponent": "Quillan Salkilld",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "Official UFC February 2023 Road to UFC Asia lightweight final is included once as official Octagon bout; 2022-10-23 RTU semifinal with KyeongPyo Kim is non-UFC qualifier and excluded. UFC.com event may show 2023-02-05 by Australian local date; anchored US official fight night date must be independently verified.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "unique original native fight IDs and paired corners",
+        "source match every completed UFC event/outcome and career completeness",
+        "feeder DWCS/RTU qualifier source exclusions",
+        "full frozen 783-person strict Stage3 successful audit"
+      ]
+    },
+    "ante-delija": {
+      "fighterName": "Ante Delija",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ante-delija",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/7d8435c56043b0ae",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2025-09-06",
+          "opponent": "Marcin Tybura",
+          "result": "win"
+        },
+        {
+          "date": "2025-11-01",
+          "opponent": "Waldo Cortes Acosta",
+          "result": "loss"
+        },
+        {
+          "date": "2026-02-21",
+          "opponent": "Serghei Spivac",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "UFC.com athlete card currently shows two graphical wins even where the narrative unambiguously documents 2025-11-01 and 2026-02-21 losses. Three completed Octagon contests, past PFL bouts excluded.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "unique original native fight IDs and paired corners",
+        "source match every completed UFC event/outcome and career completeness",
+        "feeder DWCS/RTU qualifier source exclusions",
+        "full frozen 783-person strict Stage3 successful audit"
+      ]
+    },
+    "bassil-hafez": {
+      "fighterName": "Bassil Hafez",
+      "officialFighterUrl": "https://www.ufc.com/athlete/bassil-hafez",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/f4d92416da98804b",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2023-07-15",
+          "opponent": "Jack Della Maddalena",
+          "result": "loss"
+        },
+        {
+          "date": "2024-06-01",
+          "opponent": "Mickey Gall",
+          "result": "win"
+        },
+        {
+          "date": "2024-11-16",
+          "opponent": "Oban Elliott",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "Three official UFC fights independently dated; later suspension is not a fight and must not cause an invented UFC result. UFC page labels losing bouts with misleading graphical Win icon.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "unique original native fight IDs and paired corners",
+        "source match every completed UFC event/outcome and career completeness",
+        "feeder DWCS/RTU qualifier source exclusions",
+        "full frozen 783-person strict Stage3 successful audit"
+      ]
+    }
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-ikram-kavanagh-complete-careers-20261115",
+  "asOf": "2026-11-15",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336"
+  },
+  "sourceMethod": "Independent source checks: full dated UFC.com athlete records with six UFC bouts each; pinned Greco UFCStats athlete IDs and original fight URLs; native UFCalendar numeric IDs, paired opponents, winners and completed round metrics. Verified DWCS bouts recorded but not counted.",
+  "fighters": {
+    "ikram-aliskerov": {
+      "name": "Ikram Aliskerov",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ikram-aliskerov",
+      "ufcStatsFighterId": "b07aed698fba8624",
+      "nativeFighterId": "441",
+      "officialUfcCareerBoutCount": 6,
+      "bouts": [
+        {
+          "date": "2023-05-06",
+          "opponent": "Phil Hawes",
+          "result": "win",
+          "nativeBoutId": "59640",
+          "nativeFighterId": "441",
+          "originalOpponentNumericId": "1210",
+          "fightUrl": "https://ufcstats.com/fight-details/d22de60b7a3d908c"
+        },
+        {
+          "date": "2023-10-21",
+          "opponent": "Warlley Alves",
+          "result": "win",
+          "nativeBoutId": "60000",
+          "nativeFighterId": "441",
+          "originalOpponentNumericId": "2329",
+          "fightUrl": "https://ufcstats.com/fight-details/7024385b5107bd4b"
+        },
+        {
+          "date": "2024-06-22",
+          "opponent": "Robert Whittaker",
+          "result": "loss",
+          "nativeBoutId": "38806",
+          "nativeFighterId": "441",
+          "originalOpponentNumericId": "1043",
+          "fightUrl": "https://ufcstats.com/fight-details/eba46dbf9cdd83c0"
+        },
+        {
+          "date": "2025-04-26",
+          "opponent": "Andre Muniz",
+          "result": "win",
+          "nativeBoutId": "60879",
+          "nativeFighterId": "441",
+          "originalOpponentNumericId": "188",
+          "fightUrl": "https://ufcstats.com/fight-details/62fbdd4f0bcd3c2a"
+        },
+        {
+          "date": "2025-10-25",
+          "opponent": "JunYong Park",
+          "result": "win",
+          "nativeBoutId": "60464",
+          "nativeFighterId": "441",
+          "originalOpponentNumericId": "439",
+          "fightUrl": "https://ufcstats.com/fight-details/0230a9dd2739add4"
+        },
+        {
+          "date": "2026-06-27",
+          "opponent": "Brunno Ferreira",
+          "result": "win",
+          "nativeBoutId": "66367",
+          "nativeFighterId": "441",
+          "originalOpponentNumericId": "353",
+          "fightUrl": "https://ufcstats.com/fight-details/d83294b031502177"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "boutId": "88260",
+          "fighterSlug": "ikram-aliskerov",
+          "date": "2022-09-13",
+          "opponent": "Mário Sousa",
+          "event": "Dana White's Contender Series 54",
+          "sourceUrl": "https://www.ufc.com/athlete/ikram-aliskerov"
+        }
+      ],
+      "note": "Official UFC biography separately identifies the Sep 2022 DWCS kimura win over Mario Sousa; completed Octagon career runs May 2023 Phil Hawes through Jun 2026 Brunno Ferreira, six bouts."
+    },
+    "lone-er-kavanagh": {
+      "name": "Lone'er Kavanagh",
+      "officialFighterUrl": "https://www.ufc.com/athlete/loneer-kavanagh",
+      "ufcStatsFighterId": "bb2c3c3a466224af",
+      "nativeFighterId": "270",
+      "officialUfcCareerBoutCount": 6,
+      "bouts": [
+        {
+          "date": "2024-11-23",
+          "opponent": "Jose Ochoa",
+          "result": "win",
+          "nativeBoutId": "66436",
+          "nativeFighterId": "270",
+          "originalOpponentNumericId": "26",
+          "fightUrl": "https://ufcstats.com/fight-details/38f1c83c19e99fa2"
+        },
+        {
+          "date": "2025-03-22",
+          "opponent": "Felipe dos Santos",
+          "result": "win",
+          "nativeBoutId": "60315",
+          "nativeFighterId": "270",
+          "originalOpponentNumericId": "2812",
+          "fightUrl": "https://ufcstats.com/fight-details/e5a88f5c686173c4"
+        },
+        {
+          "date": "2025-08-23",
+          "opponent": "Charles Johnson",
+          "result": "loss",
+          "nativeBoutId": "65917",
+          "nativeFighterId": "270",
+          "originalOpponentNumericId": "279",
+          "fightUrl": "https://ufcstats.com/fight-details/1ab1ed99a4bc5494"
+        },
+        {
+          "date": "2026-02-28",
+          "opponent": "Brandon Moreno",
+          "result": "win",
+          "nativeBoutId": "60673",
+          "nativeFighterId": "270",
+          "originalOpponentNumericId": "362",
+          "fightUrl": "https://ufcstats.com/fight-details/1330b5c21269fe92"
+        },
+        {
+          "date": "2026-07-11",
+          "opponent": "Brandon Royval",
+          "result": "loss",
+          "nativeBoutId": "66461",
+          "nativeFighterId": "270",
+          "originalOpponentNumericId": "345",
+          "fightUrl": "https://ufcstats.com/fight-details/a3ab1979192b647c"
+        },
+        {
+          "date": "2026-10-24",
+          "opponent": "Ramazan Temirov",
+          "result": "win",
+          "nativeBoutId": "83681",
+          "nativeFighterId": "270",
+          "originalOpponentNumericId": "2861",
+          "fightUrl": "https://ufcstats.com/fight-details/b9004bd72276a190"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "boutId": "83992",
+          "fighterSlug": "lone-er-kavanagh",
+          "date": "2024-08-13",
+          "opponent": "An Tuan Ho",
+          "event": "Dana White's Contender Series",
+          "sourceUrl": "https://www.ufc.com/athlete/loneer-kavanagh"
+        }
+      ],
+      "note": "Official UFC biography identifies Aug 2024 An Tuan Ho DWCS KO separately; exactly six Octagon bouts, from Nov 2024 Jose Ochoa through Oct 2026 Ramazan Temirov."
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-rei-tsuruya-official-chronology-precertification",
+  "asOf": "2026-11-15",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "certificationStatus": "pending_exact_independent_fight_ids_native_pair_corners_and_measured_round_gate",
+  "frozenCohort": 783,
+  "slug": "rei-tsuruya",
+  "name": "Rei Tsuruya",
+  "officialFighterUrl": "https://www.ufc.com/athlete/rei-tsuruya",
+  "officialUfcCareerBoutCount": 5,
+  "officialCareer": [
+    {
+      "date": "2024-02-03",
+      "opponent": "Jiniushiyue",
+      "result": "win",
+      "method": "TKO (strikes)",
+      "classification": "official_road_to_ufc_tournament_final",
+      "round": 1,
+      "time": "4:59"
+    },
+    {
+      "date": "2024-06-29",
+      "opponent": "Carlos Hernandez",
+      "result": "win",
+      "method": "unanimous decision",
+      "classification": "UFC 303",
+      "round": 3,
+      "time": "5:00",
+      "knownNativeBoutIdFromPreviouslyPinnedOpponentEvidence": "61052"
+    },
+    {
+      "date": "2025-03-08",
+      "opponent": "Joshua Van",
+      "result": "loss",
+      "method": "unanimous decision",
+      "classification": "UFC 313",
+      "round": 3,
+      "time": "5:00"
+    },
+    {
+      "date": "2026-05-30",
+      "opponent": "Luis Gurule",
+      "result": "win",
+      "method": "submission (rear-naked choke)",
+      "classification": "UFC Fight Night Macau",
+      "round": 1,
+      "time": "3:19"
+    },
+    {
+      "date": "2026-08-29",
+      "opponent": "Kevin Borjas",
+      "result": "win",
+      "method": "submission (rear-naked choke)",
+      "classification": "UFC Fight Night Shanghai",
+      "round": 1,
+      "time": "4:14"
+    }
+  ],
+  "excludedFeederAppearances": [
+    {
+      "date": "2023-05-27",
+      "opponent": "Ronal Siahaan",
+      "result": "win",
+      "classification": "Road to UFC Season 2 quarterfinal",
+      "reason": "nonfinal qualifier"
+    },
+    {
+      "date": "2023-08-27",
+      "opponent": "Mark Climaco",
+      "result": "win",
+      "classification": "Road to UFC Season 2 semifinal",
+      "reason": "nonfinal qualifier"
+    }
+  ],
+  "sourceUrls": [
+    "https://www.ufc.com/athlete/rei-tsuruya",
+    "https://www.ufc.com/news/welcome-back-rei-tsuruya-ufc-macau",
+    "https://www.ufc.com/news/rei-tsuruya-prospect-rising-ufc-shanghai",
+    "https://www.ufc.com/index.php/news/ufc-shanghai-prelim-results-nurmagomedov-vs-song",
+    "https://www.ufc.com/news/rei-tsuruya-big-opportunity-flyweight-standout-ufc-313"
+  ],
+  "researchNotes": [
+    "Dated official UFC.com biography narrative is source of truth; graphical result tiles may be misleading.",
+    "Road to UFC 2024 final counted as official UFC career event; 2023 QF/SF excluded.",
+    "2024 Carlos Hernandez opposite-corner native bout 61052 previously preserved in data/ufc-source-verified-native-id-exceptions.json; does not by itself prove all other native bouts.",
+    "Do not create a canonical proof or award certificate until original native fighter/bout ID for every completed official UFC fight, opposing corners, original UFCStats-derived independent URLs, outcomes, and measured rounds are matched and strict full-783 Stage3 CI passes."
+  ],
+  "proposedNextSteps": [
+    "Recover original pinned Greco UFCStats fight URLs and fighter identity for each of the five official bouts.",
+    "Join each to preserved UFCalendar numeric fighter and opponent IDs and measured round sets without mutating caches.",
+    "Submit canonical independent full-career evidence and fail-closed regression tests, then confirm full 783-fighter strict CI."
+  ]
+}

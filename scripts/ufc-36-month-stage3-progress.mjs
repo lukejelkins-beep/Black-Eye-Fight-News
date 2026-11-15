@@ -26,6 +26,22 @@ const normalizedOutcome=value=>({
  nc:'no_contest',no_contest:'no_contest'
 })[String(value||'').toLowerCase()]||null;
 
+/** Only individually official-UFC-confirmed showcase bouts on an otherwise feeder-labelled card.
+ * Data alone never certifies a career: native ID, both corners, result and rounds still must pass.
+ */
+export const isAttestedOfficialUfcShowcase=(entry,row)=>{
+ const id=numId(row?.nativeBoutId??row?.boutId),when=date(row?.date);
+ if(!id||!when)return false;
+ return arr(entry?.officialShowcaseBouts).some(x=>
+   x?.independentlyOfficial===true&&numId(x.nativeBoutId)===id&&
+   date(x.date)&&Math.abs((Date.parse(x.date+'T00:00:00Z')-
+    Date.parse(when+'T00:00:00Z'))/86400000)<=1&&
+   normal(x.opponent)===normal(row.opponent)&&
+   /^https:\/\/www\.ufc\.com\/news\//i.test(String(x.officialUfcSourceUrl||''))&&
+   /^https:\/\/ufcstats\.com\/fight-details\/[a-f0-9]{16}$/i.test(String(x.fightUrl||''))&&
+   (!row.fightUrl||row.fightUrl===x.fightUrl));
+};
+
 /** Full-career proof must be independently grounded, not inferred from index coverage. */
 export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,independentEntry,indexedBouts=null,independentAsOf=asOf){
  const timeline=profile?.ufcTimeline||{};
@@ -106,8 +122,12 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
  const nativeIds=representations.map(r=>String(r.nativeBoutId));
  const sourceIds=given.map(r=>String(r.fightUrl));
  const savedNativeIds=rows.map(r=>String(r.boutId||''));
+ // Exact own-name aliases must be separately source-pinned to this UFCStats ID.
+ const reviewedAthleteName=normal(ext.fighterName)===normal(profile?.name)||
+   (sourceFighterIdentitySafe&&arr(ext.sourceVerifiedNativeNameAliases).some(alias=>
+    normal(alias)===normal(profile?.name)));
  const nativeMatches=nativeMapped&&indexedBouts&&sourceFighterIdentitySafe&&
-   normal(ext.fighterName)===normal(profile?.name)&&
+   reviewedAthleteName&&
    /^https:\/\/www\.ufc\.com\/athlete\//i.test(String(ext.officialFighterUrl||''))&&
    nativeIdentitySet.size>0&&
    ext.sourceSnapshot?.fightResultsBlobSha?.match(/^[a-f0-9]{40}$/i)&&
@@ -136,7 +156,7 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
      const h=matches[0],b=indexedBouts[id];
      const delta=(a,c)=>date(a)&&date(c)?
        Math.abs((Date.parse(a+'T00:00:00Z')-Date.parse(c+'T00:00:00Z'))/86400000):999;
-     if(!b||b.org!=='ufc'||isFeederTitle(b.event)||
+     if(!b||b.org!=='ufc'||(isFeederTitle(b.event)&&!isAttestedOfficialUfcShowcase(ext,r))||
         !['completed','draw','no_contest'].includes(b.status)||
         delta(r.date,h.date)>1||delta(r.date,b.eventDate)>1||
         normalizedOutcome(r.result)!==normalizedOutcome(h.result))return false;
@@ -151,8 +171,13 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
        reviewedNativeNames.has(normal(own.name))&&opponentMatched(other));
      if(corners.length!==1)return false;
      const [own,other]=corners[0];
+     // A draw may be persisted as status=completed with a native method=draw.
+     // Require an actual native draw method AND no winner; do not infer from a null winner alone.
+     const nativeDrawWithoutWinner=!b.result?.winnerId&&
+       String(b.result?.method||'').toLowerCase()==='draw';
      const outcome=b.status==='no_contest'?'no_contest':
-       b.status==='draw'?'draw':String(b.result?.winnerId)===String(own.id)?'win':
+       b.status==='draw'||nativeDrawWithoutWinner?'draw':
+       String(b.result?.winnerId)===String(own.id)?'win':
        String(b.result?.winnerId)===String(other.id)?'loss':null;
      return outcome===normalizedOutcome(r.result);
    });
@@ -305,7 +330,7 @@ export function auditOfficialCareerInventory(inventory,approved,census,profiles,
  return result;
 }
 
-export function auditApprovedStage3(approval,census,progress,research,archive={},feederEvidence={},finaleEvidence={},legacyEvidence={},independentEvidence={},officialInventory={}){
+export function auditApprovedStage3(approval,census,progress,research,archive={},feederEvidence={},finaleEvidence={},legacyEvidence={},independentEvidence={},officialInventory={},approvedSnapshot={}){
   if(approval?.status!=='approved'||approval?.approvedBy!=='user'||approval?.schema!==1||
      approval?.scope!=='ufc-36-month-roster')throw Error('Stage 3 roster not approved');
   const approved=arr(approval.approvedFighters);
@@ -316,6 +341,27 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
   if(!date(approval.rosterAsOf)||!date(census.asOf)||approval.rosterAsOf>census.asOf)
     throw Error('Invalid approved cohort date');
   const current=new Map(arr(census.fighters).map(f=>[f.slug,f]));
+  // Rolling eligibility can omit approved fighters without invalidating the
+  // original owner's immutable research cohort and source-confirmed histories.
+  // A missing current row receives only its original pinned last-fight date;
+  // its eligibility and all source/native/corner/round gates remain separate.
+  let frozenRosterAnchorFallbacks=0;
+  if(approvedSnapshot?.schema===1){
+    if(approvedSnapshot.scope!=='ufc-approved-cohort-frozen-census-snapshot'||
+       approvedSnapshot.rosterAsOf!==approval.rosterAsOf||
+       approvedSnapshot.approvedRosterSha256!==approval.approvedRosterSha256||
+       Object.keys(approvedSnapshot.fighters||{}).length!==783||
+       approved.some(slug=>{
+         const row=approvedSnapshot.fighters?.[slug];
+         return row?.slug!==slug||!date(row?.lastUfcFight)||
+           row?.eligibilityStatus!=='latest_observed_mma_ufc';
+       }))throw Error('Invalid original approved UFC cohort date snapshot');
+    for(const slug of approved){
+      if(current.has(slug))continue;
+      current.set(slug,{...approvedSnapshot.fighters[slug],frozenApprovedCohortAnchor:true});
+      frozenRosterAnchorFallbacks++;
+    }
+  }
   const currentEligible=new Set(arr(census.fighters).filter(f=>
     f?.eligibilityStatus==='latest_observed_mma_ufc').map(f=>f.slug));
   const bouts=progress?.bouts||{},roundDone=progress?.roundDone||{},
@@ -459,13 +505,16 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
         providerTimelineMetadata.missingRosterLatestBout++;
     }
     const allHistory=arr(profile.recentHistory).filter(isUfc).filter(r=>!date(r.date)||r.date<=census.asOf);
-    for(const row of allHistory.filter(r=>feederDates.has(date(r.date))||sourceVerified(slug,r))){
+    const officialShowcase=(row)=>isAttestedOfficialUfcShowcase(independentRegistry[slug],row);
+    for(const row of allHistory.filter(r=>
+      (feederDates.has(date(r.date))&&!officialShowcase(r))||sourceVerified(slug,r))){
       excludedFeederHistoryRows++;
       if(sourceVerified(slug,row)&&!feederDates.has(date(row.date)))sourceVerifiedFeederHistoryRows++;
       const native=row.source==='native'?numId(row.boutId):null;
       if(native)excludedFeederFightIds.add(native);
     }
-    const history=allHistory.filter(r=>!feederDates.has(date(r.date))&&!sourceVerified(slug,r));
+    const history=allHistory.filter(r=>
+      (!feederDates.has(date(r.date))||officialShowcase(r))&&!sourceVerified(slug,r));
     if(history.length)profilesWithHistory++;
     // Legacy complete=true is not a certification without retained source evidence.
     historyRows+=history.length;
@@ -541,6 +590,9 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     const knownMeasured=observed.length>0&&samples.every(r=>r.measured);
     if(knownIndexed)allKnownIndexed++;
     if(knownMeasured)allKnownMeasured++;
+    // Certification is scoped to the immutable owner-approved cohort date, NOT
+    // the rolling audit/report date. Native source/bout exact-match gates below
+    // still block any new saved UFC fights not covered by the independent proof.
     const proof=evaluateCareerEvidence(profile,history,
       current.get(slug)?.lastUfcFight,census.asOf,independentRegistry[slug],bouts,approval.rosterAsOf);
     const independentFullCareer=knownMeasured&&proof.independentlyVerified;
@@ -781,6 +833,8 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
   const summary={
     asOf:census.asOf,approvedSnapshotAsOf:approval.rosterAsOf,
     certificationEvidenceCutoff:approval.rosterAsOf,
+    liveCensusFighterRows:arr(census.fighters).length,
+    frozenApprovedCohortAnchorFallbacks:frozenRosterAnchorFallbacks,
     approvalHash:approval.approvedRosterSha256||null,
     approvedFighters:approved.length,
     stillEligibleApproved:approved.filter(x=>currentEligible.has(x)).length,
@@ -1088,7 +1142,8 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
    read('data/ufc-official-finale-recovery.json'),
    read('data/ufc-official-legacy-evidence.json'),
    read('data/ufc-independent-full-career-verification.json'),
-   read('data/ufc-official-career-bout-inventory.json'));
+   read('data/ufc-official-career-bout-inventory.json'),
+   read('data/ufc-approved-cohort-frozen-census-20261114.json'));
  const qa=path.join(root,'qa');fs.mkdirSync(qa,{recursive:true});
  fs.writeFileSync(path.join(qa,'ufc-36-month-stage3-progress.json'),JSON.stringify(r,null,2)+'\n');
  fs.writeFileSync(path.join(qa,'ufc-36-month-stage3-progress.md'),markdownReport(r));

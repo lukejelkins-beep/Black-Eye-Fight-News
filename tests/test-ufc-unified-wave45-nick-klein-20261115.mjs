@@ -1,0 +1,54 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {evaluateCareerEvidence} from '../scripts/ufc-36-month-stage3-progress.mjs';
+const read=f=>JSON.parse(readFileSync(new URL('../data/'+f,import.meta.url),'utf8'));
+const approval=read('ufc-36-month-roster-approval.json');
+const census=read('ufc-36-month-candidates.json');
+const profile=read('ufcalendar-fighter-research.json').profiles['nick-klein'];
+const cache=read('ufcalendar-rich-progress.json');
+const e=read('ufc-independent-full-career-verification.json').fighters['nick-klein'];
+const feeder=read('ufc-feeder-bout-evidence.json');
+const expected=[["2025-02-22","Mansur Abdul-Malik","loss","e011819e721c4a2a","38535","359"],["2025-08-02","Andrey Pulyaev","loss","b3c695728e177fd4","60760","334"],["2026-10-31","Joseph Kropschot","loss","f9bda28454d49c78","85985","29328"]];
+const history=profile.recentHistory.filter(r=>r.promotion==='ufc'&&r.date<=census.asOf&&!feeder.bouts.some(f=>f.fighterSlug==='nick-klein'&&f.boutId===r.boutId&&f.date===r.date));
+const gate=x=>evaluateCareerEvidence(profile,history,census.fighters.find(f=>f.slug==='nick-klein')?.lastUfcFight,approval.rosterAsOf,x,cache.bouts).independentlyVerified;
+test('wave45: three complete source-reconciled UFC fights, exact original corners and measured rounds',()=>{
+ assert.ok(approval.approvedFighters.includes('nick-klein'));
+ assert.equal(approval.approvedFighters.length,783);
+ assert.equal(e.sourceCoverageAttested,true);
+ assert.equal(e.scope,'complete_official_ufc_career');
+ assert.equal(e.officialUfcCareerBoutCount,3);
+ assert.equal(e.sourceSnapshot.fightResultsBlobSha,'699c9b6cebb542bf458807563d93ed2406d8728f');
+ assert.deepEqual(e.verifiedNumericFighterIds,['2863']);
+ assert.equal(e.fighterUrl,'https://ufcstats.com/fighter-details/7eaa5e31c2dd86aa');
+ assert.equal(e.bouts.length,3);
+ assert.equal(history.length,3);
+ assert.equal(new Set(e.bouts.map(b=>b.nativeBoutId)).size,3);
+ for(const [date,opponent,result,src,boutId,otherId] of expected){
+   assert.deepEqual(e.bouts.find(b=>b.nativeBoutId===boutId),{date,opponent,result,fightUrl:'https://ufcstats.com/fight-details/'+src,nativeBoutId:boutId,nativeFighterId:'2863'});
+   const n=cache.bouts[boutId];
+   assert.equal(n?.org,'ufc');
+   assert.equal(n.status,'completed');
+   assert.ok(Math.abs(Date.parse(n.eventDate)-Date.parse(date))<=86400000);
+   assert.ok(Number(cache.roundDone[boutId])>0);
+   const own=n.a?.id==='2863'?n.a:n.b?.id==='2863'?n.b:null,other=own===n.a?n.b:n.a;
+   assert.equal(own?.slug,'nick-klein');
+   assert.equal(other?.id,otherId);
+   assert.equal(other?.name,opponent);
+   assert.equal(n.result.winnerId===own.id?'win':n.result.winnerId===other.id?'loss':null,result);
+   assert.ok(history.some(h=>h.source==='native'&&h.boutId===boutId&&h.result===result));
+ }
+ assert.equal(cache.bouts['60760'].eventDate,'2025-08-03');
+ assert.equal(gate(e),true);
+});
+test('wave45: certified Octagon career excludes documented DWCS and fails closed on altered evidence',()=>{
+ assert.equal(feeder.bouts.filter(x=>x.fighterSlug==='nick-klein'&&x.boutId==='84169').length,1);
+ assert.equal(feeder.bouts.find(x=>x.fighterSlug==='nick-klein').sourceUrl,'https://www.ufc.com/news/week-10-results-scorecards-dana-whites-contender-series-season-8');
+ assert.ok(profile.recentHistory.some(x=>x.boutId==='84169'&&x.result==='win'));
+ assert.equal(e.sourceVerifiedExcludedFeederBouts[0].nativeBoutId,'84169');
+ assert.equal(e.bouts.some(b=>b.nativeBoutId==='84169'),false);
+ assert.equal(gate(e),true);
+ assert.equal(gate({...e,bouts:e.bouts.slice(1)}),false);
+ assert.equal(gate({...e,verifiedNumericFighterIds:['99999']}),false);
+ assert.equal(gate({...e,bouts:e.bouts.map((b,i)=>i===1?{...b,result:'win'}:b)}),false);
+});

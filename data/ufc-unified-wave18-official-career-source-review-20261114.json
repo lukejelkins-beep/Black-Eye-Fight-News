@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "scope": "ufc-wave18-three-source-crosschecked-careers",
+  "snapshot": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "sourceMethod": "UFC.com dated narrative outcomes with Greco pinned UFCStats-derived source fighter/fight/event IDs and exact original native UFCalendar numeric fighter/bout/corner/outcome/round reconciliation. This artifact alone never grants Stage3 certification; full-cohort strict audit is authoritative.",
+  "pinnedSource": {
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "fighters": {
+    "pete-rodriguez": {
+      "name": "Pete Rodriguez",
+      "officialFighterUrl": "https://www.ufc.com/athlete/pete-rodriguez",
+      "grecoFighterUrl": "https://ufcstats.com/fighter-details/776d4262c4da38bf",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2022-01-22",
+          "opponent": "Jack Della Maddalena",
+          "result": "loss"
+        },
+        {
+          "date": "2022-10-15",
+          "opponent": "Mike Jackson",
+          "result": "win"
+        },
+        {
+          "date": "2024-02-03",
+          "opponent": "Themba Gorimbo",
+          "result": "loss"
+        }
+      ],
+      "note": "Three career UFC bouts include 2022-01-22 UFC 270 loss to Jack Della Maddalena (saved UTC/native 2022-01-23), October 2022 win over Mike Jackson and 2024 loss to Themba Gorimbo. Graphical Win tiles are misleading; dated UFC.com narratives supply outcomes.",
+      "status": "source_reconciled_strict_audit_pending"
+    },
+    "rayanne-dos-santos": {
+      "name": "Rayanne dos Santos",
+      "officialFighterUrl": "https://www.ufc.com/athlete/rayanne-dos-santos",
+      "grecoFighterUrl": "https://ufcstats.com/fighter-details/02bb48869eb7ac8f",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2023-12-09",
+          "opponent": "Talita Alencar",
+          "result": "loss"
+        },
+        {
+          "date": "2024-06-08",
+          "opponent": "Puja Tomar",
+          "result": "loss"
+        },
+        {
+          "date": "2025-05-31",
+          "opponent": "Alice Ardelean",
+          "result": "loss"
+        }
+      ],
+      "note": "Official UFC.com dated narratives confirm three Octagon unanimous/split decision losses despite graphical Win tiles. 2022-08-23 DWCS loss to Denise Gomes (native 84128) is an independently evidenced non-UFC feeder, excluded. 2023-12-09 and 2025-05-31 US event dates can be one day earlier than saved UTC cache.",
+      "status": "source_reconciled_strict_audit_pending"
+    },
+    "charlie-campbell": {
+      "name": "Charlie Campbell",
+      "officialFighterUrl": "https://www.ufc.com/athlete/charlie-campbell",
+      "grecoFighterUrl": "https://ufcstats.com/fighter-details/b39f7a6c2be17ee8",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2023-09-16",
+          "opponent": "Alex Reyes",
+          "result": "win"
+        },
+        {
+          "date": "2024-04-06",
+          "opponent": "Trevor Peek",
+          "result": "win"
+        },
+        {
+          "date": "2025-09-27",
+          "opponent": "Tom Nolan",
+          "result": "loss"
+        }
+      ],
+      "note": "Three official Octagon bouts: Alex Reyes and Trevor Peek wins, Tom Nolan submission loss; official UFC.com dated narratives prevail over erroneous graphical Win tiles. 2022-08-02 DWCS loss to Chris Duncan (native 88248) excluded. The pinned Greco listing duplicates Alex Reyes vs Charlie Campbell under two event-title aliases but they reference SAME fight URL 58b2fdad7af9be02 and native 60051; count once. UFC Perth event US date 2025-09-27, cached local date 2025-09-28.",
+      "status": "source_reconciled_strict_audit_pending"
+    }
+  }
+}

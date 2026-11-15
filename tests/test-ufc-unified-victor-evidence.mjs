@@ -1,0 +1,35 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const read=path=>JSON.parse(fs.readFileSync(new URL('../'+path,import.meta.url),'utf8'));
+const roster=read('data/ufc-36-month-roster-approval.json');
+const research=read('data/ufc-unified-victor-valenzuela-identity-review-20261114.json');
+const registry=read('data/ufc-independent-full-career-verification.json');
+const feeder=read('data/ufc-feeder-bout-evidence.json');
+test('Victor current official UFC athlete is never conflated with an archived namesake',()=>{
+ assert.equal(roster.approvedFighters.length,783);
+ assert.ok(roster.approvedFighters.includes('victor-valenzuela'));
+ assert.equal(research.nonproduction,true);
+ assert.equal(research.certificationGranted,false);
+ const proof=registry.fighters['victor-valenzuela'];
+ assert.equal(proof.sourceCoverageAttested,true);
+ assert.equal(proof.scope,'complete_official_ufc_career');
+ assert.equal(proof.verificationMethod,'full_official_ufc_fight_listing_crosscheck');
+ assert.equal(proof.fighterUrl,'https://ufcstats.com/fighter-details/078695e385ec2f57');
+ assert.equal(proof.officialFighterUrl,'https://www.ufc.com/athlete/victor-valenzuela-0');
+ assert.equal(proof.disambiguation.verifiedUfcStatsFighterId,'078695e385ec2f57');
+ assert.equal(proof.disambiguation.excludedUfcStatsMiddleweightId,'de277a4abcfeea46');
+ assert.notEqual(proof.disambiguation.verifiedUfcStatsFighterId,proof.disambiguation.excludedUfcStatsMiddleweightId);
+ assert.equal(proof.verifiedNumericFighterIds[0],'545');
+ assert.equal(proof.officialUfcCareerBoutCount,1);
+ assert.equal(proof.bouts.length,1);
+ assert.deepEqual(proof.bouts[0],{date:'2026-04-25',opponent:'Max Griffin',result:'win',fightUrl:'https://ufcstats.com/fight-details/2e7f8d0ad385876d',nativeBoutId:'66087',nativeFighterId:'545'});
+});
+test('the separate Victor 2025 DWCS bout is uniquely primary-attested and never counted as UFC',()=>{
+ const excluded=feeder.bouts.filter(x=>x.fighterSlug==='victor-valenzuela'&&x.boutId==='84106');
+ assert.equal(excluded.length,1);
+ assert.equal(excluded[0].date,'2025-10-14');
+ assert.equal(excluded[0].opponent,'Michael Oliveira');
+ assert.equal(excluded[0].sourceUrl,'https://www.ufc.com/athlete/victor-valenzuela-0');
+ assert.equal(registry.fighters['victor-valenzuela'].bouts.some(x=>x.nativeBoutId==='84106'),false);
+});

@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "scope": "ufc-wave19-three-two-bout-canonical-source-evidence",
+  "asOf": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "method": "UFC.com full career biographical results crosschecked by precise pinned Greco UFCStats-derived fight URL/event/own-athlete ID, saved original native numeric bout/corner identities, winner, date and measured rounds; no independent certification until full-cohort Stage3 CI success.",
+  "pinnedSource": {
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "fighters": {
+    "michelle-montague": {
+      "name": "Michelle Montague",
+      "officialFighterUrl": "https://www.ufc.com/athlete/michelle-montague",
+      "grecoFighterUrl": "https://ufcstats.com/fighter-details/ca80d72da81d7224",
+      "completeOfficialUfcFightCount": 2,
+      "bouts": [
+        {
+          "date": "2025-09-27",
+          "opponent": "Luana Carolina",
+          "result": "win"
+        },
+        {
+          "date": "2026-04-25",
+          "opponent": "Mayra Bueno Silva",
+          "result": "win"
+        }
+      ],
+      "note": "2025-09-27 Perth UFC debut win versus Luana Carolina is preserved even though official text uses the 2025-09-26 US date, while saved native timestamp rolls to 2025-09-28; second win over Mayra Bueno Silva 2026-04-25. Two official Octagon wins, none omitted.",
+      "status": "source_reconciled_strict_gate_pending"
+    },
+    "jakub-wiklacz": {
+      "name": "Jakub Wiklacz",
+      "officialFighterUrl": "https://www.ufc.com/athlete/jakub-wiklacz",
+      "grecoFighterUrl": "https://ufcstats.com/fighter-details/6902fcf0610dd303",
+      "completeOfficialUfcFightCount": 2,
+      "bouts": [
+        {
+          "date": "2025-10-04",
+          "opponent": "Patchy Mix",
+          "result": "win"
+        },
+        {
+          "date": "2026-02-07",
+          "opponent": "Muin Gafurov",
+          "result": "win"
+        }
+      ],
+      "note": "Two official UFC wins; former KSW fights are not UFC career contests. 2026-06-06 Marcus McGhee bout native 66019 was cancelled, not a fight; do not include. Official 2025-10-04 UFC 320 date differs one calendar day from saved UTC.",
+      "status": "source_reconciled_strict_gate_pending"
+    },
+    "austin-vanderford": {
+      "name": "Austin Vanderford",
+      "officialFighterUrl": "https://www.ufc.com/athlete/austin-vanderford",
+      "grecoFighterUrl": "https://ufcstats.com/fighter-details/32c3ee378671a5d9",
+      "completeOfficialUfcFightCount": 2,
+      "bouts": [
+        {
+          "date": "2025-02-22",
+          "opponent": "Nikolay Veretennikov",
+          "result": "win"
+        },
+        {
+          "date": "2025-10-04",
+          "opponent": "Ramiz Brahimaj",
+          "result": "loss"
+        }
+      ],
+      "note": "Two official UFC bouts: win over Nikolay Veretennikov and loss to Ramiz Brahimaj, correctly overriding misleading graphical Win label. Prior Bellator career is non-UFC; 2018-07-17 DWCS win over Angelo Trevino (native 83854) excluded from official UFC stats.",
+      "status": "source_reconciled_strict_gate_pending"
+    }
+  }
+}

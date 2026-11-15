@@ -1,0 +1,205 @@
+{
+  "schema": 1,
+  "scope": "ufc-full-official-career-wave-lima-camilo-bolanos",
+  "asOf": "2026-11-15",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "sourceMethod": "Complete official UFC.com dated athlete biographies and official result pages, pinned Greco UFCStats-derived independent historical source fighter/fight/event identities, original native numeric IDs/corners/outcomes, date ±1d and measured rounds, excluding non-UFC fights and future bookings.",
+  "fighters": {
+    "felipe-lima": {
+      "name": "Felipe Lima",
+      "officialFighterUrl": "https://www.ufc.com/athlete/felipe-lima",
+      "ufcStatsFighterId": "9256f591b30c073e",
+      "nativeFighterId": "2840",
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2024-06-22",
+          "opponent": "Muhammad Naimov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8bd5f20f49434c65",
+          "nativeBoutId": "38812",
+          "nativeFighterId": "2840",
+          "originalOpponentNumericId": "313",
+          "pinnedSourceEventTitle": "UFC Fight Night: Whittaker vs. Aliskerov",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/b12a1d19ee383b7c",
+          "pinnedSourceEventDate": "2024-06-22"
+        },
+        {
+          "date": "2024-12-14",
+          "opponent": "Miles Johns",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/cf258c17234d649e",
+          "nativeBoutId": "60377",
+          "nativeFighterId": "2840",
+          "originalOpponentNumericId": "431",
+          "pinnedSourceEventTitle": "UFC Fight Night: Covington vs. Buckley",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/72c9c2eadfc3277e",
+          "pinnedSourceEventDate": "2024-12-14"
+        },
+        {
+          "date": "2025-06-28",
+          "opponent": "Payton Talbott",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f6a3c78f15ff26c7",
+          "nativeBoutId": "60264",
+          "nativeFighterId": "2840",
+          "originalOpponentNumericId": "364",
+          "pinnedSourceEventTitle": "UFC 317: Topuria vs. Oliveira",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/66766984842c13dc",
+          "pinnedSourceEventDate": "2025-06-28"
+        },
+        {
+          "date": "2026-09-05",
+          "opponent": "Morgan Charriere",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ad17c34e0cc7d702",
+          "nativeBoutId": "83387",
+          "nativeFighterId": "2840",
+          "originalOpponentNumericId": "342",
+          "pinnedSourceEventTitle": "UFC Fight Night: Hooker vs. Parnasse",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/2144954270be834d",
+          "pinnedSourceEventDate": "2026-09-05"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    },
+    "matheus-camilo": {
+      "name": "Matheus Camilo",
+      "officialFighterUrl": "https://www.ufc.com/athlete/matheus-camilo",
+      "ufcStatsFighterId": "72f890c5d421e705",
+      "nativeFighterId": "304",
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2025-05-17",
+          "opponent": "Gabe Green",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a9a6cca4bbf7a5db",
+          "nativeBoutId": "60845",
+          "nativeFighterId": "304",
+          "originalOpponentNumericId": "967",
+          "pinnedSourceEventTitle": "UFC Fight Night: Burns vs. Morales",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/8ad022dd81224f61",
+          "pinnedSourceEventDate": "2025-05-17"
+        },
+        {
+          "date": "2025-11-15",
+          "opponent": "Viacheslav Borshchev",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1a5378e32e8519ef",
+          "nativeBoutId": "38208",
+          "nativeFighterId": "304",
+          "originalOpponentNumericId": "315",
+          "pinnedSourceEventTitle": "UFC 322: Della Maddalena vs. Makhachev",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/8db1b36dde268ef6",
+          "pinnedSourceEventDate": "2025-11-15"
+        },
+        {
+          "date": "2026-06-27",
+          "opponent": "Nazim Sadykhov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/809814f03ff3140c",
+          "nativeBoutId": "66369",
+          "nativeFighterId": "304",
+          "originalOpponentNumericId": "354",
+          "pinnedSourceEventTitle": "UFC Fight Night: Fiziev vs. Torres",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/31e1ea6fe6b682f8",
+          "pinnedSourceEventDate": "2026-06-27"
+        },
+        {
+          "date": "2026-10-10",
+          "opponent": "Jai Herbert",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/295339c08c80a3cf",
+          "nativeBoutId": "93197",
+          "nativeFighterId": "304",
+          "originalOpponentNumericId": "572",
+          "pinnedSourceEventTitle": "UFC Fight Night: Allen vs. Duncan",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/7f98d9d5a10fa25c",
+          "pinnedSourceEventDate": "2026-10-10"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    },
+    "gaston-bolanos": {
+      "name": "Gaston Bolanos",
+      "officialFighterUrl": "https://www.ufc.com/athlete/gaston-bolanos",
+      "ufcStatsFighterId": "96924b0019b3aff1",
+      "nativeFighterId": "2826",
+      "officialUfcCareerBoutCount": 5,
+      "bouts": [
+        {
+          "date": "2023-04-15",
+          "opponent": "Aaron Phillips",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/119559fd8124fee3",
+          "nativeBoutId": "53850",
+          "nativeFighterId": "2826",
+          "originalOpponentNumericId": "2286",
+          "pinnedSourceEventTitle": "UFC Fight Night: Holloway vs. Allen",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/15b1b21cd743d652",
+          "pinnedSourceEventDate": "2023-04-15"
+        },
+        {
+          "date": "2024-01-13",
+          "opponent": "Marcus McGhee",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/03de7404decde12f",
+          "nativeBoutId": "59920",
+          "nativeFighterId": "2826",
+          "originalOpponentNumericId": "296",
+          "pinnedSourceEventTitle": "UFC Fight Night: Ankalaev vs. Walker 2",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/010986ee359fb863",
+          "pinnedSourceEventDate": "2024-01-13"
+        },
+        {
+          "date": "2024-11-09",
+          "opponent": "Cortavious Romious",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e6685759ed2af90d",
+          "nativeBoutId": "65825",
+          "nativeFighterId": "2826",
+          "originalOpponentNumericId": "2858",
+          "pinnedSourceEventTitle": "UFC Fight Night: Magny vs. Prates",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/585f9ffdb0cd0466",
+          "pinnedSourceEventDate": "2024-11-09"
+        },
+        {
+          "date": "2025-05-03",
+          "opponent": "Quang Le",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/97b32ff27fd457a8",
+          "nativeBoutId": "60800",
+          "nativeFighterId": "2826",
+          "originalOpponentNumericId": "227",
+          "pinnedSourceEventTitle": "UFC Fight Night: Sandhagen vs. Figueiredo",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/de20ffb3fc2e7629",
+          "pinnedSourceEventDate": "2025-05-03"
+        },
+        {
+          "date": "2026-06-20",
+          "opponent": "Michael Aswell Jr.",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8b809ba1880aded0",
+          "nativeBoutId": "66452",
+          "nativeFighterId": "2826",
+          "originalOpponentNumericId": "168",
+          "pinnedSourceEventTitle": "UFC Fight Night: Kape vs. Horiguchi",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/c8661e204c66f325",
+          "pinnedSourceEventDate": "2026-06-20"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    }
+  }
+}
