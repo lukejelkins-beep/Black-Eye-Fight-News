@@ -11,7 +11,7 @@ const approval=read('ufc-36-month-roster-approval.json');
 const cohort=new Set(approval.approvedFighters);
 const cases={
  'rongzhu': {n:7,own:'280',stats:'a13d755965a4ec9f',latest:'2026-09-12',w:4,l:3,roadToUfcExcluded:true},
- 'ian-machado-garry': {n:12,own:'521',stats:'442c9011034ae1fd',latest:'2026-08-15',w:10,l:2},
+ 'ian-machado-garry': {n:12,own:'387',stats:'442c9011034ae1fd',latest:'2026-08-15',w:10,l:2},
  'joel-alvarez': {n:12,stats:'58bbef3770bb2dfc',latest:'2026-08-15',w:8,l:4},
  'anthony-hernandez': {n:13,stats:'093e1f5bb73850be',latest:'2026-08-22',w:9,l:4},
  'arman-tsarukyan': {n:13,stats:'eae48ff31db420c2',latest:'2026-09-19',w:11,l:2},
