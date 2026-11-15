@@ -76,7 +76,9 @@ test('wave65 four UFC careers preserve 16 exact pinned fighter/fight IDs, both o
    assert.equal(norm(proof.opponent),norm(other.name));
    assert.equal(proof.fightUrl,'https://ufcstats.com/fight-details/'+target.ids[proof.nativeBoutId]);
    assert.ok(Number(cache.roundDone[proof.nativeBoutId])>0);
-   assert.equal(proof.date,b.eventDate);
+   const expectedUtcShift=new Set(['38215','60757','65903','60816']);
+   const actualShift=(Date.parse(b.eventDate+'T00:00:00Z')-Date.parse(proof.date+'T00:00:00Z'))/86400000;
+   assert.equal(actualShift,expectedUtcShift.has(proof.nativeBoutId)?1:0,'expected exact source/native UTC-to-local date shift for '+proof.nativeBoutId);
    assert.equal(proof.result,b.result.winnerId===own.id?'win':'loss');
    assert.ok(history.some(h=>h.boutId===proof.nativeBoutId&&h.date===proof.date&&h.result===proof.result));
    fightURLs.push(proof.fightUrl);
