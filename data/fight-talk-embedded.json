@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-15T22:02:10.232Z",
-  "checkedAt": "2026-11-15T22:02:10.232Z",
+  "attemptedAt": "2026-11-15T22:43:31.246Z",
+  "checkedAt": "2026-11-15T22:43:31.246Z",
   "windowDays": 28,
-  "articlesChecked": 32,
+  "articlesChecked": 31,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 45,
-  "publisherSourcesConfigured": 33,
-  "linksFound": 14,
-  "newEmbedsVerified": 0,
+  "publisherSourcesConfigured": 32,
+  "linksFound": 21,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -346,6 +346,25 @@
       "embedVerified": true,
       "linkPriority": 12,
       "url": "https://www.threads.com/t/DfvYoHnmdi1/"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-15T22:00:00+00:00",
+      "discoveredAt": "2026-11-15T22:43:31.246Z",
+      "sourcePublisher": "MMA Fighting",
+      "evidenceUrl": "https://www.mmafighting.com/ufc/521095/ufc-336-gable-steveson-books-matchup-on-joshua-van-vs-manel-kape-fight-card",
+      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/DfsWXuHv-11/"
     },
     {
       "type": "post",
@@ -2179,24 +2198,6 @@
       "summary": "Original social post linked in MMA Junkie coverage. Its author, caption and publication date appear in the official embed.",
       "source": "Publisher link + official Meta oEmbed verification",
       "url": "https://www.instagram.com/p/Dfd2zTxTQd4/"
-    },
-    {
-      "type": "post",
-      "platform": "X",
-      "sport": "mma",
-      "name": "Belal Muhammad",
-      "role": "fighter",
-      "handle": "@bullyb170",
-      "nativeEmbed": true,
-      "originalDateUnverified": false,
-      "sourceLinkedAt": "2026-11-08T04:40:24+00:00",
-      "discoveredAt": "2026-11-08T22:34:34.041Z",
-      "sourcePublisher": "MMA Fighting",
-      "evidenceUrl": "https://www.mmafighting.com/ufc/520002/at-the-apex-is-criminal-pros-react-to-insane-johnny-walker-knockout-win-in-ufc-vegas-124-main-event",
-      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Public publisher link + official Meta oEmbed verification",
-      "url": "https://x.com/bullyb170/status/2119279651839431078",
-      "postedAt": "2026-11-08T04:03:37.967Z"
     }
   ],
   "seenOriginals": [
@@ -2755,6 +2756,10 @@
     {
       "url": "https://www.instagram.com/reel/DfwILBgCVns/",
       "firstSeen": "2026-11-15T21:21:23.279Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/DfsWXuHv-11/",
+      "firstSeen": "2026-11-15T22:43:31.246Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
