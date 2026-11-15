@@ -10,14 +10,14 @@
     "official-JSA-career-totals-unpublished-or-disagree": 22,
     "official-JSA-profile-field-disagreement": 1,
     "official-absence-total-unpublished-or-disagree": 61,
-    "official-completed-basho-ledger-coverage-incomplete": 5
+    "official-completed-basho-ledger-coverage-incomplete": 4
   },
   "certificationLanes": {
     "absence-proof-review": 45,
     "career-totals-review": 19,
     "fast-lane-strict-audit": 77,
-    "official-rank-recheck": 43,
-    "official-tournament-gap": 5,
+    "official-rank-recheck": 44,
+    "official-tournament-gap": 4,
     "profile-source-conflict": 1
   },
   "certified": 0,
@@ -2207,17 +2207,16 @@
       "sourceId": 70,
       "name": "Kotokuzan",
       "division": "Makushita",
-      "certificationLane": "official-tournament-gap",
-      "owner": "historical manual source review",
-      "nextAction": "Review which completed tournament results lack independent official comparison, preserving absence-only and unranked tournament distinctions.",
+      "certificationLane": "official-rank-recheck",
+      "owner": "existing JSA source worker",
+      "nextAction": "Collect dated JSA banzuke positions for this cached profile, compare exact ranks with existing API history; do not re-fetch if a validated rank snapshot exists.",
       "classification": "needs-source-or-manual-review",
       "blockers": [
-        "official-completed-basho-ledger-coverage-incomplete",
         "independent-JSA-historical-ranks-not-compared"
       ],
       "completedHistoricalBoutTournaments": 99,
       "officialBashoCompared": 96,
-      "independentlyReconciledOlderBasho": 0,
+      "independentlyReconciledOlderBasho": 3,
       "missingJsaOlderBasho": 3,
       "historicalSourceOverlapConflicts": 0,
       "JsaHistoricalRankCompared": 0,
