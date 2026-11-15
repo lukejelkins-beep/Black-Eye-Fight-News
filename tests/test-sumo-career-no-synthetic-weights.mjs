@@ -35,3 +35,22 @@ test('sourced dates stay unchanged, no extra present-basho dot or fabricated hig
  assert.ok(html.includes('Highest rank: Maegashira 5 East'));
  assert.deepEqual(input,history,'source cache must be immutable');
 });
+
+test('historical banzuke rank is preserved over a contradictory current listing',()=>{
+ const changed={...w,currentRank:'Maegashira 3 East'};
+ const source=structuredClone(history);
+ source.bySourceId['28'].rank.push({basho:'202611',rank:'Maegashira 2 East'});
+ const p=careerPoints(changed,source,'202611','202609','Maegashira 9 West');
+ assert.equal(p.ranks.at(-1).rank,'Maegashira 2 East');
+ assert.deepEqual(p.currentRankDiscrepancy,{
+  basho:'202611',recordedRank:'Maegashira 2 East',rosterRank:'Maegashira 3 East'});
+ assert.match(careerGraphs(changed,source,'202611','202609','Maegashira 9 West'),/Rank review required/);
+ assert.deepEqual(source.bySourceId['28'].rank.at(-1),{
+  basho:'202611',rank:'Maegashira 2 East'});
+});
+test('rank chart names real Sumo API source and does not claim full JSA verification',()=>{
+ const html=careerGraphs(w,history,'202611','202609','Maegashira 9 West');
+ assert.match(html,/Sumo API historical ranks/);
+ assert.match(html,/per-basho certification remains underway/);
+ assert.doesNotMatch(html,/latest rank is cross-checked with/);
+});
