@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-15T20:38:48.308Z",
-  "checkedAt": "2026-11-15T20:38:48.308Z",
-  "updatedAt": "2026-11-15T19:02:43Z",
+  "attemptedAt": "2026-11-15T21:19:30.446Z",
+  "checkedAt": "2026-11-15T21:19:30.446Z",
+  "updatedAt": "2026-11-15T21:04:27Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 3,
+  "sourcesChecked": 4,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 3,
+      "checked": 4,
       "failed": 0,
-      "configured": 3,
-      "message": "3 of 3 scheduled sources checked."
+      "configured": 4,
+      "message": "4 of 4 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 18,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 53,
+      "configured": 40,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 2,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,21 +55,94 @@
   "rollingScan": {
     "directoryEntries": 448,
     "scheduledEntries": 84,
-    "batchIndex": 1,
+    "batchIndex": 3,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 53,
-      "X": 18,
-      "Bluesky": 3,
-      "Threads": 10
+      "Threads": 11,
+      "X": 27,
+      "Instagram": 40,
+      "Bluesky": 4,
+      "Reddit": 2
     },
-    "directlyChecked": 3,
+    "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2ew2vqger2s",
+      "cid": "bafyreiboqxe5fih52xtxgpkolq4dqsyqphtnlvho3lklelzwhij2pjbpsi",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Only woman to beat Kayla Harrison in MMA sends the UFC a message in reaction to Amanda Nunes win",
+      "postedAt": "2026-11-15T21:04:27Z",
+      "date": "16 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2ew2vqger2s",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2esjfthad2x",
+      "cid": "bafyreif7mtzoylqa5bi65p7be6mifpvbpua7bzf67ec2r5jsrvtxtdq3bm",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Dana White provides update on Tom Aspinall’s return following Ciryl Gane’s UFC 334 win",
+      "postedAt": "2026-11-15T20:00:59Z",
+      "date": "16 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2esjfthad2x",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2eqzqpbmv2o",
+      "cid": "bafyreigunatcgbj2glzihtfnfiddtqyix237azoblif3q2x6atcvdjhbga",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Josh Hokit hits back at Jon Jones after having UFC 334 loss to Ciryl Gane mocked",
+      "postedAt": "2026-11-15T19:34:20Z",
+      "date": "16 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2eqzqpbmv2o",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2epba73qu2u",
       "cid": "bafyreiavc77zcf7reg7rvip4rqtxgnepkk52hiux44q3niend22ge6f77q",
@@ -91,7 +164,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -115,7 +188,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -211,7 +284,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -283,7 +356,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -379,7 +452,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -475,7 +548,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -499,7 +572,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -575,54 +648,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2dxpznytu22",
-      "cid": "bafyreihaeujkghfrgomdyh3f6cqrso66d44fvf27mimtbnjbumfgtez2cq",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Dana White open to Kayla Harrison vs. Amanda Nunes rematch following UFC 334",
-      "postedAt": "2026-11-15T12:01:30Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2dxpznytu22",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2dugxdmes2r",
-      "cid": "bafyreiaion3gkeam2qswuxbgncua4woxwimrb22ckxsh4i7rlrqiesdyba",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Josh Hokit claims he was ‘seeing triple all fight’ as he accuses Ciryl Gane of fouling him at UFC 334",
-      "postedAt": "2026-11-15T11:02:44Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2dugxdmes2r",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n2drsprhv22e",
       "cid": "bafyreiawipaivr522z56sdbq5is7uzjldbxkregewobpaw2rphebbkuhoq",
       "platform": "Bluesky",
@@ -671,30 +696,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2diwoveh625",
-      "cid": "bafyreielerhfclevaktv5l4wb542o2ca5jr6ipzdx6peaunph3ni3337sq",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Dana White responds to Josh Hokit’s calls for an immediate rematch after UFC 334 defeat",
-      "postedAt": "2026-11-15T07:36:47Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2diwoveh625",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:q3k4mwmengzciq2ytpf3ckoa/app.bsky.feed.post/3n2dgf2dob227",
       "cid": "bafyreigchrzeqyhywvsd2m6roj2ssqd3vrea2mujfq4qhfhfry46jrs364",
       "platform": "Bluesky",
@@ -715,7 +716,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -931,7 +932,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -979,7 +980,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1123,7 +1124,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1147,7 +1148,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1195,7 +1196,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1243,7 +1244,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1267,7 +1268,7 @@
         "comments": 3,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2167,7 +2168,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T19:15:27.968Z",
+      "engagementCheckedAt": "2026-11-15T21:19:30.446Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
