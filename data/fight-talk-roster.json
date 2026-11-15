@@ -1,5 +1,5 @@
 {
-  "revisedAt": "2026-11-14",
+  "revisedAt": "2026-11-15",
   "purpose": "Full combat-sports site champion, contender and prospect roster; null profiles mean no sufficiently supported account was found, not that an account does not exist.",
   "fighters": [
     {
@@ -878,7 +878,11 @@
       "sport": "boxing",
       "tier": "prospect",
       "profiles": {
-        "X": null,
+        "X": {
+          "username": "DavidNyika",
+          "url": "https://x.com/DavidNyika",
+          "identityBasis": "Wikidata P2002 for David Nyika (New Zealand amateur boxer)"
+        },
         "Instagram": {
           "username": "davidnyika",
           "url": "https://www.instagram.com/davidnyika/",
@@ -3280,7 +3284,7 @@
     "total": 215,
     "tracked": 160,
     "missingBoth": 55,
-    "withX": 74,
+    "withX": 75,
     "withInstagram": 158,
     "withThreads": 39
   }
