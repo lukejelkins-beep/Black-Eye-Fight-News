@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "research-run-incomplete",
+  "status": "resolved-after-successful-retry",
   "at": "2026-11-15T08:31:06Z",
   "runId": "43694856675",
   "workflowCommit": "866312bd6e13f44dba7261c0a5e7f71491eab387",
@@ -13,5 +13,8 @@
     "healthCheckpoint": "skipped",
     "gitPush": "skipped"
   },
-  "note": "This is an incomplete Actions run. Do not advance certification or claim a completed checkpoint."
+  "note": "Previous run failed before a complete data checkpoint. A later validated run completed the collection, data audit, projections and checkpoint. Original outcomes retained for traceability.",
+  "resolvedByRunId": "43694856675",
+  "resolvedAt": "2026-11-15T08:35:50.025Z",
+  "successEvidencePath": "data/sumo/backfill/v1/workflow-health.json"
 }
