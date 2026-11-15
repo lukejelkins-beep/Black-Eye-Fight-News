@@ -341,15 +341,24 @@ export function publishedCurrentWeight(w,careerCache){
  const matched=entry&&Number(entry.sumoApiId)===Number(w?.sourceId)&&
    Number(entry.officialNskId)===Number(w?.officialNskId);
  const official=matched?entry.currentListedWeight:null;
- const kg=Number(official?.kg);
- const validOfficial=official?.datedMeasurement===false&&
-   Number.isFinite(kg)&&kg>0&&
+ const kg=Number(official?.kg),cm=Number(official?.heightCm);
+ const validJsaSource=official?.datedMeasurement===false&&
    /^https:\/\/www\.sumo\.or\.jp\//.test(String(official?.source||''));
+ const validOfficial=validJsaSource&&Number.isFinite(kg)&&kg>0;
+ const validOfficialHeight=validJsaSource&&Number.isFinite(cm)&&cm>0;
+ const apiHeight=Number(w?.heightCm);
+ const apiHeightCm=Number.isFinite(apiHeight)&&apiHeight>0?apiHeight:null;
  return {kg:validOfficial?kg:apiKg===null?null:Math.round(apiKg),
   source:validOfficial?'JSA current listing':'Sumo API roster listing',
   sourceUrl:validOfficial?official.source:null,
   apiKg,
   underReview:!!validOfficial&&apiKg!==null&&Math.round(apiKg)!==kg,
+  heightCm:validOfficialHeight?cm:apiHeightCm===null?null:Math.round(apiHeightCm),
+  heightSource:validOfficialHeight?'JSA current listing':'Sumo API roster listing',
+  heightSourceUrl:validOfficialHeight?official.source:null,
+  apiHeightCm,
+  heightUnderReview:!!validOfficialHeight&&apiHeightCm!==null&&
+    Math.round(apiHeightCm)!==cm,
   datedWeighIn:false};
 }
 
