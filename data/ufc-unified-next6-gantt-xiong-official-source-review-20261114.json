@@ -1,0 +1,175 @@
+{
+  "schema": 1,
+  "scope": "ufc-next6-gantt-xiong-independent-source-review",
+  "snapshot": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "sourceMethod": "Complete official UFC.com fighter debut-to-November 14 history, with official scorecards controlling outcomes where graphical Win badge misleading. Independent pinned Greco UFCStats fighter/event/fight URL and saved native corner/date/winner/rounds required before certification.",
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "fighters": {
+    "thomas-gantt": {
+      "fighterName": "Tommy Gantt",
+      "officialFighterUrl": "https://www.ufc.com/athlete/thomas-gantt",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/de83f920fd302871",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-05-16",
+          "opponent": "Artur Minev",
+          "result": "win"
+        },
+        {
+          "date": "2026-09-12",
+          "opponent": "Drakkar Klose",
+          "result": "win"
+        }
+      ],
+      "reviewNote": "Official UFC.com profile uses Tommy Gantt for approved Thomas Gantt. 2025-09-16 DWCS guillotine win over Adam Livingston excluded from official UFC-only record.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exact pinned fighter/fight event chronology native IDs",
+        "every completed original paired fighter/opponent numeric ID result and round",
+        "source-attested historical DWCS/feeder exclusions",
+        "full strict Stage3 783-cohort audit"
+      ]
+    },
+    "torrez-finney": {
+      "fighterName": "Torrez Finney",
+      "officialFighterUrl": "https://www.ufc.com/athlete/torrez-finney",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/fbb60f24af5d5a02",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2025-04-05",
+          "opponent": "Robert Valentin",
+          "result": "win"
+        },
+        {
+          "date": "2026-01-31",
+          "opponent": "Jacob Malkoun",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "Three prior DWCS Season 7/8 fights against Yuri Panferov, Cameron Rowston, Abdellah Er-Ramy are distinctly excluded. UFC 325 Jan 2026 Malkoun loss documented in dated official narrative.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exact pinned fighter/fight event chronology native IDs",
+        "every completed original paired fighter/opponent numeric ID result and round",
+        "source-attested historical DWCS/feeder exclusions",
+        "full strict Stage3 783-cohort audit"
+      ]
+    },
+    "ty-miller": {
+      "fighterName": "Ty Miller",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ty-miller",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/0859524157a19045",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-01-24",
+          "opponent": "Adam Fugitt",
+          "result": "win"
+        },
+        {
+          "date": "2026-08-08",
+          "opponent": "Billy Ray Goff",
+          "result": "win"
+        }
+      ],
+      "reviewNote": "Two official stoppage wins. 2025-08-12 DWCS decision over Jimmy Drago excluded.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exact pinned fighter/fight event chronology native IDs",
+        "every completed original paired fighter/opponent numeric ID result and round",
+        "source-attested historical DWCS/feeder exclusions",
+        "full strict Stage3 783-cohort audit"
+      ]
+    },
+    "tyrell-fortune": {
+      "fighterName": "Tyrell Fortune",
+      "officialFighterUrl": "https://www.ufc.com/athlete/tyrell-fortune",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/bc7f4b2d4c2724a2",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-03-28",
+          "opponent": "Marcin Tybura",
+          "result": "win"
+        },
+        {
+          "date": "2026-07-25",
+          "opponent": "Rizvan Kuniev",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "Two official UFC bouts, with official UFC.com fighter narrative incorrectly typing 3/21 for first bout despite 3/28 fight-card date; historical source and native IDs required.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exact pinned fighter/fight event chronology native IDs",
+        "every completed original paired fighter/opponent numeric ID result and round",
+        "source-attested historical DWCS/feeder exclusions",
+        "full strict Stage3 783-cohort audit"
+      ]
+    },
+    "uran-satybaldiev": {
+      "fighterName": "Uran Satybaldiev",
+      "officialFighterUrl": "https://www.ufc.com/athlete/uran-satybaldiev",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/02f484417a6fa69d",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2025-04-05",
+          "opponent": "Martin Buday",
+          "result": "loss"
+        },
+        {
+          "date": "2025-08-23",
+          "opponent": "Diyar Nurgozhay",
+          "result": "win"
+        }
+      ],
+      "reviewNote": "Both official UFC bouts dated in primary biography. Upcoming Dec 5 2026 contest is NOT complete and must not appear in completed history.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exact pinned fighter/fight event chronology native IDs",
+        "every completed original paired fighter/opponent numeric ID result and round",
+        "source-attested historical DWCS/feeder exclusions",
+        "full strict Stage3 783-cohort audit"
+      ]
+    },
+    "xiong-jing-nan": {
+      "fighterName": "Xiong Jingnan",
+      "officialFighterUrl": "https://www.ufc.com/athlete/xiong-jing-nan",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/2cdb479a0ef0ee1d",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-05-30",
+          "opponent": "Angela Hill",
+          "result": "loss"
+        },
+        {
+          "date": "2026-08-29",
+          "opponent": "Julia Polastri",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "UFC official fighter page displays Jingnan Xiong but independent UFCStats-derived fighter name is Xiong Jingnan. Both UFC losses are dated official narrative; former ONE championship results are out of scope.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exact pinned fighter/fight event chronology native IDs",
+        "every completed original paired fighter/opponent numeric ID result and round",
+        "source-attested historical DWCS/feeder exclusions",
+        "full strict Stage3 783-cohort audit"
+      ]
+    }
+  }
+}

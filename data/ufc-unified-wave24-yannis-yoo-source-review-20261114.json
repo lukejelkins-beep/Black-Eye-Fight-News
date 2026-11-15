@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave24-two-three-bout-careers",
+  "asOf": "2026-11-14",
+  "rosterSize": 783,
+  "nonproduction": true,
+  "certificationGranted": false,
+  "pinnedSource": {
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "method": "Full primary UFC.com dated bios and results independently matched to immutable UFCStats-derived fighter/fight identities, original native numeric both corners, winners and measured rounds. Official detailed losses override misleading graphic Win tiles. No feeder/uncompleted fights certified.",
+  "fighters": {
+    "john-yannis": {
+      "fighterName": "John Yannis",
+      "officialFighterUrl": "https://www.ufc.com/athlete/john-yannis",
+      "grecoFighterUrl": "https://ufcstats.com/fighter-details/450bcab0968562c4",
+      "nativeFighterId": "543",
+      "bouts": [
+        {
+          "date": "2025-08-02",
+          "opponent": "Austin Bashi",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/07c2af68b6dbc4ec",
+          "nativeBoutId": "60761",
+          "nativeFighterId": "543"
+        },
+        {
+          "date": "2026-04-18",
+          "opponent": "Jamie Siraj",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/32087c183dffcae0",
+          "nativeBoutId": "66100",
+          "nativeFighterId": "543"
+        },
+        {
+          "date": "2026-06-06",
+          "opponent": "Marcus McGhee",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/90940d93d6e0998f",
+          "nativeBoutId": "66473",
+          "nativeFighterId": "543"
+        }
+      ],
+      "sourceOnly": true,
+      "strictStage3Required": true
+    },
+    "joosang-yoo": {
+      "fighterName": "JooSang Yoo",
+      "officialFighterUrl": "https://www.ufc.com/athlete/joosang-yoo",
+      "grecoFighterUrl": "https://ufcstats.com/fighter-details/a44020ea2e8cd026",
+      "nativeFighterId": "203",
+      "bouts": [
+        {
+          "date": "2025-06-07",
+          "opponent": "Jeka Saragih",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9f4a0de31375ba04",
+          "nativeBoutId": "60871",
+          "nativeFighterId": "203"
+        },
+        {
+          "date": "2025-10-04",
+          "opponent": "Daniel Santos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7b34aa1eb09b8301",
+          "nativeBoutId": "60744",
+          "nativeFighterId": "203"
+        },
+        {
+          "date": "2026-09-19",
+          "opponent": "Michael Aswell Jr.",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d89cc2cb92cd8407",
+          "nativeBoutId": "83424",
+          "nativeFighterId": "203"
+        }
+      ],
+      "sourceOnly": true,
+      "strictStage3Required": true
+    }
+  }
+}

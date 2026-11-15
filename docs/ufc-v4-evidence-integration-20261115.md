@@ -1,0 +1,11 @@
+# UFC V4 evidence integration review — 15 November 2026
+
+This branch stages existing independent UFC career research from draft PR #189 on a current-main base. It does not publish V4 profiles, scores or leaderboards, change the approved 783-fighter cohort, or authorize a Render release. Issue #171 remains the release tracker.
+
+The canonical evidence register contains 437 distinct fighter entries: all 66 former main entries unchanged and 371 additional research entries. The feeder exclusion ledger retains all 60 main rows unchanged and adds 92 source-attested rows. Source-review JSON and fail-closed tests are carried as existing provenance; no new provider research was performed. The one existing central audit workflow runs the tests without adding another scheduled certification or paid collector workflow.
+
+With the saved main collector data at integration base `1c92ae2d797ea5943175c5e4df89ac0ce95e0a7e`, the strict Stage 3 audit returns **429 certified / 150 fastLane / 204 exceptions = 783**. Eight fighters previously certified on the older #189 data snapshot now have a newly saved 14 November UFC bout outside their independent complete-career proof: Bia Mesquita, César Almeida, Chris Duncan, Donte Johnson, Evan Elder, Heili Alateng, Juan Díaz and Melquizael Costa. They correctly remain uncertified until their full updated UFC careers are independently source-checked and pass Stage 3. Do not change their original evidence timestamps, assume the new outcomes, or restore the old 437 count by weakening the gate.
+
+The Stage 3 evaluator keeps the approved cohort date as the independent evidence cutoff while checking provider freshness at the rolling census date, preserving the correction from PR #201. It also retains #189's separately attested official showcase, draw, alias and frozen approved-census fallback checks. All six standalone verifiers and the central strict audit passed locally with saved inputs. Counts are snapshot-specific; inspect the latest completed full-cohort audit before using them operationally.
+
+PRs #192, #191, #186, #179 and #141 already have their fighter subjects in this register. Review unique source documents and tests before marking those PRs superseded. The historical #109/#133/#136/#137/#95 code proposals remain separate; do not merge them wholesale or restart their automations.

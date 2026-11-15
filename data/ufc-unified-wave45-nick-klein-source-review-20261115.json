@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave45-source-linked-career",
+  "asOf": "2026-11-15",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07",
+    "evidenceCutoff": "2026-11-14",
+    "directUfcStatsAccess": "Pinned Greco UFCStats-derived CSV, not direct UFCStats scraping",
+    "method": "Complete official UFC.com dated Octagon career, exact pinned Greco fight IDs, original saved native fighter/opponent corners, win/loss outcomes and measured rounds; separate UFC-confirmed DWCS feeder exclusion."
+  },
+  "fighters": {
+    "nick-klein": {
+      "name": "Nick Klein",
+      "ufcStatsFighterId": "7eaa5e31c2dd86aa",
+      "nativeFighterId": "2863",
+      "officialFighterUrl": "https://www.ufc.com/athlete/nick-klein",
+      "officialUfcCareerBoutCount": 3,
+      "bouts": [
+        {
+          "date": "2025-02-22",
+          "opponent": "Mansur Abdul-Malik",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e011819e721c4a2a",
+          "nativeBoutId": "38535",
+          "nativeFighterId": "2863",
+          "originalOpponentNumericId": "359"
+        },
+        {
+          "date": "2025-08-02",
+          "opponent": "Andrey Pulyaev",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b3c695728e177fd4",
+          "nativeBoutId": "60760",
+          "nativeFighterId": "2863",
+          "originalOpponentNumericId": "334"
+        },
+        {
+          "date": "2026-10-31",
+          "opponent": "Joseph Kropschot",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f9bda28454d49c78",
+          "nativeBoutId": "85985",
+          "nativeFighterId": "2863",
+          "originalOpponentNumericId": "29328"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84169",
+          "date": "2024-10-15",
+          "opponent": "Heraldo Souza",
+          "result": "win",
+          "event": "Dana White's Contender Series Season 8 Week 10",
+          "officialSourceUrl": "https://www.ufc.com/news/week-10-results-scorecards-dana-whites-contender-series-season-8",
+          "excludedBecause": "Official UFC DWCS Season 8 Week 10 contest predates Feb 2025 UFC debut, not a fourth UFC Octagon bout."
+        }
+      ]
+    }
+  }
+}

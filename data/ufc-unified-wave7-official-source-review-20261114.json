@@ -1,0 +1,267 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave7-official-career-source-review",
+  "snapshot": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "sourceMethod": "Complete dated official UFC.com athlete biographies and detail results; individual event scorecards take precedence over incorrect summary winner tiles. Next: pinned independent Greco UFCStats history and original saved UFCalendar numeric IDs/corners/rounds.",
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "fighters": {
+    "eric-mcconico": {
+      "fighterName": "eric-mcconico",
+      "officialFighterUrl": "https://www.ufc.com/athlete/eric-mcconico",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/9508cc6184cb2450",
+      "officialUfcCareerCount": 5,
+      "bouts": [
+        {
+          "date": "2025-02-22",
+          "opponent": "Nursulton Ruziboev",
+          "result": "loss"
+        },
+        {
+          "date": "2025-08-09",
+          "opponent": "Cody Brundage",
+          "result": "win"
+        },
+        {
+          "date": "2025-11-15",
+          "opponent": "Baisangur Susurkaev",
+          "result": "loss"
+        },
+        {
+          "date": "2026-04-25",
+          "opponent": "Rodolfo Vieira",
+          "result": "win"
+        },
+        {
+          "date": "2026-08-15",
+          "opponent": "Donte Johnson",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "Five UFC fights; athlete results panel incorrectly shows final fight as a win. Detailed dated narrative governs.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exhaustive independent pinned source fighter/results/event alignment",
+        "exact native saved numeric fighter ID, opponent corners, date, winner and class",
+        "separate source-attested feeder exclusions",
+        "complete measured-round coverage and full 783 strict Stage3 audit"
+      ]
+    },
+    "felipe-franco": {
+      "fighterName": "felipe-franco",
+      "officialFighterUrl": "https://www.ufc.com/athlete/felipe-franco",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/e564146b9cf6dbef",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2026-03-21",
+          "opponent": "Mario Pinto",
+          "result": "loss"
+        },
+        {
+          "date": "2026-07-18",
+          "opponent": "Levi Rodrigues Jr.",
+          "result": "win"
+        },
+        {
+          "date": "2026-10-10",
+          "opponent": "Brendson Ribeiro",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "Three UFC fights; inaccurate last-fight win badge. Distinct 2025-09-09 DWCS loss to Freddy Vidal excluded.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exhaustive independent pinned source fighter/results/event alignment",
+        "exact native saved numeric fighter ID, opponent corners, date, winner and class",
+        "separate source-attested feeder exclusions",
+        "complete measured-round coverage and full 783 strict Stage3 audit"
+      ]
+    },
+    "eric-nolan": {
+      "fighterName": "eric-nolan",
+      "officialFighterUrl": "https://www.ufc.com/athlete/eric-nolan",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/64b12fe31be7560c",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2025-08-16",
+          "opponent": "Baisangur Susurkaev",
+          "result": "loss"
+        },
+        {
+          "date": "2026-06-27",
+          "opponent": "Farman Hasanov",
+          "result": "loss"
+        },
+        {
+          "date": "2026-10-03",
+          "opponent": "Court McGee",
+          "result": "win"
+        }
+      ],
+      "reviewNote": "Full three-fight UFC record, athlete summary tiles misleading about first two losses.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exhaustive independent pinned source fighter/results/event alignment",
+        "exact native saved numeric fighter ID, opponent corners, date, winner and class",
+        "separate source-attested feeder exclusions",
+        "complete measured-round coverage and full 783 strict Stage3 audit"
+      ]
+    },
+    "guilherme-pat": {
+      "fighterName": "guilherme-pat",
+      "officialFighterUrl": "https://www.ufc.com/athlete/guilherme-pat",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/ba15006c804a8de0",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2025-12-13",
+          "opponent": "Allen Frye Jr.",
+          "result": "win"
+        },
+        {
+          "date": "2026-04-04",
+          "opponent": "Thomas Petersen",
+          "result": "loss"
+        },
+        {
+          "date": "2026-08-08",
+          "opponent": "Steven Asplund",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "Three UFC fights. Detailed official UFC narrative corrects false win badges for later two.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exhaustive independent pinned source fighter/results/event alignment",
+        "exact native saved numeric fighter ID, opponent corners, date, winner and class",
+        "separate source-attested feeder exclusions",
+        "complete measured-round coverage and full 783 strict Stage3 audit"
+      ]
+    },
+    "elisha-ellison": {
+      "fighterName": "elisha-ellison",
+      "officialFighterUrl": "https://www.ufc.com/athlete/elisha-ellison",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/87e4a3a5080ee7ce",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2025-09-27",
+          "opponent": "Brando Pericic",
+          "result": "loss"
+        },
+        {
+          "date": "2026-07-11",
+          "opponent": "Gable Steveson",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "Two dated UFC losses confirmed by official athlete narrative.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exhaustive independent pinned source fighter/results/event alignment",
+        "exact native saved numeric fighter ID, opponent corners, date, winner and class",
+        "separate source-attested feeder exclusions",
+        "complete measured-round coverage and full 783 strict Stage3 audit"
+      ]
+    },
+    "jackson-mcvey": {
+      "fighterName": "jackson-mcvey",
+      "officialFighterUrl": "https://www.ufc.com/athlete/jackson-mcvey",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/3eeec2f53cebdf12",
+      "officialUfcCareerCount": 4,
+      "bouts": [
+        {
+          "date": "2025-07-19",
+          "opponent": "Brunno Ferreira",
+          "result": "loss"
+        },
+        {
+          "date": "2025-11-08",
+          "opponent": "Zach Reese",
+          "result": "loss"
+        },
+        {
+          "date": "2026-04-25",
+          "opponent": "Sedriques Dumas",
+          "result": "win"
+        },
+        {
+          "date": "2026-08-22",
+          "opponent": "Wes Schultz",
+          "result": "win"
+        }
+      ],
+      "reviewNote": "Four consecutive UFC bouts including two losses, then two wins.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exhaustive independent pinned source fighter/results/event alignment",
+        "exact native saved numeric fighter ID, opponent corners, date, winner and class",
+        "separate source-attested feeder exclusions",
+        "complete measured-round coverage and full 783 strict Stage3 audit"
+      ]
+    },
+    "farman-hasanov": {
+      "fighterName": "farman-hasanov",
+      "officialFighterUrl": "https://www.ufc.com/athlete/farman-hasanov",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/c88f8a9c1ea7165d",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-06-27",
+          "opponent": "Eric Nolan",
+          "result": "win"
+        },
+        {
+          "date": "2026-10-31",
+          "opponent": "Jean-Paul Lebosnoyani",
+          "result": "loss"
+        }
+      ],
+      "reviewNote": "Official UFC Oct 31 detailed narrative records a doctor's stoppage loss even though summary tile says win.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exhaustive independent pinned source fighter/results/event alignment",
+        "exact native saved numeric fighter ID, opponent corners, date, winner and class",
+        "separate source-attested feeder exclusions",
+        "complete measured-round coverage and full 783 strict Stage3 audit"
+      ]
+    },
+    "ethyn-ewing": {
+      "fighterName": "ethyn-ewing",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ethyn-ewing",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/d776b5814f2400b4",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2025-11-15",
+          "opponent": "Malcolm Wellmaker",
+          "result": "win"
+        },
+        {
+          "date": "2026-04-04",
+          "opponent": "Rafael Estevam",
+          "result": "win"
+        }
+      ],
+      "reviewNote": "Two UFC fights since Nov 2025, both wins.",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "exhaustive independent pinned source fighter/results/event alignment",
+        "exact native saved numeric fighter ID, opponent corners, date, winner and class",
+        "separate source-attested feeder exclusions",
+        "complete measured-round coverage and full 783 strict Stage3 audit"
+      ]
+    }
+  }
+}

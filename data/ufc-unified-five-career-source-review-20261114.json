@@ -1,0 +1,227 @@
+{
+  "schema": 1,
+  "scope": "ufc-independent-five-career-official-source-crosscheck",
+  "snapshot": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "fighters": {
+    "ramon-taveras": {
+      "fighterName": "Ramon Taveras",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ramon-taveras",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/c5ccd878231c5407",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2024-01-20",
+          "opponent": "Serhiy Sidey",
+          "result": "win",
+          "event": "UFC 297: Strickland vs. Du Plessis",
+          "fightUrl": "https://ufcstats.com/fight-details/43d90683078fcee5"
+        },
+        {
+          "date": "2024-12-14",
+          "opponent": "Davey Grant",
+          "result": "loss",
+          "event": "UFC Fight Night: Covington vs. Buckley",
+          "fightUrl": "https://ufcstats.com/fight-details/b40e4deb48658851"
+        },
+        {
+          "date": "2025-09-27",
+          "opponent": "Jack Jenkins",
+          "result": "loss",
+          "event": "UFC Fight Night: Ulberg vs. Reyes",
+          "fightUrl": "https://ufcstats.com/fight-details/38248c5d13f273e6"
+        }
+      ],
+      "excludedFeederBouts": [
+        {
+          "nativeBoutId": "84097",
+          "date": "2023-10-10",
+          "opponent": "Cortavious Romious",
+          "result": "win",
+          "event": "Dana White's Contender Series 66",
+          "officialSourceUrl": "https://www.ufc.com/athlete/ramon-taveras",
+          "excludedBecause": "UFC.com identifies historical Dana White's Contender Series feeder; not an official Octagon fight"
+        },
+        {
+          "nativeBoutId": "88267",
+          "date": "2023-09-05",
+          "opponent": "Serhiy Sidey",
+          "result": "loss",
+          "event": "Dana White's Contender Series 61",
+          "officialSourceUrl": "https://www.ufc.com/athlete/ramon-taveras",
+          "excludedBecause": "UFC.com identifies historical Dana White's Contender Series feeder; not an official Octagon fight"
+        }
+      ],
+      "status": "source_attested_not_certified",
+      "note": "Source-only review; separate whole-cohort strict Stage3 audit decides certificate."
+    },
+    "brogan-walker": {
+      "fighterName": "Brogan Walker",
+      "officialFighterUrl": "https://www.ufc.com/athlete/brogan-walker",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/4333a8e70a672eb7",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2022-08-06",
+          "opponent": "Juliana Miller",
+          "result": "loss",
+          "event": "UFC Fight Night: Santos vs. Hill",
+          "fightUrl": "https://ufcstats.com/fight-details/2b11aa4b90b1dd41"
+        },
+        {
+          "date": "2023-04-22",
+          "opponent": "Iasmin Lucindo",
+          "result": "loss",
+          "event": "UFC Fight Night: Pavlovich vs. Blaydes",
+          "fightUrl": "https://ufcstats.com/fight-details/20c0f50c11509301"
+        },
+        {
+          "date": "2025-10-04",
+          "opponent": "Veronica Hardy",
+          "result": "loss",
+          "event": "UFC 320: Ankalaev vs. Pereira 2",
+          "fightUrl": "https://ufcstats.com/fight-details/98883348ddb3be33"
+        }
+      ],
+      "excludedFeederBouts": [],
+      "status": "source_attested_not_certified",
+      "note": "Source-only review; separate whole-cohort strict Stage3 audit decides certificate."
+    },
+    "mitch-ramirez": {
+      "fighterName": "Mitch Ramirez",
+      "officialFighterUrl": "https://www.ufc.com/athlete/mitch-ramirez",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/e99eb0ef25885de5",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2024-03-16",
+          "opponent": "Thiago Moises",
+          "result": "loss",
+          "event": "UFC Fight Night: Tuivasa vs. Tybura",
+          "fightUrl": "https://ufcstats.com/fight-details/537b3cef39d2d573"
+        },
+        {
+          "date": "2025-07-12",
+          "opponent": "Mike Davis",
+          "result": "loss",
+          "event": "UFC Fight Night: Lewis vs. Teixeira",
+          "fightUrl": "https://ufcstats.com/fight-details/7f33fbdc35afd721"
+        },
+        {
+          "date": "2026-07-18",
+          "opponent": "Chase Hooper",
+          "result": "loss",
+          "event": "UFC Fight Night: Du Plessis vs. Usman",
+          "fightUrl": "https://ufcstats.com/fight-details/f2abca7379982d4f"
+        }
+      ],
+      "excludedFeederBouts": [
+        {
+          "nativeBoutId": "84164",
+          "date": "2023-08-29",
+          "opponent": "Carlos Prates",
+          "result": "loss",
+          "event": "Dana White's Contender Series 60",
+          "officialSourceUrl": "https://www.ufc.com/athlete/mitch-ramirez",
+          "excludedBecause": "UFC.com identifies historical Dana White's Contender Series feeder; not an official Octagon fight"
+        }
+      ],
+      "status": "source_attested_not_certified",
+      "note": "Source-only review; separate whole-cohort strict Stage3 audit decides certificate."
+    },
+    "steven-asplund": {
+      "fighterName": "Steven Asplund",
+      "officialFighterUrl": "https://www.ufc.com/athlete/steven-asplund",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/e56cee1ad697db04",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2025-12-13",
+          "opponent": "Sean Sharaf",
+          "result": "win",
+          "event": "UFC Fight Night: Royval vs. Kape",
+          "fightUrl": "https://ufcstats.com/fight-details/a2523a8565fe4361"
+        },
+        {
+          "date": "2026-03-14",
+          "opponent": "Vitor Petrino",
+          "result": "loss",
+          "event": "UFC Fight Night: Emmett vs. Vallejos",
+          "fightUrl": "https://ufcstats.com/fight-details/2c330a6f7f1e55f0"
+        },
+        {
+          "date": "2026-08-08",
+          "opponent": "Guilherme Pat",
+          "result": "win",
+          "event": "UFC Fight Night: Gamrot vs. Salkilld",
+          "fightUrl": "https://ufcstats.com/fight-details/3050549d19395f6f"
+        }
+      ],
+      "excludedFeederBouts": [
+        {
+          "nativeBoutId": "83909",
+          "date": "2025-09-09",
+          "opponent": "Anthony Guarascio",
+          "result": "win",
+          "event": "Dana White's Contender Series 81",
+          "officialSourceUrl": "https://www.ufc.com/athlete/steven-asplund",
+          "excludedBecause": "UFC.com identifies historical Dana White's Contender Series feeder; not an official Octagon fight"
+        }
+      ],
+      "status": "source_attested_not_certified",
+      "note": "Source-only review; separate whole-cohort strict Stage3 audit decides certificate."
+    },
+    "tommy-mcmillen": {
+      "fighterName": "Tommy McMillen",
+      "officialFighterUrl": "https://www.ufc.com/athlete/tommy-mcmillen",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/6b0a6def604de298",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2026-04-04",
+          "opponent": "Manolo Zecchini",
+          "result": "win",
+          "event": "UFC Fight Night: Moicano vs. Duncan",
+          "fightUrl": "https://ufcstats.com/fight-details/c27bec45d5a29a2c"
+        },
+        {
+          "date": "2026-07-18",
+          "opponent": "Alberto Montes",
+          "result": "win",
+          "event": "UFC Fight Night: Du Plessis vs. Usman",
+          "fightUrl": "https://ufcstats.com/fight-details/c64c6ba6eb1e1d06"
+        },
+        {
+          "date": "2026-09-12",
+          "opponent": "Marwan Rahiki",
+          "result": "win",
+          "event": "Noche UFC: Silva vs. Delgado",
+          "fightUrl": "https://ufcstats.com/fight-details/1fca7dfa9e1e15cb"
+        }
+      ],
+      "excludedFeederBouts": [
+        {
+          "nativeBoutId": "84143",
+          "date": "2025-09-02",
+          "opponent": "David Mgoyan",
+          "result": "win",
+          "event": "Dana White's Contender Series 80",
+          "officialSourceUrl": "https://www.ufc.com/athlete/tommy-mcmillen",
+          "excludedBecause": "UFC.com identifies historical Dana White's Contender Series feeder; not an official Octagon fight"
+        }
+      ],
+      "status": "source_attested_not_certified",
+      "note": "Source-only review; separate whole-cohort strict Stage3 audit decides certificate."
+    }
+  }
+}

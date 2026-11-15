@@ -1,0 +1,111 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-julia-polastri-complete-career",
+  "asOf": "2026-11-15",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336"
+  },
+  "sourceMethod": "Official UFC.com dated career narrative enumerates all six Octagon bouts, two DWCS bouts separately documented. Pinned Greco UFCStats exact fighter and source fight URLs crosschecked to saved native UFCalendar fight IDs, both corners, outcomes and measured rounds. Long opponent names reconciled to the same numeric native corners.",
+  "fighters": {
+    "julia-polastri": {
+      "name": "Julia Polastri",
+      "officialFighterUrl": "https://www.ufc.com/athlete/julia-polastri",
+      "ufcStatsFighterId": "abb68e3c7ca128f2",
+      "nativeFighterId": "176",
+      "officialUfcCareerBoutCount": 6,
+      "bouts": [
+        {
+          "date": "2024-06-15",
+          "opponent": "Josefine Lindgren Knutsson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/06713afc60301c0c",
+          "nativeBoutId": "61064",
+          "nativeFighterId": "176",
+          "originalOpponentNumericId": "11107"
+        },
+        {
+          "date": "2024-10-12",
+          "opponent": "Cory McKenna",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/48dd2c9cb39bd2d4",
+          "nativeBoutId": "61125",
+          "nativeFighterId": "176",
+          "originalOpponentNumericId": "1222"
+        },
+        {
+          "date": "2025-03-29",
+          "opponent": "Loopy Godinez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7efca050bc7be8ac",
+          "nativeBoutId": "61011",
+          "nativeFighterId": "176",
+          "originalOpponentNumericId": "574"
+        },
+        {
+          "date": "2025-10-11",
+          "opponent": "Karolina Kowalkiewicz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c547b3e95bcc5f24",
+          "nativeBoutId": "65897",
+          "nativeFighterId": "176",
+          "originalOpponentNumericId": "164"
+        },
+        {
+          "date": "2026-04-25",
+          "opponent": "Talita Alencar",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0df4f4ac27cf2d26",
+          "nativeBoutId": "66088",
+          "nativeFighterId": "176",
+          "originalOpponentNumericId": "302"
+        },
+        {
+          "date": "2026-08-29",
+          "opponent": "Xiong Jing Nan",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6206c62fc8f0b71b",
+          "nativeBoutId": "83411",
+          "nativeFighterId": "176",
+          "originalOpponentNumericId": "4680"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "boutId": "83967",
+          "fighterSlug": "julia-polastri",
+          "date": "2021-09-14",
+          "opponent": "Jasmine Jasudavicius",
+          "event": "Dana White's Contender Series 39",
+          "sourceUrl": "https://www.ufc.com/athlete/julia-polastri"
+        },
+        {
+          "boutId": "84122",
+          "fighterSlug": "julia-polastri",
+          "date": "2023-09-12",
+          "opponent": "Patricia Alujas",
+          "event": "Dana White's Contender Series 62",
+          "sourceUrl": "https://www.ufc.com/news/week-6-results-scorecards-dana-whites-contender-series-season-7"
+        }
+      ],
+      "sourceVerifiedOpponentNameVariants": [
+        {
+          "native": "Josefine Lindgren Knutsson",
+          "officialUfcAndGreco": "Josefine Knutsson",
+          "boutId": "61064"
+        },
+        {
+          "native": "Xiong Jing Nan",
+          "officialUfcAndGreco": "Xiong Jingnan",
+          "boutId": "83411"
+        }
+      ],
+      "note": "Official UFC profile lists six complete Octagon results from June 2024 Josefine Knutsson through August 2026 Xiong Jingnan, plus both 2021 and 2023 DWCS fights excluded. Opponent-name formatting variants use unchanged paired native numeric fighter IDs and exact pinned Greco bout URLs."
+    }
+  }
+}

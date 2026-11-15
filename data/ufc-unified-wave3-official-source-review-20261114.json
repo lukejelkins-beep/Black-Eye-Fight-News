@@ -1,0 +1,228 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave3-official-source-review",
+  "snapshot": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "sourceBasis": "UFC.com athlete dated full-career narrative through snapshot. Summary result tiles are nonauthoritative when conflicting with detailed narrative. Pinned independent Greco UFCStats and saved exact native IDs/stats must still be reconciled.",
+  "sourceSnapshot": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "commit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "fighters": {
+    "alberto-montes": {
+      "officialAthleteUrl": "https://www.ufc.com/athlete/alberto-montes",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/a112097ad877a48f",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2026-03-07",
+          "opponent": "Ricky Turcios",
+          "result": "win"
+        },
+        {
+          "date": "2026-07-18",
+          "opponent": "Tommy McMillen",
+          "result": "loss"
+        }
+      ],
+      "feederExclusionsToCrosscheck": [
+        "2024-10-01 DWCS Carlos Calderon, excluded"
+      ],
+      "pending": [
+        "exact pinned Greco fight-detail URLs for all official bouts",
+        "original saved UFCalendar numeric fighter and bout identities, both native corners, event dates and outcomes",
+        "complete required measured statistics and passing 783-fighter strict Stage3 CI"
+      ],
+      "status": "official_source_only_not_certified"
+    },
+    "allen-frye-jr": {
+      "officialAthleteUrl": "https://www.ufc.com/athlete/allen-frye-jr",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/73a78713bd899f4c",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2025-12-13",
+          "opponent": "Guilherme Pat",
+          "result": "loss"
+        },
+        {
+          "date": "2026-10-10",
+          "opponent": "RJ Harris",
+          "result": "win"
+        }
+      ],
+      "feederExclusionsToCrosscheck": [],
+      "pending": [
+        "exact pinned Greco fight-detail URLs for all official bouts",
+        "original saved UFCalendar numeric fighter and bout identities, both native corners, event dates and outcomes",
+        "complete required measured statistics and passing 783-fighter strict Stage3 CI"
+      ],
+      "status": "official_source_only_not_certified"
+    },
+    "alvin-hines": {
+      "officialAthleteUrl": "https://www.ufc.com/athlete/alvin-hines",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/ab2a4b5e04dc5fe9",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2025-06-28",
+          "opponent": "Jhonata Diniz",
+          "result": "loss"
+        },
+        {
+          "date": "2026-07-18",
+          "opponent": "RJ Harris",
+          "result": "loss"
+        }
+      ],
+      "feederExclusionsToCrosscheck": [],
+      "pending": [
+        "exact pinned Greco fight-detail URLs for all official bouts",
+        "original saved UFCalendar numeric fighter and bout identities, both native corners, event dates and outcomes",
+        "complete required measured statistics and passing 783-fighter strict Stage3 CI"
+      ],
+      "status": "official_source_only_not_certified"
+    },
+    "andreas-gustafsson": {
+      "officialAthleteUrl": "https://www.ufc.com/athlete/andreas-gustafsson",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/2caf993f53541fa1",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2025-06-07",
+          "opponent": "Khaos Williams",
+          "result": "win"
+        },
+        {
+          "date": "2025-09-06",
+          "opponent": "Rinat Fakhretdinov",
+          "result": "loss"
+        }
+      ],
+      "feederExclusionsToCrosscheck": [
+        "2024-08-20 DWCS Pat Pytlik, excluded"
+      ],
+      "pending": [
+        "exact pinned Greco fight-detail URLs for all official bouts",
+        "original saved UFCalendar numeric fighter and bout identities, both native corners, event dates and outcomes",
+        "complete required measured statistics and passing 783-fighter strict Stage3 CI"
+      ],
+      "status": "official_source_only_not_certified"
+    },
+    "angel-pacheco": {
+      "officialAthleteUrl": "https://www.ufc.com/athlete/angel-pacheco",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/07797f10b9569cfc",
+      "officialUfcCareerCount": 2,
+      "bouts": [
+        {
+          "date": "2024-03-30",
+          "opponent": "Caolan Loughran",
+          "result": "loss"
+        },
+        {
+          "date": "2026-02-28",
+          "opponent": "Santiago Luna",
+          "result": "loss"
+        }
+      ],
+      "feederExclusionsToCrosscheck": [
+        "2023-09-26 DWCS Danny Silva, excluded"
+      ],
+      "pending": [
+        "exact pinned Greco fight-detail URLs for all official bouts",
+        "original saved UFCalendar numeric fighter and bout identities, both native corners, event dates and outcomes",
+        "complete required measured statistics and passing 783-fighter strict Stage3 CI"
+      ],
+      "status": "official_source_only_not_certified"
+    },
+    "alice-pereira": {
+      "officialAthleteUrl": "https://www.ufc.com/athlete/alice-pereira",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/81d2c551886bd5a1",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2025-09-13",
+          "opponent": "Montserrat Rendon",
+          "result": "loss"
+        },
+        {
+          "date": "2026-04-04",
+          "opponent": "Hailey Cowan",
+          "result": "win"
+        },
+        {
+          "date": "2026-10-10",
+          "opponent": "Daria Zhelezniakova",
+          "result": "win"
+        }
+      ],
+      "feederExclusionsToCrosscheck": [],
+      "pending": [
+        "exact pinned Greco fight-detail URLs for all official bouts",
+        "original saved UFCalendar numeric fighter and bout identities, both native corners, event dates and outcomes",
+        "complete required measured statistics and passing 783-fighter strict Stage3 CI"
+      ],
+      "status": "official_source_only_not_certified"
+    },
+    "benardo-sopaj": {
+      "officialAthleteUrl": "https://www.ufc.com/athlete/benardo-sopaj",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/b6c37948cb226e8c",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2024-03-02",
+          "opponent": "Vinicius Oliveira",
+          "result": "loss"
+        },
+        {
+          "date": "2025-01-18",
+          "opponent": "Ricky Turcios",
+          "result": "win"
+        },
+        {
+          "date": "2026-05-16",
+          "opponent": "Timmy Cuamba",
+          "result": "win"
+        }
+      ],
+      "feederExclusionsToCrosscheck": [],
+      "pending": [
+        "exact pinned Greco fight-detail URLs for all official bouts",
+        "original saved UFCalendar numeric fighter and bout identities, both native corners, event dates and outcomes",
+        "complete required measured statistics and passing 783-fighter strict Stage3 CI"
+      ],
+      "status": "official_source_only_not_certified"
+    },
+    "brando-pericic": {
+      "officialAthleteUrl": "https://www.ufc.com/athlete/brando-pericic",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/d0fd0d9ee560dae7",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2025-09-27",
+          "opponent": "Elisha Ellison",
+          "result": "win"
+        },
+        {
+          "date": "2026-03-21",
+          "opponent": "Louie Sutherland",
+          "result": "win"
+        },
+        {
+          "date": "2026-05-02",
+          "opponent": "Shamil Gaziev",
+          "result": "win"
+        }
+      ],
+      "feederExclusionsToCrosscheck": [],
+      "pending": [
+        "exact pinned Greco fight-detail URLs for all official bouts",
+        "original saved UFCalendar numeric fighter and bout identities, both native corners, event dates and outcomes",
+        "complete required measured statistics and passing 783-fighter strict Stage3 CI"
+      ],
+      "status": "official_source_only_not_certified"
+    }
+  }
+}

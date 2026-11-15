@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave56-two-four-fight-full-careers",
+  "asOf": "2026-11-15",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336"
+  },
+  "sourceMethod": "Official UFC.com complete dated careers plus exact Greco fight URLs/results and saved unmodified native fighter/corner, winner and round statistics. DWCS precisely excluded with individual UFC source attestations. All careers require full-cohort strict Stage3 audit.",
+  "fighters": {
+    "iwo-baraniewski": {
+      "name": "Iwo Baraniewski",
+      "officialFighterUrl": "https://www.ufc.com/athlete/iwo-baraniewski",
+      "additionalOfficialDWCSUrl": "https://www.ufc.com/news/week-6-results-scorecards-fight-recaps-contract-winners-interviews-dana-whites-contender-series-season-9",
+      "ufcStatsFighterId": "1c23ec2f1b71be40",
+      "nativeFighterId": "83",
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2025-12-06",
+          "opponent": "Ibo Aslan",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ea660db65bfa998f",
+          "nativeBoutId": "60531",
+          "nativeFighterId": "83",
+          "originalOpponentNumericId": "351"
+        },
+        {
+          "date": "2026-03-21",
+          "opponent": "Austen Lane",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/43e26b46cbb51985",
+          "nativeBoutId": "60562",
+          "nativeFighterId": "83",
+          "originalOpponentNumericId": "533"
+        },
+        {
+          "date": "2026-06-06",
+          "opponent": "Junior Tafa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/bfe4950b3de83e9c",
+          "nativeBoutId": "66471",
+          "nativeFighterId": "83",
+          "originalOpponentNumericId": "322"
+        },
+        {
+          "date": "2026-09-19",
+          "opponent": "Alonzo Menifield",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/196c64693a2ce308",
+          "nativeBoutId": "83419",
+          "nativeFighterId": "83",
+          "originalOpponentNumericId": "54"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "boutId": "88278",
+          "fighterSlug": "iwo-baraniewski",
+          "date": "2025-09-16",
+          "opponent": "Mahamed Aly",
+          "event": "Dana White's Contender Series 82",
+          "sourceUrl": "https://www.ufc.com/news/week-6-results-scorecards-fight-recaps-contract-winners-interviews-dana-whites-contender-series-season-9"
+        }
+      ],
+      "note": "Official UFC biography lists exact four Octagon bouts after Dec 2025 debut, including Sept 2026 loss to Alonzo Menifield. September 2025 Mahamed Aly DWCS KO independently attested and excluded."
+    },
+    "tallison-teixeira": {
+      "name": "Tallison Teixeira",
+      "officialFighterUrl": "https://www.ufc.com/athlete/tallison-teixeira",
+      "additionalOfficialDWCSUrl": "https://www.ufc.com/news/dana-whites-contender-series-alumni-competing-ufc-312",
+      "ufcStatsFighterId": "17923f676f100e16",
+      "nativeFighterId": "56",
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2025-02-08",
+          "opponent": "Justin Tafa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8435f90fbd50c7a5",
+          "nativeBoutId": "60981",
+          "nativeFighterId": "56",
+          "originalOpponentNumericId": "1148"
+        },
+        {
+          "date": "2025-07-12",
+          "opponent": "Derrick Lewis",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0adfc21045c02555",
+          "nativeBoutId": "60829",
+          "nativeFighterId": "56",
+          "originalOpponentNumericId": "106"
+        },
+        {
+          "date": "2026-01-31",
+          "opponent": "Tai Tuivasa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/67765535bd0b6bdf",
+          "nativeBoutId": "65850",
+          "nativeFighterId": "56",
+          "originalOpponentNumericId": "324"
+        },
+        {
+          "date": "2026-05-30",
+          "opponent": "Sergei Pavlovich",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f74e4afdf6ae29d1",
+          "nativeBoutId": "66103",
+          "nativeFighterId": "56",
+          "originalOpponentNumericId": "55"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "boutId": "83824",
+          "fighterSlug": "tallison-teixeira",
+          "date": "2024-09-17",
+          "opponent": "Arthur Lopes",
+          "event": "Dana White's Contender Series 72",
+          "sourceUrl": "https://www.ufc.com/news/dana-whites-contender-series-alumni-competing-ufc-312"
+        }
+      ],
+      "note": "Four completed Octagon bouts from Feb 2025 Justin Tafa to May 2026 Sergei Pavlovich; 2024 Arthur Lopes DWCS fight separately official-UFC source confirmed and excluded. Pinned Greco and native winner IDs override misleading graphical Win labels."
+    }
+  }
+}

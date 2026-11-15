@@ -1,0 +1,152 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave29-two-full-ufc-careers",
+  "asOf": "2026-11-15",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07",
+    "evidenceCutoff": "2026-11-14",
+    "directUfcStatsAccess": "Pinned independently sourced Greco UFCStats-derived data, not a direct UFCStats live scrape",
+    "method": "Complete full dated UFC.com fighter biography, pinned Greco fighter and original exact UFC fight-result URLs, paired saved UFCalendar numeric bout IDs, both opponents, results and measured rounds; source-verified DWCS bouts excluded."
+  },
+  "sourceMethod": "Entire UFC.com dated biography and all eight exact pinned Greco full-history fight identities, native original numeric corners and winners and measured rounds, with one approved UTC day offset and separate DWCS feeder exclusions. Stage3 strict gate required.",
+  "fighters": {
+    "abdul-rakhman-yakhyaev": {
+      "name": "Abdul Rakhman Yakhyaev",
+      "ufcStatsFighterId": "95aff2fd8d09a5f0",
+      "nativeFighterId": "384",
+      "officialFighterUrl": "https://www.ufc.com/athlete/abdulrakhman-yakhyaev",
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Complete official UFC.com biography dated narratives independently confirm four UFC Octagon finishes, Nov 2025–Oct 2026, over Rafael Cerqueira, Brendson Ribeiro, Julius Walker and Nikita Krylov. Separate 26 Aug 2025 DWCS win over Alik Lorenz excluded by original native 84059. One old last-five snapshot understated Nikita Krylov's measured stats but current original native roundDone and strict full-cohort audit show one fully measured round.",
+      "bouts": [
+        {
+          "date": "2025-11-22",
+          "opponent": "Rafael Cerqueira",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f5564a9eeebd4ea0",
+          "nativeBoutId": "60413",
+          "nativeFighterId": "384",
+          "originalOpponentNumericId": "374",
+          "pinnedSourceEventTitle": "UFC Fight Night: Tsarukyan vs. Hooker",
+          "nativeRecordedEventDate": "2025-11-22"
+        },
+        {
+          "date": "2026-04-04",
+          "opponent": "Brendson Ribeiro",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ad487d1c6141d90a",
+          "nativeBoutId": "60700",
+          "nativeFighterId": "384",
+          "originalOpponentNumericId": "263",
+          "pinnedSourceEventTitle": "UFC Fight Night: Moicano vs. Duncan",
+          "nativeRecordedEventDate": "2026-04-04"
+        },
+        {
+          "date": "2026-06-27",
+          "opponent": "Julius Walker",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/48b1ee7ab45add4c",
+          "nativeBoutId": "66373",
+          "nativeFighterId": "384",
+          "originalOpponentNumericId": "498",
+          "pinnedSourceEventTitle": "UFC Fight Night: Fiziev vs. Torres",
+          "nativeRecordedEventDate": "2026-06-27"
+        },
+        {
+          "date": "2026-10-24",
+          "opponent": "Nikita Krylov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6193cd89b1cd9a9e",
+          "nativeBoutId": "83733",
+          "nativeFighterId": "384",
+          "originalOpponentNumericId": "329",
+          "pinnedSourceEventTitle": "UFC 333: Volkanovski vs. Evloev",
+          "nativeRecordedEventDate": "2026-10-24"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84059",
+          "date": "2025-08-26",
+          "opponent": "Alik Lorenz",
+          "result": "win",
+          "event": "Dana White's Contender Series 79",
+          "officialSourceUrl": "https://www.ufc.com/athlete/abdulrakhman-yakhyaev",
+          "excludedBecause": "Official UFC biography confirms separate DWCS feeder bout; saved provider UFC-labelled history must not add it to complete Octagon career"
+        }
+      ]
+    },
+    "cristian-quinonez": {
+      "name": "Cristian Quinonez",
+      "ufcStatsFighterId": "7debc13b36343605",
+      "nativeFighterId": "471",
+      "officialFighterUrl": "https://www.ufc.com/athlete/cristian-quinonez",
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "Complete official UFC.com biography lists four UFC bouts since 3 Sep 2022: KO win Khalid Taha, submission losses Kyung Ho Kang and Raoni Barcelos, and unanimous decision win Kris Moutinho. UFC official local event day 2024-02-24 for Barcelos differs by exactly one UTC day from saved native 2024-02-25 and is retained separately, not silently rewritten. Official page Win tiles for losses overridden by detailed fight history and native/pinned Greco results. Earlier DWCS win Xiao Long excluded.",
+      "bouts": [
+        {
+          "date": "2022-09-03",
+          "opponent": "Khalid Taha",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ca7fd237c16cec84",
+          "nativeBoutId": "61175",
+          "nativeFighterId": "471",
+          "originalOpponentNumericId": "2629",
+          "pinnedSourceEventTitle": "UFC Fight Night: Gane vs. Tuivasa",
+          "nativeRecordedEventDate": "2022-09-03"
+        },
+        {
+          "date": "2023-06-17",
+          "opponent": "Kyung Ho Kang",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7ba54a10f28c9496",
+          "nativeBoutId": "60173",
+          "nativeFighterId": "471",
+          "originalOpponentNumericId": "1184",
+          "pinnedSourceEventTitle": "UFC Fight Night: Vettori vs. Cannonier",
+          "nativeRecordedEventDate": "2023-06-17"
+        },
+        {
+          "date": "2024-02-24",
+          "opponent": "Raoni Barcelos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/063e7ce759c52f81",
+          "nativeBoutId": "39034",
+          "nativeFighterId": "471",
+          "originalOpponentNumericId": "424",
+          "pinnedSourceEventTitle": "UFC Fight Night: Moreno vs. Royval 2",
+          "nativeRecordedEventDate": "2024-02-25"
+        },
+        {
+          "date": "2026-02-28",
+          "opponent": "Kris Moutinho",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/25ab195cefbce1d0",
+          "nativeBoutId": "60681",
+          "nativeFighterId": "471",
+          "originalOpponentNumericId": "470",
+          "pinnedSourceEventTitle": "UFC Fight Night: Moreno vs. Kavanagh",
+          "nativeRecordedEventDate": "2026-02-28"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83857",
+          "date": "2021-10-26",
+          "opponent": "Xiao Long",
+          "result": "win",
+          "event": "Dana White's Contender Series 45",
+          "officialSourceUrl": "https://www.ufc.com/athlete/cristian-quinonez",
+          "excludedBecause": "Official UFC biography confirms separate DWCS feeder bout; saved provider UFC-labelled history must not add it to complete Octagon career"
+        }
+      ]
+    }
+  }
+}

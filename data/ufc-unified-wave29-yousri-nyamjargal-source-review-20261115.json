@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave29-yousri-nyamjargal-full-careers",
+  "asOf": "2026-11-15",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "sourceMethod": "Full official UFC.com dated athlete biographies and pinned Greco UFCStats-derived fighter/fight/event identities crosschecked against saved native fighter/opponent corner IDs, outcomes, event dates and measured rounds. DWCS and Road to UFC feeder bouts excluded; scheduled/cancelled contests excluded. Strict full-cohort Stage3 audit separately determines certification.",
+  "fighters": {
+    "yousri-belgaroui": {
+      "name": "Yousri Belgaroui",
+      "officialFighterUrl": "https://www.ufc.com/athlete/yousri-belgaroui",
+      "ufcStatsFighterId": "7674b836ce0698a0",
+      "nativeFighterId": "137",
+      "officialUfcCareerBoutCount": 3,
+      "bouts": [
+        {
+          "date": "2025-10-18",
+          "opponent": "Azamat Bekoev",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/87ac0e5face106b4",
+          "nativeBoutId": "38153",
+          "nativeFighterId": "137",
+          "originalOpponentNumericId": "138",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/38e5d9dcb0fddc42"
+        },
+        {
+          "date": "2026-03-28",
+          "opponent": "Mansur Abdul-Malik",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e32dc26b11d1f81d",
+          "nativeBoutId": "60627",
+          "nativeFighterId": "137",
+          "originalOpponentNumericId": "359",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/5c38639f860a5542"
+        },
+        {
+          "date": "2026-09-12",
+          "opponent": "Djorden Santos",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9a0e77ecd1b7f04e",
+          "nativeBoutId": "83821",
+          "nativeFighterId": "137",
+          "originalOpponentNumericId": "24",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/638cfec7ec559d6e"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84165",
+          "date": "2023-08-29",
+          "opponent": "Marco Tulio",
+          "result": "loss",
+          "event": "Dana White's Contender Series 60",
+          "officialSourceUrl": "https://www.ufc.com/athlete/yousri-belgaroui",
+          "excludedBecause": "UFC.com athlete biography explicitly records this DWCS feeder bout separately from ordinary UFC Octagon career."
+        },
+        {
+          "nativeBoutId": "88274",
+          "date": "2024-09-10",
+          "opponent": "Taiga Iwasaki",
+          "result": "win",
+          "event": "Dana White's Contender Series 71",
+          "officialSourceUrl": "https://www.ufc.com/athlete/yousri-belgaroui",
+          "excludedBecause": "UFC.com athlete biography explicitly records this DWCS feeder bout separately from ordinary UFC Octagon career."
+        }
+      ]
+    },
+    "nyamjargal-tumendemberel": {
+      "name": "Nyamjargal Tumendemberel",
+      "officialFighterUrl": "https://www.ufc.com/athlete/nyamjargal-tumendemberel",
+      "ufcStatsFighterId": "17cb6d8e8187f304",
+      "nativeFighterId": "144",
+      "officialUfcCareerBoutCount": 2,
+      "bouts": [
+        {
+          "date": "2024-11-23",
+          "opponent": "Carlos Hernandez",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5dab54e34c2cfe01",
+          "nativeBoutId": "38594",
+          "nativeFighterId": "144",
+          "originalOpponentNumericId": "1071",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/e955046551f8c7dd"
+        },
+        {
+          "date": "2026-03-07",
+          "opponent": "Cody Durden",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f661ef429055f8c1",
+          "nativeBoutId": "60694",
+          "nativeFighterId": "144",
+          "originalOpponentNumericId": "415",
+          "pinnedSourceEventUrl": "https://ufcstats.com/event-details/15ec018d144710db"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "60901",
+          "date": "2025-08-22",
+          "opponent": "Terrance Saeteurn",
+          "result": "win",
+          "event": "Road to UFC Season 4 Semifinals",
+          "officialSourceUrl": "https://www.ufc.com/athlete/nyamjargal-tumendemberel",
+          "excludedBecause": "UFC.com athlete biography explicitly records this Road to UFC feeder bout separately from ordinary UFC Octagon career."
+        }
+      ]
+    }
+  }
+}

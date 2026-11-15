@@ -1,0 +1,124 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave31-alekseeva-sygula-full-careers",
+  "asOf": "2026-11-15",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07",
+    "evidenceCutoff": "2026-11-14",
+    "directUfcStatsAccess": "Pinned Greco historical UFCStats-derived archive; not a live UFCStats scrape",
+    "method": "Official UFC.com complete dated athlete biographies, exact pinned Greco UFCStats-derived historical fighter/fight result IDs, saved immutable native fighter/bout/opponent corners and results plus every required measured round. Exclude all unlisted feeder/exhibition/cancelled fights."
+  },
+  "sourceMethod": "Source-attested entire official UFC.com career chronology and original pinned Greco historical fighter/fight IDs linked bout-by-bout to exact original saved native paired identities and measured rounds; complete strict Stage 3 gate required.",
+  "fighters": {
+    "irina-alekseeva": {
+      "name": "Irina Alekseeva",
+      "ufcStatsFighterId": "103e2e33a60683e1",
+      "nativeFighterId": "166",
+      "officialFighterUrl": "https://www.ufc.com/athlete/irina-alekseeva",
+      "sourceScopeVerified": "UFC official complete dated athlete biography reports exactly four Octagon appearances between 2023-04-29 and 2025-10-11: kneebar win over Stephanie Egger, decision losses to Melissa Dixon (saved native / pinned Greco name Melissa Mullins) and Klaudia Sygula, rear-naked-choke loss to Bia Mesquita. Official biography identifies Dixon name spelling while saved opponent/native and Greco list Mullins. UFC graphical Win tiles on Alekseeva losses are contradicted by official full fight narratives; each exact native winner and pinned independent historical outcome is a loss.",
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2023-04-29",
+          "opponent": "Stephanie Egger",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f9345fa82bf43847",
+          "nativeBoutId": "53871",
+          "nativeFighterId": "166",
+          "opponentNativeFighterId": "677",
+          "sourceEvent": "UFC Fight Night: Song vs. Simon"
+        },
+        {
+          "date": "2023-10-14",
+          "opponent": "Melissa Mullins",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1ba282da76ca82ad",
+          "nativeBoutId": "60018",
+          "nativeFighterId": "166",
+          "opponentNativeFighterId": "122",
+          "sourceEvent": "UFC Fight Night: Yusuff vs. Barboza"
+        },
+        {
+          "date": "2025-06-21",
+          "opponent": "Klaudia Sygula",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/2bfc0212f2cae65b",
+          "nativeBoutId": "60280",
+          "nativeFighterId": "166",
+          "opponentNativeFighterId": "453",
+          "sourceEvent": "UFC Fight Night: Hill vs. Rountree Jr."
+        },
+        {
+          "date": "2025-10-11",
+          "opponent": "Bia Mesquita",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/546f971f9d8e0a33",
+          "nativeBoutId": "65895",
+          "nativeFighterId": "166",
+          "opponentNativeFighterId": "174",
+          "sourceEvent": "UFC Fight Night: Oliveira vs. Gamrot"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    },
+    "klaudia-sygula": {
+      "name": "Klaudia Sygula",
+      "ufcStatsFighterId": "9f5e3c20ce40b344",
+      "nativeFighterId": "453",
+      "officialFighterUrl": "https://www.ufc.com/athlete/klaudia-sygula",
+      "sourceScopeVerified": "UFC official complete dated athlete biography confirms exactly four completed Octagon appearances since 2024-11-09: stoppage loss to Melissa Mullins, decision wins over Irina Alekseeva and Priscila Cachoeira, decision loss to Nora Cornolle on 2026-09-05. The UFC website's graphic Win tile for the Cornolle loss conflicts with its own detailed full biography; the primary narrative, pinned Greco source outcome and immutable native winner all agree Sygula lost. Shared Alekseeva/Sygula native fight 60280 and same pinned UFCStats fight URL counted once per unique fight.",
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2024-11-09",
+          "opponent": "Melissa Mullins",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/32f2965b4f4c4ebf",
+          "nativeBoutId": "65833",
+          "nativeFighterId": "453",
+          "opponentNativeFighterId": "122",
+          "sourceEvent": "UFC Fight Night: Magny vs. Prates"
+        },
+        {
+          "date": "2025-06-21",
+          "opponent": "Irina Alekseeva",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2bfc0212f2cae65b",
+          "nativeBoutId": "60280",
+          "nativeFighterId": "453",
+          "opponentNativeFighterId": "166",
+          "sourceEvent": "UFC Fight Night: Hill vs. Rountree Jr."
+        },
+        {
+          "date": "2026-02-07",
+          "opponent": "Priscila Cachoeira",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2bbfbb234c255249",
+          "nativeBoutId": "60737",
+          "nativeFighterId": "453",
+          "opponentNativeFighterId": "95",
+          "sourceEvent": "UFC Fight Night: Bautista vs. Oliveira"
+        },
+        {
+          "date": "2026-09-05",
+          "opponent": "Nora Cornolle",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/809ebb0cfdd01ce2",
+          "nativeBoutId": "83648",
+          "nativeFighterId": "453",
+          "opponentNativeFighterId": "481",
+          "sourceEvent": "UFC Fight Night: Hooker vs. Parnasse"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": []
+    }
+  }
+}

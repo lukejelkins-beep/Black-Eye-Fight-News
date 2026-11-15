@@ -1,0 +1,212 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave30-three-full-official-careers",
+  "asOf": "2026-11-15",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "rosterSize": 783,
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07",
+    "evidenceCutoff": "2026-11-14",
+    "directUfcStatsAccess": "Immutable pinned Greco UFCStats-derived fight CSV; did not directly access live UFCStats",
+    "method": "Official UFC.com dated whole UFC fighter biographies + pinned Greco UFCStats historical fight identity and exact original native bout/paired fighter IDs, official outcomes, saved measured rounds. Official DWCS feeder bouts separated without inventing absent provider IDs."
+  },
+  "sourceMethod": "UFC.com exhaustive completed official fight timelines, Greco exact fight URLs, immutable numeric saved fighter IDs and opposing corners, event local UTC day variance, round statistics and individually documented feeder exclusions.",
+  "fighters": {
+    "fernie-garcia": {
+      "name": "Fernie Garcia",
+      "officialFighterUrl": "https://www.ufc.com/athlete/fernie-garcia",
+      "ufcStatsFighterId": "9e92e1ca498d7244",
+      "nativeFighterId": "960",
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "UFC.com full dated biography lists exactly four official Octagon losses: Journey Newson, Brady Hiestand, Rinya Nakamura and Hyder Amil; separately documents a 2021 DWCS feeder win over Josh Weems, not counted as UFC Octagon contest. UFC.com fight card graphics misleadingly mark losses as wins; full biography and pinned historical Greco results agree with native losers.",
+      "bouts": [
+        {
+          "date": "2022-05-07",
+          "opponent": "Journey Newson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/430309e0f8a315d5",
+          "nativeBoutId": "61607",
+          "nativeFighterId": "960",
+          "originalOpponentNumericId": "959",
+          "pinnedSourceEventTitle": "UFC 274: Oliveira vs. Gaethje",
+          "roundsObserved": 3,
+          "sourceDuplicateRowsDeduplicated": 0
+        },
+        {
+          "date": "2022-11-19",
+          "opponent": "Brady Hiestand",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a3696c847ef6c7f9",
+          "nativeBoutId": "59788",
+          "nativeFighterId": "960",
+          "originalOpponentNumericId": "759",
+          "pinnedSourceEventTitle": "UFC Fight Night: Nzechukwu vs. Cutelaba",
+          "roundsObserved": 3,
+          "sourceDuplicateRowsDeduplicated": 0
+        },
+        {
+          "date": "2023-08-26",
+          "opponent": "Rinya Nakamura",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/de89bea7b0dcd2d3",
+          "nativeBoutId": "52436",
+          "nativeFighterId": "960",
+          "originalOpponentNumericId": "2781",
+          "pinnedSourceEventTitle": "UFC Fight Night: Holloway vs. The Korean Zombie",
+          "roundsObserved": 3,
+          "sourceDuplicateRowsDeduplicated": 0
+        },
+        {
+          "date": "2024-02-10",
+          "opponent": "Hyder Amil",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/478a637045ad49fb",
+          "nativeBoutId": "59912",
+          "nativeFighterId": "960",
+          "originalOpponentNumericId": "119",
+          "pinnedSourceEventTitle": "UFC Fight Night: Hermansson vs. Pyfer",
+          "roundsObserved": 2,
+          "sourceDuplicateRowsDeduplicated": 0
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "separatelyDocumentedFeederWithoutNativeLink": "Official UFC.com athlete biography documents 5 Oct 2021 DWCS win over Josh Weems. No verified native numerical DWCS ID in the saved source index, so it is excluded as biographical source evidence only, without inventing a numeric link."
+    },
+    "fernando-padilla": {
+      "name": "Fernando Padilla",
+      "officialFighterUrl": "https://www.ufc.com/athlete/fernando-padilla",
+      "ufcStatsFighterId": "d2f43cfaf8ca3560",
+      "nativeFighterId": "2811",
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "UFC.com complete four-bout Octagon career: 2023 finish against Julian Erosa, 2023 decision loss to Kyle Nelson, March 2024 submission over Luis Pajuelo, December 2024 knockout loss to Sean Woodson. December native UFC event UTC date is 2024-12-15, one calendar day after 2024-12-14 official US-local event. Pinned Greco duplicate Grasso/Nelson row has identical unique fight URL and is counted once.",
+      "bouts": [
+        {
+          "date": "2023-04-29",
+          "opponent": "Julian Erosa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e0e2c1fc1a178d89",
+          "nativeBoutId": "53866",
+          "nativeFighterId": "2811",
+          "originalOpponentNumericId": "522",
+          "pinnedSourceEventTitle": "UFC Fight Night: Song vs. Simon",
+          "roundsObserved": 1,
+          "sourceDuplicateRowsDeduplicated": 0
+        },
+        {
+          "date": "2023-09-16",
+          "opponent": "Kyle Nelson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a5d76e93a5052e3f",
+          "nativeBoutId": "60046",
+          "nativeFighterId": "2811",
+          "originalOpponentNumericId": "155",
+          "pinnedSourceEventTitle": "UFC Fight Night: Grasso vs. Shevchenko 2",
+          "roundsObserved": 3,
+          "sourceDuplicateRowsDeduplicated": 1
+        },
+        {
+          "date": "2024-03-23",
+          "opponent": "Luis Pajuelo",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a1294453a28beda3",
+          "nativeBoutId": "38997",
+          "nativeFighterId": "2811",
+          "originalOpponentNumericId": "2851",
+          "pinnedSourceEventTitle": "UFC Fight Night: Ribas vs. Namajunas",
+          "roundsObserved": 1,
+          "sourceDuplicateRowsDeduplicated": 0
+        },
+        {
+          "date": "2024-12-14",
+          "opponent": "Sean Woodson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ebeeed2595266bbc",
+          "nativeBoutId": "60376",
+          "nativeFighterId": "2811",
+          "originalOpponentNumericId": "1120",
+          "pinnedSourceEventTitle": "UFC Fight Night: Covington vs. Buckley",
+          "roundsObserved": 1,
+          "sourceDuplicateRowsDeduplicated": 0
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "separatelyDocumentedFeederWithoutNativeLink": null
+    },
+    "ernesta-kareckaite": {
+      "name": "Ernesta Kareckaite",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ernesta-kareckaite",
+      "ufcStatsFighterId": "e4faa79383c9f214",
+      "nativeFighterId": "468",
+      "officialUfcCareerBoutCount": 4,
+      "sourceScopeVerified": "UFC.com complete official dated chronology confirms four Octagon bouts: loss to Dione Barbosa, split-decision win against Nicolle Caliari, loss to Regina Tarin, and majority draw with Melissa Gatto. Source athlete accents (Kareckaitė/Kareckaite) are normalized without altering numeric identity; actual native draw method and no winner verified. DWCS win over Carli Judice excluded.",
+      "bouts": [
+        {
+          "date": "2024-05-04",
+          "opponent": "Dione Barbosa",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/4661e9ca9354021e",
+          "nativeBoutId": "60926",
+          "nativeFighterId": "468",
+          "originalOpponentNumericId": "583",
+          "pinnedSourceEventTitle": "UFC 301: Pantoja vs. Erceg",
+          "roundsObserved": 3,
+          "sourceDuplicateRowsDeduplicated": 0
+        },
+        {
+          "date": "2025-01-11",
+          "opponent": "Nicolle Caliari",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b33e3a6d15700bb1",
+          "nativeBoutId": "60351",
+          "nativeFighterId": "468",
+          "originalOpponentNumericId": "50",
+          "pinnedSourceEventTitle": "UFC Fight Night: Dern vs. Ribas 2",
+          "roundsObserved": 3,
+          "sourceDuplicateRowsDeduplicated": 0
+        },
+        {
+          "date": "2026-02-28",
+          "opponent": "Regina Tarin",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/44d58943ac8e47e1",
+          "nativeBoutId": "60683",
+          "nativeFighterId": "468",
+          "originalOpponentNumericId": "474",
+          "pinnedSourceEventTitle": "UFC Fight Night: Moreno vs. Kavanagh",
+          "roundsObserved": 3,
+          "sourceDuplicateRowsDeduplicated": 0
+        },
+        {
+          "date": "2026-10-10",
+          "opponent": "Melissa Gatto",
+          "result": "draw",
+          "fightUrl": "https://ufcstats.com/fight-details/e556bdf83f767d4b",
+          "nativeBoutId": "93273",
+          "nativeFighterId": "468",
+          "originalOpponentNumericId": "582",
+          "pinnedSourceEventTitle": "UFC Fight Night: Allen vs. Duncan",
+          "roundsObserved": 3,
+          "sourceDuplicateRowsDeduplicated": 0
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83950",
+          "date": "2023-09-26",
+          "opponent": "Carli Judice",
+          "result": "win",
+          "event": "Dana White's Contender Series 64",
+          "officialSourceUrl": "https://www.ufc.com/athlete/ernesta-kareckaite",
+          "excludedBecause": "Official UFC.com biography identifies DWCS feeder fight, not an Octagon career contest"
+        }
+      ],
+      "separatelyDocumentedFeederWithoutNativeLink": null
+    }
+  }
+}

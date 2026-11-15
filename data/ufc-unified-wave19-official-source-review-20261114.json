@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "scope": "ufc-wave19-donte-kody-source-only-full-Octagon-review",
+  "snapshot": "2026-11-14",
+  "rosterSize": 783,
+  "nonproduction": true,
+  "certificationGranted": false,
+  "sourceMethod": "Primary UFC.com athlete complete dated biographies, official UFC 326 and UFC 312 judges' cards overriding contradictory narrative or graphical summaries, pinned Greco UFCStats-derived event/fight history; strict full original native IDs and rounds required to certify.",
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07"
+  },
+  "fighters": {
+    "donte-johnson": {
+      "fighterName": "Donte Johnson",
+      "officialFighterUrl": "https://www.ufc.com/athlete/donte-johnson",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/ad5cb64af10fc946",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2025-11-01",
+          "opponent": "Sedriques Dumas",
+          "result": "win"
+        },
+        {
+          "date": "2026-03-07",
+          "opponent": "Cody Brundage",
+          "result": "win"
+        },
+        {
+          "date": "2026-08-15",
+          "opponent": "Eric McConico",
+          "result": "win"
+        }
+      ],
+      "reviewNote": "2026-11-14 Cesar Almeida booking is upcoming, not completed at pinned cutoff 2026-11-07. UFC 326 official judges scorecards confirm March 7 win is SPLIT DECISION (29-28/28-29/29-28), correcting a mistaken biography sentence calling it unanimous. 2025-08-26 DWCS win over Darion Abbey excluded as feeder.",
+      "officialUfcDecisionScorecardUrl": "https://www.ufc.com/news/ufc-326-official-scorecards-holloway-vs-oliveira-2",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "one-to-one independently pinned UFCStats fight URL + event date and original both native corners",
+        "exact saved DWCS feeder exclusions",
+        "successful full-cohort Stage3 independent 783-fighter audit"
+      ]
+    },
+    "kody-steele": {
+      "fighterName": "Kody Steele",
+      "officialFighterUrl": "https://www.ufc.com/athlete/kody-steele",
+      "pinnedGrecoFighterUrl": "https://ufcstats.com/fighter-details/aebaa8cec15b083d",
+      "officialUfcCareerCount": 3,
+      "bouts": [
+        {
+          "date": "2025-02-08",
+          "opponent": "Rongzhu",
+          "result": "loss"
+        },
+        {
+          "date": "2026-05-02",
+          "opponent": "Dom Mar Fan",
+          "result": "win"
+        },
+        {
+          "date": "2026-10-24",
+          "opponent": "Noah Gugnon",
+          "result": "win"
+        }
+      ],
+      "reviewNote": "2025 UFC 312 official scorecard proves 30-27 x3 loss to Rongzhu; athlete summary tile 'Zhu vs Steele' is an ambiguous shortened label, NOT a new opponent. 2024-10-08 DWCS win over Chasen Blair excluded as feeder; Fight Pass grappling results out of UFC-only scope.",
+      "officialUfcDecisionScorecardUrl": "https://www.ufc.com/news/official-judges-scorecards-ufc-312-du-plessis-vs-strickland-2-sydney",
+      "status": "source_attested_not_certified",
+      "pending": [
+        "one-to-one independently pinned UFCStats fight URL + event date and original both native corners",
+        "exact saved DWCS feeder exclusions",
+        "successful full-cohort Stage3 independent 783-fighter audit"
+      ]
+    }
+  }
+}
