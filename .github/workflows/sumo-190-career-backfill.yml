@@ -62,6 +62,16 @@ jobs:
                       echo 'Official JSA profiles complete; permitted SumoDB historical weight collection remains.'
                       exit 0
                     fi
+                    # Continue independent published career W-L-A checks only
+                    # for still-blocked wrestlers. Once each eligible profile
+                    # has a cached one-time evidence result, stop that lane.
+                    # An absent count is treated as incomplete on the first run.
+                    provider=$(gh api "repos/${GITHUB_REPOSITORY}/contents/data/sumo/backfill/v1/sumodb-collection-status.json?ref=research/sumo-190-career-cache-20261114" --jq '.content' 2>/dev/null | tr -d '\n' | base64 -d || true)
+                    if ! printf '%s' "$provider" | jq -e '.careerRecordCrosschecksOutstanding == 0' >/dev/null 2>&1; then
+                      echo 'run=true' >> "$GITHUB_OUTPUT"
+                      echo 'One-time independent SumoDB career totals checks still outstanding.'
+                      exit 0
+                    fi
                   fi
                   echo 'run=false' >> "$GITHUB_OUTPUT"
                   echo 'All eligible work completed or SumoDB automated reuse permission not documented.'
