@@ -1,0 +1,196 @@
+/**
+ * BEFN Sumo strict historical-career-results verification (research only).
+ * This is the single decision register downstream of the existing 190-person
+ * source preflight. It never rewrites source documents or publishes profiles.
+ *
+ * A passed result verifies complete regular-bout career W/L against an
+ * independent JSA per-basho ledger, official career totals, historical ranks,
+ * independent source identity and reciprocal matchup integrity.
+ * It DOES NOT independently verify every kimarite, historical weigh-in or
+ * licensed photograph. Those remain separate full-profile release gates.
+ */
+import {readFile,writeFile,rename,mkdir} from 'node:fs/promises';
+import {join} from 'node:path';
+import {createHash} from 'node:crypto';
+import {cohortCurrentBasho} from './sumo-jsa-public-spotcheck.mjs';
+
+const ROOT='data/sumo/backfill/v1';
+const load=async p=>JSON.parse(await readFile(p,'utf8'));
+const validId=x=>Number.isSafeInteger(Number(x))&&Number(x)>0;
+const goodInt=x=>x!==null&&x!==undefined&&Number.isSafeInteger(Number(x))&&Number(x)>=0;
+const sum=(arr,field)=>arr.reduce((n,r)=>n+Number(r[field]||0),0);
+const digest=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex');
+
+export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit,h2h,activeBasho}){
+ const fail=[],add=(condition,reason)=>{if(!condition)fail.push(reason);};
+ const id=Number(w?.sourceId);
+ const ident=validId(id)&&validId(w?.officialNskId)&&validId(w?.sumoDbId);
+ add(ident,'frozen-source-identity');
+ add(!!preflight&&Number(preflight.sourceId)===id&&
+  preflight.classification==='candidate-for-strict-audit'&&
+  Array.isArray(preflight.blockers)&&preflight.blockers.length===0,
+  'preflight-prerequisites-not-met');
+ add(!!p&&Number(p.sourceId)===id&&Number(p.officialNskId)===Number(w?.officialNskId)&&
+  p.certification==='not-started'&&p.releaseGates?.certified===false,
+  'projected-profile-identity-or-state');
+ add(!!raw&&Number(raw.rikishiId)===id&&Number(raw.nskId)===Number(w?.officialNskId)&&
+  raw.researchOnly===true&&raw.certification==='not-started'&&
+  ['profile','stats','measurements','ranks','shikonas','matches'].every(k=>
+    raw.stages?.[k]?.complete===true),
+  'incomplete-source-pagination-or-identity');
+ add(!!sourceAudit&&Number(sourceAudit.sourceId)===id&&
+   sourceAudit.readyForExternalCrosscheck===true&&
+   Array.isArray(sourceAudit.errors)&&sourceAudit.errors.length===0&&
+   sourceAudit.boutLedger?.missingWinner===0,
+   'source-audit-or-native-bout-ledger-failed');
+ const b=p?.boutHistory||{}, matches=raw?.data?.matches||[], per=p?.perBasho||[];
+ add(b.fullPagination===true&&b.rawSourceImmutable===true&&
+  goodInt(b.regularBouts)&&goodInt(b.otherBouts)&&
+  b.totalRawBouts===matches.length&&b.totalRawBouts===b.regularBouts+b.otherBouts&&
+  b.regularWins+b.regularLosses===b.regularBouts&&
+  sum(per,'scheduledBoutRows')===b.regularBouts&&
+  sum(per,'wins')===b.regularWins&&sum(per,'losses')===b.regularLosses&&
+  per.every(x=>goodInt(x.wins)&&goodInt(x.losses)&&goodInt(x.scheduledBoutRows)&&
+   x.wins+x.losses===x.scheduledBoutRows),
+  'full-per-basho-and-regular-bout-ledger-reconciliation');
+ add(goodInt(p?.career?.wins)&&goodInt(p?.career?.losses)&&goodInt(p?.career?.absences)&&
+  p.career.wins===b.regularWins&&p.career.losses===b.regularLosses&&
+  sourceAudit?.boutLedger?.authoritativeWins===p.career.wins&&
+  sourceAudit?.boutLedger?.authoritativeLosses===p.career.losses,
+  'career-totals-not-backed-by-source-ledger');
+ const history=p?.rankTimeline||[];
+ add(history.length>0&&Array.isArray(p?.rankHistoryGaps)&&
+  p.rankHistoryGaps.length===0&&history.every(r=>/^(18|19|20)\d{2}(01|03|05|07|09|11)$/.test(String(r.bashoId))&&
+  typeof r.rank==='string'&&r.rank.length>4),
+  'dated-career-rank-history-incomplete');
+ const j=official||{},basic=j.fieldComparisons||{},bh=j.bashoReconciliation||{},rank=j.rankReconciliation||{};
+ add(Number(j.sourceId)===id&&Number(j.officialNskId)===Number(w?.officialNskId)&&
+  j.url==='https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+w.officialNskId+'/'&&
+  /^[a-f0-9]{64}$/.test(String(j.rawHtmlSha256||''))&&
+  basic.name===true&&basic.stable===true&&basic.rankGrade===true&&
+  Object.values(basic).every(x=>x!==false),
+  'independent-official-profile-identity-or-fields');
+ add(j.career&&j.career.wins===p?.career?.wins&&
+  j.career.losses===p?.career?.losses&&
+  j.career.absences!=null&&j.career.absences===p?.career?.absences,
+  'independent-published-career-wins-losses-absences');
+ const prior=per.filter(x=>x.bashoId!==activeBasho&&x.scheduledBoutRows>0);
+ const officialPer=new Map((j.officialBashoRecords||[]).map(x=>[x.bashoId,x]));
+ add(bh.discrepantBasho===0&&bh.agreeingBasho===bh.comparedBasho&&
+  bh.comparedBasho>=prior.length&&
+  prior.every(x=>{const o=officialPer.get(x.bashoId);return o?.wins===x.wins&&o?.losses===x.losses;})&&
+  (bh.unmatchedOfficialBasho||[]).every(x=>{
+   const o=officialPer.get(x);return o&&o.wins===0&&o.losses===0;
+  })&&
+  bh.rawSourceMatchesChanged===false,
+  'independent-official-completed-tournament-results');
+ const publishedRanks=j.officialRankRecords||[];
+ add(goodInt(rank.comparedBasho)&&rank.comparedBasho>=Math.max(1,Math.floor(history.length*0.75))&&
+  rank.agreedBasho===rank.comparedBasho&&rank.mismatches?.length===0&&
+  rank.missingSourceRankBasho?.length===0&&
+  publishedRanks.length===rank.comparedBasho,
+  'independent-official-banzuke-rank-coverage');
+ const birth=weight?.identityRecheck?.identityEvidence||weight?.identityEvidence||{};
+ add(Number(weight?.sourceId)===id&&Number(weight?.officialNskId)===Number(w?.officialNskId)&&
+  Number(weight?.sumoDbId)===Number(w?.sumoDbId)&&
+  birth.valid===true&&birth.birthDateStatus==='match'&&
+  Array.isArray(weight.datedEvidence)&&weight.datedEvidence.length>0&&
+  p?.measurementCoverage?.conflictingOverlaps?.length===0,
+  'independent-source-identity-or-measurement-conflict');
+ const chronology=p?.headToHead||[];
+ add(h2h?.cohortSize===190&&h2h.profilesChecked===190&&
+  h2h.counterpartConflicts===0&&h2h.counterpartGaps===0&&
+  h2h.integrityStatus==='source-pair-reconciled'&&
+  sum(chronology,'regularBouts')===b.regularBouts&&
+  chronology.every(x=>x.meetings?.length===x.regularBouts&&
+    x.wins+x.losses===x.regularBouts&&x.meetings.every(m=>
+     validId(m.winnerId)&&typeof m.kimarite==='string'&&
+     m.kimarite.trim().length>0&&m.resultKind!=='technique-not-recorded')),
+  'complete-native-h2h-or-kimarite-provenance');
+ const blockers=[...new Set(fail)];
+ const careerResultsCertified=blockers.length===0;
+ const sources={
+  api:'https://www.sumo-api.com/api/rikishi/'+id,
+  jsa:j.url||null,
+  historicalMeasurements:weight?.sourcePageUrl||
+    weight?.sources?.sumodb?.url||null
+ };
+ return {
+  sourceId:id,name:w?.shikonaEn||null,
+  status:careerResultsCertified?'career-results-strictly-certified':'strict-audit-blocked',
+  careerResultsCertified,
+  independentlyVerifiedBy:['JSA published career totals','JSA completed tournament W-L',
+    'JSA dated banzuke ranks','SumoDB matching wrestler identity'].filter(()=>careerResultsCertified),
+  sourceNativeBoutLedgerReconciled:careerResultsCertified,
+  independentBoutByBoutKimariteCertified:false,
+  historicalWeightTimelineCertified:false,
+  fullProfileCertified:false,
+  releaseApproved:false,
+  blockers,
+  checks:{regularBouts:b.regularBouts??0,
+   completedTournamentResultsCrosschecked:bh.comparedBasho??0,
+   historicalRanksCrosschecked:rank.comparedBasho??0,
+   allTimeOpponents:chronology.length,
+   independentWeightDates:weight?.datedEvidence?.length??0},
+  sources,
+  evidenceDigest:digest({raw:raw?.data,p,official,weight,preflight,
+    sourceAudit:{status:sourceAudit?.status,boutLedger:sourceAudit?.boutLedger},
+    globalH2H:{cohortSize:h2h?.cohortSize,conflicts:h2h?.counterpartConflicts,
+     gaps:h2h?.counterpartGaps}})
+ };
+}
+export function strictSummary(rows,preflight){
+ if(rows.length!==190||new Set(rows.map(x=>x.sourceId)).size!==190)
+  throw Error('Strict audit must cover exactly the frozen 190 distinct wrestler IDs');
+ const certified=rows.filter(x=>x.careerResultsCertified);
+ const blocked=rows.filter(x=>!x.careerResultsCertified);
+ if(certified.some(x=>x.blockers.length>0)||certified.length>
+   Number(preflight?.candidateForStrictAudit||0))
+  throw Error('Certification cannot exceed validated source preflight');
+ return {
+  schemaVersion:1,scope:'Research-only canonical career-result verification decision register',
+  cohortSize:190,strictAuditSuccessful:true,
+  strictCareerResultsCertified:certified.length,
+  blocked:blocked.length,fullProfilesCertified:0,productionApproved:false,
+  meaning:'Certifies source-complete regular-bout career result ledgers independently corroborated by JSA per-basho W-L, career totals, dated ranks and SumoDB identity. Does NOT independently certify individual kimarite, historical weigh-ins, images or full profile publication.',
+  certificationMethod:'JSA crosscheck + complete API native-bout ledger + reciprocal H2H + dated identity evidence',
+  rows
+ };
+}
+async function main(){
+ const roster=await load('data/sumo/rikishi-index.json');
+ const pre=await load(join(ROOT,'career-certification-preflight.json'));
+ const source=await load(join(ROOT,'audit.json'));
+ const h2h=await load(join(ROOT,'h2h-chronology-coverage.json'));
+ if(roster.count!==190||roster.rikishi?.length!==190||
+  pre.cohortSize!==190||source.cohortSize!==190)
+  throw Error('Frozen 190 cohort/audit mismatch');
+ const sourceById=new Map(source.cases.map(x=>[Number(x.sourceId),x]));
+ const preById=new Map(pre.rows.map(x=>[Number(x.sourceId),x]));
+ const activeBasho=cohortCurrentBasho(roster),rows=[];
+ for(const w of roster.rikishi){
+  const id=w.sourceId;
+  const [p,raw,official,weight]=await Promise.all([
+   load(join(ROOT,'profile-ready',id+'.json')),
+   load(join(ROOT,'rikishi',id+'.json')),
+   load(join(ROOT,'jsa-public/profiles',id+'.json')),
+   load(join(ROOT,'weight-source-crosschecks',id+'.json'))
+  ]);
+  rows.push(strictCareerAudit({w,p,raw,official,weight,
+   preflight:preById.get(id),sourceAudit:sourceById.get(id),h2h,activeBasho}));
+ }
+ const report=strictSummary(rows,pre);
+ const target=join(ROOT,'career-certification-strict.json');
+ await mkdir(ROOT,{recursive:true});
+ const body=JSON.stringify(report,null,2)+'\n';
+ const old=await readFile(target,'utf8').catch(e=>e.code==='ENOENT'?null:Promise.reject(e));
+ if(old!==body){
+  const temp=target+'.tmp';await writeFile(temp,body);await rename(temp,target);
+ }
+ console.log(JSON.stringify({strictAuditSuccessful:true,cohort:190,
+  careerResultsCertified:report.strictCareerResultsCertified,
+  blocked:report.blocked,fullyCertifiedProfiles:0,productionApproved:false,
+  certifiedNames:rows.filter(x=>x.careerResultsCertified).map(x=>x.name)}));
+}
+if(process.argv[1]&&import.meta.url===new URL('file://'+process.argv[1]).href)
+ main().catch(e=>{console.error(e);process.exitCode=1;});
