@@ -22,6 +22,7 @@ on:
       - 'tests/test-ufc-unified-wave49-suyoung-lisboa-20261115.mjs'
       - 'tests/test-ufc-unified-wave51-lee-prepolec-valentin-20261115.mjs'
       - 'tests/test-ufc-unified-wave52-page-sy-walker-20261115.mjs'
+      - 'tests/test-ufc-unified-wave53-morales-mariscal-nunes-20261115.mjs'
       - 'tests/test-ufc-unified-daria-zhelezniakova-20261115.mjs'
       - 'tests/test-ufc-unified-jeka-saragih-20261115.mjs'
       - 'tests/test-ufc-unified-wave38-kline-armfield-ochoa-20261115.mjs'
@@ -264,6 +265,7 @@ jobs:
           node --test tests/test-ufc-unified-wave49-suyoung-lisboa-20261115.mjs
           node --test tests/test-ufc-unified-wave51-lee-prepolec-valentin-20261115.mjs
           node --test tests/test-ufc-unified-wave52-page-sy-walker-20261115.mjs
+          node --test tests/test-ufc-unified-wave53-morales-mariscal-nunes-20261115.mjs
           node scripts/ufc-36-month-stage3-progress.mjs
           node --test tests/test-ufc-stage3-v4-reconciliation.mjs
           node scripts/ufc-reconcile-stage3-v4-certifications.mjs
