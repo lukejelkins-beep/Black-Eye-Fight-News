@@ -1,20 +1,20 @@
 {
-  "attemptedAt": "2026-11-15T07:50:54.170Z",
-  "checkedAt": "2026-11-15T07:50:54.170Z",
+  "attemptedAt": "2026-11-15T08:42:12.563Z",
+  "checkedAt": "2026-11-15T08:42:12.563Z",
   "windowDays": 28,
   "articlesChecked": 32,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 47,
   "publisherSourcesConfigured": 33,
-  "linksFound": 22,
-  "newEmbedsVerified": 7,
+  "linksFound": 18,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
   "xApiEstimatedSpendUsd": 0,
   "linksRejected": 0,
-  "curatedVerified": 18,
+  "curatedVerified": 23,
   "curatedRejected": 0,
   "curatedPublisherLinked": 2,
   "posts": [
@@ -249,6 +249,25 @@
       "embedVerified": true,
       "linkPriority": 55,
       "url": "https://x.com/ufc/status/2121784966216667302"
+    },
+    {
+      "type": "post",
+      "platform": "Threads",
+      "sport": "mma",
+      "name": "Original Threads post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-15T08:42:12.563Z",
+      "discoveredAt": "2026-11-15T08:42:12.563Z",
+      "sourcePublisher": "UFC",
+      "evidenceUrl": "https://www.ufc.com/",
+      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 12,
+      "url": "https://www.threads.com/t/DfwFEXjm58o/"
     },
     {
       "type": "post",
@@ -2164,22 +2183,6 @@
       "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
       "source": "Publisher link + official Meta oEmbed verification",
       "url": "https://www.instagram.com/reel/DfSX-KQp3uB/"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "mma",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-06T18:13:57+00:00",
-      "discoveredAt": "2026-11-09T03:36:56.892Z",
-      "sourcePublisher": "UFC",
-      "evidenceUrl": "https://www.ufc.com/news/elijah-smith-out-to-remind-himself-who-he-is-ufc-vegas-124",
-      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher link + official Meta oEmbed verification",
-      "url": "https://www.instagram.com/reel/DZwLhfcuZw0/"
     }
   ],
   "seenOriginals": [
@@ -2718,6 +2721,10 @@
     {
       "url": "https://www.instagram.com/reel/DfwE4rQtFAg/",
       "firstSeen": "2026-11-15T07:50:54.170Z"
+    },
+    {
+      "url": "https://www.threads.com/t/DfwFEXjm58o/",
+      "firstSeen": "2026-11-15T08:42:12.563Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
