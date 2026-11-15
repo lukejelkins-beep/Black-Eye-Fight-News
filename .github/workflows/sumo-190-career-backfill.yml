@@ -39,6 +39,7 @@ jobs:
           fi
           if json=$(gh api "repos/${GITHUB_REPOSITORY}/contents/data/sumo/backfill/v1/summary.json?ref=research/sumo-190-career-cache-20261114" --jq '.content' | tr -d '\n' | base64 -d); then
             if printf '%s' "$json" | jq -e '.cohortSize==190 and .counts.collected==190 and .counts.pending==0 and .counts.partial==0 and .counts.exception==0' > /dev/null; then
+              echo 'histories_complete=true' >> "$GITHUB_OUTPUT"
               if official=$(gh api "repos/${GITHUB_REPOSITORY}/contents/data/sumo/backfill/v1/jsa-public/summary.json?ref=research/sumo-190-career-cache-20261114" --jq '.content' 2>/dev/null | tr -d '\n' | base64 -d); then
                 if printf '%s' "$official" | jq -e '.cohort==190 and .pending==0' > /dev/null; then
                   # If SumoDB owner consent is obtained, keep the same
@@ -99,8 +100,8 @@ jobs:
           node --check scripts/sumo-official-bout-corrections.mjs
           node --check scripts/sumo-official-career-totals.mjs
           node --test tests/test-sumo-backfill-190.mjs tests/test-sumo-verify-190.mjs tests/test-sumo-jsa-reconcile.mjs tests/test-sumo-build-profile-cache.mjs tests/test-sumo-h2h-chronology.mjs tests/test-sumo-jsa-public-spotcheck.mjs tests/test-sumo-jsa-corrected-basho-audit.mjs tests/test-sumo-research-run-health.mjs tests/test-sumo-career-no-synthetic-weights.mjs tests/test-sumo-export-preview-career.mjs tests/test-sumo-check-live-preview.mjs tests/test-sumo-jsa-history-exceptions.mjs tests/test-sumo-weight-history-190.mjs tests/test-sumo-weight-sumodb-collector.mjs tests/test-sumo-official-bout-corrections.mjs tests/test-sumo-official-career-totals.mjs
-      - name: Collect only missing research data
-        if: steps.preflight.outputs.run == 'true'
+      - name: Collect only missing API histories
+        if: steps.preflight.outputs.run == 'true' && steps.preflight.outputs.histories_complete != 'true'
         env:
           # One coordinated worker uses the available GitHub runner window,
           # not an arbitrary fixed API-call budget.
