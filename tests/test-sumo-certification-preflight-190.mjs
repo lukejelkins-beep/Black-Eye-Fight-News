@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {preflightRikishi,summarizePreflight,planPreflightNextAction,documentedDebutRankGap,supplementalHistoricalBashoCoverage}
+import {preflightRikishi,summarizePreflight,planPreflightNextAction,documentedDebutRankGap,supplementalHistoricalBashoCoverage,independentHistoricalRankCoverage}
  from '../scripts/sumo-certification-preflight-190.mjs';
 const get=path=>JSON.parse(readFileSync(new URL('../'+path,import.meta.url),'utf8'));
 const roster=get('data/sumo/rikishi-index.json');
@@ -12,7 +12,10 @@ const sumodb=get('data/sumo/backfill/v1/weight-source-crosschecks/28.json');
 const sample=()=>({
  p:structuredClone(profile),
  j:{...structuredClone(official),
-  rankReconciliation:{comparedBasho:59,mismatches:[]},
+  officialRankRecords:profile.rankTimeline.slice(0,59).map(x=>({
+   bashoId:x.bashoId,rank:x.rank})),
+  rankReconciliation:{comparedBasho:59,agreedBasho:59,
+   mismatches:[],missingSourceRankBasho:[]},
   bashoReconciliation:{...structuredClone(official.bashoReconciliation),
     comparedBasho:59,discrepantBasho:0,unmatchedOfficialBasho:[]}},
  s:structuredClone(sumodb)});
@@ -178,4 +181,29 @@ test('fast-lane preflight requires at least three quarters of the numbered rank 
  j.rankReconciliation.comparedBasho=threshold;
  const adequate=preflightRikishi(w,p,j,s,'202611');
  assert.ok(!adequate.blockers.includes('independent-JSA-historical-ranks-not-compared'));
+});
+
+test('old JSA rank-window gaps require exact dated independent rank observations',()=>{
+ const p=get('data/sumo/backfill/v1/profile-ready/14.json');
+ const j=get('data/sumo/backfill/v1/jsa-public/profiles/14.json');
+ const source=get('data/sumo/backfill/v1/weight-source-crosschecks/14.json');
+ const standard=independentHistoricalRankCoverage(p,j,source);
+ assert.equal(standard.passed,false,'official rank excerpt alone is too short');
+ const officialDates=new Set(j.officialRankRecords.map(x=>x.bashoId));
+ const supplemented=structuredClone(source);
+ supplemented.careerRecordCrosscheck={
+  sourceUrl:'https://sumodb.sumogames.de/Rikishi.aspx?r='+source.sumoDbId,
+  identityVerified:true,originalMeasurementsUnchanged:true,
+  independentOfApi:true,datedBashoLedgerSourceSha256:'e'.repeat(64),
+  independentBashoRows:p.rankTimeline.filter(x=>!officialDates.has(x.bashoId))
+   .map(x=>({bashoId:x.bashoId,rankEn:x.rank})),
+  careerRecordDiffersFromPriorSnapshot:false
+ };
+ const pass=independentHistoricalRankCoverage(p,j,supplemented);
+ assert.equal(pass.passed,true);
+ assert.ok(pass.independentAdditional>0);
+ supplemented.careerRecordCrosscheck.independentBashoRows[0].rankEn='Maegashira 99 East';
+ const wrong=independentHistoricalRankCoverage(p,j,supplemented);
+ assert.equal(wrong.passed,false);
+ assert.ok(wrong.sourceConflicts>0);
 });
