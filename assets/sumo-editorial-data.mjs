@@ -1,12 +1,32 @@
 /* Presentation-only selection helpers. Never mutate cached API records. */
-export const boutKey=row=>[row.bashoId,row.day,row.opponentId].map(v=>String(v??'unknown')).join('-');
+export const boutBaseKey=row=>[row.bashoId,row.day,row.opponentId].map(v=>String(v??'unknown')).join('-');
+export const boutKey=row=>{
+  const extra=[row.eventType?'special-'+String(row.eventType):'',
+    Number.isSafeInteger(Number(row.matchNo))&&Number(row.matchNo)>0?'match-'+Number(row.matchNo):''].filter(Boolean);
+  return [boutBaseKey(row),...extra].join('-');
+};
+/** Source identity, day, opponent, optional match number and special-bout type
+ * remain distinct. A current result supersedes exactly one matching historical
+ * copy; ambiguous double bouts are preserved rather than silently discarded. */
 export function mergeProfileBouts(current=[],historical=[]){
   const rows=new Map();
-  for(const row of historical)if(Number.isSafeInteger(Number(row?.opponentId))&&Number(row.opponentId)>0)rows.set(boutKey(row),row);
-  // Current banzuke results and confirmed torikumi supersede an older cached copy.
-  for(const row of current)if(Number.isSafeInteger(Number(row?.opponentId))&&Number(row.opponentId)>0)rows.set(boutKey(row),row);
+  for(const row of historical){
+    if(!Number.isSafeInteger(Number(row?.opponentId))||Number(row.opponentId)<1)continue;
+    rows.set(boutKey(row),row);
+  }
+  for(const row of current){
+    if(!Number.isSafeInteger(Number(row?.opponentId))||Number(row.opponentId)<1)continue;
+    const candidates=[...rows.entries()].filter(([key,old])=>
+      !old.eventType&&boutBaseKey(old)===boutBaseKey(row));
+    const exact=candidates.filter(([,old])=>old.outcome===row.outcome&&String(old.kimarite??'')===String(row.kimarite??''));
+    const match=(exact.length===1?exact:candidates.length===1?candidates:[]);
+    if(match.length===1)rows.delete(match[0][0]);
+    rows.set(boutKey(row),row);
+  }
   return [...rows.values()].sort((a,b)=>String(b.bashoId).localeCompare(String(a.bashoId))||
-    Number(b.day||0)-Number(a.day||0)||Number(a.opponentId)-Number(b.opponentId));
+    Number(b.day||0)-Number(a.day||0)||Number(a.opponentId)-Number(b.opponentId)||
+    String(a.eventType||'').localeCompare(String(b.eventType||''))||
+    Number(a.matchNo||0)-Number(b.matchNo||0));
 }
 export function filterAndSortOpponents(rows=[],query='',sort='meetings',label=r=>r.name||''){
   const q=String(query).trim().toLocaleLowerCase();
