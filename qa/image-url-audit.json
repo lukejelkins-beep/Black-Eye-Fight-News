@@ -1,10 +1,10 @@
 {
-  "checkedAt": "2026-11-08T20:05:38.685Z",
+  "checkedAt": "2026-11-15T20:02:39.518Z",
   "scope": "External editorial image URLs from the current website data and fighter catalogue. A GitHub runner image-response check, NOT browser image or copyright verification.",
-  "sourceUrlCount": 225,
-  "tested": 225,
+  "sourceUrlCount": 226,
+  "tested": 226,
   "counts": {
-    "http-error": 14,
+    "http-error": 15,
     "reachable-image": 203,
     "request-failed": 8
   },
@@ -94,6 +94,16 @@
       "status": "http-error",
       "httpStatus": 403,
       "mime": "text/html"
+    },
+    {
+      "url": "https://www.mmafullcontact.com/wp-content/uploads/2022/06/1297434574-1024x1024.jpg",
+      "context": [
+        "fighterRegistry.fighters.Manon Fiorot.photo",
+        "siteData.fighters[162].photo"
+      ],
+      "status": "http-error",
+      "httpStatus": 403,
+      "mime": "text/plain"
     },
     {
       "url": "https://www.origin.premierboxingchampions.com/sites/default/files/BioImage_Antuanne.jpg",
@@ -444,7 +454,7 @@
         "fighterRegistry.fighters.Teófimo López.photo"
       ],
       "status": "reachable-image",
-      "httpStatus": 200,
+      "httpStatus": 206,
       "mime": "image/jpeg"
     },
     {
@@ -559,6 +569,15 @@
       "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Jaime%20Munguia%20(cropped).jpg",
       "context": [
         "fighterRegistry.fighters.Jaime Munguía.photo"
+      ],
+      "status": "reachable-image",
+      "httpStatus": 206,
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/JoshHokit.jpg",
+      "context": [
+        "fighterRegistry.fighters.Josh Hokit.photo"
       ],
       "status": "reachable-image",
       "httpStatus": 206,
@@ -1035,7 +1054,6 @@
     {
       "url": "https://gidstats.ru/img/fighters/0/0/1-2529.png",
       "context": [
-        "fighterRegistry.fighters.Josh Hokit.photo",
         "siteData.fighters[133].photo"
       ],
       "status": "reachable-image",
@@ -2024,16 +2042,6 @@
       "status": "reachable-image",
       "httpStatus": 206,
       "mime": "image/png"
-    },
-    {
-      "url": "https://www.mmafullcontact.com/wp-content/uploads/2022/06/1297434574-1024x1024.jpg",
-      "context": [
-        "fighterRegistry.fighters.Manon Fiorot.photo",
-        "siteData.fighters[162].photo"
-      ],
-      "status": "reachable-image",
-      "httpStatus": 206,
-      "mime": "image/jpeg"
     },
     {
       "url": "https://www.mmaweekly.com/.image/Mjk6MDAwMDAwMDAwMTExNzQy/loneer-kavanagh.png?profile=share16-9",
