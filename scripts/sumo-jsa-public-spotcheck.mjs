@@ -179,6 +179,21 @@ export function reconcileJsaBashoResults(officialRows,source,asOf,activeBashoId=
  };
 }
 
+/**
+ * JSA profile uses integer centimetres/kilograms while the API can store
+ * decimal precision. Integer display rounding is compatible, but it does
+ * not certify the underlying measurement or alter the source record.
+ */
+export function compareJsaListedMeasurement(published,raw){
+ if(published==null||raw==null||!Number.isFinite(Number(published))||
+    !Number.isFinite(Number(raw)))
+  return {match:null,method:'unavailable',published:published??null,api:raw??null};
+ const official=Number(published),api=Number(raw);
+ const method=official===api?'exact':
+   Number.isInteger(official)&&Math.round(api)===official?
+     'integer-display-rounding-compatible':'disagreement';
+ return {match:method!=='disagreement',method,published:official,api};
+}
 export function parseOfficialProfile(html,roster){
  const text=htmlToPublicText(html);
  // Some official pages display W-L only; an omitted absence field is
@@ -197,13 +212,17 @@ export function parseOfficialProfile(html,roster){
  const nameMatchOk=announcedName!=null&&announcedName.toLowerCase().startsWith(expectedName.toLowerCase());
  const rank=rankMatch?{division:rankMatch[1],position:rankMatch[2]==null?null:Number(rankMatch[2])}:null;
  const expected=String(roster.currentRank||'').match(/^([A-Za-z-]+)\s+(\d+)\s+(East|West)$/i);
+ const measurementComparisonDetails={
+  height:compareJsaListedMeasurement(num('Height','cm'),roster.heightCm),
+  weight:compareJsaListedMeasurement(num('Weight','kg'),roster.weightKg)
+ };
  const comparisons={
   name: nameMatchOk,
   stable: stableMatch?.[1]!=null?stableMatch[1].trim()===roster.heya:null,
   rankGrade:rank&&expected?rank.division.toLowerCase()===expected[1].toLowerCase()&&
     (rank.position===null||rank.position===Number(expected[2])):null,
-  height: num('Height','cm')!=null?num('Height','cm')===Number(roster.heightCm):null,
-  weight: num('Weight','kg')!=null?num('Weight','kg')===Number(roster.weightKg):null
+  height:measurementComparisonDetails.height.match,
+  weight:measurementComparisonDetails.weight.match
  };
  const completeness=!!career&&!!rank&&!!stableMatch&&num('Height','cm')!=null&&num('Weight','kg')!=null;
  return {
@@ -216,6 +235,8 @@ export function parseOfficialProfile(html,roster){
   careerAbsencesPublished:career?.[3]!=null,
   officialAsOf:asOf?{monthYear:asOf[1],day:Number(asOf[2])}:null,
   fieldComparisons:comparisons,
+  measurementComparisonDetails,measurementComparisonMethod:'published-integer-precision',
+  historicMeasurementsChanged:false,
   status:!nameMatchOk?'identity-review':!completeness?'parse-review':
     Object.values(comparisons).some(v=>v===false)?'field-disagreement':'basic-fields-parsed',
   certification:'not-started',
