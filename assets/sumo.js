@@ -84,8 +84,15 @@ function knownHigh(w){
 }
 function weightHeight(w) {
   const listing=publishedCurrentWeight(w,STATE.careerHistory);
-  const h=listing.heightCm!==null?listing.heightCm+' cm':'—';
-  const mass=listing.kg!==null?listing.kg+' kg':'—';
+  // Display the source precision, not a rounded API representation. The
+  // canonical publishedCurrentWeight choice/review flag remains unchanged.
+  const rawHeight=Number(w?.heightCm),rawKg=Number(w?.weightKg);
+  const displayedHeight=listing.heightSource==='Sumo API roster listing'&&Number.isFinite(rawHeight)&&rawHeight>0
+    ?rawHeight:listing.heightCm;
+  const displayedKg=listing.source==='Sumo API roster listing'&&Number.isFinite(rawKg)&&rawKg>0
+    ?rawKg:listing.kg;
+  const h=displayedHeight!==null?displayedHeight+' cm':'—';
+  const mass=displayedKg!==null?displayedKg+' kg':'—';
   return {h,mass,heightSource:listing.heightSource,
     heightUnderReview:listing.heightUnderReview,
     currentHeightCm:listing.heightCm,apiHeightCm:listing.apiHeightCm,
@@ -556,7 +563,7 @@ function renderProfile(id) {
     '<h1>'+e(w.shikonaEn)+'</h1><div class="jp">'+e(w.shikonaJp||'')+'</div>'+
     flagMark(w)+'<div class="hero-rank">'+e(w.currentRank||'Rank not available')+' · '+movementMarkup(w)+'</div>'+
     '</div><div class="profile-facts profile-meta">'+fact('Stable',w.heya)+fact('Age at snapshot',age===null?'Not available':age+' years')+
-    fact('Height',current.h,current.heightSource)+fact('Weight · undated',current.mass,current.weightSource)+'</div>'+
+    fact('Height',current.h==='—'?'Not available':current.h,current.heightSource+(current.heightUnderReview?' · under source/date review':''))+fact('Weight · undated',current.mass==='—'?'Not available':current.mass,current.weightSource+(current.underReview?' · under source/date review':''))+'</div>'+
     '<div class="profile-current"><span class="tag">'+e(bashoLabel(details().bashoId))+' · CURRENT BASHO</span>'+
     currentBlock+'<p>Cached tournament snapshot, not live. '+(divisionOf(w.currentRank)==='Makushita'?'Makushita non-bout days are not absences.':'Scheduled pairings appear only when confirmed in published torikumi.')+'</p></div></section>'+
     '<div class="sumo-summary-strip">'+summaryStat(career,'Career W–L · API ledger')+
