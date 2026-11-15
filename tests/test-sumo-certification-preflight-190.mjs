@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {preflightRikishi,summarizePreflight}
+import {preflightRikishi,summarizePreflight,planPreflightNextAction}
  from '../scripts/sumo-certification-preflight-190.mjs';
 const get=path=>JSON.parse(readFileSync(new URL('../'+path,import.meta.url),'utf8'));
 const roster=get('data/sumo/rikishi-index.json');
@@ -59,4 +59,31 @@ test('preflight rejects mismatched fighter IDs and requires exactly 190 unique c
  assert.equal(report.certified,0);
  assert.equal(report.productionApproved,false);
  assert.throws(()=>summarizePreflight([...rows,rows[0]]),/190/);
+});
+
+test('preflight assigns next action to a single existing worker without self-certifying',()=>{
+ const rank=planPreflightNextAction(['independent-JSA-historical-ranks-not-compared']);
+ assert.equal(rank.lane,'official-rank-recheck');
+ assert.equal(rank.owner,'existing JSA source worker');
+ const dob=planPreflightNextAction(['independent-SumoDB-birth-date-not-verified']);
+ assert.equal(dob.lane,'source-identity-recheck');
+ const both=planPreflightNextAction(['independent-JSA-historical-ranks-not-compared',
+  'official-completed-basho-ledger-coverage-incomplete']);
+ assert.equal(both.lane,'official-tournament-gap');
+ const fast=planPreflightNextAction([]);
+ assert.equal(fast.lane,'fast-lane-strict-audit');
+ assert.match(fast.nextAction,/cannot be granted by preflight/);
+});
+test('190-fighter preflight lane counts reconcile with candidates and manual blockers',()=>{
+ const {p,j,s}=sample();
+ const candidate=preflightRikishi(w,p,j,s,'202611');
+ const rows=Array.from({length:190},(_,i)=>({...candidate,sourceId:i+1000}));
+ rows[0]={...rows[0],blockers:['independent-JSA-historical-ranks-not-compared'],
+  classification:'needs-source-or-manual-review',certificationLane:'official-rank-recheck'};
+ const report=summarizePreflight(rows);
+ assert.equal(report.candidateForStrictAudit,189);
+ assert.equal(report.needsSourceOrManualReview,1);
+ assert.equal(report.certificationLanes['fast-lane-strict-audit'],189);
+ assert.equal(report.certificationLanes['official-rank-recheck'],1);
+ assert.equal(report.certified,0);
 });
