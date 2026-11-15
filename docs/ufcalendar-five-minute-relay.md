@@ -48,3 +48,14 @@ Inspect `.github/workflows/ufcalendar-rich-backfill.yml` run list and
   new data was returned on every call.
 - Confirm watchdog runs report either "recent collected data" or restart only
   when no collector is active.
+
+### Handoff record and duplicate guard
+
+Each relay dispatch records the source Actions run ID and the committed research
+checkpoint SHA as workflow inputs, visible in the follow-up run name. The relay
+checks recent collector runs after its delay and skips dispatch while another
+collector run is queued or active. If GitHub run state cannot be checked, it
+leaves recovery to the existing 20-minute watchdog. The watchdog uses the same
+run-state check before seeding a new bounded chain. These checks do not make
+paid API calls; the existing collector concurrency and budget guard remain the
+final protection if two dispatches race.
