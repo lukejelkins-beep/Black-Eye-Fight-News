@@ -166,3 +166,16 @@ test('truncated JSA early tournaments need every missing bout ledger row indepen
  overlapping.wins+=1;
  assert.ok(supplementalHistoricalBashoCoverage(historicalProfile,jsa,altered,'202611').sourceOverlapConflicts>0);
 });
+
+test('fast-lane preflight requires at least three quarters of the numbered rank history crosschecked',()=>{
+ const {p,j,s}=sample();
+ const threshold=Math.max(1,Math.floor(p.rankTimeline.length*0.75));
+ assert.ok(threshold>1);
+ j.rankReconciliation.comparedBasho=threshold-1;
+ const short=preflightRikishi(w,p,j,s,'202611');
+ assert.ok(short.blockers.includes('independent-JSA-historical-ranks-not-compared'));
+ assert.equal(short.classification,'needs-source-or-manual-review');
+ j.rankReconciliation.comparedBasho=threshold;
+ const adequate=preflightRikishi(w,p,j,s,'202611');
+ assert.ok(!adequate.blockers.includes('independent-JSA-historical-ranks-not-compared'));
+});
