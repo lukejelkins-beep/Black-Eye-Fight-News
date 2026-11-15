@@ -31156,6 +31156,144 @@
         }
       ],
       "note": "UFC official prelim report attests 2025 Felipe Bunes win; official fighter narrative and pinned Greco separately confirm 2026 Ethyn Ewing TKO loss even if summary badge says Win. DWCS 2022 João Elias excluded, 2025 Aug local/UTC one-day offset retained."
+    },
+    "iwo-baraniewski": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Iwo Baraniewski",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/1c23ec2f1b71be40",
+      "officialFighterUrl": "https://www.ufc.com/athlete/iwo-baraniewski",
+      "earliestOfficialUfcBout": "2025-12-06",
+      "latestCompletedOfficialUfcBout": "2026-09-19",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-15",
+        "method": "Independently checked full dated UFC.com career and separate DWCS official source, pinned Greco native fighter/fight source, saved exact immutable UFCalendar bout IDs, both corners and result plus measured rounds. No feeder bouts counted as Octagon."
+      },
+      "verifiedNumericFighterIds": [
+        "83"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2025-12-06",
+          "opponent": "Ibo Aslan",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ea660db65bfa998f",
+          "nativeBoutId": "60531",
+          "nativeFighterId": "83"
+        },
+        {
+          "date": "2026-03-21",
+          "opponent": "Austen Lane",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/43e26b46cbb51985",
+          "nativeBoutId": "60562",
+          "nativeFighterId": "83"
+        },
+        {
+          "date": "2026-06-06",
+          "opponent": "Junior Tafa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/bfe4950b3de83e9c",
+          "nativeBoutId": "66471",
+          "nativeFighterId": "83"
+        },
+        {
+          "date": "2026-09-19",
+          "opponent": "Alonzo Menifield",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/196c64693a2ce308",
+          "nativeBoutId": "83419",
+          "nativeFighterId": "83"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "boutId": "88278",
+          "fighterSlug": "iwo-baraniewski",
+          "date": "2025-09-16",
+          "opponent": "Mahamed Aly",
+          "event": "Dana White's Contender Series 82",
+          "sourceUrl": "https://www.ufc.com/news/week-6-results-scorecards-fight-recaps-contract-winners-interviews-dana-whites-contender-series-season-9"
+        }
+      ],
+      "note": "Official UFC biography lists exact four Octagon bouts after Dec 2025 debut, including Sept 2026 loss to Alonzo Menifield. September 2025 Mahamed Aly DWCS KO independently attested and excluded."
+    },
+    "tallison-teixeira": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Tallison Teixeira",
+      "verifiedAt": "2026-11-15",
+      "fighterUrl": "https://ufcstats.com/fighter-details/17923f676f100e16",
+      "officialFighterUrl": "https://www.ufc.com/athlete/tallison-teixeira",
+      "earliestOfficialUfcBout": "2025-02-08",
+      "latestCompletedOfficialUfcBout": "2026-05-30",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-15",
+        "method": "Independently checked full dated UFC.com career and separate DWCS official source, pinned Greco native fighter/fight source, saved exact immutable UFCalendar bout IDs, both corners and result plus measured rounds. No feeder bouts counted as Octagon."
+      },
+      "verifiedNumericFighterIds": [
+        "56"
+      ],
+      "officialUfcCareerBoutCount": 4,
+      "bouts": [
+        {
+          "date": "2025-02-08",
+          "opponent": "Justin Tafa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8435f90fbd50c7a5",
+          "nativeBoutId": "60981",
+          "nativeFighterId": "56"
+        },
+        {
+          "date": "2025-07-12",
+          "opponent": "Derrick Lewis",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/0adfc21045c02555",
+          "nativeBoutId": "60829",
+          "nativeFighterId": "56"
+        },
+        {
+          "date": "2026-01-31",
+          "opponent": "Tai Tuivasa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/67765535bd0b6bdf",
+          "nativeBoutId": "65850",
+          "nativeFighterId": "56"
+        },
+        {
+          "date": "2026-05-30",
+          "opponent": "Sergei Pavlovich",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f74e4afdf6ae29d1",
+          "nativeBoutId": "66103",
+          "nativeFighterId": "56"
+        }
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "boutId": "83824",
+          "fighterSlug": "tallison-teixeira",
+          "date": "2024-09-17",
+          "opponent": "Arthur Lopes",
+          "event": "Dana White's Contender Series 72",
+          "sourceUrl": "https://www.ufc.com/news/dana-whites-contender-series-alumni-competing-ufc-312"
+        }
+      ],
+      "note": "Four completed Octagon bouts from Feb 2025 Justin Tafa to May 2026 Sergei Pavlovich; 2024 Arthur Lopes DWCS fight separately official-UFC source confirmed and excluded. Pinned Greco and native winner IDs override misleading graphical Win labels."
     }
   }
 }
