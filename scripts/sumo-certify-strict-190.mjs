@@ -70,10 +70,30 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
   basic.name===true&&basic.stable===true&&basic.rankGrade===true&&
   Object.values(basic).every(x=>x!==false),
   'independent-official-profile-identity-or-fields');
- add(j.career&&j.career.wins===p?.career?.wins&&
-  j.career.losses===p?.career?.losses&&
-  j.career.absences!=null&&j.career.absences===p?.career?.absences,
-  'independent-published-career-wins-losses-absences');
+ const sumoDbPublished=weight?.careerRecordCrosscheck||null;
+ const independentCareer=sumoDbPublished?.career||null;
+ const exactIndependent=sumoDbPublished?.identityVerified===true&&
+  sumoDbPublished?.originalMeasurementsUnchanged===true&&
+  sumoDbPublished?.independentOfApi===true&&
+  /^[a-f0-9]{64}$/.test(String(sumoDbPublished.rawHtmlSha256||''))&&
+  sumoDbPublished.sourceUrl==='https://sumodb.sumogames.de/Rikishi.aspx?r='+w?.sumoDbId&&
+  independentCareer?.absences!==null&&independentCareer?.absences!==undefined&&
+  independentCareer.wins===p?.career?.wins&&
+  independentCareer.losses===p?.career?.losses&&
+  independentCareer.absences===p?.career?.absences;
+ // If JSA explicitly publishes any component, it takes precedence. Use an
+ // independent SumoDB three-part record only to fill unpublished components,
+ // and still require agreement with all completed JSA per-basho outcomes.
+ const jsaCareerPresent=j.career!=null;
+ const jsaWLMatches=jsaCareerPresent&&
+  j.career.wins===p?.career?.wins&&j.career.losses===p?.career?.losses;
+ const jsaAbsencePresent=jsaCareerPresent&&j.career.absences!=null;
+ const basis=jsaWLMatches&&jsaAbsencePresent&&
+  j.career.absences===p?.career?.absences?'published-JSA-career-WLA':
+  exactIndependent&&(!jsaCareerPresent||jsaWLMatches)&&
+   (!jsaAbsencePresent||j.career.absences===p?.career?.absences)?
+   'separate-SumoDB-career-WLA-plus-published-JSA-basho':null;
+ add(!!basis,'independent-published-career-wins-losses-absences');
  const prior=per.filter(x=>x.bashoId!==activeBasho&&x.scheduledBoutRows>0);
  const officialPer=new Map((j.officialBashoRecords||[]).map(x=>[x.bashoId,x]));
  add(bh.discrepantBasho===0&&bh.agreeingBasho===bh.comparedBasho&&
@@ -119,8 +139,12 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
   sourceId:id,name:w?.shikonaEn||null,
   status:careerResultsCertified?'career-results-strictly-certified':'strict-audit-blocked',
   careerResultsCertified,
-  independentlyVerifiedBy:['JSA published career totals','JSA completed tournament W-L',
-    'JSA dated banzuke ranks','SumoDB matching wrestler identity'].filter(()=>careerResultsCertified),
+  careerTotalsEvidenceBasis:careerResultsCertified?basis:null,
+  independentlyVerifiedBy:careerResultsCertified?[
+    basis==='published-JSA-career-WLA'?'JSA published W-L-A':'SumoDB published W-L-A',
+    'JSA completed tournament W-L','JSA dated banzuke ranks',
+    'SumoDB matching wrestler identity'
+  ]:[],
   sourceNativeBoutLedgerReconciled:careerResultsCertified,
   independentBoutByBoutKimariteCertified:false,
   historicalWeightTimelineCertified:false,
@@ -152,7 +176,7 @@ export function strictSummary(rows,preflight){
   cohortSize:190,strictAuditSuccessful:true,
   strictCareerResultsCertified:certified.length,
   blocked:blocked.length,fullProfilesCertified:0,productionApproved:false,
-  meaning:'Certifies source-complete regular-bout career result ledgers independently corroborated by JSA per-basho W-L, career totals, dated ranks and SumoDB identity. Does NOT independently certify individual kimarite, historical weigh-ins, images or full profile publication.',
+  meaning:'Certifies source-complete regular-bout career result ledgers against JSA published tournament W-L and dated ranks plus JSA career W-L-A when available; if JSA omits an aggregate, independently published exact-match SumoDB W-L-A may supply missing components. Does NOT independently certify individual kimarite, historical weigh-ins, images or full profile publication.',
   certificationMethod:'JSA crosscheck + complete API native-bout ledger + reciprocal H2H + dated identity evidence',
   rows
  };
