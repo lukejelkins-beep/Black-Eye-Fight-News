@@ -88,3 +88,13 @@ test('distinct same-day regular, playoff and trial bouts are preserved under com
  assert.ok(result.some(x=>x===current));
  assert.ok(boutKey(playoff).includes('special-playoff'));
 });
+
+test('source-recorded absence remains an A row without a fabricated opponent or zero',()=>{
+ const absence={bashoId:'202611',day:4,opponentId:null,outcome:'absence',kimarite:null};
+ const ordinary={bashoId:'202611',day:3,opponentId:28,outcome:'win',kimarite:'oshidashi'};
+ const rows=mergeProfileBouts([ordinary,absence],[]);
+ assert.equal(rows.length,2);
+ assert.strictEqual(rows.find(x=>x.outcome==='absence'),absence);
+ assert.ok(boutKey(absence).includes('unknown'),'Absence has no invented opponent ID');
+ assert.equal(mergeProfileBouts([{...absence,outcome:'scheduled'}],[]).length,0,'Unconfirmed no-opponent future slots are not bouts');
+});
