@@ -13,7 +13,7 @@ import {readFile,writeFile,rename,mkdir} from 'node:fs/promises';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {cohortCurrentBasho} from './sumo-jsa-public-spotcheck.mjs';
-import {documentedDebutRankGap} from './sumo-certification-preflight-190.mjs';
+import {documentedDebutRankGap,supplementalHistoricalBashoCoverage} from './sumo-certification-preflight-190.mjs';
 
 const ROOT='data/sumo/backfill/v1';
 const load=async p=>JSON.parse(await readFile(p,'utf8'));
@@ -98,10 +98,12 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
    'separate-SumoDB-career-WLA-plus-published-JSA-basho':null;
  add(!!basis,'independent-published-career-wins-losses-absences');
  const prior=per.filter(x=>x.bashoId!==activeBasho&&x.scheduledBoutRows>0);
+ const historicalProof=supplementalHistoricalBashoCoverage(p,official,weight,activeBasho);
  const officialPer=new Map((j.officialBashoRecords||[]).map(x=>[x.bashoId,x]));
- add(bh.discrepantBasho===0&&bh.agreeingBasho===bh.comparedBasho&&
-  bh.comparedBasho>=prior.length&&
-  prior.every(x=>{const o=officialPer.get(x.bashoId);return o?.wins===x.wins&&o?.losses===x.losses;})&&
+ add(historicalProof.passed&&
+  bh.discrepantBasho===0&&bh.agreeingBasho===bh.comparedBasho&&
+  (historicalProof.baselineJsa!==true||
+    prior.every(x=>{const o=officialPer.get(x.bashoId);return o?.wins===x.wins&&o?.losses===x.losses;}))&&
   (bh.unmatchedOfficialBasho||[]).every(x=>{
    const o=officialPer.get(x);return o&&o.wins===0&&o.losses===0;
   })&&
@@ -144,6 +146,8 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
   careerResultsCertified,
   careerTotalsEvidenceBasis:careerResultsCertified?basis:null,
   documentedNoPublishedNumberedDebutRank:evidencedDebutGap,
+  independentlyCrosscheckedOlderBashoFromSumoDB:careerResultsCertified?
+    historicalProof.otherSourceBasho:0,
   missingDebutRankPreservedAsNull:evidencedDebutGap,
   independentlyVerifiedBy:careerResultsCertified?[
     basis==='published-JSA-career-WLA'?'JSA published W-L-A':'SumoDB published W-L-A',
