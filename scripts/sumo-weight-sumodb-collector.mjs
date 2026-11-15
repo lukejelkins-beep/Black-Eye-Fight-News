@@ -366,17 +366,36 @@ async function main(){
    const index=reviews.findIndex(x=>x.sourceId===f.sourceId);
    if(index<0)reviews.push(f);else reviews[index]=f;
  }
+ // A skipped one-time source check is not a successful corroboration;
+ // keep a distinct outstanding count for the existing GitHub scheduler.
+ const checkpoint=await optional(join(ROOT,'career-certification-preflight.json'));
+ const outstanding=new Map((checkpoint?.rows||[]).map(x=>[Number(x.sourceId),x]));
+ let outstandingCareerCrosschecks=0,careerRecordsCaptured=0;
+ for(const w of roster.rikishi){
+  const doc=await optional(join(ROOT,'weight-source-crosschecks',w.sourceId+'.json'));
+  if(doc?.careerRecordCrosscheck?.sourceRecordPublished===true)careerRecordsCaptured++;
+  const item=outstanding.get(Number(w.sourceId));
+  const block=reviews.some(x=>x.sourceId===w.sourceId&&x.permanent&&
+     Number(x.parserVersion||0)>=SOURCE_PARSER_VERSION);
+  const birth=doc?.identityRecheck?.identityEvidence||doc?.identityEvidence||{};
+  if(!block&&birth.valid===true&&birth.birthDateStatus==='match'&&
+    requiresCareerRecordCrosscheck(doc,item))outstandingCareerCrosschecks++;
+ }
  const result={schemaVersion:1,scope:'Research-only SumoDB collection progress',
   lastRunAt:now(),source:'https://sumodb.sumogames.de',
   permission:'user-reported-confirmation',requestsThisRun:requests,
   updatedThisRun:updated,identityAuditsThisRun:identityAudits,
   careerRecordCrosschecksThisRun:careerAudits,
+  careerRecordCrosschecksOutstanding:outstandingCareerCrosschecks,
+  independentlyPublishedCareerRecordsCaptured:careerRecordsCaptured,
   cooldownReason:error,nextAllowedAt:cooldown?
     new Date(Date.now()+cooldown*1000).toISOString():null,
   reviewCases:reviews,certifiedWeightHistories:0,productionPublished:0};
  await save(STATUS,result);
  console.log(JSON.stringify({status:cooldown?'cooldown':failed.length?'needs-manual-review':'ok',
-  requests,updated,identityAudits,careerAudits,reviewCases:reviews.length,nextAllowedAt:result.nextAllowedAt,
+  requests,updated,identityAudits,careerAudits,careerCrosschecksOutstanding:outstandingCareerCrosschecks,
+  independentlyPublishedCareerRecordsCaptured:careerRecordsCaptured,
+  reviewCases:reviews.length,nextAllowedAt:result.nextAllowedAt,
   error,certified:0}));
 }
 if(process.argv[1]&&import.meta.url===new URL('file://'+process.argv[1]).href)
