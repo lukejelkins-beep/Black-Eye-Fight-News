@@ -32,9 +32,21 @@ export function careerPoints(w,cache,bashoId,prevBasho,prevRank){
   // Never overwrite a dated rank already provided by the historical API.
   if(bashoOK(bashoId)&&ordinalRank(w?.currentRank)!==null&&!existingCurrentRank)
     ranks.push({basho:bashoId,rank:w.currentRank});
+  const rosterWeight=Number(w?.weightKg);
+  const officialWeight=entry?.currentListedWeight;
+  const hasOfficialWeight=officialWeight?.datedMeasurement===false&&
+    Number.isFinite(Number(officialWeight?.kg))&&Number(officialWeight.kg)>0&&
+    /^https:\/\/www\.sumo\.or\.jp\//.test(String(officialWeight.source||''));
+  const currentListedWeightKg=hasOfficialWeight?Number(officialWeight.kg):
+    Number.isFinite(rosterWeight)&&rosterWeight>0?rosterWeight:null;
+  const currentWeightApiDiscrepancy=hasOfficialWeight&&Number.isFinite(rosterWeight)&&
+    rosterWeight>0&&Math.round(rosterWeight)!==Number(officialWeight.kg)?
+    {officialKg:Number(officialWeight.kg),apiKg:rosterWeight,
+      note:'Current measurement discrepancy pending source reconciliation'}:null;
   return {weight:dedupe(weight),ranks:dedupe(ranks),entry,currentRankDiscrepancy,
-    currentListedWeightKg:Number.isFinite(Number(w?.weightKg))&&Number(w?.weightKg)>0?
-      Number(w.weightKg):null};
+    currentListedWeightKg,
+    currentListedWeightSource:hasOfficialWeight?'JSA current published profile':'Sumo API current listing',
+    currentWeightApiDiscrepancy};
 }
 const frame=(width,height,children,klass,label)=>'<svg class="'+klass+'" viewBox="0 0 '+width+' '+height+'" role="group" aria-label="'+esc(label)+'">'+children+'</svg>';
 export function weightChart(points){
@@ -70,7 +82,8 @@ export function banzukeChart(points){
     frame(W,H,s,'sumo-rank-svg','Ranking trajectory for '+points.length+' bashos, with exact ranks on focus or hover').replace('class="sumo-rank-svg"','class="sumo-rank-svg" style="width:'+W+'px"')+'</div>';
 }
 export function careerGraphs(w,cache,bashoId,prevBasho,prevRank){
-  const {weight,ranks,entry,currentListedWeightKg,currentRankDiscrepancy}=careerPoints(w,cache,bashoId,prevBasho,prevRank);
+  const {weight,ranks,entry,currentListedWeightKg,currentListedWeightSource,
+    currentWeightApiDiscrepancy,currentRankDiscrepancy}=careerPoints(w,cache,bashoId,prevBasho,prevRank);
   const highest=ranked=>ranked.length?
     ranked.reduce((best,next)=>ordinalRank(next.rank)<ordinalRank(best.rank)?next:best).rank:null;
   const weightSourceUrl=entry?.weightSource||entry?.sourceUrl||null;
@@ -86,7 +99,9 @@ export function careerGraphs(w,cache,bashoId,prevBasho,prevRank){
     '<p class="sumo-career-source">Rank review required: cached historical rank '+esc(currentRankDiscrepancy.recordedRank)+
       ' differs from the current profile listing '+esc(currentRankDiscrepancy.rosterRank)+'.</p>':'';
   const milestone=entry?.milestones?.length?'<div class="sumo-career-milestones">'+entry.milestones.map(m=>'<div><small>'+esc(dateLabel(m.basho))+'</small><strong>'+esc(m.title)+'</strong><span>'+esc(m.rank)+'</span></div>').join('')+'</div>':'';
-  return '<div class="sumo-career-summary"><span>'+weight.length+' dated weight snapshot'+(weight.length===1?'':'s')+'</span><span>'+ranks.length+' ranked basho'+(ranks.length===1?'':'s')+'</span><span>Highest rank: '+esc(highest(ranks)||'Not yet documented')+'</span>'+ (currentListedWeightKg!==null?'<span>Currently listed: '+esc(currentListedWeightKg)+' kg (undated)</span>':'')+'</div>'+
+  return '<div class="sumo-career-summary"><span>'+weight.length+' dated weight snapshot'+(weight.length===1?'':'s')+'</span><span>'+ranks.length+' ranked basho'+(ranks.length===1?'':'s')+'</span><span>Highest rank: '+esc(highest(ranks)||'Not yet documented')+'</span>'+ (currentListedWeightKg!==null?'<span>'+esc(currentListedWeightSource==='JSA current published profile'?'JSA currently listed: ':'Currently listed: ')+esc(currentListedWeightKg)+' kg (undated)</span>':'')+
+    (currentWeightApiDiscrepancy?'<span class="sumo-career-source">Weight review: JSA '+esc(currentWeightApiDiscrepancy.officialKg)+
+      ' kg, Sumo API '+esc(currentWeightApiDiscrepancy.apiKg)+' kg — disagreement pending verification</span>':'')+'</div>'+
     '<div class="sumo-career-panels">'+
     '<section class="sumo-career-panel"><div class="sumo-career-panel-head"><small>BODY MEASUREMENTS · KG</small><h3>Weight history</h3></div><div class="sumo-career-panel-main">'+weightChart(weight)+'</div><p class="sumo-career-source">'+footWeight+'</p></section>'+
     '<section class="sumo-career-panel"><div class="sumo-career-panel-head"><small>BANZUKE · EAST & WEST</small><h3>Career rank movement</h3></div><div class="sumo-career-panel-main">'+banzukeChart(ranks)+
