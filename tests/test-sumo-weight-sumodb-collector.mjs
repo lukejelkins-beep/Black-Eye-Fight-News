@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {permissionAllowsCollection,conservativeRobotsAllow,sourceIdentityEvidence}
+import {permissionAllowsCollection,conservativeRobotsAllow,sourceIdentityEvidence,
+ corroborateSavedMeasurements,requiresIdentityRecheck}
  from '../scripts/sumo-weight-sumodb-collector.mjs';
 
 test('no automated historical collection without documented provider permission',()=>{
@@ -101,4 +102,34 @@ test('missing DOB still accepts a fully mapped and header-matched rikishi but do
  assert.equal(r.birthDateStatus,'source-birth-date-missing');
  assert.equal(r.matchedCurrentName,true);
  assert.equal(r.publishedDob,null);
+});
+
+test('second-pass identity QA retains every original dated source weight',()=>{
+ const saved=[{bashoId:'202405',weightKg:142.5,heightCm:179},
+  {bashoId:'202505',weightKg:144,heightCm:180}];
+ const fetched=[{bashoId:'202405',weightKg:142.5,heightCm:179},
+  {bashoId:'202505',weightKg:144,heightCm:180},
+  {bashoId:'202603',weightKg:147,heightCm:181}];
+ const before=structuredClone(saved);
+ const result=corroborateSavedMeasurements(saved,fetched);
+ assert.deepEqual(result,{ok:true,corroborated:2,issues:[]});
+ assert.deepEqual(saved,before,'recheck must never mutate saved evidence');
+});
+test('second-pass identity QA refuses missing or changed historical source observations',()=>{
+ const saved=[{bashoId:'202405',weightKg:142,heightCm:180}];
+ assert.equal(corroborateSavedMeasurements(saved,[]).ok,false);
+ assert.match(corroborateSavedMeasurements(saved,[
+   {bashoId:'202505',weightKg:142,heightCm:180}]).issues[0],/source date absent/);
+ assert.match(corroborateSavedMeasurements(saved,[
+   {bashoId:'202405',weightKg:143,heightCm:180}]).issues[0],/value differs/);
+ assert.match(corroborateSavedMeasurements(saved,[
+   {bashoId:'202405',weightKg:142,heightCm:181}]).issues[0],/value differs/);
+});
+test('reverify only legacy identity evidence, once, after source collection',()=>{
+ assert.equal(requiresIdentityRecheck({datedEvidence:[{}]}),true);
+ assert.equal(requiresIdentityRecheck({identityEvidence:{valid:true}}),true);
+ assert.equal(requiresIdentityRecheck({identityEvidence:{birthDateStatus:'match'}}),false);
+ assert.equal(requiresIdentityRecheck({identityEvidence:{birthDateStatus:'source-birth-date-missing'}}),false);
+ assert.equal(requiresIdentityRecheck({identityRecheck:{sourceParserVersion:4}}),false);
+ assert.equal(requiresIdentityRecheck(null),false);
 });
