@@ -27,10 +27,12 @@ const normalizedOutcome=value=>({
 })[String(value||'').toLowerCase()]||null;
 
 /** Full-career proof must be independently grounded, not inferred from index coverage. */
-export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,independentEntry,indexedBouts=null){
+export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,independentEntry,indexedBouts=null,independentAsOf=asOf){
  const timeline=profile?.ufcTimeline||{};
  const rows=arr(history);
  const latest=date(rosterLatest),snapshot=date(asOf);
+ // Source proof belongs to the approved cohort; provider freshness remains rolling.
+ const evidenceCutoff=date(independentAsOf);
  // Roster activity dates use the event-local calendar day. UFCalendar's
  // historical timestamps can roll into the next UTC day (or vice versa).
  // A one-day difference for the MOST RECENT saved fight is not evidence
@@ -159,7 +161,8 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
    givenKeys.slice().sort().every((v,i)=>v===savedKeys.slice().sort()[i]);
  const checked=ext.sourceCoverageAttested===true&&
    ext.verificationMethod==='full_official_ufc_fight_listing_crosscheck'&&
-   snapshot&&date(ext.verifiedAt)>=snapshot&&
+   snapshot&&evidenceCutoff&&evidenceCutoff<=snapshot&&
+   date(ext.verifiedAt)>=evidenceCutoff&&
    /^https:\/\/ufcstats\.com\/fighter-details\/[a-f0-9]+$/i.test(String(ext.fighterUrl||''))&&
    given.length>0&&given.every(r=>date(r?.date)&&normal(r?.opponent)&&
      normalizedOutcome(r?.result)&&
@@ -310,6 +313,8 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     approved.some(s=>typeof s!=='string'||!s))throw Error('Invalid immutable 783-fighter cohort');
   if(census?.indexCompleteness!=='36_month_event_scan_complete'||
     census?.scope!=='ufc'||census?.activityMonths!==36)throw Error('Invalid cached UFC census');
+  if(!date(approval.rosterAsOf)||!date(census.asOf)||approval.rosterAsOf>census.asOf)
+    throw Error('Invalid approved cohort date');
   const current=new Map(arr(census.fighters).map(f=>[f.slug,f]));
   const currentEligible=new Set(arr(census.fighters).filter(f=>
     f?.eligibilityStatus==='latest_observed_mma_ufc').map(f=>f.slug));
@@ -537,7 +542,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     if(knownIndexed)allKnownIndexed++;
     if(knownMeasured)allKnownMeasured++;
     const proof=evaluateCareerEvidence(profile,history,
-      current.get(slug)?.lastUfcFight,census.asOf,independentRegistry[slug],bouts);
+      current.get(slug)?.lastUfcFight,census.asOf,independentRegistry[slug],bouts,approval.rosterAsOf);
     const independentFullCareer=knownMeasured&&proof.independentlyVerified;
     const providerFullCareer=knownMeasured&&proof.providerCertified;
     const providerHistoryDiscrepancy=proof.providerDiscrepancy||!proof.rosterLatestPresent;
@@ -775,6 +780,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     (x.action==='not_yet_attempted'||x.action==='retry_eligible')).length;
   const summary={
     asOf:census.asOf,approvedSnapshotAsOf:approval.rosterAsOf,
+    certificationEvidenceCutoff:approval.rosterAsOf,
     approvalHash:approval.approvedRosterSha256||null,
     approvedFighters:approved.length,
     stillEligibleApproved:approved.filter(x=>currentEligible.has(x)).length,
