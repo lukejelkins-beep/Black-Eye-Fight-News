@@ -21,12 +21,25 @@
     "weightKg": 141.4,
     "heightCm": 177
   },
-  "currentOfficialMeasurement": null,
+  "currentOfficialMeasurement": {
+    "weightKg": 141.4,
+    "heightCm": 177,
+    "source": "Japan Sumo Association current published profile",
+    "sourceUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4345/",
+    "officialAsOf": {
+      "monthYear": "November 2026",
+      "day": 8
+    },
+    "snapshotType": "current-listed-weight-not-dated-weigh-in",
+    "measurementDateKnown": false,
+    "independentlyCertified": false,
+    "agreesWithApiCurrentWeight": true
+  },
   "career": {
     "wins": 38,
     "losses": 16,
     "absences": 12,
-    "winLossEvidence": "sumo-api-career-stats",
+    "winLossEvidence": "official-JSA-public-record-verified-against-bout-ledger",
     "sourceSummaryLagReconciled": false,
     "originalApiCareerTotals": {
       "wins": 38,
