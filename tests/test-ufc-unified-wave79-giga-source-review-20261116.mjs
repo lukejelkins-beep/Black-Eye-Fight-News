@@ -10,13 +10,19 @@ const certificate = read('ufc-independent-full-career-verification.json').fighte
 const DAY = 86400000;
 const normalized = text => String(text || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
 
-test('wave79 source review retains all 13 official UFC Giga Chikadze bouts, without claiming certification', () => {
+test('wave79 official chronology agrees with independently attested Giga Chikadze source proof', () => {
   assert.equal(inventory.status, 'source_corroborated_list_not_independent_career_certification');
   assert.equal(entry.sourceUrl, 'https://www.ufc.com/athlete/giga-chikadze');
   assert.equal(entry.bouts.length, 13);
   assert.equal(new Set(entry.bouts.map(x => x.cachedNativeBoutId)).size, 13);
-  assert.equal(certificate, undefined, 'source review cannot become a strict certificate');
+  assert.ok(certificate?.sourceCoverageAttested, 'independent source coverage evidence is required');
+  assert.equal(certificate.officialUfcCareerBoutCount, 13);
+  assert.equal(certificate.bouts.length, 13);
   for (const bout of entry.bouts) {
+    const sourceProof = certificate.bouts.find(x => String(x.nativeBoutId) === bout.cachedNativeBoutId);
+    assert.ok(sourceProof?.fightUrl?.startsWith('https://ufcstats.com/fight-details/'), 'pinned independent fight identity missing: ' + bout.cachedNativeBoutId);
+    assert.equal(sourceProof.result, bout.result);
+    assert.equal(normalized(sourceProof.opponent), normalized(bout.opponent));
     const cached = native.recentHistory.find(x => String(x.boutId) === bout.cachedNativeBoutId);
     assert.ok(cached, 'original native bout missing: ' + bout.cachedNativeBoutId);
     assert.equal(normalized(cached.opponent), normalized(bout.opponent));
