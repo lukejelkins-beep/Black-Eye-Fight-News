@@ -83,11 +83,25 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
   'official-JSA-identity-or-current-rank-unresolved');
  add(officialId&&Object.values(jsa.fieldComparisons||{}).every(x=>x!==false),
   'official-JSA-profile-field-disagreement');
- add(officialId&&jsa.career&&
-   jsa.career.wins===p.career?.wins&&jsa.career.losses===p.career?.losses,
+ // A separately captured SumoDB W-L-A may verify an aggregate omitted by JSA,
+ // but it cannot override any explicit disagreement with the official JSA.
+ // All three values must match the full native-bout career ledger exactly.
+ const other=sdb?.careerRecordCrosscheck||null,totals=other?.career||null;
+ const independentlyMatched=other?.identityVerified===true&&
+  other?.originalMeasurementsUnchanged===true&&other?.independentOfApi===true&&
+  Number(sdb.sourceId)===Number(w.sourceId)&&
+  totals&&totals.absences!==null&&totals.absences!==undefined&&
+  totals.wins===p.career?.wins&&totals.losses===p.career?.losses&&
+  totals.absences===p.career?.absences;
+ const jsaHasCareer=officialId&&jsa.career!==null&&jsa.career!==undefined;
+ const jsaWinLossMatches=jsaHasCareer&&
+  jsa.career.wins===p.career?.wins&&jsa.career.losses===p.career?.losses;
+ add(jsaHasCareer?jsaWinLossMatches:officialId&&independentlyMatched,
   'official-JSA-career-totals-unpublished-or-disagree');
- add(officialId&&jsa.career?.absences!=null&&
-   jsa.career.absences===p.career?.absences,
+ const jsaAbsencesPresent=jsaHasCareer&&jsa.career.absences!=null;
+ add(jsaAbsencesPresent?
+   jsa.career.absences===p.career?.absences:
+   officialId&&independentlyMatched&&(!jsaHasCareer||jsaWinLossMatches),
   'official-absence-total-unpublished-or-disagree');
  const prior=(p.perBasho||[]).filter(x=>x.bashoId!==activeBasho&&
   Number(x.scheduledBoutRows||0)>0);
@@ -113,6 +127,10 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
   blockers:problems,completedHistoricalBoutTournaments:prior.length,
   officialBashoCompared:Number(historical?.comparedBasho||0),
   JsaHistoricalRankCompared:Number(ranks?.comparedBasho||0),
+  careerTotalsEvidence:jsaWinLossMatches&&jsaAbsencesPresent?
+   'published-JSA-three-part-career-record':independentlyMatched&&
+   (!jsaHasCareer||jsaWinLossMatches)?
+   'independent-SumoDB-three-part-career-record-plus-JSA-basho':'incomplete-or-conflicting',
   independentBirthDateMatch:rawIdentity?.birthDateStatus==='match',
   sourceEligibilityChecked:true,strictAuditPassed:false,certified:false,
   productionReleaseApproved:false,photoRightsReviewedSeparately:true};
