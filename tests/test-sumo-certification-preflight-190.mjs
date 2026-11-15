@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {preflightRikishi,summarizePreflight,planPreflightNextAction,documentedDebutRankGap}
+import {preflightRikishi,summarizePreflight,planPreflightNextAction,documentedDebutRankGap,supplementalHistoricalBashoCoverage}
  from '../scripts/sumo-certification-preflight-190.mjs';
 const get=path=>JSON.parse(readFileSync(new URL('../'+path,import.meta.url),'utf8'));
 const roster=get('data/sumo/rikishi-index.json');
@@ -136,4 +136,33 @@ test('JSA-documented collegiate debut can precede numbered banzuke without inven
  assert.equal(documentedDebutRankGap(p,changed),false);
  const blocked=preflightRikishi(entrant,p,changed,s,'202611');
  assert.ok(blocked.blockers.includes('complete-rank-timeline-not-evidenced'));
+});
+
+test('truncated JSA early tournaments need every missing bout ledger row independently sourced',()=>{
+ const historicalProfile=get('data/sumo/backfill/v1/profile-ready/44.json');
+ const jsa=get('data/sumo/backfill/v1/jsa-public/profiles/44.json');
+ const saved=get('data/sumo/backfill/v1/weight-source-crosschecks/44.json');
+ const inJsa=new Set(jsa.officialBashoRecords.map(x=>x.bashoId));
+ const missing=historicalProfile.perBasho.filter(x=>
+  x.bashoId!=='202611'&&x.scheduledBoutRows>0&&!inJsa.has(x.bashoId));
+ assert.ok(missing.length>20,'legacy wrestler must expose truncated JSA years');
+ const source={...saved,careerRecordCrosscheck:{
+  sourceUrl:'https://sumodb.sumogames.de/Rikishi.aspx?r='+saved.sumoDbId,
+  identityVerified:true,originalMeasurementsUnchanged:true,independentOfApi:true,
+  datedBashoLedgerSourceSha256:'a'.repeat(64),
+  independentBashoRows:historicalProfile.perBasho.map(x=>({
+   bashoId:x.bashoId,wins:x.wins,losses:x.losses})),
+  careerRecordDiffersFromPriorSnapshot:false
+ }};
+ const verified=supplementalHistoricalBashoCoverage(historicalProfile,jsa,source,'202611');
+ assert.equal(verified.passed,true);
+ assert.equal(verified.otherSourceBasho,missing.length);
+ const broken=structuredClone(source);
+ broken.careerRecordCrosscheck.independentBashoRows=
+  broken.careerRecordCrosscheck.independentBashoRows.filter(x=>x.bashoId!==missing[0].bashoId);
+ assert.equal(supplementalHistoricalBashoCoverage(historicalProfile,jsa,broken,'202611').passed,false);
+ const altered=structuredClone(source);
+ const overlapping=altered.careerRecordCrosscheck.independentBashoRows.find(x=>inJsa.has(x.bashoId)&&x.bashoId!=='202611');
+ overlapping.wins+=1;
+ assert.ok(supplementalHistoricalBashoCoverage(historicalProfile,jsa,altered,'202611').sourceOverlapConflicts>0);
 });
