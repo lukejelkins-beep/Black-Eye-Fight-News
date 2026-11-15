@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {htmlToPublicText,parseOfficialProfile,parseJsaBashoResults,reconcileJsaBashoResults,cohortCurrentBasho,parseJsaBashoRanks,reconcileJsaBashoRanks,officialSpotcheckPriority,compareJsaListedMeasurement} from '../scripts/sumo-jsa-public-spotcheck.mjs';
+import {htmlToPublicText,parseOfficialProfile,parseJsaBashoResults,reconcileJsaBashoResults,cohortCurrentBasho,parseJsaBashoRanks,reconcileJsaBashoRanks,officialSpotcheckPriority,compareJsaListedMeasurement,requiresJsaRankRecheck} from '../scripts/sumo-jsa-public-spotcheck.mjs';
 const w={sourceId:16,officialNskId:2892,shikonaEn:'Nishikigi',
  currentRank:'Makushita 2 East',heya:'Isenoumi',heightCm:186,weightKg:184};
 const official=String.raw`<!doctype html><html><head><script>fake injection</script></head><body>
@@ -242,4 +242,17 @@ test('official public profile reports rounding compatibility without modifying d
  assert.equal(api.heightCm,191.5);
  assert.equal(api.weightKg,161.6);
  assert.equal(p.historicMeasurementsChanged,false);
+});
+
+test('older JSA snapshots are checked once for missing dated historical ranks',()=>{
+ const legacy={sourceId:28,officialNskId:3616,
+  parserVersion:4,status:'basic-fields-parsed',
+  career:{wins:432,losses:331,absences:96}};
+ assert.equal(requiresJsaRankRecheck(legacy),true);
+ assert.equal(requiresJsaRankRecheck({...legacy,
+  rankReconciliation:{comparedBasho:59,mismatches:[]}}),false);
+ assert.equal(requiresJsaRankRecheck({...legacy,
+  rankRecheck:{parserVersion:1,status:'dated-official-ranks-not-parseable'}}),false);
+ assert.equal(requiresJsaRankRecheck({...legacy,sourceId:null}),false);
+ assert.equal(requiresJsaRankRecheck(null),false);
 });
