@@ -67,8 +67,11 @@ export function careerGraphs(w,cache,bashoId,prevBasho,prevRank){
   const {weight,ranks,entry,currentListedWeightKg}=careerPoints(w,cache,bashoId,prevBasho,prevRank);
   const highest=ranked=>ranked.length?
     ranked.reduce((best,next)=>ordinalRank(next.rank)<ordinalRank(best.rank)?next:best).rank:null;
+  const weightSourceUrl=entry?.weightSource||entry?.sourceUrl||null;
+  const sourceLink=typeof weightSourceUrl==='string'&&/^https:\/\//.test(weightSourceUrl)?
+    ' <a href="'+esc(weightSourceUrl)+'" target="_blank" rel="noopener noreferrer">Historical source</a>':'';
   const footWeight=entry
-    ?'Only recorded measurements are dotted; the dashed connector does not imply weigh-ins at missing tournaments. Older measurements are source-reported and require independent official archive verification. <a href="https://sumo-sensei.com/rikishi/28" target="_blank" rel="noopener noreferrer">Historical source ↗</a>'
+    ?'Only explicitly dated measurements are dotted; connectors do not imply weigh-ins in missing tournaments. Historical observations remain subject to independent verification.'+sourceLink
     :'No dated historical weigh-ins are available yet; current listed weight is shown separately.';
   const footRank=entry
     ?'One dot per published basho rank (the cancelled May 2020 tournament is excluded). Historical rankings are sourced from a <a href="'+esc(entry.rankSource)+'" target="_blank" rel="noopener noreferrer">published career chart ↗</a>; the latest rank is cross-checked with <a href="'+esc(entry.rankCrosscheck)+'" target="_blank" rel="noopener noreferrer">the JSA ↗</a>.'
