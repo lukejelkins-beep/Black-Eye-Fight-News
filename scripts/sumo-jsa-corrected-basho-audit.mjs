@@ -7,13 +7,13 @@
 import {readFile,writeFile,mkdir,rename} from 'node:fs/promises';
 import {join} from 'node:path';
 import {applyOfficialBoutCorrections} from './sumo-official-bout-corrections.mjs';
-import {reconcileJsaBashoResults} from './sumo-jsa-public-spotcheck.mjs';
+import {reconcileJsaBashoResults,cohortCurrentBasho} from './sumo-jsa-public-spotcheck.mjs';
 const ROOT='data/sumo/backfill/v1';
 const read=async p=>JSON.parse(await readFile(p,'utf8'));
 const optional=async p=>{try{return await read(p)}catch(e){if(e.code==='ENOENT')return null;throw e;}};
 const save=async(p,d)=>{await mkdir(join(ROOT,'jsa-public','profiles'),{recursive:true});
  const tmp=p+'.tmp';await writeFile(tmp,JSON.stringify(d,null,2)+'\n');await rename(tmp,p);};
-export function auditCorrectedJsaTournament(w,official,api,manifest){
+export function auditCorrectedJsaTournament(w,official,api,manifest,activeBashoId=null){
  if(!official||!api)return null;
  if(Number(official.sourceId)!==Number(w.sourceId)||
    Number(official.officialNskId)!==Number(w.officialNskId)||
@@ -24,7 +24,7 @@ export function auditCorrectedJsaTournament(w,official,api,manifest){
  const applied=applyOfficialBoutCorrections(w,api,manifest);
  if(applied.errors.length)throw Error('Official correction validation failed '+w.sourceId+': '+applied.errors.join(','));
  const adjusted={...api,data:{...api.data,matches:applied.matches}};
- const report=reconcileJsaBashoResults(official.officialBashoRecords,adjusted,official.officialAsOf);
+ const report=reconcileJsaBashoResults(official.officialBashoRecords,adjusted,official.officialAsOf,activeBashoId);
  return {...official,
    bashoReconciliation:{...report,ledgerProvenance:applied.applied.length?
      'sumo-api-bouts-plus-verified-official-outcome-overlays':'unaltered-sumo-api-bouts',
@@ -42,7 +42,7 @@ async function main(){
   const official=await optional(dest);
   if(!official)continue;
   const source=await read(join(ROOT,'rikishi',w.sourceId+'.json'));
-  const result=auditCorrectedJsaTournament(w,official,source,manifest);
+  const result=auditCorrectedJsaTournament(w,official,source,manifest,cohortCurrentBasho(roster));
   checked++;
   if(result.bashoReconciliation.officialOutcomeOverlays.length)repaired++;
   historicalCompared+=result.bashoReconciliation.comparedBasho;
