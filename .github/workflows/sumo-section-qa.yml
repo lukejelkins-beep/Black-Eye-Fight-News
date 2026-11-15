@@ -6,6 +6,12 @@ on:
       - sumo.html
       - index.html
       - assets/sumo.js
+      - assets/sumo-verification.mjs
+      - assets/sumo.css
+      - data/sumo/api-trusted-status.json
+      - data/sumo/career-history.json
+      - data/sumo/research-h2h-*.json
+      - tests/test-sumo-api-trusted-profiles.mjs
       - assets/sumo-matchup.mjs
       - assets/sumo-data.mjs
       - assets/sumo.css
@@ -36,11 +42,13 @@ jobs:
           node --check scripts/sumo-build-preview.mjs
           node --check assets/sumo-data.mjs
           node --check assets/sumo.js
+          node --check assets/sumo-verification.mjs
           node --check assets/sumo-matchup.mjs
       - name: Test Sumo API source and three-division UI data
         run: |
           node --test tests/test-sumo-api-source.mjs
           node --test tests/test-sumo-data.mjs
+          node --test tests/test-sumo-api-trusted-profiles.mjs
           node --test tests/test-sumo-matchup.mjs
       - name: Audit 190 rikishi data coverage and movement
         run: node scripts/sumo-coverage-report.mjs
@@ -57,5 +65,9 @@ jobs:
           test -f sumo.html
           test -f data/sumo/rikishi-index.json
           test -f data/sumo/preview-details.json
+          test -f data/sumo/api-trusted-status.json
+          test -f data/sumo/career-history.json
+          test -f data/sumo/research-h2h-summary.json
+          test -f data/sumo/research-h2h-history.json
           grep -q 'noindex,nofollow' sumo.html
           echo "Sumo preview and data contract validated; no publish step"
