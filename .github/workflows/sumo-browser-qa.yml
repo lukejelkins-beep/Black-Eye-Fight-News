@@ -1,7 +1,7 @@
 name: Sumo desktop and mobile browser QA
 on:
   push:
-    branches: [feat/sumo-section-test-20261114]
+    branches: [feat/sumo-section-test-20261114, feat/sumo-editorial-results-desk-20261116]
     paths:
       - sumo.html
       - assets/sumo.css
@@ -9,6 +9,8 @@ on:
       - assets/sumo-matchup.mjs
       - assets/sumo-data.mjs
       - assets/sumo-nav.css
+      - assets/sumo-editorial*
+      - tests/test-sumo*.mjs
       - data/sumo/**
       - scripts/sumo-browser-qa.mjs
       - .github/workflows/sumo-browser-qa.yml
@@ -27,6 +29,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Run offline Sumo regression and data preservation tests
+        run: node --test tests/test-sumo*.mjs
       - name: Install test-only Chromium runtime
         run: |
           npm install --no-save --package-lock=false playwright

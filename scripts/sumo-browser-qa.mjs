@@ -10,7 +10,9 @@ import { chromium } from 'playwright';
 
 const BASE = 'http://127.0.0.1:8765/sumo.html';
 const OUT = 'qa/sumo-previews';
-const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] });
+const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'],
+  ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
+    ? {executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH} : {}) });
 const failures = [];
 
 function assertContains(haystack,needle,label){
@@ -82,7 +84,8 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.ok(await page.locator('.sumo-weight-svg').count()===1,'Weight chart on initial page');
   const order=await page.evaluate(()=>document.querySelector('#sumo-charts').compareDocumentPosition(document.querySelector('#sumo-opponents')) & Node.DOCUMENT_POSITION_FOLLOWING);
   assert.ok(order,'Charts are before opponents');
-  await page.locator('[data-profile-section="charts"]').click();
+  if(isMobile)await page.locator('#sumo-profile-section').selectOption('charts');
+  else await page.locator('[data-profile-section="charts"]').click();
   assert.ok((await page.url()).includes('section=charts'),'Section jump preserves canonical profile route');
   await page.locator('#sumo-opponent-search').fill('Ura');
   assert.ok(await page.locator('.sumo-rival').count()>0,'Search finds named opponent');
