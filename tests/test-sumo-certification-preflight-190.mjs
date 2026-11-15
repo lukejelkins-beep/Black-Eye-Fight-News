@@ -217,3 +217,37 @@ test('old JSA rank-window gaps require exact dated independent rank observations
  assert.equal(wrong.passed,false);
  assert.ok(wrong.sourceConflicts>0);
 });
+
+test('missing JSA historical rank table requires >=75% exact independent dated ranks',()=>{
+ const {p,j,s}=sample();
+ delete j.officialRankRecords;
+ delete j.rankReconciliation;
+ const minimum=Math.max(1,Math.floor(p.rankTimeline.length*0.75));
+ assert.ok(minimum>1);
+ const missing=independentHistoricalRankCoverage(p,j,s);
+ assert.equal(missing.passed,false,'a missing JSA rank table is not a rank comparison');
+ assert.equal(missing.jsaCompared,null,'do not invent a zero official comparison');
+ const rows=p.rankTimeline.slice(0,minimum).map(x=>({
+  bashoId:x.bashoId,rankEn:x.rank}));
+ s.careerRecordCrosscheck={
+  sourceUrl:'https://sumodb.sumogames.de/Rikishi.aspx?r='+s.sumoDbId,
+  identityVerified:true,originalMeasurementsUnchanged:true,independentOfApi:true,
+  datedBashoLedgerSourceSha256:'c'.repeat(64),
+  independentBashoRows:rows,careerRecordDiffersFromPriorSnapshot:false};
+ const independentlyProved=independentHistoricalRankCoverage(p,j,s);
+ assert.equal(independentlyProved.passed,true);
+ assert.equal(independentlyProved.jsaCompared,null);
+ assert.equal(independentlyProved.evidenceBasis,
+  'SumoDB-dated-ranks-JSA-historical-ranks-unavailable');
+ s.careerRecordCrosscheck.independentBashoRows.pop();
+ assert.equal(independentHistoricalRankCoverage(p,j,s).passed,false,
+  'less than 75% exact dated ranks must remain blocked');
+ s.careerRecordCrosscheck.independentBashoRows.push(rows[rows.length-1]);
+ s.careerRecordCrosscheck.independentBashoRows[0].rankEn='Jonidan 999 East';
+ assert.equal(independentHistoricalRankCoverage(p,j,s).passed,false,
+  'a dated rank contradiction must never be ignored');
+ s.careerRecordCrosscheck.independentBashoRows[0].rankEn=rows[0].rankEn;
+ j.officialRankRecords=[{bashoId:'202611',rank:'Jonidan 22 East'}];
+ assert.equal(independentHistoricalRankCoverage(p,j,s).passed,false,
+  'published JSA ranks lacking a validated reconciliation cannot be bypassed');
+});
