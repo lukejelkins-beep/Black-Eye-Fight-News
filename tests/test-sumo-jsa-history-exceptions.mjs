@@ -84,3 +84,23 @@ test('record exact independent JSA rank disagreements without overwriting origin
  assert.deepEqual(report.cases[0].rankDiscrepancies.map(x=>x.bashoId),['202609']);
  assert.equal(report.certifiedCareers,0);
 });
+
+test('rounded JSA fields are audited separately from actual field discrepancies',()=>{
+ const roster={count:190,rikishi:[rosterItem,...Array.from({length:189},(_,i)=>({
+  sourceId:i+1000,officialNskId:5000+i,shikonaEn:'Wrestler '+i}))]};
+ const record={...base,status:'basic-fields-parsed',career:{wins:45,losses:20},
+  fieldComparisons:{name:true,stable:true,rankGrade:true,height:true,weight:true},
+  measurementComparisonDetails:{
+   height:{method:'integer-display-rounding-compatible',published:192,api:191.5},
+   weight:{method:'integer-display-rounding-compatible',published:162,api:161.6}},
+  bashoReconciliation:{comparedBasho:5,agreeingBasho:5,
+    discrepantBasho:0,discrepancies:[]}};
+ const report=buildJsaExceptionReport(roster,new Map([[42,record]]));
+ assert.equal(report.roundedCompatibleProfileCount,1);
+ assert.equal(report.roundedCompatibleMeasurements,2);
+ assert.equal(report.profileReviewCases,0);
+ assert.equal(report.certifiedCareers,0);
+ const row=auditJsaSnapshot(rosterItem,record);
+ assert.equal(row.roundedCompatiblePublicMeasurements.length,2);
+ assert.equal(row.publicFieldDisagreements.length,0);
+});
