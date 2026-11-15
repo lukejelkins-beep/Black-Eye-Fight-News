@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "description": "BEFN Sumo PREVIEW only — source-labelled dated weights and per-basho historical ranks",
   "cohortSize": 190,
-  "sourceAsOf": "2026-11-15T02:53:46.653Z",
+  "sourceAsOf": "2026-11-15T03:44:30.296Z",
   "certified": false,
   "productionPublished": false,
-  "datedWeightPoints": 937,
+  "datedWeightPoints": 974,
   "rankedBashoPoints": 8539,
-  "rikishiWithIndependentWeightEvidence": 163,
-  "independentAdditionalDatedWeightPoints": 522,
+  "rikishiWithIndependentWeightEvidence": 173,
+  "independentAdditionalDatedWeightPoints": 559,
   "note": "Current listed weights are separate from historical points. No inferred per-basho weigh-ins, careers not certified.",
   "bySourceId": {
     "2": {
@@ -20001,6 +20001,42 @@
           "evidenceSource": "Sumo API historical change",
           "status": "dated source record; full history not independently certified",
           "independentlyCertified": false
+        },
+        {
+          "basho": "202205",
+          "kg": 173,
+          "heightCm": 180,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12709",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202305",
+          "kg": 176,
+          "heightCm": 179,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12709",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202405",
+          "kg": 174,
+          "heightCm": 180,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12709",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202505",
+          "kg": 173,
+          "heightCm": 179,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12709",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
         }
       ],
       "rank": [
@@ -20137,7 +20173,7 @@
           "rank": "Makushita 35 West"
         }
       ],
-      "weightSource": "https://www.sumo-api.com/api/measurements?rikishiId=85",
+      "weightSource": "https://sumodb.sumogames.de/Rikishi.aspx?r=12709",
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=85&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=12709",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4100/",
@@ -20151,7 +20187,7 @@
         "datedMeasurement": false
       },
       "bestRank": "Juryo 10 West",
-      "weightResearchStatus": "api-only",
+      "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
       "independentHistoricalRankCertification": false,
       "certified": false,
@@ -21376,6 +21412,42 @@
           "evidenceSource": "Sumo API historical change",
           "status": "dated source record; full history not independently certified",
           "independentlyCertified": false
+        },
+        {
+          "basho": "202205",
+          "kg": 133,
+          "heightCm": 182,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12634",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202305",
+          "kg": 131,
+          "heightCm": 182,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12634",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202405",
+          "kg": 140,
+          "heightCm": 183,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12634",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202505",
+          "kg": 150,
+          "heightCm": 184,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12634",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
         }
       ],
       "rank": [
@@ -21536,7 +21608,7 @@
           "rank": "Makushita 42 West"
         }
       ],
-      "weightSource": "https://www.sumo-api.com/api/measurements?rikishiId=95",
+      "weightSource": "https://sumodb.sumogames.de/Rikishi.aspx?r=12634",
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=95&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=12634",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4025/",
@@ -21550,7 +21622,7 @@
         "datedMeasurement": false
       },
       "bestRank": "Maegashira 11 West",
-      "weightResearchStatus": "api-only",
+      "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
       "independentHistoricalRankCertification": false,
       "certified": false,
@@ -25346,6 +25418,42 @@
           "evidenceSource": "Sumo API historical change",
           "status": "dated source record; full history not independently certified",
           "independentlyCertified": false
+        },
+        {
+          "basho": "202205",
+          "kg": 125,
+          "heightCm": 182,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=1241",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202305",
+          "kg": 125,
+          "heightCm": 180,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=1241",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202405",
+          "kg": 131,
+          "heightCm": 181,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=1241",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202505",
+          "kg": 131,
+          "heightCm": 181,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=1241",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
         }
       ],
       "rank": [
@@ -25934,7 +26042,7 @@
           "rank": "Makushita 39 West"
         }
       ],
-      "weightSource": "https://www.sumo-api.com/api/measurements?rikishiId=124",
+      "weightSource": "https://sumodb.sumogames.de/Rikishi.aspx?r=1241",
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=124&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=1241",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/2448/",
@@ -25948,7 +26056,7 @@
         "datedMeasurement": false
       },
       "bestRank": "Maegashira 15 East",
-      "weightResearchStatus": "api-only",
+      "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
       "independentHistoricalRankCertification": false,
       "certified": false,
@@ -26975,6 +27083,42 @@
           "evidenceSource": "Sumo API historical change",
           "status": "dated source record; full history not independently certified",
           "independentlyCertified": false
+        },
+        {
+          "basho": "202205",
+          "kg": 134,
+          "heightCm": 184,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12731",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202305",
+          "kg": 135,
+          "heightCm": 184,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12731",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202405",
+          "kg": 140,
+          "heightCm": 184,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12731",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202505",
+          "kg": 141,
+          "heightCm": 184,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12731",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
         }
       ],
       "rank": [
@@ -27095,7 +27239,7 @@
           "rank": "Makushita 33 West"
         }
       ],
-      "weightSource": "https://www.sumo-api.com/api/measurements?rikishiId=131",
+      "weightSource": "https://sumodb.sumogames.de/Rikishi.aspx?r=12731",
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=131&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=12731",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4122/",
@@ -27109,7 +27253,7 @@
         "datedMeasurement": false
       },
       "bestRank": "Makushita 6 East",
-      "weightResearchStatus": "api-only",
+      "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
       "independentHistoricalRankCertification": false,
       "certified": false,
@@ -33212,6 +33356,42 @@
           "evidenceSource": "Sumo API historical change",
           "status": "dated source record; full history not independently certified",
           "independentlyCertified": false
+        },
+        {
+          "basho": "202205",
+          "kg": 153,
+          "heightCm": 183,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12400",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202305",
+          "kg": 159,
+          "heightCm": 184,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12400",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202405",
+          "kg": 159,
+          "heightCm": 184,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12400",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202505",
+          "kg": 166,
+          "heightCm": 184,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12400",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
         }
       ],
       "rank": [
@@ -33444,7 +33624,7 @@
           "rank": "Makushita 38 West"
         }
       ],
-      "weightSource": "https://www.sumo-api.com/api/measurements?rikishiId=180",
+      "weightSource": "https://sumodb.sumogames.de/Rikishi.aspx?r=12400",
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=180&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=12400",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3791/",
@@ -33458,7 +33638,7 @@
         "datedMeasurement": false
       },
       "bestRank": "Makushita 30 West",
-      "weightResearchStatus": "api-only",
+      "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
       "independentHistoricalRankCertification": false,
       "certified": false,
@@ -35604,6 +35784,42 @@
           "evidenceSource": "Sumo API historical change",
           "status": "dated source record; full history not independently certified",
           "independentlyCertified": false
+        },
+        {
+          "basho": "202205",
+          "kg": 143,
+          "heightCm": 177,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12565",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202305",
+          "kg": 151,
+          "heightCm": 181,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12565",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202405",
+          "kg": 155,
+          "heightCm": 181,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12565",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202505",
+          "kg": 159,
+          "heightCm": 181,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12565",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
         }
       ],
       "rank": [
@@ -35788,7 +36004,7 @@
           "rank": "Makushita 34 West"
         }
       ],
-      "weightSource": "https://www.sumo-api.com/api/measurements?rikishiId=209",
+      "weightSource": "https://sumodb.sumogames.de/Rikishi.aspx?r=12565",
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=209&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=12565",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3956/",
@@ -35802,7 +36018,7 @@
         "datedMeasurement": false
       },
       "bestRank": "Makushita 34 West",
-      "weightResearchStatus": "api-only",
+      "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
       "independentHistoricalRankCertification": false,
       "certified": false,
@@ -35828,6 +36044,42 @@
           "heightCm": 176,
           "source": "https://www.sumo-api.com/api/measurements?rikishiId=210",
           "evidenceSource": "Sumo API historical change",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202205",
+          "kg": 152,
+          "heightCm": 177,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12393",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202305",
+          "kg": 157,
+          "heightCm": 177,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12393",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202405",
+          "kg": 158,
+          "heightCm": 180,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12393",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202505",
+          "kg": 156,
+          "heightCm": 180,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12393",
+          "evidenceSource": "SumoDB dated tournament measurement",
           "status": "dated source record; full history not independently certified",
           "independentlyCertified": false
         }
@@ -36062,7 +36314,7 @@
           "rank": "Makushita 41 West"
         }
       ],
-      "weightSource": "https://www.sumo-api.com/api/measurements?rikishiId=210",
+      "weightSource": "https://sumodb.sumogames.de/Rikishi.aspx?r=12393",
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=210&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=12393",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3784/",
@@ -36076,7 +36328,7 @@
         "datedMeasurement": false
       },
       "bestRank": "Makushita 29 East",
-      "weightResearchStatus": "api-only",
+      "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
       "independentHistoricalRankCertification": false,
       "certified": false,
@@ -36551,6 +36803,42 @@
           "evidenceSource": "Sumo API historical change",
           "status": "dated source record; full history not independently certified",
           "independentlyCertified": false
+        },
+        {
+          "basho": "202205",
+          "kg": 135,
+          "heightCm": 174,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12545",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202305",
+          "kg": 132,
+          "heightCm": 176,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12545",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202405",
+          "kg": 134,
+          "heightCm": 175,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12545",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202505",
+          "kg": 133,
+          "heightCm": 175,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12545",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
         }
       ],
       "rank": [
@@ -36735,7 +37023,7 @@
           "rank": "Makushita 43 West"
         }
       ],
-      "weightSource": "https://www.sumo-api.com/api/measurements?rikishiId=217",
+      "weightSource": "https://sumodb.sumogames.de/Rikishi.aspx?r=12545",
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=217&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=12545",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3936/",
@@ -36749,7 +37037,7 @@
         "datedMeasurement": false
       },
       "bestRank": "Makushita 42 East",
-      "weightResearchStatus": "api-only",
+      "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
       "independentHistoricalRankCertification": false,
       "certified": false,
@@ -41502,7 +41790,15 @@
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=378&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=12725",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4116/",
-      "currentListedWeight": null,
+      "currentListedWeight": {
+        "kg": 171,
+        "source": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4116/",
+        "officialAsOf": {
+          "monthYear": "November 2026",
+          "day": 8
+        },
+        "datedMeasurement": false
+      },
       "bestRank": "Maegashira 16 East",
       "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
@@ -43225,7 +43521,15 @@
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=8853&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=12840",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4231/",
-      "currentListedWeight": null,
+      "currentListedWeight": {
+        "kg": 165,
+        "source": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4231/",
+        "officialAsOf": {
+          "monthYear": "November 2026",
+          "day": 8
+        },
+        "datedMeasurement": false
+      },
       "bestRank": "Maegashira 3 East",
       "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
@@ -43484,7 +43788,15 @@
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=8855&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=12841",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4232/",
-      "currentListedWeight": null,
+      "currentListedWeight": {
+        "kg": 165,
+        "source": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4232/",
+        "officialAsOf": {
+          "monthYear": "November 2026",
+          "day": 8
+        },
+        "datedMeasurement": false
+      },
       "bestRank": "Maegashira 16 West",
       "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
@@ -43803,7 +44115,15 @@
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=8858&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=12876",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4267/",
-      "currentListedWeight": null,
+      "currentListedWeight": {
+        "kg": 123,
+        "source": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4267/",
+        "officialAsOf": {
+          "monthYear": "November 2026",
+          "day": 8
+        },
+        "datedMeasurement": false
+      },
       "bestRank": "Maegashira 16 East",
       "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
@@ -44024,7 +44344,15 @@
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=8860&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=12851",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4242/",
-      "currentListedWeight": null,
+      "currentListedWeight": {
+        "kg": 162,
+        "source": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4242/",
+        "officialAsOf": {
+          "monthYear": "November 2026",
+          "day": 8
+        },
+        "datedMeasurement": false
+      },
       "bestRank": "Makushita 1 East",
       "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
@@ -44435,6 +44763,33 @@
           "evidenceSource": "Sumo API historical change",
           "status": "dated source record; full history not independently certified",
           "independentlyCertified": false
+        },
+        {
+          "basho": "202305",
+          "kg": 175,
+          "heightCm": 180,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12833",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202405",
+          "kg": 170,
+          "heightCm": 180,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12833",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202505",
+          "kg": 170,
+          "heightCm": 180,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12833",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
         }
       ],
       "rank": [
@@ -44523,13 +44878,13 @@
           "rank": "Makushita 36 West"
         }
       ],
-      "weightSource": "https://www.sumo-api.com/api/measurements?rikishiId=8864",
+      "weightSource": "https://sumodb.sumogames.de/Rikishi.aspx?r=12833",
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=8864&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=12833",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4224/",
       "currentListedWeight": null,
       "bestRank": "Makushita 18 West",
-      "weightResearchStatus": "api-only",
+      "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
       "independentHistoricalRankCertification": false,
       "certified": false,
@@ -44625,7 +44980,15 @@
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=8865&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=12896",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4287/",
-      "currentListedWeight": null,
+      "currentListedWeight": {
+        "kg": 202,
+        "source": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4287/",
+        "officialAsOf": {
+          "monthYear": "November 2026",
+          "day": 8
+        },
+        "datedMeasurement": false
+      },
       "bestRank": "Maegashira 15 West",
       "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
@@ -45560,6 +45923,24 @@
           "evidenceSource": "Sumo API historical change",
           "status": "dated source record; full history not independently certified",
           "independentlyCertified": false
+        },
+        {
+          "basho": "202405",
+          "kg": 121,
+          "heightCm": 183,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12862",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
+        },
+        {
+          "basho": "202505",
+          "kg": 123,
+          "heightCm": 183,
+          "source": "https://sumodb.sumogames.de/Rikishi.aspx?r=12862",
+          "evidenceSource": "SumoDB dated tournament measurement",
+          "status": "dated source record; full history not independently certified",
+          "independentlyCertified": false
         }
       ],
       "rank": [
@@ -45628,13 +46009,13 @@
           "rank": "Makushita 40 West"
         }
       ],
-      "weightSource": "https://www.sumo-api.com/api/measurements?rikishiId=8892",
+      "weightSource": "https://sumodb.sumogames.de/Rikishi.aspx?r=12862",
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=8892&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=12862",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4253/",
       "currentListedWeight": null,
       "bestRank": "Makushita 18 West",
-      "weightResearchStatus": "api-only",
+      "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
       "independentHistoricalRankCertification": false,
       "certified": false,
@@ -47053,7 +47434,15 @@
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=9099&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=12965",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4356/",
-      "currentListedWeight": null,
+      "currentListedWeight": {
+        "kg": 160,
+        "source": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4356/",
+        "officialAsOf": {
+          "monthYear": "November 2026",
+          "day": 8
+        },
+        "datedMeasurement": false
+      },
       "bestRank": "Juryo 14 West",
       "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
@@ -47185,7 +47574,15 @@
       "rankSource": "https://www.sumo-api.com/api/ranks?rikishiId=9103&limit=200&skip=0&sortOrder=asc",
       "independentRankReference": "https://sumodb.sumogames.de/Rikishi.aspx?r=12967",
       "rankCrosscheck": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4358/",
-      "currentListedWeight": null,
+      "currentListedWeight": {
+        "kg": 152,
+        "source": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4358/",
+        "officialAsOf": {
+          "monthYear": "November 2026",
+          "day": 8
+        },
+        "datedMeasurement": false
+      },
       "bestRank": "Juryo 12 East",
       "weightResearchStatus": "dated-independent-source-collected",
       "datedWeightSourceComplete": false,
