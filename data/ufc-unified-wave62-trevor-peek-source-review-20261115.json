@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave62-independent-source-review",
+  "rosterAsOf": "2026-11-14",
+  "reviewedOn": "2026-11-15",
+  "frozenApprovedCohort": 783,
+  "nonproduction": true,
+  "certificationGranted": false,
+  "purpose": "Source research only. Strict full 783 Stage3 audit must pass to grant certificates.",
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07",
+    "evidenceCutoff": "2026-11-14"
+  },
+  "fighters": {
+    "trevor-peek": {
+      "fighterName": "Trevor Peek",
+      "officialFighterUrl": "https://www.ufc.com/athlete/trevor-peek",
+      "ufcStatsFighterId": "0bc697c5936a2d0a",
+      "nativeFighterId": "2772",
+      "officialUfcCareerBoutCount": 6,
+      "sourceReviewStatus": "strict_audit_pending",
+      "scopeNotes": "Official UFC athlete dated six-bout chronology (Feb 25 2023 to Sep 5 2026) verified alongside official Sept 5 2026 UFC Paris scorecard; six distinct Greco UFCStats results match saved native fighter/opponent IDs, winners, rounds, methods, event dates and measured round observations. Distinct September 13 2022 DWCS bout vs Malik Lewis is excluded. Graphical UFC athlete Win tiles are not authoritative when dated official fight narrative confirms losses.",
+      "bouts": [
+        {
+          "date": "2026-09-05",
+          "opponent": "Kurtis Campbell",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/cbf9063d23513661",
+          "nativeBoutId": "83070",
+          "nativeFighterId": "2772",
+          "originalOpponentNumericId": "535"
+        },
+        {
+          "date": "2024-09-07",
+          "opponent": "Yanal Ashmouz",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/75fa9c0bb31caaa3",
+          "nativeBoutId": "61108",
+          "nativeFighterId": "2772",
+          "originalOpponentNumericId": "2767"
+        },
+        {
+          "date": "2024-04-06",
+          "opponent": "Charlie Campbell",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/47f8812a335b6ce9",
+          "nativeBoutId": "61253",
+          "nativeFighterId": "2772",
+          "originalOpponentNumericId": "212"
+        },
+        {
+          "date": "2023-10-21",
+          "opponent": "Mohammad Yahya",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3c6fb6bf9b7afd40",
+          "nativeBoutId": "60003",
+          "nativeFighterId": "2772",
+          "originalOpponentNumericId": "2837"
+        },
+        {
+          "date": "2023-06-24",
+          "opponent": "Chepe Mariscal",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f18d44292036d5de",
+          "nativeBoutId": "60163",
+          "nativeFighterId": "2772",
+          "originalOpponentNumericId": "390"
+        },
+        {
+          "date": "2023-02-25",
+          "opponent": "Erick Gonzalez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/83fa3a382acc7bdc",
+          "nativeBoutId": "59709",
+          "nativeFighterId": "2772",
+          "originalOpponentNumericId": "647"
+        }
+      ],
+      "excludedFeederBout": {
+        "nativeBoutId": "88261",
+        "date": "2022-09-13",
+        "opponent": "Malik Lewis",
+        "classification": "Dana White's Contender Series"
+      }
+    }
+  }
+}
