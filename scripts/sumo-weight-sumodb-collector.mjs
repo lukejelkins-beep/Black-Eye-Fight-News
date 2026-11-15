@@ -163,7 +163,17 @@ export function parseSumoDbBashoRecords(html){
    absences=x[3]===undefined?null:Number(x[3]);
   if(wins>15||losses>15||absences!==null&&absences>15)continue;
   const bashoId=dates[0][1]+dates[0][2];
-  const record={bashoId,wins,losses,absences};
+  // Only unambiguous numbered East/West grades become independently
+  // comparable English ranks. Tsukedashi, Mae-zumo, and unknown shorthand
+  // remain null, never a guessed banzuke dot.
+  const afterDate=plain.slice(dates[0].index+dates[0][0].length).trim();
+  const shorthand=afterDate.match(/^(Jk|Jd|Sd|Ms|Y|O|S|K|M|J)(\d{1,3})(e|w)(?=[^a-z]|[A-Z]|$)/);
+  const divisions={Jk:'Jonokuchi',Jd:'Jonidan',Sd:'Sandanme',Ms:'Makushita',
+   Y:'Yokozuna',O:'Ozeki',S:'Sekiwake',K:'Komusubi',M:'Maegashira',J:'Juryo'};
+  const rankEn=shorthand&&Number(shorthand[2])>0&&Number(shorthand[2])<=120?
+   divisions[shorthand[1]]+' '+Number(shorthand[2])+' '+
+   (shorthand[3]==='e'?'East':'West'):null;
+  const record={bashoId,wins,losses,absences,rankEn};
   const before=dated.get(bashoId);
   if(before&&JSON.stringify(before)!==JSON.stringify(record))
    throw Error('Contradictory SumoDB published basho W-L for '+bashoId);
