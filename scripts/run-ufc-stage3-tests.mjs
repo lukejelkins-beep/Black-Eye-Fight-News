@@ -8,7 +8,7 @@ const root=path.resolve(fileURLToPath(new URL('..',import.meta.url)));
 const patterns=[
  /^test-ufc-unified-.*\.mjs$/,
  /^test-ufc-independent-wave-.*\.mjs$/,
- /^test-ufc-stage3-frozen-cohort-.*\.mjs$,
+ /^test-ufc-stage3-frozen-cohort-.*\.mjs$/,
  /^test-ufc-36-month-stage3-progress\.mjs$/,
  /^test-ufc-v4-stage3-import\.mjs$/
 ];
