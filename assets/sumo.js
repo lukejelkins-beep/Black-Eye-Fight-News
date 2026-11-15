@@ -79,10 +79,13 @@ function knownHigh(w){
   return careerHigh?.rank||null;
 }
 function weightHeight(w) {
-  const h=Number.isFinite(Number(w?.heightCm))&&Number(w.heightCm)>0?Math.round(Number(w.heightCm))+' cm':'—';
   const listing=publishedCurrentWeight(w,STATE.careerHistory);
+  const h=listing.heightCm!==null?listing.heightCm+' cm':'—';
   const mass=listing.kg!==null?listing.kg+' kg':'—';
-  return {h,mass,weightSource:listing.source,underReview:listing.underReview,
+  return {h,mass,heightSource:listing.heightSource,
+    heightUnderReview:listing.heightUnderReview,
+    currentHeightCm:listing.heightCm,apiHeightCm:listing.apiHeightCm,
+    weightSource:listing.source,underReview:listing.underReview,
     apiKg:listing.apiKg,currentKg:listing.kg};
 }
 function previousBanzukeData() {
@@ -400,7 +403,9 @@ function renderProfile(id) {
   const currentListing=weightHeight(w);
   const meta=[
     ['Stable (heya)',w.heya],['Birthplace',w.birthplace],
-    ['Height',currentListing.h],
+    ['Height ('+currentListing.heightSource+')',currentListing.h],
+    ...(currentListing.heightUnderReview?
+      [['Height review','JSA '+currentListing.currentHeightCm+' cm / Sumo API '+currentListing.apiHeightCm+' cm — sources differ']]:[]),
     ['Weight ('+currentListing.weightSource+')',currentListing.mass],
     ...(currentListing.underReview?
       [['Weight review','JSA '+currentListing.currentKg+' kg / Sumo API '+currentListing.apiKg+' kg — sources differ']]:[]),
