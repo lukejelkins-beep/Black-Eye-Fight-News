@@ -54,12 +54,35 @@ export function parseJsaBashoResults(html){
  return results.sort((a,b)=>a.bashoId.localeCompare(b.bashoId));
 }
 /** Compare the same completed tournament against the complete source bout ledger. */
-export function reconcileJsaBashoResults(officialRows,source,asOf){
+export function cohortCurrentBasho(roster){
+ const raw=roster?.collectedAt;
+ const time=raw?new Date(raw):null;
+ if(!time||!Number.isFinite(time.getTime()))return null;
+ const date=new Intl.DateTimeFormat('en-US',{
+   year:'numeric',month:'2-digit',timeZone:'Asia/Tokyo'
+ }).formatToParts(time);
+ const year=date.find(x=>x.type==='year')?.value;
+ const month=date.find(x=>x.type==='month')?.value;
+ const basho=year+month;
+ return /^(18|19|20)\d{2}(01|03|05|07|09|11)$/.test(basho)?basho:null;
+}
+/** Exclude the in-progress tournament even when JSA omits a Career Record/as-of line. */
+export function reconcileJsaBashoResults(officialRows,source,asOf,activeBashoId=null){
  const known=Array.isArray(officialRows)?officialRows:[];
- const completedMonth=asOf?.monthYear?(()=>{
+ const officialAsOf=asOf?.monthYear?(()=>{
   const m=String(asOf.monthYear).match(/^([A-Za-z]+)\s+(\d{4})$/);
   return m&&MONTH_INDEX[m[1]]?m[2]+MONTH_INDEX[m[1]]:null;
  })():null;
+ const cohortBasho=/^(18|19|20)\d{2}(01|03|05|07|09|11)$/.test(String(activeBashoId))?
+   String(activeBashoId):null;
+ // Without a published as-of month or known frozen cohort month, omit the
+ // latest official row conservatively; it may represent an ongoing basho.
+ const latestOfficial=known.map(x=>String(x.bashoId||''))
+   .filter(x=>/^(18|19|20)\d{2}(01|03|05|07|09|11)$/.test(x)).sort().at(-1)||null;
+ const completedMonth=officialAsOf||cohortBasho||latestOfficial;
+ const exclusionBasis=officialAsOf?'official-as-of':
+   cohortBasho?'frozen-cohort-basho':
+   latestOfficial?'conservative-latest-source-basho':'none';
  const matches=source?.data?.matches||[];
  const id=Number(source?.rikishiId);
  const groups=new Map();
@@ -89,6 +112,7 @@ export function reconcileJsaBashoResults(officialRows,source,asOf){
   discrepantBasho:discrepancies.length,
   unmatchedOfficialBasho:unavailable,
   discrepancies,excludedCurrentBasho:completedMonth,
+  currentBashoExclusionEvidence:exclusionBasis,
   status:!known.length?'official-tournament-parse-review':
     !source?.stages?.matches?.complete?'api-history-incomplete':
     discrepancies.length?'historical-results-disagree':
@@ -179,7 +203,7 @@ async function main(){
    const cachedHistory=await load(join('data/sumo/backfill/v1/rikishi',w.sourceId+'.json'));
    doc.officialBashoRecords=parseJsaBashoResults(html);
    doc.bashoReconciliation=reconcileJsaBashoResults(
-     doc.officialBashoRecords,cachedHistory,doc.officialAsOf);
+     doc.officialBashoRecords,cachedHistory,doc.officialAsOf,cohortCurrentBasho(roster));
    doc.capturedAt=now();
    doc.rawHtmlSha256=createHash('sha256').update(html).digest('hex');
    await put(path,doc);
