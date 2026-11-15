@@ -48,8 +48,7 @@ test('historically dated independent records do enter the weight curve but never
  assert.equal(w.sumoDbId,12226);
 });
 test('reject fabricated, undated, repeated or out-of-range historical weight records',()=>{
- const modify=fn=>{const first={...cohort[0],
-  measurements:structuredClone(cohort[0].measurements)};
+ const modify=fn=>{const first=structuredClone(cohort[0]);
   fn(first);return [first,...cohort.slice(1)];};
  assert.throws(()=>createPreviewCareer(roster,modify(p=>p.measurements[0].bashoId='202602')),/Undated/);
  assert.throws(()=>createPreviewCareer(roster,modify(p=>p.measurements[0].weightKg=999)),/Undated/);
