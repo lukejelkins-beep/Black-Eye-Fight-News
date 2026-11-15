@@ -10,6 +10,7 @@ const profiles=read('ufcalendar-fighter-research.json').profiles;
 const rich=read('ufcalendar-rich-progress.json');
 const approval=read('ufc-36-month-roster-approval.json');
 const feeders=read('ufc-feeder-bout-evidence.json').bouts;
+const inventory=read('ufc-official-career-bout-inventory.json');
 const cohort=new Set(approval.approvedFighters);
 const cases={
   'jamie-pickett':{count:9,id:'1129',wins:2,losses:7,draws:0,feeder:3},
@@ -85,5 +86,12 @@ test('wave73 Roberts remains uncertified: the official 2020 Kevin Croom NC is ab
  const h=officialHistory(slug);
  assert.equal(h.length,9,'nine preserved official UFC native fight IDs');
  assert.equal(h.some(x=>x.opponent==='Kevin Croom'),false,'official 2020 NC must not be invented');
+ const confirmed=inventory.fighters?.[slug];
+ assert.equal(confirmed?.sourceUrl,'https://www.ufc.com/athlete/roosevelt-roberts');
+ assert.equal(confirmed?.bouts?.length,1);
+ assert.deepEqual([confirmed.bouts[0].date,confirmed.bouts[0].opponent,confirmed.bouts[0].result],
+  ['2020-09-12','Kevin Croom','no_contest']);
+ assert.equal(confirmed.bouts[0].independentUfcStatsFightUrl,
+  'https://ufcstats.com/fight-details/e1bb0b615c02d715');
  assert.equal(gate(slug,source[slug]),false);
 });
