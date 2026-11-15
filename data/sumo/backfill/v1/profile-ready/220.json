@@ -49,7 +49,8 @@
       "weightKg": 124,
       "source": "Sumo API historical change",
       "sourceUrl": "https://www.sumo-api.com/api/measurements?rikishiId=220",
-      "independentlyCertified": false
+      "independentlyCertified": false,
+      "independentSourceConfirmed": "https://sumodb.sumogames.de/Rikishi.aspx?r=12635"
     },
     {
       "bashoId": "202103",
@@ -57,16 +58,50 @@
       "weightKg": 133,
       "source": "Sumo API historical change",
       "sourceUrl": "https://www.sumo-api.com/api/measurements?rikishiId=220",
+      "independentlyCertified": false,
+      "independentSourceConfirmed": "https://sumodb.sumogames.de/Rikishi.aspx?r=12635"
+    },
+    {
+      "bashoId": "202205",
+      "heightCm": 170,
+      "weightKg": 140,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12635",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202305",
+      "heightCm": 173,
+      "weightKg": 137,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12635",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202405",
+      "heightCm": 174,
+      "weightKg": 148,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12635",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202505",
+      "heightCm": 173,
+      "weightKg": 150,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12635",
       "independentlyCertified": false
     }
   ],
   "measurementCoverage": {
     "apiPoints": 2,
-    "independentPoints": 0,
-    "extraPoints": 0,
-    "matchingOverlapPoints": 0,
+    "independentPoints": 6,
+    "extraPoints": 4,
+    "matchingOverlapPoints": 2,
     "conflictingOverlaps": [],
-    "status": "api-only"
+    "status": "dated-independent-source-collected",
+    "independentlyCertified": false
   },
   "rankTimeline": [
     {
