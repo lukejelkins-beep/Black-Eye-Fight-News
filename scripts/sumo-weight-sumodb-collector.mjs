@@ -11,6 +11,8 @@ const ROOT='data/sumo/backfill/v1';
 const POLICY=join(ROOT,'sumodb-use-policy.json');
 const STATUS=join(ROOT,'sumodb-collection-status.json');
 const SOURCE_URL='https://sumodb.sumogames.de/Rikishi.aspx?r=';
+// Increment whenever source-identity or measurement parsing changes.
+const SOURCE_PARSER_VERSION=4;
 const BOT='BEFNResearchBot/1.0 (authorised historical-weight research; admin@blackeyefightnews.com.au)';
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const now=()=>new Date().toISOString();
@@ -88,7 +90,10 @@ export function sourceIdentityEvidence(html,w,raw){
    !publishedDob?'source-birth-date-missing':
    comparable(publishedDob)===comparable(expectedDob)?'match':'mismatch';
  const matched=!!matching&&/\brikishi\b/i.test(head);
- return {valid:matched&&birthDateStatus!=='mismatch'&&birthDateStatus!=='source-birth-date-missing',
+ // A source that does not publish a birthday can still provide a
+ // source-labelled historical weight, but must remain DOB-unverified.
+ // An explicitly DIFFERENT birthday always blocks import.
+ return {valid:matched&&birthDateStatus!=='mismatch',
   matchedShikona:matching,matchedCurrentName:matching!=null&&matching===w.shikonaEn,
   recordedAliasCount:new Set(names).size,
   birthDateStatus,publishedDob,expectedDob,
@@ -148,7 +153,10 @@ async function main(){
    const dest=join(ROOT,'weight-source-crosschecks',w.sourceId+'.json');
    if(await optional(dest))continue;
    // Do not repeatedly request an already-known irreconcilable identity/page.
-   if((prior.reviewCases||[]).some(x=>x.sourceId===w.sourceId&&x.permanent))continue;
+   // A previous parser-version exception can be retried exactly once with
+   // revised identity logic. Current-version review cases are not hammered.
+   if((prior.reviewCases||[]).some(x=>x.sourceId===w.sourceId&&
+      x.permanent&&Number(x.parserVersion||0)>=SOURCE_PARSER_VERSION))continue;
    const delay=Math.max(0,lastAt+interval-Date.now());
    if(Date.now()+delay+19000>workerDeadline)break;
    if(delay)await sleep(delay);
@@ -169,6 +177,7 @@ async function main(){
      sourceId:w.sourceId,officialNskId:w.officialNskId,sumoDbId:Number(w.sumoDbId),
      rikishi:w.shikonaEn,reviewedAt:now(),sourcePageUrl:SOURCE_URL+w.sumoDbId,
      identityEvidence:identity,
+     sourceParserVersion:SOURCE_PARSER_VERSION,
      rawHtmlSha256:createHash('sha256').update(html).digest('hex'),
      datedEvidence,coverage:{
        datedApiPoints:check.apiDatedPoints,datedIndependentPoints:check.independentDatedPoints,
@@ -186,12 +195,18 @@ async function main(){
     if(wait){
      error=msg;cooldown=wait;break;
     }
-    failed.push({sourceId:w.sourceId,name:w.shikonaEn,issue:msg,permanent:true});
+    failed.push({sourceId:w.sourceId,name:w.shikonaEn,issue:msg,
+      permanent:true,parserVersion:SOURCE_PARSER_VERSION});
    }
   }
  }
- const reviews=[...(prior.reviewCases||[])];
- for(const f of failed)if(!reviews.some(x=>x.sourceId===f.sourceId))reviews.push(f);
+ const reviews=[...(prior.reviewCases||[])].filter(x=>
+   !Number.isFinite(Number(x.parserVersion))||
+   Number(x.parserVersion)>=SOURCE_PARSER_VERSION);
+ for(const f of failed){
+   const index=reviews.findIndex(x=>x.sourceId===f.sourceId);
+   if(index<0)reviews.push(f);else reviews[index]=f;
+ }
  const result={schemaVersion:1,scope:'Research-only SumoDB collection progress',
   lastRunAt:now(),source:'https://sumodb.sumogames.de',
   permission:'user-reported-confirmation',requestsThisRun:requests,updatedThisRun:updated,
