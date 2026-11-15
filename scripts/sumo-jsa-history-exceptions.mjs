@@ -15,6 +15,8 @@ export function auditJsaSnapshot(rosterItem,doc){
    throw Error('JSA source identity does not match frozen roster for '+sourceId);
  const rec=doc.bashoReconciliation||{};
  const differences=Array.isArray(rec.discrepancies)?rec.discrepancies:[];
+ const rankAudit=doc.rankReconciliation||null;
+ const rankDisagreements=Array.isArray(rankAudit?.mismatches)?rankAudit.mismatches:[];
  const publicFields=Object.entries(doc.fieldComparisons||{})
    .filter(([_,v])=>v===false).map(([field])=>field);
  if(Number(rec.discrepantBasho||0)!==differences.length)
@@ -41,6 +43,9 @@ export function auditJsaSnapshot(rosterItem,doc){
   tournamentRowsCompared:Number(rec.comparedBasho||0),
   tournamentRowsAgreed:Number(rec.agreeingBasho||0),
   unreconciledTournamentCount:differences.length,
+  officialRankRowsCompared:Number(rankAudit?.comparedBasho||0),
+  officialRankMismatches:rankDisagreements.length,
+  rankDiscrepancies:rankDisagreements.map(x=>({...x,certification:'not-started'})),
   discrepancies:differences.map(c=>({
     bashoId:c.bashoId,
     official:c.official,
@@ -60,7 +65,7 @@ export function buildJsaExceptionReport(roster,cache){
   if(!s)continue;
   const result=auditJsaSnapshot(w,s);
   checked.push(result);
-  if(result.unreconciledTournamentCount>0||
+  if(result.unreconciledTournamentCount>0||result.officialRankMismatches>0||
     result.publicProfileStatus!=='basic-fields-parsed'||result.publicFieldDisagreements.length){
     review.push(result);
   }
@@ -69,6 +74,8 @@ export function buildJsaExceptionReport(roster,cache){
   cohortSize:190,capturedProfiles:checked.length,pendingProfiles:190-checked.length,
   historicalTournamentsCompared:checked.reduce((n,x)=>n+x.tournamentRowsCompared,0),
   historicalTournamentsDisagree:checked.reduce((n,x)=>n+x.unreconciledTournamentCount,0),
+  officialBanzukeRanksCompared:checked.reduce((n,x)=>n+x.officialRankRowsCompared,0),
+  officialBanzukeRankDiscrepancies:checked.reduce((n,x)=>n+x.officialRankMismatches,0),
   historicalCases:review.filter(x=>x.unreconciledTournamentCount>0).map(x=>x.sourceId),
   profileReviewCases:review.length,
   officialCareerTotalsNotFoundCases:review.filter(x=>x.officialCareerTotalsNotFound).length,
