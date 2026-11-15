@@ -164,7 +164,20 @@ test('wave43 three complete source-attested UFC histories reconcile fifteen dist
   assert.equal(e.officialUfcCareerBoutCount,c.fights.length);
   assert.equal(e.bouts.length,c.fights.length);
   const history=p.recentHistory.filter(x=>x.promotion==='ufc'&&x.date<=census.asOf&&x.boutId!==excluded);
-  assert.equal(history.length,c.fights.length);
+  const newlyRecovered=history.filter(x=>!c.fights.some(([id])=>id===x.boutId));
+  // The next completed 14 Nov UFC fight was collected after the pinned Greco
+  // snapshot. It MUST make the old five-bout Luis source proof fail closed;
+  // never discard the extra native bout to keep a prior certificate green.
+  if(c.slug==='luis-gurule'&&newlyRecovered.length){
+   assert.deepEqual(newlyRecovered.map(x=>({id:x.boutId,date:x.date,
+     opponent:x.opponent,result:x.result})),
+     [{id:'93106',date:'2026-11-14',opponent:'Bilal Hasan',result:'win'}]);
+   assert.equal(progress.bouts['93106']?.org,'ufc');
+   assert.equal(progress.bouts['93106']?.status,'completed');
+   assert.ok(Number(progress.roundDone['93106'])>0);
+   assert.ok(!e.bouts.some(x=>x.nativeBoutId==='93106'));
+  }else assert.deepEqual(newlyRecovered,[]);
+  assert.equal(history.length,c.fights.length+newlyRecovered.length);
   for(const [id,date,opponent,result,fightId] of c.fights){
    assert.equal(seen.has(id),false);
    seen.add(id);
@@ -183,7 +196,8 @@ test('wave43 three complete source-attested UFC histories reconcile fifteen dist
    assert.equal(native.result?.winnerId===own.id?'win':native.result?.winnerId===other?.id?'loss':null,result);
   }
   const last=census.fighters.find(x=>x.slug===c.slug)?.lastUfcFight;
-  assert.equal(evaluateCareerEvidence(p,history,last,approval.rosterAsOf,e,progress.bouts).independentlyVerified,true);
+  assert.equal(evaluateCareerEvidence(p,history,last,approval.rosterAsOf,e,progress.bouts).independentlyVerified,
+    newlyRecovered.length===0);
  }
 });
 test('wave43: Luis DWCS is separately attested feeder, and alias source rows cannot make duplicate official UFC results',()=>{
