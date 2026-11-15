@@ -273,6 +273,16 @@ function renderHome() {
     '<div class="directory-grid">'+ranks().slice(0,8).map(directoryCard).join('')+'</div>'+
     sourceFooter();
 }
+function directoryFacts(w){
+  const measurements=weightHeight(w),age=ageInJapan(w.birthDate,STATE.roster?.collectedAt?new Date(STATE.roster.collectedAt):new Date()),stats=detailStats(w);
+  const record=Number.isInteger(stats?.totalWins)&&Number.isInteger(stats?.totalLosses)
+    ?stats.totalWins+'–'+stats.totalLosses:'Not available';
+  return '<div class="sumo-directory-facts"><span>Peak: <b>'+e(knownHigh(w)||'Not available')+'</b></span>'+
+    '<span>Age at snapshot: <b>'+e(age===null?'Not available':age)+'</b></span>'+
+    '<span>Height: <b>'+e(measurements.h==='—'?'Not available':measurements.h)+'</b></span>'+
+    '<span>Weight: <b>'+e(measurements.mass==='—'?'Not available':measurements.mass)+'</b></span>'+
+    '<span>Career W–L: <b>'+e(record)+'</b></span></div>';
+}
 function directoryCard(w) {
   return '<a class="directory-card" href="#profile/'+w.sourceId+'"><div class="directory-upper">'+
     portraitFor(w,'md')+'<div><small>'+e(divisionOf(w.currentRank))+'</small>'+
@@ -280,7 +290,7 @@ function directoryCard(w) {
     '<small>'+e(w.shikonaJp||'')+'</small></div></div>'+
     '<div class="directory-lower"><div class="rank">'+e(w.currentRank||'Rank not supplied')+'</div>'+
     '<div class="detail">'+e(w.heya||'Stable not supplied')+'</div>'+
-    bioLine(w)+'<div class="sumo-directory-move">'+movementMarkup(w)+'</div>'+
+    directoryFacts(w)+'<div class="sumo-directory-move">'+movementMarkup(w)+'</div>'+
     '<span class="cta">VIEW RIKISHI PROFILE →</span></div></a>';
 }
 function directoryMatches() {
@@ -629,7 +639,7 @@ function renderBanzuke() {
     '<div class="panel-head"><h3>'+e(bashoLabel(details().bashoId))+' · '+e(d)+'</h3><span>'+rows.length+' RIKISHI · CURRENT BANZUKE</span></div>'+
     (rows.length?'<div class="sumo-rank-grid">'+rows.map(banzukeCard).join('')+'</div>':
       '<p class="missing">The current banzuke for this division is unavailable.</p>')+
-    '<p class="footnote">Green ↑ = promotion, red ↓ = demotion, ↔ = unchanged. NEW indicates an entry not present in the previous top-three banzuke, which must not be treated as a verified career debut. Flags refer to the source-recorded birthplace country, not nationality.</p>'+
+    '<p class="footnote">↑ Up / ↓ Down / ↔ Same = movement in tracked banzuke positions, not necessarily a formal rank title promotion or demotion. NEW indicates an entry not present in the previous top-three banzuke, which must not be treated as a verified career debut. Flags refer to the source-recorded birthplace country, not nationality.</p>'+
     sourceFooter();
 }
 function renderHeadToHead(a,b) {
