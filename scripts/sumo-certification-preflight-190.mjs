@@ -133,14 +133,27 @@ export function independentHistoricalRankCoverage(p,jsa,sdb){
    sourceRanks.get(x.bashoId)===x.rank).length;
  const conflicts=history.filter(x=>sourceRanks.has(x.bashoId)&&
    sourceRanks.get(x.bashoId)!==x.rank).length;
- const validJsa=!!ranks&&ranks.mismatches?.length===0&&
+ const validJsa=!!ranks&&Number.isSafeInteger(ranks.comparedBasho)&&
+   ranks.comparedBasho>=0&&ranks.mismatches?.length===0&&
    ranks.agreedBasho===ranks.comparedBasho&&
    officialRows.length===current&&
    (ranks.missingSourceRankBasho||[]).length===0;
- return {passed:validJsa&&
-   (current>=minimum||(valid&&current+additional>=minimum&&conflicts===0)),
-   jsaCompared:current,independentAdditional:additional,sourceConflicts:conflicts,
-   quota:minimum,independentEvidenceValid:!!valid};
+ // JSA's published historical rank table is sometimes entirely absent.
+ // Never report zero as an official comparison. In that distinct case,
+ // require at least 75% independent, date-exact SumoDB rank matches,
+ // already crosschecked against the immutable native rank timeline.
+ // Any present but invalid JSA rank reconciliation continues to block.
+ const noOfficialHistoricalRankRows=ranks===null&&officialRows.length===0;
+ const independentMeetsQuota=valid&&current+additional>=minimum&&conflicts===0;
+ const passed=(validJsa||noOfficialHistoricalRankRows)&&
+   ((validJsa&&current>=minimum)||independentMeetsQuota);
+ const evidenceBasis=passed?(noOfficialHistoricalRankRows?
+   'SumoDB-dated-ranks-JSA-historical-ranks-unavailable':
+   current>=minimum?'JSA-dated-ranks':'JSA-and-SumoDB-dated-ranks'):null;
+ return {passed,jsaCompared:validJsa?current:null,
+   jsaHistoricalRankRowsPresent:validJsa,noOfficialHistoricalRankRows,
+   independentAdditional:additional,sourceConflicts:conflicts,
+   quota:minimum,independentEvidenceValid:!!valid,evidenceBasis};
 }
 
 export function preflightRikishi(w,p,jsa,sdb,activeBasho){
