@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {htmlToPublicText,parseOfficialProfile,parseJsaBashoResults,reconcileJsaBashoResults,cohortCurrentBasho,parseJsaBashoRanks,reconcileJsaBashoRanks,officialSpotcheckPriority,compareJsaListedMeasurement,requiresJsaRankRecheck} from '../scripts/sumo-jsa-public-spotcheck.mjs';
+import {htmlToPublicText,parseOfficialProfile,parseJsaBashoResults,reconcileJsaBashoResults,cohortCurrentBasho,parseJsaBashoRanks,reconcileJsaBashoRanks,officialSpotcheckPriority,compareJsaListedMeasurement,requiresJsaRankRecheck,summarizeJsaRankCoverage} from '../scripts/sumo-jsa-public-spotcheck.mjs';
 const w={sourceId:16,officialNskId:2892,shikonaEn:'Nishikigi',
  currentRank:'Makushita 2 East',heya:'Isenoumi',heightCm:186,weightKg:184};
 const official=String.raw`<!doctype html><html><head><script>fake injection</script></head><body>
@@ -255,4 +255,32 @@ test('older JSA snapshots are checked once for missing dated historical ranks',(
   rankRecheck:{parserVersion:1,status:'dated-official-ranks-not-parseable'}}),false);
  assert.equal(requiresJsaRankRecheck({...legacy,sourceId:null}),false);
  assert.equal(requiresJsaRankRecheck(null),false);
+});
+
+test('scheduled rank rechecks continue only until every legacy page is checked once',()=>{
+ const docs=[
+  {sourceId:7,officialNskId:3601,parserVersion:3,career:{wins:1}},
+  {sourceId:28,officialNskId:3616,parserVersion:3,career:{wins:1}},
+  {sourceId:2,officialNskId:3682,parserVersion:4,
+   rankReconciliation:{comparedBasho:54,mismatches:[]}},
+  {sourceId:8850,officialNskId:5100,parserVersion:4,
+   rankRecheck:{status:'dated-official-ranks-not-parseable'},
+   rankReconciliation:{comparedBasho:0,mismatches:[]}}
+ ];
+ assert.deepEqual(summarizeJsaRankCoverage(docs),{
+  historicalRankRechecksOutstanding:2,
+  historicalRankProfilesCompared:1,
+  historicalRankRowsCompared:54,
+  historicalRankManualReview:1
+ });
+ const completed=docs.map(x=>requiresJsaRankRecheck(x)?{
+  ...x,rankReconciliation:{comparedBasho:40,mismatches:[]},
+  rankRecheck:{status:'source-ranks-compared'}
+ }:x);
+ const coverage=summarizeJsaRankCoverage(completed);
+ assert.equal(coverage.historicalRankRechecksOutstanding,0);
+ assert.equal(coverage.historicalRankProfilesCompared,3);
+ assert.equal(coverage.historicalRankRowsCompared,134);
+ assert.equal(coverage.historicalRankManualReview,1);
+ assert.equal(summarizeJsaRankCoverage([null,{}]).historicalRankRechecksOutstanding,0);
 });
