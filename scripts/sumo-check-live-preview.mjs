@@ -8,7 +8,7 @@ import {createHash} from 'node:crypto';
 import {join} from 'node:path';
 const SRC='data/sumo/exports/career-history.json';
 const DEST='data/sumo/backfill/v1/preview-live-qa.json';
-const URL='https://befn-sumo-preview.onrender.com/data/sumo/career-history.json';
+const PREVIEW_URL='https://befn-sumo-preview.onrender.com/data/sumo/career-history.json';
 const digest=s=>createHash('sha256').update(s).digest('hex');
 const count=d=>Object.keys(d?.bySourceId||{}).length;
 const size=d=>Number(d?.datedWeightPoints)||0;
@@ -36,7 +36,7 @@ export async function inspectPreview({expectedBody,fetchImpl=fetch,timeoutMs=120
  const expected=JSON.parse(expectedBody);
  let reported,raw=null,httpStatus=null,reason=null;
  try{
-  const response=await fetchImpl(URL,{
+  const response=await fetchImpl(PREVIEW_URL,{
    headers:{Accept:'application/json', 'Cache-Control':'no-cache'},
    signal:AbortSignal.timeout(timeoutMs),redirect:'follow'});
   httpStatus=response.status;
@@ -57,7 +57,7 @@ export async function inspectPreview({expectedBody,fetchImpl=fetch,timeoutMs=120
  const rawIdentical=raw!==null&&digest(raw)===digest(expectedBody);
  const status=reported.status==='summary-matched'?
    rawIdentical?'in-sync':'needs-complete-json-review':reported.status;
- return {schemaVersion:1,previewUrl:URL,checkedAt:new Date().toISOString(),
+ return {schemaVersion:1,previewUrl:PREVIEW_URL,checkedAt:new Date().toISOString(),
   status,sourceResearchOnly:true,productionAffected:false,
   expectedSha256:digest(expectedBody),liveSha256:raw?digest(raw):null,
   sameBytes:rawIdentical,httpStatus,reason,
