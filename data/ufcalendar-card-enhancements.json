@@ -35672,492 +35672,836 @@
       "bouts": [
         {
           "a": "Ciryl Gane",
-          "aHeldUfcTitle": true,
-          "aRecent": [
-            {
-              "boutId": "66006",
-              "date": "2026-06-15",
-              "method": "ko_tko",
-              "opponent": "Alex Pereira",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": true
-            },
-            {
-              "boutId": "60458",
-              "date": "2025-10-25",
-              "method": "no_contest",
-              "opponent": "Tom Aspinall",
-              "promotion": "ufc",
-              "result": "no_contest",
-              "source": "native",
-              "titleFight": true
-            },
-            {
-              "boutId": "60779",
-              "date": "2024-12-07",
-              "method": "decision_split",
-              "opponent": "Alexander Volkov",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "aRecord": "14-2-0",
           "aSlug": "ciryl-gane",
           "b": "Josh Hokit",
-          "bRecent": [
-            {
-              "boutId": "66011",
-              "date": "2026-06-15",
-              "method": "ko_tko",
-              "opponent": "Derrick Lewis",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "65987",
-              "date": "2026-04-11",
-              "method": "decision_unanimous",
-              "opponent": "Curtis Blaydes",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60645",
-              "date": "2026-01-24",
-              "method": "ko_tko",
-              "opponent": "Denzel Freeman",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "bRecord": "10-0-0",
           "bSlug": "josh-hokit",
           "division": "Heavyweight",
           "id": "93102",
           "main": true,
           "order": 1,
-          "result": null,
-          "roundPreview": null,
+          "result": {
+            "finishDetail": "Unanimous",
+            "method": "decision_unanimous",
+            "round": 5,
+            "time": "5:00",
+            "winnerId": "102"
+          },
+          "roundPreview": [
+            {
+              "a": {
+                "controlSec": 3,
+                "knockdowns": 0,
+                "reversals": 0,
+                "sigAttempted": 65,
+                "sigLanded": 41,
+                "subAttempts": 0,
+                "takedownAttempts": 0,
+                "takedowns": 0
+              },
+              "b": {
+                "controlSec": 57,
+                "knockdowns": 0,
+                "sigAttempted": 62,
+                "sigLanded": 29,
+                "takedownAttempts": 7,
+                "takedowns": 2
+              },
+              "round": 1
+            },
+            {
+              "a": {
+                "controlSec": 0,
+                "knockdowns": 0,
+                "reversals": 0,
+                "sigAttempted": 86,
+                "sigLanded": 56,
+                "subAttempts": 0,
+                "takedownAttempts": 0,
+                "takedowns": 0
+              },
+              "b": {
+                "controlSec": 20,
+                "knockdowns": 0,
+                "sigAttempted": 72,
+                "sigLanded": 39,
+                "takedownAttempts": 7,
+                "takedowns": 0
+              },
+              "round": 2
+            },
+            {
+              "a": {
+                "controlSec": 0,
+                "knockdowns": 0,
+                "reversals": 0,
+                "sigAttempted": 43,
+                "sigLanded": 30,
+                "subAttempts": 0,
+                "takedownAttempts": 0,
+                "takedowns": 0
+              },
+              "b": {
+                "controlSec": 74,
+                "knockdowns": 0,
+                "sigAttempted": 37,
+                "sigLanded": 24,
+                "takedownAttempts": 5,
+                "takedowns": 1
+              },
+              "round": 3
+            },
+            {
+              "a": {
+                "controlSec": 1,
+                "knockdowns": 0,
+                "reversals": 0,
+                "sigAttempted": 51,
+                "sigLanded": 40,
+                "subAttempts": 0,
+                "takedownAttempts": 0,
+                "takedowns": 0
+              },
+              "b": {
+                "controlSec": 114,
+                "knockdowns": 0,
+                "sigAttempted": 38,
+                "sigLanded": 21,
+                "takedownAttempts": 4,
+                "takedowns": 0
+              },
+              "round": 4
+            },
+            {
+              "a": {
+                "controlSec": 0,
+                "knockdowns": 0,
+                "reversals": 0,
+                "sigAttempted": 98,
+                "sigLanded": 70,
+                "subAttempts": 0,
+                "takedownAttempts": 0,
+                "takedowns": 0
+              },
+              "b": {
+                "controlSec": 12,
+                "knockdowns": 0,
+                "sigAttempted": 74,
+                "sigLanded": 33,
+                "takedownAttempts": 7,
+                "takedowns": 0
+              },
+              "round": 5
+            }
+          ],
           "scheduledRounds": 5,
-          "scorecardSummary": null,
+          "scorecardSummary": {
+            "decision": "unanimous",
+            "judges": [
+              {
+                "judge": "Adrian Castro",
+                "rounds": [
+                  [
+                    1,
+                    10,
+                    9
+                  ],
+                  [
+                    2,
+                    9,
+                    10
+                  ],
+                  [
+                    3,
+                    9,
+                    10
+                  ],
+                  [
+                    4,
+                    10,
+                    9
+                  ],
+                  [
+                    5,
+                    10,
+                    9
+                  ]
+                ],
+                "scoresKnown": true,
+                "totalA": 48,
+                "totalB": 47
+              },
+              {
+                "judge": "Sal D'Amato",
+                "rounds": [
+                  [
+                    1,
+                    9,
+                    10
+                  ],
+                  [
+                    2,
+                    10,
+                    9
+                  ],
+                  [
+                    3,
+                    9,
+                    10
+                  ],
+                  [
+                    4,
+                    10,
+                    9
+                  ],
+                  [
+                    5,
+                    10,
+                    9
+                  ]
+                ],
+                "scoresKnown": true,
+                "totalA": 48,
+                "totalB": 47
+              },
+              {
+                "judge": "Chris Lee",
+                "rounds": [
+                  [
+                    1,
+                    9,
+                    10
+                  ],
+                  [
+                    2,
+                    10,
+                    9
+                  ],
+                  [
+                    3,
+                    9,
+                    10
+                  ],
+                  [
+                    4,
+                    10,
+                    9
+                  ],
+                  [
+                    5,
+                    10,
+                    9
+                  ]
+                ],
+                "scoresKnown": true,
+                "totalA": 48,
+                "totalB": 47
+              }
+            ],
+            "observedOn": "2026-11-15",
+            "source": "UFCalendar"
+          },
           "section": "main",
-          "status": "announced",
+          "status": "completed",
           "titleFight": true
         },
         {
           "a": "Kayla Harrison",
-          "aHeldUfcTitle": true,
-          "aRecent": [
-            {
-              "boutId": "60862",
-              "date": "2025-06-07",
-              "method": "submission",
-              "opponent": "Julianna Pena",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": true
-            },
-            {
-              "boutId": "60195",
-              "date": "2024-10-05",
-              "method": "decision_unanimous",
-              "opponent": "Ketlen Vieira",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "53794",
-              "date": "2024-04-13",
-              "method": "submission",
-              "opponent": "Holly Holm",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "aRecord": "19-1-0",
           "aSlug": "kayla-harrison",
           "b": "Amanda Nunes",
-          "bHeldUfcTitle": true,
-          "bRecent": [
-            {
-              "boutId": "61332",
-              "date": "2023-06-10",
-              "method": "decision_unanimous",
-              "opponent": "Irene Aldana",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": true
-            },
-            {
-              "boutId": "59534",
-              "date": "2022-07-30",
-              "method": "decision_unanimous",
-              "opponent": "Julianna Pena",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": true
-            },
-            {
-              "boutId": "59617",
-              "date": "2021-12-11",
-              "method": "submission",
-              "opponent": "Julianna Pena",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": true
-            }
-          ],
-          "bRecord": "23-5-0",
           "bSlug": "amanda-nunes",
           "division": "Women's Bantamweight",
           "id": "93103",
           "main": false,
           "order": 2,
-          "result": null,
-          "roundPreview": null,
+          "result": {
+            "finishDetail": "Rear-Naked Choke",
+            "method": "submission",
+            "round": 4,
+            "time": "1:29",
+            "winnerId": "2845"
+          },
+          "roundPreview": [
+            {
+              "a": {
+                "controlSec": 119,
+                "knockdowns": 0,
+                "reversals": 0,
+                "sigAttempted": 12,
+                "sigLanded": 5,
+                "subAttempts": 0,
+                "takedownAttempts": 4,
+                "takedowns": 1
+              },
+              "b": {
+                "controlSec": 8,
+                "knockdowns": 0,
+                "sigAttempted": 31,
+                "sigLanded": 15,
+                "takedownAttempts": 0,
+                "takedowns": 0
+              },
+              "round": 1
+            },
+            {
+              "a": {
+                "controlSec": 132,
+                "knockdowns": 0,
+                "reversals": 0,
+                "sigAttempted": 9,
+                "sigLanded": 8,
+                "subAttempts": 1,
+                "takedownAttempts": 1,
+                "takedowns": 1
+              },
+              "b": {
+                "controlSec": 134,
+                "knockdowns": 0,
+                "sigAttempted": 7,
+                "sigLanded": 5,
+                "takedownAttempts": 5,
+                "takedowns": 1
+              },
+              "round": 2
+            },
+            {
+              "a": {
+                "controlSec": 85,
+                "knockdowns": 0,
+                "reversals": 1,
+                "sigAttempted": 13,
+                "sigLanded": 11,
+                "subAttempts": 0,
+                "takedownAttempts": 3,
+                "takedowns": 0
+              },
+              "b": {
+                "controlSec": 126,
+                "knockdowns": 0,
+                "sigAttempted": 13,
+                "sigLanded": 8,
+                "takedownAttempts": 2,
+                "takedowns": 1
+              },
+              "round": 3
+            },
+            {
+              "a": {
+                "controlSec": 5,
+                "knockdowns": 0,
+                "reversals": 0,
+                "sigAttempted": 7,
+                "sigLanded": 1,
+                "subAttempts": 1,
+                "takedownAttempts": 1,
+                "takedowns": 1
+              },
+              "b": {
+                "controlSec": 0,
+                "knockdowns": 0,
+                "sigAttempted": 11,
+                "sigLanded": 3,
+                "takedownAttempts": 0,
+                "takedowns": 0
+              },
+              "round": 4
+            }
+          ],
           "scheduledRounds": 5,
           "scorecardSummary": null,
           "section": "main",
-          "status": "announced",
+          "status": "completed",
           "titleFight": true
         },
         {
           "a": "Caio Borralho",
-          "aRecent": [
-            {
-              "boutId": "60687",
-              "date": "2026-03-07",
-              "method": "decision_unanimous",
-              "opponent": "Reinier de Ridder",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60471",
-              "date": "2025-09-06",
-              "method": "decision_unanimous",
-              "opponent": "Nassourdine Imavov",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": null,
-              "date": "2025-02-28",
-              "method": "decision_unanimous",
-              "opponent": "Brendan Allen",
-              "promotion": "",
-              "result": "win",
-              "source": "history",
-              "titleFight": false
-            }
-          ],
-          "aRecord": "18-2-0",
           "aSlug": "caio-borralho",
           "b": "Yousri Belgaroui",
-          "bRecent": [
-            {
-              "boutId": "83821",
-              "date": "2026-09-12",
-              "method": "ko_tko",
-              "opponent": "Djorden Santos",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60627",
-              "date": "2026-03-28",
-              "method": "ko_tko",
-              "opponent": "Mansur Abdul-Malik",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "38153",
-              "date": "2025-10-18",
-              "method": "ko_tko",
-              "opponent": "Azamat Bekoev",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "bRecord": "11-3-0",
           "bSlug": "yousri-belgaroui",
           "division": "Middleweight",
           "id": "93104",
           "main": false,
           "order": 3,
-          "result": null,
-          "roundPreview": null,
+          "result": {
+            "finishDetail": "Unanimous",
+            "method": "decision_unanimous",
+            "round": 3,
+            "time": "5:00",
+            "winnerId": "253"
+          },
+          "roundPreview": [
+            {
+              "a": {
+                "controlSec": 185,
+                "knockdowns": 0,
+                "reversals": 0,
+                "sigAttempted": 9,
+                "sigLanded": 6,
+                "subAttempts": 1,
+                "takedownAttempts": 2,
+                "takedowns": 1
+              },
+              "b": {
+                "controlSec": 0,
+                "knockdowns": 0,
+                "sigAttempted": 11,
+                "sigLanded": 4,
+                "takedownAttempts": 0,
+                "takedowns": 0
+              },
+              "round": 1
+            },
+            {
+              "a": {
+                "controlSec": 146,
+                "knockdowns": 0,
+                "reversals": 0,
+                "sigAttempted": 11,
+                "sigLanded": 5,
+                "subAttempts": 0,
+                "takedownAttempts": 7,
+                "takedowns": 2
+              },
+              "b": {
+                "controlSec": 0,
+                "knockdowns": 0,
+                "sigAttempted": 16,
+                "sigLanded": 11,
+                "takedownAttempts": 0,
+                "takedowns": 0
+              },
+              "round": 2
+            },
+            {
+              "a": {
+                "controlSec": 136,
+                "knockdowns": 0,
+                "reversals": 0,
+                "sigAttempted": 17,
+                "sigLanded": 9,
+                "subAttempts": 0,
+                "takedownAttempts": 4,
+                "takedowns": 2
+              },
+              "b": {
+                "controlSec": 0,
+                "knockdowns": 0,
+                "sigAttempted": 23,
+                "sigLanded": 13,
+                "takedownAttempts": 0,
+                "takedowns": 0
+              },
+              "round": 3
+            }
+          ],
           "scheduledRounds": 3,
-          "scorecardSummary": null,
+          "scorecardSummary": {
+            "decision": "unanimous",
+            "judges": [
+              {
+                "judge": "Adrian Castro",
+                "rounds": [
+                  [
+                    1,
+                    10,
+                    9
+                  ],
+                  [
+                    2,
+                    10,
+                    9
+                  ],
+                  [
+                    3,
+                    10,
+                    9
+                  ]
+                ],
+                "scoresKnown": true,
+                "totalA": 30,
+                "totalB": 27
+              },
+              {
+                "judge": "Sal D'Amato",
+                "rounds": [
+                  [
+                    1,
+                    10,
+                    9
+                  ],
+                  [
+                    2,
+                    10,
+                    9
+                  ],
+                  [
+                    3,
+                    10,
+                    9
+                  ]
+                ],
+                "scoresKnown": true,
+                "totalA": 30,
+                "totalB": 27
+              },
+              {
+                "judge": "Marcel Varela",
+                "rounds": [
+                  [
+                    1,
+                    10,
+                    9
+                  ],
+                  [
+                    2,
+                    10,
+                    9
+                  ],
+                  [
+                    3,
+                    10,
+                    9
+                  ]
+                ],
+                "scoresKnown": true,
+                "totalA": 30,
+                "totalB": 27
+              }
+            ],
+            "observedOn": "2026-11-15",
+            "source": "UFCalendar"
+          },
           "section": "main",
-          "status": "announced",
+          "status": "completed",
           "titleFight": false
         },
         {
           "a": "Uros Medic",
-          "aRecent": [
-            {
-              "boutId": "66464",
-              "date": "2026-08-01",
-              "method": "ko_tko",
-              "opponent": "Daniel Rodriguez",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60660",
-              "date": "2026-02-21",
-              "method": "ko_tko",
-              "opponent": "Geoff Neal",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "65901",
-              "date": "2025-11-08",
-              "method": "ko_tko",
-              "opponent": "Muslim Salikhov",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "aRecord": "14-3-0",
           "aSlug": "uros-medic",
           "b": "Kevin Holland",
-          "bRecent": [
-            {
-              "boutId": "65991",
-              "date": "2026-04-11",
-              "method": "decision_unanimous",
-              "opponent": "Randy Brown",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "38143",
-              "date": "2025-10-18",
-              "method": "decision_unanimous",
-              "opponent": "Mike Malott",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60805",
-              "date": "2025-07-19",
-              "method": "decision_unanimous",
-              "opponent": "Daniel Rodriguez",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "bRecord": "29-15-0",
           "bSlug": "kevin-holland",
           "division": "Welterweight",
           "id": "93105",
           "main": false,
           "order": 4,
-          "result": null,
-          "roundPreview": null,
+          "result": {
+            "finishDetail": "Majority",
+            "method": "draw",
+            "round": 3,
+            "time": "5:00",
+            "winnerId": null
+          },
+          "roundPreview": [
+            {
+              "a": {
+                "controlSec": 0,
+                "knockdowns": 0,
+                "reversals": 0,
+                "sigAttempted": 17,
+                "sigLanded": 9,
+                "subAttempts": 0,
+                "takedownAttempts": 0,
+                "takedowns": 0
+              },
+              "b": {
+                "controlSec": 58,
+                "knockdowns": 1,
+                "sigAttempted": 35,
+                "sigLanded": 19,
+                "takedownAttempts": 3,
+                "takedowns": 1
+              },
+              "round": 1
+            },
+            {
+              "a": {
+                "controlSec": 7,
+                "knockdowns": 0,
+                "reversals": 0,
+                "sigAttempted": 13,
+                "sigLanded": 7,
+                "subAttempts": 0,
+                "takedownAttempts": 0,
+                "takedowns": 0
+              },
+              "b": {
+                "controlSec": 34,
+                "knockdowns": 0,
+                "sigAttempted": 40,
+                "sigLanded": 20,
+                "takedownAttempts": 2,
+                "takedowns": 1
+              },
+              "round": 2
+            },
+            {
+              "a": {
+                "controlSec": 0,
+                "knockdowns": 0,
+                "reversals": 0,
+                "sigAttempted": 30,
+                "sigLanded": 19,
+                "subAttempts": 0,
+                "takedownAttempts": 0,
+                "takedowns": 0
+              },
+              "b": {
+                "controlSec": 64,
+                "knockdowns": 0,
+                "sigAttempted": 30,
+                "sigLanded": 14,
+                "takedownAttempts": 4,
+                "takedowns": 0
+              },
+              "round": 3
+            }
+          ],
           "scheduledRounds": 3,
-          "scorecardSummary": null,
+          "scorecardSummary": {
+            "decision": "majority-draw",
+            "judges": [
+              {
+                "judge": "Michael Bell",
+                "rounds": [
+                  [
+                    1,
+                    9,
+                    10
+                  ],
+                  [
+                    2,
+                    9,
+                    9
+                  ],
+                  [
+                    3,
+                    10,
+                    9
+                  ]
+                ],
+                "scoresKnown": true,
+                "totalA": 28,
+                "totalB": 28
+              },
+              {
+                "judge": "David Bruce",
+                "rounds": [
+                  [
+                    1,
+                    10,
+                    9
+                  ],
+                  [
+                    2,
+                    9,
+                    9
+                  ],
+                  [
+                    3,
+                    10,
+                    9
+                  ]
+                ],
+                "scoresKnown": true,
+                "totalA": 29,
+                "totalB": 27
+              },
+              {
+                "judge": "Chris Lee",
+                "rounds": [
+                  [
+                    1,
+                    9,
+                    10
+                  ],
+                  [
+                    2,
+                    9,
+                    9
+                  ],
+                  [
+                    3,
+                    10,
+                    9
+                  ]
+                ],
+                "scoresKnown": true,
+                "totalA": 28,
+                "totalB": 28
+              }
+            ],
+            "observedOn": "2026-11-15",
+            "source": "UFCalendar"
+          },
           "section": "main",
-          "status": "announced",
+          "status": "completed",
           "titleFight": false
         },
         {
           "a": "Bilal Hasan",
-          "aRecent": [
-            {
-              "boutId": "83729",
-              "date": "2026-08-29",
-              "method": "ko_tko",
-              "opponent": "Nilson Rojas",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "83743",
-              "date": "2026-08-11",
-              "method": "ko_tko",
-              "opponent": "Mridul Saikia",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": null,
-              "date": "2025-12-20",
-              "method": "ko_tko",
-              "opponent": "Renaldy Manse",
-              "promotion": "",
-              "result": "win",
-              "source": "history",
-              "titleFight": false
-            }
-          ],
-          "aRecord": "10-0-0",
           "aSlug": "bilal-hasan",
           "b": "Luis Gurule",
-          "bRecent": [
-            {
-              "boutId": "66457",
-              "date": "2026-05-30",
-              "method": "submission",
-              "opponent": "Rei Tsuruya",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "66125",
-              "date": "2026-05-16",
-              "method": "decision_unanimous",
-              "opponent": "Daniel Barez",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60667",
-              "date": "2026-02-21",
-              "method": "decision_unanimous",
-              "opponent": "Alden Coria",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "bRecord": "11-4-0",
           "bSlug": "luis-gurule",
           "division": "Flyweight",
           "id": "93106",
           "main": false,
           "order": 5,
-          "result": null,
-          "roundPreview": null,
+          "result": {
+            "finishDetail": "Split",
+            "method": "decision_split",
+            "round": 3,
+            "time": "5:00",
+            "winnerId": "48"
+          },
+          "roundPreview": [
+            {
+              "a": {
+                "controlSec": 0,
+                "knockdowns": 0,
+                "reversals": 0,
+                "sigAttempted": 65,
+                "sigLanded": 30,
+                "subAttempts": 0,
+                "takedownAttempts": 0,
+                "takedowns": 0
+              },
+              "b": {
+                "controlSec": 0,
+                "knockdowns": 0,
+                "sigAttempted": 45,
+                "sigLanded": 16,
+                "takedownAttempts": 0,
+                "takedowns": 0
+              },
+              "round": 1
+            },
+            {
+              "a": {
+                "controlSec": 0,
+                "knockdowns": 0,
+                "reversals": 0,
+                "sigAttempted": 39,
+                "sigLanded": 21,
+                "subAttempts": 0,
+                "takedownAttempts": 1,
+                "takedowns": 0
+              },
+              "b": {
+                "controlSec": 110,
+                "knockdowns": 0,
+                "sigAttempted": 36,
+                "sigLanded": 13,
+                "takedownAttempts": 3,
+                "takedowns": 1
+              },
+              "round": 2
+            },
+            {
+              "a": {
+                "controlSec": 0,
+                "knockdowns": 0,
+                "reversals": 0,
+                "sigAttempted": 5,
+                "sigLanded": 1,
+                "subAttempts": 0,
+                "takedownAttempts": 0,
+                "takedowns": 0
+              },
+              "b": {
+                "controlSec": 269,
+                "knockdowns": 0,
+                "sigAttempted": 15,
+                "sigLanded": 10,
+                "takedownAttempts": 2,
+                "takedowns": 1
+              },
+              "round": 3
+            }
+          ],
           "scheduledRounds": 3,
-          "scorecardSummary": null,
+          "scorecardSummary": {
+            "decision": "split",
+            "judges": [
+              {
+                "judge": "Chris Bolinski",
+                "rounds": [
+                  [
+                    1,
+                    10,
+                    9
+                  ],
+                  [
+                    2,
+                    10,
+                    9
+                  ],
+                  [
+                    3,
+                    9,
+                    10
+                  ]
+                ],
+                "scoresKnown": true,
+                "totalA": 29,
+                "totalB": 28
+              },
+              {
+                "judge": "Eric Colón",
+                "rounds": [
+                  [
+                    1,
+                    10,
+                    9
+                  ],
+                  [
+                    2,
+                    9,
+                    10
+                  ],
+                  [
+                    3,
+                    9,
+                    10
+                  ]
+                ],
+                "scoresKnown": true,
+                "totalA": 28,
+                "totalB": 29
+              },
+              {
+                "judge": "Darryl Porter",
+                "rounds": [
+                  [
+                    1,
+                    10,
+                    9
+                  ],
+                  [
+                    2,
+                    9,
+                    10
+                  ],
+                  [
+                    3,
+                    9,
+                    10
+                  ]
+                ],
+                "scoresKnown": true,
+                "totalA": 28,
+                "totalB": 29
+              }
+            ],
+            "observedOn": "2026-11-15",
+            "source": "UFCalendar"
+          },
           "section": "main",
-          "status": "announced",
+          "status": "completed",
           "titleFight": false
         },
         {
           "a": "Stephen Thompson",
-          "aRecent": [
-            {
-              "boutId": "93107",
-              "date": "2026-11-14",
-              "method": "ko_tko",
-              "opponent": "Charles Radtke",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60830",
-              "date": "2025-07-12",
-              "method": "decision_split",
-              "opponent": "Gabriel Bonfim",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60196",
-              "date": "2024-10-05",
-              "method": "ko_tko",
-              "opponent": "Joaquin Buckley",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "aRecord": "17-9-1",
           "aSlug": "stephen-thompson",
           "b": "Charles Radtke",
-          "bRecent": [
-            {
-              "boutId": "93107",
-              "date": "2026-11-14",
-              "method": "ko_tko",
-              "opponent": "Stephen Thompson",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "65996",
-              "date": "2026-04-11",
-              "method": "decision_unanimous",
-              "opponent": "Francisco Prado",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60422",
-              "date": "2025-11-01",
-              "method": "submission",
-              "opponent": "Daniel Frunza",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "bRecord": "12-5-0",
           "bSlug": "charles-radtke",
           "division": "Welterweight",
           "id": "93107",
@@ -36243,74 +36587,8 @@
         },
         {
           "a": "Drew Dober",
-          "aRecent": [
-            {
-              "boutId": "93108",
-              "date": "2026-11-14",
-              "method": "decision_unanimous",
-              "opponent": "Chris Duncan",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60689",
-              "date": "2026-03-07",
-              "method": "ko_tko",
-              "opponent": "Michael Johnson",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "38148",
-              "date": "2025-10-18",
-              "method": "ko_tko",
-              "opponent": "Kyle Prepolec",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "aRecord": "29-15-0",
           "aSlug": "drew-dober",
           "b": "Chris Duncan",
-          "bRecent": [
-            {
-              "boutId": "93108",
-              "date": "2026-11-14",
-              "method": "decision_unanimous",
-              "opponent": "Drew Dober",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60698",
-              "date": "2026-04-04",
-              "method": "submission",
-              "opponent": "Renato Moicano",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60526",
-              "date": "2025-12-06",
-              "method": "submission",
-              "opponent": "Terrance McKinney",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "bRecord": "15-3-0",
           "bSlug": "chris-duncan",
           "division": "Lightweight",
           "id": "93108",
@@ -36455,74 +36733,8 @@
         },
         {
           "a": "Jim Miller",
-          "aRecent": [
-            {
-              "boutId": "93109",
-              "date": "2026-11-14",
-              "method": "ko_tko",
-              "opponent": "Terrance McKinney",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "66058",
-              "date": "2026-05-09",
-              "method": "submission",
-              "opponent": "Jared Gordon",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60973",
-              "date": "2025-04-12",
-              "method": "decision_unanimous",
-              "opponent": "Chase Hooper",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "aRecord": "39-19-0",
           "aSlug": "jim-miller",
           "b": "Terrance McKinney",
-          "bRecent": [
-            {
-              "boutId": "93109",
-              "date": "2026-11-14",
-              "method": "ko_tko",
-              "opponent": "Jim Miller",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "82917",
-              "date": "2026-07-11",
-              "method": "ko_tko",
-              "opponent": "King Green",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60628",
-              "date": "2026-03-28",
-              "method": "ko_tko",
-              "opponent": "Kyle Nelson",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "bRecord": "18-9-0",
           "bSlug": "terrance-mckinney",
           "division": "Lightweight",
           "id": "93109",
@@ -36566,74 +36778,8 @@
         },
         {
           "a": "Donte Johnson",
-          "aRecent": [
-            {
-              "boutId": "93616",
-              "date": "2026-11-14",
-              "method": "ko_tko",
-              "opponent": "Cesar Almeida",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "83279",
-              "date": "2026-08-15",
-              "method": "ko_tko",
-              "opponent": "Eric McConico",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60692",
-              "date": "2026-03-07",
-              "method": "decision_split",
-              "opponent": "Cody Brundage",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "aRecord": "9-0-0",
           "aSlug": "donte-johnson",
           "b": "Baisangur Susurkaev",
-          "bRecent": [
-            {
-              "boutId": "66061",
-              "date": "2026-05-09",
-              "method": "submission",
-              "opponent": "Djorden Santos",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "38207",
-              "date": "2025-11-15",
-              "method": "ko_tko",
-              "opponent": "Eric McConico",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60501",
-              "date": "2025-08-16",
-              "method": "submission",
-              "opponent": "Eric Nolan",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "bRecord": "12-0-0",
           "bSlug": "baisangur-susurkaev",
           "division": "Middleweight",
           "id": "93110",
@@ -36649,74 +36795,8 @@
         },
         {
           "a": "Donte Johnson",
-          "aRecent": [
-            {
-              "boutId": "93616",
-              "date": "2026-11-14",
-              "method": "ko_tko",
-              "opponent": "Cesar Almeida",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "83279",
-              "date": "2026-08-15",
-              "method": "ko_tko",
-              "opponent": "Eric McConico",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60692",
-              "date": "2026-03-07",
-              "method": "decision_split",
-              "opponent": "Cody Brundage",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "aRecord": "9-0-0",
           "aSlug": "donte-johnson",
           "b": "Cesar Almeida",
-          "bRecent": [
-            {
-              "boutId": "93616",
-              "date": "2026-11-14",
-              "method": "ko_tko",
-              "opponent": "Donte Johnson",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "66446",
-              "date": "2026-07-11",
-              "method": "ko_tko",
-              "opponent": "Damian Pinas",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60649",
-              "date": "2025-12-14",
-              "method": "decision_unanimous",
-              "opponent": "Cezary Oleksiejczuk",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "bRecord": "7-3-0",
           "bSlug": "cesar-almeida",
           "division": "Catch Weight",
           "id": "93616",
@@ -36760,74 +36840,8 @@
         },
         {
           "a": "Jared Gordon",
-          "aRecent": [
-            {
-              "boutId": "93620",
-              "date": "2026-11-14",
-              "method": "decision_unanimous",
-              "opponent": "Melquizael Costa",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "66058",
-              "date": "2026-05-09",
-              "method": "submission",
-              "opponent": "Jim Miller",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "38223",
-              "date": "2025-09-13",
-              "method": "ko_tko",
-              "opponent": "Rafa Garcia",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "aRecord": "21-9-0",
           "aSlug": "jared-gordon",
           "b": "Melquizael Costa",
-          "bRecent": [
-            {
-              "boutId": "93620",
-              "date": "2026-11-14",
-              "method": "decision_unanimous",
-              "opponent": "Jared Gordon",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "66114",
-              "date": "2026-05-16",
-              "method": "decision_unanimous",
-              "opponent": "Arnold Allen",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60661",
-              "date": "2026-02-21",
-              "method": "ko_tko",
-              "opponent": "Dan Ige",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "bRecord": "26-8-0",
           "bSlug": "melquizael-costa",
           "division": "Lightweight",
           "id": "93620",
@@ -36988,74 +37002,8 @@
         },
         {
           "a": "Macy Chiasson",
-          "aRecent": [
-            {
-              "boutId": "93111",
-              "date": "2026-11-14",
-              "method": "submission",
-              "opponent": "Bia Mesquita",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60680",
-              "date": "2026-02-28",
-              "method": "decision_unanimous",
-              "opponent": "Ailin Perez",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60748",
-              "date": "2025-10-04",
-              "method": "decision_unanimous",
-              "opponent": "Yana Santos",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "aRecord": "11-6-0",
           "aSlug": "macy-chiasson",
           "b": "Bia Mesquita",
-          "bRecent": [
-            {
-              "boutId": "93111",
-              "date": "2026-11-14",
-              "method": "submission",
-              "opponent": "Macy Chiasson",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "66004",
-              "date": "2026-06-20",
-              "method": "submission",
-              "opponent": "Melissa Mullins",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60722",
-              "date": "2026-03-14",
-              "method": "submission",
-              "opponent": "Montse Rendon",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "bRecord": "8-0-0",
           "bSlug": "bia-mesquita",
           "division": "Women's Bantamweight",
           "id": "93111",
@@ -37099,74 +37047,8 @@
         },
         {
           "a": "Adrian Yanez",
-          "aRecent": [
-            {
-              "boutId": "66447",
-              "date": "2026-07-11",
-              "method": "ko_tko",
-              "opponent": "Cody Garbrandt",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60634",
-              "date": "2026-03-28",
-              "method": "draw",
-              "opponent": "Ricky Simon",
-              "promotion": "ufc",
-              "result": "draw",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60372",
-              "date": "2024-12-15",
-              "method": "decision_split",
-              "opponent": "Daniel Marcos",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "aRecord": "18-6-1",
           "aSlug": "adrian-yanez",
           "b": "Juan Díaz",
-          "bRecent": [
-            {
-              "boutId": "93780",
-              "date": "2026-11-14",
-              "method": "decision_unanimous",
-              "opponent": "Heili Alateng",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": null,
-              "date": "2026-11-14",
-              "method": "decision_unanimous",
-              "opponent": "Alatengheili",
-              "promotion": "",
-              "result": "win",
-              "source": "history",
-              "titleFight": false
-            },
-            {
-              "boutId": "66116",
-              "date": "2026-05-16",
-              "method": "submission",
-              "opponent": "Malcolm Wellmaker",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "bRecord": "16-1-1",
           "bSlug": "juan-diaz",
           "division": "Bantamweight",
           "id": "93112",
@@ -37182,74 +37064,8 @@
         },
         {
           "a": "Nazim Sadykhov",
-          "aRecent": [
-            {
-              "boutId": "66369",
-              "date": "2026-06-27",
-              "method": "ko_tko",
-              "opponent": "Matheus Camilo",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60528",
-              "date": "2025-12-06",
-              "method": "ko_tko",
-              "opponent": "Farès Ziam",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60275",
-              "date": "2025-06-21",
-              "method": "ko_tko",
-              "opponent": "Nikolas Motta",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "aRecord": "11-3-1",
           "aSlug": "nazim-sadykhov",
           "b": "Jefferson Nascimento",
-          "bRecent": [
-            {
-              "boutId": "82871",
-              "date": "2026-06-27",
-              "method": "ko_tko",
-              "opponent": "Tahir Abdullayev",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": null,
-              "date": "2026-05-29",
-              "method": "ko_tko",
-              "opponent": "Gian Maurente",
-              "promotion": "",
-              "result": "win",
-              "source": "history",
-              "titleFight": false
-            },
-            {
-              "boutId": null,
-              "date": "2025-09-27",
-              "method": "decision_unanimous",
-              "opponent": "Baysangur Makaev",
-              "promotion": "",
-              "result": "win",
-              "source": "history",
-              "titleFight": false
-            }
-          ],
-          "bRecord": "13-1-0",
           "bSlug": "jefferson-nascimento",
           "division": "Lightweight",
           "id": "93113",
@@ -37265,74 +37081,8 @@
         },
         {
           "a": "Heili Alateng",
-          "aRecent": [
-            {
-              "boutId": "93780",
-              "date": "2026-11-14",
-              "method": "decision_unanimous",
-              "opponent": "Juan Díaz",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "85944",
-              "date": "2026-09-26",
-              "method": "decision_split",
-              "opponent": "John Castaneda",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60883",
-              "date": "2025-04-26",
-              "method": "decision_unanimous",
-              "opponent": "Da'Mon Blackshear",
-              "promotion": "ufc",
-              "result": "loss",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "aRecord": "18-10-2",
           "aSlug": "heili-alateng",
           "b": "Juan Díaz",
-          "bRecent": [
-            {
-              "boutId": "93780",
-              "date": "2026-11-14",
-              "method": "decision_unanimous",
-              "opponent": "Heili Alateng",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": null,
-              "date": "2026-11-14",
-              "method": "decision_unanimous",
-              "opponent": "Alatengheili",
-              "promotion": "",
-              "result": "win",
-              "source": "history",
-              "titleFight": false
-            },
-            {
-              "boutId": "66116",
-              "date": "2026-05-16",
-              "method": "submission",
-              "opponent": "Malcolm Wellmaker",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "bRecord": "16-1-1",
           "bSlug": "juan-diaz",
           "division": "Bantamweight",
           "id": "93780",
@@ -37445,74 +37195,8 @@
         },
         {
           "a": "Evan Elder",
-          "aRecent": [
-            {
-              "boutId": "93621",
-              "date": "2026-11-14",
-              "method": "decision_unanimous",
-              "opponent": "Samuel Sanches",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "60881",
-              "date": "2025-04-26",
-              "method": "decision_unanimous",
-              "opponent": "Gauge Young",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": "61076",
-              "date": "2024-07-13",
-              "method": "submission",
-              "opponent": "Darrius Flowers",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            }
-          ],
-          "aRecord": "10-2-0",
           "aSlug": "evan-elder",
           "b": "Samuel Sanches",
-          "bRecent": [
-            {
-              "boutId": "83912",
-              "date": "2025-09-09",
-              "method": "ko_tko",
-              "opponent": "Chasen Blair",
-              "promotion": "ufc",
-              "result": "win",
-              "source": "native",
-              "titleFight": false
-            },
-            {
-              "boutId": null,
-              "date": "2025-03-30",
-              "method": "ko_tko",
-              "opponent": "Evaldo Santos",
-              "promotion": "",
-              "result": "win",
-              "source": "history",
-              "titleFight": false
-            },
-            {
-              "boutId": null,
-              "date": "2024-06-01",
-              "method": "ko_tko",
-              "opponent": "Severino Neto",
-              "promotion": "",
-              "result": "win",
-              "source": "history",
-              "titleFight": false
-            }
-          ],
-          "bRecord": "11-1-0",
           "bSlug": "samuel-sanches",
           "division": "Lightweight",
           "id": "93621",
@@ -37680,7 +37364,7 @@
       "prelimsAt": "2026-11-15T00:00:00.000Z",
       "slug": "ufc-2026-11-15",
       "startAt": "2026-11-14T22:00:00.000Z",
-      "status": "announced",
+      "status": "completed",
       "title": "Polymarket UFC 334: Gane vs Hokit",
       "venue": "Madison Square Garden, New York, NY, United States"
     },
@@ -43049,7 +42733,256 @@
       "venue": "Scotiabank Arena, Toronto, ON, Canada"
     },
     "ufc:3554": {
-      "bouts": [],
+      "bouts": [
+        {
+          "a": "Yair Rodriguez",
+          "aRecent": [
+            {
+              "boutId": "60968",
+              "date": "2025-04-12",
+              "method": "decision_unanimous",
+              "opponent": "Patricio Pitbull",
+              "promotion": "ufc",
+              "result": "win",
+              "source": "native",
+              "titleFight": false
+            },
+            {
+              "boutId": "39030",
+              "date": "2024-02-25",
+              "method": "submission",
+              "opponent": "Brian Ortega",
+              "promotion": "ufc",
+              "result": "loss",
+              "source": "native",
+              "titleFight": false
+            },
+            {
+              "boutId": "60128",
+              "date": "2023-07-08",
+              "method": "ko_tko",
+              "opponent": "Alexander Volkanovski",
+              "promotion": "ufc",
+              "result": "loss",
+              "source": "native",
+              "titleFight": true
+            }
+          ],
+          "aSlug": "yair-rodriguez",
+          "b": "Steve Garcia",
+          "bRecent": [
+            {
+              "boutId": "66010",
+              "date": "2026-06-15",
+              "method": "ko_tko",
+              "opponent": "Diego Lopes",
+              "promotion": "ufc",
+              "result": "loss",
+              "source": "native",
+              "titleFight": false
+            },
+            {
+              "boutId": "60418",
+              "date": "2025-11-01",
+              "method": "ko_tko",
+              "opponent": "David Onama",
+              "promotion": "ufc",
+              "result": "win",
+              "source": "native",
+              "titleFight": false
+            },
+            {
+              "boutId": "60831",
+              "date": "2025-07-12",
+              "method": "decision_unanimous",
+              "opponent": "Calvin Kattar",
+              "promotion": "ufc",
+              "result": "win",
+              "source": "native",
+              "titleFight": false
+            }
+          ],
+          "bRecord": "19-6-0",
+          "bSlug": "steve-garcia",
+          "division": "Featherweight",
+          "id": "93823",
+          "main": true,
+          "order": 1,
+          "result": null,
+          "roundPreview": null,
+          "scheduledRounds": 5,
+          "scorecardSummary": null,
+          "section": "main",
+          "status": "announced",
+          "titleFight": false
+        },
+        {
+          "a": "Daniel Rodriguez",
+          "aRecent": [
+            {
+              "boutId": "66464",
+              "date": "2026-08-01",
+              "method": "ko_tko",
+              "opponent": "Uros Medic",
+              "promotion": "ufc",
+              "result": "loss",
+              "source": "native",
+              "titleFight": false
+            },
+            {
+              "boutId": "60805",
+              "date": "2025-07-19",
+              "method": "decision_unanimous",
+              "opponent": "Kevin Holland",
+              "promotion": "ufc",
+              "result": "win",
+              "source": "native",
+              "titleFight": false
+            },
+            {
+              "boutId": "60793",
+              "date": "2025-05-03",
+              "method": "ko_tko",
+              "opponent": "Santiago Ponzinibbio",
+              "promotion": "ufc",
+              "result": "win",
+              "source": "native",
+              "titleFight": false
+            }
+          ],
+          "aRecord": "20-6-0",
+          "aSlug": "daniel-rodriguez",
+          "b": "Roberto Soldic",
+          "bRecent": [
+            {
+              "boutId": "92979",
+              "date": "2026-10-03",
+              "method": "decision_unanimous",
+              "opponent": "Khaos Williams",
+              "promotion": "ufc",
+              "result": "win",
+              "source": "native",
+              "titleFight": false
+            },
+            {
+              "boutId": null,
+              "date": "2025-09-06",
+              "method": "ko_tko",
+              "opponent": "Tomasz Adamek",
+              "promotion": "",
+              "result": "win",
+              "source": "history",
+              "titleFight": false
+            },
+            {
+              "boutId": "78253",
+              "date": "2025-02-20",
+              "method": "ko_tko",
+              "opponent": "Dagi Arslanaliev",
+              "promotion": "one",
+              "result": "win",
+              "source": "native",
+              "titleFight": false
+            }
+          ],
+          "bRecord": "22-4-0",
+          "bSlug": "roberto-soldic",
+          "division": "Welterweight",
+          "id": "93824",
+          "main": false,
+          "order": 2,
+          "result": null,
+          "roundPreview": null,
+          "scheduledRounds": 3,
+          "scorecardSummary": null,
+          "section": "main",
+          "status": "announced",
+          "titleFight": false
+        },
+        {
+          "a": "Chidi Njokuani",
+          "aRecent": [
+            {
+              "boutId": "83407",
+              "date": "2026-08-15",
+              "method": "decision_unanimous",
+              "opponent": "Joel Álvarez",
+              "promotion": "ufc",
+              "result": "win",
+              "source": "native",
+              "titleFight": false
+            },
+            {
+              "boutId": "60665",
+              "date": "2026-02-21",
+              "method": "decision_unanimous",
+              "opponent": "Carlos Leal",
+              "promotion": "ufc",
+              "result": "loss",
+              "source": "native",
+              "titleFight": false
+            },
+            {
+              "boutId": "60836",
+              "date": "2025-07-12",
+              "method": "submission",
+              "opponent": "Jake Matthews",
+              "promotion": "ufc",
+              "result": "loss",
+              "source": "native",
+              "titleFight": false
+            }
+          ],
+          "aRecord": "26-12-0",
+          "aSlug": "chidi-njokuani",
+          "b": "Ignacio Bahamondes",
+          "bRecent": [
+            {
+              "boutId": "83282",
+              "date": "2026-09-12",
+              "method": "decision_unanimous",
+              "opponent": "Muslim Salikhov",
+              "promotion": "ufc",
+              "result": "win",
+              "source": "native",
+              "titleFight": false
+            },
+            {
+              "boutId": "60629",
+              "date": "2026-03-28",
+              "method": "decision_unanimous",
+              "opponent": "Tofiq Musayev",
+              "promotion": "ufc",
+              "result": "loss",
+              "source": "native",
+              "titleFight": false
+            },
+            {
+              "boutId": "60272",
+              "date": "2025-06-21",
+              "method": "decision_unanimous",
+              "opponent": "Rafael Fiziev",
+              "promotion": "ufc",
+              "result": "loss",
+              "source": "native",
+              "titleFight": false
+            }
+          ],
+          "bRecord": "18-7-0",
+          "bSlug": "ignacio-bahamondes",
+          "division": "Welterweight",
+          "id": "93825",
+          "main": false,
+          "order": 3,
+          "result": null,
+          "roundPreview": null,
+          "scheduledRounds": 3,
+          "scorecardSummary": null,
+          "section": "main",
+          "status": "announced",
+          "titleFight": false
+        }
+      ],
       "date": "2027-01-16",
       "earlyPrelimsAt": "",
       "id": "3554",
@@ -43059,7 +42992,7 @@
       "slug": "ufc-fight-night-2027-01-17",
       "startAt": "2027-01-16T22:00:00.000Z",
       "status": "announced",
-      "title": "UFC Dallas",
+      "title": "UFC Fight Night: Rodriguez vs Garcia",
       "venue": "American Airlines Center, Dallas, TX, United States"
     },
     "ufc:3591": {
@@ -44072,7 +44005,203 @@
       "startAt": "2026-12-05T15:00:00.000Z",
       "status": "announced",
       "title": "UFC Fight Night: Adesanya vs Magomedov",
-      "venue": "The Venue, Riyadh, Saudi Arabia"
+      "venue": "The Venue, Riyadh, Riyadh, Saudi Arabia"
+    },
+    "ufc:3604": {
+      "bouts": [
+        {
+          "a": "Joe Pyfer",
+          "aRecent": [
+            {
+              "boutId": null,
+              "date": "2026-09-18",
+              "method": "",
+              "opponent": "Luke Rockhold",
+              "promotion": "",
+              "result": "win",
+              "source": "history",
+              "titleFight": false
+            },
+            {
+              "boutId": "60623",
+              "date": "2026-03-28",
+              "method": "ko_tko",
+              "opponent": "Israel Adesanya",
+              "promotion": "ufc",
+              "result": "win",
+              "source": "native",
+              "titleFight": false
+            },
+            {
+              "boutId": "60742",
+              "date": "2025-10-04",
+              "method": "submission",
+              "opponent": "Abus Magomedov",
+              "promotion": "ufc",
+              "result": "win",
+              "source": "native",
+              "titleFight": false
+            }
+          ],
+          "aRecord": "16-3-0",
+          "aSlug": "joe-pyfer",
+          "b": "Bo Nickal",
+          "bRecent": [
+            {
+              "boutId": null,
+              "date": "2026-09-05",
+              "method": "decision",
+              "opponent": "Shirvani Gadzhikurbanovich Muradov",
+              "promotion": "",
+              "result": "win",
+              "source": "history",
+              "titleFight": false
+            },
+            {
+              "boutId": null,
+              "date": "2026-08-22",
+              "method": "decision",
+              "opponent": "Max McEnelly",
+              "promotion": "",
+              "result": "loss",
+              "source": "history",
+              "titleFight": false
+            },
+            {
+              "boutId": "66009",
+              "date": "2026-06-15",
+              "method": "ko_tko",
+              "opponent": "Kyle Daukaus",
+              "promotion": "ufc",
+              "result": "win",
+              "source": "native",
+              "titleFight": false
+            }
+          ],
+          "bRecord": "9-1-0",
+          "bSlug": "bo-nickal",
+          "division": "Middleweight",
+          "id": "93826",
+          "main": true,
+          "order": 1,
+          "result": null,
+          "roundPreview": null,
+          "scheduledRounds": 5,
+          "scorecardSummary": null,
+          "section": "main",
+          "status": "announced",
+          "titleFight": false
+        }
+      ],
+      "date": "2027-02-13",
+      "earlyPrelimsAt": "",
+      "id": "3604",
+      "mainAt": "2027-02-13T22:00:00.000Z",
+      "org": "ufc",
+      "prelimsAt": "2027-02-13T20:00:00.000Z",
+      "slug": "ufc-fight-night-2027-02-13",
+      "startAt": "2027-02-13T20:00:00.000Z",
+      "status": "announced",
+      "title": "UFC Fight Night: Pyfer vs Nickal",
+      "venue": "Rocket Arena, Cleveland, United States"
+    },
+    "ufc:3605": {
+      "bouts": [
+        {
+          "a": "Gabriel Bonfim",
+          "aRecent": [
+            {
+              "boutId": "66012",
+              "date": "2026-06-06",
+              "method": "decision_unanimous",
+              "opponent": "Belal Muhammad",
+              "promotion": "ufc",
+              "result": "win",
+              "source": "native",
+              "titleFight": false
+            },
+            {
+              "boutId": "65899",
+              "date": "2025-11-08",
+              "method": "ko_tko",
+              "opponent": "Randy Brown",
+              "promotion": "ufc",
+              "result": "win",
+              "source": "native",
+              "titleFight": false
+            },
+            {
+              "boutId": "60830",
+              "date": "2025-07-12",
+              "method": "decision_split",
+              "opponent": "Stephen Thompson",
+              "promotion": "ufc",
+              "result": "win",
+              "source": "native",
+              "titleFight": false
+            }
+          ],
+          "aRecord": "20-1-0",
+          "aSlug": "gabriel-bonfim",
+          "b": "Sean Brady",
+          "bRecent": [
+            {
+              "boutId": "66053",
+              "date": "2026-05-09",
+              "method": "decision_unanimous",
+              "opponent": "Joaquin Buckley",
+              "promotion": "ufc",
+              "result": "win",
+              "source": "native",
+              "titleFight": false
+            },
+            {
+              "boutId": "38197",
+              "date": "2025-11-15",
+              "method": "ko_tko",
+              "opponent": "Michael Morales",
+              "promotion": "ufc",
+              "result": "loss",
+              "source": "native",
+              "titleFight": false
+            },
+            {
+              "boutId": "60308",
+              "date": "2025-03-22",
+              "method": "submission",
+              "opponent": "Leon Edwards",
+              "promotion": "ufc",
+              "result": "win",
+              "source": "native",
+              "titleFight": false
+            }
+          ],
+          "bRecord": "19-2-0",
+          "bSlug": "sean-brady",
+          "division": "Welterweight",
+          "id": "93827",
+          "main": true,
+          "order": 1,
+          "result": null,
+          "roundPreview": null,
+          "scheduledRounds": 5,
+          "scorecardSummary": null,
+          "section": "main",
+          "status": "announced",
+          "titleFight": false
+        }
+      ],
+      "date": "2027-01-23",
+      "earlyPrelimsAt": "",
+      "id": "3605",
+      "mainAt": "2027-01-23T22:00:00.000Z",
+      "org": "ufc",
+      "prelimsAt": "2027-01-23T20:00:00.000Z",
+      "slug": "ufc-fight-night-2027-01-23",
+      "startAt": "2027-01-23T20:00:00.000Z",
+      "status": "announced",
+      "title": "UFC Fight Night: Bonfim vs Brady",
+      "venue": "Meta Apex, Las Vegas, NV, United States"
     },
     "ufc:5": {
       "bouts": [
@@ -54166,7 +54295,7 @@
       "venue": "Meta Apex, Las Vegas, Nevada, United States"
     }
   },
-  "generatedAt": "2026-11-15T05:50:04+00:00",
+  "generatedAt": "2026-11-15T09:44:07+00:00",
   "note": "Selected dated facts for BEFN cards; not a full API feed.",
   "schema": 1,
   "source": "UFCalendar"
