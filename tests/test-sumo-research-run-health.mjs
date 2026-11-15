@@ -43,3 +43,15 @@ test('a successful and committed Sumo research checkpoint resolves an old failur
  assert.equal(resolvePreviousResearchFailure({...prior,status:'resolved-after-successful-retry'},success),null);
  assert.equal(resolvePreviousResearchFailure(prior,{...success,runId:null}),null);
 });
+
+test('run health independently displays JSA source-omission and banzuke rank QA',()=>{
+ const r=buildSumoHealth({...input,official:{profileReviewCases:6,
+  officialCareerTotalsNotFoundCases:6,genuineParserOrFieldReviewCases:0,
+  officialBanzukeRanksCompared:97,officialBanzukeRankDiscrepancies:1}});
+ assert.equal(r.officialJsa.officialReviewCases,6);
+ assert.equal(r.officialJsa.officialCareerTotalsNotFound,6);
+ assert.equal(r.officialJsa.genuineParserOrFieldReviews,0);
+ assert.equal(r.officialJsa.officialHistoricalRanksCompared,97);
+ assert.equal(r.officialJsa.officialHistoricalRankDiscrepancies,1);
+ assert.equal(r.certifiedCareers,0);
+});
