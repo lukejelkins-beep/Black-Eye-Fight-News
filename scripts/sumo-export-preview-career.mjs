@@ -65,7 +65,8 @@ export function createPreviewCareer(roster,profiles,asOf){
    name:w.shikonaEn,weight,rank,
    weightSource:weight.find(m=>m.evidenceSource==='SumoDB dated tournament measurement')?.source||
      weight[0]?.source||null,
-   rankSource:'https://sumodb.sumogames.de/Rikishi.aspx?r='+w.sumoDbId,
+   rankSource:'https://www.sumo-api.com/api/ranks?rikishiId='+w.sourceId+'&limit=200&skip=0&sortOrder=asc',
+   independentRankReference:'https://sumodb.sumogames.de/Rikishi.aspx?r='+w.sumoDbId,
    rankCrosscheck:'https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+w.officialNskId+'/',
    currentListedWeight:currentOfficial?{
      kg:currentOfficial.weightKg,
