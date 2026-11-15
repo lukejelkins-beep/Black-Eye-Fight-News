@@ -99,6 +99,35 @@ export function sourceIdentityEvidence(html,w,raw){
   birthDateStatus,publishedDob,expectedDob,
   evidenceWindow:'profile-header-before-career-record'};
 }
+/**
+ * Cross-check a historical saved measurement against a fresh same-ID source
+ * document before recording stronger identity evidence. Never replace the
+ * saved source weight or silently erase a source discrepancy.
+ */
+export function corroborateSavedMeasurements(savedRows,latestRows){
+ if(!Array.isArray(savedRows)||!savedRows.length||!Array.isArray(latestRows))
+  return {ok:false,corroborated:0,issues:['missing dated historical measurements']};
+ const latest=new Map(latestRows.map(row=>[String(row.bashoId),row]));
+ const issues=[];let corroborated=0;
+ for(const row of savedRows){
+  const newer=latest.get(String(row.bashoId));
+  if(!newer){
+   issues.push('source date absent on recheck '+row.bashoId);continue;
+  }
+  const heightEqual=Number(row.heightCm)===Number(newer.heightCm);
+  const weightEqual=Number(row.weightKg)===Number(newer.weightKg);
+  if(!heightEqual||!weightEqual)
+   issues.push('source value differs on recheck '+row.bashoId);
+  else corroborated++;
+ }
+ return {ok:issues.length===0,corroborated,issues};
+}
+export function requiresIdentityRecheck(doc){
+ if(!doc||doc.identityRecheck)return false;
+ const status=doc.identityEvidence?.birthDateStatus||null;
+ return status!== 'match'&&status!=='source-birth-date-missing'&&
+   status!=='roster-birth-date-unavailable'&&status!=='mismatch';
+}
 export function recoveryCooldown(error){
  const s=String(error||'');
  if(/robots|HTTP (403|429|451)/i.test(s))return 24*3600;
@@ -125,7 +154,7 @@ async function main(){
   console.log(JSON.stringify({status:'provider-cooldown',nextAllowedAt:prior.nextAllowedAt,requests:0}));
   return;
  }
- let error=null,cooldown=0,updated=0,requests=0;
+ let error=null,cooldown=0,updated=0,requests=0,identityAudits=0;
  const failed=[];
  try{
   const robots=await fetch('https://sumodb.sumogames.de/robots.txt',{
@@ -142,8 +171,8 @@ async function main(){
  if(roster?.count!==190||roster.rikishi?.length!==190)throw Error('Frozen cohort mismatch');
  const interval=Math.max(12000,Math.ceil(60000/Number(p.allowedRequestsPerMinute)));
  const limit=Math.min(10,Math.max(1,Number(process.env.SUMODB_MAX_PER_RUN||10)));
- // GitHub Actions has a four-minute job limit; keep enough time for QA,
- // JSA checks, a final JSON summary and the research-branch git checkpoint.
+ // The collection stage has a strict 160-second deadline. Reserve the
+ // remaining workflow time for QA and a saved GitHub research checkpoint.
  const workerDeadline=Date.now()+160000;
  let lastAt=0;
  if(!cooldown){
@@ -199,6 +228,57 @@ async function main(){
       permanent:true,parserVersion:SOURCE_PARSER_VERSION});
    }
   }
+  // After every accessible roster profile has its dated source snapshot,
+  // spend remaining provider budget on older source-identity gaps. These
+  // rechecks do not re-collect, overwrite or increase the saved weight dots.
+  let hasPendingHistoricalSource=false;
+  for(const w of roster.rikishi){
+   const priorDoc=await optional(join(ROOT,'weight-source-crosschecks',w.sourceId+'.json'));
+   const blocked=(prior.reviewCases||[]).some(x=>x.sourceId===w.sourceId&&
+     x.permanent&&Number(x.parserVersion||0)>=SOURCE_PARSER_VERSION);
+   if(!priorDoc&&!blocked)hasPendingHistoricalSource=true;
+  }
+  if(!hasPendingHistoricalSource){
+   for(const w of roster.rikishi){
+    if(requests>=limit||cooldown)break;
+    const dest=join(ROOT,'weight-source-crosschecks',w.sourceId+'.json');
+    const saved=await optional(dest);
+    if(!requiresIdentityRecheck(saved))continue;
+    if((prior.reviewCases||[]).some(x=>x.sourceId===w.sourceId&&
+       x.permanent&&Number(x.parserVersion||0)>=SOURCE_PARSER_VERSION))continue;
+    const delay=Math.max(0,lastAt+interval-Date.now());
+    if(Date.now()+delay+19000>workerDeadline)break;
+    if(delay)await sleep(delay);
+    lastAt=Date.now();requests++;
+    try{
+     if(Number(saved.sumoDbId)!==Number(w.sumoDbId)||
+        Number(saved.sourceId)!==Number(w.sourceId)||
+        Number(saved.officialNskId)!==Number(w.officialNskId))
+      throw Error('Prior SumoDB source identity does not match frozen roster');
+     const html=await fetchHtml(SOURCE_URL+w.sumoDbId);
+     if(html.length<400||html.length>2_000_000)throw Error('Unexpected source HTML length');
+     const raw=await read(join(ROOT,'rikishi',w.sourceId+'.json'));
+     const identity=sourceIdentityEvidence(html,w,raw);
+     if(!identity.valid)throw Error('Source identity mismatch on historical verification pass');
+     const rows=parseSumoDbDatedMeasurements(html);
+     const corroboration=corroborateSavedMeasurements(saved.datedEvidence,rows);
+     if(!corroboration.ok)
+      throw Error('Historical source recheck disagreed: '+corroboration.issues.join('; '));
+     const proof={verifiedAt:now(),sourceParserVersion:SOURCE_PARSER_VERSION,
+      sourceUrl:SOURCE_URL+w.sumoDbId,rawHtmlSha256:createHash('sha256').update(html).digest('hex'),
+      identityEvidence:identity,unchangedSavedMeasurements:corroboration.corroborated,
+      originalEvidencePreserved:true,certified:false};
+     await save(dest,{...saved,identityRecheck:proof});
+     identityAudits++;
+    }catch(e){
+     const msg=String(e.message||e).slice(0,180);
+     const wait=recoveryCooldown(msg);
+     if(wait){error=msg;cooldown=wait;break;}
+     failed.push({sourceId:w.sourceId,name:w.shikonaEn,
+      issue:'Identity second-pass: '+msg,permanent:true,parserVersion:SOURCE_PARSER_VERSION});
+    }
+   }
+  }
  }
  const reviews=[...(prior.reviewCases||[])].filter(x=>
    !Number.isFinite(Number(x.parserVersion))||
@@ -209,13 +289,14 @@ async function main(){
  }
  const result={schemaVersion:1,scope:'Research-only SumoDB collection progress',
   lastRunAt:now(),source:'https://sumodb.sumogames.de',
-  permission:'user-reported-confirmation',requestsThisRun:requests,updatedThisRun:updated,
+  permission:'user-reported-confirmation',requestsThisRun:requests,
+  updatedThisRun:updated,identityAuditsThisRun:identityAudits,
   cooldownReason:error,nextAllowedAt:cooldown?
     new Date(Date.now()+cooldown*1000).toISOString():null,
   reviewCases:reviews,certifiedWeightHistories:0,productionPublished:0};
  await save(STATUS,result);
  console.log(JSON.stringify({status:cooldown?'cooldown':failed.length?'needs-manual-review':'ok',
-  requests,updated,reviewCases:reviews.length,nextAllowedAt:result.nextAllowedAt,
+  requests,updated,identityAudits,reviewCases:reviews.length,nextAllowedAt:result.nextAllowedAt,
   error,certified:0}));
 }
 if(process.argv[1]&&import.meta.url===new URL('file://'+process.argv[1]).href)
