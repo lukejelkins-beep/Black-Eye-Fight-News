@@ -6,6 +6,7 @@ import {
   rankPositions, confirmedCareerHigh, publishedCurrentWeight
 } from './sumo-data.mjs';
 import { careerGraphs } from './sumo-editorial-charts.mjs';
+import { boutKey, mergeProfileBouts, filterAndSortOpponents, exactNamePriority } from './sumo-editorial-data.mjs';
 import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verification.mjs';
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
 
@@ -289,7 +290,7 @@ function directoryMatches() {
   const indexed=new Map();
   for(const d of DIVS) for(const [i,row] of (getBanzuke(d)?rankTable(getBanzuke(d)):[]).entries()) indexed.set(Number(row.rikishiID), DIVS.indexOf(d)*1000+i);
   found.sort((a,b)=>{
-    const priority=w=>exact&&(String(w.shikonaEn).toLocaleLowerCase()===exact||String(w.shikonaJp).toLocaleLowerCase()===exact)?0:1;
+    const priority=w=>exactNamePriority(w,exact);
     return priority(a)-priority(b)||(indexed.get(a.sourceId)??9999)-(indexed.get(b.sourceId)??9999)||a.shikonaEn.localeCompare(b.shikonaEn);
   });
   return found;
@@ -388,7 +389,7 @@ function profileTechniques(w){
     dist.techniques.map(x=>'<div class="chart-row"><span class="name">'+e(x.technique)+'</span><div class="bar-bg" role="meter" aria-label="'+e(x.technique)+' '+x.percentage+' percent" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+x.percentage+'"><div style="width:'+x.percentage+'%"></div></div><strong>'+x.percentage+'%</strong></div>').join('');
 }
 /* Presentation-only results model. One canonical renderer; no cache records are rewritten. */
-function resultKey(row) {return [row.bashoId,row.day,row.opponentId].map(v=>String(v??'unknown')).join('-');}
+function resultKey(row) {return boutKey(row);}
 function currentProfileBouts(w) {
   const entry=entryFor(w),date=details().bashoId;
   const completed=(entry?.record||[]).flatMap((rec,i)=>{
@@ -431,14 +432,8 @@ function sourceCareerBouts(w) {
   }));
   return validMatchSamples(detailFor(details(),id),id).map(m=>({...m,scope:'Cached recent results sample'}));
 }
-function profileBouts(w){
-  const current=currentProfileBouts(w),historical=sourceCareerBouts(w),byKey=new Map();
-  // The banzuke owns current results. Source-ledger rows extend history only.
-  for(const row of historical)if(Number.isSafeInteger(Number(row.opponentId))&&row.opponentId>0)byKey.set(resultKey(row),row);
-  for(const row of current)byKey.set(resultKey(row),row);
-  return [...byKey.values()].sort((a,b)=>String(b.bashoId).localeCompare(String(a.bashoId))||
-    Number(b.day||0)-Number(a.day||0)||Number(a.opponentId)-Number(b.opponentId));
-}
+function profileBouts(w){return mergeProfileBouts(currentProfileBouts(w),sourceCareerBouts(w));}
+
 function profileBoutRow(w,row){
   const id=Number(row.opponentId),opponent=wrestler(id);
   const outcome=String(row.outcome||'').toLowerCase();
@@ -586,13 +581,8 @@ function opponentResults(w){
   if(!profile||!Array.isArray(original))
     return '<p role="status">'+e(STATE.h2hOpponentsFailed?'Opponent directory could not load.':'Loading the complete opponent index…')+'</p>'+
       (STATE.h2hOpponentsFailed?'<button type="button" data-opponent-retry>Retry opponent index</button>':'');
-  const q=STATE.opponentQuery.trim().toLocaleLowerCase();
-  const matches=original.filter(r=>!q||String(wrestler(r.id)?.shikonaEn||r.name||'').toLocaleLowerCase().includes(q));
   const name=r=>String(wrestler(r.id)?.shikonaEn||r.name||'Rikishi #'+r.id);
-  const compareName=(a,b)=>name(a).localeCompare(name(b),'en');
-  matches.sort((a,b)=>STATE.opponentSort==='name'?compareName(a,b):
-    STATE.opponentSort==='record'?(b.wins-b.losses)-(a.wins-a.losses)||compareName(a,b):
-    (b.meetings-a.meetings)||compareName(a,b));
+  const matches=filterAndSortOpponents(original,STATE.opponentQuery,STATE.opponentSort,name);
   const shown=matches.slice(0,STATE.h2hOpponentLimit);
   return '<p class="directory-count" role="status" aria-live="polite">'+shown.length+' shown of '+matches.length+
     ' matching opponents · '+original.length+' recorded opponents total</p>'+
