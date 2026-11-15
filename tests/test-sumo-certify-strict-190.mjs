@@ -213,3 +213,33 @@ test('strict W-L audit can independently cover an older basho missing from JSA h
  f.weight.careerRecordCrosscheck.independentBashoRows[0].losses=1;
  assert.ok(strictCareerAudit(f).blockers.includes('independent-official-completed-tournament-results'));
 });
+
+test('older SumoDB rank corroboration can meet strict rank threshold only with exact positions',()=>{
+ const f=fixture();
+ f.p.rankTimeline=[
+  {bashoId:'202507',rank:'Jonidan 35 East'},
+  {bashoId:'202609',rank:'Jonidan 17 East'},
+  {bashoId:'202611',rank:'Jonidan 22 East'}
+ ];
+ f.official.officialRankRecords=[{bashoId:'202611',rank:'Jonidan 22 East'}];
+ f.official.rankReconciliation={comparedBasho:1,agreedBasho:1,mismatches:[],
+  missingSourceRankBasho:[]};
+ f.weight.careerRecordCrosscheck={
+  sourceUrl:'https://sumodb.sumogames.de/Rikishi.aspx?r=20',
+  identityVerified:true,originalMeasurementsUnchanged:true,independentOfApi:true,
+  datedBashoLedgerSourceSha256:'e'.repeat(64),
+  independentBashoRows:[
+   {bashoId:'202507',rankEn:'Jonidan 35 East'},
+   {bashoId:'202609',rankEn:'Jonidan 17 East'}],
+  careerRecordDiffersFromPriorSnapshot:false
+ };
+ assert.equal(strictCareerAudit(f).careerResultsCertified,true);
+ assert.equal(strictCareerAudit(f).independentlyCrosscheckedOlderRanksFromSumoDB,2);
+ f.weight.careerRecordCrosscheck.independentBashoRows[0].rankEn='Jonidan 34 East';
+ assert.ok(strictCareerAudit(f).blockers.includes('independent-official-banzuke-rank-coverage'));
+ f.weight.careerRecordCrosscheck.independentBashoRows[0].rankEn=null;
+ assert.equal(strictCareerAudit(f).careerResultsCertified,true,
+  'one exact additional rank plus one JSA rank reaches the 2/3 minimum');
+ f.weight.careerRecordCrosscheck.independentBashoRows[1].rankEn=null;
+ assert.ok(strictCareerAudit(f).blockers.includes('independent-official-banzuke-rank-coverage'));
+});
