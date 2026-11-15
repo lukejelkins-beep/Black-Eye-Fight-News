@@ -69,7 +69,8 @@ export function editorialWeightChart(points,{start=null,end=null,source=null,rev
     '<div class="table-scroll"><table><thead><tr><th scope="col">Recorded period</th><th scope="col">Weight</th><th scope="col">Source</th><th scope="col">Date precision</th><th scope="col">Review state</th></tr></thead><tbody>'+
     plotted.map(({point:p})=>'<tr><td>'+esc(monthLabel(p.basho))+'</td><td>'+esc(p.kg)+' kg</td><td>'+sourceCell(p.source||source)+'</td><td>'+esc(p.datePrecision||'Month only')+'</td><td>'+esc(p.reviewState||review||'Not stated')+'</td></tr>').join('')+
     '</tbody></table></div></details>';
-  return '<div class="sumo-weight-scroll">'+svg(body,W,H,'sumo-weight-svg','Dated weight observations on actual elapsed calendar time, in kilograms')+'</div>'+
+  return '<p class="sumo-chart-scroll-hint">On smaller screens, swipe the chart or focus it and use arrow keys. Every observation is also in the table below.</p>'+
+    '<div class="sumo-weight-scroll" tabindex="0" role="region" aria-label="Scrollable weight history chart">'+svg(body,W,H,'sumo-weight-svg','Dated weight observations on actual elapsed calendar time, in kilograms')+'</div>'+
     '<p class="sumo-chart-note">Each dot is a dated observation. Dashed connectors only guide between observations within 18 months; long gaps remain unconnected. No intervening measurements are implied.</p>'+table;
 }
 export function rankRangePoints(points,range='career'){
@@ -108,7 +109,7 @@ function rankSvg(points,{fullLadder=false,overview=false}={}){
     const desc=monthLabel(p.basho)+' · '+p.rank+' · '+move;
     return '<circle class="sumo-rank-point" cx="'+x(i)+'" cy="'+y(p.rank)+'" r="'+(overview?2.5:4.2)+'" '+
       (overview?'':'tabindex="0" role="img" aria-label="'+esc(desc)+'"')+'><title>'+esc(desc)+'</title></circle>'+
-      (!overview&&(i===0||i===points.length-1)?'<text class="sumo-chart-axis" x="'+x(i)+'" y="'+(H-10)+'" text-anchor="middle">'+esc(monthLabel(p.basho))+'</text>':'');
+      (!overview&&(i===0||i===points.length-1)?'<text class="sumo-chart-axis" x="'+x(i)+'" y="'+(H-10)+'" text-anchor="'+(i===0?'start':'end')+'">'+esc(monthLabel(p.basho))+'</text>':'');
   }).join('');
   return svg(body,W,H,overview?'sumo-rank-overview':'sumo-rank-svg',overview?'Whole-career rank overview, first to latest recorded basho':'Selected-period ordinal banzuke history; higher on chart means higher rank');
 }
@@ -130,7 +131,8 @@ export function editorialRankChart(points,{range='career',fullLadder=false}={}){
     options.map(([id,label])=>'<button type="button" data-rank-range="'+id+'" aria-pressed="'+(range===id)+'">'+label+'</button>').join('')+
     '<button type="button" data-rank-ladder aria-pressed="'+fullLadder+'">'+(fullLadder?'Visited divisions':'Full rank ladder')+'</button></div>'+
     '<p class="sumo-chart-note">Ordinal banzuke positions (East and West distinguished); higher means a higher rank. '+selected.length+' observations in selected period. '+(fullLadder?'Full ladder':'Vertical axis adapted to visited divisions')+'.</p>'+
-    '<div class="sumo-rank-scroll">'+rankSvg(selected,{fullLadder})+'</div>'+
+    '<p class="sumo-chart-scroll-hint">On smaller screens, swipe the chart or focus it and use arrow keys. Every observation is also in the table below.</p>'+
+    '<div class="sumo-rank-scroll" tabindex="0" role="region" aria-label="Scrollable rank history chart">'+rankSvg(selected,{fullLadder})+'</div>'+
     '<p class="sumo-chart-note">Step connectors join only consecutive recorded bashos. Missing rank entries stay unconnected; position movement is not necessarily a formal title promotion or demotion. Highest sourced observation: '+esc(highest.rank)+'.</p>'+table;
 }
 export function careerGraphs(w,cache,bashoId,prevBasho,prevRank,options={}){

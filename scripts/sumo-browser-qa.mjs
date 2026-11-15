@@ -248,6 +248,42 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.equal(await page.locator('.sumo-ed-extra').first().getAttribute('open'),'');
   await page.locator('#sumo-results').screenshot({path:OUT+'/'+label+'-results.png',animations:'disabled'});
   screenshotCount++;
+  const rowLayout=await page.locator('.sumo-ed-row-main').evaluateAll(rows=>rows.flatMap(row=>{
+    const boxes=[...row.children].map(el=>({name:el.className,rect:el.getBoundingClientRect()}));
+    const problems=[];
+    for(let i=0;i<boxes.length;i++)for(let j=i+1;j<boxes.length;j++){
+      const a=boxes[i],b=boxes[j];
+      if(Math.min(a.rect.right,b.rect.right)-Math.max(a.rect.left,b.rect.left)>1&&
+         Math.min(a.rect.bottom,b.rect.bottom)-Math.max(a.rect.top,b.rect.top)>1)
+        problems.push(a.name+' overlaps '+b.name);
+    }
+    for(const el of row.querySelectorAll('.sumo-ed-date small,.sumo-ed-person a')){
+      if(el.scrollWidth>el.clientWidth+1)problems.push(el.className+' text overflows');
+    }
+    return problems;
+  }));
+  assert.deepEqual(rowLayout,[],'Result cells and their text must not overlap');
+  for(const kind of ['rank','weight']){
+    const chart=page.locator('.sumo-'+kind+'-scroll');
+    const readable=await chart.locator('svg text').evaluateAll(ns=>ns.every(n=>
+      parseFloat(getComputedStyle(n).fontSize)*n.getScreenCTM().a>=12));
+    assert.ok(readable,kind+' axis labels render at least 12 CSS pixels');
+    const dimensions=await chart.evaluate(el=>({client:el.clientWidth,scroll:el.scrollWidth}));
+    if(dimensions.scroll>dimensions.client){
+      await chart.press('ArrowRight');
+      await page.waitForFunction(k=>document.querySelector('.sumo-'+k+'-scroll').scrollLeft>0,kind);
+      await chart.evaluate(el=>{el.scrollLeft=el.scrollWidth;});
+      const lastVisible=await chart.evaluate(el=>{
+        const point=el.querySelector('svg circle:last-of-type').getBoundingClientRect();
+        const box=el.getBoundingClientRect();
+        return point.left>=box.left&&point.right<=box.right;
+      });
+      assert.ok(lastVisible,kind+' latest observation is reachable inside chart');
+      await chart.screenshot({path:OUT+'/'+label+'-'+kind+'-chart-end.png',animations:'disabled'});
+      screenshotCount++;
+      await chart.evaluate(el=>{el.scrollLeft=0;});
+    }
+  }
   const careerPoints=await page.locator('.sumo-rank-svg .sumo-rank-point').count();
   await page.locator('[data-rank-range="2y"]').click();
   assert.ok(await page.locator('.sumo-rank-svg .sumo-rank-point').count()<careerPoints);
@@ -277,6 +313,11 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.waitForSelector('.sumo-api-quality[data-sumo-source-id="28"]');
   assert.equal(await page.locator('#sumo-period').inputValue(),'current');
 
+  for(const route of ['kimarite','banzuke','basho','rikishi','home']){
+    await page.locator('.subnav [data-page="'+route+'"]').press('Enter');
+    await page.waitForURL('**#'+route);
+    assert.equal(await page.locator('.subnav [data-page="'+route+'"]').getAttribute('aria-current'),'page');
+  }
   if (isMobile){
     for(const route of ['home','rikishi','profile/8850','basho','banzuke','kimarite']){
       await open(page,route,'#sumo-main');

@@ -761,7 +761,12 @@ function renderKimarite() {
 function render() {
   const hash=decodeURIComponent(location.hash.slice(1)||'home').split('?')[0];
   const [page,id]=hash.split('/');
-  tabs.forEach(a=>a.classList.toggle('active',(page==='profile'?'rikishi':page)===a.dataset.page));
+  tabs.forEach(a=>{
+    const active=(page==='profile'?'rikishi':page)===a.dataset.page;
+    a.classList.toggle('active',active);
+    if(active)a.setAttribute('aria-current','page');
+    else a.removeAttribute('aria-current');
+  });
   if (STATE.error) { ROOT.innerHTML='<h1>Sumo snapshot unavailable</h1>'+note(STATE.error)+'<p>Existing BEFN pages are unaffected. Try again later.</p>';return;}
   if (!STATE.roster) { ROOT.innerHTML='<div class="loading">Loading sourced Sumo data…</div>';return; }
   switch(page) {

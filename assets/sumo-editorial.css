@@ -251,7 +251,9 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .profile-hero>.profile-facts{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
  .profile-hero>.profile-current{grid-column:1/-1;grid-row:3}
 }
-.profile-hero .sumo-photo-fallback{font-size:13px;position:absolute;bottom:8px;left:0;right:0;text-align:center;color:#21191c;background:#f6f2eadb;padding:4px;z-index:2}
+.sumo-photo-fallback{display:none}
+.profile-hero .sumo-photo-fallback{display:block;font-size:13px;position:absolute;bottom:8px;left:0;right:0;text-align:center;color:#21191c;background:#f6f2eadb;padding:4px;z-index:2}
+.profile-hero .profile-icon.sumo-photo:not(.has-photo)>span{display:none}
 .profile-hero .profile-icon:not(.has-photo){background:#e4d9cc}
 .profile-hero .profile-icon:not(.has-photo):before,.profile-hero .profile-icon:not(.has-photo):after{opacity:.18}
 
@@ -316,4 +318,20 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .sumo-rank-name{font-size:22px}
  .sumo-rank-info{flex-wrap:wrap;gap:2px 8px}
  .sumo-directory-facts{grid-template-columns:minmax(0,1fr)}
+}
+
+/* Keep detailed chart labels readable; contain scrolling within labelled regions. */
+.sumo-weight-scroll,.sumo-rank-scroll{overflow-x:auto;overflow-y:hidden;padding:4px 0 10px}
+.sumo-weight-svg,.sumo-rank-svg{min-width:900px;max-width:none;max-height:none}
+.sumo-chart-axis,.sumo-chart-ranklabel,.sumo-chart-number{font-family:'DM Sans',system-ui,sans-serif}
+.sumo-chart-scroll-hint{font-size:13px;color:var(--muted);line-height:1.5}
+.sumo-career-summary span{font-size:13px}
+.sumo-ed-person>.profile-icon.sumo-photo{width:40px;height:50px;min-height:0;flex:0 0 40px}
+@media(max-width:599px){
+ .sumo-ed-row-main{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"result h2h" "person person" "date date" "rank technique";gap:8px 12px;align-items:center}
+ .sumo-ed-row-main>div{min-width:0}
+ .sumo-ed-date{display:flex;flex-wrap:wrap;gap:4px 8px}
+ .sumo-ed-person>.profile-icon.sumo-photo{width:30px;height:38px;flex-basis:30px}
+ .sumo-ed-person .profile-icon.sumo-photo>span{display:none}
+ .sumo-ed-tech{max-width:125px}
 }
