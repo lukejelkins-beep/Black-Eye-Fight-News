@@ -51,7 +51,7 @@ for(const entry of cases){
   assert(obs.metrics[key]===value,'native measured '+key+' disagreement '+entry.slug);
  const c=candidates.fighters.find(x=>x.slug===entry.slug);
  assert(c?.lastUfcFight==='2026-07-18','roster latest UFC bout not matched '+entry.slug);
- const gate=evaluateCareerEvidence(p,h,c.lastUfcFight,candidates.asOf,e,progress.bouts);
+ const gate=evaluateCareerEvidence(p,h,c.lastUfcFight,candidates.asOf,e,progress.bouts,roster.rosterAsOf);
  assert(gate.independentlyVerified===true&&!gate.unresolvedIdentityConflicts,'full historical certification gate blocked '+entry.slug+': '+JSON.stringify(gate));
  results.push({slug:entry.slug,identity:entry.name,certified:true,verifiedSourceFightCount:1,nativeFightId:'83063',nativeFighterId:entry.id,verifiedOutcome:entry.result,stats:{cageSec:obs.cageSec,...entry.stats},independentGate:gate,officialSource:e.officialFighterUrl,ufcStatsSource:e.fighterUrl,sourceFightUrl:b.fightUrl});
 }

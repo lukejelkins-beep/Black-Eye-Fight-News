@@ -863,3 +863,87 @@ test('Aleksandre Topuria has exactly two completed UFC fights with native 373 an
    i?{...r,nativeFighterId:'999999'}:r)}),false);
  assert.equal(verified(evidence,{}),false);
 });
+
+
+// Synthetic source-linked fixture: no provider requests or mutable research files.
+function frozenEvidenceFixture(){
+ const saved=history(41,'Opponent A','2026-11-10');
+ const profile={name:'Fighter 1',recentHistory:[saved],ufcTimeline:{
+   complete:true,providerTruncatedFlag:false,observedOn:'2026-11-14',settledCount:1}};
+ const native={...fight(41,'Opponent A'),event:'UFC Fight Night',eventDate:saved.date,
+   a:{id:'1',name:'Fighter 1',slug:'fighter-1'},b:{id:'2',name:'Opponent A'},
+   result:{winnerId:'1',method:'decision'}};
+ const evidence={fighterName:'Fighter 1',sourceCoverageAttested:true,
+   verificationMethod:'full_official_ufc_fight_listing_crosscheck',verifiedAt:'2026-11-14',
+   fighterUrl:'https://ufcstats.com/fighter-details/aaaaaaaaaaaaaaaa',
+   officialFighterUrl:'https://www.ufc.com/athlete/fighter-1',
+   sourceSnapshot:{fightResultsBlobSha:'a'.repeat(40),fighterDetailsBlobSha:'b'.repeat(40)},
+   verifiedNumericFighterIds:['1'],bouts:[{date:saved.date,opponent:saved.opponent,result:'win',
+     nativeBoutId:'41',nativeFighterId:'1',
+     fightUrl:'https://ufcstats.com/fight-details/bbbbbbbbbbbbbbbb'}]};
+ return {approval:structuredClone(approval),census:{...structuredClone(census),
+   fighters:census.fighters.map(x=>({...x,lastUfcFight:saved.date}))},
+   progress:{...progress,bouts:{'41':native}},research:{profiles:{'fighter-1':profile}},
+   archive:{fights:{'2026-11-10:fighter1:opponenta':{rounds:[
+     {round:1,a:{sigLanded:2},b:{sigLanded:3}}]}}},
+   evidence:{schema:1,scope:'ufc-independent-full-career-verification',
+     rosterAsOf:approval.rosterAsOf,fighters:{'fighter-1':evidence}}};
+}
+const auditFrozenFixture=f=>auditApprovedStage3(f.approval,f.census,f.progress,
+ f.research,f.archive,{},{},{},f.evidence);
+
+test('rolling audit dates preserve frozen-cohort source proof but not stale provider certification',()=>{
+ for(const day of ['2026-11-14','2026-11-15','2026-11-16']){
+   const f=frozenEvidenceFixture();f.census.asOf=day;
+   const s=auditFrozenFixture(f).summary;
+   assert.equal(s.independentlyVerifiedFullCareerTimelines,1,day);
+   assert.equal(s.fullyProviderCertifiedTimelines,day==='2026-11-14'?1:0,
+     'provider observation freshness must still use the rolling census date');
+   assert.equal(s.certificationEvidenceCutoff,'2026-11-14');
+   assert.equal(s.asOf,day);
+ }
+});
+
+test('frozen source-proof cutoff never overrides native identity, result, chronology or round gates',()=>{
+ const mutations=[
+   f=>{f.evidence.fighters['fighter-1'].verifiedAt='2026-11-13';},
+   f=>{f.evidence.fighters['fighter-1'].sourceCoverageAttested=false;},
+   f=>{f.evidence.fighters['fighter-1'].bouts[0].nativeFighterId='999';},
+   f=>{f.progress.bouts['41'].result.winnerId='2';},
+   f=>{f.evidence.fighters['fighter-1'].bouts=[];},
+   f=>{f.archive.fights={};},
+   f=>{f.research.profiles['fighter-1'].ufcHistoryIdConflicts=[{id:'999'}];},
+   f=>{f.census.fighters=f.census.fighters.slice(1);},
+   f=>{f.research.profiles['fighter-1'].recentHistory.push(
+     history(42,'Opponent B','2026-11-15'));
+     f.census.fighters[0].lastUfcFight='2026-11-15';
+     f.progress.bouts['42']={...f.progress.bouts['41'],id:'42',eventDate:'2026-11-15',
+       b:{id:'3',name:'Opponent B'}};
+     f.archive.fights['2026-11-15:fighter1:opponentb']={rounds:[
+       {round:1,a:{sigLanded:5},b:{sigLanded:4}}]};}
+ ];
+ for(const mutate of mutations){
+   const f=frozenEvidenceFixture();f.census.asOf='2026-11-16';mutate(f);
+   assert.equal(auditFrozenFixture(f).summary.independentlyVerifiedFullCareerTimelines,0);
+ }
+});
+
+test('direct certification callers may pin independent proof without relaxing provider freshness',()=>{
+ const f=frozenEvidenceFixture(),p=f.research.profiles['fighter-1'];
+ const args=[p,p.recentHistory,'2026-11-10','2026-11-15',
+   f.evidence.fighters['fighter-1'],f.progress.bouts];
+ assert.equal(evaluateCareerEvidence(...args).independentlyVerified,false,
+   'legacy callers retain their explicit as-of semantics');
+ const proof=evaluateCareerEvidence(...args,'2026-11-14');
+ assert.equal(proof.independentlyVerified,true);
+ assert.equal(proof.providerCertified,false);
+ for(const cutoff of ['',null,'invalid','2026-11-16'])
+   assert.equal(evaluateCareerEvidence(...args,cutoff).independentlyVerified,false);
+});
+
+test('an approved audit requires an evidence date no later than the census',()=>{
+ for(const cutoff of [undefined,null,'','invalid','2026-11-16']){
+   const f=frozenEvidenceFixture();f.approval.rosterAsOf=cutoff;
+   assert.throws(()=>auditFrozenFixture(f),/Invalid approved cohort date/);
+ }
+});
