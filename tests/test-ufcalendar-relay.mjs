@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {test} from 'node:test';
-import {planRelay,dispatchRelay,MAX_RELAY_HOP,RESEARCH_CEILING} from '../scripts/ufcalendar-relay.mjs';
+import {planRelay,dispatchRelay,getCollectorRuns,activeCollectorRun,MAX_RELAY_HOP,RESEARCH_CEILING} from '../scripts/ufcalendar-relay.mjs';
 import {shouldRestart} from '../scripts/ufcalendar-watchdog.mjs';
 
 const t=new Date('2026-11-12T02:00:00.000Z');
@@ -45,7 +45,24 @@ test('GitHub dispatch uses tokenless input and never invokes UFCalendar',async()
  await dispatchRelay({token:'fixture',repository:'sample/project',hop:3,fetcher:fake});
  assert.match(request.url,/github\.com\/repos\/sample\/project\/actions\/workflows\//);
  assert(!request.url.includes('ufcalendar.com'));
- assert.deepEqual(JSON.parse(request.options.body),{ref:'main',inputs:{continuous:'true',hop:'3'}});
+ assert.deepEqual(JSON.parse(request.options.body),{ref:'main',inputs:{continuous:'true',hop:'3',source_run_id:'',checkpoint_sha:''}});
  assert.equal(request.options.method,'POST');
  assert(!request.options.body.includes('fixture'));
+});
+
+test('Relay records the source run and committed checkpoint without a paid request',async()=>{
+ let request;
+ const fetcher=async(url,options)=>{request={url,options};return {status:204}};
+ const sha='a'.repeat(40);
+ await dispatchRelay({token:'fixture',repository:'sample/project',hop:6,sourceRunId:'123',checkpointSha:sha,fetcher});
+ assert.deepEqual(JSON.parse(request.options.body).inputs,{continuous:'true',hop:'6',source_run_id:'123',checkpoint_sha:sha});
+ await assert.rejects(dispatchRelay({token:'fixture',repository:'sample/project',hop:6,sourceRunId:'wrong',fetcher}),/Invalid source run ID/);
+});
+test('Relay checks queued runs and fails closed when the run list is unavailable',async()=>{
+ const runs=[{id:11,status:'in_progress'},{id:12,status:'queued'}];
+ assert.equal(activeCollectorRun(runs,11).id,12);
+ assert.equal(activeCollectorRun([{id:11,status:'in_progress'}],11),undefined);
+ const fetcher=async()=>({ok:true,json:async()=>({workflow_runs:runs})});
+ assert.deepEqual(await getCollectorRuns({token:'fixture',repository:'sample/project',fetcher}),runs);
+ await assert.rejects(getCollectorRuns({token:'fixture',repository:'sample/project',fetcher:async()=>({ok:false,status:403})}),/HTTP 403/);
 });

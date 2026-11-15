@@ -12,6 +12,14 @@ on:
         required: false
         type: string
         default: '0'
+      source_run_id:
+        description: 'Actions run ID that requested this handoff'
+        required: false
+        type: string
+      checkpoint_sha:
+        description: 'Committed research checkpoint at handoff'
+        required: false
+        type: string
   schedule:
     # Outside the November burst, retain four daily maintenance windows.
     # November runs use GitHub's explicit workflow_dispatch relay and
@@ -29,6 +37,7 @@ on:
       - 'tests/test-ufcalendar-relay.mjs'
       - 'tests/test_ufcalendar_rich_backfill.py'
       - '.github/workflows/ufcalendar-rich-backfill.yml'
+run-name: ${{ github.event_name == 'workflow_dispatch' && format('UFCalendar hop {0} from run {1} at {2}', inputs.hop, inputs.source_run_id, inputs.checkpoint_sha) || 'UFCalendar scheduled or source update' }}
 permissions:
   contents: write
   actions: write
@@ -103,4 +112,7 @@ jobs:
           GH_REPOSITORY: ${{ github.repository }}
           GH_EVENT_NAME: ${{ github.event_name }}
           GH_EVENT_PATH: ${{ github.event_path }}
-        run: node scripts/ufcalendar-relay.mjs
+          GH_RUN_ID: ${{ github.run_id }}
+        run: |
+          export BEFN_CHECKPOINT_SHA="$(git rev-parse HEAD)"
+          node scripts/ufcalendar-relay.mjs

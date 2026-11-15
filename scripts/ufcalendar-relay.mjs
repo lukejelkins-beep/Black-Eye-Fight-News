@@ -42,16 +42,32 @@ export function planRelay({now = new Date(), eventName='', inputs={}, progress={
   return {enabled:true,hop:hop+1,delayMs,reason:'Five-minute bounded follow-up'};
 }
 
-export async function dispatchRelay({token,repository,hop,fetcher=fetch}){
+export async function getCollectorRuns({token,repository,fetcher=fetch}){
+  if(!token||!/^[-\w]+\/[-.\w]+$/.test(repository||''))throw Error('GitHub run check unavailable');
+  const url='https://api.github.com/repos/'+repository+'/actions/workflows/ufcalendar-rich-backfill.yml/runs?per_page=20';
+  const res=await fetcher(url,{headers:{Accept:'application/vnd.github+json',Authorization:'Bearer '+token,'X-GitHub-Api-Version':'2022-11-28'}});
+  if(!res.ok)throw Error('Could not check collector runs, HTTP '+res.status);
+  const body=await res.json();
+  if(!Array.isArray(body.workflow_runs))throw Error('Invalid collector run response');
+  return body.workflow_runs;
+}
+
+export function activeCollectorRun(runs,currentRunId){
+  return runs.find(run=>String(run.id)!==String(currentRunId)&&['queued','in_progress','waiting','pending','requested'].includes(run.status));
+}
+
+export async function dispatchRelay({token,repository,hop,sourceRunId='',checkpointSha='',fetcher=fetch}){
   if(!token||!/^[-\w]+\/[-.\w]+$/.test(repository||''))
     throw Error('GitHub Actions dispatch unavailable');
+  if(sourceRunId&&!/^\d+$/.test(String(sourceRunId)))throw Error('Invalid source run ID');
+  if(checkpointSha&&!/^[a-f0-9]{40}$/.test(checkpointSha))throw Error('Invalid checkpoint SHA');
   const url='https://api.github.com/repos/'+repository+'/actions/workflows/ufcalendar-rich-backfill.yml/dispatches';
   const res=await fetcher(url,{method:'POST',headers:{
     Accept:'application/vnd.github+json',
     Authorization:'Bearer '+token,
     'X-GitHub-Api-Version':'2022-11-28',
     'Content-Type':'application/json'
-  },body:JSON.stringify({ref:'main',inputs:{continuous:'true',hop:String(hop)}})});
+  },body:JSON.stringify({ref:'main',inputs:{continuous:'true',hop:String(hop),source_run_id:String(sourceRunId),checkpoint_sha:checkpointSha}})});
   if(res.status!==204)throw Error('GitHub dispatch returned HTTP '+res.status);
 }
 
@@ -70,7 +86,14 @@ async function main(){
     await new Promise(resolve=>setTimeout(resolve,plan.delayMs));
   }
   try{
-    await dispatchRelay({token:process.env.GH_TOKEN,repository:process.env.GH_REPOSITORY,hop:plan.hop});
+    const token=process.env.GH_TOKEN,repository=process.env.GH_REPOSITORY;
+    const runs=await getCollectorRuns({token,repository});
+    const existing=activeCollectorRun(runs,process.env.GH_RUN_ID);
+    if(existing){
+      console.log('UFC relay handoff already covered by active run '+existing.id+'.');
+      return;
+    }
+    await dispatchRelay({token,repository,hop:plan.hop,sourceRunId:process.env.GH_RUN_ID,checkpointSha:process.env.BEFN_CHECKPOINT_SHA});
     console.log('Scheduled bounded UFC research relay hop '+plan.hop+'/'+MAX_RELAY_HOP+'.');
   }catch(err){
     // Do not create failure emails for a handoff; separate scheduled watchdog
