@@ -10,6 +10,11 @@ const brief=read('data/sumo/research-h2h-summary.json');
 const opponents=read('data/sumo/research-h2h-opponents.json');
 const detail=read('data/sumo/research-h2h-history.json');
 const photos=read('data/sumo/approved-photos.json');
+const validBasho=v=>{
+ const s=String(v);
+ return s.length===6&&Number.isInteger(Number(s))&&Number(s.slice(0,4))>=1800&&
+  ['01','03','05','07','09','11'].includes(s.slice(-2));
+};
 
 test('sumo: 190 API-trusted previews are not falsely called fully certified',()=>{
  assert.equal(validateSumoPreviewReadiness(method,roster),true);
@@ -45,10 +50,10 @@ test('sumo: complete source profiles, weight and rank timelines and opponent ind
   assert.equal(Number(c.officialNskId),w.officialNskId);
   assert.ok(Array.isArray(c.rank)&&c.rank.length>0,'missing rank history '+id);
   assert.ok(Array.isArray(c.weight),'historical weights must be explicitly represented '+id);
-  assert.ok(c.rank.every(x=>/^\\d{4}(01|03|05|07|09|11)$/.test(String(x.basho))&&typeof x.rank==='string'),
+  assert.ok(c.rank.every(x=>validBasho(x.basho)&&typeof x.rank==='string'),
    'rank dates must be authentic '+id);
-  assert.ok(c.weight.every(x=>/^\\d{4}(01|03|05|07|09|11)$/.test(String(x.basho))&&
-    Number.isFinite(x.kg)&&x.kg>0&&/^https:\\/\\//.test(String(x.source))),
+  assert.ok(c.weight.every(x=>validBasho(x.basho)&&
+    Number.isFinite(x.kg)&&x.kg>0&&String(x.source).startsWith('https://')),
     'weight dots must retain dated source proof '+id);
   if(c.currentListedWeight)assert.equal(c.currentListedWeight.datedMeasurement,false,
    'current listed weight is never an invented tournament weigh-in '+id);
@@ -71,8 +76,14 @@ test('sumo: no full H2H is misleadingly called a separate JSA verification',()=>
 test('sumo: licensed photo manifest remains separate from API and certification decisions',()=>{
  const approved=Object.values(photos.bySourceId||{}).filter(x=>x?.approved===true);
  assert.ok(approved.length>=1,'locally licensed test photos are available');
- assert.ok(approved.every(x=>/^assets\\/sumo-photos\\/[a-zA-Z0-9_-]+\\.(webp|png|jpg|jpeg)$/.test(x.path)&&
-  !!x.license&&!!x.credit),'never silently show unlicensed photographs');
+ assert.ok(approved.every(x=>{
+  const p=String(x.path||'');
+  const name=p.slice('assets/sumo-photos/'.length);
+  return p.startsWith('assets/sumo-photos/')&&name.length>5&&
+   !name.includes('/')&&!name.includes('..')&&
+   ['.jpg','.jpeg','.png','.webp'].some(ext=>name.endsWith(ext))&&
+   !!x.license&&!!x.credit;
+ }), 'never silently show unlicensed photographs');
  assert.equal(method.sourceRedistributionPermissionConfirmed,false);
 });
 test('sumo: fail closed on a data-integrity regression',()=>{
