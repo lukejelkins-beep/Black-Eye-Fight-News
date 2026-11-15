@@ -254,3 +254,34 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .profile-hero .sumo-photo-fallback{font-size:13px;position:absolute;bottom:8px;left:0;right:0;text-align:center;color:#21191c;background:#f6f2eadb;padding:4px;z-index:2}
 .profile-hero .profile-icon:not(.has-photo){background:#e4d9cc}
 .profile-hero .profile-icon:not(.has-photo):before,.profile-hero .profile-icon:not(.has-photo):after{opacity:.18}
+
+/* Original Sumo .sumo-photo.xl has higher specificity and a forced 100% height;
+   override that explicitly so the new portrait is a true, non-stretched 4:5 frame. */
+.profile-hero>.profile-icon.sumo-photo.xl{
+ width:100%;height:auto;min-height:0;aspect-ratio:4/5;align-self:start;
+}
+.profile-hero>.profile-icon.sumo-photo.xl>img{height:100%;width:100%;object-fit:cover}
+.profile-hero>.profile-facts.profile-meta{display:grid;min-width:0;align-content:start}
+.sumo-photo-fallback{overflow-wrap:anywhere}
+.sumo-techniques-list .chart-row .name{overflow-wrap:anywhere}
+.sumo-rival{min-height:62px;text-decoration:none}
+.sumo-rival:focus-visible{outline-offset:-3px}
+.sumo-h2h-hero .sumo-match-identity .sumo-bio-line b{color:#fff!important}
+.sumo-h2h-hero .sumo-country-name{color:#fff!important}
+.sumo-h2h-hero .sumo-h2h-score small{font-size:14px}
+.sumo-h2h-hero .sumo-h2h-score>span{font-size:13px}
+.sumo-weight-svg,.sumo-rank-svg{overflow:visible}
+@media(max-width:599px){
+ .profile-hero>.profile-icon.sumo-photo.xl{width:96px;max-width:100%}
+ .sumo-h2h-hero{grid-template-columns:minmax(0,1fr)!important}
+ .sumo-h2h-hero .sumo-match-person{flex-wrap:wrap}
+ .sumo-ed-h2h{white-space:nowrap}
+ .sumo-ed-tech{overflow-wrap:anywhere}
+ .sumo-ed-rank{overflow-wrap:anywhere}
+ .sumo-profile-summary{font-size:14px}
+ .sumo-rank-svg,.sumo-weight-svg{max-height:240px}
+}
+@media(max-width:359px){
+ .profile-hero>.profile-icon.sumo-photo.xl{width:88px}
+ .sumo-ed-row-main{grid-template-columns:36px minmax(0,1fr) auto}
+}
