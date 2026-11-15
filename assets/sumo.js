@@ -3,7 +3,7 @@ import {
   rankTable, leadingRikishi, currentDay, dailyResults, validMatchSamples, currentBashoMatchSample,
   techniqueDistribution, detailFor, banzukeFor, searchRikishi, snapshotDate,
   originCountry, banzukeMovement, dayMatchups, verifiedDayMatchups, lastCompletedBashoDay, verifiedHeadToHead, verifiedHighestRank,
-  rankPositions, confirmedCareerHigh
+  rankPositions, confirmedCareerHigh, publishedCurrentWeight
 } from './sumo-data.mjs';
 import { careerGraphs } from './sumo-career.mjs';
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
@@ -80,8 +80,10 @@ function knownHigh(w){
 }
 function weightHeight(w) {
   const h=Number.isFinite(Number(w?.heightCm))&&Number(w.heightCm)>0?Math.round(Number(w.heightCm))+' cm':'—';
-  const mass=Number.isFinite(Number(w?.weightKg))&&Number(w.weightKg)>0?Math.round(Number(w.weightKg))+' kg':'—';
-  return {h,mass};
+  const listing=publishedCurrentWeight(w,STATE.careerHistory);
+  const mass=listing.kg!==null?listing.kg+' kg':'—';
+  return {h,mass,weightSource:listing.source,underReview:listing.underReview,
+    apiKg:listing.apiKg,currentKg:listing.kg};
 }
 function previousBanzukeData() {
   const out={};
@@ -395,9 +397,13 @@ function renderProfile(id) {
   const officialLink=Number.isSafeInteger(officialId)&&officialId>0
     ?'<a href="https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+officialId+'/" target="_blank" rel="noopener noreferrer">JSA OFFICIAL RIKISHI PROFILE ↗</a>'
     :'<a href="'+JSA_URL+'" target="_blank" rel="noopener noreferrer">JSA OFFICIAL WRESTLER DIRECTORY ↗</a>';
+  const currentListing=weightHeight(w);
   const meta=[
-    ['Stable (heya)',w.heya],['Birthplace',w.birthplace],['Height',Number.isFinite(w.heightCm)?w.heightCm+' cm':null],
-    ['Weight',Number.isFinite(w.weightKg)?w.weightKg+' kg':null],
+    ['Stable (heya)',w.heya],['Birthplace',w.birthplace],
+    ['Height',currentListing.h],
+    ['Weight ('+currentListing.weightSource+')',currentListing.mass],
+    ...(currentListing.underReview?
+      [['Weight review','JSA '+currentListing.currentKg+' kg / Sumo API '+currentListing.apiKg+' kg — sources differ']]:[]),
     ['Highest career rank',knownHigh(w)||'Not yet sourced'],
     ['Date of birth',dateOnly(w.birthDate)],['Professional debut',bashoLabel(w.debutBasho)]
   ];
