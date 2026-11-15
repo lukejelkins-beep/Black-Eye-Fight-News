@@ -73,3 +73,16 @@ test('Run health keeps source identity rechecks separate from new collection',()
  assert.equal(values.sumoDb.additionalDatedWeights,205);
  assert.equal(values.certifiedCareers,0);
 });
+
+test('health checkpoint publishes only strict-preflight candidates and JSA rank rechecks, never certificates',()=>{
+ const v=buildSumoHealth({...input,
+  jsa:{...jsa,historicalRankRechecksThisRun:8},
+  preflight:{candidateForStrictAudit:26,needsSourceOrManualReview:164,
+    blockerCounts:{'independent-JSA-historical-ranks-not-compared':115}}});
+ assert.equal(v.officialJsa.historicalRankRechecksThisRun,8);
+ assert.equal(v.strictPreflight.eligible,26);
+ assert.equal(v.strictPreflight.blocked,164);
+ assert.equal(v.strictPreflight.blockerCounts['independent-JSA-historical-ranks-not-compared'],115);
+ assert.equal(v.strictPreflight.certified,0);
+ assert.equal(v.certifiedCareers,0);
+});
