@@ -5582,6 +5582,204 @@
         }
       ],
       "note": "One completed official UFC career fight verified through Nov14 2026; no inferred/cached-only certification. Independent Stage3 CI gate pending."
+    },
+    "kayla-harrison": {
+      "fighterName": "Kayla Harrison",
+      "scope": "complete_official_ufc_career",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/1af1170ed937cba7",
+      "officialFighterUrl": "https://www.ufc.com/athlete/kayla-harrison",
+      "verifiedNumericFighterIds": [
+        "2845"
+      ],
+      "earliestOfficialUfcBout": "2024-04-13",
+      "latestCompletedOfficialUfcBout": "2025-06-07",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-14",
+        "latestGrecoEvent": "2026-11-07",
+        "directUfcStatsAccess": "not_available; URLs extracted from pinned UFCStats-derived historical archive",
+        "method": "Independently enumerated each UFC.com official athlete career biography and the complete pinned Greco UFCStats-derived fighter/results/event CSV entries through 7 Nov 2026. Reconciled event-local dates, opponent, result, native fighter corner, stable fight ID, and existing measured native history; scheduled and non-UFC appearances excluded."
+      },
+      "bouts": [
+        {
+          "date": "2024-04-13",
+          "opponent": "Holly Holm",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b1ac165326d8f29e",
+          "eventUrl": "https://ufcstats.com/event-details/6750e338922a099d",
+          "nativeBoutId": "53794",
+          "nativeFighterId": "2845"
+        },
+        {
+          "date": "2024-10-05",
+          "opponent": "Ketlen Vieira",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9ea124a13d071186",
+          "eventUrl": "https://ufcstats.com/event-details/eee8efec7b951d84",
+          "nativeBoutId": "60195",
+          "nativeFighterId": "2845"
+        },
+        {
+          "date": "2025-06-07",
+          "opponent": "Julianna Pena",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/81b84b34f0357fa5",
+          "eventUrl": "https://ufcstats.com/event-details/18c49685296c60e6",
+          "nativeBoutId": "60862",
+          "nativeFighterId": "2845"
+        }
+      ],
+      "note": "All three completed UFC appearances enumerated from first UFC bout (13 Apr 2024) to 14 Nov 2026. The 7 Jun 2025 fight has a documented native next-day UTC date of 8 Jun; the Nov 14 2026 Nunes bout is upcoming in the evidence snapshot and is not a completed historical bout. Earlier PFL competition and Judo achievements are excluded from UFC-only certification."
+    },
+    "nina-milosevic": {
+      "fighterName": "Nina Milošević",
+      "scope": "complete_official_ufc_career",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/eabece0edc2d62ca",
+      "officialFighterUrl": "https://www.ufc.com/athlete/nina-milosevic",
+      "verifiedNumericFighterIds": [
+        "33223"
+      ],
+      "earliestOfficialUfcBout": "2026-08-01",
+      "latestCompletedOfficialUfcBout": "2026-11-07",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-14",
+        "latestGrecoEvent": "2026-11-07",
+        "directUfcStatsAccess": "not_available; URLs extracted from pinned UFCStats-derived historical archive",
+        "method": "Independently enumerated each UFC.com official athlete career biography and the complete pinned Greco UFCStats-derived fighter/results/event CSV entries through 7 Nov 2026. Reconciled event-local dates, opponent, result, native fighter corner, stable fight ID, and existing measured native history; scheduled and non-UFC appearances excluded."
+      },
+      "bouts": [
+        {
+          "date": "2026-08-01",
+          "opponent": "Hailey Cowan",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f78f34ef2ee7b02c",
+          "eventUrl": "https://ufcstats.com/event-details/1a50e734bb54861a",
+          "nativeBoutId": "82926",
+          "nativeFighterId": "33223"
+        },
+        {
+          "date": "2026-11-07",
+          "opponent": "Priscila Cachoeira",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d5bb4cadca484a31",
+          "eventUrl": "https://ufcstats.com/event-details/110404b505fb562c",
+          "nativeBoutId": "93279",
+          "nativeFighterId": "33223"
+        }
+      ],
+      "note": "UFC.com lists 1 Aug 2026 Octagon debut and exactly two completed UFC finishes (Cowan and Cachoeira). Accented UFC biography name is the same athlete as the unaccented Greco historical fighter/details listing; full surname and numeric fighter corner match. IMMAF and prior BRAVE/regional fights remain outside this UFC-only audit."
+    },
+    "ollie-schmid": {
+      "fighterName": "Ollie Schmid",
+      "scope": "complete_official_ufc_career",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/b701f095e6ccb149",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ollie-schmid",
+      "verifiedNumericFighterIds": [
+        "555"
+      ],
+      "earliestOfficialUfcBout": "2026-05-02",
+      "latestCompletedOfficialUfcBout": "2026-11-07",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-14",
+        "latestGrecoEvent": "2026-11-07",
+        "directUfcStatsAccess": "not_available; URLs extracted from pinned UFCStats-derived historical archive",
+        "method": "Independently enumerated each UFC.com official athlete career biography and the complete pinned Greco UFCStats-derived fighter/results/event CSV entries through 7 Nov 2026. Reconciled event-local dates, opponent, result, native fighter corner, stable fight ID, and existing measured native history; scheduled and non-UFC appearances excluded."
+      },
+      "bouts": [
+        {
+          "date": "2026-05-02",
+          "opponent": "Marwan Rahiki",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/cfc884a249141cba",
+          "eventUrl": "https://ufcstats.com/event-details/872b018076f831b0",
+          "nativeBoutId": "66066",
+          "nativeFighterId": "555"
+        },
+        {
+          "date": "2026-11-07",
+          "opponent": "Keiichiro Nakamura",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/85d62e821823ba69",
+          "eventUrl": "https://ufcstats.com/event-details/110404b505fb562c",
+          "nativeBoutId": "93280",
+          "nativeFighterId": "555"
+        }
+      ],
+      "note": "UFC.com detailed narrative and official 7 Nov event result establish 1-1 UFC (Rahiki LOSS, Nakamura WIN) despite an erroneous generic Win label for the Rahiki record tile. Greco fighter archive and native winner IDs agree on both outcomes; no other source-documented UFC fights through the snapshot."
+    },
+    "jose-delano": {
+      "fighterName": "Jose Delano",
+      "scope": "complete_official_ufc_career",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "verifiedAt": "2026-11-14",
+      "fighterUrl": "https://ufcstats.com/fighter-details/d7c4956d61ae76a9",
+      "officialFighterUrl": "https://www.ufc.com/athlete/jose-delano",
+      "verifiedNumericFighterIds": [
+        "588"
+      ],
+      "earliestOfficialUfcBout": "2026-04-04",
+      "latestCompletedOfficialUfcBout": "2026-11-07",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "evidenceCutoff": "2026-11-14",
+        "latestGrecoEvent": "2026-11-07",
+        "directUfcStatsAccess": "not_available; URLs extracted from pinned UFCStats-derived historical archive",
+        "method": "Independently enumerated each UFC.com official athlete career biography and the complete pinned Greco UFCStats-derived fighter/results/event CSV entries through 7 Nov 2026. Reconciled event-local dates, opponent, result, native fighter corner, stable fight ID, and existing measured native history; scheduled and non-UFC appearances excluded."
+      },
+      "excludedFromOfficialUfc": [
+        {
+          "date": "2025-08-19",
+          "opponent": "Manuel Exposito",
+          "event": "Dana White's Contender Series Season 9 Episode 2",
+          "reason": "DWCS audition, exclude from UFC official career",
+          "sourceUrl": "https://www.ufc.com/athlete/jose-delano"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-04-04",
+          "opponent": "Robert Ruchala",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/7924f10aac3543de",
+          "eventUrl": "https://ufcstats.com/event-details/9a70f67ad2187fa3",
+          "nativeBoutId": "60703",
+          "nativeFighterId": "588"
+        },
+        {
+          "date": "2026-11-07",
+          "opponent": "Murtazali Magomedov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9f33576489a0370c",
+          "eventUrl": "https://ufcstats.com/event-details/110404b505fb562c",
+          "nativeBoutId": "93284",
+          "nativeFighterId": "588"
+        }
+      ],
+      "note": "Official UFC.com written fight biography confirms loss to Murtazali Magomedov on 7 Nov 2026 despite a misleading generic Win label in its athlete record tile; Greco source outcome and native winner ID verify the loss. Earlier 19 Aug 2025 DWCS decision against Manuel Exposito was a pre-UFC audition, not an official UFC career bout."
     }
   }
 }
