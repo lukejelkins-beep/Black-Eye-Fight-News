@@ -42,6 +42,16 @@ jobs:
               echo 'histories_complete=true' >> "$GITHUB_OUTPUT"
               if official=$(gh api "repos/${GITHUB_REPOSITORY}/contents/data/sumo/backfill/v1/jsa-public/summary.json?ref=research/sumo-190-career-cache-20261114" --jq '.content' 2>/dev/null | tr -d '\n' | base64 -d); then
                 if printf '%s' "$official" | jq -e '.cohort==190 and .pending==0' > /dev/null; then
+                  # Completion of public profile collection does not mean
+                  # one-time historical-rank crosschecks are complete. Legacy
+                  # cached profiles require a bounded, source-backed recheck.
+                  # Missing progress metadata also mandates a single pass to
+                  # build the new checkpoint; never assume null equals done.
+                  if ! printf '%s' "$official" | jq -e '.historicalRankRechecksOutstanding == 0' >/dev/null 2>&1; then
+                    echo 'run=true' >> "$GITHUB_OUTPUT"
+                    echo 'Official historical rank verification still outstanding; no API-history recollection.'
+                    exit 0
+                  fi
                   # If SumoDB owner consent is obtained, keep the same
                   # isolated worker collecting permitted historical weights.
                   policy=$(gh api "repos/${GITHUB_REPOSITORY}/contents/data/sumo/backfill/v1/sumodb-use-policy.json?ref=research/sumo-190-career-cache-20261114" --jq '.content' 2>/dev/null | tr -d '\n' | base64 -d || true)
