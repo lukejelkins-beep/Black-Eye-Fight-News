@@ -13,7 +13,7 @@ import {readFile,writeFile,rename,mkdir} from 'node:fs/promises';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {cohortCurrentBasho} from './sumo-jsa-public-spotcheck.mjs';
-import {documentedDebutRankGap,supplementalHistoricalBashoCoverage} from './sumo-certification-preflight-190.mjs';
+import {documentedDebutRankGap,supplementalHistoricalBashoCoverage,independentHistoricalRankCoverage} from './sumo-certification-preflight-190.mjs';
 
 const ROOT='data/sumo/backfill/v1';
 const load=async p=>JSON.parse(await readFile(p,'utf8'));
@@ -109,32 +109,12 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
   })&&
   bh.rawSourceMatchesChanged===false,
   'independent-official-completed-tournament-results');
- const publishedRanks=j.officialRankRecords||[];
- const rankQuota=Math.max(1,Math.floor(history.length*0.75));
- const jsaDates=new Set(publishedRanks.map(x=>String(x.bashoId)));
- const extraRankSource=weight?.careerRecordCrosscheck||null;
- const validRankSource=extraRankSource?.identityVerified===true&&
-  extraRankSource?.originalMeasurementsUnchanged===true&&
-  extraRankSource?.independentOfApi===true&&
-  extraRankSource?.careerRecordDiffersFromPriorSnapshot!==true&&
-  /^[a-f0-9]{64}$/.test(String(extraRankSource.datedBashoLedgerSourceSha256||''))&&
-  extraRankSource.sourceUrl==='https://sumodb.sumogames.de/Rikishi.aspx?r='+w?.sumoDbId&&
-  Array.isArray(extraRankSource.independentBashoRows);
- const independentRankByDate=validRankSource?new Map(
-  extraRankSource.independentBashoRows.filter(x=>x.rankEn!=null)
-   .map(x=>[String(x.bashoId),String(x.rankEn)])):new Map();
- const additionalRankMatches=history.filter(x=>!jsaDates.has(x.bashoId)&&
-  independentRankByDate.get(x.bashoId)===x.rank).length;
- const independentRankConflicts=history.filter(x=>independentRankByDate.has(x.bashoId)&&
-  independentRankByDate.get(x.bashoId)!==x.rank).length;
- const originalOfficialCoverage=rank.comparedBasho>=rankQuota;
- add(goodInt(rank.comparedBasho)&&
-  (originalOfficialCoverage||validRankSource&&
-   rank.comparedBasho+additionalRankMatches>=rankQuota&&independentRankConflicts===0)&&
-  rank.agreedBasho===rank.comparedBasho&&rank.mismatches?.length===0&&
-  rank.missingSourceRankBasho?.length===0&&
-  publishedRanks.length===rank.comparedBasho,
-  'independent-official-banzuke-rank-coverage');
+ const rankCoverage=independentHistoricalRankCoverage(p,j,weight);
+ const originalOfficialCoverage=rankCoverage.evidenceBasis==='JSA-dated-ranks';
+ const additionalRankMatches=rankCoverage.independentAdditional;
+ // Preflight and strict audit share the same >=75% date-exact source
+ // requirement. An unavailable JSA rank table is never called corroborated.
+ add(rankCoverage.passed,'independent-official-banzuke-rank-coverage');
  const birth=weight?.identityRecheck?.identityEvidence||weight?.identityEvidence||{};
  add(Number(weight?.sourceId)===id&&Number(weight?.officialNskId)===Number(w?.officialNskId)&&
   Number(weight?.sumoDbId)===Number(w?.sumoDbId)&&
@@ -170,10 +150,15 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
     historicalProof.otherSourceBasho:0,
   independentlyCrosscheckedOlderRanksFromSumoDB:careerResultsCertified&&
     !originalOfficialCoverage?additionalRankMatches:0,
+  rankHistoryEvidenceBasis:careerResultsCertified?rankCoverage.evidenceBasis:null,
   missingDebutRankPreservedAsNull:evidencedDebutGap,
   independentlyVerifiedBy:careerResultsCertified?[
     basis==='published-JSA-career-WLA'?'JSA published W-L-A':'SumoDB published W-L-A',
-    'JSA completed tournament W-L','JSA dated banzuke ranks',
+    'JSA completed tournament W-L',
+    rankCoverage.evidenceBasis==='SumoDB-dated-ranks-JSA-historical-ranks-unavailable'?
+      'SumoDB dated banzuke ranks (JSA historical ranks unavailable)':
+      rankCoverage.evidenceBasis==='JSA-dated-ranks'?
+       'JSA dated banzuke ranks':'JSA and SumoDB dated banzuke ranks',
     'SumoDB matching wrestler identity'
   ]:[],
   sourceNativeBoutLedgerReconciled:careerResultsCertified,
