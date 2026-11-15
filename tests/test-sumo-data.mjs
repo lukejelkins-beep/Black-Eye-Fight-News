@@ -6,7 +6,7 @@ import {
   bashoLabel, divisionOf, recordSummary, rankTable, leadingRikishi,
   dailyResults, currentDay, matchResult, techniqueDistribution, searchRikishi,
   banzukeFor, validMatchSamples, trackedBanzukeCohort, currentBashoMatchSample,
-  originCountry, banzukeMovement, dayMatchups, verifiedHeadToHead, verifiedHighestRank, confirmedCareerHigh, announcedTorikumiMatches, verifiedDayMatchups, lastCompletedBashoDay
+  originCountry, banzukeMovement, dayMatchups, verifiedHeadToHead, verifiedHighestRank, confirmedCareerHigh, announcedTorikumiMatches, verifiedDayMatchups, lastCompletedBashoDay, publishedCurrentWeight
 } from '../assets/sumo-data.mjs';
 
 const entries = {
@@ -358,4 +358,28 @@ test('Sumo preview all-190 career dates stay source-labelled and uncertified',()
     }
   }
   assert.equal(plotted,data.datedWeightPoints);
+});
+
+test('current measurement cards use JSA publication separately from source API measurements',()=>{
+ const wrestler={sourceId:9104,officialNskId:4357,weightKg:172};
+ const history={bySourceId:{9104:{sumoApiId:9104,officialNskId:4357,
+   currentListedWeight:{kg:173,datedMeasurement:false,
+    source:'https://www.sumo.or.jp/EnSumoDataRikishi/profile/4357/'}}}};
+ const current=publishedCurrentWeight(wrestler,history);
+ assert.equal(current.kg,173);
+ assert.equal(current.source,'JSA current listing');
+ assert.equal(current.underReview,true);
+ assert.equal(current.apiKg,172);
+ assert.equal(current.datedWeighIn,false);
+ const rounded=publishedCurrentWeight({...wrestler,weightKg:172.6},history);
+ assert.equal(rounded.underReview,false,'rounded source value is compatible');
+ const unknown=publishedCurrentWeight({...wrestler,officialNskId:1},history);
+ assert.equal(unknown.source,'Sumo API roster listing');
+ assert.equal(unknown.kg,172,'mismatched identity must not import official data');
+});
+test('current listed weights feed both Sumo profile information and matchup cards with provenance',()=>{
+ const js=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
+ assert.match(js,/publishedCurrentWeight\(w,STATE\.careerHistory\)/);
+ assert.match(js,/Weight review/);
+ assert.match(js,/currentListing\.weightSource/);
 });
