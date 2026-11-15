@@ -25,8 +25,14 @@ export function careerPoints(w,cache,bashoId,prevBasho,prevRank){
   // Current profile weight is an undated listing, not a confirmed weigh-in
   // at the current basho. Never create a graph dot from it.
   if(bashoOK(prevBasho)&&ordinalRank(prevRank)!==null&&!entry)ranks.push({basho:prevBasho,rank:prevRank});
-  if(bashoOK(bashoId)&&ordinalRank(w?.currentRank)!==null)ranks.push({basho:bashoId,rank:w.currentRank});
-  return {weight:dedupe(weight),ranks:dedupe(ranks),entry,
+  const existingCurrentRank=bashoOK(bashoId)?ranks.find(p=>p.basho===bashoId)?.rank:null;
+  const currentRankDiscrepancy=existingCurrentRank&&
+    ordinalRank(w?.currentRank)!==null&&existingCurrentRank!==w.currentRank?
+      {basho:bashoId,recordedRank:existingCurrentRank,rosterRank:w.currentRank}:null;
+  // Never overwrite a dated rank already provided by the historical API.
+  if(bashoOK(bashoId)&&ordinalRank(w?.currentRank)!==null&&!existingCurrentRank)
+    ranks.push({basho:bashoId,rank:w.currentRank});
+  return {weight:dedupe(weight),ranks:dedupe(ranks),entry,currentRankDiscrepancy,
     currentListedWeightKg:Number.isFinite(Number(w?.weightKg))&&Number(w?.weightKg)>0?
       Number(w.weightKg):null};
 }
@@ -64,7 +70,7 @@ export function banzukeChart(points){
     frame(W,H,s,'sumo-rank-svg','Ranking trajectory for '+points.length+' bashos, with exact ranks on focus or hover').replace('class="sumo-rank-svg"','class="sumo-rank-svg" style="width:'+W+'px"')+'</div>';
 }
 export function careerGraphs(w,cache,bashoId,prevBasho,prevRank){
-  const {weight,ranks,entry,currentListedWeightKg}=careerPoints(w,cache,bashoId,prevBasho,prevRank);
+  const {weight,ranks,entry,currentListedWeightKg,currentRankDiscrepancy}=careerPoints(w,cache,bashoId,prevBasho,prevRank);
   const highest=ranked=>ranked.length?
     ranked.reduce((best,next)=>ordinalRank(next.rank)<ordinalRank(best.rank)?next:best).rank:null;
   const weightSourceUrl=entry?.weightSource||entry?.sourceUrl||null;
@@ -74,12 +80,15 @@ export function careerGraphs(w,cache,bashoId,prevBasho,prevRank){
     ?'Only explicitly dated measurements are dotted; connectors do not imply weigh-ins in missing tournaments. Historical observations remain subject to independent verification.'+sourceLink
     :'No dated historical weigh-ins are available yet; current listed weight is shown separately.';
   const footRank=entry
-    ?'One dot per published basho rank (the cancelled May 2020 tournament is excluded). Historical rankings are sourced from a <a href="'+esc(entry.rankSource)+'" target="_blank" rel="noopener noreferrer">published career chart ↗</a>; the latest rank is cross-checked with <a href="'+esc(entry.rankCrosscheck)+'" target="_blank" rel="noopener noreferrer">the JSA ↗</a>.'
+    ?'Dated banzuke positions are sourced from the <a href="'+esc(entry.rankSource)+'" target="_blank" rel="noopener noreferrer">Sumo API historical ranks</a>. See the <a href="'+esc(entry.rankCrosscheck)+'" target="_blank" rel="noopener noreferrer">JSA official profile</a> for independent reference; per-basho certification remains underway.'
     :'Only current and previously cached tournament ranks are available; older bashos await collection.';
+  const rankReview=currentRankDiscrepancy?
+    '<p class="sumo-career-source">Rank review required: cached historical rank '+esc(currentRankDiscrepancy.recordedRank)+
+      ' differs from the current profile listing '+esc(currentRankDiscrepancy.rosterRank)+'.</p>':'';
   const milestone=entry?.milestones?.length?'<div class="sumo-career-milestones">'+entry.milestones.map(m=>'<div><small>'+esc(dateLabel(m.basho))+'</small><strong>'+esc(m.title)+'</strong><span>'+esc(m.rank)+'</span></div>').join('')+'</div>':'';
   return '<div class="sumo-career-summary"><span>'+weight.length+' dated weight snapshot'+(weight.length===1?'':'s')+'</span><span>'+ranks.length+' ranked basho'+(ranks.length===1?'':'s')+'</span><span>Highest rank: '+esc(highest(ranks)||'Not yet documented')+'</span>'+ (currentListedWeightKg!==null?'<span>Currently listed: '+esc(currentListedWeightKg)+' kg (undated)</span>':'')+'</div>'+
     '<div class="sumo-career-panels">'+
     '<section class="sumo-career-panel"><div class="sumo-career-panel-head"><small>BODY MEASUREMENTS · KG</small><h3>Weight history</h3></div><div class="sumo-career-panel-main">'+weightChart(weight)+'</div><p class="sumo-career-source">'+footWeight+'</p></section>'+
     '<section class="sumo-career-panel"><div class="sumo-career-panel-head"><small>BANZUKE · EAST & WEST</small><h3>Career rank movement</h3></div><div class="sumo-career-panel-main">'+banzukeChart(ranks)+
-    '<div class="sumo-rank-legend"><span>🟢 Promotion</span><span>🔴 Demotion</span><span>🟡 Unchanged</span><span>Scroll sideways to see all bashos</span></div>'+milestone+'</div><p class="sumo-career-source">'+footRank+'</p></section></div>';
+    '<div class="sumo-rank-legend"><span>🟢 Promotion</span><span>🔴 Demotion</span><span>🟡 Unchanged</span><span>Scroll sideways to see all bashos</span></div>'+milestone+'</div>'+rankReview+'<p class="sumo-career-source">'+footRank+'</p></section></div>';
 }
