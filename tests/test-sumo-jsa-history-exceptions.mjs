@@ -104,3 +104,41 @@ test('rounded JSA fields are audited separately from actual field discrepancies'
  assert.equal(row.roundedCompatiblePublicMeasurements.length,2);
  assert.equal(row.publicFieldDisagreements.length,0);
 });
+
+test('older official JSA coverage gaps list missing dated bouts without fabricating source verification',()=>{
+ const doc={...base,status:'basic-fields-parsed',career:{wins:20,losses:11,absences:0},
+  officialBashoRecords:[{bashoId:'201105',wins:6,losses:1},{bashoId:'202611',wins:2,losses:1}],
+  bashoReconciliation:{comparedBasho:1,agreeingBasho:1,discrepantBasho:0,
+   excludedCurrentBasho:'202611',unmatchedOfficialBasho:[],discrepancies:[]}};
+ const p={perBasho:[
+  {bashoId:'200505',wins:4,losses:3,scheduledBoutRows:7},
+  {bashoId:'201105',wins:6,losses:1,scheduledBoutRows:7},
+  {bashoId:'202611',wins:2,losses:1,scheduledBoutRows:3}]};
+ const row=auditJsaSnapshot(rosterItem,doc,p);
+ assert.equal(row.missingOfficialHistoricalBashoCount,1);
+ assert.equal(row.earliestMissingOfficialBasho,'200505');
+ assert.deepEqual(row.missingOfficialHistoricalBasho.map(x=>x.bashoId),['200505']);
+ assert.equal(row.reviewClassification,'official-public-tournament-coverage-shortfall');
+ assert.equal(row.unreconciledTournamentCount,0,'unpublished is not a source conflict');
+ assert.equal(row.certification,'not-started');
+ const roster={count:190,rikishi:[rosterItem,...Array.from({length:189},(_,i)=>
+  ({sourceId:1000+i,shikonaEn:'Other '+i,officialNskId:9000+i}))]};
+ const report=buildJsaExceptionReport(roster,new Map([[42,doc]]),new Map([[42,p]]));
+ assert.equal(report.sourceCoverageCases,1);
+ assert.equal(report.missingOfficialHistoricalBashoTotal,1);
+ assert.equal(report.profileReviewCases,1);
+ assert.equal(report.cases[0].sourceId,42);
+ assert.equal(report.genuineParserOrFieldReviewCases,0);
+});
+test('zero-bout absence tournaments are not invented as missing verified career bouts',()=>{
+ const doc={...base,status:'basic-fields-parsed',career:{wins:1,losses:0},
+  officialBashoRecords:[{bashoId:'202609',wins:1,losses:0}],
+  bashoReconciliation:{comparedBasho:1,agreeingBasho:1,discrepantBasho:0,
+   excludedCurrentBasho:'202611',unmatchedOfficialBasho:[],discrepancies:[]}};
+ const p={perBasho:[
+  {bashoId:'202607',wins:0,losses:0,scheduledBoutRows:0},
+  {bashoId:'202609',wins:1,losses:0,scheduledBoutRows:1}]};
+ const row=auditJsaSnapshot(rosterItem,doc,p);
+ assert.equal(row.missingOfficialHistoricalBashoCount,0);
+ assert.equal(row.certification,'not-started');
+});
