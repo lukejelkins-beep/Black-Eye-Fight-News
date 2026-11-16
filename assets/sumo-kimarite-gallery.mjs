@@ -103,7 +103,7 @@ function gallery(){
   '</div><div id="sumo-km-count" class="sumo-km-count" role="status">82 of 82 techniques</div></section>'+
   '<div id="sumo-km-results"></div>'+
   '<section class="sumo-km-outcomes"><h2>Other results — not kimarite</h2><p>Isamiashi, Koshikudake, Tsukite, Tsukihiza and Fumidashi are classified separately from the 82 winning techniques. Forfeits and absences are also not performed winning techniques.</p></section>'+
-  '<p class="sumo-km-source">Photographs: Japan Sumo Association (used with owner-reported permission). Technique terminology: <a href="'+JSA_CATALOGUE+'" target="_blank" rel="noopener noreferrer">Japan Sumo Association</a>. Demonstrations: <a href="'+NHK_GALLERY+'" target="_blank" rel="noopener noreferrer">NHK WORLD-JAPAN</a>. Source videos remain with their publishers; BEFN has not republished them.</p>'+
+  '<p class="sumo-km-source">Photographs: Japan Sumo Association (used with owner-reported permission). Technique terminology: <a href="'+JSA_CATALOGUE+'" target="_blank" rel="noopener noreferrer">Japan Sumo Association</a>. Demonstrations: <a href="'+NHK_GALLERY+'" target="_blank" rel="noopener noreferrer">NHK WORLD-JAPAN</a>. Short NHK-derived GIF examples are displayed where approved footage has been prepared; otherwise the official JSA still is shown.</p>'+
   '</div>';
 }
 function detail(item){
