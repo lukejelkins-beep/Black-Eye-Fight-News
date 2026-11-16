@@ -51,7 +51,9 @@ test('recent five are real source rows, preserve order, winner, kimarite, and no
   assert.equal(dailyRecentMeetings({rows:[]},1,2).length,0);
 });
 test('daily date and selection respect Japan tournament day, do not infer an event',()=>{
-  assert.equal(dailyDefaultDay({today:9,lastCompleted:8,announced:10,hasAnnounced:true}),9);
+  assert.equal(dailyDefaultDay({today:9,lastCompleted:9,announced:10,hasAnnounced:true}),10);
+  assert.equal(dailyDefaultDay({today:9,lastCompleted:9,announced:10,hasAnnounced:false}),9);
+  assert.equal(dailyDefaultDay({today:9,lastCompleted:9,announced:8,hasAnnounced:true}),9);
   assert.equal(dailyDefaultDay({lastCompleted:8,announced:9,hasAnnounced:true}),9);
   assert.equal(dailyDefaultDay({lastCompleted:8,announced:9,hasAnnounced:false}),8);
   assert.equal(dailyDefaultDay({today:19,lastCompleted:0}),1);
