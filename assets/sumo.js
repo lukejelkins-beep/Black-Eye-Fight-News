@@ -58,6 +58,13 @@ function flagBackdrop(w) {
   // Country is mapped only from the source birthplace. The full-panel image is decorative; emoji is the offline fallback.
   return c?'<span class="sumo-flag-backdrop" style="--sumo-flag-url:url(https://flagcdn.com/w640/'+e(c.code.toLowerCase())+'.png)" aria-hidden="true">'+c.flag+'</span>':'';
 }
+/** Hero-only country flag. No emoji fallback: the country name remains accessible
+ * text beside the rank and the image is strictly decorative. */
+function heroFlagBackdrop(w){
+  const country=originCountry(w?.birthplace);
+  return country?'<span class="sumo-hero-flag" style="--sumo-flag-url:url(https://flagcdn.com/w640/'+
+    e(country.code.toLowerCase())+'.png)" aria-hidden="true"></span>':'';
+}
 function portraitFor(w,size='sm',fallbackName=null){
   const photo=w && STATE.photoIndex?.[String(w.sourceId)];
   const valid=photo?.approved===true &&
@@ -845,18 +852,13 @@ function renderProfile(id) {
   const maku=Number.isInteger(mWins)&&Number.isInteger(mLosses)?mWins+'–'+mLosses:'Not available';
   const careerPercent=dailyWinPercentage(wins,losses)||'Not available';
   const makuPercent=dailyWinPercentage(mWins,mLosses)||'Not available';
-  const approvedPhoto=STATE.photoIndex?.[String(w.sourceId)];
-  const fullPhoto=approvedPhoto?.approved===true &&
-    /^assets\/sumo-photos\/[a-zA-Z0-9_-]+\.(webp|png|jpg|jpeg)$/.test(String(approvedPhoto.path||'')) &&
-    String(approvedPhoto.license||'').trim()&&String(approvedPhoto.credit||'').trim()
-    ?'<a class="sumo-full-photo" href="'+e(approvedPhoto.path)+'" target="_blank" rel="noopener noreferrer">View full photo</a>':'';
   const titleCount=s?.yushoByDivision?.Makuuchi;
   const currentBlock=r?'<div class="sumo-current-record"><span><b>'+r.win+'</b><small>Wins</small></span>'+
     '<span><b>'+r.loss+'</b><small>Losses</small></span><span><b class="'+(r.absence===null?'unavailable':'')+'">'+e(r.absence===null?'N/A':r.absence)+'</b><small>'+
     e(r.absence===null?'Absences not supplied':'Absences')+'</small></span></div>':
     '<p>Current tournament record not available.</p>';
   return '<a class="back-link" href="#rikishi">← Rikishi directory</a>'+
-    '<section class="profile-hero">'+portraitFor(w,'xl')+flagBackdrop(w)+
+    '<section class="profile-hero">'+portraitFor(w,'xl')+heroFlagBackdrop(w)+
     '<div class="profile-title"><div class="eyebrow">BEFN SUMO · '+e(divisionOf(w.currentRank))+'</div>'+
     '<h1>'+e(w.shikonaEn)+'</h1><div class="jp">'+e(w.shikonaJp||'')+'</div>'+
     '<div class="sumo-hero-rank"><strong>'+e(w.currentRank||'Rank not available')+'</strong>'+
@@ -865,7 +867,6 @@ function renderProfile(id) {
     '<div class="sumo-hero-career"><div><span>Scope</span><span>Wins–losses</span><span>Win %</span></div>'+
     '<div><strong>Career</strong><b>'+e(career)+'</b><b>'+e(careerPercent)+'</b></div>'+
     '<div><strong>Makuuchi</strong><b>'+e(maku)+'</b><b>'+e(makuPercent)+'</b></div></div>'+ 
-    '<div class="sumo-hero-actions"><a class="sumo-quick-results" data-profile-section="results" href="#profile/'+Number(w.sourceId)+'?section=results">Jump to results</a>'+fullPhoto+'</div>'+
     '</div><div class="profile-current"><span class="tag">'+e(bashoLabel(details().bashoId))+' · SNAPSHOT · NOT LIVE</span>'+
     currentBlock+(divisionOf(w.currentRank)==='Makushita'?'<p class="footnote">Makushita non-bout days are not absences.</p>':'')+'</div>'+
     '<div class="profile-facts profile-meta">'+fact('Stable',w.heya)+fact('Age',age===null?'Not available':age+' years')+
