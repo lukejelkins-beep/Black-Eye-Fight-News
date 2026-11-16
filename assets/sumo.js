@@ -16,7 +16,7 @@ const ROOT = document.querySelector('#sumo-main');
 const tabs = [...document.querySelectorAll('[data-page]')];
 const DIVS = ['Makuuchi','Juryo','Makushita'];
 const STATE = {
-  roster: null, details: null, careerHistory: null, officialStyles: null, photoIndex: null, apiTrust: null, error: null, query: '', division: 'All',
+  roster: null, details: null, careerHistory: null, officialStyles: null, photoIndex: null, apiTrust: null, divisionStats: null, error: null, query: '', division: 'All',
   visible: 24, directoryLayout: 'cards', bashoDivision: 'Makuuchi', bashoView: 'results', banzukeDivision: 'Makuuchi',
   day: null, matchupDivision: 'Makuuchi', matchupDay: null, profileLimit: 5, h2hOldestFirst: false, h2hOpponentLimit: 16,
   profileMode: 'bouts', profilePeriod: 'current', rankRange: '2y', fullRankLadder: false,
@@ -239,21 +239,27 @@ function dailyFighterFacts(w,fallback,side){
   const name=w?.shikonaEn||fallback||'Rikishi not found';
   const country=w?originCountry(w.birthplace):null;
   const link=w?'<a href="#profile/'+Number(w.sourceId)+'">'+e(name)+'</a>':e(name);
-  return '<div class="sumo-daily-facts '+side+'"><h2>'+link+'</h2>'+
-    '<div class="sumo-daily-origin">'+flagMark(w)+(country?e(country.name):'Birthplace unavailable')+'</div>'+
+  return '<div class="sumo-daily-facts '+side+'">'+flagBackdrop(w)+
+    '<div class="sumo-daily-facts-content"><h2>'+link+'</h2>'+
+    '<div class="sumo-daily-origin">'+(country?e(country.name):'Birthplace unavailable')+'</div>'+
     '<div class="sumo-daily-ranks"><strong>'+e(w?.currentRank||'Rank unavailable')+'</strong>'+
-    '<small>Peak: '+e(w?knownHigh(w)||'Unavailable':'Unavailable')+'</small></div></div>';
+    '<small>Peak: '+e(w?knownHigh(w)||'Unavailable':'Unavailable')+'</small></div></div></div>';
 }
 function comparisonGrid(first,second) {
   const fact=w=>{
     if(!w)return null;
     const stats=detailStats(w),measure=weightHeight(w);
+    const currentEntry=entryFor(w);
+    const current=currentEntry?recordSummary(currentEntry.record,divisionOf(w.currentRank)):null;
     return Object.fromEntries(dailyStats({
       currentRank:w.currentRank,highestRank:knownHigh(w),
       heightCm:measure.heightCm,weightKg:measure.weightKg,
+      currentBashoWins:current?.win,currentBashoLosses:current?.loss,
       careerWins:stats?.totalWins,careerLosses:stats?.totalLosses,
       makuuchiWins:stats?.winsByDivision?.Makuuchi,
-      makuuchiLosses:stats?.lossByDivision?.Makuuchi
+      makuuchiLosses:stats?.lossByDivision?.Makuuchi,
+      makushitaWins:stats?.winsByDivision?.Makushita,
+      makushitaLosses:stats?.lossByDivision?.Makushita
     }));
   };
   const left=fact(first),right=fact(second);
@@ -263,9 +269,12 @@ function comparisonGrid(first,second) {
     return facts[scope+' wins']+'–'+facts[scope+' losses'];
   };
   const rows=[
-    ['Height',f=>pair(f,'Height')],['Weight',f=>pair(f,'Weight')],
+    ['Height',f=>pair(f,'Height')+(pair(f,'Height cm')!=='Not available'?' ('+pair(f,'Height cm')+')':'')],
+    ['Weight',f=>pair(f,'Weight')],
+    ['Current basho W–L',f=>winsLosses(f,'Current basho')],
     ['Career W–L',f=>winsLosses(f,'Career')],['Career win %',f=>pair(f,'Career win %')],
-    ['Makuuchi W–L',f=>winsLosses(f,'Makuuchi')],['Makuuchi win %',f=>pair(f,'Makuuchi win %')]
+    ['Makuuchi W–L',f=>winsLosses(f,'Makuuchi')],['Makuuchi win %',f=>pair(f,'Makuuchi win %')],
+    ['Makushita W–L',f=>winsLosses(f,'Makushita')],['Makushita win %',f=>pair(f,'Makushita win %')]
   ];
   return '<div class="sumo-comparison" role="group" aria-label="Wrestler comparison, left and right values">'+
     '<div class="sumo-comparison-head"><span>'+e(first?.shikonaEn||'First wrestler')+'</span><span>Statistic</span><span>'+e(second?.shikonaEn||'Second wrestler')+'</span></div>'+
@@ -348,7 +357,7 @@ function renderDailyMatchups(){
     '<div class="sumo-daily-grid">'+(pairing.length?pairing.map(dailyMatchupCard).join(''):
       '<div class="sumo-daily-empty">No confirmed pairings or completed results are cached for this division and selected day. '+latestAction+'</div>')+'</div>'+
     resultsArchive+
-    '<details class="sumo-data-coverage"><summary>Data coverage and interpretation</summary><p>Career win percentage is wins ÷ (wins + losses), excluding absences. Makuuchi totals reflect the available source scope. Missing values are not zero. History and pairwise series may be different source datasets. <a href="sumo-photo-credits.html">Portrait credits</a>.</p></details>'+
+    '<details class="sumo-data-coverage"><summary>Data coverage and interpretation</summary><p>Win percentages are wins ÷ (wins + losses), excluding absences. Current basho is taken from the latest banzuke; all-time Makuuchi and Makushita records are sourced from Sumo API division statistics when available. Missing values are never zeroed. Historical records may use different source snapshots. <a href="sumo-photo-credits.html">Portrait credits</a>.</p></details>'+
     sourceFooter()+'</section>';
 }
 function opponentBoutCard(w,rec,i,div){
@@ -496,9 +505,12 @@ function renderDirectory() {
 function detailStats(w) {
   const enriched=detailFor(details(),w.sourceId);
   const fromApi=enriched?.stats?.status==='available'?enriched.stats.data:null;
+  const cache=STATE.divisionStats?.bySourceId?.[String(w.sourceId)];
+  const trustedCache=cache?.sourceId===Number(w.sourceId)&&cache?.shikonaEn===w.shikonaEn&&cache?.status==='available';
+  const stats=trustedCache?cache.stats:fromApi;
   const research=STATE.h2hSummary?.profiles?.[String(w.sourceId)];
-  return research?{...fromApi,totalWins:research.careerWins,totalLosses:research.careerLosses,
-    totalMatches:research.careerWins+research.careerLosses,researchCareerSource:true}:fromApi;
+  return research?{...stats,totalWins:research.careerWins,totalLosses:research.careerLosses,
+    totalMatches:research.careerWins+research.careerLosses,researchCareerSource:true}:stats;
 }
 function formatStats(w,cur) {
   const s=detailStats(w), total=s?.totalMatches, wins=s?.totalWins, losses=s?.totalLosses;
@@ -1229,8 +1241,9 @@ async function loadCompleteH2h(){
 }
 async function init(){
   try {
-    const [roster,details,styles,photos,careerHistory,h2hSummary,readiness]=await Promise.all([loadJson('data/sumo/rikishi-index.json'),loadJson('data/sumo/preview-details.json'),loadJson('data/sumo/official-style-evidence.json'),loadJson('data/sumo/approved-photos.json'),loadJson('data/sumo/career-history.json'),
-      loadJson('data/sumo/research-h2h-summary.json').catch(()=>null),loadJson('data/sumo/api-trusted-status.json')]);
+    const [roster,details,styles,photos,careerHistory,h2hSummary,readiness,divisionStats]=await Promise.all([loadJson('data/sumo/rikishi-index.json'),loadJson('data/sumo/preview-details.json'),loadJson('data/sumo/official-style-evidence.json'),loadJson('data/sumo/approved-photos.json'),loadJson('data/sumo/career-history.json'),
+      loadJson('data/sumo/research-h2h-summary.json').catch(()=>null),loadJson('data/sumo/api-trusted-status.json'),
+      loadJson('data/sumo/division-stats.json').catch(()=>null)]);
     if(!Array.isArray(roster?.rikishi)||!Array.isArray(details?.featured)||roster?.count!==roster.rikishi.length) throw new Error('Sumo cache schema or roster total not valid');
     if((roster?.trackedDivisions||[]).join(',')!==DIVS.join(','))throw new Error('Sumo cache does not match the approved three-division scope');
     if(roster.rikishi.some(x=>!DIVS.includes(divisionOf(x.currentRank))))throw new Error('Out-of-scope division in Sumo index');
@@ -1240,6 +1253,7 @@ async function init(){
     if(h2hSummary&&(h2hSummary.schemaVersion!==1||h2hSummary.cohortSize!==190||h2hSummary.certified!==false))throw new Error('Research H2H summary failed schema validation');
     validateSumoPreviewReadiness(readiness,roster);
     STATE.roster=roster;STATE.details=details;STATE.officialStyles=styles;STATE.photoIndex=photos.bySourceId;STATE.careerHistory=careerHistory;STATE.h2hSummary=h2hSummary;STATE.apiTrust=readiness;
+    STATE.divisionStats=divisionStats?.schemaVersion===1&&divisionStats?.cohortSize===roster.count&&divisionStats?.source==='https://www.sumo-api.com/api'?divisionStats:null;
     render();
   } catch(error){
     STATE.error=error.message || 'Unable to load the preview dataset';
