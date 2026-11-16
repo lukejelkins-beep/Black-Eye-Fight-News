@@ -29,13 +29,15 @@ export function setKimariteMediaManifest(data){
   const hasGif=/^assets\/sumo-kimarite\/[a-z]+\.gif$/.test(row.gif||'');
   if(!hasWebm&&!hasGif)continue;
   // H.264 MP4 fallback keeps clips playable on iPhone/Safari.
-  if(row.mp4 && (!hasWebm||!/^assets\/sumo-kimarite\/[a-z]+\.mp4$/.test(row.mp4)||row.mp4!==row.webm.replace(/\.webm$/,'.mp4')))continue;
+  if(row.mp4 && !/^assets\/sumo-kimarite\/[a-z]+\.mp4$/.test(row.mp4))continue;
+  if(row.mp4 && hasWebm && row.mp4!==row.webm.replace(/\.webm$/,'.mp4'))continue;
+  if(row.clip && !/^assets\/sumo-kimarite\/[a-z]+\.(mp4|mov)$/.test(row.clip))continue;
   // Only the official JSA catalogue still is used as a public video poster.
   const technique=KIMARITE.find(x=>x.slug===slug);
   if(!technique)continue;
   if(row.poster && row.poster!==technique.jsaPoster)continue;
   if(row.rights!=='NHK permission confirmed by BEFN owner'||row.credit!=='NHK WORLD-JAPAN')continue;
-  valid[slug]={webm:hasWebm?row.webm:null,gif:hasGif?row.gif:null,mp4:row.mp4||null,poster:technique.jsaPoster,rights:row.rights,credit:row.credit};
+  valid[slug]={webm:hasWebm?row.webm:null,gif:hasGif?row.gif:null,mp4:row.mp4||null,clip:row.clip||row.mp4||null,poster:technique.jsaPoster,rights:row.rights,credit:row.credit};
  }
  APPROVED_WEBM=Object.freeze(valid);return true;
 }
@@ -160,22 +162,33 @@ let focusBeforeModal=null;
 export function kimariteModalMarkup(item){
  const clip=videoFor(item);
  const group=groupFor(item);
- const graphic=clip?.gif?
+ const isOshidashi=item.slug==='oshidashi';
+ // The owner-supplied Oshidashi GIF has priority over all external stills.
+ // Do not use the previously disputed JSA photo as an Oshidashi fallback.
+ const visual=clip?.gif?
    '<img class="sumo-km-modal-gif" src="'+esc(clip.gif)+'" alt="Looping example of '+esc(item.name)+'" decoding="async">'+
    '<span class="sumo-km-modal-media-credit">GIF: '+esc(clip.credit)+'</span>':
+   isOshidashi?
+   '<div class="sumo-km-modal-pending-visual">Owner-supplied Oshidashi GIF pending upload to the test branch</div>':
    '<img class="sumo-km-modal-still" src="'+esc(item.jsaPoster)+'" alt="Official Japan Sumo Association '+esc(item.name)+' reference photograph">'+
    '<span class="sumo-km-modal-media-credit">Photo: Japan Sumo Association</span>';
- const pending=clip?.gif?'':'<p class="sumo-km-modal-pending">Animated example is being prepared. This is the official JSA reference still.</p>';
+ const clipButton=clip?.clip?
+   '<div class="sumo-km-clip-panel"><button type="button" class="sumo-km-clip-button" data-km-clip-toggle aria-expanded="false" aria-controls="sumo-km-original-clip">▶ Play original clip</button>'+
+   '<div class="sumo-km-clip-content" id="sumo-km-original-clip" hidden><video class="sumo-km-original-clip" controls playsinline preload="none" src="'+esc(clip.clip)+'" aria-label="Original '+esc(item.name)+' source clip"></video></div></div>':'';
+ const pending=clip?.gif?'':isOshidashi?
+   '<p class="sumo-km-modal-pending">The owner-provided GIF is awaiting transfer to this branch; no unrelated photograph is substituted.</p>':
+   '<p class="sumo-km-modal-pending">Animated example is being prepared. This is the official JSA reference still.</p>';
  return '<div class="sumo-km-overlay" data-km-backdrop>'+
    '<section class="sumo-km-dialog" role="dialog" aria-modal="true" aria-labelledby="sumo-km-modal-title" tabindex="-1">'+
-    '<button type="button" class="sumo-km-close" data-km-close aria-label="Close kimarite viewer">×</button>'+
-    '<div class="sumo-km-modal-visual">'+graphic+'</div>'+
-    '<div class="sumo-km-modal-text"><div class="eyebrow">'+esc(group.name)+'</div>'+
-    '<h2 id="sumo-km-modal-title">'+esc(item.name)+' <span>'+esc(item.japanese)+'</span></h2>'+
-    '<p class="sumo-km-modal-meaning">'+esc(item.english)+'</p>'+pending+
-    '<div class="sumo-km-modal-links"><a target="_blank" rel="noopener noreferrer" href="'+esc(item.jsaDetail)+'">Official JSA reference ↗</a>'+
-    '<a target="_blank" rel="noopener noreferrer" href="'+esc(linkSource(item))+'">NHK video source ↗</a></div>'+
-    '</div></section></div>';
+   '<button type="button" class="sumo-km-close" data-km-close aria-label="Close kimarite viewer">×</button>'+
+   '<div class="sumo-km-modal-visual">'+visual+'</div>'+
+   '<div class="sumo-km-modal-text"><div class="eyebrow">'+esc(group.name)+'</div>'+
+   '<h2 id="sumo-km-modal-title">'+esc(item.name)+' <span>'+esc(item.japanese)+'</span></h2>'+
+   '<p class="sumo-km-modal-meaning">'+esc(item.english)+'</p>'+pending+
+   clipButton+
+   '<div class="sumo-km-modal-links"><a target="_blank" rel="noopener noreferrer" href="'+esc(item.jsaDetail)+'">Official JSA reference ↗</a>'+
+   '<a target="_blank" rel="noopener noreferrer" href="'+esc(linkSource(item))+'">NHK video source ↗</a></div>'+
+   '</div></section></div>';
 }
 export function openKimariteModal(name,returnFocus=null){
  const item=lookupKimarite(name);
@@ -200,6 +213,17 @@ export function closeKimariteModal(restoreFocus=true){
 }
 if(typeof document!=='undefined'){
  document.addEventListener('click',event=>{
+   const clipToggle=event.target.closest?.('[data-km-clip-toggle]');
+   if(clipToggle && modalHost?.contains(clipToggle)){
+     event.preventDefault();
+     const content=modalHost.querySelector('#sumo-km-original-clip');
+     const wasOpen=clipToggle.getAttribute('aria-expanded')==='true';
+     clipToggle.setAttribute('aria-expanded',String(!wasOpen));
+     clipToggle.textContent=wasOpen?'▶ Play original clip':'▾ Hide original clip';
+     if(content)content.hidden=wasOpen;
+     if(wasOpen)content?.querySelector('video')?.pause();
+     return;
+   }
    const button=event.target.closest?.('[data-km-close]');
    if(button){event.preventDefault();closeKimariteModal();return;}
    if(event.target?.matches?.('[data-km-backdrop]')){event.preventDefault();closeKimariteModal();return;}
