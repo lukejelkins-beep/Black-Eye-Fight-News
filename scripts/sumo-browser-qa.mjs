@@ -53,6 +53,19 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assertContains(home,'five leaders','home leaders');
   assert.ok(await page.locator('.sumo-home-grid').count()===1,'Results and leaders appear in first dashboard');
   assert.equal(await page.locator('.sumo-home-leaders .sumo-standings-row').count(),5,'Homepage shows exactly five leaders');
+  if(isMobile){
+    const nav=await page.evaluate(()=>{
+      const links=[...document.querySelector('.subnav-inner').children]
+        .filter(el=>getComputedStyle(el).display!=='none');
+      return links.map(el=>({label:el.innerText.trim(),
+        client:el.clientWidth,scroll:el.scrollWidth,
+        left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right}));
+    });
+    assert.equal(nav.length,4,'Mobile navigation has four unambiguous destinations');
+    assert.ok(nav.every((item,i)=>item.scroll<=item.client+2&&
+      (i===0||item.left>=nav[i-1].right-2)),
+      'No overlapping or clipped mobile navigation text: '+JSON.stringify(nav));
+  }
   await snap(page,label+'-home',{fullPage:false});
 
   await open(page,'rikishi','#directory-results .directory-card');
