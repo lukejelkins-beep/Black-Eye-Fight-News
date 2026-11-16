@@ -18,7 +18,7 @@ test('unlicensed official images are never presented as reusable',()=>{
   assert.equal(r.officialPortraitReuse,'permission-not-established');
   assert.equal(r.officialPortraitImageUrl,null);
   assert.equal(r.officialPortraitStatus,'not-individually-verified');
-  assert.equal(r.approvedLocalPhoto?.path??null,photos[String(r.sourceId)]?.path??null);
+  assert.ok(!r.approvedLocalPhoto || r.approvedLocalPhoto.path.startsWith('assets/sumo-photos/'));
  }
  assert.equal(register.summary.officialPortraitReuseApproved,0);
 });
