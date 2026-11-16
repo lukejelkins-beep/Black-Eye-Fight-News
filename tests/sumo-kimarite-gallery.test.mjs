@@ -26,7 +26,7 @@ test('gallery and deep-linked detail render independently of wrestler cache',()=
   globalThis.location={hash:'#kimarite?term=yorikiri'};
   const detail=renderKimariteGallery();
   assert.match(detail,/Yorikiri/);
-  assert.match(detail,/sumo\\.or\\.jp\\/img\\/kimarite\\/kimarite_05\\.jpg/);
+  assert.match(detail,/assets\\/sumo-kimarite\\/jsa\\/kimarite_05\\.jpg/);
   assert.match(detail,/View JSA photograph and reference/);
   assert.match(detail,/Frontal force-out/);
   delete globalThis.location;
@@ -39,7 +39,7 @@ test('media manifest rejects unverified paths or missing credit',()=>{
   globalThis.location={hash:'#kimarite?term=yorikiri'};
   assert.doesNotMatch(renderKimariteGallery(),/sumo-km-video/);
   const approved={schemaVersion:1,clips:{yorikiri:{
-    webm:'assets/sumo-kimarite/yorikiri.webm',mp4:'assets/sumo-kimarite/yorikiri.mp4',poster:'https://sumo.or.jp/img/kimarite/kimarite_05.jpg',
+    webm:'assets/sumo-kimarite/yorikiri.webm',mp4:'assets/sumo-kimarite/yorikiri.mp4',poster:'assets/sumo-kimarite/yorikiri-poster.jpg',
     credit:'NHK WORLD-JAPAN',rights:'NHK permission confirmed by BEFN owner'
   }}};
   assert.equal(setKimariteMediaManifest(approved),true);
@@ -131,4 +131,18 @@ test('three further owner-provided GIFs retain their matching clip and poster',(
   assert.match(html,/Play original clip/);
   assert.doesNotMatch(html,/sumo-km-modal-still/);
  }
+});
+
+
+test('JSA gallery photos use local verified assets and no source badges over the image',()=>{
+ for(const item of KIMARITE){
+  assert.match(item.jsaPoster,/^assets\/sumo-kimarite\/jsa\/kimarite_\d\d\.jpg$/);
+  assert.match(item.jsaRemote,/^https:\/\/www\.sumo\.or\.jp\/img\/kimarite\/kimarite_\d\d\.jpg$/);
+ }
+ globalThis.location={hash:'#kimarite'};
+ const gallery=renderKimariteGallery();
+ assert.doesNotMatch(gallery,/sumo-km-poster-credit/);
+ assert.doesNotMatch(gallery,/Photo: Japan Sumo Association/);
+ assert.match(gallery,/Photographs: Japan Sumo Association/);
+ delete globalThis.location;
 });
