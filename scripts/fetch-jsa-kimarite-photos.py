@@ -19,7 +19,7 @@ OUTPUT = Path(__file__).resolve().parents[1] / "assets/sumo-kimarite/jsa"
 EXPECTED = range(1, 83)
 
 def valid_jpeg(data: bytes) -> bool:
-    return len(data) > 4000 and data.startswith(b"\\xff\\xd8\\xff") and data.rstrip().endswith(b"\\xff\\xd9")
+    return len(data) > 4000 and data[:3] == bytes([255, 216, 255]) and data.rstrip().endswith(bytes([255, 217]))
 
 def fetch(n: int) -> tuple[int, str]:
     dest = OUTPUT / f"kimarite_{n:02d}.jpg"
