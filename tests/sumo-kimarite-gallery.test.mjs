@@ -146,3 +146,16 @@ test('JSA gallery photos use local verified assets and no source badges over the
  assert.match(gallery,/Photographs: Japan Sumo Association/);
  delete globalThis.location;
 });
+
+test('all 82 gallery group records include their actual JSA JPEG URLs',()=>{
+  const items=KIMARITE_GROUPS.flatMap(g=>g.items);
+  assert.equal(items.length,82);
+  for(let i=0;i<items.length;i++){
+    const item=items[i];
+    const photo='kimarite_'+String(i+1).padStart(2,'0')+'.jpg';
+    assert.equal(item.jsaId,i+1);
+    assert.equal(item.jsaPoster,'assets/sumo-kimarite/jsa/'+photo);
+    assert.equal(item.jsaRemote,'https://www.sumo.or.jp/img/kimarite/'+photo);
+    assert.equal(lookupKimarite(item.slug),item);
+  }
+});
