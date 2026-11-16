@@ -267,6 +267,22 @@ const sameAthleteName=(a,b)=>normal(a)===normal(b)||Boolean(tokens(a)&&tokens(a)
 const nearSourceDay=(a,b)=>date(a)&&date(b)&&
  Math.abs(Date.parse(a+'T00:00:00Z')-Date.parse(b+'T00:00:00Z'))<=86400000;
 
+/** Flag all frozen identities sharing a single official UFC athlete URL. */
+export function sharedOfficialUfcIdentitySlugs(approved,registry){
+ const officialUrlOwners=new Map(),conflicts=new Set();
+ for(const slug of approved){
+   const row=registry?.[slug];
+   const url=String(row?.officialFighterUrl||row?.officialUfcFighterUrl||'')
+     .trim().toLowerCase().replace(/\\/$/,'');
+   if(!/^https:\/\/www\.ufc\.com\/athlete\//.test(url))continue;
+   if(!officialUrlOwners.has(url))officialUrlOwners.set(url,[]);
+   officialUrlOwners.get(url).push(slug);
+ }
+ for(const owners of officialUrlOwners.values())
+   if(owners.length>1)owners.forEach(slug=>conflicts.add(slug));
+ return conflicts;
+}
+
 /** Independent UFC source inventory is a depth-gap detector, never a certificate. */
 export function auditOfficialCareerInventory(inventory,approved,census,profiles,bouts){
  const result={cases:[],conflicts:[],totalSourceBouts:0,matchedSaved:0,
@@ -516,17 +532,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
   // Distinct frozen roster entries cannot both inherit the same official UFC
   // athlete page. Preserve all roster entries and source proofs for review,
   // but fail closed on certification until their identities are disambiguated.
-  const officialUrlOwners=new Map(),sharedOfficialIdentity=new Set();
-  for(const slug of approved){
-    const row=independentRegistry[slug];
-    const url=String(row?.officialFighterUrl||row?.officialUfcFighterUrl||'')
-      .trim().toLowerCase().replace(/\/$/,'');
-    if(!/^https:\/\/www\.ufc\.com\/athlete\//.test(url))continue;
-    if(!officialUrlOwners.has(url))officialUrlOwners.set(url,[]);
-    officialUrlOwners.get(url).push(slug);
-  }
-  for(const owners of officialUrlOwners.values())
-    if(owners.length>1)owners.forEach(slug=>sharedOfficialIdentity.add(slug));
+  const sharedOfficialIdentity=sharedOfficialUfcIdentitySlugs(approved,independentRegistry);
 
   // One offline pass through indexed official UFC fights, keyed by stable
   // numeric fighter ID. This can expose older bouts omitted by shortened
