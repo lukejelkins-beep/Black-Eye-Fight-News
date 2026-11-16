@@ -62507,6 +62507,103 @@
         }
       ],
       "note": "Research-only complete career source attestation subject to exact-HEAD 783-cohort Stage3 audit. No paid APIs, inference, changed provider cache or production release."
+    },
+    "wang-cong": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Wang Cong",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/2997e7fe3c9d3d4a",
+      "officialFighterUrl": "https://www.ufc.com/athlete/wang-cong",
+      "earliestOfficialUfcBout": "2024-08-24",
+      "latestCompletedOfficialUfcBout": "2026-10-03",
+      "officialUfcCareerBoutCount": 7,
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "80258ab3d9f413cad9be13fde64beb66dd0bcfa6",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "24238cb71d7bec6522a77f285b530274b3c897b9",
+        "method": "Seven independently complete UFCStats/Greco fighter-event-bout results, official UFC.com athlete full chronology, paired original native IDs, opponents/results/dates and measured native round records. Excludes 2024-05-18 Road to UFC qualifier Paula Luna from the UFC Octagon count.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "500"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "bouts": [
+        {
+          "date": "2024-08-24",
+          "opponent": "Victoria Leonardo",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d4127baf74b0e791",
+          "eventUrl": "https://ufcstats.com/event-details/be8ad887e4d674b0",
+          "nativeBoutId": "60237",
+          "nativeFighterId": "500"
+        },
+        {
+          "date": "2024-11-23",
+          "opponent": "Gabriella Fernandes",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/64d6d51219e0664c",
+          "eventUrl": "https://ufcstats.com/event-details/e955046551f8c7dd",
+          "nativeBoutId": "38588",
+          "nativeFighterId": "500"
+        },
+        {
+          "date": "2025-02-08",
+          "opponent": "Bruna Brasil",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/946cae1beed2baec",
+          "eventUrl": "https://ufcstats.com/event-details/e6015889f50075d2",
+          "nativeBoutId": "60986",
+          "nativeFighterId": "500"
+        },
+        {
+          "date": "2025-06-07",
+          "opponent": "Ariane Lipski da Silva",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d078e9046aa86307",
+          "eventUrl": "https://ufcstats.com/event-details/18c49685296c60e6",
+          "nativeBoutId": "60870",
+          "nativeFighterId": "500",
+          "sourceVerifiedIndependentOpponentName": "Ariane da Silva",
+          "sourceVerifiedNativeOpponentAliases": [
+            "Ariane da Silva"
+          ],
+          "verifiedOpponentNativeFighterIds": [
+            "4831"
+          ]
+        },
+        {
+          "date": "2026-02-07",
+          "opponent": "Eduarda Moura",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/84e8ccc3c97c2b4c",
+          "eventUrl": "https://ufcstats.com/event-details/c337c3c85b1871e0",
+          "nativeBoutId": "60735",
+          "nativeFighterId": "500"
+        },
+        {
+          "date": "2026-07-11",
+          "opponent": "Tracy Cortez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e84c3f1f9a33fa90",
+          "eventUrl": "https://ufcstats.com/event-details/fccb0fee256b7b4d",
+          "nativeBoutId": "66448",
+          "nativeFighterId": "500"
+        },
+        {
+          "date": "2026-10-03",
+          "opponent": "Natalia Silva",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/3f804eec9183e597",
+          "eventUrl": "https://ufcstats.com/event-details/ad3fdba28a7540cf",
+          "nativeBoutId": "92978",
+          "nativeFighterId": "500"
+        }
+      ],
+      "note": "Research-only complete career attestation awaiting exact-HEAD full-cohort Stage3. Official 2026 Natalia Silva fight is a Wang loss despite misleading UFC.com hero-card Win badge. Original provider event UTC date 2025-06-08 corresponds to independent 2025-06-07 UFC 316 local day. Native Ariane Lipski da Silva is UFCStats Ariane da Silva. Road to UFC qualifier vs Paula Luna excluded."
     }
   }
 }
