@@ -5288,16 +5288,16 @@
       "certificationStatus": "independently_verified_full_career_pending_offline_ci",
       "sourceCoverageAttested": true,
       "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
-      "scope": "full_ufc_career_from_debut_to_snapshot",
-      "verifiedAt": "2026-11-14",
+      "scope": "complete_official_ufc_career",
+      "verifiedAt": "2026-11-16",
       "fighterUrl": "https://ufcstats.com/fighter-details/5182316da3c1d891",
       "officialFighterUrl": "https://www.ufc.com/athlete/bilal-hasan",
       "firstOfficialUfcFight": "2026-08-29",
-      "lastOfficialUfcFight": "2026-08-29",
-      "verifiedOfficialUfcBoutCount": 1,
+      "lastOfficialUfcFight": "2026-11-14",
+      "verifiedOfficialUfcBoutCount": 2,
       "verifiedUfcRecord": {
         "wins": 1,
-        "losses": 0,
+        "losses": 1,
         "draws": 0,
         "noContests": 0
       },
@@ -5305,19 +5305,19 @@
         "52597"
       ],
       "sourceSnapshot": {
-        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fightResultsBlobSha": "80258ab3d9f413cad9be13fde64beb66dd0bcfa6",
         "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
-        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
-        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
-        "cutoffLastEvent": "2026-11-07"
+        "eventDetailsBlobSha": "24238cb71d7bec6522a77f285b530274b3c897b9",
+        "sourceCommit": "96adace863c0a793579cc06d27d468797545607f",
+        "cutoffLastEvent": "2026-11-14"
       },
       "sourceCoverage": {
-        "method": "Reviewed full official UFC athlete profile from debut to 14 Nov 2026; independently verified one unique UFCStats-derived source bout against all pinned Greco fighter fight rows, dated independent event listing, saved numeric fighter native bout identity both corners, official outcome, measured round/time. All previously saved DWCS feeder contests explicitly excluded. UFC misleading summary widgets do not replace official detailed result narratives.",
+        "method": "Two independently pinned Greco UFCStats-derived source fight results/events current through Nov14, crosschecked against original numeric native bout IDs, both corners, event-local dates, outcomes and measured rounds. Existing UFC athlete page URL retained but not re-fetched in this update. No imputation.",
         "officialDebut": "2026-08-29",
-        "officialDatedBouts": 1,
-        "grecoExactBoutRows": 1,
-        "sourceSnapshotLastEvent": "2026-11-07",
-        "sourcePresentationException": "One completed official UFC fight Aug29 2026 Nilson Rojas TKO win R2 2:28, separately excludes Dana White's Contender Series 10 Aug11 2026 bout vs Mridul Saikia. Nov14 matchup vs Luis Gurule is listed as upcoming on official athlete biography, not a completed fight at roster snapshot.",
+        "officialDatedBouts": 2,
+        "grecoExactBoutRows": 2,
+        "sourceSnapshotLastEvent": "2026-11-14",
+        "sourcePresentationException": "15 Nov source archive now includes Bilal Hasan's 14 Nov split decision loss against Luis Gurule at UFC 334; the earlier 7 Nov pinned snapshot did not. Exclude his DWCS bout against Mridul Saikia.",
         "excludedFeederNativeFights": [
           {
             "date": "2026-08-11",
@@ -5342,10 +5342,29 @@
           "method": "ko_tko",
           "round": 2,
           "time": "2:28",
-          "independentEventUrl": "https://ufcstats.com/event-details/9d61d8cb1c354867"
+          "independentEventUrl": "https://ufcstats.com/event-details/9d61d8cb1c354867",
+          "originalOpponentNumericId": "11849",
+          "pinnedSourceEventDate": "2026-08-29"
+        },
+        {
+          "date": "2026-11-14",
+          "opponent": "Luis Gurule",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/fdefe4d1a8ef2997",
+          "nativeBoutId": "93106",
+          "nativeFightId": "93106",
+          "nativeFighterId": "52597",
+          "originalOpponentNumericId": "48",
+          "event": "Polymarket UFC 334: Gane vs Hokit",
+          "pinnedSourceEventDate": "2026-11-14",
+          "method": "decision_split",
+          "round": 3,
+          "time": "5:00",
+          "independentEventUrl": "https://ufcstats.com/event-details/402ea3b5ee233852"
         }
       ],
-      "note": "One completed official UFC career fight verified through Nov14 2026; no inferred/cached-only certification. Independent Stage3 CI gate pending."
+      "note": "Two completed official UFC bouts independently source-matched through Nov 14. DWCS excluded. Exact-current-head complete 783-cohort Stage3 audit required for certification; proof alone not a certificate.",
+      "officialUfcCareerBoutCount": 2
     },
     "borislav-nikolic": {
       "rosterAsOf": "2026-11-14",
