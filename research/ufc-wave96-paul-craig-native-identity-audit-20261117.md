@@ -64,3 +64,11 @@ Crosschecked the 21 native opponent/date identities above against the independen
 **Data-quality exception identified:** Cageside displays `17/0` significant strikes for the 2017 Khalil Rountree Jr. fight, an impossible landed/attempted relationship. Do not ingest that cell as valid or use it as proof of clean original per-round measurements. Original archived round records must resolve the discrepancy.
 
 **Status:** still uncertified. 21 UFC contests independently matched by opponent, date, outcome, and external bout-level measured-stat coverage; strict archived original-round/source-ID crosswalk and full-cohort audit outstanding. Never claim an audit ran without a successful exact-commit workflow.
+
+## Owner-approved round-stat evidence policy — 2026-11-17
+
+**Superseding owner decision:** Accept **UFCalendar as authoritative for UFC per-round statistical values**. Do not require independent UFCStats/Greco/third-party numerical corroboration of round-stat figures. This supersedes earlier research-note language demanding independently verified round measurements, including the external 2017 Rountree discrepancy as a blocker. Such external disagreement is no longer a certification blocker for round values.
+
+**Still required:** verify that the actual UFCalendar round-stat records exist, are correctly linked to each original numeric UFC bout ID and fighter corner, and contain the relevant values; `roundDone` alone is a retrieval-status marker, not the round record itself. Preserve complete original UFC fight identity, chronology, opponent, result, NC/draw, excluded feeder/cancelled entries, and exact-commit strict audit. Do not fabricate missing rows or relax those non-statistic gates.
+
+**Implementation follow-up:** The strict Stage 3 validator and tests should be updated to use this policy on the existing research branch before certification is claimed. This note alone does not modify validator logic or certify Paul Craig.
