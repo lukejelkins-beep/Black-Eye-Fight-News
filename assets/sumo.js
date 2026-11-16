@@ -879,7 +879,7 @@ function renderProfile(id) {
     sectionNav(w.sourceId)+lastFiveStrip(w)+
     sectionHead('results','Tournament and career ledger','Results')+resultDesk(w)+'</section>'+
     sectionHead('career','Historical context','Career')+
-    '<div class="sumo-career-strip" aria-label="Source-listed tournament and top-division title totals"><div><span>Basho</span><strong>'+e(s?.basho??'Not available')+'</strong></div>'+
+    '<div class="sumo-career-strip" aria-label="Career tournament and championship totals"><div><span>Basho</span><strong>'+e(s?.basho??'Not available')+'</strong></div>'+
     '<div><span>Makuuchi Championships</span><strong>'+e(titleCount??'Not available')+'</strong></div></div>'+
     '<div class="sumo-career-detail-section"><h3>Biography</h3><div class="sumo-career-data-grid">'+
     careerInfoTile('Born',dateOnly(w.birthDate))+
@@ -923,7 +923,7 @@ function opponentResults(w){
     (STATE.h2hOpponentLimit>16?'<button type="button" class="btn light" data-h2h-fewer>Show fewer opponents</button>':'');
 }
 function profileRivalries(w){
-  return '<p class="section-intro">All source-recorded opponents remain available for search and head-to-head comparison. Records are API research data, not blanket JSA certification.</p>'+
+  return '<p class="section-intro">Search for an opponent or select a tile to see the full head-to-head history.</p>'+
     '<div class="sumo-opponent-controls"><label for="sumo-opponent-search">Search opponent</label>'+
     '<input id="sumo-opponent-search" type="search" value="'+e(STATE.opponentQuery)+'" placeholder="Ring name…" autocomplete="off">'+
     '<label for="sumo-opponent-sort">Sort opponents</label><select id="sumo-opponent-sort">'+
