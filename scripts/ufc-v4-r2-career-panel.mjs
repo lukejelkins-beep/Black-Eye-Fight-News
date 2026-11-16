@@ -3,7 +3,13 @@
  */
 import {canShowVerifiedCareer} from './ufc-v4-r2-career-gate.mjs';
 const escapeHtml=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const validDate=x=>{\n  if(typeof x!=='string'||!/^\\d{4}-\\d{2}-\\d{2}$/.test(x))return false;\n  const [year,month,day]=x.split('-').map(Number);\n  const parsed=new Date(Date.UTC(year,month-1,day));\n  return parsed.getUTCFullYear()===year&&parsed.getUTCMonth()+1===month&&\n    parsed.getUTCDate()===day&&parsed.getTime()<=Date.now();\n};
+const validDate=x=>{
+  if(typeof x!=='string'||!/^\\d{4}-\\d{2}-\\d{2}$/.test(x))return false;
+  const [year,month,day]=x.split('-').map(Number);
+  const parsed=new Date(Date.UTC(year,month-1,day));
+  return parsed.getUTCFullYear()===year&&parsed.getUTCMonth()+1===month&&
+    parsed.getUTCDate()===day&&parsed.getTime()<=Date.now();
+};
 const validResult=new Set(['win','loss','draw','no_contest']);
 export function renderVerifiedCareerPanel({featureEnabled=false,fighterSlug,audit,expectedCommit,
   duplicateIdentitySlugs=[],bouts=[],verifiedOfficialBoutCount}={}){
@@ -15,7 +21,9 @@ export function renderVerifiedCareerPanel({featureEnabled=false,fighterSlug,audi
   const clean=bouts.map(b=>({date:b?.date,opponent:b?.opponent,event:b?.event,
     result:b?.result,method:b?.method,round:b?.round})); 
   if(clean.some(b=>!validDate(b.date)||!String(b.opponent||'').trim()||
-      !validResult.has(b.result)||!String(b.event||'').trim()||\n      (b.round!=null&&(!Number.isSafeInteger(b.round)||b.round<1||b.round>12))||\n      (b.method!=null&&typeof b.method!=='string')))
+      !validResult.has(b.result)||!String(b.event||'').trim()||
+      (b.round!=null&&(!Number.isSafeInteger(b.round)||b.round<1||b.round>12))||
+      (b.method!=null&&typeof b.method!=='string')))
     return {visible:false,reason:'invalid_bout_data',html:''};
   const keys=new Set(clean.map(b=>b.date+'|'+b.opponent.toLowerCase()+'|'+b.event.toLowerCase()));
   if(keys.size!==clean.length)return {visible:false,reason:'duplicate_bouts',html:''};
