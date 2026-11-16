@@ -31,3 +31,14 @@
 - A muted 640×294 VP9/WebM sample was generated (171,992 bytes). This example **does not yet show an unambiguous completed ring exit** and has not been added to the public manifest or the repository.
 - Official still: https://sumo.or.jp/img/kimarite/kimarite_03.jpg; source reference https://sumo.or.jp/Kimarite/detail/3/.
 - For production-quality instructional footage, supply a longer view containing the decisive push-out and full finishing motion.
+
+## GIF pop-up interaction (17 November 2026)
+- BEFN Sumo uses an on-demand GIF overlay: tap a named kimarite from the gallery, match results, H2H, profile techniques or standings, and a modal opens without changing the current URL, view or scroll position.
+- GIFs are **not** auto-loaded across the 82-card gallery. Full-motion GIFs load only after a tap, with Escape, backdrop and close-button dismissal, focus restoration and a mobile-safe frame.
+- Technique tiles always show the matching original JSA reference photograph (verified Oshidashi: https://sumo.or.jp/img/kimarite/kimarite_03.jpg). Never show unrelated image-search photographs as JSA examples.
+- `data/sumo/kimarite-media.json` accepts an optional `gif` path under `assets/sumo-kimarite/{slug}.gif`. Source credit and usage permission are required.
+- Create a tight GIF directly from the permitted recording using:
+  `python3 scripts/build-kimarite-gif.py /path/oshidashi.mov --slug oshidashi --crop 760:426:20:24 --width 480 --fps 12`
+- Test a full technique sequence, both wrestlers' visibility throughout, no unnecessary borders, mobile decoding and GIF loop behaviour before declaring an example completed. 
+- The user-supplied 1.965-second Oshidashi MOV was cropped into a **review GIF only**. It lacks conclusive footage of the ring exit and has **not** been committed to the site or media manifest.
+- Top 15 frequent winning techniques remain the priority set; other kimarite show JSA photographs and links until a verified GIF exists.
