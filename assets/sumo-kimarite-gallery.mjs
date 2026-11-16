@@ -212,6 +212,13 @@ if(typeof document!=='undefined'){
    openKimariteModal(input,a);
  },true);
  document.addEventListener('keydown',event=>{
+   if(!modalHost && (event.key==='Enter'||event.key===' ') && event.target?.dataset?.kmOpen){
+     if(lookupKimarite(event.target.dataset.kmOpen)){
+       event.preventDefault();event.stopPropagation();
+       openKimariteModal(event.target.dataset.kmOpen,event.target);
+     }
+     return;
+   }
    if(!modalHost)return;
    if(event.key==='Escape'){event.preventDefault();closeKimariteModal();return;}
    if(event.key==='Tab'){
