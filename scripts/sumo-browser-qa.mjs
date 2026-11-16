@@ -159,7 +159,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     'The original closed career disclosures have been replaced');
   assert.equal(await page.locator('#sumo-career .sumo-career-detail-section').count(),4,
     'Biography, Division records, Prizes and Last six banzuke positions are always visible');
-  assert.equal(await page.locator('#sumo-career .sumo-career-data-tile').count()>=4,true,
+  assert.ok((await page.locator('#sumo-career .sumo-career-data-tile').count())>=4,
     'Career data is displayed in compact tiles');
   assert.equal(await page.locator('#sumo-career .sumo-basho-history-item').count(),6,
     'Six recorded banzuke positions display as visible tiles');
