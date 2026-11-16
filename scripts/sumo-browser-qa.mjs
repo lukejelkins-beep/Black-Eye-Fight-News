@@ -70,11 +70,28 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.locator('[data-directory-division="Makushita"]').click();
   assert.equal(await page.locator('#directory-results .directory-card').count(),24);
   assertContains(await page.locator('#directory-results').innerText(),'120 matching current wrestlers','Makushita filter');
+  await page.locator('[data-directory-layout="list"]').click();
+  assert.equal(await page.locator('.directory-grid.is-list .directory-card').count(),24,
+    'Compact directory keeps all currently filtered rikishi');
+  await page.locator('[data-directory-layout="cards"]').click();
+  assert.equal(await page.locator('.directory-grid.is-list').count(),0,'Return to image-card presentation');
   await snap(page,label+'-directory',{fullPage:false});
 
   await open(page,'profile/8850','.profile-hero');
   let profile=await page.locator('#sumo-main').innerText();
   assertContains(profile,'Onosato','Onosato name');
+  assert.equal(await page.locator('.sumo-quick-results').count(),1,'Results jump available beside identity');
+  assert.equal(await page.locator('.sumo-full-photo').count(),1,'Approved original photo available at full size');
+  const heroMeasurements=await page.evaluate(()=>{
+    const box=document.querySelector('.profile-hero').getBoundingClientRect();
+    const image=document.querySelector('.profile-hero>.sumo-photo').getBoundingClientRect();
+    const heading=document.querySelector('.profile-hero h1').getBoundingClientRect();
+    return {top:box.top,headingTop:heading.top,imageHeight:image.height,viewport:window.innerHeight};
+  });
+  assert.ok(heroMeasurements.headingTop<heroMeasurements.viewport/2,
+    'Profile name is in the upper half of the first screen: '+JSON.stringify(heroMeasurements));
+  assert.ok(heroMeasurements.imageHeight<=(isMobile?321:521),
+    'Approved portrait is bounded rather than full-page: '+JSON.stringify(heroMeasurements));
   assertContains(profile,'Yokozuna','rank');
   assertContains(profile,'Winning techniques','techniques');
   assertContains(profile,'Results','canonical results');
@@ -218,6 +235,20 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   }));
   assert.ok(bodyWidth.doc<=bodyWidth.viewport+6,'Daily page has no viewport overflow '+JSON.stringify(bodyWidth));
   await snap(page,label+'-daily-faceoff-day1',{fullPage:false});
+  await page.locator('#sumo-matchup-day').selectOption('7');
+  const cardLink=page.locator('.sumo-daily-card .sumo-daily-score a').first();
+  assert.ok(await cardLink.count()>0,'Completed Day 7 card provides full H2H');
+  await cardLink.click();
+  await page.waitForSelector('.sumo-h2h-hero');
+  assertContains(await page.locator('.back-link').innerText(),'Day 7','Context-aware H2H return label');
+  await page.locator('.back-link').click();
+  await page.waitForSelector('#sumo-matchup-day');
+  assert.ok(page.url().includes('#matchups'),'H2H returns to originating daily route');
+  assert.equal(await page.locator('#sumo-matchup-day').inputValue(),'7','Return retains original tournament day');
+  await open(page,'headtohead/8850/71','.sumo-h2h-hero');
+  await page.waitForFunction(()=>document.querySelector('.sumo-h2h-score')?.textContent.includes('5–0'),null,{timeout:25000});
+  assertContains(await page.locator('#sumo-main').innerText(),'No recorded losses against Churanoumi',
+    'True zero losses are not described as missing technique data');
 
   await open(page,'kimarite','.technical-terms');
   assert.equal(await page.locator('.technical-terms .term').count(),9);
@@ -281,6 +312,10 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   // Exercise the redesigned controls, including native keyboard disclosures.
   await open(page,'profile/28','.profile-hero');
   if(isMobile){
+    await page.locator('.sumo-mobile-more summary').press('Enter');
+    assert.equal(await page.locator('.sumo-mobile-more-links a').count(),2,
+      'Mobile navigation exposes Banzuke and Kimarite without horizontal clipping');
+    await page.locator('.sumo-mobile-more summary').press('Enter');
     await page.locator('.befn-site-menu summary').press('Enter');
     assert.equal(await page.locator('.befn-site-menu').getAttribute('open'),'');
     assert.equal(await page.locator('.befn-site-menu nav a').count(),7,'Other sports and site pages remain accessible');
