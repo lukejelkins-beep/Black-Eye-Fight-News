@@ -57348,6 +57348,98 @@
           "nativeFighterId": "116"
         }
       ]
+    },
+    "quillan-salkilld": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Quillan Salkilld",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/17734443a833cdf7",
+      "officialFighterUrl": "https://www.ufc.com/athlete/quillan-salkilld",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "method": "Full dated UFC.com Octagon biography plus Oct 2026 original 6-0 official update cross-checked against source-pinned original Greco UFCStats-derived fighter and fight rows and complete cached native opponent/corner/date/round sets. DWCS separately excluded, announced February 2027 bout not a result. No paid API calls."
+      },
+      "verifiedNumericFighterIds": [
+        "323"
+      ],
+      "officialUfcCareerBoutCount": 6,
+      "sourceScopeVerified": "All six completed UFC fights from February 2025 to August 2026, each win independently corroborated. One 2024 DWCS decision over Gauge Young excluded; announced February 2027 Benoît Saint Denis fight not included.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/quillan-salkilld",
+        "https://www.ufc.com/news/ufc-fight-night-sydney-main-event-set-quillan-salkilld-face-benoit-saint-denis",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83889",
+          "date": "2024-09-03",
+          "opponent": "Gauge Young",
+          "result": "win",
+          "event": "Dana White's Contender Series 70",
+          "officialSourceUrl": "https://www.ufc.com/athlete/quillan-salkilld",
+          "excludedBecause": "Dana White's Contender Series victory is feeder competition, not official UFC Octagon career fight",
+          "originalNativeFighterId": "323",
+          "originalOpponentFighterId": "271"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-08-08",
+          "opponent": "Mateusz Gamrot",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a10deecfb8558335",
+          "nativeBoutId": "82958",
+          "nativeFighterId": "323"
+        },
+        {
+          "date": "2026-05-02",
+          "opponent": "Beneil Dariush",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5c7c38dece435cde",
+          "nativeBoutId": "66064",
+          "nativeFighterId": "323"
+        },
+        {
+          "date": "2026-01-31",
+          "opponent": "Jamie Mullarkey",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/32e9bc4d0a19a923",
+          "nativeBoutId": "65851",
+          "nativeFighterId": "323"
+        },
+        {
+          "date": "2025-10-25",
+          "opponent": "Nasrat Haqparast",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/cb902d73389ed34b",
+          "nativeBoutId": "60463",
+          "nativeFighterId": "323"
+        },
+        {
+          "date": "2025-06-07",
+          "opponent": "Yanal Ashmouz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2e4064e0e6d4d92e",
+          "nativeBoutId": "60872",
+          "nativeFighterId": "323"
+        },
+        {
+          "date": "2025-02-08",
+          "opponent": "Anshul Jubli",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/4218d1d1ce6d322c",
+          "nativeBoutId": "60990",
+          "nativeFighterId": "323"
+        }
+      ]
     }
   }
 }
