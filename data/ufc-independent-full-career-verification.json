@@ -57440,6 +57440,93 @@
           "nativeFighterId": "323"
         }
       ]
+    },
+    "nora-cornolle": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Nora Cornolle",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/f2b3f4ef3f780168",
+      "officialFighterUrl": "https://www.ufc.com/athlete/nora-cornolle",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "method": "All seven Nora Cornolle fighter/fight results independently found in pinned Greco UFCStats-derived CSV and reconciled to the seven-result UFC.com athlete biography. Seven exact fight URLs already appear in seven separate certified opponents' evidence. Each one-to-one original native numeric ID, both corners, dates (within 1 UTC day), outcome and positive measured rounds were checked offline without paid providers."
+      },
+      "verifiedNumericFighterIds": [
+        "481"
+      ],
+      "officialUfcCareerBoutCount": 7,
+      "sourceScopeVerified": "Complete seven-fight official UFC Octagon chronology from 2023-09-02 through 2026-09-05, excluding earlier non-UFC professional career; two distinct Joselyne Edwards matches retained.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/nora-cornolle",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "bouts": [
+        {
+          "date": "2026-09-05",
+          "opponent": "Klaudia Sygula",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/809ebb0cfdd01ce2",
+          "nativeBoutId": "83648",
+          "nativeFighterId": "481"
+        },
+        {
+          "date": "2026-02-21",
+          "opponent": "Joselyne Edwards",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/fd56a469e4589ebc",
+          "nativeBoutId": "60668",
+          "nativeFighterId": "481"
+        },
+        {
+          "date": "2025-08-02",
+          "opponent": "Karol Rosa",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c62ed8a6002b5360",
+          "nativeBoutId": "60755",
+          "nativeFighterId": "481"
+        },
+        {
+          "date": "2025-04-12",
+          "opponent": "Hailey Cowan",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0e71e69359db4d1e",
+          "nativeBoutId": "60978",
+          "nativeFighterId": "481"
+        },
+        {
+          "date": "2024-09-28",
+          "opponent": "Jacqueline Cavalcanti",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a187670c5ee1ec5f",
+          "nativeBoutId": "38712",
+          "nativeFighterId": "481"
+        },
+        {
+          "date": "2024-04-06",
+          "opponent": "Melissa Mullins",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1685eecc7ef37fb5",
+          "nativeBoutId": "61260",
+          "nativeFighterId": "481"
+        },
+        {
+          "date": "2023-09-02",
+          "opponent": "Joselyne Edwards",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e3a5a7ede88a2555",
+          "nativeBoutId": "60073",
+          "nativeFighterId": "481"
+        }
+      ]
     }
   }
 }
