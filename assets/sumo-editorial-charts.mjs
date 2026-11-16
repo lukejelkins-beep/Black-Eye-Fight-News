@@ -135,6 +135,75 @@ export function editorialRankChart(points,{range='career',fullLadder=false}={}){
     '<div class="sumo-rank-scroll" tabindex="0" role="region" aria-label="Scrollable rank history chart">'+rankSvg(selected,{fullLadder})+'</div>'+
     '<p class="sumo-chart-note">Step connectors join only consecutive recorded bashos. Missing rank entries stay unconnected; position movement is not necessarily a formal title promotion or demotion. Highest sourced observation: '+esc(highest.rank)+'.</p>'+table;
 }
+
+/** Readable mobile-first rank view; same ordinal positions and observation gaps
+ * as the full evidence chart, but with a genuine phone-scale SVG and sparse
+ * x-axis labels. Career and five-year selections scroll inside the panel. */
+function mobileRankSvg(points,{fullLadder=false}={}){
+  if(!points.length)return '<p class="sumo-career-empty">No recorded rankings for this period.</p>';
+  const tiers=points.map(p=>parseBanzukeRank(p.rank)?.tier).filter(Number.isFinite);
+  const ordinals=points.map(p=>ordinalRank(p.rank)).filter(Number.isFinite);
+  if(!tiers.length||!ordinals.length)return '<p class="sumo-career-empty">Recorded rank positions could not be plotted.</p>';
+  const min=fullLadder?0:Math.max(0,Math.floor(Math.min(...tiers)-.5));
+  const max=fullLadder?10:Math.min(10,Math.max(min+2,Math.ceil(Math.max(...tiers)+1)));
+  const W=Math.max(338,104+(Math.max(0,points.length-1)*20)+14),H=218,L=99,R=13,T=16,B=43;
+  const y=rank=>T+(ordinalRank(rank)-min)/(max-min)*(H-T-B);
+  const months=points.map(p=>monthNumber(p.basho));
+  const dates=months.filter(Number.isFinite),low=Math.min(...dates),high=Math.max(...dates);
+  const x=i=>L+(high===low?.5:(months[i]-low)/(high-low))*(W-L-R);
+  let body='';
+  for(let tier=Math.ceil(min);tier<max;tier++){
+    const yy=T+(tier-min)/(max-min)*(H-T-B);
+    body+='<line class="sumo-chart-grid" x1="'+L+'" x2="'+(W-R)+'" y1="'+yy+'" y2="'+yy+'"/>'+
+      '<text class="sumo-mobile-rank-y" text-anchor="end" x="'+(L-8)+'" y="'+(yy+4)+'">'+esc(labels[tier])+'</text>';
+  }
+  for(let i=1;i<points.length;i++){
+    if(months[i]!==null&&months[i-1]!==null&&months[i]-months[i-1]===2){
+      body+='<path class="sumo-rank-connector" d="M '+x(i-1)+' '+y(points[i-1].rank)+' H '+x(i)+' V '+y(points[i].rank)+'"/>';
+    }
+  }
+  const shown=[...new Set([0,Math.floor((points.length-1)/2),points.length-1])];
+  for(const index of shown){
+    const date=String(points[index].basho),xx=x(index),mon=monthNames[Number(date.slice(4,6))-1]||'';
+    body+='<text class="sumo-mobile-rank-x" x="'+xx+'" y="'+(H-25)+'" text-anchor="'+(index===0?'start':index===points.length-1?'end':'middle')+'">'+esc(mon)+
+      '</text><text class="sumo-mobile-rank-x" x="'+xx+'" y="'+(H-12)+'" text-anchor="'+(index===0?'start':index===points.length-1?'end':'middle')+'">'+esc(date.slice(0,4))+'</text>';
+  }
+  body+=points.map((p,i)=>{
+    const prev=i?ordinalRank(points[i-1].rank):null,now=ordinalRank(p.rank);
+    const move=prev===null?'First recorded':now<prev?'Higher rank':now>prev?'Lower rank':'Unchanged';
+    const description=monthLabel(p.basho)+' · '+p.rank+' · '+move;
+    return '<circle class="sumo-mobile-rank-point" cx="'+x(i)+'" cy="'+y(p.rank)+'" r="4.2" tabindex="0" role="button" '+
+      'data-mobile-rank="'+esc(p.rank)+'" data-mobile-basho="'+esc(monthLabel(p.basho))+
+      '" aria-label="'+esc(description)+'"><title>'+esc(description)+'</title></circle>';
+  }).join('');
+  return '<div class="sumo-mobile-rank-scroll" tabindex="0" role="region" aria-label="Rank movement; swipe to view all recorded positions">'+
+    '<svg class="sumo-rank-mobile-svg" viewBox="0 0 '+W+' '+H+'" style="width:100%;min-width:'+W+'px" role="group" aria-label="Source-recorded rank history, higher ranks shown higher">'+body+'</svg></div>';
+}
+export function mobileRankPreview(w,cache,bashoId,prevBasho,prevRank,{range='2y',fullLadder=false}={}){
+  const {ranks}=careerPoints(w,cache,bashoId,prevBasho,prevRank);
+  const selected=rankRangePoints(ranks,range);
+  const last=selected[selected.length-1];
+  const best=selected.reduce((winner,p)=>{
+    if(!winner)return p;
+    return ordinalRank(p.rank)<ordinalRank(winner.rank)?p:winner;
+  },null);
+  const lastRank=ranks[ranks.length-1];
+  const currentTier=parseBanzukeRank(lastRank?.rank)?.tier;
+  const bashoAtTier=Number.isFinite(currentTier)?
+    ranks.filter(p=>parseBanzukeRank(p.rank)?.tier===currentTier).length:null;
+  const filters=[['2y','2 years'],['5y','5 years'],['career','Career']];
+  return '<section class="sumo-mobile-rank-preview" aria-label="Mobile rank history preview">'+
+    '<header class="sumo-mobile-rank-header"><h2>Rank graph</h2><span>'+selected.length+' observed basho</span></header>'+
+    '<div class="sumo-mobile-rank-controls" role="group" aria-label="Rank graph time period">'+
+    filters.map(([key,label])=>'<button type="button" data-rank-range="'+key+'" aria-pressed="'+(key===range)+'">'+label+'</button>').join('')+'</div>'+
+    mobileRankSvg(selected,{fullLadder})+
+    (last?'<div class="sumo-mobile-rank-selected" id="sumo-mobile-rank-detail" role="status" aria-live="polite">'+
+      '<strong>'+esc(monthLabel(last.basho))+'</strong> · '+esc(last.rank)+'</div>':'')+
+    '<div class="sumo-mobile-rank-facts"><span><small>Latest recorded</small><strong>'+esc(lastRank?.rank||'—')+'</strong></span>'+
+    '<span><small>Peak in view</small><strong>'+esc(best?.rank||'—')+'</strong></span>'+
+    '<span><small>Basho at current tier</small><strong>'+esc(bashoAtTier??'—')+'</strong></span></div>'+
+    '<p class="sumo-mobile-rank-note">Source-observed rank positions, not a complete tournament count. Tap a dot for the exact rank. Gaps are not connected.</p></section>';
+}
 export function careerGraphs(w,cache,bashoId,prevBasho,prevRank,options={}){
   const data=careerPoints(w,cache,bashoId,prevBasho,prevRank);
   const {ranks,entry,currentListedWeightKg,currentListedWeightSource,currentRankDiscrepancy,currentWeightApiDiscrepancy}=data;
