@@ -759,6 +759,30 @@ function resultDesk(w){
     (shown.length?shown.map(row=>profileBoutRow(w,row)).join(''):'<p class="missing">No completed or confirmed scheduled bouts in this selection.</p>')+
     '</div>'+messages;
 }
+
+function careerInfoTile(label,value,extra=''){
+  return '<div class="sumo-career-data-tile"><small>'+e(label)+'</small><strong>'+
+    e(value===null||value===undefined||value===''?'Not available':value)+'</strong>'+
+    (extra?'<span>'+e(extra)+'</span>':'')+'</div>';
+}
+function careerDivisionTiles(stats){
+  const wins=stats?.winsByDivision||{}, losses=stats?.lossByDivision||{};
+  const priorities=['Makuuchi','Juryo','Makushita','Sandanme','Jonidan','Jonokuchi'];
+  const rank=key=>{const i=priorities.indexOf(key);return i<0?99:i;};
+  const keys=[...new Set([...Object.keys(wins),...Object.keys(losses)])]
+    .sort((a,b)=>rank(a)-rank(b)||a.localeCompare(b));
+  const valid=keys.filter(k=>Number.isSafeInteger(wins[k])&&Number.isSafeInteger(losses[k])&&
+    wins[k]>=0&&losses[k]>=0);
+  return valid.length?valid.map(k=>careerInfoTile(k==='Juryo'?'Jūryō':k,
+    wins[k]+' W – '+losses[k]+' L',dailyWinPercentage(wins[k],losses[k])||'')).join(''):
+    '<p class="sumo-career-empty">Division records not available.</p>';
+}
+function careerPrizeTiles(stats){
+  const prizes=Object.entries(stats?.sansho||{}).filter(([k,v])=>
+    k&&v!==null&&v!==undefined&&String(v).trim()!=='');
+  return prizes.length?prizes.map(([k,v])=>careerInfoTile(k,v)).join(''):
+    '<p class="sumo-career-empty">Prize details not available.</p>';
+}
 function recentBashoTimeline(w){
   const history=STATE.careerHistory?.bySourceId?.[String(w.sourceId)]?.rank||[];
   const rows=history.filter(x=>x&&x.basho&&x.rank).slice().sort((a,b)=>String(b.basho).localeCompare(String(a.basho))).slice(0,6);
