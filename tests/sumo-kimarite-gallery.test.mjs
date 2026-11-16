@@ -26,7 +26,7 @@ test('gallery and deep-linked detail render independently of wrestler cache',()=
   globalThis.location={hash:'#kimarite?term=yorikiri'};
   const detail=renderKimariteGallery();
   assert.match(detail,/Yorikiri/);
-  assert.match(detail,/assets\\/sumo-kimarite\\/jsa\\/kimarite_05\\.jpg/);
+  assert.ok(detail.includes('assets/sumo-kimarite/jsa/kimarite_05.jpg'));
   assert.match(detail,/View JSA photograph and reference/);
   assert.match(detail,/Frontal force-out/);
   delete globalThis.location;
