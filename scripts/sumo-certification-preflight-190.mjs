@@ -343,6 +343,73 @@ export function independentlyCorroboratedProfileWeightForCareerOnly(w,p,jsa,sdb)
   weightProfileFieldStillDisputed:true,historicalWeightTimelineCertified:false};
 }
 
+/** Verify one later independent SumoDB CURRENT-basho win using a dated
+ * earlier official JSA baseline. All completed ranked tournaments must match.
+ * This validates the earlier raw career snapshot, never mutates its totals.
+ */
+export function independentlyReconciledLaterSumoDbCurrentBasho(p,jsa,sdb,activeBasho){
+ const reject=reason=>({passed:false,reason});
+ const c=sdb?.careerRecordCrosscheck;
+ const officialId=Number(p?.sourceId)===Number(jsa?.sourceId)&&
+  Number(p?.sourceId)===Number(sdb?.sourceId)&&
+  Number(p?.officialNskId)===Number(jsa?.officialNskId)&&
+  Number(p?.officialNskId)===Number(sdb?.officialNskId)&&
+  Number(sdb?.sumoDbId)>0&&
+  c?.sourceUrl==='https://sumodb.sumogames.de/Rikishi.aspx?r='+sdb.sumoDbId;
+ const hash=x=>/^[a-f0-9]{64}$/.test(String(x||''));
+ const timestamp=x=>typeof x==='string'&&/^20\d{2}-\d\d-\d\dT/.test(x)&&Number.isFinite(Date.parse(x));
+ const oldAt=jsa?.capturedAt,newAt=c?.capturedAt;
+ if(!officialId||jsa?.career!==null||c?.identityVerified!==true||
+  c?.independentOfApi!==true||c?.originalMeasurementsUnchanged!==true||
+  c?.careerRecordDiffersFromPriorSnapshot===true||
+  sdb?.identityEvidence?.birthDateStatus!=='match'||
+  !hash(jsa?.rawHtmlSha256)||!hash(c?.rawHtmlSha256)||
+  !hash(c?.datedBashoLedgerSourceSha256)||
+  jsa?.bashoReconciliation?.discrepantBasho!==0||
+  jsa?.bashoReconciliation?.status!=='historical-tournaments-agree')
+  return reject('source-identity-or-independent-snapshot-not-valid');
+ if(!timestamp(oldAt)||!timestamp(newAt)||
+    Date.parse(newAt)<=Date.parse(oldAt)||
+    Date.parse(newAt)-Date.parse(oldAt)>48*60*60*1000)
+  return reject('later-snapshot-not-timed-and-bounded');
+ const native=p?.perBasho||[],other=c?.independentBashoRows;
+ if(!native.length||!Array.isArray(other)||!other.length)
+  return reject('historical-sources-missing');
+ const current=native.find(x=>x.bashoId===activeBasho);
+ const officialCurrent=(jsa?.officialBashoRecords||[]).find(x=>x.bashoId===activeBasho);
+ const byDate=new Map(other.map(x=>[String(x.bashoId),x]));
+ if(byDate.size!==other.length)return reject('duplicate-independent-basho-dates');
+ const later=byDate.get(activeBasho);
+ if(!current||!officialCurrent||!later||
+    officialCurrent.wins!==current.wins||
+    officialCurrent.losses!==current.losses||
+    later.wins!==current.wins+1||later.losses!==current.losses)
+  return reject('one-later-officially-baselined-win-not-proved');
+ const totals=c.career||{};
+ if(totals.wins!==p?.career?.wins+1||
+    totals.losses!==p?.career?.losses||
+    totals.absences==null||totals.absences!==p?.career?.absences)
+  return reject('independent-later-career-WLA-not-reconciled');
+ const prior=native.filter(x=>x.bashoId!==activeBasho);
+ if(!prior.length||prior.some(x=>{
+  const r=byDate.get(x.bashoId);
+  return !r||r.wins!==x.wins||r.losses!==x.losses;
+ }))return reject('completed-tournament-overlap-conflict');
+ const recognizedDates=new Set(native.map(x=>x.bashoId));
+ const extras=other.filter(x=>!recognizedDates.has(x.bashoId));
+ if(extras.some(x=>!(x.rankEn==null||(x.wins===0&&x.losses===0&&
+    Number.isSafeInteger(x.absences)&&x.absences>0))))
+  return reject('independent-ranked-basho-missing-from-native-evidence');
+ return {passed:true,scope:'research-career-results-only',
+  activeBasho,earlierJsaCapture:oldAt,laterSumoDbCapture:newAt,
+  fullyReconciledCompletedBasho:prior.length,extraCurrentWins:1,
+  nativeCareerWins:p.career.wins,laterIndependentCareerWins:totals.wins,
+  currentOfficialBaseline:{wins:current.wins,losses:current.losses},
+  independentLaterTournament:{wins:later.wins,losses:later.losses},
+  independentSourceOnlyNonregularOrAbsenceBasho:extras.map(x=>x.bashoId),
+  rawSourceRecordsMutated:false,certified:false};
+}
+
 export function preflightRikishi(w,p,jsa,sdb,activeBasho){
  if(!id(w?.sourceId)||!id(w?.officialNskId)||!id(w?.sumoDbId)||
    !p||p.sourceId!==w.sourceId||p.officialNskId!==w.officialNskId||
@@ -390,17 +457,18 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
   totals.absences===p.career?.absences;
  const jsaHasCareer=officialId&&jsa.career!==null&&jsa.career!==undefined;
  const currentCutoff=independentlyVerifiedCurrentBashoCutoff(p,jsa,activeBasho);
+ const laterIndependent=independentlyReconciledLaterSumoDbCurrentBasho(p,jsa,sdb,activeBasho);
  const fullAttendance=proveZeroCareerAbsencesFromCompleteBasho(p,jsa,sdb,activeBasho);
  const jsaWinLossMatches=jsaHasCareer&&(
   jsa.career.wins===p.career?.wins&&jsa.career.losses===p.career?.losses||
   currentCutoff.passed||fullAttendance.passed);
- add(jsaHasCareer?jsaWinLossMatches:officialId&&independentlyMatched,
+ add(jsaHasCareer?jsaWinLossMatches:officialId&&(independentlyMatched||laterIndependent.passed),
   'official-JSA-career-totals-unpublished-or-disagree');
  const jsaAbsencesPresent=jsaHasCareer&&jsa.career.absences!=null;
  add(jsaAbsencesPresent?
    jsa.career.absences===p.career?.absences:
    officialId&&(fullAttendance.passed||
-    independentlyMatched&&(!jsaHasCareer||jsaWinLossMatches)),
+    (independentlyMatched&&(!jsaHasCareer||jsaWinLossMatches)||laterIndependent.passed)),
   'official-absence-total-unpublished-or-disagree');
  const prior=(p.perBasho||[]).filter(x=>x.bashoId!==activeBasho&&
   Number(x.scheduledBoutRows||0)>0);
@@ -437,7 +505,8 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
     'published-JSA-three-part-career-record'):fullAttendance.passed?
    'independent-complete-ranked-basho-proof-of-native-zero-absences':
    independentlyMatched&&(!jsaHasCareer||jsaWinLossMatches)?
-   'independent-SumoDB-three-part-career-record-plus-JSA-basho':'incomplete-or-conflicting',
+   'independent-SumoDB-three-part-career-record-plus-JSA-basho':laterIndependent.passed?
+   'dated-JSA-early-SumoDB-later-current-basho-WLA':'incomplete-or-conflicting',
   fullAttendanceZeroAbsencesProved:fullAttendance.passed,
   fullAttendanceBashoProven:fullAttendance.passed?fullAttendance.completedBashoProven:0,
   independentBirthDateMatch:rawIdentity?.birthDateStatus==='match',

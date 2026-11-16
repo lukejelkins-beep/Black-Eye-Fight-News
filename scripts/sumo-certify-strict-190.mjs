@@ -13,7 +13,7 @@ import {readFile,writeFile,rename,mkdir} from 'node:fs/promises';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {cohortCurrentBasho} from './sumo-jsa-public-spotcheck.mjs';
-import {documentedDebutRankGap,supplementalHistoricalBashoCoverage,independentHistoricalRankCoverage,independentlyVerifiedCurrentBashoCutoff,proveZeroCareerAbsencesFromCompleteBasho,independentlyCorroboratedProfileWeightForCareerOnly} from './sumo-certification-preflight-190.mjs';
+import {documentedDebutRankGap,supplementalHistoricalBashoCoverage,independentHistoricalRankCoverage,independentlyVerifiedCurrentBashoCutoff,proveZeroCareerAbsencesFromCompleteBasho,independentlyCorroboratedProfileWeightForCareerOnly,independentlyReconciledLaterSumoDbCurrentBasho} from './sumo-certification-preflight-190.mjs';
 
 const ROOT='data/sumo/backfill/v1';
 const load=async p=>JSON.parse(await readFile(p,'utf8'));
@@ -90,6 +90,7 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
  // and still require agreement with all completed JSA per-basho outcomes.
  const jsaCareerPresent=j.career!=null;
  const currentCutoff=independentlyVerifiedCurrentBashoCutoff(p,j,activeBasho);
+ const laterIndependent=independentlyReconciledLaterSumoDbCurrentBasho(p,j,weight,activeBasho);
  const zeroAbsenceProof=proveZeroCareerAbsencesFromCompleteBasho(p,j,weight,activeBasho);
  const jsaWLMatches=jsaCareerPresent&&(
   j.career.wins===p?.career?.wins&&j.career.losses===p?.career?.losses||
@@ -101,7 +102,8 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
    'source-complete-ranked-basho-prove-zero-native-absences':
   exactIndependent&&(!jsaCareerPresent||jsaWLMatches)&&
    (!jsaAbsencePresent||j.career.absences===p?.career?.absences)?
-   'separate-SumoDB-career-WLA-plus-published-JSA-basho':null;
+   'separate-SumoDB-career-WLA-plus-published-JSA-basho':laterIndependent.passed&&!jsaCareerPresent?
+   'dated-JSA-early-SumoDB-later-current-basho-WLA-reconciled':null;
  add(!!basis,'independent-published-career-wins-losses-absences');
  const prior=per.filter(x=>x.bashoId!==activeBasho&&x.scheduledBoutRows>0);
  const historicalProof=supplementalHistoricalBashoCoverage(p,official,weight,activeBasho);
@@ -151,6 +153,8 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
   status:careerResultsCertified?'career-results-strictly-certified':'strict-audit-blocked',
   careerResultsCertified,
   careerTotalsEvidenceBasis:careerResultsCertified?basis:null,
+  laterIndependentCareerCutoffReconciled:careerResultsCertified&&laterIndependent.passed,
+  laterIndependentCareerCutoffEvidence:careerResultsCertified&&laterIndependent.passed?laterIndependent:null,
   datedJsaCareerCutoffReconciled:careerResultsCertified&&currentCutoff.passed,
   datedJsaCareerCutoffEvidence:careerResultsCertified&&currentCutoff.passed?
    currentCutoff:null,

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {preflightRikishi,proveZeroCareerAbsencesFromCompleteBasho,independentlyCorroboratedProfileWeightForCareerOnly}
+import {preflightRikishi,proveZeroCareerAbsencesFromCompleteBasho,independentlyCorroboratedProfileWeightForCareerOnly,independentlyReconciledLaterSumoDbCurrentBasho}
  from '../scripts/sumo-certification-preflight-190.mjs';
 
 const read=path=>JSON.parse(readFileSync(new URL('../'+path,import.meta.url),'utf8'));
@@ -112,4 +112,30 @@ test('Tenshoyama corroborated weight-only conflict is retained without blocking 
  assert.equal(independentlyCorroboratedProfileWeightForCareerOnly(w,p,j,noDatedIndependent).passed,false);
  assert.equal(cached(id).data.profile.weight,172);
  assert.equal(official(id).weightKg,173);
+});
+
+test('later SumoDB current-basho single-win snapshots reconcile two exact earlier JSA career baselines',()=>{
+ for(const [id,expectedCompleted] of [[118,83],[172,115]]){
+  const w=wrestler(id),p=projected(id),j=official(id),s=source(id);
+  const result=independentlyReconciledLaterSumoDbCurrentBasho(p,j,s,'202611');
+  assert.equal(result.passed,true,JSON.stringify(result));
+  assert.equal(result.fullyReconciledCompletedBasho,expectedCompleted);
+  assert.equal(result.extraCurrentWins,1);
+  assert.equal(result.rawSourceRecordsMutated,false);
+  const pre=preflightRikishi(w,p,j,s,'202611');
+  assert.equal(pre.classification,'candidate-for-strict-audit',JSON.stringify(pre.blockers));
+  assert.equal(pre.certified,false);
+  const old=structuredClone(s);
+  old.careerRecordCrosscheck.capturedAt='2026-11-14T01:00:00Z';
+  assert.equal(independentlyReconciledLaterSumoDbCurrentBasho(p,j,old,'202611').passed,false);
+  const conflict=structuredClone(s);
+  conflict.careerRecordCrosscheck.independentBashoRows.find(x=>x.bashoId==='202609').wins+=1;
+  assert.equal(independentlyReconciledLaterSumoDbCurrentBasho(p,j,conflict,'202611').passed,false);
+  const extra=structuredClone(s);
+  extra.careerRecordCrosscheck.career.wins+=1;
+  assert.equal(independentlyReconciledLaterSumoDbCurrentBasho(p,j,extra,'202611').passed,false);
+  const mismatch=structuredClone(j);
+  mismatch.officialBashoRecords.find(x=>x.bashoId==='202611').wins+=1;
+  assert.equal(independentlyReconciledLaterSumoDbCurrentBasho(p,mismatch,s,'202611').passed,false);
+ }
 });
