@@ -1,122 +1,69 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {evaluateCareerEvidence} from '../scripts/ufc-36-month-stage3-progress.mjs';
+import {auditOfficialCareerInventory} from '../scripts/ufc-36-month-stage3-progress.mjs';
 
-// Research-only candidate proofs. Full 783-person strict Stage3 CI must succeed
-// at the exact current commit before either candidate may be counted.
+// Exact original UFC native fight/round data remains a strict prerequisite.
+// Road-to-UFC finals in official UFC athlete histories cannot be silently discarded.
 const read=name=>JSON.parse(readFileSync(new URL('../data/'+name,import.meta.url),'utf8'));
-const approval=read('ufc-36-month-roster-approval.json');
-const evidence=read('ufc-independent-full-career-verification.json').fighters;
-const profiles=read('ufcalendar-fighter-research.json').profiles;
+const approved=read('ufc-36-month-roster-approval.json');
+const cert=read('ufc-independent-full-career-verification.json').fighters;
+const wave5=read('ufc-unified-wave5-official-source-review-20261114.json');
+const rei=read('ufc-unified-rei-tsuruya-official-source-review-20261115.json');
+const inv=read('ufc-official-career-bout-inventory.json');
 const rich=read('ufcalendar-rich-progress.json');
-const expected={
- 'zhu-kangjie':{
-  name:'Zhu Kangjie',numeric:'59',ufcStats:'6f4ec5aa3eced219',
-  official:'https://www.ufc.com/athlete/zhu-kangjie',
-  bouts:[['66458','2026-05-30','Rodrigo Vera','loss','34d5ec676fb5bce3','2988','1e75e6c9de99fa76']],
-  excluded:['Xie Bin','Shin Haraguchi','Tatsuya Ando'],count:1
- },
- 'yizha':{
-  name:'Yizha',numeric:'281',ufcStats:'3f11fd1751fa83b1',
-  official:'https://www.ufc.com/athlete/yi-zha',
-  bouts:[
-   ['65856','2026-01-31','Kaan Ofli','loss','4c1e7e1765a5438a','171','30ad2050273d016a'],
-   ['65920','2025-08-23','Westin Wilson','win','f0b7caa90faf47e5','268','754968e325d6f60d'],
-   ['61112','2024-09-07','Gabriel Santos','loss','6e9876d2be2bbd02','2768','ee0b69e307c857e5'],
-   ['59749','2023-02-04','JeongYeong Lee','loss','765482eb58e8db48','2785','d26394fc0e8e880a']
-  ],
-  excluded:['Kaiwen','SangWon Kim','Wuziazibieke Jiahefu','Koyomi Matsushima','Keisuke Sasu'],count:4
+const fighters=[
+ ['zhu-kangjie','2025-05-23','Bin Xie','win','https://www.ufc.com/athlete/zhu-kangjie'],
+ ['yizha','2024-02-03','Kaiwen','win','https://www.ufc.com/athlete/yi-zha'],
+ ['rei-tsuruya','2024-02-03','Jiniushiyue','win','https://www.ufc.com/athlete/rei-tsuruya']
+];
+test('frozen 783 cohort and earlier Zhu and Rei official UFC source findings remain binding',()=>{
+ assert.equal(approved.approvedFighters.length,783);
+ assert.equal(new Set(approved.approvedFighters).size,783);
+ assert.equal(wave5.fighters['zhu-kangjie'].officialUfcCareerCount,2);
+ assert.equal(wave5.fighters['zhu-kangjie'].bouts[0].opponent,'Bin Xie');
+ assert.equal(wave5.fighters['zhu-kangjie'].bouts[0].date,'2025-05-23');
+ assert.equal(rei.officialUfcCareerBoutCount,5);
+ assert.equal(rei.officialCareer[0].opponent,'Jiniushiyue');
+ assert.equal(rei.officialCareer[0].classification,'official_road_to_ufc_tournament_final');
+});
+test('three official Road to UFC finals are independently dated source gaps, never silently excluded',()=>{
+ for(const [slug,date,opponent,result,url] of fighters){
+  assert.ok(approved.approvedFighters.includes(slug),slug);
+  assert.equal(cert[slug],undefined,'refuse incomplete full-career proof for '+slug);
+  const item=inv.fighters[slug];
+  assert.ok(item,slug);
+  assert.equal(item.status,'source_confirmed_missing_original_road_to_ufc_final_not_certified');
+  assert.equal(item.sourceUrl,url,slug);
+  assert.equal(item.bouts.length,1);
+  const source=item.bouts[0];
+  assert.equal(source.date,date,slug);
+  assert.equal(source.opponent,opponent,slug);
+  assert.equal(source.result,result,slug);
+  assert.match(source.officialFinalSourceUrl,/^https:\/\/www\.ufc\.com\//);
+  assert.equal(source.nativeRecoveryStatus,'no_matching_original_ufc_native_fight_in_saved_cache');
+  assert.equal(source.independentUfcStatsFightUrl,undefined,'not invented UFCStats identity');
+  for(const key of ['cachedNativeBoutId','nativeBoutId','nativeFighterId','roundStats','measuredRounds'])
+   assert.equal(Object.hasOwn(source,key),false,'never invent missing '+key+': '+slug);
  }
-};
-const history=s=>profiles[s].recentHistory.filter(x=>x.promotion==='ufc'&&x.source==='native'&&
- rich.bouts[x.boutId]?.org==='ufc'&&rich.bouts[x.boutId]?.status==='completed'&&
- !/contender series|road to ufc/i.test(rich.bouts[x.boutId].event||''));
-const gate=(s,p,b=rich.bouts)=>evaluateCareerEvidence(profiles[s],history(s),
- history(s).map(h=>h.date).sort().at(-1),'2026-11-15',p,b,approval.rosterAsOf).independentlyVerified;
-
-test('frozen 783 UFC cohort and two previously deferred source identities',()=>{
- assert.equal(approval.approvedFighters.length,783);
- assert.equal(new Set(approval.approvedFighters).size,783);
- for(const slug of Object.keys(expected))assert.ok(approval.approvedFighters.includes(slug));
- assert.equal(Object.keys(expected).length,2);
 });
-for(const [slug,c] of Object.entries(expected)){
- test('complete pinned source, two numeric corners, dates/outcomes and positive measured rounds: '+slug,()=>{
-  const p=evidence[slug],h=history(slug);
-  assert.equal(p.sourceCoverageAttested,true);
-  assert.equal(p.scope,'complete_official_ufc_career');
-  assert.equal(p.verificationMethod,'full_official_ufc_fight_listing_crosscheck');
-  assert.equal(p.verifiedAt,'2026-11-16');
-  assert.equal(p.fighterName,c.name);
-  assert.equal(p.officialFighterUrl,c.official);
-  assert.equal(p.fighterUrl,'https://ufcstats.com/fighter-details/'+c.ufcStats);
-  assert.deepEqual(p.verifiedNumericFighterIds,[c.numeric]);
-  assert.equal(p.sourceSnapshot.sourceCommit,'96adace863c0a793579cc06d27d468797545607f');
-  assert.equal(p.sourceSnapshot.fightResultsBlobSha,'80258ab3d9f413cad9be13fde64beb66dd0bcfa6');
-  assert.equal(p.sourceSnapshot.fighterDetailsBlobSha,'7141332f0b319edbc10d006b229050ee947e7336');
-  assert.equal(p.sourceSnapshot.eventDetailsBlobSha,'24238cb71d7bec6522a77f285b530274b3c897b9');
-  assert.equal(p.officialUfcCareerBoutCount,c.count);
-  assert.equal(p.bouts.length,c.count);
-  assert.equal(h.length,c.count);
-  assert.equal(new Set(p.bouts.map(b=>b.nativeBoutId)).size,c.count);
-  assert.equal(new Set(p.bouts.map(b=>b.fightUrl)).size,c.count);
-  for(const [id,day,opponent,result,fightId,opponentId,eventId] of c.bouts){
-   const row=p.bouts.find(x=>x.nativeBoutId===id);
-   const original=rich.bouts[id];
-   assert.ok(row&&original,id);
-   assert.equal(row.date,day);
-   assert.equal(row.opponent,opponent);
-   assert.equal(row.result,result);
-   assert.equal(row.fightUrl,'https://ufcstats.com/fight-details/'+fightId);
-   assert.equal(row.pinnedSourceEventDate,day);
-   assert.equal(row.independentEventUrl,'https://ufcstats.com/event-details/'+eventId);
-   assert.equal(row.nativeFighterId,c.numeric);
-   assert.equal(row.originalOpponentNumericId,opponentId);
-   assert.equal(original.org,'ufc');
-   assert.equal(original.status,'completed');
-   assert.equal(original.a.id===c.numeric?original.b.id:original.b.id===c.numeric?original.a.id:null,opponentId);
-   assert.ok(Number(rich.roundDone[id])>0,'positive original saved measured rounds required: '+id);
-   assert.equal(h.filter(x=>x.boutId===id&&x.result===result).length,1,id);
-   assert.ok(Math.abs(Date.parse(original.eventDate)-Date.parse(day))<=86400000,'only one-day proven UTC shift');
-  }
-  assert.equal(gate(slug,p),true);
- });
- test('independent exclusions are real feeder bouts, never relabelled UFC or injected as saved native bouts: '+slug,()=>{
-  const p=evidence[slug];
-  assert.deepEqual(p.sourceVerifiedExcludedFeederBouts.map(x=>x.opponent),c.excluded);
-  assert.ok(p.sourceVerifiedExcludedFeederBouts.every(x=>/Road to UFC/i.test(x.promotion)));
-  assert.ok(p.sourceVerifiedExcludedFeederBouts.every(x=>!p.bouts.some(b=>b.opponent===x.opponent)));
-  assert.ok(p.bouts.every(x=>!/(Road to UFC|DWCS)/i.test(rich.bouts[x.nativeBoutId].event)));
-  assert.equal(gate(slug,p),true);
- });
- test('absent, duplicate, inverted, imaginary identity and extra feeder certificate all fail closed: '+slug,()=>{
-  const p=evidence[slug];
-  assert.equal(gate(slug,p),true);
-  const missing=structuredClone(p);missing.bouts.pop();assert.equal(gate(slug,missing),false);
-  const flipped=structuredClone(p);flipped.bouts[0].result=p.bouts[0].result==='win'?'loss':'win';
-  assert.equal(gate(slug,flipped),false);
-  const invented=structuredClone(p);invented.verifiedNumericFighterIds=['999999'];assert.equal(gate(slug,invented),false);
-  const added=structuredClone(p);added.bouts.push({...added.bouts[0],nativeBoutId:'999999',fightUrl:'https://ufcstats.com/fight-details/0000000000000000'});
-  assert.equal(gate(slug,added),false);
-  const wrongCorner=structuredClone(p);wrongCorner.bouts[0].nativeFighterId='999999';
-  assert.equal(gate(slug,wrongCorner),false);
-  if(p.bouts.length>1){
-   const dup=structuredClone(p);dup.bouts[1].nativeBoutId=dup.bouts[0].nativeBoutId;assert.equal(gate(slug,dup),false);
-  }
- });
-}
-test('Yizha 2023 Road-to-UFC Season 1 final counts only because official UFC Fight Night event actually hosted the contest',()=>{
- const row=evidence.yizha.bouts.find(x=>x.nativeBoutId==='59749');
- assert.equal(row.pinnedSourceEventDate,'2023-02-04');
- assert.equal(history('yizha').find(x=>x.boutId==='59749').date,'2023-02-05');
- assert.equal(rich.bouts['59749'].event,'UFC Fight Night: Lewis vs Spivac');
- assert.equal(evidence.yizha.independentSourceCrosschecks.includes('https://www.ufc.com/event/ufc-fight-night-february-04-2023'),true);
- assert.ok(!evidence.yizha.bouts.some(x=>x.opponent==='Kaiwen'));
+test('original numeric UFC caches cannot substitute different bouts or cancelled/feeder rows for the three missing finals',()=>{
+ const expected={ 'zhu-kangjie':1, 'yizha':4, 'rei-tsuruya':4 };
+ for(const [slug,count] of Object.entries(expected)){
+  const ns=Object.values(rich.bouts).filter(b=>b.org==='ufc'&&b.status==='completed'&&
+   (b.a?.slug===slug||b.b?.slug===slug));
+  assert.equal(ns.length,count,'original saved UFC completed bouts unchanged: '+slug);
+  assert.ok(!ns.some(b=>inv.fighters[slug].bouts.some(s=>b.eventDate===s.date)));
+ }
+ assert.equal(rich.bouts['66105'].status,'cancelled','Zhu cancelled bout never substitutes for RTU final');
+ assert.equal(rich.bouts['66111'].status,'cancelled','Rei cancelled bout never substitutes for RTU final');
 });
-test('Zhu same-day cancelled Ramon Taveras fight is never counted as Octagon result',()=>{
- assert.equal(rich.bouts['66105'].status,'cancelled');
- assert.equal(evidence['zhu-kangjie'].excludedCancelledUfcBouts[0].nativeBoutId,'66105');
- assert.ok(!evidence['zhu-kangjie'].bouts.some(x=>x.nativeBoutId==='66105'));
- assert.equal(evidence['zhu-kangjie'].bouts.length,1);
+test('missing RTU finals enter the existing inventory exception gate, not an independent certification',()=>{
+ const slugs=fighters.map(x=>x[0]);
+ const sub={...inv,fighters:Object.fromEntries(slugs.map(k=>[k,inv.fighters[k]]))};
+ const out=auditOfficialCareerInventory(sub,slugs,{asOf:'2026-11-14',fighters:[]},{},rich.bouts);
+ assert.equal(out.totalSourceBouts,3);
+ assert.equal(out.sourceMissingSaved,3);
+ assert.equal(out.matchedSaved,0);
+ assert.deepEqual(new Set(out.cases.map(x=>x.slug)),new Set(slugs));
 });
