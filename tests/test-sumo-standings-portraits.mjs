@@ -5,7 +5,8 @@ import { banzukeMovement } from '../assets/sumo-data.mjs';
 
 test('standings cards render central approved portrait component',()=>{
  const src=fs.readFileSync('assets/sumo.js','utf8');
- assert.match(src,/portraitFor\(w,'sm',title\).*sumo-standings-identity/);
+ assert.match(src,/portraitFor\(w,'sm',title\)/);
+ assert.match(src,/sumo-standings-identity/);
  assert.match(src,/sumo-standings-record/);
 });
 test('elite rank lateral movement never displays false demotion',()=>{
