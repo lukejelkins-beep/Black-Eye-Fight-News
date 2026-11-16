@@ -192,14 +192,34 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     const formLayout=await page.locator('.sumo-recent-strip').evaluate(panel=>{
       const list=panel.querySelector('.sumo-recent-list');
       const items=[...list.querySelectorAll('.sumo-recent-bout')];
+      const bounds=el=>el?.getBoundingClientRect();
       const boundaries=items.map(el=>{
-        const box=el.getBoundingClientRect(),name=el.querySelector('.sumo-recent-person');
+        const box=bounds(el),photo=el.querySelector('.sumo-recent-portrait');
+        const photoInner=photo?.querySelector('.profile-icon.sumo-photo');
+        const info=el.querySelector('.sumo-recent-info');
+        const flag=info?.querySelector(':scope>.sumo-flag-backdrop');
+        const name=info?.querySelector('.sumo-recent-person');
+        const record=info?.querySelector('.sumo-recent-result-line');
+        const technique=info?.querySelector('.sumo-recent-technique');
+        const p=bounds(photo),inner=bounds(photoInner),i=bounds(info),n=bounds(name),rc=bounds(record),t=bounds(technique);
+        const flagRect=bounds(flag);
         return {
           left:box.left,right:box.right,top:box.top,bottom:box.bottom,
-          width:box.width,height:box.height,
-          nameWidth:name.getBoundingClientRect().width,
-          nameText:name.textContent,
-          technique:el.querySelector('.sumo-recent-technique').textContent
+          width:box.width,height:box.height,photoWidth:p?.width,
+          photoLeft:p?.left-box.left,photoTop:p?.top-box.top,photoBottom:box.bottom-p?.bottom,
+          imageFill:!!(inner&&p&&Math.abs(inner.width-p.width)<3&&Math.abs(inner.height-p.height)<3),
+          infoRight:box.right-i?.right,
+          separated:!!(p&&i&&i.left>=p.right-2),
+          nameInside:!!(n&&i&&n.left>=i.left-2&&n.right<=i.right+2&&n.bottom<=i.bottom+2),
+          recordInside:!!(rc&&i&&rc.left>=i.left-2&&rc.right<=i.right+2&&rc.bottom<=i.bottom+2),
+          techniqueInside:!!(t&&i&&t.left>=i.left-2&&t.right<=i.right+2&&t.bottom<=i.bottom+2),
+          nameText:name?.textContent,technique:technique?.textContent,
+          resultText:record?.textContent,hasFlag:!!flag,
+          flagOnlyInInfo:!flag||!!(!el.querySelector(':scope>.sumo-flag-backdrop')&&flag.parentElement===info&&
+            flagRect.left>=i.left-2&&flagRect.right<=i.right+2&&flagRect.top>=i.top-2&&flagRect.bottom<=i.bottom+2&&
+            Number(getComputedStyle(flag).opacity)<=.2),
+          photoApproved:!!photoInner?.classList.contains('has-photo'),
+          photoHasImage:!!photoInner?.querySelector('img')
         };
       });
       return {
@@ -214,17 +234,25 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     assert.equal(formLayout.columnCount,2,'Exactly two Recent Form tiles per row on phones');
     assert.ok(formLayout.listScroll<=formLayout.listWidth+3 &&
       formLayout.documentWidth<=formLayout.viewportWidth+6,
-      'Compact ten-card grid does not scroll sideways: '+JSON.stringify(formLayout));
-    assert.ok(formLayout.items.every((item,i,items)=>
-      item.width>=112&&item.nameWidth>=90&&item.height<=155&&
+      'Recent Form does not cause sideways scrolling: '+JSON.stringify(formLayout));
+    assert.ok(formLayout.items.every((item,index,items)=>
+      item.width>=110&&item.photoWidth>=42&&item.height<=220&&
+      item.photoLeft<=2&&item.photoTop<=2&&item.photoBottom<=2&&
+      item.imageFill&&item.infoRight<=2&&item.separated&&
+      item.nameInside&&item.recordInside&&item.techniqueInside&&
       item.nameText?.length>0&&item.technique?.length>0&&
-      (i<2||item.top>=items[i-2].bottom-2)),
-      'Ten readable, nonoverlapping tiles fit in five mobile rows: '+JSON.stringify(formLayout));
+      /[WL]/.test(item.resultText)&&item.flagOnlyInInfo&&
+      item.photoApproved===item.photoHasImage&&
+      (index<2||item.top>=items[index-2].bottom-2)),
+      'Each split tile retains edge-to-edge photo, right-only flag and legible W-L/day/kimarite: '+
+      JSON.stringify(formLayout));
     for(let i=0;i<10;i+=2){
       assert.ok(Math.abs(formLayout.items[i].top-formLayout.items[i+1].top)<=2 &&
         formLayout.items[i+1].left>=formLayout.items[i].right-1,
-        'Tiles '+i+' and '+(i+1)+' appear side by side in the same row');
+        'Recent Form tiles '+i+' and '+(i+1)+' appear alongside each other');
     }
+    assert.ok(formLayout.items.filter(item=>item.hasFlag).length>=1,
+      'Source-backed country flags appear only behind opponent information, not photographs');
     await page.locator('.sumo-recent-strip').screenshot({path:OUT+'/'+label+'-compact-form.png',animations:'disabled'});
     screenshotCount++;
     const charts=page.locator('#sumo-charts .sumo-career-panel');
