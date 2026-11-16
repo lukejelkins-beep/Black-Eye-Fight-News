@@ -9,7 +9,7 @@ import { careerGraphs } from './sumo-editorial-charts.mjs?v=20261117-clean-profi
 import { boutKey, mergeProfileBouts, filterAndSortOpponents, exactNamePriority } from './sumo-editorial-data.mjs';
 import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verification.mjs';
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
-import { dailyStats, dailyRecentMeetings, dailyDefaultDay, dailySelectedDate, dailyWinPercentage, heightFeetInches } from './sumo-daily.mjs?v=20261116-division-relative-records';
+import { dailyStats, dailyRecentMeetings, dailyDefaultDay, dailySelectedDate, dailyWinPercentage, heightFeetInches, highestRecordedDivision } from './sumo-daily.mjs?v=20261117-h2h-highest-division';
 import { ordinalRank } from './sumo-career.mjs';
 import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-jsa-photo-cachefix-v3';
 
@@ -244,14 +244,14 @@ function dailyFighterFacts(w,fallback,side){
     '<div class="sumo-daily-ranks"><strong>'+e(w?.currentRank||'Rank unavailable')+'</strong>'+
     '<small>Peak: '+e(w?knownHigh(w)||'Unavailable':'Unavailable')+'</small></div></div></div>';
 }
-function comparisonGrid(first,second,division='Makushita') {
+function comparisonGrid(first,second,division=null) {
   const fact=w=>{
     if(!w)return null;
     const stats=detailStats(w),measure=weightHeight(w);
     const currentEntry=entryFor(w);
     const current=Array.isArray(currentEntry?.record)&&currentEntry.record.length>0
       ?recordSummary(currentEntry.record,divisionOf(w.currentRank)):null;
-    return Object.fromEntries(dailyStats({
+    const values=Object.fromEntries(dailyStats({
       currentRank:w.currentRank,highestRank:knownHigh(w),
       heightCm:measure.heightCm,weightKg:measure.weightKg,
       currentBashoWins:current?.win,currentBashoLosses:current?.loss,
@@ -263,24 +263,38 @@ function comparisonGrid(first,second,division='Makushita') {
       makushitaWins:stats?.winsByDivision?.Makushita,
       makushitaLosses:stats?.lossByDivision?.Makushita
     }));
+    return {values,highest:highestRecordedDivision(stats)};
   };
-  // The bout's sourced division, never the wrestler's historic highest division,
-  // determines which division-specific career record belongs in this card.
+  // Daily matchup cards supply their actual bout division. The career H2H page
+  // passes no division, so each wrestler instead uses their highest division
+  // with a source-backed W-L pair (Makuuchi first, then Juryo, etc.).
   const divisionScope=DIVS.includes(division)?division:null;
-  const divisionLabel=divisionScope||'Division';
   const left=fact(first),right=fact(second);
-  const pair=(facts,label)=>facts?.[label]||'Not available';
+  const sameTopDivision=!divisionScope&&left?.highest&&right?.highest&&
+    left.highest.division===right.highest.division;
+  const labelDivision=divisionScope||(sameTopDivision?left.highest.division:'Highest division');
+  const displayDivision=scope=>scope==='Juryo'?'Jūryō':scope;
+  const pair=(facts,label)=>facts?.values?.[label]||'Not available';
   const winsLosses=(facts,scope)=>{
-    if(!facts||facts[scope+' wins']==='Not available'||facts[scope+' losses']==='Not available')return 'Not available';
-    return facts[scope+' wins']+'–'+facts[scope+' losses'];
+    if(!facts||facts.values?.[scope+' wins']==='Not available'||
+       facts.values?.[scope+' losses']==='Not available')return 'Not available';
+    return facts.values[scope+' wins']+'–'+facts.values[scope+' losses'];
   };
+  const topValue=(facts,isPercentage)=>{
+    if(!facts?.highest)return 'Not available';
+    const rankLabel=sameTopDivision?'':displayDivision(facts.highest.division)+' · ';
+    return rankLabel+(isPercentage?facts.highest.percentage:facts.highest.record);
+  };
+  const scopedValue=(facts,isPercentage)=>divisionScope
+    ?(isPercentage?pair(facts,divisionScope+' win %'):winsLosses(facts,divisionScope))
+    :topValue(facts,isPercentage);
   const rows=[
     ['Height',f=>pair(f,'Height')],
     ['Weight',f=>pair(f,'Weight')],
     ['Current basho W–L',f=>winsLosses(f,'Current basho')],
     ['Career W–L',f=>winsLosses(f,'Career')],['Career win %',f=>pair(f,'Career win %')],
-    [divisionLabel+' W–L',f=>divisionScope?winsLosses(f,divisionScope):'Not available'],
-    [divisionLabel+' win %',f=>divisionScope?pair(f,divisionScope+' win %'):'Not available']
+    [displayDivision(labelDivision)+' W–L',f=>scopedValue(f,false)],
+    [displayDivision(labelDivision)+' win %',f=>scopedValue(f,true)]
   ];
   return '<div class="sumo-comparison" role="group" aria-label="Wrestler comparison, left and right values">'+
     '<div class="sumo-comparison-head"><span>'+e(first?.shikonaEn||'First wrestler')+'</span><span>Statistic</span><span>'+e(second?.shikonaEn||'Second wrestler')+'</span></div>'+
