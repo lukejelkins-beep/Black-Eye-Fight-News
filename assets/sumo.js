@@ -798,8 +798,8 @@ function recentBashoTimeline(w){
     return '<div class="sumo-basho-history-item'+cls+'" aria-label="'+e(bashoLabel(row.basho)+' · '+row.rank+' · '+movement)+'"><strong>'+e(bashoLabel(row.basho))+'</strong><span>'+e(row.rank)+'</span>'+record+'</div>';
   }).join('')+'</div>';
 }
-function lastFiveStrip(w){
-  const matches=profileBouts(w).filter(x=>x.outcome==='win'||x.outcome==='loss').slice(0,5);
+function recentTenStrip(w){
+  const matches=profileBouts(w).filter(x=>x.outcome==='win'||x.outcome==='loss').slice(0,10);
   const wins=matches.filter(x=>x.outcome==='win').length,losses=matches.length-wins;
   const summary=matches.length?'<span class="sumo-recent-record"><b>'+wins+' W</b> · <b>'+losses+' L</b></span>':'';
   const cards=matches.map(row=>{
@@ -816,10 +816,8 @@ function lastFiveStrip(w){
   return '<section class="sumo-recent-strip" aria-label="Recent performance">'+
     '<header class="sumo-recent-header"><h2>Recent form</h2><span>Last '+matches.length+' recorded bouts</span></header>'+
     (matches.length?'<div class="sumo-recent-summary">'+summary+
-      '<span>Newest first · tap a bout for its details</span></div>'+
-      '<div class="sumo-recent-carousel"><button type="button" class="sumo-recent-arrow" data-recent-shift="-1" aria-label="Earlier visible results">‹</button>'+
-      '<div class="sumo-recent-list" id="sumo-recent-track" tabindex="0" role="region" aria-label="Five most recent recorded completed bouts">'+cards+'</div>'+
-      '<button type="button" class="sumo-recent-arrow" data-recent-shift="1" aria-label="Next visible results">›</button></div>':
+      '<span>Newest first</span></div>'+
+      '<div class="sumo-recent-carousel"><div class="sumo-recent-list" id="sumo-recent-track" role="list" aria-label="Ten most recent recorded completed bouts, when available">'+cards+'</div></div>':
       '<p class="missing">No completed source-backed bouts available.</p>')+'</section>';
 }
 function summaryStat(value,label){return '<div class="sumo-summary-stat"><strong>'+e(value===null||value===undefined?'Not available':value)+'</strong><span>'+e(label)+'</span></div>';}
@@ -876,7 +874,7 @@ function renderProfile(id) {
     '<div class="profile-facts profile-meta">'+fact('Stable',w.heya)+fact('Age',age===null?'Not available':age+' years')+
     fact('Height',current.h==='—'?'Not available':current.h)+
     fact('Weight · undated',current.mass==='—'?'Not available':current.mass)+'</div></section>'+
-    sectionNav(w.sourceId)+lastFiveStrip(w)+
+    sectionNav(w.sourceId)+recentTenStrip(w)+
     sectionHead('results','Tournament and career ledger','Results')+resultDesk(w)+'</section>'+
     sectionHead('career','Historical context','Career')+
     '<div class="sumo-career-strip" aria-label="Career tournament and championship totals"><div><span>Basho</span><strong>'+e(s?.basho??'Not available')+'</strong></div>'+
@@ -1196,14 +1194,6 @@ document.addEventListener('click',ev=>{
     render();
     document.getElementById('sumo-bout-'+last.dataset.resultLink)?.scrollIntoView({block:'center'});
     document.getElementById('sumo-bout-'+last.dataset.resultLink)?.querySelector('a')?.focus({preventScroll:true});
-    return;
-  }
-  const recentArrow=ev.target.closest?.('[data-recent-shift]');
-  if(recentArrow){
-    ev.preventDefault();
-    const scroller=document.getElementById('sumo-recent-track');
-    const card=scroller?.querySelector('.sumo-recent-bout');
-    if(scroller&&card)scroller.scrollBy({left:Number(recentArrow.dataset.recentShift)*(card.getBoundingClientRect().width+9)*2,behavior:'smooth'});
     return;
   }
   const el=ev.target.closest?.('[data-home-leader-division],[data-home-view-standings],[data-directory-layout],[data-basho-view],[data-matchup-latest],[data-directory-reset],[data-matchup-division],[data-matchup-today],[data-directory-division],[data-more-rikishi],[data-fewer-rikishi],[data-banzuke-division],[data-basho-division],[data-day],[data-jump-day],[data-profile-limit],[data-h2h-order],[data-h2h-more],[data-h2h-fewer],[data-results-mode],[data-rank-range],[data-rank-ladder],[data-h2h-retry],[data-opponent-retry]');
