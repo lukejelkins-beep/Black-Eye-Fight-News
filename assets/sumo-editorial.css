@@ -785,3 +785,92 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .sumo-career-strip>div{padding:12px 10px}
   .sumo-career-strip>div>span{font-size:13px}
 }
+
+/* Home-only visual hierarchy: full-bleed photo panels and readable right-hand facts.
+   Scope deliberately excludes Banzuke, daily matchups and full rikishi profiles. */
+.sumo-home-grid{grid-template-columns:minmax(0,1fr);gap:18px}
+.sumo-home-feature{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.sumo-home-feature .feature-card,
+.sumo-home-feature .feature-card:nth-child(3){
+  display:grid;grid-template-columns:minmax(0,44%) minmax(0,56%);
+  grid-template-rows:minmax(0,1fr) auto;min-height:240px;
+  overflow:hidden;border-radius:10px;background:radial-gradient(circle at right top,#604132,#1a151a 72%);
+}
+.sumo-home-feature .feature-top{display:contents}
+.sumo-home-feature .feature-top>.profile-icon.sumo-photo{
+  grid-column:1;grid-row:1/span 2;display:block;
+  width:100%!important;height:100%!important;min-height:100%!important;max-height:none!important;
+  aspect-ratio:auto!important;margin:0;border:0;border-radius:0;align-self:stretch;
+}
+.sumo-home-feature .feature-top>.profile-icon.sumo-photo>img{
+  display:block;width:100%;height:100%;object-fit:cover!important;object-position:center top!important;
+  transform:none!important;
+}
+.sumo-home-feature .feature-info{
+  grid-column:2;grid-row:1;min-width:0;align-self:end;padding:16px clamp(12px,2vw,22px) 10px;
+}
+.sumo-home-feature .feature-info .rank{font-size:13px;line-height:1.4}
+.sumo-home-feature .feature-info h3{
+  margin:10px 0;font:900 clamp(25px,2.9vw,37px)/.98 'Barlow Condensed',Impact,sans-serif;
+  overflow-wrap:anywhere;
+}
+.sumo-home-feature .feature-info h3 .sumo-country{display:block;margin-bottom:8px}
+.sumo-home-feature .feature-info small{font-size:13px;line-height:1.3;color:#ede3d9;overflow-wrap:anywhere}
+.sumo-home-feature .feature-bottom{
+  grid-column:2;grid-row:2;display:flex;flex-direction:column;align-items:flex-start;
+  gap:3px;padding:11px clamp(12px,2vw,22px) 16px;font-size:13px;border-top:1px solid #5a4c4b;
+}
+.sumo-home-feature .feature-bottom span:last-child{font-weight:900;font-size:16px;color:#fff8e8;font-variant-numeric:tabular-nums}
+
+/* Tournament leaders: square photo-led cards, not thin horizontal list rows. */
+.sumo-home-leaders .sumo-standings-list{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;
+}
+.sumo-home-leaders .sumo-standings-row{
+  display:grid;grid-template-columns:minmax(0,46%) minmax(0,54%);
+  grid-template-rows:minmax(0,1fr) auto;
+  gap:0;padding:0;min-width:0;min-height:0;aspect-ratio:1/1;
+  align-items:stretch;border-radius:10px;
+}
+.sumo-home-leaders .sumo-standings-row>.profile-icon.sumo-photo{
+  grid-column:1;grid-row:1/span 2;display:block;
+  width:100%!important;height:100%!important;min-height:100%!important;max-height:none!important;
+  aspect-ratio:auto!important;border:0;border-radius:0;align-self:stretch;
+}
+.sumo-home-leaders .sumo-standings-row>.profile-icon.sumo-photo>img{
+  display:block;width:100%;height:100%;object-fit:cover!important;object-position:center top!important;
+  transform:none!important;
+}
+.sumo-home-leaders .sumo-standings-identity{
+  grid-column:2;grid-row:1;display:flex;justify-content:flex-end;min-width:0;
+  padding:14px 11px 8px;overflow-wrap:anywhere;
+}
+.sumo-home-leaders .sumo-standings-identity strong{
+  font:900 clamp(23px,2.7vw,34px)/1 'Barlow Condensed',Impact,sans-serif;
+  overflow-wrap:anywhere;
+}
+.sumo-home-leaders .sumo-standings-identity small{
+  font-size:13px;line-height:1.35;overflow-wrap:anywhere;
+}
+.sumo-home-leaders .sumo-standings-record{
+  grid-column:2;grid-row:2;text-align:left;align-self:end;
+  padding:8px 11px 15px;white-space:normal;font-size:17px;line-height:1.35;
+}
+@media(max-width:1000px){
+  .sumo-home-leaders .sumo-standings-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:650px){
+  .sumo-home-feature{grid-template-columns:minmax(0,1fr)}
+  .sumo-home-feature .feature-card{min-height:248px}
+  .sumo-home-leaders .sumo-standings-list{grid-template-columns:minmax(0,1fr)}
+  .sumo-home-leaders .sumo-standings-identity strong{font-size:clamp(27px,7vw,36px)}
+  .sumo-home-leaders .sumo-standings-record{font-size:18px}
+}
+@media(max-width:360px){
+  .sumo-home-feature .feature-card{grid-template-columns:minmax(0,43%) minmax(0,57%)}
+  .sumo-home-feature .feature-info{padding:12px 10px 8px}
+  .sumo-home-feature .feature-bottom{padding:10px 10px 14px}
+  .sumo-home-feature .feature-info h3{font-size:25px}
+  .sumo-home-leaders .sumo-standings-identity{padding:10px 8px 6px}
+  .sumo-home-leaders .sumo-standings-record{padding:6px 8px 12px}
+}
