@@ -306,7 +306,7 @@ function directoryFacts(w){
 function directoryCard(w) {
   return '<a class="directory-card" href="#profile/'+w.sourceId+'"><div class="directory-upper">'+
     flagBackdrop(w)+portraitFor(w,'md')+'<div><small>'+e(divisionOf(w.currentRank))+'</small>'+
-    '<h3>'+flagMark(w)+' '+e(w.shikonaEn)+'</h3>'+
+    '<h3>'+e(w.shikonaEn)+'</h3>'+
     '<small>'+e(w.shikonaJp||'')+'</small></div></div>'+
     '<div class="directory-lower"><div class="rank">'+e(w.currentRank||'Rank not supplied')+'</div>'+
     '<div class="detail">'+e(w.heya||'Stable not supplied')+'</div>'+
@@ -655,7 +655,7 @@ function banzukeCard(row) {
   return '<article class="sumo-rank-card"><div class="sumo-rank-card-head"><span>'+e(divisionOf(w.currentRank))+'</span>'+
     '<span>'+recordLabels(row.summary)+'</span></div>'+
     '<div class="sumo-rank-card-body">'+flagBackdrop(w)+portraitFor(w,'lg')+
-    '<div class="sumo-rank-card-data"><div class="sumo-rank-name">'+flagMark(w)+
+    '<div class="sumo-rank-card-data"><div class="sumo-rank-name">'+
     '<a href="#profile/'+Number(w.sourceId)+'">'+e(w.shikonaEn)+'</a></div>'+
     '<div class="sumo-rank-strong">'+e(w.currentRank||'Rank not supplied')+'</div>'+
     '<div class="sumo-rank-info"><span>Highest rank: <b>'+e(knownHigh(w)||'Not yet sourced')+'</b></span>'+
