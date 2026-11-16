@@ -176,6 +176,10 @@ function headToHeadName(id,a,b){
 function headToHeadUrl(a,b) {
   return '#headtohead/'+Number(a)+'/'+Number(b);
 }
+function techniqueMarkup(kimarite,text) {
+  const term=TERMS.find(x=>x.term.toLowerCase()===String(kimarite||'').trim().toLowerCase());
+  return term?'<a href="#kimarite-'+kebab(term.term)+'" data-kimarite-term="'+e(kebab(term.term))+'" title="See '+e(term.term)+' in the kimarite guide">'+e(text)+'</a>':e(text);
+}
 function historyRowsMarkup(h2h,a,b,limit=5,reverse=false) {
   if(!h2h)return '<p class="missing">Head-to-head history is not yet available for this pairing.</p>';
   const rows=reverse?[...h2h.rows].reverse():h2h.rows;
@@ -547,21 +551,25 @@ function profileTechniques(w){
     const denominator=filtered.reduce((n,x)=>n+Number(x.count),0);
     const unknownWins=all.filter(x=>/^(unknown|unrecorded)$/i.test(String(x.kimarite))).reduce((n,x)=>n+(Number(x.count)||0),0);
     const forfeitWins=all.filter(x=>/fusen/i.test(String(x.kimarite))).reduce((n,x)=>n+(Number(x.count)||0),0);
-    return '<p class="footnote">'+denominator+' recorded non-forfeit winning techniques across the source career ledger. Percentages use wins with a named physical kimarite, not every career victory. '+(unknownWins?'Unknown-technique wins: '+unknownWins+'. ':'')+(forfeitWins?'Forfeit wins excluded: '+forfeitWins+'. ':'')+'Unreported values are not treated as zero.</p>'+
-      filtered.map(x=>{const n=Number(x.count),pct=denominator?Math.round(n/denominator*1000)/10:0;
-        return '<div class="chart-row"><span class="name">'+e(x.kimarite)+'</span><div class="bar-bg" role="meter" aria-label="'+e(x.kimarite)+' '+n+' of '+denominator+' recorded non-forfeit technique wins" aria-valuemin="0" aria-valuemax="'+denominator+'" aria-valuenow="'+n+'"><div style="width:'+pct+'%"></div></div>'+
-          '<strong>'+n+' · '+pct+'%</strong></div>';
-      }).join('')+'<p class="footnote">API-trusted career source, not independent bout-by-bout certification. <a href="#kimarite">Kimarite reference</a> provides sourced explanations where available.</p>';
+    const bar=x=>{const n=Number(x.count),pct=denominator?(n/denominator*100).toFixed(1):'0.0';
+      return '<div class="chart-row"><span class="name">'+e(x.kimarite)+'</span><div class="bar-bg" role="meter" aria-label="'+e(x.kimarite)+' '+n+' of '+denominator+' named winning techniques" aria-valuemin="0" aria-valuemax="'+denominator+'" aria-valuenow="'+n+'"><div style="width:'+pct+'%"></div></div>'+
+        '<strong>'+n+' · '+pct+'%</strong></div>';};
+    return '<p class="footnote">'+denominator+' named non-forfeit winning results recorded in the source career ledger. '+(unknownWins?'Unrecorded techniques: '+unknownWins+'. ':'')+(forfeitWins?'Forfeit wins excluded: '+forfeitWins+'. ':'')+'Missing data are never zero.</p>'+
+      filtered.slice(0,5).map(bar).join('')+
+      (filtered.length>5?'<details class="sumo-tech-more"><summary>Show all '+filtered.length+' named technique rows</summary>'+
+        filtered.slice(5).map(bar).join('')+'</details>':'')+
+      '<p class="footnote">Source-trusted research records, not independent bout-by-bout certification. <a href="#kimarite">Kimarite reference</a>.</p>';
   }
   const enriched=detailFor(details(),w.sourceId),direct=Array.isArray(enriched?.matches?.data?.records)?enriched.matches.data.records:[];
   const fallback=currentBashoMatchSample(entryFor(w),details().bashoId)
     .filter(x=>x.outcome==='win').map(x=>({winnerId:w.sourceId,kimarite:x.kimarite}));
   const dist=techniqueDistribution(direct.length?direct:fallback,w.sourceId);
   if(!dist.sampleWins)return '<p class="missing">No supported, non-forfeit winning-technique breakdown is available for this period.</p>';
-  return '<p class="footnote">'+dist.sampleWins+' wins with recorded techniques · '+e(direct.length?'recent cached sample':'current tournament')+' · not career percentages.</p>'+
-    dist.techniques.map(x=>'<div class="chart-row"><span class="name">'+e(x.technique)+'</span><div class="bar-bg" role="meter" aria-label="'+e(x.technique)+' '+x.percentage+' percent" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+x.percentage+'"><div style="width:'+x.percentage+'%"></div></div><strong>'+x.percentage+'%</strong></div>').join('');
+  const row=x=>'<div class="chart-row"><span class="name">'+e(x.technique)+'</span><div class="bar-bg" role="meter" aria-label="'+e(x.technique)+' '+x.percentage+' percent" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+x.percentage+'"><div style="width:'+x.percentage+'%"></div></div><strong>'+Number(x.percentage).toFixed(1)+'%</strong></div>';
+  return '<p class="footnote">'+dist.sampleWins+' wins with named techniques · '+e(direct.length?'recent cached sample':'current tournament')+' · not full career statistics.</p>'+
+    dist.techniques.slice(0,5).map(row).join('')+
+    (dist.techniques.length>5?'<details class="sumo-tech-more"><summary>Show all '+dist.techniques.length+' techniques</summary>'+dist.techniques.slice(5).map(row).join('')+'</details>':'');
 }
-/* Presentation-only results model. One canonical renderer; no cache records are rewritten. */
 function resultKey(row) {return boutKey(row);}
 function currentProfileBouts(w) {
   const entry=entryFor(w),date=details().bashoId;
@@ -632,10 +640,10 @@ function profileBoutRow(w,row){
     '<div class="sumo-ed-result '+e(outcome)+'">'+e(label)+'</div>'+
     '<div class="sumo-ed-person">'+portraitFor(opponent,'sm')+
     (opponent?'<a href="#profile/'+id+'">'+e(name)+'</a>':'<span>'+e(name)+'</span>')+'</div>'+
-    '<div class="sumo-ed-rank"><span>'+e(opponent?.currentRank||'Not available')+'</span><small>Current rank only</small></div>'+
-    '<div class="sumo-ed-tech">'+(row.eventType?'<small>'+e(row.eventType)+' · non-regular</small>':'')+e(technique)+'</div>'+
+    '<div class="sumo-ed-rank"><span>'+e(opponent?.currentRank||'Not available')+'</span></div>'+
+    '<div class="sumo-ed-tech">'+(row.eventType?'<small>'+e(row.eventType)+' · non-regular</small>':'')+techniqueMarkup(row.kimarite,technique)+'</div>'+
     '<div class="sumo-ed-h2h">'+(absence?'No H2H':'<a href="'+headToHeadUrl(w.sourceId,id)+'" aria-label="Head to head: '+e(w.shikonaEn)+' versus '+e(name)+'">H2H '+e(h2h?h2h.wins+'–'+h2h.losses:'↗')+'</a>')+'</div></div>'+
-    '<details class="sumo-ed-extra"><summary>Opponent details · '+e(name)+'</summary><div class="sumo-details-grid">'+personal+
+    '<details class="sumo-ed-extra"><summary>Details</summary><div class="sumo-details-grid">'+personal+
     '<span>Source: '+e(row.scope)+'</span><span>Completed result: '+e(outcome==='scheduled'?'No — confirmed scheduled pairing':absence?'No — recorded absence':'Yes')+'</span></div></details></article>';
 }
 function resultDesk(w){
@@ -755,7 +763,7 @@ function renderProfile(id) {
     '<div><strong>Career</strong><b>'+e(career)+'</b><b>'+e(careerPercent)+'</b></div>'+
     '<div><strong>Makuuchi · source scope</strong><b>'+e(maku)+'</b><b>'+e(makuPercent)+'</b></div></div>'+
     '</div><div class="profile-current"><span class="tag">'+e(bashoLabel(details().bashoId))+' · SNAPSHOT · NOT LIVE</span>'+
-    currentBlock+'</div>'+
+    currentBlock+(divisionOf(w.currentRank)==='Makushita'?'<p class="footnote">Makushita non-bout days are not absences.</p>':'')+'</div>'+
     '<div class="profile-facts profile-meta">'+fact('Stable',w.heya)+fact('Age',age===null?'Not available':age+' years')+
     fact('Height',current.h==='—'?'Not available':current.h)+
     fact('Weight · undated',current.mass==='—'?'Not available':current.mass)+'</div></section>'+
