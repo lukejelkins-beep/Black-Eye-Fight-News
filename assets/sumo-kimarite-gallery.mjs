@@ -35,9 +35,10 @@ export function setKimariteMediaManifest(data){
   // Only the official JSA catalogue still is used as a public video poster.
   const technique=KIMARITE.find(x=>x.slug===slug);
   if(!technique)continue;
-  if(row.poster && row.poster!==technique.jsaPoster)continue;
+  const ownPoster=slug==='oshidashi'?'assets/sumo-kimarite/oshidashi-poster.jpg':null;
+  if(row.poster && row.poster!==technique.jsaPoster && row.poster!==ownPoster)continue;
   if(row.rights!=='NHK permission confirmed by BEFN owner'||row.credit!=='NHK WORLD-JAPAN')continue;
-  valid[slug]={webm:hasWebm?row.webm:null,gif:hasGif?row.gif:null,mp4:row.mp4||null,clip:row.clip||row.mp4||null,poster:technique.jsaPoster,rights:row.rights,credit:row.credit};
+  valid[slug]={webm:hasWebm?row.webm:null,gif:hasGif?row.gif:null,mp4:row.mp4||null,clip:row.clip||row.mp4||null,poster:row.poster||ownPoster||technique.jsaPoster,rights:row.rights,credit:row.credit};
  }
  APPROVED_WEBM=Object.freeze(valid);return true;
 }
@@ -57,12 +58,19 @@ const groupFor=item=>KIMARITE_GROUPS.find(x=>x.id===item.group);
 let filter='all',search='';
 const videoFor=item=>APPROVED_WEBM[item.slug];
 function media(item,large=false){
- // The landing page remains a lightweight photographic directory. Animation
- // starts only inside the click-to-open technique window.
+ // Still frames, not animations, in the directory. Animation is intentionally
+ // played only after the user opens the modal.
  const clip=videoFor(item);
- return '<div class="sumo-km-poster" aria-label="Official JSA technique photograph: '+esc(item.name)+'">'+
-   '<img src="'+esc(item.jsaPoster)+'" alt="Japan Sumo Association reference photograph of '+esc(item.name)+'" loading="lazy" decoding="async">'+
-   '<span class="sumo-km-poster-credit">Photo: Japan Sumo Association</span>'+
+ if(item.slug==='oshidashi'&&!clip?.poster){
+   return '<div class="sumo-km-no-video" role="img" aria-label="Oshidashi preview awaiting owner footage">'+
+     '<span class="sumo-km-glyph" aria-hidden="true">相</span>'+
+     '<small>Owner-supplied GIF preview pending</small></div>';
+ }
+ const poster=clip?.poster||item.jsaPoster;
+ const credit=item.slug==='oshidashi'?'Owner-supplied NHK video frame':'Japan Sumo Association';
+ return '<div class="sumo-km-poster" aria-label="'+esc(item.name)+' technique reference photograph">'+
+   '<img src="'+esc(poster)+'" alt="'+esc(item.name)+' technique reference" loading="lazy" decoding="async">'+
+   '<span class="sumo-km-poster-credit">Photo: '+esc(credit)+'</span>'+
    (clip?.gif?'<span class="sumo-km-pending sumo-km-ready">▶ View GIF</span>':'')+
    '</div>';
 }
