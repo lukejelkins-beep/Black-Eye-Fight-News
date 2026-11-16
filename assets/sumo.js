@@ -802,7 +802,7 @@ function summaryStat(value,label){return '<div class="sumo-summary-stat"><strong
 function sectionHead(id,label,title){return '<section class="sumo-section" id="sumo-'+id+'">'+heading(label,title);}
 function sectionNav(id){
   const parts=[['results','Results'],['career','Career'],['charts','Analysis'],['opponents','Opponents']];
-  const secondary=[['techniques','Techniques'],['sources','Data coverage']];
+  const secondary=[['techniques','Techniques']];
   return '<nav class="sumo-section-nav" aria-label="On this profile">'+parts.map(([key,label])=>
     '<a href="#profile/'+id+'?section='+key+'" data-profile-section="'+key+'">'+label+'</a>').join('')+
     '<details class="sumo-profile-more"><summary>More</summary>'+secondary.map(([key,label])=>
@@ -810,30 +810,14 @@ function sectionNav(id){
     '<div class="sumo-section-menu"><label>On this profile <select id="sumo-profile-section">'+
     [...parts,...secondary].map(([key,label])=>'<option value="'+key+'">'+label+'</option>').join('')+'</select></label></div>';
 }
-function renderApiQuality(w){
- const quality=wrestlerQuality(w,STATE.apiTrust);
- if(!quality)return '<p class="footnote">Source data status is unavailable; this profile has not been independently certified.</p>';
- return '<aside class="sumo-api-quality" data-sumo-source-id="'+Number(w.sourceId)+'" aria-label="Research data quality">'+
-  '<div class="sumo-api-quality-label">API-TRUSTED · NON-PRODUCTION PREVIEW</div>'+
-  '<strong>'+e(quality.careerResultsStatus)+'</strong>'+
-  '<p>Complete cached Sumo API career data is accepted for development. This is not full-profile certification, bout-by-bout JSA certification or production approval.</p>'+
-  (quality.historicalReview?'<p class="sumo-api-review">Review: an older JSA career-record snapshot needs a matched-date follow-up. The current API record remains available for preview.</p>':'')+
-  '</aside>';
-}
 function renderProfile(id) {
   const w=wrestler(id);
   if(!w)return '<a class="back-link" href="#rikishi">← All rikishi</a>'+note('Wrestler not in the tracked snapshot.');
   const item=entryFor(w),r=item?recordSummary(item.record,divisionOf(w.currentRank)):null,s=detailStats(w);
   const current=weightHeight(w),age=ageInJapan(w.birthDate);
-  const officialId=Number(w.officialNskId);
-  const officialLink=Number.isSafeInteger(officialId)&&officialId>0?
-    'https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+officialId+'/':JSA_URL;
   const style=STATE.officialStyles?.byNskId?.[String(w.officialNskId)];
   const styleOkay=style&&Number(style.sumoApiId)===Number(w.sourceId)&&Array.isArray(style.signature)&&
     /^https:\/\/www\.sumo\.or\.jp\/EnSumoDataRikishi\/profile\/\d+\/$/.test(style.sourceUrl);
-  const sourceNotes=[];
-  if(current.underReview)sourceNotes.push('Weight source/date/precision review unresolved. JSA listing '+current.currentKg+' kg; API roster '+current.apiKg+' kg.');
-  if(current.heightUnderReview)sourceNotes.push('Height source/date/precision review unresolved. JSA listing '+current.currentHeightCm+' cm; API roster '+current.apiHeightCm+' cm.');
   const fact=(label,value,extra='')=>'<div><span>'+e(label)+'</span><strong>'+e(value===null||value===undefined?'Not available':value)+'</strong>'+
     (extra?'<span>'+e(extra)+'</span>':'')+'</div>';
   const wins=Number.isInteger(s?.totalWins)?s.totalWins:null;
@@ -849,7 +833,6 @@ function renderProfile(id) {
     String(approvedPhoto.license||'').trim()&&String(approvedPhoto.credit||'').trim()
     ?'<a class="sumo-full-photo" href="'+e(approvedPhoto.path)+'" target="_blank" rel="noopener noreferrer">View full photo</a>':'';
   const titleCount=s?.yushoByDivision?.Makuuchi;
-  const careerAwards=Object.entries(s?.sansho||{}).map(([k,v])=>'<li>'+e(k)+': '+e(v)+'</li>').join('');
   const currentBlock=r?'<div class="sumo-current-record"><span><b>'+r.win+'</b><small>Wins</small></span>'+
     '<span><b>'+r.loss+'</b><small>Losses</small></span><span><b class="'+(r.absence===null?'unavailable':'')+'">'+e(r.absence===null?'N/A':r.absence)+'</b><small>'+
     e(r.absence===null?'Absences not supplied':'Absences')+'</small></span></div>':
