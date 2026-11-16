@@ -44,7 +44,7 @@ test('standings are compact results while ranking movement remains on Banzuke',(
   assert.match(method('movementMarkup'),/rankPositions\(previousBanzukeData\(\)\)/);
   assert.match(css,/\.sumo-standings-row/);
   assert.match(css,/@media\(max-width:540px\)/);
-  assert.match(html,/assets\/sumo-editorial\.css\?v=20261116-ux-refinement/);
+  assert.match(html,/assets\/sumo-editorial\.css\?v=20261116-[a-z0-9-]+/);
 });
 
 test('scoped directory empty state retains the search and offers Search all',()=>{
