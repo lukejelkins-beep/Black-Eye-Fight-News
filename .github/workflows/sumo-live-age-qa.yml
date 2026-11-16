@@ -1,0 +1,17 @@
+name: Sumo live-age QA (test only)
+on:
+  push:
+    branches:
+      - fix/sumo-live-age-20261116
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check assets/sumo.js
+      - run: node --test tests/test-sumo-live-age.mjs tests/test-sumo-data.mjs
