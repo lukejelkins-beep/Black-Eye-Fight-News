@@ -56,7 +56,7 @@ test('Tokihayate and Daiseizan division records are independently sourced, not i
     }));
     assert.notEqual(values['Makushita win %'],'Not available');
     assert.notEqual(values['Makuuchi win %'],'Not available');
-    assert.match(values.Height,/^\d+′\d+″$/);
+    assert.match(values.Height,/^\d+(?:\.\d+)? cm \(\d+′\d+″\)$/);
   }
 });
 test('current basho W-L is from real banzuke bouts, not stale historical stats',()=>{
