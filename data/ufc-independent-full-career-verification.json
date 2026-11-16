@@ -55957,6 +55957,367 @@
       ],
       "sourceVerifiedExcludedFeederBouts": [],
       "rosterAsOf": "2026-11-14"
+    },
+    "ibo-aslan": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Ibo Aslan",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/6e8f1bcdda94ff45",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ibo-aslan",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "method": "Full dated UFC.com biography source checked 16 Nov 2026; each official result linked to pinned Greco UFCStats-derived fighter/fight/event IDs and original saved UFCalendar fighter/opponent corner, date, winner and measured round set. Event-local dates preserved when original native cache uses next UTC day. DWCS feeder result independently excluded; no paid provider request."
+      },
+      "verifiedNumericFighterIds": [
+        "351"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "Five official Octagon bouts from March 2024 through December 2025; the August 2023 Paulo Renato Junior DWCS bout is separately excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/ibo-aslan",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84024",
+          "date": "2023-08-15",
+          "opponent": "Paulo Renato Jr.",
+          "result": "win",
+          "event": "Dana White's Contender Series 58",
+          "officialSourceUrl": "https://www.ufc.com/athlete/ibo-aslan",
+          "excludedBecause": "Dana White's Contender Series is a separate feeder contest, not an official UFC Octagon career bout",
+          "originalNativeFighterId": "351",
+          "originalOpponentFighterId": "12741"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2025-12-06",
+          "opponent": "Iwo Baraniewski",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ea660db65bfa998f",
+          "eventUrl": "https://ufcstats.com/event-details/bd92cf5da5413d2a",
+          "nativeBoutId": "60531",
+          "nativeFighterId": "351"
+        },
+        {
+          "date": "2025-07-26",
+          "opponent": "Billy Elekana",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f9dac7702609669f",
+          "eventUrl": "https://ufcstats.com/event-details/28d8638ea0a71908",
+          "nativeBoutId": "60826",
+          "nativeFighterId": "351"
+        },
+        {
+          "date": "2025-02-22",
+          "opponent": "Ion Cuțelaba",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/08763e87e10b9709",
+          "eventUrl": "https://ufcstats.com/event-details/c50ea21fe9ef478d",
+          "nativeBoutId": "38533",
+          "nativeFighterId": "351"
+        },
+        {
+          "date": "2024-10-26",
+          "opponent": "Rafael Cerqueira",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/781a2ea50f5ae68f",
+          "eventUrl": "https://ufcstats.com/event-details/221b2a3070c7ce3e",
+          "nativeBoutId": "60183",
+          "nativeFighterId": "351"
+        },
+        {
+          "date": "2024-03-30",
+          "opponent": "Anton Turkalj",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/697e38075fd41819",
+          "eventUrl": "https://ufcstats.com/event-details/dba230fe33011201",
+          "nativeBoutId": "38989",
+          "nativeFighterId": "351"
+        }
+      ]
+    },
+    "jacobe-smith": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Jacobe Smith",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/85497ffd934ecf7e",
+      "officialFighterUrl": "https://www.ufc.com/athlete/jacobe-smith",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "method": "Full dated UFC.com biography source checked 16 Nov 2026; each official result linked to pinned Greco UFCStats-derived fighter/fight/event IDs and original saved UFCalendar fighter/opponent corner, date, winner and measured round set. Event-local dates preserved when original native cache uses next UTC day. DWCS feeder result independently excluded; no paid provider request."
+      },
+      "verifiedNumericFighterIds": [
+        "489"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "Five official Octagon bouts from January 2025 through October 2026; the October 2024 Christien Savoie DWCS bout is separately excluded. A July 2026 cancelled Kevin Holland bout has no official result.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/jacobe-smith",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84032",
+          "date": "2024-10-01",
+          "opponent": "Christien Savoie",
+          "result": "win",
+          "event": "Dana White's Contender Series 74",
+          "officialSourceUrl": "https://www.ufc.com/athlete/jacobe-smith",
+          "excludedBecause": "Dana White's Contender Series is a separate feeder contest, not an official UFC Octagon career bout",
+          "originalNativeFighterId": "489",
+          "originalOpponentFighterId": "28523"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-10-31",
+          "opponent": "Randy Brown",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d37d3af2529c3fd5",
+          "eventUrl": "https://ufcstats.com/event-details/0a66de3a797cf73a",
+          "nativeBoutId": "93557",
+          "nativeFighterId": "489"
+        },
+        {
+          "date": "2026-10-03",
+          "opponent": "Bruce Whitehead",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/bc35fb29afba68b9",
+          "eventUrl": "https://ufcstats.com/event-details/ad3fdba28a7540cf",
+          "nativeBoutId": "93246",
+          "nativeFighterId": "489"
+        },
+        {
+          "date": "2026-02-21",
+          "opponent": "Josiah Harrell",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/54437b8dba3a6110",
+          "eventUrl": "https://ufcstats.com/event-details/79ab17db3b40831a",
+          "nativeBoutId": "60663",
+          "nativeFighterId": "489"
+        },
+        {
+          "date": "2025-06-28",
+          "opponent": "Niko Price",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9bff9fe298e63357",
+          "eventUrl": "https://ufcstats.com/event-details/66766984842c13dc",
+          "nativeBoutId": "60269",
+          "nativeFighterId": "489"
+        },
+        {
+          "date": "2025-01-11",
+          "opponent": "Preston Parsons",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/58eda5a58a89f739",
+          "eventUrl": "https://ufcstats.com/event-details/81ddc98fceb30086",
+          "nativeBoutId": "60350",
+          "nativeFighterId": "489"
+        }
+      ]
+    },
+    "malcolm-wellmaker": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Malcolm Wellmaker",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/2e45d08b3f2f02c8",
+      "officialFighterUrl": "https://www.ufc.com/athlete/malcolm-wellmaker",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "method": "Full dated UFC.com biography source checked 16 Nov 2026; each official result linked to pinned Greco UFCStats-derived fighter/fight/event IDs and original saved UFCalendar fighter/opponent corner, date, winner and measured round set. Event-local dates preserved when original native cache uses next UTC day. DWCS feeder result independently excluded; no paid provider request."
+      },
+      "verifiedNumericFighterIds": [
+        "31"
+      ],
+      "officialUfcCareerBoutCount": 5,
+      "sourceScopeVerified": "Five official Octagon bouts from April 2025 through October 2026; the August 2024 Adam Bramhald DWCS bout is separately excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/malcolm-wellmaker",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84011",
+          "date": "2024-08-27",
+          "opponent": "Adam Bramhald",
+          "result": "win",
+          "event": "Dana White's Contender Series 69",
+          "officialSourceUrl": "https://www.ufc.com/athlete/malcolm-wellmaker",
+          "excludedBecause": "Dana White's Contender Series is a separate feeder contest, not an official UFC Octagon career bout",
+          "originalNativeFighterId": "31",
+          "originalOpponentFighterId": "8871"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-10-10",
+          "opponent": "Otari Tanzilovi",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c56bbc28d155f846",
+          "eventUrl": "https://ufcstats.com/event-details/7f98d9d5a10fa25c",
+          "nativeBoutId": "93201",
+          "nativeFighterId": "31"
+        },
+        {
+          "date": "2026-05-16",
+          "opponent": "Juan Díaz",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ecb7ff543dd41bf8",
+          "eventUrl": "https://ufcstats.com/event-details/73abb7a5c57fb443",
+          "nativeBoutId": "66116",
+          "nativeFighterId": "31"
+        },
+        {
+          "date": "2025-11-15",
+          "opponent": "Ethyn Ewing",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e313286b307334a7",
+          "eventUrl": "https://ufcstats.com/event-details/8db1b36dde268ef6",
+          "nativeBoutId": "38203",
+          "nativeFighterId": "31"
+        },
+        {
+          "date": "2025-06-14",
+          "opponent": "Kris Moutinho",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f6454f2e508626ec",
+          "eventUrl": "https://ufcstats.com/event-details/de277a4abcfeea46",
+          "nativeBoutId": "60291",
+          "nativeFighterId": "31"
+        },
+        {
+          "date": "2025-04-26",
+          "opponent": "Cameron Saaiman",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c2c20a04a78d9143",
+          "eventUrl": "https://ufcstats.com/event-details/b2e3aca4cd363477",
+          "nativeBoutId": "60884",
+          "nativeFighterId": "31"
+        }
+      ]
+    },
+    "bolaji-oki": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Bolaji Oki",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/4bdedbdeedff7d1d",
+      "officialFighterUrl": "https://www.ufc.com/athlete/bolaji-oki",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "method": "Full dated UFC.com biography source checked 16 Nov 2026; each official result linked to pinned Greco UFCStats-derived fighter/fight/event IDs and original saved UFCalendar fighter/opponent corner, date, winner and measured round set. Event-local dates preserved when original native cache uses next UTC day. DWCS feeder result independently excluded; no paid provider request."
+      },
+      "verifiedNumericFighterIds": [
+        "257"
+      ],
+      "officialUfcCareerBoutCount": 6,
+      "sourceScopeVerified": "Six official Octagon bouts from February 2024 through October 2026; the August 2023 Dylan Salvador DWCS bout is separately excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/bolaji-oki",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84168",
+          "date": "2023-08-29",
+          "opponent": "Dylan Salvador",
+          "result": "win",
+          "event": "Dana White's Contender Series 60",
+          "officialSourceUrl": "https://www.ufc.com/athlete/bolaji-oki",
+          "excludedBecause": "Dana White's Contender Series is a separate feeder contest, not an official UFC Octagon career bout",
+          "originalNativeFighterId": "257",
+          "originalOpponentFighterId": "11533"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-10-24",
+          "opponent": "Daniel Santos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1fa88509d87cc05e",
+          "eventUrl": "https://ufcstats.com/event-details/cc18abc046b382c9",
+          "nativeBoutId": "93508",
+          "nativeFighterId": "257"
+        },
+        {
+          "date": "2026-03-14",
+          "opponent": "Manoel Sousa",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c769dd861357af9f",
+          "eventUrl": "https://ufcstats.com/event-details/babc6b5745335f18",
+          "nativeBoutId": "60720",
+          "nativeFighterId": "257"
+        },
+        {
+          "date": "2025-09-06",
+          "opponent": "Mason Jones",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/69b31593175f77ec",
+          "eventUrl": "https://ufcstats.com/event-details/6e380a4d73ab4f0e",
+          "nativeBoutId": "60474",
+          "nativeFighterId": "257"
+        },
+        {
+          "date": "2025-05-31",
+          "opponent": "Michael Aswell Jr.",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ae89ba793121fe0c",
+          "eventUrl": "https://ufcstats.com/event-details/2a898bf9fb7710b3",
+          "nativeBoutId": "38404",
+          "nativeFighterId": "257"
+        },
+        {
+          "date": "2024-09-28",
+          "opponent": "Chris Duncan",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/eedc7fccf7037949",
+          "eventUrl": "https://ufcstats.com/event-details/079488710f012779",
+          "nativeBoutId": "38713",
+          "nativeFighterId": "257"
+        },
+        {
+          "date": "2024-02-10",
+          "opponent": "Timmy Cuamba",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/edf46d6962be7e8d",
+          "eventUrl": "https://ufcstats.com/event-details/eaea0fc7b76525a8",
+          "nativeBoutId": "59907",
+          "nativeFighterId": "257"
+        }
+      ]
     }
   }
 }
