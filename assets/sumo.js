@@ -11,7 +11,7 @@ import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verificati
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
 import { dailyStats, dailyRecentMeetings, dailyDefaultDay, dailySelectedDate, dailyWinPercentage, heightFeetInches } from './sumo-daily.mjs?v=20261116-division-relative-records';
 import { ordinalRank } from './sumo-career.mjs';
-import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions } from './sumo-kimarite-gallery.mjs?v=20261117-nhk-gallery';
+import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-nhk-gallery';
 
 const ROOT = document.querySelector('#sumo-main');
 const tabs = [...document.querySelectorAll('[data-page]')];
@@ -1293,9 +1293,9 @@ async function loadCompleteH2h(){
 }
 async function init(){
   try {
-    const [roster,details,styles,photos,careerHistory,h2hSummary,readiness,divisionStats]=await Promise.all([loadJson('data/sumo/rikishi-index.json'),loadJson('data/sumo/preview-details.json'),loadJson('data/sumo/official-style-evidence.json'),loadJson('data/sumo/approved-photos.json'),loadJson('data/sumo/career-history.json'),
+    const [roster,details,styles,photos,careerHistory,h2hSummary,readiness,divisionStats,kimariteMedia]=await Promise.all([loadJson('data/sumo/rikishi-index.json'),loadJson('data/sumo/preview-details.json'),loadJson('data/sumo/official-style-evidence.json'),loadJson('data/sumo/approved-photos.json'),loadJson('data/sumo/career-history.json'),
       loadJson('data/sumo/research-h2h-summary.json').catch(()=>null),loadJson('data/sumo/api-trusted-status.json'),
-      loadJson('data/sumo/division-stats.json').catch(()=>null)]);
+      loadJson('data/sumo/division-stats.json').catch(()=>null),loadJson('data/sumo/kimarite-media.json').catch(()=>null)]);
     if(!Array.isArray(roster?.rikishi)||!Array.isArray(details?.featured)||roster?.count!==roster.rikishi.length) throw new Error('Sumo cache schema or roster total not valid');
     if((roster?.trackedDivisions||[]).join(',')!==DIVS.join(','))throw new Error('Sumo cache does not match the approved three-division scope');
     if(roster.rikishi.some(x=>!DIVS.includes(divisionOf(x.currentRank))))throw new Error('Out-of-scope division in Sumo index');
@@ -1306,6 +1306,7 @@ async function init(){
     validateSumoPreviewReadiness(readiness,roster);
     STATE.roster=roster;STATE.details=details;STATE.officialStyles=styles;STATE.photoIndex=photos.bySourceId;STATE.careerHistory=careerHistory;STATE.h2hSummary=h2hSummary;STATE.apiTrust=readiness;
     STATE.divisionStats=divisionStats?.schemaVersion===1&&divisionStats?.cohortSize===roster.count&&divisionStats?.source==='https://www.sumo-api.com/api'?divisionStats:null;
+    setKimariteMediaManifest(kimariteMedia);
     render();
   } catch(error){
     STATE.error=error.message || 'Unable to load the preview dataset';
