@@ -53,3 +53,16 @@ test('UFCalendar-first cannot override unresolved native fighter identity collis
  assert.equal(args(conflicted),false);
  assert.equal(args(aliasConflict),false);
 });
+
+test('semantic attestation rejects non-UFC, cancelled and unverified feeder rows',()=>{
+ const change=(index,patch)=>saved.map((row,i)=>i===index?{...row,...patch}:row);
+ assert.equal(verify(change(0,{promotion:'pfl'})),false);
+ assert.equal(verify(change(0,{status:'cancelled'})),false);
+ assert.equal(verify(change(0,{event:'Road to UFC qualifiers'})),false);
+ const official={...source,bouts:source.bouts.map((b,i)=>i===0?
+   {...b,event:'Road to UFC qualifiers'}:b)};
+ assert.equal(verify(change(0,{event:'Road to UFC qualifiers'}),official),false);
+ const attested={...official,bouts:official.bouts.map((b,i)=>i===0?
+   {...b,independentlyOfficial:true,officialUfcSourceUrl:'https://www.ufc.com/news/official-finale'}:b)};
+ assert.equal(verify(change(0,{event:'Road to UFC qualifiers'}),attested),true);
+});
