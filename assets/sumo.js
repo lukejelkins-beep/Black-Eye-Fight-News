@@ -251,7 +251,8 @@ function comparisonGrid(first,second) {
     if(!w)return null;
     const stats=detailStats(w),measure=weightHeight(w);
     const currentEntry=entryFor(w);
-    const current=currentEntry?recordSummary(currentEntry.record,divisionOf(w.currentRank)):null;
+    const current=Array.isArray(currentEntry?.record)&&currentEntry.record.length>0
+      ?recordSummary(currentEntry.record,divisionOf(w.currentRank)):null;
     return Object.fromEntries(dailyStats({
       currentRank:w.currentRank,highestRank:knownHigh(w),
       heightCm:measure.heightCm,weightKg:measure.weightKg,
