@@ -66,7 +66,8 @@ test('preview markup provides accessible full head-to-head navigation',()=>{
   assert.match(source,/function renderHeadToHead/);
   assert.match(source,/case 'headtohead'/);
   assert.match(source,/historyRowsMarkup\(h2h,a,b,5\)/);
-  assert.match(source,/nextDayForBasho\(new Date\(\)/);
+  assert.match(source,/bashoDayForDate\(new Date\(\)/);
+  assert.match(source,/dailyDefaultDay\(/);
   assert.match(source,/techniqueText\(m\.kimarite\)/);
   const html=readFileSync(new URL('../sumo.html',import.meta.url),'utf8');
   assert.match(html,/20261115-career-h2h2/);

@@ -340,97 +340,31 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 /* 2026-11-16: roster-first homepage, flag-backdrop identities and source-only banzuke movement. */
 .sumo-country-name{display:none!important}
 .sumo-country{gap:0}
-.sumo-standings-list{display:grid;gap:8px}
+/* Canonical tournament standings: one 76px row per wrestler. */
+.sumo-standings-list{display:grid;gap:6px}
 .sumo-standings-row{
-  position:relative;isolation:isolate;overflow:hidden;display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(140px,max-content);gap:14px;
-  min-height:76px;align-items:center;padding:12px 16px;
-  border:1px solid #35333e;border-radius:9px;
-  background:linear-gradient(110deg,#20252d 0%,#232631 66%,#1b1c24 100%);
-  color:#fffaf1;text-decoration:none;
+  display:grid;grid-template-columns:64px minmax(0,1fr) minmax(125px,auto);
+  align-items:center;gap:12px;min-height:80px;padding:6px 14px 6px 6px;
+  text-decoration:none;background:#fff;border:1px solid var(--border);
+  border-radius:8px;color:var(--ink);overflow:hidden;
 }
-.sumo-standings-row:hover{border-color:#d3aa46;background:linear-gradient(110deg,#2b3039,#21242d)}
-.sumo-standings-row:focus-visible{outline:3px solid #d3aa46;outline-offset:2px}
-.sumo-flag-backdrop{
-  position:absolute;z-index:0;top:-47px;right:9px;
-  font:normal 132px/1 "Apple Color Emoji","Segoe UI Emoji",system-ui,sans-serif;
-  opacity:.18;pointer-events:none;user-select:none;transform:rotate(-12deg);
-}
-.sumo-standings-row > :not(.sumo-flag-backdrop),
-.directory-upper > :not(.sumo-flag-backdrop),
-.sumo-rank-card-body > :not(.sumo-flag-backdrop){position:relative;z-index:1}
-.sumo-standings-identity,.sumo-standings-ranking{display:flex;flex-direction:column;gap:5px;min-width:0}
-.sumo-standings-identity strong{font:800 clamp(20px,2vw,24px)/1.06 'Barlow Condensed',Impact,sans-serif;overflow-wrap:anywhere}
-.sumo-standings-identity small{font-size:13px;color:#f4e8d8;font-weight:700}
-.sumo-standings-identity .number-win{color:#8ee5b5}
-.sumo-standings-identity .number-loss{color:#ffb0af}
-.sumo-standings-ranking{align-items:flex-end;text-align:right}
-.sumo-standings-ranking strong{font-size:14px;font-weight:750;overflow-wrap:anywhere}
-.sumo-standings-ranking .sumo-move{font-size:12px;align-self:flex-end}
-.sumo-standings-legend{font-size:12px;color:var(--muted);line-height:1.5;margin:10px 1px 0}
+.sumo-standings-row:hover{border-color:var(--red);background:#faf6f0}
+.sumo-standings-row .profile-icon.sumo-photo{width:64px;height:68px;min-height:0;max-height:68px;aspect-ratio:auto;border:0;border-radius:6px}
+.sumo-standings-row .profile-icon.sumo-photo img{object-fit:cover;object-position:center top;transform:none}
+.sumo-standings-identity{min-width:0;display:flex;flex-direction:column;gap:3px}
+.sumo-standings-identity strong{font:800 22px/1 'Barlow Condensed',Impact,sans-serif;color:var(--ink)}
+.sumo-standings-identity small{font-size:13px;font-weight:650;color:var(--muted)}
+.sumo-standings-record{font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.sumo-standings-no-photo{font-size:12px;color:var(--muted)}
+.sumo-flag-backdrop{position:absolute;z-index:0;right:4px;top:-36px;font:normal 110px/1 system-ui,sans-serif;opacity:.12;pointer-events:none}
 .directory-upper,.sumo-rank-card-body{position:relative;isolation:isolate;overflow:hidden}
-.directory-upper .sumo-flag-backdrop{top:-36px;right:-6px;opacity:.13;font-size:125px}
-.sumo-rank-card-body .sumo-flag-backdrop{top:-43px;right:9%;opacity:.11;font-size:132px}
-@media(max-width:480px){
- .sumo-standings-row{grid-template-columns:minmax(0,1fr);gap:5px;padding:11px 13px}
- .sumo-standings-ranking{flex-direction:row;align-items:center;justify-content:space-between;text-align:left;gap:9px}
- .sumo-standings-ranking .sumo-move{align-self:center;flex:none}
- .sumo-standings-row .sumo-flag-backdrop{right:2px;top:-36px;font-size:111px}
- .directory-upper .sumo-flag-backdrop{font-size:100px}
- .sumo-rank-card-body .sumo-flag-backdrop{right:0;font-size:104px}
+.directory-upper>:not(.sumo-flag-backdrop),.sumo-rank-card-body>:not(.sumo-flag-backdrop){position:relative;z-index:1}
+@media(max-width:540px){
+ .sumo-standings-row{grid-template-columns:52px minmax(0,1fr);gap:7px 10px;min-height:74px;padding:6px}
+ .sumo-standings-row .profile-icon.sumo-photo{width:52px;height:62px;grid-row:1/span 2}
+ .sumo-standings-record{grid-column:2;text-align:left;font-size:13px}
+ .sumo-standings-identity strong{font-size:19px}
 }
-@media(prefers-reduced-motion:reduce){.sumo-standings-row{scroll-behavior:auto}}
-
-/* Official portrait thumbnails in the editorial tournament standings */
-.sumo-standings-row>.sumo-photo{grid-column:1;grid-row:1 / span 2;width:62px;height:82px;align-self:center;border-radius:7px;overflow:hidden;z-index:2}
-.sumo-standings-row:has(>.sumo-photo){grid-template-columns:62px minmax(0,1fr) auto;align-items:center;column-gap:13px}
-.sumo-standings-row:has(>.sumo-photo)>.sumo-standings-identity{grid-column:2;grid-row:1 / span 2}
-.sumo-standings-row:has(>.sumo-photo)>.sumo-standings-ranking{grid-column:3;grid-row:1 / span 2}
-@media(max-width:740px){.sumo-standings-row:has(>.sumo-photo){grid-template-columns:60px minmax(0,1fr);gap:7px 12px}.sumo-standings-row>.sumo-photo{width:60px;height:78px}.sumo-standings-row:has(>.sumo-photo)>.sumo-standings-ranking{grid-column:2;grid-row:2;min-width:0}.sumo-standings-row:has(>.sumo-photo)>.sumo-standings-identity{grid-column:2;grid-row:1}}
-
-
-/* Keep movement labels compact, readable and safely wrapped on narrow screens. */
-.sumo-standings-row:has(>.sumo-photo){grid-template-columns:62px minmax(0,1fr) minmax(110px,auto)}
-.sumo-standings-ranking{min-width:0;max-width:100%;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
-.sumo-standings-ranking>strong{max-width:100%;overflow-wrap:normal;word-break:normal}
-.sumo-standings-ranking .sumo-move{white-space:nowrap;max-width:100%;font-size:12px;padding:5px 7px}
-.sumo-standings-ranking .sumo-move-meta{color:#d4d2d6;font-size:11px;line-height:1.3;text-align:right;max-width:185px}
-.sumo-standings-ranking .sumo-move.up{background:#dff5e7;color:#19683d}
-.sumo-standings-ranking .sumo-move.down{background:#fbe1e2;color:#9a2934}
-.sumo-standings-ranking .sumo-move.same{background:#ece9e4;color:#554c4c}
-@media(max-width:740px){
- .sumo-standings-row:has(>.sumo-photo){grid-template-columns:58px minmax(0,1fr);gap:8px 12px;align-items:center}
- .sumo-standings-row:has(>.sumo-photo)>.sumo-standings-identity{grid-column:2;grid-row:1;min-width:0}
- .sumo-standings-row:has(>.sumo-photo)>.sumo-standings-ranking{grid-column:2;grid-row:2;min-width:0;align-items:flex-start}
- .sumo-standings-ranking>strong{font-size:13px;white-space:normal;overflow-wrap:normal}
- .sumo-standings-ranking .sumo-move-meta{text-align:left;max-width:none}
-}
-
-/* Narrow cards: portrait stays left; all text stays inside the available column. */
-.sumo-standings-row:has(>.sumo-photo){grid-template-columns:62px minmax(0,1fr)}
-.sumo-standings-row:has(>.sumo-photo)>.sumo-standings-identity{grid-column:2;grid-row:1}
-.sumo-standings-row:has(>.sumo-photo)>.sumo-standings-ranking{grid-column:2;grid-row:2;align-items:flex-start;text-align:left;max-width:100%}
-.sumo-standings-ranking .sumo-move{display:inline-block;box-sizing:border-box;max-width:100%;white-space:normal;overflow-wrap:normal;word-break:normal;font-weight:750}
-.sumo-standings-ranking .sumo-move-meta{max-width:100%;text-align:left}
-.sumo-yokozuna-label{font-size:13px;font-weight:750;color:#e9d2a0}
-@media(max-width:740px){.sumo-standings-row:has(>.sumo-photo){grid-template-columns:58px minmax(0,1fr)}.sumo-standings-ranking .sumo-move{font-size:12px;padding:4px 6px}}
-
-/* Standings: tight headshot crop and left-aligned movement with rank and measurements. */
-.sumo-standings-row>.sumo-photo{width:74px;height:74px;min-height:0;border-radius:10px;align-self:center;grid-row:1 / span 2}
-.sumo-standings-row>.sumo-photo.has-photo>img{width:100%;height:100%;object-fit:cover;object-position:center 8%;transform:scale(1.9);transform-origin:center 12%}
-.sumo-standings-row:has(>.sumo-photo){grid-template-columns:74px minmax(0,1fr);column-gap:13px}
-.sumo-standings-row:has(>.sumo-photo)>.sumo-standings-identity{grid-column:2;grid-row:1}
-.sumo-standings-row:has(>.sumo-photo)>.sumo-standings-ranking{grid-column:2;grid-row:2;align-items:flex-start;text-align:left;justify-content:flex-start;gap:6px}
-.sumo-standings-row .sumo-standings-ranking .sumo-move{align-self:flex-start;margin-left:0;margin-right:auto}
-.sumo-standings-row .sumo-standings-ranking .sumo-move-meta{align-self:flex-start;text-align:left}
-.sumo-standings-measurements{display:block;color:#e7e2d9;font-size:12px;font-weight:600;letter-spacing:.01em}
-@media(max-width:740px){
- .sumo-standings-row:has(>.sumo-photo){grid-template-columns:72px minmax(0,1fr);gap:7px 13px}
- .sumo-standings-row>.sumo-photo{width:72px;height:72px}
- .sumo-standings-row:has(>.sumo-photo)>.sumo-standings-ranking{grid-column:2;grid-row:2;flex-direction:column;align-items:flex-start;justify-content:flex-start}
- .sumo-standings-row .sumo-standings-ranking .sumo-move{align-self:flex-start}
-}
-
 /* Editorial profile snapshots and compact sourced basho history */
 .sumo-hero-peak{margin:8px 0;font-size:14px;color:var(--ink);font-weight:600}
 .sumo-hero-peak strong{font-size:17px;font-weight:850}
@@ -441,45 +375,63 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-basho-history-item strong{font-size:15px}.sumo-basho-history-item span{font-size:17px;font-weight:800}.sumo-basho-history-item small{color:#666;font-size:12px}
 .sumo-rival{display:grid;grid-template-columns:52px minmax(0,1fr) auto;align-items:center;gap:5px 12px}
 .sumo-rival-photo{grid-column:1;grid-row:1 / span 2}.sumo-rival-photo .sumo-photo{width:48px;height:48px;min-height:0;border-radius:50%;overflow:hidden}
-.sumo-rival-photo .sumo-photo.has-photo img{width:100%;height:100%;object-fit:cover;object-position:center 8%;transform:scale(1.9);transform-origin:center 12%}
+.sumo-rival-photo .sumo-photo.has-photo img{width:100%;height:100%;object-fit:cover;object-position:center 8%;transform:none}
 .sumo-rival-name{grid-column:2;grid-row:1}.sumo-rival>strong{grid-column:3;grid-row:1}.sumo-rival>small{grid-column:2 / -1;grid-row:2}
 .sumo-rival-name .sumo-flag{margin-right:6px}
 @media(max-width:650px){.sumo-basho-timeline{grid-template-columns:repeat(2,minmax(0,1fr))}.sumo-rival{grid-template-columns:42px minmax(0,1fr) auto;column-gap:8px}.sumo-rival-photo .sumo-photo{width:40px;height:40px}.sumo-rival>strong{font-size:13px}}
 
-/* Sumo mobile standings: full-height left portrait rail, preserving head and original image. */
-.sumo-standings-row{grid-template-columns:clamp(96px,23%,142px) minmax(0,1fr);grid-template-rows:auto auto;column-gap:14px;row-gap:8px;min-height:178px;padding:14px 14px 14px 0;align-items:center}
-.sumo-standings-row>.profile-icon.sumo-photo{grid-column:1;grid-row:1/-1;align-self:stretch;width:100%;height:100%;min-height:178px;max-height:none;aspect-ratio:auto;margin:0;border-radius:8px 0 0 8px;overflow:hidden;background:#f4ede3}
-.sumo-standings-row>.profile-icon.sumo-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top;transform:none}
-.sumo-standings-row>.sumo-standings-identity{grid-column:2;grid-row:1;align-self:end}
-.sumo-standings-row>.sumo-standings-ranking{grid-column:2;grid-row:2;align-self:start;align-items:flex-start;text-align:left}
-.sumo-standings-row>.sumo-standings-ranking .sumo-move{align-self:flex-start}
-.sumo-directory-current{font-size:14px;font-weight:700;color:#7f2038;margin:9px 0 0}
-@media(max-width:480px){
- .sumo-standings-row{grid-template-columns:clamp(102px,29%,150px) minmax(0,1fr);grid-template-rows:auto auto;gap:8px 12px;min-height:215px;padding:10px 10px 10px 0}
- .sumo-standings-row>.profile-icon.sumo-photo{min-height:215px;grid-column:1;grid-row:1/-1}
- .sumo-standings-row>.sumo-standings-identity{grid-column:2;grid-row:1}
- .sumo-standings-row>.sumo-standings-ranking{grid-column:2;grid-row:2;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:7px}
- .sumo-standings-row>.sumo-standings-ranking .sumo-move{align-self:flex-start;max-width:100%;white-space:normal}
- .sumo-standings-row>.sumo-standings-identity strong{font-size:clamp(19px,5.5vw,25px)}
+/* Canonical bounded profile hero: photo fills its own panel, records stay first-screen. */
+.profile-hero{
+ display:grid;grid-template-columns:minmax(280px,390px) minmax(0,1fr)!important;
+ grid-template-rows:auto auto auto;align-items:start;column-gap:24px;row-gap:12px;
+ padding:0 24px 20px 0!important;min-width:0;border-radius:10px;
+ background:#21191c;color:#fff;overflow:hidden;
 }
-
-/* Editorial edge-to-edge wrestler rail: one image column, separate information column. */
-.sumo-standings-row{position:relative;display:grid;grid-template-columns:minmax(145px,38%) minmax(0,1fr);grid-template-rows:auto auto;column-gap:16px;row-gap:8px;min-height:260px;padding:0 16px 0 0;overflow:hidden;align-items:center}
-.sumo-standings-row>.profile-icon.sumo-photo{grid-column:1;grid-row:1/-1;position:relative;inset:auto;align-self:stretch;justify-self:stretch;width:100%;height:100%;min-height:260px;max-height:none;margin:0;padding:0;aspect-ratio:auto;border:0;border-radius:0;overflow:hidden;background:#f4eee5;transform:none}
-.sumo-standings-row>.profile-icon.sumo-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;transform:none;max-width:none;max-height:none;border-radius:0}
-.sumo-standings-row>.sumo-standings-identity{grid-column:2;grid-row:1;align-self:end;min-width:0;z-index:1}
-.sumo-standings-row>.sumo-standings-ranking{grid-column:2;grid-row:2;align-self:start;min-width:0;align-items:flex-start;text-align:left;z-index:1}
-.sumo-standings-row>.sumo-standings-ranking .sumo-move{align-self:flex-start}
-@media(max-width:480px){.sumo-standings-row{grid-template-columns:minmax(135px,40%) minmax(0,1fr);min-height:285px;gap:8px 12px;padding:0 10px 0 0}.sumo-standings-row>.profile-icon.sumo-photo{min-height:285px;grid-column:1;grid-row:1/-1}.sumo-standings-row>.sumo-standings-identity{grid-column:2;grid-row:1}.sumo-standings-row>.sumo-standings-ranking{grid-column:2;grid-row:2;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:8px}.sumo-standings-row>.sumo-standings-identity strong{font-size:clamp(18px,5.5vw,25px)}}
-
-/* Profile editorial redesign: image first, full-bleed, all original details below. */
-.profile-hero{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0!important;padding:0!important;overflow:hidden;border-radius:12px}
-.profile-hero>.profile-icon.sumo-photo{grid-column:1/-1!important;grid-row:1!important;display:block;position:relative;align-self:stretch;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;aspect-ratio:3/4!important;margin:0!important;border:0!important;border-radius:0!important;overflow:hidden;background:#eee5d8}
-.profile-hero>.profile-icon.sumo-photo img{display:block;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center top!important;transform:none!important}
-.profile-hero>.profile-title{grid-column:1/-1!important;grid-row:2!important;padding:22px 24px 8px;min-width:0}
-.profile-hero>.profile-facts{grid-column:1/-1!important;grid-row:3!important;padding:12px 24px 20px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
-.profile-hero>.profile-current{grid-column:1/-1!important;grid-row:4!important;margin:0 24px 24px}
-@media(max-width:599px){.profile-hero>.profile-icon.sumo-photo{aspect-ratio:3/4!important}.profile-hero>.profile-title{padding:18px 18px 6px}.profile-hero>.profile-facts{padding:12px 18px 18px;gap:12px}.profile-hero>.profile-current{margin:0 18px 18px}}
+.profile-hero>.profile-icon.sumo-photo.xl{
+ grid-column:1;grid-row:1/span 3;align-self:stretch;width:100%!important;
+ height:100%!important;min-height:440px!important;max-height:520px!important;
+ aspect-ratio:auto!important;border:0;border-radius:0!important;
+ margin:0!important;background:#e5d9cb;overflow:hidden;
+}
+.profile-hero>.profile-icon.sumo-photo.xl img{
+ width:100%!important;height:100%!important;object-fit:cover!important;
+ object-position:center top!important;transform:none!important;
+}
+.profile-hero>.profile-title{grid-column:2;grid-row:1;padding:22px 0 0;min-width:0}
+.profile-hero>.profile-current{grid-column:2;grid-row:2;margin:0;min-width:0;padding:10px 12px}
+.profile-hero>.profile-facts{grid-column:2;grid-row:3;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.profile-hero h1{font-size:clamp(42px,5vw,58px)}
+.profile-hero .sumo-hero-rank{display:flex;align-items:center;gap:9px;margin:8px 0;font-size:18px;flex-wrap:wrap}
+.profile-hero .sumo-hero-peak{color:#f0e8df;font-size:14px;margin:3px 0 12px}
+.sumo-hero-career{display:grid;gap:2px;background:#30272b;border:1px solid #65535a;border-radius:7px;overflow:hidden}
+.sumo-hero-career>div{display:grid;grid-template-columns:minmax(0,1.3fr) 1fr 72px;align-items:center;gap:8px;padding:6px 10px}
+.sumo-hero-career>div:first-child{color:#d0bfbd;font-size:12px;border-bottom:1px solid #65535a}
+.sumo-hero-career>div:not(:first-child){font-size:14px;font-variant-numeric:tabular-nums}
+.sumo-hero-career>div:not(:first-child) b{text-align:right}
+.profile-hero .profile-current{background:transparent;border:0}
+.profile-hero .sumo-current-record{display:flex;justify-content:space-between;gap:10px}
+.profile-hero .profile-current .tag{font-size:12px}
+.profile-hero .profile-meta span{font-size:12px}
+.profile-hero .profile-meta strong{font-size:14px}
+@media(max-width:950px){
+ .profile-hero{grid-template-columns:minmax(220px,35%) minmax(0,1fr)!important;column-gap:18px}
+ .profile-hero>.profile-icon.sumo-photo.xl{min-height:400px!important;max-height:500px!important}
+ .profile-hero>.profile-title{padding-top:16px}
+}
+@media(max-width:650px){
+ .profile-hero{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto auto auto;gap:0!important;padding:0 0 15px!important}
+ .profile-hero>.profile-title{grid-column:1;grid-row:1;padding:15px 16px 8px}
+ .profile-hero>.profile-icon.sumo-photo.xl{grid-column:1;grid-row:2;width:100%!important;height:clamp(240px,72vw,320px)!important;min-height:0!important;max-height:320px!important;aspect-ratio:auto!important}
+ .profile-hero>.profile-current{grid-column:1;grid-row:3;margin:8px 16px;padding:5px}
+ .profile-hero>.profile-facts{grid-column:1;grid-row:4;margin:0 16px}
+ .profile-hero h1{font-size:clamp(35px,10vw,46px)}
+ .sumo-hero-career>div{grid-template-columns:minmax(0,1.3fr) .8fr 65px;font-size:13px}
+}
+@media(max-width:360px){
+ .sumo-hero-career>div{grid-template-columns:minmax(0,1.3fr) 70px 56px;padding:5px 6px;gap:4px}
+ .sumo-hero-career>div:not(:first-child){font-size:12px}
+ .profile-hero .profile-meta{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 
 /* Integrated approved Sumo styling from PR #214. */
 
@@ -554,7 +506,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 /* Shared approved JSA headshot framing for all compact wrestler portraits.
    Keep the XL profile hero photograph uncropped. */
 .profile-icon.sumo-photo.sumo-headshot{overflow:hidden;isolation:isolate}
-.profile-icon.sumo-photo.sumo-headshot.has-photo>img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 8%;transform:scale(1.9);transform-origin:center 12%}
+.profile-icon.sumo-photo.sumo-headshot.has-photo>img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top;transform:none}
 /* The same headshot treatment applies to standings, rankings, matchup,
    opponents directory and compact profile cards via portraitFor(). */
 
@@ -588,10 +540,196 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 }
 
 /* Preserve edge-to-edge directory portraits from #227 over the compact headshot rule. */
-.directory-card .directory-upper>.profile-icon.sumo-photo.sumo-headshot.has-photo>img{
-  transform:none;object-fit:cover;object-position:center top;
-}
+.directory-card .directory-upper>.profile-icon.sumo-photo.sumo-headshot.has-photo>img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top;transform:none}
 /* Preserve existing fullbleed standings rail in place of generic headshot crop. */
-.sumo-standings-row>.profile-icon.sumo-photo.sumo-headshot.has-photo>img{
-  transform:none;object-fit:cover;object-position:center top;
+.sumo-standings-row>.profile-icon.sumo-photo.sumo-headshot.has-photo>img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top;transform:none}
+
+
+/* Clear front page and one compact Sumo navigation. */
+.main{padding-top:16px}
+.sumo-overview-lede{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 26px;background:var(--ink);color:#fff;border-radius:9px}
+.sumo-overview-lede h1{font:900 clamp(34px,4vw,50px)/1 'Barlow Condensed',Impact,sans-serif;margin:3px 0}
+.sumo-overview-lede p{font-size:14px;margin:6px 0;color:#e4d7ce}
+.sumo-overview-lede .btn{flex:none}
+.sumo-home-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:20px}
+.sumo-home-grid .section-head{margin-top:20px}
+.sumo-home-feature{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.sumo-compact-results{display:grid;gap:6px}
+.sumo-compact-bout{display:grid;grid-template-columns:minmax(0,1fr) minmax(90px,.45fr) 54px;align-items:center;gap:12px;padding:8px 10px;background:#fff;border:1px solid var(--border);border-radius:7px}
+.sumo-compact-names{display:flex;align-items:center;gap:10px;min-width:0;font-weight:800;font-size:14px}
+.sumo-compact-names>.profile-icon.sumo-photo{width:35px;height:42px;min-height:0;flex:none;border:0}
+.sumo-compact-names .sumo-photo img{transform:none;object-position:center top}
+.sumo-compact-names small{font-weight:400;color:var(--muted)}
+.sumo-compact-result{min-width:0;font-size:13px;display:flex;flex-direction:column;line-height:1.3}
+.sumo-compact-result small{color:var(--muted)}
+.sumo-compact-bout>a{font-size:14px;font-weight:800;color:var(--red);text-align:right}
+.sumo-inline-action{display:inline-flex;font-weight:700;font-size:14px;margin:12px 0}
+.sumo-basho-views{display:flex;gap:4px;background:#21191c;padding:5px;margin:18px 0 8px;border-radius:6px}
+.sumo-basho-views button{flex:1;background:transparent;border:0;color:#fff;padding:9px 15px;border-radius:4px;min-height:44px;cursor:pointer;font-weight:750}
+.sumo-basho-views button[aria-pressed=true]{background:#f6f2ea;color:#21191c}
+.sumo-day-quick{font-size:14px;color:var(--muted);margin:14px 0 6px}
+.sumo-empty-bout{background:#fff;padding:18px;border:1px solid var(--border);font-size:14px}
+.sumo-empty-bout button{display:inline-flex;margin-left:10px}
+.sumo-snapshot-line{font-size:14px;color:var(--muted)}
+/* Directory identity should be visible without traversing an oversized image. */
+.directory-card .directory-upper>.profile-icon.sumo-photo{height:clamp(175px,21vw,235px);aspect-ratio:auto;max-height:235px}
+.directory-card .directory-upper>.profile-icon.sumo-photo>img{object-position:center top}
+.directory-card .sumo-directory-identity{padding:11px 14px 13px}
+.directory-card .sumo-directory-identity h3{font-size:clamp(21px,2.2vw,27px);line-height:1;margin:0 0 5px}
+.directory-card .sumo-directory-identity small{font-size:14px}
+.directory-card .directory-lower{padding:10px 14px}
+.directory-card .sumo-directory-facts{font-size:13px;margin:6px 0}
+.directory-card .directory-lower .cta{font-size:13px;padding-top:8px}
+.sumo-empty-search{padding:12px 16px;background:#fff;border:1px solid var(--border)}
+/* Banzuke: aligned rank/person/previous/movement/current record. */
+.sumo-rank-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:0;background:#fff;border:1px solid var(--border)}
+.sumo-rank-table-head,.sumo-rank-card{display:grid;grid-template-columns:minmax(130px,.95fr) minmax(180px,1.4fr) minmax(125px,1fr) minmax(125px,1fr) minmax(105px,1fr);gap:10px;align-items:center;padding:10px 14px}
+.sumo-rank-table-head{background:#21191c;color:#fff;font-size:13px;font-weight:800}
+.sumo-rank-card{border:0;border-bottom:1px solid var(--border);border-radius:0;min-height:72px;box-shadow:none}
+.sumo-rank-card:last-child{border-bottom:0}
+.sumo-rank-published strong{font-weight:800;font-size:14px}
+.sumo-rank-person{display:flex;align-items:center;gap:10px;min-width:0}
+.sumo-rank-person>.profile-icon.sumo-photo{width:46px;height:55px;min-height:0;border-radius:4px;flex:none}
+.sumo-rank-person a{font:800 21px/1 'Barlow Condensed',Impact,sans-serif}
+.sumo-rank-person small{display:block;font-size:12px;color:var(--muted)}
+.sumo-rank-prior{font-size:13px}.sumo-rank-prior span{display:none}.sumo-rank-prior strong{font-weight:600}
+.sumo-rank-movement .sumo-move{font-size:12px;white-space:normal}
+.sumo-rank-record{font-size:13px;font-weight:750;font-variant-numeric:tabular-nums}
+.sumo-move.same{background:transparent!important;color:var(--muted)!important;border:1px solid var(--border)}
+.sumo-move.unavailable{background:transparent;color:var(--muted)}
+/* Profile subsections and compact recent form. */
+.sumo-section-nav{justify-content:flex-start;gap:8px;flex-wrap:wrap}
+.sumo-section-nav a{font-size:15px;min-height:44px}
+.sumo-profile-more{position:relative;margin-left:auto;min-height:44px}
+.sumo-profile-more summary{list-style:none;cursor:pointer;padding:9px 14px;font-size:14px;font-weight:750}
+.sumo-profile-more[open]>a{display:block;background:#fff;color:#84243a!important;padding:9px 14px;position:relative;z-index:4}
+.sumo-recent-strip{margin:14px 0}
+.sumo-recent-strip h2{font:800 24px/1.1 'Barlow Condensed',Impact,sans-serif;margin:0 0 3px}
+.sumo-recent-list{display:grid;grid-template-columns:1fr;gap:4px}
+.sumo-recent-list a{display:grid;grid-template-columns:37px minmax(80px,1.2fr) minmax(110px,1fr) minmax(110px,1fr);gap:10px;align-items:center;background:#fff;border:1px solid var(--border);border-radius:5px;padding:7px 10px;color:var(--ink);text-decoration:none;font-size:13px;min-height:48px}
+.sumo-recent-outcome{border-radius:4px;padding:3px;font-size:14px;font-weight:850;text-align:center;background:#eee}
+.sumo-recent-list a.win .sumo-recent-outcome{background:#e1f4e8;color:#17664f}
+.sumo-recent-list a.loss .sumo-recent-outcome{background:#f9e1e4;color:#84243a}
+.sumo-recent-person{font-weight:750}
+.sumo-data-coverage{background:#fff;padding:10px 14px;margin:15px 0;border:1px solid var(--border);border-radius:6px;font-size:14px}
+.sumo-data-coverage summary{font-weight:750;cursor:pointer;min-height:32px}
+.sumo-kimarite-bar{display:grid;grid-template-columns:120px minmax(0,1fr) 68px;gap:9px;align-items:center;margin:9px 0;font-size:13px}
+.sumo-kimarite-bar strong{text-align:right}
+.sumo-kimarite-panel>p{font-size:14px}
+.sumo-kimarite-panel .bar-bg{height:12px;background:#eee;border-radius:10px;overflow:hidden}
+.sumo-kimarite-panel .bar-bg>div{height:100%;background:#84243a}
+.sumo-h2h-hero .sumo-bio-line{font-size:13px}
+.sumo-h2h-hero .sumo-photo img{transform:none!important;object-position:center top}
+.sumo-h2h-score>small:not(:last-child){display:none}
+.sumo-h2h-comparison{margin:14px 0}
+.sumo-h2h-bout .sumo-h2h-winner{color:#21191c!important;background:transparent!important}
+.technical-terms .term{scroll-margin-top:80px}
+@media(max-width:900px){
+ .sumo-home-grid{grid-template-columns:minmax(0,1fr)}
+ .sumo-home-feature{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .sumo-rank-table-head{display:none}
+ .sumo-rank-card{grid-template-columns:minmax(0,1.2fr) minmax(0,1.5fr);gap:6px;padding:10px}
+ .sumo-rank-prior span{display:inline;margin-right:4px}
+ .sumo-rank-movement,.sumo-rank-record{grid-column:2}
+}
+@media(max-width:600px){
+ .sumo-overview-lede{display:block;padding:18px}
+ .sumo-home-feature{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .sumo-compact-bout{grid-template-columns:minmax(0,1fr) 57px;gap:6px}
+ .sumo-compact-names{font-size:13px;flex-wrap:wrap}
+ .sumo-compact-result{grid-column:1;grid-row:2}
+ .sumo-compact-bout>a{grid-column:2;grid-row:1/span 2}
+ .sumo-recent-list a{grid-template-columns:32px minmax(0,1fr);gap:4px 9px}
+ .sumo-recent-list a>span:nth-child(3),.sumo-recent-list a>strong{grid-column:2}
+ .sumo-section-nav{display:flex;overflow-x:auto;flex-wrap:nowrap}
+ .sumo-section-nav a{white-space:nowrap;padding-inline:9px}
+ .sumo-profile-more{min-width:70px}
+ .sumo-section-menu{display:none}
+ .sumo-rank-card{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ .sumo-rank-published{grid-column:1}
+ .sumo-rank-person{grid-column:1/-1;grid-row:2}
+ .sumo-rank-prior{grid-column:2;grid-row:1}
+ .sumo-rank-movement{grid-column:1}
+ .sumo-rank-record{grid-column:2}
+}
+
+/* Single specialist navigation; global BEFN destinations remain in a disclosure. */
+.masthead-inner{display:flex;align-items:center;justify-content:space-between}
+.header-right{display:flex;align-items:center;justify-content:flex-end;gap:12px}
+.befn-site-menu{position:relative;z-index:50}
+.befn-site-menu summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:6px;border:1px solid #716166;border-radius:6px;color:#fff;font-size:13px;font-weight:750;padding:9px 11px;min-height:44px}
+.befn-site-menu summary:after{content:"▾"}
+.befn-site-menu[open] summary:after{content:"▴"}
+.befn-site-menu nav{position:absolute;top:calc(100% + 6px);right:0;display:grid;width:min(250px,calc(100vw - 32px));padding:6px;background:#21191c;border:1px solid #7a636c;border-radius:7px;box-shadow:0 12px 28px #110a0c55}
+.befn-site-menu nav a{padding:9px 12px;color:#fff7ea;text-decoration:none;font-size:14px;font-weight:650;min-height:42px}
+.befn-site-menu nav a:hover,.befn-site-menu nav a:focus-visible{background:#84243a}
+.befn-back{font-size:13px;white-space:nowrap}
+.subnav-inner{display:flex;align-items:center;gap:4px;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:thin}
+.subnav a{white-space:nowrap;min-height:44px;display:flex;align-items:center}
+.subnav{position:relative;z-index:10}
+.sumo-ed-extra{padding:0 12px;background:transparent}
+.sumo-ed-extra summary{min-height:42px;padding:6px 5px}
+.sumo-tech-more{border-top:1px solid var(--border);margin:8px 0;padding:10px 0}
+.sumo-tech-more summary{font-size:14px;font-weight:800;cursor:pointer;min-height:44px}
+.sumo-tech-more .chart-row{margin:10px 0}
+@media(max-width:690px){
+ .header-right{gap:6px}
+ .befn-back{display:none}
+ .preview-chip{display:none}
+ .befn-site-menu summary{font-size:13px;padding-inline:8px}
+ .subnav-inner{padding-inline:12px}
+}
+
+/* F01: first-screen paths to results and full licensed source photograph. */
+.sumo-hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:12px}
+.sumo-hero-actions a{display:inline-flex;align-items:center;min-height:40px;padding:7px 12px;border:1px solid #ad9184;border-radius:5px;color:#fff;font-size:13px;font-weight:800;text-decoration:none}
+.sumo-hero-actions .sumo-quick-results{background:#d3aa46;color:#21191c;border-color:#d3aa46}
+.sumo-hero-actions a:hover{text-decoration:underline}
+.sumo-hero-actions a:focus-visible{outline:3px solid #d3aa46;outline-offset:3px}
+/* F15: opt-in density for visitors scanning a full 190-rikishi directory. */
+.sumo-directory-layout{display:flex;gap:6px;justify-content:flex-end;margin:8px 0 12px}
+.sumo-directory-layout button{min-height:44px;padding:8px 12px;font-size:14px;font-weight:750;border-radius:5px;border:1px solid var(--border);background:#fff;color:#21191c;cursor:pointer}
+.sumo-directory-layout button[aria-pressed=true]{background:#21191c;color:#fff}
+.directory-grid.is-list{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:6px!important}
+.directory-grid.is-list .directory-card{display:grid!important;grid-template-columns:92px minmax(0,1fr) minmax(120px,.6fr)!important;align-items:center!important;gap:14px!important;min-height:100px!important;border-radius:7px;padding:4px 16px 4px 4px}
+.directory-grid.is-list .directory-upper{display:contents!important}
+.directory-grid.is-list .directory-upper>.sumo-flag-backdrop{display:none!important}
+.directory-grid.is-list .directory-upper>.profile-icon.sumo-photo{grid-column:1;grid-row:1;height:92px!important;min-height:0!important;max-height:92px!important;width:88px!important;border-radius:5px!important;align-self:center}
+.directory-grid.is-list .sumo-directory-identity{grid-column:2;grid-row:1;padding:0!important;min-width:0}
+.directory-grid.is-list .directory-lower{grid-column:3;grid-row:1;min-width:0;padding:0!important;background:transparent}
+.directory-grid.is-list .directory-lower .detail{font-size:13px}
+.directory-grid.is-list .sumo-directory-facts{font-size:13px}
+.directory-grid.is-list .directory-lower .cta{font-size:12px}
+@media(max-width:550px){
+ .directory-grid.is-list .directory-card{grid-template-columns:62px minmax(0,1fr)!important;gap:4px 11px;min-height:85px!important;padding:6px}
+ .directory-grid.is-list .directory-upper>.profile-icon.sumo-photo{width:62px!important;height:78px!important;max-height:78px!important;grid-row:1/span 2}
+ .directory-grid.is-list .sumo-directory-identity{grid-column:2;grid-row:1}
+ .directory-grid.is-list .directory-lower{grid-column:2;grid-row:2}
+ .directory-grid.is-list .directory-lower .cta{display:none}
+ .sumo-hero-actions{margin-top:9px}
+}
+/* F02: four clear mobile destinations, never an undiscoverable clipped navigation row. */
+.sumo-mobile-more{display:none}
+@media(max-width:680px){
+ .subnav-inner{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;padding:0 9px;overflow:visible}
+ .subnav-inner>a[href="#banzuke"],.subnav-inner>a[href="#kimarite"]{display:none!important}
+ .subnav-inner>a,.sumo-mobile-more>summary{justify-content:center;text-align:center;padding:8px 3px;font-size:12px;white-space:nowrap;min-width:0;min-height:44px}
+ .sumo-mobile-more{display:block;position:relative;z-index:40;color:#fff;min-width:0}
+ .sumo-mobile-more>summary{display:flex;align-items:center;cursor:pointer;list-style:none;font-weight:850;letter-spacing:.04em;text-transform:uppercase}
+ .sumo-mobile-more>summary:after{content:" ▾";margin-left:3px}
+ .sumo-mobile-more[open]>summary:after{content:" ▴"}
+ .sumo-mobile-more-links{position:absolute;top:100%;right:0;min-width:180px;display:grid;padding:5px;background:#21191c;border:1px solid #79676a;box-shadow:0 10px 20px #110a0c55;z-index:80}
+ .sumo-mobile-more-links>a{padding:12px 10px;color:#fff;white-space:nowrap;text-decoration:none;font-size:14px;font-weight:750}
+ .sumo-mobile-more-links>a:focus-visible,.sumo-mobile-more-links>a:hover{background:#84243a}
+}
+
+/* Final 320px screenshot correction: use short labels, not overlapping text. */
+.sumo-mobile-label{display:none}
+@media(max-width:680px){
+  .sumo-desktop-label{display:none}
+  .sumo-mobile-label{display:inline}
+  .subnav-inner{grid-template-columns:1.1fr .82fr .82fr .8fr}
+}
+@media(max-width:350px){
+  .subnav-inner>a,.sumo-mobile-more>summary{font-size:11px;letter-spacing:0}
 }

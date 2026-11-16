@@ -14,9 +14,9 @@
   <link rel="stylesheet" href="assets/global-sport-v1.0.3.css?v=103b">
   <link rel="stylesheet" href="assets/sumo.css?v=20261115-career-h2h2">
   <link rel="stylesheet" href="assets/sumo-nav.css?v=20261114-sumo-preview">
-  <link rel="stylesheet" href="assets/sumo-editorial.css?v=20261116-reconciled-sumo">
-  <link rel="stylesheet" href="assets/sumo-daily.css?v=20261116-daily-faceoff">
-  <script type="module" src="assets/sumo.js?v=20261116-reconciled-sumo"></script>
+  <link rel="stylesheet" href="assets/sumo-editorial.css?v=20261116-ux-refinement">
+  <link rel="stylesheet" href="assets/sumo-daily.css?v=20261116-ux-refinement">
+  <script type="module" src="assets/sumo.js?v=20261116-ux-refinement"></script>
 </head>
 <body>
   <a class="skip" href="#sumo-main">Skip to content</a>
@@ -27,36 +27,25 @@
         <img src="assets/app-icon-source.webp" width="58" height="58" alt="">
         <span><strong>BLACK EYE</strong><strong>FIGHT NEWS</strong><small>RESULTS · RANKINGS · FIGHTERS</small></span>
       </a>
-      <div class="header-right"><span class="preview-chip">TEST BRANCH · PREVIEW</span><a href="index.html#home">BACK TO BEFN</a></div>
+      <div class="header-right"><span class="preview-chip">TEST BRANCH · PREVIEW</span>
+        <details class="befn-site-menu"><summary>Explore BEFN</summary><nav aria-label="Other BEFN sections">
+          <a href="index.html#home">News</a><a href="index.html#champions">Champions</a>
+          <a href="index.html#fighters">Fighter Scout</a><a href="index.html#leaderboards">UFC Stats</a>
+          <a href="index.html#fights">Fights</a><a href="index.html#highlights">Fight Film</a>
+          <a href="sumo.html" aria-current="page">Sumo</a></nav></details>
+        <a class="befn-back" href="index.html#home">BEFN home</a></div>
     </div>
   </header>
-  <nav class="site-nav" aria-label="BEFN primary navigation">
-    <div class="frame primary-links">
-      <a href="index.html#home">News</a><a href="index.html#champions">Champions</a>
-      <a href="index.html#fighters">Fighter Scout</a><a href="index.html#leaderboards">UFC Stats</a>
-      <a href="index.html#fights">Fights</a><a href="index.html#highlights">Fight Film</a>
-      <a href="sumo.html" class="selected" aria-current="page">Sumo</a>
-    </div>
-  </nav>
-  <details class="mobile-site-menu"><summary>BEFN menu · all sections</summary>
-    <nav aria-label="Mobile primary navigation"><a href="index.html#home">News</a><a href="index.html#champions">Champions</a><a href="index.html#fighters">Fighter Scout</a><a href="index.html#leaderboards">UFC Stats</a><a href="index.html#fights">Fights</a><a href="index.html#highlights">Fight Film</a><a href="sumo.html" aria-current="page">Sumo</a></nav>
-  </details>
-  <section class="befn-global-sports" aria-label="Combat sports">
-    <div class="befn-global-sports-inner">
-      <a class="befn-sport-all" href="index.html#home">ALL SPORTS</a>
-      <a class="befn-sport-option" data-sport-value="boxing" href="index.html#fights" aria-label="Boxing" title="Boxing"><span class="sport-photo-visual" aria-hidden="true"></span></a>
-      <a class="befn-sport-option" data-sport-value="mma" href="index.html#fights" aria-label="MMA" title="MMA"><span class="sport-photo-visual" aria-hidden="true"></span></a>
-      <a class="befn-sport-option" data-sport-value="grappling" href="index.html#fights" aria-label="Grappling and wrestling" title="Grappling and wrestling"><span class="sport-photo-visual" aria-hidden="true"></span></a>
-      <a class="befn-sport-option befn-sumo-link" href="sumo.html" aria-current="page" aria-label="Sumo" title="Sumo"><span aria-hidden="true">相</span></a>
-    </div>
-  </section>
   <div class="subnav"><nav class="frame subnav-inner" aria-label="Sumo pages">
     <a href="#home" data-page="home">Overview</a>
+    <a href="#basho" data-page="basho"><span class="sumo-desktop-label">Basho Centre</span><span class="sumo-mobile-label">Basho</span></a>
     <a href="#rikishi" data-page="rikishi">Rikishi</a>
-    <a href="#basho" data-page="basho">Basho Centre</a>
-    <a href="#matchups" data-page="matchups">Today’s Matchups</a>
     <a href="#banzuke" data-page="banzuke">Banzuke</a>
     <a href="#kimarite" data-page="kimarite">Kimarite</a>
+    <details class="sumo-mobile-more"><summary>More</summary><div class="sumo-mobile-more-links">
+      <a href="#banzuke" data-page="banzuke">Banzuke rankings</a>
+      <a href="#kimarite" data-page="kimarite">Kimarite guide</a>
+    </div></details>
   </nav></div>
   <main id="sumo-main" class="frame main" tabindex="-1" aria-live="polite">
     <div class="loading">Loading tracked wrestler profiles and tournament data…</div>
