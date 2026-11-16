@@ -652,3 +652,30 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .sumo-rank-movement{grid-column:1}
  .sumo-rank-record{grid-column:2}
 }
+
+/* Single specialist navigation; global BEFN destinations remain in a disclosure. */
+.masthead-inner{display:flex;align-items:center;justify-content:space-between}
+.header-right{display:flex;align-items:center;justify-content:flex-end;gap:12px}
+.befn-site-menu{position:relative;z-index:50}
+.befn-site-menu summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:6px;border:1px solid #716166;border-radius:6px;color:#fff;font-size:13px;font-weight:750;padding:9px 11px;min-height:44px}
+.befn-site-menu summary:after{content:"▾"}
+.befn-site-menu[open] summary:after{content:"▴"}
+.befn-site-menu nav{position:absolute;top:calc(100% + 6px);right:0;display:grid;width:min(250px,calc(100vw - 32px));padding:6px;background:#21191c;border:1px solid #7a636c;border-radius:7px;box-shadow:0 12px 28px #110a0c55}
+.befn-site-menu nav a{padding:9px 12px;color:#fff7ea;text-decoration:none;font-size:14px;font-weight:650;min-height:42px}
+.befn-site-menu nav a:hover,.befn-site-menu nav a:focus-visible{background:#84243a}
+.befn-back{font-size:13px;white-space:nowrap}
+.subnav-inner{display:flex;align-items:center;gap:4px;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:thin}
+.subnav a{white-space:nowrap;min-height:44px;display:flex;align-items:center}
+.subnav{position:relative;z-index:10}
+.sumo-ed-extra{padding:0 12px;background:transparent}
+.sumo-ed-extra summary{min-height:42px;padding:6px 5px}
+.sumo-tech-more{border-top:1px solid var(--border);margin:8px 0;padding:10px 0}
+.sumo-tech-more summary{font-size:14px;font-weight:800;cursor:pointer;min-height:44px}
+.sumo-tech-more .chart-row{margin:10px 0}
+@media(max-width:690px){
+ .header-right{gap:6px}
+ .befn-back{display:none}
+ .preview-chip{display:none}
+ .befn-site-menu summary{font-size:13px;padding-inline:8px}
+ .subnav-inner{padding-inline:12px}
+}
