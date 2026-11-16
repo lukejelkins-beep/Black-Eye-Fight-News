@@ -45,14 +45,19 @@ export function setKimariteMediaManifest(data){
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const kimariteSlug=s=>String(s||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
 if(GROUPS.some((g,i)=>g.items.length!==JP_BY_GROUP[i].length))throw new Error('JSA technique label count mismatch');
-export const KIMARITE_GROUPS = GROUPS.map((g,groupIndex)=>({...g,items:g.items.map(([name,english],i)=>({name,english,japanese:JP_BY_GROUP[groupIndex][i],slug:kimariteSlug(name),group:g.id}))}));
-export const KIMARITE = KIMARITE_GROUPS.flatMap(g=>g.items).map((item,index)=>({
- ...item,
- jsaId:index+1,
- jsaPoster:'assets/sumo-kimarite/jsa/kimarite_'+String(index+1).padStart(2,'0')+'.jpg',
- jsaRemote:'https://www.sumo.or.jp/img/kimarite/kimarite_'+String(index+1).padStart(2,'0')+'.jpg',
- jsaDetail:'https://sumo.or.jp/Kimarite/detail/'+(index+1)+'/'
-}));
+// Every gallery item and detail lookup must reference the SAME fully-enriched
+// technique record. Previously only the flat list had jsaPoster, so cards
+// rendered src="?v=..." (the HTML page URL) instead of the JSA JPEG.
+const JSA_OFFSETS=GROUPS.map((_,index)=>GROUPS.slice(0,index).reduce((sum,g)=>sum+g.items.length,0));
+export const KIMARITE_GROUPS = GROUPS.map((g,groupIndex)=>({...g,items:g.items.map(([name,english],i)=>{
+ const jsaId=JSA_OFFSETS[groupIndex]+i+1;
+ const photo='kimarite_'+String(jsaId).padStart(2,'0')+'.jpg';
+ return {name,english,japanese:JP_BY_GROUP[groupIndex][i],slug:kimariteSlug(name),group:g.id,
+   jsaId,jsaPoster:'assets/sumo-kimarite/jsa/'+photo,
+   jsaRemote:'https://www.sumo.or.jp/img/kimarite/'+photo,
+   jsaDetail:'https://sumo.or.jp/Kimarite/detail/'+jsaId+'/'};
+})}));
+export const KIMARITE = KIMARITE_GROUPS.flatMap(g=>g.items);
 const bySlug = new Map(KIMARITE.map(x=>[x.slug,x]));
 export const lookupKimarite=s=>bySlug.get(kimariteSlug(s));
 const groupFor=item=>KIMARITE_GROUPS.find(x=>x.id===item.group);
