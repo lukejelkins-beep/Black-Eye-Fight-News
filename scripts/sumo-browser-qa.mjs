@@ -145,6 +145,41 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   }
   assert.ok(heroMeasurements.imageHeight<=(isMobile?321:521),
     'Approved portrait is bounded rather than full-page: '+JSON.stringify(heroMeasurements));
+  const heroInfoCheck=await page.locator('.profile-hero').evaluate(hero=>{
+    const photo=hero.querySelector(':scope>.profile-icon.sumo-photo.xl');
+    const overlay=hero.querySelector(':scope>.sumo-flag-backdrop');
+    const title=hero.querySelector(':scope>.profile-title');
+    const rank=hero.querySelector('.sumo-hero-rank');
+    const country=hero.querySelector('.sumo-hero-country');
+    const height=[...hero.querySelectorAll('.profile-facts>div')]
+      .find(el=>el.querySelector('span')?.textContent==='Height');
+    const image=photo?.getBoundingClientRect(),flag=overlay?.getBoundingClientRect();
+    const intersect=flag&&image?Math.max(0,Math.min(flag.right,image.right)-Math.max(flag.left,image.left))*
+      Math.max(0,Math.min(flag.bottom,image.bottom)-Math.max(flag.top,image.top)):Infinity;
+    return {
+      height:height?.querySelector('strong')?.textContent,
+      rankText:rank?.textContent,
+      emojiInRank:!!rank?.querySelector('.sumo-country-emoji'),
+      country:country?.textContent,
+      flagExists:!!overlay,
+      flagUrl:overlay?getComputedStyle(overlay,'::before').backgroundImage:null,
+      flagOpacity:overlay?Number(getComputedStyle(overlay).opacity):null,
+      flagFontSize:overlay?getComputedStyle(overlay).fontSize:null,
+      photoOverlapArea:intersect,
+      titleAboveFlag:!!(overlay&&title&&Number(getComputedStyle(title).zIndex)>Number(getComputedStyle(overlay).zIndex)),
+      viewport:document.documentElement.clientWidth
+    };
+  });
+  assert.equal(heroInfoCheck.height,'190 cm · 6′3″',
+    'Profile hero shows source centimetres and nearest feet/inches');
+  assert.equal(heroInfoCheck.emojiInRank,false,'Hero flag emoji removed from rank line');
+  assert.equal(heroInfoCheck.country,'Japan','Country remains readable as plain text');
+  assert.ok(heroInfoCheck.flagExists&&heroInfoCheck.flagUrl!=='none'&&
+    heroInfoCheck.flagOpacity>0&&heroInfoCheck.flagOpacity<=.2&&heroInfoCheck.flagFontSize==='0px',
+    'Country flag is a subtle decorative image without visible emoji: '+JSON.stringify(heroInfoCheck));
+  assert.ok(heroInfoCheck.photoOverlapArea<=3,
+    'Hero flag does not overlap the wrestler photograph: '+JSON.stringify(heroInfoCheck));
+  assert.ok(heroInfoCheck.titleAboveFlag,'Hero text stays above faded flag image');
   assertContains(profile,'Yokozuna','rank');
   assertContains(profile,'Winning techniques','techniques');
   assertContains(profile,'Results','canonical results');
