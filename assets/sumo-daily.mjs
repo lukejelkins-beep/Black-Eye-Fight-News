@@ -43,6 +43,8 @@ export function dailyRecentMeetings(history,a,b,limit=5) {
 }
 export function dailyDefaultDay({today=null,lastCompleted=0,announced=null,hasAnnounced=false}={}) {
   const valid=value=>Number.isInteger(value)&&value>=1&&value<=15;
+  // Published next-day torikumi takes priority over today's completed bouts.
+  if(hasAnnounced&&valid(announced)&&(!valid(today)||announced>today))return announced;
   if(valid(today))return today;
   if(hasAnnounced&&valid(announced))return announced;
   return valid(lastCompleted)?lastCompleted:1;
