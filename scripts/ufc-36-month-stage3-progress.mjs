@@ -243,7 +243,7 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
    ext.certificationStandard==='ufcalendar_first')&&
    matchesRevisedOfficialCareer(profile,rows,ext,snapshot,evidenceCutoff);
  const independentlyVerified=Boolean(rosterLatestPresent&&
-   ((checked&&!unresolvedIdentityConflicts)||semanticCertified));
+   !unresolvedIdentityConflicts&&(checked||semanticCertified));
  return {providerCertified,independentlyVerified,legacyClaim,
    explicitUntruncated:providerFlag,providerDiscrepancy,
    unresolvedIdentityConflicts,rosterLatestPresent,
