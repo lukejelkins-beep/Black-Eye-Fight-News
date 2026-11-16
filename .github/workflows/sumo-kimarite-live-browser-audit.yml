@@ -1,0 +1,31 @@
+name: Sumo — live iPhone kimarite image rendering audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [feat/sumo-section-test-20261114]
+    paths:
+      - .github/workflows/sumo-kimarite-live-browser-audit.yml
+permissions:
+  contents: read
+jobs:
+  mobile-browser-photos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install test-only browser engines
+        run: |
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium webkit
+      - name: Verify public JSA images actually render at mobile viewport sizes
+        run: node scripts/sumo-kimarite-live-browser-audit.mjs
+      - name: Preserve browser screenshots and response records
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sumo-kimarite-live-browser-image-qa
+          path: qa/sumo-previews/kimarite-live-*
+          retention-days: 7
