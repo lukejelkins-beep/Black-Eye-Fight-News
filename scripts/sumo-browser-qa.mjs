@@ -459,6 +459,21 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.locator('[data-h2h-order="oldest"]').click();
   assertContains(await page.locator('.sumo-h2h-order+ol li').first().innerText(),'November 2025','chronological oldest-first sort');
 
+  // Career H2H is a comparison of each wrestler's highest sourced division,
+  // not the default Makushita record in the earlier preview.
+  await open(page,'headtohead/19/7','.sumo-h2h-hero');
+  const careerLabels=await page.locator('.sumo-h2h-comparison .sumo-comparison-row>span').allInnerTexts();
+  assert.ok(careerLabels.includes('Makuuchi W–L')&&careerLabels.includes('Makuuchi win %'),
+    'Hoshoryu versus Kirishima shows top-division Makuuchi records in both rows: '+JSON.stringify(careerLabels));
+  assert.ok(!careerLabels.some(label=>label.includes('Makushita')),
+    'Career H2H does not default to older Makushita results');
+  const divisionCells=await page.locator('.sumo-h2h-comparison .sumo-comparison-row')
+    .filter({has:page.locator('span:text-is("Makuuchi W–L")')})
+    .first().locator('strong').allInnerTexts();
+  assert.equal(divisionCells.length,2,'Career H2H shows two Makuuchi W–L entries');
+  assert.ok(divisionCells.every(value=>/^\d+–\d+$/.test(value)),
+    'Both Makuuchi records are nonempty sourced numeric W–L entries: '+JSON.stringify(divisionCells));
+
   // All tracked rikishi should expose current banzuke opponent histories even
   // without individually fetched lifetime stats or 18-bout enrichment.
   await open(page,'profile/2','.profile-hero');
