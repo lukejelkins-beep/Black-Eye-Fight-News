@@ -563,11 +563,15 @@ function recentBashoTimeline(w){
   const history=STATE.careerHistory?.bySourceId?.[String(w.sourceId)]?.rank||[];
   const rows=history.filter(x=>x&&x.basho&&x.rank).slice().sort((a,b)=>String(b.basho).localeCompare(String(a.basho))).slice(0,6);
   if(!rows.length)return '<p class="missing">Historical rankings not available in the current cache.</p>';
-  return '<div class="sumo-basho-timeline">'+rows.map(row=>{
+  return '<div class="sumo-basho-timeline">'+rows.map((row,index)=>{
+    const older=rows[index+1];
+    const direction=older?rankDirection(older.rank,row.rank):'same';
+    const cls=direction==='up'?' is-promotion':direction==='down'?' is-demotion':'';
+    const movement=direction==='up'?'Promotion':direction==='down'?'Demotion':older?'Unchanged':'Latest recorded rank';
     const bouts=profileBouts(w).filter(x=>String(x.bashoId)===String(row.basho));
-    const wins=bouts.filter(x=>x.outcome==='win').length,losses=bouts.filter(x=>x.outcome==='loss').length;
-    const full=bouts.filter(x=>x.outcome==='win'||x.outcome==='loss').length===15;
-    return '<div class="sumo-basho-history-item"><strong>'+e(bashoLabel(row.basho))+'</strong><span>'+e(row.rank)+'</span><small>'+(full?e(wins+' W · '+losses+' L'):'Rank sourced · full result not verified')+'</small></div>';
+    const completed=bouts.filter(x=>x.outcome==='win'||x.outcome==='loss');
+    const record=completed.length===15?'<small>'+e(completed.filter(x=>x.outcome==='win').length+' W · '+completed.filter(x=>x.outcome==='loss').length+' L')+'</small>':'';
+    return '<div class="sumo-basho-history-item'+cls+'" aria-label="'+e(bashoLabel(row.basho)+' · '+row.rank+' · '+movement)+'"><strong>'+e(bashoLabel(row.basho))+'</strong><span>'+e(row.rank)+'</span>'+record+'</div>';
   }).join('')+'</div>';
 }
 function lastFiveStrip(w){
