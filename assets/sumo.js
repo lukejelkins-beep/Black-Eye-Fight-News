@@ -294,11 +294,11 @@ function renderHome() {
     sourceFooter();
 }
 function directoryFacts(w){
-  const measurements=weightHeight(w),age=ageInJapan(w.birthDate,STATE.roster?.collectedAt?new Date(STATE.roster.collectedAt):new Date()),stats=detailStats(w);
+  const measurements=weightHeight(w),age=ageInJapan(w.birthDate),stats=detailStats(w);
   const record=Number.isInteger(stats?.totalWins)&&Number.isInteger(stats?.totalLosses)
     ?stats.totalWins+'–'+stats.totalLosses:'Not available';
   return '<div class="sumo-directory-facts"><span>Peak: <b>'+e(knownHigh(w)||'Not available')+'</b></span>'+
-    '<span>Age at snapshot: <b>'+e(age===null?'Not available':age)+'</b></span>'+
+    '<span>Age: <b>'+e(age===null?'Not available':age)+'</b></span>'+
     '<span>Height: <b>'+e(measurements.h==='—'?'Not available':measurements.h)+'</b></span>'+
     '<span>Weight: <b>'+e(measurements.mass==='—'?'Not available':measurements.mass)+'</b></span>'+
     '<span>Career W–L: <b>'+e(record)+'</b></span></div>';
@@ -557,7 +557,7 @@ function renderProfile(id) {
   const w=wrestler(id);
   if(!w)return '<a class="back-link" href="#rikishi">← All rikishi</a>'+note('Wrestler not in the tracked snapshot.');
   const item=entryFor(w),r=item?recordSummary(item.record,divisionOf(w.currentRank)):null,s=detailStats(w);
-  const current=weightHeight(w),age=ageInJapan(w.birthDate,STATE.roster?.collectedAt?new Date(STATE.roster.collectedAt):new Date());
+  const current=weightHeight(w),age=ageInJapan(w.birthDate);
   const officialId=Number(w.officialNskId);
   const officialLink=Number.isSafeInteger(officialId)&&officialId>0?
     'https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+officialId+'/':JSA_URL;
@@ -581,7 +581,7 @@ function renderProfile(id) {
     '<div class="profile-title"><div class="eyebrow">BEFN SUMO · '+e(divisionOf(w.currentRank))+'</div>'+
     '<h1>'+e(w.shikonaEn)+'</h1><div class="jp">'+e(w.shikonaJp||'')+'</div>'+
     flagMark(w)+'<div class="hero-rank">'+e(w.currentRank||'Rank not available')+' · '+movementMarkup(w)+'</div>'+
-    '</div><div class="profile-facts profile-meta">'+fact('Stable',w.heya)+fact('Age at snapshot',age===null?'Not available':age+' years')+
+    '</div><div class="profile-facts profile-meta">'+fact('Stable',w.heya)+fact('Age',age===null?'Not available':age+' years')+
     fact('Height',current.h==='—'?'Not available':current.h,current.heightSource+(current.heightUnderReview?' · under source/date review':''))+fact('Weight · undated',current.mass==='—'?'Not available':current.mass,current.weightSource+(current.underReview?' · under source/date review':''))+'</div>'+
     '<div class="profile-current"><span class="tag">'+e(bashoLabel(details().bashoId))+' · CURRENT BASHO</span>'+
     currentBlock+'<p>Cached tournament snapshot, not live. '+(divisionOf(w.currentRank)==='Makushita'?'Makushita non-bout days are not absences.':'Scheduled pairings appear only when confirmed in published torikumi.')+'</p></div></section>'+
