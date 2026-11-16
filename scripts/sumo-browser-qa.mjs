@@ -105,7 +105,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   const history=await page.locator('#sumo-main').innerText();
   assertContains(history,'Career head-to-head','dedicated H2H view');
   assertContains(history,'1–5','source-confirmed all-time series');
-  assert.equal(await page.locator('.sumo-h2h-hero+.section-head').count(),1,'Head-to-head history heading shown');
+  assert.equal(await page.locator('.section-head').filter({hasText:'Every historical meeting'}).count(),1,'Head-to-head history heading shown after kimarite charts');
   assert.equal(await page.locator('.sumo-h2h-order+ol li').count(),6,'Every source-confirmed bout is shown');
   assertContains(history,'Tsukiotoshi','actual kimarite recorded');
   assertContains(history,'not independently bout-certified','history is not mislabeled as certified');
