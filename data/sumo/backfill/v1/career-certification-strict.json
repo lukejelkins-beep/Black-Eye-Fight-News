@@ -3,8 +3,8 @@
   "scope": "Research-only canonical career-result verification decision register",
   "cohortSize": 190,
   "strictAuditSuccessful": true,
-  "strictCareerResultsCertified": 184,
-  "blocked": 6,
+  "strictCareerResultsCertified": 185,
+  "blocked": 5,
   "confirmedNumberedRankAbsentAtDebut": 9,
   "fullProfilesCertified": 0,
   "productionApproved": false,
@@ -2962,28 +2962,30 @@
     {
       "sourceId": 88,
       "name": "Gojinyu",
-      "status": "strict-audit-blocked",
-      "careerResultsCertified": false,
-      "careerTotalsEvidenceBasis": null,
+      "status": "career-results-strictly-certified",
+      "careerResultsCertified": true,
+      "careerTotalsEvidenceBasis": "source-complete-ranked-basho-prove-zero-native-absences",
       "datedJsaCareerCutoffReconciled": false,
       "datedJsaCareerCutoffEvidence": null,
-      "zeroAbsenceIndependentlyProvedByAllRankedBasho": false,
-      "zeroAbsenceCompletedBashoCompared": 0,
+      "zeroAbsenceIndependentlyProvedByAllRankedBasho": true,
+      "zeroAbsenceCompletedBashoCompared": 28,
       "documentedNoPublishedNumberedDebutRank": false,
       "independentlyCrosscheckedOlderBashoFromSumoDB": 0,
       "independentlyCrosscheckedOlderRanksFromSumoDB": 0,
-      "rankHistoryEvidenceBasis": null,
+      "rankHistoryEvidenceBasis": "JSA-dated-ranks",
       "missingDebutRankPreservedAsNull": false,
-      "independentlyVerifiedBy": [],
-      "sourceNativeBoutLedgerReconciled": false,
+      "independentlyVerifiedBy": [
+        "Full independent numbered-rank basho W-L proving native zero absences",
+        "JSA completed tournament W-L",
+        "JSA dated banzuke ranks",
+        "SumoDB matching wrestler identity"
+      ],
+      "sourceNativeBoutLedgerReconciled": true,
       "independentBoutByBoutKimariteCertified": false,
       "historicalWeightTimelineCertified": false,
       "fullProfileCertified": false,
       "releaseApproved": false,
-      "blockers": [
-        "preflight-prerequisites-not-met",
-        "independent-published-career-wins-losses-absences"
-      ],
+      "blockers": [],
       "checks": {
         "regularBouts": 201,
         "completedTournamentResultsCrosschecked": 28,
@@ -2996,7 +2998,7 @@
         "jsa": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4123/",
         "historicalMeasurements": "https://sumodb.sumogames.de/Rikishi.aspx?r=12733"
       },
-      "evidenceDigest": "9026be920c6bc190b2717d604a8eb9e6c0b60fb1ef92ed089b0233987e9438e5"
+      "evidenceDigest": "5fd3f0c30f2c4b1db1a4680cb9f1624e2b6294876757ceda9c32376f6adf5538"
     },
     {
       "sourceId": 9050,
