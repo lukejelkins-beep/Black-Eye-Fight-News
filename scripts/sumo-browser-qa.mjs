@@ -142,7 +142,10 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.equal(await page.locator('.sumo-rank-card').count(),matchedMakuuchi,
     'Every source banzuke entry with an identity in the approved roster renders a card');
   assert.ok((await page.locator('.sumo-rank-card .sumo-flag-backdrop').count())>0,'Banzuke cards retain source-backed flag decorations');
-  assert.equal(await page.locator('.sumo-rank-card .sumo-move').count(),42);
+  const rankMovementCount=await page.locator('.sumo-rank-card .sumo-move').count();
+  const yokozunaCount=await page.locator('.sumo-rank-card .sumo-yokozuna-label').count();
+  assert.equal(rankMovementCount+yokozunaCount,matchedMakuuchi,
+    'Every ranked wrestler has a movement indicator or an explicit Yokozuna label');
   await page.locator('[data-banzuke-division="Juryo"]').click();
   assert.equal(await page.locator('.sumo-rank-card').count(),28);
   await page.locator('[data-banzuke-division="Makushita"]').click();
