@@ -6,10 +6,10 @@ const escapeHtml=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 const validDate=x=>/^\d{4}-\d{2}-\d{2}$/.test(String(x||''));
 const validResult=new Set(['win','loss','draw','no_contest']);
 export function renderVerifiedCareerPanel({featureEnabled=false,fighterSlug,audit,expectedCommit,
-  duplicateIdentitySlugs=[],bouts=[]}={}){
+  duplicateIdentitySlugs=[],bouts=[],verifiedOfficialBoutCount}={}){
   const eligibility=canShowVerifiedCareer({featureEnabled,fighterSlug,audit,expectedCommit,duplicateIdentitySlugs});
   if(!eligibility.allowed)return {visible:false,reason:eligibility.reason,html:''};
-  if(!Array.isArray(bouts)||!bouts.length)return {visible:false,reason:'no_complete_history',html:''};
+  if(!Number.isSafeInteger(verifiedOfficialBoutCount)||verifiedOfficialBoutCount<1||\n      !Array.isArray(bouts)||bouts.length!==verifiedOfficialBoutCount)\n    return {visible:false,reason:'incomplete_official_history',html:''};
   const clean=bouts.map(b=>({date:b?.date,opponent:b?.opponent,event:b?.event,
     result:b?.result,method:b?.method,round:b?.round})); 
   if(clean.some(b=>!validDate(b.date)||!String(b.opponent||'').trim()||
