@@ -133,7 +133,14 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
 
 
   await open(page,'banzuke','.sumo-rank-card');
-  assert.equal(await page.locator('.sumo-rank-card').count(),42);
+  const matchedMakuuchi=await page.evaluate(async ids=>{
+    const snapshot=await (await fetch('data/sumo/preview-details.json')).json();
+    const b=snapshot.banzuke?.Makuuchi?.data;
+    const index=new Set(ids);
+    return [...(b?.east||[]),...(b?.west||[])].filter(row=>index.has(Number(row.rikishiID))).length;
+  },roster.rikishi.map(w=>w.sourceId));
+  assert.equal(await page.locator('.sumo-rank-card').count(),matchedMakuuchi,
+    'Every source banzuke entry with an identity in the approved roster renders a card');
   assert.ok((await page.locator('.sumo-rank-card .sumo-flag-backdrop').count())>0,'Banzuke cards retain source-backed flag decorations');
   assert.equal(await page.locator('.sumo-rank-card .sumo-move').count(),42);
   await page.locator('[data-banzuke-division="Juryo"]').click();
