@@ -404,10 +404,18 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.equal(await page.locator('#sumo-period').inputValue(),'current');
 
   for(const route of ['kimarite','banzuke','basho','rikishi','home']){
-    await page.locator('.subnav [data-page="'+route+'"]').press('Enter');
-    await page.waitForURL('**#'+route);
-    await page.waitForSelector('.subnav [data-page="'+route+'"][aria-current="page"]');
-    assert.equal(await page.locator('.subnav [data-page="'+route+'"]').getAttribute('aria-current'),'page');
+    if(isMobile && (route==='kimarite'||route==='banzuke')){
+      const menu=page.locator('.sumo-mobile-more');
+      if(await menu.getAttribute('open')===null)await menu.locator('summary').press('Enter');
+      await menu.locator('[data-page="'+route+'"]').press('Enter');
+      await page.waitForURL('**#'+route);
+      await menu.locator('summary').press('Enter');
+    }else{
+      await page.locator('.subnav-inner>[data-page="'+route+'"]').press('Enter');
+      await page.waitForURL('**#'+route);
+    }
+    const active=page.locator('.subnav [data-page="'+route+'"][aria-current="page"]').first();
+    assert.equal(await active.getAttribute('aria-current'),'page','Destination is announced as current');
   }
   if (isMobile){
     for(const route of ['home','rikishi','profile/8850','matchups','basho','banzuke','kimarite']){
