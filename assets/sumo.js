@@ -5,7 +5,7 @@ import {
   originCountry, banzukeMovement, dayMatchups, verifiedDayMatchups, lastCompletedBashoDay, verifiedHeadToHead, verifiedHighestRank,
   rankPositions, confirmedCareerHigh, publishedCurrentWeight
 } from './sumo-data.mjs?v=20261116-ranked-matchups';
-import { careerGraphs } from './sumo-editorial-charts.mjs';
+import { careerGraphs, mobileRankPreview } from './sumo-editorial-charts.mjs?v=20261117-rank-mobile';
 import { boutKey, mergeProfileBouts, filterAndSortOpponents, exactNamePriority } from './sumo-editorial-data.mjs';
 import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verification.mjs';
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
@@ -776,15 +776,27 @@ function recentBashoTimeline(w){
 }
 function lastFiveStrip(w){
   const matches=profileBouts(w).filter(x=>x.outcome==='win'||x.outcome==='loss').slice(0,5);
-  return '<section class="sumo-recent-strip" aria-label="Recent performance"><h2>Recent form</h2>'+
-    '<p class="footnote">Latest '+matches.length+' completed recorded bout'+(matches.length===1?'':'s')+', newest first.</p>'+
-    (matches.length?'<div class="sumo-recent-list">'+matches.map(row=>
-      '<a class="'+e(row.outcome)+'" data-result-link="'+e(resultKey(row))+'" data-result-period="'+e(row.bashoId)+'" href="#profile/'+Number(w.sourceId)+'?result='+e(resultKey(row))+'">'+
-      '<span class="sumo-recent-outcome">'+e(row.outcome==='win'?'W':'L')+'</span>'+
-      '<span class="sumo-recent-person">'+e(row.opponent||'Opponent unavailable')+'</span>'+
-      '<span>'+e(bashoLabel(row.bashoId))+' · Day '+e(row.day)+'</span>'+
-      '<strong>'+e(row.kimarite?techniqueText(row.kimarite):'Technique unavailable')+'</strong></a>'
-    ).join('')+'</div>':'<p class="missing">No completed source-backed bouts available.</p>')+'</section>';
+  const wins=matches.filter(x=>x.outcome==='win').length,losses=matches.length-wins;
+  const summary=matches.length?'<span class="sumo-recent-record"><b>'+wins+' W</b> · <b>'+losses+' L</b></span>':'';
+  const cards=matches.map(row=>{
+    const name=row.opponent||'Opponent unavailable';
+    const technique=row.kimarite?techniqueText(row.kimarite):'Not recorded';
+    return '<a class="sumo-recent-bout '+e(row.outcome)+'" data-result-link="'+e(resultKey(row))+'" data-result-period="'+e(row.bashoId)+
+      '" href="#profile/'+Number(w.sourceId)+'?result='+e(resultKey(row))+'" aria-label="'+
+      e((row.outcome==='win'?'Win':'Loss')+' versus '+name+' · '+bashoLabel(row.bashoId)+' · Day '+(row.day??'unknown')+' · '+technique)+'">'+
+      '<span class="sumo-recent-outcome">'+(row.outcome==='win'?'W':'L')+'</span>'+
+      '<strong class="sumo-recent-person">'+e(name)+'</strong>'+
+      '<span class="sumo-recent-day">'+e('Day '+(row.day??'—'))+'</span>'+
+      '<small class="sumo-recent-technique">'+e(technique)+'</small></a>';
+  }).join('');
+  return '<section class="sumo-recent-strip" aria-label="Recent performance">'+
+    '<header class="sumo-recent-header"><h2>Recent form</h2><span>Last '+matches.length+' recorded bouts</span></header>'+
+    (matches.length?'<div class="sumo-recent-summary">'+summary+
+      '<span>Newest first · tap a bout for its details</span></div>'+
+      '<div class="sumo-recent-carousel"><button type="button" class="sumo-recent-arrow" data-recent-shift="-1" aria-label="Earlier visible results">‹</button>'+
+      '<div class="sumo-recent-list" id="sumo-recent-track" tabindex="0" role="region" aria-label="Five most recent recorded completed bouts">'+cards+'</div>'+
+      '<button type="button" class="sumo-recent-arrow" data-recent-shift="1" aria-label="Next visible results">›</button></div>':
+      '<p class="missing">No completed source-backed bouts available.</p>')+'</section>';
 }
 function summaryStat(value,label){return '<div class="sumo-summary-stat"><strong>'+e(value===null||value===undefined?'Not available':value)+'</strong><span>'+e(label)+'</span></div>';}
 function sectionHead(id,label,title){return '<section class="sumo-section" id="sumo-'+id+'">'+heading(label,title);}
@@ -858,6 +870,8 @@ function renderProfile(id) {
     fact('Height',current.h==='—'?'Not available':current.h)+
     fact('Weight · undated',current.mass==='—'?'Not available':current.mass)+'</div></section>'+
     sectionNav(w.sourceId)+lastFiveStrip(w)+
+    mobileRankPreview(w,STATE.careerHistory,details().bashoId,details().previousBashoId,movementFor(w).previousRank,
+      {range:STATE.rankRange,fullLadder:STATE.fullRankLadder})+
     sectionHead('results','Tournament and career ledger','Results')+resultDesk(w)+'</section>'+
     sectionHead('career','Historical context','Career')+
     '<div class="sumo-career-strip" aria-label="Source-listed tournament and top-division title totals"><div><span>Basho</span><strong>'+e(s?.basho??'Not available')+'</strong></div>'+
@@ -1170,6 +1184,11 @@ document.addEventListener('change',ev=>{
   if(t?.id==='sumo-profile-section')navigateSection(t.value);
   if(t?.id==='sumo-matchup-day'){STATE.matchupDay=Number(t.value);render();document.getElementById('sumo-matchup-day')?.focus({preventScroll:true});}
 });
+document.addEventListener('keydown',ev=>{
+  if((ev.key==='Enter'||ev.key===' ')&&ev.target?.matches?.('[data-mobile-rank]')){
+    ev.preventDefault();ev.target.click();
+  }
+});
 document.addEventListener('click',ev=>{
   const h2hLink=ev.target.closest?.('a[href^="#headtohead/"]');
   if(h2hLink&&location.hash.startsWith('#')&&!location.hash.startsWith('#headtohead/')){
@@ -1187,6 +1206,29 @@ document.addEventListener('click',ev=>{
     render();
     document.getElementById('sumo-bout-'+last.dataset.resultLink)?.scrollIntoView({block:'center'});
     document.getElementById('sumo-bout-'+last.dataset.resultLink)?.querySelector('a')?.focus({preventScroll:true});
+    return;
+  }
+  const rankDot=ev.target.closest?.('[data-mobile-rank]');
+  if(rankDot){
+    const detail=document.getElementById('sumo-mobile-rank-detail');
+    if(detail){detail.textContent=rankDot.dataset.mobileBasho+' · '+rankDot.dataset.mobileRank;}
+    return;
+  }
+  const mobileRankRange=ev.target.closest?.('[data-mobile-rank-range]');
+  if(mobileRankRange){
+    STATE.rankRange=mobileRankRange.dataset.mobileRankRange;
+    const priorScroll=window.scrollY;
+    render();
+    window.scrollTo({top:priorScroll,behavior:'instant'});
+    document.querySelector('[data-mobile-rank-range="'+STATE.rankRange+'"]')?.focus({preventScroll:true});
+    return;
+  }
+  const recentArrow=ev.target.closest?.('[data-recent-shift]');
+  if(recentArrow){
+    ev.preventDefault();
+    const scroller=document.getElementById('sumo-recent-track');
+    const card=scroller?.querySelector('.sumo-recent-bout');
+    if(scroller&&card)scroller.scrollBy({left:Number(recentArrow.dataset.recentShift)*(card.getBoundingClientRect().width+9)*2,behavior:'smooth'});
     return;
   }
   const el=ev.target.closest?.('[data-home-leader-division],[data-home-view-standings],[data-directory-layout],[data-basho-view],[data-matchup-latest],[data-directory-reset],[data-matchup-division],[data-matchup-today],[data-directory-division],[data-more-rikishi],[data-fewer-rikishi],[data-banzuke-division],[data-basho-division],[data-day],[data-jump-day],[data-profile-limit],[data-h2h-order],[data-h2h-more],[data-h2h-fewer],[data-results-mode],[data-rank-range],[data-rank-ladder],[data-h2h-retry],[data-opponent-retry]');

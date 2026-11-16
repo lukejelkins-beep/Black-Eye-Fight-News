@@ -985,3 +985,146 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .sumo-home-leaders .sumo-leader-last>small:last-child{font-size:11px}
   .sumo-home-leader-controls .pill{font-size:12px;padding-inline:5px}
 }
+
+/* BEFN mobile results carousel and compact rank graph — visual-only enhancement.
+   The original source-backed result desk, rank history and data tables remain. */
+.sumo-recent-strip{
+  display:block;margin:16px 0 20px;min-width:0;overflow:hidden;
+  border:1px solid #d4c9be;border-radius:12px;background:#fcfaf5;
+}
+.sumo-recent-header,.sumo-mobile-rank-header{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:#172137;color:#fff;border-bottom:4px solid #9b1f38;
+  padding:14px clamp(13px,2.4vw,20px);
+}
+.sumo-recent-strip .sumo-recent-header h2,
+.sumo-mobile-rank-header h2{
+  color:#fff;font:900 clamp(25px,3.3vw,32px)/1 'Barlow Condensed',Impact,sans-serif;
+  text-transform:uppercase;margin:0;letter-spacing:.015em;
+}
+.sumo-recent-header>span,.sumo-mobile-rank-header>span{
+  color:#eee5de;font-size:13px;font-weight:650;white-space:nowrap;
+}
+.sumo-recent-summary{
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 14px;
+  align-items:center;padding:10px 16px 0;font-size:12px;color:#5c5255;
+}
+.sumo-recent-record{font-size:14px;font-weight:850;color:#272123}
+.sumo-recent-record b:first-child{color:#17664f}
+.sumo-recent-record b:last-child{color:#a42a3d}
+.sumo-recent-carousel{display:flex;gap:8px;align-items:center;padding:12px 10px 16px;min-width:0}
+.sumo-recent-arrow{
+  flex:0 0 29px;align-self:stretch;min-width:29px;
+  border:0;background:transparent;color:#342b30;
+  padding:0;font-size:30px;font-weight:750;cursor:pointer;
+}
+.sumo-recent-arrow:focus-visible{outline:3px solid #84243a;outline-offset:0}
+.sumo-recent-list{
+  display:flex;min-width:0;flex:1;gap:9px;
+  overflow-x:auto;scroll-snap-type:x proximity;
+  overscroll-behavior-inline:contain;scrollbar-width:thin;
+  padding:2px 1px 7px;
+}
+.sumo-recent-list a.sumo-recent-bout{
+  flex:1 0 148px;min-width:0;max-width:none;display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-start;text-align:center;gap:4px;
+  min-height:130px;padding:0 7px 8px;background:#fff;border:1px solid #d5c9c0;
+  border-radius:10px;color:#252025;text-decoration:none;
+  scroll-snap-align:start;overflow:hidden;
+}
+.sumo-recent-list .sumo-recent-bout .sumo-recent-outcome{
+  display:block;align-self:stretch;margin:0 -7px 2px;border-radius:0;
+  background:#e5f3e7;color:#17664f;padding:6px 4px;
+  font-size:24px;font-weight:900;
+}
+.sumo-recent-list .sumo-recent-bout.loss .sumo-recent-outcome{
+  background:#f8e3e6;color:#9b1f38;
+}
+.sumo-recent-list .sumo-recent-bout .sumo-recent-person{
+  display:block;font-size:14px;line-height:1.12;font-weight:900;
+  overflow-wrap:anywhere;
+}
+.sumo-recent-day{font-size:12px;color:#544c4f;font-weight:750}
+.sumo-recent-list .sumo-recent-bout .sumo-recent-technique{
+  display:block;align-self:stretch;background:#f0ede9;color:#383237;
+  border-radius:5px;margin-top:auto;padding:4px 3px;
+  font-size:11px;line-height:1.2;overflow-wrap:anywhere;
+}
+.sumo-recent-list .sumo-recent-bout:hover{border-color:#84243a}
+.sumo-mobile-rank-preview{display:none}
+@media(max-width:650px){
+  .sumo-recent-strip{margin:13px 0 16px}
+  .sumo-recent-header,.sumo-mobile-rank-header{padding:13px 12px}
+  .sumo-recent-header>span,.sumo-mobile-rank-header>span{font-size:12px}
+  .sumo-recent-summary{padding:9px 12px 0}
+  .sumo-recent-summary>span:last-child{font-size:11px}
+  .sumo-recent-carousel{padding:10px 5px 12px;gap:3px}
+  .sumo-recent-arrow{flex-basis:21px;min-width:21px;font-size:26px}
+  .sumo-recent-list{gap:7px}
+  .sumo-recent-list a.sumo-recent-bout{flex:0 0 clamp(105px,32vw,139px);min-height:127px}
+  .sumo-recent-list .sumo-recent-bout .sumo-recent-person{font-size:13px}
+  .sumo-mobile-rank-preview{
+    display:block;min-width:0;margin:0 0 18px;background:#fcfaf5;
+    border:1px solid #d4c9be;border-radius:12px;overflow:hidden;
+  }
+  .sumo-mobile-rank-controls{display:flex;gap:6px;padding:12px 12px 2px}
+  .sumo-mobile-rank-controls button{
+    flex:1 1 0;min-width:0;min-height:37px;border:1px solid #c8bdb5;
+    border-radius:6px;background:#fff;font-size:12px;font-weight:800;color:#45393e;
+    cursor:pointer;
+  }
+  .sumo-mobile-rank-controls button[aria-pressed="true"]{
+    background:#84243a;color:#fff;border-color:#84243a;
+  }
+  .sumo-mobile-rank-scroll{
+    display:block;min-width:0;width:100%;overflow-x:auto;overflow-y:hidden;
+    overscroll-behavior-x:contain;scrollbar-width:thin;padding:8px 4px 5px;
+  }
+  .sumo-rank-mobile-svg{
+    display:block;max-width:none;height:auto;max-height:none;overflow:visible;
+  }
+  .sumo-rank-mobile-svg .sumo-mobile-rank-y{
+    fill:#53484e;font:700 12px 'DM Sans',system-ui,sans-serif;
+  }
+  .sumo-rank-mobile-svg .sumo-mobile-rank-x{
+    fill:#645c5c;font:650 11px 'DM Sans',system-ui,sans-serif;
+  }
+  .sumo-rank-mobile-svg .sumo-mobile-rank-point{
+    fill:#981d39;stroke:#fff;stroke-width:1.5px;cursor:pointer;
+  }
+  .sumo-rank-mobile-svg .sumo-mobile-rank-point:focus-visible{
+    outline:none;stroke:#111b30;stroke-width:3px;
+  }
+  .sumo-mobile-rank-selected{
+    padding:8px 12px;font-size:13px;font-weight:650;color:#332a2e;
+    background:#f4eee8;border-top:1px solid #e4d9cf;
+  }
+  .sumo-mobile-rank-facts{
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:0;padding:11px 8px 6px;
+    border-top:1px solid #e6dcd2;
+  }
+  .sumo-mobile-rank-facts>span{
+    display:flex;flex-direction:column;gap:4px;align-items:center;
+    text-align:center;min-width:0;padding:3px 5px;
+    border-right:1px solid #ddd2c8;
+  }
+  .sumo-mobile-rank-facts>span:last-child{border:0}
+  .sumo-mobile-rank-facts small{
+    font-size:10px;line-height:1.25;color:#64595e;font-weight:750;
+  }
+  .sumo-mobile-rank-facts strong{
+    font:850 15px/1.15 'Barlow Condensed',Impact,sans-serif;
+    color:#84243a;overflow-wrap:anywhere;
+  }
+  .sumo-mobile-rank-note{
+    color:#746b6d;font-size:11px;line-height:1.45;
+    margin:0;padding:5px 12px 13px;
+  }
+}
+@media(max-width:360px){
+  .sumo-recent-header>span{font-size:11px}
+  .sumo-recent-summary>span:last-child{flex-basis:100%}
+  .sumo-mobile-rank-facts strong{font-size:13px}
+  .sumo-mobile-rank-facts small{font-size:9px}
+}
