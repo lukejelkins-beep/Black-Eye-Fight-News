@@ -2,19 +2,17 @@
   "schemaVersion": 1,
   "cohortSize": 190,
   "scope": "Research-only strict Sumo career preflight; never self-certifies",
-  "candidateForStrictAudit": 185,
+  "candidateForStrictAudit": 186,
   "sourceCorroboratedDebutRankGaps": 9,
-  "needsSourceOrManualReview": 5,
+  "needsSourceOrManualReview": 4,
   "blockerCounts": {
     "official-JSA-career-totals-unpublished-or-disagree": 2,
-    "official-JSA-profile-field-disagreement": 1,
     "official-absence-total-unpublished-or-disagree": 4
   },
   "certificationLanes": {
     "absence-proof-review": 2,
     "career-totals-review": 2,
-    "fast-lane-strict-audit": 185,
-    "profile-source-conflict": 1
+    "fast-lane-strict-audit": 186
   },
   "certified": 0,
   "productionApproved": false,
@@ -3674,13 +3672,11 @@
       "sourceId": 9104,
       "name": "Tenshoyama",
       "division": "Makushita",
-      "certificationLane": "profile-source-conflict",
-      "owner": "historical manual source review",
-      "nextAction": "Investigate the exact official/API current profile disagreement and document which publication is newer; do not overwrite either raw source.",
-      "classification": "needs-source-or-manual-review",
-      "blockers": [
-        "official-JSA-profile-field-disagreement"
-      ],
+      "certificationLane": "fast-lane-strict-audit",
+      "owner": "strict audit reviewer",
+      "nextAction": "Run complete independent strict career audit against raw and saved official evidence; certification cannot be granted by preflight.",
+      "classification": "candidate-for-strict-audit",
+      "blockers": [],
       "completedHistoricalBoutTournaments": 5,
       "officialBashoCompared": 5,
       "independentlyReconciledOlderBasho": 0,
