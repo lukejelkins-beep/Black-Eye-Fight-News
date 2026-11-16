@@ -1209,3 +1209,110 @@ button,input,select,summary{font-size:16px;line-height:1.5}
     overflow-x:auto;scrollbar-width:thin;max-width:100%;
   }
 }
+
+/* Opponent H2H photo-left flag-on-information-only tiles.
+   The entire tile remains the original accessible #headtohead link.
+   No flag graphics or overlays are placed on the portrait. */
+#sumo-opponents .sumo-rival-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;margin:14px 0 20px;border:0;background:transparent;
+  border-radius:0;overflow:visible;
+}
+#sumo-opponents .sumo-rival{
+  display:grid;grid-template-columns:minmax(0,41%) minmax(0,59%);
+  grid-template-rows:minmax(0,1fr);gap:0;
+  width:100%;height:170px;min-width:0;min-height:0;
+  padding:0;border:1px solid #524a4e;border-radius:9px;
+  overflow:hidden;isolation:isolate;background:#22252f;
+  color:#fff;text-decoration:none;box-shadow:none;
+}
+#sumo-opponents .sumo-rival:hover,
+#sumo-opponents .sumo-rival:focus-visible{
+  background:#2b2d38;border-color:#bd9853;
+  transform:none;outline-offset:2px;
+}
+#sumo-opponents .sumo-rival-portrait{
+  display:block;position:relative;grid-column:1;grid-row:1;
+  width:100%;height:100%;min-width:0;min-height:0;
+  align-self:stretch;overflow:hidden;background:#423733;
+  border-radius:0;
+}
+#sumo-opponents .sumo-rival-portrait>.profile-icon.sumo-photo{
+  position:absolute;inset:0;display:block;
+  width:100%!important;height:100%!important;min-width:0;
+  min-height:0!important;max-width:none!important;max-height:none!important;
+  border:0!important;border-radius:0!important;aspect-ratio:auto!important;
+  margin:0;overflow:hidden;
+}
+#sumo-opponents .sumo-rival-portrait .sumo-photo>img{
+  position:absolute;inset:0;width:100%!important;height:100%!important;
+  max-width:none;max-height:none;display:block;
+  object-fit:cover!important;object-position:center top!important;
+  transform:none!important;border-radius:0;
+}
+#sumo-opponents .sumo-rival-info{
+  position:relative;grid-column:2;grid-row:1;align-self:stretch;
+  display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
+  gap:13px;min-width:0;min-height:0;padding:13px 12px 13px 14px;
+  isolation:isolate;overflow:hidden;background:#22252f;
+}
+#sumo-opponents .sumo-rival-info>.sumo-flag-backdrop{
+  position:absolute;inset:0;right:0;top:0;
+  display:block;width:100%;height:100%;z-index:0;opacity:.18;
+  font-size:0;line-height:0;color:transparent;
+  pointer-events:none;user-select:none;transform:none;
+}
+#sumo-opponents .sumo-rival-info>.sumo-flag-backdrop::before{
+  content:"";position:absolute;inset:0;
+  background-image:var(--sumo-flag-url);
+  background-size:cover;background-position:center;
+}
+#sumo-opponents .sumo-rival-info::after{
+  content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(90deg,rgba(34,37,47,.62),rgba(34,37,47,.42));
+  pointer-events:none;
+}
+#sumo-opponents .sumo-rival-info>:not(.sumo-flag-backdrop){
+  position:relative;z-index:2;
+}
+#sumo-opponents .sumo-rival-main{
+  display:flex;flex-direction:column;gap:7px;
+  grid-column:auto;grid-row:auto;
+  align-items:flex-start;justify-content:center;
+  min-width:0;max-width:100%;
+}
+#sumo-opponents .sumo-rival-name{
+  display:block;min-width:0;
+  font:900 clamp(21px,2.4vw,29px)/1.02 'Barlow Condensed',Impact,sans-serif;
+  color:#fff;letter-spacing:.01em;overflow-wrap:anywhere;
+}
+#sumo-opponents .sumo-rival-main>.sumo-country{
+  font-size:20px;line-height:1.1;
+}
+#sumo-opponents .sumo-rival .sumo-rival-record{
+  display:inline-block;grid-column:auto;grid-row:auto;
+  align-self:flex-start;justify-self:start;
+  font-size:clamp(18px,1.8vw,24px);white-space:normal;
+  font-variant-numeric:tabular-nums;
+  color:#fff0c3;background:#40332f;border:1px solid #bd9853;
+  padding:8px 10px;border-radius:6px;text-align:center;
+  text-shadow:0 1px 1px #100b0c;
+}
+@media(max-width:900px){
+  #sumo-opponents .sumo-rival-grid{grid-template-columns:minmax(0,1fr);gap:10px}
+  #sumo-opponents .sumo-rival{height:165px;grid-template-columns:minmax(0,39%) minmax(0,61%)}
+  #sumo-opponents .sumo-rival-name{font-size:clamp(23px,5.5vw,31px)}
+  #sumo-opponents .sumo-rival .sumo-rival-record{font-size:clamp(19px,4.5vw,23px)}
+}
+@media(max-width:400px){
+  #sumo-opponents .sumo-rival{height:153px;grid-template-columns:minmax(0,38%) minmax(0,62%)}
+  #sumo-opponents .sumo-rival-info{padding:12px 10px 12px 12px;gap:10px}
+  #sumo-opponents .sumo-rival-name{font-size:clamp(21px,6vw,27px)}
+  #sumo-opponents .sumo-rival .sumo-rival-record{font-size:19px;padding:7px 10px}
+}
+@media(max-width:340px){
+  #sumo-opponents .sumo-rival{height:145px}
+  #sumo-opponents .sumo-rival-info{padding:9px;gap:8px}
+  #sumo-opponents .sumo-rival-name{font-size:21px}
+  #sumo-opponents .sumo-rival .sumo-rival-record{font-size:17px}
+}
