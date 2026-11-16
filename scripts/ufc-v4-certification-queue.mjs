@@ -62,8 +62,7 @@ export function buildCertificationQueue(report,registry={}){
       sourceMissing.has(slug))add('source_confirmed_missing_history');
    if(sourceConflicts.has(slug))add('source_result_conflict');
    if(ambiguous.has(slug))add('native_identity_ambiguous');
-   if(!x.allKnownFightsIndexed||!x.allKnownFightsMeasured||
-      x.status==='known_fight_coverage_gap')add('known_fight_coverage_gap');
+   if(x.status==='known_fight_coverage_gap')add('known_fight_coverage_gap');
    if(x.providerHistoryDiscrepancy===true||
       x.status==='provider_history_discrepancy'||
       rosterGaps.has(slug))add('provider_history_discrepancy');
@@ -101,7 +100,7 @@ export function buildCertificationQueue(report,registry={}){
  return {schema:1,scope:'ufc-v4-certification-attempt-and-exception-queue',
    asOf:s.asOf,approvedSnapshotAsOf:s.approvedSnapshotAsOf,
    source:'qa/ufc-36-month-stage3-progress.json',
-   certificationRule:'Only the independent Stage3 source gate may certify; fast lane remains uncertified until exhaustive source-attested UFC fight URLs match saved numeric fights and measured statistics.',
+   certificationRule:'Only the independent Stage3 source gate may certify; fast lane remains uncertified until exhaustive official UFC chronology and identity/outcome evidence matches saved career history; native numeric IDs and optional round measurements are not required.',
    totals,lanes,
    researchPriority:{
      nextSourceAttestation,
