@@ -204,6 +204,25 @@ export function verifiedDayMatchups(banzuke,torikumi,options){
   return [...merged.values()].sort((a,b)=>(a.matchNo||999)-(b.matchNo||999));
 }
 
+/**
+ * Display each confirmed head-to-head in descending current-banzuke order:
+ * Yokozuna, Ozeki, Sekiwake, Komusubi, then maegashira (or the equivalent
+ * numbered rank ladder in Juryo and Makushita).
+ * Sort by the HIGHEST-ranked participant, keeping every source matchup intact.
+ * This changes display ordering only, not torikumi or match outcomes.
+ */
+export function rankOrderedMatchups(banzuke,matches) {
+  const position=new Map(sortBanzukeEntries(banzuke).map((row,index)=>[Number(row.rikishiID),index]));
+  const order=id=>position.get(Number(id))??Number.MAX_SAFE_INTEGER;
+  const ranks=m=>[order(m.rikishiId),order(m.opponentId)].sort((a,b)=>a-b);
+  return [...(Array.isArray(matches)?matches:[])].sort((a,b)=>{
+    const left=ranks(a),right=ranks(b);
+    return left[0]-right[0]||left[1]-right[1]||
+      (Number(a.matchNo)||999)-(Number(b.matchNo)||999)||
+      String(a.key||'').localeCompare(String(b.key||''));
+  });
+}
+
 export function lastCompletedBashoDay(banzuke){
   let day=0;
   for(const row of sortBanzukeEntries(banzuke)){
