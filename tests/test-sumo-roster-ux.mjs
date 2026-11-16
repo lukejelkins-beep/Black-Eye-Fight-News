@@ -34,5 +34,5 @@ test('overview standings include movement based on the previous banzuke and rema
   assert.match(src,/recordLabels\(summary\)/);
   assert.match(css,/@media\(max-width:480px\)/);
   assert.match(css,/\.sumo-standings-row/);
-  assert.match(html,/20261116-roster-flags/);
+  assert.match(html,/assets\/sumo-editorial\.css\?v=20261116-reconciled-sumo/);
 });
