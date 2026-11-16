@@ -405,3 +405,12 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .sumo-standings-ranking>strong{font-size:13px;white-space:normal;overflow-wrap:normal}
  .sumo-standings-ranking .sumo-move-meta{text-align:left;max-width:none}
 }
+
+/* Narrow cards: portrait stays left; all text stays inside the available column. */
+.sumo-standings-row:has(>.sumo-photo){grid-template-columns:62px minmax(0,1fr)}
+.sumo-standings-row:has(>.sumo-photo)>.sumo-standings-identity{grid-column:2;grid-row:1}
+.sumo-standings-row:has(>.sumo-photo)>.sumo-standings-ranking{grid-column:2;grid-row:2;align-items:flex-start;text-align:left;max-width:100%}
+.sumo-standings-ranking .sumo-move{display:inline-block;box-sizing:border-box;max-width:100%;white-space:normal;overflow-wrap:normal;word-break:normal;font-weight:750}
+.sumo-standings-ranking .sumo-move-meta{max-width:100%;text-align:left}
+.sumo-yokozuna-label{font-size:13px;font-weight:750;color:#e9d2a0}
+@media(max-width:740px){.sumo-standings-row:has(>.sumo-photo){grid-template-columns:58px minmax(0,1fr)}.sumo-standings-ranking .sumo-move{font-size:12px;padding:4px 6px}}
