@@ -83,6 +83,7 @@ test('owner-provided GIF is primary in popup and original clip is optional',()=>
   const record={schemaVersion:1,clips:{oshidashi:{
     gif:'assets/sumo-kimarite/oshidashi.gif',
     clip:'assets/sumo-kimarite/oshidashi.mp4',
+    poster:'assets/sumo-kimarite/oshidashi-poster.jpg',
     rights:'NHK permission confirmed by BEFN owner',
     credit:'NHK WORLD-JAPAN'
   }}};
@@ -100,4 +101,16 @@ test('no unrelated still substitutes for missing Oshidashi media',()=>{
   assert.match(html,/Owner-supplied Oshidashi GIF pending upload/);
   assert.doesNotMatch(html,/sumo-km-modal-still/);
   assert.doesNotMatch(html,/Play original clip/);
+});
+
+test('Oshidashi owner GIF poster can replace incorrect catalogue still',()=>{
+  const valid=setKimariteMediaManifest({schemaVersion:1,clips:{oshidashi:{
+    gif:'assets/sumo-kimarite/oshidashi.gif',clip:'assets/sumo-kimarite/oshidashi.mp4',
+    poster:'assets/sumo-kimarite/oshidashi-poster.jpg',credit:'NHK WORLD-JAPAN',
+    rights:'NHK permission confirmed by BEFN owner'
+  }}});
+  assert.equal(valid,true);
+  const modal=kimariteModalMarkup(lookupKimarite('oshidashi'));
+  assert.match(modal,/oshidashi.gif/);
+  assert.doesNotMatch(modal,/sumo-km-modal-still/);
 });
