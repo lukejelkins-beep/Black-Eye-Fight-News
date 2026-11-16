@@ -513,6 +513,21 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     independentEvidence?.rosterAsOf===approval.rosterAsOf?
       independentEvidence?.fighters||{}:{};
 
+  // Distinct frozen roster entries cannot both inherit the same official UFC
+  // athlete page. Preserve all roster entries and source proofs for review,
+  // but fail closed on certification until their identities are disambiguated.
+  const officialUrlOwners=new Map(),sharedOfficialIdentity=new Set();
+  for(const slug of approved){
+    const row=independentRegistry[slug];
+    const url=String(row?.officialFighterUrl||row?.officialUfcFighterUrl||'')
+      .trim().toLowerCase().replace(/\\/$/,'');
+    if(!/^https:\/\/www\.ufc\.com\/athlete\//.test(url))continue;
+    if(!officialUrlOwners.has(url))officialUrlOwners.set(url,[]);
+    officialUrlOwners.get(url).push(slug);
+  }
+  for(const owners of officialUrlOwners.values())
+    if(owners.length>1)owners.forEach(slug=>sharedOfficialIdentity.add(slug));
+
   // One offline pass through indexed official UFC fights, keyed by stable
   // numeric fighter ID. This can expose older bouts omitted by shortened
   // /fighters/history responses without spending another API call.
@@ -666,10 +681,10 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     });
     const officialInventoryDispute=officialSourceInventory.cases.some(r=>r.slug===slug)||
       officialSourceInventory.conflicts.some(r=>r.slug===slug);
-    const independentFullCareer=!malformedHistory&&!officialInventoryDispute&&
-      proof.independentlyVerified;
-    const providerFullCareer=!malformedHistory&&!officialInventoryDispute&&
-      proof.providerCertified;
+    const independentFullCareer=!sharedOfficialIdentity.has(slug)&&
+      !malformedHistory&&!officialInventoryDispute&&proof.independentlyVerified;
+    const providerFullCareer=!sharedOfficialIdentity.has(slug)&&
+      !malformedHistory&&!officialInventoryDispute&&proof.providerCertified;
     const providerHistoryDiscrepancy=proof.providerDiscrepancy||!proof.rosterLatestPresent;
     const independentRow=independentRegistry[slug]||{};
     const minVerified=independentRow.scope==='minimum_count_evidence_only'&&
