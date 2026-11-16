@@ -101,14 +101,39 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     const heading=document.querySelector('.profile-hero h1').getBoundingClientRect();
     return {top:box.top,headingTop:heading.top,imageHeight:image.height,viewport:window.innerHeight};
   });
-  assert.ok(heroMeasurements.headingTop<heroMeasurements.viewport/2,
-    'Profile name is in the upper half of the first screen: '+JSON.stringify(heroMeasurements));
+  if(viewport.width<=650){
+    const imageFirst=await page.evaluate(()=>{
+      const hero=document.querySelector('.profile-hero');
+      const photo=hero.querySelector(':scope>.profile-icon.sumo-photo.xl');
+      const heading=hero.querySelector(':scope>.profile-title');
+      const photoRect=photo.getBoundingClientRect(),titleRect=heading.getBoundingClientRect(),heroRect=hero.getBoundingClientRect();
+      const img=photo.querySelector('img');
+      return {photoTop:photoRect.top,titleTop:titleRect.top,
+        photoWidth:photoRect.width,heroWidth:heroRect.width,
+        photoHeight:photoRect.height,objectPosition:img?getComputedStyle(img).objectPosition:null};
+    });
+    assert.ok(imageFirst.photoTop<imageFirst.titleTop,'Photo precedes name on mobile: '+JSON.stringify(imageFirst));
+    assert.ok(imageFirst.photoWidth>=imageFirst.heroWidth-3,'Photo fills mobile hero width: '+JSON.stringify(imageFirst));
+    assert.ok(imageFirst.photoHeight<=306,'Portrait bounded and not excessively tall: '+JSON.stringify(imageFirst));
+    assert.ok(!imageFirst.objectPosition||imageFirst.objectPosition.includes('top'),'Portrait preserves top of head: '+JSON.stringify(imageFirst));
+  }else{
+    assert.ok(heroMeasurements.headingTop<heroMeasurements.viewport/2,
+      'Desktop/tablet profile name appears high in first screen: '+JSON.stringify(heroMeasurements));
+  }
   assert.ok(heroMeasurements.imageHeight<=(isMobile?321:521),
     'Approved portrait is bounded rather than full-page: '+JSON.stringify(heroMeasurements));
   assertContains(profile,'Yokozuna','rank');
   assertContains(profile,'Winning techniques','techniques');
   assertContains(profile,'Results','canonical results');
   assertContains(profile,'Career','career section');
+  const careerTiles=page.locator('#sumo-career .sumo-career-strip>div');
+  assert.equal(await careerTiles.count(),2,'Career summary has exactly Basho and Makuuchi Championships');
+  assert.deepEqual(await careerTiles.locator('span').allInnerTexts(),['Basho','Makuuchi Championships'],
+    'Two clear, nonduplicative labels');
+  assert.deepEqual(await careerTiles.locator('strong').allInnerTexts(),['22','6'],
+    'Onosato source-listed Basho 22 and Makuuchi titles 6');
+  assertContains(profile,'coverage may be partial','summary coverage warning remains visible');
+  assertContains(profile,'Career summary scope','source disclosures retain the coverage limitation');
   assertContains(profile,'Analysis','accessible charts in Analysis');
   assertContains(profile,'Recent form','last-five results show named recent form');
   assertContains(profile,'API-TRUSTED','development-data method is displayed');
@@ -116,6 +141,21 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assertContains(profile,'Opponents and head-to-head','opponent catalogue');
   await page.waitForSelector('.sumo-rival',{timeout:25000});
   assert.ok(await page.locator('.sumo-rival').count()>=10,'Complete sourced opponent directory available');
+  const opponentScores=await page.locator('.sumo-rival').evaluateAll(cards=>cards.slice(0,12).map(card=>{
+    const score=card.querySelector('.sumo-rival-record');
+    const rect=score.getBoundingClientRect(),outer=card.getBoundingClientRect(),style=getComputedStyle(score);
+    return {score:score.textContent,colour:style.color,bg:style.backgroundColor,
+      inside:rect.left>=outer.left-1&&rect.right<=outer.right+1&&rect.bottom<=outer.bottom+1,
+      width:rect.width};
+  }));
+  assert.ok(opponentScores.length>=10&&opponentScores.every(x=>x.inside&&x.width>40),
+    'Opponent scores must fit inside dark card at '+viewport.width+'px: '+JSON.stringify(opponentScores));
+  assert.ok(opponentScores.every(x=>x.colour==='rgb(255, 240, 195)'&&x.bg==='rgb(64, 51, 47)'),
+    'Opponent scores must use opaque cream/gold contrast: '+JSON.stringify(opponentScores));
+  await page.locator('#sumo-career').scrollIntoViewIfNeeded();
+  await snap(page,label+'-profile-career',{fullPage:false});
+  await page.locator('#sumo-opponents').scrollIntoViewIfNeeded();
+  await snap(page,label+'-profile-opponents',{fullPage:false});
   assertContains(profile,'JSA-listed signature manoeuvres','official source signature tags');
   assertContains(profile,'tsuki','JSA-listed source manoeuvres preserved');
   assert.ok(await page.locator('.sumo-ed-row').count()>0,'Canonical current tournament rows rendered');

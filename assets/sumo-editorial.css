@@ -733,3 +733,55 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 @media(max-width:350px){
   .subnav-inner>a,.sumo-mobile-more>summary{font-size:11px;letter-spacing:0}
 }
+
+/* PR #230 follow-up: image-first rikishi hero; source-grounded Career tiles; readable H2H. */
+.sumo-career-strip{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.sumo-career-strip>div{
+  display:flex;flex-direction:column;justify-content:center;gap:5px;
+  min-width:0;padding:16px 20px;border-top:3px solid #d3aa46;
+}
+.sumo-career-strip>div>span{font-size:clamp(14px,1.6vw,17px);font-weight:800;color:#413639}
+.sumo-career-strip>div>strong{
+  font:900 clamp(38px,4vw,54px)/1 'Barlow Condensed',Impact,sans-serif;
+  color:#21191c;font-variant-numeric:tabular-nums;
+}
+.sumo-career-caveat{margin:8px 0 18px;font-size:13px;line-height:1.5;color:#625a5d}
+.sumo-rival .sumo-rival-record{
+  color:#fff0c3;background:#40332f;border:1px solid #bd9853;border-radius:6px;
+  display:inline-block;padding:8px 10px;min-width:0;max-width:100%;
+  font:900 clamp(16px,2vw,21px)/1.1 'Barlow Condensed',Impact,sans-serif;
+  font-variant-numeric:tabular-nums;letter-spacing:.02em;
+  white-space:normal;text-align:center;text-shadow:0 1px 1px #100b0c;
+  justify-self:end;
+}
+@media(max-width:650px){
+  /* DOM order is already image then identity; align the visual grid to it. */
+  .profile-hero{grid-template-rows:auto auto auto auto!important}
+  .profile-hero>.profile-icon.sumo-photo.xl{
+    grid-column:1;grid-row:1!important;
+    height:clamp(230px,70vw,305px)!important;max-height:305px!important;
+    background:#e5d9cb;
+  }
+  .profile-hero>.profile-icon.sumo-photo.xl img{
+    object-fit:cover!important;object-position:center top!important;
+  }
+  .profile-hero>.profile-title{grid-column:1;grid-row:2!important;padding:15px 16px 9px}
+  .profile-hero>.profile-current{grid-column:1;grid-row:3!important}
+  .profile-hero>.profile-facts{grid-column:1;grid-row:4!important}
+}
+@media(max-width:600px){
+  .sumo-rival{
+    grid-template-columns:54px minmax(0,1fr);
+    grid-template-rows:auto auto;gap:5px 10px;
+  }
+  .sumo-rival-portrait{grid-column:1;grid-row:1/span 2;align-self:center}
+  .sumo-rival-main{grid-column:2;grid-row:1}
+  .sumo-rival .sumo-rival-record{grid-column:2;grid-row:2;justify-self:start}
+}
+@media(max-width:360px){
+  .sumo-rival{grid-template-columns:46px minmax(0,1fr)}
+  .sumo-career-strip>div{padding:12px 10px}
+  .sumo-career-strip>div>span{font-size:13px}
+}

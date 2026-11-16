@@ -769,7 +769,7 @@ function renderProfile(id) {
     '<div class="sumo-hero-peak">Peak rank: <strong>'+e(knownHigh(w)||'Not available')+'</strong></div>'+
     '<div class="sumo-hero-career"><div><span>Scope</span><span>Wins–losses</span><span>Win %</span></div>'+
     '<div><strong>Career</strong><b>'+e(career)+'</b><b>'+e(careerPercent)+'</b></div>'+
-    '<div><strong>Makuuchi · source scope</strong><b>'+e(maku)+'</b><b>'+e(makuPercent)+'</b></div></div>'+ 
+    '<div><strong>Makuuchi</strong><b>'+e(maku)+'</b><b>'+e(makuPercent)+'</b></div></div>'+ 
     '<div class="sumo-hero-actions"><a class="sumo-quick-results" data-profile-section="results" href="#profile/'+Number(w.sourceId)+'?section=results">Jump to results</a>'+fullPhoto+'</div>'+
     '</div><div class="profile-current"><span class="tag">'+e(bashoLabel(details().bashoId))+' · SNAPSHOT · NOT LIVE</span>'+
     currentBlock+(divisionOf(w.currentRank)==='Makushita'?'<p class="footnote">Makushita non-bout days are not absences.</p>':'')+'</div>'+
@@ -779,9 +779,9 @@ function renderProfile(id) {
     sectionNav(w.sourceId)+lastFiveStrip(w)+
     sectionHead('results','Tournament and career ledger','Results')+resultDesk(w)+'</section>'+
     sectionHead('career','Historical context','Career')+
-    '<div class="sumo-career-strip"><div><strong>'+e(s?.basho??'Not available')+'</strong><span>Recorded basho · API stats</span></div>'+
-    '<div><strong>'+e(s?.yusho??'Not available')+'</strong><span>Championships · source scope</span></div>'+
-    '<div><strong>'+e(titleCount??'Not available')+'</strong><span>Makuuchi championships · source scope</span></div></div>'+
+    '<div class="sumo-career-strip" aria-label="Source-listed tournament and top-division title totals"><div><span>Basho</span><strong>'+e(s?.basho??'Not available')+'</strong></div>'+
+    '<div><span>Makuuchi Championships</span><strong>'+e(titleCount??'Not available')+'</strong></div></div>'+
+    '<p class="sumo-career-caveat">Source-listed figures; coverage may be partial and is not independently verified as a complete career. See Data coverage.</p>'+
     '<details class="sumo-career-facts"><summary>Biography, prizes and division records</summary><dl>'+
     '<div><dt>Birth date</dt><dd>'+e(dateOnly(w.birthDate))+'</dd></div>'+
     '<div><dt>Source-listed birthplace</dt><dd>'+e(w.birthplace||'Not available')+'</dd></div>'+
@@ -800,6 +800,7 @@ function renderProfile(id) {
       '<p>These sourced labels are not win percentages. <a href="'+e(style.sourceUrl)+'" target="_blank" rel="noopener noreferrer">JSA evidence</a></p></div>':'')+'</section>'+
     sectionHead('sources','Provenance and limitations','Data coverage')+
     '<div class="sumo-sources">'+renderApiQuality(w)+
+    '<p><strong>Career summary scope:</strong> Basho and Makuuchi championships use the source-listed career statistics for this rikishi. Missing tournaments or incomplete source coverage cannot be treated as a verified whole-career total.</p>'+
     '<p><strong>Snapshot:</strong> '+e(snapshotDate(STATE.roster.collectedAt))+' · third-party API inputs; not universal independent certification.</p>'+
     '<p><strong>Measurements:</strong> '+e(current.heightSource)+' / '+e(current.weightSource)+'. Listings are undated; graphs use dated source observations only.</p>'+
     sourceNotes.map(x=>'<p class="sumo-api-review">'+e(x)+'</p>').join('')+
@@ -826,7 +827,7 @@ function opponentResults(w){
         '<span class="sumo-rival-main"><span class="sumo-rival-name">'+e(label)+'</span>'+
         (opponent?flagMark(opponent):'')+
         '<small>'+e(r.meetings)+' recorded meetings · open full chronology</small></span>'+
-        '<strong class="sumo-rival-record">'+e(r.wins)+' W · '+e(r.losses)+' L</strong></a>';
+        '<strong class="sumo-rival-record" aria-label="'+e(r.wins)+' wins and '+e(r.losses)+' losses">'+e(r.wins)+' W – '+e(r.losses)+' L</strong></a>';
     }).join('')+'</div>'+
     (shown.length<matches.length?'<button type="button" class="btn light" data-h2h-more>Show more opponents ('+(matches.length-shown.length)+' remain)</button>':'')+
     (STATE.h2hOpponentLimit>16?'<button type="button" class="btn light" data-h2h-fewer>Show fewer opponents</button>':'');
