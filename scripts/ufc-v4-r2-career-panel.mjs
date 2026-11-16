@@ -26,6 +26,14 @@ export function renderVerifiedCareerPanel({featureEnabled=false,fighterSlug,audi
     escapeHtml(b.round??'Unavailable')+'</td></tr>').join('');
   return {visible:true,reason:'certified_at_exact_commit',html:
     '<section class="befn-ufc-r2-career" aria-label="Verified UFC career">'+
+    '<style>.befn-ufc-r2-career{max-width:100%;min-width:0;margin:1rem 0}'+
+    '.befn-ufc-r2-career-scroll{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}'+
+    '.befn-ufc-r2-career table{width:100%;border-collapse:collapse;font-size:.875rem;min-width:38rem}'+
+    '.befn-ufc-r2-career th,.befn-ufc-r2-career td{text-align:left;padding:.65rem .75rem;'+
+    'border-bottom:1px solid var(--border,#d8d8d8);vertical-align:top}'+
+    '.befn-ufc-r2-career th{white-space:nowrap}'+
+    '@media(max-width:640px){.befn-ufc-r2-career table{font-size:.8rem}}'+
+    '</style>'+
     '<h3>UFC career history</h3><div class="befn-ufc-r2-career-scroll" tabindex="0">'+
     '<table><thead><tr><th>Date</th><th>Opponent</th><th>Event</th><th>Result</th>'+
     '<th>Method</th><th>Round</th></tr></thead><tbody>'+rows+
