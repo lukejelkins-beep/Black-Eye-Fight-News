@@ -722,3 +722,14 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .sumo-mobile-more-links>a{padding:12px 10px;color:#fff;white-space:nowrap;text-decoration:none;font-size:14px;font-weight:750}
  .sumo-mobile-more-links>a:focus-visible,.sumo-mobile-more-links>a:hover{background:#84243a}
 }
+
+/* Final 320px screenshot correction: use short labels, not overlapping text. */
+.sumo-mobile-label{display:none}
+@media(max-width:680px){
+  .sumo-desktop-label{display:none}
+  .sumo-mobile-label{display:inline}
+  .subnav-inner{grid-template-columns:1.1fr .82fr .82fr .8fr}
+}
+@media(max-width:350px){
+  .subnav-inner>a,.sumo-mobile-more>summary{font-size:11px;letter-spacing:0}
+}
