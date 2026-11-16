@@ -58184,6 +58184,14 @@
           "date": "2022-09-27",
           "opponent": "Donovan Beard",
           "reason": "Non-UFC feeder bout; not an official UFC Octagon contest"
+        },
+        {
+          "nativeBoutId": "83952",
+          "date": "2022-08-09",
+          "opponent": "Zachary Borrego",
+          "event": "Dana White's Contender Series",
+          "sourceUrl": "https://www.ufc.com/athlete/bo-nickal",
+          "reason": "UFC.com explicitly identifies a separate DWCS preliminary bout; original native research history retains the numeric bout, but the rich event index lacks this feeder event. Never classify as an official UFC Octagon fight."
         }
       ],
       "bouts": [
@@ -58251,7 +58259,7 @@
           "nativeFighterId": "109"
         }
       ],
-      "note": "Pinned independent source proof and exact two-corner native history; do not substitute DWCS feeder results or infer missing statistics."
+      "note": "Pinned independent source proof and exact two-corner native history; do not substitute DWCS feeder results or infer missing statistics. Official UFC.com documents two separate DWCS bouts (Donovan Beard and Zachary Borrego); the latter is saved in raw fighter history even though absent from the rich native event index."
     }
   }
 }
