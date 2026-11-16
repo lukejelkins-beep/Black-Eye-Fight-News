@@ -11,7 +11,7 @@ import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verificati
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
 import { dailyStats, dailyRecentMeetings, dailyDefaultDay, dailySelectedDate, dailyWinPercentage, heightFeetInches } from './sumo-daily.mjs?v=20261116-division-relative-records';
 import { ordinalRank } from './sumo-career.mjs';
-import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-popup-preview';
+import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-jsa-local-photos-v2';
 
 const ROOT = document.querySelector('#sumo-main');
 const tabs = [...document.querySelectorAll('[data-page]')];
