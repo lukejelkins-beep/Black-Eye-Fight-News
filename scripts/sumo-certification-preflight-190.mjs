@@ -410,6 +410,78 @@ export function independentlyReconciledLaterSumoDbCurrentBasho(p,jsa,sdb,activeB
   rawSourceRecordsMutated:false,certified:false};
 }
 
+/** Reconcile one additional officially published CURRENT-basho absence day.
+ * Frozen native W-L-A must independently match a separately captured SumoDB
+ * W-L-A, while JSA's day-labelled record is exactly one absence ahead.
+ * Preserve the distinct source cutoffs and do not mutate source values.
+ */
+export function independentlyReconciledOneDayAbsenceCutoff(w,p,jsa,sdb,activeBasho){
+ const reject=reason=>({passed:false,reason});
+ const native=p?.career||{},official=jsa?.career||{},independent=sdb?.careerRecordCrosscheck||{};
+ const independentCareer=independent.career||{};
+ const hash=x=>/^[a-f0-9]{64}$/.test(String(x||''));
+ const dob=sdb?.identityRecheck?.identityEvidence||sdb?.identityEvidence||{};
+ const asOf=jsa?.officialAsOf||{};
+ const months=['January','February','March','April','May','June','July',
+  'August','September','October','November','December'];
+ const basho=String(activeBasho);
+ const expectedMonth=months[Number(basho.slice(4))-1]+' '+basho.slice(0,4);
+ const officialId=Number(w?.sourceId)===Number(p?.sourceId)&&
+  Number(w?.sourceId)===Number(jsa?.sourceId)&&
+  Number(w?.sourceId)===Number(sdb?.sourceId)&&
+  Number(w?.officialNskId)===Number(jsa?.officialNskId)&&
+  Number(w?.officialNskId)===Number(sdb?.officialNskId)&&
+  Number(w?.sumoDbId)===Number(sdb?.sumoDbId)&&
+  jsa?.url==='https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+w?.officialNskId+'/'&&
+  independent.sourceUrl==='https://sumodb.sumogames.de/Rikishi.aspx?r='+w?.sumoDbId;
+ if(!officialId||!hash(jsa?.rawHtmlSha256)||!hash(independent.rawHtmlSha256)||
+    independent.identityVerified!==true||independent.independentOfApi!==true||
+    independent.originalMeasurementsUnchanged!==true||dob.birthDateStatus!=='match'||
+    jsa?.bashoReconciliation?.status!=='historical-tournaments-agree'||
+    jsa?.bashoReconciliation?.discrepantBasho!==0)
+  return reject('source-identity-or-independent-baseline-invalid');
+ if(asOf.monthYear!==expectedMonth||!Number.isInteger(asOf.day)||asOf.day<2||asOf.day>15)
+  return reject('dated-official-basho-cutoff-not-verified');
+ const current=(p?.perBasho||[]).find(x=>x.bashoId===basho);
+ const officialCurrent=(jsa?.officialBashoRecords||[]).find(x=>x.bashoId===basho);
+ const valid=n=>Number.isSafeInteger(n)&&n>=0;
+ if(!current||!officialCurrent||
+    ![native.wins,native.losses,native.absences,official.wins,official.losses,official.absences,
+       officialCurrent.wins,officialCurrent.losses,officialCurrent.absences].every(valid))
+  return reject('career-or-current-absence-value-missing');
+ if(native.wins!==official.wins||native.losses!==official.losses||
+    official.absences!==native.absences+1||
+    independentCareer.wins!==native.wins||
+    independentCareer.losses!==native.losses||
+    independentCareer.absences!==native.absences)
+  return reject('one-day-absence-delta-and-independent-native-baseline-not-exact');
+ if(current.wins!==officialCurrent.wins||current.losses!==officialCurrent.losses||
+    current.scheduledBoutRows!==current.wins+current.losses||
+    officialCurrent.absences<1||
+    officialCurrent.wins+officialCurrent.losses+officialCurrent.absences!==asOf.day)
+  return reject('current-tournament-count-or-official-as-of-day-invalid');
+ const priorNative=(p?.perBasho||[]).filter(x=>x.bashoId!==basho);
+ const byJsa=new Map((jsa.officialBashoRecords||[]).map(x=>[x.bashoId,x]));
+ if(priorNative.some(x=>{const o=byJsa.get(x.bashoId);
+   return !o||x.wins!==o.wins||x.losses!==o.losses;}))
+  return reject('completed-basho-ledger-does-not-reconcile');
+ const prior=(jsa.officialBashoRecords||[]).filter(x=>x.bashoId!==basho&&x.absences!=null);
+ if(prior.some(x=>!valid(x.absences)))return reject('historical-absence-count-invalid');
+ const priorPublished=prior.reduce((n,x)=>n+x.absences,0);
+ if(priorPublished!==official.absences-officialCurrent.absences)
+  return reject('published-historical-absence-total-not-fully-reconciled');
+ const nativeCurrentAbsences=native.absences-priorPublished;
+ if(nativeCurrentAbsences<0||nativeCurrentAbsences!==officialCurrent.absences-1||
+    nativeCurrentAbsences+current.wins+current.losses!==asOf.day-1)
+  return reject('native-prior-day-absence-window-not-proved');
+ return {passed:true,activeBasho:basho,officialAsOfDay:asOf.day,
+  nativeEarlierDay:asOf.day-1,priorPublishedAbsences:priorPublished,
+  nativeCurrentAbsences,officialCurrentAbsences:officialCurrent.absences,
+  nativeCareerAbsences:native.absences,publishedJsaCareerAbsences:official.absences,
+  matchingIndependentEarlierWLA:true,extraPublishedAbsenceDays:1,
+  originalSourceTotalsUnchanged:true,certified:false};
+}
+
 export function preflightRikishi(w,p,jsa,sdb,activeBasho){
  if(!id(w?.sourceId)||!id(w?.officialNskId)||!id(w?.sumoDbId)||
    !p||p.sourceId!==w.sourceId||p.officialNskId!==w.officialNskId||
@@ -458,6 +530,7 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
  const jsaHasCareer=officialId&&jsa.career!==null&&jsa.career!==undefined;
  const currentCutoff=independentlyVerifiedCurrentBashoCutoff(p,jsa,activeBasho);
  const laterIndependent=independentlyReconciledLaterSumoDbCurrentBasho(p,jsa,sdb,activeBasho);
+ const absenceCutoff=independentlyReconciledOneDayAbsenceCutoff(w,p,jsa,sdb,activeBasho);
  const fullAttendance=proveZeroCareerAbsencesFromCompleteBasho(p,jsa,sdb,activeBasho);
  const jsaWinLossMatches=jsaHasCareer&&(
   jsa.career.wins===p.career?.wins&&jsa.career.losses===p.career?.losses||
@@ -466,7 +539,7 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
   'official-JSA-career-totals-unpublished-or-disagree');
  const jsaAbsencesPresent=jsaHasCareer&&jsa.career.absences!=null;
  add(jsaAbsencesPresent?
-   jsa.career.absences===p.career?.absences:
+   (jsa.career.absences===p.career?.absences||absenceCutoff.passed):
    officialId&&(fullAttendance.passed||
     (independentlyMatched&&(!jsaHasCareer||jsaWinLossMatches)||laterIndependent.passed)),
   'official-absence-total-unpublished-or-disagree');
@@ -500,9 +573,10 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
    sourceRankCoverage.independentAdditional:0,
   documentedNoPublishedNumberedDebutRank:justifiedDebutGap,
   debutRankStillUnpublished:justifiedDebutGap?String(p.rankHistoryGaps[0].bashoId):null,
-  careerTotalsEvidence:jsaWinLossMatches&&jsaAbsencesPresent?
+  careerTotalsEvidence:jsaWinLossMatches&&jsaAbsencesPresent&&jsa.career.absences===p.career?.absences?
    (currentCutoff.passed?'published-JSA-three-part-WLA-as-of-reconciled':
-    'published-JSA-three-part-career-record'):fullAttendance.passed?
+    'published-JSA-three-part-career-record'):absenceCutoff.passed?
+   'published-JSA-day-labelled-one-absence-cutoff-plus-SumoDB-baseline':fullAttendance.passed?
    'independent-complete-ranked-basho-proof-of-native-zero-absences':
    independentlyMatched&&(!jsaHasCareer||jsaWinLossMatches)?
    'independent-SumoDB-three-part-career-record-plus-JSA-basho':laterIndependent.passed?

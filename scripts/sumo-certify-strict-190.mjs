@@ -13,7 +13,7 @@ import {readFile,writeFile,rename,mkdir} from 'node:fs/promises';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {cohortCurrentBasho} from './sumo-jsa-public-spotcheck.mjs';
-import {documentedDebutRankGap,supplementalHistoricalBashoCoverage,independentHistoricalRankCoverage,independentlyVerifiedCurrentBashoCutoff,proveZeroCareerAbsencesFromCompleteBasho,independentlyCorroboratedProfileWeightForCareerOnly,independentlyReconciledLaterSumoDbCurrentBasho} from './sumo-certification-preflight-190.mjs';
+import {documentedDebutRankGap,supplementalHistoricalBashoCoverage,independentHistoricalRankCoverage,independentlyVerifiedCurrentBashoCutoff,proveZeroCareerAbsencesFromCompleteBasho,independentlyCorroboratedProfileWeightForCareerOnly,independentlyReconciledLaterSumoDbCurrentBasho,independentlyReconciledOneDayAbsenceCutoff} from './sumo-certification-preflight-190.mjs';
 
 const ROOT='data/sumo/backfill/v1';
 const load=async p=>JSON.parse(await readFile(p,'utf8'));
@@ -91,6 +91,7 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
  const jsaCareerPresent=j.career!=null;
  const currentCutoff=independentlyVerifiedCurrentBashoCutoff(p,j,activeBasho);
  const laterIndependent=independentlyReconciledLaterSumoDbCurrentBasho(p,j,weight,activeBasho);
+ const absenceCutoff=independentlyReconciledOneDayAbsenceCutoff(w,p,j,weight,activeBasho);
  const zeroAbsenceProof=proveZeroCareerAbsencesFromCompleteBasho(p,j,weight,activeBasho);
  const jsaWLMatches=jsaCareerPresent&&(
   j.career.wins===p?.career?.wins&&j.career.losses===p?.career?.losses||
@@ -98,6 +99,7 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
  const jsaAbsencePresent=jsaCareerPresent&&j.career.absences!=null;
  const basis=jsaWLMatches&&jsaAbsencePresent&&
   j.career.absences===p?.career?.absences?'published-JSA-career-WLA':
+  absenceCutoff.passed?'published-JSA-day-labelled-one-absence-cutoff-plus-independent-SumoDB-baseline':
   zeroAbsenceProof.passed?
    'source-complete-ranked-basho-prove-zero-native-absences':
   exactIndependent&&(!jsaCareerPresent||jsaWLMatches)&&
@@ -155,6 +157,8 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
   careerTotalsEvidenceBasis:careerResultsCertified?basis:null,
   laterIndependentCareerCutoffReconciled:careerResultsCertified&&laterIndependent.passed,
   laterIndependentCareerCutoffEvidence:careerResultsCertified&&laterIndependent.passed?laterIndependent:null,
+  datedJsaAbsenceCutoffReconciled:careerResultsCertified&&absenceCutoff.passed,
+  datedJsaAbsenceCutoffEvidence:careerResultsCertified&&absenceCutoff.passed?absenceCutoff:null,
   datedJsaCareerCutoffReconciled:careerResultsCertified&&currentCutoff.passed,
   datedJsaCareerCutoffEvidence:careerResultsCertified&&currentCutoff.passed?
    currentCutoff:null,

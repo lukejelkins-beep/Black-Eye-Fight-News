@@ -47,7 +47,10 @@ jobs:
           if(r.count!==190||r.rikishi.length!==190||s.cohortSize!==190||p.cohortSize!==190||
              s.strictAuditSuccessful!==true||
              s.strictCareerResultsCertified+s.blocked!==190||
-             s.strictCareerResultsCertified!==188||
+             s.strictCareerResultsCertified!==190||
+             s.blocked!==0||
+             s.rows.find(x=>x.sourceId===112)?.careerResultsCertified!==true||
+             s.rows.find(x=>x.sourceId===98)?.careerResultsCertified!==true||
              s.rows.find(x=>x.sourceId===118)?.careerResultsCertified!==true||
              s.rows.find(x=>x.sourceId===172)?.careerResultsCertified!==true||
              s.rows.find(x=>x.sourceId===9104)?.careerResultsCertified!==true||

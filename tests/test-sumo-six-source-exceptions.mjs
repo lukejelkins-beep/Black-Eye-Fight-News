@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {preflightRikishi,proveZeroCareerAbsencesFromCompleteBasho,independentlyCorroboratedProfileWeightForCareerOnly,independentlyReconciledLaterSumoDbCurrentBasho}
+import {preflightRikishi,proveZeroCareerAbsencesFromCompleteBasho,independentlyCorroboratedProfileWeightForCareerOnly,independentlyReconciledLaterSumoDbCurrentBasho,independentlyReconciledOneDayAbsenceCutoff}
  from '../scripts/sumo-certification-preflight-190.mjs';
 
 const read=path=>JSON.parse(readFileSync(new URL('../'+path,import.meta.url),'utf8'));
@@ -137,5 +137,32 @@ test('later SumoDB current-basho single-win snapshots reconcile two exact earlie
   const mismatch=structuredClone(j);
   mismatch.officialBashoRecords.find(x=>x.bashoId==='202611').wins+=1;
   assert.equal(independentlyReconciledLaterSumoDbCurrentBasho(p,mismatch,s,'202611').passed,false);
+ }
+});
+
+test('one-day JSA absence cutoff matches independent baseline without rewriting raw career totals',()=>{
+ for(const [id,expectedEarlierAbsences,expectedPrior] of [[112,5,1],[98,10,4]]){
+  const w=wrestler(id),p=projected(id),j=official(id),s=source(id);
+  const r=independentlyReconciledOneDayAbsenceCutoff(w,p,j,s,'202611');
+  assert.equal(r.passed,true,JSON.stringify(r));
+  assert.equal(r.nativeCareerAbsences,expectedEarlierAbsences);
+  assert.equal(r.priorPublishedAbsences,expectedPrior);
+  assert.equal(r.extraPublishedAbsenceDays,1);
+  assert.equal(r.originalSourceTotalsUnchanged,true);
+  const row=preflightRikishi(w,p,j,s,'202611');
+  assert.equal(row.classification,'candidate-for-strict-audit',JSON.stringify(row.blockers));
+  assert.equal(row.certified,false);
+  const wrongDay=structuredClone(j);
+  wrongDay.officialAsOf.day=7;
+  assert.equal(independentlyReconciledOneDayAbsenceCutoff(w,p,wrongDay,s,'202611').passed,false);
+  const excess=structuredClone(j);
+  excess.career.absences+=1;
+  assert.equal(independentlyReconciledOneDayAbsenceCutoff(w,p,excess,s,'202611').passed,false);
+  const missing=structuredClone(s);
+  missing.careerRecordCrosscheck.career.absences=null;
+  assert.equal(independentlyReconciledOneDayAbsenceCutoff(w,p,j,missing,'202611').passed,false);
+  const oldMismatch=structuredClone(j);
+  oldMismatch.officialBashoRecords.find(x=>x.bashoId==='202609').wins+=1;
+  assert.equal(independentlyReconciledOneDayAbsenceCutoff(w,p,oldMismatch,s,'202611').passed,false);
  }
 });
