@@ -1,0 +1,41 @@
+name: Sumo — import official JSA kimarite photos
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feat/sumo-section-test-20261114
+    paths:
+      - .github/workflows/sumo-jsa-kimarite-photos.yml
+      - scripts/fetch-jsa-kimarite-photos.py
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sumo-jsa-photo-import
+  cancel-in-progress: false
+
+jobs:
+  import-photos:
+    name: Download and verify all 82 JSA photos
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Check out latest Sumo test branch
+        uses: actions/checkout@v4
+        with:
+          ref: feat/sumo-section-test-20261114
+          persist-credentials: true
+      - name: Import 82 official reference images
+        run: python3 scripts/fetch-jsa-kimarite-photos.py
+      - name: Commit local copies for browser reliability
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/sumo-kimarite/jsa/kimarite_*.jpg
+          if git diff --staged --quiet; then
+            echo "All 82 official photos are already committed."
+          else
+            git commit -m "Sumo preview: bundle 82 official JSA kimarite photos for mobile cards"
+            git push origin HEAD:feat/sumo-section-test-20261114
+          fi
