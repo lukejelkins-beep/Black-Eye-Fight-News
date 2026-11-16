@@ -381,13 +381,16 @@ test('current measurement cards use JSA publication separately from source API m
  assert.equal(unknown.kg,172,'mismatched identity must not import official data');
  assert.equal(unknown.heightSource,'Sumo API roster listing');
 });
-test('current listed weights feed both Sumo profile information and matchup cards with provenance',()=>{
- const js=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
- assert.match(js,/publishedCurrentWeight\(w,STATE\.careerHistory\)/);
- assert.match(js,/Weight source\/date\/precision review unresolved/);
- assert.match(js,/current\.weightSource/);
+test('published measurement values feed profile facts while provenance stays in research data',()=>{
+  const js=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
+  const charts=readFileSync(new URL('../assets/sumo-editorial-charts.mjs',import.meta.url),'utf8');
+  assert.match(js,/publishedCurrentWeight\(w,STATE\.careerHistory\)/);
+  assert.match(js,/fact\('Weight · undated',current\.mass/);
+  assert.match(charts,/datedWeightObservations\(entry\)/);
+  assert.doesNotMatch(js,/Weight source\/date\/precision review unresolved/);
+  assert.doesNotMatch(js,/sectionHead\('sources'/);
+  assert.doesNotMatch(charts,/sumo-career-summary/);
 });
-
 test('differing official JSA height remains labelled and reviewable; cannot generate an historical weigh-in',()=>{
  const w={sourceId:8860,officialNskId:4310,heightCm:190.1,weightKg:161.6};
  const doc={bySourceId:{8860:{sumoApiId:8860,officialNskId:4310,
