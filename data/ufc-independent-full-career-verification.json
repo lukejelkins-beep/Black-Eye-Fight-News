@@ -59520,6 +59520,1616 @@
         }
       ],
       "note": "Evidence-only research; do not publish or merge until successful current-HEAD 783-person strict audit. No missing metrics inferred."
+    },
+    "jiri-prochazka": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Jiri Prochazka",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/009341ed974bad72",
+      "officialFighterUrl": "https://www.ufc.com/athlete/jiri-prochazka",
+      "earliestOfficialUfcBout": "2020-07-11",
+      "latestCompletedOfficialUfcBout": "2026-04-11",
+      "officialUfcCareerBoutCount": 9,
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "80258ab3d9f413cad9be13fde64beb66dd0bcfa6",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "24238cb71d7bec6522a77f285b530274b3c897b9",
+        "method": "Complete independently pinned UFCStats Greco fight list, one-to-one matched to every saved official Octagon original numeric bout, both fighter IDs, exact outcome, opponent, date ±1 day and positive measured rounds; source-identified DWCS excluded without removal.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "196"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "bouts": [
+        {
+          "date": "2020-07-11",
+          "opponent": "Volkan Oezdemir",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/cd8cdb539deaa47f",
+          "eventUrl": "https://ufcstats.com/event-details/dbd198f780286aca",
+          "nativeBoutId": "65668",
+          "nativeFighterId": "196"
+        },
+        {
+          "date": "2021-05-01",
+          "opponent": "Dominick Reyes",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/394802bb096b403e",
+          "eventUrl": "https://ufcstats.com/event-details/d57e6a8971b6d2bd",
+          "nativeBoutId": "61562",
+          "nativeFighterId": "196"
+        },
+        {
+          "date": "2022-06-11",
+          "opponent": "Glover Teixeira",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fd49f89b9d97566b",
+          "eventUrl": "https://ufcstats.com/event-details/3a24769a4855040a",
+          "nativeBoutId": "59583",
+          "nativeFighterId": "196"
+        },
+        {
+          "date": "2023-11-11",
+          "opponent": "Alex Pereira",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b1f2ec122beda7a5",
+          "eventUrl": "https://ufcstats.com/event-details/5a558ba1ff5e9121",
+          "nativeBoutId": "59960",
+          "nativeFighterId": "196"
+        },
+        {
+          "date": "2024-04-13",
+          "opponent": "Aleksandar Rakic",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/eda1e8c285a0a788",
+          "eventUrl": "https://ufcstats.com/event-details/6750e338922a099d",
+          "nativeBoutId": "53792",
+          "nativeFighterId": "196"
+        },
+        {
+          "date": "2024-06-29",
+          "opponent": "Alex Pereira",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/bca5d01f8775f852",
+          "eventUrl": "https://ufcstats.com/event-details/f3743d8ef5dde970",
+          "nativeBoutId": "61041",
+          "nativeFighterId": "196"
+        },
+        {
+          "date": "2025-01-18",
+          "opponent": "Jamahal Hill",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/959fea398ffa5778",
+          "eventUrl": "https://ufcstats.com/event-details/39f68882def7a507",
+          "nativeBoutId": "60943",
+          "nativeFighterId": "196"
+        },
+        {
+          "date": "2025-10-04",
+          "opponent": "Khalil Rountree Jr.",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2560ea97b2cce4ef",
+          "eventUrl": "https://ufcstats.com/event-details/8944a0f9b2f0ce6d",
+          "nativeBoutId": "60740",
+          "nativeFighterId": "196"
+        },
+        {
+          "date": "2026-04-11",
+          "opponent": "Carlos Ulberg",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a031f062b7ffefee",
+          "eventUrl": "https://ufcstats.com/event-details/f3eb664db7fb1df3",
+          "nativeBoutId": "65985",
+          "nativeFighterId": "196"
+        }
+      ],
+      "note": "Research-only certified source proof pending strict current-HEAD complete 783-person regression gate. Historic feeder rows preserved without zero statistics substitution."
+    },
+    "andre-muniz": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Andre Muniz",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/886264a0c9f4ea5e",
+      "officialFighterUrl": "https://www.ufc.com/athlete/andre-muniz",
+      "earliestOfficialUfcBout": "2019-11-16",
+      "latestCompletedOfficialUfcBout": "2025-10-04",
+      "officialUfcCareerBoutCount": 10,
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "80258ab3d9f413cad9be13fde64beb66dd0bcfa6",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "24238cb71d7bec6522a77f285b530274b3c897b9",
+        "method": "Complete independently pinned UFCStats Greco fight list, one-to-one matched to every saved official Octagon original numeric bout, both fighter IDs, exact outcome, opponent, date ±1 day and positive measured rounds; source-identified DWCS excluded without removal.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "188"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83875",
+          "date": "2018-08-11",
+          "opponent": "Bruno Assis",
+          "event": "Dana White's Contender Series",
+          "sourceUrl": "https://www.ufc.com/athlete/andre-muniz",
+          "reason": "Independently UFC.com-source-verified DWCS feeder preserved in raw profile, excluded from official Octagon history"
+        },
+        {
+          "nativeBoutId": "88223",
+          "date": "2019-08-06",
+          "opponent": "Taylor Johnson",
+          "event": "Dana White's Contender Series",
+          "sourceUrl": "https://www.ufc.com/athlete/andre-muniz",
+          "reason": "Independently UFC.com-source-verified DWCS feeder preserved in raw profile, excluded from official Octagon history"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2019-11-16",
+          "opponent": "Antonio Arroyo",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/57b111b54a2d2323",
+          "eventUrl": "https://ufcstats.com/event-details/81ca2c245b19b3c5",
+          "nativeBoutId": "62067",
+          "nativeFighterId": "188"
+        },
+        {
+          "date": "2020-09-05",
+          "opponent": "Bartosz Fabinski",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e8206c7380441fbb",
+          "eventUrl": "https://ufcstats.com/event-details/542db012217ecb83",
+          "nativeBoutId": "59358",
+          "nativeFighterId": "188"
+        },
+        {
+          "date": "2021-05-15",
+          "opponent": "Jacare Souza",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ca22bafab913aae7",
+          "eventUrl": "https://ufcstats.com/event-details/744f50016c39c26c",
+          "nativeBoutId": "59514",
+          "nativeFighterId": "188"
+        },
+        {
+          "date": "2021-12-11",
+          "opponent": "Eryk Anders",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/16243b1470887cb6",
+          "eventUrl": "https://ufcstats.com/event-details/ef927e4fe2117ab8",
+          "nativeBoutId": "59625",
+          "nativeFighterId": "188"
+        },
+        {
+          "date": "2022-07-02",
+          "opponent": "Uriah Hall",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/99ac96bb67e5c5e4",
+          "eventUrl": "https://ufcstats.com/event-details/4a9e305633f3ef47",
+          "nativeBoutId": "61489",
+          "nativeFighterId": "188"
+        },
+        {
+          "date": "2023-02-25",
+          "opponent": "Brendan Allen",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/2ba11e0bf32829d6",
+          "eventUrl": "https://ufcstats.com/event-details/806975e1b4f47b27",
+          "nativeBoutId": "59705",
+          "nativeFighterId": "188"
+        },
+        {
+          "date": "2023-07-22",
+          "opponent": "Paul Craig",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8104fe27bdc46914",
+          "eventUrl": "https://ufcstats.com/event-details/1174782eacde9b0c",
+          "nativeBoutId": "60103",
+          "nativeFighterId": "188"
+        },
+        {
+          "date": "2023-12-09",
+          "opponent": "JunYong Park",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1afc4f372a125c74",
+          "eventUrl": "https://ufcstats.com/event-details/5ef0088c1b19beeb",
+          "nativeBoutId": "59941",
+          "nativeFighterId": "188"
+        },
+        {
+          "date": "2025-04-26",
+          "opponent": "Ikram Aliskerov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/62fbdd4f0bcd3c2a",
+          "eventUrl": "https://ufcstats.com/event-details/b2e3aca4cd363477",
+          "nativeBoutId": "60879",
+          "nativeFighterId": "188"
+        },
+        {
+          "date": "2025-10-04",
+          "opponent": "Edmen Shahbazyan",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/1c7cc3a22ab7d907",
+          "eventUrl": "https://ufcstats.com/event-details/8944a0f9b2f0ce6d",
+          "nativeBoutId": "60746",
+          "nativeFighterId": "188"
+        }
+      ],
+      "note": "Research-only certified source proof pending strict current-HEAD complete 783-person regression gate. Historic feeder rows preserved without zero statistics substitution."
+    },
+    "ilia-topuria": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Ilia Topuria",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/54f64b5e283b0ce7",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ilia-topuria",
+      "earliestOfficialUfcBout": "2020-10-10",
+      "latestCompletedOfficialUfcBout": "2026-06-14",
+      "officialUfcCareerBoutCount": 10,
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "80258ab3d9f413cad9be13fde64beb66dd0bcfa6",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "24238cb71d7bec6522a77f285b530274b3c897b9",
+        "method": "Complete independently pinned UFCStats Greco fight list, one-to-one matched to every saved official Octagon original numeric bout, both fighter IDs, exact outcome, opponent, date ±1 day and positive measured rounds; source-identified DWCS excluded without removal.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "99"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "bouts": [
+        {
+          "date": "2020-10-10",
+          "opponent": "Youssef Zalal",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/22fe6779c3fa649d",
+          "eventUrl": "https://ufcstats.com/event-details/fd4578cac86d75ca",
+          "nativeBoutId": "61798",
+          "nativeFighterId": "99"
+        },
+        {
+          "date": "2020-12-05",
+          "opponent": "Damon Jackson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b1be8b41b1a4fd85",
+          "eventUrl": "https://ufcstats.com/event-details/398b440e73d55b8b",
+          "nativeBoutId": "66180",
+          "nativeFighterId": "99"
+        },
+        {
+          "date": "2021-07-10",
+          "opponent": "Ryan Hall",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/07468b6347ac5e3d",
+          "eventUrl": "https://ufcstats.com/event-details/8a0be41c0380188d",
+          "nativeBoutId": "59443",
+          "nativeFighterId": "99"
+        },
+        {
+          "date": "2022-03-19",
+          "opponent": "Jai Herbert",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a200b5dcbdd2506e",
+          "eventUrl": "https://ufcstats.com/event-details/1d00756835ca67c9",
+          "nativeBoutId": "61425",
+          "nativeFighterId": "99"
+        },
+        {
+          "date": "2022-12-10",
+          "opponent": "Bryce Mitchell",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/4a17876e99f6baf3",
+          "eventUrl": "https://ufcstats.com/event-details/f65a0eb902f9476b",
+          "nativeBoutId": "61228",
+          "nativeFighterId": "99"
+        },
+        {
+          "date": "2023-06-24",
+          "opponent": "Josh Emmett",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c3ef3cb03edde8bb",
+          "eventUrl": "https://ufcstats.com/event-details/a780d16cf7eed44d",
+          "nativeBoutId": "60153",
+          "nativeFighterId": "99"
+        },
+        {
+          "date": "2024-02-17",
+          "opponent": "Alexander Volkanovski",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/bec3154a11df3299",
+          "eventUrl": "https://ufcstats.com/event-details/dab0e6cb8c932162",
+          "nativeBoutId": "59888",
+          "nativeFighterId": "99"
+        },
+        {
+          "date": "2024-10-26",
+          "opponent": "Max Holloway",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ebf7cea27b83c432",
+          "eventUrl": "https://ufcstats.com/event-details/221b2a3070c7ce3e",
+          "nativeBoutId": "60178",
+          "nativeFighterId": "99"
+        },
+        {
+          "date": "2025-06-28",
+          "opponent": "Charles Oliveira",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/7a64d63e12618ba7",
+          "eventUrl": "https://ufcstats.com/event-details/66766984842c13dc",
+          "nativeBoutId": "60260",
+          "nativeFighterId": "99"
+        },
+        {
+          "date": "2026-06-14",
+          "opponent": "Justin Gaethje",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7208e40818401e88",
+          "eventUrl": "https://ufcstats.com/event-details/48544433372ecfa6",
+          "nativeBoutId": "66005",
+          "nativeFighterId": "99"
+        }
+      ],
+      "note": "Research-only certified source proof pending strict current-HEAD complete 783-person regression gate. Historic feeder rows preserved without zero statistics substitution."
+    },
+    "jordan-leavitt": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Jordan Leavitt",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/ac026518a9b4dc0f",
+      "officialFighterUrl": "https://www.ufc.com/athlete/jordan-leavitt",
+      "earliestOfficialUfcBout": "2020-12-05",
+      "latestCompletedOfficialUfcBout": "2026-06-06",
+      "officialUfcCareerBoutCount": 10,
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "80258ab3d9f413cad9be13fde64beb66dd0bcfa6",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "24238cb71d7bec6522a77f285b530274b3c897b9",
+        "method": "Complete independently pinned UFCStats Greco fight list, one-to-one matched to every saved official Octagon original numeric bout, both fighter IDs, exact outcome, opponent, date ±1 day and positive measured rounds; source-identified DWCS excluded without removal.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "89"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83941",
+          "date": "2020-08-04",
+          "opponent": "Luke Flores",
+          "event": "Dana White's Contender Series",
+          "sourceUrl": "https://www.ufc.com/news/dana-whites-contender-series-week-1-results",
+          "reason": "Independently UFC.com-source-verified DWCS feeder preserved in raw profile, excluded from official Octagon history"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2020-12-05",
+          "opponent": "Matt Wiman",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/856fab879c68ded7",
+          "eventUrl": "https://ufcstats.com/event-details/398b440e73d55b8b",
+          "nativeBoutId": "66178",
+          "nativeFighterId": "89"
+        },
+        {
+          "date": "2021-06-05",
+          "opponent": "Claudio Puelles",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/58c5d506181812fa",
+          "eventUrl": "https://ufcstats.com/event-details/3b2485c8d5c8b580",
+          "nativeBoutId": "59508",
+          "nativeFighterId": "89"
+        },
+        {
+          "date": "2021-12-18",
+          "opponent": "Matt Sayles",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ea76a3af8c5ecc55",
+          "eventUrl": "https://ufcstats.com/event-details/2a470ad41c22c25a",
+          "nativeBoutId": "61355",
+          "nativeFighterId": "89"
+        },
+        {
+          "date": "2022-04-16",
+          "opponent": "Trey Ogden",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/eac46cfead228e11",
+          "eventUrl": "https://ufcstats.com/event-details/8753e125f4499816",
+          "nativeBoutId": "61526",
+          "nativeFighterId": "89"
+        },
+        {
+          "date": "2022-07-23",
+          "opponent": "Paddy Pimblett",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8e02bdaac8ed50e5",
+          "eventUrl": "https://ufcstats.com/event-details/319c15b8aac5bfde",
+          "nativeBoutId": "59559",
+          "nativeFighterId": "89"
+        },
+        {
+          "date": "2023-02-25",
+          "opponent": "Victor Martinez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a7f66f13f953352f",
+          "eventUrl": "https://ufcstats.com/event-details/806975e1b4f47b27",
+          "nativeBoutId": "59711",
+          "nativeFighterId": "89"
+        },
+        {
+          "date": "2023-11-18",
+          "opponent": "Chase Hooper",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5be63144ac46f97e",
+          "eventUrl": "https://ufcstats.com/event-details/3feed7d02711d8b7",
+          "nativeBoutId": "59975",
+          "nativeFighterId": "89"
+        },
+        {
+          "date": "2025-05-31",
+          "opponent": "Kurt Holobaugh",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2521fed000747f47",
+          "eventUrl": "https://ufcstats.com/event-details/2a898bf9fb7710b3",
+          "nativeBoutId": "38403",
+          "nativeFighterId": "89"
+        },
+        {
+          "date": "2026-02-21",
+          "opponent": "Yadier del Valle",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5b97f47cdd355cbe",
+          "eventUrl": "https://ufcstats.com/event-details/79ab17db3b40831a",
+          "nativeBoutId": "60671",
+          "nativeFighterId": "89"
+        },
+        {
+          "date": "2026-06-06",
+          "opponent": "Joanderson Brito",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/44cfbb8c3c356c65",
+          "eventUrl": "https://ufcstats.com/event-details/ba17afef01ed78b6",
+          "nativeBoutId": "66020",
+          "nativeFighterId": "89"
+        }
+      ],
+      "note": "Research-only certified source proof pending strict current-HEAD complete 783-person regression gate. Historic feeder rows preserved without zero statistics substitution."
+    },
+    "khamzat-chimaev": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Khamzat Chimaev",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/767755fd74662dbf",
+      "officialFighterUrl": "https://www.ufc.com/athlete/khamzat-chimaev",
+      "earliestOfficialUfcBout": "2020-07-15",
+      "latestCompletedOfficialUfcBout": "2026-05-09",
+      "officialUfcCareerBoutCount": 10,
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "80258ab3d9f413cad9be13fde64beb66dd0bcfa6",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "24238cb71d7bec6522a77f285b530274b3c897b9",
+        "method": "Complete independently pinned UFCStats Greco fight list, one-to-one matched to every saved official Octagon original numeric bout, both fighter IDs, exact outcome, opponent, date ±1 day and positive measured rounds; source-identified DWCS excluded without removal.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "1"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "bouts": [
+        {
+          "date": "2020-07-15",
+          "opponent": "John Phillips",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/7fd810af30144119",
+          "eventUrl": "https://ufcstats.com/event-details/18f5669a92e99d92",
+          "nativeBoutId": "65681",
+          "nativeFighterId": "1"
+        },
+        {
+          "date": "2020-07-25",
+          "opponent": "Rhys McKee",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/573d3a6984cbcd29",
+          "eventUrl": "https://ufcstats.com/event-details/dde70a112e053a6c",
+          "nativeBoutId": "65642",
+          "nativeFighterId": "1"
+        },
+        {
+          "date": "2020-09-19",
+          "opponent": "Gerald Meerschaert",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/498766b46b8b4a7f",
+          "eventUrl": "https://ufcstats.com/event-details/831b937811804dad",
+          "nativeBoutId": "61781",
+          "nativeFighterId": "1"
+        },
+        {
+          "date": "2021-10-30",
+          "opponent": "Li Jingliang",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/987cdcbc809e210d",
+          "eventUrl": "https://ufcstats.com/event-details/3974fa35c917af1d",
+          "nativeBoutId": "61707",
+          "nativeFighterId": "1"
+        },
+        {
+          "date": "2022-04-09",
+          "opponent": "Gilbert Burns",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/394b0347b0438622",
+          "eventUrl": "https://ufcstats.com/event-details/3a97fda0de6f1fa4",
+          "nativeBoutId": "61584",
+          "nativeFighterId": "1"
+        },
+        {
+          "date": "2022-09-10",
+          "opponent": "Kevin Holland",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0111e6a64b5184c6",
+          "eventUrl": "https://ufcstats.com/event-details/93bf96be327fcd98",
+          "nativeBoutId": "59827",
+          "nativeFighterId": "1"
+        },
+        {
+          "date": "2023-10-21",
+          "opponent": "Kamaru Usman",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f23e9729b2b73c27",
+          "eventUrl": "https://ufcstats.com/event-details/13a0fb8fbdafb54f",
+          "nativeBoutId": "59998",
+          "nativeFighterId": "1"
+        },
+        {
+          "date": "2024-10-26",
+          "opponent": "Robert Whittaker",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b8bf186f884678ea",
+          "eventUrl": "https://ufcstats.com/event-details/221b2a3070c7ce3e",
+          "nativeBoutId": "60179",
+          "nativeFighterId": "1"
+        },
+        {
+          "date": "2025-08-16",
+          "opponent": "Dricus Du Plessis",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/12cedec11b37ddc0",
+          "eventUrl": "https://ufcstats.com/event-details/421ccfc6ddb17958",
+          "nativeBoutId": "60496",
+          "nativeFighterId": "1"
+        },
+        {
+          "date": "2026-05-09",
+          "opponent": "Sean Strickland",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/70f1621080b3435c",
+          "eventUrl": "https://ufcstats.com/event-details/9eedac48b497de5a",
+          "nativeBoutId": "66050",
+          "nativeFighterId": "1"
+        }
+      ],
+      "note": "Research-only certified source proof pending strict current-HEAD complete 783-person regression gate. Historic feeder rows preserved without zero statistics substitution."
+    },
+    "tatsuro-taira": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Tatsuro Taira",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/4461d7e47375a895",
+      "officialFighterUrl": "https://www.ufc.com/athlete/tatsuro-taira",
+      "earliestOfficialUfcBout": "2022-05-14",
+      "latestCompletedOfficialUfcBout": "2026-05-09",
+      "officialUfcCareerBoutCount": 10,
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "80258ab3d9f413cad9be13fde64beb66dd0bcfa6",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "24238cb71d7bec6522a77f285b530274b3c897b9",
+        "method": "Complete independently pinned UFCStats Greco fight list, one-to-one matched to every saved official Octagon original numeric bout, both fighter IDs, exact outcome, opponent, date ±1 day and positive measured rounds; source-identified DWCS excluded without removal.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "4"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "bouts": [
+        {
+          "date": "2022-05-14",
+          "opponent": "Carlos Candelario",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/22f1133d02700bb2",
+          "eventUrl": "https://ufcstats.com/event-details/60ba33c3f555a7a3",
+          "nativeBoutId": "61453",
+          "nativeFighterId": "4"
+        },
+        {
+          "date": "2022-10-15",
+          "opponent": "CJ Vergara",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fac560495e61d34c",
+          "eventUrl": "https://ufcstats.com/event-details/49c29e57d4e2be6f",
+          "nativeBoutId": "61210",
+          "nativeFighterId": "4"
+        },
+        {
+          "date": "2023-02-04",
+          "opponent": "Jesus Aguilar",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a26ca06cce403ce2",
+          "eventUrl": "https://ufcstats.com/event-details/d26394fc0e8e880a",
+          "nativeBoutId": "59753",
+          "nativeFighterId": "4"
+        },
+        {
+          "date": "2023-07-08",
+          "opponent": "Édgar Cháirez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d3a9aceeb7e23580",
+          "eventUrl": "https://ufcstats.com/event-details/6085ceb59087514b",
+          "nativeBoutId": "60134",
+          "nativeFighterId": "4"
+        },
+        {
+          "date": "2023-12-09",
+          "opponent": "Carlos Hernandez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/84f6de7c99779e5f",
+          "eventUrl": "https://ufcstats.com/event-details/5ef0088c1b19beeb",
+          "nativeBoutId": "59946",
+          "nativeFighterId": "4"
+        },
+        {
+          "date": "2024-06-15",
+          "opponent": "Alex Perez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/7f14be4e45bca6bd",
+          "eventUrl": "https://ufcstats.com/event-details/9c5828c6fd9dc948",
+          "nativeBoutId": "61054",
+          "nativeFighterId": "4"
+        },
+        {
+          "date": "2024-10-12",
+          "opponent": "Brandon Royval",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/998bde5639c61adb",
+          "eventUrl": "https://ufcstats.com/event-details/5bdcbd8dd681a257",
+          "nativeBoutId": "61116",
+          "nativeFighterId": "4"
+        },
+        {
+          "date": "2025-08-02",
+          "opponent": "HyunSung Park",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/282c8c6c1ed82bfb",
+          "eventUrl": "https://ufcstats.com/event-details/f2c934689243fe4e",
+          "nativeBoutId": "60752",
+          "nativeFighterId": "4"
+        },
+        {
+          "date": "2025-12-06",
+          "opponent": "Brandon Moreno",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/fbbb9e72900b71f5",
+          "eventUrl": "https://ufcstats.com/event-details/bd92cf5da5413d2a",
+          "nativeBoutId": "60522",
+          "nativeFighterId": "4"
+        },
+        {
+          "date": "2026-05-09",
+          "opponent": "Joshua Van",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c85b530861145935",
+          "eventUrl": "https://ufcstats.com/event-details/9eedac48b497de5a",
+          "nativeBoutId": "66051",
+          "nativeFighterId": "4"
+        }
+      ],
+      "note": "Research-only certified source proof pending strict current-HEAD complete 783-person regression gate. Historic feeder rows preserved without zero statistics substitution."
+    },
+    "vitor-petrino": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Vitor Petrino",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/71171fc96445bf65",
+      "officialFighterUrl": "https://www.ufc.com/athlete/vitor-petrino",
+      "earliestOfficialUfcBout": "2023-03-11",
+      "latestCompletedOfficialUfcBout": "2026-08-22",
+      "officialUfcCareerBoutCount": 10,
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "80258ab3d9f413cad9be13fde64beb66dd0bcfa6",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "24238cb71d7bec6522a77f285b530274b3c897b9",
+        "method": "Complete independently pinned UFCStats Greco fight list, one-to-one matched to every saved official Octagon original numeric bout, both fighter IDs, exact outcome, opponent, date ±1 day and positive measured rounds; source-identified DWCS excluded without removal.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "173"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84047",
+          "date": "2022-09-06",
+          "opponent": "Rodolfo Bellato",
+          "event": "Dana White's Contender Series 53",
+          "sourceUrl": "https://www.ufc.com/athlete/vitor-petrino",
+          "reason": "DWCS feeder record from indexed native cache, not UFC Octagon result"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2023-03-11",
+          "opponent": "Anton Turkalj",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8d5b88e0ff253617",
+          "eventUrl": "https://ufcstats.com/event-details/35080a7f406f9ab3",
+          "nativeBoutId": "59672",
+          "nativeFighterId": "173"
+        },
+        {
+          "date": "2023-07-08",
+          "opponent": "Marcin Prachnio",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/69f67a4a690eb15d",
+          "eventUrl": "https://ufcstats.com/event-details/6085ceb59087514b",
+          "nativeBoutId": "60137",
+          "nativeFighterId": "173"
+        },
+        {
+          "date": "2023-11-04",
+          "opponent": "Modestas Bukauskas",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6532b71560ae39e0",
+          "eventUrl": "https://ufcstats.com/event-details/7c4ec656d8fcb867",
+          "nativeBoutId": "59993",
+          "nativeFighterId": "173"
+        },
+        {
+          "date": "2024-03-02",
+          "opponent": "Tyson Pedro",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/df3cc5ec78d05a71",
+          "eventUrl": "https://ufcstats.com/event-details/e4a9dbade7c7e1a7",
+          "nativeBoutId": "61262",
+          "nativeFighterId": "173"
+        },
+        {
+          "date": "2024-05-04",
+          "opponent": "Anthony Smith",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a8718a3419a11e15",
+          "eventUrl": "https://ufcstats.com/event-details/981ab7a0576f76a0",
+          "nativeBoutId": "60918",
+          "nativeFighterId": "173"
+        },
+        {
+          "date": "2024-12-14",
+          "opponent": "Dustin Jacoby",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/7b1bc4ff776f12c1",
+          "eventUrl": "https://ufcstats.com/event-details/72c9c2eadfc3277e",
+          "nativeBoutId": "60371",
+          "nativeFighterId": "173"
+        },
+        {
+          "date": "2025-07-12",
+          "opponent": "Austen Lane",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/4b75d3b7738cb278",
+          "eventUrl": "https://ufcstats.com/event-details/7b03d9df5910917d",
+          "nativeBoutId": "60833",
+          "nativeFighterId": "173"
+        },
+        {
+          "date": "2025-10-11",
+          "opponent": "Thomas Petersen",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a815dafc89adf33b",
+          "eventUrl": "https://ufcstats.com/event-details/9336e86cfd4ceaa1",
+          "nativeBoutId": "65894",
+          "nativeFighterId": "173"
+        },
+        {
+          "date": "2026-03-14",
+          "opponent": "Steven Asplund",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2c330a6f7f1e55f0",
+          "eventUrl": "https://ufcstats.com/event-details/babc6b5745335f18",
+          "nativeBoutId": "60718",
+          "nativeFighterId": "173"
+        },
+        {
+          "date": "2026-08-22",
+          "opponent": "Serghei Spivac",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a57ccf31c5f6f82b",
+          "eventUrl": "https://ufcstats.com/event-details/a0a69dc9914ef6e1",
+          "nativeBoutId": "82990",
+          "nativeFighterId": "173"
+        }
+      ],
+      "note": "Research-only certified source proof pending strict current-HEAD complete 783-person regression gate. Historic feeder rows preserved without zero statistics substitution."
+    },
+    "jamall-emmers": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Jamall Emmers",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/e00a3dee329a51f7",
+      "officialFighterUrl": "https://www.ufc.com/athlete/jamall-emmers",
+      "earliestOfficialUfcBout": "2020-03-07",
+      "latestCompletedOfficialUfcBout": "2026-08-22",
+      "officialUfcCareerBoutCount": 10,
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "80258ab3d9f413cad9be13fde64beb66dd0bcfa6",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "24238cb71d7bec6522a77f285b530274b3c897b9",
+        "method": "Complete independently pinned UFCStats Greco fight list, one-to-one matched to every saved official Octagon original numeric bout, both fighter IDs, exact outcome, opponent, date ±1 day and positive measured rounds; source-identified DWCS excluded without removal.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "425"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84065",
+          "date": "2018-06-26",
+          "opponent": "Julian Erosa",
+          "event": "Dana White's Contender Series",
+          "sourceUrl": "https://www.ufc.com/news/dana-whites-contender-series-season-2-recap",
+          "reason": "Independently UFC.com-source-verified DWCS feeder preserved in raw profile, excluded from official Octagon history"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2020-03-07",
+          "opponent": "Giga Chikadze",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/daa38964824f1b9f",
+          "eventUrl": "https://ufcstats.com/event-details/0b5b6876c2a4723f",
+          "nativeBoutId": "59162",
+          "nativeFighterId": "425"
+        },
+        {
+          "date": "2020-08-01",
+          "opponent": "Vince Cachero",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/76b9a338597fc604",
+          "eventUrl": "https://ufcstats.com/event-details/3746e21bb508391a",
+          "nativeBoutId": "59400",
+          "nativeFighterId": "425"
+        },
+        {
+          "date": "2021-08-28",
+          "opponent": "Pat Sabatini",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ef4484943b1c68a9",
+          "eventUrl": "https://ufcstats.com/event-details/0db9d2486d564a3c",
+          "nativeBoutId": "66300",
+          "nativeFighterId": "425"
+        },
+        {
+          "date": "2023-02-18",
+          "opponent": "Khusein Askhabov",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/43ec12079ccc371c",
+          "eventUrl": "https://ufcstats.com/event-details/f21a3d68fb9df387",
+          "nativeBoutId": "59701",
+          "nativeFighterId": "425"
+        },
+        {
+          "date": "2023-06-24",
+          "opponent": "Jack Jenkins",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/fcc1191761e365f9",
+          "eventUrl": "https://ufcstats.com/event-details/a780d16cf7eed44d",
+          "nativeBoutId": "60164",
+          "nativeFighterId": "425"
+        },
+        {
+          "date": "2023-11-11",
+          "opponent": "Dennis Buzukja",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/1cf69de0eea46877",
+          "eventUrl": "https://ufcstats.com/event-details/5a558ba1ff5e9121",
+          "nativeBoutId": "59972",
+          "nativeFighterId": "425"
+        },
+        {
+          "date": "2024-03-30",
+          "opponent": "Nate Landwehr",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/636b01ee49925e49",
+          "eventUrl": "https://ufcstats.com/event-details/dba230fe33011201",
+          "nativeBoutId": "38985",
+          "nativeFighterId": "425"
+        },
+        {
+          "date": "2025-03-29",
+          "opponent": "Gabriel Miranda",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e2e2537a345367d4",
+          "eventUrl": "https://ufcstats.com/event-details/0f7210aa8d61af8d",
+          "nativeBoutId": "61013",
+          "nativeFighterId": "425"
+        },
+        {
+          "date": "2025-11-08",
+          "opponent": "Hyder Amil",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e3d657dd88864ba7",
+          "eventUrl": "https://ufcstats.com/event-details/6436029b50a9c255",
+          "nativeBoutId": "65904",
+          "nativeFighterId": "425"
+        },
+        {
+          "date": "2026-08-22",
+          "opponent": "Lerryan Douglas",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2bbacf9ed3c64184",
+          "eventUrl": "https://ufcstats.com/event-details/a0a69dc9914ef6e1",
+          "nativeBoutId": "83661",
+          "nativeFighterId": "425"
+        }
+      ],
+      "note": "Research-only certified source proof pending strict current-HEAD complete 783-person regression gate. Historic feeder rows preserved without zero statistics substitution."
+    },
+    "veronica-hardy": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Veronica Hardy",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/4798e823ada58fe9",
+      "officialFighterUrl": "https://www.ufc.com/athlete/veronica-hardy",
+      "earliestOfficialUfcBout": "2016-09-03",
+      "latestCompletedOfficialUfcBout": "2025-10-04",
+      "officialUfcCareerBoutCount": 10,
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "80258ab3d9f413cad9be13fde64beb66dd0bcfa6",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "24238cb71d7bec6522a77f285b530274b3c897b9",
+        "method": "Complete independently pinned UFCStats Greco fight list, one-to-one matched to every saved official Octagon original numeric bout, both fighter IDs, exact outcome, opponent, date ±1 day and positive measured rounds; source-identified DWCS excluded without removal.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "141"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "bouts": [
+        {
+          "date": "2016-09-03",
+          "opponent": "Ashlee Evans-Smith",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/bd887c173d3050bf",
+          "eventUrl": "https://ufcstats.com/event-details/2b4faacc16d66898",
+          "nativeBoutId": "58513",
+          "nativeFighterId": "141"
+        },
+        {
+          "date": "2018-05-19",
+          "opponent": "Andrea Lee",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6222cdc86b12d251",
+          "eventUrl": "https://ufcstats.com/event-details/3144121470023e9a",
+          "nativeBoutId": "65417",
+          "nativeFighterId": "141"
+        },
+        {
+          "date": "2019-02-23",
+          "opponent": "Gillian Robertson",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/4e22e3cdb8757be1",
+          "eventUrl": "https://ufcstats.com/event-details/6546af7ab545b90c",
+          "nativeBoutId": "62352",
+          "nativeFighterId": "141"
+        },
+        {
+          "date": "2019-08-10",
+          "opponent": "Polyana Viana",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/494042bf96730bc0",
+          "eventUrl": "https://ufcstats.com/event-details/e5d03e4d966126bd",
+          "nativeBoutId": "65623",
+          "nativeFighterId": "141"
+        },
+        {
+          "date": "2020-03-14",
+          "opponent": "Bea Malecki",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ef526567c4dcf371",
+          "eventUrl": "https://ufcstats.com/event-details/53278852bcd91e11",
+          "nativeBoutId": "59152",
+          "nativeFighterId": "141"
+        },
+        {
+          "date": "2023-03-18",
+          "opponent": "Juliana Miller",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/53d6d5ad08ac0694",
+          "eventUrl": "https://ufcstats.com/event-details/e4bb7e483c4ad318",
+          "nativeBoutId": "59666",
+          "nativeFighterId": "141"
+        },
+        {
+          "date": "2023-12-02",
+          "opponent": "Jamey-Lyn Horth",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d0ac2cc5c57c4e66",
+          "eventUrl": "https://ufcstats.com/event-details/53e4e21f4c688801",
+          "nativeBoutId": "59959",
+          "nativeFighterId": "141"
+        },
+        {
+          "date": "2024-05-11",
+          "opponent": "JJ Aldrich",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ccf3b6eda4c2a564",
+          "eventUrl": "https://ufcstats.com/event-details/5dfe71ade71f3a4b",
+          "nativeBoutId": "60940",
+          "nativeFighterId": "141"
+        },
+        {
+          "date": "2024-11-16",
+          "opponent": "Eduarda Moura",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/40e2a7b65794ac05",
+          "eventUrl": "https://ufcstats.com/event-details/daff32bc96d1eabf",
+          "nativeBoutId": "60392",
+          "nativeFighterId": "141"
+        },
+        {
+          "date": "2025-10-04",
+          "opponent": "Brogan Walker",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/98883348ddb3be33",
+          "eventUrl": "https://ufcstats.com/event-details/8944a0f9b2f0ce6d",
+          "nativeBoutId": "60751",
+          "nativeFighterId": "141"
+        }
+      ],
+      "note": "Research-only certified source proof pending strict current-HEAD complete 783-person regression gate. Historic feeder rows preserved without zero statistics substitution."
+    },
+    "kyler-phillips": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Kyler Phillips",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/60425d07ef4b91a7",
+      "officialFighterUrl": "https://www.ufc.com/athlete/kyler-phillips",
+      "earliestOfficialUfcBout": "2020-02-29",
+      "latestCompletedOfficialUfcBout": "2026-04-18",
+      "officialUfcCareerBoutCount": 10,
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "80258ab3d9f413cad9be13fde64beb66dd0bcfa6",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "24238cb71d7bec6522a77f285b530274b3c897b9",
+        "method": "Complete independently pinned UFCStats Greco fight list, one-to-one matched to every saved official Octagon original numeric bout, both fighter IDs, exact outcome, opponent, date ±1 day and positive measured rounds; source-identified DWCS excluded without removal.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "570"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "88201",
+          "date": "2017-08-01",
+          "opponent": "James Gray",
+          "event": "Dana White's Contender Series",
+          "sourceUrl": "https://www.ufc.com/athlete/kyler-phillips",
+          "reason": "Independently UFC.com-source-verified DWCS feeder preserved in raw profile, excluded from official Octagon history"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2020-02-29",
+          "opponent": "Gabriel Silva",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0e3af9b5e1b3ae80",
+          "eventUrl": "https://ufcstats.com/event-details/fc9a9559a05f2704",
+          "nativeBoutId": "59169",
+          "nativeFighterId": "570"
+        },
+        {
+          "date": "2020-10-03",
+          "opponent": "Cameron Else",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c00a8682fb5b71bd",
+          "eventUrl": "https://ufcstats.com/event-details/805ad1801eb26abb",
+          "nativeBoutId": "66251",
+          "nativeFighterId": "570"
+        },
+        {
+          "date": "2021-03-06",
+          "opponent": "Song Yadong",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5980ab31e4718a83",
+          "eventUrl": "https://ufcstats.com/event-details/6e2b1d631832921d",
+          "nativeBoutId": "65766",
+          "nativeFighterId": "570"
+        },
+        {
+          "date": "2021-07-24",
+          "opponent": "Raulian Paiva",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/4bb77b1d8efc53a9",
+          "eventUrl": "https://ufcstats.com/event-details/e57f0b06ea39e360",
+          "nativeBoutId": "61718",
+          "nativeFighterId": "570"
+        },
+        {
+          "date": "2022-02-12",
+          "opponent": "Marcelo Rojo",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a0ba726da4a50458",
+          "eventUrl": "https://ufcstats.com/event-details/cbb682f5fcc44bfc",
+          "nativeBoutId": "61363",
+          "nativeFighterId": "570"
+        },
+        {
+          "date": "2023-08-05",
+          "opponent": "Raoni Barcelos",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e5cb9dfc1189d77d",
+          "eventUrl": "https://ufcstats.com/event-details/6f81b6de2557739a",
+          "nativeBoutId": "61147",
+          "nativeFighterId": "570"
+        },
+        {
+          "date": "2024-03-09",
+          "opponent": "Pedro Munhoz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ebb758b49e82d0ed",
+          "eventUrl": "https://ufcstats.com/event-details/a9df5ae20a97b090",
+          "nativeBoutId": "60910",
+          "nativeFighterId": "570"
+        },
+        {
+          "date": "2024-10-19",
+          "opponent": "Rob Font",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f01b97e864cb4b8b",
+          "eventUrl": "https://ufcstats.com/event-details/6a0047ac8c99fece",
+          "nativeBoutId": "65935",
+          "nativeFighterId": "570"
+        },
+        {
+          "date": "2025-07-19",
+          "opponent": "Vinicius Oliveira",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d2cb92fdf6a497e9",
+          "eventUrl": "https://ufcstats.com/event-details/b8e2f10efb6eca85",
+          "nativeBoutId": "60808",
+          "nativeFighterId": "570"
+        },
+        {
+          "date": "2026-04-18",
+          "opponent": "Charles Jourdain",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b5299e5b946015e5",
+          "eventUrl": "https://ufcstats.com/event-details/c3ac8d0da7b05772",
+          "nativeBoutId": "66090",
+          "nativeFighterId": "570"
+        }
+      ],
+      "note": "Research-only certified source proof pending strict current-HEAD complete 783-person regression gate. Historic feeder rows preserved without zero statistics substitution."
+    },
+    "dricus-du-plessis": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Dricus Du Plessis",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/0d7b51c9d2649a6e",
+      "officialFighterUrl": "https://www.ufc.com/athlete/dricus-du-plessis",
+      "earliestOfficialUfcBout": "2020-10-10",
+      "latestCompletedOfficialUfcBout": "2026-07-18",
+      "officialUfcCareerBoutCount": 11,
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "80258ab3d9f413cad9be13fde64beb66dd0bcfa6",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "24238cb71d7bec6522a77f285b530274b3c897b9",
+        "method": "Complete independently pinned UFCStats Greco fight list, one-to-one matched to every saved official Octagon original numeric bout, both fighter IDs, exact outcome, opponent, date ±1 day and positive measured rounds; source-identified DWCS excluded without removal.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "2739"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "bouts": [
+        {
+          "date": "2020-10-10",
+          "opponent": "Markus Perez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e64075c104471ff0",
+          "eventUrl": "https://ufcstats.com/event-details/fd4578cac86d75ca",
+          "nativeBoutId": "61796",
+          "nativeFighterId": "2739"
+        },
+        {
+          "date": "2021-07-10",
+          "opponent": "Trevin Giles",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/858feabaf429a963",
+          "eventUrl": "https://ufcstats.com/event-details/8a0be41c0380188d",
+          "nativeBoutId": "59444",
+          "nativeFighterId": "2739"
+        },
+        {
+          "date": "2022-07-02",
+          "opponent": "Brad Tavares",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/57775c8af89007c7",
+          "eventUrl": "https://ufcstats.com/event-details/4a9e305633f3ef47",
+          "nativeBoutId": "61488",
+          "nativeFighterId": "2739"
+        },
+        {
+          "date": "2022-12-10",
+          "opponent": "Darren Till",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ecab8b8b36727b8d",
+          "eventUrl": "https://ufcstats.com/event-details/f65a0eb902f9476b",
+          "nativeBoutId": "61227",
+          "nativeFighterId": "2739"
+        },
+        {
+          "date": "2023-03-04",
+          "opponent": "Derek Brunson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/c2fc4c1e0c769655",
+          "eventUrl": "https://ufcstats.com/event-details/1ccff7f0cfdf85eb",
+          "nativeBoutId": "59686",
+          "nativeFighterId": "2739"
+        },
+        {
+          "date": "2023-07-08",
+          "opponent": "Robert Whittaker",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/4ec5d9bd1442e6c1",
+          "eventUrl": "https://ufcstats.com/event-details/6085ceb59087514b",
+          "nativeBoutId": "60130",
+          "nativeFighterId": "2739"
+        },
+        {
+          "date": "2024-01-20",
+          "opponent": "Sean Strickland",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/14e53999507c76a7",
+          "eventUrl": "https://ufcstats.com/event-details/bd85ca0bb4f26cfc",
+          "nativeBoutId": "59864",
+          "nativeFighterId": "2739"
+        },
+        {
+          "date": "2024-08-17",
+          "opponent": "Israel Adesanya",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6c44af21414e4143",
+          "eventUrl": "https://ufcstats.com/event-details/32ba186f4b0e3267",
+          "nativeBoutId": "65945",
+          "nativeFighterId": "2739"
+        },
+        {
+          "date": "2025-02-08",
+          "opponent": "Sean Strickland",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d13849f49f99bf01",
+          "eventUrl": "https://ufcstats.com/event-details/e6015889f50075d2",
+          "nativeBoutId": "60979",
+          "nativeFighterId": "2739"
+        },
+        {
+          "date": "2025-08-16",
+          "opponent": "Khamzat Chimaev",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/12cedec11b37ddc0",
+          "eventUrl": "https://ufcstats.com/event-details/421ccfc6ddb17958",
+          "nativeBoutId": "60496",
+          "nativeFighterId": "2739"
+        },
+        {
+          "date": "2026-07-18",
+          "opponent": "Kamaru Usman",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/701c97405da76603",
+          "eventUrl": "https://ufcstats.com/event-details/f354c50b8d63d9b3",
+          "nativeBoutId": "82894",
+          "nativeFighterId": "2739"
+        }
+      ],
+      "note": "Research-only certified source proof pending strict current-HEAD complete 783-person regression gate. Historic feeder rows preserved without zero statistics substitution."
+    },
+    "vanessa-demopoulos": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Vanessa Demopoulos",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/2c483cf443f38ece",
+      "officialFighterUrl": "https://www.ufc.com/athlete/vanessa-demopoulos",
+      "earliestOfficialUfcBout": "2021-08-28",
+      "latestCompletedOfficialUfcBout": "2026-09-26",
+      "officialUfcCareerBoutCount": 11,
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "80258ab3d9f413cad9be13fde64beb66dd0bcfa6",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "24238cb71d7bec6522a77f285b530274b3c897b9",
+        "method": "Complete independently pinned UFCStats Greco fight list, one-to-one matched to every saved official Octagon original numeric bout, both fighter IDs, exact outcome, opponent, date ±1 day and positive measured rounds; source-identified DWCS excluded without removal.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "769"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "84039",
+          "date": "2020-08-11",
+          "opponent": "Cory McKenna",
+          "event": "Dana White's Contender Series",
+          "sourceUrl": "https://www.ufc.com/news/dana-whites-contender-series-results-season-4-episode-2",
+          "reason": "Independently UFC.com-source-verified DWCS feeder preserved in raw profile, excluded from official Octagon history"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2021-08-28",
+          "opponent": "JJ Aldrich",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/2cb9ba68fc855f33",
+          "eventUrl": "https://ufcstats.com/event-details/0db9d2486d564a3c",
+          "nativeBoutId": "66299",
+          "nativeFighterId": "769"
+        },
+        {
+          "date": "2022-01-22",
+          "opponent": "Silvana Gomez Juarez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/4047c2e259529179",
+          "eventUrl": "https://ufcstats.com/event-details/335ad945324c3a2e",
+          "nativeBoutId": "61643",
+          "nativeFighterId": "769"
+        },
+        {
+          "date": "2022-06-25",
+          "opponent": "Jinh Yu Frey",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/2c73bf152247f25a",
+          "eventUrl": "https://ufcstats.com/event-details/eb42d4febfafefd1",
+          "nativeBoutId": "59582",
+          "nativeFighterId": "769"
+        },
+        {
+          "date": "2022-11-19",
+          "opponent": "Maria Oliveira",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/bd064deb3494b41a",
+          "eventUrl": "https://ufcstats.com/event-details/012fc7cd0779c09a",
+          "nativeBoutId": "59787",
+          "nativeFighterId": "769"
+        },
+        {
+          "date": "2023-05-20",
+          "opponent": "Karolina Kowalkiewicz",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/33007109c9ca1ede",
+          "eventUrl": "https://ufcstats.com/event-details/6f812143641ceff8",
+          "nativeBoutId": "61326",
+          "nativeFighterId": "769"
+        },
+        {
+          "date": "2023-10-07",
+          "opponent": "Kanako Murata",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5ee83e03aaff5fa1",
+          "eventUrl": "https://ufcstats.com/event-details/c8a49ff2acb6f3c5",
+          "nativeBoutId": "60028",
+          "nativeFighterId": "769"
+        },
+        {
+          "date": "2024-05-18",
+          "opponent": "Emily Ducote",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/069df63733dcf697",
+          "eventUrl": "https://ufcstats.com/event-details/46baf0f57edfa4df",
+          "nativeBoutId": "61026",
+          "nativeFighterId": "769"
+        },
+        {
+          "date": "2024-09-07",
+          "opponent": "Jaqueline Amorim",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f1613b372748c8bb",
+          "eventUrl": "https://ufcstats.com/event-details/ee0b69e307c857e5",
+          "nativeBoutId": "61113",
+          "nativeFighterId": "769"
+        },
+        {
+          "date": "2025-04-05",
+          "opponent": "Talita Alencar",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/cca4d763b1c6de0a",
+          "eventUrl": "https://ufcstats.com/event-details/86b30a86664cb6e4",
+          "nativeBoutId": "60307",
+          "nativeFighterId": "769"
+        },
+        {
+          "date": "2025-06-14",
+          "opponent": "Jamey-Lyn Horth",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ab325ea526824723",
+          "eventUrl": "https://ufcstats.com/event-details/de277a4abcfeea46",
+          "nativeBoutId": "60295",
+          "nativeFighterId": "769"
+        },
+        {
+          "date": "2026-09-26",
+          "opponent": "Yazmin Jauregui",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f34e58d365bb37b1",
+          "eventUrl": "https://ufcstats.com/event-details/7e654edcddd71550",
+          "nativeBoutId": "85947",
+          "nativeFighterId": "769"
+        }
+      ],
+      "note": "Research-only certified source proof pending strict current-HEAD complete 783-person regression gate. Historic feeder rows preserved without zero statistics substitution."
+    },
+    "carlos-ulberg": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Carlos Ulberg",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/9014c02eff8b3d62",
+      "officialFighterUrl": "https://www.ufc.com/athlete/carlos-ulberg",
+      "earliestOfficialUfcBout": "2021-03-06",
+      "latestCompletedOfficialUfcBout": "2026-04-11",
+      "officialUfcCareerBoutCount": 11,
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "80258ab3d9f413cad9be13fde64beb66dd0bcfa6",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "24238cb71d7bec6522a77f285b530274b3c897b9",
+        "method": "Complete independently pinned UFCStats Greco fight list, one-to-one matched to every saved official Octagon original numeric bout, both fighter IDs, exact outcome, opponent, date ±1 day and positive measured rounds; source-identified DWCS excluded without removal.",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "verifiedNumericFighterIds": [
+        "219"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "nativeBoutId": "83832",
+          "date": "2020-11-04",
+          "opponent": "Bruno Oliveira",
+          "event": "Dana White's Contender Series",
+          "sourceUrl": "https://www.ufc.com/news/dana-whites-contender-series-results-dwcs-season-4-week-8",
+          "reason": "Independently UFC.com-source-verified DWCS feeder preserved in raw profile, excluded from official Octagon history"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2021-03-06",
+          "opponent": "Kennedy Nzechukwu",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/d170f6580e1c244f",
+          "eventUrl": "https://ufcstats.com/event-details/6e2b1d631832921d",
+          "nativeBoutId": "65770",
+          "nativeFighterId": "219"
+        },
+        {
+          "date": "2022-02-12",
+          "opponent": "Fabio Cherant",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3bebd99d5f94bec7",
+          "eventUrl": "https://ufcstats.com/event-details/cbb682f5fcc44bfc",
+          "nativeBoutId": "61364",
+          "nativeFighterId": "219"
+        },
+        {
+          "date": "2022-06-25",
+          "opponent": "Tafon Nchukwi",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/28be3fbe5c377380",
+          "eventUrl": "https://ufcstats.com/event-details/eb42d4febfafefd1",
+          "nativeBoutId": "59577",
+          "nativeFighterId": "219"
+        },
+        {
+          "date": "2022-11-12",
+          "opponent": "Nicolae Negumereanu",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/db026ff6eee4d174",
+          "eventUrl": "https://ufcstats.com/event-details/b3b6e80b7d5f8f0d",
+          "nativeBoutId": "59803",
+          "nativeFighterId": "219"
+        },
+        {
+          "date": "2023-05-13",
+          "opponent": "Ihor Potieria",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/dae2484418631ff5",
+          "eventUrl": "https://ufcstats.com/event-details/901cddcbfa079097",
+          "nativeBoutId": "61299",
+          "nativeFighterId": "219"
+        },
+        {
+          "date": "2023-09-09",
+          "opponent": "Da Woon Jung",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a3d75cc363a6544b",
+          "eventUrl": "https://ufcstats.com/event-details/ece280745f8727b8",
+          "nativeBoutId": "60058",
+          "nativeFighterId": "219"
+        },
+        {
+          "date": "2024-05-11",
+          "opponent": "Alonzo Menifield",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a049c12f43914449",
+          "eventUrl": "https://ufcstats.com/event-details/5dfe71ade71f3a4b",
+          "nativeBoutId": "60931",
+          "nativeFighterId": "219"
+        },
+        {
+          "date": "2024-11-23",
+          "opponent": "Volkan Oezdemir",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/02ec66f311dce539",
+          "eventUrl": "https://ufcstats.com/event-details/e955046551f8c7dd",
+          "nativeBoutId": "38589",
+          "nativeFighterId": "219"
+        },
+        {
+          "date": "2025-03-22",
+          "opponent": "Jan Blachowicz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6d9ea9f436ed354d",
+          "eventUrl": "https://ufcstats.com/event-details/cc2ad11b1f9d818b",
+          "nativeBoutId": "60309",
+          "nativeFighterId": "219"
+        },
+        {
+          "date": "2025-09-27",
+          "opponent": "Dominick Reyes",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a3ee907c77544cde",
+          "eventUrl": "https://ufcstats.com/event-details/ed220e87bef0cc64",
+          "nativeBoutId": "38209",
+          "nativeFighterId": "219"
+        },
+        {
+          "date": "2026-04-11",
+          "opponent": "Jiri Prochazka",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a031f062b7ffefee",
+          "eventUrl": "https://ufcstats.com/event-details/f3eb664db7fb1df3",
+          "nativeBoutId": "65985",
+          "nativeFighterId": "219"
+        }
+      ],
+      "note": "Research-only certified source proof pending strict current-HEAD complete 783-person regression gate. Historic feeder rows preserved without zero statistics substitution."
     }
   }
 }
