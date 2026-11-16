@@ -77,3 +77,27 @@ test('pending media manifest starts empty; no empty claims of encoded videos',()
   assert.equal(media.schemaVersion,1);
   assert.ok(media.clips&&typeof media.clips==='object');
 });
+
+
+test('owner-provided GIF is primary in popup and original clip is optional',()=>{
+  const record={schemaVersion:1,clips:{oshidashi:{
+    gif:'assets/sumo-kimarite/oshidashi.gif',
+    clip:'assets/sumo-kimarite/oshidashi.mp4',
+    rights:'NHK permission confirmed by BEFN owner',
+    credit:'NHK WORLD-JAPAN'
+  }}};
+  assert.equal(setKimariteMediaManifest(record),true);
+  const html=kimariteModalMarkup(lookupKimarite('oshidashi'));
+  assert.match(html,/<img class="sumo-km-modal-gif"/);
+  assert.match(html,/assets\/sumo-kimarite\/oshidashi.gif/);
+  assert.match(html,/Play original clip/);
+  assert.match(html,/assets\/sumo-kimarite\/oshidashi.mp4/);
+  assert.doesNotMatch(html,/sumo-km-modal-still/);
+});
+test('no unrelated still substitutes for missing Oshidashi media',()=>{
+  assert.equal(setKimariteMediaManifest({schemaVersion:1,clips:{}}),true);
+  const html=kimariteModalMarkup(lookupKimarite('oshidashi'));
+  assert.match(html,/Owner-supplied Oshidashi GIF pending upload/);
+  assert.doesNotMatch(html,/sumo-km-modal-still/);
+  assert.doesNotMatch(html,/Play original clip/);
+});
