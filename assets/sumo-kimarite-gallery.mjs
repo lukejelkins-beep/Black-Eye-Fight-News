@@ -35,7 +35,7 @@ export function setKimariteMediaManifest(data){
   // Only the official JSA catalogue still is used as a public video poster.
   const technique=KIMARITE.find(x=>x.slug===slug);
   if(!technique)continue;
-  const ownPoster=slug==='oshidashi'?'assets/sumo-kimarite/oshidashi-poster.jpg':null;
+  const ownPoster=`assets/sumo-kimarite/${slug}-poster.jpg`;
   if(row.poster && row.poster!==technique.jsaPoster && row.poster!==ownPoster)continue;
   if(row.rights!=='NHK permission confirmed by BEFN owner'||row.credit!=='NHK WORLD-JAPAN')continue;
   valid[slug]={webm:hasWebm?row.webm:null,gif:hasGif?row.gif:null,mp4:row.mp4||null,clip:row.clip||row.mp4||null,poster:row.poster||ownPoster||technique.jsaPoster,rights:row.rights,credit:row.credit};
@@ -67,7 +67,7 @@ function media(item,large=false){
      '<small>Owner-supplied GIF preview pending</small></div>';
  }
  const poster=clip?.poster||item.jsaPoster;
- const credit=item.slug==='oshidashi'?'Owner-supplied NHK video frame':'Japan Sumo Association';
+ const credit=clip?.poster?.startsWith('assets/sumo-kimarite/')?'Owner-provided technique clip frame':'Japan Sumo Association';
  return '<div class="sumo-km-poster" aria-label="'+esc(item.name)+' technique reference photograph">'+
    '<img src="'+esc(poster)+'" alt="'+esc(item.name)+' technique reference" loading="lazy" decoding="async">'+
    '<span class="sumo-km-poster-credit">Photo: '+esc(credit)+'</span>'+

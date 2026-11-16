@@ -112,3 +112,23 @@ test('Oshidashi owner GIF poster can replace incorrect catalogue still',()=>{
   assert.match(modal,/oshidashi.gif/);
   assert.doesNotMatch(modal,/sumo-km-modal-still/);
 });
+
+
+test('three further owner-provided GIFs retain their matching clip and poster',()=>{
+ const clips={};for(const term of ['yorikiri','tsukiotoshi','hatakikomi'])clips[term]={
+   gif:'assets/sumo-kimarite/'+term+'.gif',
+   clip:'assets/sumo-kimarite/'+term+'.mp4',
+   mp4:'assets/sumo-kimarite/'+term+'.mp4',
+   webm:'assets/sumo-kimarite/'+term+'.webm',
+   poster:'assets/sumo-kimarite/'+term+'-poster.jpg',
+   credit:'NHK WORLD-JAPAN',rights:'NHK permission confirmed by BEFN owner'
+ };
+ assert.equal(setKimariteMediaManifest({schemaVersion:1,clips}),true);
+ for(const term of Object.keys(clips)){
+  const html=kimariteModalMarkup(lookupKimarite(term));
+  assert.match(html,new RegExp('assets/sumo-kimarite/'+term+'\\.gif'));
+  assert.match(html,new RegExp('assets/sumo-kimarite/'+term+'\\.mp4'));
+  assert.match(html,/Play original clip/);
+  assert.doesNotMatch(html,/sumo-km-modal-still/);
+ }
+});
