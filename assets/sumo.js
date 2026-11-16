@@ -5,7 +5,7 @@ import {
   originCountry, banzukeMovement, dayMatchups, verifiedDayMatchups, lastCompletedBashoDay, verifiedHeadToHead, verifiedHighestRank,
   rankPositions, confirmedCareerHigh, publishedCurrentWeight
 } from './sumo-data.mjs?v=20261116-ranked-matchups';
-import { careerGraphs, mobileRankPreview } from './sumo-editorial-charts.mjs?v=20261117-rank-mobile';
+import { careerGraphs } from './sumo-editorial-charts.mjs?v=20261117-mobile-weight-rank';
 import { boutKey, mergeProfileBouts, filterAndSortOpponents, exactNamePriority } from './sumo-editorial-data.mjs';
 import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verification.mjs';
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
@@ -870,8 +870,6 @@ function renderProfile(id) {
     fact('Height',current.h==='—'?'Not available':current.h)+
     fact('Weight · undated',current.mass==='—'?'Not available':current.mass)+'</div></section>'+
     sectionNav(w.sourceId)+lastFiveStrip(w)+
-    mobileRankPreview(w,STATE.careerHistory,details().bashoId,details().previousBashoId,movementFor(w).previousRank,
-      {range:STATE.rankRange,fullLadder:STATE.fullRankLadder})+
     sectionHead('results','Tournament and career ledger','Results')+resultDesk(w)+'</section>'+
     sectionHead('career','Historical context','Career')+
     '<div class="sumo-career-strip" aria-label="Source-listed tournament and top-division title totals"><div><span>Basho</span><strong>'+e(s?.basho??'Not available')+'</strong></div>'+
@@ -1184,11 +1182,6 @@ document.addEventListener('change',ev=>{
   if(t?.id==='sumo-profile-section')navigateSection(t.value);
   if(t?.id==='sumo-matchup-day'){STATE.matchupDay=Number(t.value);render();document.getElementById('sumo-matchup-day')?.focus({preventScroll:true});}
 });
-document.addEventListener('keydown',ev=>{
-  if((ev.key==='Enter'||ev.key===' ')&&ev.target?.matches?.('[data-mobile-rank]')){
-    ev.preventDefault();ev.target.click();
-  }
-});
 document.addEventListener('click',ev=>{
   const h2hLink=ev.target.closest?.('a[href^="#headtohead/"]');
   if(h2hLink&&location.hash.startsWith('#')&&!location.hash.startsWith('#headtohead/')){
@@ -1206,21 +1199,6 @@ document.addEventListener('click',ev=>{
     render();
     document.getElementById('sumo-bout-'+last.dataset.resultLink)?.scrollIntoView({block:'center'});
     document.getElementById('sumo-bout-'+last.dataset.resultLink)?.querySelector('a')?.focus({preventScroll:true});
-    return;
-  }
-  const rankDot=ev.target.closest?.('[data-mobile-rank]');
-  if(rankDot){
-    const detail=document.getElementById('sumo-mobile-rank-detail');
-    if(detail){detail.textContent=rankDot.dataset.mobileBasho+' · '+rankDot.dataset.mobileRank;}
-    return;
-  }
-  const mobileRankRange=ev.target.closest?.('[data-mobile-rank-range]');
-  if(mobileRankRange){
-    STATE.rankRange=mobileRankRange.dataset.mobileRankRange;
-    const priorScroll=window.scrollY;
-    render();
-    window.scrollTo({top:priorScroll,behavior:'instant'});
-    document.querySelector('[data-mobile-rank-range="'+STATE.rankRange+'"]')?.focus({preventScroll:true});
     return;
   }
   const recentArrow=ev.target.closest?.('[data-recent-shift]');
