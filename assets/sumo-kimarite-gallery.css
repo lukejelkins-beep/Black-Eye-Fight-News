@@ -99,3 +99,10 @@ body.sumo-km-modal-open{overflow:hidden}
 .sumo-km-clip-content:not([hidden]){display:block;margin-top:12px;background:#1a171a;border-radius:6px;overflow:hidden}
 .sumo-km-original-clip{display:block;width:100%;max-height:min(45dvh,320px);object-fit:contain}
 .sumo-km-modal-pending-visual{display:grid;place-items:center;min-height:160px;padding:20px;color:#e7d6c9;text-align:center;font:800 16px/1.5 'DM Sans',sans-serif}
+
+/* Kimarite gallery: show genuine JSA photography with no credit banner over media. */
+.sumo-km-poster{background:#3c302a}
+.sumo-km-poster img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.sumo-km-tile .sumo-km-media{background:#3c302a}
+.sumo-km-poster-credit,.sumo-km-modal-media-credit,.sumo-km-media-credit{display:none!important}
+.sumo-km-ready{top:8px;right:8px;left:auto;bottom:auto;border-radius:5px}
