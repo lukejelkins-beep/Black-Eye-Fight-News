@@ -11,8 +11,6 @@ test('JSA catalogue contains exactly 82 distinct terms in six families',()=>{
   assert.deepEqual(KIMARITE_GROUPS.map(g=>g.items.length),[7,13,18,6,19,19]);
   assert.equal(new Set(KIMARITE.map(x=>x.slug)).size,82);
   assert.ok(KIMARITE.every(x=>x.japanese&&x.english&&x.name));
-  assert.equal(lookupKimarite('oshidashi').jsaPoster,'https://sumo.or.jp/img/kimarite/kimarite_03.jpg');
-  assert.equal(KIMARITE.at(-1).jsaPoster,'https://sumo.or.jp/img/kimarite/kimarite_82.jpg');
 });
 test('verified Japanese labels and case-insensitive canonical names',()=>{
   assert.equal(lookupKimarite('YORIKIRI').japanese,'寄り切り');
@@ -45,15 +43,15 @@ test('media manifest rejects unverified paths or missing credit',()=>{
     credit:'NHK WORLD-JAPAN',rights:'NHK permission confirmed by BEFN owner'
   }}};
   assert.equal(setKimariteMediaManifest(approved),true);
-  assert.match(renderKimariteGallery(),/assets\/sumo-kimarite\/yorikiri.webm/);
-  assert.match(renderKimariteGallery(),/assets\/sumo-kimarite\/yorikiri.mp4/);
-  assert.ok(renderKimariteGallery().indexOf('type="video/mp4"')<renderKimariteGallery().indexOf('type="video/webm"'));
+  // Landing page does not autoplay or load video assets: click opens a popup.
+  assert.doesNotMatch(renderKimariteGallery(),/type="video\/webm"/);
+  assert.doesNotMatch(renderKimariteGallery(),/type="video\/mp4"/);
   delete globalThis.location;
 });
 test('on-demand GIF dialog is labelled, accessible, and links to the JSA reference',()=>{
   assert.equal(setKimariteMediaManifest({schemaVersion:1,clips:{oshidashi:{
     gif:'assets/sumo-kimarite/oshidashi.gif',
-    poster:'https://sumo.or.jp/img/kimarite/kimarite_03.jpg',
+    poster:'assets/sumo-kimarite/oshidashi-poster.jpg',
     credit:'NHK WORLD-JAPAN', rights:'NHK permission confirmed by BEFN owner'
   }}}),true);
   const html=kimariteModalMarkup(lookupKimarite('oshidashi'));
@@ -62,9 +60,9 @@ test('on-demand GIF dialog is labelled, accessible, and links to the JSA referen
   assert.match(html,/data-km-close/);
   assert.match(html,/assets\/sumo-kimarite\/oshidashi.gif/);
   assert.match(html,/Kimarite\/detail\/3/);
-  assert.match(html,/Japan Sumo Association/);
+  assert.match(html,/Official JSA reference/);
 });
-test('gallery keeps authentic JSA stills until the visitor clicks a kimarite',()=>{
+test('gallery does not load a GIF until the visitor clicks a kimarite',()=>{
   globalThis.location={hash:'#kimarite'};
   const html=renderKimariteGallery();
   assert.match(html,/sumo-km-gallery/);
