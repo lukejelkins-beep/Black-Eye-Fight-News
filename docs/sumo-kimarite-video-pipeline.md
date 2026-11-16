@@ -42,3 +42,12 @@
 - Test a full technique sequence, both wrestlers' visibility throughout, no unnecessary borders, mobile decoding and GIF loop behaviour before declaring an example completed. 
 - The user-supplied 1.965-second Oshidashi MOV was cropped into a **review GIF only**. It lacks conclusive footage of the ring exit and has **not** been committed to the site or media manifest.
 - Top 15 frequent winning techniques remain the priority set; other kimarite show JSA photographs and links until a verified GIF exists.
+
+## Owner-confirmed Oshidashi popup implementation (17 November 2026)
+- **Primary experience:** clicking an Oshidashi reference opens a small accessible modal with the owner's **tightly cropped looping GIF**. The underlying Sumo page, scroll and selected views remain intact.
+- **Secondary option:** “Play original clip” reveals the owner-supplied recording transcoded to a compatible H.264 MP4. The clip is *not* the default player.
+- **Photo selection:** the user rejected the previously displayed JSA Oshidashi image. The popup therefore never uses that disputed still, and the gallery uses a poster extracted from the supplied clip when the media package has been uploaded.
+- **Media paths:** `assets/sumo-kimarite/oshidashi.gif`, `assets/sumo-kimarite/oshidashi.mp4`, and `assets/sumo-kimarite/oshidashi-poster.jpg`.
+- **Manifest:** `docs/oshidashi-media-manifest.example.json` is an example of the exact records to activate this media in `data/sumo/kimarite-media.json` **after all three binary files are committed**. The active manifest intentionally remains empty until then.
+- **Current deliverable:** a self-contained standalone HTML popup preview and a ZIP containing all media files plus the deployment-ready manifest have been generated for the owner in ChatGPT. They are **not automatically part of the GitHub branch**.
+- **Visual QA:** test GIF edges and clip controls on desktop/iOS, then confirm the correct Oshidashi popup from results, wrestler profiles, H2H, and the technique directory.
