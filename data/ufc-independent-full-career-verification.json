@@ -9173,27 +9173,30 @@
       "scope": "complete_official_ufc_career",
       "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
       "fighterName": "Alatengheili",
-      "verifiedAt": "2026-11-14",
+      "verifiedAt": "2026-11-16",
       "fighterUrl": "https://ufcstats.com/fighter-details/1897b7b913736a7c",
       "officialFighterUrl": "https://www.ufc.com/athlete/heili-alateng",
       "sourceSnapshot": {
         "repository": "https://github.com/Greco1899/scrape_ufc_stats",
-        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "sourceCommit": "96adace863c0a793579cc06d27d468797545607f",
+        "fightResultsBlobSha": "80258ab3d9f413cad9be13fde64beb66dd0bcfa6",
         "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
-        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
-        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
-        "cutoffLastEvent": "2026-11-07",
+        "eventDetailsBlobSha": "24238cb71d7bec6522a77f285b530274b3c897b9",
+        "cutoffLastEvent": "2026-11-14",
         "evidenceCutoff": "2026-11-14",
-        "provenance": "Source-linked Greco UFCStats-derived historical evidence with UFC.com fighter/event crosscheck as already documented by verified V4 batch; no direct UFCStats site access claimed"
+        "method": "Official UFC.com athlete chronology and UFC 334 event result crosschecked against independently pinned Greco UFCStats 11 unique full-career fight IDs, original UFC numeric two-corner native IDs, event-local dates, official wins/losses/draw and positively saved measured UFC round counts.",
+        "directUfcStatsAccess": "Pinned Greco UFCStats-derived source; no paid APIs or live UFCStats scraping"
       },
       "verifiedNumericFighterIds": [
         "7566"
       ],
-      "officialUfcCareerBoutCount": 10,
-      "sourceScopeVerified": "Complete UFC athlete biography fight listing independently reviewed from official Octagon debut through final UFC bout as of 14 November 2026; 10 uniquely source-linked UFCStats-derived fights matched to saved native fighter/bout IDs, results, and known UFC classification. Separate TUF exhibitions and DWCS bouts excluded as applicable; every native fight has measured statistics. No event title equality requirement.",
+      "officialUfcCareerBoutCount": 11,
+      "sourceScopeVerified": "Exhaustive 11-bout UFC Octagon chronology from Alatengheili vs Batgerel Danaa (31 August 2019) through the 14 November 2026 UFC 334 Juan Diaz decision. All 11 independently pinned Greco UFCStats fight identities reconcile to original saved numeric UFC bouts, same fighter ID 7566, opposing numeric corner IDs, dates, results, and positive measured rounds. The 18 September 2021 Gustavo Lopez majority draw remains a draw, not a win; source labels 'Decision - Unanimous' while the three official 28-28 cards and original native draw method control the result. The UFC lists this athlete as Alatengheili while original UFCalendar saved profile/corners call him Heili Alateng; the one exact alias is pinned to UFCStats fighter 1897b7b913736a7c and native identity 7566. Never infer a certificate from alias alone.",
       "independentSourceCrosschecks": [
         "https://www.ufc.com/athlete/heili-alateng",
-        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+        "https://www.ufc.com/event/ufc-334",
+        "https://www.ufc.com/news/updates-polymarket-ufc-334-gane-vs-hokit",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/96adace863c0a793579cc06d27d468797545607f"
       ],
       "importedV4Evidence": {
         "originalBranch": "feat/ufc-v4-career-stat-foundation-20261114",
@@ -9203,6 +9206,21 @@
         "note": "V4 strict prior pass does NOT mean main Stage3 pass. Imported unchanged source links, native fight IDs and dates for revalidation."
       },
       "bouts": [
+        {
+          "date": "2026-11-14",
+          "opponent": "Juan Díaz",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/93d70d9869c66ed1",
+          "nativeBoutId": "93780",
+          "nativeFighterId": "7566",
+          "originalOpponentNumericId": "32",
+          "pinnedSourceEventDate": "2026-11-14",
+          "independentEventUrl": "https://ufcstats.com/event-details/402ea3b5ee233852",
+          "pinnedSourceOpponentName": "Juan Diaz",
+          "round": 3,
+          "time": "5:00",
+          "method": "decision_unanimous"
+        },
         {
           "date": "2026-09-26",
           "opponent": "John Castaneda",
@@ -9289,12 +9307,14 @@
       ],
       "disambiguation": {
         "verifiedUfcStatsFighterId": "1897b7b913736a7c",
-        "officialUfcAliasEvidenceUrl": "https://www.ufc.com/athlete/heili-alateng",
-        "verifiedNameVariants": [
-          "Alatengheili",
-          "Heili Alateng"
-        ],
-        "note": "UFC official /athlete/heili-alateng page publishes athlete as Alatengheili, including exact opponents and chronology; saved numeric native athlete is Heili Alateng (id 7566). Exact UFCStats source ID and career native corners remain required by gate."
+        "nativeNumericFighterId": "7566",
+        "officialUfcAthleteUrl": "https://www.ufc.com/athlete/heili-alateng",
+        "sourceAndNativeNameReconciliation": "The same athlete is Alatengheili in official UFC/UFCStats and Heili Alateng in original native cache (id 7566); must fail closed for other fighter IDs or unreviewed aliases."
+      },
+      "verifiedUfcRecord": {
+        "wins": 6,
+        "losses": 4,
+        "draws": 1
       }
     },
     "iasmin-lucindo": {
