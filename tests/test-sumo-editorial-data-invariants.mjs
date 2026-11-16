@@ -9,7 +9,7 @@ function gitBlobSha(bytes){
  return createHash('sha1').update(header).update(bytes).digest('hex');
 }
 test('the isolated editorial redesign does not edit any frozen Sumo cache or evidence file',()=>{
- assert.equal(baseline.baseSha,'c99a3ff1664d32e3699e14204f2e78dfa73712b5');
+ assert.equal(baseline.baseSha,'922062b48a6853bc3643973b557b70e96667297f');
  assert.equal(baseline.protectedFiles.length,10);
  for(const {path,gitBlobSha:expected,size} of baseline.protectedFiles){
    const bytes=readFileSync(new URL('../'+path,import.meta.url));
