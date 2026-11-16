@@ -64,7 +64,8 @@ function flagMark(w) {
 function flagBackdrop(w) {
   const c=originCountry(w?.birthplace);
   // Decoration only: never infer a flag for a missing or unrecognised source birthplace.
-  return c?'<span class="sumo-flag-backdrop" aria-hidden="true">'+c.flag+'</span>':'';
+  // Country is mapped only from the source birthplace. The full-panel image is decorative; emoji is the offline fallback.
+  return c?'<span class="sumo-flag-backdrop" style="--sumo-flag-url:url(https://flagcdn.com/w640/'+e(c.code.toLowerCase())+'.png)" aria-hidden="true">'+c.flag+'</span>':'';
 }
 function portraitFor(w,size='sm',fallbackName=null){
   const photo=w && STATE.photoIndex?.[String(w.sourceId)];
@@ -250,7 +251,8 @@ function comparisonGrid(first,second) {
     if(!w)return null;
     const stats=detailStats(w),measure=weightHeight(w);
     const currentEntry=entryFor(w);
-    const current=currentEntry?recordSummary(currentEntry.record,divisionOf(w.currentRank)):null;
+    const current=Array.isArray(currentEntry?.record)&&currentEntry.record.length>0
+      ?recordSummary(currentEntry.record,divisionOf(w.currentRank)):null;
     return Object.fromEntries(dailyStats({
       currentRank:w.currentRank,highestRank:knownHigh(w),
       heightCm:measure.heightCm,weightKg:measure.weightKg,
@@ -269,11 +271,10 @@ function comparisonGrid(first,second) {
     return facts[scope+' wins']+'–'+facts[scope+' losses'];
   };
   const rows=[
-    ['Height',f=>pair(f,'Height')+(pair(f,'Height cm')!=='Not available'?' ('+pair(f,'Height cm')+')':'')],
+    ['Height',f=>pair(f,'Height')],
     ['Weight',f=>pair(f,'Weight')],
     ['Current basho W–L',f=>winsLosses(f,'Current basho')],
     ['Career W–L',f=>winsLosses(f,'Career')],['Career win %',f=>pair(f,'Career win %')],
-    ['Makuuchi W–L',f=>winsLosses(f,'Makuuchi')],['Makuuchi win %',f=>pair(f,'Makuuchi win %')],
     ['Makushita W–L',f=>winsLosses(f,'Makushita')],['Makushita win %',f=>pair(f,'Makushita win %')]
   ];
   return '<div class="sumo-comparison" role="group" aria-label="Wrestler comparison, left and right values">'+
@@ -507,8 +508,7 @@ function detailStats(w) {
   const fromApi=enriched?.stats?.status==='available'?enriched.stats.data:null;
   const cache=STATE.divisionStats?.bySourceId?.[String(w.sourceId)];
   const trustedCache=cache?.sourceId===Number(w.sourceId)&&cache?.shikonaEn===w.shikonaEn&&cache?.status==='available';
-  // Division cache supplements, never discards, featured source fields such
-  // as Makuuchi championships, special prizes and other existing facts.
+  // Merge source-listed division W/L without hiding unrelated API championship credentials.
   const stats=trustedCache?{...fromApi,...cache.stats}:fromApi;
   const research=STATE.h2hSummary?.profiles?.[String(w.sourceId)];
   return research?{...stats,totalWins:research.careerWins,totalLosses:research.careerLosses,

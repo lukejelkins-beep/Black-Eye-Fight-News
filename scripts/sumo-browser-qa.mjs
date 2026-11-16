@@ -7,6 +7,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
+import { recordSummary } from '../assets/sumo-data.mjs';
 
 const BASE = process.env.SUMO_QA_BASE || 'http://127.0.0.1:8765/sumo.html';
 const OUT = 'qa/sumo-previews';
@@ -262,11 +263,11 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   const firstCard=page.locator('.sumo-daily-card').first();
   assert.equal(await firstCard.locator('.sumo-daily-facts').count(),2,'Both wrestler stat columns are present');
   assert.equal(await firstCard.locator('.sumo-daily-photo').count(),2,'Portraits occupy both edges');
-  assert.equal(await firstCard.locator('.sumo-comparison-row').count(),9,'Shared comparison includes imperial height, current basho and both division records');
+  assert.equal(await firstCard.locator('.sumo-comparison-row').count(),7,'Shared comparison includes the seven requested source-backed statistics');
   assert.equal(await firstCard.locator('.sumo-daily-facts>.sumo-flag-backdrop').count(),2,'Birthplace flags are decorative backgrounds behind both identities');
   assert.match(await firstCard.locator('.sumo-comparison-row').first().innerText(),/\d+′\d+″/,'Sourced centimetres are displayed as feet and inches');
   const data=await firstCard.innerText();
-  for(const label of ['Current basho W–L','Career W–L','Career win %','Makuuchi W–L','Makuuchi win %','Makushita W–L','Makushita win %','Height','Weight','Peak:']){
+  for(const label of ['Current basho W–L','Career W–L','Career win %','Makushita W–L','Makushita win %','Height','Weight','Peak:']){
     assertContains(data,label,'Daily faceoff statistic');
   }
   const historyTiles=await page.locator('.sumo-daily-meeting').count();
@@ -472,6 +473,71 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     const active=page.locator('.subnav [data-page="'+route+'"][aria-current="page"]').first();
     assert.equal(await active.getAttribute('aria-current'),'page','Destination is announced as current');
   }
+  // The Nov 2026 Day 10 Tokihayate–Daiseizan card is the design acceptance fixture.
+  await open(page,'matchups','#sumo-main');
+  await page.locator('#sumo-matchup-day').selectOption('10');
+  await page.waitForTimeout(100);
+  const screenshotFixture=page.locator('.sumo-daily-card')
+    .filter({hasText:'Tokihayate'}).filter({hasText:'Daiseizan'}).first();
+  assert.ok(await screenshotFixture.count()>0,'The sourced Tokihayate–Daiseizan Day 10 matchup is present');
+  const identities=screenshotFixture.locator('.sumo-daily-facts');
+  assert.equal(await identities.count(),2);
+  const flags=screenshotFixture.locator('.sumo-daily-facts>.sumo-flag-backdrop');
+  assert.equal(await flags.count(),2,'Full-panel flags for both source countries');
+  const flagImages=await flags.evaluateAll(nodes=>nodes.map(el=>getComputedStyle(el,'::before').backgroundImage));
+  assert.ok(flagImages.some(url=>url.includes('/jp.png')),'Japanese flag backdrop');
+  assert.ok(flagImages.some(url=>url.includes('/cn.png')),'Chinese flag backdrop');
+  const overlay=await identities.first().evaluate(el=>getComputedStyle(el,'::after').background);
+  assert.ok(overlay.includes('rgba('),'Light cream overlay protects text contrast');
+  const comparison=await screenshotFixture.locator('.sumo-comparison').innerText();
+  for(const expected of ['179 cm (5′10″)','191 cm (6′3″)','135 kg','171 kg',
+    'Current basho W–L','Career W–L','Career win %','Makushita W–L','Makushita win %'])
+    assertContains(comparison,expected,'Daily card comparisons');
+  // Compare the visible pair with the actual November 2026 source snapshots.
+  const sourceDetails=await (await page.request.get('http://127.0.0.1:8765/data/sumo/preview-details.json')).json();
+  const divisionCache=await (await page.request.get('http://127.0.0.1:8765/data/sumo/division-stats.json')).json();
+  const banzuke=[...sourceDetails.banzuke.Makuuchi.data.east,...sourceDetails.banzuke.Makuuchi.data.west];
+  const currentFor=id=>{
+    const row=banzuke.find(x=>Number(x.rikishiID)===id);
+    assert.ok(Array.isArray(row?.record),'Current-basho source record for '+id);
+    const summary=recordSummary(row.record,'Makuuchi');
+    return summary.win+'–'+summary.loss;
+  };
+  const historicalFor=id=>{
+    const row=divisionCache.bySourceId[String(id)];
+    assert.equal(row?.status,'available','Division-specific source data for '+id);
+    const wins=row.stats.winsByDivision?.Makushita,losses=row.stats.lossByDivision?.Makushita;
+    assert.ok(Number.isSafeInteger(wins)&&Number.isSafeInteger(losses),'Sourced Makushita W-L for '+id);
+    return {wl:wins+'–'+losses,pct:(100*wins/(wins+losses)).toFixed(1)+'%'};
+  };
+  const comparisonRows=await screenshotFixture.locator('.sumo-comparison-row').evaluateAll(nodes=>
+    Object.fromEntries(nodes.map(row=>[row.querySelector('span')?.textContent?.trim(),
+      [...row.querySelectorAll('strong')].map(el=>el.textContent.trim())])));
+  const headingNames=await screenshotFixture.locator('.sumo-comparison-head>span').allInnerTexts();
+  const pairIds=[headingNames[0],headingNames[2]].map(name=>{
+    if(name==='Tokihayate')return 83;
+    if(name==='Daiseizan')return 378;
+    throw new Error('Unexpected wrestler identity in source matchup: '+name);
+  });
+  assert.deepEqual(comparisonRows['Current basho W–L'],pairIds.map(currentFor),
+    'Current W-L matches source banzuke records, without invented non-bout losses');
+  assert.deepEqual(comparisonRows['Makushita W–L'],pairIds.map(id=>historicalFor(id).wl),
+    'Career Makushita W-L matches the division-specific source');
+  assert.deepEqual(comparisonRows['Makushita win %'],pairIds.map(id=>historicalFor(id).pct),
+    'Makushita percentages use only historical Makushita wins and losses');
+  const textFlow=await identities.evaluateAll(panels=>panels.map(panel=>{
+    const els=[...panel.querySelectorAll('h2,.sumo-daily-origin,.sumo-daily-ranks')];
+    const rects=els.map(el=>el.getBoundingClientRect());
+    return rects.every((r,i)=>r.width>0&&r.right<=panel.getBoundingClientRect().right+2&&
+      (i===0||r.top>=rects[i-1].bottom-1));
+  }));
+  assert.ok(textFlow.every(Boolean),'Names, birthplace and ranks do not overlap or clip');
+  const wrapping=await screenshotFixture.locator('.sumo-daily-facts h2')
+    .evaluateAll(nodes=>nodes.map(el=>({scroll:el.scrollWidth,width:el.clientWidth})));
+  assert.ok(wrapping.every(x=>x.scroll<=x.width+4),'No clipped wrestler names');
+  const pageWidth=await page.evaluate(()=>({viewport:innerWidth,scroll:document.documentElement.scrollWidth}));
+  assert.ok(pageWidth.scroll<=pageWidth.viewport+6,'Matchups page has no horizontal overflow');
+  await snap(page,label+'-tokihayate-daiseizan',{fullPage:false});
   if (isMobile){
     for(const route of ['home','rikishi','profile/8850','matchups','basho','banzuke','kimarite']){
       await open(page,route,'#sumo-main');

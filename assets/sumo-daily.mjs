@@ -27,8 +27,7 @@ export function dailyStats({
   return [
     ['Current rank',currentRank||'Not available'],
     ['Highest rank',highestRank||'Not available'],
-    ['Height',heightFeetInches(heightCm)],
-    ['Height cm',measurement(heightCm,' cm')],
+    ['Height',measurement(heightCm,' cm')==='Not available'?'Not available':measurement(heightCm,' cm')+' ('+heightFeetInches(heightCm)+')'],
     ['Weight',measurement(weightKg,' kg')],
     ['Current basho wins',tally(currentBashoWins)],
     ['Current basho losses',tally(currentBashoLosses)],
