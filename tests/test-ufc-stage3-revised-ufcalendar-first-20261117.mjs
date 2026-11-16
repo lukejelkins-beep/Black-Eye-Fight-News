@@ -42,3 +42,14 @@ test('semantic pathway fails closed on stale, incomplete, unverified or off-site
   x=>({...x,bouts:x.bouts.map((b,i)=>i===2?{...b,result:'loss'}:b)})
  ])assert.equal(verify(saved,change(source)),false);
 });
+
+test('UFCalendar-first cannot override unresolved native fighter identity collisions',()=>{
+ const clean={...profile,ufcTimeline:{...profile.ufcTimeline,conflictingNativeFightIds:0}};
+ const conflicted={...clean,ufcTimeline:{...clean.ufcTimeline,conflictingNativeFightIds:2}};
+ const aliasConflict={...clean,ufcHistoryIdConflicts:[{reason:'two athletes share source identity'}]};
+ const args=p=>evaluateCareerEvidence(p,saved,'2026-07-10','2026-11-17',
+   {...source,certificationStandard:'ufcalendar_first'}, {},'2026-11-14').independentlyVerified;
+ assert.equal(args(clean),true);
+ assert.equal(args(conflicted),false);
+ assert.equal(args(aliasConflict),false);
+});
