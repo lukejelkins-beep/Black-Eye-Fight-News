@@ -79,25 +79,35 @@ def main() -> int:
                 skipped += 1
                 continue
             webm = args.output_dir/f"{slug}.webm"
+            mp4 = args.output_dir/f"{slug}.mp4"
             temp_webm = webm.with_suffix(".webm.tmp")
+            temp_mp4 = mp4.with_suffix(".mp4.tmp")
             try:
                 run(["ffmpeg","-hide_banner","-loglevel","error","-y",
                      "-ss",str(start),"-i",str(source),"-t",str(duration),
                      "-vf","fps=24,scale=640:-2:flags=lanczos,pad=ceil(iw/2)*2:ceil(ih/2)*2,format=yuv420p",
                      "-an","-c:v","libvpx-vp9","-deadline","good","-cpu-used","3",
                      "-crf","39","-b:v","0","-row-mt","1","-f","webm",str(temp_webm)])
+                run(["ffmpeg","-hide_banner","-loglevel","error","-y",
+                     "-ss",str(start),"-i",str(source),"-t",str(duration),
+                     "-vf","fps=30,scale=640:-2:flags=lanczos,pad=ceil(iw/2)*2:ceil(ih/2)*2,format=yuv420p",
+                     "-an","-c:v","libx264","-preset","medium","-crf","22",
+                     "-profile:v","baseline","-level","3.1","-movflags","+faststart",
+                     "-f","mp4",str(temp_mp4)])
                 temp_webm.replace(webm)
+                temp_mp4.replace(mp4)
             except subprocess.CalledProcessError as err:
-                for path in (temp_webm,):
+                for path in (temp_webm, temp_mp4):
                     path.unlink(missing_ok=True)
                 print(f"FAIL {slug}: {err.stderr}", file=sys.stderr)
                 raise
             clips[slug] = {"webm":f"assets/sumo-kimarite/{slug}.webm",
+                           "mp4":f"assets/sumo-kimarite/{slug}.mp4",
                            "poster":f"https://sumo.or.jp/img/kimarite/kimarite_{JSA_IDS[slug]:02d}.jpg",
                            "credit": CREDIT, "rights": RIGHTS,
                            "sourceUrl": url, "durationSeconds": duration}
             built += 1
-            print(f"BUILT {slug}: {webm.stat().st_size:,} bytes; cut {start:.2f}s+{duration:.2f}s")
+            print(f"BUILT {slug}: WebM {webm.stat().st_size:,} B / MP4 {mp4.stat().st_size:,} B; cut {start:.2f}s+{duration:.2f}s")
     final = {"schemaVersion":1, "source":CREDIT,
              "usage":"BEFN educational kimarite demonstration loops, authorised by project owner",
              "clips":dict(sorted(clips.items()))}
