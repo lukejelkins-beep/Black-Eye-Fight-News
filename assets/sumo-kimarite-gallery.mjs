@@ -26,12 +26,14 @@ export function setKimariteMediaManifest(data){
  for(const [slug,row] of Object.entries(data.clips)){
   if(!/^[a-z]+$/.test(slug)||!row||typeof row!=='object')continue;
   if(!/^assets\/sumo-kimarite\/[a-z]+\.webm$/.test(row.webm||''))continue;
+  // H.264 MP4 fallback keeps clips playable on iPhone/Safari.
+  if(row.mp4 && (!/^assets\/sumo-kimarite\/[a-z]+\.mp4$/.test(row.mp4)||row.mp4!==row.webm.replace(/\.webm$/,'.mp4')))continue;
   // Only the official JSA catalogue still is used as a public video poster.
   const technique=KIMARITE.find(x=>x.slug===slug);
   if(!technique)continue;
   if(row.poster && row.poster!==technique.jsaPoster)continue;
   if(row.rights!=='NHK permission confirmed by BEFN owner'||row.credit!=='NHK WORLD-JAPAN')continue;
-  valid[slug]={webm:row.webm,poster:technique.jsaPoster,rights:row.rights,credit:row.credit};
+  valid[slug]={webm:row.webm,mp4:row.mp4||null,poster:technique.jsaPoster,rights:row.rights,credit:row.credit};
  }
  APPROVED_WEBM=Object.freeze(valid);return true;
 }
@@ -58,6 +60,7 @@ function media(item,large=false){
    return '<video class="sumo-km-video" muted loop playsinline preload="none"'+
      (large?' controls':'')+
      ' poster="'+esc(item.jsaPoster)+'" aria-label="NHK technique video: '+esc(item.name)+'">'+
+     (clip.mp4?'<source src="'+esc(clip.mp4)+'" type="video/mp4">':'')+
      '<source src="'+esc(clip.webm)+'" type="video/webm">Video unavailable.</video>'+
      '<span class="sumo-km-media-credit">Video: '+esc(clip.credit)+'</span>';
  }
