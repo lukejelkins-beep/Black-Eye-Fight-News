@@ -329,19 +329,25 @@ function renderDailyMatchups(){
   const date=dailySelectedDate(startDate,day);
   const latestAction=!pairing.length&&lastCompleted&&day!==lastCompleted?
     '<button type="button" class="btn light" data-matchup-latest="'+lastCompleted+'">View latest results · Day '+lastCompleted+'</button>':'';
-  return '<section class="sumo-daily-page"><div class="sumo-daily-kicker">BEFN SUMO / BASHO CENTRE</div>'+
-    '<div class="sumo-daily-heading"><div><h1>Daily matchups</h1><p>Confirmed pairings, comparison statistics and up to five sourced head-to-head meetings.</p></div>'+
-    '<span class="sumo-daily-snapshot">Snapshot '+e(snapshotDate(STATE.roster?.collectedAt))+' · not live</span></div>'+
-    '<p class="sumo-snapshot-line">Today in Japan: '+(today?'Day '+today:'outside the active tournament')+
-    ' · Completed results available through '+(lastCompleted?'Day '+lastCompleted:'an unavailable date')+'.</p>'+
+  const showingUpcoming=!!upcoming&&day===announced&&(!today||announced>today);
+  const latestResults=banzuke&&lastCompleted?verifiedDayMatchups(banzuke,null,{
+    bashoId:details().bashoId,division,day:lastCompleted
+  }).filter(m=>m.finished):[];
+  const resultsArchive=showingUpcoming&&latestResults.length?
+    '<details class="sumo-latest-results"><summary>Day '+lastCompleted+' results · '+latestResults.length+' recorded bouts</summary>'+
+    '<div class="sumo-compact-results">'+latestResults.map(compactBoutRow).join('')+'</div></details>':'';
+  const dayTitle=showingUpcoming?'Upcoming head-to-heads':pairing.some(x=>x.finished)?'Results and head-to-heads':'Scheduled head-to-heads';
+  return '<section class="sumo-daily-page">'+
     '<div class="sumo-daily-controls">'+divisionTabs(division,'data-matchup-division')+
-    '<div class="sumo-daily-calendar"><label for="sumo-matchup-day">Basho day</label>'+
+    '<div class="sumo-daily-calendar"><label for="sumo-matchup-day">Day</label>'+
     '<select id="sumo-matchup-day">'+Array.from({length:15},(_,i)=>'<option value="'+(i+1)+'"'+(day===i+1?' selected':'')+'>Day '+(i+1)+'</option>').join('')+'</select>'+
-    (today?'<button type="button" data-matchup-today="'+today+'">Today · Day '+today+'</button>':'')+'</div></div>'+
-    '<div class="sumo-daily-date">'+e(bashoLabel(details().bashoId))+' · Day '+day+
-    (date?' · '+e(dateOnly(date)):'')+' · '+e(division)+'</div>'+
+    (lastCompleted&&day!==lastCompleted?'<button type="button" data-matchup-latest="'+lastCompleted+'">Results · Day '+lastCompleted+'</button>':'')+
+    '</div></div>'+
+    '<div class="sumo-daily-date"><strong>'+e(dayTitle)+' · Day '+day+'</strong>'+
+    '<span>'+e(bashoLabel(details().bashoId))+(date?' · '+e(dateOnly(date)):'')+' · '+e(division)+'</span></div>'+
     '<div class="sumo-daily-grid">'+(pairing.length?pairing.map(dailyMatchupCard).join(''):
       '<div class="sumo-daily-empty">No confirmed pairings or completed results are cached for this division and selected day. '+latestAction+'</div>')+'</div>'+
+    resultsArchive+
     '<details class="sumo-data-coverage"><summary>Data coverage and interpretation</summary><p>Career win percentage is wins ÷ (wins + losses), excluding absences. Makuuchi totals reflect the available source scope. Missing values are not zero. History and pairwise series may be different source datasets. <a href="sumo-photo-credits.html">Portrait credits</a>.</p></details>'+
     sourceFooter()+'</section>';
 }
@@ -373,7 +379,7 @@ function counts() {
 function wrestler(id) {return ranks().find(r=>r.sourceId===Number(id));}
 function entryFor(w) { const b=getBanzuke(divisionOf(w?.currentRank));return b ? banzukeFor(b,w.sourceId):null; }
 function sourceFooter() {
-  return '<p class="footnote">Data snapshot: <strong>'+e(snapshotDate(STATE.roster?.collectedAt))+'</strong> · Third-party API records (not certified by the JSA). Source: <a target="_blank" rel="noopener noreferrer" href="'+SOURCE_URL+'">Sumo API</a> · Cross-check: <a target="_blank" rel="noopener noreferrer" href="'+JSA_URL+'">Japan Sumo Association</a>.</p>';
+  return '<p class="footnote">Data snapshot: <strong>'+e(snapshotDate(details().dailyCollectedAt||details().collectedAt||STATE.roster?.collectedAt))+'</strong> · Third-party API records (not certified by the JSA). Source: <a target="_blank" rel="noopener noreferrer" href="'+SOURCE_URL+'">Sumo API</a> · Cross-check: <a target="_blank" rel="noopener noreferrer" href="'+JSA_URL+'">Japan Sumo Association</a>.</p>';
 }
 function statBlock(value,label) {
   return '<div class="stat"><div class="value">'+e(value)+'</div><div class="label">'+e(label)+'</div></div>';
