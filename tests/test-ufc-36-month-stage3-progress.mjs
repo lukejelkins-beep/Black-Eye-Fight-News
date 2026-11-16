@@ -576,6 +576,14 @@ test('Official UFC career inventory identifies exact source fights absent from s
  assert.equal(audit.summary.sourceInventoryMissingSavedUfcBouts,2);
  assert.equal(audit.summary.sourceInventorySavedResultContradictions,1);
  assert.equal(audit.summary.independentlyVerifiedFullCareerTimelines,0);
+ // The approved source inventory must survive normal next-day census refreshes.
+ // This previously returned zero missing fights when rolling asOf advanced.
+ const nextDay=auditApprovedStage3(approval,{...c,asOf:'2026-11-15'},
+   progress,{profiles:r},archive,{},{},{},{},inventory);
+ assert.equal(nextDay.summary.sourceInventoryOfficialUfcBouts,4);
+ assert.equal(nextDay.summary.sourceInventoryMissingSavedUfcBouts,2);
+ assert.equal(nextDay.summary.sourceInventorySavedResultContradictions,1);
+ assert.equal(nextDay.summary.independentlyVerifiedFullCareerTimelines,0);
 });
 
 test('Official source inventory rejects changed cohort and unverified fighter URLs',()=>{
