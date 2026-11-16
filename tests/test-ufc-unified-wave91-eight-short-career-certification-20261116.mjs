@@ -9,19 +9,22 @@ const census=load('ufc-36-month-candidates.json');
 const profiles=load('ufcalendar-fighter-research.json').profiles;
 const native=load('ufcalendar-rich-progress.json');
 const proofs=load('ufc-independent-full-career-verification.json').fighters;
+const linkedFeederEvidence=load('ufc-feeder-bout-evidence.json').bouts;
 const targets={
  'farid-basharat':{boutCount:7,id:'185',feeders:1},
  'ismael-bonfim':{boutCount:7,id:'427',feeders:1},
  'tom-nolan':{boutCount:7,id:'92',feeders:1},
- 'azamat-murzakanov':{boutCount:8,id:'452',feeders:0},
+ 'azamat-murzakanov':{boutCount:8,id:'452',feeders:1},
  'charles-radtke':{boutCount:8,id:'413',feeders:0},
  'joe-pyfer':{boutCount:8,id:'201',feeders:1},
  'brendson-ribeiro':{boutCount:9,id:'263',feeders:1},
  'denise-gomes':{boutCount:9,id:'421',feeders:1}
 };
+const documentedFeeder=(slug,r)=>linkedFeederEvidence.some(x=>x.fighterSlug===slug&&String(x.boutId)===String(r.boutId)&&x.date===r.date&&x.opponent===r.opponent&&String(x.sourceUrl).startsWith('https://www.ufc.com/'));
 const nativeHistory=slug=>(profiles[slug]?.recentHistory||[]).filter(r=>
  r.source==='native'&&r.promotion==='ufc'&&r.boutId&&
- !/contender series|road to ufc|\bdwcs\b/i.test(native.bouts[r.boutId]?.event||''));
+ !/contender series|road to ufc|\bdwcs\b/i.test(native.bouts[r.boutId]?.event||'')&&
+ !documentedFeeder(slug,r));
 const certified=(slug,proof)=>evaluateCareerEvidence(profiles[slug],nativeHistory(slug),
  census.fighters.find(x=>x.slug===slug).lastUfcFight,approved.rosterAsOf,proof,native.bouts).independentlyVerified;
 
@@ -42,7 +45,9 @@ test('Wave91: eight UFC careers exactly match independent source identities, bot
   assert.equal(p.sourceSnapshot.fightResultsBlobSha,'80258ab3d9f413cad9be13fde64beb66dd0bcfa6');
   const sourceIds=new Set(),nativeIds=new Set();
   for(const f of p.sourceVerifiedExcludedFeederBouts){
-   assert.match(native.bouts[f.nativeBoutId].event,/contender series|dwcs/i);
+   const b=native.bouts[f.nativeBoutId];
+   const verified=linkedFeederEvidence.some(x=>x.fighterSlug===slug&&String(x.boutId)===f.nativeBoutId&&x.date===f.date&&x.opponent===f.opponent&&x.sourceUrl===f.sourceUrl);
+   assert.ok((b&&/contender series|dwcs/i.test(b.event))||verified,'source-confirmed feeder exclusion required');
    assert.ok(!p.bouts.some(b=>b.nativeBoutId===f.nativeBoutId));
   }
   for(const f of p.bouts){
@@ -63,6 +68,10 @@ test('Wave91: eight UFC careers exactly match independent source identities, bot
     b.status==='draw'||(!b.result?.winnerId&&b.result?.method==='draw')?'draw':
     b.result?.winnerId===own.id?'win':b.result?.winnerId===opponent.id?'loss':null;
    assert.equal(f.result,outcome);
+  }
+  if(slug==='azamat-murzakanov'){
+   assert.ok(profiles[slug].recentHistory.some(r=>r.boutId==='83876'),'original 2021 DWCS row preserved');
+   assert.ok(p.sourceVerifiedExcludedFeederBouts.some(r=>r.nativeBoutId==='83876'),'exclude only corroborated feeder');
   }
   assert.equal(certified(slug,p),true,slug+' strict Stage 3 source gate');
   total+=boutCount;
