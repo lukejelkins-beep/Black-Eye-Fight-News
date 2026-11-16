@@ -957,7 +957,7 @@ function daysPanel(d,data) {
     pairings.length?(view==='matchups'?'<div class="sumo-daily-grid">'+pairings.map(dailyMatchupCard).join('')+'</div>':
       '<div class="sumo-compact-results">'+pairings.map(compactBoutRow).join('')+'</div>'):empty;
   return calendar+tabs+(view!=='standings'?lead:'')+content+
-    (d==='Makushita'?'<p class="footnote">Makushita non-bout days are not recorded absences; most wrestlers have seven bouts over fifteen days.</p>':'');
+    (d==='Makushita'?'<p class="footnote">Makushita non-bout days are not recorded absences; most wrestlers compete seven times across 15 tournament days.</p>':'');
 }
 function compactBoutRow(match) {
   const a=wrestler(match.rikishiId),b=wrestler(match.opponentId);
