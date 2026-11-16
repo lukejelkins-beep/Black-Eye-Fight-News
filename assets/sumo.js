@@ -832,6 +832,7 @@ function renderProfile(id) {
   if(!w)return '<a class="back-link" href="#rikishi">← All rikishi</a>'+note('Wrestler not in the tracked snapshot.');
   const item=entryFor(w),r=item?recordSummary(item.record,divisionOf(w.currentRank)):null,s=detailStats(w);
   const current=weightHeight(w),age=ageInJapan(w.birthDate);
+  const country=originCountry(w.birthplace);
   const style=STATE.officialStyles?.byNskId?.[String(w.officialNskId)];
   const styleOkay=style&&Number(style.sumoApiId)===Number(w.sourceId)&&Array.isArray(style.signature)&&
     /^https:\/\/www\.sumo\.or\.jp\/EnSumoDataRikishi\/profile\/\d+\/$/.test(style.sourceUrl);
@@ -855,10 +856,11 @@ function renderProfile(id) {
     e(r.absence===null?'Absences not supplied':'Absences')+'</small></span></div>':
     '<p>Current tournament record not available.</p>';
   return '<a class="back-link" href="#rikishi">← Rikishi directory</a>'+
-    '<section class="profile-hero">'+portraitFor(w,'xl')+
+    '<section class="profile-hero">'+portraitFor(w,'xl')+flagBackdrop(w)+
     '<div class="profile-title"><div class="eyebrow">BEFN SUMO · '+e(divisionOf(w.currentRank))+'</div>'+
     '<h1>'+e(w.shikonaEn)+'</h1><div class="jp">'+e(w.shikonaJp||'')+'</div>'+
-    '<div class="sumo-hero-rank">'+flagMark(w)+'<strong>'+e(w.currentRank||'Rank not available')+'</strong></div>'+
+    '<div class="sumo-hero-rank"><strong>'+e(w.currentRank||'Rank not available')+'</strong>'+
+    (country?'<span class="sumo-hero-country">'+e(country.name)+'</span>':'')+'</div>'+
     '<div class="sumo-hero-peak">Peak rank: <strong>'+e(knownHigh(w)||'Not available')+'</strong></div>'+
     '<div class="sumo-hero-career"><div><span>Scope</span><span>Wins–losses</span><span>Win %</span></div>'+
     '<div><strong>Career</strong><b>'+e(career)+'</b><b>'+e(careerPercent)+'</b></div>'+
@@ -867,7 +869,7 @@ function renderProfile(id) {
     '</div><div class="profile-current"><span class="tag">'+e(bashoLabel(details().bashoId))+' · SNAPSHOT · NOT LIVE</span>'+
     currentBlock+(divisionOf(w.currentRank)==='Makushita'?'<p class="footnote">Makushita non-bout days are not absences.</p>':'')+'</div>'+
     '<div class="profile-facts profile-meta">'+fact('Stable',w.heya)+fact('Age',age===null?'Not available':age+' years')+
-    fact('Height',current.h==='—'?'Not available':current.h)+
+    fact('Height',current.h==='—'?'Not available':current.h+' · '+heightFeetInches(current.heightCm))+
     fact('Weight · undated',current.mass==='—'?'Not available':current.mass)+'</div></section>'+
     sectionNav(w.sourceId)+recentTenStrip(w)+
     sectionHead('results','Tournament and career ledger','Results')+resultDesk(w)+'</section>'+
