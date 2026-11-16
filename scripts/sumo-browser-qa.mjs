@@ -472,6 +472,32 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     const active=page.locator('.subnav [data-page="'+route+'"][aria-current="page"]').first();
     assert.equal(await active.getAttribute('aria-current'),'page','Destination is announced as current');
   }
+  // The Nov 2026 Day 10 Tokihayate–Daiseizan card is the design acceptance fixture.
+  await open(page,'matchups','#sumo-main');
+  await page.locator('#sumo-matchup-day').selectOption('10');
+  await page.waitForTimeout(100);
+  const screenshotFixture=page.locator('.sumo-daily-card')
+    .filter({hasText:'Tokihayate'}).filter({hasText:'Daiseizan'}).first();
+  assert.ok(await screenshotFixture.count()>0,'The sourced Tokihayate–Daiseizan Day 10 matchup is present');
+  const identities=screenshotFixture.locator('.sumo-daily-facts');
+  assert.equal(await identities.count(),2);
+  const flags=screenshotFixture.locator('.sumo-daily-facts>.sumo-flag-backdrop');
+  assert.equal(await flags.count(),2,'Full-panel flags for both source countries');
+  const flagImages=await flags.evaluateAll(nodes=>nodes.map(el=>getComputedStyle(el,'::before').backgroundImage));
+  assert.ok(flagImages.some(url=>url.includes('/jp.png')),'Japanese flag backdrop');
+  assert.ok(flagImages.some(url=>url.includes('/cn.png')),'Chinese flag backdrop');
+  const overlay=await identities.first().evaluate(el=>getComputedStyle(el,'::after').background);
+  assert.ok(overlay.includes('rgba('),'Light cream overlay protects text contrast');
+  const comparison=await screenshotFixture.locator('.sumo-comparison').innerText();
+  for(const expected of ['179 cm (5′10″)','191 cm (6′3″)','135 kg','171 kg',
+    'Current basho W–L','Career W–L','Career win %','Makushita W–L','Makushita win %'])
+    assertContains(comparison,expected,'Daily card comparisons');
+  const wrapping=await screenshotFixture.locator('.sumo-daily-facts h2')
+    .evaluateAll(nodes=>nodes.map(el=>({scroll:el.scrollWidth,width:el.clientWidth})));
+  assert.ok(wrapping.every(x=>x.scroll<=x.width+4),'No clipped wrestler names');
+  const pageWidth=await page.evaluate(()=>({viewport:innerWidth,scroll:document.documentElement.scrollWidth}));
+  assert.ok(pageWidth.scroll<=pageWidth.viewport+6,'Matchups page has no horizontal overflow');
+  await snap(page,label+'-tokihayate-daiseizan',{fullPage:false});
   if (isMobile){
     for(const route of ['home','rikishi','profile/8850','matchups','basho','banzuke','kimarite']){
       await open(page,route,'#sumo-main');

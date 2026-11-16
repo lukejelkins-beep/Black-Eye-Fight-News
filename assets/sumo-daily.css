@@ -111,24 +111,44 @@
 .sumo-latest-results>summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 @media(max-width:500px){.sumo-daily-page>.sumo-daily-controls{margin:0 0 10px}.sumo-daily-date{gap:3px}.sumo-daily-date span{font-size:12px}.sumo-daily-calendar{margin:8px 0}}
 
-/* Matchup identities: birthplace flags as quiet, edge-to-edge watermarks. */
-.sumo-daily-facts{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(145deg,#fffdf9,#f4eee5)}
-.sumo-daily-facts>.sumo-flag-backdrop{
-  display:block;position:absolute;z-index:0;top:-13px;right:-8px;
-  font:normal clamp(102px,11vw,155px)/1 system-ui,sans-serif;
-  opacity:.16;pointer-events:none;user-select:none;transform:none;
+/* Source-mapped birthplace country flags: full-panel artwork behind readable identities. */
+.sumo-daily-facts {
+  position:relative; isolation:isolate; overflow:hidden;
+  background:#f8f3e9;
 }
-.sumo-daily-facts-content{position:relative;z-index:1;min-width:0}
-.sumo-daily-facts h2 a{color:#21191c;text-decoration:none}
-.sumo-daily-origin{color:#564c4c;font-weight:750}
-.sumo-daily-ranks strong{color:#21191c}
-.sumo-comparison-row strong{overflow-wrap:anywhere;line-height:1.3}
+.sumo-daily-facts>.sumo-flag-backdrop {
+  position:absolute; inset:0; z-index:0; display:grid; place-items:center;
+  overflow:hidden; pointer-events:none; user-select:none;
+  font:normal clamp(220px,27vw,460px)/1 system-ui,sans-serif;
+  opacity:.25; transform:none;
+}
+.sumo-daily-facts>.sumo-flag-backdrop::before {
+  content:""; position:absolute; inset:0;
+  background-image:var(--sumo-flag-url);
+  background-size:cover; background-position:center;
+}
+.sumo-daily-facts::after {
+  content:""; position:absolute; inset:0; z-index:1;
+  background:linear-gradient(105deg,rgba(255,253,247,.83),rgba(255,251,245,.74));
+  pointer-events:none;
+}
+.sumo-daily-facts-content {position:relative; z-index:2; min-width:0;}
+.sumo-daily-facts h2 a {color:#21191c; text-decoration:none;}
+.sumo-daily-origin {color:#423a3c; font-weight:800;}
+.sumo-daily-ranks strong {color:#21191c;}
+.sumo-comparison-row strong {overflow-wrap:anywhere;line-height:1.3;}
+.sumo-comparison-row:has(>span:first-of-type) {min-width:0;}
+.sumo-comparison-row>strong {min-width:0;}
 @media(max-width:900px){
-  .sumo-daily-facts>.sumo-flag-backdrop{font-size:clamp(96px,25vw,145px);top:-10px;right:-12px}
+ .sumo-daily-facts>.sumo-flag-backdrop {font-size:clamp(220px,51vw,400px);}
 }
 @media(max-width:500px){
-  .sumo-daily-facts{padding:12px 10px 14px;min-height:154px}
-  .sumo-daily-facts>.sumo-flag-backdrop{font-size:clamp(86px,28vw,115px);opacity:.15;top:-2px;right:-15px}
-  .sumo-daily-facts h2{line-height:1.03}
-  .sumo-comparison-row strong{font-size:clamp(12px,3.35vw,14px)}
+ .sumo-daily-facts {padding:12px 10px 14px; min-height:154px;}
+ .sumo-daily-facts>.sumo-flag-backdrop {font-size:clamp(180px,60vw,300px);}
+ .sumo-daily-facts::after {background:linear-gradient(120deg,rgba(255,253,247,.86),rgba(255,252,246,.77));}
+ .sumo-daily-facts h2 {line-height:1.03;}
+ .sumo-comparison-row strong {font-size:clamp(12px,3.35vw,14px);}
+}
+@media(max-width:350px){
+ .sumo-daily-facts>.sumo-flag-backdrop {font-size:220px;}
 }

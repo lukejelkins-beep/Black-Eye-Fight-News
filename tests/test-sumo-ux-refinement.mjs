@@ -48,7 +48,7 @@ test('F07 percentages preserve sourced wins/losses, no fabricated zero or precis
  assert.equal(dailyWinPercentage(0,5),'0.0%');
  assert.equal(dailyWinPercentage(0,0),null);
  assert.equal(dailyWinPercentage(null,7),null);
- assert.match(body('comparisonGrid'),/Makuuchi W–L/);
+ assert.match(body('comparisonGrid'),/Makushita W–L/);
  assert.match(body('comparisonGrid'),/Career win %/);
  assert.match(dailyCss,/\.sumo-comparison-row/);
  assert.match(dailyCss,/@media\(max-width:350px\)/);

@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {originCountry,recordSummary} from '../assets/sumo-data.mjs';
 import { knownNonnegativeInt,dailyWinPercentage,heightFeetInches,dailyStats,dailyRecentMeetings,dailyDefaultDay,dailySelectedDate } from '../assets/sumo-daily.mjs';
 
 test('career and Makuuchi win percentages are scoped to respective known win/loss pairs',()=>{
@@ -22,8 +24,7 @@ test('career and Makuuchi win percentages are scoped to respective known win/los
   assert.equal(rows['Makuuchi wins'],'24');
   assert.equal(rows['Makuuchi losses'],'16');
   assert.equal(rows['Makuuchi win %'],'60.0%');
-  assert.equal(rows.Height,'6′4″');
-  assert.equal(rows['Height cm'],'192 cm');
+  assert.equal(rows.Height,'192 cm (6′4″)');
   assert.equal(rows['Current basho wins'],'8');
   assert.equal(rows['Current basho losses'],'1');
   assert.equal(rows['Makushita wins'],'11');
@@ -73,4 +74,68 @@ test('daily date and selection respect Japan tournament day, do not infer an eve
   assert.equal(dailySelectedDate('2026-11-08',9),'2026-11-16');
   assert.equal(dailySelectedDate('2026-11-08',16),null);
   assert.equal(dailySelectedDate('not-a-date',9),null);
+});
+
+test('centimetre height is retained with nearest whole imperial inch',()=>{
+  assert.equal(heightFeetInches(179),'5′10″');
+  assert.equal(heightFeetInches(191),'6′3″');
+  assert.equal(heightFeetInches(182.88),'6′0″');
+  for(const invalid of [null,undefined,-1,0,NaN])assert.equal(heightFeetInches(invalid),'Not available');
+  const rows=Object.fromEntries(dailyStats({heightCm:179,weightKg:135}));
+  assert.equal(rows.Height,'179 cm (5′10″)');
+  assert.equal(rows.Weight,'135 kg');
+});
+
+test('historical Makushita values are sourced division-specific pairs, never inferred',()=>{
+  const facts=Object.fromEntries(dailyStats({
+    careerWins:300,careerLosses:220,makushitaWins:84,makushitaLosses:28,
+    currentBashoWins:8,currentBashoLosses:1
+  }));
+  assert.equal(facts['Makushita wins'],'84');
+  assert.equal(facts['Makushita losses'],'28');
+  assert.equal(facts['Makushita win %'],'75.0%');
+  assert.equal(facts['Current basho wins'],'8');
+  assert.equal(facts['Current basho losses'],'1');
+  const missing=Object.fromEntries(dailyStats({careerWins:300,careerLosses:220,makushitaWins:84}));
+  assert.equal(missing['Makushita losses'],'Not available');
+  assert.equal(missing['Makushita win %'],'Not available');
+});
+
+test('Makushita non-bout days do not count as wins, losses or assumed absences',()=>{
+  const result=recordSummary([
+    {result:'win'},{result:'absent'},{result:'loss'},
+    {result:'absent'},{result:'pending'},{result:'win'}
+  ],'Makushita');
+  assert.equal(result.win,2);
+  assert.equal(result.loss,1);
+  assert.equal(result.noBout,2);
+  assert.equal(result.absence,null);
+});
+
+test('Tokihayate and Daiseizan use actual source roster measures and birthplace-country mappings',()=>{
+  const roster=JSON.parse(readFileSync(new URL('../data/sumo/rikishi-index.json',import.meta.url),'utf8'));
+  const first=roster.rikishi.find(w=>w.shikonaEn==='Tokihayate');
+  const second=roster.rikishi.find(w=>w.shikonaEn==='Daiseizan');
+  assert.ok(first&&second);
+  assert.equal(first.heightCm,179);assert.equal(first.weightKg,135);
+  assert.equal(second.heightCm,191);assert.equal(second.weightKg,171);
+  assert.equal(originCountry(first.birthplace)?.code,'JP');
+  assert.equal(originCountry(second.birthplace)?.code,'CN');
+  assert.equal(originCountry('Unknown location'),null);
+  const rowsA=Object.fromEntries(dailyStats({heightCm:first.heightCm,weightKg:first.weightKg}));
+  const rowsB=Object.fromEntries(dailyStats({heightCm:second.heightCm,weightKg:second.weightKg}));
+  assert.equal(rowsA.Height,'179 cm (5′10″)');
+  assert.equal(rowsB.Height,'191 cm (6′3″)');
+});
+
+test('full-panel flag overlays preserve readability and historical statistics field mapping',()=>{
+  const css=readFileSync(new URL('../assets/sumo-daily.css',import.meta.url),'utf8');
+  const js=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
+  assert.match(css,/\.sumo-daily-facts>\.sumo-flag-backdrop\s*\{[^}]*inset:0/s);
+  assert.match(css,/\.sumo-daily-facts::after\s*\{[^}]*rgba\(255,253,247,\.83\)/s);
+  assert.match(css,/\.sumo-daily-facts-content\s*\{[^}]*z-index:2/s);
+  assert.match(js,/--sumo-flag-url:url\(https:\/\/flagcdn\.com\/w640\//);
+  assert.match(js,/makushitaWins:stats\?\.winsByDivision\?\.Makushita/);
+  assert.match(js,/makushitaLosses:stats\?\.lossByDivision\?\.Makushita/);
+  assert.doesNotMatch(js,/\['Height',f=>pair\(f,'Height'\)\+\(/);
 });
