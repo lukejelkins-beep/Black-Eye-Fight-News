@@ -1,0 +1,167 @@
+/**
+ * BEFN Sumo kimarite gallery — original editorial UI, factual catalogue of 82 JSA techniques.
+ * NHK/YouTube videos are NEVER downloaded, converted or self-hosted here.
+ * To activate a WebM, provide rights-cleared footage and document permission for
+ * trimming, conversion, silent looping and publication by BEFN.
+ */
+const GROUPS = [
+  {id:"basic",name:"Basic techniques",jp:"基本技",intro:"Direct pushes, thrusts and force-outs",items:[["Tsukidashi","Frontal thrust-out"],["Tsukitaoshi","Frontal thrust-down"],["Oshidashi","Frontal push-out"],["Oshitaoshi","Frontal push-down"],["Yorikiri","Frontal force-out"],["Yoritaoshi","Frontal crush-out"],["Abisetaoshi","Backward force-down"]]},
+  {id:"throws",name:"Throwing techniques",jp:"投げ手",intro:"Grip, leverage and rotation",items:[["Uwatenage","Overarm throw"],["Shitatenage","Underarm throw"],["Kotenage","Arm-lock throw"],["Sukuinage","Beltless scoop throw"],["Uwatedashinage","Pulling overarm throw"],["Shitatedashinage","Pulling underarm throw"],["Koshinage","Hip throw"],["Kubinage","Headlock throw"],["Ipponzeoi","One-arm shoulder throw"],["Nichonage","Leg-hook lifting throw"],["Yaguranage","Inner-thigh lifting throw"],["Kakenage","Inner-thigh hooking throw"],["Tsukaminage","Lifting belt throw"]]},
+  {id:"legs",name:"Leg techniques",jp:"掛け手",intro:"Trips, hooks, foot sweeps and leg picks",items:[["Uchigake","Inside leg trip"],["Sotogake","Outside leg trip"],["Chongake","Heel-hook trip"],["Kirikaeshi","Knee-prop twist-down"],["Kawazugake","Entangling backward trip"],["Kekaeshi","Ankle-kick counter"],["Ketaguri","Tachiai ankle kick-down"],["Mitokorozeme","Triple attack"],["Watashikomi","Thigh-grab push-down"],["Nimaigeri","Ankle-kick throw"],["Komatasukui","Inner-thigh scoop"],["Sotokomata","Outer-thigh scoop"],["Omata","Far-thigh scoop"],["Tsumatori","Toe pick"],["Kozumatori","Ankle pick"],["Ashitori","Leg pick"],["Susotori","Outside ankle pick"],["Susoharai","Rear foot sweep"]]},
+  {id:"backward",name:"Backward body drops",jp:"反り手",intro:"Arching and dropping backwards",items:[["Izori","Backward knee-lift drop"],["Shumokuzori","Shoulder-carry backward drop"],["Kakezori","Hooked backward drop"],["Tasukizori","Arm-and-leg backward drop"],["Sototasukizori","Outer arm-and-thigh backward drop"],["Tsutaezori","Underarm backward drop"]]},
+  {id:"twists",name:"Twist-down techniques",jp:"捻り手",intro:"Turns, asymmetric holds and balance breaks",items:[["Tsukiotoshi","Thrust-down"],["Makiotoshi","Wrapping twist-down"],["Tottari","Arm-bar twist-down"],["Sakatottari","Counter arm-bar twist-down"],["Katasukashi","Under-shoulder swing-down"],["Sotomuso","Outer knee sweep-down"],["Uchimuso","Inner thigh sweep-down"],["Zubuneri","Head-assisted twist-down"],["Uwatehineri","Overarm twist-down"],["Shitatehineri","Underarm twist-down"],["Amiuchi","Fisherman's throw"],["Sabaori","Waist-crush down"],["Harimanage","Over-head belt throw"],["Osakate","Deep overarm throw"],["Kainahineri","Arm twist-down"],["Gasshohineri","Clasped-hands neck twist-down"],["Tokkurinage","Two-handed neck twist-down"],["Kubihineri","Neck-and-arm twist-down"],["Kotehineri","Belt-assisted arm twist-down"]]},
+  {id:"special",name:"Special techniques",jp:"特殊技",intro:"Pull-downs, lifts, rear attacks and other finishes",items:[["Hikiotoshi","Hand pull-down"],["Hikkake","Hooked-arm force-out/down"],["Hatakikomi","Slap-down"],["Sokubiotoshi","Neck chop-down"],["Tsuridashi","Frontal lift-out"],["Okuritsuridashi","Rear lift-out"],["Tsuriotoshi","Frontal lift-and-drop"],["Okuritsuriotoshi","Rear lift-and-drop"],["Okuridashi","Rear push-out"],["Okuritaoshi","Rear push-down"],["Okurinage","Rear throw"],["Okurigake","Rear leg-trip"],["Okurihikiotoshi","Rear pull-down"],["Waridashi","Separated-body force-out"],["Utchari","Edge pivot throw"],["Kimedashi","Arm-lock force-out"],["Kimetaoshi","Arm-lock force-down"],["Ushiromotare","Backward lean-out/down"],["Yobimodoshi","Pulling body slam"]]},
+];
+const JP = {"yorikiri":"寄り切り","oshidashi":"押し出し","hatakikomi":"叩き込み","uwatenage":"上手投げ","shitatenage":"下手投げ","tsukiotoshi":"突き落とし","sukuinage":"掬い投げ","oshitaoshi":"押し倒し","yoritaoshi":"寄り倒し"};
+const NHK_YOUTUBE_IDS = {"yorikiri":"bbnsql1bZzw","oshidashi":"BZXmwVOfJNk","hatakikomi":"dVlwcqzB870","uwatenage":"jXZwxHTRRmo","yoritaoshi":"PucQVjkE038","oshitaoshi":"0N6K53M-S2M"};
+const NHK_GALLERY = 'https://www3.nhk.or.jp/nhkworld/en/tv/sumo/techniques/';
+const JSA_CATALOGUE = 'https://www.sumo.or.jp/Kimarite/show/';
+// Source-controlled rights manifest. DO NOT add clips without a documented licence
+// explicitly allowing cropping/trimming, transcoding to WebM, and public looping.
+const APPROVED_WEBM = Object.freeze({});
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+export const kimariteSlug=s=>String(s||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
+export const KIMARITE_GROUPS = GROUPS.map(g=>({...g,items:g.items.map(([name,english])=>({name,english,japanese:JP[kimariteSlug(name)]||'',slug:kimariteSlug(name),group:g.id}))}));
+export const KIMARITE = KIMARITE_GROUPS.flatMap(g=>g.items);
+const bySlug = new Map(KIMARITE.map(x=>[x.slug,x]));
+export const lookupKimarite=s=>bySlug.get(kimariteSlug(s));
+const groupFor=item=>KIMARITE_GROUPS.find(x=>x.id===item.group);
+let filter='all',search='';
+const videoFor=item=>APPROVED_WEBM[item.slug];
+function media(item,large=false){
+ const clip=videoFor(item);
+ if(clip?.webm&&clip?.rights&&clip?.credit){
+   return '<video class="sumo-km-video" muted loop playsinline preload="none"'+
+    (large?' controls':' autoplay')+' aria-label="Demonstration of '+esc(item.name)+'"'+
+    (clip.poster?' poster="'+esc(clip.poster)+'"':'')+'>'+
+    '<source src="'+esc(clip.webm)+'" type="video/webm">Animation unavailable.</video>'+
+    '<span class="sumo-km-media-credit">'+esc(clip.credit)+'</span>';
+ }
+ const yt=NHK_YOUTUBE_IDS[item.slug];
+ if(large&&yt){
+   return '<iframe class="sumo-km-embed" src="https://www.youtube-nocookie.com/embed/'+yt+
+    '?rel=0" title="NHK WORLD-JAPAN demonstration: '+esc(item.name)+'" loading="lazy"'+
+    ' referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+ }
+ return '<div class="sumo-km-no-video" role="img" aria-label="Video example awaiting reuse permission">'+
+   '<span class="sumo-km-glyph" aria-hidden="true">相</span><span class="sumo-km-play" aria-hidden="true">▶</span>'+
+   '<small>'+ (yt?'Official demonstration available':'Demonstration not yet licensed')+'</small></div>';
+}
+function linkSource(item){
+ const yt=NHK_YOUTUBE_IDS[item.slug];
+ return yt?'https://www.youtube.com/watch?v='+yt:NHK_GALLERY;
+}
+function tile(item){
+ return '<article class="sumo-km-tile" id="kimarite-'+item.slug+'"><a class="sumo-km-tile-link" href="#kimarite?term='+item.slug+'" aria-label="View '+esc(item.name)+' example and explanation">'+
+  '<div class="sumo-km-media">'+media(item)+'</div><div class="sumo-km-tile-meta">'+
+  '<div class="sumo-km-jp">'+esc(item.japanese||groupFor(item).jp)+'</div>'+
+  '<div><h3>'+esc(item.name)+'</h3><p>'+esc(item.english)+'</p></div><span class="sumo-km-chevron" aria-hidden="true">↗</span>'+
+  '</div></a></article>';
+}
+function galleryContents(){
+ const host=document.getElementById('sumo-km-results');if(!host)return;
+ const found=KIMARITE_GROUPS.map(g=>({...g,items:g.items.filter(item=>(filter==='all'||g.id===filter)&&
+   (!search||(item.name+' '+item.english+' '+item.japanese+' '+g.name).toLowerCase().includes(search)))})).filter(g=>g.items.length);
+ const shown=found.reduce((n,g)=>n+g.items.length,0);
+ host.innerHTML=found.length?found.map(g=>'<section class="sumo-km-group" id="sumo-km-'+g.id+'"><header class="sumo-km-group-head">'+
+  '<div><span class="sumo-km-jp">'+esc(g.jp)+'</span><h2>'+esc(g.name)+'</h2><p>'+esc(g.intro)+'</p></div>'+
+  '<strong>'+g.items.length+' techniques</strong></header><div class="sumo-km-grid">'+g.items.map(tile).join('')+'</div></section>').join(''):
+  '<p class="sumo-km-empty">No matching kimarite. Try a different spelling or category.</p>';
+ document.getElementById('sumo-km-count').textContent=shown+' of 82 techniques';
+ document.querySelectorAll('[data-km-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.kmFilter===filter)));
+}
+function gallery(){
+ return '<div class="sumo-km-gallery">'+
+  '<header class="sumo-km-hero"><div class="eyebrow">BEFN SUMO · THE TECHNIQUE LIBRARY</div>'+
+  '<h1>Kimarite <span>決まり手</span></h1><p>Explore all 82 official sumo winning techniques. Select a technique to see what it means and an authorised demonstration where available.</p>'+
+  '<div class="sumo-km-hero-stats"><strong>82 <small>techniques</small></strong><strong>6 <small>families</small></strong><strong>5 <small>other outcomes</small></strong></div></header>'+
+  '<section class="sumo-km-controls" aria-label="Find a winning technique">'+
+  '<label for="sumo-km-search">Find a technique</label>'+
+  '<input id="sumo-km-search" type="search" value="'+esc(search)+'" placeholder="Search yorikiri, throw, trip…" autocomplete="off">'+
+  '<div class="sumo-km-filters" role="group" aria-label="Technique families">'+
+  '<button type="button" data-km-filter="all" aria-pressed="'+(filter==='all')+'">All 82</button>'+
+  KIMARITE_GROUPS.map(g=>'<button type="button" data-km-filter="'+g.id+'" aria-pressed="'+(filter===g.id)+'">'+esc(g.name.replace(' techniques','').replace(' body drops',' drops'))+' <span>'+g.items.length+'</span></button>').join('')+
+  '</div><div id="sumo-km-count" class="sumo-km-count" role="status">82 of 82 techniques</div></section>'+
+  '<div id="sumo-km-results"></div>'+
+  '<section class="sumo-km-outcomes"><h2>Other results — not kimarite</h2><p>Isamiashi, Koshikudake, Tsukite, Tsukihiza and Fumidashi are classified separately from the 82 winning techniques. Forfeits and absences are also not performed winning techniques.</p></section>'+
+  '<p class="sumo-km-source">Technique terminology: <a href="'+JSA_CATALOGUE+'" target="_blank" rel="noopener noreferrer">Japan Sumo Association</a>. Demonstrations: <a href="'+NHK_GALLERY+'" target="_blank" rel="noopener noreferrer">NHK WORLD-JAPAN</a>. Source videos remain with their publishers; BEFN has not republished them.</p>'+
+  '</div>';
+}
+function detail(item){
+ const category=groupFor(item);
+ const mediaLink=linkSource(item);
+ const yt=NHK_YOUTUBE_IDS[item.slug];
+ const idx=KIMARITE.findIndex(x=>x.slug===item.slug);
+ const previous=KIMARITE[(idx-1+KIMARITE.length)%KIMARITE.length];
+ const next=KIMARITE[(idx+1)%KIMARITE.length];
+ return '<article class="sumo-km-detail" id="kimarite-'+item.slug+'">'+
+  '<a class="sumo-km-back" href="#kimarite">← All 82 kimarite</a>'+
+  '<div class="sumo-km-detail-head"><div class="eyebrow">'+esc(category.name)+'</div>'+
+  '<h1>'+esc(item.name)+'</h1><div class="sumo-km-detail-jp">'+esc(item.japanese||category.jp)+'</div>'+
+  '<p class="sumo-km-meaning">'+esc(item.english)+'</p></div>'+
+  '<div class="sumo-km-detail-grid"><div class="sumo-km-detail-media">'+media(item,true)+'</div>'+
+  '<div class="sumo-km-detail-aside"><h2>How the bout is decided</h2><p>'+esc(item.english)+'. This finish is categorised by the Japan Sumo Association under '+esc(category.name.toLowerCase())+'.</p>'+
+  (videoFor(item)?.webm?'<p>Autoplaying WebM example · muted · looping</p>':yt?
+    '<p>This is an authorised YouTube embed from NHK, not a downloadable or edited BEFN WebM.</p>':
+    '<p>No licensed example video is currently available to play here. The official NHK collection is linked below.</p>')+
+  '<a class="sumo-km-watch" target="_blank" rel="noopener noreferrer" href="'+esc(mediaLink)+'">'+(yt?'Open original NHK demonstration':'Explore NHK technique videos')+' ↗</a>'+
+  '<a class="sumo-km-jsa" target="_blank" rel="noopener noreferrer" href="'+JSA_CATALOGUE+'">Check official JSA reference ↗</a>'+
+  '</div></div><nav class="sumo-km-prevnext" aria-label="Explore adjacent techniques">'+
+  '<a href="#kimarite?term='+previous.slug+'">← '+esc(previous.name)+'</a>'+
+  '<a href="#kimarite?term='+next.slug+'">'+esc(next.name)+' →</a></nav></article>';
+}
+export function renderKimariteGallery(){
+ const value=new URLSearchParams(location.hash.split('?')[1]||'').get('term');
+ const item=lookupKimarite(value);
+ return item?detail(item):gallery();
+}
+export function hydrateKimariteGallery(){
+ if(document.getElementById('sumo-km-results'))galleryContents();
+ const videos=[...document.querySelectorAll('.sumo-km-video')];
+ if(!videos.length)return;
+ const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{
+   if(entry.isIntersecting&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+     entry.target.play().catch(()=>{});
+   }else entry.target.pause();
+ });},{rootMargin:'150px'});
+ videos.forEach(video=>observer.observe(video));
+}
+// Delegated listeners register once; the parent Sumo router owns hash navigation.
+document.addEventListener('input',event=>{
+ if(event.target?.id==='sumo-km-search'){
+   search=event.target.value.trim().toLowerCase();
+   galleryContents();
+ }
+});
+document.addEventListener('click',event=>{
+ const target=event.target.closest?.('[data-km-filter]');
+ if(!target)return;
+ filter=target.dataset.kmFilter;
+ galleryContents();
+});
+// Link existing bout, head-to-head and profile technique references to their examples.
+// Text nodes are used (not innerHTML replacement), preserving current data and links.
+export function linkKimariteMentions(root){
+ const selectors=['.sumo-ed-tech','.sumo-result-extra','.sumo-h2h-technique','.sumo-daily-meeting','.sumo-compact-result','.sumo-techniques-list .chart-row .name','.sumo-kimarite-bar','.sumo-leader-last','.sumo-daily-card'];
+ const valid=new Map(KIMARITE.map(x=>[x.name.toLowerCase(),x]));
+ const names=[...valid.keys()].sort((a,b)=>b.length-a.length).map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
+ const reg=new RegExp('\\b('+names.join('|')+')\\b','ig');
+ root.querySelectorAll(selectors.join(',')).forEach(node=>{
+   const walker=document.createTreeWalker(node,NodeFilter.SHOW_TEXT);
+   const texts=[];while(walker.nextNode())texts.push(walker.currentNode);
+   for(const textNode of texts){
+     if(!textNode.textContent||textNode.parentElement.closest('a,button,script,style'))continue;
+     const s=textNode.textContent;reg.lastIndex=0;if(!reg.test(s))continue;
+     reg.lastIndex=0;const fragment=document.createDocumentFragment();let last=0,match;
+     while((match=reg.exec(s))){
+       if(match.index>last)fragment.append(document.createTextNode(s.slice(last,match.index)));
+       const item=valid.get(match[0].toLowerCase());
+       const link=document.createElement('a');link.href='#kimarite?term='+item.slug;
+       link.className='sumo-km-inline-link';link.title='View '+item.name+' technique example';
+       link.textContent=match[0];fragment.append(link);last=match.index+match[0].length;
+     }
+     if(last<s.length)fragment.append(document.createTextNode(s.slice(last)));
+     textNode.replaceWith(fragment);
+   }
+ });
+}
