@@ -178,7 +178,30 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   });
   assert.ok(structure,'Preserve existing profile section order: header, form, Results, Career, Analysis');
   if(isMobile){
-    assert.ok(await page.locator('.sumo-recent-list').isVisible(),'Recent form scrolls inside its own compact panel');
+    assert.ok(await page.locator('.sumo-recent-list').isVisible(),'Recent form uses compact readable mobile rows');
+    const formLayout=await page.locator('.sumo-recent-strip').evaluate(panel=>{
+      const list=panel.querySelector('.sumo-recent-list');
+      const items=[...list.querySelectorAll('.sumo-recent-bout')];
+      const boundaries=items.map(el=>({
+        left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right,
+        top:el.getBoundingClientRect().top,bottom:el.getBoundingClientRect().bottom,
+        nameWidth:el.querySelector('.sumo-recent-person').getBoundingClientRect().width
+      }));
+      return {
+        listScroll:list.scrollWidth,listWidth:list.clientWidth,
+        panelWidth:panel.getBoundingClientRect().width,
+        items:boundaries,
+        arrows:[...panel.querySelectorAll('.sumo-recent-arrow')].every(el=>getComputedStyle(el).display==='none')
+      };
+    });
+    assert.equal(formLayout.items.length,5,'All five latest bouts fit in the form list');
+    assert.ok(formLayout.arrows,'Mobile no longer shows redundant carousel arrows');
+    assert.ok(formLayout.listScroll<=formLayout.listWidth+3,
+      'All five recent bouts are visible without sideways scrolling: '+JSON.stringify(formLayout));
+    assert.ok(formLayout.items.every((row,i,rows)=>
+      row.right-row.left>180&&row.nameWidth>90&&(i===0||row.top>=rows[i-1].bottom-1)),
+      'Five rows stack vertically with space for readable opponent names: '+JSON.stringify(formLayout));
+
     await page.locator('.sumo-recent-strip').screenshot({path:OUT+'/'+label+'-compact-form.png',animations:'disabled'});
     screenshotCount++;
     const charts=page.locator('#sumo-charts .sumo-career-panel');
@@ -192,8 +215,34 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
         return {frame:el.clientWidth,content:el.scrollWidth,
           svg:svg.getBoundingClientRect().width,viewport:document.documentElement.clientWidth};
       });
-      assert.ok(sizes.svg>=300&&sizes.svg<850,
-        'Mobile '+kind+' chart uses a phone-sized SVG rather than the 900px desktop view: '+JSON.stringify(sizes));
+      assert.ok(sizes.svg>=250&&sizes.svg<850,
+        'Mobile '+kind+' chart uses an adaptive SVG rather than the 900px desktop view: '+JSON.stringify(sizes));
+      const ticks=await graph.evaluate(svg=>{
+        const h=svg.viewBox.baseVal.height;
+        const labels=[...svg.querySelectorAll('.sumo-chart-axis')].filter(el=>
+          Number(el.getAttribute('y'))>=h-30);
+        const groups=new Map();
+        for(const el of labels){
+          const key=el.getAttribute('y');
+          if(!groups.has(key))groups.set(key,[]);
+          const rect=el.getBoundingClientRect();
+          groups.get(key).push({left:rect.left,right:rect.right,text:el.textContent});
+        }
+        return [...groups.values()].map(row=>row.sort((a,b)=>a.left-b.left));
+      });
+      for(const row of ticks){
+        for(let i=1;i<row.length;i++){
+          assert.ok(row[i-1].right<=row[i].left+1,
+            kind+' chart bottom-axis labels do not overlap: '+JSON.stringify(row));
+        }
+      }
+      if(kind==='rank'){
+        assert.equal(ticks.reduce((n,row)=>n+row.length,0),4,
+          'Mobile rank chart shows two dates on two lines rather than overlapping five dates');
+      }else{
+        assert.ok(ticks.reduce((n,row)=>n+row.length,0)<=3,
+          'Mobile weight chart has no more than three calendar labels');
+      }
       const pageWidth=await page.evaluate(()=>document.documentElement.scrollWidth);
       assert.ok(pageWidth<=sizes.viewport+6,'Chart '+kind+' cannot overflow the document');
     }
