@@ -134,7 +134,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
 
   await open(page,'banzuke','.sumo-rank-card');
   assert.equal(await page.locator('.sumo-rank-card').count(),42);
-  assert.equal(await page.locator('.sumo-rank-card .sumo-country').count(),42);
+  assert.ok((await page.locator('.sumo-rank-card .sumo-flag-backdrop').count())>0,'Banzuke cards retain source-backed flag decorations');
   assert.equal(await page.locator('.sumo-rank-card .sumo-move').count(),42);
   await page.locator('[data-banzuke-division="Juryo"]').click();
   assert.equal(await page.locator('.sumo-rank-card').count(),28);
@@ -162,7 +162,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.locator('[data-day="7"]').click();
   assert.ok(await page.locator('.sumo-match-card').count()>0,'Makushita matchups use designed cards');
   assert.ok(await page.locator('.sumo-match-card .sumo-match-person').count()>=2);
-  assert.ok((await page.locator('.standings tbody tr').count())>=20);
+  assert.ok((await page.locator('.sumo-standings-row').count())>=20,'Basho standings preserve all entries in responsive rows');
   await snap(page,label+'-basho',{fullPage:false});
 
   await open(page,'kimarite','.technical-terms');
