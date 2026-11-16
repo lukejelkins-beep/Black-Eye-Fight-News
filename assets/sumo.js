@@ -125,11 +125,17 @@ function movementFor(w) {
 }
 function movementMarkup(w) {
   const m=movementFor(w);
-  const clazz=['up','down','same','new'].includes(m.status)?m.status:'unavailable';
-  const symbol=m.status==='up'?'↑':m.status==='down'?'↓':m.status==='same'?'↔':m.status==='new'?'✦':'—';
-  const detail=m.previousRank?(' · previous: '+m.previousRank):'';
-  return '<span class="sumo-move '+clazz+'" title="'+e(m.label+detail)+'"><span aria-hidden="true">'+symbol+'</span> '+e(m.status==='up'||m.status==='down'?m.places+' places':m.status==='new'?'NEW':m.status==='same'?'Same rank':'—')+'</span>';
+  // Banzuke slots are not interchangeable with numbered rank promotions.
+  // Until an independently checked rank-delta algorithm is available, show
+  // the source's previous/current rank rather than a misleading place count.
+  if(!m.previousRank || !m.currentRank)
+    return '<span class="sumo-move unavailable">Previous rank unavailable</span>';
+  if(m.previousRank===m.currentRank)
+    return '<span class="sumo-move same">↔ Same rank</span>';
+  return '<span class="sumo-move same" title="Previous banzuke to current banzuke">'+
+    e(m.previousRank)+' → '+e(m.currentRank)+'</span>';
 }
+
 function headToHeadFor(a,b) {
   return researchedHeadToHead(STATE.h2hSummary,STATE.h2hFull,a,b)||h2hHistory(details(),a,b);
 }
@@ -257,8 +263,8 @@ function standingsTable(rows, limit=10) {
       (w?movementMarkup(w):'<span class="sumo-move unavailable">—</span>')+'</span></a>';
   }).join('');
   return '<div class="sumo-standings-list" role="list" aria-label="Tournament standings, ranks and movement">'+cards+'</div>'+
-    '<p class="sumo-standings-legend">↑ Gained places · ↓ Lost places · ↔ Unchanged since '+e(bashoLabel(details().previousBashoId))+
-    '. Movement is based on banzuke positions, not tournament wins.</p>';
+    '<p class="sumo-standings-legend">Previous → current banzuke ranks, compared with '+e(bashoLabel(details().previousBashoId))+
+    '. These are published rank labels, not tournament win totals or calculated place counts.</p>';
 }
 function featureCard(w) {
   const ent=entryFor(w),s=recordSummary(ent?.record, divisionOf(w.currentRank));
