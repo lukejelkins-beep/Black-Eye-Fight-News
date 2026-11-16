@@ -639,8 +639,12 @@ function opponentResults(w){
     '<div class="sumo-rival-grid">'+shown.map(r=>{
       const opponent=wrestler(r.id),label=name(r);
       return '<a class="sumo-rival" href="'+headToHeadUrl(w.sourceId,r.id)+'">'+
-        '<span class="sumo-rival-name">'+e(label)+'</span><strong>'+e(r.wins)+' W · '+e(r.losses)+' L</strong>'+
-        '<small>'+e(r.meetings)+' recorded meetings · open full chronology</small></a>';
+        (opponent?flagBackdrop(opponent):'')+
+        '<span class="sumo-rival-portrait">'+portraitFor(opponent,'sm')+'</span>'+
+        '<span class="sumo-rival-main"><span class="sumo-rival-name">'+e(label)+'</span>'+
+        (opponent?flagMark(opponent):'')+
+        '<small>'+e(r.meetings)+' recorded meetings · open full chronology</small></span>'+
+        '<strong class="sumo-rival-record">'+e(r.wins)+' W · '+e(r.losses)+' L</strong></a>';
     }).join('')+'</div>'+
     (shown.length<matches.length?'<button type="button" class="btn light" data-h2h-more>Show more opponents ('+(matches.length-shown.length)+' remain)</button>':'')+
     (STATE.h2hOpponentLimit>16?'<button type="button" class="btn light" data-h2h-fewer>Show fewer opponents</button>':'');
