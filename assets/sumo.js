@@ -285,9 +285,11 @@ function standingsTable(rows, limit=10) {
     const rank=x.rank||w?.currentRank||'Rank not available';
     const summary=x.summary||recordSummary(x.record,divisionOf(rank));
     const tally=recordLabels(summary);
+    const measurements=w?weightHeight(w):null;
+    const physical=measurements?'<small class="sumo-standings-measurements">'+e(measurements.h==='—'?'Height unavailable':measurements.h)+' · '+e(measurements.mass==='—'?'Weight unavailable':measurements.mass)+'</small>':'';
     return '<a class="sumo-standings-row" role="listitem" href="#profile/'+id+'">'+flagBackdrop(w)+
       (w?portraitFor(w,'sm'):'')+'<span class="sumo-standings-identity"><strong>'+e(title)+'</strong><small>'+tally+'</small></span>'+
-      '<span class="sumo-standings-ranking"><strong>'+e(rank)+'</strong>'+
+      '<span class="sumo-standings-ranking"><strong>'+e(rank)+'</strong>'+physical+
       (w?movementMarkup(w):'<span class="sumo-move unavailable">—</span>')+'</span></a>';
   }).join('');
   return '<div class="sumo-standings-list" role="list" aria-label="Tournament standings, ranks and movement">'+cards+'</div>'+
