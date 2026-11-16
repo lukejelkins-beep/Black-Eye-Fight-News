@@ -17,7 +17,7 @@ const tabs = [...document.querySelectorAll('[data-page]')];
 const DIVS = ['Makuuchi','Juryo','Makushita'];
 const STATE = {
   roster: null, details: null, careerHistory: null, officialStyles: null, photoIndex: null, apiTrust: null, error: null, query: '', division: 'All',
-  visible: 24, bashoDivision: 'Makuuchi', bashoView: 'results', banzukeDivision: 'Makuuchi',
+  visible: 24, directoryLayout: 'cards', bashoDivision: 'Makuuchi', bashoView: 'results', banzukeDivision: 'Makuuchi',
   day: null, matchupDivision: 'Makuuchi', matchupDay: null, profileLimit: 5, h2hOldestFirst: false, h2hOpponentLimit: 16,
   profileMode: 'bouts', profilePeriod: 'current', rankRange: '2y', fullRankLadder: false,
   opponentQuery: '', opponentSort: 'meetings', h2hReturn: null,
@@ -472,7 +472,10 @@ function directoryResults() {
   const message='No matches in '+scoped+(q?' for “'+q+'”':'')+'.';
   const reset='<button type="button" class="btn light" data-directory-reset>Search all divisions</button>';
   return '<p class="directory-count" role="status" aria-live="polite">'+found.length+' matching current wrestler'+(found.length===1?'':'s')+' in '+e(scoped)+' · '+selected.length+' shown</p>'+
-    (selected.length?'<div class="directory-grid">'+selected.map(directoryCard).join('')+'</div>':
+    '<div class="sumo-directory-layout" role="group" aria-label="Directory layout">'+
+      '<button type="button" data-directory-layout="cards" aria-pressed="'+(STATE.directoryLayout==='cards')+'">Photo cards</button>'+
+      '<button type="button" data-directory-layout="list" aria-pressed="'+(STATE.directoryLayout==='list')+'">Compact list</button></div>'+
+    (selected.length?'<div class="directory-grid '+(STATE.directoryLayout==='list'?'is-list':'')+'">'+selected.map(directoryCard).join('')+'</div>':
       '<div class="sumo-empty-search">'+note(message)+reset+'</div>')+
     (found.length>STATE.visible?'<div class="more-wrap"><button type="button" class="btn light" data-more-rikishi>Show more ('+(found.length-STATE.visible)+' remain)</button></div>':'')+
     (STATE.visible>24?'<div class="more-wrap"><button type="button" class="btn light" data-fewer-rikishi>Show fewer</button></div>':'');
@@ -747,6 +750,11 @@ function renderProfile(id) {
   const maku=Number.isInteger(mWins)&&Number.isInteger(mLosses)?mWins+'–'+mLosses:'Not available';
   const careerPercent=dailyWinPercentage(wins,losses)||'Not available';
   const makuPercent=dailyWinPercentage(mWins,mLosses)||'Not available';
+  const approvedPhoto=STATE.photoIndex?.[String(w.sourceId)];
+  const fullPhoto=approvedPhoto?.approved===true &&
+    /^assets\/sumo-photos\/[a-zA-Z0-9_-]+\.(webp|png|jpg|jpeg)$/.test(String(approvedPhoto.path||'')) &&
+    String(approvedPhoto.license||'').trim()&&String(approvedPhoto.credit||'').trim()
+    ?'<a class="sumo-full-photo" href="'+e(approvedPhoto.path)+'" target="_blank" rel="noopener noreferrer">View full photo</a>':'';
   const titleCount=s?.yushoByDivision?.Makuuchi;
   const careerAwards=Object.entries(s?.sansho||{}).map(([k,v])=>'<li>'+e(k)+': '+e(v)+'</li>').join('');
   const currentBlock=r?'<div class="sumo-current-record"><span><b>'+r.win+'</b><small>Wins</small></span>'+
@@ -761,7 +769,8 @@ function renderProfile(id) {
     '<div class="sumo-hero-peak">Peak rank: <strong>'+e(knownHigh(w)||'Not available')+'</strong></div>'+
     '<div class="sumo-hero-career"><div><span>Scope</span><span>Wins–losses</span><span>Win %</span></div>'+
     '<div><strong>Career</strong><b>'+e(career)+'</b><b>'+e(careerPercent)+'</b></div>'+
-    '<div><strong>Makuuchi · source scope</strong><b>'+e(maku)+'</b><b>'+e(makuPercent)+'</b></div></div>'+
+    '<div><strong>Makuuchi · source scope</strong><b>'+e(maku)+'</b><b>'+e(makuPercent)+'</b></div></div>'+ 
+    '<div class="sumo-hero-actions"><a class="sumo-quick-results" data-profile-section="results" href="#profile/'+Number(w.sourceId)+'?section=results">Jump to results</a>'+fullPhoto+'</div>'+
     '</div><div class="profile-current"><span class="tag">'+e(bashoLabel(details().bashoId))+' · SNAPSHOT · NOT LIVE</span>'+
     currentBlock+(divisionOf(w.currentRank)==='Makushita'?'<p class="footnote">Makushita non-bout days are not absences.</p>':'')+'</div>'+
     '<div class="profile-facts profile-meta">'+fact('Stable',w.heya)+fact('Age',age===null?'Not available':age+' years')+
@@ -1098,13 +1107,14 @@ document.addEventListener('click',ev=>{
     document.getElementById('sumo-bout-'+last.dataset.resultLink)?.querySelector('a')?.focus({preventScroll:true});
     return;
   }
-  const el=ev.target.closest?.('[data-basho-view],[data-matchup-latest],[data-directory-reset],[data-matchup-division],[data-matchup-today],[data-directory-division],[data-more-rikishi],[data-fewer-rikishi],[data-banzuke-division],[data-basho-division],[data-day],[data-jump-day],[data-profile-limit],[data-h2h-order],[data-h2h-more],[data-h2h-fewer],[data-results-mode],[data-rank-range],[data-rank-ladder],[data-h2h-retry],[data-opponent-retry]');
+  const el=ev.target.closest?.('[data-directory-layout],[data-basho-view],[data-matchup-latest],[data-directory-reset],[data-matchup-division],[data-matchup-today],[data-directory-division],[data-more-rikishi],[data-fewer-rikishi],[data-banzuke-division],[data-basho-division],[data-day],[data-jump-day],[data-profile-limit],[data-h2h-order],[data-h2h-more],[data-h2h-fewer],[data-results-mode],[data-rank-range],[data-rank-ladder],[data-h2h-retry],[data-opponent-retry]');
   if(!el)return;
   if(el.dataset.matchupDivision){STATE.matchupDivision=el.dataset.matchupDivision;render();}
   if(el.dataset.matchupToday){STATE.matchupDay=Number(el.dataset.matchupToday);render();}
   if(el.dataset.matchupLatest){STATE.matchupDay=Number(el.dataset.matchupLatest);render();}
   if(el.dataset.bashoView){STATE.bashoView=el.dataset.bashoView;render();}
   if(el.hasAttribute('data-directory-reset')){STATE.division='All';STATE.visible=24;refreshDir();}
+  if(el.dataset.directoryLayout){STATE.directoryLayout=el.dataset.directoryLayout;refreshDir();}
   if(el.dataset.directoryDivision){STATE.division=el.dataset.directoryDivision;STATE.visible=24;refreshDir();}
   if(el.hasAttribute('data-more-rikishi')){
     const before=STATE.visible;STATE.visible+=24;refreshDir();
