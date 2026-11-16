@@ -9,6 +9,42 @@ import {
   originCountry, banzukeMovement, dayMatchups, verifiedHeadToHead, verifiedHighestRank, confirmedCareerHigh, announcedTorikumiMatches, verifiedDayMatchups, rankOrderedMatchups, lastCompletedBashoDay, publishedCurrentWeight
 } from '../assets/sumo-data.mjs';
 
+import { highestRecordedDivision } from '../assets/sumo-daily.mjs';
+
+test('career H2H prefers Makuuchi record even when older Makushita data exists',()=>{
+  const result=highestRecordedDivision({
+    winsByDivision:{Makushita:30,Juryo:50,Makuuchi:175},
+    lossByDivision:{Makushita:19,Juryo:20,Makuuchi:63}
+  });
+  assert.deepEqual(result,{division:'Makuuchi',wins:175,losses:63,record:'175–63',percentage:'73.5%'});
+});
+test('career H2H chooses highest available division below Makuuchi',()=>{
+  assert.equal(highestRecordedDivision({
+    winsByDivision:{Makushita:70,Juryo:23},
+    lossByDivision:{Makushita:29,Juryo:10}
+  })?.division,'Juryo');
+  assert.equal(highestRecordedDivision({
+    winsByDivision:{Makushita:30,Sandanme:56},
+    lossByDivision:{Makushita:19,Sandanme:18}
+  })?.division,'Makushita');
+  assert.equal(highestRecordedDivision({
+    winsByDivision:{Sandanme:34,Jonidan:18},
+    lossByDivision:{Sandanme:15,Jonidan:6}
+  })?.division,'Sandanme');
+});
+test('career H2H never infers a division record from rank or missing values',()=>{
+  assert.equal(highestRecordedDivision({highestRank:'Yokozuna 1 East',winsByDivision:{Makushita:12},lossByDivision:{}}),null);
+  assert.equal(highestRecordedDivision({winsByDivision:{Makuuchi:0,Juryo:10},lossByDivision:{Makuuchi:0,Juryo:2}})?.division,'Juryo');
+  assert.equal(highestRecordedDivision({winsByDivision:{Makuuchi:12},lossByDivision:{Makuuchi:null}}),null);
+});
+test('dedicated H2H selects highest sourced division without altering daily matchup division labels',()=>{
+  const source=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
+  assert.match(source,/function comparisonGrid\(first,second,division=null\)/);
+  assert.match(source,/highestRecordedDivision\(stats\)/);
+  assert.match(source,/comparisonGrid\(first,second\)\+.*h2hKimaritePanel/s);
+  assert.match(source,/comparisonGrid\(first,second,match\.division\|\|STATE\.matchupDivision\)/);
+});
+
 const entries = {
   east:[{rikishiID:10,shikonaEn:'East One',rank:'Maegashira 1 East',rankValue:101,side:'East',
     record:[{result:'win',opponentID:11,opponentShikonaEn:'West One',kimarite:'oshidashi'},{result:'absent'}]}],
