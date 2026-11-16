@@ -5,8 +5,10 @@ on:
     paths:
       - 'scripts/ufc-v4-r2-career-gate.mjs'
       - 'scripts/ufc-v4-r2-career-panel.mjs'
+      - 'scripts/ufc-v4-r2-v3-pilot-adapter.mjs'
       - 'tests/test-ufc-v4-r2-career-gate.mjs'
       - 'tests/test-ufc-v4-r2-career-panel.mjs'
+      - 'tests/test-ufc-v4-r2-v3-pilot-adapter.mjs'
       - '.github/workflows/verify-ufc-v4-r2.yml'
 permissions:
   contents: read
@@ -20,6 +22,6 @@ jobs:
         with:
           node-version: '22'
       - name: Verify feature-off and full-history gating
-        run: node --test tests/test-ufc-v4-r2-career-gate.mjs tests/test-ufc-v4-r2-career-panel.mjs
+        run: node --test tests/test-ufc-v4-r2-career-gate.mjs tests/test-ufc-v4-r2-career-panel.mjs tests/test-ufc-v4-r2-v3-pilot-adapter.mjs
       - name: Assert no live activation
         run: echo 'R2 remains OFF; this workflow cannot authorize merge or deployment.'
