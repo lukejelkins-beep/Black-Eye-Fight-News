@@ -72,3 +72,13 @@ Crosschecked the 21 native opponent/date identities above against the independen
 **Still required:** verify that the actual UFCalendar round-stat records exist, are correctly linked to each original numeric UFC bout ID and fighter corner, and contain the relevant values; `roundDone` alone is a retrieval-status marker, not the round record itself. Preserve complete original UFC fight identity, chronology, opponent, result, NC/draw, excluded feeder/cancelled entries, and exact-commit strict audit. Do not fabricate missing rows or relax those non-statistic gates.
 
 **Implementation follow-up:** The strict Stage 3 validator and tests should be updated to use this policy on the existing research branch before certification is claimed. This note alone does not modify validator logic or certify Paul Craig.
+
+## Owner-approved original bout-ID relaxation — 2026-11-17
+
+**Superseding owner decision:** Original numeric bout identity crosswalks are **not required** for BEFN UFC Stage 3 certification. Do not block a career solely because original provider bout IDs, UFCStats/Greco IDs, or original numeric corner IDs cannot be reconciled. Fight records may be matched using fighter identity, opponent, official event/date (allow documented timezone offsets), and final result, with safeguards against duplicate opponents/rematches and mistaken events.
+
+Together with the preceding owner decision, **UFCalendar per-round figures are accepted as authoritative**, without independent numerical verification. The practical remaining checks are complete official UFC career chronology, correct fighter/opponent/outcome/date matching, appropriate exclusion of cancelled/non-UFC qualifiers, and presence of usable UFCalendar statistical data for the represented fights. Missing original IDs or disagreement with external numerical statistics alone must not prevent certification.
+
+For Paul Craig, the independently corroborated 21-bout official chronology is the source-of-truth count. A 20-row provider-history summary is not automatically disqualifying, but the actual profile dataset must represent the 21 UFC bouts (or explicitly account for any unavailable data without inventing a result). A count mismatch must not be silently relabelled complete.
+
+**Important:** This note records the revised standard; existing executable validator/tests and the strict audit still need updating before claiming any new certified fighter. No certification count increase on this note.
