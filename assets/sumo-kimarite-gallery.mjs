@@ -63,8 +63,8 @@ function media(item,large=false){
  // The owner-provided technique GIF stays inside the click-to-open popup.
  const clip=videoFor(item);
  return '<div class="sumo-km-poster" aria-label="Official Japan Sumo Association photograph of '+esc(item.name)+'">'+
-   '<img src="'+esc(item.jsaPoster)+'" data-jsa-remote="'+esc(item.jsaRemote)+'"'+
-   ' alt="Official JSA '+esc(item.name)+' technique photograph" loading="lazy" decoding="async" referrerpolicy="no-referrer">'+
+   '<img src="'+esc(item.jsaPoster)+'?v=20261117-jsa-photo-cachefix-v3" data-jsa-remote="'+esc(item.jsaRemote)+'"'+
+   ' alt="Official JSA '+esc(item.name)+' technique photograph" loading="'+(item.jsaId<=7?'eager':'lazy')+'" decoding="async" referrerpolicy="no-referrer">'+
    (clip?.gif?'<span class="sumo-km-pending sumo-km-ready">▶ View GIF</span>':'')+
    '</div>';
 }
@@ -190,7 +190,7 @@ export function kimariteModalMarkup(item){
    '':
    isOshidashi?
    '<div class="sumo-km-modal-pending-visual">Owner-supplied Oshidashi GIF pending upload to the test branch</div>':
-   '<img class="sumo-km-modal-still" src="'+esc(item.jsaPoster)+'" data-jsa-remote="'+esc(item.jsaRemote)+'" referrerpolicy="no-referrer" alt="Official Japan Sumo Association '+esc(item.name)+' reference photograph">'+
+   '<img class="sumo-km-modal-still" src="'+esc(item.jsaPoster)+'?v=20261117-jsa-photo-cachefix-v3" data-jsa-remote="'+esc(item.jsaRemote)+'" referrerpolicy="no-referrer" alt="Official Japan Sumo Association '+esc(item.name)+' reference photograph">'+
    '';
  const clipButton=clip?.clip?
    '<div class="sumo-km-clip-panel"><button type="button" class="sumo-km-clip-button" data-km-clip-toggle aria-expanded="false" aria-controls="sumo-km-original-clip">▶ Play original clip</button>'+
