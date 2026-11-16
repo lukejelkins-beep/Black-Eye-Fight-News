@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { knownNonnegativeInt,dailyWinPercentage,dailyStats,dailyRecentMeetings,dailyDefaultDay,dailySelectedDate } from '../assets/sumo-daily.mjs';
+import { knownNonnegativeInt,dailyWinPercentage,heightFeetInches,dailyStats,dailyRecentMeetings,dailyDefaultDay,dailySelectedDate } from '../assets/sumo-daily.mjs';
 
 test('career and Makuuchi win percentages are scoped to respective known win/loss pairs',()=>{
   assert.equal(dailyWinPercentage(7,3),'70.0%');
@@ -13,8 +13,8 @@ test('career and Makuuchi win percentages are scoped to respective known win/los
   }
   const rows=Object.fromEntries(dailyStats({
     currentRank:'Yokozuna 1 East',highestRank:'Yokozuna',
-    heightCm:192,weightKg:181,careerWins:120,careerLosses:30,
-    makuuchiWins:24,makuuchiLosses:16
+    heightCm:192,weightKg:181,currentBashoWins:8,currentBashoLosses:1,careerWins:120,careerLosses:30,
+    makuuchiWins:24,makuuchiLosses:16,makushitaWins:11,makushitaLosses:3
   }));
   assert.equal(rows['Career wins'],'120');
   assert.equal(rows['Career losses'],'30');
@@ -22,7 +22,13 @@ test('career and Makuuchi win percentages are scoped to respective known win/los
   assert.equal(rows['Makuuchi wins'],'24');
   assert.equal(rows['Makuuchi losses'],'16');
   assert.equal(rows['Makuuchi win %'],'60.0%');
-  assert.equal(rows.Height,'192 cm');
+  assert.equal(rows.Height,'6′4″');
+  assert.equal(rows['Height cm'],'192 cm');
+  assert.equal(rows['Current basho wins'],'8');
+  assert.equal(rows['Current basho losses'],'1');
+  assert.equal(rows['Makushita wins'],'11');
+  assert.equal(rows['Makushita losses'],'3');
+  assert.equal(rows['Makushita win %'],'78.6%');
   assert.equal(rows.Weight,'181 kg');
   assert.equal(rows['Highest rank'],'Yokozuna');
 });
@@ -33,6 +39,13 @@ test('missing source values are never substituted with zeros or computed percent
   assert.equal(rows['Makuuchi win %'],'Not available');
   assert.equal(rows['Makuuchi wins'],'0');
   assert.equal(rows.Height,'Not available');
+  assert.equal(rows['Current basho wins'],'Not available');
+  assert.equal(rows['Makushita win %'],'Not available');
+  assert.equal(heightFeetInches(179),'5′10″');
+  assert.equal(heightFeetInches(191),'6′3″');
+  assert.equal(heightFeetInches(null),'Not available');
+  assert.equal(heightFeetInches(-1),'Not available');
+  assert.equal(heightFeetInches(0),'Not available');
   assert.equal(rows.Weight,'Not available');
 });
 test('recent five are real source rows, preserve order, winner, kimarite, and no fabricated extras',()=>{
