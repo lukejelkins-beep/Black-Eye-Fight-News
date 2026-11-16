@@ -97,7 +97,7 @@ function weightHeight(w) {
     ?rawHeight:listing.heightCm;
   const displayedKg=listing.source==='Sumo API roster listing'&&Number.isFinite(rawKg)&&rawKg>0
     ?rawKg:listing.kg;
-  const h=displayedHeight!==null?displayedHeight+' cm':'—';
+  const h=Number.isFinite(displayedHeight)&&displayedHeight>0?Math.floor(Math.round(displayedHeight/2.54)/12)+'′ '+(Math.round(displayedHeight/2.54)%12)+'″':'—';
   const mass=displayedKg!==null?displayedKg+' kg':'—';
   return {h,mass,heightSource:listing.heightSource,
     heightUnderReview:listing.heightUnderReview,
@@ -124,18 +124,17 @@ function movementFor(w) {
   return movementCache.get(id);
 }
 function compactRank(rank) {
-  const match=/^(Yokozuna|Ozeki|Sekiwake|Komusubi|Maegashira|Juryo|Makushita)\\s*(\\d+)?\\s*(East|West)?/i.exec(String(rank||''));
+  const match=/^(Yokozuna|Ozeki|Sekiwake|Komusubi|Maegashira|Juryo|Makushita)\s*(\d+)?\s*(East|West)?/i.exec(String(rank||''));
   if(!match)return String(rank||'—');
   const short={yokozuna:'Y',ozeki:'O',sekiwake:'S',komusubi:'K',maegashira:'M',juryo:'J',makushita:'Ms'}[match[1].toLowerCase()];
   return short+(match[2]||'')+(match[3]?match[3][0].toUpperCase():'');
 }
 function rankDirection(previous,current){
   const order={yokozuna:7,ozeki:6,sekiwake:5,komusubi:4,maegashira:3,juryo:2,makushita:1};
-  const parse=rank=>{const m=/^(Yokozuna|Ozeki|Sekiwake|Komusubi|Maegashira|Juryo|Makushita)\\s*(\\d+)?/i.exec(String(rank||''));return m?{tier:order[m[1].toLowerCase()],num:Number(m[2]||1)}:null;};
+  const parse=rank=>{const m=/^(Yokozuna|Ozeki|Sekiwake|Komusubi|Maegashira|Juryo|Makushita)\s*(\d+)?/i.exec(String(rank||''));return m?{tier:order[m[1].toLowerCase()],num:Number(m[2]||1)}:null;};
   const a=parse(previous),b=parse(current);
   if(!a||!b)return 'unavailable';
   if(a.tier!==b.tier)return b.tier>a.tier?'up':'down';
-  // Within sanyaku, a change in slot number or East/West is not a promotion/demotion.
   if(a.tier>=4)return 'same';
   return b.num<a.num?'up':b.num>a.num?'down':'same';
 }
@@ -145,7 +144,7 @@ function priorBashoRecord(w){
     const b=previousBanzukeData()[div];
     if(!b)continue;
     const row=[...(b.east||[]),...(b.west||[])].find(x=>Number(x.rikishiID)===id);
-    if(row){const summary=row.summary||recordSummary(row.record,div);
+    if(row){const summary=row.summary||(row.record!=null?recordSummary(row.record,div):null);
       if(Number.isFinite(Number(summary?.win))&&Number.isFinite(Number(summary?.loss)))
         return summary.win+' W · '+summary.loss+' L';
     }
@@ -153,15 +152,16 @@ function priorBashoRecord(w){
   return null;
 }
 function movementMarkup(w) {
+  const current=String(w?.currentRank||'');
+  if(/^Yokozuna\b/i.test(current))return '<span class="sumo-yokozuna-label">Yokozuna</span>';
   const m=movementFor(w);
-  if(!m.previousRank||!m.currentRank)return '<span class="sumo-move unavailable">Previous rank unavailable</span>';
-  const direction=rankDirection(m.previousRank,m.currentRank);
-  const symbol=direction==='up'?'↑':direction==='down'?'↓':'↔';
-  const label=direction==='up'?'Promoted':direction==='down'?'Demoted':direction==='same'?'Same tier':'Rank change unavailable';
-  const cls=direction==='up'?'up':direction==='down'?'down':'same';
   const record=priorBashoRecord(w);
-  return '<span class="sumo-move '+cls+'" title="'+e(m.previousRank+' to '+m.currentRank)+'">'+symbol+' '+e(compactRank(m.previousRank))+' → '+e(compactRank(m.currentRank))+'</span>'+
-    '<span class="sumo-move-meta">'+e(label)+(record?' · Previous basho: '+e(record):' · Previous basho record unavailable')+'</span>';
+  const recordHtml=record?'<span class="sumo-move-meta">Last basho: '+e(record)+'</span>':'';
+  if(!m.previousRank||!m.currentRank)return recordHtml;
+  const direction=rankDirection(m.previousRank,m.currentRank);
+  const cls=direction==='up'?'up':direction==='down'?'down':'same';
+  const symbol=direction==='up'?'↑':direction==='down'?'↓':'↔';
+  return '<span class="sumo-move '+cls+'" title="'+e(m.previousRank+' to '+m.currentRank)+'">'+symbol+' '+e(compactRank(m.previousRank))+' → '+e(compactRank(m.currentRank))+'</span>'+recordHtml;
 }
 
 function headToHeadFor(a,b) {
