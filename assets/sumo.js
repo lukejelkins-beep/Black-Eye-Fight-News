@@ -803,15 +803,19 @@ function recentTenStrip(w){
   const wins=matches.filter(x=>x.outcome==='win').length,losses=matches.length-wins;
   const summary=matches.length?'<span class="sumo-recent-record"><b>'+wins+' W</b> · <b>'+losses+' L</b></span>':'';
   const cards=matches.map(row=>{
-    const name=row.opponent||'Opponent unavailable';
+    const opponent=wrestler(row.opponentId);
+    const name=opponent?.shikonaEn||row.opponent||'Opponent unavailable';
     const technique=row.kimarite?techniqueText(row.kimarite):'Not recorded';
     return '<a class="sumo-recent-bout '+e(row.outcome)+'" data-result-link="'+e(resultKey(row))+'" data-result-period="'+e(row.bashoId)+
       '" href="#profile/'+Number(w.sourceId)+'?result='+e(resultKey(row))+'" aria-label="'+
       e((row.outcome==='win'?'Win':'Loss')+' versus '+name+' · '+bashoLabel(row.bashoId)+' · Day '+(row.day??'unknown')+' · '+technique)+'">'+
-      '<span class="sumo-recent-outcome">'+(row.outcome==='win'?'W':'L')+'</span>'+
+      '<span class="sumo-recent-portrait">'+portraitFor(opponent,'sm',name)+'</span>'+
+      '<span class="sumo-recent-info">'+
+      (opponent?flagBackdrop(opponent):'')+
       '<strong class="sumo-recent-person">'+e(name)+'</strong>'+
-      '<span class="sumo-recent-day">'+e('Day '+(row.day??'—'))+'</span>'+
-      '<small class="sumo-recent-technique">'+e(technique)+'</small></a>';
+      '<span class="sumo-recent-result-line"><b class="sumo-recent-outcome">'+(row.outcome==='win'?'W':'L')+'</b>'+
+      '<span class="sumo-recent-day">'+e('Day '+(row.day??'—'))+'</span></span>'+
+      '<small class="sumo-recent-technique">'+e(technique)+'</small></span></a>';
   }).join('');
   return '<section class="sumo-recent-strip" aria-label="Recent performance">'+
     '<header class="sumo-recent-header"><h2>Recent form</h2><span>Last '+matches.length+' recorded bouts</span></header>'+
