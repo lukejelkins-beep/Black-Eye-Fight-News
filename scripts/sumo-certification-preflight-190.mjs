@@ -272,8 +272,15 @@ export function proveZeroCareerAbsencesFromCompleteBasho(p,jsa,sdb,activeBasho){
  for(const x of completed){
   const d=String(x.bashoId),needed=fullBasho(ranks.get(d)||'',d);
   const official=sourceByDate.get(d),other=otherByDate.get(d);
-  if(needed===null||x.wins+x.losses!==needed||
-     Number(x.scheduledBoutRows)!==needed)
+  // One extra scheduled lower-division bout is legitimate ONLY if the
+  // independent JSA tournament record confirms its exact W-L. A missing
+  // scheduled bout or an uncorroborated extra bout is never full attendance.
+  const fought=x.wins+x.losses;
+  const normalAttendance=fought===needed;
+  const independentlyConfirmedExtra=fought===needed+1&&
+   official?.wins===x.wins&&official?.losses===x.losses;
+  if(needed===null||!(normalAttendance||independentlyConfirmedExtra)||
+     Number(x.scheduledBoutRows)!==fought)
    return no('incomplete-or-unnumbered-tournament-bouts');
   const exact=row=>row&&row.wins===x.wins&&row.losses===x.losses&&
    !(row.absences!=null&&row.absences!==0);
