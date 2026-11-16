@@ -273,7 +273,7 @@ export function sharedOfficialUfcIdentitySlugs(approved,registry){
  for(const slug of approved){
    const row=registry?.[slug];
    const url=String(row?.officialFighterUrl||row?.officialUfcFighterUrl||'')
-     .trim().toLowerCase().replace(/\\/$/,'');
+     .trim().toLowerCase().replace(/\/$/,'');
    if(!/^https:\/\/www\.ufc\.com\/athlete\//.test(url))continue;
    if(!officialUrlOwners.has(url))officialUrlOwners.set(url,[]);
    officialUrlOwners.get(url).push(slug);
