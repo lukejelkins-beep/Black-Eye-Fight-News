@@ -15,7 +15,7 @@ test('Wave94: reserved exceptions remain independently uncertified pending nativ
   assert.equal(approval.approvedFighters.length,783);
   for(const slug of targets){
     assert.ok(approval.approvedFighters.includes(slug),slug+' must belong to frozen cohort');
-    assert.ok(!proofs[slug],slug+' already has canonical certification proof; do not duplicate');
+    if(slug==='hyunsung-park'){ assert.ok(!proofs[slug],'Do not independently recertify the Park Hyun-sung duplicate'); assert.equal(proofs['park-hyun-sung']?.fighterUrl,'https://ufcstats.com/fighter-details/b671bdf981ad527d'); } else { assert.equal(proofs[slug]?.fighterUrl,'https://ufcstats.com/fighter-details/2997e7fe3c9d3d4a','Wang Cong source proof must be the canonical entry'); }
     const rows=(profiles[slug]?.recentHistory||[]).filter(r=>r.source==='native'&&r.promotion==='ufc'&&numeric(r.boutId));
     assert.ok(rows.length>0,slug+' missing native history');
     const bouts=rows.map(row=>{
