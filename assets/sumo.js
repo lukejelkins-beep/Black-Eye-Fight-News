@@ -817,7 +817,7 @@ function recentTenStrip(w){
     '<header class="sumo-recent-header"><h2>Recent form</h2><span>Last '+matches.length+' recorded bouts</span></header>'+
     (matches.length?'<div class="sumo-recent-summary">'+summary+
       '<span>Newest first</span></div>'+
-      '<div class="sumo-recent-carousel"><div class="sumo-recent-list" id="sumo-recent-track" role="list" aria-label="Ten most recent recorded completed bouts, when available">'+cards+'</div></div>':
+      '<div class="sumo-recent-carousel"><div class="sumo-recent-list" id="sumo-recent-track" role="group" aria-label="Ten most recent recorded completed bouts, when available">'+cards+'</div></div>':
       '<p class="missing">No completed source-backed bouts available.</p>')+'</section>';
 }
 function summaryStat(value,label){return '<div class="sumo-summary-stat"><strong>'+e(value===null||value===undefined?'Not available':value)+'</strong><span>'+e(label)+'</span></div>';}
