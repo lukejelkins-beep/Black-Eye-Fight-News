@@ -54,8 +54,14 @@ function imageToken(rank, name, large=false) {
 
 function flagMark(w) {
   const c=originCountry(w?.birthplace);
-  return c?'<span class="sumo-country" title="Birthplace country: '+e(c.name)+'" aria-label="Birthplace country: '+e(c.name)+'"><span class="sumo-country-emoji" aria-hidden="true">'+c.flag+'</span><span class="sumo-country-name">'+e(c.name)+'</span></span>'
-    :'<span class="sumo-country unknown" title="Birthplace country not supplied">🌐 <span class="sumo-country-name">Unspecified origin</span></span>';
+  // Visual flag only; accessible birthplace description remains available.
+  return c?'<span class="sumo-country" title="Birthplace country: '+e(c.name)+'" aria-label="Birthplace country: '+e(c.name)+'"><span class="sumo-country-emoji" aria-hidden="true">'+c.flag+'</span></span>'
+    :'<span class="sumo-country unknown" title="Birthplace country not supplied" aria-label="Birthplace country not supplied"><span aria-hidden="true">🌐</span></span>';
+}
+function flagBackdrop(w) {
+  const c=originCountry(w?.birthplace);
+  // Decoration only: never infer a flag for a missing or unrecognised source birthplace.
+  return c?'<span class="sumo-flag-backdrop" aria-hidden="true">'+c.flag+'</span>':'';
 }
 function portraitFor(w,size='sm'){
   const photo=w && STATE.photoIndex?.[String(w.sourceId)];
@@ -239,9 +245,20 @@ function divisionTabs(active, attr, all=false) {
 }
 function standingsTable(rows, limit=10) {
   if (!rows?.length) return '<p class="missing">No independently checked current rankings are cached.</p>';
-  return '<div class="table-scroll"><table class="standings"><thead><tr><th>Rikishi</th><th>Rank</th><th>W</th><th>L</th><th>A</th></tr></thead><tbody>' +
-    rows.slice(0,limit).map(x=>'<tr><td>'+wrestlerLink(x)+'</td><td>'+e(x.rank||'—')+'</td><td class="number-win">'+x.summary.win+'</td><td class="number-loss">'+x.summary.loss+'</td><td class="number-abs">'+(x.summary.absence===null?'—':x.summary.absence)+'</td></tr>').join('') +
-    '</tbody></table></div>';
+  const cards=rows.slice(0,limit).map(x=>{
+    const id=Number(x.sourceId||x.rikishiID),w=wrestler(id);
+    const title=x.shikonaEn||w?.shikonaEn||'Name unavailable';
+    const rank=x.rank||w?.currentRank||'Rank not available';
+    const summary=x.summary||recordSummary(x.record,divisionOf(rank));
+    const tally=recordLabels(summary);
+    return '<a class="sumo-standings-row" role="listitem" href="#profile/'+id+'">'+flagBackdrop(w)+
+      '<span class="sumo-standings-identity"><strong>'+e(title)+'</strong><small>'+tally+'</small></span>'+
+      '<span class="sumo-standings-ranking"><strong>'+e(rank)+'</strong>'+
+      (w?movementMarkup(w):'<span class="sumo-move unavailable">—</span>')+'</span></a>';
+  }).join('');
+  return '<div class="sumo-standings-list" role="list" aria-label="Tournament standings, ranks and movement">'+cards+'</div>'+
+    '<p class="sumo-standings-legend">↑ Gained places · ↓ Lost places · ↔ Unchanged since '+e(bashoLabel(details().previousBashoId))+
+    '. Movement is based on banzuke positions, not tournament wins.</p>';
 }
 function featureCard(w) {
   const ent=entryFor(w),s=recordSummary(ent?.record, divisionOf(w.currentRank));
@@ -262,13 +279,9 @@ function previewHead() {
   statBlock(n.Makushita,'Makushita · third division')+statBlock(number(STATE.roster?.count),'Total actively tracked')+'</div>';
 }
 function renderHome() {
-  const featuredNames=['Onosato','Wakatakakage','Nishikigi'];
-  const picks=featuredNames.map(name=>ranks().find(r=>r.shikonaEn===name)).filter(Boolean);
   const maku=getBanzuke('Makuuchi');
   const leaders=maku?leadingRikishi(maku,7):[];
   return previewHead() +
-    heading('Featured · Three divisions','Rikishi in focus','<a href="#rikishi">Browse all rikishi →</a>')+
-    '<div class="feature-grid">'+picks.map(featureCard).join('')+'</div>' +
     heading('November 2026 tournament','Basho Centre','<a href="#basho">Full basho results →</a>') +
     '<div class="columns"><section class="panel"><div class="panel-head"><h3>'+e(bashoLabel(details().bashoId))+' · Makuuchi</h3><span>SNAPSHOT · NOT LIVE</span></div>' +
       '<div class="panel-body">'+standingsTable(leaders)+'</div></section>' +
@@ -276,7 +289,7 @@ function renderHome() {
     '<div class="panel-body"><p>Unlike boxing and MMA, Sumo uses tournament-by-tournament ranking tables. BEFN follows the current banzuke rather than retaining an arbitrary fixed list.</p>' +
     '<p>All <b>'+counts().Makuuchi+' Makuuchi</b>, <b>'+counts().Juryo+' Jūryō</b> and <b>'+counts().Makushita+' Makushita</b> places are covered in this source snapshot. Lower-division wrestlers normally compete in seven bouts per 15-day basho.</p>' +
     '<a class="btn light" href="#banzuke">VIEW FULL BANZUKE</a></div></section></div>' +
-    heading('Explore the roster','All ranked rikishi','<a href="#rikishi">Search 190 profiles →</a>')+
+    heading('Explore the roster','All ranked rikishi','<a href="#rikishi">Search '+number(STATE.roster?.count)+' profiles →</a>')+
     '<div class="directory-grid">'+ranks().slice(0,8).map(directoryCard).join('')+'</div>'+
     sourceFooter();
 }
@@ -292,7 +305,7 @@ function directoryFacts(w){
 }
 function directoryCard(w) {
   return '<a class="directory-card" href="#profile/'+w.sourceId+'"><div class="directory-upper">'+
-    portraitFor(w,'md')+'<div><small>'+e(divisionOf(w.currentRank))+'</small>'+
+    flagBackdrop(w)+portraitFor(w,'md')+'<div><small>'+e(divisionOf(w.currentRank))+'</small>'+
     '<h3>'+flagMark(w)+' '+e(w.shikonaEn)+'</h3>'+
     '<small>'+e(w.shikonaJp||'')+'</small></div></div>'+
     '<div class="directory-lower"><div class="rank">'+e(w.currentRank||'Rank not supplied')+'</div>'+
@@ -641,7 +654,7 @@ function banzukeCard(row) {
   const m=movementFor(w),size=weightHeight(w);
   return '<article class="sumo-rank-card"><div class="sumo-rank-card-head"><span>'+e(divisionOf(w.currentRank))+'</span>'+
     '<span>'+recordLabels(row.summary)+'</span></div>'+
-    '<div class="sumo-rank-card-body">'+portraitFor(w,'lg')+
+    '<div class="sumo-rank-card-body">'+flagBackdrop(w)+portraitFor(w,'lg')+
     '<div class="sumo-rank-card-data"><div class="sumo-rank-name">'+flagMark(w)+
     '<a href="#profile/'+Number(w.sourceId)+'">'+e(w.shikonaEn)+'</a></div>'+
     '<div class="sumo-rank-strong">'+e(w.currentRank||'Rank not supplied')+'</div>'+
