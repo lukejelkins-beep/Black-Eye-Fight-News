@@ -1,0 +1,29 @@
+name: Sumo official portrait source discovery (non-production)
+on:
+  push:
+    branches:
+      - research/sumo-official-portrait-register-20261116
+    paths:
+      - scripts/stage-sumo-official-portraits.py
+      - .github/workflows/sumo-official-portrait-research.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check roster and source register
+        run: node --test tests/test-sumo-official-portrait-register.mjs
+      - name: Discover source images without publishing
+        run: python3 scripts/stage-sumo-official-portraits.py
+      - name: Upload source candidates for identity QA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sumo-official-portrait-source-candidates
+          path: qa/sumo-official-portrait-staging/image-candidates.json
+          if-no-files-found: warn
+          retention-days: 14
