@@ -163,43 +163,43 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     'Recent form retains five source-backed bouts');
   const firstRecent=page.locator('.sumo-recent-bout').first();
   assert.ok((await firstRecent.getAttribute('data-result-link'))?.length>0,
-    'Tapping a recent bout still opens its canonical results entry');
+    'Recent results still link to canonical result entries');
   const formData=await firstRecent.innerText();
-  assert.ok(formData.includes('Day ')&&formData.length>15,'Recent form preserves day and kimarite detail');
+  assert.ok(formData.includes('Day ')&&formData.length>15,'Recent form keeps date and technique');
+  assert.equal(await page.locator('.sumo-mobile-rank-preview').count(),0,
+    'No duplicate rank chart is inserted below recent form or above Results');
+  const structure=await page.evaluate(()=>{
+    const nav=document.querySelector('.sumo-section-nav');
+    const recent=document.querySelector('.sumo-recent-strip');
+    const results=document.querySelector('#sumo-results');
+    return Boolean(nav&&recent&&results&&
+      (nav.compareDocumentPosition(recent)&Node.DOCUMENT_POSITION_FOLLOWING)&&
+      (recent.compareDocumentPosition(results)&Node.DOCUMENT_POSITION_FOLLOWING));
+  });
+  assert.ok(structure,'Preserve existing profile section order: header, form, Results, Career, Analysis');
   if(isMobile){
-    const compact=page.locator('.sumo-mobile-rank-preview');
-    assert.ok(await compact.isVisible(),'Phone-scale rank graph appears directly below recent form');
-    const mobileGraph=page.locator('.sumo-rank-mobile-svg');
-    assert.ok(await mobileGraph.count()===1,'Mobile rank chart is rendered with recorded rank history');
-    assert.ok(await page.locator('.sumo-mobile-rank-point').count()>0,
-      'Mobile chart points come from observed source positions');
-    const nav=await page.locator('.sumo-mobile-rank-point').last().getAttribute('data-mobile-rank');
-    await page.locator('.sumo-mobile-rank-point').last().click();
-    assert.ok((await page.locator('#sumo-mobile-rank-detail').innerText()).includes(nav),
-      'Tapping a dot exposes the exact sourced rank');
-    const initial=await page.locator('.sumo-mobile-rank-controls [aria-pressed="true"]').innerText();
-    assert.ok(initial.length>0,'Mobile rank period controls show selected state');
-    await page.locator('[data-mobile-rank-range="career"]').click();
-    assert.equal(await page.locator('[data-mobile-rank-range="career"]').getAttribute('aria-pressed'),'true',
-      'Career rank filter works on mobile');
-    await page.locator('[data-mobile-rank-range="2y"]').click();
-    const overflow=await page.evaluate(()=>({
-      page:document.documentElement.scrollWidth,
-      viewport:document.documentElement.clientWidth,
-      chart:document.querySelector('.sumo-mobile-rank-scroll')?.scrollWidth,
-      track:document.querySelector('.sumo-recent-list')?.scrollWidth
-    }));
-    assert.ok(overflow.page<=overflow.viewport+6,
-      'Mobile carousel and chart scrolling are contained: '+JSON.stringify(overflow));
-    await compact.screenshot({path:OUT+'/'+label+'-compact-rank.png',animations:'disabled'});
-    screenshotCount++;
+    assert.ok(await page.locator('.sumo-recent-list').isVisible(),'Recent form scrolls inside its own compact panel');
     await page.locator('.sumo-recent-strip').screenshot({path:OUT+'/'+label+'-compact-form.png',animations:'disabled'});
     screenshotCount++;
-  }else{
-    assert.ok(!(await page.locator('.sumo-mobile-rank-preview').isVisible()),
-      'Phone-only rank preview stays hidden on desktop');
+    const charts=page.locator('#sumo-charts .sumo-career-panel');
+    assert.equal(await charts.count(),2,'Original rank and weight analysis panels remain');
+    for(const kind of ['rank','weight']){
+      const frame=page.locator('.sumo-'+kind+'-scroll');
+      const graph=frame.locator('.sumo-'+kind+'-svg');
+      assert.equal(await graph.count(),1,'Existing '+kind+' graph is not duplicated');
+      const sizes=await frame.evaluate(el=>{
+        const svg=el.querySelector('svg');
+        return {frame:el.clientWidth,content:el.scrollWidth,
+          svg:svg.getBoundingClientRect().width,viewport:document.documentElement.clientWidth};
+      });
+      assert.ok(sizes.svg>=300&&sizes.svg<850,
+        'Mobile '+kind+' chart uses a phone-sized SVG rather than the 900px desktop view: '+JSON.stringify(sizes));
+      const pageWidth=await page.evaluate(()=>document.documentElement.scrollWidth);
+      assert.ok(pageWidth<=sizes.viewport+6,'Chart '+kind+' cannot overflow the document');
+    }
+    await page.locator('#sumo-charts').screenshot({path:OUT+'/'+label+'-mobile-graphs.png',animations:'disabled'});
+    screenshotCount++;
   }
-
   assertContains(profile,'API-TRUSTED','development-data method is displayed');
   assertContains(profile,'Career results: independently corroborated','career evidence is labelled separately');
   assertContains(profile,'Opponents and head-to-head','opponent catalogue');
