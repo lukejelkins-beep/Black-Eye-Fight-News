@@ -277,12 +277,34 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
       flagContained:!flag||(()=>{const f=rect(flag);return f.left>=ri.left-2&&f.right<=ri.right+2&&f.top>=ri.top-2&&f.bottom<=ri.bottom+2})(),
       flagOpacity:flag?getComputedStyle(flag).opacity:null,
       noMeetingsText:!/recorded meetings|open full chronology/i.test(card.textContent),
-      sourceFlagRetained:!!sourceFlag,
+      noSmallFlag:!sourceFlag,
       score:record?.textContent?.trim(),
       wrapping:card.scrollWidth>card.clientWidth+2
     };
   }));
   assert.ok(h2hTiles.length>=10,'A representative set of H2H tiles is rendered');
+  const tileColumns=await page.locator('#sumo-opponents .sumo-rival-grid').evaluate(grid=>{
+    const cards=[...grid.querySelectorAll('.sumo-rival')].slice(0,4);
+    const bounds=cards.map(card=>card.getBoundingClientRect());
+    const gridStyle=getComputedStyle(grid);
+    return {
+      columns:gridStyle.gridTemplateColumns.split(' ').length,
+      firstRow:bounds[0]&&bounds[1]&&
+        Math.abs(bounds[0].top-bounds[1].top)<=2&&bounds[1].left>=bounds[0].right,
+      secondRow:bounds[2]&&bounds[3]&&
+        Math.abs(bounds[2].top-bounds[3].top)<=2&&bounds[2].top>=bounds[0].bottom,
+      viewport:document.documentElement.clientWidth,
+      pageWidth:document.documentElement.scrollWidth,
+      cardWidths:bounds.map(x=>x.width)
+    };
+  });
+  assert.ok(tileColumns.columns===2&&tileColumns.firstRow&&tileColumns.secondRow,
+    'Opponent tiles remain exactly two per row, including 320px/390px phones: '+JSON.stringify(tileColumns));
+  assert.ok(tileColumns.cardWidths.every(w=>w>=120),
+    'Both opponent cards stay usefully readable: '+JSON.stringify(tileColumns));
+  assert.ok(tileColumns.pageWidth<=tileColumns.viewport+6,
+    'Two-column opponent grid never causes document horizontal scroll: '+JSON.stringify(tileColumns));
+
   for(const [index,tile] of h2hTiles.entries()){
     assert.equal(tile.tag,'A','H2H whole-tile link remains a semantic anchor');
     assert.ok(tile.href?.startsWith('#headtohead/'),'H2H link still opens full chronology');
@@ -290,7 +312,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
       'H2H tile '+index+' photo touches left/top/bottom edges: '+JSON.stringify(tile));
     assert.ok(Math.abs(tile.photoInnerWidth-tile.photoWidth)<3,
       'H2H tile '+index+' photo fills the entire left panel');
-    assert.ok(tile.photoInnerHeight>100&&tile.photoWidth>60,
+    assert.ok(tile.photoInnerHeight>110&&tile.photoWidth>44,
       'H2H tile '+index+' photo is large and full-height');
     assert.ok(tile.infoLeft>=tile.photoRight-2&&tile.infoRight<=2,
       'H2H tile '+index+' details occupy only the right panel');
@@ -298,8 +320,8 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
       'H2H tile '+index+' flag is a faint image inside right information only');
     assert.ok(tile.nameInside&&tile.recordInside,
       'H2H tile '+index+' name and gold W-L badge fit in right panel');
-    assert.ok(tile.noMeetingsText&&(!tile.flagPresent||tile.sourceFlagRetained)&&!tile.wrapping,
-      'H2H tile '+index+' preserves country and W-L without redundant meeting text or overflow');
+    assert.ok(tile.noMeetingsText&&tile.noSmallFlag&&!tile.wrapping,
+      'H2H tile '+index+' has gold W-L with no small flag emoji, meeting text or overflow');
   }
   assert.ok(h2hTiles.filter(tile=>tile.flagPresent).length>=5,
     'Representative source-backed opponent tiles show a faded birthplace-country flag');
