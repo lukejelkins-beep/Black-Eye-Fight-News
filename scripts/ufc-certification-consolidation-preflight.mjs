@@ -31,12 +31,31 @@ function validEntries(document, label, approved) {
         !Array.isArray(proof?.bouts) || !proof.bouts.length)
       throw Error(label + ': incomplete source evidence for ' + slug);
     const ids = new Set();
+    const semantic = proof.certificationStandard === 'ufcalendar_first';
+    if (semantic && (
+        proof.verificationMethod !== 'full_official_ufc_fight_listing_crosscheck' ||
+        !/^https:\/\/www\.ufc\.com\/athlete\/[a-z0-9-]+\/?$/i.test(String(proof.officialFighterUrl||'')) ||
+        !/^\d{4}-\d{2}-\d{2}$/.test(String(proof.verifiedAt||'')) ||
+        !String(proof.fighterName||'').trim()))
+      throw Error(label + ': unverified UFCalendar-first official identity for ' + slug);
     for (const bout of proof.bouts) {
       const id = String(bout?.nativeBoutId || '');
-      if (!id || !bout?.fightUrl || !bout?.nativeFighterId || !bout?.result)
-        throw Error(label + ': missing native/source bout identity for ' + slug);
-      if (ids.has(id)) throw Error(label + ': duplicated native bout ' + slug + '/' + id);
-      ids.add(id);
+      if (semantic) {
+        const date=String(bout?.date||''),opponent=String(bout?.opponent||'')
+          .normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
+          .replace(/[^a-z0-9]/g,'');
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !opponent ||
+            !['win','loss','draw','no_contest'].includes(String(bout?.result||'').toLowerCase()))
+          throw Error(label + ': missing official UFC chronology for ' + slug);
+        const fingerprint=date+'|'+opponent;
+        if (ids.has(fingerprint)) throw Error(label + ': duplicated official bout ' + slug + '/' + fingerprint);
+        ids.add(fingerprint);
+      } else {
+        if (!id || !bout?.fightUrl || !bout?.nativeFighterId || !bout?.result)
+          throw Error(label + ': missing native/source bout identity for ' + slug);
+        if (ids.has(id)) throw Error(label + ': duplicated native bout ' + slug + '/' + id);
+        ids.add(id);
+      }
     }
   }
   return entries;
@@ -44,7 +63,13 @@ function validEntries(document, label, approved) {
 
 /** Check stable source-native identities, NOT innocuous review prose or aliases. */
 export function sourceNativeSignature(proof) {
-  return proof.bouts.map(b => [
+  if(proof.certificationStandard === 'ufcalendar_first')
+    return 'official:' + proof.bouts.map(b=>[
+      String(b.date), String(b.opponent||'').normalize('NFKD')
+       .replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,''),
+      String(b.result).toLowerCase()
+    ].join('|')).sort().join(';;');
+  return 'native:' + proof.bouts.map(b => [
     String(b.nativeBoutId), String(b.nativeFighterId),
     String(b.fightUrl), String(b.result).toLowerCase()
   ].join('|')).sort().join(';;');

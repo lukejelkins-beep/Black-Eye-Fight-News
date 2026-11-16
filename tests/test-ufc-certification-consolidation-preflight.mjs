@@ -62,3 +62,37 @@ test('unapproved, unsourced, or duplicate native fights are rejected', () => {
   double.bouts.push({ ...double.bouts[0] });
   assert.throws(() => preflight(register({ 'fighter-0': double }), approved), /duplicated native bout/);
 });
+
+const ufcalendarProof=()=>({
+ sourceCoverageAttested:true,scope:'complete_official_ufc_career',
+ certificationStandard:'ufcalendar_first',
+ verificationMethod:'full_official_ufc_fight_listing_crosscheck',
+ verifiedAt:'2026-11-17',fighterName:'Example Athlete',
+ officialFighterUrl:'https://www.ufc.com/athlete/example-athlete',
+ bouts:[
+  {date:'2026-01-10',opponent:'Opponent X',result:'win'},
+  {date:'2026-03-10',opponent:'Opponent X',result:'draw'},
+  {date:'2026-04-10',opponent:'Opponent Y',result:'no_contest'}
+ ]
+});
+test('explicit official semantic source works without native IDs and keeps rematches',()=>{
+ const c=register({'fighter-0':ufcalendarProof()});
+ const out=preflight(c,approved,[{label:'other-chat',document:c}]);
+ assert.equal(out.safeToReview,true);
+ assert.equal(out.counts.alreadyCertifiedNoops,1);
+ assert.equal(out.counts.newCandidates,0);
+});
+test('official semantic proof rejects duplicates, missing identity, and changing fight outcome',()=>{
+ const p=ufcalendarProof(),c=register({'fighter-0':p});
+ const modified=structuredClone(p);
+ modified.bouts[2].result='loss';
+ assert.equal(preflight(c,approved,[{label:'other-chat',document:register({'fighter-0':modified})}]).safeToReview,false);
+ const dupe=structuredClone(p);dupe.bouts[1].date=dupe.bouts[0].date;
+ assert.throws(()=>preflight(register({'fighter-0':dupe}),approved),/duplicated official/);
+ for(const corrupt of [
+  {...p,officialFighterUrl:'https://untrusted.test/'},
+  {...p,verifiedAt:''},
+  {...p,bouts:[{date:'2026-01-10',opponent:'',result:'win'}]},
+  {...p,bouts:[{date:'2026-01-10',opponent:'Opponent X',result:'invalid'}]}
+ ])assert.throws(()=>preflight(register({'fighter-0':corrupt}),approved),/unverified UFCalendar|missing official UFC chronology/);
+});
