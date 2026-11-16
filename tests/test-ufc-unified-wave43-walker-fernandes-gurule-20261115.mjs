@@ -158,11 +158,11 @@ test('wave43 three complete source-attested UFC histories reconcile fifteen dist
   assert.equal(e.fighterName,c.name);
   assert.equal(e.officialFighterUrl,c.official);
   assert.equal(e.fighterUrl,'https://ufcstats.com/fighter-details/'+c.stats);
-  assert.equal(e.sourceSnapshot?.sourceCommit,'c742842f29466758fedc3906dbad28d6d320a8da');
-  assert.equal(e.sourceSnapshot?.fightResultsBlobSha,'699c9b6cebb542bf458807563d93ed2406d8728f');
+  assert.equal(e.sourceSnapshot?.sourceCommit,c.slug==='luis-gurule'?'96adace863c0a793579cc06d27d468797545607f':'c742842f29466758fedc3906dbad28d6d320a8da');
+  assert.equal(e.sourceSnapshot?.fightResultsBlobSha,c.slug==='luis-gurule'?'80258ab3d9f413cad9be13fde64beb66dd0bcfa6':'699c9b6cebb542bf458807563d93ed2406d8728f');
   assert.deepEqual(e.verifiedNumericFighterIds,[c.id]);
-  assert.equal(e.officialUfcCareerBoutCount,c.fights.length);
-  assert.equal(e.bouts.length,c.fights.length);
+  assert.equal(e.officialUfcCareerBoutCount,c.fights.length+(c.slug==='luis-gurule'?1:0));
+  assert.equal(e.bouts.length,c.fights.length+(c.slug==='luis-gurule'?1:0));
   const history=p.recentHistory.filter(x=>x.promotion==='ufc'&&x.date<=census.asOf&&x.boutId!==excluded);
   const newlyRecovered=history.filter(x=>!c.fights.some(([id])=>id===x.boutId));
   // The next completed 14 Nov UFC fight was collected after the pinned Greco
@@ -175,7 +175,10 @@ test('wave43 three complete source-attested UFC histories reconcile fifteen dist
    assert.equal(progress.bouts['93106']?.org,'ufc');
    assert.equal(progress.bouts['93106']?.status,'completed');
    assert.ok(Number(progress.roundDone['93106'])>0);
-   assert.ok(!e.bouts.some(x=>x.nativeBoutId==='93106'));
+   const appended=e.bouts.filter(x=>x.nativeBoutId==='93106');
+   assert.equal(appended.length,1);
+   assert.equal(appended[0].result,'win');
+   assert.equal(appended[0].fightUrl,'https://ufcstats.com/fight-details/fdefe4d1a8ef2997');
   }else assert.deepEqual(newlyRecovered,[]);
   assert.equal(history.length,c.fights.length+newlyRecovered.length);
   for(const [id,date,opponent,result,fightId] of c.fights){
@@ -197,7 +200,7 @@ test('wave43 three complete source-attested UFC histories reconcile fifteen dist
   }
   const last=census.fighters.find(x=>x.slug===c.slug)?.lastUfcFight;
   assert.equal(evaluateCareerEvidence(p,history,last,approval.rosterAsOf,e,progress.bouts).independentlyVerified,
-    newlyRecovered.length===0);
+    true);
  }
 });
 test('wave43: Luis DWCS is separately attested feeder, and alias source rows cannot make duplicate official UFC results',()=>{
