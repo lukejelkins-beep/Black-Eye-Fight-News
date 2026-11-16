@@ -178,7 +178,7 @@ function headToHeadUrl(a,b) {
 }
 function techniqueMarkup(kimarite,text) {
   const term=TERMS.find(x=>x.term.toLowerCase()===String(kimarite||'').trim().toLowerCase());
-  return term?'<a href="#kimarite-'+kebab(term.term)+'" data-kimarite-term="'+e(kebab(term.term))+'" title="See '+e(term.term)+' in the kimarite guide">'+e(text)+'</a>':e(text);
+  return term?'<a href="#kimarite?term='+kebab(term.term)+'" data-kimarite-term="'+e(kebab(term.term))+'" title="See '+e(term.term)+' in the kimarite guide">'+e(text)+'</a>':e(text);
 }
 function historyRowsMarkup(h2h,a,b,limit=5,reverse=false) {
   if(!h2h)return '<p class="missing">Head-to-head history is not yet available for this pairing.</p>';
@@ -1164,6 +1164,11 @@ window.addEventListener('hashchange',()=>{
     STATE.matchupDay=STATE.h2hReturn.matchupDay;
   }
   lastRoute=route;STATE.h2hOldestFirst=false;render();
+  const requestedTerm=route==='kimarite'?new URLSearchParams(location.hash.split('?')[1]||'').get('term'):null;
+  if(requestedTerm&&/^[a-z-]+$/.test(requestedTerm)&&document.getElementById('kimarite-'+requestedTerm)){
+    requestAnimationFrame(()=>document.getElementById('kimarite-'+requestedTerm)?.scrollIntoView({block:'start'}));
+    return;
+  }
   if(STATE.h2hReturn?.hash?.split('?')[0]==='#'+route){
     const prior=STATE.h2hReturn.scrollY;
     requestAnimationFrame(()=>window.scrollTo({top:prior,behavior:'instant'}));
