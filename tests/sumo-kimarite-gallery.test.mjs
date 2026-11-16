@@ -11,6 +11,8 @@ test('JSA catalogue contains exactly 82 distinct terms in six families',()=>{
   assert.deepEqual(KIMARITE_GROUPS.map(g=>g.items.length),[7,13,18,6,19,19]);
   assert.equal(new Set(KIMARITE.map(x=>x.slug)).size,82);
   assert.ok(KIMARITE.every(x=>x.japanese&&x.english&&x.name));
+  assert.equal(lookupKimarite('oshidashi').jsaPoster,'https://sumo.or.jp/img/kimarite/kimarite_03.jpg');
+  assert.equal(KIMARITE.at(-1).jsaPoster,'https://sumo.or.jp/img/kimarite/kimarite_82.jpg');
 });
 test('verified Japanese labels and case-insensitive canonical names',()=>{
   assert.equal(lookupKimarite('YORIKIRI').japanese,'寄り切り');
@@ -26,7 +28,8 @@ test('gallery and deep-linked detail render independently of wrestler cache',()=
   globalThis.location={hash:'#kimarite?term=yorikiri'};
   const detail=renderKimariteGallery();
   assert.match(detail,/Yorikiri/);
-  assert.match(detail,/youtube-nocookie.com/);
+  assert.match(detail,/sumo\\.or\\.jp\\/img\\/kimarite\\/kimarite_05\\.jpg/);
+  assert.match(detail,/View JSA photograph and reference/);
   assert.match(detail,/Frontal force-out/);
   delete globalThis.location;
 });
@@ -38,7 +41,7 @@ test('media manifest rejects unverified paths or missing credit',()=>{
   globalThis.location={hash:'#kimarite?term=yorikiri'};
   assert.doesNotMatch(renderKimariteGallery(),/sumo-km-video/);
   const approved={schemaVersion:1,clips:{yorikiri:{
-    webm:'assets/sumo-kimarite/yorikiri.webm',poster:'assets/sumo-kimarite/yorikiri.jpg',
+    webm:'assets/sumo-kimarite/yorikiri.webm',poster:'https://sumo.or.jp/img/kimarite/kimarite_05.jpg',
     credit:'NHK WORLD-JAPAN',rights:'NHK permission confirmed by BEFN owner'
   }}};
   assert.equal(setKimariteMediaManifest(approved),true);
