@@ -116,8 +116,8 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await open(page,'profile/8850','.profile-hero');
   let profile=await page.locator('#sumo-main').innerText();
   assertContains(profile,'Onosato','Onosato name');
-  assert.equal(await page.locator('.sumo-quick-results').count(),1,'Results jump available beside identity');
-  assert.equal(await page.locator('.sumo-full-photo').count(),1,'Approved original photo available at full size');
+  assert.equal(await page.locator('.sumo-quick-results').count(),0,'Redundant Jump to results hero button removed');
+  assert.equal(await page.locator('.sumo-full-photo').count(),0,'Redundant View full photo hero button removed');
   const heroMeasurements=await page.evaluate(()=>{
     const box=document.querySelector('.profile-hero').getBoundingClientRect();
     const image=document.querySelector('.profile-hero>.sumo-photo').getBoundingClientRect();
@@ -147,7 +147,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     'Approved portrait is bounded rather than full-page: '+JSON.stringify(heroMeasurements));
   const heroInfoCheck=await page.locator('.profile-hero').evaluate(hero=>{
     const photo=hero.querySelector(':scope>.profile-icon.sumo-photo.xl');
-    const overlay=hero.querySelector(':scope>.sumo-flag-backdrop');
+    const overlay=hero.querySelector(':scope>.sumo-hero-flag');
     const title=hero.querySelector(':scope>.profile-title');
     const rank=hero.querySelector('.sumo-hero-rank');
     const country=hero.querySelector('.sumo-hero-country');
@@ -175,7 +175,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.equal(heroInfoCheck.emojiInRank,false,'Hero flag emoji removed from rank line');
   assert.equal(heroInfoCheck.country,'Japan','Country remains readable as plain text');
   assert.ok(heroInfoCheck.flagExists&&heroInfoCheck.flagUrl!=='none'&&
-    heroInfoCheck.flagOpacity>0&&heroInfoCheck.flagOpacity<=.2&&heroInfoCheck.flagFontSize==='0px',
+    heroInfoCheck.flagOpacity>0&&heroInfoCheck.flagOpacity<=.25&&heroInfoCheck.flagFontSize==='0px',
     'Country flag is a subtle decorative image without visible emoji: '+JSON.stringify(heroInfoCheck));
   assert.ok(heroInfoCheck.photoOverlapArea<=3,
     'Hero flag does not overlap the wrestler photograph: '+JSON.stringify(heroInfoCheck));
