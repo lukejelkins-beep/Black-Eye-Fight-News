@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-16T17:28:51.322Z",
-  "checkedAt": "2026-11-16T17:28:51.322Z",
+  "attemptedAt": "2026-11-16T18:27:22.576Z",
+  "checkedAt": "2026-11-16T18:27:22.576Z",
   "windowDays": 28,
-  "articlesChecked": 32,
+  "articlesChecked": 31,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 45,
-  "publisherSourcesConfigured": 33,
-  "linksFound": 15,
-  "newEmbedsVerified": 0,
+  "publisherSourcesConfigured": 32,
+  "linksFound": 18,
+  "newEmbedsVerified": 2,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -18,6 +18,46 @@
   "curatedRejected": 0,
   "curatedPublisherLinked": 2,
   "posts": [
+    {
+      "type": "post",
+      "platform": "Threads",
+      "sport": "mma",
+      "name": "Original Threads post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-16T18:27:22.576Z",
+      "discoveredAt": "2026-11-16T18:27:22.576Z",
+      "sourcePublisher": "UFC",
+      "evidenceUrl": "https://www.ufc.com/",
+      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 12,
+      "url": "https://www.threads.com/t/Dfzaah4AS6w/"
+    },
+    {
+      "type": "post",
+      "platform": "X",
+      "sport": "boxing",
+      "name": "DAZN Boxing",
+      "role": "media",
+      "handle": "@DAZNBoxing",
+      "nativeEmbed": true,
+      "originalDateUnverified": false,
+      "postedAt": "2026-11-15T18:30:00.293Z",
+      "sourceLinkedAt": "2026-11-16T15:36:15.000Z",
+      "discoveredAt": "2026-11-16T18:27:22.576Z",
+      "sourcePublisher": "Boxing News",
+      "evidenceUrl": "https://boxingnewsonline.net/news/benavidez-new-p4p-top-five/",
+      "summary": "Original social post linked in Boxing News coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://x.com/DAZNBoxing/status/2122034396576555493"
+    },
     {
       "type": "post",
       "platform": "X",
@@ -2172,38 +2212,6 @@
       "summary": "Original social post linked in UFC official homepage coverage. Its author, caption and publication date appear in the official embed.",
       "source": "Public publisher link + official Meta oEmbed verification",
       "url": "https://www.threads.com/t/DfPlFFViSTK/"
-    },
-    {
-      "type": "post",
-      "platform": "Threads",
-      "sport": "mma",
-      "name": "Original Threads post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-08T08:28:40.486Z",
-      "discoveredAt": "2026-11-08T08:28:40.486Z",
-      "sourcePublisher": "UFC official homepage",
-      "evidenceUrl": "https://www.ufc.com/",
-      "summary": "Original social post linked in UFC official homepage coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Public publisher link + official Meta oEmbed verification",
-      "url": "https://www.threads.com/t/DfU_TyUDKLG/"
-    },
-    {
-      "type": "post",
-      "platform": "Threads",
-      "sport": "mma",
-      "name": "Original Threads post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-08T08:28:40.486Z",
-      "discoveredAt": "2026-11-08T08:28:40.486Z",
-      "sourcePublisher": "UFC official homepage",
-      "evidenceUrl": "https://www.ufc.com/",
-      "summary": "Original social post linked in UFC official homepage coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Public publisher link + official Meta oEmbed verification",
-      "url": "https://www.threads.com/t/DfUmO3Bk4vJ/"
     }
   ],
   "seenOriginals": [
@@ -2774,6 +2782,14 @@
     {
       "url": "https://www.instagram.com/reel/DfxmFjyAmRg/",
       "firstSeen": "2026-11-16T04:14:52.319Z"
+    },
+    {
+      "url": "https://www.threads.com/t/Dfzaah4AS6w/",
+      "firstSeen": "2026-11-16T18:27:22.576Z"
+    },
+    {
+      "url": "https://x.com/DAZNBoxing/status/2122034396576555493",
+      "firstSeen": "2026-11-16T18:27:22.576Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
