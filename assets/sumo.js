@@ -11,6 +11,7 @@ import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verificati
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
 import { dailyStats, dailyRecentMeetings, dailyDefaultDay, dailySelectedDate, dailyWinPercentage, heightFeetInches } from './sumo-daily.mjs?v=20261116-division-relative-records';
 import { ordinalRank } from './sumo-career.mjs';
+import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions } from './sumo-kimarite-gallery.mjs?v=20261117-nhk-gallery';
 
 const ROOT = document.querySelector('#sumo-main');
 const tabs = [...document.querySelectorAll('[data-page]')];
@@ -24,17 +25,7 @@ const STATE = {
   h2hSummary: null, h2hFull: null, h2hLoading: false, h2hLoadFailed: false,
   h2hOpponents: null, h2hOpponentsLoading: false, h2hOpponentsFailed: false
 };
-const TERMS = [
-  {term:'Yorikiri',label:'Frontal force-out',detail:'The wrestler drives the opponent out while holding the mawashi (belt).'},
-  {term:'Oshidashi',label:'Frontal push-out',detail:'The opponent is pushed out of the ring without a firm belt grip.'},
-  {term:'Hatakikomi',label:'Slap-down',detail:'A downward slap to the shoulder, neck or back causes the opponent to fall.'},
-  {term:'Uwatenage',label:'Overarm throw',detail:'A throw using an overarm grip on the opponent’s mawashi.'},
-  {term:'Shitatenage',label:'Underarm throw',detail:'A throw using a grip taken underneath the opponent’s arm.'},
-  {term:'Tsukiotoshi',label:'Thrust-down',detail:'The wrestler thrusts the opponent downward and off balance.'},
-  {term:'Sukuinage',label:'Beltless arm throw',detail:'An arm-led scoop throw carried out without gripping the mawashi.'},
-  {term:'Oshitaoshi',label:'Frontal push-down',detail:'A forward push makes the opponent fall inside or outside the ring.'},
-  {term:'Yoritaoshi',label:'Frontal crush-out',detail:'A forward driving attack forces the opponent to fall backward.'}
-];
+const TERMS = KIMARITE.map(x=>({term:x.name,label:x.english,detail:x.english}));
 
 const e = (v) => String(v ?? '').replace(/[&<>"']/g, x => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
 const number = (v) => Number.isFinite(Number(v)) ? Number(v).toLocaleString('en-AU') : '—';
@@ -1075,15 +1066,9 @@ function renderBasho() {
     sourceFooter();
 }
 function renderKimarite() {
-  return heading('Common winning techniques','Kimarite guide','','h1')+
-    '<p class="section-intro">Common sumo winning techniques, with plain-language definitions. The JSA catalogue covers additional terms.</p>'+
-    '<div class="technical-terms">'+TERMS.map(t=>'<article class="term" id="kimarite-'+kebab(t.term)+'">'+
-      '<div class="eyebrow">'+e(t.label)+'</div><h2>'+e(t.term)+'</h2><p>'+e(t.detail)+'</p></article>').join('')+'</div>'+
-    '<section class="sumo-kimarite-glossary"><h2>Result glossary</h2><p><strong>Kyūjō</strong> is an absence; <strong>fusen</strong> is a forfeit; a scheduled bout has not been fought. These are not interchangeable with a performed winning technique.</p>'+
-    '<p><a href="https://www.sumo.or.jp/Kimarite/show/" target="_blank" rel="noopener noreferrer">Official JSA kimarite catalogue</a></p></section>'+
-    '<details class="sumo-data-coverage"><summary>Technique data coverage</summary><p>Percentages are calculated only from a defined set of source-recorded bouts with a named physical kimarite, not necessarily all career wins. Unrecorded results are not counted as zero.</p></details>'+
-    sourceFooter();
+  return renderKimariteGallery();
 }
+
 function render() {
   const hash=decodeURIComponent(location.hash.slice(1)||'home').split('?')[0];
   const [page,id]=hash.split('/');
@@ -1109,6 +1094,8 @@ function render() {
     case 'kimarite': ROOT.innerHTML=renderKimarite();break;
     default: ROOT.innerHTML=renderHome();
   }
+  if(page==='kimarite')hydrateKimariteGallery();
+  else linkKimariteMentions(ROOT);
 }
 function refreshDir() {
   const target=document.getElementById('directory-results');
