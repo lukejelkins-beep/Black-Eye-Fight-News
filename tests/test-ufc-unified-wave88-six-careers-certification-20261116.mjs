@@ -19,7 +19,7 @@ const cases={
 };
 const history=slug=>profiles[slug].recentHistory.filter(r=>
  r.source==='native'&&r.promotion==='ufc'&&r.boutId&&
- !/contender series|road to ufc|\\bdwcs\\b/i.test(native.bouts[r.boutId]?.event||''));
+ !/contender series|road to ufc|\bdwcs\b/i.test(native.bouts[r.boutId]?.event||''));
 const check=(slug,proof)=>evaluateCareerEvidence(
  profiles[slug],history(slug),
  census.fighters.find(f=>f.slug===slug).lastUfcFight,
