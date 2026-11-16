@@ -29,7 +29,7 @@ test('Wave94: Wang Cong seven distinct official UFC fights have source-native id
  assert.equal(p.fighterUrl,'https://ufcstats.com/fighter-details/2997e7fe3c9d3d4a');
  const source=new Set(),ids=new Set();
  for(const b of p.bouts){
-  assert.match(b.fightUrl,/^https:\\/\\/ufcstats\\.com\\/fight-details\\/[a-f0-9]{16}$/);
+  assert.ok(b.fightUrl.startsWith('https://ufcstats.com/fight-details/') && /^[a-f0-9]{16}$/.test(b.fightUrl.split('/').at(-1)),'pinned independent UFCStats bout URL');
   assert.ok(!source.has(b.fightUrl));source.add(b.fightUrl);
   assert.ok(!ids.has(b.nativeBoutId));ids.add(b.nativeBoutId);
   assert.equal(b.nativeFighterId,'500');
