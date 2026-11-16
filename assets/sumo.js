@@ -321,10 +321,7 @@ function renderHome() {
     heading('November 2026 tournament','Basho Centre','<a href="#basho">Full basho results →</a>') +
     '<div class="columns"><section class="panel"><div class="panel-head"><h3>'+e(bashoLabel(details().bashoId))+' · Makuuchi</h3><span>SNAPSHOT · NOT LIVE</span></div>' +
       '<div class="panel-body">'+standingsTable(leaders)+'</div></section>' +
-    '<section class="panel"><div class="panel-head"><h3>Three-division coverage</h3><span>CURRENT ROSTER</span></div>' +
-    '<div class="panel-body"><p>Unlike boxing and MMA, Sumo uses tournament-by-tournament ranking tables. BEFN follows the current banzuke rather than retaining an arbitrary fixed list.</p>' +
-    '<p>All <b>'+counts().Makuuchi+' Makuuchi</b>, <b>'+counts().Juryo+' Jūryō</b> and <b>'+counts().Makushita+' Makushita</b> places are covered in this source snapshot. Lower-division wrestlers normally compete in seven bouts per 15-day basho.</p>' +
-    '<a class="btn light" href="#banzuke">VIEW FULL BANZUKE</a></div></section></div>' +
+    '</div>' +
     heading('Explore the roster','All ranked rikishi','<a href="#rikishi">Search '+number(STATE.roster?.count)+' profiles →</a>')+
     '<div class="directory-grid">'+ranks().slice(0,8).map(directoryCard).join('')+'</div>'+
     sourceFooter();
