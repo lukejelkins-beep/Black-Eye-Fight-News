@@ -520,7 +520,7 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
   for(const slug of approved){
     const row=independentRegistry[slug];
     const url=String(row?.officialFighterUrl||row?.officialUfcFighterUrl||'')
-      .trim().toLowerCase().replace(/\\/$/,'');
+      .trim().toLowerCase().replace(/\/$/,'');
     if(!/^https:\/\/www\.ufc\.com\/athlete\//.test(url))continue;
     if(!officialUrlOwners.has(url))officialUrlOwners.set(url,[]);
     officialUrlOwners.get(url).push(slug);
