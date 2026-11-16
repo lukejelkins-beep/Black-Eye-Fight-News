@@ -150,7 +150,7 @@ function mobileRankSvg(points,{fullLadder=false}={}){
   const y=rank=>T+(ordinalRank(rank)-min)/(max-min)*(H-T-B);
   const months=points.map(p=>monthNumber(p.basho));
   const dates=months.filter(Number.isFinite),low=Math.min(...dates),high=Math.max(...dates);
-  const x=i=>L+(high===low?.5:(months[i]-low)/(high-low))*(W-L-R);
+  const x=i=>L+(high===low?0.5:(months[i]-low)/(high-low))*(W-L-R);
   let body='';
   for(let tier=Math.ceil(min);tier<max;tier++){
     const yy=T+(tier-min)/(max-min)*(H-T-B);
@@ -195,7 +195,7 @@ export function mobileRankPreview(w,cache,bashoId,prevBasho,prevRank,{range='2y'
   return '<section class="sumo-mobile-rank-preview" aria-label="Mobile rank history preview">'+
     '<header class="sumo-mobile-rank-header"><h2>Rank graph</h2><span>'+selected.length+' observed basho</span></header>'+
     '<div class="sumo-mobile-rank-controls" role="group" aria-label="Rank graph time period">'+
-    filters.map(([key,label])=>'<button type="button" data-rank-range="'+key+'" aria-pressed="'+(key===range)+'">'+label+'</button>').join('')+'</div>'+
+    filters.map(([key,label])=>'<button type="button" data-mobile-rank-range="'+key+'" aria-pressed="'+(key===range)+'">'+label+'</button>').join('')+'</div>'+
     mobileRankSvg(selected,{fullLadder})+
     (last?'<div class="sumo-mobile-rank-selected" id="sumo-mobile-rank-detail" role="status" aria-live="polite">'+
       '<strong>'+esc(monthLabel(last.basho))+'</strong> · '+esc(last.rank)+'</div>':'')+
