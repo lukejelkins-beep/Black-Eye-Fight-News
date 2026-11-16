@@ -165,6 +165,41 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.ok((await page.locator('.sumo-standings-row').count())>=20,'Basho standings preserve all entries in responsive rows');
   await snap(page,label+'-basho',{fullPage:false});
 
+  // Dedicated daily face-offs use sourced pairings, two complete stat columns,
+  // genuine latest-five kimarite and responsive image-first cards.
+  await open(page,'matchups','.sumo-daily-page');
+  await page.locator('#sumo-matchup-day').selectOption('1');
+  assert.ok(await page.locator('.sumo-daily-card').count()>0,'Makuuchi Day 1 verified cards rendered');
+  const firstCard=page.locator('.sumo-daily-card').first();
+  assert.equal(await firstCard.locator('.sumo-daily-facts').count(),2,'Both wrestler stat columns are present');
+  assert.equal(await firstCard.locator('.sumo-daily-photo').count(),2,'Portraits occupy both edges');
+  assert.equal(await firstCard.locator('.sumo-daily-facts dl>div').count(),20,'Each wrestler has ten stats');
+  const data=await firstCard.innerText();
+  for(const label of ['Career wins','Career losses','Career win %','Makuuchi wins','Makuuchi losses','Makuuchi win %','Height','Weight','Highest rank']){
+    assertContains(data,label,'Daily faceoff statistic');
+  }
+  const historyTiles=await page.locator('.sumo-daily-meeting').count();
+  for(const card of await page.locator('.sumo-daily-card').all()){
+    assert.ok(await card.locator('.sumo-daily-meeting').count()<=5,'Never fabricate more than five recent pairings');
+    for(const tile of await card.locator('.sumo-daily-meeting').all()){
+      assert.ok((await tile.locator('em').innerText()).length>0,'Individual kimarite or missing-technique notice visible');
+    }
+  }
+  assert.ok(historyTiles>=0,'Recent meeting history is optional when source data is unavailable');
+  await snap(page,label+'-daily-faceoff',{fullPage:false});
+  for(const division of ['Juryo','Makushita']){
+    await page.locator('[data-matchup-division="'+division+'"]').click();
+    assertContains(await page.locator('.sumo-daily-date').innerText(),division,'Division selector');
+    assert.equal(await page.locator('#sumo-matchup-day').inputValue(),'1','Day is retained between divisions');
+  }
+  await page.locator('[data-matchup-division="Makuuchi"]').click();
+  const bodyWidth=await page.evaluate(()=>({
+    doc:document.documentElement.scrollWidth, viewport:document.documentElement.clientWidth,
+    card:document.querySelector('.sumo-daily-card')?.getBoundingClientRect().width
+  }));
+  assert.ok(bodyWidth.doc<=bodyWidth.viewport+6,'Daily page has no viewport overflow '+JSON.stringify(bodyWidth));
+  await snap(page,label+'-daily-faceoff-day1',{fullPage:false});
+
   await open(page,'kimarite','.technical-terms');
   assert.equal(await page.locator('.technical-terms .term').count(),9);
   assertContains(await page.locator('#sumo-main').innerText(),'Yorikiri','technique');
@@ -313,14 +348,14 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.waitForSelector('.sumo-api-quality[data-sumo-source-id="28"]');
   assert.equal(await page.locator('#sumo-period').inputValue(),'current');
 
-  for(const route of ['kimarite','banzuke','basho','rikishi','home']){
+  for(const route of ['kimarite','banzuke','matchups','basho','rikishi','home']){
     await page.locator('.subnav [data-page="'+route+'"]').press('Enter');
     await page.waitForURL('**#'+route);
     await page.waitForSelector('.subnav [data-page="'+route+'"][aria-current="page"]');
     assert.equal(await page.locator('.subnav [data-page="'+route+'"]').getAttribute('aria-current'),'page');
   }
   if (isMobile){
-    for(const route of ['home','rikishi','profile/8850','basho','banzuke','kimarite']){
+    for(const route of ['home','rikishi','profile/8850','matchups','basho','banzuke','kimarite']){
       await open(page,route,'#sumo-main');
       const widths=await page.evaluate(()=>({viewport:innerWidth,scroll:document.documentElement.scrollWidth,body:document.body.scrollWidth}));
       assert.ok(widths.scroll<=widths.viewport+6,route+' horizontal overflow '+JSON.stringify(widths));
@@ -340,7 +375,7 @@ try {
   await testSite({width:390,height:844},true,'mobile',true);
   await testSite({width:320,height:740},true,'reflow320',false);
   if(failures.length)throw new Error(failures.join('\n'));
-  await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'pass',browser:browser.version(),viewportResults,screenshotCount,views:['home','rikishi','profiles','banzuke','basho','kimarite','headtohead'],viewportWidths:[1440,768,390,320],realTouchTest:false},null,2));
+  await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'pass',browser:browser.version(),viewportResults,screenshotCount,views:['home','rikishi','profiles','banzuke','basho','matchups','kimarite','headtohead'],viewportWidths:[1440,768,390,320],realTouchTest:false},null,2));
   console.log('Sumo editorial browser QA passed: 1440/768/390/320, five key wrestlers, H2H chronology, charts and no JS exceptions. Real-device touch remains separate.');
 } catch(error) {
   await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'fail',browser:browser.version(),viewportResults,screenshotCount,error:String(error.stack||error),failures},null,2));
