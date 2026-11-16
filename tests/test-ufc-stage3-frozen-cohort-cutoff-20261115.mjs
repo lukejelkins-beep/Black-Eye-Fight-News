@@ -45,7 +45,7 @@ test('Stage3 preserves strict certified careers across midnight without fabricat
  assert.ok(Object.values(independentlyVerified.fighters).some(p=>p.verifiedAt==='2026-11-14'),'original completed proof timestamps must not be rewritten');
 });
 
-test('fresh independent UFC 334 evidence restores seven careers while Heili remains held',()=>{
+test('fresh independent UFC 334 evidence restores seven careers and separately reviewed Heili',()=>{
  const decisions=new Map(audit(census.asOf).careerVerificationDecisions.map(d=>[d.slug,d]));
  const refreshed=['bia-mesquita','cesar-almeida','chris-duncan','donte-johnson',
   'evan-elder','juan-diaz','melquizael-costa'];
@@ -57,8 +57,12 @@ test('fresh independent UFC 334 evidence restores seven careers while Heili rema
   assert.equal(decision.newestSavedUfcFight,'2026-11-14',slug);
   assert.equal(decision.independentlyVerifiedFullCareer,true,slug);
  }
- const still=independentlyVerified.fighters['heili-alateng'];
- const latest=still.bouts.map(b=>b.date).sort().at(-1);
- assert.ok(decisions.get('heili-alateng').newestSavedUfcFight>latest);
- assert.equal(decisions.get('heili-alateng').independentlyVerifiedFullCareer,false);
+ const heili=independentlyVerified.fighters['heili-alateng'];
+ const latest=heili.bouts.map(b=>b.date).sort().at(-1);
+ assert.equal(latest,'2026-11-14');
+ assert.equal(heili.sourceSnapshot.sourceCommit,'96adace863c0a793579cc06d27d468797545607f');
+ assert.equal(heili.bouts.length,11);
+ assert.deepEqual(heili.sourceVerifiedNativeNameAliases,['Heili Alateng']);
+ assert.equal(decisions.get('heili-alateng').newestSavedUfcFight,latest);
+ assert.equal(decisions.get('heili-alateng').independentlyVerifiedFullCareer,true);
 });
