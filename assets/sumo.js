@@ -987,4 +987,13 @@ async function init(){
     render();
   }
 }
+// Recalculate ages after a birthday even when the page remains open overnight.
+// The formatter uses Japan-local calendar dates, matching the wrestler records.
+let lastAgeDate=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+function refreshAgeOnDateChange(){
+  const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+  if(today!==lastAgeDate){lastAgeDate=today;if(STATE.roster)render();}
+}
+setInterval(refreshAgeOnDateChange,60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshAgeOnDateChange();});
 init();
