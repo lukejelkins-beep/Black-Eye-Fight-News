@@ -445,7 +445,7 @@ function homeLeaderCard(row) {
     '<div class="sumo-leader-last"><small>LAST COMPLETED · DAY '+e(latest.day)+'</small>'+
     '<span><b class="sumo-leader-outcome '+(latest.outcome==='win'?'win':'loss')+'">'+
     e(latest.outcome==='win'?'W':'L')+'</b> vs '+e(latest.opponent||'Opponent unavailable')+'</span>'+
-    '<small>Kimarite: '+e(latest.kimarite?techniqueText(latest.kimarite):'Not recorded')+'</small></div>':
+    '<small'+(latest.kimarite&&KIMARITE.some(x=>x.slug===kebab(latest.kimarite))?' class="sumo-leader-tech-click" role="button" tabindex="0" data-km-open="'+e(kebab(latest.kimarite))+'" aria-label="View '+e(latest.kimarite)+' technique"':'')+'>Kimarite: '+e(latest.kimarite?techniqueText(latest.kimarite):'Not recorded')+'</small></div>':
     '<div class="sumo-leader-last"><small>LATEST BOUT</small><span>Completed result not available</span></div>';
   return '<a class="sumo-standings-row sumo-leader-card" role="listitem" href="#profile/'+id+'">'+
     (w?portraitFor(w,'md',name):'<div class="sumo-standings-no-photo">Portrait unavailable</div>')+
