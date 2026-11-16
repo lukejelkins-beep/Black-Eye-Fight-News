@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "scope": "Research-only supplemental manual source review for six blocked Sumo career-result histories",
+  "reviewedOn": "2026-11-16",
+  "cohortSize": 190,
+  "sourceResearchHeadBeforeReview": "c7a7e1397ba73e882cfb11252f90f85c66feddbb",
+  "certificationEffect": "none",
+  "strictCareerResultsCertifiedBeforeReview": 184,
+  "fullProfilesCertified": 0,
+  "productionReleaseApproved": false,
+  "sourcePrinciples": [
+    "Preserve original immutable Sumo API and independent source snapshots",
+    "Retain source publication cutoff differences and null unknowns",
+    "Do not certify or rewrite aggregates from this note; re-run complete strict 190-person audit after separately validated input changes"
+  ],
+  "cases": [
+    {
+      "sourceId": 112,
+      "name": "Kotoeiho",
+      "classification": "published-absence-count-disagreement-and-current-basho-cutoff",
+      "savedApiStats": {
+        "wins": 174,
+        "losses": 120,
+        "absences": 5
+      },
+      "officialJsaSnapshot": {
+        "wins": 174,
+        "losses": 120,
+        "absences": 6,
+        "asOf": "November 2026 Day 8",
+        "currentBasho": "1-2-5",
+        "priorObservedAbsence": "2022-07 4-2-1"
+      },
+      "independentSumoDbCareer": {
+        "wins": 174,
+        "losses": 120,
+        "absences": 6
+      },
+      "officialAbsentNotice": "Absent from Day 3 of November 2026 tournament",
+      "evidenceUrls": [
+        "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4120/",
+        "https://sumodb.sumogames.de/Rikishi.aspx?r=12729",
+        "https://sumo.or.jp/EnHonbashoMain/absence/"
+      ],
+      "conclusion": "Official published six absences and independent SumoDB six do not equal cached native five. The source difference is real and has current-basho timing context; do not silently align or certify until period-specific reconciliation is audited."
+    },
+    {
+      "sourceId": 98,
+      "name": "Shirokuma",
+      "classification": "published-absence-count-disagreement-and-current-basho",
+      "savedApiStats": {
+        "wins": 178,
+        "losses": 153,
+        "absences": 10
+      },
+      "officialJsaSnapshot": {
+        "wins": 178,
+        "losses": 153,
+        "absences": 11,
+        "asOf": "November 2026 Day 8"
+      },
+      "officialAbsentNotice": "Absent from Day 1 of November 2026 tournament",
+      "evidenceUrls": [
+        "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4164/",
+        "https://sumo.or.jp/EnHonbashoMain/absence/"
+      ],
+      "conclusion": "The published JSA absence total differs from the saved API aggregate. Official absence notice confirms a tournament withdrawal, but by itself does not prove the precise cutoff or all-time absence reconciliation; certification stays blocked."
+    },
+    {
+      "sourceId": 88,
+      "name": "Gojinyu",
+      "classification": "absence-total-unpublished",
+      "savedApiStats": {
+        "wins": 114,
+        "losses": 87,
+        "absences": 0
+      },
+      "officialJsaSnapshot": {
+        "wins": 114,
+        "losses": 87,
+        "absences": null,
+        "asOf": "November 2026 Day 8"
+      },
+      "independentSumoDbCachedAbsences": null,
+      "evidenceUrls": [
+        "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4123/",
+        "https://sumodb.sumogames.de/Rikishi.aspx?r=12733"
+      ],
+      "conclusion": "The independent JSA publication omits absence totals; an omitted aggregate is not proof of zero. A complete dated full-attendance proof or explicit independent absent total is still required."
+    },
+    {
+      "sourceId": 118,
+      "name": "Ikawasakura",
+      "classification": "independent-career-aggregate-snapshot-conflict",
+      "savedApiStats": {
+        "wins": 306,
+        "losses": 271,
+        "absences": 36
+      },
+      "cachedSumoDbCrosscheck": {
+        "wins": 307,
+        "losses": 271,
+        "absences": 36
+      },
+      "observedSumoDbPage": {
+        "wins": 306,
+        "losses": 271,
+        "absences": 36
+      },
+      "officialJsaCareerAggregatePublished": false,
+      "evidenceUrls": [
+        "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3379/",
+        "https://sumodb.sumogames.de/Rikishi.aspx?r=11988"
+      ],
+      "conclusion": "Current accessible SumoDB headline equals the saved native W-L-A, whereas earlier cached SumoDB crosscheck contains an extra win. Verify a fresh pinned source snapshot and the date-specific tournament ledger to resolve source drift before strict audit."
+    },
+    {
+      "sourceId": 172,
+      "name": "Kototsubasa",
+      "classification": "independent-career-aggregate-snapshot-conflict",
+      "savedApiStats": {
+        "wins": 396,
+        "losses": 409,
+        "absences": 3
+      },
+      "cachedSumoDbCrosscheck": {
+        "wins": 397,
+        "losses": 409,
+        "absences": 3
+      },
+      "observedSumoDbPage": {
+        "wins": 384,
+        "losses": 397,
+        "absences": 3
+      },
+      "officialJsaCareerAggregatePublished": false,
+      "evidenceUrls": [
+        "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3023/",
+        "https://sumodb.sumogames.de/Rikishi.aspx?r=7164"
+      ],
+      "conclusion": "Independent page headline, cached crosscheck and native aggregate are not contemporaneously aligned. Verify source snapshot chronology and all missing/extra tournament rows; no aggregate substitution."
+    },
+    {
+      "sourceId": 9104,
+      "name": "Tenshoyama",
+      "classification": "api-profile-weight-differs-from-independent-dated-measurement",
+      "savedApiCurrentProfileWeightKg": 172,
+      "savedApiDatedMeasurement": {
+        "bashoId": "202601",
+        "weightKg": 173
+      },
+      "officialJsaProfileWeightKg": 173,
+      "independentSumoDbProfileWeightKg": 173,
+      "evidenceUrls": [
+        "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4357/",
+        "https://sumodb.sumogames.de/Rikishi.aspx?r=12966"
+      ],
+      "conclusion": "Independent JSA and SumoDB both show 173 kg, matching the preserved dated Sumo API measurement, while a distinct API profile field says 172 kg. This substantiates the conflict, not authority to overwrite profile or certify without an audited rule for as-of measurement provenance."
+    }
+  ]
+}
