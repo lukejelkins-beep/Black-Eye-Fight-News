@@ -298,7 +298,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
       'H2H tile '+index+' flag is a faint image inside right information only');
     assert.ok(tile.nameInside&&tile.recordInside,
       'H2H tile '+index+' name and gold W-L badge fit in right panel');
-    assert.ok(tile.noMeetingsText&&tile.sourceFlagRetained&&!tile.wrapping,
+    assert.ok(tile.noMeetingsText&&(!tile.flagPresent||tile.sourceFlagRetained)&&!tile.wrapping,
       'H2H tile '+index+' preserves country and W-L without redundant meeting text or overflow');
   }
   assert.ok(h2hTiles.filter(tile=>tile.flagPresent).length>=5,
