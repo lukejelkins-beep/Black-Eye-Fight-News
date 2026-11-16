@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-16T02:01:56.266Z",
-  "checkedAt": "2026-11-16T02:01:56.266Z",
+  "attemptedAt": "2026-11-16T02:58:32.604Z",
+  "checkedAt": "2026-11-16T02:58:32.604Z",
   "windowDays": 28,
   "articlesChecked": 31,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 45,
   "publisherSourcesConfigured": 32,
-  "linksFound": 15,
-  "newEmbedsVerified": 0,
+  "linksFound": 19,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -424,6 +424,25 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://x.com/ringmagazine/status/2121415086166212617"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-15T10:00:00+00:00",
+      "discoveredAt": "2026-11-16T02:58:32.604Z",
+      "sourcePublisher": "MMA Junkie",
+      "evidenceUrl": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/15/ufc-334-josh-hokit-rematch-ciryl-gane-dana-white/92793447007/",
+      "summary": "Original social post linked in MMA Junkie coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/DfwJEXFgAJF/"
     },
     {
       "type": "post",
@@ -2182,22 +2201,6 @@
       "summary": "Original social post linked in UFC official homepage coverage. Its author, caption and publication date appear in the official embed.",
       "source": "Public publisher link + official Meta oEmbed verification",
       "url": "https://www.threads.com/t/DfSzDxfCQ98/"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "mma",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-08T06:40:00+00:00",
-      "discoveredAt": "2026-11-09T06:58:21.712Z",
-      "sourcePublisher": "MMA Junkie",
-      "evidenceUrl": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/08/ufc-vegas-124-davey-grant-issues-statement-first-knockout-loss-elijah-smith/92665299007/",
-      "summary": "Original social post linked in MMA Junkie coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher link + official Meta oEmbed verification",
-      "url": "https://www.instagram.com/p/Dfd2zTxTQd4/"
     }
   ],
   "seenOriginals": [
@@ -2760,6 +2763,10 @@
     {
       "url": "https://www.instagram.com/p/DfsWXuHv-11/",
       "firstSeen": "2026-11-15T22:43:31.246Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/DfwJEXFgAJF/",
+      "firstSeen": "2026-11-16T02:58:32.604Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
