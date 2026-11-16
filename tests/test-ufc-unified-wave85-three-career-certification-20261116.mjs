@@ -34,7 +34,8 @@ test('wave85 strict gate refuses omitted contest, reversed outcome or fictitious
  const p=register[slug];
  assert.equal(strict(slug,{...p,bouts:p.bouts.slice(1)}),false);
  assert.equal(strict(slug,{...p,verifiedNumericFighterIds:['999999']}),false);
- assert.equal(strict(slug,{...p,bouts:p.bouts.map((b,i)=>i?b:{...b,result:b.result==='win'?'loss':'win'}}),false);
+ const tampered=p.bouts.map((b,i)=>i===0?{...b,result:b.result==='win'?'loss':'win'}:b);
+ assert.equal(strict(slug,{...p,bouts:tampered}),false);
  }
 });
 test('Mederos 2026 majority draw survives strict source/native/corner corroboration unchanged',()=>{
