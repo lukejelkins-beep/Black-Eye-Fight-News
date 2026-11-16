@@ -45,7 +45,6 @@ const dateOnly = (v) => {
   if (!v || !Number.isFinite(new Date(v).getTime())) return 'Not available';
   return new Intl.DateTimeFormat('en-AU', { day:'numeric', month:'short', year:'numeric', timeZone:'UTC' }).format(new Date(v));
 };
-function kebab(value){return String(value??'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
 function heading(label,title,more='',level='h2') {
   const tag=level==='h1'?'h1':'h2';
   return '<header class="section-head"><div><div class="eyebrow">'+e(label)+'</div><'+tag+'>'+e(title)+'</'+tag+'></div>'+more+'</header>';
