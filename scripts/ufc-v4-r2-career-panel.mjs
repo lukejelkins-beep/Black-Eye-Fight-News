@@ -9,7 +9,9 @@ export function renderVerifiedCareerPanel({featureEnabled=false,fighterSlug,audi
   duplicateIdentitySlugs=[],bouts=[],verifiedOfficialBoutCount}={}){
   const eligibility=canShowVerifiedCareer({featureEnabled,fighterSlug,audit,expectedCommit,duplicateIdentitySlugs});
   if(!eligibility.allowed)return {visible:false,reason:eligibility.reason,html:''};
-  if(!Number.isSafeInteger(verifiedOfficialBoutCount)||verifiedOfficialBoutCount<1||\n      !Array.isArray(bouts)||bouts.length!==verifiedOfficialBoutCount)\n    return {visible:false,reason:'incomplete_official_history',html:''};
+  if(!Number.isSafeInteger(verifiedOfficialBoutCount)||verifiedOfficialBoutCount<1||
+      !Array.isArray(bouts)||bouts.length!==verifiedOfficialBoutCount)
+    return {visible:false,reason:'incomplete_official_history',html:''};
   const clean=bouts.map(b=>({date:b?.date,opponent:b?.opponent,event:b?.event,
     result:b?.result,method:b?.method,round:b?.round})); 
   if(clean.some(b=>!validDate(b.date)||!String(b.opponent||'').trim()||
