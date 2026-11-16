@@ -164,12 +164,16 @@ for(const [slug,c] of Object.entries(cases)){
   const fake=structuredClone(p);fake.verifiedNumericFighterIds=['999999'];assert.equal(gate(slug,fake),false);
  });
 }
-test('wave83 keeps conflicting Park and Heili historical/alias identities held',()=>{
+test('wave83 Park remains held; new Heili full-career source/alias review does not allow ten-bout shortcut',()=>{
  const park=cert['park-hyun-sung'],heili=cert['heili-alateng'];
  assert.equal(park.bouts.length,5);
- assert.equal(heili.bouts.length,10);
+ assert.equal(heili.bouts.length,11);
  assert.equal(gate('park-hyun-sung',park),false);
- assert.equal(gate('heili-alateng',heili),false);
+ assert.equal(gate('heili-alateng',heili),true);
+ const stale=structuredClone(heili);
+ stale.bouts=stale.bouts.filter(x=>x.nativeBoutId!=='93780');
+ assert.equal(stale.bouts.length,10);
+ assert.equal(gate('heili-alateng',stale),false);
 });
 
 test('wave83 reciprocal UFC 334 source/native pairs are identical fights, never double counted',()=>{
