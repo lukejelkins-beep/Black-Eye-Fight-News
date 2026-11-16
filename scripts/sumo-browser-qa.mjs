@@ -271,7 +271,8 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
       infoRight:a?.right-ri?.right,infoLeft:ri?.left,photoRight:p?.right,
       nameInside:!!(n&&ri&&n.left>=ri.left-2&&n.right<=ri.right+2),
       recordInside:!!(rr&&ri&&rr.left>=ri.left-2&&rr.right<=ri.right+2&&rr.bottom<=ri.bottom+2),
-      flagInInfo:!!(flag&&!card.querySelector(':scope>.sumo-flag-backdrop')&&
+      flagPresent:!!flag,
+      flagInInfo:!flag||!!(!card.querySelector(':scope>.sumo-flag-backdrop')&&
         flag.parentElement===info),
       flagContained:!flag||(()=>{const f=rect(flag);return f.left>=ri.left-2&&f.right<=ri.right+2&&f.top>=ri.top-2&&f.bottom<=ri.bottom+2})(),
       flagOpacity:flag?getComputedStyle(flag).opacity:null,
@@ -300,6 +301,8 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     assert.ok(tile.noMeetingsText&&tile.sourceFlagRetained&&!tile.wrapping,
       'H2H tile '+index+' preserves country and W-L without redundant meeting text or overflow');
   }
+  assert.ok(h2hTiles.filter(tile=>tile.flagPresent).length>=5,
+    'Representative source-backed opponent tiles show a faded birthplace-country flag');
 
   const opponentScores=await page.locator('.sumo-rival').evaluateAll(cards=>cards.slice(0,12).map(card=>{
     const score=card.querySelector('.sumo-rival-record');
