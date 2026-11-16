@@ -115,7 +115,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     assert.ok(imageFirst.photoTop<imageFirst.titleTop,'Photo precedes name on mobile: '+JSON.stringify(imageFirst));
     assert.ok(imageFirst.photoWidth>=imageFirst.heroWidth-3,'Photo fills mobile hero width: '+JSON.stringify(imageFirst));
     assert.ok(imageFirst.photoHeight<=306,'Portrait bounded and not excessively tall: '+JSON.stringify(imageFirst));
-    assert.ok(!imageFirst.objectPosition||imageFirst.objectPosition.includes('top'),'Portrait preserves top of head: '+JSON.stringify(imageFirst));
+    assert.ok(!imageFirst.objectPosition||/\\btop\\b|0%$/.test(imageFirst.objectPosition),'Portrait preserves top of head: '+JSON.stringify(imageFirst));
   }else{
     assert.ok(heroMeasurements.headingTop<heroMeasurements.viewport/2,
       'Desktop/tablet profile name appears high in first screen: '+JSON.stringify(heroMeasurements));
