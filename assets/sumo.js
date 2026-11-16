@@ -562,6 +562,17 @@ function resultDesk(w){
     (shown.length?shown.map(row=>profileBoutRow(w,row)).join(''):'<p class="missing">No completed or confirmed scheduled bouts in this selection.</p>')+
     '</div>'+messages;
 }
+function recentBashoTimeline(w){
+  const history=STATE.careerHistory?.bySourceId?.[String(w.sourceId)]?.rank||[];
+  const rows=history.filter(x=>x&&x.basho&&x.rank).slice().sort((a,b)=>String(b.basho).localeCompare(String(a.basho))).slice(0,6);
+  if(!rows.length)return '<p class="missing">Historical rankings not available in the current cache.</p>';
+  return '<div class="sumo-basho-timeline">'+rows.map(row=>{
+    const bouts=profileBouts(w).filter(x=>String(x.bashoId)===String(row.basho));
+    const wins=bouts.filter(x=>x.outcome==='win').length,losses=bouts.filter(x=>x.outcome==='loss').length;
+    const full=bouts.filter(x=>x.outcome==='win'||x.outcome==='loss').length===15;
+    return '<div class="sumo-basho-history-item"><strong>'+e(bashoLabel(row.basho))+'</strong><span>'+e(row.rank)+'</span><small>'+(full?e(wins+' W · '+losses+' L'):'Rank sourced · full result not verified')+'</small></div>';
+  }).join('')+'</div>';
+}
 function lastFiveStrip(w){
   const matches=profileBouts(w).filter(x=>x.outcome==='win'||x.outcome==='loss').slice(0,5);
   return '<div class="sumo-recent-strip"><span class="label">LATEST '+matches.length+' COMPLETED · NEWEST FIRST</span>'+
@@ -616,7 +627,7 @@ function renderProfile(id) {
     '<section class="profile-hero">'+portraitFor(w,'xl')+
     '<div class="profile-title"><div class="eyebrow">BEFN SUMO · '+e(divisionOf(w.currentRank))+'</div>'+
     '<h1>'+e(w.shikonaEn)+'</h1><div class="jp">'+e(w.shikonaJp||'')+'</div>'+
-    flagMark(w)+'<div class="hero-rank">'+e(w.currentRank||'Rank not available')+' · '+movementMarkup(w)+'</div>'+
+    flagMark(w)+'<div class="sumo-hero-peak">Highest rank: <strong>'+e(knownHigh(w)||'Not available')+'</strong></div><div class="hero-rank">'+e(w.currentRank||'Rank not available')+' · '+movementMarkup(w)+'</div>'+
     '</div><div class="profile-facts profile-meta">'+fact('Stable',w.heya)+fact('Age at snapshot',age===null?'Not available':age+' years')+
     fact('Height',current.h==='—'?'Not available':current.h,current.heightSource+(current.heightUnderReview?' · under source/date review':''))+fact('Weight · undated',current.mass==='—'?'Not available':current.mass,current.weightSource+(current.underReview?' · under source/date review':''))+'</div>'+
     '<div class="profile-current"><span class="tag">'+e(bashoLabel(details().bashoId))+' · CURRENT BASHO</span>'+
@@ -625,7 +636,7 @@ function renderProfile(id) {
     summaryStat(knownHigh(w)||'Not available','Highest sourced rank')+
     summaryStat(Number.isInteger(mWins)&&Number.isInteger(mLosses)?mWins+'–'+mLosses:'Not available','Makuuchi W–L · API scope')+
     summaryStat(noTitles,'Makuuchi championships · API stats')+'</div>'+
-    lastFiveStrip(w)+sectionNav(w.sourceId)+
+    lastFiveStrip(w)+'<section class="sumo-history-preview"><h2>Recent basho & rankings</h2><p class="section-intro">Six recent sourced banzuke positions. Tournament results appear only when complete.</p>'+recentBashoTimeline(w)+'</section>'+sectionNav(w.sourceId)+
     sectionHead('results','Tournament and career ledger','Results')+resultDesk(w)+'</section>'+
     sectionHead('career','Historical context','Career')+
     '<div class="sumo-career-strip">'+
@@ -669,7 +680,7 @@ function opponentResults(w){
     '<div class="sumo-rival-grid">'+shown.map(r=>{
       const opponent=wrestler(r.id),label=name(r);
       return '<a class="sumo-rival" href="'+headToHeadUrl(w.sourceId,r.id)+'">'+
-        '<span class="sumo-rival-name">'+e(label)+'</span><strong>'+e(r.wins)+' W · '+e(r.losses)+' L</strong>'+
+        '<span class="sumo-rival-photo">'+portraitFor(opponent,'sm')+'</span><span class="sumo-rival-name">'+flagMark(opponent)+e(label)+'</span><strong>'+e(r.wins)+' W · '+e(r.losses)+' L</strong>'+
         '<small>'+e(r.meetings)+' recorded meetings · open full chronology</small></a>';
     }).join('')+'</div>'+
     (shown.length<matches.length?'<button type="button" class="btn light" data-h2h-more>Show more opponents ('+(matches.length-shown.length)+' remain)</button>':'')+
