@@ -1,0 +1,54 @@
+name: Sumo promote 190 official portraits (test branch only)
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/sumo-official-portrait-register-20261116
+    paths:
+      - scripts/promote-sumo-official-portraits.py
+      - .github/workflows/sumo-promote-official-portraits.yml
+permissions:
+  contents: write
+  actions: read
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/sumo-official-portrait-register-20261116
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install Pillow==11.3.0
+      - uses: actions/download-artifact@v4
+        with:
+          name: sumo-official-portrait-source-candidates
+          run-id: 43784022026
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: qa/sumo-official-portrait-staging
+      - name: Promote precisely one official portrait per wrestler
+        run: python scripts/promote-sumo-official-portraits.py
+      - name: Verify roster mapping and file integrity
+        run: |
+          node --test tests/test-sumo-official-portrait-register.mjs
+          python - <<'PY'
+          import json,pathlib,hashlib
+          m=json.loads(pathlib.Path('data/sumo/approved-photos.json').read_text())['bySourceId']
+          r=json.loads(pathlib.Path('data/sumo/rikishi-index.json').read_text())['rikishi']
+          assert len(r)==190
+          for w in r:
+            p=m[str(w['sourceId'])]
+            assert p['officialNskId']==w['officialNskId']
+            assert hashlib.sha256(pathlib.Path(p['path']).read_bytes()).hexdigest()==p['sha256']
+          print('190/190 official portraits passed file, identity-ID and checksum checks')
+          PY
+      - name: Commit official portrait assets only to research branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/sumo-photos/jsa-*.jpg data/sumo/approved-photos.json
+          git diff --cached --quiet || git commit -m "Add 190 JSA official portraits for Sumo test preview"
+          git push origin HEAD:research/sumo-official-portrait-register-20261116
