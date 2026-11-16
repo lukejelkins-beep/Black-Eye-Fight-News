@@ -679,3 +679,46 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .befn-site-menu summary{font-size:13px;padding-inline:8px}
  .subnav-inner{padding-inline:12px}
 }
+
+/* F01: first-screen paths to results and full licensed source photograph. */
+.sumo-hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:12px}
+.sumo-hero-actions a{display:inline-flex;align-items:center;min-height:40px;padding:7px 12px;border:1px solid #ad9184;border-radius:5px;color:#fff;font-size:13px;font-weight:800;text-decoration:none}
+.sumo-hero-actions .sumo-quick-results{background:#d3aa46;color:#21191c;border-color:#d3aa46}
+.sumo-hero-actions a:hover{text-decoration:underline}
+.sumo-hero-actions a:focus-visible{outline:3px solid #d3aa46;outline-offset:3px}
+/* F15: opt-in density for visitors scanning a full 190-rikishi directory. */
+.sumo-directory-layout{display:flex;gap:6px;justify-content:flex-end;margin:8px 0 12px}
+.sumo-directory-layout button{min-height:44px;padding:8px 12px;font-size:14px;font-weight:750;border-radius:5px;border:1px solid var(--border);background:#fff;color:#21191c;cursor:pointer}
+.sumo-directory-layout button[aria-pressed=true]{background:#21191c;color:#fff}
+.directory-grid.is-list{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:6px!important}
+.directory-grid.is-list .directory-card{display:grid!important;grid-template-columns:92px minmax(0,1fr) minmax(120px,.6fr)!important;align-items:center!important;gap:14px!important;min-height:100px!important;border-radius:7px;padding:4px 16px 4px 4px}
+.directory-grid.is-list .directory-upper{display:contents!important}
+.directory-grid.is-list .directory-upper>.sumo-flag-backdrop{display:none!important}
+.directory-grid.is-list .directory-upper>.profile-icon.sumo-photo{grid-column:1;grid-row:1;height:92px!important;min-height:0!important;max-height:92px!important;width:88px!important;border-radius:5px!important;align-self:center}
+.directory-grid.is-list .sumo-directory-identity{grid-column:2;grid-row:1;padding:0!important;min-width:0}
+.directory-grid.is-list .directory-lower{grid-column:3;grid-row:1;min-width:0;padding:0!important;background:transparent}
+.directory-grid.is-list .directory-lower .detail{font-size:13px}
+.directory-grid.is-list .sumo-directory-facts{font-size:13px}
+.directory-grid.is-list .directory-lower .cta{font-size:12px}
+@media(max-width:550px){
+ .directory-grid.is-list .directory-card{grid-template-columns:62px minmax(0,1fr)!important;gap:4px 11px;min-height:85px!important;padding:6px}
+ .directory-grid.is-list .directory-upper>.profile-icon.sumo-photo{width:62px!important;height:78px!important;max-height:78px!important;grid-row:1/span 2}
+ .directory-grid.is-list .sumo-directory-identity{grid-column:2;grid-row:1}
+ .directory-grid.is-list .directory-lower{grid-column:2;grid-row:2}
+ .directory-grid.is-list .directory-lower .cta{display:none}
+ .sumo-hero-actions{margin-top:9px}
+}
+/* F02: four clear mobile destinations, never an undiscoverable clipped navigation row. */
+.sumo-mobile-more{display:none}
+@media(max-width:680px){
+ .subnav-inner{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;padding:0 9px;overflow:visible}
+ .subnav-inner>a[href="#banzuke"],.subnav-inner>a[href="#kimarite"]{display:none!important}
+ .subnav-inner>a,.sumo-mobile-more>summary{justify-content:center;text-align:center;padding:8px 3px;font-size:12px;white-space:nowrap;min-width:0;min-height:44px}
+ .sumo-mobile-more{display:block;position:relative;z-index:40;color:#fff;min-width:0}
+ .sumo-mobile-more>summary{display:flex;align-items:center;cursor:pointer;list-style:none;font-weight:850;letter-spacing:.04em;text-transform:uppercase}
+ .sumo-mobile-more>summary:after{content:" ▾";margin-left:3px}
+ .sumo-mobile-more[open]>summary:after{content:" ▴"}
+ .sumo-mobile-more-links{position:absolute;top:100%;right:0;min-width:180px;display:grid;padding:5px;background:#21191c;border:1px solid #79676a;box-shadow:0 10px 20px #110a0c55;z-index:80}
+ .sumo-mobile-more-links>a{padding:12px 10px;color:#fff;white-space:nowrap;text-decoration:none;font-size:14px;font-weight:750}
+ .sumo-mobile-more-links>a:focus-visible,.sumo-mobile-more-links>a:hover{background:#84243a}
+}
