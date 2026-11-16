@@ -69,7 +69,7 @@ function portraitFor(w,size='sm'){
     /^assets\/sumo-photos\/[a-zA-Z0-9_-]+\.(webp|png|jpg|jpeg)$/.test(String(photo.path||'')) &&
     typeof photo.license==='string' && photo.license.trim() &&
     typeof photo.credit==='string' && photo.credit.trim();
-  const root='class="profile-icon sumo-photo '+e(size)+(valid?' has-photo':'')+'"';
+  const root='class="profile-icon sumo-photo '+e(size)+(size==='xl'?'':' sumo-headshot')+(valid?' has-photo':'')+'"';
   const name=w?.shikonaEn||'Unknown rikishi';
   return '<div '+root+' role="img" aria-label="'+e(valid?'Photograph of '+name:'Illustrated portrait placeholder for '+name)+'">'+
     (valid?'<img src="'+e(photo.path)+'" alt="" loading="lazy" decoding="async">':'')+
