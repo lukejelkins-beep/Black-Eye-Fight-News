@@ -65,18 +65,39 @@ if(nextDay>=1&&nextDay<=15){
     }
   }
 }
-nextDetails.announcedDay=scheduleCount?nextDay:null;
-nextDetails.torikumi=nextTorikumi;
+// Preserve published current-day pairings until all bouts are complete.
+// Some providers announce tomorrow's schedule only late in today's basho.
+let selectedDay=scheduleCount?nextDay:null;
+let selectedTorikumi=nextTorikumi;
+if(!nextTorikumi.Makuuchi?.data && Number(details.announcedDay)===today){
+  const retained={};
+  let retainedCount=0;
+  for(const division of TRACKED_DIVISIONS){
+    const prior=details.torikumi?.[division]?.data;
+    const rows=announcedTorikumiMatches(prior,{bashoId,division,day:today});
+    if(rows.length){
+      retained[division]={status:'available',data:prior};
+      retainedCount+=rows.length;
+    }
+  }
+  if(retained.Makuuchi?.data || (!scheduleCount&&retainedCount)){
+    selectedDay=today;
+    selectedTorikumi=retained;
+    scheduleCount=retainedCount;
+  }
+}
+nextDetails.announcedDay=selectedDay;
+nextDetails.torikumi=selectedTorikumi;
 nextDetails.dailyCollectedAt=capturedAt;
 nextDetails.dailyJstDay=(today>=1&&today<=15)?today:null;
 nextDetails.dailyScheduleCount=scheduleCount;
 nextDetails.dailySource='https://www.sumo-api.com/api';
-nextDetails.dailyStatus=scheduleCount?'next-day-torikumi-published':'next-day-torikumi-not-yet-published';
+nextDetails.dailyStatus=selectedDay===nextDay?'next-day-torikumi-published':selectedDay===today?'current-day-torikumi-retained':'next-day-torikumi-not-yet-published';
 const temp=PATH+'.tmp';
 await writeFile(temp,JSON.stringify(nextDetails,null,2)+'\n','utf8');
 await rename(temp,PATH);
 console.log(JSON.stringify({
   status:'ok',bashoId,capturedAt,japanDay:today,nextDay,upcomingBouts:scheduleCount,
   completedThrough:Object.fromEntries(TRACKED_DIVISIONS.map(d=>[d,lastCompletedBashoDay(newBanzuke[d])])),
-  torikumi:Object.fromEntries(TRACKED_DIVISIONS.map(d=>[d,nextTorikumi[d]?.data?.torikumi?.length||0]))
+  torikumi:Object.fromEntries(TRACKED_DIVISIONS.map(d=>[d,selectedTorikumi[d]?.data?.torikumi?.length||0]))
 }));
