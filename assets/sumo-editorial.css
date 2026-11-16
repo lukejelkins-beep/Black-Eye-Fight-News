@@ -480,3 +480,8 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .profile-hero>.profile-facts{grid-column:1/-1!important;grid-row:3!important;padding:12px 24px 20px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
 .profile-hero>.profile-current{grid-column:1/-1!important;grid-row:4!important;margin:0 24px 24px}
 @media(max-width:599px){.profile-hero>.profile-icon.sumo-photo{aspect-ratio:3/4!important}.profile-hero>.profile-title{padding:18px 18px 6px}.profile-hero>.profile-facts{padding:12px 18px 18px;gap:12px}.profile-hero>.profile-current{margin:0 18px 18px}}
+
+/* Rank history: colour only genuine changes relative to the preceding basho. */
+.sumo-basho-history-item.is-promotion{background:#e3f4e8;border-color:#8ccca3;color:#155d38}
+.sumo-basho-history-item.is-demotion{background:#fce8e7;border-color:#e6aaa6;color:#8e2525}
+.sumo-basho-history-item.is-promotion small,.sumo-basho-history-item.is-demotion small{color:inherit}
