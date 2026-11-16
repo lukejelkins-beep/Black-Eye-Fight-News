@@ -57527,6 +57527,110 @@
           "nativeFighterId": "481"
         }
       ]
+    },
+    "muhammad-naimov": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Muhammad Naimov",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/8d11d9c13e2ccdf7",
+      "officialFighterUrl": "https://www.ufc.com/athlete/muhammad-naimov",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "method": "UFC.com dated eight-fight Octagon biography independently checked against all eight 2023-2026 pinned Greco UFCStats fight-result identities and fighter details; eight exact independent fight URLs cross-referenced to certified opponents already in the single canonical evidence register. Preserved all original numeric native bout IDs, both fighter corners, outcomes, dates within one-day UTC tolerance and positive saved measured-round counts. Earlier 2020 DWCS appearance excluded; not present in saved UFC Octagon native bouts."
+      },
+      "verifiedNumericFighterIds": [
+        "313"
+      ],
+      "officialUfcCareerBoutCount": 8,
+      "sourceScopeVerified": "Eight completed UFC Octagon bouts from 2023-06-03 to 2026-09-05, confirmed by UFC.com fighter biography. Separate 2020 DWCS fight against Collin Anglin is excluded from UFC career count.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/muhammad-naimov",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [
+        {
+          "date": "2020-09-15",
+          "opponent": "Collin Anglin",
+          "result": "loss",
+          "event": "Dana White's Contender Series Season 4 Episode 7",
+          "officialSourceUrl": "https://www.ufc.com/athlete/muhammad-naimov",
+          "excludedBecause": "DWCS predates 2023 Octagon debut; not a UFC Octagon career fight or stored native UFC bout"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-09-05",
+          "opponent": "Losene Keita",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b90b099c1f47bb93",
+          "nativeBoutId": "83646",
+          "nativeFighterId": "313"
+        },
+        {
+          "date": "2025-12-06",
+          "opponent": "Mairon Santos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/40fa4f8b4b93884e",
+          "nativeBoutId": "60533",
+          "nativeFighterId": "313"
+        },
+        {
+          "date": "2025-06-21",
+          "opponent": "Bogdan Grad",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/19764211af05674c",
+          "nativeBoutId": "60276",
+          "nativeFighterId": "313"
+        },
+        {
+          "date": "2025-02-01",
+          "opponent": "Kaan Ofli",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/940f586104bf8bc8",
+          "nativeBoutId": "38557",
+          "nativeFighterId": "313"
+        },
+        {
+          "date": "2024-06-22",
+          "opponent": "Felipe Lima",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8bd5f20f49434c65",
+          "nativeBoutId": "38812",
+          "nativeFighterId": "313"
+        },
+        {
+          "date": "2024-02-25",
+          "opponent": "Erik Silva",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/50dae6b76c9c6490",
+          "nativeBoutId": "39040",
+          "nativeFighterId": "313"
+        },
+        {
+          "date": "2023-10-21",
+          "opponent": "Nathaniel Wood",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/b84c447bb74febe2",
+          "nativeBoutId": "60007",
+          "nativeFighterId": "313"
+        },
+        {
+          "date": "2023-06-03",
+          "opponent": "Jamie Mullarkey",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ad7bd4b3ee923498",
+          "nativeBoutId": "61316",
+          "nativeFighterId": "313"
+        }
+      ]
     }
   }
 }
