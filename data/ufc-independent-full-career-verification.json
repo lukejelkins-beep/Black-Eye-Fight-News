@@ -57631,6 +57631,93 @@
           "nativeFighterId": "313"
         }
       ]
+    },
+    "morgan-charriere": {
+      "sourceCoverageAttested": true,
+      "scope": "complete_official_ufc_career",
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "fighterName": "Morgan Charriere",
+      "verifiedAt": "2026-11-16",
+      "fighterUrl": "https://ufcstats.com/fighter-details/5b03b61f9d90125e",
+      "officialFighterUrl": "https://www.ufc.com/athlete/morgan-charriere",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+        "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+        "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+        "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+        "cutoffLastEvent": "2026-11-07",
+        "evidenceCutoff": "2026-11-14",
+        "method": "Official UFC athlete biography individually lists seven Octagon appearances and dates, crosschecked to exact pinned Greco UFCStats fighter/fight-result source rows. All seven original numeric native bout IDs, corners, results, date +/-1 and positive measured rounds were checked, including one Gabriel Miranda fight not already held as a certified opponent's proof; six others have reciprocal independent existing source records. Cage Warriors/regional bouts remain outside UFC history."
+      },
+      "verifiedNumericFighterIds": [
+        "342"
+      ],
+      "officialUfcCareerBoutCount": 7,
+      "sourceScopeVerified": "Seven UFC featherweight fights from 2023-09-02 debut to 2026-09-05. Earlier Cage Warriors and regional contests excluded.",
+      "independentSourceCrosschecks": [
+        "https://www.ufc.com/athlete/morgan-charriere",
+        "https://github.com/Greco1899/scrape_ufc_stats/commit/c742842f29466758fedc3906dbad28d6d320a8da"
+      ],
+      "sourceVerifiedExcludedFeederBouts": [],
+      "bouts": [
+        {
+          "date": "2026-09-05",
+          "opponent": "Felipe Lima",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/ad17c34e0cc7d702",
+          "nativeBoutId": "83387",
+          "nativeFighterId": "342"
+        },
+        {
+          "date": "2025-12-13",
+          "opponent": "Melquizael Costa",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/93ca562453f65b8d",
+          "nativeBoutId": "60650",
+          "nativeFighterId": "342"
+        },
+        {
+          "date": "2025-07-12",
+          "opponent": "Nate Landwehr",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/4e5d4a36eaaa3a78",
+          "nativeBoutId": "60832",
+          "nativeFighterId": "342"
+        },
+        {
+          "date": "2025-03-22",
+          "opponent": "Nathaniel Wood",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/9779eb1aae1d4654",
+          "nativeBoutId": "60313",
+          "nativeFighterId": "342"
+        },
+        {
+          "date": "2024-09-28",
+          "opponent": "Gabriel Miranda",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f114929ed709606e",
+          "nativeBoutId": "38704",
+          "nativeFighterId": "342"
+        },
+        {
+          "date": "2024-04-06",
+          "opponent": "Chepe Mariscal",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/32375b4435fea5e6",
+          "nativeBoutId": "61251",
+          "nativeFighterId": "342"
+        },
+        {
+          "date": "2023-09-02",
+          "opponent": "Manolo Zecchini",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0d41a3fa5efef91b",
+          "nativeBoutId": "60070",
+          "nativeFighterId": "342"
+        }
+      ]
     }
   }
 }
