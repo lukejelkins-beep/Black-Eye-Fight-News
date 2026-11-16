@@ -36,7 +36,12 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 export const kimariteSlug=s=>String(s||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
 if(GROUPS.some((g,i)=>g.items.length!==JP_BY_GROUP[i].length))throw new Error('JSA technique label count mismatch');
 export const KIMARITE_GROUPS = GROUPS.map((g,groupIndex)=>({...g,items:g.items.map(([name,english],i)=>({name,english,japanese:JP_BY_GROUP[groupIndex][i],slug:kimariteSlug(name),group:g.id}))}));
-export const KIMARITE = KIMARITE_GROUPS.flatMap(g=>g.items);
+export const KIMARITE = KIMARITE_GROUPS.flatMap(g=>g.items).map((item,index)=>({
+ ...item,
+ jsaId:index+1,
+ jsaPoster:'https://sumo.or.jp/img/kimarite/kimarite_'+String(index+1).padStart(2,'0')+'.jpg',
+ jsaDetail:'https://sumo.or.jp/Kimarite/detail/'+(index+1)+'/'
+}));
 const bySlug = new Map(KIMARITE.map(x=>[x.slug,x]));
 export const lookupKimarite=s=>bySlug.get(kimariteSlug(s));
 const groupFor=item=>KIMARITE_GROUPS.find(x=>x.id===item.group);
@@ -44,22 +49,21 @@ let filter='all',search='';
 const videoFor=item=>APPROVED_WEBM[item.slug];
 function media(item,large=false){
  const clip=videoFor(item);
+ // The official JSA still is the poster for every technique, including
+ // techniques without an encoded loop. NHK footage is credited separately.
  if(clip?.webm&&clip?.rights&&clip?.credit){
    return '<video class="sumo-km-video" muted loop playsinline preload="none"'+
-    (large?' controls':'')+' aria-label="Demonstration of '+esc(item.name)+'"'+
-    (clip.poster?' poster="'+esc(clip.poster)+'"':'')+'>'+
-    '<source src="'+esc(clip.webm)+'" type="video/webm">Animation unavailable.</video>'+
-    '<span class="sumo-km-media-credit">'+esc(clip.credit)+'</span>';
+     (large?' controls':'')+
+     ' poster="'+esc(item.jsaPoster)+'" aria-label="NHK technique video: '+esc(item.name)+'">'+
+     '<source src="'+esc(clip.webm)+'" type="video/webm">Video unavailable.</video>'+
+     '<span class="sumo-km-media-credit">Video: '+esc(clip.credit)+'</span>';
  }
- const yt=NHK_YOUTUBE_IDS[item.slug];
- if(large&&yt){
-   return '<iframe class="sumo-km-embed" src="https://www.youtube-nocookie.com/embed/'+yt+
-    '?rel=0" title="NHK WORLD-JAPAN demonstration: '+esc(item.name)+'" loading="lazy"'+
-    ' referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
- }
- return '<div class="sumo-km-no-video" role="img" aria-label="Video example awaiting reuse permission">'+
-   '<span class="sumo-km-glyph" aria-hidden="true">相</span><span class="sumo-km-play" aria-hidden="true">▶</span>'+
-   '<small>'+ (yt?'NHK source located · loop pending':'Loop being prepared')+'</small></div>';
+ const nhk=NHK_YOUTUBE_IDS[item.slug];
+ return '<div class="sumo-km-poster" aria-label="Official JSA technique photograph: '+esc(item.name)+'">'+
+   '<img src="'+esc(item.jsaPoster)+'" alt="Japan Sumo Association reference photograph of '+esc(item.name)+'" loading="lazy" decoding="async">'+
+   '<span class="sumo-km-poster-credit">Photo: Japan Sumo Association</span>'+
+   (nhk?'<span class="sumo-km-pending" aria-label="NHK video loop pending">WebM pending</span>':'')+
+   '</div>';
 }
 function linkSource(item){
  const yt=NHK_YOUTUBE_IDS[item.slug];
@@ -99,7 +103,7 @@ function gallery(){
   '</div><div id="sumo-km-count" class="sumo-km-count" role="status">82 of 82 techniques</div></section>'+
   '<div id="sumo-km-results"></div>'+
   '<section class="sumo-km-outcomes"><h2>Other results — not kimarite</h2><p>Isamiashi, Koshikudake, Tsukite, Tsukihiza and Fumidashi are classified separately from the 82 winning techniques. Forfeits and absences are also not performed winning techniques.</p></section>'+
-  '<p class="sumo-km-source">Technique terminology: <a href="'+JSA_CATALOGUE+'" target="_blank" rel="noopener noreferrer">Japan Sumo Association</a>. Demonstrations: <a href="'+NHK_GALLERY+'" target="_blank" rel="noopener noreferrer">NHK WORLD-JAPAN</a>. Source videos remain with their publishers; BEFN has not republished them.</p>'+
+  '<p class="sumo-km-source">Photographs: Japan Sumo Association (used with owner-reported permission). Technique terminology: <a href="'+JSA_CATALOGUE+'" target="_blank" rel="noopener noreferrer">Japan Sumo Association</a>. Demonstrations: <a href="'+NHK_GALLERY+'" target="_blank" rel="noopener noreferrer">NHK WORLD-JAPAN</a>. Source videos remain with their publishers; BEFN has not republished them.</p>'+
   '</div>';
 }
 function detail(item){
@@ -117,10 +121,10 @@ function detail(item){
   '<div class="sumo-km-detail-grid"><div class="sumo-km-detail-media">'+media(item,true)+'</div>'+
   '<div class="sumo-km-detail-aside"><h2>How the bout is decided</h2><p>'+esc(item.english)+'. This finish is categorised by the Japan Sumo Association under '+esc(category.name.toLowerCase())+'.</p>'+
   (videoFor(item)?.webm?'<p>Autoplaying WebM example · muted · looping</p>':yt?
-    '<p>NHK source footage identified; a BEFN WebM loop has not yet been encoded.</p>':
-    '<p>An NHK WebM loop has not yet been prepared for this technique. The official NHK collection is linked below.</p>')+
+    '<p>The official JSA reference still is shown here while the NHK WebM loop is being prepared.</p>':
+    '<p>The official JSA reference still is shown here while the NHK WebM loop is being prepared.</p>')+
   '<a class="sumo-km-watch" target="_blank" rel="noopener noreferrer" href="'+esc(mediaLink)+'">'+(yt?'Open original NHK demonstration':'Explore NHK technique videos')+' ↗</a>'+
-  '<a class="sumo-km-jsa" target="_blank" rel="noopener noreferrer" href="'+JSA_CATALOGUE+'">Check official JSA reference ↗</a>'+
+  '<a class="sumo-km-jsa" target="_blank" rel="noopener noreferrer" href="'+esc(item.jsaDetail)+'">View JSA photograph and reference ↗</a>'+
   '</div></div><nav class="sumo-km-prevnext" aria-label="Explore adjacent techniques">'+
   '<a href="#kimarite?term='+previous.slug+'">← '+esc(previous.name)+'</a>'+
   '<a href="#kimarite?term='+next.slug+'">'+esc(next.name)+' →</a></nav></article>';
