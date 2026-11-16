@@ -263,8 +263,8 @@ function standingsTable(rows, limit=10) {
       (w?movementMarkup(w):'<span class="sumo-move unavailable">—</span>')+'</span></a>';
   }).join('');
   return '<div class="sumo-standings-list" role="list" aria-label="Tournament standings, ranks and movement">'+cards+'</div>'+
-    '<p class="sumo-standings-legend">↑ Gained places · ↓ Lost places · ↔ Unchanged since '+e(bashoLabel(details().previousBashoId))+
-    '. Movement is based on banzuke positions, not tournament wins.</p>';
+    '<p class="sumo-standings-legend">Previous → current banzuke ranks, compared with '+e(bashoLabel(details().previousBashoId))+
+    '. These are published rank labels, not tournament win totals or calculated place counts.</p>';
 }
 function featureCard(w) {
   const ent=entryFor(w),s=recordSummary(ent?.record, divisionOf(w.currentRank));
