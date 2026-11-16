@@ -60,17 +60,17 @@
       "date": "2026-11-11"
     }
   ],
-  "lastRun": "2026-11-11",
+  "lastRun": "2026-11-16",
   "month": "2026-11",
   "provider": {
     "befnCap": 100,
-    "limit": 100,
-    "minimumSecondsBetweenCalls": 7.5,
-    "remainingForEditorialCalls": 71,
+    "limit": 30000,
+    "minimumSecondsBetweenCalls": 2.5,
+    "remainingForEditorialCalls": 0,
     "resetAt": "2026-12-01T00:00:00.000Z",
-    "rpmLimit": 10,
-    "tier": "free",
-    "used": 19
+    "rpmLimit": 60,
+    "tier": "hobby",
+    "used": 24138
   },
   "schema": 1,
   "spent": {
@@ -79,8 +79,8 @@
     "divisions": 2,
     "events": 1,
     "histories": 3,
-    "reserve": 2,
+    "reserve": 3,
     "rounds": 19
   },
-  "status": "connected"
+  "status": "budget_exhausted"
 }

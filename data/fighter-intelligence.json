@@ -32,17 +32,17 @@
         "2 victories in 2 verified appearances"
       ],
       "stats": {
-        "observedOn": "2026-11-11",
+        "observedOn": "2026-11-16",
         "record": "12-3-0",
         "sapm": 2.97,
         "slpm": 2.42,
-        "source": "UFCalendar",
-        "strAcc": null,
-        "strDef": null,
+        "source": "UFC Stats API",
+        "strAcc": 0.37,
+        "strDef": 0.61,
         "subAvg": 0.0,
-        "tdAcc": null,
+        "tdAcc": 0.38,
         "tdAvg": 1.8,
-        "tdDef": null
+        "tdDef": 0.7
       }
     },
     {
@@ -166,7 +166,19 @@
         "2 victories in 2 verified appearances",
         "2 victories by stoppage"
       ],
-      "stats": null
+      "stats": {
+        "observedOn": "2026-11-16",
+        "record": "24-10-0",
+        "sapm": 3.01,
+        "slpm": 3.99,
+        "source": "UFC Stats API",
+        "strAcc": 0.56,
+        "strDef": 0.46,
+        "subAvg": 0.7,
+        "tdAcc": 0.5,
+        "tdAvg": 0.32,
+        "tdDef": 0.57
+      }
     },
     {
       "division": "Featherweight",
@@ -1376,7 +1388,7 @@
       "stats": null
     }
   ],
-  "generatedOn": "2026-11-11",
+  "generatedOn": "2026-11-16",
   "note": "Editorial reassessment signals, not official rankings or automatic designations.",
   "schema": 1,
   "scope": "UFC, PFL and ONE MMA",
@@ -1387,9 +1399,9 @@
       "status": "connected"
     },
     {
-      "detail": "Budgeted scouting: 19/100 account requests consumed; {'comparisons': 3, 'discovery': 1, 'divisions': 2, 'events': 1, 'histories': 3, 'reserve': 2, 'rounds': 19}.",
+      "detail": "Budgeted scouting: 24138/30000 account requests consumed; {'comparisons': 3, 'discovery': 1, 'divisions': 2, 'events': 1, 'histories': 3, 'reserve': 3, 'rounds': 19}.",
       "provider": "UFCalendar",
-      "status": "connected"
+      "status": "budget_exhausted"
     },
     {
       "detail": "Enable only when data reuse terms are confirmed.",
@@ -1397,9 +1409,9 @@
       "status": "pending_permission"
     },
     {
-      "detail": "Endpoint connectivity or data verification failed (URLError).",
+      "detail": "Health, search and fighter-detail calls verified; 2 of 2 review profiles matched. Max seven calls per weekly run.",
       "provider": "UFC Stats API",
-      "status": "unavailable"
+      "status": "connected"
     }
   ]
 }
