@@ -13,7 +13,7 @@ import {readFile,writeFile,rename,mkdir} from 'node:fs/promises';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {cohortCurrentBasho} from './sumo-jsa-public-spotcheck.mjs';
-import {documentedDebutRankGap,supplementalHistoricalBashoCoverage,independentHistoricalRankCoverage,independentlyVerifiedCurrentBashoCutoff,proveZeroCareerAbsencesFromCompleteBasho} from './sumo-certification-preflight-190.mjs';
+import {documentedDebutRankGap,supplementalHistoricalBashoCoverage,independentHistoricalRankCoverage,independentlyVerifiedCurrentBashoCutoff,proveZeroCareerAbsencesFromCompleteBasho,independentlyCorroboratedProfileWeightForCareerOnly} from './sumo-certification-preflight-190.mjs';
 
 const ROOT='data/sumo/backfill/v1';
 const load=async p=>JSON.parse(await readFile(p,'utf8'));
@@ -67,11 +67,12 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
   typeof r.rank==='string'&&r.rank.length>4),
   'dated-career-rank-history-incomplete');
  const j=official||{},basic=j.fieldComparisons||{},bh=j.bashoReconciliation||{},rank=j.rankReconciliation||{};
+ const profileWeightReview=independentlyCorroboratedProfileWeightForCareerOnly(w,p,j,weight);
  add(Number(j.sourceId)===id&&Number(j.officialNskId)===Number(w?.officialNskId)&&
   j.url==='https://www.sumo.or.jp/EnSumoDataRikishi/profile/'+w.officialNskId+'/'&&
   /^[a-f0-9]{64}$/.test(String(j.rawHtmlSha256||''))&&
   basic.name===true&&basic.stable===true&&basic.rankGrade===true&&
-  Object.values(basic).every(x=>x!==false),
+  (Object.values(basic).every(x=>x!==false)||profileWeightReview.passed),
   'independent-official-profile-identity-or-fields');
  const sumoDbPublished=weight?.careerRecordCrosscheck||null;
  const independentCareer=sumoDbPublished?.career||null;
@@ -176,6 +177,11 @@ export function strictCareerAudit({w,p,raw,official,weight,preflight,sourceAudit
     'SumoDB matching wrestler identity'
   ]:[],
   sourceNativeBoutLedgerReconciled:careerResultsCertified,
+  independentlyCorroboratedWeightOnlyProfileConflict:careerResultsCertified&&profileWeightReview.passed,
+  retainedWeightProfileDifference:profileWeightReview.passed?{
+   officialJsaWeightKg:profileWeightReview.officialJsaWeightKg,
+   unmodifiedSourceApiProfileWeightKg:profileWeightReview.preservedRawApiProfileWeightKg,
+   currentProfileWeightCertified:false}:null,
   independentBoutByBoutKimariteCertified:false,
   historicalWeightTimelineCertified:false,
   fullProfileCertified:false,

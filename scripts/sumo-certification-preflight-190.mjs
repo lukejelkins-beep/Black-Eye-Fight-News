@@ -298,6 +298,51 @@ export function proveZeroCareerAbsencesFromCompleteBasho(p,jsa,sdb,activeBasho){
   sourceDay:jsa.officialAsOf.day};
 }
 
+/** Accept a documented weight-only profile source conflict for career results
+ * identity. Never certify the weight itself or alter the original API/JSA data.
+ */
+export function independentlyCorroboratedProfileWeightForCareerOnly(w,p,jsa,sdb){
+ const reject=reason=>({passed:false,reason});
+ const fields=jsa?.fieldComparisons||{};
+ const onlyWeightMismatch=fields.weight===false&&
+  ['name','stable','rankGrade','height'].every(k=>fields[k]===true)&&
+  Object.values(fields).filter(x=>x===false).length===1;
+ if(!onlyWeightMismatch)return reject('not-a-weight-only-disagreement');
+ const validSha=x=>/^[a-f0-9]{64}$/.test(String(x||''));
+ const expectedUrl='https://sumodb.sumogames.de/Rikishi.aspx?r='+w?.sumoDbId;
+ const matchedIdentity=Number(jsa?.sourceId)===Number(w?.sourceId)&&
+  Number(jsa?.officialNskId)===Number(w?.officialNskId)&&
+  Number(sdb?.sourceId)===Number(w?.sourceId)&&
+  Number(sdb?.officialNskId)===Number(w?.officialNskId)&&
+  Number(sdb?.sumoDbId)===Number(w?.sumoDbId)&&
+  sdb?.sourcePageUrl===expectedUrl&&sdb?.identityEvidence?.valid===true&&
+  sdb.identityEvidence.birthDateStatus==='match'&&
+  sdb?.careerRecordCrosscheck?.identityVerified===true&&
+  sdb.careerRecordCrosscheck.independentOfApi===true&&
+  validSha(jsa?.rawHtmlSha256)&&
+  validSha(sdb?.careerRecordCrosscheck?.rawHtmlSha256);
+ if(!matchedIdentity)return reject('independent-source-identity-or-snapshot-not-proven');
+ const officialWeight=jsa?.weightKg;
+ if(typeof officialWeight!=='number'||!Number.isFinite(officialWeight)||
+    officialWeight<=0||p?.current?.weightKg!==w?.weightKg||
+    p?.current?.weightKg===officialWeight||
+    p?.measurementCoverage?.conflictingOverlaps?.length!==0)
+  return reject('weight-source-or-raw-disagreement-not-isolated');
+ const dated=x=>/^(18|19|20)\d{2}(01|03|05|07|09|11)$/.test(String(x));
+ const nativeDated=(p?.measurements||[]).some(x=>
+  x.source==='Sumo API historical change'&&
+  x.weightKg===officialWeight&&dated(x.bashoId));
+ const independentDated=(sdb?.datedEvidence||[]).some(x=>
+  x.sourceUrl===expectedUrl&&x.weightKg===officialWeight&&dated(x.bashoId));
+ if(!nativeDated||!independentDated)
+  return reject('native-and-independent-dated-weight-evidence-required');
+ return {passed:true,scope:'career-results-source-identity-only',
+  officialJsaWeightKg:officialWeight,
+  preservedRawApiProfileWeightKg:p.current.weightKg,
+  historicalApiAndSumoDbDatedWeightsAgree:true,
+  weightProfileFieldStillDisputed:true,historicalWeightTimelineCertified:false};
+}
+
 export function preflightRikishi(w,p,jsa,sdb,activeBasho){
  if(!id(w?.sourceId)||!id(w?.officialNskId)||!id(w?.sumoDbId)||
    !p||p.sourceId!==w.sourceId||p.officialNskId!==w.officialNskId||
@@ -330,7 +375,8 @@ export function preflightRikishi(w,p,jsa,sdb,activeBasho){
  add(!!officialId&&jsa.fieldComparisons?.name===true&&
    jsa.fieldComparisons?.stable===true&&jsa.fieldComparisons?.rankGrade===true,
   'official-JSA-identity-or-current-rank-unresolved');
- add(officialId&&Object.values(jsa.fieldComparisons||{}).every(x=>x!==false),
+ const reviewedWeightDifference=independentlyCorroboratedProfileWeightForCareerOnly(w,p,jsa,sdb);
+ add(officialId&&(Object.values(jsa.fieldComparisons||{}).every(x=>x!==false)||reviewedWeightDifference.passed),
   'official-JSA-profile-field-disagreement');
  // A separately captured SumoDB W-L-A may verify an aggregate omitted by JSA,
  // but it cannot override any explicit disagreement with the official JSA.

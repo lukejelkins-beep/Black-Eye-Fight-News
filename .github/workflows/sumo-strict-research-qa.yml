@@ -47,7 +47,8 @@ jobs:
           if(r.count!==190||r.rikishi.length!==190||s.cohortSize!==190||p.cohortSize!==190||
              s.strictAuditSuccessful!==true||
              s.strictCareerResultsCertified+s.blocked!==190||
-             s.strictCareerResultsCertified!==185||
+             s.strictCareerResultsCertified!==186||
+             s.rows.find(x=>x.sourceId===9104)?.careerResultsCertified!==true||
              s.fullProfilesCertified!==0||s.productionApproved!==false) process.exit(1);
           console.log(JSON.stringify({strictAuditSuccessful:true,certified:s.strictCareerResultsCertified,blocked:s.blocked,preflightCandidates:p.candidateForStrictAudit,fullyCertified:0,productionApproved:false}));
           "

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {preflightRikishi,proveZeroCareerAbsencesFromCompleteBasho}
+import {preflightRikishi,proveZeroCareerAbsencesFromCompleteBasho,independentlyCorroboratedProfileWeightForCareerOnly}
  from '../scripts/sumo-certification-preflight-190.mjs';
 
 const read=path=>JSON.parse(readFileSync(new URL('../'+path,import.meta.url),'utf8'));
@@ -84,4 +84,32 @@ test('unpublished absences and stale-profile weight remain unknown or flagged, n
  assert.equal(j.weightKg,173);
  assert.equal(n.liveIndependentSources.sumodbProfileWeightKg,173);
  assert.equal(n.certified??false,false);
+});
+
+test('Tenshoyama corroborated weight-only conflict is retained without blocking unrelated career results',()=>{
+ const id=9104,w=wrestler(id),p=projected(id),j=official(id),s=source(id);
+ const reviewed=independentlyCorroboratedProfileWeightForCareerOnly(w,p,j,s);
+ assert.equal(reviewed.passed,true,JSON.stringify(reviewed));
+ assert.equal(reviewed.officialJsaWeightKg,173);
+ assert.equal(reviewed.preservedRawApiProfileWeightKg,172);
+ assert.equal(reviewed.weightProfileFieldStillDisputed,true);
+ assert.equal(reviewed.historicalWeightTimelineCertified,false);
+ const pre=preflightRikishi(w,p,j,s,'202611');
+ assert.equal(pre.classification,'candidate-for-strict-audit',JSON.stringify(pre.blockers));
+ assert.equal(pre.certified,false);
+ assert.equal(pre.productionReleaseApproved,false);
+ const falseHeight=structuredClone(j);
+ falseHeight.fieldComparisons.height=false;
+ assert.equal(independentlyCorroboratedProfileWeightForCareerOnly(w,p,falseHeight,s).passed,false);
+ const wrongBirth=structuredClone(s);
+ wrongBirth.identityEvidence.birthDateStatus='mismatch';
+ assert.equal(independentlyCorroboratedProfileWeightForCareerOnly(w,p,j,wrongBirth).passed,false);
+ const noDatedApi=structuredClone(p);
+ noDatedApi.measurements=noDatedApi.measurements.filter(x=>x.source!=='Sumo API historical change');
+ assert.equal(independentlyCorroboratedProfileWeightForCareerOnly(w,noDatedApi,j,s).passed,false);
+ const noDatedIndependent=structuredClone(s);
+ noDatedIndependent.datedEvidence=[];
+ assert.equal(independentlyCorroboratedProfileWeightForCareerOnly(w,p,j,noDatedIndependent).passed,false);
+ assert.equal(cached(id).data.profile.weight,172);
+ assert.equal(official(id).weightKg,173);
 });
