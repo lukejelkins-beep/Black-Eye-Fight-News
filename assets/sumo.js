@@ -919,8 +919,7 @@ function opponentResults(w){
         '<div class="sumo-rival-portrait">'+portraitFor(opponent,'sm')+'</div>'+
         '<div class="sumo-rival-info">'+
         (opponent?flagBackdrop(opponent):'')+
-        '<div class="sumo-rival-main"><span class="sumo-rival-name">'+e(label)+'</span>'+
-        (opponent?flagMark(opponent):'')+'</div>'+
+        '<div class="sumo-rival-main"><span class="sumo-rival-name">'+e(label)+'</span></div>'+
         '<strong class="sumo-rival-record" aria-label="'+e(r.wins)+' wins and '+e(r.losses)+' losses">'+
         e(r.wins)+' W – '+e(r.losses)+' L</strong></div></a>';
     }).join('')+'</div>'+

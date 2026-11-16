@@ -1316,3 +1316,70 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   #sumo-opponents .sumo-rival-name{font-size:21px}
   #sumo-opponents .sumo-rival .sumo-rival-record{font-size:17px}
 }
+
+/* Two compact opponent cards per row at every viewport.
+   Left photo remains edge-to-edge; the only birthplace flag is the muted
+   artwork inside the right-hand information panel. */
+#sumo-opponents .sumo-rival-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(6px,1.2vw,12px);
+}
+#sumo-opponents .sumo-rival{
+  box-sizing:border-box;
+  height:clamp(136px,12.5vw,156px);
+  grid-template-columns:minmax(0,39%) minmax(0,61%);
+  min-width:0;
+}
+#sumo-opponents .sumo-rival-info{
+  min-width:0;padding:10px 10px 10px 11px;gap:8px;
+  justify-content:center;
+}
+#sumo-opponents .sumo-rival-name{
+  font-size:clamp(18px,2.3vw,24px);line-height:1.05;
+  overflow-wrap:anywhere;word-break:normal;hyphens:auto;
+}
+#sumo-opponents .sumo-rival .sumo-rival-record{
+  font-size:clamp(15px,1.65vw,19px);
+  line-height:1.15;
+  padding:6px 8px;
+  max-width:100%;
+  overflow-wrap:anywhere;
+}
+#sumo-opponents .sumo-rival-main>.sumo-country{display:none}
+@media(max-width:900px){
+  #sumo-opponents .sumo-rival-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;
+  }
+  #sumo-opponents .sumo-rival{
+    height:145px;grid-template-columns:minmax(0,40%) minmax(0,60%);
+  }
+  #sumo-opponents .sumo-rival-info{padding:9px;gap:7px}
+  #sumo-opponents .sumo-rival-name{font-size:clamp(18px,2.7vw,23px)}
+  #sumo-opponents .sumo-rival .sumo-rival-record{
+    font-size:clamp(14px,2.2vw,19px);padding:6px 7px;
+  }
+}
+@media(max-width:500px){
+  #sumo-opponents .sumo-rival-grid{gap:7px}
+  #sumo-opponents .sumo-rival{
+    height:132px;grid-template-columns:minmax(0,40%) minmax(0,60%);
+  }
+  #sumo-opponents .sumo-rival-info{padding:7px 6px;gap:7px}
+  #sumo-opponents .sumo-rival-name{font-size:clamp(16px,4vw,19px);line-height:1.03}
+  #sumo-opponents .sumo-rival .sumo-rival-record{
+    font-size:clamp(12px,3.25vw,15px);padding:5px 5px;
+    line-height:1.1;
+  }
+}
+@media(max-width:360px){
+  #sumo-opponents .sumo-rival-grid{gap:6px}
+  #sumo-opponents .sumo-rival{
+    height:124px;grid-template-columns:minmax(0,39%) minmax(0,61%);
+  }
+  #sumo-opponents .sumo-rival-info{padding:6px 5px;gap:5px}
+  #sumo-opponents .sumo-rival-name{font-size:16px}
+  #sumo-opponents .sumo-rival .sumo-rival-record{
+    font-size:12px;padding:4px;line-height:1.05;
+  }
+}
