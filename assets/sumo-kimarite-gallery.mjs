@@ -1,8 +1,8 @@
 /**
- * BEFN Sumo kimarite gallery — original editorial UI, factual catalogue of 82 JSA techniques.
- * NHK/YouTube videos are NEVER downloaded, converted or self-hosted here.
- * To activate a WebM, provide rights-cleared footage and document permission for
- * trimming, conversion, silent looping and publication by BEFN.
+ * BEFN Sumo kimarite reference gallery. NHK footage is used only when
+ * supplied with the permission documented by the BEFN owner. Source
+ * videos and original publication remain attributed to NHK WORLD-JAPAN.
+ * No third-party clips are bundled here until they have been encoded.
  */
 const GROUPS = [
   {id:"basic",name:"Basic techniques",jp:"基本技",intro:"Direct pushes, thrusts and force-outs",items:[["Tsukidashi","Frontal thrust-out"],["Tsukitaoshi","Frontal thrust-down"],["Oshidashi","Frontal push-out"],["Oshitaoshi","Frontal push-down"],["Yorikiri","Frontal force-out"],["Yoritaoshi","Frontal crush-out"],["Abisetaoshi","Backward force-down"]]},
@@ -13,12 +13,24 @@ const GROUPS = [
   {id:"special",name:"Special techniques",jp:"特殊技",intro:"Pull-downs, lifts, rear attacks and other finishes",items:[["Hikiotoshi","Hand pull-down"],["Hikkake","Hooked-arm force-out/down"],["Hatakikomi","Slap-down"],["Sokubiotoshi","Neck chop-down"],["Tsuridashi","Frontal lift-out"],["Okuritsuridashi","Rear lift-out"],["Tsuriotoshi","Frontal lift-and-drop"],["Okuritsuriotoshi","Rear lift-and-drop"],["Okuridashi","Rear push-out"],["Okuritaoshi","Rear push-down"],["Okurinage","Rear throw"],["Okurigake","Rear leg-trip"],["Okurihikiotoshi","Rear pull-down"],["Waridashi","Separated-body force-out"],["Utchari","Edge pivot throw"],["Kimedashi","Arm-lock force-out"],["Kimetaoshi","Arm-lock force-down"],["Ushiromotare","Backward lean-out/down"],["Yobimodoshi","Pulling body slam"]]},
 ];
 const JP = {"yorikiri":"寄り切り","oshidashi":"押し出し","hatakikomi":"叩き込み","uwatenage":"上手投げ","shitatenage":"下手投げ","tsukiotoshi":"突き落とし","sukuinage":"掬い投げ","oshitaoshi":"押し倒し","yoritaoshi":"寄り倒し"};
-const NHK_YOUTUBE_IDS = {"yorikiri":"bbnsql1bZzw","oshidashi":"BZXmwVOfJNk","hatakikomi":"dVlwcqzB870","uwatenage":"jXZwxHTRRmo","yoritaoshi":"PucQVjkE038","oshitaoshi":"0N6K53M-S2M"};
+const NHK_YOUTUBE_IDS = {"yorikiri":"bbnsql1bZzw","oshidashi":"BZXmwVOfJNk","hatakikomi":"dVlwcqzB870","uwatenage":"jXZwxHTRRmo","shitatenage":"pTjJdejyZ_0","tsukiotoshi":"PmXZDloYSUk","sukuinage":"nmlYy36vHmk","yoritaoshi":"PucQVjkE038","oshitaoshi":"0N6K53M-S2M"};
 const NHK_GALLERY = 'https://www3.nhk.or.jp/nhkworld/en/tv/sumo/techniques/';
 const JSA_CATALOGUE = 'https://www.sumo.or.jp/Kimarite/show/';
-// Source-controlled rights manifest. DO NOT add clips without a documented licence
-// explicitly allowing cropping/trimming, transcoding to WebM, and public looping.
-const APPROVED_WEBM = Object.freeze({});
+// The generated manifest is loaded from data/sumo/kimarite-media.json.
+// Authorised NHK footage is transcoded by scripts/build-kimarite-webm.py.
+let APPROVED_WEBM = Object.freeze({});
+export function setKimariteMediaManifest(data){
+ if(data?.schemaVersion!==1||!data?.clips||typeof data.clips!=='object')return false;
+ const valid={};
+ for(const [slug,row] of Object.entries(data.clips)){
+  if(!/^[a-z]+$/.test(slug)||!row||typeof row!=='object')continue;
+  if(!/^assets\/sumo-kimarite\/[a-z]+\.webm$/.test(row.webm||''))continue;
+  if(!/^assets\/sumo-kimarite\/[a-z]+\.jpg$/.test(row.poster||''))continue;
+  if(row.rights!=='NHK permission confirmed by BEFN owner'||row.credit!=='NHK WORLD-JAPAN')continue;
+  valid[slug]={webm:row.webm,poster:row.poster,rights:row.rights,credit:row.credit};
+ }
+ APPROVED_WEBM=Object.freeze(valid);return true;
+}
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const kimariteSlug=s=>String(s||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
 export const KIMARITE_GROUPS = GROUPS.map(g=>({...g,items:g.items.map(([name,english])=>({name,english,japanese:JP[kimariteSlug(name)]||'',slug:kimariteSlug(name),group:g.id}))}));
@@ -32,7 +44,7 @@ function media(item,large=false){
  const clip=videoFor(item);
  if(clip?.webm&&clip?.rights&&clip?.credit){
    return '<video class="sumo-km-video" muted loop playsinline preload="none"'+
-    (large?' controls':' autoplay')+' aria-label="Demonstration of '+esc(item.name)+'"'+
+    (large?' controls':'')+' aria-label="Demonstration of '+esc(item.name)+'"'+
     (clip.poster?' poster="'+esc(clip.poster)+'"':'')+'>'+
     '<source src="'+esc(clip.webm)+'" type="video/webm">Animation unavailable.</video>'+
     '<span class="sumo-km-media-credit">'+esc(clip.credit)+'</span>';
@@ -45,7 +57,7 @@ function media(item,large=false){
  }
  return '<div class="sumo-km-no-video" role="img" aria-label="Video example awaiting reuse permission">'+
    '<span class="sumo-km-glyph" aria-hidden="true">相</span><span class="sumo-km-play" aria-hidden="true">▶</span>'+
-   '<small>'+ (yt?'Official demonstration available':'Demonstration not yet licensed')+'</small></div>';
+   '<small>'+ (yt?'NHK source located · loop pending':'Loop being prepared')+'</small></div>';
 }
 function linkSource(item){
  const yt=NHK_YOUTUBE_IDS[item.slug];
@@ -54,7 +66,7 @@ function linkSource(item){
 function tile(item){
  return '<article class="sumo-km-tile" id="kimarite-'+item.slug+'"><a class="sumo-km-tile-link" href="#kimarite?term='+item.slug+'" aria-label="View '+esc(item.name)+' example and explanation">'+
   '<div class="sumo-km-media">'+media(item)+'</div><div class="sumo-km-tile-meta">'+
-  '<div class="sumo-km-jp">'+esc(item.japanese||groupFor(item).jp)+'</div>'+
+  '<div class="sumo-km-jp">'+esc(item.japanese||'決まり手')+'</div>'+
   '<div><h3>'+esc(item.name)+'</h3><p>'+esc(item.english)+'</p></div><span class="sumo-km-chevron" aria-hidden="true">↗</span>'+
   '</div></a></article>';
 }
@@ -97,13 +109,13 @@ function detail(item){
  return '<article class="sumo-km-detail" id="kimarite-'+item.slug+'">'+
   '<a class="sumo-km-back" href="#kimarite">← All 82 kimarite</a>'+
   '<div class="sumo-km-detail-head"><div class="eyebrow">'+esc(category.name)+'</div>'+
-  '<h1>'+esc(item.name)+'</h1><div class="sumo-km-detail-jp">'+esc(item.japanese||category.jp)+'</div>'+
+  '<h1>'+esc(item.name)+'</h1><div class="sumo-km-detail-jp">'+esc(item.japanese||'決まり手')+'</div>'+
   '<p class="sumo-km-meaning">'+esc(item.english)+'</p></div>'+
   '<div class="sumo-km-detail-grid"><div class="sumo-km-detail-media">'+media(item,true)+'</div>'+
   '<div class="sumo-km-detail-aside"><h2>How the bout is decided</h2><p>'+esc(item.english)+'. This finish is categorised by the Japan Sumo Association under '+esc(category.name.toLowerCase())+'.</p>'+
   (videoFor(item)?.webm?'<p>Autoplaying WebM example · muted · looping</p>':yt?
-    '<p>This is an authorised YouTube embed from NHK, not a downloadable or edited BEFN WebM.</p>':
-    '<p>No licensed example video is currently available to play here. The official NHK collection is linked below.</p>')+
+    '<p>NHK source footage identified; a BEFN WebM loop has not yet been encoded.</p>':
+    '<p>An NHK WebM loop has not yet been prepared for this technique. The official NHK collection is linked below.</p>')+
   '<a class="sumo-km-watch" target="_blank" rel="noopener noreferrer" href="'+esc(mediaLink)+'">'+(yt?'Open original NHK demonstration':'Explore NHK technique videos')+' ↗</a>'+
   '<a class="sumo-km-jsa" target="_blank" rel="noopener noreferrer" href="'+JSA_CATALOGUE+'">Check official JSA reference ↗</a>'+
   '</div></div><nav class="sumo-km-prevnext" aria-label="Explore adjacent techniques">'+
@@ -119,6 +131,7 @@ export function hydrateKimariteGallery(){
  if(document.getElementById('sumo-km-results'))galleryContents();
  const videos=[...document.querySelectorAll('.sumo-km-video')];
  if(!videos.length)return;
+ if(!('IntersectionObserver' in window))return;
  const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{
    if(entry.isIntersecting&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
      entry.target.play().catch(()=>{});
@@ -127,13 +140,13 @@ export function hydrateKimariteGallery(){
  videos.forEach(video=>observer.observe(video));
 }
 // Delegated listeners register once; the parent Sumo router owns hash navigation.
-document.addEventListener('input',event=>{
+if(typeof document!=='undefined')document.addEventListener('input',event=>{
  if(event.target?.id==='sumo-km-search'){
    search=event.target.value.trim().toLowerCase();
    galleryContents();
  }
 });
-document.addEventListener('click',event=>{
+if(typeof document!=='undefined')document.addEventListener('click',event=>{
  const target=event.target.closest?.('[data-km-filter]');
  if(!target)return;
  filter=target.dataset.kmFilter;
