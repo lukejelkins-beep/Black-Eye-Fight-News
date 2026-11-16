@@ -27,7 +27,9 @@ test('render complete ordered history with accessible table and escaped source t
   assert.ok(r.html.indexOf('2026-01-10')<r.html.indexOf('2024-01-10'));
 });
 test('fail closed on missing, malformed or duplicate career rows',()=>{
-  assert.equal(render({bouts:[]}).reason,'incomplete_official_history');\n  assert.equal(render({verifiedOfficialBoutCount:3}).reason,'incomplete_official_history');\n  assert.equal(render({verifiedOfficialBoutCount:null}).visible,false);
+  assert.equal(render({bouts:[]}).reason,'incomplete_official_history');
+  assert.equal(render({verifiedOfficialBoutCount:3}).reason,'incomplete_official_history');
+  assert.equal(render({verifiedOfficialBoutCount:null}).visible,false);
   assert.equal(render({bouts:[{...bouts[0],event:''}]}).reason,'invalid_bout_data');
   assert.equal(render({bouts:[bouts[0],bouts[0]]}).reason,'duplicate_bouts');
 });
