@@ -14,7 +14,7 @@ const GROUPS = [
 ];
 // Japanese terminology follows the official JSA 82-technique catalogue, in matching group order.
 const JP_BY_GROUP = [["突き出し","突き倒し","押し出し","押し倒し","寄り切り","寄り倒し","浴びせ倒し"],["上手投げ","下手投げ","小手投げ","掬い投げ","上手出し投げ","下手出し投げ","腰投げ","首投げ","一本背負い","二丁投げ","櫓投げ","掛け投げ","つかみ投げ"],["内掛け","外掛け","ちょん掛け","切り返し","河津掛け","蹴返し","蹴手繰り","三所攻め","渡し込み","二枚蹴り","小股掬い","外小股","大股","褄取り","小褄取り","足取り","裾取り","裾払い"],["居反り","撞木反り","掛け反り","たすき反り","外たすき反り","伝え反り"],["突き落とし","巻き落とし","とったり","逆取ったり","肩すかし","外無双","内無双","頭捻り","上手捻り","下手捻り","網打ち","鯖折り","波離間投げ","大逆手","腕捻り","合掌捻り","徳利投げ","首捻り","小手捻り"],["引き落とし","引っ掛け","叩き込み","素首落とし","吊り出し","送り吊り出し","吊り落とし","送り吊り落とし","送り出し","送り倒し","送り投げ","送り掛け","送り引き落とし","割り出し","打っ棄り","極め出し","極め倒し","後ろもたれ","呼び戻し"]];
-const NHK_YOUTUBE_IDS = {"yorikiri":"bbnsql1bZzw","oshidashi":"BZXmwVOfJNk","hatakikomi":"dVlwcqzB870","uwatenage":"jXZwxHTRRmo","shitatenage":"pTjJdejyZ_0","tsukiotoshi":"PmXZDloYSUk","sukuinage":"nmlYy36vHmk","yoritaoshi":"PucQVjkE038","oshitaoshi":"0N6K53M-S2M"};
+const NHK_YOUTUBE_IDS = {"yorikiri":"bbnsql1bZzw","oshidashi":"BZXmwVOfJNk","hatakikomi":"dVlwcqzB870","uwatenage":"jXZwxHTRRmo","shitatenage":"pTjJdejyZ_0","tsukiotoshi":"PmXZDloYSUk","sukuinage":"nmlYy36vHmk","yoritaoshi":"PucQVjkE038","oshitaoshi":"0N6K53M-S2M","abisetaoshi":"4ENRUd7l0eQ","katasukashi":"FTqtI1aPCIo"};
 const NHK_GALLERY = 'https://www3.nhk.or.jp/nhkworld/en/tv/sumo/techniques/';
 const JSA_CATALOGUE = 'https://www.sumo.or.jp/Kimarite/show/';
 // The generated manifest is loaded from data/sumo/kimarite-media.json.
