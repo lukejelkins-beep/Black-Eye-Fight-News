@@ -20,6 +20,7 @@ from pathlib import Path
 
 RIGHTS = "NHK permission confirmed by BEFN owner"
 CREDIT = "NHK WORLD-JAPAN"
+JSA_IDS = {"tsukidashi": 1, "tsukitaoshi": 2, "oshidashi": 3, "oshitaoshi": 4, "yorikiri": 5, "yoritaoshi": 6, "abisetaoshi": 7, "uwatenage": 8, "shitatenage": 9, "kotenage": 10, "sukuinage": 11, "uwatedashinage": 12, "shitatedashinage": 13, "koshinage": 14, "kubinage": 15, "ipponzeoi": 16, "nichonage": 17, "yaguranage": 18, "kakenage": 19, "tsukaminage": 20, "uchigake": 21, "sotogake": 22, "chongake": 23, "kirikaeshi": 24, "kawazugake": 25, "kekaeshi": 26, "ketaguri": 27, "mitokorozeme": 28, "watashikomi": 29, "nimaigeri": 30, "komatasukui": 31, "sotokomata": 32, "omata": 33, "tsumatori": 34, "kozumatori": 35, "ashitori": 36, "susotori": 37, "susoharai": 38, "izori": 39, "shumokuzori": 40, "kakezori": 41, "tasukizori": 42, "sototasukizori": 43, "tsutaezori": 44, "tsukiotoshi": 45, "makiotoshi": 46, "tottari": 47, "sakatottari": 48, "katasukashi": 49, "sotomuso": 50, "uchimuso": 51, "zubuneri": 52, "uwatehineri": 53, "shitatehineri": 54, "amiuchi": 55, "sabaori": 56, "harimanage": 57, "osakate": 58, "kainahineri": 59, "gasshohineri": 60, "tokkurinage": 61, "kubihineri": 62, "kotehineri": 63, "hikiotoshi": 64, "hikkake": 65, "hatakikomi": 66, "sokubiotoshi": 67, "tsuridashi": 68, "okuritsuridashi": 69, "tsuriotoshi": 70, "okuritsuriotoshi": 71, "okuridashi": 72, "okuritaoshi": 73, "okurinage": 74, "okurigake": 75, "okurihikiotoshi": 76, "waridashi": 77, "utchari": 78, "kimedashi": 79, "kimetaoshi": 80, "ushiromotare": 81, "yobimodoshi": 82}
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SLUG = re.compile(r"^[a-z]+$")
 
@@ -29,7 +30,7 @@ def run(command: list[str]) -> None:
 def parse_cut(row: dict[str, str]) -> tuple[str, str, float, float, str] | None:
     slug = (row.get("slug") or "").strip().lower()
     source = (row.get("source_file") or "").strip()
-    if not SLUG.fullmatch(slug):
+    if not SLUG.fullmatch(slug) or slug not in JSA_IDS:
         raise ValueError(f"Invalid kimarite slug: {slug!r}")
     if not source:
         return None
@@ -78,27 +79,21 @@ def main() -> int:
                 skipped += 1
                 continue
             webm = args.output_dir/f"{slug}.webm"
-            poster = args.output_dir/f"{slug}.jpg"
             temp_webm = webm.with_suffix(".webm.tmp")
-            temp_poster = poster.with_suffix(".jpg.tmp")
             try:
                 run(["ffmpeg","-hide_banner","-loglevel","error","-y",
                      "-ss",str(start),"-i",str(source),"-t",str(duration),
                      "-vf","fps=24,scale=640:-2:flags=lanczos,pad=ceil(iw/2)*2:ceil(ih/2)*2,format=yuv420p",
                      "-an","-c:v","libvpx-vp9","-deadline","good","-cpu-used","3",
                      "-crf","39","-b:v","0","-row-mt","1","-f","webm",str(temp_webm)])
-                run(["ffmpeg","-hide_banner","-loglevel","error","-y",
-                     "-ss",str(start+min(0.5,duration/2)),"-i",str(source),"-frames:v","1",
-                     "-vf","scale=640:-2:flags=lanczos","-q:v","3","-f","image2",str(temp_poster)])
                 temp_webm.replace(webm)
-                temp_poster.replace(poster)
             except subprocess.CalledProcessError as err:
-                for path in (temp_webm, temp_poster):
+                for path in (temp_webm,):
                     path.unlink(missing_ok=True)
                 print(f"FAIL {slug}: {err.stderr}", file=sys.stderr)
                 raise
             clips[slug] = {"webm":f"assets/sumo-kimarite/{slug}.webm",
-                           "poster":f"assets/sumo-kimarite/{slug}.jpg",
+                           "poster":f"https://sumo.or.jp/img/kimarite/kimarite_{JSA_IDS[slug]:02d}.jpg",
                            "credit": CREDIT, "rights": RIGHTS,
                            "sourceUrl": url, "durationSeconds": duration}
             built += 1
