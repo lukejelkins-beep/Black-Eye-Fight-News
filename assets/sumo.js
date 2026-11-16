@@ -346,7 +346,7 @@ function directoryCard(w) {
     '<small>'+e(w.shikonaJp||'')+'</small></div></div>'+
     '<div class="directory-lower"><div class="rank">'+e(w.currentRank||'Rank not supplied')+'</div>'+
     '<div class="detail">'+e(w.heya||'Stable not supplied')+'</div>'+
-    directoryFacts(w)+'<div class="sumo-directory-move">'+movementMarkup(w)+'</div>'+
+    directoryFacts(w)+'<div class="sumo-directory-current">'+(entryFor(w)?'Current basho: '+recordLabels(recordSummary(entryFor(w).record,divisionOf(w.currentRank))):'Current basho record unavailable')+'</div><div class="sumo-directory-move">'+(/^Yokozuna\b/i.test(String(w.currentRank||''))?'':movementMarkup(w))+'</div>'+
     '<span class="cta">VIEW RIKISHI PROFILE →</span></div></a>';
 }
 function directoryMatches() {
