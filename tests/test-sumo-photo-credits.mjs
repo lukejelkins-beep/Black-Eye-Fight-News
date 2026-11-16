@@ -29,7 +29,7 @@ test('photo credits are available from Sumo; only approved local images may disp
   const sha=createHash('sha256').update(bytes).digest('hex');
   assert.equal(p.sha256,sha,'the approved JPEG differs from its exact source snapshot');
   assert.match(credits,/Japan Sumo Association/);
-  assert.match(credits,/permission attested by BEFN operator/);
+  assert.match(credits,/permission attested by the BEFN operator/);
  }
 });
 test('unlicensed, external, or unreviewed photos cannot appear in approved manifest',()=>{
