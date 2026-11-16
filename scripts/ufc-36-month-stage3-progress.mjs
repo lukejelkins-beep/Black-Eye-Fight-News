@@ -366,8 +366,16 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     f?.eligibilityStatus==='latest_observed_mma_ufc').map(f=>f.slug));
   const bouts=progress?.bouts||{},roundDone=progress?.roundDone||{},
     fights=archive?.fights||{},profiles=research?.profiles||{};
+  // The source inventory is pinned to the immutable approved cohort date.
+  // The rolling 36-month census may advance after that day; using its date
+  // would silently discard ALL approved official missing-bout evidence.
+  // Preserve the fully validated frozen snapshot identities and dates; the
+  // ordinary current census and strict full-career certificate gate stay intact.
+  const sourceCensus={...census,asOf:approval.rosterAsOf,
+    fighters:approvedSnapshot?.schema===1
+      ? Object.values(approvedSnapshot.fighters) : census.fighters};
   const officialSourceInventory=auditOfficialCareerInventory(
-    officialInventory,approved,census,profiles,bouts);
+    officialInventory,approved,sourceCensus,profiles,bouts);
   const officialSourceWinnerLedger=progress?.ufcOfficialSourceDateChecks||{};
   const officialSourceWinnerPages=progress?.ufcOfficialSourceDatePages||{};
   const officialSourceNonWinnerLedger=progress?.ufcOfficialSourceNonWinnerChecks||{};
