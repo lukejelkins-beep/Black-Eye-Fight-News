@@ -914,13 +914,15 @@ function opponentResults(w){
     ' matching opponents · '+original.length+' recorded opponents total</p>'+
     '<div class="sumo-rival-grid">'+shown.map(r=>{
       const opponent=wrestler(r.id),label=name(r);
-      return '<a class="sumo-rival" href="'+headToHeadUrl(w.sourceId,r.id)+'">'+
+      return '<a class="sumo-rival" href="'+headToHeadUrl(w.sourceId,r.id)+
+        '" aria-label="'+e(label)+' head to head: '+e(r.wins)+' wins, '+e(r.losses)+' losses; open chronology">'+
+        '<div class="sumo-rival-portrait">'+portraitFor(opponent,'sm')+'</div>'+
+        '<div class="sumo-rival-info">'+
         (opponent?flagBackdrop(opponent):'')+
-        '<span class="sumo-rival-portrait">'+portraitFor(opponent,'sm')+'</span>'+
-        '<span class="sumo-rival-main"><span class="sumo-rival-name">'+e(label)+'</span>'+
-        (opponent?flagMark(opponent):'')+
-        '<small>'+e(r.meetings)+' recorded meetings · open full chronology</small></span>'+
-        '<strong class="sumo-rival-record" aria-label="'+e(r.wins)+' wins and '+e(r.losses)+' losses">'+e(r.wins)+' W – '+e(r.losses)+' L</strong></a>';
+        '<div class="sumo-rival-main"><span class="sumo-rival-name">'+e(label)+'</span>'+
+        (opponent?flagMark(opponent):'')+'</div>'+
+        '<strong class="sumo-rival-record" aria-label="'+e(r.wins)+' wins and '+e(r.losses)+' losses">'+
+        e(r.wins)+' W – '+e(r.losses)+' L</strong></div></a>';
     }).join('')+'</div>'+
     (shown.length<matches.length?'<button type="button" class="btn light" data-h2h-more>Show more opponents ('+(matches.length-shown.length)+' remain)</button>':'')+
     (STATE.h2hOpponentLimit>16?'<button type="button" class="btn light" data-h2h-fewer>Show fewer opponents</button>':'');
