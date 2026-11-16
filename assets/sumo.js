@@ -9,7 +9,7 @@ import { careerGraphs } from './sumo-editorial-charts.mjs';
 import { boutKey, mergeProfileBouts, filterAndSortOpponents, exactNamePriority } from './sumo-editorial-data.mjs';
 import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verification.mjs';
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
-import { dailyStats, dailyRecentMeetings, dailyDefaultDay, dailySelectedDate, dailyWinPercentage, heightFeetInches } from './sumo-daily.mjs';
+import { dailyStats, dailyRecentMeetings, dailyDefaultDay, dailySelectedDate, dailyWinPercentage, heightFeetInches } from './sumo-daily.mjs?v=20261116-division-relative-records';
 import { ordinalRank } from './sumo-career.mjs';
 
 const ROOT = document.querySelector('#sumo-main');
@@ -246,7 +246,7 @@ function dailyFighterFacts(w,fallback,side){
     '<div class="sumo-daily-ranks"><strong>'+e(w?.currentRank||'Rank unavailable')+'</strong>'+
     '<small>Peak: '+e(w?knownHigh(w)||'Unavailable':'Unavailable')+'</small></div></div></div>';
 }
-function comparisonGrid(first,second) {
+function comparisonGrid(first,second,division='Makushita') {
   const fact=w=>{
     if(!w)return null;
     const stats=detailStats(w),measure=weightHeight(w);
@@ -260,10 +260,16 @@ function comparisonGrid(first,second) {
       careerWins:stats?.totalWins,careerLosses:stats?.totalLosses,
       makuuchiWins:stats?.winsByDivision?.Makuuchi,
       makuuchiLosses:stats?.lossByDivision?.Makuuchi,
+      juryoWins:stats?.winsByDivision?.Juryo,
+      juryoLosses:stats?.lossByDivision?.Juryo,
       makushitaWins:stats?.winsByDivision?.Makushita,
       makushitaLosses:stats?.lossByDivision?.Makushita
     }));
   };
+  // The bout's sourced division, never the wrestler's historic highest division,
+  // determines which division-specific career record belongs in this card.
+  const divisionScope=DIVS.includes(division)?division:null;
+  const divisionLabel=divisionScope||'Division';
   const left=fact(first),right=fact(second);
   const pair=(facts,label)=>facts?.[label]||'Not available';
   const winsLosses=(facts,scope)=>{
@@ -275,7 +281,8 @@ function comparisonGrid(first,second) {
     ['Weight',f=>pair(f,'Weight')],
     ['Current basho W–L',f=>winsLosses(f,'Current basho')],
     ['Career W–L',f=>winsLosses(f,'Career')],['Career win %',f=>pair(f,'Career win %')],
-    ['Makushita W–L',f=>winsLosses(f,'Makushita')],['Makushita win %',f=>pair(f,'Makushita win %')]
+    [divisionLabel+' W–L',f=>divisionScope?winsLosses(f,divisionScope):'Not available'],
+    [divisionLabel+' win %',f=>divisionScope?pair(f,divisionScope+' win %'):'Not available']
   ];
   return '<div class="sumo-comparison" role="group" aria-label="Wrestler comparison, left and right values">'+
     '<div class="sumo-comparison-head"><span>'+e(first?.shikonaEn||'First wrestler')+'</span><span>Statistic</span><span>'+e(second?.shikonaEn||'Second wrestler')+'</span></div>'+
@@ -318,7 +325,7 @@ function dailyMatchupCard(match){
     dailyFighterFacts(second,match.opponent,'end')+
     '<div class="sumo-daily-photo end">'+portraitFor(second,'xl',match.opponent)+'</div></div>'+
     '<p class="sumo-daily-outcome '+(isComplete?'completed':'pending')+'">'+e(subtitle)+'</p>'+
-    comparisonGrid(first,second)+dailyMeetingMarkup(match,match.rikishiId,match.opponentId)+
+    comparisonGrid(first,second,match.division||STATE.matchupDivision)+dailyMeetingMarkup(match,match.rikishiId,match.opponentId)+
     (history&&!history.complete?'<p class="sumo-daily-result-note">Individual history is source-limited; open the full series for coverage.</p>':'')+
     '</article>';
 }

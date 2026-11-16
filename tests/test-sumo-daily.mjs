@@ -16,7 +16,7 @@ test('career and Makuuchi win percentages are scoped to respective known win/los
   const rows=Object.fromEntries(dailyStats({
     currentRank:'Yokozuna 1 East',highestRank:'Yokozuna',
     heightCm:192,weightKg:181,currentBashoWins:8,currentBashoLosses:1,careerWins:120,careerLosses:30,
-    makuuchiWins:24,makuuchiLosses:16,makushitaWins:11,makushitaLosses:3
+    makuuchiWins:24,makuuchiLosses:16,juryoWins:21,juryoLosses:9,makushitaWins:11,makushitaLosses:3
   }));
   assert.equal(rows['Career wins'],'120');
   assert.equal(rows['Career losses'],'30');
@@ -24,6 +24,9 @@ test('career and Makuuchi win percentages are scoped to respective known win/los
   assert.equal(rows['Makuuchi wins'],'24');
   assert.equal(rows['Makuuchi losses'],'16');
   assert.equal(rows['Makuuchi win %'],'60.0%');
+  assert.equal(rows['Juryo wins'],'21');
+  assert.equal(rows['Juryo losses'],'9');
+  assert.equal(rows['Juryo win %'],'70.0%');
   assert.equal(rows.Height,'192 cm (6′4″)');
   assert.equal(rows['Current basho wins'],'8');
   assert.equal(rows['Current basho losses'],'1');
@@ -42,6 +45,7 @@ test('missing source values are never substituted with zeros or computed percent
   assert.equal(rows.Height,'Not available');
   assert.equal(rows['Current basho wins'],'Not available');
   assert.equal(rows['Makushita win %'],'Not available');
+  assert.equal(rows['Juryo win %'],'Not available');
   assert.equal(heightFeetInches(179),'5′10″');
   assert.equal(heightFeetInches(191),'6′3″');
   assert.equal(heightFeetInches(null),'Not available');
@@ -138,4 +142,7 @@ test('full-panel flag overlays preserve readability and historical statistics fi
   assert.match(js,/makushitaWins:stats\?\.winsByDivision\?\.Makushita/);
   assert.match(js,/makushitaLosses:stats\?\.lossByDivision\?\.Makushita/);
   assert.doesNotMatch(js,/\['Height',f=>pair\(f,'Height'\)\+\(/);
+  assert.match(js,/comparisonGrid\(first,second,match\.division\|\|STATE\.matchupDivision\)/);
+  assert.match(js,/juryoWins:stats\?\.winsByDivision\?\.Juryo/);
+  assert.match(js,/juryoLosses:stats\?\.lossByDivision\?\.Juryo/);
 });

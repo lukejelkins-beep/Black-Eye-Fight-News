@@ -16,8 +16,10 @@ test('home prioritises real snapshot results, five leaders and complete-roster d
   const home=method('renderHome');
   assert.match(home,/verifiedDayMatchups\(maku/);
   assert.match(home,/\.filter\(m=>m\.finished\)/);
-  assert.match(home,/leadingRikishi\(maku,5\)/);
-  assert.match(home,/standingsTable\(leaders,5\)/);
+  assert.match(home,/homeLeaderTabs\(\)/);
+  assert.match(home,/homeLeaderCards\(STATE\.homeLeaderDivision\)/);
+  assert.match(method('homeLeaderCards'),/leadingRikishi\(data,5\)/);
+  assert.match(method('homeLeaderTabs'),/data-home-leader-division/);
   assert.match(home,/Search all /);
   assert.doesNotMatch(home,/Rikishi in focus/);
   assert.match(method('renderDirectory'),/data-directory-division/);
