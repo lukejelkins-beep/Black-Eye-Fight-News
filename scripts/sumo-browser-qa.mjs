@@ -254,6 +254,53 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assertContains(profile,'Opponents and head-to-head','opponent catalogue');
   await page.waitForSelector('.sumo-rival',{timeout:25000});
   assert.ok(await page.locator('.sumo-rival').count()>=10,'Complete sourced opponent directory available');
+  const h2hTiles=await page.locator('.sumo-rival').evaluateAll(cards=>cards.slice(0,12).map(card=>{
+    const photo=card.querySelector('.sumo-rival-portrait');
+    const photoBody=photo?.querySelector('.profile-icon.sumo-photo');
+    const info=card.querySelector('.sumo-rival-info');
+    const flag=info?.querySelector(':scope>.sumo-flag-backdrop');
+    const record=info?.querySelector('.sumo-rival-record');
+    const name=info?.querySelector('.sumo-rival-name');
+    const sourceFlag=info?.querySelector('.sumo-country');
+    const rect=el=>el?el.getBoundingClientRect():null;
+    const a=rect(card),p=rect(photo),pb=rect(photoBody),ri=rect(info),rr=rect(record),n=rect(name);
+    return {
+      tag:card.tagName,href:card.getAttribute('href'),cardWidth:a?.width,
+      photoLeft:p?.left-a?.left,photoTop:p?.top-a?.top,photoBottom:a?.bottom-p?.bottom,
+      photoWidth:p?.width,photoInnerWidth:pb?.width,photoInnerHeight:pb?.height,
+      infoRight:a?.right-ri?.right,infoLeft:ri?.left,photoRight:p?.right,
+      nameInside:!!(n&&ri&&n.left>=ri.left-2&&n.right<=ri.right+2),
+      recordInside:!!(rr&&ri&&rr.left>=ri.left-2&&rr.right<=ri.right+2&&rr.bottom<=ri.bottom+2),
+      flagInInfo:!!(flag&&!card.querySelector(':scope>.sumo-flag-backdrop')&&
+        flag.parentElement===info),
+      flagContained:!flag||(()=>{const f=rect(flag);return f.left>=ri.left-2&&f.right<=ri.right+2&&f.top>=ri.top-2&&f.bottom<=ri.bottom+2})(),
+      flagOpacity:flag?getComputedStyle(flag).opacity:null,
+      noMeetingsText:!/recorded meetings|open full chronology/i.test(card.textContent),
+      sourceFlagRetained:!!sourceFlag,
+      score:record?.textContent?.trim(),
+      wrapping:card.scrollWidth>card.clientWidth+2
+    };
+  }));
+  assert.ok(h2hTiles.length>=10,'A representative set of H2H tiles is rendered');
+  for(const [index,tile] of h2hTiles.entries()){
+    assert.equal(tile.tag,'A','H2H whole-tile link remains a semantic anchor');
+    assert.ok(tile.href?.startsWith('#headtohead/'),'H2H link still opens full chronology');
+    assert.ok(tile.photoLeft<=2&&tile.photoTop<=2&&tile.photoBottom<=2,
+      'H2H tile '+index+' photo touches left/top/bottom edges: '+JSON.stringify(tile));
+    assert.ok(Math.abs(tile.photoInnerWidth-tile.photoWidth)<3,
+      'H2H tile '+index+' photo fills the entire left panel');
+    assert.ok(tile.photoInnerHeight>100&&tile.photoWidth>60,
+      'H2H tile '+index+' photo is large and full-height');
+    assert.ok(tile.infoLeft>=tile.photoRight-2&&tile.infoRight<=2,
+      'H2H tile '+index+' details occupy only the right panel');
+    assert.ok(tile.flagInInfo&&tile.flagContained&&(!tile.flagOpacity||Number(tile.flagOpacity)<=.2),
+      'H2H tile '+index+' flag is a faint image inside right information only');
+    assert.ok(tile.nameInside&&tile.recordInside,
+      'H2H tile '+index+' name and gold W-L badge fit in right panel');
+    assert.ok(tile.noMeetingsText&&tile.sourceFlagRetained&&!tile.wrapping,
+      'H2H tile '+index+' preserves country and W-L without redundant meeting text or overflow');
+  }
+
   const opponentScores=await page.locator('.sumo-rival').evaluateAll(cards=>cards.slice(0,12).map(card=>{
     const score=card.querySelector('.sumo-rival-record');
     const rect=score.getBoundingClientRect(),outer=card.getBoundingClientRect(),style=getComputedStyle(score);
