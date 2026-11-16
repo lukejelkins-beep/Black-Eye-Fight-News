@@ -123,17 +123,45 @@ function movementFor(w) {
   if(!movementCache.has(id)) movementCache.set(id,banzukeMovement(id,currentBanzukeData(),previousBanzukeData()));
   return movementCache.get(id);
 }
+function compactRank(rank) {
+  const match=/^(Yokozuna|Ozeki|Sekiwake|Komusubi|Maegashira|Juryo|Makushita)\\s*(\\d+)?\\s*(East|West)?/i.exec(String(rank||''));
+  if(!match)return String(rank||'—');
+  const short={yokozuna:'Y',ozeki:'O',sekiwake:'S',komusubi:'K',maegashira:'M',juryo:'J',makushita:'Ms'}[match[1].toLowerCase()];
+  return short+(match[2]||'')+(match[3]?match[3][0].toUpperCase():'');
+}
+function rankDirection(previous,current){
+  const order={yokozuna:7,ozeki:6,sekiwake:5,komusubi:4,maegashira:3,juryo:2,makushita:1};
+  const parse=rank=>{const m=/^(Yokozuna|Ozeki|Sekiwake|Komusubi|Maegashira|Juryo|Makushita)\\s*(\\d+)?/i.exec(String(rank||''));return m?{tier:order[m[1].toLowerCase()],num:Number(m[2]||1)}:null;};
+  const a=parse(previous),b=parse(current);
+  if(!a||!b)return 'unavailable';
+  if(a.tier!==b.tier)return b.tier>a.tier?'up':'down';
+  // Within sanyaku, a change in slot number or East/West is not a promotion/demotion.
+  if(a.tier>=4)return 'same';
+  return b.num<a.num?'up':b.num>a.num?'down':'same';
+}
+function priorBashoRecord(w){
+  const id=Number(w?.sourceId);
+  for(const div of DIVS){
+    const b=previousBanzukeData()[div];
+    if(!b)continue;
+    const row=[...(b.east||[]),...(b.west||[])].find(x=>Number(x.rikishiID)===id);
+    if(row){const summary=row.summary||recordSummary(row.record,div);
+      if(Number.isFinite(Number(summary?.win))&&Number.isFinite(Number(summary?.loss)))
+        return summary.win+' W · '+summary.loss+' L';
+    }
+  }
+  return null;
+}
 function movementMarkup(w) {
   const m=movementFor(w);
-  // Banzuke slots are not interchangeable with numbered rank promotions.
-  // Until an independently checked rank-delta algorithm is available, show
-  // the source's previous/current rank rather than a misleading place count.
-  if(!m.previousRank || !m.currentRank)
-    return '<span class="sumo-move unavailable">Previous rank unavailable</span>';
-  if(m.previousRank===m.currentRank)
-    return '<span class="sumo-move same">↔ Same rank</span>';
-  return '<span class="sumo-move same" title="Previous banzuke to current banzuke">'+
-    e(m.previousRank)+' → '+e(m.currentRank)+'</span>';
+  if(!m.previousRank||!m.currentRank)return '<span class="sumo-move unavailable">Previous rank unavailable</span>';
+  const direction=rankDirection(m.previousRank,m.currentRank);
+  const symbol=direction==='up'?'↑':direction==='down'?'↓':'↔';
+  const label=direction==='up'?'Promoted':direction==='down'?'Demoted':direction==='same'?'Same tier':'Rank change unavailable';
+  const cls=direction==='up'?'up':direction==='down'?'down':'same';
+  const record=priorBashoRecord(w);
+  return '<span class="sumo-move '+cls+'" title="'+e(m.previousRank+' to '+m.currentRank)+'">'+symbol+' '+e(compactRank(m.previousRank))+' → '+e(compactRank(m.currentRank))+'</span>'+
+    '<span class="sumo-move-meta">'+e(label)+(record?' · Previous basho: '+e(record):' · Previous basho record unavailable')+'</span>';
 }
 
 function headToHeadFor(a,b) {
@@ -263,7 +291,7 @@ function standingsTable(rows, limit=10) {
       (w?movementMarkup(w):'<span class="sumo-move unavailable">—</span>')+'</span></a>';
   }).join('');
   return '<div class="sumo-standings-list" role="list" aria-label="Tournament standings, ranks and movement">'+cards+'</div>'+
-    '<p class="sumo-standings-legend">Previous → current banzuke ranks, compared with '+e(bashoLabel(details().previousBashoId))+
+    '<p class="sumo-standings-legend">Abbreviations: Y Yokozuna · O Ozeki · S Sekiwake · K Komusubi · M Maegashira. Previous → current ranks compared with '+e(bashoLabel(details().previousBashoId))+
     '. These are published rank labels, not tournament win totals or calculated place counts.</p>';
 }
 function featureCard(w) {
