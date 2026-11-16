@@ -83,6 +83,7 @@ function galleryContents(){
   '<p class="sumo-km-empty">No matching kimarite. Try a different spelling or category.</p>';
  document.getElementById('sumo-km-count').textContent=shown+' of 82 techniques';
  document.querySelectorAll('[data-km-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.kmFilter===filter)));
+ observeKimariteVideos();
 }
 function gallery(){
  return '<div class="sumo-km-gallery">'+
@@ -129,18 +130,25 @@ export function renderKimariteGallery(){
  const item=lookupKimarite(value);
  return item?detail(item):gallery();
 }
-export function hydrateKimariteGallery(){
- if(document.getElementById('sumo-km-results'))galleryContents();
+let kimariteVideoObserver=null;
+function observeKimariteVideos(){
+ kimariteVideoObserver?.disconnect();
+ kimariteVideoObserver=null;
+ if(!('IntersectionObserver' in window))return;
  const videos=[...document.querySelectorAll('.sumo-km-video')];
  if(!videos.length)return;
- if(!('IntersectionObserver' in window))return;
- const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{
-   if(entry.isIntersecting&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-     entry.target.play().catch(()=>{});
-   }else entry.target.pause();
+ kimariteVideoObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{
+  if(entry.isIntersecting&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    entry.target.play().catch(()=>{});
+  }else entry.target.pause();
  });},{rootMargin:'150px'});
- videos.forEach(video=>observer.observe(video));
+ videos.forEach(video=>kimariteVideoObserver.observe(video));
 }
+export function hydrateKimariteGallery(){
+ if(document.getElementById('sumo-km-results'))galleryContents();
+ else observeKimariteVideos();
+}
+
 // Delegated listeners register once; the parent Sumo router owns hash navigation.
 if(typeof document!=='undefined')document.addEventListener('input',event=>{
  if(event.target?.id==='sumo-km-search'){
