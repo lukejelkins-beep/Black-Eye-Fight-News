@@ -45,6 +45,20 @@ export function dailyStats({
     ['Makushita win %',dailyWinPercentage(makushitaWins,makushitaLosses)||'Not available']
   ];
 }
+/** Select each wrestler's highest division with a genuinely recorded W–L pair.
+ * A historic peak rank on its own is not evidence of an available division record.
+ * Zero-zero and missing/incomplete stats must not be presented as a real record. */
+export function highestRecordedDivision(stats){
+  const wins=stats?.winsByDivision||{},losses=stats?.lossByDivision||{};
+  for(const division of ['Makuuchi','Juryo','Makushita','Sandanme','Jonidan','Jonokuchi']){
+    const w=wins[division],l=losses[division];
+    if(knownNonnegativeInt(w)&&knownNonnegativeInt(l)&&w+l>0){
+      return {division,wins:w,losses:l,record:w+'–'+l,
+        percentage:dailyWinPercentage(w,l)};
+    }
+  }
+  return null;
+}
 export function dailyRecentMeetings(history,a,b,limit=5) {
   if(!Array.isArray(history?.rows))return [];
   const first=Number(a),second=Number(b);
