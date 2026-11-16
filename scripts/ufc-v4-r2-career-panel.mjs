@@ -4,7 +4,7 @@
 import {canShowVerifiedCareer} from './ufc-v4-r2-career-gate.mjs';
 const escapeHtml=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const validDate=x=>{
-  if(typeof x!=='string'||!/^\\d{4}-\\d{2}-\\d{2}$/.test(x))return false;
+  if(typeof x!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(x))return false;
   const [year,month,day]=x.split('-').map(Number);
   const parsed=new Date(Date.UTC(year,month-1,day));
   return parsed.getUTCFullYear()===year&&parsed.getUTCMonth()+1===month&&
