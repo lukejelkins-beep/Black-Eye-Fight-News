@@ -43,21 +43,22 @@ test('All six source-reviewed outcomes match each native ID, corner, date and me
  }
 });
 
-test('Every held fighter has a newly saved bout missing from the earlier independent full-career proof',()=>{
+test('Every UFC334 held review now has either strict source-linked new bout evidence or retains the earlier hold',()=>{
  for(const slug of expectedSlugs){
   const eventBout=review.newBouts.find(b=>b.a.slug===slug||b.b.slug===slug);
   assert.ok(eventBout,slug+' is not affected');
   const prior=independent.fighters[slug];
   assert.ok(prior,'prior independent career proof missing: '+slug);
+  const refreshed=prior.bouts.filter(x=>String(x.nativeBoutId)===eventBout.nativeBoutId);
+  assert.equal(refreshed.length,1,'new source attached to exactly one official fight: '+slug);
+  assert.equal(refreshed[0].date,'2026-11-14');
+  assert.match(refreshed[0].fightUrl,/^https:\/\/ufcstats\.com\/fight-details\/[a-f0-9]{16}$/);
+  assert.equal(prior.sourceSnapshot.sourceCommit,'96adace863c0a793579cc06d27d468797545607f',slug);
   if(slug==='heili-alateng'){
-   assert.ok(!(prior.bouts||[]).some(x=>String(x.nativeBoutId)===eventBout.nativeBoutId),
-    'Heili historical/identity exception must remain held');
-  }else{
-   const refreshed=prior.bouts.filter(x=>String(x.nativeBoutId)===eventBout.nativeBoutId);
-   assert.equal(refreshed.length,1,'new source attached to exactly one official fight: '+slug);
-   assert.equal(refreshed[0].date,'2026-11-14');
-   assert.match(refreshed[0].fightUrl,/^https:\/\/ufcstats\.com\/fight-details\/[a-f0-9]{16}$/);
-   assert.equal(prior.sourceSnapshot.sourceCommit,'96adace863c0a793579cc06d27d468797545607f',slug);
+   assert.equal(prior.bouts.length,11);
+   assert.equal(refreshed[0].fightUrl,'https://ufcstats.com/fight-details/93d70d9869c66ed1');
+   assert.deepEqual(prior.sourceVerifiedNativeNameAliases,['Heili Alateng']);
+   assert.equal(prior.disambiguation.verifiedUfcStatsFighterId,'1897b7b913736a7c');
   }
   const profile=research.profiles[slug];
   assert.ok(profile,'saved profile missing: '+slug);
