@@ -1,0 +1,19 @@
+name: Sumo headshot and rank regression (test only)
+on:
+  push:
+    branches:
+      - fix/sumo-standings-headshots-rank-20261116
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check assets/sumo.js && node --check assets/sumo-data.mjs
+      - run: node --test tests/test-sumo-standings-portraits.mjs tests/test-sumo-data.mjs
+      - run: node --test tests/test-sumo-api-source.mjs
