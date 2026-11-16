@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-16T00:18:59.471Z",
-  "checkedAt": "2026-11-16T00:18:59.471Z",
-  "updatedAt": "2026-11-16T00:08:36Z",
+  "attemptedAt": "2026-11-16T01:50:36.560Z",
+  "checkedAt": "2026-11-16T01:50:36.560Z",
+  "updatedAt": "2026-11-16T01:04:43Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 4,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 4,
+      "checked": 6,
       "failed": 0,
-      "configured": 4,
-      "message": "4 of 4 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 27,
+      "configured": 34,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 40,
+      "configured": 36,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 2,
+      "configured": 1,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,22 +55,46 @@
   "rollingScan": {
     "directoryEntries": 448,
     "scheduledEntries": 84,
-    "batchIndex": 3,
+    "batchIndex": 4,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Threads": 11,
-      "X": 27,
-      "Instagram": 40,
-      "Bluesky": 4,
-      "Reddit": 2
+      "X": 34,
+      "Instagram": 36,
+      "Bluesky": 6,
+      "Threads": 7,
+      "Reddit": 1
     },
-    "directlyChecked": 4,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2fdik5lhv2k",
+      "cid": "bafyreigmvjsdubzjcc5efqk4qo2d76tss5d7huwvjkwgwr2qudvhbt6kve",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Adrien Broner says he's done with boxing after earning over $30 million during his career. 🥊\n\nThe former four-division world champion insists he has nothing left to prove after making millions in the sport.\n\nBroner appears ready to walk away from the ring for good.",
+      "postedAt": "2026-11-16T01:04:43Z",
+      "date": "16 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2fdik5lhv2k",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 1,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2fae6lg4d2f",
       "cid": "bafyreibslndw32xfe7vkth3fwgo34nnnpqcrf6vaa5suw2u3sntwi6zh3i",
@@ -93,6 +117,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-16T00:18:59.471Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2f7xn47fo2z",
+      "cid": "bafyreieqaab3377cepgmp5crflnrd6zxbytii2zeg57webp3dmqfy466tq",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Yair Rodriguez vs. Steve Garcia set for UFC Dallas main event www.mmafighting.com/ufc/521613/y...",
+      "postedAt": "2026-11-16T00:01:33.684694Z",
+      "date": "16 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2f7xn47fo2z",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -120,6 +168,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2ezoso6y32b",
+      "cid": "bafyreib4s26b4uo46pzqkg6ww5ouq7ywwvoqhcx6zn4tzrkuymkl2jarda",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "At age 62, former IBO world champion Jeff Mayweather is returning to the ring for a celebrity boxing exhibition in Lagos on December 23.  🇳🇬\n\nIt's been 31 years since Jeff last fought. 😳",
+      "postedAt": "2026-11-15T22:09:16Z",
+      "date": "16 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2ezoso6y32b",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2ezcz46oh2a",
       "cid": "bafyreicwnown2zw46atzzsci3rcvx63g2jc3ihjnx6yaopad4rixeyeqju",
       "platform": "Bluesky",
@@ -141,6 +213,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-16T00:18:59.471Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2ezb7vsgc2q",
+      "cid": "bafyreif2tqspntoc254bqn57rh5sgie2qpzfidzsxjtbkpc634lkvgf5ym",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "UFC 336: Gable Steveson books matchup on Joshua Van vs. Manel Kape fight card www.mmafighting.com/ufc/521095/u...",
+      "postedAt": "2026-11-15T22:01:39.179994Z",
+      "date": "16 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2ezb7vsgc2q",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -168,6 +264,54 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2evilu24z22",
+      "cid": "bafyreih45jnvv6fmpfehy2zkj23cktlnbqf3xdbhondgl2mjpvgr6ncte4",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Convicted Con Man, 71, Eyes Oldest Boxer World Record #boxing #boxingnews",
+      "postedAt": "2026-11-15T20:54:13Z",
+      "date": "16 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2evilu24z22",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2esl2vrbn2b",
+      "cid": "bafyreicmaqiu32qvnjrjd4r3qqylajuafucthu5tosomlzznja32ewqm54",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "‘Call the cops’: Alex Pereira reacts to ‘robbery’ in Ciryl Gane vs. Josh Hokit www.mmafighting.com/ufc/521627/c...",
+      "postedAt": "2026-11-15T20:01:53.413698Z",
+      "date": "16 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2esl2vrbn2b",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2esjfthad2x",
       "cid": "bafyreif7mtzoylqa5bi65p7be6mifpvbpua7bzf67ec2r5jsrvtxtdq3bm",
       "platform": "Bluesky",
@@ -189,6 +333,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-16T00:18:59.471Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2escv74id2s",
+      "cid": "bafyreid3klj7pczt5wg3hmtdouckxjrphekig7hwq6nkm5qecrnl7oib2u",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "From Miss Deutschland to a winning professional debut! 🥊🇩🇪\n\nTatjana Genrich, 33, defeated Hungary's Andrea Hajnal by unanimous decision over four rounds in Magdeburg on Saturday night.\n\nThe former beauty queen returned to boxing after 15 years away, beginning her professional career with a win.",
+      "postedAt": "2026-11-15T19:57:20Z",
+      "date": "16 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2escv74id2s",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 2,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -281,10 +449,10 @@
       "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
       "engagement": {
         "likes": 1,
-        "comments": 0,
+        "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -308,7 +476,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -332,7 +500,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -380,7 +548,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -404,7 +572,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -452,7 +620,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -476,7 +644,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -500,7 +668,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -524,7 +692,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -548,55 +716,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2e6ifplla2y",
-      "cid": "bafyreigcsssvwn77evbhswim4cnmvumq3ktv3etaymtjtzbwfgq6tr3cdq",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Dana White credits Josh Hokit for the ‘perfect fight’ but he still lost to Ciryl Gane www.mmafighting.com/ufc/521595/d...",
-      "postedAt": "2026-11-15T14:02:29.069558Z",
-      "date": "16 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2e6ifplla2y",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2e33hyzxe2h",
-      "cid": "bafyreibvri426fzkm3skzkjpgf5lgb4ouvpujt4jylktubvgjw7lu3io4y",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Jon Jones celebrates Ciryl Gane winning over Josh Hokit at UFC 334: ‘Same coaches, different results’ www.mmafighting.com/ufc/521582/j...",
-      "postedAt": "2026-11-15T13:01:33.317953Z",
-      "date": "16 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2e33hyzxe2h",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -616,11 +736,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
       "engagement": {
-        "likes": 0,
+        "likes": 1,
         "comments": 0,
-        "shares": 0
+        "shares": 1
       },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -669,30 +789,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2dlgrfbs722",
-      "cid": "bafyreicqtmagzckgjgn7clnhspxtfgkpmcjgxq7cwzeunyhr4mqvqngjty",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "UFC 334 post-fight show: Reaction to Ciryl Gane’s gutsy win over Josh Hokit in wild brawl www.mmafighting.com/ufc/521601/u...",
-      "postedAt": "2026-11-15T08:21:33.220704Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2dlgrfbs722",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -788,7 +884,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -884,7 +980,7 @@
         "comments": 3,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1100,7 +1196,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1172,7 +1268,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
+      "engagementCheckedAt": "2026-11-16T01:50:36.560Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1197,30 +1293,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-16T00:18:59.471Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2ckvsgfjb2b",
-      "cid": "bafyreiadpqhcwzmvlrvc37k465ar6uefgvaghiqto57s5zbelildohz4fy",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Eddie Hearn wants to re-sign Shakur Stevenson following his departure from Zuffa Boxing. 🥊\n\nThe pair previously worked together from August 2024 to April 2025, with Stevenson stopping Josh Padley during their partnership.\n\nHearn is now pushing for a Matchroom reunion.",
-      "postedAt": "2026-11-14T22:39:25Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2ckvsgfjb2b",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1272,30 +1344,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2cgdsf7il2z",
-      "cid": "bafyreididngxgka4cugzl5nurmn3qpilfmq32venjx77ubcafu34hnerau",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Zuffa’s Matchmaking Promise Exposed by ‘Embarrassing’ Fight #boxing #boxingnews",
-      "postedAt": "2026-11-14T21:17:46Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2cgdsf7il2z",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2cgdsfo5e2d",
       "cid": "bafyreididngxgka4cugzl5nurmn3qpilfmq32venjx77ubcafu34hnerau",
       "platform": "Bluesky",
@@ -1317,54 +1365,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-15T15:00:08.813Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2cfkyaram2k",
-      "cid": "bafyreifcr5xnxsymlif6f7jphl5qiarunn2okz2fryxzqibcsy2n5qswea",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Gervonta Davis has blasted the proposed Floyd Mayweather vs. Ryan Garcia fight, calling it fake in a post on Instagram.\n\n“That Floyd and Ryan fight is fake as hell,” Tank wrote, before suggesting he could fight either man.\n\nDavis is set for a comeback in 2027. 🥊",
-      "postedAt": "2026-11-14T21:03:54Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2cfkyaram2k",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2cdes5pca26",
-      "cid": "bafyreigwtikpolut2g2qqnqxd6omd6snhyhgo2frp4nwoq3omho7aq3ws4",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Bill Haney has a message for Floyd Mayweather: “Stop doing exhibitions!” 🥊\n\nHaney called Mayweather “food” while discussing a potential fight with his son Devin, warning the boxing legend about his comeback.\n\nMayweather remains on course for a professional return in 2027. 👑",
-      "postedAt": "2026-11-14T20:24:38Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2cdes5pca26",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-15T18:22:04.321Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
