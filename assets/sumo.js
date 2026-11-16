@@ -145,7 +145,7 @@ function priorBashoRecord(w){
     if(!b)continue;
     const row=[...(b.east||[]),...(b.west||[])].find(x=>Number(x.rikishiID)===id);
     if(row){const summary=row.summary||(row.record!=null?recordSummary(row.record,div):null);
-      if(Number.isFinite(Number(summary?.win))&&Number.isFinite(Number(summary?.loss)))
+      if(summary && summary.win!=null && summary.loss!=null && Number.isFinite(Number(summary.win))&&Number.isFinite(Number(summary.loss)))
         return summary.win+' W · '+summary.loss+' L';
     }
   }
