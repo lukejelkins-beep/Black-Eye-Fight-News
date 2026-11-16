@@ -100,3 +100,13 @@
  .sumo-daily-score-label{font-size:14px}
 }
 @media(prefers-reduced-motion:reduce){.sumo-daily-history-track{scroll-behavior:auto}}
+
+/* Daily head-to-heads: immediately expose confirmed next-day pairings. */
+.sumo-daily-page>.sumo-daily-controls{margin:0 0 12px}
+.sumo-daily-date{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:5px 16px;margin:0 0 14px;border-top:0;padding-top:0}
+.sumo-daily-date strong{font:900 clamp(23px,3vw,31px)/1.15 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase}
+.sumo-daily-date span{color:var(--muted);font-weight:600}
+.sumo-latest-results{margin:20px 0 12px;border:1px solid var(--border);border-radius:7px;background:#fff;padding:0 12px 12px}
+.sumo-latest-results>summary{padding:13px 4px;cursor:pointer;font-size:15px;font-weight:800;list-style-position:inside}
+.sumo-latest-results>summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+@media(max-width:500px){.sumo-daily-page>.sumo-daily-controls{margin:0 0 10px}.sumo-daily-date{gap:3px}.sumo-daily-date span{font-size:12px}.sumo-daily-calendar{margin:8px 0}}
