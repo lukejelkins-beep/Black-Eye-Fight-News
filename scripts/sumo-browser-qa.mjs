@@ -262,9 +262,11 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   const firstCard=page.locator('.sumo-daily-card').first();
   assert.equal(await firstCard.locator('.sumo-daily-facts').count(),2,'Both wrestler stat columns are present');
   assert.equal(await firstCard.locator('.sumo-daily-photo').count(),2,'Portraits occupy both edges');
-  assert.equal(await firstCard.locator('.sumo-comparison-row').count(),6,'Shared comparison preserves all six measurement/record/percentage fields');
+  assert.equal(await firstCard.locator('.sumo-comparison-row').count(),9,'Shared comparison includes imperial height, current basho and both division records');
+  assert.equal(await firstCard.locator('.sumo-daily-facts>.sumo-flag-backdrop').count(),2,'Birthplace flags are decorative backgrounds behind both identities');
+  assert.match(await firstCard.locator('.sumo-comparison-row').first().innerText(),/\d+′\d+″/,'Sourced centimetres are displayed as feet and inches');
   const data=await firstCard.innerText();
-  for(const label of ['Career W–L','Career win %','Makuuchi W–L','Makuuchi win %','Height','Weight','Peak:']){
+  for(const label of ['Current basho W–L','Career W–L','Career win %','Makuuchi W–L','Makuuchi win %','Makushita W–L','Makushita win %','Height','Weight','Peak:']){
     assertContains(data,label,'Daily faceoff statistic');
   }
   const historyTiles=await page.locator('.sumo-daily-meeting').count();
