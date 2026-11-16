@@ -6,7 +6,7 @@ import {
   bashoLabel, divisionOf, recordSummary, rankTable, leadingRikishi,
   dailyResults, currentDay, matchResult, techniqueDistribution, searchRikishi,
   banzukeFor, validMatchSamples, trackedBanzukeCohort, currentBashoMatchSample,
-  originCountry, banzukeMovement, dayMatchups, verifiedHeadToHead, verifiedHighestRank, confirmedCareerHigh, announcedTorikumiMatches, verifiedDayMatchups, lastCompletedBashoDay, publishedCurrentWeight
+  originCountry, banzukeMovement, dayMatchups, verifiedHeadToHead, verifiedHighestRank, confirmedCareerHigh, announcedTorikumiMatches, verifiedDayMatchups, rankOrderedMatchups, lastCompletedBashoDay, publishedCurrentWeight
 } from '../assets/sumo-data.mjs';
 
 const entries = {
@@ -401,4 +401,54 @@ test('differing official JSA height remains labelled and reviewable; cannot gene
  assert.equal(listed.datedWeighIn,false);
  const wrong={bySourceId:{8860:{...doc.bySourceId[8860],officialNskId:1111}}};
  assert.equal(publishedCurrentWeight(w,wrong).heightSource,'Sumo API roster listing');
+});
+
+test('descending banzuke presentation orders head-to-heads Yokozuna first without touching source order',()=>{
+  const banzuke={
+    east:[
+      {rikishiID:1,rank:'Yokozuna 1 East',rankValue:1,side:'East'},
+      {rikishiID:3,rank:'Ozeki 1 East',rankValue:2,side:'East'},
+      {rikishiID:5,rank:'Sekiwake 1 East',rankValue:3,side:'East'},
+      {rikishiID:7,rank:'Maegashira 8 East',rankValue:108,side:'East'}
+    ],
+    west:[
+      {rikishiID:2,rank:'Yokozuna 1 West',rankValue:1,side:'West'},
+      {rikishiID:4,rank:'Ozeki 1 West',rankValue:2,side:'West'},
+      {rikishiID:6,rank:'Sekiwake 1 West',rankValue:3,side:'West'},
+      {rikishiID:8,rank:'Maegashira 8 West',rankValue:108,side:'West'}
+    ]
+  };
+  // Simulates API torikumi arriving from low ranks to high ranks.
+  const matchups=[
+    {key:'m8',rikishiId:7,opponentId:8,matchNo:1,finished:false},
+    {key:'s1',rikishiId:5,opponentId:6,matchNo:2,finished:true},
+    {key:'o1',rikishiId:3,opponentId:4,matchNo:3,finished:false},
+    {key:'y1',rikishiId:1,opponentId:2,matchNo:4,finished:true}
+  ];
+  const order=rankOrderedMatchups(banzuke,matchups);
+  assert.deepEqual(order.map(m=>m.key),['y1','o1','s1','m8']);
+  assert.deepEqual(matchups.map(m=>m.key),['m8','s1','o1','y1'],'Original source order is unchanged');
+  assert.equal(order.filter(x=>x.finished).length,2,'Both completed and scheduled results are retained');
+  assert.deepEqual(rankOrderedMatchups(banzuke,[]),[]);
+  assert.deepEqual(rankOrderedMatchups(banzuke,null),[]);
+});
+test('top five exists for each cached top-three division with sourced last bout details',()=>{
+  const roster=JSON.parse(readFileSync(new URL('../data/sumo/rikishi-index.json',import.meta.url),'utf8'));
+  const source=JSON.parse(readFileSync(new URL('../data/sumo/preview-details.json',import.meta.url),'utf8'));
+  const tracked=new Set(roster.rikishi.map(x=>x.sourceId));
+  for(const division of ['Makuuchi','Juryo','Makushita']){
+    const banzuke=source.banzuke[division]?.data;
+    assert.ok(banzuke,division+' banzuke is cached');
+    const leaders=leadingRikishi(banzuke,5);
+    assert.equal(leaders.length,5,division+' shows five leaders');
+    for(const leader of leaders){
+      assert.ok(tracked.has(Number(leader.rikishiID)),division+' leader belongs to the approved 190');
+      const latest=currentBashoMatchSample(leader,source.bashoId)[0];
+      if(latest){
+        assert.ok(['win','loss'].includes(latest.outcome));
+        assert.ok(Number.isInteger(latest.day)&&latest.day>=1&&latest.day<=15);
+        assert.ok(typeof latest.opponent==='string'&&latest.opponent.length>0);
+      }
+    }
+  }
 });
