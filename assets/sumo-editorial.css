@@ -471,3 +471,12 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-standings-row>.sumo-standings-ranking{grid-column:2;grid-row:2;align-self:start;min-width:0;align-items:flex-start;text-align:left;z-index:1}
 .sumo-standings-row>.sumo-standings-ranking .sumo-move{align-self:flex-start}
 @media(max-width:480px){.sumo-standings-row{grid-template-columns:minmax(135px,40%) minmax(0,1fr);min-height:285px;gap:8px 12px;padding:0 10px 0 0}.sumo-standings-row>.profile-icon.sumo-photo{min-height:285px;grid-column:1;grid-row:1/-1}.sumo-standings-row>.sumo-standings-identity{grid-column:2;grid-row:1}.sumo-standings-row>.sumo-standings-ranking{grid-column:2;grid-row:2;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:8px}.sumo-standings-row>.sumo-standings-identity strong{font-size:clamp(18px,5.5vw,25px)}}
+
+/* Profile editorial redesign: image first, full-bleed, all original details below. */
+.profile-hero{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0!important;padding:0!important;overflow:hidden;border-radius:12px}
+.profile-hero>.profile-icon.sumo-photo{grid-column:1/-1!important;grid-row:1!important;display:block;position:relative;align-self:stretch;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;aspect-ratio:3/4!important;margin:0!important;border:0!important;border-radius:0!important;overflow:hidden;background:#eee5d8}
+.profile-hero>.profile-icon.sumo-photo img{display:block;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center top!important;transform:none!important}
+.profile-hero>.profile-title{grid-column:1/-1!important;grid-row:2!important;padding:22px 24px 8px;min-width:0}
+.profile-hero>.profile-facts{grid-column:1/-1!important;grid-row:3!important;padding:12px 24px 20px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.profile-hero>.profile-current{grid-column:1/-1!important;grid-row:4!important;margin:0 24px 24px}
+@media(max-width:599px){.profile-hero>.profile-icon.sumo-photo{aspect-ratio:3/4!important}.profile-hero>.profile-title{padding:18px 18px 6px}.profile-hero>.profile-facts{padding:12px 18px 18px;gap:12px}.profile-hero>.profile-current{margin:0 18px 18px}}
