@@ -507,7 +507,8 @@ function detailStats(w) {
   const fromApi=enriched?.stats?.status==='available'?enriched.stats.data:null;
   const cache=STATE.divisionStats?.bySourceId?.[String(w.sourceId)];
   const trustedCache=cache?.sourceId===Number(w.sourceId)&&cache?.shikonaEn===w.shikonaEn&&cache?.status==='available';
-  const stats=trustedCache?cache.stats:fromApi;
+  // Merge source-listed division W/L without hiding unrelated API championship credentials.
+  const stats=trustedCache?{...fromApi,...cache.stats}:fromApi;
   const research=STATE.h2hSummary?.profiles?.[String(w.sourceId)];
   return research?{...stats,totalWins:research.careerWins,totalLosses:research.careerLosses,
     totalMatches:research.careerWins+research.careerLosses,researchCareerSource:true}:stats;
