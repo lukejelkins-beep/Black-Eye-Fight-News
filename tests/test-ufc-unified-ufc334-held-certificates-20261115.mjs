@@ -49,8 +49,16 @@ test('Every held fighter has a newly saved bout missing from the earlier indepen
   assert.ok(eventBout,slug+' is not affected');
   const prior=independent.fighters[slug];
   assert.ok(prior,'prior independent career proof missing: '+slug);
-  assert.ok(!(prior.bouts||[]).some(x=>String(x.nativeBoutId)===eventBout.nativeBoutId),
-   'unexpectedly source-pinned new fight: '+slug);
+  if(slug==='heili-alateng'){
+   assert.ok(!(prior.bouts||[]).some(x=>String(x.nativeBoutId)===eventBout.nativeBoutId),
+    'Heili historical/identity exception must remain held');
+  }else{
+   const refreshed=prior.bouts.filter(x=>String(x.nativeBoutId)===eventBout.nativeBoutId);
+   assert.equal(refreshed.length,1,'new source attached to exactly one official fight: '+slug);
+   assert.equal(refreshed[0].date,'2026-11-14');
+   assert.match(refreshed[0].fightUrl,/^https:\/\/ufcstats\.com\/fight-details\/[a-f0-9]{16}$/);
+   assert.equal(prior.sourceSnapshot.sourceCommit,'96adace863c0a793579cc06d27d468797545607f',slug);
+  }
   const profile=research.profiles[slug];
   assert.ok(profile,'saved profile missing: '+slug);
   const matches=(profile.recentHistory||[]).filter(x=>String(x.boutId)===eventBout.nativeBoutId&&x.promotion==='ufc');
