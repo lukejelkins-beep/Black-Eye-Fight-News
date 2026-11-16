@@ -8,7 +8,7 @@ import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 
-const BASE = 'http://127.0.0.1:8765/sumo.html';
+const BASE = process.env.SUMO_QA_BASE || 'http://127.0.0.1:8765/sumo.html';
 const OUT = 'qa/sumo-previews';
 const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'],
   ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
@@ -46,13 +46,13 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
    assert.equal(new Set(roster.rikishi.map(w=>w.sourceId)).size,roster.count,'Stable IDs are unique');
   assert.equal(research.profileCount,roster.count,'Full tracked roster has corresponding research records');
   assert.equal(research.certified,false,'Research cache must not imply JSA certification');
-  await open(page,'home','.hero');
+  await open(page,'home','.sumo-overview-lede');
   const home=await page.locator('#sumo-main').innerText();
-  assertContains(home,'THE SUMO','homepage');
-  assertContains(home,String(roster.count),'tracked total');
-  assertContains(home,'42','Makuuchi count');
-  assertContains(home,'28','Juryo count');
-  assertContains(home,'120','Makushita count');
+  assertContains(home,'Sumo','Sumo home context');
+  assertContains(home,'results','latest results priority');
+  assertContains(home,'five leaders','home leaders');
+  assert.ok(await page.locator('.sumo-home-grid').count()===1,'Results and leaders appear in first dashboard');
+  assert.equal(await page.locator('.sumo-home-leaders .sumo-standings-row').count(),5,'Homepage shows exactly five leaders');
   await snap(page,label+'-home',{fullPage:false});
 
   await open(page,'rikishi','#directory-results .directory-card');
@@ -60,6 +60,12 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.locator('#sumo-search').fill('Onosato');
   assert.equal(await page.locator('#directory-results .directory-card').count(),1);
   assertContains(await page.locator('#directory-results').innerText(),'Onosato','search match');
+  await page.locator('[data-directory-division="Juryo"]').click();
+  await page.locator('#sumo-search').fill('Onosato');
+  assert.equal(await page.locator('.sumo-empty-search').count(),1,'Conflicting division search has a scoped empty state');
+  assertContains(await page.locator('.sumo-empty-search').innerText(),'Juryo','Search names selected division');
+  await page.locator('[data-directory-reset]').click();
+  assert.equal(await page.locator('#directory-results .directory-card').count(),1,'Search all keeps Onosato query and reveals match');
   await page.locator('#sumo-search').fill('');
   await page.locator('[data-directory-division="Makushita"]').click();
   assert.equal(await page.locator('#directory-results .directory-card').count(),24);
@@ -73,8 +79,8 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assertContains(profile,'Winning techniques','techniques');
   assertContains(profile,'Results','canonical results');
   assertContains(profile,'Career','career section');
-  assertContains(profile,'Charts','accessible chart section');
-  assertContains(profile,'LATEST','last-five compact strip');
+  assertContains(profile,'Analysis','accessible charts in Analysis');
+  assertContains(profile,'Recent form','last-five results show named recent form');
   assertContains(profile,'API-TRUSTED','development-data method is displayed');
   assertContains(profile,'Career results: independently corroborated','career evidence is labelled separately');
   assertContains(profile,'Opponents and head-to-head','opponent catalogue');
@@ -83,13 +89,12 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assertContains(profile,'JSA-listed signature manoeuvres','official source signature tags');
   assertContains(profile,'tsuki','JSA-listed source manoeuvres preserved');
   assert.ok(await page.locator('.sumo-ed-row').count()>0,'Canonical current tournament rows rendered');
-  assert.equal(await page.locator('.sumo-section-nav a').count(),6,'Six non-hiding profile sections');
+  assert.equal(await page.locator('.sumo-section-nav a').count(),6,'Four primary destinations and two additional accessible sections');
   assert.equal(await page.locator('.sumo-rank-svg').count(),1,'Rank chart on initial page');
   assert.ok(await page.locator('.sumo-weight-svg').count()===1,'Weight chart on initial page');
   const order=await page.evaluate(()=>document.querySelector('#sumo-charts').compareDocumentPosition(document.querySelector('#sumo-opponents')) & Node.DOCUMENT_POSITION_FOLLOWING);
   assert.ok(order,'Charts are before opponents');
-  if(isMobile)await page.locator('#sumo-profile-section').selectOption('charts');
-  else await page.locator('[data-profile-section="charts"]').click();
+  await page.locator('.sumo-section-nav [data-profile-section="charts"]').click();
   assert.ok((await page.url()).includes('section=charts'),'Section jump preserves canonical profile route');
   await page.locator('#sumo-opponent-search').fill('Ura');
   assert.ok(await page.locator('.sumo-rival').count()>0,'Search finds named opponent');
@@ -141,13 +146,11 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   },roster.rikishi.map(w=>w.sourceId));
   assert.equal(await page.locator('.sumo-rank-card').count(),matchedMakuuchi,
     'Every source banzuke entry with an identity in the approved roster renders a card');
-  assert.ok((await page.locator('.sumo-rank-card .sumo-flag-backdrop').count())>0,'Banzuke cards retain source-backed flag decorations');
-  assert.equal(await page.locator('.sumo-rank-card .sumo-rank-change').count(),matchedMakuuchi,
+  assert.ok((await page.locator('.sumo-rank-person .sumo-photo').count())>0,'Banzuke retains approved photo framework');
+  assert.equal(await page.locator('.sumo-rank-card .sumo-rank-movement').count(),matchedMakuuchi,
     'Every wrestler has a rank-change area, even when their prior banzuke rank is unavailable');
   const rankMovementCount=await page.locator('.sumo-rank-card .sumo-move').count();
-  const yokozunaCount=await page.locator('.sumo-rank-card .sumo-yokozuna-label').count();
-  assert.ok(rankMovementCount+yokozunaCount<=matchedMakuuchi,
-    'No duplicate rank movement markers should be present');
+  assert.equal(rankMovementCount,matchedMakuuchi,'Exactly one banzuke movement label per wrestler');
   await page.locator('[data-banzuke-division="Juryo"]').click();
   assert.equal(await page.locator('.sumo-rank-card').count(),28);
   await page.locator('[data-banzuke-division="Makushita"]').click();
@@ -161,20 +164,24 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   });
   assert.ok(Number.isInteger(announcedDay)&&announcedDay>=1&&announcedDay<=15,'Published preview has a source-scheduled day');
   await page.locator('[data-day="'+announcedDay+'"]').click();
-  const confirmed=await page.locator('.sumo-match-card .sumo-match-status.scheduled').count();
-  assert.ok(confirmed>0,'Verified torikumi pending matchups must appear');
-  assertContains(await page.locator('#sumo-main').innerText(),'torikumi announcement','scheduled source provenance');
+  await page.locator('[data-basho-view="matchups"]').click();
+  const confirmed=await page.locator('.sumo-daily-card .sumo-daily-status:not(.completed)').count();
+  assert.ok(confirmed>0,'Confirmed scheduled matchups must appear without invented outcomes');
+  assertContains(await page.locator('#sumo-main').innerText(),'snapshot, not live','scheduled source provenance');
   await snap(page,label+'-scheduled',{fullPage:false});
   await page.locator('[data-day="15"]').click();
-  assert.equal(await page.locator('.sumo-match-card .sumo-match-status.scheduled').count(),0,'Day 15 cannot be guessed from future banzuke slots');
+  assert.equal(await page.locator('.sumo-daily-card .sumo-daily-status:not(.completed)').count(),0,'Day 15 cannot be guessed from future banzuke slots');
   await page.locator('[data-basho-division="Makushita"]').click();
   const basho=await page.locator('#sumo-main').innerText();
   assertContains(basho,'seven times across 15 tournament days','lower division caveat');
   assert.equal(await page.locator('[data-day]').count(),15,'All calendar days are selectable');
   await page.locator('[data-day="7"]').click();
-  assert.ok(await page.locator('.sumo-match-card').count()>0,'Makushita matchups use designed cards');
-  assert.ok(await page.locator('.sumo-match-card .sumo-match-person').count()>=2);
-  assert.ok((await page.locator('.sumo-standings-row').count())>=20,'Basho standings preserve all entries in responsive rows');
+  assert.ok(await page.locator('.sumo-daily-card').count()>0,'Makushita matchups use designed face-off cards');
+  assert.ok(await page.locator('.sumo-daily-card .sumo-daily-photo').count()>=2);
+  await page.locator('[data-basho-view="standings"]').click();
+  assert.ok((await page.locator('.sumo-standings-row').count())>=20,'Basho standings stay accessible in compact rows');
+  await page.locator('[data-basho-view="results"]').click();
+  assert.ok((await page.locator('.sumo-compact-bout').count())>0,'Compact result rows show actual winners');
   await snap(page,label+'-basho',{fullPage:false});
 
   // Dedicated daily face-offs use sourced pairings, two complete stat columns,
@@ -185,9 +192,9 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   const firstCard=page.locator('.sumo-daily-card').first();
   assert.equal(await firstCard.locator('.sumo-daily-facts').count(),2,'Both wrestler stat columns are present');
   assert.equal(await firstCard.locator('.sumo-daily-photo').count(),2,'Portraits occupy both edges');
-  assert.equal(await firstCard.locator('.sumo-daily-facts dl>div').count(),20,'Each wrestler has ten stats');
+  assert.equal(await firstCard.locator('.sumo-comparison-row').count(),6,'Shared comparison preserves all six measurement/record/percentage fields');
   const data=await firstCard.innerText();
-  for(const label of ['Career wins','Career losses','Career win %','Makuuchi wins','Makuuchi losses','Makuuchi win %','Height','Weight','Highest rank']){
+  for(const label of ['Career W–L','Career win %','Makuuchi W–L','Makuuchi win %','Height','Weight','Peak:']){
     assertContains(data,label,'Daily faceoff statistic');
   }
   const historyTiles=await page.locator('.sumo-daily-meeting').count();
@@ -274,10 +281,10 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   // Exercise the redesigned controls, including native keyboard disclosures.
   await open(page,'profile/28','.profile-hero');
   if(isMobile){
-    await page.locator('.mobile-site-menu summary').press('Enter');
-    assert.equal(await page.locator('.mobile-site-menu').getAttribute('open'),'');
-    assert.equal(await page.locator('.mobile-site-menu nav a').count(),7);
-    await page.locator('.mobile-site-menu summary').press('Enter');
+    await page.locator('.befn-site-menu summary').press('Enter');
+    assert.equal(await page.locator('.befn-site-menu').getAttribute('open'),'');
+    assert.equal(await page.locator('.befn-site-menu nav a').count(),7,'Other sports and site pages remain accessible');
+    await page.locator('.befn-site-menu summary').press('Enter');
   }
   const currentRows=await page.locator('.sumo-ed-row').count();
   await page.locator('[data-results-mode="tournaments"]').click();
@@ -331,6 +338,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
       await chart.evaluate(el=>{el.scrollLeft=0;});
     }
   }
+  await page.locator('[data-rank-range="career"]').click();
   const careerPoints=await page.locator('.sumo-rank-svg .sumo-rank-point').count();
   await page.locator('[data-rank-range="2y"]').click();
   assert.ok(await page.locator('.sumo-rank-svg .sumo-rank-point').count()<careerPoints);
@@ -360,7 +368,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.waitForSelector('.sumo-api-quality[data-sumo-source-id="28"]');
   assert.equal(await page.locator('#sumo-period').inputValue(),'current');
 
-  for(const route of ['kimarite','banzuke','matchups','basho','rikishi','home']){
+  for(const route of ['kimarite','banzuke','basho','rikishi','home']){
     await page.locator('.subnav [data-page="'+route+'"]').press('Enter');
     await page.waitForURL('**#'+route);
     await page.waitForSelector('.subnav [data-page="'+route+'"][aria-current="page"]');
@@ -383,12 +391,13 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
 await mkdir(OUT,{recursive:true});
 try {
   await testSite({width:1440,height:900},false,'desktop',true);
-  await testSite({width:768,height:900},false,'tablet',false);
+  await testSite({width:1280,height:900},false,'laptop1280',false);
+  await testSite({width:768,height:1024},false,'tablet',false);
   await testSite({width:390,height:844},true,'mobile',true);
   await testSite({width:320,height:740},true,'reflow320',false);
   if(failures.length)throw new Error(failures.join('\n'));
-  await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'pass',browser:browser.version(),viewportResults,screenshotCount,views:['home','rikishi','profiles','banzuke','basho','matchups','kimarite','headtohead'],viewportWidths:[1440,768,390,320],realTouchTest:false},null,2));
-  console.log('Sumo editorial browser QA passed: 1440/768/390/320, five key wrestlers, H2H chronology, charts and no JS exceptions. Real-device touch remains separate.');
+  await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'pass',browser:browser.version(),viewportResults,screenshotCount,views:['home','rikishi','profiles','banzuke','basho','matchups','kimarite','headtohead'],viewportWidths:[1440,1280,768,390,320],realTouchTest:false},null,2));
+  console.log('Sumo editorial browser QA passed: 1440/1280/768/390/320, five key wrestlers, H2H chronology, charts and no JS exceptions. Real-device touch remains separate.');
 } catch(error) {
   await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'fail',browser:browser.version(),viewportResults,screenshotCount,error:String(error.stack||error),failures},null,2));
   throw error;
