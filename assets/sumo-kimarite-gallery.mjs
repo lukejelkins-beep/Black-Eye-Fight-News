@@ -26,9 +26,12 @@ export function setKimariteMediaManifest(data){
  for(const [slug,row] of Object.entries(data.clips)){
   if(!/^[a-z]+$/.test(slug)||!row||typeof row!=='object')continue;
   if(!/^assets\/sumo-kimarite\/[a-z]+\.webm$/.test(row.webm||''))continue;
-  if(!/^assets\/sumo-kimarite\/[a-z]+\.jpg$/.test(row.poster||''))continue;
+  // Only the official JSA catalogue still is used as a public video poster.
+  const technique=KIMARITE.find(x=>x.slug===slug);
+  if(!technique)continue;
+  if(row.poster && row.poster!==technique.jsaPoster)continue;
   if(row.rights!=='NHK permission confirmed by BEFN owner'||row.credit!=='NHK WORLD-JAPAN')continue;
-  valid[slug]={webm:row.webm,poster:row.poster,rights:row.rights,credit:row.credit};
+  valid[slug]={webm:row.webm,poster:technique.jsaPoster,rights:row.rights,credit:row.credit};
  }
  APPROVED_WEBM=Object.freeze(valid);return true;
 }
