@@ -72,6 +72,11 @@ export function matchesRevisedOfficialCareer(profile,history,evidence,asOf,cutof
        sameAthleteName(alias,row.opponent)))&&
      (!item.event||!row.event||tokens(item.event)===tokens(row.event)));
    if(index<0)return false;
+   const matched=saved[index];
+   // An attested official chronology cannot silently certify feeder,
+   // cancelled or non-UFC provider rows as UFC contests.
+   if(!isUfc(matched)||isFeederTitle(matched.event)||isFeederTitle(item.event)||
+      /cancelled|canceled|scheduled|upcoming/i.test(String(matched.status||'')))return false;
    used.add(index);
  }
  return used.size===saved.length;
