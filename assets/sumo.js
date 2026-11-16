@@ -128,7 +128,7 @@ function movementMarkup(w) {
   const clazz=['up','down','same','new'].includes(m.status)?m.status:'unavailable';
   const symbol=m.status==='up'?'↑':m.status==='down'?'↓':m.status==='same'?'↔':m.status==='new'?'✦':'—';
   const detail=m.previousRank?(' · previous: '+m.previousRank):'';
-  return '<span class="sumo-move '+clazz+'" title="'+e(m.label+detail)+'"><span aria-hidden="true">'+symbol+'</span> '+e(m.status==='up'||m.status==='down'?m.places+' places':m.status==='new'?'NEW':m.status==='same'?'0':'—')+'</span>';
+  return '<span class="sumo-move '+clazz+'" title="'+e(m.label+detail)+'"><span aria-hidden="true">'+symbol+'</span> '+e(m.status==='up'||m.status==='down'?m.places+' places':m.status==='new'?'NEW':m.status==='same'?'Same rank':'—')+'</span>';
 }
 function headToHeadFor(a,b) {
   return researchedHeadToHead(STATE.h2hSummary,STATE.h2hFull,a,b)||h2hHistory(details(),a,b);
@@ -252,7 +252,7 @@ function standingsTable(rows, limit=10) {
     const summary=x.summary||recordSummary(x.record,divisionOf(rank));
     const tally=recordLabels(summary);
     return '<a class="sumo-standings-row" role="listitem" href="#profile/'+id+'">'+flagBackdrop(w)+
-      '<span class="sumo-standings-identity"><strong>'+e(title)+'</strong><small>'+tally+'</small></span>'+
+      (w?portraitFor(w,'sm'):'')+'<span class="sumo-standings-identity"><strong>'+e(title)+'</strong><small>'+tally+'</small></span>'+
       '<span class="sumo-standings-ranking"><strong>'+e(rank)+'</strong>'+
       (w?movementMarkup(w):'<span class="sumo-move unavailable">—</span>')+'</span></a>';
   }).join('');

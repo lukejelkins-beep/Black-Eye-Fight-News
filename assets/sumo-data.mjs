@@ -386,6 +386,15 @@ export function banzukeMovement(rikishiId, currentBanzuke, priorBanzuke) {
   const curr=current.get(Number(rikishiId)), old=prior.get(Number(rikishiId));
   if(!curr) return {status:'unavailable',label:'Current rank unavailable',places:null};
   if(!old) return {status:'new',label:'New to tracked top three',places:null, currentRank:curr.rank};
+  // A change in ordering within the same elite rank is not a rank demotion.
+  // In particular, Ozeki 1/2 East/West must not show a red "down places" badge.
+  const eliteTier=rank=>/^(Yokozuna|Ozeki|Sekiwake|Komusubi)\b/i.exec(String(rank||''))?.[1]?.toLowerCase();
+  const currTier=eliteTier(curr.rank), oldTier=eliteTier(old.rank);
+  if(currTier && currTier===oldTier) return {
+    status:'same',places:0,label:'Same '+currTier+' rank (previous: '+old.rank+')',
+    currentRank:curr.rank,previousRank:old.rank,previousDivision:old.division,
+    division:curr.division,divisionChanged:false
+  };
   const places=old.position-curr.position;
   return {
     status:places>0?'up':places<0?'down':'same',
