@@ -9,9 +9,17 @@ export function dailyWinPercentage(wins,losses) {
   if(!knownNonnegativeInt(wins)||!knownNonnegativeInt(losses)||wins+losses===0)return null;
   return (100*wins/(wins+losses)).toFixed(1)+'%';
 }
+/** Present the source centimetre measurement as the nearest whole inch. */
+export function heightFeetInches(heightCm) {
+  if(typeof heightCm!=='number'||!Number.isFinite(heightCm)||heightCm<=0)return 'Not available';
+  const inches=Math.round(heightCm/2.54);
+  return Math.floor(inches/12)+'′'+inches%12+'″';
+}
 export function dailyStats({
   highestRank=null,currentRank=null,heightCm=null,weightKg=null,
-  careerWins=null,careerLosses=null,makuuchiWins=null,makuuchiLosses=null
+  currentBashoWins=null,currentBashoLosses=null,
+  careerWins=null,careerLosses=null,makuuchiWins=null,makuuchiLosses=null,
+  makushitaWins=null,makushitaLosses=null
 }={}) {
   const measurement=(value,unit)=>typeof value==='number'&&Number.isFinite(value)&&value>0
     ?String(value)+unit:'Not available';
@@ -19,14 +27,20 @@ export function dailyStats({
   return [
     ['Current rank',currentRank||'Not available'],
     ['Highest rank',highestRank||'Not available'],
-    ['Height',measurement(heightCm,' cm')],
+    ['Height',heightFeetInches(heightCm)],
+    ['Height cm',measurement(heightCm,' cm')],
     ['Weight',measurement(weightKg,' kg')],
+    ['Current basho wins',tally(currentBashoWins)],
+    ['Current basho losses',tally(currentBashoLosses)],
     ['Career wins',tally(careerWins)],
     ['Career losses',tally(careerLosses)],
     ['Career win %',dailyWinPercentage(careerWins,careerLosses)||'Not available'],
     ['Makuuchi wins',tally(makuuchiWins)],
     ['Makuuchi losses',tally(makuuchiLosses)],
-    ['Makuuchi win %',dailyWinPercentage(makuuchiWins,makuuchiLosses)||'Not available']
+    ['Makuuchi win %',dailyWinPercentage(makuuchiWins,makuuchiLosses)||'Not available'],
+    ['Makushita wins',tally(makushitaWins)],
+    ['Makushita losses',tally(makushitaLosses)],
+    ['Makushita win %',dailyWinPercentage(makushitaWins,makushitaLosses)||'Not available']
   ];
 }
 export function dailyRecentMeetings(history,a,b,limit=5) {
