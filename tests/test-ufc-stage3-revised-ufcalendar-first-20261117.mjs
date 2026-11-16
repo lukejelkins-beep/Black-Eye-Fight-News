@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {matchesRevisedOfficialCareer,evaluateCareerEvidence} from '../scripts/ufc-36-month-stage3-progress.mjs';
+import {matchesRevisedOfficialCareer,evaluateCareerEvidence,sharedOfficialUfcIdentitySlugs} from '../scripts/ufc-36-month-stage3-progress.mjs';
 const profile={name:'Example Athlete',ufcTimeline:{complete:false}};
 const saved=[
  {date:'2026-02-10',opponent:'Opp A',promotion:'ufc',result:'win',source:'history'},
@@ -65,4 +65,19 @@ test('semantic attestation rejects non-UFC, cancelled and unverified feeder rows
  const attested={...official,bouts:official.bouts.map((b,i)=>i===0?
    {...b,independentlyOfficial:true,officialUfcSourceUrl:'https://www.ufc.com/news/official-finale'}:b)};
  assert.equal(verify(change(0,{event:'Road to UFC qualifiers'}),attested),true);
+});
+
+test('full-cohort official URL identity collisions block both aliases, not just the newer proof',()=>{
+ const registry={
+  'hyunsung-park':{officialFighterUrl:'https://www.ufc.com/athlete/hyunsung-park'},
+  'park-hyun-sung':{officialFighterUrl:'https://www.ufc.com/athlete/hyunsung-park/'},
+  'carlos-hernandez':{officialFighterUrl:'https://www.ufc.com/athlete/carlos-hernandez'},
+  'carlos-hernandez-7':{officialFighterUrl:'https://www.ufc.com/athlete/carlos-hernandez'},
+  'unrelated':{officialFighterUrl:'https://www.ufc.com/athlete/unrelated'}
+ };
+ const roster=Object.keys(registry);
+ assert.deepEqual([...sharedOfficialUfcIdentitySlugs(roster,registry)].sort(),
+  ['carlos-hernandez','carlos-hernandez-7','hyunsung-park','park-hyun-sung'].sort());
+ assert.equal(sharedOfficialUfcIdentitySlugs(['unrelated'],registry).size,0);
+ assert.equal(sharedOfficialUfcIdentitySlugs(['hyunsung-park','unrelated'],registry).size,0);
 });
