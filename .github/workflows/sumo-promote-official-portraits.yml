@@ -6,6 +6,7 @@ on:
       - research/sumo-official-portrait-register-20261116
     paths:
       - scripts/promote-sumo-official-portraits.py
+      - tests/test-sumo-official-portrait-register.mjs
       - .github/workflows/sumo-promote-official-portraits.yml
 permissions:
   contents: write
