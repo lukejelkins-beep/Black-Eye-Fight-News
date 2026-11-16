@@ -4,7 +4,7 @@ import {
   techniqueDistribution, detailFor, banzukeFor, searchRikishi, snapshotDate,
   originCountry, banzukeMovement, dayMatchups, verifiedDayMatchups, lastCompletedBashoDay, verifiedHeadToHead, verifiedHighestRank,
   rankPositions, confirmedCareerHigh, publishedCurrentWeight
-} from './sumo-data.mjs';
+} from './sumo-data.mjs?v=20261116-ranked-matchups';
 import { careerGraphs } from './sumo-editorial-charts.mjs';
 import { boutKey, mergeProfileBouts, filterAndSortOpponents, exactNamePriority } from './sumo-editorial-data.mjs';
 import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verification.mjs';
