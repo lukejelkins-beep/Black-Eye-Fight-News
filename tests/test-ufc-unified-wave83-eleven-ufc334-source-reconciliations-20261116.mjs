@@ -171,3 +171,24 @@ test('wave83 keeps conflicting Park and Heili historical/alias identities held',
  assert.equal(gate('park-hyun-sung',park),false);
  assert.equal(gate('heili-alateng',heili),false);
 });
+
+test('wave83 reciprocal UFC 334 source/native pairs are identical fights, never double counted',()=>{
+ const pairs=[
+  ['caio-borralho','yousri-belgaroui','93104'],
+  ['cesar-almeida','donte-johnson','93616'],
+  ['luis-gurule','bilal-hasan','93106']
+ ];
+ for(const [a,b,id] of pairs){
+  const x=cert[a]?.bouts?.filter(row=>row.nativeBoutId===id)||[];
+  const y=cert[b]?.bouts?.filter(row=>row.nativeBoutId===id)||[];
+  assert.equal(x.length,1,a+': exact one official result');
+  assert.equal(y.length,1,b+': exact one opposing result');
+  assert.equal(x[0].fightUrl,y[0].fightUrl);
+  assert.equal(x[0].pinnedSourceEventDate,'2026-11-14');
+  assert.equal(y[0].pinnedSourceEventDate,'2026-11-14');
+  assert.equal(x[0].nativeFighterId,y[0].originalOpponentNumericId);
+  assert.equal(y[0].nativeFighterId,x[0].originalOpponentNumericId);
+  assert.notEqual(x[0].result,y[0].result);
+  assert.ok(Number(rich.roundDone[id])>0);
+ }
+});
