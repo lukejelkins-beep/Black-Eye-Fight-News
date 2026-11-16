@@ -267,7 +267,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.equal(await firstCard.locator('.sumo-daily-facts>.sumo-flag-backdrop').count(),2,'Birthplace flags are decorative backgrounds behind both identities');
   assert.match(await firstCard.locator('.sumo-comparison-row').first().innerText(),/\d+′\d+″/,'Sourced centimetres are displayed as feet and inches');
   const data=await firstCard.innerText();
-  for(const label of ['Current basho W–L','Career W–L','Career win %','Makushita W–L','Makushita win %','Height','Weight','Peak:']){
+  for(const label of ['Current basho W–L','Career W–L','Career win %','Makuuchi W–L','Makuuchi win %','Height','Weight','Peak:']){
     assertContains(data,label,'Daily faceoff statistic');
   }
   const historyTiles=await page.locator('.sumo-daily-meeting').count();
@@ -282,6 +282,10 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   for(const division of ['Juryo','Makushita']){
     await page.locator('[data-matchup-division="'+division+'"]').click();
     assertContains(await page.locator('.sumo-daily-date').innerText(),division,'Division selector');
+    const scopedLabels=await page.locator('.sumo-daily-card').first().locator('.sumo-comparison-row>span').allInnerTexts();
+    assert.ok(scopedLabels.includes(division+' W–L')&&scopedLabels.includes(division+' win %'),
+      'Comparison labels follow the active bout division: '+division);
+    assert.ok(!scopedLabels.includes('Makuuchi W–L'),'Other division career record is not shown');
     assert.equal(await page.locator('#sumo-matchup-day').inputValue(),'1','Day is retained between divisions');
   }
   await page.locator('[data-matchup-division="Makuuchi"]').click();
@@ -491,7 +495,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.ok(overlay.includes('rgba('),'Light cream overlay protects text contrast');
   const comparison=await screenshotFixture.locator('.sumo-comparison').innerText();
   for(const expected of ['179 cm (5′10″)','191 cm (6′3″)','135 kg','171 kg',
-    'Current basho W–L','Career W–L','Career win %','Makushita W–L','Makushita win %'])
+    'Current basho W–L','Career W–L','Career win %','Makuuchi W–L','Makuuchi win %'])
     assertContains(comparison,expected,'Daily card comparisons');
   // Compare the visible pair with the actual November 2026 source snapshots.
   const sourceDetails=await (await page.request.get('http://127.0.0.1:8765/data/sumo/preview-details.json')).json();
@@ -506,8 +510,8 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   const historicalFor=id=>{
     const row=divisionCache.bySourceId[String(id)];
     assert.equal(row?.status,'available','Division-specific source data for '+id);
-    const wins=row.stats.winsByDivision?.Makushita,losses=row.stats.lossByDivision?.Makushita;
-    assert.ok(Number.isSafeInteger(wins)&&Number.isSafeInteger(losses),'Sourced Makushita W-L for '+id);
+    const wins=row.stats.winsByDivision?.Makuuchi,losses=row.stats.lossByDivision?.Makuuchi;
+    assert.ok(Number.isSafeInteger(wins)&&Number.isSafeInteger(losses),'Sourced Makuuchi W-L for '+id);
     return {wl:wins+'–'+losses,pct:(100*wins/(wins+losses)).toFixed(1)+'%'};
   };
   const comparisonRows=await screenshotFixture.locator('.sumo-comparison-row').evaluateAll(nodes=>
@@ -521,10 +525,10 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   });
   assert.deepEqual(comparisonRows['Current basho W–L'],pairIds.map(currentFor),
     'Current W-L matches source banzuke records, without invented non-bout losses');
-  assert.deepEqual(comparisonRows['Makushita W–L'],pairIds.map(id=>historicalFor(id).wl),
-    'Career Makushita W-L matches the division-specific source');
-  assert.deepEqual(comparisonRows['Makushita win %'],pairIds.map(id=>historicalFor(id).pct),
-    'Makushita percentages use only historical Makushita wins and losses');
+  assert.deepEqual(comparisonRows['Makuuchi W–L'],pairIds.map(id=>historicalFor(id).wl),
+    'Career Makuuchi W-L matches the division-specific source');
+  assert.deepEqual(comparisonRows['Makuuchi win %'],pairIds.map(id=>historicalFor(id).pct),
+    'Makuuchi percentages use only historical Makuuchi wins and losses');
   const textFlow=await identities.evaluateAll(panels=>panels.map(panel=>{
     const els=[...panel.querySelectorAll('h2,.sumo-daily-origin,.sumo-daily-ranks')];
     const rects=els.map(el=>el.getBoundingClientRect());

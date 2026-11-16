@@ -19,7 +19,7 @@ export function dailyStats({
   highestRank=null,currentRank=null,heightCm=null,weightKg=null,
   currentBashoWins=null,currentBashoLosses=null,
   careerWins=null,careerLosses=null,makuuchiWins=null,makuuchiLosses=null,
-  makushitaWins=null,makushitaLosses=null
+  juryoWins=null,juryoLosses=null,makushitaWins=null,makushitaLosses=null
 }={}) {
   const measurement=(value,unit)=>typeof value==='number'&&Number.isFinite(value)&&value>0
     ?String(value)+unit:'Not available';
@@ -37,6 +37,9 @@ export function dailyStats({
     ['Makuuchi wins',tally(makuuchiWins)],
     ['Makuuchi losses',tally(makuuchiLosses)],
     ['Makuuchi win %',dailyWinPercentage(makuuchiWins,makuuchiLosses)||'Not available'],
+    ['Juryo wins',tally(juryoWins)],
+    ['Juryo losses',tally(juryoLosses)],
+    ['Juryo win %',dailyWinPercentage(juryoWins,juryoLosses)||'Not available'],
     ['Makushita wins',tally(makushitaWins)],
     ['Makushita losses',tally(makushitaLosses)],
     ['Makushita win %',dailyWinPercentage(makushitaWins,makushitaLosses)||'Not available']
