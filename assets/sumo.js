@@ -676,6 +676,32 @@ function renderBanzuke() {
     '<p class="footnote">↑ Up / ↓ Down / ↔ Same = movement in tracked banzuke positions, not necessarily a formal rank title promotion or demotion. NEW indicates an entry not present in the previous top-three banzuke, which must not be treated as a verified career debut. Flags refer to the source-recorded birthplace country, not nationality.</p>'+
     sourceFooter();
 }
+function h2hKimariteChart(history,firstId,firstName,secondName,winning){
+  const who=winning?Number(firstId):null;
+  const bouts=history?.rows||[];
+  const selected=bouts.filter(m=>winning?Number(m.winnerId)===who:Number(m.winnerId)!==Number(firstId));
+  const counts=new Map();let unknown=0;
+  for(const m of selected){
+    const k=String(m.kimarite||'').trim().toLowerCase();
+    if(!k||k==='unknown'||k==='unrecorded'){unknown++;continue;}
+    counts.set(k,(counts.get(k)||0)+1);
+  }
+  const known=selected.length-unknown;
+  const title=winning?firstName+' wins':firstName+' losses';
+  if(!known)return '<section class="sumo-kimarite-panel"><h3>'+e(title)+'</h3><p>Named kimarite unavailable for these recorded meetings.</p></section>';
+  const sorted=[...counts].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
+  const top=sorted.slice(0,5);const remainder=sorted.slice(5).reduce((n,x)=>n+x[1],0);
+  const entries=remainder?[...top,['Other named techniques',remainder]]:top;
+  const palette=['#d6a84d','#64b6a0','#769ad5','#ce7d8d','#a997d6','#8c929c'];
+  let progress=0;const stops=entries.map((x,i)=>{const start=progress;progress+=x[1]/known*100;return palette[i]+' '+start.toFixed(3)+'% '+progress.toFixed(3)+'%';});
+  const legend=entries.map((x,i)=>'<li><span class="sumo-kimarite-swatch" style="background:'+palette[i]+'"></span><span>'+e(x[0])+'</span><strong>'+x[1]+' · '+Math.round(x[1]/known*100)+'%</strong></li>').join('');
+  return '<section class="sumo-kimarite-panel"><h3>'+e(title)+'</h3><div class="sumo-kimarite-content"><div class="sumo-kimarite-pie" role="img" aria-label="'+e(title+': '+entries.map(x=>x[0]+' '+x[1]).join(', '))+'" style="background:conic-gradient('+stops.join(',')+')"><span><strong>'+known+'</strong><small>named bouts</small></span></div><ul class="sumo-kimarite-legend">'+legend+'</ul></div>'+
+    (unknown?'<p class="footnote">'+unknown+' additional result(s) have no named kimarite and are excluded from percentages.</p>':'')+'</section>';
+}
+function h2hKimaritePanel(history,a,firstName,secondName){
+  if(!history?.rows?.length)return '';
+  return '<section class="sumo-h2h-kimarite"><h2>Kimarite breakdown</h2><p class="section-intro">Techniques in '+e(firstName)+'’s wins and losses against '+e(secondName)+'. Only named techniques from '+history.rows.length+' cached meetings are included; these are '+(history.complete?'all recorded regular meetings':'a partial historical sample')+'.</p><div class="sumo-kimarite-grid">'+h2hKimariteChart(history,a,firstName,secondName,true)+h2hKimariteChart(history,a,firstName,secondName,false)+'</div></section>';
+}
 function renderHeadToHead(a,b) {
   const first=wrestler(a),second=wrestler(b);
   if(!first&&!second)return '<a href="#rikishi">← Rikishi directory</a>'+note('Neither wrestler is in this tracked roster.');
@@ -698,6 +724,7 @@ function renderHeadToHead(a,b) {
     '<small>'+e(secondName)+' wins: '+e(history?history.losses:'Not available')+'</small>'+
     '<small>'+e(history?history.total+' recorded meetings':'Series loading')+'</small></div>'+
     '<div>'+fighterOnCard(second,b,secondName)+'</div></div>'+
+    h2hKimaritePanel(history,a,firstName,secondName)+
     heading('Calendar chronology','Every historical meeting')+
     '<p class="section-intro">Each source-recorded match retains basho, calendar day, winner and original kimarite; forfeits and special meetings remain distinct.</p>'+
     '<p role="status" aria-live="polite">'+e(coverage)+'</p>'+
