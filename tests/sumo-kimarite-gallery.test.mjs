@@ -41,11 +41,13 @@ test('media manifest rejects unverified paths or missing credit',()=>{
   globalThis.location={hash:'#kimarite?term=yorikiri'};
   assert.doesNotMatch(renderKimariteGallery(),/sumo-km-video/);
   const approved={schemaVersion:1,clips:{yorikiri:{
-    webm:'assets/sumo-kimarite/yorikiri.webm',poster:'https://sumo.or.jp/img/kimarite/kimarite_05.jpg',
+    webm:'assets/sumo-kimarite/yorikiri.webm',mp4:'assets/sumo-kimarite/yorikiri.mp4',poster:'https://sumo.or.jp/img/kimarite/kimarite_05.jpg',
     credit:'NHK WORLD-JAPAN',rights:'NHK permission confirmed by BEFN owner'
   }}};
   assert.equal(setKimariteMediaManifest(approved),true);
   assert.match(renderKimariteGallery(),/assets\/sumo-kimarite\/yorikiri.webm/);
+  assert.match(renderKimariteGallery(),/assets\/sumo-kimarite\/yorikiri.mp4/);
+  assert.ok(renderKimariteGallery().indexOf('type="video/mp4"')<renderKimariteGallery().indexOf('type="video/webm"'));
   delete globalThis.location;
 });
 test('pending media manifest starts empty; no empty claims of encoded videos',()=>{
