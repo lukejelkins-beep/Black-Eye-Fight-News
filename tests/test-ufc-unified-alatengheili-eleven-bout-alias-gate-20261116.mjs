@@ -115,3 +115,19 @@ test('omitted, duplicated, inverted and fabricated source-native records all fai
  const badOfficial=clone();badOfficial.officialFighterUrl='https://example.invalid';
  assert.equal(gate(badOfficial),false);
 });
+
+test('the pinned 2026 Nov14 source identity and opposing native corner cannot be reassigned',()=>{
+ assert.equal(proof.sourceSnapshot.cutoffLastEvent,'2026-11-14');
+ assert.equal(proof.sourceSnapshot.evidenceCutoff,'2026-11-14');
+ const row=proof.bouts.find(x=>x.nativeBoutId==='93780');
+ assert.equal(row.pinnedSourceOpponentName,'Juan Diaz');
+ assert.equal(row.originalOpponentNumericId,'32');
+ assert.equal(rich.bouts['93780'].a.id,'7566');
+ assert.equal(rich.bouts['93780'].b.id,'32');
+ const changed=structuredClone(proof);
+ changed.bouts[0].nativeFighterId='32';
+ assert.equal(gate(changed),false);
+ const wrongAlias=structuredClone(proof);
+ wrongAlias.disambiguation.verifiedUfcStatsFighterId='0000000000000000';
+ assert.equal(gate(wrongAlias),false);
+});
