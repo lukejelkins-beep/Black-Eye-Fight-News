@@ -5,6 +5,8 @@ on:
     branches: [feat/sumo-section-test-20261114]
     paths:
       - .github/workflows/sumo-kimarite-live-browser-audit.yml
+      - assets/sumo-kimarite-gallery.mjs
+      - tests/sumo-kimarite-gallery.test.mjs
 permissions:
   contents: read
 jobs:
@@ -20,6 +22,21 @@ jobs:
         run: |
           npm install --no-save --package-lock=false playwright
           npx playwright install --with-deps chromium webkit
+      - name: Check catalogue metadata regression tests
+        run: node --test tests/sumo-kimarite-gallery.test.mjs
+      - name: Confirm fixed version is live before testing browser
+        shell: bash
+        run: |
+          for attempt in $(seq 1 45); do
+            if curl -fsSL 'https://befn-sumo-preview.onrender.com/sumo.html' |
+              grep -q '20261117-jsa-group-photo-fix-v4'; then
+              echo 'The corrected gallery version is live'
+              exit 0
+            fi
+            sleep 5
+          done
+          echo 'The corrected gallery is not yet deployed' >&2
+          exit 1
       - name: Verify public JSA images actually render at mobile viewport sizes
         run: node scripts/sumo-kimarite-live-browser-audit.mjs
       - name: Preserve browser screenshots and response records
