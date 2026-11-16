@@ -1,0 +1,101 @@
+/* BEFN Sumo: NHK-inspired technique library, original styling and rights-safe media. */
+.sumo-km-gallery,.sumo-km-detail{color:#2d2426;max-width:1180px;margin:0 auto 48px}
+.sumo-km-hero{background:linear-gradient(115deg,#211b20 0%,#4a2935 65%,#6c4936 100%);color:#fff;padding:clamp(24px,5vw,60px);border-radius:14px;margin:16px 0 22px}
+.sumo-km-hero .eyebrow{color:#edc583;font-size:12px;letter-spacing:1.5px;font-weight:800}
+.sumo-km-hero h1{margin:8px 0;font:900 clamp(46px,8vw,84px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase}
+.sumo-km-hero h1 span{font-size:.45em;vertical-align:middle;color:#d6b38c;margin-left:10px}
+.sumo-km-hero>p{max-width:700px;color:#f1e6e2;font-size:16px;line-height:1.6}
+.sumo-km-hero-stats{display:flex;gap:32px;flex-wrap:wrap;margin-top:22px;padding-top:16px;border-top:1px solid #ffffff36}
+.sumo-km-hero-stats strong{font:800 28px/1 'Barlow Condensed',Impact,sans-serif}
+.sumo-km-hero-stats small{font:600 12px 'DM Sans',sans-serif;display:block;color:#e3d7cd;margin-top:6px}
+.sumo-km-controls{background:#fff;border:1px solid #e2d7ce;border-radius:10px;padding:18px;margin-bottom:24px}
+.sumo-km-controls label{display:block;font-weight:800;margin:0 0 8px}
+#sumo-km-search{width:100%;min-height:46px;background:#fff;border:1px solid #bdaba4;border-radius:7px;padding:10px 15px;font:600 15px 'DM Sans',sans-serif;color:#2d2426}
+.sumo-km-filters{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}
+.sumo-km-filters button{min-height:40px;padding:8px 13px;border:1px solid #d6c9bd;border-radius:8px;background:#f6f0e9;color:#2e2625;font-weight:750;font-size:12px;cursor:pointer}
+.sumo-km-filters button span{opacity:.7;margin-left:4px}
+.sumo-km-filters button[aria-pressed=true]{background:#8f2a3a;color:white;border-color:#8f2a3a}
+.sumo-km-filters button:focus-visible,.sumo-km-tile-link:focus-visible{outline:3px solid #cb943c;outline-offset:2px}
+.sumo-km-count{text-align:right;color:#645858;font-size:12px;margin-top:10px}
+.sumo-km-group{margin-bottom:34px;scroll-margin-top:95px}
+.sumo-km-group-head{display:flex;justify-content:space-between;align-items:end;gap:14px;border-bottom:3px solid #8f2a3a;margin:0 0 16px;padding:0 0 11px}
+.sumo-km-group-head h2{font:900 clamp(26px,4vw,36px)/1.1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;margin:3px 0}
+.sumo-km-group-head p{margin:3px 0;color:#6c5e59;font-size:13px}
+.sumo-km-group-head>strong{font:800 13px 'DM Sans',sans-serif;color:#8f2a3a;white-space:nowrap}
+.sumo-km-jp{color:#9b4d56;font-size:13px;font-weight:800}
+.sumo-km-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.sumo-km-tile{background:#fffdfa;border:1px solid #e3d6c9;border-radius:9px;overflow:hidden;box-shadow:0 2px 5px #30202009;min-width:0;transition:transform .15s,border-color .15s}
+.sumo-km-tile:hover{border-color:#b27856;transform:translateY(-2px)}
+.sumo-km-tile-link{display:block;text-decoration:none!important;color:#2c2426!important;height:100%}
+.sumo-km-media{aspect-ratio:16/9;background:#241f24;position:relative;overflow:hidden}
+.sumo-km-no-video{width:100%;height:100%;position:relative;display:flex;justify-content:center;align-items:center;isolation:isolate;background:radial-gradient(circle at 65% 25%,#8a4a46 0%,transparent 40%),linear-gradient(140deg,#3b2630,#1d1b23)}
+.sumo-km-no-video:before,.sumo-km-no-video:after{content:'';position:absolute;border:2px solid #e9b87d40;border-radius:50%;width:50%;aspect-ratio:1;transform:rotate(30deg);z-index:-1}
+.sumo-km-no-video:after{width:80%;opacity:.45}
+.sumo-km-glyph{font-size:clamp(44px,6vw,74px);font-weight:900;color:#ffffff18;line-height:1}
+.sumo-km-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;display:grid;place-items:center;border-radius:50%;background:#fff2;color:#fff;border:1px solid #fffb;box-shadow:0 2px 18px #0007;font-size:18px;padding-left:3px}
+.sumo-km-no-video small{position:absolute;bottom:10px;left:12px;right:12px;text-align:left;color:#fff;font-size:11px;font-weight:700}
+.sumo-km-video,.sumo-km-embed{display:block;width:100%;height:100%;object-fit:cover;border:0;background:#17151a}
+.sumo-km-media-credit{position:absolute;bottom:6px;right:8px;font-size:10px;color:#fff;background:#0009;padding:2px 5px}
+.sumo-km-tile-meta{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:15px}
+.sumo-km-tile-meta h3{font:900 23px/1.1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;margin:0 0 5px}
+.sumo-km-tile-meta p{font-size:12px;color:#756763;margin:0;line-height:1.4}
+.sumo-km-tile-meta .sumo-km-jp{writing-mode:vertical-rl;border-right:1px solid #d2c5b6;padding-right:7px}
+.sumo-km-chevron{font-size:19px;font-weight:800;color:#8f2a3a}
+.sumo-km-outcomes,.sumo-km-source{background:#fffdfa;border:1px solid #e2d8cf;border-radius:8px;padding:18px 20px;margin:20px 0}
+.sumo-km-outcomes h2{font:900 25px 'Barlow Condensed',Impact,sans-serif;margin:0 0 7px}
+.sumo-km-outcomes p,.sumo-km-source{font-size:13px;line-height:1.7;color:#534a49}
+.sumo-km-back{display:inline-flex;font-weight:800;margin:12px 0 24px}
+.sumo-km-detail-head h1{font:900 clamp(45px,8vw,74px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;margin:8px 0}
+.sumo-km-detail-jp{font-size:27px;color:#913444}.sumo-km-meaning{font-size:18px;font-weight:750}
+.sumo-km-detail-grid{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(235px,1fr);gap:20px;margin:24px 0}
+.sumo-km-detail-media{aspect-ratio:16/9;background:#241f24;overflow:hidden;border-radius:10px;position:relative}
+.sumo-km-detail-aside{background:#fffdfa;border:1px solid #e4d6c8;border-radius:10px;padding:20px}
+.sumo-km-detail-aside h2{font:900 23px 'Barlow Condensed',Impact,sans-serif;margin-top:0}
+.sumo-km-detail-aside p{line-height:1.6;font-size:14px}
+.sumo-km-watch,.sumo-km-jsa{display:block;margin:12px 0;font-weight:800;font-size:13px}
+.sumo-km-prevnext{display:flex;justify-content:space-between;gap:12px;padding:20px 0;border-top:1px solid #d8ccc0}
+.sumo-km-inline-link{color:#8f2a3a!important;font-weight:800;text-decoration:underline;text-underline-offset:2px}
+.sumo-km-empty{padding:35px;text-align:center;border:1px dashed #c7b6a9;border-radius:8px}
+@media(max-width:900px){.sumo-km-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sumo-km-detail-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.sumo-km-hero{padding:25px 20px}.sumo-km-hero-stats{gap:26px}.sumo-km-grid{grid-template-columns:1fr;gap:12px}.sumo-km-group-head{align-items:start}.sumo-km-group-head>strong{font-size:11px}.sumo-km-tile-link{display:grid;grid-template-columns:minmax(115px,42%) minmax(0,1fr);min-height:135px}.sumo-km-media{height:100%;aspect-ratio:auto}.sumo-km-tile-meta{padding:10px;gap:6px}.sumo-km-tile-meta h3{font-size:20px}.sumo-km-tile-meta .sumo-km-jp{font-size:11px}.sumo-km-play{width:39px;height:39px;font-size:14px}.sumo-km-no-video small{font-size:9px}.sumo-km-detail-grid{margin-top:18px}.sumo-km-detail-media{aspect-ratio:16/10}.sumo-km-prevnext{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.sumo-km-tile{transition:none}.sumo-km-tile:hover{transform:none}}
+
+/* Official JSA reference photograph: visible before each NHK WebM is available. */
+.sumo-km-poster{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#211b20;overflow:hidden}
+.sumo-km-poster img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
+.sumo-km-poster-credit{position:absolute;left:8px;bottom:8px;padding:3px 6px;border-radius:3px;background:#141011c7;color:#fff;font-size:10px;font-weight:700;line-height:1.3}
+.sumo-km-pending{position:absolute;top:10px;right:10px;padding:4px 7px;background:#251d25de;border:1px solid #ffffff60;border-radius:4px;color:#fff;font-size:10px;font-weight:700}
+.sumo-km-detail-media .sumo-km-poster-credit{font-size:12px}
+.sumo-km-tile .sumo-km-poster-credit{max-width:90%}
+@media(max-width:560px){.sumo-km-poster-credit{font-size:9px;left:4px;bottom:4px}.sumo-km-pending{top:6px;right:6px;font-size:9px}}
+
+/* An on-demand GIF window, never a route change. */
+body.sumo-km-modal-open{overflow:hidden}
+#sumo-km-popup-root{position:fixed;inset:0;z-index:99999}
+.sumo-km-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#080709c9;padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));overscroll-behavior:contain}
+.sumo-km-dialog{position:relative;background:#fffaf2;color:#2a2026;border:1px solid #a98e7b;border-radius:12px;box-shadow:0 15px 60px #0007;width:min(660px,100%);max-height:min(92dvh,800px);overflow:auto;scrollbar-gutter:stable;outline:none}
+.sumo-km-close{position:absolute;right:12px;top:12px;z-index:3;display:flex;justify-content:center;align-items:center;width:44px;height:44px;cursor:pointer;background:#1f1922ea;color:#fff;border:1px solid #fff8;border-radius:50%;font:500 34px/1 Arial,sans-serif}
+.sumo-km-close:hover,.sumo-km-close:focus-visible{background:#8e283b;outline:2px solid #cfaa74;outline-offset:2px}
+.sumo-km-modal-visual{position:relative;background:#251f24;line-height:0;overflow:hidden;display:flex;justify-content:center;align-items:center}
+.sumo-km-modal-gif,.sumo-km-modal-still{display:block;width:100%;max-width:100%;height:auto;max-height:min(60dvh,500px);object-fit:contain;object-position:center}
+.sumo-km-modal-media-credit{position:absolute;bottom:0;left:0;padding:8px 12px;background:linear-gradient(90deg,#111b,#1110);color:#fff;font:600 11px/1.4 'DM Sans',sans-serif;line-height:1.4}
+.sumo-km-modal-text{padding:18px 24px 22px}
+.sumo-km-modal-text .eyebrow{font-size:11px;letter-spacing:.12em;color:#8f2a3a;font-weight:800;text-transform:uppercase}
+.sumo-km-modal-text h2{font:900 clamp(30px,5vw,40px)/1 'Barlow Condensed',Impact,sans-serif;margin:7px 0}
+.sumo-km-modal-text h2 span{font:700 .52em 'DM Sans',sans-serif;color:#9b4550;margin-left:8px}
+.sumo-km-modal-meaning{margin:0 0 10px;font-size:15px;color:#594e4e}
+.sumo-km-modal-pending{font-size:12px;color:#6e5558;margin:8px 0}
+.sumo-km-modal-links{border-top:1px solid #e0d3c6;padding-top:12px;display:flex;gap:12px;flex-wrap:wrap;font-size:12px;font-weight:800}
+.sumo-km-modal-links a{color:#812738;text-decoration:underline;text-underline-offset:2px}
+.sumo-km-inline-link{cursor:pointer;text-decoration:underline;text-underline-offset:2px;font-weight:800;color:#86253b}
+.sumo-km-ready{background:#83283c;color:#fff}
+@media(max-width:600px){.sumo-km-overlay{align-items:center;padding:10px}.sumo-km-dialog{width:100%;max-height:92dvh;border-radius:9px}.sumo-km-close{top:8px;right:8px;width:40px;height:40px}.sumo-km-modal-text{padding:14px 15px 20px}.sumo-km-modal-media-credit{font-size:10px}.sumo-km-modal-gif{max-height:48dvh}}
+@media(prefers-reduced-motion:reduce){.sumo-km-overlay{scroll-behavior:auto}}
+
+/* On-demand original clip; the looping GIF remains the primary media. */
+.sumo-km-clip-panel{margin:12px 0 16px}
+.sumo-km-clip-button{cursor:pointer;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 15px;background:#8c293f;color:white;border:1px solid #8c293f;border-radius:7px;font:800 13px/1.3 'DM Sans',sans-serif}
+.sumo-km-clip-button:hover,.sumo-km-clip-button:focus-visible{background:#5e1928;outline:2px solid #b28d50;outline-offset:2px}
+.sumo-km-clip-content:not([hidden]){display:block;margin-top:12px;background:#1a171a;border-radius:6px;overflow:hidden}
+.sumo-km-original-clip{display:block;width:100%;max-height:min(45dvh,320px);object-fit:contain}
+.sumo-km-modal-pending-visual{display:grid;place-items:center;min-height:160px;padding:20px;color:#e7d6c9;text-align:center;font:800 16px/1.5 'DM Sans',sans-serif}
