@@ -12,7 +12,8 @@ const GROUPS = [
   {id:"twists",name:"Twist-down techniques",jp:"捻り手",intro:"Turns, asymmetric holds and balance breaks",items:[["Tsukiotoshi","Thrust-down"],["Makiotoshi","Wrapping twist-down"],["Tottari","Arm-bar twist-down"],["Sakatottari","Counter arm-bar twist-down"],["Katasukashi","Under-shoulder swing-down"],["Sotomuso","Outer knee sweep-down"],["Uchimuso","Inner thigh sweep-down"],["Zubuneri","Head-assisted twist-down"],["Uwatehineri","Overarm twist-down"],["Shitatehineri","Underarm twist-down"],["Amiuchi","Fisherman's throw"],["Sabaori","Waist-crush down"],["Harimanage","Over-head belt throw"],["Osakate","Deep overarm throw"],["Kainahineri","Arm twist-down"],["Gasshohineri","Clasped-hands neck twist-down"],["Tokkurinage","Two-handed neck twist-down"],["Kubihineri","Neck-and-arm twist-down"],["Kotehineri","Belt-assisted arm twist-down"]]},
   {id:"special",name:"Special techniques",jp:"特殊技",intro:"Pull-downs, lifts, rear attacks and other finishes",items:[["Hikiotoshi","Hand pull-down"],["Hikkake","Hooked-arm force-out/down"],["Hatakikomi","Slap-down"],["Sokubiotoshi","Neck chop-down"],["Tsuridashi","Frontal lift-out"],["Okuritsuridashi","Rear lift-out"],["Tsuriotoshi","Frontal lift-and-drop"],["Okuritsuriotoshi","Rear lift-and-drop"],["Okuridashi","Rear push-out"],["Okuritaoshi","Rear push-down"],["Okurinage","Rear throw"],["Okurigake","Rear leg-trip"],["Okurihikiotoshi","Rear pull-down"],["Waridashi","Separated-body force-out"],["Utchari","Edge pivot throw"],["Kimedashi","Arm-lock force-out"],["Kimetaoshi","Arm-lock force-down"],["Ushiromotare","Backward lean-out/down"],["Yobimodoshi","Pulling body slam"]]},
 ];
-const JP = {"yorikiri":"寄り切り","oshidashi":"押し出し","hatakikomi":"叩き込み","uwatenage":"上手投げ","shitatenage":"下手投げ","tsukiotoshi":"突き落とし","sukuinage":"掬い投げ","oshitaoshi":"押し倒し","yoritaoshi":"寄り倒し"};
+// Japanese terminology follows the official JSA 82-technique catalogue, in matching group order.
+const JP_BY_GROUP = [["突き出し","突き倒し","押し出し","押し倒し","寄り切り","寄り倒し","浴びせ倒し"],["上手投げ","下手投げ","小手投げ","掬い投げ","上手出し投げ","下手出し投げ","腰投げ","首投げ","一本背負い","二丁投げ","櫓投げ","掛け投げ","つかみ投げ"],["内掛け","外掛け","ちょん掛け","切り返し","河津掛け","蹴返し","蹴手繰り","三所攻め","渡し込み","二枚蹴り","小股掬い","外小股","大股","褄取り","小褄取り","足取り","裾取り","裾払い"],["居反り","撞木反り","掛け反り","たすき反り","外たすき反り","伝え反り"],["突き落とし","巻き落とし","とったり","逆取ったり","肩すかし","外無双","内無双","頭捻り","上手捻り","下手捻り","網打ち","鯖折り","波離間投げ","大逆手","腕捻り","合掌捻り","徳利投げ","首捻り","小手捻り"],["引き落とし","引っ掛け","叩き込み","素首落とし","吊り出し","送り吊り出し","吊り落とし","送り吊り落とし","送り出し","送り倒し","送り投げ","送り掛け","送り引き落とし","割り出し","打っ棄り","極め出し","極め倒し","後ろもたれ","呼び戻し"]];
 const NHK_YOUTUBE_IDS = {"yorikiri":"bbnsql1bZzw","oshidashi":"BZXmwVOfJNk","hatakikomi":"dVlwcqzB870","uwatenage":"jXZwxHTRRmo","shitatenage":"pTjJdejyZ_0","tsukiotoshi":"PmXZDloYSUk","sukuinage":"nmlYy36vHmk","yoritaoshi":"PucQVjkE038","oshitaoshi":"0N6K53M-S2M"};
 const NHK_GALLERY = 'https://www3.nhk.or.jp/nhkworld/en/tv/sumo/techniques/';
 const JSA_CATALOGUE = 'https://www.sumo.or.jp/Kimarite/show/';
@@ -33,7 +34,8 @@ export function setKimariteMediaManifest(data){
 }
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const kimariteSlug=s=>String(s||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
-export const KIMARITE_GROUPS = GROUPS.map(g=>({...g,items:g.items.map(([name,english])=>({name,english,japanese:JP[kimariteSlug(name)]||'',slug:kimariteSlug(name),group:g.id}))}));
+if(GROUPS.some((g,i)=>g.items.length!==JP_BY_GROUP[i].length))throw new Error('JSA technique label count mismatch');
+export const KIMARITE_GROUPS = GROUPS.map((g,groupIndex)=>({...g,items:g.items.map(([name,english],i)=>({name,english,japanese:JP_BY_GROUP[groupIndex][i],slug:kimariteSlug(name),group:g.id}))}));
 export const KIMARITE = KIMARITE_GROUPS.flatMap(g=>g.items);
 const bySlug = new Map(KIMARITE.map(x=>[x.slug,x]));
 export const lookupKimarite=s=>bySlug.get(kimariteSlug(s));
