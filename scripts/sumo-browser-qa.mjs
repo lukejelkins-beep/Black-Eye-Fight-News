@@ -168,9 +168,9 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.equal(await page.locator('#sumo-sources').count(),0,
     'No sourcing or preview-certification block remains in the profile');
   assertContains(profile,'Analysis','accessible charts in Analysis');
-  assertContains(profile,'Recent form','last-five results show named recent form');
-  assert.equal(await page.locator('.sumo-recent-bout').count(),5,
-    'Recent form retains five source-backed bouts');
+  assertContains(profile,'Recent form','last-ten results show named recent form');
+  assert.equal(await page.locator('.sumo-recent-bout').count(),10,
+    'Recent form shows ten source-backed completed bouts when available');
   const firstRecent=page.locator('.sumo-recent-bout').first();
   assert.ok((await firstRecent.getAttribute('data-result-link'))?.length>0,
     'Recent results still link to canonical result entries');
@@ -192,26 +192,39 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     const formLayout=await page.locator('.sumo-recent-strip').evaluate(panel=>{
       const list=panel.querySelector('.sumo-recent-list');
       const items=[...list.querySelectorAll('.sumo-recent-bout')];
-      const boundaries=items.map(el=>({
-        left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right,
-        top:el.getBoundingClientRect().top,bottom:el.getBoundingClientRect().bottom,
-        nameWidth:el.querySelector('.sumo-recent-person').getBoundingClientRect().width
-      }));
+      const boundaries=items.map(el=>{
+        const box=el.getBoundingClientRect(),name=el.querySelector('.sumo-recent-person');
+        return {
+          left:box.left,right:box.right,top:box.top,bottom:box.bottom,
+          width:box.width,height:box.height,
+          nameWidth:name.getBoundingClientRect().width,
+          nameText:name.textContent,
+          technique:el.querySelector('.sumo-recent-technique').textContent
+        };
+      });
       return {
+        columnCount:getComputedStyle(list).gridTemplateColumns.split(' ').length,
         listScroll:list.scrollWidth,listWidth:list.clientWidth,
         panelWidth:panel.getBoundingClientRect().width,
-        items:boundaries,
-        arrows:[...panel.querySelectorAll('.sumo-recent-arrow')].every(el=>getComputedStyle(el).display==='none')
+        items:boundaries,documentWidth:document.documentElement.scrollWidth,
+        viewportWidth:document.documentElement.clientWidth
       };
     });
-    assert.equal(formLayout.items.length,5,'All five latest bouts fit in the form list');
-    assert.ok(formLayout.arrows,'Mobile no longer shows redundant carousel arrows');
-    assert.ok(formLayout.listScroll<=formLayout.listWidth+3,
-      'All five recent bouts are visible without sideways scrolling: '+JSON.stringify(formLayout));
-    assert.ok(formLayout.items.every((row,i,rows)=>
-      row.right-row.left>180&&row.nameWidth>90&&(i===0||row.top>=rows[i-1].bottom-1)),
-      'Five rows stack vertically with space for readable opponent names: '+JSON.stringify(formLayout));
-
+    assert.equal(formLayout.items.length,10,'Ten completed source-backed bouts are listed');
+    assert.equal(formLayout.columnCount,2,'Exactly two Recent Form tiles per row on phones');
+    assert.ok(formLayout.listScroll<=formLayout.listWidth+3 &&
+      formLayout.documentWidth<=formLayout.viewportWidth+6,
+      'Compact ten-card grid does not scroll sideways: '+JSON.stringify(formLayout));
+    assert.ok(formLayout.items.every((item,i,items)=>
+      item.width>=112&&item.nameWidth>=90&&item.height<=155&&
+      item.nameText?.length>0&&item.technique?.length>0&&
+      (i<2||item.top>=items[i-2].bottom-2)),
+      'Ten readable, nonoverlapping tiles fit in five mobile rows: '+JSON.stringify(formLayout));
+    for(let i=0;i<10;i+=2){
+      assert.ok(Math.abs(formLayout.items[i].top-formLayout.items[i+1].top)<=2 &&
+        formLayout.items[i+1].left>=formLayout.items[i].right-1,
+        'Tiles '+i+' and '+(i+1)+' appear side by side in the same row');
+    }
     await page.locator('.sumo-recent-strip').screenshot({path:OUT+'/'+label+'-compact-form.png',animations:'disabled'});
     screenshotCount++;
     const charts=page.locator('#sumo-charts .sumo-career-panel');
