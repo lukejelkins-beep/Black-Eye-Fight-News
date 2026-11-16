@@ -17,10 +17,10 @@ test('photo credits are available from Sumo; only approved local images may disp
   assert.ok(w,'unknown wrestler image ID '+id);
   assert.equal(p.officialNskId,w.officialNskId);
   assert.match(p.path,/^assets\/sumo-photos\/[a-z0-9_-]+\.jpg$/);
-  assert.equal(p.license,'CC BY-SA 4.0');
-  assert.match(p.sourceUrl,/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
-  assert.match(p.licenseUrl,/^https:\/\/creativecommons\.org\/licenses\/by-sa\/4\.0\/$/);
-  assert.ok(p.credit&&p.author);
+  assert.match(p.license,/^Official JSA portrait — permission attested by BEFN operator, 2026-11-16$/);
+  assert.match(p.sourceUrl,/^https:\/\/www\.sumo\.or\.jp\/img\/sumo_data\/rikishi\/270x474\/[a-zA-Z0-9_-]+\.jpg$/);
+  assert.match(p.profileUrl,/^https:\/\/www\.sumo\.or\.jp\/EnSumoDataRikishi\/profile\/\d+\/$/);
+  assert.equal(p.credit,'Japan Sumo Association');
   assert.ok(existsSync(new URL('../'+p.path,import.meta.url)));
   const bytes=read(p.path);
   assert.ok(bytes.length>30000&&bytes.length<8000000);
@@ -28,8 +28,8 @@ test('photo credits are available from Sumo; only approved local images may disp
   assert.equal(bytes.at(-2),0xff);assert.equal(bytes.at(-1),0xd9);
   const sha=createHash('sha256').update(bytes).digest('hex');
   assert.equal(p.sha256,sha,'the approved JPEG differs from its exact source snapshot');
-  assert.ok(credits.includes(p.author),'author missing from CC attribution page');
-  assert.ok(credits.includes(p.sourceUrl),'source image link missing from credits');
+  assert.match(credits,/Japan Sumo Association/);
+  assert.match(credits,/permission attested by the BEFN operator/);
  }
 });
 test('unlicensed, external, or unreviewed photos cannot appear in approved manifest',()=>{
