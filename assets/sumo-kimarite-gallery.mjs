@@ -49,7 +49,8 @@ export const KIMARITE_GROUPS = GROUPS.map((g,groupIndex)=>({...g,items:g.items.m
 export const KIMARITE = KIMARITE_GROUPS.flatMap(g=>g.items).map((item,index)=>({
  ...item,
  jsaId:index+1,
- jsaPoster:'https://sumo.or.jp/img/kimarite/kimarite_'+String(index+1).padStart(2,'0')+'.jpg',
+ jsaPoster:'assets/sumo-kimarite/jsa/kimarite_'+String(index+1).padStart(2,'0')+'.jpg',
+ jsaRemote:'https://www.sumo.or.jp/img/kimarite/kimarite_'+String(index+1).padStart(2,'0')+'.jpg',
  jsaDetail:'https://sumo.or.jp/Kimarite/detail/'+(index+1)+'/'
 }));
 const bySlug = new Map(KIMARITE.map(x=>[x.slug,x]));
@@ -58,19 +59,12 @@ const groupFor=item=>KIMARITE_GROUPS.find(x=>x.id===item.group);
 let filter='all',search='';
 const videoFor=item=>APPROVED_WEBM[item.slug];
 function media(item,large=false){
- // Still frames, not animations, in the directory. Animation is intentionally
- // played only after the user opens the modal.
+ // Always show the official JSA catalogue still in library cards.
+ // The owner-provided technique GIF stays inside the click-to-open popup.
  const clip=videoFor(item);
- if(item.slug==='oshidashi'&&!clip?.poster){
-   return '<div class="sumo-km-no-video" role="img" aria-label="Oshidashi preview awaiting owner footage">'+
-     '<span class="sumo-km-glyph" aria-hidden="true">相</span>'+
-     '<small>Owner-supplied GIF preview pending</small></div>';
- }
- const poster=clip?.poster||item.jsaPoster;
- const credit=clip?.poster?.startsWith('assets/sumo-kimarite/')?'Owner-provided technique clip frame':'Japan Sumo Association';
- return '<div class="sumo-km-poster" aria-label="'+esc(item.name)+' technique reference photograph">'+
-   '<img src="'+esc(poster)+'" alt="'+esc(item.name)+' technique reference" loading="lazy" decoding="async">'+
-   '<span class="sumo-km-poster-credit">Photo: '+esc(credit)+'</span>'+
+ return '<div class="sumo-km-poster" aria-label="Official Japan Sumo Association photograph of '+esc(item.name)+'">'+
+   '<img src="'+esc(item.jsaPoster)+'" data-jsa-remote="'+esc(item.jsaRemote)+'"'+
+   ' alt="Official JSA '+esc(item.name)+' technique photograph" loading="lazy" decoding="async" referrerpolicy="no-referrer">'+
    (clip?.gif?'<span class="sumo-km-pending sumo-km-ready">▶ View GIF</span>':'')+
    '</div>';
 }
@@ -98,6 +92,7 @@ function galleryContents(){
  document.getElementById('sumo-km-count').textContent=shown+' of 82 techniques';
  document.querySelectorAll('[data-km-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.kmFilter===filter)));
  observeKimariteVideos();
+ hydrateJsaPhotoFallbacks(host);
 }
 function gallery(){
  return '<div class="sumo-km-gallery">'+
@@ -158,9 +153,26 @@ function observeKimariteVideos(){
  });},{rootMargin:'150px'});
  videos.forEach(video=>kimariteVideoObserver.observe(video));
 }
+// Resolve self-hosted source photographs, with the official URL as a fallback
+// while the JSA-photo import workflow is finishing.
+export function hydrateJsaPhotoFallbacks(root=document){
+ if(typeof root?.querySelectorAll!=='function')return;
+ root.querySelectorAll('img[data-jsa-remote]').forEach(img=>{
+  if(img.dataset.jsaFallbackBound)return;
+  img.dataset.jsaFallbackBound='true';
+  img.addEventListener('error',()=>{
+   const remote=img.dataset.jsaRemote;
+   if(remote && !img.dataset.jsaFallbackTried){
+    img.dataset.jsaFallbackTried='true';
+    img.src=remote;
+   }
+  });
+ });
+}
 export function hydrateKimariteGallery(){
  if(document.getElementById('sumo-km-results'))galleryContents();
  else observeKimariteVideos();
+ hydrateJsaPhotoFallbacks();
 }
 
 // Opened over any Sumo surface containing a named kimarite; the current page,
@@ -175,11 +187,11 @@ export function kimariteModalMarkup(item){
  // Do not use the previously disputed JSA photo as an Oshidashi fallback.
  const visual=clip?.gif?
    '<img class="sumo-km-modal-gif" src="'+esc(clip.gif)+'" alt="Looping example of '+esc(item.name)+'" decoding="async">'+
-   '<span class="sumo-km-modal-media-credit">GIF: '+esc(clip.credit)+'</span>':
+   '':
    isOshidashi?
    '<div class="sumo-km-modal-pending-visual">Owner-supplied Oshidashi GIF pending upload to the test branch</div>':
-   '<img class="sumo-km-modal-still" src="'+esc(item.jsaPoster)+'" alt="Official Japan Sumo Association '+esc(item.name)+' reference photograph">'+
-   '<span class="sumo-km-modal-media-credit">Photo: Japan Sumo Association</span>';
+   '<img class="sumo-km-modal-still" src="'+esc(item.jsaPoster)+'" data-jsa-remote="'+esc(item.jsaRemote)+'" referrerpolicy="no-referrer" alt="Official Japan Sumo Association '+esc(item.name)+' reference photograph">'+
+   '';
  const clipButton=clip?.clip?
    '<div class="sumo-km-clip-panel"><button type="button" class="sumo-km-clip-button" data-km-clip-toggle aria-expanded="false" aria-controls="sumo-km-original-clip">▶ Play original clip</button>'+
    '<div class="sumo-km-clip-content" id="sumo-km-original-clip" hidden><video class="sumo-km-original-clip" controls playsinline preload="none" src="'+esc(clip.clip)+'" aria-label="Original '+esc(item.name)+' source clip"></video></div></div>':'';
@@ -207,6 +219,7 @@ export function openKimariteModal(name,returnFocus=null){
  modalHost.id='sumo-km-popup-root';
  modalHost.innerHTML=kimariteModalMarkup(item);
  document.body.append(modalHost);
+ hydrateJsaPhotoFallbacks(modalHost);
  document.body.classList.add('sumo-km-modal-open');
  modalHost.querySelector('[data-km-close]')?.focus({preventScroll:true});
  return true;
