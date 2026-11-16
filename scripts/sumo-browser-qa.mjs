@@ -7,6 +7,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
+import { recordSummary } from '../assets/sumo-data.mjs';
 
 const BASE = process.env.SUMO_QA_BASE || 'http://127.0.0.1:8765/sumo.html';
 const OUT = 'qa/sumo-previews';
@@ -492,6 +493,40 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   for(const expected of ['179 cm (5′10″)','191 cm (6′3″)','135 kg','171 kg',
     'Current basho W–L','Career W–L','Career win %','Makushita W–L','Makushita win %'])
     assertContains(comparison,expected,'Daily card comparisons');
+  // Compare the visible pair with the actual November 2026 source snapshots.
+  const sourceDetails=await (await page.request.get('http://127.0.0.1:8765/data/sumo/preview-details.json')).json();
+  const divisionCache=await (await page.request.get('http://127.0.0.1:8765/data/sumo/division-stats.json')).json();
+  const banzuke=[...sourceDetails.banzuke.Makuuchi.data.east,...sourceDetails.banzuke.Makuuchi.data.west];
+  const currentFor=id=>{
+    const row=banzuke.find(x=>Number(x.rikishiID)===id);
+    assert.ok(Array.isArray(row?.record),'Current-basho source record for '+id);
+    const summary=recordSummary(row.record,'Makuuchi');
+    return summary.win+'–'+summary.loss;
+  };
+  const historicalFor=id=>{
+    const row=divisionCache.bySourceId[String(id)];
+    assert.equal(row?.status,'available','Division-specific source data for '+id);
+    const wins=row.stats.winsByDivision?.Makushita,losses=row.stats.lossByDivision?.Makushita;
+    assert.ok(Number.isSafeInteger(wins)&&Number.isSafeInteger(losses),'Sourced Makushita W-L for '+id);
+    return {wl:wins+'–'+losses,pct:(100*wins/(wins+losses)).toFixed(1)+'%'};
+  };
+  const comparisonRows=await screenshotFixture.locator('.sumo-comparison-row').evaluateAll(nodes=>
+    Object.fromEntries(nodes.map(row=>[row.querySelector('span')?.textContent?.trim(),
+      [...row.querySelectorAll('strong')].map(el=>el.textContent.trim())])));
+  const tok=historicalFor(83),dai=historicalFor(378);
+  assert.deepEqual(comparisonRows['Current basho W–L'],[currentFor(83),currentFor(378)],
+    'Current W-L matches source banzuke records, without invented non-bout losses');
+  assert.deepEqual(comparisonRows['Makushita W–L'],[tok.wl,dai.wl],
+    'Career Makushita W-L matches the division-specific source');
+  assert.deepEqual(comparisonRows['Makushita win %'],[tok.pct,dai.pct],
+    'Makushita percentages use only historical Makushita wins and losses');
+  const textFlow=await identities.evaluateAll(panels=>panels.map(panel=>{
+    const els=[...panel.querySelectorAll('h2,.sumo-daily-origin,.sumo-daily-ranks')];
+    const rects=els.map(el=>el.getBoundingClientRect());
+    return rects.every((r,i)=>r.width>0&&r.right<=panel.getBoundingClientRect().right+2&&
+      (i===0||r.top>=rects[i-1].bottom-1));
+  }));
+  assert.ok(textFlow.every(Boolean),'Names, birthplace and ranks do not overlap or clip');
   const wrapping=await screenshotFixture.locator('.sumo-daily-facts h2')
     .evaluateAll(nodes=>nodes.map(el=>({scroll:el.scrollWidth,width:el.clientWidth})));
   assert.ok(wrapping.every(x=>x.scroll<=x.width+4),'No clipped wrestler names');
