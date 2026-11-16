@@ -60,7 +60,7 @@ test('each of the 87 V4-only source proofs is individually cross-gated; no silen
   const greco=manifest.sourceGrecoCommit;
   const refreshed=new Set(['caio-borralho','cesar-almeida','chris-duncan','melquizael-costa',
    'kayla-harrison','juan-diaz','bia-mesquita','donte-johnson','yousri-belgaroui',
-   'evan-elder','luis-gurule']);
+   'evan-elder','luis-gurule','heili-alateng']);
   for(const slug of all){
     const item=evidence.fighters[slug];
     assert.equal(item.sourceCoverageAttested,true,slug);
