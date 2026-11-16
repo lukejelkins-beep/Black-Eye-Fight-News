@@ -72,13 +72,13 @@ export function editorialWeightChart(points,{start=null,end=null,source=null,rev
       '" cx="'+xx+'" cy="'+yy+'" r="5.5" tabindex="0" role="img" aria-label="'+esc(desc)+'"><title>'+esc(desc)+'</title></circle>'+
       ((i===plotted.length-1||(i===0&&(!mobile||firstLastGap>=75)))?'<text class="sumo-chart-number" x="'+xx+'" y="'+(yy-13)+'" text-anchor="middle">'+esc(p.kg)+' kg</text>':'');
   }).join('');
-  const table='<details class="sumo-data-table"><summary>All '+plotted.length+' dated weight observations and sources</summary>'+
-    '<div class="table-scroll"><table><thead><tr><th scope="col">Recorded period</th><th scope="col">Weight</th><th scope="col">Source</th><th scope="col">Date precision</th><th scope="col">Review state</th></tr></thead><tbody>'+
-    plotted.map(({point:p})=>'<tr><td>'+esc(monthLabel(p.basho))+'</td><td>'+esc(p.kg)+' kg</td><td>'+sourceCell(p.source||source)+'</td><td>'+esc(p.datePrecision||'Month only')+'</td><td>'+esc(p.reviewState||review||'Not stated')+'</td></tr>').join('')+
+  const table='<details class="sumo-data-table"><summary>Weight measurements ('+plotted.length+')</summary>'+
+    '<div class="table-scroll"><table><thead><tr><th scope="col">Basho</th><th scope="col">Weight</th></tr></thead><tbody>'+
+    plotted.map(({point:p})=>'<tr><td>'+esc(monthLabel(p.basho))+'</td><td>'+esc(p.kg)+' kg</td></tr>').join('')+
     '</tbody></table></div></details>';
-  return '<p class="sumo-chart-scroll-hint">On smaller screens, swipe the chart or focus it and use arrow keys. Every observation is also in the table below.</p>'+
-    '<div class="sumo-weight-scroll" tabindex="0" role="region" aria-label="Scrollable weight history chart">'+svg(body,W,H,'sumo-weight-svg','Dated weight observations on actual elapsed calendar time, in kilograms',mobile)+'</div>'+
-    '<p class="sumo-chart-note">Each dot is a dated observation. Dashed connectors only guide between observations within 18 months; long gaps remain unconnected. No intervening measurements are implied.</p>'+table;
+  return '<div class="sumo-weight-scroll" tabindex="0" role="region" aria-label="Scrollable weight history chart">'+
+    svg(body,W,H,'sumo-weight-svg','Dated weight observations on actual elapsed calendar time, in kilograms',mobile)+
+    '</div>'+table;
 }
 export function rankRangePoints(points,range='career'){
   if(range==='career'||!points.length)return points.slice();
@@ -135,38 +135,28 @@ export function editorialRankChart(points,{range='career',fullLadder=false}={}){
   if(!points.length)return '<p class="sumo-career-empty">No recorded banzuke rankings are available.</p>';
   const selected=rankRangePoints(points,range);
   const options=[['2y','Last 2 years'],['5y','Last 5 years'],['career','Career']];
-  const latest=points[points.length-1];
-  const count=points.length,highest=points.reduce((best,p)=>ordinalRank(p.rank)<ordinalRank(best.rank)?p:best);
-  const table='<details class="sumo-data-table"><summary>All '+count+' recorded rank observations</summary>'+
-    '<div class="table-scroll"><table><thead><tr><th scope="col">Basho</th><th scope="col">Recorded rank</th><th scope="col">Previous recorded rank</th><th scope="col">Position movement</th></tr></thead><tbody>'+
+  const count=points.length;
+  const table='<details class="sumo-data-table"><summary>Rank history ('+count+')</summary>'+
+    '<div class="table-scroll"><table><thead><tr><th scope="col">Basho</th><th scope="col">Rank</th><th scope="col">Previous rank</th><th scope="col">Movement</th></tr></thead><tbody>'+
     points.map((p,i)=>{
       const prev=i?points[i-1]:null,a=ordinalRank(p.rank),b=prev?ordinalRank(prev.rank):null;
       const movement=b===null?'Not available':a<b?'Up':a>b?'Down':'Unchanged';
-      return '<tr><td>'+esc(monthLabel(p.basho))+'</td><td>'+esc(p.rank)+'</td><td>'+esc(prev?.rank||'Not available')+'</td><td>'+movement+(prev?' · from '+esc(monthLabel(prev.basho)):'')+'</td></tr>';
+      return '<tr><td>'+esc(monthLabel(p.basho))+'</td><td>'+esc(p.rank)+'</td><td>'+esc(prev?.rank||'Not available')+'</td><td>'+movement+'</td></tr>';
     }).join('')+'</tbody></table></div></details>';
-  return '<div class="sumo-career-overview"><span>Whole career · '+count+' observed ranks · latest '+esc(monthLabel(latest.basho))+'</span>'+rankSvg(points,{fullLadder,overview:true})+'</div>'+
+  return '<div class="sumo-career-overview"><span>Career rank progression</span>'+rankSvg(points,{fullLadder,overview:true})+'</div>'+
     '<div class="sumo-chart-controls" role="group" aria-label="Rank history period">'+
     options.map(([id,label])=>'<button type="button" data-rank-range="'+id+'" aria-pressed="'+(range===id)+'">'+label+'</button>').join('')+
     '<button type="button" data-rank-ladder aria-pressed="'+fullLadder+'">'+(fullLadder?'Visited divisions':'Full rank ladder')+'</button></div>'+
-    '<p class="sumo-chart-note">Ordinal banzuke positions (East and West distinguished); higher means a higher rank. '+selected.length+' observations in selected period. '+(fullLadder?'Full ladder':'Vertical axis adapted to visited divisions')+'.</p>'+
-    '<p class="sumo-chart-scroll-hint">On smaller screens, swipe the chart or focus it and use arrow keys. Every observation is also in the table below.</p>'+
-    '<div class="sumo-rank-scroll" tabindex="0" role="region" aria-label="Scrollable rank history chart">'+rankSvg(selected,{fullLadder})+'</div>'+
-    '<p class="sumo-chart-note">Step connectors join only consecutive recorded bashos. Missing rank entries stay unconnected; position movement is not necessarily a formal title promotion or demotion. Highest sourced observation: '+esc(highest.rank)+'.</p>'+table;
+    '<div class="sumo-rank-scroll" tabindex="0" role="region" aria-label="Scrollable rank history chart">'+rankSvg(selected,{fullLadder})+'</div>'+table;
 }
 
 export function careerGraphs(w,cache,bashoId,prevBasho,prevRank,options={}){
-  const data=careerPoints(w,cache,bashoId,prevBasho,prevRank);
-  const {ranks,entry,currentListedWeightKg,currentListedWeightSource,currentRankDiscrepancy,currentWeightApiDiscrepancy}=data;
+  const {ranks,entry}=careerPoints(w,cache,bashoId,prevBasho,prevRank);
   const weight=datedWeightObservations(entry);
-  const start=w?.debutBasho||null;
   const source=entry?.weightSource||entry?.sourceUrl||null;
-  const summary='<div class="sumo-career-summary"><span>'+ranks.length+' rank observations</span><span>'+weight.length+' dated weight observations</span>'+
-    (currentListedWeightKg===null?'':'<span>Currently listed: '+esc(currentListedWeightKg)+' kg · undated · '+esc(currentListedWeightSource)+'</span>')+'</div>';
-  const rankReview=currentRankDiscrepancy?'<p class="sumo-career-source">Rank review: cached historical rank '+esc(currentRankDiscrepancy.recordedRank)+' and current listing '+esc(currentRankDiscrepancy.rosterRank)+' differ. Review remains open.</p>':'';
-  const weightReview=currentWeightApiDiscrepancy?'<p class="sumo-career-source">Current weight source/date review: JSA '+esc(currentWeightApiDiscrepancy.officialKg)+' kg and API '+esc(currentWeightApiDiscrepancy.apiKg)+' kg. Source precision and recording dates require reconciliation.</p>':'';
-  return summary+'<div class="sumo-career-panels">'+
-    '<section class="sumo-career-panel"><div class="sumo-career-panel-head"><small>BANZUKE · EAST / WEST</small><h3>Rank history</h3></div><div class="sumo-career-panel-main">'+editorialRankChart(ranks,{range:options.rankRange||'career',fullLadder:options.fullLadder===true})+
-    '</div>'+rankReview+'<p class="sumo-career-source">Ranks are source observations, not independently certified tournament results. The source keeps rank periods separate from API-statistics basho counts. '+sourceCell(entry?.rankSource)+'</p></section>'+
-    '<section class="sumo-career-panel"><div class="sumo-career-panel-head"><small>MEASURED OBSERVATIONS · KG</small><h3>Weight history</h3></div><div class="sumo-career-panel-main">'+editorialWeightChart(weight,{start,end:bashoId,source})+
-    '</div>'+weightReview+'<p class="sumo-career-source">The current listed weight has no measurement date and is excluded from the dated chart. Dated observations have month-level precision; independent weighing-date corroboration is not implied. '+sourceCell(source)+'</p></section></div>';
+  return '<div class="sumo-career-panels">'+
+    '<section class="sumo-career-panel"><div class="sumo-career-panel-head"><small>BANZUKE · EAST / WEST</small><h3>Rank history</h3></div><div class="sumo-career-panel-main">'+
+    editorialRankChart(ranks,{range:options.rankRange||'career',fullLadder:options.fullLadder===true})+'</div></section>'+
+    '<section class="sumo-career-panel"><div class="sumo-career-panel-head"><small>WEIGHT · KG</small><h3>Weight history</h3></div><div class="sumo-career-panel-main">'+
+    editorialWeightChart(weight,{start:w?.debutBasho||null,end:bashoId,source})+'</div></section></div>';
 }

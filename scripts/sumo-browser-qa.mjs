@@ -155,8 +155,18 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     'Two clear, nonduplicative labels');
   assert.deepEqual(await careerTiles.locator('strong').allInnerTexts(),['22','6'],
     'Onosato source-listed Basho 22 and Makuuchi titles 6');
-  assertContains(profile,'coverage may be partial','summary coverage warning remains visible');
-  assertContains(profile,'Career summary scope','source disclosures retain the coverage limitation');
+  assert.equal(await page.locator('#sumo-career .sumo-career-facts').count(),0,
+    'The original closed career disclosures have been replaced');
+  assert.equal(await page.locator('#sumo-career .sumo-career-detail-section').count(),4,
+    'Biography, Division records, Prizes and Last six banzuke positions are always visible');
+  assert.ok((await page.locator('#sumo-career .sumo-career-data-tile').count())>=4,
+    'Career data is displayed in compact tiles');
+  assert.equal(await page.locator('#sumo-career .sumo-basho-history-item').count(),6,
+    'Six recorded banzuke positions display as visible tiles');
+  assert.equal(await page.locator('.sumo-career-summary').count(),0,
+    'The three technical boxes above the Analysis graphs are removed');
+  assert.equal(await page.locator('#sumo-sources').count(),0,
+    'No sourcing or preview-certification block remains in the profile');
   assertContains(profile,'Analysis','accessible charts in Analysis');
   assertContains(profile,'Recent form','last-five results show named recent form');
   assert.equal(await page.locator('.sumo-recent-bout').count(),5,
@@ -249,7 +259,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     await page.locator('#sumo-charts').screenshot({path:OUT+'/'+label+'-mobile-graphs.png',animations:'disabled'});
     screenshotCount++;
   }
-  assertContains(profile,'API-TRUSTED','development-data method is displayed');
+  assert.ok(!profile.includes('API-TRUSTED'),'Technical API badge is not displayed');
   assertContains(profile,'Career results: independently corroborated','career evidence is labelled separately');
   assertContains(profile,'Opponents and head-to-head','opponent catalogue');
   await page.waitForSelector('.sumo-rival',{timeout:25000});
@@ -341,10 +351,10 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await snap(page,label+'-profile-career',{fullPage:false});
   await page.locator('#sumo-opponents').scrollIntoViewIfNeeded();
   await snap(page,label+'-profile-opponents',{fullPage:false});
-  assertContains(profile,'JSA-listed signature manoeuvres','official source signature tags');
+  assertContains(profile,'Signature manoeuvres','Rikishi signature manoeuvres remain visible');
   assertContains(profile,'tsuki','JSA-listed source manoeuvres preserved');
   assert.ok(await page.locator('.sumo-ed-row').count()>0,'Canonical current tournament rows rendered');
-  assert.equal(await page.locator('.sumo-section-nav a').count(),6,'Four primary destinations and two additional accessible sections');
+  assert.equal(await page.locator('.sumo-section-nav a').count(),5,'Four destinations and a techniques link; no provenance navigation');
   assert.equal(await page.locator('.sumo-rank-svg').count(),1,'Rank chart on initial page');
   assert.ok(await page.locator('.sumo-weight-svg').count()===1,'Weight chart on initial page');
   const order=await page.evaluate(()=>document.querySelector('#sumo-charts').compareDocumentPosition(document.querySelector('#sumo-opponents')) & Node.DOCUMENT_POSITION_FOLLOWING);
@@ -379,10 +389,10 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   const unfeatured=await page.locator('#sumo-main').innerText();
   assertContains(unfeatured,'Career','career section exists for all tracked profiles');
   assertContains(unfeatured,'Opponents and head-to-head','opponent directory section');
-  assertContains(unfeatured,'API-TRUSTED','API-trusted status shown on nonfeatured profile');
+  assert.ok(!unfeatured.includes('API-TRUSTED'),'Technical badge removed on nonfeatured profiles');
   await page.waitForSelector('.sumo-rival',{timeout:25000});
   assert.ok(await page.locator('.sumo-rival').count()>0,'Unfeatured rikishi has complete opponent library');
-  assert.equal(await page.locator('.sumo-sources h3').filter({hasText:'JSA-listed signature manoeuvres'}).count(),0,'No speculative official style on unsourced profiles');
+  assert.equal(await page.locator('.sumo-signature h3').count(),0,'No speculative signature manoeuvres on unsourced profiles');
   await open(page,'profile/82','.profile-hero');
   assertContains(await page.locator('#sumo-main').innerText(),'206–131','Fujiseiun career W–L preserved');
   await open(page,'profile/16','.profile-hero');
@@ -523,12 +533,14 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     assert.ok(!checkedIds.has(w.sourceId),'Duplicate Sumo browser QA source ID '+w.sourceId);
     checkedIds.add(w.sourceId);
     await page.evaluate(id=>{ location.hash='#profile/'+id; },w.sourceId);
-    await page.waitForSelector('.sumo-api-quality[data-sumo-source-id="'+w.sourceId+'"]',{timeout:15000});
+    await page.waitForFunction(name=>document.querySelector('.profile-hero h1')?.textContent?.trim()===name,
+      w.shikonaEn,{timeout:15000});
     const headingText=await page.locator('.profile-hero h1').innerText();
     assertContains(headingText,w.shikonaEn,'Loaded wrestler '+w.sourceId);
-    const qualityText=await page.locator('.sumo-api-quality').innerText();
-    assertContains(qualityText,'API-TRUSTED','source designation for '+w.sourceId);
-    assertContains(qualityText,'Career results:','independent career evidence for '+w.sourceId);
+    assert.equal(await page.locator('#sumo-career .sumo-career-detail-section').count(),4,
+      'Visible career tile groups on wrestler '+w.sourceId);
+    assert.equal(await page.locator('#sumo-sources,.sumo-api-quality,.sumo-career-summary').count(),0,
+      'No provenance or analysis summary boxes on wrestler '+w.sourceId);
     assert.equal(await page.locator('.sumo-rank-svg').count(),1,'Dated career-rank graph '+w.sourceId);
     assert.equal(await page.locator('.sumo-weight-svg').count(),1,'Dated weight graph '+w.sourceId);
     if(isMobile){
@@ -660,7 +672,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.locator('.sumo-rival').first().click();
   await page.waitForSelector('.sumo-h2h-hero');
   await page.getByRole('link',{name:'Back to originating profile'}).click();
-  await page.waitForSelector('.sumo-api-quality[data-sumo-source-id="28"]');
+  await page.waitForSelector('.profile-hero h1');
   assert.equal(await page.locator('#sumo-period').inputValue(),'current');
 
   for(const route of ['kimarite','banzuke','basho','rikishi','home']){
