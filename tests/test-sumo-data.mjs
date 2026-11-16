@@ -384,7 +384,7 @@ test('current measurement cards use JSA publication separately from source API m
 test('current listed weights feed both Sumo profile information and matchup cards with provenance',()=>{
  const js=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
  assert.match(js,/publishedCurrentWeight\(w,STATE\.careerHistory\)/);
- assert.match(js,/Weight source\/date\/precision review is unresolved/);
+ assert.match(js,/Weight source\/date\/precision review unresolved/);
  assert.match(js,/current\.weightSource/);
 });
 
