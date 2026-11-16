@@ -513,12 +513,17 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   const comparisonRows=await screenshotFixture.locator('.sumo-comparison-row').evaluateAll(nodes=>
     Object.fromEntries(nodes.map(row=>[row.querySelector('span')?.textContent?.trim(),
       [...row.querySelectorAll('strong')].map(el=>el.textContent.trim())])));
-  const tok=historicalFor(83),dai=historicalFor(378);
-  assert.deepEqual(comparisonRows['Current basho W–L'],[currentFor(83),currentFor(378)],
+  const headingNames=await screenshotFixture.locator('.sumo-comparison-head>span').allInnerTexts();
+  const pairIds=[headingNames[0],headingNames[2]].map(name=>{
+    if(name==='Tokihayate')return 83;
+    if(name==='Daiseizan')return 378;
+    throw new Error('Unexpected wrestler identity in source matchup: '+name);
+  });
+  assert.deepEqual(comparisonRows['Current basho W–L'],pairIds.map(currentFor),
     'Current W-L matches source banzuke records, without invented non-bout losses');
-  assert.deepEqual(comparisonRows['Makushita W–L'],[tok.wl,dai.wl],
+  assert.deepEqual(comparisonRows['Makushita W–L'],pairIds.map(id=>historicalFor(id).wl),
     'Career Makushita W-L matches the division-specific source');
-  assert.deepEqual(comparisonRows['Makushita win %'],[tok.pct,dai.pct],
+  assert.deepEqual(comparisonRows['Makushita win %'],pairIds.map(id=>historicalFor(id).pct),
     'Makushita percentages use only historical Makushita wins and losses');
   const textFlow=await identities.evaluateAll(panels=>panels.map(panel=>{
     const els=[...panel.querySelectorAll('h2,.sumo-daily-origin,.sumo-daily-ranks')];
