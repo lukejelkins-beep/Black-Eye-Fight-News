@@ -42,3 +42,11 @@ The cache's `ufcFullCareerHistoryChecks['paul-craig']` independently records `uf
 4. Only after all gates pass, update canonical evidence in place and run exact-commit full-cohort strict Stage 3 audit; until then keep Paul Craig uncertified and retain the latest audited 651/783 checkpoint.
 
 No production or roster changes are authorised by this research note.
+
+## Independent official chronology reconciliation (2026-11-17)
+
+The official UFC Paul Craig athlete profile lists **all 21** opponent/result/date entries, including the 2019 Mauricio Rua draw and 2025 Rodolfo Bellato no-contest. This independently corroborates the complete 21-bout **opponent chronology** against the 21 native event-index identities above. Source: https://www.ufc.com/athlete/paul-craig . Additional independent 21-row chronology corroboration: https://fighterapi.com/fighters/paul-craig-3946951 and https://www.fightindex.io/fighters/paul-craig .
+
+**Newly resolved:** the 21st native bout is **not an extra invalid UFC bout**: the official UFC source confirms 21 real UFC contests (9 wins, 10 losses, 1 draw, 1 NC). Therefore the 20-row provider history is incomplete as a *count*, and should not be used to drop a native record. **Not resolved:** which specific individual ID is missing from those 20 history rows, because the cached summary stores only the count, not the row IDs. Do not assume the draw or NC is missing merely because they are non-winner results.
+
+**Further certification gates remain:** official original per-fight URL/ID crosswalk, measured archived native round statistics (rather than retrieval markers), and successful strict full-cohort audit. Official fighter biography confirms opponents and results, not native round-stat evidence. No new certification is claimed.
