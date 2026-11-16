@@ -11,6 +11,7 @@ const patterns=[
  // New three-career source/corner/outcome negative tests must run in the strict audit.
  /^test-ufc-three-11-bout-career-source-gates-20261115\.mjs$/,
  /^test-ufc-stage3-frozen-cohort-.*\.mjs$/,
+ /^test-ufc-stage3-revised-.*\.mjs$/,
  /^test-ufc-36-month-stage3-progress\.mjs$/,
  /^test-ufc-v4-stage3-import\.mjs$/
 ];

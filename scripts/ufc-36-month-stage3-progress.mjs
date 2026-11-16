@@ -236,7 +236,12 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
  // Existing numeric source proofs are retained. A separately attested
  // official UFC athlete chronology may also pass without native identity
  // crosswalks, third-party URL matches, or optional round measurements.
- const semanticCertified=matchesRevisedOfficialCareer(profile,rows,ext,snapshot,evidenceCutoff);
+ // Preserve older original-native attestations and their mutation defenses.
+ // Newly attested UFCalendar-first careers opt in explicitly, or have no
+ // complete native mapping in their source proof.
+ const semanticCertified=(!nativeMapped||
+   ext.certificationStandard==='ufcalendar_first')&&
+   matchesRevisedOfficialCareer(profile,rows,ext,snapshot,evidenceCutoff);
  const independentlyVerified=Boolean(rosterLatestPresent&&
    ((checked&&!unresolvedIdentityConflicts)||semanticCertified));
  return {providerCertified,independentlyVerified,legacyClaim,
