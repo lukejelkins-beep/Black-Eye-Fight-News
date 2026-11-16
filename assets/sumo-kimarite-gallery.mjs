@@ -25,15 +25,17 @@ export function setKimariteMediaManifest(data){
  const valid={};
  for(const [slug,row] of Object.entries(data.clips)){
   if(!/^[a-z]+$/.test(slug)||!row||typeof row!=='object')continue;
-  if(!/^assets\/sumo-kimarite\/[a-z]+\.webm$/.test(row.webm||''))continue;
+  const hasWebm=/^assets\/sumo-kimarite\/[a-z]+\.webm$/.test(row.webm||'');
+  const hasGif=/^assets\/sumo-kimarite\/[a-z]+\.gif$/.test(row.gif||'');
+  if(!hasWebm&&!hasGif)continue;
   // H.264 MP4 fallback keeps clips playable on iPhone/Safari.
-  if(row.mp4 && (!/^assets\/sumo-kimarite\/[a-z]+\.mp4$/.test(row.mp4)||row.mp4!==row.webm.replace(/\.webm$/,'.mp4')))continue;
+  if(row.mp4 && (!hasWebm||!/^assets\/sumo-kimarite\/[a-z]+\.mp4$/.test(row.mp4)||row.mp4!==row.webm.replace(/\.webm$/,'.mp4')))continue;
   // Only the official JSA catalogue still is used as a public video poster.
   const technique=KIMARITE.find(x=>x.slug===slug);
   if(!technique)continue;
   if(row.poster && row.poster!==technique.jsaPoster)continue;
   if(row.rights!=='NHK permission confirmed by BEFN owner'||row.credit!=='NHK WORLD-JAPAN')continue;
-  valid[slug]={webm:row.webm,mp4:row.mp4||null,poster:technique.jsaPoster,rights:row.rights,credit:row.credit};
+  valid[slug]={webm:hasWebm?row.webm:null,gif:hasGif?row.gif:null,mp4:row.mp4||null,poster:technique.jsaPoster,rights:row.rights,credit:row.credit};
  }
  APPROVED_WEBM=Object.freeze(valid);return true;
 }
@@ -53,24 +55,16 @@ const groupFor=item=>KIMARITE_GROUPS.find(x=>x.id===item.group);
 let filter='all',search='';
 const videoFor=item=>APPROVED_WEBM[item.slug];
 function media(item,large=false){
+ // The landing page remains a lightweight photographic directory. Animation
+ // starts only inside the click-to-open technique window.
  const clip=videoFor(item);
- // The official JSA still is the poster for every technique, including
- // techniques without an encoded loop. NHK footage is credited separately.
- if(clip?.webm&&clip?.rights&&clip?.credit){
-   return '<video class="sumo-km-video" muted loop playsinline preload="none"'+
-     (large?' controls':'')+
-     ' poster="'+esc(item.jsaPoster)+'" aria-label="NHK technique video: '+esc(item.name)+'">'+
-     (clip.mp4?'<source src="'+esc(clip.mp4)+'" type="video/mp4">':'')+
-     '<source src="'+esc(clip.webm)+'" type="video/webm">Video unavailable.</video>'+
-     '<span class="sumo-km-media-credit">Video: '+esc(clip.credit)+'</span>';
- }
- const nhk=NHK_YOUTUBE_IDS[item.slug];
  return '<div class="sumo-km-poster" aria-label="Official JSA technique photograph: '+esc(item.name)+'">'+
    '<img src="'+esc(item.jsaPoster)+'" alt="Japan Sumo Association reference photograph of '+esc(item.name)+'" loading="lazy" decoding="async">'+
    '<span class="sumo-km-poster-credit">Photo: Japan Sumo Association</span>'+
-   (nhk?'<span class="sumo-km-pending" aria-label="NHK video loop pending">WebM pending</span>':'')+
+   (clip?.gif?'<span class="sumo-km-pending sumo-km-ready">▶ View GIF</span>':'')+
    '</div>';
 }
+
 function linkSource(item){
  const yt=NHK_YOUTUBE_IDS[item.slug];
  return yt?'https://www.youtube.com/watch?v='+yt:NHK_GALLERY;
@@ -126,7 +120,7 @@ function detail(item){
   '<p class="sumo-km-meaning">'+esc(item.english)+'</p></div>'+
   '<div class="sumo-km-detail-grid"><div class="sumo-km-detail-media">'+media(item,true)+'</div>'+
   '<div class="sumo-km-detail-aside"><h2>How the bout is decided</h2><p>'+esc(item.english)+'. This finish is categorised by the Japan Sumo Association under '+esc(category.name.toLowerCase())+'.</p>'+
-  (videoFor(item)?.webm?'<p>Autoplaying WebM example · muted · looping</p>':yt?
+  (videoFor(item)?.gif?'<p>Tap the photograph to view the looping GIF example.</p>':yt?
     '<p>The official JSA reference still is shown here while the NHK WebM loop is being prepared.</p>':
     '<p>The official JSA reference still is shown here while the NHK WebM loop is being prepared.</p>')+
   '<a class="sumo-km-watch" target="_blank" rel="noopener noreferrer" href="'+esc(mediaLink)+'">'+(yt?'Open original NHK demonstration':'Explore NHK technique videos')+' ↗</a>'+
@@ -159,6 +153,77 @@ export function hydrateKimariteGallery(){
  else observeKimariteVideos();
 }
 
+// Opened over any Sumo surface containing a named kimarite; the current page,
+// scroll position, profile filter, and active tournament view remain unchanged.
+let modalHost=null;
+let focusBeforeModal=null;
+export function kimariteModalMarkup(item){
+ const clip=videoFor(item);
+ const group=groupFor(item);
+ const graphic=clip?.gif?
+   '<img class="sumo-km-modal-gif" src="'+esc(clip.gif)+'" alt="Looping example of '+esc(item.name)+'" decoding="async">'+
+   '<span class="sumo-km-modal-media-credit">GIF: '+esc(clip.credit)+'</span>':
+   '<img class="sumo-km-modal-still" src="'+esc(item.jsaPoster)+'" alt="Official Japan Sumo Association '+esc(item.name)+' reference photograph">'+
+   '<span class="sumo-km-modal-media-credit">Photo: Japan Sumo Association</span>';
+ const pending=clip?.gif?'':'<p class="sumo-km-modal-pending">Animated example is being prepared. This is the official JSA reference still.</p>';
+ return '<div class="sumo-km-overlay" data-km-backdrop>'+
+   '<section class="sumo-km-dialog" role="dialog" aria-modal="true" aria-labelledby="sumo-km-modal-title" tabindex="-1">'+
+    '<button type="button" class="sumo-km-close" data-km-close aria-label="Close kimarite viewer">×</button>'+
+    '<div class="sumo-km-modal-visual">'+graphic+'</div>'+
+    '<div class="sumo-km-modal-text"><div class="eyebrow">'+esc(group.name)+'</div>'+
+    '<h2 id="sumo-km-modal-title">'+esc(item.name)+' <span>'+esc(item.japanese)+'</span></h2>'+
+    '<p class="sumo-km-modal-meaning">'+esc(item.english)+'</p>'+pending+
+    '<div class="sumo-km-modal-links"><a target="_blank" rel="noopener noreferrer" href="'+esc(item.jsaDetail)+'">Official JSA reference ↗</a>'+
+    '<a target="_blank" rel="noopener noreferrer" href="'+esc(linkSource(item))+'">NHK video source ↗</a></div>'+
+    '</div></section></div>';
+}
+export function openKimariteModal(name,returnFocus=null){
+ const item=lookupKimarite(name);
+ if(!item||typeof document==='undefined')return false;
+ closeKimariteModal(false);
+ focusBeforeModal=returnFocus||document.activeElement;
+ modalHost=document.createElement('div');
+ modalHost.id='sumo-km-popup-root';
+ modalHost.innerHTML=kimariteModalMarkup(item);
+ document.body.append(modalHost);
+ document.body.classList.add('sumo-km-modal-open');
+ modalHost.querySelector('[data-km-close]')?.focus({preventScroll:true});
+ return true;
+}
+export function closeKimariteModal(restoreFocus=true){
+ if(!modalHost)return;
+ modalHost.remove();
+ modalHost=null;
+ document.body.classList.remove('sumo-km-modal-open');
+ if(restoreFocus&&focusBeforeModal?.isConnected)focusBeforeModal.focus({preventScroll:true});
+ focusBeforeModal=null;
+}
+if(typeof document!=='undefined'){
+ document.addEventListener('click',event=>{
+   const button=event.target.closest?.('[data-km-close]');
+   if(button){event.preventDefault();closeKimariteModal();return;}
+   if(event.target?.matches?.('[data-km-backdrop]')){event.preventDefault();closeKimariteModal();return;}
+   const a=event.target.closest?.('a[href^="#kimarite?term="],[data-km-open]');
+   if(!a)return;
+   const input=a.dataset.kmOpen||new URLSearchParams((a.getAttribute('href')||'').split('?')[1]||'').get('term');
+   if(!lookupKimarite(input))return;
+   event.preventDefault();
+   event.stopPropagation();
+   openKimariteModal(input,a);
+ },true);
+ document.addEventListener('keydown',event=>{
+   if(!modalHost)return;
+   if(event.key==='Escape'){event.preventDefault();closeKimariteModal();return;}
+   if(event.key==='Tab'){
+     const focusables=[...modalHost.querySelectorAll('a[href],button:not([disabled])')];
+     if(!focusables.length)return;
+     const first=focusables[0],last=focusables.at(-1);
+     if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+     else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+   }
+ });
+}
+
 // Delegated listeners register once; the parent Sumo router owns hash navigation.
 if(typeof document!=='undefined')document.addEventListener('input',event=>{
  if(event.target?.id==='sumo-km-search'){
@@ -175,7 +240,7 @@ if(typeof document!=='undefined')document.addEventListener('click',event=>{
 // Link existing bout, head-to-head and profile technique references to their examples.
 // Text nodes are used (not innerHTML replacement), preserving current data and links.
 export function linkKimariteMentions(root){
- const selectors=['.sumo-ed-tech','.sumo-result-extra','.sumo-h2h-technique','.sumo-daily-meeting','.sumo-compact-result','.sumo-techniques-list .chart-row .name','.sumo-kimarite-bar','.sumo-leader-last','.sumo-daily-card'];
+ const selectors=['.sumo-ed-tech','.sumo-result-extra','.sumo-h2h-technique','.sumo-daily-meeting','.sumo-compact-result','.sumo-techniques-list .chart-row .name','.sumo-kimarite-bar','.sumo-leader-last','.sumo-daily-card','.sumo-match-footer','.sumo-result-header','.sumo-daily-history','.sumo-daily-history-title','.sumo-standings-row','.sumo-ed-row','.sumo-ed-extra','.sumo-result-extra','.sumo-sources','.sumo-h2h-kimarite','.sumo-bout-row','.sumo-h2h-bout','.sumo-daily-card'];
  const valid=new Map(KIMARITE.map(x=>[x.name.toLowerCase(),x]));
  const names=[...valid.keys()].sort((a,b)=>b.length-a.length).map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
  const reg=new RegExp('\\b('+names.join('|')+')\\b','ig');
@@ -190,6 +255,7 @@ export function linkKimariteMentions(root){
        if(match.index>last)fragment.append(document.createTextNode(s.slice(last,match.index)));
        const item=valid.get(match[0].toLowerCase());
        const link=document.createElement('a');link.href='#kimarite?term='+item.slug;
+       link.dataset.kmOpen=item.slug;
        link.className='sumo-km-inline-link';link.title='View '+item.name+' technique example';
        link.textContent=match[0];fragment.append(link);last=match.index+match[0].length;
      }
