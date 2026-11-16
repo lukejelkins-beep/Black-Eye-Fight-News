@@ -9,6 +9,7 @@ const monthLabel=v=>validMonth(v)?monthNames[Number(String(v).slice(4,6))-1]+' '
 const missing=v=>v===null||v===undefined||v===''?'Not available':String(v);
 const svg=(body,width,height,klass,label,mobile=false)=>'<svg class="'+klass+'"'+(mobile?' style="--sumo-mobile-chart-width:'+width+'px"':'')+' viewBox="0 0 '+width+' '+height+'" role="group" aria-label="'+esc(label)+'">'+body+'</svg>';
 const mobileGraph=()=>typeof window!=='undefined'&&!!window.matchMedia?.('(max-width: 650px)').matches;
+const mobilePlotWidth=()=>Math.max(270,Math.min(560,Math.floor(window.innerWidth)-72));
 /** A real calendar axis, not a point-index axis. Null means no recorded measurement period. */
 export function weightTimePositions(points,start,end){
   const observations=points.filter(p=>monthNumber(p.basho)!==null);
@@ -33,7 +34,7 @@ function sourceCell(value){
 export function editorialWeightChart(points,{start=null,end=null,source=null,review=null}={}){
   if(!points.length)return '<p class="sumo-career-empty">No dated weight observations are available. An undated current listing is not a dated measurement.</p>';
   const mobile=mobileGraph();
-  const W=mobile?Math.max(344,62+Math.max(0,points.length-1)*46):900;
+  const W=mobile?Math.max(mobilePlotWidth(),70+Math.max(0,points.length-1)*43):900;
   const H=mobile?216:280,L=mobile?50:64,R=mobile?16:26,T=mobile?21:26,B=mobile?42:46;
   const plotted=weightTimePositions(points,start,end);
   const values=plotted.map(x=>x.point.kg);
@@ -49,7 +50,9 @@ export function editorialWeightChart(points,{start=null,end=null,source=null,rev
   const maxMonths=monthNumber(end)??monthNumber(plotted[plotted.length-1].point.basho);
   const minMonths=monthNumber(start)??monthNumber(plotted[0].point.basho);
   if(minMonths!==null&&maxMonths!==null&&minMonths<maxMonths){
-    const minYear=Math.ceil(minMonths/12),maxYear=Math.floor(maxMonths/12),step=Math.max(1,Math.ceil((maxYear-minYear)/7));
+    const minYear=Math.ceil(minMonths/12),maxYear=Math.floor(maxMonths/12);
+    const maxIntervals=mobile?2:7;
+    const step=Math.max(1,Math.ceil((maxYear-minYear)/maxIntervals));
     for(let yr=minYear;yr<=maxYear;yr+=step){
       const xx=L+(yr*12-minMonths)/(maxMonths-minMonths)*(W-L-R);
       if(xx>=L&&xx<=W-R)body+='<text class="sumo-chart-axis" x="'+xx+'" y="'+(H-10)+'" text-anchor="middle">'+yr+'</text>';
@@ -60,13 +63,14 @@ export function editorialWeightChart(points,{start=null,end=null,source=null,rev
     // A conspicuous gap is intentionally left unconnected, not interpolated.
     if(gap<=18)body+='<line class="sumo-weight-connector" x1="'+x(a)+'" y1="'+y(a.point.kg)+'" x2="'+x(b)+'" y2="'+y(b.point.kg)+'"/>';
   }
+  const firstLastGap=plotted.length>1?Math.abs(x(plotted[plotted.length-1])-x(plotted[0])):Infinity;
   body+=plotted.map((v,i)=>{
     const p=v.point,desc=monthLabel(p.basho)+' · '+p.kg+' kg · '+missing(p.source||source)+
       ' · month precision'+(p.reviewState?' · '+p.reviewState:'');
     const xx=x(v),yy=y(p.kg);
     return '<circle class="sumo-weight-point" data-weight-month="'+esc(p.basho)+'" data-weight-x="'+xx.toFixed(2)+
       '" cx="'+xx+'" cy="'+yy+'" r="5.5" tabindex="0" role="img" aria-label="'+esc(desc)+'"><title>'+esc(desc)+'</title></circle>'+
-      ((i===0||i===plotted.length-1)?'<text class="sumo-chart-number" x="'+xx+'" y="'+(yy-13)+'" text-anchor="middle">'+esc(p.kg)+' kg</text>':'');
+      ((i===plotted.length-1||(i===0&&(!mobile||firstLastGap>=75)))?'<text class="sumo-chart-number" x="'+xx+'" y="'+(yy-13)+'" text-anchor="middle">'+esc(p.kg)+' kg</text>':'');
   }).join('');
   const table='<details class="sumo-data-table"><summary>All '+plotted.length+' dated weight observations and sources</summary>'+
     '<div class="table-scroll"><table><thead><tr><th scope="col">Recorded period</th><th scope="col">Weight</th><th scope="col">Source</th><th scope="col">Date precision</th><th scope="col">Review state</th></tr></thead><tbody>'+
@@ -83,8 +87,8 @@ export function rankRangePoints(points,range='career'){
 }
 function rankSvg(points,{fullLadder=false,overview=false}={}){
   const mobile=!overview&&mobileGraph();
-  const W=mobile?Math.max(344,108+Math.max(0,points.length-1)*25):900;
-  const H=mobile?230:overview?88:290,L=mobile?92:overview?12:106,R=mobile?16:24,T=mobile?17:overview?10:22,B=mobile?47:overview?12:42;
+  const W=mobile?Math.max(mobilePlotWidth(),90+Math.max(0,points.length-1)*17):900;
+  const H=mobile?234:overview?88:290,L=mobile?92:overview?12:106,R=mobile?14:24,T=mobile?17:overview?10:22,B=mobile?51:overview?12:42;
   if(!points.length)return '';
   const ord=points.map(p=>ordinalRank(p.rank)).filter(v=>v!==null);
   if(!ord.length)return '';
@@ -112,9 +116,18 @@ function rankSvg(points,{fullLadder=false,overview=false}={}){
     const now=ordinalRank(p.rank),prev=i?ordinalRank(points[i-1].rank):null;
     const move=prev===null?'First recorded':now<prev?'Up in banzuke positions':now>prev?'Down in banzuke positions':'Same banzuke position';
     const desc=monthLabel(p.basho)+' · '+p.rank+' · '+move;
+    const showTick=!overview&&(i===0||i===points.length-1);
+    const anchor=i===0?'start':'end';
+    const date=String(p.basho||'');
+    const label=mobile
+      ?'<text class="sumo-chart-axis" x="'+x(i)+'" y="'+(H-27)+'" text-anchor="'+anchor+'">'+
+        esc(monthNames[Number(date.slice(4,6))-1]||'')+'</text>'+
+        '<text class="sumo-chart-axis" x="'+x(i)+'" y="'+(H-11)+'" text-anchor="'+anchor+'">'+
+        esc(date.slice(0,4))+'</text>'
+      :'<text class="sumo-chart-axis" x="'+x(i)+'" y="'+(H-11)+'" text-anchor="'+anchor+'">'+esc(monthLabel(p.basho))+'</text>';
     return '<circle class="sumo-rank-point" cx="'+x(i)+'" cy="'+y(p.rank)+'" r="'+(overview?2.5:4.2)+'" '+
       (overview?'':'tabindex="0" role="img" aria-label="'+esc(desc)+'"')+'><title>'+esc(desc)+'</title></circle>'+
-      (!overview&&(i===0||i===points.length-1||(mobile&&i%Math.max(1,Math.ceil(points.length/5))===0))?'<text class="sumo-chart-axis" x="'+x(i)+'" y="'+(H-11)+'" text-anchor="'+(i===0?'start':i===points.length-1?'end':'middle')+'">'+esc(mobile?monthLabel(p.basho).replace(' '," ’"):monthLabel(p.basho))+'</text>':'');
+      (showTick?label:'');
   }).join('');
   return svg(body,W,H,overview?'sumo-rank-overview':'sumo-rank-svg',overview?'Whole-career rank overview, first to latest recorded basho':'Selected-period ordinal banzuke history; higher on chart means higher rank',mobile);
 }
