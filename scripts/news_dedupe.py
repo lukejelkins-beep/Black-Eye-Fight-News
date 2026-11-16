@@ -66,9 +66,22 @@ def event_kind(title):
 def subject_terms(title):
     return set(title_terms(title))-GENERIC_SUBJECT
 
+# The same fighter can sign with different promotions in one news cycle.
+# Require a matching named promotion for the narrow reunion-signing match.
+NAMED_PROMOTIONS=('ufc','pfl','rizin','ksw','bellator','bkfc','cage warriors')
+
+def named_promotions(title):
+    text=str(title or '').lower()
+    return {p for p in NAMED_PROMOTIONS if re.search(r'\b'+re.escape(p)+r'\b',text)}
+
 def same_event(a,b):
     kind=event_kind(a.get('title',''))
     if not kind or kind!=event_kind(b.get('title','')):return False
+    # Rumours, offers and rejected proposals are not confirmed agreements.
+    if headline_stage(a.get('title'))!=headline_stage(b.get('title')):return False
+    if kind=='contract-extension':
+        x,y=named_promotions(a.get('title')),named_promotions(b.get('title'))
+        if x and y and x!=y:return False
     left,right=subject_terms(a.get('title','')),subject_terms(b.get('title',''))
     shared=left&right
     # Matching two rare subject tokens (e.g. 'jon'+'anik') plus the event type
@@ -102,8 +115,35 @@ def headline_stage(title):
       ('cancelled',r'\b(?:cancelled|canceled|called off)\b'),
       ('postponed',r'\b(?:postponed|delayed)\b'),
       ('result',r'\b(?:knocked out|knockout|wins?|defeats?|stops?|submits?)\b'),
-      ('unconfirmed',r'\b(?:rumou?rs?|reportedly|possible|could|may)\b')]
+      ('unconfirmed',r'\b(?:rumou?rs?|reportedly|possible|possibly|could|may)\b')]
     return next((kind for kind,pattern in rules if re.search(pattern,t)),'')
+
+def has_booking_development(title):
+    return bool(re.search(
+        r'\b(?:booked|scheduled|set to face|fight announced|to face|to fight|will fight|added to)\b',
+        str(title or ''),re.I))
+
+def matching_return_signing(a,b):
+    """Same confirmed fighter re-signing, described as a post-split signing.
+
+    This is intentionally not a generic "signs" alias for extensions.
+    """
+    x,y=str(a.get('title') or ''),str(b.get('title') or '')
+    resigned=lambda t: bool(re.search(r'\bre-signs?\b',t,re.I))
+    after_split=lambda t: bool(re.search(
+        r'\bsigns?\b.{0,100}\bafter\b.{0,70}\b(?:split|hiatus|absence|departure)\b',t,re.I))
+    if not ((resigned(x) and after_split(y)) or (resigned(y) and after_split(x))):return False
+    # Exclude unconfirmed claims, offers, rejections and unrelated follow-up bouts.
+    if headline_stage(x) or headline_stage(y):return False
+    if has_booking_development(x) or has_booking_development(y):return False
+    roles=r'\b(?:commentary|commentator|announcer|broadcast|analyst|coach|pundit)\b'
+    if bool(re.search(roles,x,re.I))!=bool(re.search(roles,y,re.I)):return False
+    promo_x,promo_y=named_promotions(x),named_promotions(y)
+    if not promo_x or promo_x!=promo_y:return False
+    left,right=subject_terms(x),subject_terms(y)
+    shared=left&right
+    return bool(len(shared)>=2 and min(len(left),len(right)) and
+                len(shared)/min(len(left),len(right))>=.65)
 
 def reworded_headline(a,b):
     left,right=distinctive(a.get('title')),distinctive(b.get('title'))
@@ -142,7 +182,15 @@ def duplicate_of(a,b):
     x,y=title_terms(a.get('title')),title_terms(b.get('title'))
     if not x or not y:return False
     if x==y:return True
-    if same_event(a,b) or reworded_headline(a,b) or matching_booking(a,b) or matching_event_media(a,b):return True
+    # Apply editorial vetoes before every fuzzy matcher. A permissive booking or
+    # contract matcher must not undo the narrower return-signing safeguards.
+    if headline_stage(a.get('title'))!=headline_stage(b.get('title')):return False
+    titles=(a.get('title',''),b.get('title',''))
+    if (any(event_kind(t)=='contract-extension' for t in titles) and
+            any(has_booking_development(t) for t in titles)):
+        return False
+    if (same_event(a,b) or matching_return_signing(a,b) or reworded_headline(a,b)
+            or matching_booking(a,b) or matching_event_media(a,b)):return True
     sa,sb=set(x),set(y)
     if min(len(sa),len(sb))<6:return False
     if (sa & UPDATES)!=(sb & UPDATES):return False

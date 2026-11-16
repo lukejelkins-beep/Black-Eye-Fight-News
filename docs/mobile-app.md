@@ -20,7 +20,7 @@ npx cap open android
 npx cap open ios
 ```
 
-Platform projects are generated locally rather than committed here; use `npx cap add` only once per platform. `npm run build` creates `www/` from the current public website's HTML, assets, editions and data. Update `www/` with `npm run cap:sync` after web changes.
+Platform projects are generated locally rather than committed here; use `npx cap add` only once per platform. `npm run build` creates `www/` from the public website HTML, assets, data, legal pages and push worker. Private editions are excluded. Update `www/` with `npm run cap:sync` after web changes.
 
 **Important:** This native package currently bundles a snapshot of the JSON feeds, because the website uses relative `/data/` URLs. Native store builds will need HTTPS API/feed routing (or a carefully reviewed native data adapter) to retain the Render site's live-refresh behaviour. Do **not** ship it as a fully live native app without that extra work. Do not use Capacitor `server.url` to load the production site for App Store release: the standard approach is bundling a local app shell with APIs for remote content.
 

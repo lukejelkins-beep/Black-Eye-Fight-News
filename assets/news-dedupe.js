@@ -30,6 +30,9 @@
    ['suspension',/\b(?:suspended|suspension)\b/i]
   ];
   function eventKind(title){return eventRules.find(([,re])=>re.test(title||''))?.[0]||'';}
+  const namedPromotions=['ufc','pfl','rizin','ksw','bellator','bkfc','cage warriors'];
+  function promotions(title){return namedPromotions.filter(p=>new RegExp('\\b'+p+'\\b','i').test(title||''));}
+  function hasBookingDevelopment(title){return /\b(?:booked|scheduled|set to face|fight announced|to face|to fight|will fight|added to)\b/i.test(title||'');}
   function sameEvent(a,b){
    const kind=eventKind(a.title);
    if(!kind||kind!==eventKind(b.title))return false;
@@ -53,7 +56,7 @@
     if(/\b(?:cancelled|canceled|called off)\b/.test(t))return 'cancelled';
     if(/\b(?:postponed|delayed)\b/.test(t))return 'postponed';
     if(/\b(?:knocked out|knockout|wins?|defeats?|stops?|submits?)\b/.test(t))return 'result';
-    if(/\b(?:rumou?rs?|reportedly|possible|could|may)\b/.test(t))return 'unconfirmed';
+    if(/\b(?:rumou?rs?|reportedly|possible|possibly|could|may)\b/.test(t))return 'unconfirmed';
     return '';
   }
   function sameRewordedHeadline(a,b){
@@ -82,6 +85,14 @@
     if(a.sport!==b.sport||Math.abs(Date.parse(a.publishedAt)-Date.parse(b.publishedAt))>72*3600e3)return false;
     const x=terms(a.title),y=terms(b.title),sx=new Set(x),sy=new Set(y);
     if(x.join(' ')==y.join(' '))return true;
+    // Every fuzzy path respects editorial stage and contract follow-ups, just
+    // like the authoritative publishing-time filter.
+    if(stage(a.title)!==stage(b.title))return false;
+    if([a.title,b.title].some(t=>eventKind(t)==='contract-extension')){
+      if(hasBookingDevelopment(a.title)||hasBookingDevelopment(b.title))return false;
+      const ap=promotions(a.title),bp=promotions(b.title);
+      if(ap.length&&bp.length&&ap.join(',')!==bp.join(','))return false;
+    }
     if(sameEvent(a,b)||sameRewordedHeadline(a,b)||matchingBooking(a,b)||matchingEventMedia(a,b))return true;
     if(Math.min(sx.size,sy.size)<6)return false;
     const stages=s=>[...s].filter(w=>updates.has(w)).sort().join(',');

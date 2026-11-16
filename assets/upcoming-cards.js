@@ -194,7 +194,7 @@ window.UpcomingCards=(()=>{
   const choices=sections.length>1?[allOption,...sections]:sections;
   const selected=choices.find(g=>g.key===active.get(e.id))||choices[0];
   const tabs=choices.length>1?'<div class="result-card-tabs upcoming-tabs" role="group" aria-label="'+esc(e.title)+' sections" style="grid-template-columns:repeat('+choices.length+',minmax(0,1fr))">'+choices.map(g=>
-   '<button type="button" class="result-card-tab'+(g.key===selected.key?' is-active':'')+'" data-upcoming-tab="'+esc(e.id)+'" data-upcoming-section="'+esc(g.key)+'" aria-controls="upcoming-'+esc(e.id)+'-'+(g.key==='all'?sections[0].key:g.key)+'" aria-pressed="'+String(g.key===selected.key)+'"><span>'+esc(g.label)+'</span><small>'+g.rows.length+'</small></button>').join('')+'</div>':
+   '<button type="button" class="result-card-tab'+(g.key===selected.key?' is-active':'')+'" data-upcoming-tab="'+esc(e.id)+'" data-upcoming-section="'+esc(g.key)+'" aria-controls="'+(g.key==='all'?sections:[g]).map(panel=>'upcoming-'+esc(e.id)+'-'+panel.key).join(' ')+'" aria-pressed="'+String(g.key===selected.key)+'"><span>'+esc(g.label)+'</span><small>'+g.rows.length+'</small></button>').join('')+'</div>':
    '<div class="upcoming-single-section">'+esc(selected?.label||'Announced bouts')+'</div>';
   const panels=sections.map(g=>'<div id="upcoming-'+esc(e.id)+'-'+esc(g.key)+'" class="result-bouts upcoming-fights" data-upcoming-panel="'+esc(g.key)+'" role="list" aria-label="'+esc(g.label)+'" '+(selected.key==='all'||g.key===selected.key?'':'hidden')+'>'+g.rows.map(b=>'<div role="listitem">'+bout(b,e)+'</div>').join('')+'</div>').join('');
   const artCandidates=posterCandidates(e),first=artCandidates[0],art=first?href(first.url):'';
@@ -219,6 +219,8 @@ window.UpcomingCards=(()=>{
   const query=String(window.BEFNFightsUI?.query||'').trim().toLowerCase();
   const promo=window.BEFNFightsUI?.promotion||'ufc';
   const events=feed.events.filter(e=>{
+   // Explicit final state outranks the grace period for unconfirmed start times.
+   if(['completed','cancelled'].includes(String(e.status||'').toLowerCase()))return false;
    if((sport!=='all'&&e.sport!==sport)||!Array.isArray(e.bouts)||!e.bouts.length)return false;
    if(sport==='mma'){
     const name=String(e.promotion||'').toLowerCase();

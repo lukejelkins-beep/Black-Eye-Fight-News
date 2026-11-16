@@ -1,0 +1,35 @@
+{
+  "dateMelbourne": "2026-11-14",
+  "sourceRevision": "0ac044fdde1fab90a2180a39172ae1f2b75d4d21",
+  "previewRevision": "8ea165f3d00e8c4ddf12b7241a9e5e53ce4170af",
+  "sha256": {
+    "index.html": "cb370e6b477fea159f32458b14f72040548e442db298f0400c1972603f549793",
+    "assets/results.js": "9b7d0feb5a72082a464c426edc194a8ce965c85358c6d69bf32fd39a29cdfa13",
+    "assets/upcoming-cards.js": "883488a1f7d2f4f3577382021bed2334ff4ec27ff7353a29fcc10218c86cf7c5",
+    "assets/news-dedupe.js": "0cd202911e987a6bccb24485e3cd5c8a7d18c1ef6b2eb56280b76eee9cf937ab",
+    "scripts/news_dedupe.py": "2997c1939aa275236f4bb8fe98e96da4615ce20523a1b803af35e6317e0c1a39",
+    "data/results.json": "3562613f511938930930d42ab0bd0e794334a4a1b0fd501a982c0b931fbc2e7d",
+    "data/upcoming-cards.json": "4ba53426c4c616f69cd367d3a322e6356d1b342701b5fb06e1f230732ed81b3c"
+  },
+  "resultsAndUpcomingUnchangedFromHandover": true,
+  "newsInputMainRevision": "2b8f364fb37c0e9fd6133dedf481400b06a0b14a",
+  "newsInputSha256": "e1c25a7a1791d1a03d22e84824185c4c769c76a327cf32829b2bcdf2208a954e",
+  "sourceCI": {
+    "run": 43577693632,
+    "releasePreflight": "success",
+    "qaInventory": "success"
+  },
+  "console": {
+    "retrievedLatestWarningsErrors": 100,
+    "extensionOrigin": 100,
+    "befnOriginInRetrievedSample": 0,
+    "note": "Bounded console sample; not proof of zero errors across the complete session. Provider fetches/remote scripts/workers intentionally restricted by fixture."
+  },
+  "limitations": [
+    "Chrome on Linux; mobile iframe CSS viewport, not physical mobile device",
+    "No screen reader operated",
+    "No production latency, INP or p95 claim",
+    "No changed-server-payload refresh injected in browser; deterministic source regressions cover refresh retention",
+    "Branch protection administration read still403"
+  ]
+}
