@@ -32,4 +32,8 @@ test('fail closed on missing, malformed or duplicate career rows',()=>{
   assert.equal(render({verifiedOfficialBoutCount:null}).visible,false);
   assert.equal(render({bouts:[{...bouts[0],event:''},bouts[1]]}).reason,'invalid_bout_data');
   assert.equal(render({bouts:[bouts[0],bouts[0]]}).reason,'duplicate_bouts');
+  assert.equal(render({bouts:[{...bouts[0],date:'2026-02-30'},bouts[1]]}).reason,'invalid_bout_data');
+  assert.equal(render({bouts:[{...bouts[0],date:'2099-01-01'},bouts[1]]}).reason,'invalid_bout_data');
+  assert.equal(render({bouts:[{...bouts[0],round:0},bouts[1]]}).reason,'invalid_bout_data');
+  assert.equal(render({bouts:[{...bouts[0],method:{bad:true}},bouts[1]]}).reason,'invalid_bout_data');
 });
