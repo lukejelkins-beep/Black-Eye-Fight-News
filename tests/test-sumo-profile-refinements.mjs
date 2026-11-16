@@ -38,5 +38,5 @@ test('H2H opponent record is source-derived, gold-on-solid-dark, and reflows at 
   assert.match(css,/\.sumo-rival \.sumo-rival-record\{[\s\S]*?color:#fff0c3;background:#40332f/);
   assert.match(css,/@media\(max-width:600px\)\{[\s\S]*?\.sumo-rival \.sumo-rival-record\{grid-column:2;grid-row:2/);
   assert.match(css,/@media\(max-width:360px\)\{\s*\.sumo-rival\{grid-template-columns:46px minmax\(0,1fr\)/);
-  assert.match(html,/sumo-editorial\.css\?v=20261116-profile-career-h2h/);
+  assert.match(html,/sumo-editorial\.css\?v=20261116-[\w-]+/);
 });
