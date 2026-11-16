@@ -17,8 +17,10 @@ const cases={
   'vinicius-oliveira':{count:6,numeric:'501',feeder:'83951'},
   'bo-nickal':{count:7,numeric:'109',feeder:'83978'}
 };
+const excludedNative=slug=>new Set((registry[slug]?.sourceVerifiedExcludedFeederBouts||[]).map(x=>String(x.nativeBoutId)));
 const history=slug=>profiles[slug].recentHistory.filter(r=>
  r.source==='native'&&r.promotion==='ufc'&&r.boutId&&
+ !excludedNative(slug).has(String(r.boutId))&&
  !/contender series|road to ufc|\bdwcs\b/i.test(native.bouts[r.boutId]?.event||''));
 const check=(slug,proof)=>evaluateCareerEvidence(
  profiles[slug],history(slug),
@@ -37,9 +39,13 @@ test('wave88: six exact independent UFCStats career sources and original two-cor
   assert.equal(h.length,count,slug+' complete native official history');
   assert.deepEqual(p.verifiedNumericFighterIds,[numeric]);
   assert.equal(p.sourceSnapshot.fightResultsBlobSha,'80258ab3d9f413cad9be13fde64beb66dd0bcfa6');
-  assert.equal(p.sourceVerifiedExcludedFeederBouts.length,1);
+  assert.equal(p.sourceVerifiedExcludedFeederBouts.length,slug==='bo-nickal'?2:1);
   assert.equal(p.sourceVerifiedExcludedFeederBouts[0].nativeBoutId,feeder);
   assert.match(native.bouts[feeder].event,/contender series|dwcs/i);
+  if(slug==='bo-nickal'){
+   assert.ok(p.sourceVerifiedExcludedFeederBouts.some(x=>x.nativeBoutId==='83952'&&x.sourceUrl==='https://www.ufc.com/athlete/bo-nickal'));
+   assert.ok(profiles[slug].recentHistory.some(x=>x.boutId==='83952'&&x.opponent==='Zachary Borrego'));
+  }
   assert.ok(!p.bouts.some(r=>r.nativeBoutId===feeder));
   const unique=new Set();
   for(const bout of p.bouts){
