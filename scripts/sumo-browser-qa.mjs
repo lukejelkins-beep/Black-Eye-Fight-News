@@ -54,6 +54,28 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assertContains(home,'five leaders','home leaders');
   assert.ok(await page.locator('.sumo-home-grid').count()===1,'Results and leaders appear in first dashboard');
   assert.equal(await page.locator('.sumo-home-leaders .sumo-standings-row').count(),5,'Homepage shows exactly five leaders');
+  for(const division of ['Makuuchi','Juryo','Makushita']){
+    await page.locator('[data-home-leader-division="'+division+'"]').click();
+    assert.equal(await page.locator('[data-home-leader-division="'+division+'"]').getAttribute('aria-pressed'),'true',
+      'Selected '+division+' leader tab is accessible');
+    assert.equal(await page.locator('.sumo-home-leaders .sumo-leader-card').count(),5,
+      'Exactly five source-ranked leaders for '+division);
+    assert.equal(await page.locator('.sumo-leader-card .sumo-leader-vitals').count(),5,'Height and weight in all '+division+' cards');
+    assert.equal(await page.locator('.sumo-leader-card .sumo-leader-career').count(),5,'Recorded career W-L in all '+division+' cards');
+    assert.equal(await page.locator('.sumo-leader-card .sumo-leader-last').count(),5,'Latest completed result details in all '+division+' cards');
+    const proportions=await page.locator('.sumo-leader-card').first().evaluate(card=>{
+      const image=card.querySelector('.profile-icon.sumo-photo');
+      return {cardWidth:card.getBoundingClientRect().width,photoWidth:image?.getBoundingClientRect().width,
+        photoHeight:image?.getBoundingClientRect().height,cardHeight:card.getBoundingClientRect().height};
+    });
+    assert.ok(proportions.photoWidth>=proportions.cardWidth*.40,'Leader portrait dominates left edge '+JSON.stringify(proportions));
+    assert.ok(proportions.photoHeight>=proportions.cardHeight-3,'Portrait fills the height '+JSON.stringify(proportions));
+    const widths=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
+    assert.ok(widths.page<=widths.viewport+6,'No mobile horizontal overflow after '+division+' toggle: '+JSON.stringify(widths));
+  }
+  await page.locator('[data-home-leader-division="Makuuchi"]').click();
+  await page.locator('.sumo-home-leaders').screenshot({path:OUT+'/'+label+'-top-five.png',animations:'disabled'});
+  screenshotCount++;
   if(isMobile){
     const nav=await page.evaluate(()=>{
       const links=[...document.querySelector('.subnav-inner').children]
@@ -257,9 +279,24 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
 
   // Dedicated daily face-offs use sourced pairings, two complete stat columns,
   // genuine latest-five kimarite and responsive image-first cards.
+  const rankSource=await (await page.request.get('http://127.0.0.1:8765/data/sumo/preview-details.json')).json();
+  const assertRankedHeadToHeads=async division=>{
+    const rows=[...(rankSource.banzuke?.[division]?.data?.east||[]),
+      ...(rankSource.banzuke?.[division]?.data?.west||[])].sort((a,b)=>
+      (Number(a.rankValue)||99999)-(Number(b.rankValue)||99999)||
+      (a.side==='East'?-1:1));
+    const positions=new Map(rows.map((row,i)=>[Number(row.rikishiID),i]));
+    const ranks=await page.locator('.sumo-daily-card').evaluateAll(cards=>cards.map(card=>
+      [...card.querySelectorAll('.sumo-daily-facts a[href^="#profile/"]')]
+        .map(a=>Number(a.getAttribute('href').split('/')[1]))));
+    assert.ok(ranks.length>0,'Head-to-head cards exist for '+division);
+    const highs=ranks.map(pair=>Math.min(...pair.map(id=>positions.get(id)??99999)));
+    assert.deepEqual(highs,[...highs].sort((a,b)=>a-b),'Matchups descend from top of '+division+' banzuke');
+  };
   await open(page,'matchups','.sumo-daily-page');
   await page.locator('#sumo-matchup-day').selectOption('1');
   assert.ok(await page.locator('.sumo-daily-card').count()>0,'Makuuchi Day 1 verified cards rendered');
+  await assertRankedHeadToHeads('Makuuchi');
   const firstCard=page.locator('.sumo-daily-card').first();
   assert.equal(await firstCard.locator('.sumo-daily-facts').count(),2,'Both wrestler stat columns are present');
   assert.equal(await firstCard.locator('.sumo-daily-photo').count(),2,'Portraits occupy both edges');
@@ -282,6 +319,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   for(const division of ['Juryo','Makushita']){
     await page.locator('[data-matchup-division="'+division+'"]').click();
     assertContains(await page.locator('.sumo-daily-date').innerText(),division,'Division selector');
+    await assertRankedHeadToHeads(division);
     assert.equal(await page.locator('#sumo-matchup-day').inputValue(),'1','Day is retained between divisions');
   }
   await page.locator('[data-matchup-division="Makuuchi"]').click();
