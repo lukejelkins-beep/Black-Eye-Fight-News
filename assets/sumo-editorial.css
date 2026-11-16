@@ -414,3 +414,19 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-standings-ranking .sumo-move-meta{max-width:100%;text-align:left}
 .sumo-yokozuna-label{font-size:13px;font-weight:750;color:#e9d2a0}
 @media(max-width:740px){.sumo-standings-row:has(>.sumo-photo){grid-template-columns:58px minmax(0,1fr)}.sumo-standings-ranking .sumo-move{font-size:12px;padding:4px 6px}}
+
+/* Standings: tight headshot crop and left-aligned movement with rank and measurements. */
+.sumo-standings-row>.sumo-photo{width:74px;height:74px;min-height:0;border-radius:10px;align-self:center;grid-row:1 / span 2}
+.sumo-standings-row>.sumo-photo.has-photo>img{width:100%;height:100%;object-fit:cover;object-position:center 8%;transform:scale(1.9);transform-origin:center 12%}
+.sumo-standings-row:has(>.sumo-photo){grid-template-columns:74px minmax(0,1fr);column-gap:13px}
+.sumo-standings-row:has(>.sumo-photo)>.sumo-standings-identity{grid-column:2;grid-row:1}
+.sumo-standings-row:has(>.sumo-photo)>.sumo-standings-ranking{grid-column:2;grid-row:2;align-items:flex-start;text-align:left;justify-content:flex-start;gap:6px}
+.sumo-standings-row .sumo-standings-ranking .sumo-move{align-self:flex-start;margin-left:0;margin-right:auto}
+.sumo-standings-row .sumo-standings-ranking .sumo-move-meta{align-self:flex-start;text-align:left}
+.sumo-standings-measurements{display:block;color:#e7e2d9;font-size:12px;font-weight:600;letter-spacing:.01em}
+@media(max-width:740px){
+ .sumo-standings-row:has(>.sumo-photo){grid-template-columns:72px minmax(0,1fr);gap:7px 13px}
+ .sumo-standings-row>.sumo-photo{width:72px;height:72px}
+ .sumo-standings-row:has(>.sumo-photo)>.sumo-standings-ranking{grid-column:2;grid-row:2;flex-direction:column;align-items:flex-start;justify-content:flex-start}
+ .sumo-standings-row .sumo-standings-ranking .sumo-move{align-self:flex-start}
+}
