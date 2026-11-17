@@ -1742,3 +1742,121 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   }
   .profile-hero .sumo-hero-country{font-size:12px}
 }
+
+/* Sumo day-results: photo-led three-column face-off cards. */
+/* Specific to Basho Centre > Results. The existing scheduled matchup,
+   standings, rikishi profile and H2H cards are intentionally unaffected. */
+.sumo-compact-results{
+  display:grid;grid-template-columns:minmax(0,1fr);gap:12px;
+  width:100%;max-width:960px;margin:8px auto 20px;
+}
+.sumo-compact-results .sumo-compact-bout{
+  display:grid;grid-template-columns:minmax(0,29%) minmax(0,42%) minmax(0,29%);
+  grid-template-rows:minmax(0,1fr);
+  position:relative;isolation:isolate;
+  width:100%;min-width:0;min-height:218px;height:auto;
+  gap:0;padding:0;overflow:hidden;
+  color:#fbf7f2;background:#1d2331;
+  border:1px solid #c5b5a4;border-radius:12px;
+  box-shadow:0 5px 18px rgba(21,14,24,.08);
+}
+.sumo-compact-results .sumo-compact-photo{
+  grid-row:1;display:block;position:relative;min-width:0;min-height:0;
+  height:100%;width:100%;overflow:hidden;
+  background:linear-gradient(160deg,#e4d8c9,#a9a3a0);
+  text-decoration:none;
+}
+.sumo-compact-results .sumo-compact-photo.start{grid-column:1}
+.sumo-compact-results .sumo-compact-photo.end{grid-column:3}
+.sumo-compact-results .sumo-compact-photo>.profile-icon.sumo-photo.xl{
+  position:absolute;inset:0;display:block;
+  height:100%!important;width:100%!important;min-height:0!important;
+  max-height:none!important;max-width:none!important;aspect-ratio:auto!important;
+  margin:0;padding:0;border:0!important;border-radius:0!important;
+  box-shadow:none!important;overflow:hidden;
+}
+.sumo-compact-results .sumo-compact-photo>.profile-icon.sumo-photo>img{
+  display:block;position:absolute;inset:0;
+  width:100%!important;height:100%!important;max-width:none;
+  max-height:none;object-fit:cover!important;object-position:center top!important;
+  border:0;transform:none!important;
+}
+.sumo-compact-results .sumo-compact-photo.is-winner::after{
+  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  box-shadow:inset 0 -5px 0 #cda85c,inset 0 0 0 2px rgba(205,168,92,.55);
+}
+.sumo-compact-results .sumo-compact-photo:focus-visible{outline:3px solid #e4b653;outline-offset:-4px;z-index:3}
+.sumo-compact-results .sumo-compact-center{
+  grid-column:2;grid-row:1;position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-sizing:border-box;gap:12px;min-width:0;min-height:0;padding:14px 14px;
+  text-align:center;color:#fbf7f2;
+  background:linear-gradient(165deg,#232b3e,#151924 80%);
+  border-left:1px solid rgba(201,167,102,.26);
+  border-right:1px solid rgba(201,167,102,.26);
+}
+.sumo-compact-results .sumo-compact-pair{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:5px;width:100%;min-width:0;
+}
+.sumo-compact-results .sumo-compact-fighter{
+  display:block;max-width:100%;min-width:0;
+  color:#fff;font:900 clamp(23px,3vw,32px)/.98 'Barlow Condensed',Impact,sans-serif;
+  text-transform:uppercase;letter-spacing:.01em;overflow-wrap:anywhere;
+}
+.sumo-compact-results .sumo-compact-fighter a{text-decoration:none;color:inherit}
+.sumo-compact-results .sumo-compact-fighter a:hover{text-decoration:underline;text-decoration-color:#d9b365}
+.sumo-compact-results .sumo-compact-vs{
+  display:block;color:#d1ab61;font:900 11px/1 'DM Sans',sans-serif;
+  letter-spacing:.15em;
+}
+.sumo-compact-results .sumo-compact-outcome{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  min-width:0;max-width:100%;line-height:1.2;
+}
+.sumo-compact-results .sumo-compact-state{
+  display:inline-block;border:1px solid rgba(225,203,158,.65);border-radius:3px;
+  padding:2px 9px;background:#164f40;color:#e3f7e9;
+  font-size:10px;font-weight:900;letter-spacing:.07em;
+}
+.sumo-compact-results .sumo-compact-state.pending{background:#6c5033;color:#f9eccb}
+.sumo-compact-results .sumo-compact-outcome>strong{
+  display:block;color:#fbf3df;max-width:100%;
+  font-size:clamp(13px,1.5vw,16px);font-weight:850;overflow-wrap:anywhere;
+}
+.sumo-compact-results .sumo-compact-technique{
+  display:block;font-size:clamp(12px,1.4vw,14px);
+  font-weight:750;line-height:1.25;color:#d7b269;overflow-wrap:anywhere;
+}
+.sumo-compact-results .sumo-compact-technique a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.sumo-compact-results .sumo-compact-h2h{
+  display:block;padding:5px 13px;border:1px solid #b79559;border-radius:5px;
+  color:#f2d7a2;background:rgba(186,146,73,.1);
+  font-size:12px;line-height:1.2;font-weight:800;text-decoration:none;
+}
+.sumo-compact-results .sumo-compact-h2h:hover{color:#171c29;background:#e1c183}
+.sumo-compact-results .sumo-compact-h2h:focus-visible{outline:2px solid #f9d28b;outline-offset:2px}
+@media(max-width:650px){
+  .sumo-compact-results{gap:9px;margin:7px auto 14px}
+  .sumo-compact-results .sumo-compact-bout{
+    grid-template-columns:minmax(0,28%) minmax(0,44%) minmax(0,28%);
+    min-height:192px;border-radius:9px;
+  }
+  .sumo-compact-results .sumo-compact-center{padding:10px 7px;gap:8px}
+  .sumo-compact-results .sumo-compact-pair{gap:4px}
+  .sumo-compact-results .sumo-compact-fighter{font-size:clamp(18px,5vw,24px)}
+  .sumo-compact-results .sumo-compact-vs{font-size:9px}
+  .sumo-compact-results .sumo-compact-outcome>strong{font-size:12px}
+  .sumo-compact-results .sumo-compact-technique{font-size:12px}
+  .sumo-compact-results .sumo-compact-h2h{font-size:11px;padding:5px 10px}
+}
+@media(max-width:360px){
+  .sumo-compact-results .sumo-compact-bout{
+    grid-template-columns:minmax(0,27%) minmax(0,46%) minmax(0,27%);
+    min-height:185px;
+  }
+  .sumo-compact-results .sumo-compact-center{gap:7px;padding:8px 5px}
+  .sumo-compact-results .sumo-compact-fighter{font-size:17px}
+  .sumo-compact-results .sumo-compact-technique{font-size:11px}
+  .sumo-compact-results .sumo-compact-h2h{font-size:10px}
+}
