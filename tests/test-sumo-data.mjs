@@ -542,6 +542,7 @@ test('Results and Matchups use one compact bout row with source-backed winner an
   assert.match(renderer,/winner\?e\(winner\)\+' won':'Result recorded'/);
   assert.match(renderer,/bout-compare/,'Matchup rows keep the comparison behind a toggle');
   assert.match(style,/Compact bout rows/);
-  assert.match(js,/pairings\.map\(compactBoutRow\)/,'Results tab uses the compact row');
-  assert.match(js,/pairing\.map\(dailyMatchupRow\)/,'Matchups page uses the compact row');
+  assert.match(js,/boutSections\(pairings,compactBoutRow\)/,'Results tab uses headline cards then compact rows');
+  assert.match(js,/boutSections\(pairing,dailyMatchupRow\)/,'Matchups page uses headline cards then compact rows');
+  assert.match(js,/function headlineBout\(/,'Top bouts render as large headline cards');
 });
