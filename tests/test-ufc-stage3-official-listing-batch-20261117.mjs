@@ -49,3 +49,31 @@ test('official-listing batch: results come from ufc.com unless the page shows no
   if(b.resultSource)assert.equal(b.resultSource,'saved_ufcalendar_no_official_marker',slug);
  }
 });
+
+// Careers certified from the complete UFCStats fighter list, because ufc.com athlete
+// pages omit real UFC fights that saved UFCalendar history has.
+const USTATS=['calvin-kattar','dan-ige','lauren-murphy','edmen-shahbazyan','islam-makhachev','marvin-vettori','ion-cutelaba','court-mcgee'];
+test('UFCStats batch: proofs are well formed and certify',()=>{
+ for(const slug of USTATS){
+  const p=proofs[slug];
+  assert.ok(approval.approvedFighters.includes(slug),slug);
+  assert.equal(p.verificationMethod,'full_official_ufc_fight_listing_crosscheck',slug);
+  assert.equal(p.sourceCoverageAttested,true,slug);
+  assert.match(p.fighterUrl,/^https:\/\/ufcstats\.com\/fighter-details\/[a-f0-9]+$/,slug);
+  assert.ok(p.bouts.every(b=>/^https:\/\/ufcstats\.com\/fight-details\/[a-f0-9]+$/.test(b.fightUrl)),slug);
+  assert.equal(p.bouts.length,history(slug).length,slug+' count equals saved UFC count');
+  assert.equal(check(slug,p),true,slug);
+ }
+});
+test('UFCStats batch: omitted, duplicated, reversed, substituted and unattested proofs are rejected',()=>{
+ const flip={win:'loss',loss:'win',draw:'win',no_contest:'win'};
+ for(const slug of USTATS){
+  const p=proofs[slug];
+  assert.equal(check(slug,{...p,bouts:p.bouts.slice(1)}),false,slug+' omitted');
+  assert.equal(check(slug,{...p,bouts:[...p.bouts,p.bouts[0]]}),false,slug+' duplicated');
+  assert.equal(check(slug,{...p,bouts:p.bouts.map((b,i)=>i?b:{...b,result:flip[b.result]})}),false,slug+' reversed');
+  assert.equal(check(slug,{...p,bouts:p.bouts.map((b,i)=>i?b:{...b,opponent:'Somebody Else'})}),false,slug+' opponent');
+  assert.equal(check(slug,{...p,sourceCoverageAttested:false}),false,slug+' unattested');
+  assert.equal(check(slug,{...p,fighterUrl:'https://example.com/fighter-details/abc'}),false,slug+' non-ufcstats');
+ }
+});
