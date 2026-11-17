@@ -379,6 +379,12 @@ test('the cached upcoming tournament list must contain verified torikumi identit
   assert.ok(Number.isInteger(details.announcedDay)&&details.announcedDay>=1&&details.announcedDay<=15);
   for(const division of ['Makuuchi','Juryo','Makushita']){
     const source=details.torikumi?.[division];
+    // Makuuchi is released first; lower divisions can lag. Unavailable is a valid, labelled
+    // state for them and must never block a deploy. Makuuchi is always required.
+    if(division!=='Makuuchi'&&source?.status==='unavailable'&&!source.data){
+      assert.ok(source.reason,division+' unavailable without a reason');
+      continue;
+    }
     assert.equal(source?.status,'available',division+' torikumi missing');
     assert.ok(Array.isArray(source.data?.torikumi),division+' torikumi not an array');
     const options={division,bashoId:details.bashoId,day:details.announcedDay};
