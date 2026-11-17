@@ -1074,14 +1074,31 @@ function compactBoutRow(match) {
   const left=a?.shikonaEn||match.rikishi||'Wrestler';
   const right=b?.shikonaEn||match.opponent||'Wrestler';
   const finished=match.finished===true;
-  const winner=finished?(Number(match.winnerId)===Number(match.rikishiId)?left:right):null;
-  return '<article class="sumo-compact-bout">'+
-    '<div class="sumo-compact-names">'+(a?portraitFor(a,'sm',left):'')+'<span>'+e(left)+' <small>vs</small> '+e(right)+'</span>'+
-    (b?portraitFor(b,'sm',right):'')+'</div>'+
-    '<div class="sumo-compact-result"><strong>'+e(finished?winner+' won':'Scheduled')+'</strong>'+
-    '<small>'+e(finished?techniqueText(match.kimarite):'Result pending')+'</small></div>'+
-    '<a href="'+headToHeadUrl(match.rikishiId,match.opponentId)+'">H2H</a></article>';
+  const winnerId=Number(match.winnerId);
+  const hasWinner=finished&&[Number(match.rikishiId),Number(match.opponentId)].includes(winnerId);
+  const winner=hasWinner?(winnerId===Number(match.rikishiId)?left:right):null;
+  const technique=finished?(match.kimarite?techniqueText(match.kimarite):'Technique not recorded'):'Result pending';
+  const leftName=a?'<a href="#profile/'+Number(a.sourceId)+'">'+e(left)+'</a>':e(left);
+  const rightName=b?'<a href="#profile/'+Number(b.sourceId)+'">'+e(right)+'</a>':e(right);
+  return '<article class="sumo-compact-bout '+(finished?'is-complete':'is-scheduled')+
+    '" aria-label="'+e(left+' versus '+right+(winner?' — '+winner+' won':finished?' — completed':' — scheduled'))+'">'+
+    '<div class="sumo-compact-photo start">'+portraitFor(a,'xl',left)+'</div>'+
+    '<div class="sumo-compact-center">'+
+    '<span class="sumo-compact-eyebrow">'+(finished?'FINAL RESULT':'UPCOMING BOUT')+'</span>'+
+    '<div class="sumo-compact-pairing">'+
+    '<strong class="sumo-compact-fighter '+(hasWinner&&winnerId===Number(match.rikishiId)?'winner':'')+'">'+leftName+'</strong>'+
+    '<span class="sumo-compact-vs" aria-hidden="true">VS</span>'+
+    '<strong class="sumo-compact-fighter '+(hasWinner&&winnerId===Number(match.opponentId)?'winner':'')+'">'+rightName+'</strong></div>'+
+    '<div class="sumo-compact-verdict">'+
+    '<span class="sumo-compact-result-label">'+e(winner?winner+' won':finished?'Completed':'Scheduled')+'</span>'+
+    '<span class="sumo-compact-technique">'+(finished?techniqueMarkup(match.kimarite,technique):e(technique))+'</span>'+
+    '</div>'+
+    '<a class="sumo-compact-h2h" href="'+headToHeadUrl(match.rikishiId,match.opponentId)+'" aria-label="Head to head: '+e(left+' versus '+right)+'">View H2H <span aria-hidden="true">›</span></a>'+
+    '</div>'+
+    '<div class="sumo-compact-photo end">'+portraitFor(b,'xl',right)+'</div>'+
+    '</article>';
 }
+
 function renderBasho() {
   const d=STATE.bashoDivision,data=getBanzuke(d);
   const target=details().basho?.data,lastday=data?lastCompletedBashoDay(data):0;
