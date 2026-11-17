@@ -63,7 +63,9 @@ try{
         (next.pages[division] ||= {})[day]=same?old:{...entry,fetchedAt:new Date().toISOString()};
         report.push({division,day,status:entry.status,bouts:rows.length,shown});
       }catch(error){
-        report.push({division,day,status:'error',error:String(error.message).slice(0,120)});
+        // Say what the page actually showed, so a block or a layout change is visible in the run log.
+        const seen=await page.evaluate(()=>({title:document.title,body:(document.body?.innerText||'').replace(/\s+/g,' ').slice(0,160),table:!!document.querySelector('#torikumi_table'),none:!!document.querySelector('#no_torikumi')})).catch(()=>null);
+        report.push({division,day,status:'error',error:String(error.message).slice(0,120),seen});
       }finally{await page.close();}
       await sleep(2000);
     }
