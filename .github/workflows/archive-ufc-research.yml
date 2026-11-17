@@ -39,13 +39,15 @@ jobs:
         run: python scripts/refresh-ufc-research-archive.py
       - name: Independently crosscheck disputed rounds when UFC Stats API is reachable
         run: python scripts/crosscheck-ufc-stats-api.py
+      - name: Rebuild the small public round-evidence summary
+        run: python scripts/build-ufc-round-evidence-summary.py
       - name: Publish incremental archive with provenance and quota ledger
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "BEFN UFC research archive"
           git config user.email "ufc-archive-bot@users.noreply.github.com"
-          git add data/ufc-research-archive.json data/ufc-research-ledger.json
+          git add data/ufc-research-archive.json data/ufc-research-ledger.json data/ufc-round-evidence-summary.json
           if git diff --cached --quiet; then
             echo "Archive unchanged"
             exit 0

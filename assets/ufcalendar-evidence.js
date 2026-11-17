@@ -35,7 +35,7 @@
         lines + '<div class="befn-round-source">Source: ' + esc(f.sourceNames || 'UFCalendar') + ' · Strikes are listed A–B, not judges’ scores · — means unavailable</div></article>';
     }).join("");
     section.innerHTML = '<h3>Round-by-round intelligence</h3><p class="befn-explain">' +
-      'Selected fight evidence for scouting reviews. ' + list.length +
+      'Selected fight evidence for scouting reviews. ' + (state.total || list.length) +
       ' bouts analysed so far; statistics are displayed where officially available. ' +
       'Fight outcomes and classifications are reviewed separately.</p>' +
       '<div class="befn-round-grid">' + cards + '</div>';
@@ -59,11 +59,13 @@
   function load() {
     if (state || loading) return;
     loading = true;
-    fetch("data/ufc-research-archive.json", {cache:"no-store"})
-      .then(r => {if (!r.ok) throw Error("Archive not ready"); return r.json();})
+    // Small derived summary (built by scripts/build-ufc-round-evidence-summary.py).
+    // Never fetch the multi-megabyte research archive from a visitor's browser.
+    fetch("data/ufc-round-evidence-summary.json", {cache:"no-store"})
+      .then(r => {if (!r.ok) throw Error("Summary not ready"); return r.json();})
       .then(data => {
-        state = transformArchive(data);
-        if (!state || !Object.keys(state.fights).length) throw Error("No archive evidence yet");
+        if (!data || data.schema !== 1 || !data.fights || !Object.keys(data.fights).length) throw Error("No archive evidence yet");
+        state = data;
         draw();
       })
       .catch(() => fetch("data/ufcalendar-intelligence.json", {cache:"no-store"})
