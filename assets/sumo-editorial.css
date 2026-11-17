@@ -1785,3 +1785,40 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   display:inline-block;padding:3px 8px;border:1px solid rgba(238,222,210,.35);border-radius:4px;
   color:#e8dcda;background:rgba(33,25,28,.3);font:700 12px/1.2 'DM Sans',system-ui,sans-serif;letter-spacing:.015em;
 }
+
+/* Stage 3: profile hero band and compact rankings rows. Final overrides, kept
+   together so the hero reads as one component. Earlier hero layers use
+   !important, so these do too; remove the older layers in a later cleanup. */
+.profile-hero{grid-template-columns:300px minmax(0,1fr)!important;column-gap:28px!important;align-items:start}
+.profile-hero>.profile-icon.sumo-photo.xl{min-height:380px!important;max-height:620px!important}
+.profile-hero .sumo-current-record{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}
+.profile-hero .sumo-current-record b{display:block;font:900 40px/1 'Barlow Condensed',Impact,sans-serif;font-variant-numeric:tabular-nums}
+.profile-hero .sumo-current-record small{display:block;margin-top:3px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#d8cecc}
+@media(max-width:950px){.profile-hero{grid-template-columns:240px minmax(0,1fr)!important}.profile-hero>.profile-icon.sumo-photo.xl{min-height:320px!important;max-height:380px!important}}
+@media(max-width:650px){
+  .profile-hero{grid-template-columns:104px minmax(0,1fr)!important;grid-template-rows:auto auto auto!important;column-gap:12px!important;row-gap:12px!important;padding:14px!important;align-items:start}
+  .profile-hero>.profile-icon.sumo-photo.xl{grid-column:1;grid-row:1!important;width:104px!important;height:130px!important;min-height:0!important;max-height:130px!important;border-radius:8px!important}
+  .profile-hero>.profile-title{grid-column:2;grid-row:1!important;padding:0}
+  .profile-hero>.sumo-hero-flag{grid-column:2;grid-row:1!important;width:100%;height:100%}
+  .profile-hero>.profile-current{grid-column:1/-1;grid-row:2!important;margin:0;padding:0}
+  .profile-hero>.profile-facts{grid-column:1/-1;grid-row:3!important;margin:0}
+  .profile-hero h1{font-size:34px;margin:2px 0}
+  .sumo-hero-career>div{grid-template-columns:minmax(0,1fr) auto auto!important;gap:10px!important;white-space:nowrap}
+  .sumo-hero-career>div:first-child span:nth-child(2){font-size:11px}
+  .profile-hero .sumo-hero-rank{margin:4px 0;font-size:15px}
+  .profile-hero .sumo-hero-peak{font-size:13px;margin:2px 0 8px}
+  .profile-hero .sumo-current-record b{font-size:34px}
+}
+/* Rankings: one two-line row per wrestler on phones; table layout stays on desktop. */
+@media(max-width:700px){
+  .sumo-rank-card{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"per rec" "pub mv";gap:5px 10px;padding:9px 12px;min-height:0}
+  .sumo-rank-card>.sumo-rank-person{grid-area:per;display:flex;align-items:center;gap:10px;min-width:0}
+  .sumo-rank-card>.sumo-rank-person .profile-icon{width:38px;height:46px;min-height:0;flex:none}
+  .sumo-rank-card>.sumo-rank-person .sumo-photo>small{display:none}
+  .sumo-rank-card>.sumo-rank-person a{font:800 20px/1.1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;text-decoration:none;color:var(--ink,#111013)}
+  .sumo-rank-card>.sumo-rank-person small{display:block;font-size:12px;color:#5f5760}
+  .sumo-rank-card>.sumo-rank-record{grid-area:rec;align-self:center;text-align:right;white-space:nowrap;font-size:14px}
+  .sumo-rank-card>.sumo-rank-published{grid-area:pub;font-size:13px}
+  .sumo-rank-card>.sumo-rank-movement{grid-area:mv;justify-self:end}
+  .sumo-rank-card>.sumo-rank-prior{display:none}
+}
