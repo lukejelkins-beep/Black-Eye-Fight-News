@@ -616,6 +616,41 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assertContains(await page.locator('#sumo-main').innerText(),'Yorikiri','technique');
   await snap(page,label+'-kimarite',{fullPage:false});
 
+  // Click-to-open viewer should be tightly bounded by the translation, never
+  // reserve space for an invisible clip panel or source link footer.
+  await page.locator('.sumo-km-tile-link[href="#kimarite?term=yorikiri"]').click();
+  await page.waitForSelector('#sumo-km-popup-root .sumo-km-dialog');
+  const kmPopup=await page.locator('#sumo-km-popup-root .sumo-km-dialog').evaluate(dialog=>{
+    const caption=dialog.querySelector('.sumo-km-modal-meaning');
+    const body=dialog.querySelector('.sumo-km-modal-text');
+    const visual=dialog.querySelector('.sumo-km-modal-visual');
+    const img=visual?.querySelector('img');
+    const bounds=el=>el?.getBoundingClientRect();
+    const d=bounds(dialog),c=bounds(caption),m=bounds(body),v=bounds(visual);
+    return {
+      title:dialog.querySelector('#sumo-km-modal-title')?.textContent,
+      translation:caption?.textContent?.trim(),
+      surplus:d.bottom-c.bottom,
+      bottomPadding:parseFloat(getComputedStyle(body).paddingBottom)||0,
+      imageHeight:v?.height,
+      imageVisible:!!img,
+      outOfFrame:d.bottom>window.innerHeight+1,
+      extras:dialog.querySelectorAll('.sumo-km-modal-links,.sumo-km-clip-panel,.sumo-km-modal-pending').length,
+      close:!!dialog.querySelector('[data-km-close]')
+    };
+  });
+  assert.ok(kmPopup.title?.includes('Yorikiri')&&kmPopup.translation==='Frontal force-out',
+    'Popup preserves correct category/name/English translation');
+  assert.ok(kmPopup.close&&kmPopup.imageVisible&&kmPopup.imageHeight>0,
+    'Popup keeps demonstration image and close button');
+  assert.equal(kmPopup.extras,0,'Popup no longer includes hidden original clip, references or pending text');
+  assert.ok(kmPopup.surplus>=0&&kmPopup.surplus<=kmPopup.bottomPadding+4,
+    'Popup ends after English translation with no extra blank space: '+JSON.stringify(kmPopup));
+  assert.ok(!kmPopup.outOfFrame,'Popup stays inside mobile/desktop viewport');
+  await page.locator('#sumo-km-popup-root [data-km-close]').click();
+  assert.equal(await page.locator('#sumo-km-popup-root').count(),0,'Close button dismisses modal');
+
+
   // Exercise every current wrestler on both desktop and mobile, not only
   // the feature cards. The source ID attribute prevents a stale page from
   // satisfying the next route's assertion.
