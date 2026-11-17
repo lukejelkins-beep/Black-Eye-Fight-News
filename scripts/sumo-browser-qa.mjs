@@ -538,6 +538,64 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.ok((await page.locator('.sumo-standings-row').count())>=20,'Basho standings stay accessible in compact rows');
   await page.locator('[data-basho-view="results"]').click();
   assert.ok((await page.locator('.sumo-compact-bout').count())>0,'Compact result rows show actual winners');
+
+  const resultCards=await page.locator('.sumo-compact-bout').evaluateAll(cards=>cards.slice(0,8).map(card=>{
+    const rect=el=>el?.getBoundingClientRect();
+    const outer=rect(card),left=card.querySelector('.sumo-compact-photo.left'),
+      right=card.querySelector('.sumo-compact-photo.right'),
+      center=card.querySelector('.sumo-compact-center'),
+      imgLeft=left?.querySelector('.profile-icon.sumo-photo'),
+      imgRight=right?.querySelector('.profile-icon.sumo-photo'),
+      names=center?.querySelector('.sumo-compact-names'),winner=center?.querySelector('.sumo-compact-winner'),
+      technique=center?.querySelector('.sumo-compact-kimarite'),
+      h2h=center?.querySelector('a.sumo-compact-h2h'),
+      l=rect(left),rr=rect(right),c=rect(center),picL=rect(imgLeft),picR=rect(imgRight);
+    const allowed=el=>!!(el&&c&&rect(el).left>=c.left-2&&rect(el).right<=c.right+2&&rect(el).bottom<=c.bottom+2);
+    return {
+      cardWidth:outer.width,cardHeight:outer.height,
+      photoLeftWidth:l?.width,photoRightWidth:rr?.width,
+      photoLeftHeight:l?.height,photoRightHeight:rr?.height,
+      leftFlush:!!(l&&l.left-outer.left<=2&&l.top-outer.top<=2&&outer.bottom-l.bottom<=2),
+      rightFlush:!!(rr&&outer.right-rr.right<=2&&rr.top-outer.top<=2&&outer.bottom-rr.bottom<=2),
+      centerMiddle:!!(c&&l&&rr&&c.left>=l.right-2&&rr.left>=c.right-2),
+      portraitFills:!!(picL&&picR&&l&&rr&&
+        Math.abs(picL.width-l.width)<3&&Math.abs(picL.height-l.height)<3&&
+        Math.abs(picR.width-rr.width)<3&&Math.abs(picR.height-rr.height)<3),
+      nameInside:allowed(names),winnerInside:allowed(winner),
+      techniqueInside:allowed(technique),h2hInside:allowed(h2h),
+      nameText:names?.textContent?.trim(),winnerText:winner?.textContent?.trim(),
+      techniqueText:technique?.textContent?.trim(),
+      lhref:left?.getAttribute('href'),rhref:right?.getAttribute('href'),
+      h2hHref:h2h?.getAttribute('href'),
+      namedPortraits:!!(imgLeft?.getAttribute('aria-label')&&imgRight?.getAttribute('aria-label')),
+      hasWinner:card.classList.contains('is-complete'),
+      winnerHighlight:card.querySelectorAll('a.sumo-compact-photo.is-winner').length,
+      overflow:card.scrollWidth>card.clientWidth+3
+    };
+  }));
+  assert.ok(resultCards.length>0,'New results use portrait-left / central score / portrait-right cards');
+  for(const [index,card] of resultCards.entries()){
+    assert.ok(card.cardHeight>=150&&card.photoLeftWidth>=50&&card.photoRightWidth>=50,
+      'Both wrestler photographs are large enough: '+index+' '+JSON.stringify(card));
+    assert.ok(card.leftFlush&&card.rightFlush&&card.centerMiddle&&card.portraitFills,
+      'Photos are full height at the outer edges, central score desk stays in the middle: '+
+      index+' '+JSON.stringify(card));
+    assert.ok(card.nameInside&&card.winnerInside&&card.techniqueInside&&card.h2hInside&&!card.overflow,
+      'Results/winner/kimarite/H2H fit in central panel without clipping: '+index+' '+JSON.stringify(card));
+    assert.ok(card.lhref?.startsWith('#profile/')&&card.rhref?.startsWith('#profile/')&&
+      card.h2hHref?.startsWith('#headtohead/')&&card.namedPortraits,
+      'Both portraits retain profile links and central H2H retains head-to-head link');
+    assert.ok(card.nameText?.includes('VS')&&card.winnerText&&card.techniqueText,
+      'Central score desk presents names, result and technique');
+    if(card.hasWinner)assert.equal(card.winnerHighlight,1,
+      'Precisely one photo has a gold winner highlight');
+  }
+  const pageFit=await page.evaluate(()=>({
+    width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth
+  }));
+  assert.ok(pageFit.scroll<=pageFit.width+6,
+    'New portrait result cards never cause sideways document scrolling: '+JSON.stringify(pageFit));
+
   await snap(page,label+'-basho',{fullPage:false});
 
   // Dedicated daily face-offs use sourced pairings, two complete stat columns,
