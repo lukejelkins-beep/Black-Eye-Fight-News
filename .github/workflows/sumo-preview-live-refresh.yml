@@ -11,9 +11,13 @@ name: Sumo preview live refresh (every basho)
 #   scripts/sumo-run-update.mjs      runs the right sequence of the above per mode
 on:
   schedule:
-    # Live results: every 30 min on the days a basho can run (8th-28th of
-    # Jan/Mar/May/Jul/Sep/Nov, UTC). The script exits quietly if no basho is live.
-    - cron: '7,37 * 8-28 1,3,5,7,9,11 *'
+    # Live results on the days a basho can run (8th-28th of Jan/Mar/May/Jul/Sep/Nov,
+    # UTC). The script exits quietly if no basho is live.
+    # Every 10 min from 13:00 to 19:59 JST: the next day's torikumi is released
+    # about 14:00 JST and bouts finish about 18:00 JST, so new data lands fast.
+    - cron: '*/10 4-10 8-28 1,3,5,7,9,11 *'
+    # Every 30 min the rest of the day.
+    - cron: '7,37 0-3,11-23 8-28 1,3,5,7,9,11 *'
     # Daily rebuild all year (04:23 JST): roster, rankings, new-basho rollover.
     - cron: '23 19 * * *'
   workflow_dispatch:
