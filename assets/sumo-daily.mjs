@@ -71,13 +71,27 @@ export function dailyRecentMeetings(history,a,b,limit=5) {
     kimarite:typeof row.kimarite==='string'&&row.kimarite.trim()?row.kimarite.trim():null
   }));
 }
-export function dailyDefaultDay({today=null,lastCompleted=0,announced=null,hasAnnounced=false}={}) {
+export function dailyDefaultDay({today=null,lastCompleted=0,announced=null,hasAnnounced=false,todayComplete=true}={}) {
   const valid=value=>Number.isInteger(value)&&value>=1&&value<=15;
-  // Published next-day torikumi takes priority over today's completed bouts.
-  if(hasAnnounced&&valid(announced)&&(!valid(today)||announced>today))return announced;
+  // Next day's torikumi is published the afternoon before (about 14:00 JST). It
+  // takes centre stage only once today's bouts are finished; until then today
+  // stays in front and the released pairings are offered as a secondary link.
+  if(hasAnnounced&&valid(announced)&&(!valid(today)||announced>today)){
+    if(!valid(today)||todayComplete)return announced;
+    return today;
+  }
   if(valid(today))return today;
   if(hasAnnounced&&valid(announced))return announced;
   return valid(lastCompleted)?lastCompleted:1;
+}
+// Makuuchi bouts finish about 18:00 JST. Treat the day as concluded only when
+// results for it are recorded and the Tokyo clock is past 18:10.
+export function dailyConcluded({today=null,lastCompleted=0,now=new Date()}={}) {
+  if(!Number.isInteger(today)||today<1||today>15)return true;
+  if(!(lastCompleted>=today))return false;
+  const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(now);
+  const hour=Number(parts.find(p=>p.type==='hour')?.value),minute=Number(parts.find(p=>p.type==='minute')?.value);
+  return hour*60+minute>=18*60+10;
 }
 export function dailySelectedDate(startDate,day) {
   if(!/^\d{4}-\d{2}-\d{2}$/.test(String(startDate||''))||!Number.isInteger(day)||day<1||day>15)return null;
