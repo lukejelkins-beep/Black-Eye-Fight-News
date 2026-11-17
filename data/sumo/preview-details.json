@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "preview": true,
   "source": "https://www.sumo-api.com/api",
-  "collectedAt": "2026-11-17T05:49:09.237Z",
+  "collectedAt": "2026-11-17T05:49:54.137Z",
   "notice": "Developer preview; third-party source; cross-check results against the Japan Sumo Association before production.",
   "bashoId": "202611",
   "trackedDivisions": [
@@ -46289,27 +46289,31 @@
       }
     }
   },
-  "announcedDay": null,
+  "announcedDay": 11,
   "torikumi": {
     "Makuuchi": {
-      "status": "unavailable",
-      "data": null,
-      "reason": "No confirmed next-day torikumi in current API response"
+      "status": "available",
+      "data": {
+        "date": "202611",
+        "startDate": "2026-11-08T00:00:00Z",
+        "endDate": "2026-11-22T00:00:00Z"
+      }
     },
     "Juryo": {
-      "status": "unavailable",
-      "data": null,
-      "reason": "No confirmed next-day torikumi in current API response"
+      "status": "available",
+      "data": {
+        "date": "202611",
+        "startDate": "2026-11-08T00:00:00Z",
+        "endDate": "2026-11-22T00:00:00Z"
+      }
     },
     "Makushita": {
-      "status": "unavailable",
-      "data": null,
-      "reason": "No confirmed next-day torikumi in current API response"
+      "status": "available",
+      "data": {
+        "date": "202611",
+        "startDate": "2026-11-08T00:00:00Z",
+        "endDate": "2026-11-22T00:00:00Z"
+      }
     }
-  },
-  "dailyCollectedAt": "2026-11-17T05:49:36.601Z",
-  "dailyJstDay": 10,
-  "dailyScheduleCount": 0,
-  "dailySource": "https://www.sumo-api.com/api",
-  "dailyStatus": "next-day-torikumi-not-yet-published"
+  }
 }
