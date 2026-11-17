@@ -21,6 +21,9 @@ Every image shown to readers is a file BEFN controls, in a consistent shape, wit
 - Event posters: use the promotion's own poster when permitted; otherwise a BEFN-designed card from the headline bout.
 - Alt text on every image; names and event, not "photo".
 
-## Open questions for the owner
-- Where is the stockpile of images you have collected (a folder, a drive, a service)? Roughly how many, and under what permission?
-- Which sources are you permitted to republish (promoter press kits, licences, Wikimedia)? List them here once known.
+## Local library (decided 2026-11-17)
+There is no existing stockpile. The owner keeps a local `befn-images/` folder on their Mac with `originals/`, `register.csv` (source, credit, licence, permission, focus point, approval) and `process_images.py`, which makes the portrait, card and thumbnail WebP crops and a `manifest.json`. Only approved rows are processed. Processed files and the manifest are what get added to the site.
+- Claude does not fetch photos of public figures from the web. The owner downloads what they are permitted to use and drops it into `originals/`.
+
+## Open question for the owner
+Which sources are you permitted to republish (promoter press kits, licences, Wikimedia)? List them here once known.
