@@ -1,19 +1,19 @@
 {
-  "attemptedAt": "2026-11-17T19:47:05.636Z",
-  "checkedAt": "2026-11-17T19:47:05.636Z",
-  "updatedAt": "2026-11-17T19:12:36Z",
+  "attemptedAt": "2026-11-17T21:32:29.659Z",
+  "checkedAt": "2026-11-17T21:32:29.659Z",
+  "updatedAt": "2026-11-17T20:05:32Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 4,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 4,
+      "checked": 6,
       "failed": 0,
-      "configured": 4,
-      "message": "4 of 4 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 40,
+      "configured": 43,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 2,
+      "configured": 0,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,22 +55,69 @@
   "rollingScan": {
     "directoryEntries": 448,
     "scheduledEntries": 84,
-    "batchIndex": 3,
+    "batchIndex": 0,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Threads": 11,
+      "Instagram": 43,
+      "Bluesky": 6,
       "X": 27,
-      "Instagram": 40,
-      "Bluesky": 4,
-      "Reddit": 2
+      "Threads": 8
     },
-    "directlyChecked": 4,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2jtpffeve2w",
+      "cid": "bafyreiatqjd3j57j37pvz6bwmc63wvdimdivyjelbfzmzyuy5j2265dpna",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "De La Hoya Laughs at Mayweather vs Garcia: “I Have No Idea!” #boxing #boxingnews",
+      "postedAt": "2026-11-17T20:05:32Z",
+      "date": "18 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2jtpffeve2w",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n2jrk2shhs2w",
+      "cid": "bafyreigj7madledhluczqu63mv7ci2a4kzokggpo6siusioccgivucffni",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Dan Rafael",
+      "handle": "@danrafael1.bsky.social",
+      "role": "commentator",
+      "quote": "If you want the free updated #boxing schedule take a few seconds & sign up for my newsletter & it'll hit your inbox in a bit & each Tuesday! Go here: danrafael.substack.com\n#KabayelHysa #AzimValenzuela #BenavidezCieslak #OrtizThurman #WalkerRocha #FuryJoshua #LaraTszyu #BivolSmith #HaneyParo",
+      "postedAt": "2026-11-17T19:26:46.332Z",
+      "date": "18 Nov 2026",
+      "url": "https://bsky.app/profile/danrafael1.bsky.social/post/3n2jrk2shhs2w",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:ukajoiyhrbbiiu7qpcz43aha/bafkreifun33dacusv726vgtqm3jhyo44mqkzgax2esadqlh67jcvwz5hga",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2jqqq2nyz2a",
       "cid": "bafyreigmbuvxh6m3lqvv6i3k2kkf7pws5lkpmwh2xdoxnrev67vtvbiree",
@@ -141,6 +188,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-17T19:47:05.636Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2jjsxluim2e",
+      "cid": "bafyreig323wafhamcufhicrd6nocwmcxpobswlfetdhyhn6e5xhfmajxim",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Deontay Wilder Brutally Roasted as Opetaia Fight Collapses #boxing #boxingnews",
+      "postedAt": "2026-11-17T17:08:34Z",
+      "date": "18 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2jjsxluim2e",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -216,6 +287,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2j7vtcqpa2b",
+      "cid": "bafyreicoc5vtpmvcthonulzvi3qpixghtd6e74xmofpuc6qqj6rlh2eq4y",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "0-32 Boxer Has ‘HARDCORE’ Tattoo, Nine KO Losses Under 60s #boxing #boxingnews",
+      "postedAt": "2026-11-17T14:11:13Z",
+      "date": "18 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2j7vtcqpa2b",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2j7fc426w2d",
       "cid": "bafyreiceo7z2jcg2rj3bamuzbv7hgqigaics2dhqqcahvwalm32woivm5m",
       "platform": "Bluesky",
@@ -284,7 +379,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -328,11 +423,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
       "engagement": {
-        "likes": 0,
+        "likes": 1,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -376,11 +471,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
       "engagement": {
-        "likes": 0,
+        "likes": 2,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -428,7 +523,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -570,9 +665,9 @@
       "engagement": {
         "likes": 5,
         "comments": 0,
-        "shares": 3
+        "shares": 4
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -764,7 +859,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -836,7 +931,7 @@
         "comments": 3,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -884,7 +979,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -956,7 +1051,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1028,7 +1123,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1048,11 +1143,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
       "engagement": {
-        "likes": 2,
+        "likes": 3,
         "comments": 0,
         "shares": 1
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1072,11 +1167,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
       "engagement": {
-        "likes": 0,
+        "likes": 1,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1100,7 +1195,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1124,31 +1219,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2dxsomy3b26",
-      "cid": "bafyreia25wkm2likkik5bessr3mp3k25ll5zyngwh235om22x7tak7i6qy",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Darius Fulghum Stuns Diego Pacheco, Fulfills WBN Prediction #boxing #boxingnews",
-      "postedAt": "2026-11-15T12:02:59Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2dxsomy3b26",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 1,
-        "comments": 1,
-        "shares": 1
-      },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1168,11 +1239,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
       "engagement": {
-        "likes": 0,
+        "likes": 1,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1220,7 +1291,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1244,7 +1315,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1292,7 +1363,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1340,7 +1411,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1388,7 +1459,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1436,7 +1507,7 @@
         "comments": 2,
         "shares": 1
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1484,7 +1555,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1508,7 +1579,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1532,7 +1603,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1556,7 +1627,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1680,54 +1751,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2cgdsfo5e2d",
-      "cid": "bafyreididngxgka4cugzl5nurmn3qpilfmq32venjx77ubcafu34hnerau",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Zuffa’s Matchmaking Promise Exposed by ‘Embarrassing’ Fight #boxing #boxingnews",
-      "postedAt": "2026-11-14T21:17:46Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2cgdsfo5e2d",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2c4hkjhzi26",
-      "cid": "bafyreidmntutuf66uq6qh5trj7isuaznaooo474qmrynfzknpmpib6y6la",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Real-Life Rocky Battered by 2-0 Heavyweight on Zuffa Debut #boxing #boxingnews",
-      "postedAt": "2026-11-14T18:20:55Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2c4hkjhzi26",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n2b32xajjk2k",
       "cid": "bafyreifwxpkeqpbphjizfakb4ht4hdkhoxqtwxf2l75oocf43szucmya4q",
       "platform": "Bluesky",
@@ -1744,11 +1767,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
       "engagement": {
-        "likes": 0,
+        "likes": 1,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1768,11 +1791,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
       "engagement": {
-        "likes": 1,
+        "likes": 2,
         "comments": 0,
         "shares": 1
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1796,7 +1819,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1820,31 +1843,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n244qojkc22x",
-      "cid": "bafyreidngsa2oey6sysbbxwn7ltck6baxixyulssxyo4e3ybl6546fjzym",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Dan Rafael",
-      "handle": "@danrafael1.bsky.social",
-      "role": "commentator",
-      "quote": "#Boxing Notebook: #BootsKelly 3-belt 154 unification fight set; WBA denies Bahdi rematch vs. Schofield; Jarrell Miler-Tony Yoka details; #FuryJoshua undercard official; Quick hits; Show & tell. Read & sign up for my Substack: danrafael.substack.com/p/notebook-e...",
-      "postedAt": "2026-11-12T09:10:03.168Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/danrafael1.bsky.social/post/3n244qojkc22x",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:ukajoiyhrbbiiu7qpcz43aha/bafkreifun33dacusv726vgtqm3jhyo44mqkzgax2esadqlh67jcvwz5hga",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
-      "engagement": {
-        "likes": 2,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-17T11:32:41.631Z",
+      "engagementCheckedAt": "2026-11-17T21:32:29.659Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
