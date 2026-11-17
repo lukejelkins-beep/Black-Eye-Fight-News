@@ -73,23 +73,23 @@
 body.sumo-km-modal-open{overflow:hidden}
 #sumo-km-popup-root{position:fixed;inset:0;z-index:99999}
 .sumo-km-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#080709c9;padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));overscroll-behavior:contain}
-.sumo-km-dialog{position:relative;background:#fffaf2;color:#2a2026;border:1px solid #a98e7b;border-radius:12px;box-shadow:0 15px 60px #0007;width:min(660px,100%);max-height:min(92dvh,800px);overflow:auto;scrollbar-gutter:stable;outline:none}
+.sumo-km-dialog{position:relative;background:#fffaf2;color:#2a2026;border:1px solid #a98e7b;border-radius:12px;box-shadow:0 15px 60px #0007;width:min(660px,100%);max-height:min(92dvh,800px);overflow:auto;height:auto;overflow-x:hidden;overflow-y:auto;outline:none}
 .sumo-km-close{position:absolute;right:12px;top:12px;z-index:3;display:flex;justify-content:center;align-items:center;width:44px;height:44px;cursor:pointer;background:#1f1922ea;color:#fff;border:1px solid #fff8;border-radius:50%;font:500 34px/1 Arial,sans-serif}
 .sumo-km-close:hover,.sumo-km-close:focus-visible{background:#8e283b;outline:2px solid #cfaa74;outline-offset:2px}
 .sumo-km-modal-visual{position:relative;background:#251f24;line-height:0;overflow:hidden;display:flex;justify-content:center;align-items:center}
 .sumo-km-modal-gif,.sumo-km-modal-still{display:block;width:100%;max-width:100%;height:auto;max-height:min(60dvh,500px);object-fit:contain;object-position:center}
 .sumo-km-modal-media-credit{position:absolute;bottom:0;left:0;padding:8px 12px;background:linear-gradient(90deg,#111b,#1110);color:#fff;font:600 11px/1.4 'DM Sans',sans-serif;line-height:1.4}
-.sumo-km-modal-text{padding:18px 24px 22px}
+.sumo-km-modal-text{padding:18px 24px 14px}
 .sumo-km-modal-text .eyebrow{font-size:11px;letter-spacing:.12em;color:#8f2a3a;font-weight:800;text-transform:uppercase}
 .sumo-km-modal-text h2{font:900 clamp(30px,5vw,40px)/1 'Barlow Condensed',Impact,sans-serif;margin:7px 0}
 .sumo-km-modal-text h2 span{font:700 .52em 'DM Sans',sans-serif;color:#9b4550;margin-left:8px}
-.sumo-km-modal-meaning{margin:0 0 10px;font-size:15px;color:#594e4e}
+.sumo-km-modal-meaning{margin:0;font-size:15px;color:#594e4e}
 .sumo-km-modal-pending{font-size:12px;color:#6e5558;margin:8px 0}
 .sumo-km-modal-links{border-top:1px solid #e0d3c6;padding-top:12px;display:flex;gap:12px;flex-wrap:wrap;font-size:12px;font-weight:800}
 .sumo-km-modal-links a{color:#812738;text-decoration:underline;text-underline-offset:2px}
 .sumo-km-inline-link{cursor:pointer;text-decoration:underline;text-underline-offset:2px;font-weight:800;color:#86253b}
 .sumo-km-ready{background:#83283c;color:#fff}
-@media(max-width:600px){.sumo-km-overlay{align-items:center;padding:10px}.sumo-km-dialog{width:100%;max-height:92dvh;border-radius:9px}.sumo-km-close{top:8px;right:8px;width:40px;height:40px}.sumo-km-modal-text{padding:14px 15px 20px}.sumo-km-modal-media-credit{font-size:10px}.sumo-km-modal-gif{max-height:48dvh}}
+@media(max-width:600px){.sumo-km-overlay{align-items:center;padding:10px}.sumo-km-dialog{width:100%;max-height:92dvh;border-radius:9px}.sumo-km-close{top:8px;right:8px;width:40px;height:40px}.sumo-km-modal-text{padding:14px 15px 12px}.sumo-km-modal-media-credit{font-size:10px}.sumo-km-modal-gif{max-height:48dvh}}
 @media(prefers-reduced-motion:reduce){.sumo-km-overlay{scroll-behavior:auto}}
 
 /* On-demand original clip; the looping GIF remains the primary media. */
