@@ -1,0 +1,85 @@
+name: Sumo preview live refresh (every basho)
+
+# Scheduled workflows only run from the default branch, so this lives on main.
+# It touches ONLY the Sumo preview branch (never main, never the production
+# site). All logic lives in that branch's scripts:
+#   scripts/sumo-basho-calendar.mjs  which basho is it, and is it live
+#   scripts/sumo-refresh-daily.mjs   results + announced next-day torikumi
+#   scripts/sumo-build-preview.mjs   roster, rankings and basho details
+on:
+  schedule:
+    # Live results: every 30 min on the days a basho can run (8th-28th of
+    # Jan/Mar/May/Jul/Sep/Nov, UTC). The script exits quietly if no basho is live.
+    - cron: '7,37 * 8-28 1,3,5,7,9,11 *'
+    # Daily rebuild all year (04:23 JST): roster, rankings, new-basho rollover.
+    - cron: '23 19 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sumo-preview-single-writer
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/sumo-section-test-20261114
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Decide what to run
+        id: plan
+        shell: bash
+        run: |
+          set -euo pipefail
+          read -r BASHO PHASE < <(node scripts/sumo-basho-calendar.mjs)
+          HAVE=$(node -p "require('./data/sumo/preview-details.json').bashoId")
+          if [ "$BASHO" != "$HAVE" ]; then MODE=rebuild
+          elif [ "${{ github.event.schedule }}" = "23 19 * * *" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then MODE=rebuild
+          elif [ "$PHASE" = "live" ]; then MODE=refresh
+          else MODE=skip; fi
+          echo "basho=$BASHO phase=$PHASE have=$HAVE mode=$MODE"
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+      - name: Rebuild roster, rankings and basho details
+        if: steps.plan.outputs.mode == 'rebuild'
+        run: |
+          node --test tests/test-sumo-api-source.mjs
+          node scripts/sumo-build-preview.mjs
+      - name: Refresh latest results and announced next-day torikumi
+        if: steps.plan.outputs.mode == 'refresh'
+        run: |
+          node --test tests/test-sumo-daily.mjs tests/test-sumo-api-source.mjs
+          node scripts/sumo-refresh-daily.mjs
+      - name: Commit only the preview data files
+        if: steps.plan.outputs.mode != 'skip'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "BEFN Sumo daily preview"
+          git config user.email "sumo-preview@users.noreply.github.com"
+          git add data/sumo/preview-details.json data/sumo/rikishi-index.json
+          if git diff --cached --quiet; then
+            echo "No data change"
+            exit 0
+          fi
+          git commit -m "Refresh verified-source Sumo preview data (${{ steps.plan.outputs.mode }})"
+          for attempt in 1 2 3; do
+            git fetch origin feat/sumo-section-test-20261114
+            if ! git rebase origin/feat/sumo-section-test-20261114; then
+              git rebase --abort || true
+              echo "Concurrent change conflict; leaving preview branch unchanged" >&2
+              exit 1
+            fi
+            if git push origin HEAD:feat/sumo-section-test-20261114; then
+              exit 0
+            fi
+            sleep 2
+          done
+          exit 1
