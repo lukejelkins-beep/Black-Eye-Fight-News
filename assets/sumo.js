@@ -1318,7 +1318,7 @@ async function loadOpponentIndex(){
   STATE.h2hOpponentsLoading=true;
   try {
     const data=await loadJson('data/sumo/research-h2h-opponents.json');
-    if(data?.schemaVersion!==1||data?.cohortSize!==190||data?.profileCount!==190||data.certified!==false||!data.profiles)
+    if(data?.schemaVersion!==1||data?.cohortSize!==STATE.roster?.rikishi?.length||data?.profileCount<data?.cohortSize||data.certified!==false||!data.profiles)
       throw new Error('Opponent index failed research cache checks');
     STATE.h2hOpponents=data;
   } catch(error){
@@ -1334,7 +1334,7 @@ async function loadCompleteH2h(){
   STATE.h2hLoading=true;
   try {
     const result=await loadJson('data/sumo/research-h2h-history.json');
-    if(result?.schemaVersion!==1||result?.cohortSize!==190||result?.certified!==false||!result.pairs)
+    if(result?.schemaVersion!==1||result?.cohortSize!==STATE.roster?.rikishi?.length||result?.certified!==false||!result.pairs)
       throw new Error('Full research chronology cache failed validation');
     STATE.h2hFull=result;
   } catch(error){
@@ -1356,7 +1356,7 @@ async function init(){
     if(styles?.schemaVersion!==1||!styles.byNskId)throw new Error('Official style evidence cache unavailable or malformed');
     if(photos?.schemaVersion!==1||!photos.bySourceId||typeof photos.bySourceId!=='object')throw new Error('Licensed Sumo photo manifest missing or malformed');
     if(careerHistory?.schemaVersion!==1||!careerHistory.bySourceId)throw new Error('Sumo career timeline snapshot invalid');
-    if(h2hSummary&&(h2hSummary.schemaVersion!==1||h2hSummary.cohortSize!==190||h2hSummary.certified!==false))throw new Error('Research H2H summary failed schema validation');
+    if(h2hSummary&&(h2hSummary.schemaVersion!==1||h2hSummary.cohortSize!==roster?.rikishi?.length||h2hSummary.certified!==false))throw new Error('Research H2H summary failed schema validation');
     validateSumoPreviewReadiness(readiness,roster);
     STATE.roster=roster;STATE.details=details;STATE.officialStyles=styles;STATE.photoIndex=photos.bySourceId;STATE.careerHistory=careerHistory;STATE.h2hSummary=h2hSummary;STATE.apiTrust=readiness;
     STATE.divisionStats=divisionStats?.schemaVersion===1&&divisionStats?.cohortSize===roster.count&&divisionStats?.source==='https://www.sumo-api.com/api'?divisionStats:null;
