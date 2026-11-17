@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-17T13:28:53.193Z",
-  "checkedAt": "2026-11-17T13:28:53.193Z",
+  "attemptedAt": "2026-11-17T14:36:21.899Z",
+  "checkedAt": "2026-11-17T14:36:21.899Z",
   "windowDays": 28,
-  "articlesChecked": 32,
+  "articlesChecked": 31,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 45,
-  "publisherSourcesConfigured": 33,
-  "linksFound": 14,
-  "newEmbedsVerified": 0,
+  "publisherSourcesConfigured": 32,
+  "linksFound": 11,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -38,6 +38,25 @@
       "embedVerified": true,
       "linkPriority": 55,
       "url": "https://x.com/Queensberry/status/2122567295801364753"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-17T05:02:00+00:00",
+      "discoveredAt": "2026-11-17T14:36:21.899Z",
+      "sourcePublisher": "MMA Junkie",
+      "evidenceUrl": "https://mmajunkie.usatoday.com/story/sports/boxing/2026/11/17/irish-boxer-lee-reeves-dies-fight-related-injuries-reports/92821539007/",
+      "summary": "Original social post linked in MMA Junkie coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/Df0ufjTz14Z/"
     },
     {
       "type": "post",
@@ -2322,25 +2341,6 @@
       "embedVerified": true,
       "linkPriority": 60,
       "url": "https://x.com/bullyb170/status/2119231642308878462"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "mma",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-09T19:00:00+00:00",
-      "discoveredAt": "2026-11-11T09:42:14.153Z",
-      "sourcePublisher": "MMA Junkie",
-      "evidenceUrl": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/09/the-thrill-and-agony-ufc-vegas-124-winner-and-loser-reactions/92699651007/",
-      "summary": "Original social post linked in MMA Junkie coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Trusted publisher permalink (embed unconfirmed)",
-      "verification": "trusted-publisher-link",
-      "embedVerified": false,
-      "linkPriority": 10,
-      "url": "https://www.instagram.com/p/Dfd3HklGXUoembed/"
     }
   ],
   "seenOriginals": [
@@ -3099,6 +3099,10 @@
     {
       "url": "https://x.com/Queensberry/status/2122567295801364753",
       "firstSeen": "2026-11-17T09:02:17.982Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/Df0ufjTz14Z/",
+      "firstSeen": "2026-11-17T14:36:21.899Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
