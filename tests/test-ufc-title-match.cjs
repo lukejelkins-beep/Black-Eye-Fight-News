@@ -1,7 +1,7 @@
 const assert=require("node:assert/strict");
 const fs=require("node:fs");
 const vm=require("node:vm");
-const html=fs.readFileSync("index.html","utf8");
+const html=require('./helpers/read-index.cjs')();
 const start=html.indexOf("function befnDivisionKey(");
 const stop=html.indexOf("function openFighter(",start);
 assert(start>=0&&stop>start,"V3 championship helper is present");

@@ -1,5 +1,5 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert');
-const fullSite=fs.readFileSync('index.html','utf8');
+const fullSite=require('./helpers/read-index.cjs')();
 const resultsSource=fs.readFileSync('assets/results.js','utf8');
 const filmSource=fs.readFileSync('assets/fight-film.js','utf8');
 assert(fullSite.includes('assets/news-list.css'),'Compact news-list stylesheet loads');

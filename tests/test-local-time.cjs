@@ -4,7 +4,7 @@ const fs=require('node:fs');
 const vm=require('node:vm');
 const helper=fs.readFileSync('assets/local-time.js','utf8');
 const upcoming=fs.readFileSync('assets/upcoming-cards.js','utf8');
-const html=fs.readFileSync('index.html','utf8');
+const html=require('./helpers/read-index.cjs')();
 
 // Validate embedded JS too; node --check cannot inspect script tags in HTML.
 for(const script of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi)){

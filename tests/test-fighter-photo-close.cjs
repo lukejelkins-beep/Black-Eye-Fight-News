@@ -1,6 +1,6 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
-const html=fs.readFileSync('index.html','utf8'),script=fs.readFileSync('assets/fighter-hover.js','utf8');
+const html=require('./helpers/read-index.cjs')(),script=fs.readFileSync('assets/fighter-hover.js','utf8');
 // Inline scripts are separately syntax-validated by tests/test-local-time.cjs.
 new vm.Script(script);
 for(const [source,kind] of [[html,'fighter-preview'],[script,'fighter-mention']]){
