@@ -1870,3 +1870,31 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .sumo-faceoff-result-card .sumo-faceoff-verdict{font-size:12px}
   .sumo-faceoff-result-card .sumo-faceoff-method{font-size:11px}
 }
+
+/* Portrait-led Results refinements: winner accent and no text cropping at 320px. */
+.sumo-faceoff-result-card>.sumo-faceoff-photo.is-winner::after{
+  content:"";position:absolute;inset:0;z-index:2;
+  border-bottom:4px solid #d7b86b;box-sizing:border-box;
+  pointer-events:none;
+}
+@media(max-width:650px){
+  .sumo-compact-results>.sumo-faceoff-result-card{
+    height:auto;min-height:174px;
+  }
+  .sumo-faceoff-result-card .sumo-faceoff-centre{
+    min-height:174px;
+  }
+  .sumo-faceoff-result-card .sumo-faceoff-names{
+    flex-direction:column;gap:2px;line-height:1.05;
+  }
+  .sumo-faceoff-result-card .sumo-faceoff-names a,
+  .sumo-faceoff-result-card .sumo-faceoff-names>span{
+    max-width:100%;overflow-wrap:anywhere;
+  }
+}
+@media(max-width:360px){
+  .sumo-compact-results>.sumo-faceoff-result-card,
+  .sumo-faceoff-result-card .sumo-faceoff-centre{
+    height:auto;min-height:172px;
+  }
+}
