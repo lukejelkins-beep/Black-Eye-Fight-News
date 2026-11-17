@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-17T08:00:40.806Z",
-  "checkedAt": "2026-11-17T08:00:40.806Z",
+  "attemptedAt": "2026-11-17T09:02:17.982Z",
+  "checkedAt": "2026-11-17T09:02:17.982Z",
   "windowDays": 28,
-  "articlesChecked": 31,
+  "articlesChecked": 32,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 45,
-  "publisherSourcesConfigured": 32,
-  "linksFound": 9,
-  "newEmbedsVerified": 0,
+  "publisherSourcesConfigured": 33,
+  "linksFound": 55,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -18,6 +18,27 @@
   "curatedRejected": 0,
   "curatedPublisherLinked": 2,
   "posts": [
+    {
+      "type": "post",
+      "platform": "X",
+      "sport": "boxing",
+      "name": "Queensberry Promotions",
+      "role": "promoter",
+      "handle": "@Queensberry",
+      "nativeEmbed": true,
+      "originalDateUnverified": false,
+      "postedAt": "2026-11-17T05:47:33.369Z",
+      "sourceLinkedAt": "2026-11-17T09:01:52.000Z",
+      "discoveredAt": "2026-11-17T09:02:17.982Z",
+      "sourcePublisher": "Boxing News",
+      "evidenceUrl": "https://boxingnewsonline.net/news/lee-reeves-sadly-passes-away/",
+      "summary": "Original social post linked in Boxing News coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 55,
+      "url": "https://x.com/Queensberry/status/2122567295801364753"
+    },
     {
       "type": "post",
       "platform": "Threads",
@@ -2320,25 +2341,6 @@
       "embedVerified": false,
       "linkPriority": 10,
       "url": "https://www.instagram.com/p/Dfd3HklGXUoembed/"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "mma",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-09T03:54:01+00:00",
-      "discoveredAt": "2026-11-11T09:42:14.153Z",
-      "sourcePublisher": "ONE Championship",
-      "evidenceUrl": "https://www.onefc.com/news/im-ready-magomed-magomedov-eyes-lightweight-mma-gold-after-hard-fought-win-at-one-fight-night-49/",
-      "summary": "Original social post linked in ONE Championship coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 10,
-      "url": "https://www.instagram.com/reel/Dfbe1TzOGV9/"
     }
   ],
   "seenOriginals": [
@@ -3093,6 +3095,10 @@
     {
       "url": "https://www.instagram.com/p/DfwQP1Omxft/",
       "firstSeen": "2026-11-17T04:23:07.419Z"
+    },
+    {
+      "url": "https://x.com/Queensberry/status/2122567295801364753",
+      "firstSeen": "2026-11-17T09:02:17.982Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
