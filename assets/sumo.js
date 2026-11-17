@@ -211,11 +211,17 @@ function bioLine(w){
     '<span class="sumo-bio-line">'+e(measurements.h)+' · '+e(measurements.mass)+(age===null?'':' · Age '+age)+'</span>'+
     '<span class="sumo-bio-line">Career W–L: '+e(career)+'</span>';
 }
-function fighterOnCard(w,id,label) {
+function fighterOnCard(w,id,label,opts) {
   const name=w?.shikonaEn||label||'Opponent';
   const link=w?'<a href="#profile/'+Number(w.sourceId)+'">'+e(name)+'</a>':'<span>'+e(name)+'</span>';
-  return '<div class="sumo-match-person">'+portraitFor(w,'md')+
-    '<div class="sumo-match-identity"><div class="sumo-match-name">'+flagMark(w)+link+'</div>'+bioLine(w)+'</div></div>';
+  // Head-to-head hero uses the approved style: plain country name plus a faded
+  // flag behind the information column, not a small emoji beside the name.
+  // The country comes only from the source birthplace; unknown shows nothing.
+  const hero=opts&&opts.hero===true;
+  const country=hero?originCountry(w?.birthplace):null;
+  const mark=hero?(country?'<span class="sumo-hero-country">'+e(country.name)+'</span>':''):flagMark(w);
+  return '<div class="sumo-match-person'+(hero?' has-flag-backdrop':'')+'">'+(hero?heroFlagBackdrop(w):'')+portraitFor(w,'md')+
+    '<div class="sumo-match-identity"><div class="sumo-match-name">'+link+mark+'</div>'+bioLine(w)+'</div></div>';
 }
 function matchupCard(match) {
   const a=wrestler(match.rikishiId),b=wrestler(match.opponentId);
@@ -1016,11 +1022,11 @@ function renderHeadToHead(a,b) {
   else if(STATE.h2hLoadFailed)coverage='Complete chronology could not load. Showing '+(history?.rows.length||0)+' of '+(history?.total||'unknown')+' meetings.';
   else coverage='Showing '+(history?.rows.length||0)+' of '+(history?.total||'unknown')+' sourced meetings. Full cache has not yet loaded.';
   return back+heading('Rikishi versus rikishi','Career head-to-head','','h1')+
-    '<div class="sumo-h2h-hero"><div>'+fighterOnCard(first,a,firstName)+'</div>'+
+    '<div class="sumo-h2h-hero"><div>'+fighterOnCard(first,a,firstName,{hero:true})+'</div>'+
     '<div class="sumo-h2h-score"><span>Career series · regular recorded bouts</span>'+
     '<strong>'+e(history?history.wins+'–'+history.losses:'Unavailable')+'</strong>'+
     '<small>'+e(history?history.total+' recorded meetings':'Series loading')+'</small></div>'+
-    '<div>'+fighterOnCard(second,b,secondName)+'</div></div>'+
+    '<div>'+fighterOnCard(second,b,secondName,{hero:true})+'</div></div>'+
     '<div class="sumo-h2h-comparison">'+comparisonGrid(first,second)+'</div>'+
     h2hKimaritePanel(history,a,firstName,secondName)+
     heading('Calendar chronology','Every historical meeting')+
