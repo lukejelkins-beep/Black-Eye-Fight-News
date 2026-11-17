@@ -1,6 +1,6 @@
 # Design direction
 
-Status: **proposed by Claude on 2026-11-17, awaiting owner approval** unless marked *approved*. Approved items move to the top of DECISIONS.md.
+Status: **approved by the owner on 2026-11-17.** Changes to this direction need the owner's agreement and a line in DECISIONS.md.
 
 ## The feel
 Modern, fast and confident, in the spirit of the official UFC site: dark editorial surfaces, big photography, uppercase condensed headlines, one accent colour, almost no decoration. A reader should find the thing they came for in one tap and understand it in one glance.

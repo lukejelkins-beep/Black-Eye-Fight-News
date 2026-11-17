@@ -10,4 +10,5 @@ Format: date — decision — who — where it shows up.
 - The tracked cohort size is taken from the roster, never a fixed 190. — Claude, merged with the above.
 - Career totals and head-to-head records are updated from each completed bout during a basho. — Owner approved — PR #265.
 - Merging to `main` or the Sumo preview branch needs the owner's explicit "Merge N". — Owner standing rule.
-- Design direction in DIRECTION.md and the roadmap in REVIEW-2026-11-17.md are **proposed**, not yet approved.
+- Design direction in DIRECTION.md (dark editorial look, two typefaces, one header and navigation pattern, no internal research on public pages) is approved. — Owner approved — docs/design/DIRECTION.md.
+- There is no existing image collection. Images will be collected into a local library on the owner's Mac (originals, a rights register, processed website crops) and only processed, approved images go on the site. Claude does not download photos of public figures itself; the owner supplies files they are permitted to use, and Claude builds the pipeline and the site changes. — Owner direction — docs/design/IMAGE-GUIDE.md.
