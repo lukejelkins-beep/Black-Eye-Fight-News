@@ -538,6 +538,48 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.ok((await page.locator('.sumo-standings-row').count())>=20,'Basho standings stay accessible in compact rows');
   await page.locator('[data-basho-view="results"]').click();
   assert.ok((await page.locator('.sumo-compact-bout').count())>0,'Compact result rows show actual winners');
+  const resultCards=await page.locator('.sumo-compact-bout').evaluateAll(cards=>cards.slice(0,12).map(card=>{
+    const $=selector=>card.querySelector(selector);
+    const box=el=>el?.getBoundingClientRect();
+    const a=box(card),left=box($('.sumo-bout-photo.start')),
+      right=box($('.sumo-bout-photo.end')),centre=box($('.sumo-bout-centre'));
+    const photos=[...card.querySelectorAll('.sumo-bout-photo')];
+    return {
+      cardWidth:a?.width,cardHeight:a?.height,
+      leftWidth:left?.width,rightWidth:right?.width,centreWidth:centre?.width,
+      leftFlush:!!(left&&Math.abs(left.left-a.left)<=2&&Math.abs(left.top-a.top)<=2&&Math.abs(left.bottom-a.bottom)<=2),
+      rightFlush:!!(right&&Math.abs(right.right-a.right)<=2&&Math.abs(right.top-a.top)<=2&&Math.abs(right.bottom-a.bottom)<=2),
+      centreBetween:!!(left&&right&&centre&&centre.left>=left.right-2&&right.left>=centre.right-2),
+      centreNotClipped:!!(centre&&$('.sumo-bout-centre').scrollHeight<=$('.sumo-bout-centre').clientHeight+5),
+      photos:photos.length,
+      photoFill:photos.every(link=>{
+        const p=box(link),inner=box(link.querySelector('.profile-icon.sumo-photo'));
+        return !!(p&&inner&&Math.abs(p.width-inner.width)<=2&&Math.abs(p.height-inner.height)<=2);
+      }),
+      names:card.querySelectorAll('.sumo-bout-pair>a').length,
+      technique:!!$('.sumo-bout-technique')?.textContent?.trim(),
+      result:!!$('.sumo-bout-outcome strong')?.textContent?.trim(),
+      h2h:!!$('.sumo-bout-h2h[href^="#headtohead/"]'),
+      resultLinks:[...card.querySelectorAll('.sumo-bout-technique a[href^="#kimarite"]')].length,
+      pageWidth:document.documentElement.scrollWidth,
+      viewport:document.documentElement.clientWidth
+    };
+  }));
+  assert.ok(resultCards.length>0,'Redesigned results have cards');
+  for(const [index,card] of resultCards.entries()){
+    assert.ok(card.photos===2&&card.leftWidth>=card.cardWidth*.24&&card.rightWidth>=card.cardWidth*.24,
+      'Result '+index+' has two prominent wrestler photos: '+JSON.stringify(card));
+    assert.ok(card.leftFlush&&card.rightFlush&&card.centreBetween&&card.photoFill,
+      'Result '+index+' has edge-to-edge left/right portraits and central information: '+JSON.stringify(card));
+    assert.ok(card.centreNotClipped&&card.centreWidth>=110&&card.names===2&&card.technique&&card.result&&card.h2h,
+      'Result '+index+' has readable centred names, winner, technique and H2H: '+JSON.stringify(card));
+    assert.ok(card.pageWidth<=card.viewport+6,
+      'Result card does not cause horizontal page scrolling: '+JSON.stringify(card));
+  }
+  await page.locator('.sumo-compact-results').screenshot({
+    path:OUT+'/'+label+'-results-photo-led.png',animations:'disabled'});
+  screenshotCount++;
+
   await snap(page,label+'-basho',{fullPage:false});
 
   // Dedicated daily face-offs use sourced pairings, two complete stat columns,
