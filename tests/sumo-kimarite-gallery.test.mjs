@@ -62,12 +62,22 @@ test('on-demand GIF dialog is labelled, accessible, and ends after the English t
   assert.match(html,/Frontal push-out/);
   assert.doesNotMatch(html,/Official JSA reference|Kimarite\/detail\//);
 });
-test('gallery does not load a GIF until the visitor clicks a kimarite',()=>{
-  globalThis.location={hash:'#kimarite'};
-  const html=renderKimariteGallery();
-  assert.match(html,/sumo-km-gallery/);
-  assert.doesNotMatch(html,/src="assets\/sumo-kimarite\/oshidashi.gif"/);
+test('cards with an approved GIF play it inline, lazily, with a reduced-motion still; others keep the JSA photo',()=>{
+  assert.equal(setKimariteMediaManifest({schemaVersion:1,clips:{oshidashi:{
+    gif:'assets/sumo-kimarite/oshidashi.gif',credit:'NHK WORLD-JAPAN',rights:'NHK permission confirmed by BEFN owner'
+  }}}),true);
+  globalThis.location={hash:'#kimarite?term=oshidashi'};
+  const withGif=renderKimariteGallery();
+  assert.match(withGif,/<img class="sumo-km-inline-gif" src="assets\/sumo-kimarite\/oshidashi\.gif"/);
+  assert.match(withGif,/loading="lazy"/);
+  assert.match(withGif,/prefers-reduced-motion: reduce[^>]*srcset="assets\/sumo-kimarite\/jsa\/kimarite_03\.jpg/);
+  assert.doesNotMatch(withGif,/View GIF/);
+  globalThis.location={hash:'#kimarite?term=yorikiri'};
+  const withoutGif=renderKimariteGallery();
+  assert.doesNotMatch(withoutGif,/sumo-km-inline-gif/);
+  assert.match(withoutGif,/assets\/sumo-kimarite\/jsa\/kimarite_05\.jpg/);
   delete globalThis.location;
+  setKimariteMediaManifest({schemaVersion:1,clips:{}});
 });
 
 test('pending media manifest starts empty; no empty claims of encoded videos',()=>{
