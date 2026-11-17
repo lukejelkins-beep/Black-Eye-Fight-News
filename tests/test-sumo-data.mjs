@@ -10,6 +10,31 @@ import {
 } from '../assets/sumo-data.mjs';
 
 import { highestRecordedDivision } from '../assets/sumo-daily.mjs';
+import { lookupKimarite, kimariteModalMarkup, setKimariteMediaManifest } from '../assets/sumo-kimarite-gallery.mjs';
+
+test('technique popup ends directly after English translation for both picture and GIF examples',()=>{
+  setKimariteMediaManifest({schemaVersion:1,clips:{
+    yorikiri:{
+      gif:'assets/sumo-kimarite/yorikiri.gif',
+      clip:'assets/sumo-kimarite/yorikiri.mp4',
+      rights:'NHK permission confirmed by BEFN owner',credit:'NHK WORLD-JAPAN'
+    }
+  }});
+  for(const name of ['Yorikiri','Uwatenage']){
+    const item=lookupKimarite(name),html=kimariteModalMarkup(item);
+    assert.ok(item&&html.includes('class="sumo-km-modal-visual"'));
+    assert.ok(html.includes('id="sumo-km-modal-title"'));
+    assert.ok(html.includes(item.japanese));
+    assert.ok(html.includes('<p class="sumo-km-modal-meaning">'+item.english+'</p>'));
+    assert.match(html,/<p class="sumo-km-modal-meaning">[^<]+<\/p><\/div><\/section><\/div>$/);
+    assert.doesNotMatch(html,/sumo-km-clip-panel|sumo-km-original-clip|sumo-km-modal-links|sumo-km-modal-pending/);
+    assert.ok(html.includes('data-km-close'),'Existing close control retained');
+  }
+  assert.match(kimariteModalMarkup(lookupKimarite('Yorikiri')),/sumo-km-modal-gif/);
+  assert.match(kimariteModalMarkup(lookupKimarite('Uwatenage')),/sumo-km-modal-still/);
+});
+
+
 
 test('career H2H prefers Makuuchi record even when older Makushita data exists',()=>{
   const result=highestRecordedDivision({
