@@ -101,9 +101,7 @@ function galleryContents(){
 }
 function gallery(){
  return '<div class="sumo-km-gallery">'+
-  '<header class="sumo-km-hero"><div class="eyebrow">BEFN SUMO · THE TECHNIQUE LIBRARY</div>'+
-  '<h1>Kimarite <span>決まり手</span></h1><p>Explore all 82 official sumo winning techniques. Select a technique to see what it means and an authorised demonstration where available.</p>'+
-  '<div class="sumo-km-hero-stats"><strong>82 <small>techniques</small></strong><strong>6 <small>families</small></strong><strong>5 <small>other outcomes</small></strong></div></header>'+
+  '<header class="sumo-page-head"><h1>Techniques</h1><p>82 official kimarite · 決まり手 · 6 families</p></header>'+
   '<section class="sumo-km-controls" aria-label="Find a winning technique">'+
   '<label for="sumo-km-search">Find a technique</label>'+
   '<input id="sumo-km-search" type="search" value="'+esc(search)+'" placeholder="Search yorikiri, throw, trip…" autocomplete="off">'+

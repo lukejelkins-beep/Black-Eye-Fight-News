@@ -708,31 +708,21 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .directory-grid.is-list .directory-lower .cta{display:none}
  .sumo-hero-actions{margin-top:9px}
 }
-/* F02: four clear mobile destinations, never an undiscoverable clipped navigation row. */
-.sumo-mobile-more{display:none}
+/* Four destinations, identical on phone and desktop: Results, Rankings, Rikishi, Techniques. */
 @media(max-width:680px){
- .subnav-inner{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;padding:0 9px;overflow:visible}
- .subnav-inner>a[href="#banzuke"],.subnav-inner>a[href="#kimarite"]{display:none!important}
- .subnav-inner>a,.sumo-mobile-more>summary{justify-content:center;text-align:center;padding:8px 3px;font-size:12px;white-space:nowrap;min-width:0;min-height:44px}
- .sumo-mobile-more{display:block;position:relative;z-index:40;color:#fff;min-width:0}
- .sumo-mobile-more>summary{display:flex;align-items:center;cursor:pointer;list-style:none;font-weight:850;letter-spacing:.04em;text-transform:uppercase}
- .sumo-mobile-more>summary:after{content:" ▾";margin-left:3px}
- .sumo-mobile-more[open]>summary:after{content:" ▴"}
- .sumo-mobile-more-links{position:absolute;top:100%;right:0;min-width:180px;display:grid;padding:5px;background:#21191c;border:1px solid #79676a;box-shadow:0 10px 20px #110a0c55;z-index:80}
- .sumo-mobile-more-links>a{padding:12px 10px;color:#fff;white-space:nowrap;text-decoration:none;font-size:14px;font-weight:750}
- .sumo-mobile-more-links>a:focus-visible,.sumo-mobile-more-links>a:hover{background:#84243a}
-}
-
-/* Final 320px screenshot correction: use short labels, not overlapping text. */
-.sumo-mobile-label{display:none}
-@media(max-width:680px){
-  .sumo-desktop-label{display:none}
-  .sumo-mobile-label{display:inline}
-  .subnav-inner{grid-template-columns:1.1fr .82fr .82fr .8fr}
+ .subnav-inner{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;padding:0 6px;overflow:visible}
+ .subnav-inner>a{justify-content:center;text-align:center;padding:8px 2px;font-size:12px;white-space:nowrap;min-width:0;min-height:44px}
 }
 @media(max-width:350px){
-  .subnav-inner>a,.sumo-mobile-more>summary{font-size:11px;letter-spacing:0}
+ .subnav-inner>a{font-size:11px;letter-spacing:0}
 }
+.subnav a.active,.subnav a[aria-current="page"]{box-shadow:inset 0 -3px 0 var(--brand-red,#cf1824)}
+
+/* One page header everywhere: dark band, uppercase title, one context line. */
+.sumo-page-head{margin:16px 0 18px;padding:clamp(16px,3vw,26px) clamp(16px,3vw,28px);background:#151115;color:#fff;border-radius:6px;border-left:4px solid var(--brand-red,#cf1824)}
+.sumo-page-head h1{margin:0;font:900 clamp(34px,6vw,56px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;letter-spacing:.01em;color:#fff;overflow-wrap:anywhere}
+.sumo-page-head p{margin:8px 0 0;color:#d9cfcd;font:600 14px/1.4 'DM Sans',system-ui,sans-serif}
+.back-link+.sumo-page-head{margin-top:10px}
 
 /* PR #230 follow-up: image-first rikishi hero; source-grounded Career tiles; readable H2H. */
 .sumo-career-strip{
