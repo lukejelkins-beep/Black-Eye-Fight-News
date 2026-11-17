@@ -1,0 +1,59 @@
+name: Sumo preview live refresh during basho
+
+# Scheduled workflows only run from the default branch, so this lives on main.
+# It touches ONLY the Sumo preview branch (never main, never the production
+# site): it runs that branch's own refresh script and commits the preview
+# data cache there. Render redeploys the preview from that commit.
+on:
+  schedule:
+    # Every 30 minutes, 8-23 Nov (UTC), covering the Kyushu basho (8-22 Nov)
+    # and the evening torikumi announcement for each next day.
+    - cron: '7,37 * 8-23 11 *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sumo-preview-single-writer
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/sumo-section-test-20261114
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Refresh latest results and announced next-day torikumi
+        run: node scripts/sumo-refresh-daily.mjs
+      - name: Commit only the preview daily cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "BEFN Sumo daily preview"
+          git config user.email "sumo-preview@users.noreply.github.com"
+          git add data/sumo/preview-details.json
+          if git diff --cached --quiet; then
+            echo "No daily cache change"
+            exit 0
+          fi
+          git commit -m "Refresh verified-source Sumo daily preview results and torikumi"
+          for attempt in 1 2 3; do
+            git fetch origin feat/sumo-section-test-20261114
+            if ! git rebase origin/feat/sumo-section-test-20261114; then
+              git rebase --abort || true
+              echo "Concurrent change conflict; leaving preview branch unchanged" >&2
+              exit 1
+            fi
+            if git push origin HEAD:feat/sumo-section-test-20261114; then
+              exit 0
+            fi
+            sleep 2
+          done
+          exit 1
