@@ -367,7 +367,15 @@ test('Sumo preview profiles load source-linked career cache and accessible chart
 
 test('the cached upcoming tournament list must contain verified torikumi identities',()=>{
   const details=JSON.parse(readFileSync(new URL('../data/sumo/preview-details.json',import.meta.url),'utf8'));
-  assert.equal(details.bashoId,'202611');
+  assert.match(details.bashoId,/^20\d{4}$/);
+  // The schedule for the next day is published late, and between bashos there is none.
+  // That is a normal state, not a broken dataset; it must never block a deploy.
+  if(details.announcedDay==null){
+    assert.ok(['next-day-torikumi-not-yet-published',undefined].includes(details.dailyStatus),'unexpected daily status '+details.dailyStatus);
+    for(const division of ['Makuuchi','Juryo','Makushita'])
+      assert.notEqual(details.torikumi?.[division]?.status,'available',division+' marked available with no announced day');
+    return;
+  }
   assert.ok(Number.isInteger(details.announcedDay)&&details.announcedDay>=1&&details.announcedDay<=15);
   for(const division of ['Makuuchi','Juryo','Makushita']){
     const source=details.torikumi?.[division];
