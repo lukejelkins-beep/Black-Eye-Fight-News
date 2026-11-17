@@ -60,9 +60,9 @@ export function matchesRevisedOfficialCareer(profile,history,evidence,asOf,cutof
  for(const item of official){
    const when=date(item?.date),who=tokens(item?.opponent),
      result=normalizedOutcome(item?.result),fingerprint=when+'|'+who;
-   // Certification is frozen to the cohort snapshot: future contests cannot
-   // be silently counted as completed official career evidence.
-   if(!when||when>asOf||!who||!result||seen.has(fingerprint)||
+   // The approved roster is frozen at cutoff (not the later verification
+   // date): post-cutoff contests cannot silently expand the cohort proof.
+   if(!when||when>cutoff||!who||!result||seen.has(fingerprint)||
       (item.officialUfcSourceUrl&&
        !/^https:\/\/www\.ufc\.com\//i.test(String(item.officialUfcSourceUrl))))return false;
    seen.add(fingerprint);
