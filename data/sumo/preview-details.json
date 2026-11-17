@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "preview": true,
   "source": "https://www.sumo-api.com/api",
-  "collectedAt": "2026-11-17T06:40:17.053Z",
+  "collectedAt": "2026-11-17T09:53:47.259Z",
   "notice": "Developer preview; third-party source; cross-check results against the Japan Sumo Association before production.",
   "bashoId": "202611",
   "trackedDivisions": [
@@ -31,7 +31,7 @@
           "lossByDivision": {
             "Juryo": 6,
             "Makushita": 4,
-            "Makuuchi": 63
+            "Makuuchi": 64
           },
           "sansho": {
             "Gino-sho": 3,
@@ -42,10 +42,10 @@
           "totalByDivision": {
             "Juryo": 30,
             "Makushita": 14,
-            "Makuuchi": 238
+            "Makuuchi": 239
           },
-          "totalLosses": 73,
-          "totalMatches": 282,
+          "totalLosses": 74,
+          "totalMatches": 283,
           "totalWins": 209,
           "winsByDivision": {
             "Juryo": 24,
@@ -65,6 +65,22 @@
           "skip": 0,
           "total": 18,
           "records": [
+            {
+              "bashoId": "202611",
+              "division": "Makuuchi",
+              "day": 10,
+              "matchNo": 20,
+              "eastId": 8850,
+              "eastShikona": "Onosato",
+              "eastRank": "Yokozuna 1 East",
+              "westId": 74,
+              "westShikona": "Atamifuji",
+              "westRank": "Sekiwake 1 West",
+              "kimarite": "oshidashi",
+              "winnerId": 74,
+              "winnerEn": "Atamifuji",
+              "winnerJp": ""
+            },
             {
               "bashoId": "202611",
               "division": "Makuuchi",
@@ -336,22 +352,6 @@
               "winnerId": 8850,
               "winnerEn": "Onosato",
               "winnerJp": ""
-            },
-            {
-              "bashoId": "202609",
-              "division": "Makuuchi",
-              "day": 7,
-              "matchNo": 20,
-              "eastId": 8850,
-              "eastShikona": "Onosato",
-              "eastRank": "Yokozuna 1 East",
-              "westId": 71,
-              "westShikona": "Churanoumi",
-              "westRank": "Maegashira 3 West",
-              "kimarite": "oshidashi",
-              "winnerId": 8850,
-              "winnerEn": "Onosato",
-              "winnerJp": ""
             }
           ]
         }
@@ -377,7 +377,7 @@
             "Sandanme": 2
           },
           "lossByDivision": {
-            "Juryo": 82,
+            "Juryo": 83,
             "Makushita": 13,
             "Makuuchi": 164,
             "Sandanme": 2
@@ -388,13 +388,13 @@
           },
           "totalAbsences": 102,
           "totalByDivision": {
-            "Juryo": 204,
+            "Juryo": 205,
             "Makushita": 49,
             "Makuuchi": 423,
             "Sandanme": 14
           },
-          "totalLosses": 261,
-          "totalMatches": 690,
+          "totalLosses": 262,
+          "totalMatches": 691,
           "totalWins": 429,
           "winsByDivision": {
             "Juryo": 122,
@@ -418,6 +418,22 @@
           "skip": 0,
           "total": 18,
           "records": [
+            {
+              "bashoId": "202611",
+              "division": "Juryo",
+              "day": 10,
+              "matchNo": 14,
+              "eastId": 12,
+              "eastShikona": "Wakatakakage",
+              "eastRank": "Juryo 5 West",
+              "westId": 8853,
+              "westShikona": "Onokatsu",
+              "westRank": "Juryo 1 West",
+              "kimarite": "hikiotoshi",
+              "winnerId": 8853,
+              "winnerEn": "Onokatsu",
+              "winnerJp": "阿武剋　一弘"
+            },
             {
               "bashoId": "202611",
               "division": "Juryo",
@@ -689,22 +705,6 @@
               "winnerId": 8,
               "winnerEn": "Kotoshoho",
               "winnerJp": ""
-            },
-            {
-              "bashoId": "202605",
-              "division": "Makuuchi",
-              "day": 8,
-              "matchNo": 15,
-              "eastId": 12,
-              "eastShikona": "Wakatakakage",
-              "eastRank": "Komusubi 1 East",
-              "westId": 41,
-              "westShikona": "Oho",
-              "westRank": "Maegashira 3 West",
-              "kimarite": "yorikiri",
-              "winnerId": 12,
-              "winnerEn": "Wakatakakage",
-              "winnerJp": "若隆景　渥"
             }
           ]
         }
@@ -46667,7 +46667,7 @@
       "reason": "No confirmed next-day torikumi on the JSA page yet"
     }
   },
-  "dailyCollectedAt": "2026-11-17T09:52:55.558Z",
+  "dailyCollectedAt": "2026-11-17T09:56:34.431Z",
   "dailyJstDay": 10,
   "dailyScheduleCount": 21,
   "dailySource": "https://www.sumo.or.jp/EnHonbashoMain/torikumi/",
