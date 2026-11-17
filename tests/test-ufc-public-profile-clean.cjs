@@ -2,7 +2,7 @@
 // Audit provenance and scoring internally; keep public fighter cards editorially clean.
 const assert=require("node:assert/strict");
 const fs=require("node:fs");
-const html=fs.readFileSync("index.html","utf8");
+const html=require('./helpers/read-index.cjs')();
 const insights=fs.readFileSync("assets/fighter-insights.js","utf8");
 const modal=html.slice(html.indexOf("function openFighter(id){"),html.indexOf("function navigate(){"));
 const section=(start,end)=>{const a=insights.indexOf(start),z=insights.indexOf(end,a);assert(a>=0&&z>a,"Missing frontend rendering boundary: "+start);return insights.slice(a,z)};

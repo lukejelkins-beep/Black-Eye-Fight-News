@@ -1,5 +1,5 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert');
-const html=fs.readFileSync('index.html','utf8');
+const html=require('./helpers/read-index.cjs')();
 assert(html.includes('news-publisher-link'),'MMA News retains a compact direct source link');
 assert(html.includes('https://mmajunkie.usatoday.com/'),'MMA Junkie canonical reporting is directly linked');
 for(const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)){if(m[1].includes('application/json'))JSON.parse(m[2]);else new Function(m[2]);}

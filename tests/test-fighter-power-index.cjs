@@ -4,7 +4,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const model = require("../assets/fighter-power-index.js");
 const insights=fs.readFileSync(path.join(__dirname,"../assets/fighter-insights.js"),"utf8");
-const html=fs.readFileSync(path.join(__dirname,"../index.html"),"utf8");
+const html=require('./helpers/read-index.cjs')();
 const css=fs.readFileSync(path.join(__dirname,"../assets/fighter-power.css"),"utf8");
 const last5=[
  {date:"2026-11-07",opponent:"A",result:"win"},

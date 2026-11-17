@@ -2,7 +2,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import vm from "node:vm";
-const html=fs.readFileSync("index.html","utf8");
+import readIndex from "./helpers/read-index.cjs";
+const html=readIndex();
 const js=fs.readFileSync("assets/fighter-insights.js","utf8");
 const css=fs.readFileSync("assets/ufc-stat-leaderboards.css","utf8");
 test("dedicated UFC statistics route is navigable with a responsive standalone page",()=>{

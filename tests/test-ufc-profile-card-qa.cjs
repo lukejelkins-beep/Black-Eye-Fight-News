@@ -10,7 +10,7 @@ const root=path.resolve(__dirname,"..");
 const model=require("../assets/fighter-power-index.js");
 const classifier=require("../assets/ufc-prospect-contender.js");
 const read=p=>fs.readFileSync(path.join(root,p),"utf8");
-const html=read("index.html");
+const html=require("./helpers/read-index.cjs")();
 const insights=read("assets/fighter-insights.js");
 const source=x=>typeof x==="string"&&/^https:\/\/[^/\s]+\/\S*/i.test(x)&&!(/google\.com\/search/i.test(x));
 const norm=x=>String(x||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]/g,"");

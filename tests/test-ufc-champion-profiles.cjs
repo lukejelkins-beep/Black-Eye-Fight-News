@@ -4,7 +4,7 @@ const fs=require("node:fs");
 const path=require("node:path");
 const root=path.resolve(__dirname,"..");
 const data=JSON.parse(fs.readFileSync(path.join(root,"data/ufc-champion-profiles.json"),"utf8"));
-const index=fs.readFileSync(path.join(root,"index.html"),"utf8");
+const index=require('./helpers/read-index.cjs')();
 const insights=fs.readFileSync(path.join(root,"assets/fighter-insights.js"),"utf8");
 const model=require("../assets/fighter-power-index.js");
 assert.equal(data.schema,1);
