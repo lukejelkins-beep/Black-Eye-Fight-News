@@ -22,3 +22,6 @@
 - Add focused regression tests for certification logic, data transforms and release-sensitive behavior. Run the affected tests, the full-cohort Stage 3 audit for UFC certification changes, and applicable QA checks. Report the exact commit and pass/fail result; distinguish research-only results from production checks.
 - `main` auto-deploys to the Render static site. Keep draft research and unapproved public features off `main`. Follow `docs/ufc-v4-staged-release-control.md` and release tracker #171 for UFC V4. Obtain explicit owner approval for the specific merge or production release, then verify the deployed SHA and live QA result.
 - Record unresolved conflicts, provider limits and skipped checks in the PR. Do not treat a passing unit test, a running audit or a registry entry as proof of production behavior or source truth.
+
+## Design and working agreement
+- Read `docs/design/README.md` before any visual or front-end change. `docs/design/DIRECTION.md` is the look and feel, `WORKING-AGREEMENT.md` is the approval and QA process, `IMAGE-GUIDE.md` covers image sourcing and rights, and `DECISIONS.md` is the log. Add a line to `DECISIONS.md` whenever a decision is made.
