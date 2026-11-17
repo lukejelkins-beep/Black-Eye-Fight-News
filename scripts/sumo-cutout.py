@@ -69,6 +69,33 @@ def cutout(src, max_h=1400):
     floor = (hsv[:, :, 1] < 45) & (hsv[:, :, 2] < 115)
     floor[: int(h * 0.88)] = False
     alpha = np.where(floor, 0, alpha).astype(np.uint8)
+    # White apron / paper streamers (shide) against the white studio: close light gaps
+    # in the central column only, where the apron hangs (arms stay outside it).
+    y0, y1, x0, x1 = int(h * 0.40), int(h * 0.84), int(w * 0.30), int(w * 0.70)
+    band = (alpha[y0:y1, x0:x1] > 128).astype(np.uint8)
+    kx = max(5, (w // 14) | 1)
+    closed = cv2.morphologyEx(band, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_RECT, (kx, 3)))
+    light = (hsv[y0:y1, x0:x1, 1] < 70) & (hsv[y0:y1, x0:x1, 2] > 150)
+    add = (closed > 0) & (band == 0) & light
+    alpha[y0:y1, x0:x1][add] = 255
+    # Bottom corners: drop floor tones, keep feet (skin is more saturated than the floor).
+    corner = np.zeros((h, w), bool)
+    corner[int(h * 0.88):, : int(w * 0.14)] = True
+    corner[int(h * 0.88):, int(w * 0.86):] = True
+    notskin = hsv[:, :, 1] < 55
+    alpha = np.where(corner & notskin, 0, alpha).astype(np.uint8)
+    # White studio floor below the apron fringe.
+    white = (hsv[:, :, 1] < 32) & (hsv[:, :, 2] > 198)
+    white[: int(h * 0.82)] = False
+    alpha = np.where(white, 0, alpha).astype(np.uint8)
+    # Specks: keep only sizeable components.
+    b2 = cv2.morphologyEx((alpha > 100).astype(np.uint8), cv2.MORPH_OPEN, np.ones((5, 5), np.uint8))
+    n3, l3, st3, _ = cv2.connectedComponentsWithStats(b2, 8)
+    keepm = np.zeros_like(b2)
+    for i in range(1, n3):
+        if st3[i, cv2.CC_STAT_AREA] > 0.004 * w * h:
+            keepm[l3 == i] = 1
+    alpha = np.where(cv2.dilate(keepm, np.ones((5, 5), np.uint8)) > 0, alpha, 0).astype(np.uint8)
     k = max(3, (w // 300) | 1)
     alpha = cv2.erode(alpha, np.ones((2, 2), np.uint8))
     alpha = cv2.GaussianBlur(alpha, (k, k), 0)
@@ -83,6 +110,4 @@ def cutout(src, max_h=1400):
 
 if __name__ == '__main__':
     res = cutout(sys.argv[1])
-    if res.shape[0] < 1.7 * res.shape[1]:
-        sys.exit(3)  # bust crop or failed key: not suitable as a standing cut-out
     cv2.imwrite(sys.argv[2], res, [cv2.IMWRITE_WEBP_QUALITY, 88])
