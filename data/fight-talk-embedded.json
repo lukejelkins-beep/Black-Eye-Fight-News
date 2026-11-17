@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-17T17:48:05.714Z",
-  "checkedAt": "2026-11-17T17:48:05.714Z",
+  "attemptedAt": "2026-11-17T18:46:08.392Z",
+  "checkedAt": "2026-11-17T18:46:08.392Z",
   "windowDays": 28,
   "articlesChecked": 31,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
-  "rssArticleCandidates": 45,
+  "rssArticleCandidates": 46,
   "publisherSourcesConfigured": 32,
-  "linksFound": 14,
-  "newEmbedsVerified": 0,
+  "linksFound": 17,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -38,6 +38,25 @@
       "embedVerified": true,
       "linkPriority": 55,
       "url": "https://x.com/Queensberry/status/2122567295801364753"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-17T17:00:00+00:00",
+      "discoveredAt": "2026-11-17T18:46:08.392Z",
+      "sourcePublisher": "MMA Fighting",
+      "evidenceUrl": "https://www.mmafighting.com/rankings/521758/mma-pound-for-pound-rankings-kayla-harrison-conquers-amanda-nunes-closes-in-on-valentina-shevchenko",
+      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/Df0NX2CE0_S/"
     },
     {
       "type": "post",
@@ -2329,24 +2348,6 @@
       "summary": "Original social post linked in MMA Junkie coverage. Its author, caption and publication date appear in the official embed.",
       "source": "Publisher link + official Meta oEmbed verification",
       "url": "https://www.instagram.com/reel/DflQsGzB8bh/"
-    },
-    {
-      "type": "post",
-      "platform": "X",
-      "sport": "mma",
-      "name": "PFL",
-      "role": "promoter",
-      "handle": "@PFLMMA",
-      "nativeEmbed": true,
-      "originalDateUnverified": false,
-      "postedAt": "2026-11-10T17:46:48.538Z",
-      "sourceLinkedAt": "2026-11-10T18:09:48+00:00",
-      "discoveredAt": "2026-11-10T19:40:11.247Z",
-      "sourcePublisher": "MMA Fighting",
-      "evidenceUrl": "https://www.mmafighting.com/boxing/520388/video-jake-paul-and-cedric-doumbe-exchange-words-in-1st-faceoff-for-boxing-showdown",
-      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher link + official X oEmbed verification",
-      "url": "https://x.com/PFLMMA/status/2120211586640175418"
     }
   ],
   "seenOriginals": [
@@ -3125,6 +3126,10 @@
     {
       "url": "https://www.instagram.com/reel/DFm0WAqpDR7/",
       "firstSeen": "2026-11-17T16:45:14.220Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/Df0NX2CE0_S/",
+      "firstSeen": "2026-11-17T18:46:08.392Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
