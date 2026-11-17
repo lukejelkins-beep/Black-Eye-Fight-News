@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import {
   KIMARITE, KIMARITE_GROUPS, lookupKimarite, renderKimariteGallery,
   setKimariteMediaManifest, kimariteModalMarkup
@@ -48,7 +48,7 @@ test('media manifest rejects unverified paths or missing credit',()=>{
   assert.doesNotMatch(renderKimariteGallery(),/type="video\/mp4"/);
   delete globalThis.location;
 });
-test('on-demand GIF dialog is labelled, accessible, and links to the JSA reference',()=>{
+test('on-demand GIF dialog is labelled, accessible, and ends after the English translation',()=>{
   assert.equal(setKimariteMediaManifest({schemaVersion:1,clips:{oshidashi:{
     gif:'assets/sumo-kimarite/oshidashi.gif',
     poster:'assets/sumo-kimarite/oshidashi-poster.jpg',
@@ -59,8 +59,8 @@ test('on-demand GIF dialog is labelled, accessible, and links to the JSA referen
   assert.match(html,/aria-modal="true"/);
   assert.match(html,/data-km-close/);
   assert.match(html,/assets\/sumo-kimarite\/oshidashi.gif/);
-  assert.match(html,/Kimarite\/detail\/3/);
-  assert.match(html,/Official JSA reference/);
+  assert.match(html,/Frontal push-out/);
+  assert.doesNotMatch(html,/Official JSA reference|Kimarite\/detail\//);
 });
 test('gallery does not load a GIF until the visitor clicks a kimarite',()=>{
   globalThis.location={hash:'#kimarite'};
@@ -77,7 +77,7 @@ test('pending media manifest starts empty; no empty claims of encoded videos',()
 });
 
 
-test('owner-provided GIF is primary in popup and original clip is optional',()=>{
+test('owner-provided GIF is primary in popup and the popup carries no original-clip link',()=>{
   const record={schemaVersion:1,clips:{oshidashi:{
     gif:'assets/sumo-kimarite/oshidashi.gif',
     clip:'assets/sumo-kimarite/oshidashi.mp4',
@@ -89,8 +89,8 @@ test('owner-provided GIF is primary in popup and original clip is optional',()=>
   const html=kimariteModalMarkup(lookupKimarite('oshidashi'));
   assert.match(html,/<img class="sumo-km-modal-gif"/);
   assert.match(html,/assets\/sumo-kimarite\/oshidashi.gif/);
-  assert.match(html,/Play original clip/);
-  assert.match(html,/assets\/sumo-kimarite\/oshidashi.mp4/);
+  assert.doesNotMatch(html,/Play original clip/);
+  assert.doesNotMatch(html,/oshidashi\.mp4/);
   assert.doesNotMatch(html,/sumo-km-modal-still/);
 });
 test('no unrelated still substitutes for missing Oshidashi media',()=>{
@@ -114,7 +114,7 @@ test('Oshidashi owner GIF poster can replace incorrect catalogue still',()=>{
 });
 
 
-test('three further owner-provided GIFs retain their matching clip and poster',()=>{
+test('three further owner-provided GIFs show their own GIF and no original-clip link',()=>{
  const clips={};for(const term of ['yorikiri','tsukiotoshi','hatakikomi'])clips[term]={
    gif:'assets/sumo-kimarite/'+term+'.gif',
    clip:'assets/sumo-kimarite/'+term+'.mp4',
@@ -127,8 +127,8 @@ test('three further owner-provided GIFs retain their matching clip and poster',(
  for(const term of Object.keys(clips)){
   const html=kimariteModalMarkup(lookupKimarite(term));
   assert.match(html,new RegExp('assets/sumo-kimarite/'+term+'\\.gif'));
-  assert.match(html,new RegExp('assets/sumo-kimarite/'+term+'\\.mp4'));
-  assert.match(html,/Play original clip/);
+  assert.doesNotMatch(html,new RegExp(term+'\\.mp4'));
+  assert.doesNotMatch(html,/Play original clip/);
   assert.doesNotMatch(html,/sumo-km-modal-still/);
  }
 });
@@ -158,4 +158,18 @@ test('all 82 gallery group records include their actual JSA JPEG URLs',()=>{
     assert.equal(item.jsaRemote,'https://www.sumo.or.jp/img/kimarite/'+photo);
     assert.equal(lookupKimarite(item.slug),item);
   }
+});
+
+test('every GIF listed in the shipped media manifest exists and passes the site validator',()=>{
+  const manifest=JSON.parse(readFileSync(new URL('../data/sumo/kimarite-media.json',import.meta.url),'utf8'));
+  const slugs=Object.keys(manifest.clips);
+  assert.ok(slugs.length>=20,'expected at least 20 clips, found '+slugs.length);
+  for(const slug of slugs){
+    assert.ok(lookupKimarite(slug),slug+' is not a known kimarite slug');
+    assert.ok(existsSync(new URL('../'+manifest.clips[slug].gif,import.meta.url)),slug+' GIF file is missing');
+  }
+  assert.equal(setKimariteMediaManifest(manifest),true);
+  for(const slug of slugs)
+    assert.match(kimariteModalMarkup(lookupKimarite(slug)),new RegExp('assets/sumo-kimarite/'+slug+'\\.gif'));
+  setKimariteMediaManifest({schemaVersion:1,clips:{}});
 });
