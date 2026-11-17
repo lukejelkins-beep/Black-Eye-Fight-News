@@ -6,10 +6,14 @@
 import { mkdir, writeFile, rename } from 'node:fs/promises';
 import { createSumoClient, collectRoster, buildRikishiIndex, SUMO_API_BASE } from './sumo-api-source.mjs';
 import { TRACKED_DIVISIONS, trackedBanzukeCohort } from '../assets/sumo-data.mjs';
+import { resolveBasho } from './sumo-basho-calendar.mjs';
 
 const PICKS = ['Onosato', 'Wakatakakage', 'Nishikigi'];
-const CURRENT_BASHO = '202611';
-const PREVIOUS_BASHO = '202609';
+// The basho follows the calendar (second Sunday of Jan/Mar/May/Jul/Sep/Nov),
+// so this never needs editing between tournaments.
+const resolved = resolveBasho(new Date());
+const CURRENT_BASHO = resolved.id;
+const PREVIOUS_BASHO = resolved.previousBashoId;
 const capturedAt = new Date().toISOString();
 const client = createSumoClient({ maxCalls: 28, timeoutMs: 15000 });
 const note = 'Developer preview; third-party source; cross-check results against the Japan Sumo Association before production.';
