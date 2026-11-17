@@ -27,3 +27,6 @@ There is no existing stockpile. The owner keeps a local `befn-images/` folder on
 
 ## Open question for the owner
 Which sources are you permitted to republish (promoter press kits, licences, Wikimedia)? List them here once known.
+
+## UFC library (added 2026-11-17)
+750 of the 783 approved UFC fighters have processed images in `assets/img/ufc/<slug>-{portrait,card,thumb}.webp`, listed in `data/ufc-image-register.json` (rights: `owner-cleared`, per owner statement). `scripts/process-fighter-images.py` makes them from the owner's local folder; crops are top-biased with no face detection, and 293 sources are under 480 px wide (`lowRes: true` in the register), so they will look soft if shown large. 33 fighters are listed under `missing`.
