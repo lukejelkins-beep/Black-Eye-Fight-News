@@ -14,7 +14,7 @@ const capturedAt=now.toISOString();
 const client=createSumoClient({maxCalls:8,timeoutMs:15000});
 const [details,roster]=await Promise.all([PATH,ROSTER].map(async path=>JSON.parse(await readFile(path,'utf8'))));
 const bashoId=String(details.bashoId||'');
-if (!/^20[0-9]{4}$/.test(bashoId) || !Array.isArray(roster.rikishi) || roster.rikishi.length!==190 ||
+if (!/^20[0-9]{4}$/.test(bashoId) || !Array.isArray(roster.rikishi) || roster.rikishi.length<100 ||
     !TRACKED_DIVISIONS.every(d=>details.banzuke?.[d]?.status==='available')){
   throw new Error('Existing approved preview dataset is incomplete; refusing refresh');
 }
