@@ -60,7 +60,9 @@ export function matchesRevisedOfficialCareer(profile,history,evidence,asOf,cutof
  for(const item of official){
    const when=date(item?.date),who=tokens(item?.opponent),
      result=normalizedOutcome(item?.result),fingerprint=when+'|'+who;
-   if(!when||!who||!result||seen.has(fingerprint)||
+   // Certification is frozen to the cohort snapshot: future contests cannot
+   // be silently counted as completed official career evidence.
+   if(!when||when>asOf||!who||!result||seen.has(fingerprint)||
       (item.officialUfcSourceUrl&&
        !/^https:\/\/www\.ufc\.com\//i.test(String(item.officialUfcSourceUrl))))return false;
    seen.add(fingerprint);
