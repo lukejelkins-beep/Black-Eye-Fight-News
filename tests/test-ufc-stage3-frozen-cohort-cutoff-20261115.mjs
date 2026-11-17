@@ -32,7 +32,17 @@ test('Stage3 preserves strict certified careers across midnight without fabricat
  const pending=next.careerVerificationDecisions.filter(d=>
   independentlyVerified.fighters[d.slug]&&!d.independentlyVerifiedFullCareer);
  assert.equal(afterMidnight.independentlyVerifiedFullCareerTimelines+pending.length,evidenceEntries);
- for(const decision of pending){
+ // Two approved slugs that point at one real athlete (same UFCStats page) must
+ // stay uncertified until the owner resolves canonical identity. That is a
+ // different reason from a newer unproven bout, so assert it explicitly.
+ const documentedDuplicateIdentity=new Set(['carlos-hernandez','carlos-hernandez-7']);
+ const urls=new Set(['carlos-hernandez','carlos-hernandez-7'].map(s=>independentlyVerified.fighters[s]?.fighterUrl));
+ assert.equal(urls.size,1,'duplicate-identity pair still shares one source athlete');
+ for(const slug of documentedDuplicateIdentity){
+  assert.ok(approval.approvedFighters.includes(slug));
+  assert.equal(next.careerVerificationDecisions.find(d=>d.slug===slug)?.independentlyVerifiedFullCareer,false,slug+' must not certify while identity is unresolved');
+ }
+ for(const decision of pending.filter(d=>!documentedDuplicateIdentity.has(d.slug))){
   const proof=independentlyVerified.fighters[decision.slug];
   const latestProvenBout=proof.bouts.map(b=>b.date).sort().at(-1);
   assert.ok(decision.newestSavedUfcFight>latestProvenBout,
