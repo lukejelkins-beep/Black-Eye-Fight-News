@@ -1086,7 +1086,7 @@ function compactBoutRow(match) {
        portraitFor(w,'md',name)+'</a>'
     :'<div class="sumo-faceoff-photo '+side+(winner&&name===winner?' is-winner':'')+'">'+portraitFor(w,'md',name)+'</div>';
   return '<article class="sumo-compact-bout sumo-faceoff-result-card '+(finished?'is-finished':'is-scheduled')+
-    '" aria-label="'+e(left+' versus '+right+': '+(finished?winner+' won by '+method:'scheduled'))+'">'+
+    '" aria-label="'+e(left+' versus '+right+': '+(finished?(winner?winner+' won by '+method:'result recorded'):'scheduled'))+'">'+
     portraitLink(a,left,'left')+
     '<div class="sumo-faceoff-centre">'+
     '<div class="sumo-faceoff-kicker">'+e('DAY '+(match.day||'—')+' · '+(finished?'RESULT':'SCHEDULED'))+'</div>'+
