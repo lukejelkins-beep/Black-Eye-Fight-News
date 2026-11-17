@@ -1,6 +1,6 @@
 {
-  "attemptedAt": "2026-11-17T15:39:28.934929+00:00",
-  "lastSuccessfulAt": "2026-11-17T15:39:28.934929+00:00",
+  "attemptedAt": "2026-11-17T16:47:56.168690+00:00",
+  "lastSuccessfulAt": "2026-11-17T16:47:56.168690+00:00",
   "sources": [
     {
       "name": "World Boxing News",
@@ -8,7 +8,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.worldboxingnews.net/feed/",
-      "lastSuccessfulAt": "2026-11-17T15:39:28.934929+00:00"
+      "lastSuccessfulAt": "2026-11-17T16:47:56.168690+00:00"
     },
     {
       "name": "MMA Fighting",
@@ -16,7 +16,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-17T15:39:28.934929+00:00"
+      "lastSuccessfulAt": "2026-11-17T16:47:56.168690+00:00"
     },
     {
       "name": "MMA Junkie",
@@ -24,7 +24,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-17T15:39:28.934929+00:00"
+      "lastSuccessfulAt": "2026-11-17T16:47:56.168690+00:00"
     },
     {
       "name": "Sherdog",
@@ -32,7 +32,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.sherdog.com/rss/news.xml",
-      "lastSuccessfulAt": "2026-11-17T15:39:28.934929+00:00"
+      "lastSuccessfulAt": "2026-11-17T16:47:56.168690+00:00"
     },
     {
       "name": "UFC",
@@ -40,7 +40,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-17T15:39:28.934929+00:00"
+      "lastSuccessfulAt": "2026-11-17T16:47:56.168690+00:00"
     },
     {
       "name": "ONE MMA",
@@ -55,29 +55,30 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/feed/",
-      "lastSuccessfulAt": "2026-11-17T15:39:28.934929+00:00"
+      "lastSuccessfulAt": "2026-11-17T16:47:56.168690+00:00"
     },
     {
       "name": "Cage Warriors",
       "sport": "mma",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-17T14:43:08.888773+00:00",
-      "error": "cagewarriors.com: HTTP Error 403: Forbidden | www.bing.com: not well-formed (invalid token): line 1, column 41"
+      "ok": true,
+      "items": 3,
+      "feedUrl": "https://www.bing.com/news/search?q=site%3Acagewarriors.com&format=rss&setmkt=en-US",
+      "lastSuccessfulAt": "2026-11-17T16:47:56.168690+00:00"
     },
     {
       "name": "RIZIN",
       "sport": "mma",
       "ok": true,
-      "items": 5,
+      "items": 4,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-17T15:39:28.934929+00:00"
+      "lastSuccessfulAt": "2026-11-17T16:47:56.168690+00:00"
     },
     {
       "name": "KSW",
       "sport": "mma",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
+      "error": "www.bing.com: No recent, source-verified articles"
     },
     {
       "name": "ADCC",
@@ -112,14 +113,15 @@
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
+      "error": "www.bing.com: No recent, source-verified articles"
     },
     {
       "name": "FloGrappling",
       "sport": "grappling",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-17T14:43:08.888773+00:00",
-      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
+      "ok": true,
+      "items": 3,
+      "feedUrl": "https://www.bing.com/news/search?q=site%3Aflograppling.com%2Farticles&format=rss",
+      "lastSuccessfulAt": "2026-11-17T16:47:56.168690+00:00"
     },
     {
       "name": "Real American Freestyle",
@@ -138,12 +140,63 @@
     {
       "name": "ONE Live Results",
       "sport": "mma",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-17T14:43:08.888773+00:00",
-      "error": "www.onefc.com: IncompleteRead(49145 bytes read)"
+      "ok": true,
+      "items": 1,
+      "feedUrl": "https://www.onefc.com/category/live-results/feed/",
+      "lastSuccessfulAt": "2026-11-17T16:47:56.168690+00:00"
     }
   ],
   "articles": [
+    {
+      "id": "10fb23c93e1f9439ff36",
+      "title": "Fighters On The Rise | UFC Qatar",
+      "url": "https://www.ufc.com/news/fighters-on-the-rise-ufc-qatar-topuria-costa-lorenz",
+      "source": "UFC",
+      "sport": "mma",
+      "publishedAt": "2026-11-17T16:22:00+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://ufc.com/images/styles/card/s3/2026-11/112126-aleksandre-topuria-GettyImages-2247793951.jpg?itok=QTVc2tx7",
+        "alt": "Article image: Fighters On The Rise | UFC Qatar",
+        "credit": "",
+        "sourceUrl": "https://www.ufc.com/news/fighters-on-the-rise-ufc-qatar-topuria-costa-lorenz",
+        "kind": "publisher",
+        "checkedAt": "2026-11-17T16:47:56.168690+00:00"
+      },
+      "summaryCheckedAt": "2026-11-17T16:47:56.168690+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Identifying Three Names To Track This Weekend And Going Forward Inside The Octagon At UFC Fight Night: Prochazka vs Stirling Read the Full Article Here",
+        "Each has the opportunity to make a statement this weekend, and now is your chance to get to know them a little more before they venture into the fray this weekend.",
+        "READ: Preview Every Fight At UFC Qatar"
+      ],
+      "firstSeenAt": "2026-11-17T16:47:56.168690+00:00"
+    },
+    {
+      "id": "e207e37e53b57cfa76c5",
+      "title": "Deontay Wilder Brutally Roasted as Opetaia Fight Collapses",
+      "url": "https://www.worldboxingnews.com/deontay-wilder-roasted-us-heavyweight-star/",
+      "source": "World Boxing News",
+      "sport": "boxing",
+      "publishedAt": "2026-11-17T16:20:21+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://www.worldboxingnews.com/wp-content/uploads/2026/11/wilder-vanhouter.jpg",
+        "alt": "Deontay Wilder Brutally Roasted as Opetaia Fight Collapses",
+        "credit": "",
+        "sourceUrl": "https://www.worldboxingnews.com/deontay-wilder-roasted-us-heavyweight-star/",
+        "kind": "publisher",
+        "checkedAt": "2026-11-17T16:47:56.168690+00:00"
+      },
+      "summaryCheckedAt": "2026-11-17T16:47:56.168690+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Deontay Wilder has been told he is tarnishing his name by continuing to fight, just as his scheduled December 11 opponent Jai Opetaia has pulled out injured from their heavyweight clash.",
+        "Joshua undercard in Cardiff into uncertainty, with organizers reportedly searching for a replacement opponent for Wilder.",
+        "Before the cancellation, Da’Mazion Vanhouter, the unbeaten 21-year-old prospect Dana White believes could become America’s next heavyweight superstar, delivered a damning assessment of the former WBC champion."
+      ],
+      "firstSeenAt": "2026-11-17T16:47:56.168690+00:00"
+    },
     {
       "id": "a5393a83069c123944f3",
       "title": "Usman Nurmagomedov, associates involved in Abu Dhabi brawl out of prison following reduced sentences",
@@ -185,13 +238,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-17T15:39:28.934929+00:00"
       },
-      "summaryCheckedAt": "2026-11-17T15:39:28.934929+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Here are four keys that could decide who rules the strawweight MMA throne.",
         "A World Champion armed with every tool in the book locks horns with a submission-hunting challenger capable of turning any exchange into dangerous territory at ONE SAMURAI 5 .",
         "View this post on Instagram The Filipino superstar’s resume speaks for itself."
       ],
+      "summaryCheckedAt": "2026-11-17T15:39:28.934929+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T15:39:28.934929+00:00"
     },
     {
@@ -295,6 +348,24 @@
       "firstSeenAt": "2026-11-17T10:11:33.260264+00:00"
     },
     {
+      "id": "ccd6ae8c9929932db6f0",
+      "title": "Chris Duncan wants ‘gangster’ King Green after UFC 334 – and an ice cream break",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/17/ufc-334-video-chris-duncan-callout-bobby-green-gangster/92816026007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-17T08:20:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryCheckedAt": "2026-11-17T16:47:56.168690+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "After a successful business trip to New York, Scotland's Chris Duncan is ready for a little break with family – and then a shot at King Green."
+      ],
+      "firstSeenAt": "2026-11-17T16:47:56.168690+00:00"
+    },
+    {
       "id": "09c34af8f4e7b643ce68",
       "title": "Robert Whittaker: Laser-focused Israel Adesanya 'beats the brakes off' Shara Magomedov",
       "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/17/ufc-israel-adesanya-beats-the-brakes-shara-magomedov-robert-whittaker-prediction/92721683007/",
@@ -305,11 +376,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-17T15:39:28.934929+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Robert Whittaker is siding with his former foe to rebound at UFC Fight Night 295."
       ],
+      "summaryCheckedAt": "2026-11-17T15:39:28.934929+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T15:39:28.934929+00:00"
     },
     {
@@ -361,12 +432,12 @@
         "kind": "publisher",
         "checkedAt": "2026-11-17T04:33:46.978943+00:00"
       },
+      "summaryCheckedAt": "2026-11-17T16:47:56.168690+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Joshua Van had Josh Hokit clearly beating Ciryl Gane and recently opened up about his reaction to the judges’ decision.",
         "\"I thought it was either 4-0 going into the fifth for Josh Hokit , or 3-1 going into the fifth.\" (via @MikeBohn) https://t.co/zD5caVJeI7"
       ],
-      "summaryCheckedAt": "2026-11-17T04:33:46.978943+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T04:33:46.978943+00:00"
     },
     {
@@ -385,11 +456,11 @@
         "kind": "publisher",
         "checkedAt": "2026-11-17T04:33:46.978943+00:00"
       },
+      "summaryCheckedAt": "2026-11-17T16:47:56.168690+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Muhammad Mokaev claims Saba Lazishvili turned down an offer to wrestle him in Dubai in December."
       ],
-      "summaryCheckedAt": "2026-11-17T04:33:46.978943+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T04:33:46.978943+00:00"
     },
     {
@@ -408,12 +479,12 @@
         "kind": "publisher",
         "checkedAt": "2026-11-17T04:33:46.978943+00:00"
       },
+      "summaryCheckedAt": "2026-11-17T16:47:56.168690+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Michal Oleksiejczuk isn't buying Sharabutdin Magomedov ’s story about their fight.",
         "Ciekawa historia. 😂 Walkę wziąłem z kanapy na dwa tygodnie przed pojedynkiem, do tego nie mam żadnego sponsora, więc nie wiem kto wpadł na taki genialny pomysł. 💡 https://t.co/2Lz57mivPv"
       ],
-      "summaryCheckedAt": "2026-11-17T04:33:46.978943+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T04:33:46.978943+00:00"
     },
     {
@@ -507,11 +578,11 @@
         "kind": "publisher",
         "checkedAt": "2026-11-17T03:25:54.956662+00:00"
       },
-      "summaryCheckedAt": "2026-11-17T15:39:28.934929+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Ilia Topuria has played down the intensity of his rivalry with Paddy Pimblett ."
       ],
+      "summaryCheckedAt": "2026-11-17T15:39:28.934929+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T03:25:54.956662+00:00"
     },
     {
@@ -530,11 +601,11 @@
         "kind": "publisher",
         "checkedAt": "2026-11-17T03:25:54.956662+00:00"
       },
-      "summaryCheckedAt": "2026-11-17T15:39:28.934929+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Josh Hokit refuses to believe that Ultimate Fighting Championship Octagon announcer Bruce Buffer’s job is harder than fighting."
       ],
+      "summaryCheckedAt": "2026-11-17T15:39:28.934929+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T03:25:54.956662+00:00"
     },
     {
@@ -723,7 +794,7 @@
         "credit": "Jeff Bottari, Zuffa LLC",
         "sourceUrl": "https://www.mmafighting.com/ufc/521692/jon-jones-josh-hokit-trade-vicious-insults-hokit-makes-wild-accusation-the-wrath-of-god-is-coming-for-you",
         "kind": "publisher",
-        "checkedAt": "2026-11-16T16:45:20.736230+00:00"
+        "checkedAt": "2026-11-17T16:47:56.168690+00:00"
       },
       "summaryPoints": [
         "Jon Jones and Josh Hokit went at each others’ throats on social media late Sunday evening.",
@@ -916,11 +987,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-17T15:39:28.934929+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "The thrill of victory and agony of defeat was seen in the aftermath of UFC 334 with winning and losing fighter reactions."
       ],
+      "summaryCheckedAt": "2026-11-17T15:39:28.934929+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T03:25:54.956662+00:00"
     },
     {
@@ -1074,7 +1145,7 @@
         "credit": "",
         "sourceUrl": "https://www.worldboxingnews.com/lee-selby-blinded-bare-knuckle-boxing/",
         "kind": "publisher",
-        "checkedAt": "2026-11-16T16:45:20.736230+00:00"
+        "checkedAt": "2026-11-17T16:47:56.168690+00:00"
       },
       "summaryPoints": [
         "Former IBF featherweight world champion Lee Selby, once dubbed the ‘Welsh Floyd Mayweather’ for his boxing skills, fought through a frightening eye injury to win a five-round bare-knuckle war in London.",
@@ -1370,12 +1441,12 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-17T15:39:28.934929+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Bruce Buffer was expecting a hostile reception from Josh Hokit at UFC 334.",
         "The UFC announcer let his feelings known about Hokit's schtick by calling him disrespectful."
       ],
+      "summaryCheckedAt": "2026-11-17T15:39:28.934929+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-16T15:06:49.542581+00:00"
     },
     {
@@ -1987,7 +2058,7 @@
         "credit": "",
         "sourceUrl": "https://www.worldboxingnews.com/max-kellerman-jai-opetaia-wbss-title/",
         "kind": "publisher",
-        "checkedAt": "2026-11-16T16:45:20.736230+00:00"
+        "checkedAt": "2026-11-17T16:47:56.168690+00:00"
       },
       "summaryPoints": [
         "Max Kellerman has sparked another backlash on boxing social media after claiming Jai Opetaia won the World Boxing Super Series, a tournament the Australian cruiserweight never entered.",
@@ -6271,81 +6342,6 @@
         "Norma Dumont has parted ways with the Ultimate Fighting Championship despite having two bouts left on her contract.",
         "A post shared by Norma Dumont (@norma_dumont_mma)"
       ]
-    },
-    {
-      "id": "0c80a6a3345dd875553b",
-      "title": "Fight By Fight Preview | Zuffa Boxing 13",
-      "url": "https://www.ufc.com/news/fight-fight-preview-zuffa-boxing-13",
-      "source": "UFC",
-      "sport": "boxing",
-      "publishedAt": "2026-11-12T01:00:00+00:00",
-      "score": 1,
-      "image": {
-        "url": "https://ufc.com/images/styles/card/s3/2026-11/111426-Zuffa-Boxing-13-FBF-hero.jpg?itok=gyOl_Ol7",
-        "alt": "Article image: Fight By Fight Preview | Zuffa Boxing 13",
-        "credit": "",
-        "sourceUrl": "https://www.ufc.com/news/fight-fight-preview-zuffa-boxing-13",
-        "kind": "publisher",
-        "checkedAt": "2026-11-13T02:17:53.588755+00:00"
-      },
-      "summaryPoints": [
-        "Zuffa Boxing Has Arrived In Riyadh, Saudi Arabia, With A World Champion At The Top Of The Card.",
-        "Main Event: Carlos Adames vs Gerome Warburton",
-        "Co-Main Event: Jason Moloney vs Andres Teran"
-      ],
-      "summaryCheckedAt": "2026-11-12T01:14:14.450365+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-12T01:14:14.450365+00:00"
-    },
-    {
-      "id": "dbcae411bf672902ee41",
-      "title": "Carlos Adames: ‘I’m Here To Make History’ | Zuffa Boxing 13",
-      "url": "https://www.ufc.com/news/carlos-adames-i-am-here-to-make-history-zuffa-boxing-13",
-      "source": "UFC",
-      "sport": "boxing",
-      "publishedAt": "2026-11-12T00:59:00+00:00",
-      "score": 1,
-      "image": {
-        "url": "https://ufc.com/images/styles/card/s3/2026-11/111426-Carlos-Adames-hero.jpg?itok=4fLtY1wC",
-        "alt": "Article image: Carlos Adames: ‘I’m Here To Make History’ | Zuffa Boxing 13",
-        "credit": "",
-        "sourceUrl": "https://www.ufc.com/news/carlos-adames-i-am-here-to-make-history-zuffa-boxing-13",
-        "kind": "publisher",
-        "checkedAt": "2026-11-13T02:17:53.588755+00:00"
-      },
-      "summaryPoints": [
-        "Dominican World Champion Carlos Adames Is The Latest Name To Join A Growing Band Of Elite Middleweights In Zuffa Boxing.",
-        "Now He Wants To Prove He’s The Best Of Them All.",
-        "The fighting pride of Elías Piña, Dominican Republic, Carlos Adames has reached the heady heights of the WBC world middleweight championship."
-      ],
-      "summaryCheckedAt": "2026-11-12T01:14:14.450365+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-12T01:14:14.450365+00:00"
-    },
-    {
-      "id": "b7a48cd5b61ac172db73",
-      "title": "MMA fighter Jindrich Janecka resuscitated after cardiac arrest in cage",
-      "url": "https://www.sherdog.com/news/news/MMA-fighter-Jindrich-Janecka-resuscitated-after-cardiac-arrest-in-cage-203589",
-      "source": "Sherdog",
-      "sport": "mma",
-      "publishedAt": "2026-11-12T00:36:42+00:00",
-      "score": 0,
-      "image": {
-        "url": "https://www1-cdn.sherdog.com/_images/headers/20261112123642_heart_attack.JPG",
-        "alt": "Article image: MMA fighter Jindrich Janecka resuscitated after cardiac arrest in cage",
-        "credit": "",
-        "sourceUrl": "https://www.sherdog.com/news/news/MMA-fighter-Jindrich-Janecka-resuscitated-after-cardiac-arrest-in-cage-203589",
-        "kind": "publisher",
-        "checkedAt": "2026-11-12T01:14:14.450365+00:00"
-      },
-      "summaryPoints": [
-        "Jindrich Janecka went into cardiac arrest during his bout against Tomas Skalicky at Cage Game 2, according to Oktagon MMA chief medic Norbert Bidrman.",
-        "Skalický neuvěřitelný, Janečka se tam držel sílou vůle.",
-        "Ještě dělat angličáky mezi koly, to fakt nechceš 😀 Poprve, co padlo KO v 15s v tom stand and bang šílenství #CageGame2 https://t.co/uZiV7zL0Hm"
-      ],
-      "summaryCheckedAt": "2026-11-12T01:14:14.450365+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-12T01:14:14.450365+00:00"
     }
   ],
   "resultReports": [
@@ -7329,13 +7325,13 @@
         "credit": "",
         "sourceUrl": "https://www.onefc.com/news/one-fight-night-49-gabriel-vs-magomedov-results-and-highlights-for-every-match/",
         "kind": "publisher",
-        "checkedAt": "2026-11-16T15:06:49.542581+00:00"
+        "checkedAt": "2026-11-17T16:47:56.168690+00:00"
       },
       "firstSeenAt": "2026-11-09T10:59:59.594220+00:00"
     }
   ],
   "deduplication": {
-    "checkedAt": "2026-11-17T15:39:28.934929+00:00",
+    "checkedAt": "2026-11-17T16:47:56.168690+00:00",
     "removedArticles": 2,
     "removedResultReports": 0,
     "examples": [
