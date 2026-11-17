@@ -115,3 +115,14 @@ test('frozen-cohort certification rejects future official contests and unverifia
  assert.equal(matchesRevisedOfficialCareer(profile,saved,missingDate,
   '2026-11-17','2026-11-14'),false);
 });
+
+test('official chronology is bounded by frozen 14 Nov roster date, not 17 Nov verification date',()=>{
+ const afterRoster={...source,bouts:source.bouts.map((b,i)=>
+   i===0?{...b,date:'2026-11-15'}:b)};
+ const afterRosterSaved=saved.map((b,i)=>i===0?{...b,date:'2026-11-15'}:b);
+ assert.equal(matchesRevisedOfficialCareer(profile,afterRosterSaved,afterRoster,
+   '2026-11-17','2026-11-14'),false);
+ // Same proof remains eligible when all dates fall within the frozen cohort.
+ assert.equal(matchesRevisedOfficialCareer(profile,saved,source,
+   '2026-11-17','2026-11-14'),true);
+});
