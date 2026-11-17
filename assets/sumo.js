@@ -500,7 +500,7 @@ function previewHead() {
   const last=b?lastCompletedBashoDay(b):0;
   return '<section class="sumo-overview-lede"><div><div class="eyebrow">BEFN SUMO · TOURNAMENT DESK</div>'+
     '<h1>'+e(bashoLabel(d.bashoId))+'</h1><p>Recorded results through '+(last?'Day '+last:'an unavailable date')+
-    ' · Snapshot '+e(snapshotDate(STATE.roster?.collectedAt))+' · Not live</p></div>'+
+    ' · Updated '+e(snapshotDate(details().dailyCollectedAt||details().collectedAt||STATE.roster?.collectedAt))+'</p></div>'+
     '<a class="btn" href="#basho">Basho Centre</a></section>';
 }
 function renderHome() {
@@ -869,7 +869,7 @@ function renderProfile(id) {
     '<div class="sumo-hero-career"><div><span>Scope</span><span>Wins–losses</span><span>Win %</span></div>'+
     '<div><strong>Career</strong><b>'+e(career)+'</b><b>'+e(careerPercent)+'</b></div>'+
     '<div><strong>Makuuchi</strong><b>'+e(maku)+'</b><b>'+e(makuPercent)+'</b></div></div>'+ 
-    '</div><div class="profile-current"><span class="tag">'+e(bashoLabel(details().bashoId))+' · SNAPSHOT · NOT LIVE</span>'+
+    '</div><div class="profile-current"><span class="tag">'+e(bashoLabel(details().bashoId))+' · UPDATED '+e(snapshotDate(details().dailyCollectedAt||details().collectedAt||STATE.roster?.collectedAt)).toUpperCase()+'</span>'+
     currentBlock+(divisionOf(w.currentRank)==='Makushita'?'<p class="footnote">Makushita non-bout days are not absences.</p>':'')+'</div>'+
     '<div class="profile-facts profile-meta">'+fact('Stable',w.heya)+fact('Age',age===null?'Not available':age+' years')+
     fact('Height',current.h==='—'?'Not available':current.h+' · '+heightFeetInches(current.heightCm))+
@@ -1109,7 +1109,7 @@ function dailyMatchupRow(match) {
 function renderBasho() {
   const d=STATE.bashoDivision,data=getBanzuke(d);
   const lastday=data?lastCompletedBashoDay(data):0;
-  return pageHead('Results',bashoLabel(details().bashoId)+' · '+(lastday?'Results through Day '+lastday:'No results yet')+' · Snapshot, not live')+
+  return pageHead('Results',bashoLabel(details().bashoId)+' · '+(lastday?'Results through Day '+lastday:'No results yet')+' · Updated '+snapshotDate(details().dailyCollectedAt||details().collectedAt||STATE.roster?.collectedAt))+
     divisionTabs(d,'data-basho-division')+
     (data?daysPanel(d,data):'<p class="missing">No banzuke snapshot available for this division.</p>')+
     sourceFooter();
