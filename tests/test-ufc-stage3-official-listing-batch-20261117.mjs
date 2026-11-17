@@ -11,9 +11,10 @@ const census=load('ufc-36-month-candidates.json');
 const profiles=load('ufcalendar-fighter-research.json').profiles;
 const native=load('ufcalendar-rich-progress.json');
 const proofs=load('ufc-independent-full-career-verification.json').fighters;
-const BATCH=["jasmine-jasudavicius", "roman-kopylov", "andre-petroski", "drakkar-klose", "mateusz-gamrot", "modestas-bukauskas", "chris-gutierrez", "muslim-salikhov", "alexa-grasso", "dominick-reyes", "loopy-godinez", "raoni-barcelos", "serghei-spivac", "cory-sandhagen", "josh-emmett", "cody-durden", "cody-garbrandt", "joaquin-buckley"];
+const feederEvidence=load('ufc-feeder-bout-evidence.json').bouts;
+const BATCH=["jasmine-jasudavicius", "roman-kopylov", "andre-petroski", "drakkar-klose", "mateusz-gamrot", "modestas-bukauskas", "chris-gutierrez", "muslim-salikhov", "alexa-grasso", "dominick-reyes", "loopy-godinez", "raoni-barcelos", "serghei-spivac", "cory-sandhagen", "josh-emmett", "cody-durden", "cody-garbrandt", "joaquin-buckley", "zach-reese", "alex-perez", "mike-davis", "esteban-ribovics", "mateusz-rebecki", "mike-malott", "tracy-cortez", "luana-carolina", "brunno-ferreira", "chidi-njokuani", "dusko-todorovic", "steve-garcia", "chase-hooper", "geoff-neal", "gregory-rodrigues", "daniel-rodriguez", "jalin-turner", "mario-bautista", "grant-dawson", "kennedy-nzechukwu", "petr-yan", "ryan-spann", "dustin-jacoby", "merab-dvalishvili", "ricky-simon"];
 const feeder=/contender series|road to ufc|\bdwcs\b/i;
-const history=slug=>profiles[slug].recentHistory.filter(r=>r.source==='native'&&r.promotion==='ufc'&&r.boutId&&!feeder.test(native.bouts[r.boutId]?.event||''));
+const history=slug=>profiles[slug].recentHistory.filter(r=>r.source==='native'&&r.promotion==='ufc'&&r.boutId&&!feeder.test(native.bouts[r.boutId]?.event||'')&&!feederEvidence.some(e=>e.boutId===r.boutId&&e.fighterSlug===slug));
 const check=(slug,x)=>evaluateCareerEvidence(profiles[slug],history(slug),
  census.fighters.find(f=>f.slug===slug).lastUfcFight,approval.rosterAsOf,x,native.bouts).independentlyVerified;
 test('official-listing batch: every proof is well formed and certifies',()=>{
