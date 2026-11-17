@@ -1,3 +1,4 @@
+import {readFileSync} from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {matchesRevisedOfficialCareer,evaluateCareerEvidence,sharedOfficialUfcIdentitySlugs} from '../scripts/ufc-36-month-stage3-progress.mjs';
@@ -80,4 +81,24 @@ test('full-cohort official URL identity collisions block both aliases, not just 
   ['carlos-hernandez','carlos-hernandez-7','hyunsung-park','park-hyun-sung'].sort());
  assert.equal(sharedOfficialUfcIdentitySlugs(['unrelated'],registry).size,0);
  assert.equal(sharedOfficialUfcIdentitySlugs(['hyunsung-park','unrelated'],registry).size,0);
+});
+
+test('Paul Craig cached 21 UFC contests match attested complete career, including Bellato NC and Rua draw',()=>{
+ const research=JSON.parse(readFileSync(new URL('../data/ufcalendar-fighter-research.json',import.meta.url)));
+ const registry=JSON.parse(readFileSync(new URL('../data/ufc-independent-full-career-verification.json',import.meta.url)));
+ const athlete=research.profiles['paul-craig'];
+ const attestation=registry.fighters['paul-craig'];
+ const officialRows=athlete.recentHistory.filter(row=>row.promotion==='ufc');
+ assert.equal(officialRows.length,21);
+ assert.equal(attestation.bouts.length,21);
+ assert.equal(officialRows.filter(row=>row.result==='no_contest').length,1);
+ assert.equal(officialRows.filter(row=>row.result==='draw').length,1);
+ assert.equal(matchesRevisedOfficialCareer(athlete,officialRows,attestation,'2026-11-17','2026-11-14'),true);
+ for(const omitted of [0,1,12,20]){
+  assert.equal(matchesRevisedOfficialCareer(athlete,
+   officialRows.filter((_,i)=>i!==omitted),attestation,'2026-11-17','2026-11-14'),false);
+ }
+ assert.equal(matchesRevisedOfficialCareer(athlete,
+  [...officialRows,athlete.recentHistory.find(row=>row.opponent==='Luis Henrique da Silva')],
+  attestation,'2026-11-17','2026-11-14'),false);
 });
