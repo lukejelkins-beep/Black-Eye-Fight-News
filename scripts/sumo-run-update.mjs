@@ -8,13 +8,15 @@ import { spawnSync } from 'node:child_process';
 
 const PLANS = {
   refresh: [
-    ['--test', 'tests/test-sumo-daily.mjs', 'tests/test-sumo-api-source.mjs'],
+    ['--test', 'tests/test-sumo-daily.mjs', 'tests/test-sumo-api-source.mjs', 'tests/test-sumo-jsa.mjs'],
+    ['scripts/sumo-jsa-scrape.mjs'],
     ['scripts/sumo-refresh-daily.mjs'],
     ['scripts/sumo-apply-live-bouts.mjs']
   ],
   rebuild: [
-    ['--test', 'tests/test-sumo-api-source.mjs'],
+    ['--test', 'tests/test-sumo-api-source.mjs', 'tests/test-sumo-jsa.mjs'],
     ['scripts/sumo-build-preview.mjs'],
+    ['scripts/sumo-jsa-scrape.mjs'],
     ['scripts/sumo-refresh-daily.mjs'],
     ['scripts/sumo-onboard-rikishi.mjs'],
     ['scripts/sumo-apply-live-bouts.mjs']

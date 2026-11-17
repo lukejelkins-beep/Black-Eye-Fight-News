@@ -1,10 +1,13 @@
 /**
  * Refresh only the published daily Sumo data in the isolated BEFN preview.
- * Public source: sumo-api.com; never modifies roster, career history or main.
+ * Results/banzuke: sumo-api.com. Matchups (torikumi): the Japan Sumo Association's
+ * own pages, read by scripts/sumo-jsa-scrape.mjs into data/sumo/jsa-torikumi.json.
+ * Never modifies roster, career history or main.
  * Requires an independently announced day-specific torikumi for upcoming bouts.
  */
 import {readFile,writeFile,rename} from 'node:fs/promises';
 import {createSumoClient} from './sumo-api-source.mjs';
+import {jsaToTorikumiSource} from '../assets/sumo-jsa.mjs';
 import {TRACKED_DIVISIONS,trackedBanzukeCohort,announcedTorikumiMatches,lastCompletedBashoDay,dayMatchups} from '../assets/sumo-data.mjs';
 
 const PATH='data/sumo/preview-details.json';
@@ -12,6 +15,8 @@ const ROSTER='data/sumo/rikishi-index.json';
 const now=new Date();
 const capturedAt=now.toISOString();
 const client=createSumoClient({maxCalls:8,timeoutMs:15000});
+const JSA_PATH='data/sumo/jsa-torikumi.json';
+const jsa=await readFile(JSA_PATH,'utf8').then(JSON.parse).catch(()=>null);
 const [details,roster]=await Promise.all([PATH,ROSTER].map(async path=>JSON.parse(await readFile(path,'utf8'))));
 const bashoId=String(details.bashoId||'');
 if (!/^20[0-9]{4}$/.test(bashoId) || !Array.isArray(roster.rikishi) || roster.rikishi.length<100 ||
@@ -53,12 +58,16 @@ let scheduleCount=0;
 if(nextDay>=1&&nextDay<=15){
   for(const division of TRACKED_DIVISIONS){
     try{
-      const source=await client.torikumi(bashoId,division,nextDay);
+      const page=jsa?.bashoId===bashoId?jsa.pages?.[division]?.[nextDay]:null;
+      const converted=page?.status==='available'
+        ?jsaToTorikumiSource({rows:page.rows,roster:roster.rikishi,bashoId,division,day:nextDay}):null;
+      if(converted?.dropped)console.warn(division+' day '+nextDay+': '+converted.dropped+' JSA bout(s) skipped (wrestler not in tracked roster)');
+      const source=converted?converted.source:null;
       const rows=announcedTorikumiMatches(source,{bashoId,division,day:nextDay});
       if(rows.length){
         nextTorikumi[division]={status:'available',data:source};
         scheduleCount+=rows.length;
-      }else nextTorikumi[division]={status:'unavailable',data:null,reason:'No confirmed next-day torikumi in current API response'};
+      }else nextTorikumi[division]={status:'unavailable',data:null,reason:'No confirmed next-day torikumi on the JSA page yet'};
     }catch(error){
       nextTorikumi[division]={status:'unavailable',data:null,reason:'Next-day schedule source temporarily unavailable'};
       console.warn(division+' day '+nextDay+' torikumi not yet available: '+String(error.message).slice(0,140));
@@ -91,7 +100,7 @@ nextDetails.torikumi=selectedTorikumi;
 nextDetails.dailyCollectedAt=capturedAt;
 nextDetails.dailyJstDay=(today>=1&&today<=15)?today:null;
 nextDetails.dailyScheduleCount=scheduleCount;
-nextDetails.dailySource='https://www.sumo-api.com/api';
+nextDetails.dailySource='https://www.sumo.or.jp/EnHonbashoMain/torikumi/';
 nextDetails.dailyStatus=selectedDay===nextDay?'next-day-torikumi-published':selectedDay===today?'current-day-torikumi-retained':'next-day-torikumi-not-yet-published';
 const temp=PATH+'.tmp';
 await writeFile(temp,JSON.stringify(nextDetails,null,2)+'\n','utf8');
