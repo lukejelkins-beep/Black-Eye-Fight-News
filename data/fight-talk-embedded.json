@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-17T19:50:54.364Z",
-  "checkedAt": "2026-11-17T19:50:54.364Z",
+  "attemptedAt": "2026-11-17T20:43:22.815Z",
+  "checkedAt": "2026-11-17T20:43:22.815Z",
   "windowDays": 28,
   "articlesChecked": 32,
   "publisherFeedsChecked": 3,
-  "publisherFeedsFailed": 0,
-  "rssArticleCandidates": 45,
+  "publisherFeedsFailed": 1,
+  "rssArticleCandidates": 15,
   "publisherSourcesConfigured": 33,
-  "linksFound": 13,
-  "newEmbedsVerified": 2,
+  "linksFound": 15,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -76,6 +76,25 @@
       "embedVerified": true,
       "linkPriority": 12,
       "url": "https://www.threads.com/t/Df14ZHngXdF/"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "grappling",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-17T20:06:22+00:00",
+      "discoveredAt": "2026-11-17T20:43:22.815Z",
+      "sourcePublisher": "Sherdog",
+      "evidenceUrl": "https://www.sherdog.com/news/news/Merab-Dvalishvili-vs-Kenzo-Biyong-booked-for-RAF-16-wrestling-match-203673",
+      "summary": "Original social post linked in Sherdog coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/Df0KKKPRd2x/"
     },
     {
       "type": "post",
@@ -2338,22 +2357,6 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/reel/Dflb_CIgPzx/"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "grappling",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-10T20:30:00+00:00",
-      "discoveredAt": "2026-11-10T22:03:58.023Z",
-      "sourcePublisher": "MMA Fighting",
-      "evidenceUrl": "https://www.mmafighting.com/raf-wrestling/520413/bo-nickal-vs-yoel-romero-rescheduled-for-raf-16",
-      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher link + official Meta oEmbed verification",
-      "url": "https://www.instagram.com/p/Dfkk5p3xtp9/"
     }
   ],
   "seenOriginals": [
@@ -3144,6 +3147,10 @@
     {
       "url": "https://www.threads.com/t/Df14ZHngXdF/",
       "firstSeen": "2026-11-17T19:50:54.364Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/Df0KKKPRd2x/",
+      "firstSeen": "2026-11-17T20:43:22.815Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
