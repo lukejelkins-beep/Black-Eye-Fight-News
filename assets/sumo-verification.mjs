@@ -29,7 +29,7 @@ export function validateSumoPreviewReadiness(snapshot,roster){
 }
 export function wrestlerQuality(w,snapshot){
  const id=Number(w?.sourceId);
- if(!validId(id)||!snapshot||snapshot.cohortSize!==190)return null;
+ if(!validId(id)||!snapshot||!(snapshot.cohortSize>=100))return null;
  const pending=snapshot.strictCareerResultsPendingSourceIds.includes(id);
  const historicalReview=snapshot.legacyJsaSpotcheckReviewSourceIds.includes(id);
  return {

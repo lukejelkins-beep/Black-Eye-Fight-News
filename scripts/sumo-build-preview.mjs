@@ -5,7 +5,8 @@
  */
 import { mkdir, writeFile, rename } from 'node:fs/promises';
 import { createSumoClient, collectRoster, buildRikishiIndex, SUMO_API_BASE } from './sumo-api-source.mjs';
-import { TRACKED_DIVISIONS, trackedBanzukeCohort } from '../assets/sumo-data.mjs';
+import { readFile } from 'node:fs/promises';
+import { TRACKED_DIVISIONS, trackedBanzukeCohort, announcedTorikumiMatches } from '../assets/sumo-data.mjs';
 import { resolveBasho } from './sumo-basho-calendar.mjs';
 
 const PICKS = ['Onosato', 'Wakatakakage', 'Nishikigi'];
@@ -70,7 +71,11 @@ const announcedDay=upcomingDayFromBasho(basho.data,capturedAt);
 const torikumi={};
 if(announcedDay){
   for(const div of TRACKED_DIVISIONS){
-    torikumi[div]=await collectOptional(()=>client.torikumi(CURRENT_BASHO,div,announcedDay),div+' torikumi day '+announcedDay);
+    const fetched=await collectOptional(()=>client.torikumi(CURRENT_BASHO,div,announcedDay),div+' torikumi day '+announcedDay);
+    // An unpublished day can come back as a basho info object rather than bouts.
+    // Only keep what actually contains announced bouts for this division and day.
+    const rows=fetched.data?announcedTorikumiMatches(fetched.data,{bashoId:CURRENT_BASHO,division:div,day:announcedDay}):[];
+    torikumi[div]=rows.length?fetched:{status:'unavailable',data:null,reason:'No confirmed torikumi published for day '+announcedDay};
   }
 }
 
@@ -127,6 +132,17 @@ const details = {
   announcedDay,
   torikumi
 };
+// The daily refresh owns the results/torikumi fields. When rebuilding within the
+// same basho, keep what it last verified rather than replacing it with this
+// run's snapshot, which would drop the schedule currently being fought.
+try {
+  const previous = JSON.parse(await readFile('data/sumo/preview-details.json', 'utf8'));
+  if (previous.bashoId === CURRENT_BASHO) {
+    for (const key of ['announcedDay', 'torikumi', 'dailyCollectedAt', 'dailyJstDay', 'dailyScheduleCount', 'dailySource', 'dailyStatus']) {
+      if (key in previous) details[key] = previous[key];
+    }
+  }
+} catch { /* first build: nothing to keep */ }
 await save('data/sumo/rikishi-index.json', roster);
 await save('data/sumo/preview-details.json', details);
 console.log(JSON.stringify({
