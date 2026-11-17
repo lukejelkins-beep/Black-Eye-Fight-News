@@ -7,6 +7,8 @@ name: Sumo preview live refresh (every basho)
 #   scripts/sumo-refresh-daily.mjs   results + announced next-day torikumi
 #   scripts/sumo-build-preview.mjs   roster, rankings and basho details
 #   scripts/sumo-onboard-rikishi.mjs career + head-to-head data for new wrestlers
+#   scripts/sumo-apply-live-bouts.mjs completed bouts into career / head-to-head
+#   scripts/sumo-run-update.mjs      runs the right sequence of the above per mode
 on:
   schedule:
     # Live results: every 30 min on the days a basho can run (8th-28th of
@@ -48,24 +50,21 @@ jobs:
           else MODE=skip; fi
           echo "basho=$BASHO phase=$PHASE have=$HAVE mode=$MODE"
           echo "mode=$MODE" >> "$GITHUB_OUTPUT"
-      - name: Rebuild roster, rankings and basho details
-        if: steps.plan.outputs.mode == 'rebuild'
+      - name: Run the update (steps are defined on the preview branch)
+        if: steps.plan.outputs.mode != 'skip'
+        shell: bash
         run: |
-          node --test tests/test-sumo-api-source.mjs
-          node scripts/sumo-build-preview.mjs
-      - name: Add career and head-to-head data for wrestlers new to the divisions
-        if: steps.plan.outputs.mode == 'rebuild'
-        run: |
-          if [ -f scripts/sumo-onboard-rikishi.mjs ]; then
-            node scripts/sumo-onboard-rikishi.mjs
+          set -euo pipefail
+          MODE="${{ steps.plan.outputs.mode }}"
+          if [ -f scripts/sumo-run-update.mjs ]; then
+            node scripts/sumo-run-update.mjs "$MODE"
+          elif [ "$MODE" = "rebuild" ]; then
+            node --test tests/test-sumo-api-source.mjs
+            node scripts/sumo-build-preview.mjs
           else
-            echo "Onboarding script not on the preview branch yet; skipping"
+            node --test tests/test-sumo-daily.mjs tests/test-sumo-api-source.mjs
+            node scripts/sumo-refresh-daily.mjs
           fi
-      - name: Refresh latest results and announced next-day torikumi
-        if: steps.plan.outputs.mode == 'refresh'
-        run: |
-          node --test tests/test-sumo-daily.mjs tests/test-sumo-api-source.mjs
-          node scripts/sumo-refresh-daily.mjs
       - name: Commit only the preview data files
         id: commit
         if: steps.plan.outputs.mode != 'skip'
