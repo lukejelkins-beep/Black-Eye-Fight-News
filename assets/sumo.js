@@ -9,7 +9,7 @@ import { careerGraphs } from './sumo-editorial-charts.mjs?v=20261117-clean-profi
 import { boutKey, mergeProfileBouts, filterAndSortOpponents, exactNamePriority } from './sumo-editorial-data.mjs';
 import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verification.mjs';
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
-import { dailyStats, dailyRecentMeetings, dailyDefaultDay, dailySelectedDate, dailyWinPercentage, heightFeetInches, highestRecordedDivision } from './sumo-daily.mjs?v=20261117-h2h-highest-division';
+import { dailyStats, dailyRecentMeetings, dailyDefaultDay,dailyConcluded, dailySelectedDate, dailyWinPercentage, heightFeetInches, highestRecordedDivision } from './sumo-daily.mjs?v=20261117-day-flow';
 import { ordinalRank } from './sumo-career.mjs';
 import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-popup-translation-only';
 
@@ -336,15 +336,24 @@ function dailyMeetingMarkup(match,firstId,secondId){
   return '<div class="sumo-daily-history"><div class="sumo-daily-history-title">Recent meetings ('+meetings.length+' available)</div>'+
     '<div class="sumo-daily-history-track" aria-label="'+meetings.length+' recent sourced meetings, newest first; scroll horizontally for more" tabindex="0">'+tiles+'</div></div>';
 }
-function renderDailyMatchups(){
-  const division=STATE.matchupDivision,banzuke=getBanzuke(division);
+function centreDay(division='Makuuchi'){
+  const banzuke=getBanzuke(division);
   const startDate=details()?.basho?.data?.startDate||null;
-  const jsToday=bashoDayForDate(new Date(),startDate);
-  const today=Number.isInteger(jsToday)&&jsToday>=1&&jsToday<=15?jsToday:null;
+  const js=bashoDayForDate(new Date(),startDate);
+  const today=Number.isInteger(js)&&js>=1&&js<=15?js:null;
   const announced=Number(details().announcedDay);
   const upcoming=getAnnouncedTorikumi(division,announced);
   const lastCompleted=banzuke?lastCompletedBashoDay(banzuke):0;
-  const defaultDay=dailyDefaultDay({today,lastCompleted,announced,hasAnnounced:!!upcoming});
+  const concluded=dailyConcluded({today,lastCompleted});
+  const day=dailyDefaultDay({today,lastCompleted,announced,hasAnnounced:!!upcoming,todayComplete:concluded});
+  return {banzuke,startDate,today,announced,upcoming,lastCompleted,concluded,day,
+    releasedAhead:!!upcoming&&Number.isInteger(today)&&announced>today&&day!==announced};
+}
+function renderDailyMatchups(){
+  const division=STATE.matchupDivision,banzuke=getBanzuke(division);
+  const cd=centreDay(division);
+  const {startDate,today,announced,upcoming,lastCompleted,concluded}=cd;
+  const defaultDay=cd.day;
   const selected=Number.isInteger(STATE.matchupDay)?STATE.matchupDay:defaultDay;
   const day=Math.min(15,Math.max(1,selected));
   const pairing=banzuke?rankOrderedMatchups(banzuke,verifiedDayMatchups(banzuke,getAnnouncedTorikumi(division,day),{
@@ -367,6 +376,7 @@ function renderDailyMatchups(){
     '<div class="sumo-daily-calendar"><label for="sumo-matchup-day">Day</label>'+
     '<select id="sumo-matchup-day">'+Array.from({length:15},(_,i)=>'<option value="'+(i+1)+'"'+(day===i+1?' selected':'')+'>Day '+(i+1)+'</option>').join('')+'</select>'+
     (lastCompleted&&day!==lastCompleted?'<button type="button" data-matchup-latest="'+lastCompleted+'">Results · Day '+lastCompleted+'</button>':'')+
+    (cd.releasedAhead&&day!==announced?'<button type="button" class="sumo-released" data-matchup-latest="'+announced+'">Day '+announced+' matchups released ›</button>':'')+
     '</div></div>'+
     '<div class="sumo-daily-date"><strong>'+e(dayTitle)+' · Day '+day+'</strong>'+
     '<span>'+e(bashoLabel(details().bashoId))+(date?' · '+e(dateOnly(date)):'')+' · '+e(division)+'</span></div>'+
@@ -509,6 +519,22 @@ function previewHead() {
     '<h1>'+e(bashoLabel(d.bashoId))+'</h1><p>Recorded results through '+(last?'Day '+last:'an unavailable date')+
     ' · Updated '+e(snapshotDate(details().dailyCollectedAt||details().collectedAt||STATE.roster?.collectedAt))+'</p></div>'+
     '<a class="btn" href="#basho">Basho Centre</a></section>';
+}
+function centreStage(shownDay){
+  const cd=centreDay('Makuuchi');
+  if(!cd.banzuke||!cd.day)return '';
+  const day=cd.day;
+  if(day===shownDay)return '';
+  const list=rankOrderedMatchups(cd.banzuke,verifiedDayMatchups(cd.banzuke,getAnnouncedTorikumi('Makuuchi',day),{
+    bashoId:details().bashoId,division:'Makuuchi',day
+  }));
+  if(!list.length)return '';
+  const kind=day===cd.announced&&(!cd.today||cd.announced>cd.today)?'Next up':day===cd.today&&!cd.concluded?'Today':'Latest';
+  const live=day===cd.today?' · today':'';
+  return '<section class="sumo-centre-stage">'+
+    heading(kind+' · Makuuchi','Day '+day+' main bout'+live,'<a href="#matchups" data-matchup-latest="'+day+'">All Day '+day+' matchups</a>')+
+    (cd.releasedAhead?'<p class="sumo-released-note">Day '+cd.announced+' matchups are out. They move to centre stage when today\'s bouts finish. <a href="#matchups" data-matchup-latest="'+cd.announced+'">See them now</a></p>':'')+
+    '<div class="hl-list">'+headlineBout(list[0],'Day '+day+' · Main bout')+'</div></section>';
 }
 function renderHome() {
   const maku=getBanzuke('Makuuchi');
@@ -1168,7 +1194,9 @@ function dailyMatchupRow(match) {
 function renderBasho() {
   const d=STATE.bashoDivision,data=getBanzuke(d);
   const lastday=data?lastCompletedBashoDay(data):0;
+  const shown=STATE.day===null?Math.max(1,lastday):Math.min(15,Math.max(1,STATE.day));
   return pageHead('Results',bashoLabel(details().bashoId)+' · '+(lastday?'Results through Day '+lastday:'No results yet')+' · Updated '+snapshotDate(details().dailyCollectedAt||details().collectedAt||STATE.roster?.collectedAt))+
+    centreStage(shown)+
     divisionTabs(d,'data-basho-division')+
     (data?daysPanel(d,data):'<p class="missing">No banzuke snapshot available for this division.</p>')+
     sourceFooter();

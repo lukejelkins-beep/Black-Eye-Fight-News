@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {originCountry,recordSummary} from '../assets/sumo-data.mjs';
-import { knownNonnegativeInt,dailyWinPercentage,heightFeetInches,dailyStats,dailyRecentMeetings,dailyDefaultDay,dailySelectedDate } from '../assets/sumo-daily.mjs';
+import { knownNonnegativeInt,dailyWinPercentage,heightFeetInches,dailyStats,dailyRecentMeetings,dailyDefaultDay,dailyConcluded,dailySelectedDate } from '../assets/sumo-daily.mjs';
 
 test('career and Makuuchi win percentages are scoped to respective known win/loss pairs',()=>{
   assert.equal(dailyWinPercentage(7,3),'70.0%');
@@ -75,6 +75,10 @@ test('daily date and selection respect Japan tournament day, do not infer an eve
   assert.equal(dailyDefaultDay({lastCompleted:8,announced:9,hasAnnounced:true}),9);
   assert.equal(dailyDefaultDay({lastCompleted:8,announced:9,hasAnnounced:false}),8);
   assert.equal(dailyDefaultDay({today:19,lastCompleted:0}),1);
+  // Next-day pairings wait in the wings until today's bouts have finished.
+  assert.equal(dailyDefaultDay({today:10,lastCompleted:9,announced:11,hasAnnounced:true,todayComplete:false}),10);
+  assert.equal(dailyDefaultDay({today:10,lastCompleted:10,announced:11,hasAnnounced:true,todayComplete:true}),11);
+
   assert.equal(dailySelectedDate('2026-11-08',9),'2026-11-16');
   assert.equal(dailySelectedDate('2026-11-08',16),null);
   assert.equal(dailySelectedDate('not-a-date',9),null);
@@ -145,4 +149,13 @@ test('full-panel flag overlays preserve readability and historical statistics fi
   assert.match(js,/comparisonGrid\(first,second,match\.division\|\|STATE\.matchupDivision\)/);
   assert.match(js,/juryoWins:stats\?\.winsByDivision\?\.Juryo/);
   assert.match(js,/juryoLosses:stats\?\.lossByDivision\?\.Juryo/);
+});
+
+test('dailyConcluded needs recorded results and the Tokyo clock past 18:10',()=>{
+  const at=iso=>new Date(iso);
+  // 17:00 JST = 08:00 UTC, 18:30 JST = 09:30 UTC
+  assert.equal(dailyConcluded({today:10,lastCompleted:10,now:at('2026-11-17T08:00:00Z')}),false);
+  assert.equal(dailyConcluded({today:10,lastCompleted:9,now:at('2026-11-17T09:30:00Z')}),false);
+  assert.equal(dailyConcluded({today:10,lastCompleted:10,now:at('2026-11-17T09:30:00Z')}),true);
+  assert.equal(dailyConcluded({today:null,lastCompleted:0}),true);
 });
