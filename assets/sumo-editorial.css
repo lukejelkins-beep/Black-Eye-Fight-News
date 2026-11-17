@@ -1742,3 +1742,159 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   }
   .profile-hero .sumo-hero-country{font-size:12px}
 }
+
+/* Basho Results portrait-led three-panel faceoffs. Scope exclusively to the
+   compact Results view; scheduled daily matchup cards retain their layout. */
+.sumo-compact-results{
+  display:grid;grid-template-columns:minmax(0,1fr);gap:11px;
+}
+.sumo-compact-results>.sumo-faceoff-result-card{
+  display:grid;grid-template-columns:minmax(0,25%) minmax(0,50%) minmax(0,25%);
+  gap:0;align-items:stretch;grid-template-rows:minmax(0,1fr);
+  width:100%;min-width:0;min-height:162px;height:172px;
+  padding:0;margin:0;box-sizing:border-box;overflow:hidden;
+  position:relative;isolation:isolate;
+  background:#182137;color:#fff;border:1px solid #b79762;
+  border-top:3px solid #c7a34d;border-radius:11px;
+  box-shadow:0 3px 13px rgba(26,21,26,.11);
+}
+.sumo-faceoff-result-card>.sumo-faceoff-photo{
+  position:relative;display:block;grid-row:1;
+  min-width:0;min-height:0;width:100%;height:100%;
+  overflow:hidden;border:0;text-decoration:none;
+  background:linear-gradient(140deg,#8c746d,#392d31);
+}
+.sumo-faceoff-result-card>.sumo-faceoff-photo.left{grid-column:1;border-right:1px solid rgba(220,195,158,.3)}
+.sumo-faceoff-result-card>.sumo-faceoff-photo.right{grid-column:3;border-left:1px solid rgba(220,195,158,.3)}
+.sumo-faceoff-result-card>.sumo-faceoff-photo>.profile-icon.sumo-photo{
+  position:absolute;inset:0;display:block;box-sizing:border-box;
+  width:100%!important;height:100%!important;
+  min-height:0!important;max-width:none!important;max-height:none!important;
+  margin:0!important;border:0!important;border-radius:0!important;
+  aspect-ratio:auto!important;overflow:hidden;
+}
+.sumo-faceoff-result-card>.sumo-faceoff-photo .sumo-photo>img{
+  position:absolute;inset:0;display:block;
+  width:100%!important;height:100%!important;max-width:none;max-height:none;
+  object-fit:cover!important;object-position:center top!important;
+  transform:none!important;border-radius:0;
+}
+.sumo-faceoff-result-card>.sumo-faceoff-photo .sumo-photo>span,
+.sumo-faceoff-result-card>.sumo-faceoff-photo .sumo-photo>small{
+  pointer-events:none;
+}
+.sumo-faceoff-result-card>.sumo-faceoff-photo:hover img{filter:brightness(1.08)}
+.sumo-faceoff-result-card .sumo-faceoff-centre{
+  grid-column:2;grid-row:1;box-sizing:border-box;min-width:0;min-height:0;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  gap:7px;padding:11px 12px;text-align:center;
+  background:linear-gradient(125deg,#22283b 0%,#172136 58%,#272634 100%);
+}
+.sumo-faceoff-result-card .sumo-faceoff-kicker{
+  color:#d8b970;font-size:10px;line-height:1.15;font-weight:900;
+  letter-spacing:.12em;text-transform:uppercase;
+}
+.sumo-faceoff-result-card .sumo-faceoff-names{
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
+  gap:3px 7px;min-width:0;max-width:100%;
+  font:900 clamp(16px,2.1vw,22px)/1.07 'Barlow Condensed',Impact,sans-serif;
+  letter-spacing:.005em;overflow-wrap:anywhere;
+}
+.sumo-faceoff-result-card .sumo-faceoff-names a,
+.sumo-faceoff-result-card .sumo-faceoff-names>span:not(:nth-child(2)){
+  color:#fffefa;text-decoration:none;
+}
+.sumo-faceoff-result-card .sumo-faceoff-names a:hover{
+  text-decoration:underline;text-decoration-color:#d8b970;text-underline-offset:2px;
+}
+.sumo-faceoff-result-card .sumo-faceoff-names>span:nth-child(2){
+  color:#c9ac72;font:800 10px/1 'DM Sans',system-ui,sans-serif;
+}
+.sumo-faceoff-result-card .sumo-faceoff-verdict{
+  min-width:0;max-width:100%;display:flex;align-items:center;justify-content:center;
+  color:#c6efdc;font-size:clamp(13px,1.5vw,16px);
+  line-height:1.2;overflow-wrap:anywhere;
+}
+.sumo-faceoff-result-card .sumo-faceoff-verdict.pending{color:#f0d8a4}
+.sumo-faceoff-result-card .sumo-faceoff-verdict strong{font-weight:900}
+.sumo-faceoff-result-card .sumo-faceoff-method{
+  min-width:0;max-width:100%;color:#f1d6d0;
+  font-size:clamp(12px,1.2vw,14px);line-height:1.2;
+  font-weight:750;overflow-wrap:anywhere;
+}
+.sumo-faceoff-result-card .sumo-faceoff-method a{
+  color:#f2d5cf!important;text-decoration:underline;text-underline-offset:3px;
+}
+.sumo-faceoff-result-card .sumo-faceoff-h2h{
+  display:inline-flex;align-items:center;justify-content:center;gap:3px;
+  width:auto;min-height:27px;box-sizing:border-box;
+  padding:3px 10px;border:1px solid #ac905d;border-radius:5px;
+  background:rgba(199,163,77,.12);color:#f8e7c2!important;
+  font-size:11px;line-height:1.1;font-weight:900;letter-spacing:.04em;
+  text-decoration:none;text-align:center;
+}
+.sumo-faceoff-result-card .sumo-faceoff-h2h:hover{
+  background:#dcc085;color:#211e27!important;
+}
+.sumo-faceoff-result-card :is(a,button):focus-visible{
+  outline:2px solid #ffe5a0;outline-offset:-2px;
+}
+@media(min-width:1180px){
+  .sumo-compact-results{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .sumo-compact-results>.sumo-faceoff-result-card{
+    height:178px;grid-template-columns:minmax(0,27%) minmax(0,46%) minmax(0,27%);
+  }
+}
+@media(max-width:650px){
+  .sumo-compact-results{gap:9px}
+  .sumo-compact-results>.sumo-faceoff-result-card{
+    grid-template-columns:minmax(0,26%) minmax(0,48%) minmax(0,26%);
+    grid-template-rows:minmax(0,1fr);gap:0;padding:0;
+    height:154px;min-height:0;
+  }
+  .sumo-faceoff-result-card .sumo-faceoff-centre{padding:8px 6px;gap:5px}
+  .sumo-faceoff-result-card .sumo-faceoff-kicker{font-size:9px;letter-spacing:.09em}
+  .sumo-faceoff-result-card .sumo-faceoff-names{font-size:clamp(15px,4.1vw,18px);gap:2px 5px}
+  .sumo-faceoff-result-card .sumo-faceoff-names>span:nth-child(2){font-size:9px}
+  .sumo-faceoff-result-card .sumo-faceoff-verdict{font-size:13px}
+  .sumo-faceoff-result-card .sumo-faceoff-method{font-size:11.5px}
+  .sumo-faceoff-result-card .sumo-faceoff-h2h{min-height:25px;padding:3px 8px;font-size:10px}
+}
+@media(max-width:360px){
+  .sumo-compact-results>.sumo-faceoff-result-card{
+    grid-template-columns:minmax(0,25%) minmax(0,50%) minmax(0,25%);
+    height:150px;
+  }
+  .sumo-faceoff-result-card .sumo-faceoff-centre{padding:6px 5px;gap:4px}
+  .sumo-faceoff-result-card .sumo-faceoff-names{font-size:15px}
+  .sumo-faceoff-result-card .sumo-faceoff-verdict{font-size:12px}
+  .sumo-faceoff-result-card .sumo-faceoff-method{font-size:11px}
+}
+
+/* Portrait-led Results refinements: winner accent and no text cropping at 320px. */
+.sumo-faceoff-result-card>.sumo-faceoff-photo.is-winner::after{
+  content:"";position:absolute;inset:0;z-index:2;
+  border-bottom:4px solid #d7b86b;box-sizing:border-box;
+  pointer-events:none;
+}
+@media(max-width:650px){
+  .sumo-compact-results>.sumo-faceoff-result-card{
+    height:auto;min-height:174px;
+  }
+  .sumo-faceoff-result-card .sumo-faceoff-centre{
+    min-height:174px;
+  }
+  .sumo-faceoff-result-card .sumo-faceoff-names{
+    flex-direction:column;gap:2px;line-height:1.05;
+  }
+  .sumo-faceoff-result-card .sumo-faceoff-names a,
+  .sumo-faceoff-result-card .sumo-faceoff-names>span{
+    max-width:100%;overflow-wrap:anywhere;
+  }
+}
+@media(max-width:360px){
+  .sumo-compact-results>.sumo-faceoff-result-card,
+  .sumo-faceoff-result-card .sumo-faceoff-centre{
+    height:auto;min-height:172px;
+  }
+}

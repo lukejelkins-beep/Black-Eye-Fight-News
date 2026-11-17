@@ -516,3 +516,27 @@ test('top five exists for each cached top-three division with sourced last bout 
     }
   }
 });
+
+test('Basho Results use portrait-led faceoff cards with source-backed winner and technique links',()=>{
+  const js=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
+  const style=readFileSync(new URL('../assets/sumo-editorial.css',import.meta.url),'utf8');
+  const start=js.indexOf('function compactBoutRow(match) {');
+  const end=js.indexOf('function renderBasho() {',start);
+  assert.ok(start>=0&&end>start,'A dedicated compact result-card renderer exists');
+  const renderer=js.slice(start,end);
+  assert.match(renderer,/sumo-compact-bout sumo-faceoff-result-card/);
+  assert.match(renderer,/portraitFor\(w,'md',name\)/);
+  assert.match(renderer,/sumo-faceoff-photo/);
+  assert.match(renderer,/sumo-faceoff-centre/);
+  assert.match(renderer,/sumo-faceoff-kicker/);
+  assert.match(renderer,/sumo-faceoff-verdict/);
+  assert.match(renderer,/techniqueMarkup\(match\.kimarite,method\)/);
+  assert.match(renderer,/headToHeadUrl\(match\.rikishiId,match\.opponentId\)/);
+  assert.match(renderer,/winnerIsLeft/);
+  assert.match(renderer,/winnerIsRight/);
+  assert.match(renderer,/winner\?winner\+' won':'Result recorded'/);
+  assert.match(style,/Basho Results portrait-led three-panel faceoffs/);
+  assert.match(style,/@media\(max-width:650px\)/);
+  assert.match(js,/pairings\.map\(compactBoutRow\)/,
+    'Results tab still uses the new layout without changing scheduled matchups');
+});

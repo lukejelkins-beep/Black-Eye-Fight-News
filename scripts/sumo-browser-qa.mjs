@@ -538,6 +538,61 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.ok((await page.locator('.sumo-standings-row').count())>=20,'Basho standings stay accessible in compact rows');
   await page.locator('[data-basho-view="results"]').click();
   assert.ok((await page.locator('.sumo-compact-bout').count())>0,'Compact result rows show actual winners');
+
+  const resultFaceoffs=await page.locator('.sumo-faceoff-result-card').evaluateAll(cards=>
+    cards.slice(0,12).map(card=>{
+      const photoA=card.querySelector('.sumo-faceoff-photo.left');
+      const photoB=card.querySelector('.sumo-faceoff-photo.right');
+      const centre=card.querySelector('.sumo-faceoff-centre');
+      const winner=card.querySelector('.sumo-faceoff-verdict');
+      const technique=card.querySelector('.sumo-faceoff-method');
+      const h2h=card.querySelector('.sumo-faceoff-h2h');
+      const r=card.getBoundingClientRect(),a=photoA?.getBoundingClientRect(),
+        b=photoB?.getBoundingClientRect(),m=centre?.getBoundingClientRect();
+      const imageA=photoA?.querySelector('.profile-icon.sumo-photo')?.getBoundingClientRect(),
+        imageB=photoB?.querySelector('.profile-icon.sumo-photo')?.getBoundingClientRect();
+      return {
+        cardWidth:r.width,cardHeight:r.height,
+        grid:getComputedStyle(card).gridTemplateColumns,
+        leftWidth:a?.width,rightWidth:b?.width,centreWidth:m?.width,
+        leftEdge:a?.left-r.left,rightEdge:r.right-b?.right,
+        topLeft:a?.top-r.top,topRight:b?.top-r.top,
+        bottomLeft:r.bottom-a?.bottom,bottomRight:r.bottom-b?.bottom,
+        centerAligned:!!(a&&m&&b&&m.left>=a.right-2&&b.left>=m.right-2),
+        leftFill:!!(a&&imageA&&Math.abs(a.width-imageA.width)<=3&&Math.abs(a.height-imageA.height)<=3),
+        rightFill:!!(b&&imageB&&Math.abs(b.width-imageB.width)<=3&&Math.abs(b.height-imageB.height)<=3),
+        names:card.querySelector('.sumo-faceoff-names')?.innerText?.trim(),
+        winner:winner?.innerText?.trim(),
+        technique:technique?.innerText?.trim(),
+        techniqueLink:!!technique?.querySelector('a[data-kimarite-term]'),
+        h2hUrl:h2h?.getAttribute('href'),
+        sourcePhotoCount:card.querySelectorAll('.sumo-faceoff-photo .sumo-photo').length,
+        overflow:card.scrollWidth>card.clientWidth+3
+      };
+    }));
+  assert.ok(resultFaceoffs.length>0,'Actual completed results use redesigned face-off tiles');
+  for(const [i,card] of resultFaceoffs.entries()){
+    assert.ok(card.cardHeight>=145&&card.leftWidth>=60&&card.rightWidth>=60&&
+      card.centreWidth>=100&&card.centerAligned,
+      'Result face-off '+i+' has generous left/right portraits and a readable centre: '+JSON.stringify(card));
+    assert.ok(card.leftFill&&card.rightFill&&
+      card.leftEdge<=3&&card.rightEdge<=3&&card.topLeft<=3&&card.topRight<=3&&
+      card.bottomLeft<=3&&card.bottomRight<=3,
+      'Portraits fill their left/right panels edge-to-edge: '+JSON.stringify(card));
+    assert.equal(card.sourcePhotoCount,2,'Both wrestler portraits use existing approved-image markup');
+    assert.ok(card.names?.length>3&&card.winner?.length>3&&card.technique?.length>0,
+      'Central panel retains wrestler identities, actual winner and kimarite');
+    assert.ok(card.h2hUrl?.startsWith('#headtohead/')&&!card.overflow,
+      'H2H link remains functional and card does not overflow: '+JSON.stringify(card));
+  }
+  if(isMobile){
+    const widths=await page.evaluate(()=>({
+      page:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth
+    }));
+    assert.ok(widths.page<=widths.viewport+6,
+      'Photo-led results do not introduce sideways scrolling on phones: '+JSON.stringify(widths));
+  }
+
   await snap(page,label+'-basho',{fullPage:false});
 
   // Dedicated daily face-offs use sourced pairings, two complete stat columns,
