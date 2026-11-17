@@ -4,7 +4,7 @@ window.UpcomingCards=(()=>{
  let feed=null,error='',loading=null,lastCheck=0;
  const opened=new Set(),active=new Map();
  const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
- const href=x=>{try{const u=new URL(x);return u.protocol==='https:'?esc(u.href):'#'}catch{return '#'}};
+ const href=x=>{if(/^assets\/img\/[a-z0-9-]+\/[a-z0-9-]+\.webp$/.test(String(x)))return esc(x);try{const u=new URL(x);return u.protocol==='https:'?esc(u.href):'#'}catch{return '#'}};
  const localDate=()=>window.FightTime.dayKey(new Date());
  const fmtDate=x=>window.FightTime.venueDay(x);
  const fmtTime=x=>window.FightTime.localDateTime(x);
@@ -18,6 +18,8 @@ window.UpcomingCards=(()=>{
   return catalog;
  }
  function sourcePhoto(name){
+  const local=window.BEFNLocalImages?window.BEFNLocalImages.url(name,'thumb'):'';
+  if(local)return local;
   const fighters=registry();
   const item=fighters[name]||Object.entries(fighters).find(([k])=>k.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()===name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase())?.[1];
   const src=item?.photo||'';

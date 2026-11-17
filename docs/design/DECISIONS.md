@@ -3,6 +3,7 @@
 Format: date — decision — who — where it shows up.
 
 ## 2026-11-17
+- Site pages now prefer the local owner-cleared UFC photos (`assets/local-images.js`, generated from the register) and fall back to the existing hotlinks when a fighter has none. Names shared by two fighters (Carlos Hernandez) are skipped rather than guessed. — Owner direction — PR for branch ufc-use-local-fighter-images.
 - 750 UFC fighter photos supplied by the owner from a local folder are cleared for use on BEFN and processed into portrait (4:5), card (16:9) and thumb (1:1) WebP files in `assets/img/ufc/`, recorded in `data/ufc-image-register.json` as `owner-cleared`. 33 fighters have no photo. Source URLs are kept in the register; the permission paperwork is held by the owner, not in this repo. Pages still hotlink until a follow-up PR switches them to the local files. — Owner direction — PR for branch ufc-local-fighter-images.
 - Sumo navigation is four items: Results, Rankings, Rikishi, Techniques. Overview page removed; Results is the front page. — Owner approved — Sumo preview, PR #259.
 - Every Sumo page uses one header pattern (dark band, red edge, uppercase title, one context line). — Owner approved — PR #259.

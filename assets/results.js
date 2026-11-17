@@ -33,11 +33,11 @@ window.ResultsDesk=(()=>{
  const promotionMatch=r=>window.BEFNSport?.get()!=='mma'||belongsToPromotion(r);
  const isFinalStatus=s=>['completed','no_contest','draw'].includes(String(s||'').toLowerCase());
  const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
- const url=x=>{try{const u=new URL(x,location.href);return u.protocol==='https:'?esc(u.href):'#'}catch{return '#'}};
+ const url=x=>{if(/^assets\/img\/[a-z0-9-]+\/[a-z0-9-]+\.webp$/.test(String(x)))return esc(x);try{const u=new URL(x,location.href);return u.protocol==='https:'?esc(u.href):'#'}catch{return '#'}};
  const date=x=>window.FightTime.venueDay(x);
  const link=(href,label,cls='')=>`<a class="${cls}" href="${url(href)}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>`;
  function photo(f, winner=false) {
- const source=f.photo || (typeof portraitURL === 'function' ? portraitURL(f.name) : '');
+ const source=(window.BEFNLocalImages?window.BEFNLocalImages.url(f.name,'thumb'):'') || f.photo || (typeof portraitURL === 'function' ? portraitURL(f.name) : '');
  const initials=String(f.name||'?').trim().split(/\s+/).slice(0,2).map(p=>p[0]?.toUpperCase()||'').join('');
  return `<span class="result-photo${winner?' is-winner':''}" data-result-photo-name="${esc(f.name)}">${source?`<img src="${url(source)}" alt="Photograph of ${esc(f.name)}" loading="lazy" referrerpolicy="no-referrer">`:''}<span class="result-photo-missing" ${source?'hidden':''} aria-hidden="true">${esc(initials)}</span>${winner?'<span class="result-win-tick" role="img" aria-label="Confirmed winner">✓</span>':''}</span>`;
 }
