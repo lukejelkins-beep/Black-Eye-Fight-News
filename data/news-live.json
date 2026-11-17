@@ -1,14 +1,13 @@
 {
-  "attemptedAt": "2026-11-17T01:15:07.266744+00:00",
-  "lastSuccessfulAt": "2026-11-17T01:15:07.266744+00:00",
+  "attemptedAt": "2026-11-17T02:27:22.124046+00:00",
+  "lastSuccessfulAt": "2026-11-17T02:27:22.124046+00:00",
   "sources": [
     {
       "name": "World Boxing News",
       "sport": "boxing",
-      "ok": true,
-      "items": 10,
-      "feedUrl": "https://www.worldboxingnews.net/feed/",
-      "lastSuccessfulAt": "2026-11-17T01:15:07.266744+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-17T01:15:07.266744+00:00",
+      "error": "www.worldboxingnews.net: mismatched tag: line 93, column 2"
     },
     {
       "name": "MMA Fighting",
@@ -16,7 +15,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-17T01:15:07.266744+00:00"
+      "lastSuccessfulAt": "2026-11-17T02:27:22.124046+00:00"
     },
     {
       "name": "MMA Junkie",
@@ -24,7 +23,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-17T01:15:07.266744+00:00"
+      "lastSuccessfulAt": "2026-11-17T02:27:22.124046+00:00"
     },
     {
       "name": "Sherdog",
@@ -32,7 +31,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.sherdog.com/rss/news.xml",
-      "lastSuccessfulAt": "2026-11-17T01:15:07.266744+00:00"
+      "lastSuccessfulAt": "2026-11-17T02:27:22.124046+00:00"
     },
     {
       "name": "UFC",
@@ -40,7 +39,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-17T01:15:07.266744+00:00"
+      "lastSuccessfulAt": "2026-11-17T02:27:22.124046+00:00"
     },
     {
       "name": "ONE MMA",
@@ -62,7 +61,7 @@
       "ok": true,
       "items": 3,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Acagewarriors.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-17T01:15:07.266744+00:00"
+      "lastSuccessfulAt": "2026-11-17T02:27:22.124046+00:00"
     },
     {
       "name": "RIZIN",
@@ -70,7 +69,7 @@
       "ok": true,
       "items": 7,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-17T01:15:07.266744+00:00"
+      "lastSuccessfulAt": "2026-11-17T02:27:22.124046+00:00"
     },
     {
       "name": "KSW",
@@ -84,7 +83,7 @@
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "adcombat.com: No recent, source-verified articles | www.bing.com: No recent, source-verified articles"
+      "error": "adcombat.com: mismatched tag: line 93, column 2 | www.bing.com: No recent, source-verified articles"
     },
     {
       "name": "NCAA Division I Wrestling",
@@ -120,7 +119,7 @@
       "ok": true,
       "items": 3,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Aflograppling.com%2Farticles&format=rss",
-      "lastSuccessfulAt": "2026-11-17T01:15:07.266744+00:00"
+      "lastSuccessfulAt": "2026-11-17T02:27:22.124046+00:00"
     },
     {
       "name": "Real American Freestyle",
@@ -142,10 +141,34 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/category/live-results/feed/",
-      "lastSuccessfulAt": "2026-11-17T01:15:07.266744+00:00"
+      "lastSuccessfulAt": "2026-11-17T02:27:22.124046+00:00"
     }
   ],
   "articles": [
+    {
+      "id": "7dda2f79effaaca36471",
+      "title": "Jim Miller regrets accepting Terrance McKinney fight after weight miss",
+      "url": "https://www.sherdog.com/news/news/Jim-Miller-regrets-accepting-Terrance-McKinney-fight-after-weight-miss-203660",
+      "source": "Sherdog",
+      "sport": "mma",
+      "publishedAt": "2026-11-17T02:14:56+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://www1-cdn.sherdog.com/_images/headers/20261117021456_miller_t_wrecks_weight_miss.JPG",
+        "alt": "Article image: Jim Miller regrets accepting Terrance McKinney fight after weight miss",
+        "credit": "",
+        "sourceUrl": "https://www.sherdog.com/news/news/Jim-Miller-regrets-accepting-Terrance-McKinney-fight-after-weight-miss-203660",
+        "kind": "publisher",
+        "checkedAt": "2026-11-17T02:27:22.124046+00:00"
+      },
+      "summaryCheckedAt": "2026-11-17T02:27:22.124046+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Jim Miller regrets going ahead with the Terrance McKinney fight after the latter missed weight.",
+        "A post shared by Jim A10 Miller (@jimmiller_155)"
+      ],
+      "firstSeenAt": "2026-11-17T02:27:22.124046+00:00"
+    },
     {
       "id": "1e67566134115642705f",
       "title": "Mike Perry talks UFC move, BKFC past, and more",
@@ -162,13 +185,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-17T01:15:07.266744+00:00"
       },
-      "summaryCheckedAt": "2026-11-17T01:15:07.266744+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Mike Perry is a new member of the UFC.",
         "The former BKFC star joins MMA Fighting’s Mike Heck in his first interview since joining the UFC to discuss the big change, his combat sports future, and more Monday night.",
         "Perry is expected to be live at 8:15 p.m."
       ],
+      "summaryCheckedAt": "2026-11-17T01:15:07.266744+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T01:15:07.266744+00:00"
     },
     {
@@ -541,6 +564,60 @@
       "firstSeenAt": "2026-11-16T18:38:23.595900+00:00"
     },
     {
+      "id": "a310ccbe988152787ed5",
+      "title": "Bia Mesquita keeps up Ailin Perez callout after taking Rousey’s record at UFC 334",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/16/ufc-334-video-bia-mesquita-callout-ailin-perez-breaks-ronda-rousey-record-submissions/92816804007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-16T17:30:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryCheckedAt": "2026-11-17T02:27:22.124046+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Her American Top Team teammate Kayla Harrison holds the belt in her division, but Bia Mesquita plans to fight for it by around this time next year."
+      ],
+      "firstSeenAt": "2026-11-17T02:27:22.124046+00:00"
+    },
+    {
+      "id": "d144edc7d71299223c38",
+      "title": "Alexander Volkanovski credits Ciryl Gane for getting composure back at UFC 334",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/16/ufc-334-alexander-volkanovski-response-ciryl-gane-composure-beat-josh-hokit-heavyweight-title/92807158007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-16T16:40:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryCheckedAt": "2026-11-17T02:27:22.124046+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Alexander Volkanovski explained how forward aggression doesn't always win you a fight."
+      ],
+      "firstSeenAt": "2026-11-17T02:27:22.124046+00:00"
+    },
+    {
+      "id": "b6c8c8730e710040e487",
+      "title": "Spinning Back Clique: Kayla Harrison's GOAT status, Gane-Hokit, RAF Abu Dhabi chaos",
+      "url": "https://mmajunkie.usatoday.com/story/sports/mma/spinning-back-clique/2026/11/16/spinning-back-clique-ufc-334-kayla-harrison-gane-hokit-raf-abu-dhabi-chaos/92817894007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-16T16:00:00+00:00",
+      "score": 0,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryPoints": [
+        "On the latest episode of \"Spinning Back Clique,\" the panel discusses UFC 334, the crazy brawl before RAF Abu Dhabi, and much more."
+      ],
+      "summaryCheckedAt": "2026-11-17T00:05:52.418875+00:00",
+      "summaryQualityVersion": 3,
+      "firstSeenAt": "2026-11-17T00:05:52.418875+00:00"
+    },
+    {
       "id": "a873b60853d8804bb1e0",
       "title": "Terrance McKinney explains welterweight move after UFC 334 weight miss",
       "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/16/ufc-334-terrance-mckinney-weight-shift-miss-explained/92790514007/",
@@ -582,24 +659,6 @@
       "summaryCheckedAt": "2026-11-16T16:45:20.736230+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-16T16:45:20.736230+00:00"
-    },
-    {
-      "id": "b6c8c8730e710040e487",
-      "title": "Spinning Back Clique: Kayla Harrison's GOAT status, Gane-Hokit, RAF Abu Dhabi chaos",
-      "url": "https://mmajunkie.usatoday.com/story/sports/mma/spinning-back-clique/2026/11/16/spinning-back-clique-ufc-334-kayla-harrison-gane-hokit-raf-abu-dhabi-chaos/92817894007/",
-      "source": "MMA Junkie",
-      "sport": "mma",
-      "publishedAt": "2026-11-16T15:16:00+00:00",
-      "score": 0,
-      "sourceMethod": "Bing News indexed MMA Junkie original",
-      "timeBasis": "Bing News feed timestamp",
-      "image": null,
-      "summaryPoints": [
-        "On the latest episode of \"Spinning Back Clique,\" the panel discusses UFC 334, the crazy brawl before RAF Abu Dhabi, and much more."
-      ],
-      "summaryCheckedAt": "2026-11-17T00:05:52.418875+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-17T00:05:52.418875+00:00"
     },
     {
       "id": "c2352ec4219c37c529e4",
@@ -711,6 +770,24 @@
       "summaryCheckedAt": "2026-11-16T22:25:47.795329+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-16T22:25:47.795329+00:00"
+    },
+    {
+      "id": "da098cc53852764f500f",
+      "title": "Amanda Nunes responds to Kayla Harrison's UFC title rematch proposal",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/16/amanda-nunes-kayla-harrison-ufc-title-rematch-featherweight/92815661007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-16T13:14:00+00:00",
+      "score": 4,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryCheckedAt": "2026-11-17T02:27:22.124046+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "On the Monday following the event, Nunes addressed Harrison's rematch idea, tagging UFC CEO Dana White and Harrison in a straight-to-the-point message posted on social media."
+      ],
+      "firstSeenAt": "2026-11-17T02:27:22.124046+00:00"
     },
     {
       "id": "5757f5b8d04fb1eaf887",
@@ -6304,100 +6381,6 @@
       "summaryCheckedAt": "2026-11-11T21:06:16.681548+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-11T21:06:16.681548+00:00"
-    },
-    {
-      "id": "a8f38986e26d22477e7f",
-      "title": "SS United States live updates: Ship finally sinks at 9 p.m.",
-      "url": "https://mmajunkie.usatoday.com/story/news/2026/11/11/ss-united-states-sinking-florida-updates--live/92695792007/",
-      "source": "MMA Junkie",
-      "sport": "mma",
-      "publishedAt": "2026-11-11T19:41:00+00:00",
-      "score": 0,
-      "sourceMethod": "Bing News indexed MMA Junkie original",
-      "timeBasis": "Bing News feed timestamp",
-      "image": null,
-      "summaryCheckedAt": "2026-11-16T15:06:49.542581+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-12T04:33:25.585928+00:00",
-      "updatedAt": "2026-11-12T09:03:04.053342+00:00",
-      "summaryPoints": [
-        "11, 2026, about 22 nautical miles southwest of Destin, Florida."
-      ]
-    },
-    {
-      "id": "7c6611747b5a931cc335",
-      "title": "Gervonta Davis Cites Mayweather Over 878-Day Winless Drought",
-      "url": "https://www.worldboxingnews.com/gervonta-davis-mayweather-878-days/",
-      "source": "World Boxing News",
-      "sport": "boxing",
-      "publishedAt": "2026-11-11T19:36:08+00:00",
-      "score": 0,
-      "image": {
-        "url": "https://www.worldboxingnews.com/wp-content/uploads/2026/11/Tank-Martin-Official-Weigh-ins_06_15_2024_Weigh-in20.jpg",
-        "alt": "Gervonta Davis Cites Mayweather Over 878-Day Winless Drought",
-        "credit": "",
-        "sourceUrl": "https://www.worldboxingnews.com/gervonta-davis-mayweather-878-days/",
-        "kind": "publisher",
-        "checkedAt": "2026-11-13T22:49:14.545622+00:00"
-      },
-      "summaryPoints": [
-        "Gervonta Davis has dismissed concerns over his lengthy absence from boxing by pointing to ex-mentor Floyd Mayweather, despite going 878 days without a victory.",
-        "The Baltimore puncher has not won a fight since knocking out Frank Martin in June 2024.",
-        "Gervonta Davis cites Floyd Mayweather after a layoff as the former lightweight champion goes 878 days without a win amid career uncertainty."
-      ],
-      "summaryCheckedAt": "2026-11-11T21:06:16.681548+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-11T21:06:16.681548+00:00"
-    },
-    {
-      "id": "bc328dfe1cedd0fd470f",
-      "title": "Ilia Topuria shares video of Usman Nurmagomedov attacking Merab Dvalishvili during RAF interview",
-      "url": "https://www.mmafighting.com/ufc/520533/ilia-topuria-shares-video-of-usman-nurmagomedov-attacking-merab-dvalishvili-during-raf-interview",
-      "source": "MMA Fighting",
-      "sport": "mma",
-      "publishedAt": "2026-11-11T19:07:18+00:00",
-      "score": 0,
-      "image": {
-        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/Screenshot-2026-11-11-at-12.27.14-PM.png?quality=90&strip=all&crop=0,0,100,100",
-        "alt": "An unidentified figure strikes Merab Dvalishvili",
-        "credit": "@Topuriailia, Twitter",
-        "sourceUrl": "https://www.mmafighting.com/ufc/520533/ilia-topuria-shares-video-of-usman-nurmagomedov-attacking-merab-dvalishvili-during-raf-interview",
-        "kind": "publisher",
-        "checkedAt": "2026-11-11T18:27:39.794175+00:00"
-      },
-      "summaryPoints": [
-        "Ilia Topuria has released footage of Merab Dvalishvili being ambushed ahead of his upcoming RAF Abu Dhabi matchup.",
-        "According to Dvalishvili, he and a friend were jumped by “20 guys” and the attack left them both visibly bloodied and bruised.",
-        "A taller man in a black shirt and hat, possibly Usman Nurmagomedov, gets Dvalishvili’s attention and then proceeds to strike him in the face."
-      ],
-      "summaryCheckedAt": "2026-11-11T18:27:39.794175+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-11T18:27:39.794175+00:00"
-    },
-    {
-      "id": "73c9a939cd247f9395d7",
-      "title": "Bloody Merab Dvalishvili claims ‘sneaky’ Usman Nurmagomedov and friends jumped him ahead of RAF Abu Dhabi",
-      "url": "https://www.mmafighting.com/ufc/520524/bloody-merab-dvalishvili-claims-sneaky-usman-nurmagomedov-and-friends-jumped-him-ahead-of-raf-abu-dhabi",
-      "source": "MMA Fighting",
-      "sport": "mma",
-      "publishedAt": "2026-11-11T19:06:55+00:00",
-      "score": 0,
-      "image": {
-        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/Screenshot-2026-11-11-at-11.29.30-AM.png?quality=90&strip=all&crop=0,0,100,100",
-        "alt": "Merab Dvalishvili",
-        "credit": "@merab.dvalishvili, Instagram",
-        "sourceUrl": "https://www.mmafighting.com/ufc/520524/bloody-merab-dvalishvili-claims-sneaky-usman-nurmagomedov-and-friends-jumped-him-ahead-of-raf-abu-dhabi",
-        "kind": "publisher",
-        "checkedAt": "2026-11-11T18:27:39.794175+00:00"
-      },
-      "summaryPoints": [
-        "Merab Dvalishvili’s feud with the Nurmagomedov family appears to have gone to a whole new level.",
-        "“Was doing an interview for RAF in hotel lobby and Usman and his buddies came up from behind and started punching me and my young friend,” Dvalishvili wrote in a caption.",
-        "“Security was holding me – They kept kicking us when we were down like losers.” Watch the clip here ."
-      ],
-      "summaryCheckedAt": "2026-11-11T18:27:39.794175+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-11T18:27:39.794175+00:00"
     }
   ],
   "resultReports": [
@@ -6689,7 +6672,7 @@
         "credit": "",
         "sourceUrl": "https://www.ufc.com/news/polymarket-ufc-334-gane-vs-hokit-results",
         "kind": "publisher",
-        "checkedAt": "2026-11-16T02:13:05.005825+00:00"
+        "checkedAt": "2026-11-17T02:27:22.124046+00:00"
       },
       "firstSeenAt": "2026-11-15T02:08:37.234991+00:00"
     },
@@ -7387,7 +7370,7 @@
     }
   ],
   "deduplication": {
-    "checkedAt": "2026-11-17T01:15:07.266744+00:00",
+    "checkedAt": "2026-11-17T02:27:22.124046+00:00",
     "removedArticles": 2,
     "removedResultReports": 0,
     "examples": [
