@@ -620,6 +620,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   // reserve space for an invisible clip panel or source link footer.
   await page.locator('.sumo-km-tile-link[href="#kimarite?term=yorikiri"]').click();
   await page.waitForSelector('#sumo-km-popup-root .sumo-km-dialog');
+  await page.locator('#sumo-km-popup-root .sumo-km-modal-visual img').evaluate(img=>img.decode().catch(()=>{}));
   const kmPopup=await page.locator('#sumo-km-popup-root .sumo-km-dialog').evaluate(dialog=>{
     const caption=dialog.querySelector('.sumo-km-modal-meaning');
     const body=dialog.querySelector('.sumo-km-modal-text');
