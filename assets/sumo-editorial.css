@@ -1742,3 +1742,180 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   }
   .profile-hero .sumo-hero-country{font-size:12px}
 }
+
+/* BEFN Sumo editorial photo-led tournament Results cards (preview only) */
+.sumo-compact-results{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:12px;
+}
+.sumo-compact-results .sumo-compact-bout{
+  box-sizing:border-box;
+  display:grid;
+  grid-template-columns:minmax(0,27%) minmax(0,46%) minmax(0,27%);
+  grid-template-rows:190px;
+  gap:0;
+  align-items:stretch;
+  width:100%;min-width:0;
+  padding:0;margin:0;
+  border:1px solid #a78c72;
+  border-radius:12px;
+  overflow:hidden;
+  isolation:isolate;
+  background:#192136;
+  box-shadow:0 5px 16px rgba(22,17,22,.11);
+}
+.sumo-compact-results .sumo-compact-bout>.sumo-bout-photo{
+  position:relative;
+  display:block;
+  align-self:stretch;
+  width:100%;height:100%;
+  padding:0;margin:0;
+  min-width:0;min-height:0;
+  grid-row:1;
+  border:0;
+  border-radius:0;
+  overflow:hidden;
+  background:radial-gradient(circle at 50% 20%,#9c8171,#453536 85%);
+  text-decoration:none;
+  cursor:pointer;
+}
+.sumo-compact-results .sumo-compact-bout>.sumo-bout-photo.start{grid-column:1}
+.sumo-compact-results .sumo-compact-bout>.sumo-bout-photo.end{grid-column:3}
+.sumo-compact-results .sumo-bout-photo>.profile-icon.sumo-photo{
+  position:absolute;
+  inset:0;
+  display:block;
+  box-sizing:border-box;
+  width:100%!important;height:100%!important;
+  min-width:0!important;min-height:0!important;
+  max-width:none!important;max-height:none!important;
+  margin:0!important;padding:0;
+  border:0!important;border-radius:0!important;
+  aspect-ratio:auto!important;
+  overflow:hidden;
+}
+.sumo-compact-results .sumo-bout-photo .sumo-photo>img{
+  position:absolute;inset:0;
+  display:block;width:100%!important;height:100%!important;
+  max-width:none!important;max-height:none!important;
+  object-fit:cover!important;
+  object-position:50% 12%!important;
+  transform:none!important;
+  border-radius:0!important;
+}
+.sumo-compact-results .sumo-bout-photo:hover .sumo-photo>img{filter:brightness(1.06)}
+.sumo-compact-results .sumo-bout-photo:focus-visible{outline:3px solid #e2bd69;outline-offset:-4px;z-index:4}
+.sumo-compact-results .sumo-bout-photo.is-winner::after{
+  content:"";position:absolute;inset:0;
+  border-bottom:5px solid #d0a951;
+  z-index:7;pointer-events:none;
+}
+.sumo-compact-results .sumo-bout-win-marker{
+  position:absolute;left:7px;bottom:10px;z-index:8;
+  display:grid;place-items:center;
+  width:27px;height:27px;
+  background:#30694d;color:#ecffef;
+  border:1px solid #c9ad69;border-radius:5px;
+  font:900 16px/1 'Barlow Condensed',Impact,sans-serif;
+}
+.sumo-compact-results .sumo-bout-centre{
+  grid-column:2;grid-row:1;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  gap:8px;
+  box-sizing:border-box;
+  min-width:0;min-height:0;
+  width:100%;height:100%;
+  padding:14px 11px;
+  text-align:center;
+  background:linear-gradient(160deg,#1a243a,#22212e);
+  border-left:1px solid #ac8858;
+  border-right:1px solid #ac8858;
+  color:#f8f5f0;
+}
+.sumo-compact-results .sumo-bout-pair{
+  display:flex;flex-direction:column;align-items:center;
+  gap:3px;min-width:0;max-width:100%;
+}
+.sumo-compact-results .sumo-bout-pair>a{
+  display:block;max-width:100%;min-width:0;
+  color:#fff;text-decoration:none;
+  font:900 clamp(18px,2.25vw,27px)/1.02 'Barlow Condensed',Impact,sans-serif;
+  text-transform:uppercase;
+  overflow-wrap:anywhere;hyphens:auto;
+}
+.sumo-compact-results .sumo-bout-pair>a:hover{text-decoration:underline;text-decoration-color:#d5b46c}
+.sumo-compact-results .sumo-bout-vs{
+  font:850 10px/1 'DM Sans',sans-serif;
+  letter-spacing:.16em;color:#d2aa60;
+}
+.sumo-compact-results .sumo-bout-outcome{
+  display:flex;flex-direction:column;
+  align-items:center;gap:2px;max-width:100%;min-width:0;
+}
+.sumo-compact-results .sumo-bout-result-label{
+  font:800 9px/1.1 'DM Sans',sans-serif;
+  letter-spacing:.13em;color:#d6b26f;
+}
+.sumo-compact-results .sumo-bout-outcome>strong{
+  color:#f2e8d5;
+  font:800 14px/1.13 'DM Sans',sans-serif;
+  max-width:100%;overflow-wrap:anywhere;
+}
+.sumo-compact-results .sumo-bout-technique{
+  font-size:13px;line-height:1.1;font-weight:800;
+  max-width:100%;overflow-wrap:anywhere;color:#e8d6c7;
+}
+.sumo-compact-results .sumo-bout-technique a{
+  color:#f3d18e;
+  text-decoration:underline;text-underline-offset:3px;
+}
+.sumo-compact-results .sumo-bout-h2h{
+  display:inline-flex;justify-content:center;align-items:center;
+  min-height:26px;min-width:48px;
+  border:1px solid #a78c65;border-radius:5px;
+  padding:4px 10px;
+  color:#f7e9ca;
+  font:850 12px/1 'DM Sans',sans-serif;
+  text-align:center;text-decoration:none;
+  background:rgba(255,255,255,.055);
+}
+.sumo-compact-results .sumo-bout-h2h:hover,
+.sumo-compact-results .sumo-bout-h2h:focus-visible{background:#c5a05b;color:#19171e}
+@media(min-width:1150px){
+  .sumo-compact-results{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sumo-compact-results .sumo-compact-bout{grid-template-rows:197px}
+}
+@media(max-width:600px){
+  .sumo-compact-results{gap:9px}
+  .sumo-compact-results .sumo-compact-bout{
+    grid-template-columns:minmax(0,28%) minmax(0,44%) minmax(0,28%);
+    grid-template-rows:178px;
+    gap:0;padding:0;
+  }
+  .sumo-compact-results .sumo-bout-centre{
+    grid-column:2;grid-row:1;
+    gap:6px;padding:10px 6px;
+  }
+  .sumo-compact-results .sumo-bout-pair{gap:2px}
+  .sumo-compact-results .sumo-bout-pair>a{
+    font-size:clamp(16px,4.5vw,21px);
+    line-height:1.02;
+  }
+  .sumo-compact-results .sumo-bout-vs{font-size:9px}
+  .sumo-compact-results .sumo-bout-outcome>strong{font-size:12px}
+  .sumo-compact-results .sumo-bout-result-label{font-size:8px}
+  .sumo-compact-results .sumo-bout-technique{font-size:11px}
+  .sumo-compact-results .sumo-bout-h2h{font-size:11px;min-height:25px;padding:4px 8px}
+}
+@media(max-width:360px){
+  .sumo-compact-results .sumo-compact-bout{
+    grid-template-columns:minmax(0,27%) minmax(0,46%) minmax(0,27%);
+    grid-template-rows:186px;
+  }
+  .sumo-compact-results .sumo-bout-centre{padding:8px 4px;gap:5px}
+  .sumo-compact-results .sumo-bout-pair>a{font-size:16px}
+  .sumo-compact-results .sumo-bout-outcome>strong{font-size:11px}
+  .sumo-compact-results .sumo-bout-win-marker{width:23px;height:23px;left:5px;bottom:8px}
+}
