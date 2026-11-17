@@ -40,6 +40,11 @@ function heading(label,title,more='',level='h2') {
   const tag=level==='h1'?'h1':'h2';
   return '<header class="section-head"><div><div class="eyebrow">'+e(label)+'</div><'+tag+'>'+e(title)+'</'+tag+'></div>'+more+'</header>';
 }
+/** One page header for every Sumo page: an uppercase title and, at most, one
+ * line of context. Keeps pages consistent and puts content on the first screen. */
+function pageHead(title,context='') {
+  return '<header class="sumo-page-head"><h1>'+e(title)+'</h1>'+(context?'<p>'+e(context)+'</p>':'')+'</header>';
+}
 function note(text) { return '<p class="notice">'+e(text)+'</p>'; }
 function richText(text) { return e(text).replace(/\n/g, '<br>'); }
 function imageToken(rank, name, large=false) {
@@ -373,6 +378,7 @@ function renderDailyMatchups(){
     '<div class="sumo-compact-results">'+latestResults.map(compactBoutRow).join('')+'</div></details>':'';
   const dayTitle=showingUpcoming?'Upcoming head-to-heads':pairing.some(x=>x.finished)?'Results and head-to-heads':'Scheduled head-to-heads';
   return '<section class="sumo-daily-page">'+
+    pageHead('Matchups',bashoLabel(details().bashoId)+' · '+division+' · Day '+day)+
     '<div class="sumo-daily-controls">'+divisionTabs(division,'data-matchup-division')+
     '<div class="sumo-daily-calendar"><label for="sumo-matchup-day">Day</label>'+
     '<select id="sumo-matchup-day">'+Array.from({length:15},(_,i)=>'<option value="'+(i+1)+'"'+(day===i+1?' selected':'')+'>Day '+(i+1)+'</option>').join('')+'</select>'+
@@ -576,8 +582,7 @@ function directoryResults() {
     (STATE.visible>24?'<div class="more-wrap"><button type="button" class="btn light" data-fewer-rikishi>Show fewer</button></div>':'');
 }
 function renderDirectory() {
-  return heading('190 tracked rikishi · current banzuke','Rikishi directory','', 'h1')+
-    '<p class="section-intro">Find currently ranked wrestlers in Makuuchi, Jūryō and Makushita. Filters reflect the selected division.</p>'+
+  return pageHead('Rikishi',number(STATE.roster?.count)+' wrestlers · Makuuchi, Jūryō and Makushita')+
     '<div class="filters"><input id="sumo-search" class="search" type="search" aria-label="Search wrestlers" placeholder="Search wrestler, stable or location…" value="'+e(STATE.query)+'" autocomplete="off"></div>'+
     '<div id="directory-filters">'+divisionTabs(STATE.division,'data-directory-division',true)+'</div>'+
     '<div id="directory-results">'+directoryResults()+'</div>'+sourceFooter();
@@ -962,8 +967,7 @@ function banzukeCard(row) {
 }
 function renderBanzuke() {
   const d=STATE.banzukeDivision,data=getBanzuke(d),rows=data?rankTable(data):[];
-  return heading('Grand Sumo · published rankings','Banzuke','','h1')+
-    '<p class="section-intro">Current and previous published East/West ranks. Movement describes the ordinal position among tracked divisions, not necessarily a change in formal title.</p>'+
+  return pageHead('Rankings',bashoLabel(details().bashoId)+' banzuke · current and previous rank')+
     divisionTabs(d,'data-banzuke-division')+
     '<div class="panel-head"><h2>'+e(bashoLabel(details().bashoId))+' · '+e(d)+'</h2><span>'+rows.length+' wrestlers</span></div>'+
     '<div class="sumo-rank-table-head" aria-hidden="true"><span>Rank</span><span>Wrestler</span><span>Previous</span><span>Movement</span><span>Current W–L–A</span></div>'+
@@ -1021,7 +1025,7 @@ function renderHeadToHead(a,b) {
   else if(STATE.h2hLoading)coverage='Loading '+(history?.rows.length||0)+' of '+(history?.total||'available')+' recorded meetings…';
   else if(STATE.h2hLoadFailed)coverage='Complete chronology could not load. Showing '+(history?.rows.length||0)+' of '+(history?.total||'unknown')+' meetings.';
   else coverage='Showing '+(history?.rows.length||0)+' of '+(history?.total||'unknown')+' sourced meetings. Full cache has not yet loaded.';
-  return back+heading('Rikishi versus rikishi','Career head-to-head','','h1')+
+  return back+pageHead('Head-to-head',firstName+' vs '+secondName)+
     '<div class="sumo-h2h-hero"><div>'+fighterOnCard(first,a,firstName,{hero:true})+'</div>'+
     '<div class="sumo-h2h-score"><span>Career series · regular recorded bouts</span>'+
     '<strong>'+e(history?history.wins+'–'+history.losses:'Unavailable')+'</strong>'+
@@ -1108,11 +1112,8 @@ function compactBoutRow(match) {
 }
 function renderBasho() {
   const d=STATE.bashoDivision,data=getBanzuke(d);
-  const target=details().basho?.data,lastday=data?lastCompletedBashoDay(data):0;
-  return '<section class="basho-hero"><div><div class="eyebrow">Grand Sumo · tournament desk</div>'+
-    '<h1>'+e(bashoLabel(details().bashoId))+'</h1><p>'+e(target?.startDate?dateOnly(target.startDate):'Start unavailable')+
-    ' – '+e(target?.endDate?dateOnly(target.endDate):'End unavailable')+' · Japan time · snapshot, not live</p></div>'+
-    '<div><span class="basho-day">'+(lastday?'Day '+lastday:'—')+'</span><p>Latest completed results</p></div></section>'+
+  const lastday=data?lastCompletedBashoDay(data):0;
+  return pageHead('Results',bashoLabel(details().bashoId)+' · '+(lastday?'Results through Day '+lastday:'No results yet')+' · Snapshot, not live')+
     divisionTabs(d,'data-basho-division')+
     (data?daysPanel(d,data):'<p class="missing">No banzuke snapshot available for this division.</p>')+
     sourceFooter();
@@ -1122,8 +1123,9 @@ function renderKimarite() {
 }
 
 function render() {
-  const hash=decodeURIComponent(location.hash.slice(1)||'home').split('?')[0];
-  const [page,id]=hash.split('/');
+  const hash=decodeURIComponent(location.hash.slice(1)||'basho').split('?')[0];
+  let [page,id]=hash.split('/');
+  if(page==='home')page='basho';
   tabs.forEach(a=>{
     const active=(page==='profile'?'rikishi':page==='matchups'?'basho':page)===a.dataset.page;
     a.classList.toggle('active',active);
@@ -1144,7 +1146,7 @@ function render() {
     case 'basho': ROOT.innerHTML=renderBasho();break;
     case 'matchups': ROOT.innerHTML=renderDailyMatchups();break;
     case 'kimarite': ROOT.innerHTML=renderKimarite();break;
-    default: ROOT.innerHTML=renderHome();
+    default: ROOT.innerHTML=renderBasho();
   }
   if(page==='kimarite')hydrateKimariteGallery();
   else linkKimariteMentions(ROOT);
