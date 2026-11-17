@@ -102,3 +102,16 @@ test('Paul Craig cached 21 UFC contests match attested complete career, includin
   [...officialRows,athlete.recentHistory.find(row=>row.opponent==='Luis Henrique da Silva')],
   attestation,'2026-11-17','2026-11-14'),false);
 });
+
+test('frozen-cohort certification rejects future official contests and unverifiable dates',()=>{
+ const afterSnapshot={...source,bouts:source.bouts.map((bout,i)=>
+  i===0?{...bout,date:'2026-11-18'}:bout)};
+ const shiftedSaved=saved.map((bout,i)=>
+  i===0?{...bout,date:'2026-11-18'}:bout);
+ assert.equal(matchesRevisedOfficialCareer(profile,shiftedSaved,afterSnapshot,
+  '2026-11-17','2026-11-14'),false);
+ const missingDate={...source,bouts:source.bouts.map((bout,i)=>
+  i===0?{...bout,date:null}:bout)};
+ assert.equal(matchesRevisedOfficialCareer(profile,saved,missingDate,
+  '2026-11-17','2026-11-14'),false);
+});
