@@ -4,6 +4,7 @@ name: Sumo preview live refresh (every basho)
 # It touches ONLY the Sumo preview branch (never main, never the production
 # site). All logic lives in that branch's scripts:
 #   scripts/sumo-basho-calendar.mjs  which basho is it, and is it live
+#   scripts/sumo-jsa-scrape.mjs      matchups read from the Japan Sumo Association pages
 #   scripts/sumo-refresh-daily.mjs   results + announced next-day torikumi
 #   scripts/sumo-build-preview.mjs   roster, rankings and basho details
 #   scripts/sumo-onboard-rikishi.mjs career + head-to-head data for new wrestlers
@@ -41,6 +42,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Install headless browser for the JSA matchup reader
+        shell: bash
+        run: |
+          npm install --no-save --no-audit --no-fund playwright
+          npx playwright install --with-deps chromium
       - name: Decide what to run
         id: plan
         shell: bash
@@ -80,7 +86,8 @@ jobs:
           git add data/sumo/preview-details.json data/sumo/rikishi-index.json \
             data/sumo/career-history.json data/sumo/research-h2h-summary.json \
             data/sumo/research-h2h-opponents.json data/sumo/research-h2h-history.json \
-            data/sumo/division-stats.json data/sumo/api-trusted-status.json
+            data/sumo/division-stats.json data/sumo/api-trusted-status.json \
+            data/sumo/jsa-torikumi.json
           if git diff --cached --quiet; then
             echo "No data change"
             exit 0
