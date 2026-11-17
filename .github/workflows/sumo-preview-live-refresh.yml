@@ -6,6 +6,7 @@ name: Sumo preview live refresh (every basho)
 #   scripts/sumo-basho-calendar.mjs  which basho is it, and is it live
 #   scripts/sumo-refresh-daily.mjs   results + announced next-day torikumi
 #   scripts/sumo-build-preview.mjs   roster, rankings and basho details
+#   scripts/sumo-onboard-rikishi.mjs career + head-to-head data for new wrestlers
 on:
   schedule:
     # Live results: every 30 min on the days a basho can run (8th-28th of
@@ -52,6 +53,14 @@ jobs:
         run: |
           node --test tests/test-sumo-api-source.mjs
           node scripts/sumo-build-preview.mjs
+      - name: Add career and head-to-head data for wrestlers new to the divisions
+        if: steps.plan.outputs.mode == 'rebuild'
+        run: |
+          if [ -f scripts/sumo-onboard-rikishi.mjs ]; then
+            node scripts/sumo-onboard-rikishi.mjs
+          else
+            echo "Onboarding script not on the preview branch yet; skipping"
+          fi
       - name: Refresh latest results and announced next-day torikumi
         if: steps.plan.outputs.mode == 'refresh'
         run: |
@@ -65,7 +74,10 @@ jobs:
           set -euo pipefail
           git config user.name "BEFN Sumo daily preview"
           git config user.email "sumo-preview@users.noreply.github.com"
-          git add data/sumo/preview-details.json data/sumo/rikishi-index.json
+          git add data/sumo/preview-details.json data/sumo/rikishi-index.json \
+            data/sumo/career-history.json data/sumo/research-h2h-summary.json \
+            data/sumo/research-h2h-opponents.json data/sumo/research-h2h-history.json \
+            data/sumo/division-stats.json data/sumo/api-trusted-status.json
           if git diff --cached --quiet; then
             echo "No data change"
             exit 0
