@@ -1823,38 +1823,45 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .sumo-rank-card>.sumo-rank-prior{display:none}
 }
 
-/* Headline bouts (UFC-style event card): the day's top three bouts get large
-   portraits, rank badges, flags and a result strip. The rest stay compact rows.
-   Layout pattern only; no third-party imagery or branding. */
-.hl-list{display:grid;gap:14px;margin-bottom:6px}
-.hl-card{position:relative;background:#151115;color:#fff;border-radius:12px;overflow:hidden;border-top:3px solid var(--gold)}
-.hl-label{padding:10px 14px 0;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#f3c332}
-.hl-faces{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2px;padding:8px 0 0}
-.hl-side{min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 8px 12px;background:linear-gradient(#1c1519,#151115)}
-.hl-photo{position:relative;display:block;width:100%;aspect-ratio:2/3;max-height:430px;border-radius:8px;overflow:hidden;background:#e5d9cb;text-decoration:none}
-.hl-photo>.profile-icon.sumo-photo{position:absolute!important;inset:0;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;margin:0!important;border:0!important;border-radius:0!important;aspect-ratio:auto!important}
-.hl-photo .sumo-photo>img{position:absolute;inset:0;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center top!important;transform:none!important}
-.hl-side.is-loser .hl-photo{opacity:.6}
-.hl-side.is-winner .hl-photo{box-shadow:0 0 0 3px var(--gold)}
-.hl-win{position:absolute;left:8px;bottom:8px;background:var(--gold);color:#151115;font-size:11px;font-weight:900;letter-spacing:.1em;padding:3px 8px;border-radius:4px}
-.hl-name{margin-top:10px;font:900 clamp(24px,7vw,34px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;overflow-wrap:anywhere}
-.hl-name a{color:#fff;text-decoration:none}
-.hl-meta{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;margin-top:6px;font-size:12.5px;color:#d8cecc}
-.hl-rank{background:var(--gold);color:#151115;font-weight:900;font-size:12px;padding:2px 8px;border-radius:999px}
-.hl-vs{position:absolute;left:50%;top:36%;transform:translate(-50%,-50%);z-index:2;width:44px;height:44px;border-radius:50%;background:var(--red);color:#fff;font:900 17px/44px 'Barlow Condensed',Impact,sans-serif;text-align:center;border:2px solid #151115}
-.hl-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;background:#1f181d;border-top:1px solid #3a2f36}
-.hl-strip>div{padding:10px 8px;text-align:center;border-right:1px solid #3a2f36;min-width:0}
-.hl-strip>div:last-child{border-right:0}
-.hl-strip dt{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#bfb3b1}
-.hl-strip dd{margin:3px 0 0;font-weight:800;font-size:14px;overflow-wrap:anywhere}
-.hl-strip a{color:#fff0d6;text-decoration:none}
+/* Headline bouts as a seamless "stage" (UFC-style matchup): portraits stand on
+   the page with no frame, names sit over a red/blue split rule, stats run down
+   the middle. Portrait backgrounds are blended into the page with CSS only
+   (the original image files are never edited). */
+.hl-list{display:grid;gap:26px;margin-bottom:6px}
+.stage{position:relative;padding:4px 0 10px;--lc:#cf1824;--rc:#2b3a9a}
+.stage-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"lab lab" "l r";gap:2px 10px;align-items:end}
+.stage-name.left{grid-area:l}.stage-name.right{grid-area:r}.stage-label{grid-area:lab}
+.stage-name{margin:0;font:900 clamp(22px,6.4vw,40px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;overflow-wrap:normal;word-break:normal;hyphens:none}
+.stage-name.right{text-align:right}
+.stage-name a{color:#111013;text-decoration:none}
+.stage-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5f5760;text-align:center;padding-bottom:4px}
+.stage-rule{height:3px;margin:8px 0 0;background:linear-gradient(90deg,var(--lc) 0 50%,var(--rc) 50% 100%)}
+.stage-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"l r" "s s";gap:0 4px;align-items:end}
+.stage-photo{display:block;position:relative;width:100%;aspect-ratio:2/3;max-height:560px;text-decoration:none;
+}
+.stage-photo.left{grid-area:l}.stage-photo.right{grid-area:r}
+.stage-photo>.profile-icon.sumo-photo{position:absolute!important;inset:0;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;margin:0!important;border:0!important;border-radius:0!important;aspect-ratio:auto!important;background:transparent!important;isolation:auto!important;overflow:visible!important}
+.stage-photo .sumo-photo>img{position:absolute;inset:0;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;transform:none!important;
+  mix-blend-mode:multiply;filter:brightness(1.2) contrast(1.12);-webkit-mask-image:linear-gradient(#000 0 88%,transparent 100%),linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(#000 0 88%,transparent 100%),linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-composite:intersect}
+.stage-photo .is-cutout>img{mix-blend-mode:normal!important;filter:none!important;-webkit-mask-image:none!important;mask-image:none!important;object-fit:contain!important;object-position:center bottom!important}
+.stage-credit{flex-basis:100%;order:3;font-size:11px;color:#6b6168}
+.stage-photo.is-loser{opacity:.7}
+.stage-stats{grid-area:s;margin:10px 0 0;padding:0}
+.stage-stats>div{display:grid;grid-template-columns:minmax(0,1fr) 96px minmax(0,1fr);gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid #e6dfd3}
+.stage-stats dt{margin:0;text-align:center;font:800 12px/1.2 'Barlow Condensed',Impact,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#111013}
+.stage-stats dd{margin:0;font-size:15px;font-weight:500;min-width:0;overflow-wrap:anywhere}
+.stage-stats dd.l{color:var(--lc);text-align:left}
+.stage-stats dd.r{color:var(--rc);text-align:right}
+.stage-foot{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:space-between;margin:8px 0 0;font-size:13px;color:#4a434b}
+.stage-foot a{color:var(--red);font-weight:800;text-decoration:none}
+@media(min-width:900px){
+  .stage-body{grid-template-columns:minmax(220px,1fr) minmax(300px,420px) minmax(220px,1fr);grid-template-areas:"l s r";gap:0 18px;align-items:center}
+  .stage-photo{max-height:600px}
+  .stage-stats{margin:0}
+  .stage-stats>div{padding:14px 0}
+  .stage-name{font-size:clamp(28px,3.4vw,46px)}
+  .hl-list>.stage:not(:first-child) .stage-photo{max-height:460px}
+}
 .hl-section{display:flex;align-items:center;gap:8px;margin:18px 0 8px;font:900 22px/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;letter-spacing:.02em}
 .hl-section span{background:#151115;color:#f3c332;font:800 12px/1 'DM Sans',sans-serif;padding:4px 8px;border-radius:999px}
-@media(min-width:900px){
-  .hl-list{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .hl-list>.hl-card:first-child{grid-column:1/-1}
-  .hl-list>.hl-card:first-child .hl-faces{max-width:760px;margin:0 auto}
-  .hl-list>.hl-card:first-child .hl-photo{max-width:300px}
-  .hl-list>.hl-card:first-child .hl-name{font-size:46px}
-  .hl-list>.hl-card:not(:first-child) .hl-photo{max-width:230px}
 }

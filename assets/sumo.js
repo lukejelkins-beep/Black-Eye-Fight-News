@@ -82,6 +82,13 @@ function portraitFor(w,size='sm',fallbackName=null){
     (valid?'<img src="'+e(photo.path)+'" alt="" loading="lazy" decoding="async">':'')+
     '<span aria-hidden="true">相</span>'+(valid?'':'<small class="sumo-photo-fallback">Photo unavailable</small>')+'</div>';
 }
+function cutoutFor(w,name){
+  const c=w&&STATE.cutouts?.[String(w.sourceId)];
+  const photo=w&&STATE.photoIndex?.[String(w.sourceId)];
+  const ok=c&&photo?.approved===true&&c.sourceSha256===photo.sha256&&/^assets\/sumo-photos\/cutout\/[a-zA-Z0-9_-]+\.webp$/.test(String(c.path||''));
+  if(!ok)return null;
+  return '<div class="profile-icon sumo-photo xl has-photo is-cutout" role="img" aria-label="'+e('Photograph of '+(name||w.shikonaEn))+'"><img src="'+e(c.path)+'" alt="" loading="lazy" decoding="async"></div>';
+}
 function knownHigh(w){
   const research=STATE.h2hSummary?.profiles?.[String(w?.sourceId)];
   if(typeof research?.careerHigh==='string'&&research.careerHigh.trim())return research.careerHigh;
@@ -1097,6 +1104,20 @@ function boutRowMarkup(match) {
 function compactBoutRow(match) {
   return boutRowMarkup(match);
 }
+function stageFacts(w) {
+  if(!w)return {};
+  const st=detailStats(w),wh=weightHeight(w),item=entryFor(w);
+  const rec=item?recordSummary(item.record,divisionOf(w.currentRank)):null;
+  const c=originCountry(w.birthplace);
+  const wl=(x,y)=>Number.isInteger(x)&&Number.isInteger(y)?x+'–'+y:'—';
+  return {
+    Rank:w.currentRank||'—',
+    Country:c?c.name:'—',
+    Career:wl(st?.totalWins,st?.totalLosses),
+    'This basho':rec?wl(rec.win,rec.loss):'—',
+    Height:wh.h,Weight:wh.mass
+  };
+}
 function headlineBout(match,label) {
   const a=wrestler(match.rikishiId),b=wrestler(match.opponentId);
   const left=a?.shikonaEn||match.rikishi||'Wrestler',right=b?.shikonaEn||match.opponent||'Wrestler';
@@ -1105,23 +1126,28 @@ function headlineBout(match,label) {
   const winR=finished&&Number(match.winnerId)===Number(match.opponentId);
   const h2h=headToHeadFor(match.rikishiId,match.opponentId);
   const hasRecord=h2h&&Number.isInteger(h2h.wins)&&Number.isInteger(h2h.losses);
-  const side=(w,name,pos,won,lost)=>{
+  const fa=stageFacts(a),fb=stageFacts(b);
+  const rows=['Rank','Country','Career','This basho','Height','Weight'].map(k=>[k,fa[k]??'—',fb[k]??'—']);
+  rows.push(['Head to head',hasRecord?h2h.wins+'–'+h2h.losses:'—',hasRecord?h2h.losses+'–'+h2h.wins:'—']);
+  if(finished)rows.unshift(['Result',winL?'WIN':'',winR?'WIN':'']);
+  const photo=(w,name,pos,won,lost)=>{
     const href=w?'#profile/'+Number(w.sourceId):null;
-    const open=href?'<a class="hl-photo" href="'+href+'" aria-label="View '+e(name)+' profile">':'<div class="hl-photo">';
-    const country=w?originCountry(w.birthplace):null;
-    return '<div class="hl-side '+pos+(won?' is-winner':'')+(lost?' is-loser':'')+'">'+
-      open+portraitFor(w,'xl',name)+(won?'<span class="hl-win">WIN</span>':'')+(href?'</a>':'</div>')+
-      '<div class="hl-name">'+(href?'<a href="'+href+'">'+e(name)+'</a>':e(name))+'</div>'+
-      '<div class="hl-meta"><span class="hl-rank" title="'+e(w?.currentRank||'')+'">'+e(rankShort(w?.currentRank)||'Unranked')+'</span>'+
-      (country?'<span class="hl-country">'+e(country.flag||'')+' '+e(country.name)+'</span>':'')+'</div></div>';
+    const tag=href?'a':'div';
+    return '<'+tag+' class="stage-photo '+pos+(won?' is-winner':'')+(lost?' is-loser':'')+'"'+(href?' href="'+href+'" aria-label="View '+e(name)+' profile"':'')+'>'+
+      (cutoutFor(w,name)||portraitFor(w,'xl',name))+'</'+tag+'>';
   };
-  const method=finished?techniqueText(match.kimarite):'—';
-  return '<article class="hl-card '+(finished?'is-finished':'is-scheduled')+'" aria-label="'+e(left+' versus '+right)+'">'+
-    '<div class="hl-label">'+e(label)+'</div>'+
-    '<div class="hl-faces">'+side(a,left,'left',winL,winR)+'<span class="hl-vs" aria-hidden="true">VS</span>'+side(b,right,'right',winR,winL)+'</div>'+
-    '<dl class="hl-strip"><div><dt>Result</dt><dd>'+e(finished?(winL?left:winR?right:'Recorded'):'Pending')+'</dd></div>'+
-    '<div><dt>Technique</dt><dd>'+(finished?techniqueMarkup(match.kimarite,method):'—')+'</dd></div>'+
-    '<div><dt>Head to head</dt><dd><a href="'+headToHeadUrl(match.rikishiId,match.opponentId)+'">'+e(hasRecord?h2h.wins+'–'+h2h.losses:'—')+' ›</a></dd></div></dl></article>';
+  const nameLink=(w,name)=>w?'<a href="#profile/'+Number(w.sourceId)+'">'+e(name)+'</a>':e(name);
+  const division=divisionOf(a?.currentRank)||'';
+  return '<article class="stage '+(finished?'is-finished':'is-scheduled')+'" aria-label="'+e(left+' versus '+right)+'">'+
+    '<header class="stage-head"><h3 class="stage-name left">'+nameLink(a,left)+'</h3>'+
+    '<span class="stage-label">'+e((division?division+' · ':'')+label)+'</span>'+
+    '<h3 class="stage-name right">'+nameLink(b,right)+'</h3></header>'+
+    '<div class="stage-rule" aria-hidden="true"></div>'+
+    '<div class="stage-body">'+photo(a,left,'left',winL,winR)+
+    '<dl class="stage-stats">'+rows.map(([k,l,r])=>'<div><dd class="l">'+e(l)+'</dd><dt>'+e(k)+'</dt><dd class="r">'+e(r)+'</dd></div>').join('')+'</dl>'+
+    photo(b,right,'right',winR,winL)+'</div>'+
+    '<p class="stage-foot">'+(finished?'<span>'+e(winL?left:winR?right:'Result recorded')+' won · '+techniqueMarkup(match.kimarite,techniqueText(match.kimarite))+'</span>':'<span>Result pending</span>')+
+    ' <span class="stage-credit">Photos © Japan Sumo Association</span> <a href="'+headToHeadUrl(match.rikishiId,match.opponentId)+'">Full head-to-head ›</a></p></article>';
 }
 function boutSections(pairings,rowFn) {
   if(!pairings.length)return '';
@@ -1379,6 +1405,8 @@ async function init(){
     const [roster,details,styles,photos,careerHistory,h2hSummary,readiness,divisionStats,kimariteMedia]=await Promise.all([loadJson('data/sumo/rikishi-index.json'),loadJson('data/sumo/preview-details.json'),loadJson('data/sumo/official-style-evidence.json'),loadJson('data/sumo/approved-photos.json'),loadJson('data/sumo/career-history.json'),
       loadJson('data/sumo/research-h2h-summary.json').catch(()=>null),loadJson('data/sumo/api-trusted-status.json'),
       loadJson('data/sumo/division-stats.json').catch(()=>null),loadJson('data/sumo/kimarite-media.json').catch(()=>null)]);
+    // Optional cut-out derivatives; the page works without them.
+    STATE.cutouts=(await loadJson('data/sumo/cutouts.json').catch(()=>null))?.bySourceId||null;
     if(!Array.isArray(roster?.rikishi)||!Array.isArray(details?.featured)||roster?.count!==roster.rikishi.length) throw new Error('Sumo cache schema or roster total not valid');
     if((roster?.trackedDivisions||[]).join(',')!==DIVS.join(','))throw new Error('Sumo cache does not match the approved three-division scope');
     if(roster.rikishi.some(x=>!DIVS.includes(divisionOf(x.currentRank))))throw new Error('Out-of-scope division in Sumo index');
