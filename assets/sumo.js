@@ -1074,13 +1074,29 @@ function compactBoutRow(match) {
   const left=a?.shikonaEn||match.rikishi||'Wrestler';
   const right=b?.shikonaEn||match.opponent||'Wrestler';
   const finished=match.finished===true;
-  const winner=finished?(Number(match.winnerId)===Number(match.rikishiId)?left:right):null;
-  return '<article class="sumo-compact-bout">'+
-    '<div class="sumo-compact-names">'+(a?portraitFor(a,'sm',left):'')+'<span>'+e(left)+' <small>vs</small> '+e(right)+'</span>'+
-    (b?portraitFor(b,'sm',right):'')+'</div>'+
-    '<div class="sumo-compact-result"><strong>'+e(finished?winner+' won':'Scheduled')+'</strong>'+
-    '<small>'+e(finished?techniqueText(match.kimarite):'Result pending')+'</small></div>'+
-    '<a href="'+headToHeadUrl(match.rikishiId,match.opponentId)+'">H2H</a></article>';
+  const leftWon=finished&&Number(match.winnerId)===Number(match.rikishiId);
+  const rightWon=finished&&Number(match.winnerId)===Number(match.opponentId);
+  const winner=finished?(leftWon?left:right):null;
+  const leftPhoto='<a class="sumo-compact-photo left'+(leftWon?' is-winner':'')+
+    '" href="#profile/'+Number(match.rikishiId)+'" aria-label="View '+e(left)+' profile">'+
+    portraitFor(a,'sm',left)+'</a>';
+  const rightPhoto='<a class="sumo-compact-photo right'+(rightWon?' is-winner':'')+
+    '" href="#profile/'+Number(match.opponentId)+'" aria-label="View '+e(right)+' profile">'+
+    portraitFor(b,'sm',right)+'</a>';
+  const day=Number.isInteger(Number(match.day))&&Number(match.day)>0?'Day '+Number(match.day):'Bout';
+  const technique=finished?techniqueText(match.kimarite):'Result pending';
+  return '<article class="sumo-compact-bout '+(finished?'is-complete':'is-scheduled')+
+    '" aria-label="'+e(left+' versus '+right+(finished?'; '+winner+' won by '+technique:'; scheduled'))+'">'+
+    leftPhoto+
+    '<div class="sumo-compact-center sumo-compact-result">'+
+    '<span class="sumo-compact-day">'+e(day)+'</span>'+
+    '<div class="sumo-compact-names"><strong>'+e(left)+'</strong>'+
+    '<span class="sumo-compact-versus">VS</span><strong>'+e(right)+'</strong></div>'+
+    '<span class="sumo-compact-winner">'+e(finished?winner+' won':'Scheduled')+'</span>'+
+    '<span class="sumo-compact-kimarite">'+e(technique)+'</span>'+
+    '<a class="sumo-compact-h2h" href="'+headToHeadUrl(match.rikishiId,match.opponentId)+
+    '" aria-label="Head-to-head history: '+e(left)+' versus '+e(right)+'">H2H <span aria-hidden="true">›</span></a>'+
+    '</div>'+rightPhoto+'</article>';
 }
 function renderBasho() {
   const d=STATE.bashoDivision,data=getBanzuke(d);
