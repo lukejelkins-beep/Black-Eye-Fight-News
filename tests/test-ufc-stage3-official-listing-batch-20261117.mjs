@@ -77,3 +77,32 @@ test('UFCStats batch: omitted, duplicated, reversed, substituted and unattested 
   assert.equal(check(slug,{...p,fighterUrl:'https://example.com/fighter-details/abc'}),false,slug+' non-ufcstats');
  }
 });
+
+// Owner-approved 2026-11-17: a proof may list a no-contest or draw that UFCStats shows but saved
+// UFCalendar history lacks. The bout must be flagged savedHistoryGap, be a no_contest/draw, cite
+// UFCStats, and have no saved counterpart. Wins and losses are never accepted as gaps.
+const GAPS=['kyle-daukaus','chris-curtis','miles-johns','magomed-ankalaev','johnny-walker','matt-schnell','michal-oleksiejczuk','marc-andre-barriault','leon-edwards','belal-muhammad','niko-price','kelvin-gastelum','kevin-holland','sean-o-malley'];
+test('saved-history gap rule: proofs with no-contest/draw gaps certify',()=>{
+ for(const slug of GAPS){
+  const p=proofs[slug],gaps=p.bouts.filter(b=>b.savedHistoryGap);
+  assert.ok(gaps.length>=1,slug+' has a flagged gap');
+  assert.ok(gaps.every(b=>['no_contest','draw'].includes(b.result)),slug+' gaps are NC/draw only');
+  assert.ok(gaps.every(b=>/^https:\/\/ufcstats\.com\/fight-details\/[a-f0-9]+$/.test(b.fightUrl)),slug);
+  assert.equal(p.bouts.length-gaps.length,history(slug).length,slug+' non-gap bouts equal saved count');
+  assert.equal(check(slug,p),true,slug);
+ }
+});
+test('saved-history gap rule: cannot be abused for wins, losses, unflagged or already-saved bouts',()=>{
+ for(const slug of GAPS){
+  const p=proofs[slug],gi=p.bouts.findIndex(b=>b.savedHistoryGap);
+  const swap=fn=>({...p,bouts:p.bouts.map((b,i)=>i===gi?fn(b):b)});
+  assert.equal(check(slug,swap(b=>({...b,result:'win'}))),false,slug+' gap as win');
+  assert.equal(check(slug,swap(b=>({...b,result:'loss'}))),false,slug+' gap as loss');
+  assert.equal(check(slug,swap(b=>{const {savedHistoryGap,...r}=b;return r})),false,slug+' unflagged gap');
+  assert.equal(check(slug,swap(b=>({...b,fightUrl:'https://example.com/fight/abc'}))),false,slug+' non-UFCStats gap source');
+  // A flag on a real saved win/loss grants nothing: it is still compared exactly, so omitting it fails.
+  const saved=p.bouts.findIndex(b=>!b.savedHistoryGap);
+  assert.equal(check(slug,{...p,bouts:p.bouts.filter((b,i)=>i!==saved).map(b=>b)}),false,slug+' omitted saved bout');
+  assert.equal(check(slug,{...p,bouts:p.bouts.filter((b,i)=>i!==gi)}),true,slug+' gap is optional: the saved comparison is unchanged without it');
+ }
+});

@@ -46,8 +46,24 @@ export const isAttestedOfficialUfcShowcase=(entry,row)=>{
  * The approved UFCalendar-first standard does not require original numeric
  * UFC bout/corner IDs, fight-detail URLs or non-missing per-round metrics.
  */
+
+/** Owner-approved 2026-11-17: a proof may list a no-contest or draw that official
+ * sources show but saved UFCalendar history lacks. Only when it is explicitly flagged,
+ * is a no_contest/draw, cites ufc.com or UFCStats, and truly has no saved counterpart.
+ * Wins and losses missing from saved history are never accepted here. */
+const isApprovedSavedGap=(bout,saved)=>
+  bout?.savedHistoryGap===true&&
+  ['no_contest','draw'].includes(normalizedOutcome(bout?.result))&&
+  /^https:\/\/(www\.ufc\.com|ufcstats\.com)\//i.test(String(bout?.officialUfcSourceUrl||bout?.fightUrl||''))&&
+  date(bout?.date)&&tokens(bout?.opponent)&&
+  !arr(saved).some(row=>date(row?.date)&&nearSourceDay(date(bout.date),date(row.date))&&
+    sameAthleteName(bout.opponent,row.opponent));
+
 export function matchesRevisedOfficialCareer(profile,history,evidence,asOf,cutoff){
- const saved=arr(history),official=arr(evidence?.bouts);
+ const saved=arr(history),allOfficial=arr(evidence?.bouts);
+ const gaps=allOfficial.filter(b=>isApprovedSavedGap(b,saved));
+ if(allOfficial.some(b=>b?.savedHistoryGap===true&&!gaps.includes(b)))return false;
+ const official=allOfficial.filter(b=>!gaps.includes(b));
  const url=String(evidence?.officialFighterUrl||evidence?.fighterUrl||'');
  if(evidence?.sourceCoverageAttested!==true||
     evidence?.verificationMethod!=='full_official_ufc_fight_listing_crosscheck'||
@@ -127,7 +143,8 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
  // A manually checked independent UFCStats fighter-history listing must
  // cover exactly the same complete bout identities, not a partial sample.
  const ext=independentEntry||{};
- const given=arr(ext.bouts);
+ const savedGaps=arr(ext.bouts).filter(b=>isApprovedSavedGap(b,rows));
+ const given=arr(ext.bouts).filter(b=>!savedGaps.includes(b));
  const savedKeys=rows.map(r=>[date(r.date),normal(r.opponent),
    normalizedOutcome(r.result)].join('|'));
  const givenKeys=given.map(r=>[date(r.date),normal(r.opponent),
