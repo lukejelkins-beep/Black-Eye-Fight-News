@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "preview": true,
   "source": "https://www.sumo-api.com/api",
-  "collectedAt": "2026-11-17T05:49:54.137Z",
+  "collectedAt": "2026-11-17T06:01:10.899Z",
   "notice": "Developer preview; third-party source; cross-check results against the Japan Sumo Association before production.",
   "bashoId": "202611",
   "trackedDivisions": [
@@ -737,7 +737,7 @@
             "Jonidan": 39,
             "Jonokuchi": 3,
             "Juryo": 178,
-            "Makushita": 98,
+            "Makushita": 99,
             "Makuuchi": 367,
             "Sandanme": 31
           },
@@ -750,12 +750,12 @@
             "Jonidan": 84,
             "Jonokuchi": 7,
             "Juryo": 359,
-            "Makushita": 208,
+            "Makushita": 209,
             "Makuuchi": 658,
             "Sandanme": 77
           },
-          "totalLosses": 716,
-          "totalMatches": 1393,
+          "totalLosses": 717,
+          "totalMatches": 1394,
           "totalWins": 677,
           "winsByDivision": {
             "Jonidan": 45,
@@ -779,6 +779,22 @@
           "skip": 0,
           "total": 18,
           "records": [
+            {
+              "bashoId": "202611",
+              "division": "Juryo",
+              "day": 10,
+              "matchNo": 1,
+              "eastId": 77,
+              "eastShikona": "Hatsuyama",
+              "eastRank": "Juryo 14 East",
+              "westId": 16,
+              "westShikona": "Nishikigi",
+              "westRank": "Makushita 2 East",
+              "kimarite": "okuridashi",
+              "winnerId": 77,
+              "winnerEn": "Hatsuyama",
+              "winnerJp": ""
+            },
             {
               "bashoId": "202611",
               "division": "Makushita",
@@ -1050,22 +1066,6 @@
               "winnerId": 140,
               "winnerEn": "Tokifudo",
               "winnerJp": "時不動　虹"
-            },
-            {
-              "bashoId": "202609",
-              "division": "Juryo",
-              "day": 3,
-              "matchNo": 3,
-              "eastId": 101,
-              "eastShikona": "Tamashoho",
-              "eastRank": "Juryo 12 East",
-              "westId": 16,
-              "westShikona": "Nishikigi",
-              "westRank": "Juryo 14 West",
-              "kimarite": "yorikiri",
-              "winnerId": 16,
-              "winnerEn": "Nishikigi",
-              "winnerJp": ""
             }
           ]
         }
@@ -7604,11 +7604,11 @@
                 "kimarite": "hatakikomi"
               },
               {
-                "result": "",
+                "result": "win",
                 "opponentShikonaEn": "Meisei",
                 "opponentShikonaJp": "明生",
                 "opponentID": 38,
-                "kimarite": ""
+                "kimarite": "hatakikomi"
               },
               {
                 "result": "",
@@ -7646,7 +7646,7 @@
                 "kimarite": ""
               }
             ],
-            "wins": 2,
+            "wins": 3,
             "losses": 7,
             "absences": 0
           },
@@ -7840,11 +7840,11 @@
                 "kimarite": "shitatenage"
               },
               {
-                "result": "",
+                "result": "loss",
                 "opponentShikonaEn": "Tomokaze",
                 "opponentShikonaJp": "友風",
                 "opponentID": 102,
-                "kimarite": ""
+                "kimarite": "hatakikomi"
               },
               {
                 "result": "",
@@ -7883,7 +7883,7 @@
               }
             ],
             "wins": 3,
-            "losses": 6,
+            "losses": 7,
             "absences": 0
           },
           {
@@ -7958,11 +7958,11 @@
                 "kimarite": "oshidashi"
               },
               {
-                "result": "",
+                "result": "win",
                 "opponentShikonaEn": "Nishikigi",
                 "opponentShikonaJp": "錦木",
                 "opponentID": 16,
-                "kimarite": ""
+                "kimarite": "okuridashi"
               },
               {
                 "result": "",
@@ -8000,7 +8000,7 @@
                 "kimarite": ""
               }
             ],
-            "wins": 2,
+            "wins": 3,
             "losses": 7,
             "absences": 0
           }
@@ -9857,11 +9857,11 @@
                 "kimarite": "yorikiri"
               },
               {
-                "result": "",
+                "result": "loss",
                 "opponentShikonaEn": "Hatsuyama",
                 "opponentShikonaJp": "羽出山",
                 "opponentID": 77,
-                "kimarite": ""
+                "kimarite": "okuridashi"
               },
               {
                 "result": "",
@@ -9900,7 +9900,7 @@
               }
             ],
             "wins": 3,
-            "losses": 2,
+            "losses": 3,
             "absences": 0
           },
           {
