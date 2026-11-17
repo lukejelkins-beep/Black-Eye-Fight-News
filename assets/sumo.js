@@ -82,6 +82,13 @@ function portraitFor(w,size='sm',fallbackName=null){
     (valid?'<img src="'+e(photo.path)+'" alt="" loading="lazy" decoding="async">':'')+
     '<span aria-hidden="true">相</span>'+(valid?'':'<small class="sumo-photo-fallback">Photo unavailable</small>')+'</div>';
 }
+function cutoutFor(w,name){
+  const c=w&&STATE.cutouts?.[String(w.sourceId)];
+  const photo=w&&STATE.photoIndex?.[String(w.sourceId)];
+  const ok=c&&photo?.approved===true&&c.sourceSha256===photo.sha256&&/^assets\/sumo-photos\/cutout\/[a-zA-Z0-9_-]+\.webp$/.test(String(c.path||''));
+  if(!ok)return null;
+  return '<div class="profile-icon sumo-photo xl has-photo is-cutout" role="img" aria-label="'+e('Photograph of '+(name||w.shikonaEn))+'"><img src="'+e(c.path)+'" alt="" loading="lazy" decoding="async"></div>';
+}
 function knownHigh(w){
   const research=STATE.h2hSummary?.profiles?.[String(w?.sourceId)];
   if(typeof research?.careerHigh==='string'&&research.careerHigh.trim())return research.careerHigh;
@@ -1127,7 +1134,7 @@ function headlineBout(match,label) {
     const href=w?'#profile/'+Number(w.sourceId):null;
     const tag=href?'a':'div';
     return '<'+tag+' class="stage-photo '+pos+(won?' is-winner':'')+(lost?' is-loser':'')+'"'+(href?' href="'+href+'" aria-label="View '+e(name)+' profile"':'')+'>'+
-      portraitFor(w,'xl',name)+'</'+tag+'>';
+      (cutoutFor(w,name)||portraitFor(w,'xl',name))+'</'+tag+'>';
   };
   const nameLink=(w,name)=>w?'<a href="#profile/'+Number(w.sourceId)+'">'+e(name)+'</a>':e(name);
   const division=divisionOf(a?.currentRank)||'';
@@ -1140,7 +1147,7 @@ function headlineBout(match,label) {
     '<dl class="stage-stats">'+rows.map(([k,l,r])=>'<div><dd class="l">'+e(l)+'</dd><dt>'+e(k)+'</dt><dd class="r">'+e(r)+'</dd></div>').join('')+'</dl>'+
     photo(b,right,'right',winR,winL)+'</div>'+
     '<p class="stage-foot">'+(finished?'<span>'+e(winL?left:winR?right:'Result recorded')+' won · '+techniqueMarkup(match.kimarite,techniqueText(match.kimarite))+'</span>':'<span>Result pending</span>')+
-    ' <a href="'+headToHeadUrl(match.rikishiId,match.opponentId)+'">Full head-to-head ›</a></p></article>';
+    ' <span class="stage-credit">Photos © Japan Sumo Association</span> <a href="'+headToHeadUrl(match.rikishiId,match.opponentId)+'">Full head-to-head ›</a></p></article>';
 }
 function boutSections(pairings,rowFn) {
   if(!pairings.length)return '';
@@ -1398,6 +1405,8 @@ async function init(){
     const [roster,details,styles,photos,careerHistory,h2hSummary,readiness,divisionStats,kimariteMedia]=await Promise.all([loadJson('data/sumo/rikishi-index.json'),loadJson('data/sumo/preview-details.json'),loadJson('data/sumo/official-style-evidence.json'),loadJson('data/sumo/approved-photos.json'),loadJson('data/sumo/career-history.json'),
       loadJson('data/sumo/research-h2h-summary.json').catch(()=>null),loadJson('data/sumo/api-trusted-status.json'),
       loadJson('data/sumo/division-stats.json').catch(()=>null),loadJson('data/sumo/kimarite-media.json').catch(()=>null)]);
+    // Optional cut-out derivatives; the page works without them.
+    STATE.cutouts=(await loadJson('data/sumo/cutouts.json').catch(()=>null))?.bySourceId||null;
     if(!Array.isArray(roster?.rikishi)||!Array.isArray(details?.featured)||roster?.count!==roster.rikishi.length) throw new Error('Sumo cache schema or roster total not valid');
     if((roster?.trackedDivisions||[]).join(',')!==DIVS.join(','))throw new Error('Sumo cache does not match the approved three-division scope');
     if(roster.rikishi.some(x=>!DIVS.includes(divisionOf(x.currentRank))))throw new Error('Out-of-scope division in Sumo index');
