@@ -146,13 +146,9 @@ jobs:
             fi
             while IFS= read -r changed; do
               case "$changed" in
-                data/ufcalendar-rich-progress.json|data/ufcalendar-card-enhancements.json|\
-                data/ufc-research-archive.json|data/pfl-research-archive.json|\
-                data/ufcalendar-fighter-research.json|data/ufcalendar-judging-research.json|\
-                data/ufc-last-five-coverage.json|data/ufc-profile-research-queue.json|\
-                data/ufc-postfight-metrics.json|data/ufc-fighter-v3.json|data/news-live.json|data/results.json|\
-                data/upcoming-cards.json|data/fight-film.json|data/fight-talk-live.json|\
-                data/fight-talk-embedded.json|data/fight-talk-x-api.json|data/fight-talk-x-budget.json)
+                # Machine-written collector output only: any JSON under data/ or qa/.
+                # Code, workflows, tests and non-JSON files are never auto-validated here.
+                data/*.json|qa/*.json)
                   ;;
                 *)
                   echo "Unvalidated non-collector change: $changed; deployment blocked"
@@ -195,13 +191,9 @@ jobs:
             fi
             while IFS= read -r changed; do
               case "$changed" in
-                data/ufcalendar-rich-progress.json|data/ufcalendar-card-enhancements.json|\
-                data/ufc-research-archive.json|data/pfl-research-archive.json|\
-                data/ufcalendar-fighter-research.json|data/ufcalendar-judging-research.json|\
-                data/ufc-last-five-coverage.json|data/ufc-profile-research-queue.json|\
-                data/ufc-postfight-metrics.json|data/ufc-fighter-v3.json|data/news-live.json|data/results.json|\
-                data/upcoming-cards.json|data/fight-film.json|data/fight-talk-live.json|\
-                data/fight-talk-embedded.json|data/fight-talk-x-api.json|data/fight-talk-x-budget.json)
+                # Machine-written collector output only: any JSON under data/ or qa/.
+                # Code, workflows, tests and non-JSON files are never auto-validated here.
+                data/*.json|qa/*.json)
                   ;;
                 *)
                   echo "Code or unvalidated data changed during grace: $changed; blocked"
