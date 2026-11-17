@@ -64,13 +64,20 @@ const groupFor=item=>KIMARITE_GROUPS.find(x=>x.id===item.group);
 let filter='all',search='';
 const videoFor=item=>APPROVED_WEBM[item.slug];
 function media(item,large=false){
- // Always show the official JSA catalogue still in library cards.
- // The owner-provided technique GIF stays inside the click-to-open popup.
+ // Techniques with an approved NHK GIF play it inline, looping, in the card.
+ // Visitors who prefer reduced motion get the official JSA still instead
+ // (a GIF cannot be paused from CSS). Everything else shows the JSA still.
  const clip=videoFor(item);
+ const still=esc(item.jsaPoster)+'?v=20261117-jsa-photo-cachefix-v3';
+ if(clip?.gif){
+  return '<div class="sumo-km-poster sumo-km-poster-gif" aria-label="Looping NHK WORLD-JAPAN example of '+esc(item.name)+'">'+
+   '<picture><source media="(prefers-reduced-motion: reduce)" srcset="'+still+'">'+
+   '<img class="sumo-km-inline-gif" src="'+esc(clip.gif)+'" alt="Looping example of '+esc(item.name)+'"'+
+   ' loading="lazy" decoding="async" width="432" height="242"></picture></div>';
+ }
  return '<div class="sumo-km-poster" aria-label="Official Japan Sumo Association photograph of '+esc(item.name)+'">'+
-   '<img src="'+esc(item.jsaPoster)+'?v=20261117-jsa-photo-cachefix-v3" data-jsa-remote="'+esc(item.jsaRemote)+'"'+
+   '<img src="'+still+'" data-jsa-remote="'+esc(item.jsaRemote)+'"'+
    ' alt="Official JSA '+esc(item.name)+' technique photograph" loading="'+(item.jsaId<=7?'eager':'lazy')+'" decoding="async" referrerpolicy="no-referrer">'+
-   (clip?.gif?'<span class="sumo-km-pending sumo-km-ready">▶ View GIF</span>':'')+
    '</div>';
 }
 
@@ -79,7 +86,7 @@ function linkSource(item){
  return yt?'https://www.youtube.com/watch?v='+yt:NHK_GALLERY;
 }
 function tile(item){
- return '<article class="sumo-km-tile" id="kimarite-'+item.slug+'"><a class="sumo-km-tile-link" href="#kimarite?term='+item.slug+'" aria-label="View '+esc(item.name)+' example and explanation">'+
+ return '<article class="sumo-km-tile'+(videoFor(item)?.gif?' sumo-km-tile-gif':'')+'" id="kimarite-'+item.slug+'"><a class="sumo-km-tile-link" href="#kimarite?term='+item.slug+'" aria-label="View '+esc(item.name)+' example and explanation">'+
   '<div class="sumo-km-media">'+media(item)+'</div><div class="sumo-km-tile-meta">'+
   '<div class="sumo-km-jp">'+esc(item.japanese||'決まり手')+'</div>'+
   '<div><h3>'+esc(item.name)+'</h3><p>'+esc(item.english)+'</p></div><span class="sumo-km-chevron" aria-hidden="true">↗</span>'+
@@ -128,7 +135,7 @@ function detail(item){
   '<p class="sumo-km-meaning">'+esc(item.english)+'</p></div>'+
   '<div class="sumo-km-detail-grid"><div class="sumo-km-detail-media">'+media(item,true)+'</div>'+
   '<div class="sumo-km-detail-aside"><h2>How the bout is decided</h2><p>'+esc(item.english)+'. This finish is categorised by the Japan Sumo Association under '+esc(category.name.toLowerCase())+'.</p>'+
-  (videoFor(item)?.gif?'<p>Tap the photograph to view the looping GIF example.</p>':yt?
+  (videoFor(item)?.gif?'<p>The looping GIF example plays alongside this explanation.</p>':yt?
     '<p>The official JSA reference still is shown here while the NHK WebM loop is being prepared.</p>':
     '<p>The official JSA reference still is shown here while the NHK WebM loop is being prepared.</p>')+
   '<a class="sumo-km-watch" target="_blank" rel="noopener noreferrer" href="'+esc(mediaLink)+'">'+(yt?'Open original NHK demonstration':'Explore NHK technique videos')+' ↗</a>'+

@@ -106,3 +106,8 @@ body.sumo-km-modal-open{overflow:hidden}
 .sumo-km-tile .sumo-km-media{background:#3c302a}
 .sumo-km-poster-credit,.sumo-km-modal-media-credit,.sumo-km-media-credit{display:none!important}
 .sumo-km-ready{top:8px;right:8px;left:auto;bottom:auto;border-radius:5px}
+
+/* Inline looping GIF cards: the GIF fills the media slot (centre-cropped on phones; tapping opens the full frame). */
+.sumo-km-poster-gif{background:#241f24}
+.sumo-km-poster-gif picture{display:block;width:100%;height:100%}
+.sumo-km-poster img.sumo-km-inline-gif{object-fit:cover;object-position:center;width:100%;height:100%}
