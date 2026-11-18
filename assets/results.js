@@ -10,7 +10,7 @@ window.ResultsDesk=(()=>{
  const promotions=[['ufc','UFC','UFC Logo.svg'],['pfl','PFL','Professional Fighters League Primary Logo.jpg'],['one','ONE','ONE Championship.png']];
 
  // Event-specific historical promotional images with original source URLs.
- function posterFor(e){const x=posters[e.id]||e.poster||null;return x&&/^https:\/\//i.test(x.url||'')&&/^https:\/\//i.test(x.source||'')?x:null}
+ function posterFor(e){const own=(window.BEFNLocalPosters||{})[e.id],mine=own&&(own.portrait||own.landscape);if(mine)return {url:mine.url,source:mine.source,kind:own.portrait?'poster':'artwork'};const x=posters[e.id]||e.poster||null;return x&&/^https:\/\//i.test(x.url||'')&&/^https:\/\//i.test(x.source||'')?x:null}
  async function loadPosters(){
   if(posterPending||Date.now()-posterLastChecked<15*60*1000)return posterPending;
   posterLastChecked=Date.now();

@@ -137,6 +137,9 @@ window.UpcomingCards=(()=>{
     Validate the candidate's actual dimensions after it loads. */
  function posterCandidates(e){
   const items=[],seen=new Set();
+  // BEFN-hosted copy of the official poster first (scripts/cache-event-posters.py).
+  const own=(window.BEFNLocalPosters||{})[e.id]?.portrait?.url;
+  if(own){items.push({url:own,kind:'portrait'});seen.add(own)}
   for(const candidate of [e.posterPortrait?.url,e.posterList?.url]){
    if(typeof candidate==='string'&&/^https:\/\//i.test(candidate)&&!seen.has(candidate)){
     items.push({url:candidate,kind:'portrait'});seen.add(candidate);

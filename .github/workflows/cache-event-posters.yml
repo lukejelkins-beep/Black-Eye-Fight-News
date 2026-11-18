@@ -1,0 +1,46 @@
+name: Cache official event posters
+on:
+  schedule:
+    # Twice a day, after the upcoming-card refresh has had time to record new poster links.
+    - cron: '23 6,18 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/cache-event-posters.py'
+      - 'tests/test_cache_event_posters.py'
+      - '.github/workflows/cache-event-posters.yml'
+permissions:
+  contents: write
+concurrency:
+  group: event-poster-cache
+  cancel-in-progress: false
+jobs:
+  cache:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install --quiet pillow
+      - run: python -m unittest discover -s tests -p 'test_cache_event_posters.py'
+      - name: Download, resize and record new official posters
+        if: github.event_name != 'push'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'Poster cache updater'
+          git config user.email 'poster-bot@users.noreply.github.com'
+          for attempt in 1 2 3; do
+            git fetch -q origin main
+            git reset --hard -q origin/main
+            python scripts/cache-event-posters.py --limit 40
+            git add assets/img/posters assets/local-posters.js data/poster-register.json
+            if git diff --cached --quiet; then echo 'No new posters'; exit 0; fi
+            git commit -m 'Cache new official event posters'
+            if git push origin HEAD:main; then exit 0; fi
+            echo 'Retrying after another writer updated main'
+          done
+          exit 1
