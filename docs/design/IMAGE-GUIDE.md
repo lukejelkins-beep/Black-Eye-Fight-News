@@ -30,3 +30,6 @@ Which sources are you permitted to republish (promoter press kits, licences, Wik
 
 ## UFC library (added 2026-11-17)
 750 of the 783 approved UFC fighters have processed images in `assets/img/ufc/<slug>-{portrait,card,thumb}.webp`, listed in `data/ufc-image-register.json` (rights: `owner-cleared`, per owner statement). `scripts/process-fighter-images.py` makes them from the owner's local folder; crops are top-biased with no face detection, and 293 sources are under 480 px wide (`lowRes: true` in the register), so they will look soft if shown large. 33 fighters are listed under `missing`.
+
+## Event posters (added 2026-11-19)
+The owner holds permission to republish official event posters. `scripts/cache-event-posters.py` (workflow "Cache official event posters", twice a day) downloads each poster link recorded in `data/upcoming-cards.json` and `data/historical-posters.json` once, saves `assets/img/posters/<event-id>-portrait.webp` or `-landscape.webp` (900 or 1280 px wide), and records image URL, source page, credit, rights, size and checksum in `data/poster-register.json`. `assets/local-posters.js` tells the Upcoming and Results pages to use these copies first. Failed downloads are retried up to three times. Originals are not committed.
