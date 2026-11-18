@@ -1,0 +1,60 @@
+name: Import finished UFC cards into results
+on:
+  schedule:
+    # Twice a day. UFCStats usually publishes within hours of a card ending.
+    - cron: '43 1,13 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Report what would be imported without committing'
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/import-finished-ufc-results.py'
+      - 'tests/test_import_finished_ufc_results.py'
+      - '.github/workflows/import-finished-ufc-results.yml'
+permissions:
+  contents: write
+concurrency:
+  group: fight-results-refresh
+  cancel-in-progress: false
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -p 'test_import_finished_ufc_results.py'
+      - name: Import finished UFC cards (free UFCStats CSV export, no key)
+        if: github.event_name != 'push'
+        shell: bash
+        env:
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          set -euo pipefail
+          git config user.name 'Fight results updater'
+          git config user.email 'results-bot@users.noreply.github.com'
+          for attempt in 1 2 3; do
+            git fetch -q origin main
+            git reset --hard -q origin/main
+            if [ "${DRY_RUN:-false}" = "true" ]; then
+              python scripts/import-finished-ufc-results.py --dry-run
+              exit 0
+            fi
+            python scripts/import-finished-ufc-results.py
+            git add data/results.json
+            if git diff --cached --quiet; then
+              echo 'No finished UFC cards to import'
+              exit 0
+            fi
+            git commit -m 'Import finished UFC card results from UFCStats'
+            if git push origin HEAD:main; then exit 0; fi
+            echo 'Retrying after another writer updated main'
+          done
+          echo 'Push failed after three attempts' >&2
+          exit 1
