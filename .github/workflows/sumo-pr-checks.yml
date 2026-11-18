@@ -1,0 +1,35 @@
+name: Sumo preview PR checks
+
+# Runs on pull requests into the Sumo preview branch. Read-only: runs the Sumo
+# tests and a dry run of the daily refresh against the Sumo API, commits nothing.
+on:
+  pull_request:
+    branches: [feat/sumo-section-test-20261114]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Sumo tests
+        shell: bash
+        run: |
+          set -uo pipefail
+          fail=0
+          for f in tests/test-sumo-*.mjs; do
+            if node --test "$f" > /tmp/out.txt 2>&1; then echo "PASS $f"; else echo "FAIL $f"; tail -20 /tmp/out.txt; fail=1; fi
+          done
+          # Gate only on the files the scheduled update itself runs.
+          node --test tests/test-sumo-daily.mjs tests/test-sumo-api-source.mjs
+      - name: Dry run of the daily refresh (no commit)
+        run: |
+          node scripts/sumo-refresh-daily.mjs
+          node -e "const d=require('./data/sumo/preview-details.json');console.log(JSON.stringify({announcedDay:d.announcedDay,dailyStatus:d.dailyStatus,dailySource:d.dailySource,count:d.dailyScheduleCount,divisions:Object.fromEntries(Object.entries(d.torikumi||{}).map(([k,v])=>[k,v.status+':'+(v.data?.torikumi?.length||0)]))}))"
