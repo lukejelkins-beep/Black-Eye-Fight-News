@@ -2,6 +2,9 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-18
+- Sumo next-day matchups (torikumi) come from the Sumo API for all three divisions, replacing the JSA page scraper (blocked from CI) and the relayed JSA email. This reverses the "no Sumo API for matchups" rule from PR #280. Matchups now appear after about 18:00 JST instead of about 14:00. — Owner direction — Sumo preview PR for branch feat/sumo-api-torikumi-20261118, scheduler PR for branch ci/sumo-scheduler-api-torikumi-20261118.
+
 ## 2026-11-17
 - Site pages now prefer the local owner-cleared UFC photos (`assets/local-images.js`, generated from the register) and fall back to the existing hotlinks when a fighter has none. Names shared by two fighters (Carlos Hernandez) are skipped rather than guessed. — Owner direction — PR for branch ufc-use-local-fighter-images.
 - 750 UFC fighter photos supplied by the owner from a local folder are cleared for use on BEFN and processed into portrait (4:5), card (16:9) and thumb (1:1) WebP files in `assets/img/ufc/`, recorded in `data/ufc-image-register.json` as `owner-cleared`. 33 fighters have no photo. Source URLs are kept in the register; the permission paperwork is held by the owner, not in this repo. Pages still hotlink until a follow-up PR switches them to the local files. — Owner direction — PR for branch ufc-local-fighter-images.
