@@ -1,8 +1,8 @@
 {
   "platform": "X",
-  "status": "connected",
+  "status": "unavailable",
   "type": "original-source-posts",
-  "attemptedAt": "2026-11-17T23:35:03.785Z",
+  "attemptedAt": "2026-11-18T01:30:17.318Z",
   "checkedAt": "2026-11-17T23:35:03.785Z",
   "updatedAt": "2026-11-17T23:35:03.785Z",
   "trackedAccounts": 141,
@@ -22,9 +22,9 @@
   "returnedCount": 4,
   "matchedOriginalPosts": 4,
   "postCount": 180,
-  "paidXApiCalls": 76,
+  "paidXApiCalls": 77,
   "budgetMonth": "2026-11",
-  "estimatedReservedUsd": 0.2584,
+  "estimatedReservedUsd": 0.2618,
   "monthlyBudgetUsd": 2,
   "billingNote": "Pessimistic request reservations, not confirmed provider charges. Provider prepaid balance and disabled auto top-ups remain necessary.",
   "posts": [
@@ -4014,5 +4014,7 @@
       "verifiedHandle": "MMAFighting",
       "sourceProvider": "twitterapi.io"
     }
-  ]
+  ],
+  "message": "X API temporarily unavailable; existing public posts retained.",
+  "lastErrorCode": "Provider response unavailable"
 }
