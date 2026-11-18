@@ -1,6 +1,6 @@
 {
-  "attemptedAt": "2026-11-18T14:00:07.443102+00:00",
-  "lastSuccessfulAt": "2026-11-18T14:00:07.443102+00:00",
+  "attemptedAt": "2026-11-18T14:57:58.463887+00:00",
+  "lastSuccessfulAt": "2026-11-18T14:57:58.463887+00:00",
   "sources": [
     {
       "name": "World Boxing News",
@@ -8,7 +8,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.worldboxingnews.net/feed/",
-      "lastSuccessfulAt": "2026-11-18T14:00:07.443102+00:00"
+      "lastSuccessfulAt": "2026-11-18T14:57:58.463887+00:00"
     },
     {
       "name": "MMA Fighting",
@@ -16,7 +16,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-18T14:00:07.443102+00:00"
+      "lastSuccessfulAt": "2026-11-18T14:57:58.463887+00:00"
     },
     {
       "name": "MMA Junkie",
@@ -24,7 +24,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-18T14:00:07.443102+00:00"
+      "lastSuccessfulAt": "2026-11-18T14:57:58.463887+00:00"
     },
     {
       "name": "Sherdog",
@@ -32,7 +32,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.sherdog.com/rss/news.xml",
-      "lastSuccessfulAt": "2026-11-18T14:00:07.443102+00:00"
+      "lastSuccessfulAt": "2026-11-18T14:57:58.463887+00:00"
     },
     {
       "name": "UFC",
@@ -40,7 +40,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-18T14:00:07.443102+00:00"
+      "lastSuccessfulAt": "2026-11-18T14:57:58.463887+00:00"
     },
     {
       "name": "ONE MMA",
@@ -55,23 +55,21 @@
       "ok": true,
       "items": 2,
       "feedUrl": "https://www.onefc.com/feed/",
-      "lastSuccessfulAt": "2026-11-18T14:00:07.443102+00:00"
+      "lastSuccessfulAt": "2026-11-18T14:57:58.463887+00:00"
     },
     {
       "name": "Cage Warriors",
       "sport": "mma",
-      "ok": true,
-      "items": 5,
-      "feedUrl": "https://www.bing.com/news/search?q=site%3Acagewarriors.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-18T14:00:07.443102+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-18T14:00:07.443102+00:00",
+      "error": "cagewarriors.com: HTTP Error 403: Forbidden | www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "RIZIN",
       "sport": "mma",
-      "ok": true,
-      "items": 4,
-      "feedUrl": "https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-18T14:00:07.443102+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-18T14:00:07.443102+00:00",
+      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "KSW",
@@ -92,7 +90,7 @@
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "www.ncaa.com: HTTP Error 400: Bad Request | www.bing.com: No recent, source-verified articles"
+      "error": "www.ncaa.com: HTTP Error 400: Bad Request | www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "NCAA Division II Wrestling",
@@ -121,7 +119,7 @@
       "ok": true,
       "items": 3,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Aflograppling.com%2Farticles&format=rss",
-      "lastSuccessfulAt": "2026-11-18T14:00:07.443102+00:00"
+      "lastSuccessfulAt": "2026-11-18T14:57:58.463887+00:00"
     },
     {
       "name": "Real American Freestyle",
@@ -143,10 +141,35 @@
       "ok": true,
       "items": 2,
       "feedUrl": "https://www.onefc.com/category/live-results/feed/",
-      "lastSuccessfulAt": "2026-11-18T14:00:07.443102+00:00"
+      "lastSuccessfulAt": "2026-11-18T14:57:58.463887+00:00"
     }
   ],
   "articles": [
+    {
+      "id": "9a9a5edad17093f75c8e",
+      "title": "‘Feelings is not for the cage’: Jiri Prochazka promises to be a weapon like never before in UFC Qatar main event",
+      "url": "https://www.mmafighting.com/ufc/522012/feelings-is-not-for-the-cage-jiri-prochazka-promises-to-be-a-weapon-like-never-before-in-ufc-qatar-main-event",
+      "source": "MMA Fighting",
+      "sport": "mma",
+      "publishedAt": "2026-11-18T14:00:00+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2305050053.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "alt": "Jiri Prochazka",
+        "credit": "",
+        "sourceUrl": "https://www.mmafighting.com/ufc/522012/feelings-is-not-for-the-cage-jiri-prochazka-promises-to-be-a-weapon-like-never-before-in-ufc-qatar-main-event",
+        "kind": "publisher",
+        "checkedAt": "2026-11-18T14:57:58.463887+00:00"
+      },
+      "summaryCheckedAt": "2026-11-18T14:57:58.463887+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Jiri Prochazka is ready to rectify a big mistake in his eyes.",
+        "The former UFC light heavyweight champion is set to face Navajo Stirling in the main event of UFC Qatar this Saturday.",
+        "Prochazka recently competed for the chance to regain championship gold at UFC 327 in April."
+      ],
+      "firstSeenAt": "2026-11-18T14:57:58.463887+00:00"
+    },
     {
       "id": "0baa3c9758ef8d100833",
       "title": "Mike Tyson Hails Claressa Shields as GWOAT Wins Champion Honor",
@@ -163,13 +186,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-18T14:00:07.443102+00:00"
       },
-      "summaryCheckedAt": "2026-11-18T14:00:07.443102+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Mike Tyson praises Claressa Shields as the GWOAT receives the Champion of Champions award, with Roy Jones Jr. and others recognizing her.",
         "Shields also shared praise from Tyson, who credited her with helping women’s boxing gain greater respect.",
         "Shields shared a clip of Tyson discussing her achievements during an appearance on the Double Coverage podcast."
       ],
+      "summaryCheckedAt": "2026-11-18T14:00:07.443102+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-18T14:00:07.443102+00:00"
     },
     {
@@ -186,15 +209,15 @@
         "credit": "",
         "sourceUrl": "https://www.onefc.com/press-releases/one-championship-declares-one-welterweight-mma-world-title-vacant/",
         "kind": "publisher",
-        "checkedAt": "2026-11-18T14:00:07.443102+00:00"
+        "checkedAt": "2026-11-18T14:57:58.463887+00:00"
       },
-      "summaryCheckedAt": "2026-11-18T14:00:07.443102+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "The organization has elected to declare the ONE Welterweight MMA World Title vacant with immediate effect.",
         "Exactly four years ago to the day, Christian Lee claimed the ONE Welterweight MMA World Title by defeating Kiamrian Abbasov via fourth-round TKO on November 18, 2022.",
         "Following that victory, Lee stepped away from competition to grieve the sudden passing of his sister Victoria Lee and to focus on the birth of his children."
       ],
+      "summaryCheckedAt": "2026-11-18T14:00:07.443102+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-18T14:00:07.443102+00:00"
     },
     {
@@ -213,13 +236,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-18T14:00:07.443102+00:00"
       },
-      "summaryCheckedAt": "2026-11-18T14:00:07.443102+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Ciryl Gane beat Josh Hokit in convincing fashion at UFC 334, but an uncalled foul might have affected the end result.",
         "On an episode of his podcast , UFC commentator Joe Rogan expressed his surprise at Gane getting away with the poke.",
         "“He didn’t even get fined a point, which I thought was crazy,” Rogan said."
       ],
+      "summaryCheckedAt": "2026-11-18T14:00:07.443102+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-18T14:00:07.443102+00:00"
     },
     {
@@ -258,11 +281,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-18T14:00:07.443102+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "18, 2006, all-time great Georges St-Pierre won his first UFC title when he knocked out welterweight champ Matt Hughes."
       ],
+      "summaryCheckedAt": "2026-11-18T14:00:07.443102+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-18T14:00:07.443102+00:00"
     },
     {
@@ -448,11 +471,11 @@
         "kind": "publisher",
         "checkedAt": "2026-11-18T02:54:20.417740+00:00"
       },
+      "summaryCheckedAt": "2026-11-18T14:57:58.463887+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Tommy McMillen says he’ll continue partying despite his recent health scare."
       ],
-      "summaryCheckedAt": "2026-11-18T02:54:20.417740+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-18T02:54:20.417740+00:00"
     },
     {
@@ -967,11 +990,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
+      "summaryCheckedAt": "2026-11-18T14:57:58.463887+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Alexander Volkov was not impressed with heavyweight champion Ciryl Gane's win at UFC 334."
       ],
-      "summaryCheckedAt": "2026-11-18T02:54:20.417740+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-18T02:54:20.417740+00:00"
     },
     {
@@ -1180,7 +1203,7 @@
         "credit": "",
         "sourceUrl": "https://www.worldboxingnews.com/ivan-aratsky-hardcore-tattoo-ko-losses/",
         "kind": "publisher",
-        "checkedAt": "2026-11-17T14:43:08.888773+00:00"
+        "checkedAt": "2026-11-18T14:57:58.463887+00:00"
       },
       "summaryPoints": [
         "Russian boxer Ivan Aratsky has suffered 32 recorded defeats across boxing and MMA without a single victory, including nine boxing stoppages in under 60 seconds.",
@@ -1270,11 +1293,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-18T14:00:07.443102+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Tommy McMillen says being Narcaned twice was a bit of a wakeup call – but it doesn't sound like the party is over."
       ],
+      "summaryCheckedAt": "2026-11-18T14:00:07.443102+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-18T01:54:44.226395+00:00"
     },
     {
@@ -1730,7 +1753,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-17T02:27:22.124046+00:00"
       },
-      "summaryCheckedAt": "2026-11-18T02:54:20.417740+00:00",
+      "summaryCheckedAt": "2026-11-18T14:57:58.463887+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T02:27:22.124046+00:00",
       "summaryPoints": [
@@ -2176,7 +2199,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-18T02:54:20.417740+00:00",
+      "summaryCheckedAt": "2026-11-18T14:57:58.463887+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T02:27:22.124046+00:00",
       "summaryPoints": [
@@ -2194,7 +2217,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-18T02:54:20.417740+00:00",
+      "summaryCheckedAt": "2026-11-18T14:57:58.463887+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T02:27:22.124046+00:00",
       "summaryPoints": [
@@ -2384,7 +2407,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-18T02:54:20.417740+00:00",
+      "summaryCheckedAt": "2026-11-18T14:57:58.463887+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T02:27:22.124046+00:00",
       "summaryPoints": [
@@ -6312,31 +6335,6 @@
       "summaryPoints": [
         "A post shared by Abu Dhabi Police شرطة أبوظبي (@adpolicehq)"
       ]
-    },
-    {
-      "id": "8f27389f6fa7af4e6861",
-      "title": "Paddy Pimblett rips Ilia Topuria for seeking fans in 3 countries",
-      "url": "https://www.sherdog.com/news/news/Paddy-Pimblett-rips-Ilia-Topuria-for-seeking-fans-in-3-countries-203603",
-      "source": "Sherdog",
-      "sport": "mma",
-      "publishedAt": "2026-11-13T00:03:15+00:00",
-      "score": 0,
-      "image": {
-        "url": "https://www1-cdn.sherdog.com/_images/headers/20261112080518_paddy.JPG",
-        "alt": "Article image: Paddy Pimblett rips Ilia Topuria for seeking fans in 3 countries",
-        "credit": "",
-        "sourceUrl": "https://www.sherdog.com/news/news/Paddy-Pimblett-rips-Ilia-Topuria-for-seeking-fans-in-3-countries-203603",
-        "kind": "publisher",
-        "checkedAt": "2026-11-14T21:39:32.520089+00:00"
-      },
-      "summaryPoints": [
-        "Paddy Pimblett took another shot at longtime rival Ilia Topuria , accusing the former Ultimate Fighting Championship lightweight champion of courting fans in Georgia, Spain and Germany.",
-        "Paddy Pimblett takes a dig at Ilia Topuria’s fanbase, claiming another loss to him would leave Ilia with nobody backing him 🇬🇪🇪🇸 “Is he Georgian, is he Spanish, is he German?",
-        "You pick one, lad, you can’t be all three."
-      ],
-      "summaryCheckedAt": "2026-11-12T20:27:34.484903+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-12T20:27:34.484903+00:00"
     }
   ],
   "resultReports": [
@@ -7378,7 +7376,7 @@
     }
   ],
   "deduplication": {
-    "checkedAt": "2026-11-18T14:00:07.443102+00:00",
+    "checkedAt": "2026-11-18T14:57:58.463887+00:00",
     "removedArticles": 0,
     "removedResultReports": 0,
     "examples": []
