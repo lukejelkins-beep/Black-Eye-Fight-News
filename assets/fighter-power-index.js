@@ -39,7 +39,11 @@
   }
   return arr;
  }
- function recentForm(items){
+ // Opponent strength moves a result by at most ±OPPONENT_SWING: beating a
+ // top-of-roster opponent is worth up to 1.125 wins, losing to one costs
+ // only 0.875 of a loss. Unknown opponents count as roster-average (no change).
+ const OPPONENT_SWING=.25;
+ function recentForm(items,quality){
   // The original order is newest to oldest. NC is ignored in the score and
   // does not count as a defeat; it stays visible in the last-five table.
   const recent=normalizeHistory(items).filter(h=>!["nc","no contest"].includes(h.result));
@@ -48,10 +52,12 @@
   let total=4,earned=2; // equivalent to four neutral-weight results
   recent.forEach((h,i)=>{
    const weight=recency[i];
-   const value=["w","win"].includes(h.result)?1:["d","draw"].includes(h.result)?.5:0;
-   earned+=weight*value;total+=weight;
+   const base=["w","win"].includes(h.result)?1:["d","draw"].includes(h.result)?.5:0;
+   const q=typeof quality==="function"?quality(h):null;
+   const shift=Number.isFinite(q)?OPPONENT_SWING*(clamp(q,0,1)-.5):0;
+   earned+=weight*(base+shift);total+=weight;
   });
-  return Math.round(100*earned/total);
+  return Math.round(clamp(100*earned/total));
  }
  // Aggregated records must describe stat-covered cage seconds and >=2 fights.
  // All raw optional numeric fields must be absent/null if the provider omitted them.
@@ -450,7 +456,30 @@
   return Math.round(100*(below+equal/2)/sorted.length);
  }
  const V3_LABELS=Object.fromEntries(LABELS.map(([id,label,description])=>[id,{label,description}]));
- function evaluateV3(v3,{asOf,credentials,population}={}){
+ // Opponent strength for recent form, 0–1: the mean of the opponent's two
+ // best skill percentiles (so specialists are not punished for their weak
+ // side) and their own unadjusted recent form (so it never feeds on itself).
+ // Credentials excluded. Needs at least two rated skills; else unknown.
+ function buildOpponentQuality(data,population){
+  const out=new Map();
+  if(!population?.skills)return out;
+  for(const [key,f] of Object.entries(data?.fighters||{})){
+   const raw=v3Raw(f,data?.asOf);
+   if(!raw)continue;
+   const ps=SKILLS.map(id=>{
+    const ref=population.skills[id],v=raw.scores[id];
+    return Number.isFinite(v)&&Number.isFinite(ref?.mean)&&ref.values.length>=20?
+     percentileOf(shrinkToward(v,ref.mean,raw.bouts),ref.values):null;
+   }).filter(Number.isFinite);
+   if(ps.length<2)continue;
+   const best=ps.sort((a,b)=>b-a).slice(0,2);
+   const skill=(best[0]+best[1])/2;
+   const form=recentForm((f.recent||[]).map(b=>({date:b.date,opponent:b.opponent,result:b.outcome})));
+   out.set(norm(f.name||key),(Number.isFinite(form)?(skill+form)/2:skill)/100);
+  }
+  return out;
+ }
+ function evaluateV3(v3,{asOf,credentials,population,opponents}={}){
   const history=(v3?.recent||[]).map(b=>({date:b.date,opponent:b.opponent,method:b.method,result:b.outcome}));
   if(!population?.skills){
    // No roster reference: fall back to the absolute 0–100 model.
@@ -481,8 +510,11 @@
     observedOn:raw?.observedOn||null,scale:"percentile",
     confidence:raw?.bouts>=8?"moderate":"limited"};
   });
-  const form=recentForm(fights);
-  ratings.push({id:"form",label:V3_LABELS.form.label,description:V3_LABELS.form.description,
+  const qualityOf=h=>{const q=opponents?.get(norm(h.opponent));return Number.isFinite(q)?q:null};
+  const form=recentForm(fights,opponents?qualityOf:null);
+  ratings.push({id:"form",label:V3_LABELS.form.label,
+   description:V3_LABELS.form.description+(opponents?", adjusted for opponent strength":""),
+   opponents:opponents?fights.map(h=>({opponent:h.opponent,date:h.date||null,quality:qualityOf(h)})):[],
    score:form,baseScore:form,credentialAdjustment:0,credentialBreakdown:[],
    sample:fights.filter(h=>!["nc","no contest"].includes(h.result)).length,
    source:"Recorded recent fight results",observedOn:null,scale:"absolute",
@@ -490,7 +522,7 @@
   return {ratings,overall:overall(ratings),scale:"percentile"};
  }
  function level(n){return n===null?"unrated":n<35?"red":n<55?"orange":n<75?"gold":"green"}
- const api={normalize:norm,normalizeHistory,recentForm,advancedData,careerData,aggregateRoundPreviews,CREDENTIAL_SCHEDULE,CREDENTIAL_CAP,credentialBonuses,evaluate,evaluateBoxing,boxingPower,v3Stats,v3Raw,buildV3Population,percentileOf,evaluateV3,overall,OVERALL_WEIGHTS,level};
+ const api={normalize:norm,normalizeHistory,recentForm,advancedData,careerData,aggregateRoundPreviews,CREDENTIAL_SCHEDULE,CREDENTIAL_CAP,credentialBonuses,evaluate,evaluateBoxing,boxingPower,v3Stats,v3Raw,buildV3Population,buildOpponentQuality,percentileOf,evaluateV3,overall,OPPONENT_SWING,OVERALL_WEIGHTS,level};
  scope.BEFNPowerIndex=api;
  if(typeof module==="object"&&module?.exports)module.exports=api;
 })(typeof window!=="undefined"?window:globalThis);

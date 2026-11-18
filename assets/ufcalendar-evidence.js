@@ -10,6 +10,8 @@
   document.head.appendChild(style);
   function number(value) { return typeof value === "number" ? String(value) : "—"; }
   function draw() {
+    // Editorial working panel: shown only on ?editor so readers see the profiles first.
+    if (!/[?&]editor(?:=|&|$)/.test(location.search)) return;
     if (location.hash !== "#fighters" || !state || !state.fights) return;
     const list = Object.values(state.fights).filter(x => x && Array.isArray(x.rounds) && x.rounds.length);
     if (!list.length || document.getElementById("befn-round-evidence")) return;

@@ -114,23 +114,24 @@ async function checkProfile(page,profile,screen){
    const d=document.querySelector("#fighterDialog");
    return !!d?.open&&!!d.querySelector(".befn-profile-insights[data-befn-profile='"+CSS.escape(id)+"']");
   },profile.id,{timeout:12000});
-  // V3 deliberately replaces the legacy post-fight widget with nine Recent
-  // Performance tiles. Wait for its moved technical panel and tiles instead.
+  // The sumo-style profile shows a hero rating panel, a Ratings card and
+  // nine Recent Performance tiles. Wait for the lifted panel and tiles.
   await page.waitForFunction(()=>{
-   const d=document.querySelector("#fighterDialog.befn-v3-dialog");
-   return !!d?.querySelector(".dialog-bio .befn-v3-technical")&&
-    !!d?.querySelector(".befn-v3-stat-panel .befn-v3-tiles");
+   const d=document.querySelector("#fighterDialog.befn-pro-dialog");
+   return !!d?.querySelector("[data-befn-pro-rating] .befn-pro-score")&&
+    !!d?.querySelector(".befn-pro-ratings .befn-pro-meters")&&
+    !!d?.querySelector(".befn-pro-stats .befn-pro-tiles");
   },null,{timeout:12000});
   // Wait briefly for portrait requests to settle. A cached or slow image
   // must not be declared broken just because it was read instantly.
   if(isLive)await page.waitForFunction(()=>{
-    const img=document.querySelector("#fighterDialog .dialog-bio img");
+    const img=document.querySelector("#fighterDialog .befn-pro-photo img");
     return !img||img.complete;
    },null,{timeout:2500}).catch(()=>{});
   const details=await page.evaluate(id=>{
    const d=document.querySelector("#fighterDialog"),f=window.COMBAT_DATA?.fighters?.find(x=>x.id===id);
    const ins=d?.querySelector(".befn-profile-insights");
-   const title=d?.querySelector(".dialog-top h2")?.textContent?.trim();
+   const title=d?.querySelector(".befn-pro-hero h2")?.textContent?.trim();
    const recentRows=[...(d?.querySelectorAll(".befn-v3-fights li")||[])]
     .map(row=>[
      row.querySelector("time")?.textContent?.trim()||"",
@@ -138,28 +139,28 @@ async function checkProfile(page,profile,screen){
      row.querySelector(".befn-power-result")?.textContent?.trim()||"",
      row.querySelector(".befn-v3-method")?.textContent?.trim()||""
     ]);
-   const metrics=d?.querySelectorAll(".dialog-bio .befn-v3-technical .befn-power-metric").length??0;
+   const metrics=d?.querySelectorAll(".befn-pro-ratings .befn-pro-meter").length??0;
    const credential=d?.querySelector(".befn-top-credentials .befn-credential-list");
-   const tiles=[...(d?.querySelectorAll(".befn-v3-stat-panel .befn-v3-tiles > div")||[])];
+   const tiles=[...(d?.querySelectorAll(".befn-pro-stats .befn-pro-tiles > div")||[])];
    const historyRows=[...(d?.querySelectorAll(".befn-v3-fights li")||[])];
    const rect=d?.getBoundingClientRect();
    const rootWidth=document.documentElement.clientWidth;
-   const content=d?.querySelector(".dialog-content");
+   const content=d?.querySelector(".befn-pro-body");
    const viewportOverflow=document.documentElement.scrollWidth>rootWidth+4;
    return {
     identity:!!f,title,record:f?.record,division:f?.division,category:f?.category,
     metrics,recentRows,credentialsVisible:!!credential,performanceTiles:tiles.length,
-    recentFiveCount:historyRows.length,historyV3:!!ins?.classList.contains("befn-v3"),
+    recentFiveCount:historyRows.length,historyV3:!!ins?.classList.contains("befn-pro-insights"),
     noProvisionalRanks:!d?.querySelector(".befn-performance-highlights,.befn-v3-top-ten"),
     noLegacyTable:!d?.querySelector("table[data-befn-recent-results]"),
     publicLinks:[...(d?.querySelectorAll("a[href]")||[])].map(a=>a.getAttribute("href")),
-    provenanceText:d?.querySelector(".dialog-content")?.textContent||"",
+    provenanceText:d?.querySelector(".befn-pro-body")?.textContent||"",
     rect:rect&&{left:rect.left,right:rect.right,width:rect.width},
     rootWidth,viewportOverflow,
     dialogClip:!!rect&&(rect.left< -4||rect.right>innerWidth+4),
     contentOverflow:!!content&&content.scrollWidth>content.clientWidth+4,
     portraitStatus:(()=>{
-     const frame=d?.querySelector(".dialog-bio [data-fighter-portrait]");
+     const frame=d?.querySelector(".befn-pro-photo [data-fighter-portrait]");
      const im=frame?.querySelector("img");
      const fallback=frame?.querySelector(".befn-portrait-fallback");
      const styles=fallback?getComputedStyle(fallback):null;
@@ -177,7 +178,7 @@ async function checkProfile(page,profile,screen){
     closeVisible:!!d?.querySelector("button#closeFighter"),
     renderedClassification:d?.querySelector(".befn-v3-status")?.textContent||"",
     championshipBelt:!!d?.querySelector(".befn-title-belts"),
-    clippedElements:[...(ins?.querySelectorAll(".befn-profile-block h3,.befn-classifier-indices strong,.dialog-content > h3")||[])]
+    clippedElements:[...(d?.querySelectorAll(".befn-pro-card h3,.befn-pro-hero h2,.befn-pro-meter-head,.befn-profile-block h3,.befn-classifier-indices strong")||[])]
       .filter(x=>{const c=getComputedStyle(x);return (x.scrollWidth>x.clientWidth+5&&c.overflowX==="hidden")||
        (x.scrollHeight>x.clientHeight+5&&c.overflowY==="hidden")})
       .map(x=>x.tagName+":"+x.textContent.trim().slice(0,45)).slice(0,8)
@@ -195,8 +196,8 @@ async function checkProfile(page,profile,screen){
    (!record.complete||boutCount<2||(profile.latest||[]).length<2)?
    "Unassessed":profile.category;
   assert.equal(details.category,expectedCategory,"classification display mismatch");
-  assert(details.historyV3,"UFC profile is not using the approved V3 design");
-  assert.equal(details.metrics,5,"V3 header requires exactly five technical rating bars");
+  assert(details.historyV3,"UFC profile is not using the sumo-style profile design");
+  assert.equal(details.metrics,5,"Ratings card requires exactly five rating bars");
   assert.equal(details.performanceTiles,9,"V3 Recent Performance requires exactly nine tiles");
   const saved=verifiedV3?.schema===4?verifiedV3.fighters?.[normalized(profile.name)]:null;
   const vettedPerformance=Object.values(saved?.metrics||{}).some(m=>
@@ -363,7 +364,7 @@ try{
   try{
    await page.locator("#fighterDialog").waitFor({state:"visible",timeout:12000});
    const injected=await page.evaluate(()=>{
-    const frame=document.querySelector("#fighterDialog .dialog-bio [data-fighter-portrait]");
+    const frame=document.querySelector("#fighterDialog .befn-pro-photo [data-fighter-portrait]");
     if(!frame)return false;
     let image=frame.querySelector("img");
     if(!image){image=document.createElement("img");image.alt="Photograph of test fighter";frame.appendChild(image)}
@@ -372,7 +373,7 @@ try{
    });
    assert(injected,"Broken portrait test could not locate the actual fighter photo widget");
    await page.waitForFunction(()=>{
-    const frame=document.querySelector("#fighterDialog .dialog-bio [data-fighter-portrait]");
+    const frame=document.querySelector("#fighterDialog .befn-pro-photo [data-fighter-portrait]");
     const fallback=frame?.querySelector(".befn-portrait-fallback");
     const image=frame?.querySelector("img");
     return frame?.dataset.portraitState==="fallback"&&
