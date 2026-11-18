@@ -1,7 +1,7 @@
 name: Import finished PFL, ONE and Cage Warriors cards into results
 on:
   schedule:
-    # Four times a day. ESPN updates the same night; Wikipedia usually within a day.
+    # Four times a day. Wikipedia usually has results within a day.
     - cron: '13 2,8,14,20 * * *'
   workflow_dispatch:
     inputs:
@@ -30,7 +30,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m unittest discover -s tests -p 'test_import_finished_results.py'
-      - name: Import finished cards (ESPN for PFL, Wikipedia for ONE and Cage Warriors; no keys)
+      - name: Import finished cards (Wikipedia for PFL, ONE and Cage Warriors; no keys)
         if: github.event_name != 'push'
         shell: bash
         env:

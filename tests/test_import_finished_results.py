@@ -9,14 +9,22 @@ spec.loader.exec_module(importer)
 ESPN = json.loads((HERE / 'fixtures/espn-pfl-dubai-2026-11-14.json').read_text())
 CW = (HERE / 'fixtures/wiki-cage-warriors-213.txt').read_text()
 ONE = (HERE / 'fixtures/wiki-one-friday-fights-178.txt').read_text()
+PFL_SEASON = (HERE / 'fixtures/wiki-pfl-season-2026.txt').read_text()
+PFL_ARTICLE = (HERE / 'fixtures/wiki-pfl-dubai-2026-11-14.txt').read_text()
 TODAY = dt.date(2026, 11, 19)
 
 
-def fetch(url, espn=ESPN):
-    if 'scoreboard' in url:
-        return json.dumps({'events': [{'id': '600061421'}]} if '20261114' in url else {'events': []})
-    if 'fightcenter' in url:
-        return json.dumps(espn)
+def wiki(text):
+    return json.dumps({'parse': {'wikitext': {'*': text}}})
+
+
+def fetch(url, article=PFL_ARTICLE):
+    if 'Professional%20Fighters%20League' in url:
+        return wiki(PFL_SEASON)
+    if 'PFL%20Dubai' in url:
+        return wiki(article)
+    if 'PFL%20' in url:
+        return wiki('no results yet')
     if 'Cage' in url:
         return json.dumps({'parse': {'wikitext': {'*': 'intro\n' + CW}}})
     if 'ONE' in url:
@@ -43,27 +51,31 @@ def run(*cards, fetcher=fetch, today=TODAY, results=None):
 
 
 class ImportFinishedResultsTest(unittest.TestCase):
-    def test_pfl_from_espn_imports_whole_card_in_befn_corner_order(self):
+    def test_pfl_from_wikipedia_article_with_spelling_differences(self):
         results, report = run(PFL)
-        self.assertEqual(report, ['imported: PFL Dubai: Nemkov vs Bilostenniy (13 bouts from ESPN fight center)'])
+        self.assertEqual(report, ['imported: PFL Dubai: Nemkov vs Bilostenniy (5 bouts from Wikipedia (CC BY-SA))'])
         rows = results['results']
         main = rows[0]
+        # Wikipedia spells him "Sergey"; BEFN's spelling and corner order are kept.
         self.assertEqual([f['name'] for f in main['fighters']], ['Vadim Nemkov', 'Sergei Bilostenniy'])
         self.assertEqual(main['winner'], 1)
         self.assertEqual((main['method'], main['round'], main['time']), ('unanimous decision', 5, '5:00'))
         self.assertEqual(main['fighters'][0]['record'], '19–4–0')
         self.assertEqual(main['fighters'][1]['record'], '14–2–0')
-        self.assertEqual(rows[1]['method'], 'Technical Submission (Guillotine Choke)')
-        self.assertEqual([r['section'] for r in rows].count('Main card'), 5)
-        self.assertTrue(results['events'][0]['source'].startswith('https://www.espn.com/mma/fightcenter/_/id/600061421'))
-        self.assertIn('Sergei Bilostenniy defeated Vadim Nemkov', results['events'][0]['takeaways'][0]['text'])
+        self.assertEqual(rows[1]['method'], 'Technical Submission (guillotine choke)')
+        self.assertEqual([r['section'] for r in rows], ['Main card'] * 3 + ['Prelims'] * 2)
+        self.assertEqual(results['events'][0]['source'], 'https://en.wikipedia.org/wiki/PFL_Dubai%3A_Nemkov_vs._Bilostenniy')
 
-    def test_pfl_waits_while_card_in_progress(self):
-        live = copy.deepcopy(ESPN)
-        live['cards']['main']['competitions'][0]['status']['type']['completed'] = False
-        results, report = run(PFL, fetcher=lambda u: fetch(u, live))
+    def test_pfl_waits_until_article_has_results(self):
+        results, report = run(PFL, fetcher=lambda u: fetch(u, PFL_ARTICLE.split('==Results==')[0]))
         self.assertEqual(results['events'], [])
-        self.assertIn('card still in progress', report[0])
+        self.assertEqual(report, ['waiting: PFL Dubai: Nemkov vs Bilostenniy (not at source yet)'])
+
+    def test_espn_parser_kept_for_reference(self):
+        event = importer.parse_espn_event(ESPN, 'pfl')
+        self.assertEqual(len(event['bouts']), 13)
+        main = event['bouts'][0]
+        self.assertEqual((main['fighters'], main['winner'], main['method']), (['Vadim Nemkov', 'Sergei Bilostenniy'], 1, 'unanimous decision'))
 
     def test_cage_warriors_template_layout_with_no_contest(self):
         results, report = run(CAGE)
@@ -106,6 +118,9 @@ class ImportFinishedResultsTest(unittest.TestCase):
         self.assertEqual(importer.name_key('Kim Su-hyeon'), importer.name_key('Suhyeon Kim'))
         self.assertEqual(importer.name_key('Sado Uçar'), importer.name_key('Sado Ucar'))
         self.assertEqual(importer.name_key('Nik Bagley (c)'), importer.name_key('Nik Bagley'))
+        self.assertTrue(importer.same_bout(('Vadim Nemkov', 'Sergei Bilostenniy'), ('Sergey Bilostenniy', 'Vadim Nemkov')))
+        self.assertTrue(importer.same_bout(('Shem Rock', 'Connor Hughes'), ('Connor Hughes', 'Shaqueme Rock')))
+        self.assertFalse(importer.same_bout(('Vadim Nemkov', 'Sergei Bilostenniy'), ('Vadim Nemkov', 'Fedor Emelianenko')))
 
 
 if __name__ == '__main__':
