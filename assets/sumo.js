@@ -1058,7 +1058,10 @@ function renderHeadToHead(a,b) {
 function getAnnouncedTorikumi(div,day){
   const next=Number(details().announcedDay);
   const item=details().torikumi?.[div];
-  return day===next && item?.status==='available' ? item.data : null;
+  if(day===next && item?.status==='available') return item.data;
+  // Today's schedule, kept after tomorrow's is published, so unfought bouts still show.
+  const current=details().todayTorikumi?.[div];
+  return day===Number(details().todayDay) && current?.status==='available' ? current.data : null;
 }
 function daysPanel(d,data) {
   const completedDay=lastCompletedBashoDay(data);

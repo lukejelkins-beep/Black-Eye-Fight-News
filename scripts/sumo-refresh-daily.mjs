@@ -13,7 +13,7 @@ const PATH='data/sumo/preview-details.json';
 const ROSTER='data/sumo/rikishi-index.json';
 const now=new Date();
 const capturedAt=now.toISOString();
-const client=createSumoClient({maxCalls:8,timeoutMs:15000});
+const client=createSumoClient({maxCalls:12,timeoutMs:15000});
 const [details,roster]=await Promise.all([PATH,ROSTER].map(async path=>JSON.parse(await readFile(path,'utf8'))));
 const bashoId=String(details.bashoId||'');
 if (!/^20[0-9]{4}$/.test(bashoId) || !Array.isArray(roster.rikishi) || roster.rikishi.length<100 ||
@@ -77,6 +77,25 @@ if(nextDay>=1&&nextDay<=15){
     }
   }
 }
+// Today's full schedule is kept separately, so the bouts still to be fought today
+// stay on the page after tomorrow's matchups are published.
+const todayTorikumi={};
+if(today>=1&&today<=15){
+  for(const division of TRACKED_DIVISIONS){
+    const prior=Number(details.todayDay)===today?details.todayTorikumi?.[division]?.data
+      :Number(details.announcedDay)===today?details.torikumi?.[division]?.data:null;
+    const priorRows=announcedTorikumiMatches(prior,{bashoId,division,day:today});
+    let source=null;
+    try{ source=await client.torikumi(bashoId,division,today); }
+    catch(error){ console.warn(division+' day '+today+' torikumi unavailable: '+String(error.message).slice(0,140)); }
+    const rows=announcedTorikumiMatches(source,{bashoId,division,day:today});
+    if(rows.length&&rows.length>=priorRows.length)todayTorikumi[division]={status:'available',data:source};
+    else if(priorRows.length)todayTorikumi[division]={status:'available',data:prior};
+    else todayTorikumi[division]={status:'unavailable',data:null,reason:'No confirmed torikumi for today'};
+  }
+}
+nextDetails.todayDay=(today>=1&&today<=15)?today:null;
+nextDetails.todayTorikumi=todayTorikumi;
 // Preserve published current-day pairings until all bouts are complete.
 // Some providers announce tomorrow's schedule only late in today's basho.
 let selectedDay=scheduleCount?nextDay:null;
