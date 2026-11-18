@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-18T04:46:29.517Z",
-  "checkedAt": "2026-11-18T04:46:29.517Z",
+  "attemptedAt": "2026-11-18T05:52:49.462Z",
+  "checkedAt": "2026-11-18T05:52:49.462Z",
   "windowDays": 28,
   "articlesChecked": 31,
   "publisherFeedsChecked": 3,
-  "publisherFeedsFailed": 1,
-  "rssArticleCandidates": 15,
-  "publisherSourcesConfigured": 32,
-  "linksFound": 11,
-  "newEmbedsVerified": 0,
+  "publisherFeedsFailed": 0,
+  "rssArticleCandidates": 45,
+  "publisherSourcesConfigured": 33,
+  "linksFound": 12,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -18,6 +18,25 @@
   "curatedRejected": 0,
   "curatedPublisherLinked": 2,
   "posts": [
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-18T04:15:57+00:00",
+      "discoveredAt": "2026-11-18T05:52:49.462Z",
+      "sourcePublisher": "Sherdog",
+      "evidenceUrl": "https://www.sherdog.com/news/news/Josh-Hokit-reveals-why-he-flipped-off-Bruce-Buffer-at-UFC-334-203683",
+      "summary": "Original social post linked in Sherdog coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/reel/Df3QuZwqJoZ/"
+    },
     {
       "type": "post",
       "platform": "X",
@@ -2340,25 +2359,6 @@
       "embedVerified": true,
       "linkPriority": 12,
       "url": "https://www.threads.com/t/DflDJ0VFmVR/"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "mma",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-11T20:17:08+00:00",
-      "discoveredAt": "2026-11-11T22:19:12.207Z",
-      "sourcePublisher": "Sherdog",
-      "evidenceUrl": "https://www.sherdog.com/news/news/Carlos-Prates-draws-crowds-in-India-ahead-of-UFC-336-title-fight-203586",
-      "summary": "Original social post linked in Sherdog coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Trusted publisher permalink (embed unconfirmed)",
-      "verification": "trusted-publisher-link",
-      "embedVerified": false,
-      "linkPriority": 10,
-      "url": "https://www.instagram.com/p/DfhoQ2ukWxc/"
     }
   ],
   "seenOriginals": [
@@ -3161,6 +3161,10 @@
     {
       "url": "https://www.instagram.com/p/DdX4i8hibel/",
       "firstSeen": "2026-11-17T22:37:38.436Z"
+    },
+    {
+      "url": "https://www.instagram.com/reel/Df3QuZwqJoZ/",
+      "firstSeen": "2026-11-18T05:52:49.462Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
