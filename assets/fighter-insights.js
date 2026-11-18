@@ -275,23 +275,31 @@
    {label:'Grappling',score:null},{label:'Defence',score:null},{label:'Recent Form',score:null}];
   const history=fights.map(x=>{
    const [symbol,klass]=resultSymbol(x.outcome||x.result);
-   return '<li><span class="befn-power-result '+klass+'">'+symbol+'</span>'+
-    '<strong class="befn-v3-opponent">'+escapeHTML(x.opponent)+'</strong>'+
+   return '<li class="'+klass+'">'+opponentPhoto(x.opponent)+
+    '<div class="befn-pro-fight-main"><strong class="befn-v3-opponent">'+escapeHTML(x.opponent)+'</strong>'+
     '<span class="befn-v3-method">'+escapeHTML(x.method||'Method unavailable')+'</span>'+
-    '<time class="befn-v3-date">'+escapeHTML(x.date||'Date unavailable')+'</time></li>';
+    '<time class="befn-v3-date">'+escapeHTML(x.date||'Date unavailable')+'</time></div>'+
+    '<div class="befn-pro-fight-side"><span class="befn-power-result '+klass+'">'+symbol+'</span></div></li>';
   }).join('');
-  return '<section class="befn-profile-insights befn-v3 befn-v3-pending" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC fighter profile">'+
-   '<div class="befn-v3-hero" aria-label="Overall fighter rating"><div class="befn-overall-main">'+
-   '<span class="befn-overall-label">Overall</span><strong class="befn-v3-score">Unrated</strong>'+
-   '<span class="befn-overall-meter" aria-hidden="true"><span style="width:0%"></span></span></div>'+verifiedTag+'</div>'+
-   '<section class="befn-profile-block befn-v3-technical" data-pro-section="ratings"><h3>Technical ratings</h3><div class="befn-profile-body"><div class="befn-power-bars">'+
-   known.map(profileMetric).join('')+'</div></div></section>'+
-   '<div class="befn-v3-bottom-grid"><details class="befn-v3-history" data-pro-section="fights" open><summary>Recent fights <small>Up to five recorded UFC fights</small></summary>'+
-   (history?'<ul class="befn-v3-fights">'+history+'</ul>':'<p class="befn-credential-empty">Fight history awaiting verification</p>')+
-   '</details><div class="befn-v3-data-side"><section class="befn-v3-stat-panel" data-pro-section="stats"><h3>Recent Performance</h3>'+
-   '<div class="befn-v3-tiles">'+metric.map(([label,value,note])=>'<div><strong>'+escapeHTML(value)+'</strong>'+
-    '<span>'+escapeHTML(label)+'</span><small>'+escapeHTML(note)+'</small></div>').join('')+
-   '</div></section></div></div></section>';
+  const pills=fights.map(x=>{const [s,k]=resultSymbol(x.outcome||x.result);return '<span class="befn-power-result '+k+'">'+s+'</span>'}).join('');
+  // UFC fighters outside the V3 statistics snapshot: same profile shell,
+  // honest "Unrated" panel and "Stats pending" tiles until data arrives.
+  return '<section class="befn-profile-insights befn-pro-insights befn-v3-pending" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC fighter profile">'+
+   '<aside class="befn-pro-score is-unrated" aria-label="Overall fighter rating"><span class="befn-pro-tag">BEFN rating</span>'+
+   '<strong class="befn-v3-score">Unrated</strong><span class="befn-pro-progress" aria-hidden="true"><span style="width:0%"></span></span>'+
+   verifiedTag+
+   (pills?'<div class="befn-pro-form"><span>Last '+fights.length+' UFC · '+escapeHTML(recentRecord)+'</span><div>'+pills+'</div></div>':'')+
+   '</aside>'+
+   '<div class="befn-pro-grid">'+
+   proSection('ratings','Ratings','UFC statistics pending','<div class="befn-pro-meters">'+
+    known.map(m=>proMeter(m.label,Number.isFinite(m.score)?m.score:null,false,scoreTier(Number.isFinite(m.score)?m.score:null))).join('')+'</div>')+
+   proSection('fights','Recent fights','Up to five recorded UFC fights',
+    history?'<ul class="befn-v3-fights befn-pro-fight-list">'+history+'</ul>':'<p class="befn-pro-note">Fight history awaiting verification</p>')+
+   '</div>'+
+   proSection('stats','Recent performance','Per-fight averages appear once UFC statistics are recorded',
+    '<div class="befn-pro-tiles">'+metric.map(([label,value,note])=>'<div><strong>'+escapeHTML(String(value))+'</strong>'+
+    '<span>'+escapeHTML(label)+'</span><small>'+escapeHTML(note)+'</small></div>').join('')+'</div>')+
+   '</section>';
  }
  function renderProfile(f){
   const kind=f.sport==="Boxing"?"Boxing credentials":"Combat & grappling credentials";
