@@ -32,7 +32,7 @@
           ' · Control ' + number(a.controlSec) + 's / ' + number(b.controlSec) + 's</div>';
       }).join("");
       return '<article class="befn-round-card"><strong>' + names + '</strong>' +
-        '<div class="befn-round-meta">' + esc(f.event || "") + ' · ' +
+        '<div class="befn-round-meta">' + esc((globalThis.BEFNEventTitle||(x=>x))(f.event || "")) + ' · ' +
         esc(f.date || "") + ' · ' + esc(f.division || "MMA") + '</div>' +
         lines + '<div class="befn-round-source">Source: ' + esc(f.sourceNames || 'UFCalendar') + ' · Strikes are listed A–B, not judges’ scores · — means unavailable</div></article>';
     }).join("");

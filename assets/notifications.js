@@ -78,7 +78,7 @@
       const fresh=events.filter(a=>!previous.has(String(a.id))&&
         Date.parse(String(a.date)+'T12:00:00Z')>NOW()-12*3600000&&
         Date.parse(String(a.date)+'T12:00:00Z')<NOW()+32*86400000);
-      if(fresh.length)saveNews('upcoming',fresh.length===1?fresh[0].title+' · Added to fight calendar':fresh.length+' new upcoming fight cards','#calendar');
+      if(fresh.length)saveNews('upcoming',fresh.length===1?(globalThis.BEFNEventTitle||(x=>x))(fresh[0].title)+' · Added to fight calendar':fresh.length+' new upcoming fight cards','#calendar');
     }
   }
   async function poll(){

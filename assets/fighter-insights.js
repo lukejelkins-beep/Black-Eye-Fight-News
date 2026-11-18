@@ -218,7 +218,7 @@
    const m=b.metrics||{};
    const delta=m.totalStrikeDifferential;
    return '<li class="befn-postfight-bout"><span><b>'+escapeHTML(b.opponent)+
-    '</b><small>'+escapeHTML(b.date)+' · '+escapeHTML(b.event||"UFC")+'</small></span>'+
+    '</b><small>'+escapeHTML(b.date)+' · '+escapeHTML((globalThis.BEFNEventTitle||(x=>x))(b.event||"UFC"))+'</small></span>'+
     '<span><b>'+escapeHTML(trackedMetric(m.totalLanded))+' total strikes</b>'+
     '<small>Difference '+escapeHTML(trackedMetric(delta,"signed"))+
     ' · Control '+escapeHTML(trackedMetric(m.controlSec,"duration"))+'</small></span></li>';
@@ -997,8 +997,12 @@
    target.meta=source.meta;target.review=source.review;
    target.verificationNote=source.verificationNote;
    target.latest=source.latest.map(x=>({...x}));
-   target.analysis=source.review?.notes?.length?source.review.notes:
-      ["Individual credential review completed; no confirmed qualifying award entered."];
+   // Review notes are editorial working text; keep them off public cards.
+   // The card summary is the public part of the meta line ("Reigning UFC
+   // Welterweight champion"), never the reviewer's verification note.
+   target.reviewNotes=source.review?.notes||[];
+   const headline=String(source.meta||"").split(" · ")[0].trim();
+   target.analysis=[headline||("UFC "+source.division+" champion")];
    target.sources=[
     {label:"Official UFC athlete biography & fight history",url:source.source},
     {label:"UFC-only statistics and sample size",url:source.statSource},
@@ -1082,7 +1086,11 @@
     // are permitted here; otherwise make the unknown status explicit.
     target.next=source.nextVerified===true&&typeof source.next==="string"?
       source.next:"Not currently verified";
-    target.analysis=[...source.review.notes];
+    // Keep a public scouting blurb if one exists; review notes are internal.
+    target.reviewNotes=[...source.review.notes];
+    const publicBlurb=(target.analysis||[]).filter(x=>typeof x==="string"&&x.trim()&&
+     !source.review.notes.includes(x));
+    target.analysis=publicBlurb.length?publicBlurb:["UFC "+source.division];
     target.latest=source.latest.map(x=>({...x}));
     target.verificationNote=source.verificationNote||"Checked UFC evidence. Incomplete metrics remain unrated.";
     target.credentials=source.credentials.filter(c=>validSource(c?.source)).map(c=>({...c}));
