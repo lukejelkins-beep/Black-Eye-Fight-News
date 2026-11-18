@@ -4,8 +4,7 @@ name: Sumo preview live refresh (every basho)
 # It touches ONLY the Sumo preview branch (never main, never the production
 # site). All logic lives in that branch's scripts:
 #   scripts/sumo-basho-calendar.mjs  which basho is it, and is it live
-#   scripts/sumo-jsa-scrape.mjs      matchups read from the Japan Sumo Association pages
-#   scripts/sumo-refresh-daily.mjs   results + announced next-day torikumi
+#   scripts/sumo-refresh-daily.mjs   results + next-day torikumi, both from the Sumo API
 #   scripts/sumo-build-preview.mjs   roster, rankings and basho details
 #   scripts/sumo-onboard-rikishi.mjs career + head-to-head data for new wrestlers
 #   scripts/sumo-apply-live-bouts.mjs completed bouts into career / head-to-head
@@ -14,8 +13,8 @@ on:
   schedule:
     # Live results on the days a basho can run (8th-28th of Jan/Mar/May/Jul/Sep/Nov,
     # UTC). The script exits quietly if no basho is live.
-    # Every 10 min from 13:00 to 19:59 JST: the next day's torikumi is released
-    # about 14:00 JST and bouts finish about 18:00 JST, so new data lands fast.
+    # Every 10 min from 13:00 to 19:59 JST: bouts finish about 18:00 JST and the
+    # Sumo API posts the next day's torikumi soon after, so new data lands fast.
     - cron: '*/10 4-10 8-28 1,3,5,7,9,11 *'
     # Every 30 min the rest of the day.
     - cron: '7,37 0-3,11-23 8-28 1,3,5,7,9,11 *'
@@ -42,11 +41,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install headless browser for the JSA matchup reader
-        shell: bash
-        run: |
-          npm install --no-save --no-audit --no-fund playwright
-          npx playwright install --with-deps chromium
       - name: Decide what to run
         id: plan
         shell: bash
