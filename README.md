@@ -10,6 +10,6 @@ A public, continuously updated combat-sports website covering boxing, MMA, wrest
 - **Fight Film:** sourced finish and highlight footage, separated by discipline.
 - **Installable app:** PWA assets and Capacitor starter; see [the mobile app guide](docs/mobile-app.md).
 
-Deployment: Render Static Site, branch `main`, build command `echo 'Ready'`, publish path `.`, auto-deploy enabled.
+Deployment: Render Static Site, branch `main`, build command `node scripts/build-site.mjs`, publish directory `dist`, auto-deploy enabled. The build copies only reader files (pages, `assets/`, `push/` and the `data/*.json` files the pages request); research data, docs and workflows are never published.
 
 **Editorial rules:** verify records, quotes, dates, posts and rights to embedded media. Never fabricate information or claim an API platform is connected unless authenticated and approved. Keep private publications and personal delivery details out of this public repository and deployment.

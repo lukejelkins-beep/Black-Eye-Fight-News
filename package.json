@@ -4,6 +4,7 @@
   "private": true,
   "description": "Black Eye Fight News mobile-ready website",
   "scripts": {
+    "build:site": "node scripts/build-site.mjs",
     "build": "node scripts/build-mobile.mjs",
     "cap:sync": "npm run build && cap sync",
     "cap:add:android": "npm run build && cap add android",
