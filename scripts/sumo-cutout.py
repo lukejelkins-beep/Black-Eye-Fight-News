@@ -9,7 +9,7 @@ import cv2
 import numpy as np
 
 
-def cutout(src, max_h=1400):
+def cutout(src, max_h=1400, offset=False):
     img = cv2.imread(src, cv2.IMREAD_COLOR)
     h, w = img.shape[:2]
     scale = min(1.0, max_h / h)
@@ -102,10 +102,13 @@ def cutout(src, max_h=1400):
     out = cv2.cvtColor(img, cv2.COLOR_BGR2BGRA)
     out[:, :, 3] = alpha
     ys, xs = np.where(alpha > 8)
+    ox = oy = 0
     if len(ys):
         pad = 4
-        out = out[max(0, ys.min() - pad):ys.max() + pad, max(0, xs.min() - pad):xs.max() + pad]
-    return out
+        oy, ox = max(0, ys.min() - pad), max(0, xs.min() - pad)
+        out = out[oy:ys.max() + pad, ox:xs.max() + pad]
+    # offset=True also returns where the crop sits in the (resized) original.
+    return (out, (ox, oy)) if offset else out
 
 
 if __name__ == '__main__':

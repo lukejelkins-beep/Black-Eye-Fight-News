@@ -11,6 +11,7 @@ import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verificati
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
 import { dailyStats, dailyRecentMeetings, dailyDefaultDay,dailyConcluded, dailySelectedDate, dailyWinPercentage, heightFeetInches, highestRecordedDivision } from './sumo-daily.mjs?v=20261117-day-flow';
 import { ordinalRank } from './sumo-career.mjs';
+import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261118-h2h-board-v1';
 import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-inline-gifs-v4';
 
 const ROOT = document.querySelector('#sumo-main');
@@ -23,7 +24,8 @@ const STATE = {
   profileMode: 'bouts', profilePeriod: 'current', rankRange: '2y', fullRankLadder: false,
   opponentQuery: '', opponentSort: 'meetings', h2hReturn: null,
   h2hSummary: null, h2hFull: null, h2hLoading: false, h2hLoadFailed: false,
-  h2hOpponents: null, h2hOpponentsLoading: false, h2hOpponentsFailed: false
+  h2hOpponents: null, h2hOpponentsLoading: false, h2hOpponentsFailed: false,
+  heads: null, boardDivision: null, boardRecent: false
 };
 const TERMS = KIMARITE.map(x=>({term:x.name,label:x.english,detail:x.english}));
 
@@ -88,6 +90,15 @@ function cutoutFor(w,name){
   const ok=c&&photo?.approved===true&&c.sourceSha256===photo.sha256&&/^assets\/sumo-photos\/cutout\/[a-zA-Z0-9_-]+\.webp$/.test(String(c.path||''));
   if(!ok)return null;
   return '<div class="profile-icon sumo-photo xl has-photo is-cutout" role="img" aria-label="'+e('Photograph of '+(name||w.shikonaEn))+'"><img src="'+e(c.path)+'" alt="" loading="lazy" decoding="async"></div>';
+}
+/** Transparent head crop for the H2H board; falls back to the cropped portrait. */
+function headFor(w){
+  const h=w&&STATE.heads?.[String(w.sourceId)];
+  const photo=w&&STATE.photoIndex?.[String(w.sourceId)];
+  const ok=h&&photo?.approved===true&&h.sourceSha256===photo.sha256&&/^assets\/sumo-photos\/head\/[a-zA-Z0-9_-]+\.webp$/.test(String(h.path||''));
+  if(ok)return '<span class="h2h-head'+(h.matte==='feathered'?' is-feathered':'')+'"><img src="'+e(h.path)+'" alt="" width="96" height="96" loading="lazy" decoding="async"></span>';
+  const valid=photo?.approved===true&&/^assets\/sumo-photos\/[a-zA-Z0-9_-]+\.(webp|png|jpg|jpeg)$/.test(String(photo.path||''));
+  return '<span class="h2h-head is-portrait">'+(valid?'<img src="'+e(photo.path)+'" alt="" loading="lazy" decoding="async">':'<span aria-hidden="true">相</span>')+'</span>';
 }
 function knownHigh(w){
   const research=STATE.h2hSummary?.profiles?.[String(w?.sourceId)];
@@ -1194,6 +1205,122 @@ function dailyMatchupRow(match) {
     (history&&!history.complete?'<p class="sumo-daily-result-note">Individual history is source-limited; open the full series for coverage.</p>':'')+
     '</details></div>';
 }
+/* ---------- Head-to-head board ----------
+ * One rikishi against the whole current banzuke: every opponent's head, coloured
+ * by the selected rikishi's record against them. Tap a head for the meetings. */
+const BOARD_WINDOW=6;
+function boardWindow(){return STATE.boardRecent?recentBashoIds(details().bashoId,BOARD_WINDOW):null;}
+function boardRec(a,b){return boardRecord(STATE.h2hSummary,STATE.h2hFull,a,b,boardWindow());}
+function boardRankLabel(rank){return compactRank(rank).replace(/[EW]$/,'');}
+function boardRows(data){
+  const rows=[],byKey=new Map();
+  for(const entry of rankTable(data)){
+    const key=String(entry.rank||'').replace(/\s*(East|West)$/i,'');
+    let row=byKey.get(key);
+    if(!row||row[entry.side==='West'?'west':'east']){row={key,label:boardRankLabel(entry.rank),east:null,west:null};byKey.set(key,row);rows.push(row);}
+    row[entry.side==='West'?'west':'east']=entry;
+  }
+  return rows;
+}
+function recordText(rec){return rec.wins+'–'+rec.losses;}
+function boardTile(focus,entry){
+  if(!entry)return '<span class="h2h-tile is-empty" aria-hidden="true"></span>';
+  const w=wrestler(entry.rikishiID);
+  const name=w?.shikonaEn||entry.shikonaEn||'Rikishi';
+  if(Number(entry.rikishiID)===Number(focus.sourceId))
+    return '<span class="h2h-tile is-focus" aria-current="true">'+headFor(w)+'<span class="h2h-name">'+e(name)+'</span><span class="h2h-rec">Selected</span></span>';
+  const rec=boardRec(focus.sourceId,entry.rikishiID);
+  const sameHeya=w&&focus.heya&&w.heya===focus.heya;
+  if(!rec)return '<span class="h2h-tile is-loading">'+headFor(w)+'<span class="h2h-name">'+e(name)+'</span><span class="h2h-rec">…</span></span>';
+  const {tone,strength}=recordTone(rec);
+  const recLabel=rec.total?recordText(rec):sameHeya?'Stablemate':'—';
+  const said=rec.total?(focus.shikonaEn+' '+(tone==='win'?'leads':tone==='loss'?'trails':'is level')+' '+recordText(rec)):sameHeya?'same stable, they do not meet':'no meetings';
+  return '<button type="button" class="h2h-tile tone-'+tone+' s'+strength+(sameHeya&&!rec.total?' is-stablemate':'')+'" data-h2h-open="'+Number(entry.rikishiID)+'" aria-label="'+e(name+', '+(entry.rank||'')+': '+said)+'">'+
+    headFor(w)+'<span class="h2h-name">'+e(name)+'</span><span class="h2h-rec">'+e(recLabel)+'</span></button>';
+}
+function boardFocusOptions(){
+  return ranks().map(w=>'<option value="'+e(w.shikonaEn)+'">'+e(w.currentRank||'')+'</option>').join('');
+}
+function renderBoard(id){
+  const div=STATE.boardDivision||'Makuuchi';
+  const first=rankTable(getBanzuke('Makuuchi')||{east:[],west:[]})[0];
+  const focus=wrestler(id)||wrestler(first?.rikishiID);
+  if(!focus)return pageHead('Head-to-head')+note('Rankings are not available yet.');
+  if(!STATE.boardDivision)STATE.boardDivision=divisionOf(focus.currentRank)||'Makuuchi';
+  const data=getBanzuke(STATE.boardDivision);
+  const rows=data?boardRows(data):[];
+  const all=DIVS.flatMap(d=>{const b=getBanzuke(d);return b?rankTable(b):[];}).filter(x=>Number(x.rikishiID)!==Number(focus.sourceId));
+  const recs=all.map(x=>boardRec(focus.sourceId,x.rikishiID));
+  const ready=!recs.some(r=>r===null);
+  const t=boardTotals(recs);
+  const win=STATE.boardRecent?recentBashoIds(details().bashoId,BOARD_WINDOW):null;
+  const scope=STATE.boardRecent?'Last '+BOARD_WINDOW+' basho ('+bashoLabel(win[win.length-1])+' – '+bashoLabel(win[0])+')':'Career';
+  const status=STATE.boardRecent&&!STATE.h2hFull?(STATE.h2hLoadFailed?'Recent records could not load. Try again or switch to Career.':'Loading every recorded bout for the recent view…'):'';
+  return pageHead('Head-to-head',bashoLabel(details().bashoId)+' banzuke · tap a face for the meetings')+
+    '<section class="h2h-hero" aria-label="Selected rikishi">'+
+      '<div class="h2h-hero-head">'+headFor(focus)+'</div>'+
+      '<div class="h2h-hero-id"><span class="h2h-hero-rank">'+e(focus.currentRank||'')+'</span>'+
+        '<h2><a href="#profile/'+Number(focus.sourceId)+'">'+e(focus.shikonaEn)+'</a></h2>'+
+        '<span class="h2h-hero-heya">'+e(focus.heya?focus.heya+' stable':'')+'</span></div>'+
+      '<div class="h2h-hero-stats">'+
+        '<div><strong>'+(ready?t.wins+'–'+t.losses:'…')+'</strong><span>vs this banzuke</span></div>'+
+        '<div><strong class="is-win">'+(ready?t.ahead:'…')+'</strong><span>winning records</span></div>'+
+        '<div><strong class="is-loss">'+(ready?t.behind:'…')+'</strong><span>losing records</span></div>'+
+      '</div>'+
+      '<div class="h2h-hero-controls">'+
+        '<label class="h2h-pick"><span>Change rikishi</span><input id="h2h-pick" type="search" list="h2h-pick-list" placeholder="Type a name" autocomplete="off" enterkeyhint="go"></label>'+
+        '<datalist id="h2h-pick-list">'+boardFocusOptions()+'</datalist>'+
+        '<div class="sumo-segmented h2h-scope" role="group" aria-label="Records to count">'+
+          '<button type="button" data-board-recent="0" aria-pressed="'+(!STATE.boardRecent)+'">Career</button>'+
+          '<button type="button" data-board-recent="1" aria-pressed="'+STATE.boardRecent+'">Last '+BOARD_WINDOW+' basho</button></div>'+
+      '</div>'+
+    '</section>'+
+    divisionTabs(STATE.boardDivision,'data-board-division')+
+    '<div class="h2h-legend"><span class="h2h-key tone-win s3"></span>'+e(focus.shikonaEn)+' leads <span class="h2h-key tone-even s3"></span>Level <span class="h2h-key tone-loss s3"></span>Trails <span class="h2h-legend-note">Deeper colour = more meetings · '+e(scope)+'</span></div>'+
+    (status?'<p class="h2h-status" role="status">'+e(status)+(STATE.h2hLoadFailed?' <button type="button" class="btn light" data-h2h-retry>Retry</button>':'')+'</p>':'')+
+    (rows.length?'<div class="h2h-board" role="list" aria-label="'+e(STATE.boardDivision+' banzuke')+'">'+rows.map(r=>
+      '<div class="h2h-row" role="listitem"><div class="h2h-cell east">'+boardTile(focus,r.east)+'</div><span class="h2h-rank">'+e(r.label)+'</span><div class="h2h-cell west">'+boardTile(focus,r.west)+'</div></div>').join('')+'</div>'
+      :'<p class="missing">This division’s banzuke is not available.</p>')+
+    '<p class="footnote">Regular bouts only, from the Sumo API history cache (not JSA-certified). Playoffs are left out. Wrestlers from the same stable do not meet in regular bouts.</p>';
+}
+function boardSheet(a,b){
+  const first=wrestler(a),second=wrestler(b);
+  if(!first||!second)return '';
+  const rec=boardRec(a,b)||{wins:0,losses:0,total:0,latest:[]};
+  const {tone}=recordTone(rec);
+  const lead=!rec.total?'No recorded meetings'+(STATE.boardRecent?' in the last '+BOARD_WINDOW+' basho':''):
+    tone==='even'?'Level at '+recordText(rec):(tone==='win'?first.shikonaEn:second.shikonaEn)+' leads '+Math.max(rec.wins,rec.losses)+'–'+Math.min(rec.wins,rec.losses);
+  const rows=rec.latest.map(m=>{
+    const won=m.winnerId===Number(a);
+    return '<li class="'+(won?'is-win':'is-loss')+'"><span class="h2h-when">'+e(bashoLabel(m.bashoId))+' · Day '+e(m.day)+'</span><span class="h2h-who">'+e((won?first:second).shikonaEn)+'</span><span class="h2h-how">'+e(techniqueText(m.kimarite))+'</span></li>';
+  }).join('');
+  return '<div class="h2h-sheet-top"><span class="h2h-sheet-scope">'+e(STATE.boardRecent?'Last '+BOARD_WINDOW+' basho':'Career')+'</span><button type="button" class="h2h-close" data-h2h-close aria-label="Close">✕</button></div>'+
+    '<div class="h2h-face-off">'+
+      '<div class="h2h-side">'+headFor(first)+'<strong>'+e(first.shikonaEn)+'</strong><span>'+e(boardRankLabel(first.currentRank))+'</span></div>'+
+      '<div class="h2h-score tone-'+tone+'"><b>'+rec.wins+'</b><i>–</i><b>'+rec.losses+'</b></div>'+
+      '<div class="h2h-side">'+headFor(second)+'<strong>'+e(second.shikonaEn)+'</strong><span>'+e(boardRankLabel(second.currentRank))+'</span></div>'+
+    '</div>'+
+    '<h2 class="h2h-lead" id="h2h-sheet-title">'+e(lead)+'</h2>'+
+    (rows?'<h3 class="h2h-sub">Latest meetings</h3><ol class="h2h-meetings">'+rows+'</ol>':'')+
+    '<div class="h2h-sheet-actions">'+
+      (rec.total?'<a class="btn" href="'+headToHeadUrl(a,b)+'" data-h2h-close>Full series</a>':'')+
+      '<a class="btn light" href="#h2h/'+Number(b)+'" data-h2h-close>Board for '+e(second.shikonaEn)+'</a></div>';
+}
+function openBoardSheet(b){
+  const a=Number(location.hash.split('/')[1])||rankTable(getBanzuke('Makuuchi')||{east:[],west:[]})[0]?.rikishiID;
+  let dlg=document.getElementById('h2h-sheet');
+  if(!dlg){dlg=document.createElement('dialog');dlg.id='h2h-sheet';dlg.className='h2h-sheet';dlg.setAttribute('aria-labelledby','h2h-sheet-title');document.body.appendChild(dlg);
+    dlg.addEventListener('click',ev=>{if(ev.target===dlg)dlg.close();});}
+  dlg.innerHTML=boardSheet(a,b);
+  dlg.dataset.opener=String(b);
+  if(!dlg.open)dlg.showModal();
+}
+function pickBoardFocus(value){
+  const q=String(value||'').trim().toLowerCase();
+  if(!q)return;
+  const hit=ranks().find(w=>w.shikonaEn.toLowerCase()===q)||ranks().find(w=>w.shikonaEn.toLowerCase().startsWith(q));
+  if(hit){STATE.boardDivision=null;location.hash='#h2h/'+Number(hit.sourceId);}
+}
 function renderBasho() {
   const d=STATE.bashoDivision,data=getBanzuke(d);
   const lastday=data?lastCompletedBashoDay(data):0;
@@ -1213,7 +1340,7 @@ function render() {
   let [page,id]=hash.split('/');
   if(page==='home')page='basho';
   tabs.forEach(a=>{
-    const active=(page==='profile'?'rikishi':page==='matchups'?'basho':page)===a.dataset.page;
+    const active=(page==='profile'?'rikishi':page==='matchups'?'basho':page==='headtohead'?'h2h':page)===a.dataset.page;
     a.classList.toggle('active',active);
     if(active)a.setAttribute('aria-current','page');
     else a.removeAttribute('aria-current');
@@ -1229,6 +1356,8 @@ function render() {
       if(!wrestler(hash.split('/')[2])&&STATE.h2hSummary&&!STATE.h2hOpponents&&!STATE.h2hOpponentsLoading&&!STATE.h2hOpponentsFailed)void loadOpponentIndex();
       break;
     case 'banzuke': ROOT.innerHTML=renderBanzuke();break;
+    case 'h2h': ROOT.innerHTML=renderBoard(id);
+      if(STATE.boardRecent&&!STATE.h2hFull&&!STATE.h2hLoading&&!STATE.h2hLoadFailed)void loadCompleteH2h();break;
     case 'basho': ROOT.innerHTML=renderBasho();break;
     case 'matchups': ROOT.innerHTML=renderDailyMatchups();break;
     case 'kimarite': ROOT.innerHTML=renderKimarite();break;
@@ -1282,6 +1411,9 @@ document.addEventListener('input',ev=>{
     STATE.opponentQuery=ev.target.value;STATE.h2hOpponentLimit=16;refreshOpponents();
   }
 });
+document.addEventListener('keydown',ev=>{
+  if(ev.key==='Enter'&&ev.target?.id==='h2h-pick'){ev.preventDefault();pickBoardFocus(ev.target.value);}
+});
 document.addEventListener('change',ev=>{
   const t=ev.target;
   if(t?.id==='sumo-period'){
@@ -1295,6 +1427,7 @@ document.addEventListener('change',ev=>{
     document.getElementById('sumo-opponent-sort')?.focus({preventScroll:true});
   }
   if(t?.id==='sumo-profile-section')navigateSection(t.value);
+  if(t?.id==='h2h-pick')pickBoardFocus(t.value);
   if(t?.id==='sumo-matchup-day'){STATE.matchupDay=Number(t.value);render();document.getElementById('sumo-matchup-day')?.focus({preventScroll:true});}
 });
 document.addEventListener('click',ev=>{
@@ -1305,6 +1438,18 @@ document.addEventListener('click',ev=>{
       bashoDivision:STATE.bashoDivision,day:STATE.day,
       matchupDivision:STATE.matchupDivision,matchupDay:STATE.matchupDay};
   }
+  const open=ev.target.closest?.('[data-h2h-open]');
+  if(open){openBoardSheet(Number(open.dataset.h2hOpen));return;}
+  const closer=ev.target.closest?.('[data-h2h-close]');
+  if(closer){const dlg=document.getElementById('h2h-sheet');if(dlg?.open)dlg.close();if(closer.tagName!=='A')return;}
+  const scope=ev.target.closest?.('[data-board-recent]');
+  if(scope){
+    STATE.boardRecent=scope.dataset.boardRecent==='1';
+    if(STATE.boardRecent&&!STATE.h2hFull&&!STATE.h2hLoading){STATE.h2hLoadFailed=false;void loadCompleteH2h();}
+    render();document.querySelector('[data-board-recent="'+scope.dataset.boardRecent+'"]')?.focus({preventScroll:true});return;
+  }
+  const bdiv=ev.target.closest?.('[data-board-division]');
+  if(bdiv){STATE.boardDivision=bdiv.dataset.boardDivision;render();document.querySelector('[data-board-division="'+STATE.boardDivision+'"]')?.focus({preventScroll:true});return;}
   const jump=ev.target.closest?.('[data-profile-section]');
   if(jump){ev.preventDefault();navigateSection(jump.dataset.profileSection);return;}
   const last=ev.target.closest?.('[data-result-link]');
@@ -1369,6 +1514,7 @@ document.addEventListener('click',ev=>{
 });
 let lastRoute=location.hash.slice(1).split('?')[0];
 window.addEventListener('hashchange',()=>{
+  const sheet=document.getElementById('h2h-sheet');if(sheet?.open)sheet.close();
   const route=location.hash.slice(1).split('?')[0];
   if(route!==lastRoute&&route.startsWith('profile/')&&STATE.h2hReturn?.hash?.split('?')[0]==='#'+route){
     STATE.profilePeriod=STATE.h2hReturn.period;
@@ -1428,7 +1574,7 @@ async function loadCompleteH2h(){
     STATE.h2hLoadFailed=true;
   } finally {
     STATE.h2hLoading=false;
-    if(location.hash.startsWith('#headtohead/')||(location.hash.startsWith('#profile/')&&STATE.profilePeriod==='all'))render();
+    if(location.hash.startsWith('#headtohead/')||location.hash.startsWith('#h2h')||(location.hash.startsWith('#profile/')&&STATE.profilePeriod==='all'))render();
   }
 }
 async function init(){
@@ -1438,6 +1584,7 @@ async function init(){
       loadJson('data/sumo/division-stats.json').catch(()=>null),loadJson('data/sumo/kimarite-media.json').catch(()=>null)]);
     // Optional cut-out derivatives; the page works without them.
     STATE.cutouts=(await loadJson('data/sumo/cutouts.json').catch(()=>null))?.bySourceId||null;
+    STATE.heads=(await loadJson('data/sumo/heads.json').catch(()=>null))?.bySourceId||null;
     if(!Array.isArray(roster?.rikishi)||!Array.isArray(details?.featured)||roster?.count!==roster.rikishi.length) throw new Error('Sumo cache schema or roster total not valid');
     if((roster?.trackedDivisions||[]).join(',')!==DIVS.join(','))throw new Error('Sumo cache does not match the approved three-division scope');
     if(roster.rikishi.some(x=>!DIVS.includes(divisionOf(x.currentRank))))throw new Error('Out-of-scope division in Sumo index');

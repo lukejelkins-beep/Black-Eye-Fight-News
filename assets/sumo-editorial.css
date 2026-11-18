@@ -695,10 +695,10 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .directory-grid.is-list .directory-lower .cta{display:none}
  .sumo-hero-actions{margin-top:9px}
 }
-/* Four destinations, identical on phone and desktop: Results, Rankings, Rikishi, Techniques. */
+/* Five destinations, identical on phone and desktop: Results, Rankings, Rikishi, H2H, Techniques. */
 @media(max-width:680px){
- .subnav-inner{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;padding:0 6px;overflow:visible}
- .subnav-inner>a{justify-content:center;text-align:center;padding:8px 2px;font-size:12px;white-space:nowrap;min-width:0;min-height:44px}
+ .subnav-inner{display:grid;grid-template-columns:repeat(5,auto);justify-content:space-between;gap:0;padding:0 8px;overflow:visible}
+ .subnav-inner>a{justify-content:center;text-align:center;padding:8px 4px;font-size:12px;letter-spacing:.02em;white-space:nowrap;min-width:0;min-height:44px}
 }
 @media(max-width:350px){
  .subnav-inner>a{font-size:11px;letter-spacing:0}
