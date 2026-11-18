@@ -195,7 +195,7 @@ window.UpcomingCards=(()=>{
   const allOption={key:'all',label:'All',rows:e.bouts};
   const choices=sections.length>1?[allOption,...sections]:sections;
   const selected=choices.find(g=>g.key===active.get(e.id))||choices[0];
-  const tabs=choices.length>1?'<div class="result-card-tabs upcoming-tabs" role="group" aria-label="'+esc(e.title)+' sections" style="grid-template-columns:repeat('+choices.length+',minmax(0,1fr))">'+choices.map(g=>
+  const tabs=choices.length>1?'<div class="result-card-tabs upcoming-tabs" role="group" aria-label="'+esc((globalThis.BEFNEventTitle||(x=>x))(e.title))+' sections" style="grid-template-columns:repeat('+choices.length+',minmax(0,1fr))">'+choices.map(g=>
    '<button type="button" class="result-card-tab'+(g.key===selected.key?' is-active':'')+'" data-upcoming-tab="'+esc(e.id)+'" data-upcoming-section="'+esc(g.key)+'" aria-controls="upcoming-'+esc(e.id)+'-'+(g.key==='all'?sections[0].key:g.key)+'" aria-pressed="'+String(g.key===selected.key)+'"><span>'+esc(g.label)+'</span><small>'+g.rows.length+'</small></button>').join('')+'</div>':
    '<div class="upcoming-single-section">'+esc(selected?.label||'Announced bouts')+'</div>';
   const panels=sections.map(g=>'<div id="upcoming-'+esc(e.id)+'-'+esc(g.key)+'" class="result-bouts upcoming-fights" data-upcoming-panel="'+esc(g.key)+'" role="list" aria-label="'+esc(g.label)+'" '+(selected.key==='all'||g.key===selected.key?'':'hidden')+'>'+g.rows.map(b=>'<div role="listitem">'+bout(b,e)+'</div>').join('')+'</div>').join('');
@@ -204,7 +204,7 @@ window.UpcomingCards=(()=>{
    (first?'<img class="upcoming-hero-poster" src="'+art+'" data-upcoming-poster-candidates="'+esc(JSON.stringify(artCandidates))+'" data-upcoming-poster-index="0" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">':'')+'</span>';
   const summary='<summary class="upcoming-event-summary upcoming-hero upcoming-schedule-row'+(art?' has-poster':' is-artwork-missing')+'">'+media+
    '<span class="upcoming-hero-content"><span class="upcoming-row-kicker">'+esc(e.promotion)+(window.BEFNSport?.get()==='all'?' · '+esc(e.sport==='mma'?'MMA':'BOXING'):'')+'</span>'+
-   '<strong class="upcoming-hero-title">'+esc(e.title)+'</strong>'+
+   '<strong class="upcoming-hero-title">'+esc((globalThis.BEFNEventTitle||(x=>x))(e.title))+'</strong>'+
    '<span class="upcoming-hero-times">'+rowTimes(e)+'</span>'+
    '<span class="upcoming-hero-location">'+esc(e.location||'Venue TBC')+'</span>'+
    (e.sourceStatus==='reported'?'<span class="upcoming-row-provisional">Reported · UFC confirmation pending</span>':'')+'</span>'+

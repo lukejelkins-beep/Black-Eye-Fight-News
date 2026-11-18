@@ -1,5 +1,5 @@
 /* Offline-ready app shell. Always prioritise network for news and fight data. */
-const CACHE_NAME = 'befn-v3-profile-20261118-data1';
+const CACHE_NAME = 'befn-v3-profile-20261118-sponsor1';
 const SHELL = [
   '/', '/index.html', '/manifest.webmanifest',
   '/assets/mark.svg', '/assets/site-favicon-192.png', '/assets/icon-192.png', '/assets/icon-512.png', '/assets/apple-touch-icon.png', '/assets/icon-maskable-512.png',

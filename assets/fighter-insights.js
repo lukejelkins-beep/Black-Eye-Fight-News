@@ -218,7 +218,7 @@
    const m=b.metrics||{};
    const delta=m.totalStrikeDifferential;
    return '<li class="befn-postfight-bout"><span><b>'+escapeHTML(b.opponent)+
-    '</b><small>'+escapeHTML(b.date)+' · '+escapeHTML(b.event||"UFC")+'</small></span>'+
+    '</b><small>'+escapeHTML(b.date)+' · '+escapeHTML((globalThis.BEFNEventTitle||(x=>x))(b.event||"UFC"))+'</small></span>'+
     '<span><b>'+escapeHTML(trackedMetric(m.totalLanded))+' total strikes</b>'+
     '<small>Difference '+escapeHTML(trackedMetric(delta,"signed"))+
     ' · Control '+escapeHTML(trackedMetric(m.controlSec,"duration"))+'</small></span></li>';
