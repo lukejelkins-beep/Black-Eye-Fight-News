@@ -1,39 +1,39 @@
 {
   "schema": 1,
   "scope": "ufc",
-  "asOf": "2026-11-17",
-  "activityCutoff": "2025-05-17",
+  "asOf": "2026-11-18",
+  "activityCutoff": "2025-05-18",
   "activityMonths": 18,
   "eligibilityNote": "A qualifying fighter must have an official UFC bout as their latest known completed professional MMA appearance within the rolling period. Later professional MMA elsewhere, documented retirement, and confirmed UFC departure exclude; feeder fights do not qualify. Unknown rulesets or contract status require independent review.",
   "summary": {
-    "recentUfcActivityCandidates": 890,
+    "recentUfcActivityCandidates": 884,
     "excludedWithoutRecentOfficialUfc": 149,
     "excludedLaterNonUfcMma": 21,
     "excludedConfirmedRetired": 0,
     "excludedConfirmedUfcExit": 0,
     "excludedOfficialNotFighting": 0,
     "latestPromotionReviewRequired": 34,
-    "noKnownLaterMmaOrUnknown": 686,
-    "activeFighters": 720,
-    "withFiveKnown": 441,
-    "withFiveLinkedIds": 441,
-    "withThreeMeasured": 549,
+    "noKnownLaterMmaOrUnknown": 680,
+    "activeFighters": 714,
+    "withFiveKnown": 436,
+    "withFiveLinkedIds": 436,
+    "withThreeMeasured": 543,
     "withShortUfcTimelineReconciled": 0,
-    "withUfcHistoryLinkedAndMeasured": 386,
+    "withUfcHistoryLinkedAndMeasured": 383,
     "evidenceStages": {
-      "fiveLinkedMeasured": 386,
-      "fiveLinkedStatsGap": 55,
+      "fiveLinkedMeasured": 383,
+      "fiveLinkedStatsGap": 53,
       "fiveUnlinked": 0,
       "shortLinkedMeasuredDepthConfirmed": 0,
-      "shortLinkedMeasuredDepthUnconfirmed": 249,
+      "shortLinkedMeasuredDepthUnconfirmed": 248,
       "shortLinkedStatsGapDepthConfirmed": 0,
       "shortLinkedStatsGap": 30,
       "shortUnlinked": 0
     },
-    "needHistoryCheck": 279,
-    "needStats": 85,
+    "needHistoryCheck": 278,
+    "needStats": 83,
     "shiftedDateAliasesJoined": 343,
-    "uniqueKnownBoutIds": 1738
+    "uniqueKnownBoutIds": 1726
   },
   "eligibilityExcluded": [
     {
@@ -15806,50 +15806,6 @@
           "opponent": "Talita Alencar",
           "boutId": "59947",
           "method": "decision_split",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        }
-      ]
-    },
-    {
-      "name": "Connor Matthews",
-      "slug": "connor-matthews",
-      "lastUfcFight": "2025-05-17",
-      "eligibilityStatus": "latest_observed_mma_ufc",
-      "champion": false,
-      "upcoming": false,
-      "ranked": false,
-      "recentCount": 3,
-      "measuredCount": 3,
-      "evidenceStage": "shortLinkedMeasuredDepthUnconfirmed",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": true,
-      "needsStats": false,
-      "recent": [
-        {
-          "date": "2025-05-17",
-          "opponent": "Yadier del Valle",
-          "boutId": "60847",
-          "method": "submission",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2025-02-15",
-          "opponent": "Jose Delgado",
-          "boutId": "60996",
-          "method": "ko_tko",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2024-03-30",
-          "opponent": "Dennis Buzukja",
-          "boutId": "38988",
-          "method": "ko_tko",
           "outcome": "L",
           "origin": "ufc-bout-index",
           "hasMeasuredTotals": true
@@ -40154,316 +40110,6 @@
           "opponent": "Austin Hubbard",
           "boutId": "61160",
           "method": "submission",
-          "outcome": "W",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        }
-      ]
-    },
-    {
-      "name": "Carlos Hernandez",
-      "slug": "carlos-hernandez",
-      "lastUfcFight": "2025-05-17",
-      "eligibilityStatus": "latest_observed_mma_ufc",
-      "champion": false,
-      "upcoming": false,
-      "ranked": false,
-      "recentCount": 5,
-      "measuredCount": 4,
-      "evidenceStage": "fiveLinkedStatsGap",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": false,
-      "needsStats": true,
-      "recent": [
-        {
-          "date": "2025-05-17",
-          "opponent": "HyunSung Park",
-          "boutId": "60850",
-          "method": "submission",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2024-11-23",
-          "opponent": "Nyamjargal Tumendemberel",
-          "boutId": "38594",
-          "method": "decision_split",
-          "outcome": "W",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2024-06-29",
-          "opponent": "Rei Tsuruya",
-          "boutId": "61052",
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2023-12-10",
-          "opponent": "Tatsuro Taira",
-          "boutId": "59946",
-          "method": "ko_tko",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2023-06-17",
-          "opponent": "Denys Bondar",
-          "boutId": "60174",
-          "method": "decision_unanimous",
-          "outcome": "W",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": false
-        }
-      ]
-    },
-    {
-      "name": "Carlos Hernandez",
-      "slug": "carlos-hernandez-7",
-      "lastUfcFight": "2025-05-17",
-      "eligibilityStatus": "latest_observed_mma_ufc",
-      "champion": false,
-      "upcoming": false,
-      "ranked": false,
-      "recentCount": 5,
-      "measuredCount": 4,
-      "evidenceStage": "fiveLinkedStatsGap",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": false,
-      "needsStats": true,
-      "recent": [
-        {
-          "date": "2025-05-17",
-          "opponent": "Park Hyun-sung",
-          "boutId": "83242",
-          "method": "submission",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2024-11-23",
-          "opponent": "Nyamjargal Tumendemberel",
-          "boutId": "38594",
-          "method": "decision_split",
-          "outcome": "W",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2024-06-29",
-          "opponent": "Rei Tsuruya",
-          "boutId": "61052",
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2023-12-10",
-          "opponent": "Tatsuro Taira",
-          "boutId": "59946",
-          "method": "ko_tko",
-          "outcome": "L",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2023-06-17",
-          "opponent": "Denys Bondar",
-          "boutId": "60174",
-          "method": "decision_unanimous",
-          "outcome": "W",
-          "origin": "ufc-history",
-          "hasMeasuredTotals": false
-        }
-      ]
-    },
-    {
-      "name": "Gabe Green",
-      "slug": "gabe-green",
-      "lastUfcFight": "2025-05-17",
-      "eligibilityStatus": "latest_observed_mma_ufc",
-      "champion": false,
-      "upcoming": false,
-      "ranked": false,
-      "recentCount": 5,
-      "measuredCount": 5,
-      "evidenceStage": "fiveLinkedMeasured",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": false,
-      "needsStats": false,
-      "recent": [
-        {
-          "date": "2025-05-17",
-          "opponent": "Matheus Camilo",
-          "boutId": "60845",
-          "method": "submission",
-          "outcome": "W",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2023-05-13",
-          "opponent": "Bryan Battle",
-          "boutId": "61305",
-          "method": "ko_tko",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2022-07-02",
-          "opponent": "Ian Machado Garry",
-          "boutId": "61487",
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2022-04-30",
-          "opponent": "Yohan Lainesse",
-          "boutId": "59613",
-          "method": "ko_tko",
-          "outcome": "W",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2021-02-14",
-          "opponent": "Phil Rowe",
-          "boutId": "61926",
-          "method": "decision_unanimous",
-          "outcome": "W",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        }
-      ]
-    },
-    {
-      "name": "Luana Pinheiro",
-      "slug": "luana-pinheiro",
-      "lastUfcFight": "2025-05-17",
-      "eligibilityStatus": "latest_observed_mma_ufc",
-      "champion": false,
-      "upcoming": false,
-      "ranked": false,
-      "recentCount": 5,
-      "measuredCount": 5,
-      "evidenceStage": "fiveLinkedMeasured",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": false,
-      "needsStats": false,
-      "recent": [
-        {
-          "date": "2025-05-17",
-          "opponent": "Tecia Pennington",
-          "boutId": "60851",
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2024-11-09",
-          "opponent": "Gillian Robertson",
-          "boutId": "65826",
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2024-05-18",
-          "opponent": "Angela Hill",
-          "boutId": "61019",
-          "method": "submission",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2023-11-18",
-          "opponent": "Amanda Ribas",
-          "boutId": "59977",
-          "method": "ko_tko",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2023-04-08",
-          "opponent": "Michelle Waterson-Gomez",
-          "boutId": "53832",
-          "method": "decision_split",
-          "outcome": "W",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        }
-      ]
-    },
-    {
-      "name": "Sodiq Yusuff",
-      "slug": "sodiq-yusuff",
-      "lastUfcFight": "2025-05-17",
-      "eligibilityStatus": "latest_observed_mma_ufc",
-      "champion": false,
-      "upcoming": false,
-      "ranked": false,
-      "recentCount": 5,
-      "measuredCount": 5,
-      "evidenceStage": "fiveLinkedMeasured",
-      "ufcTimelineDepthConfirmed": false,
-      "needsHistoryCheck": false,
-      "needsStats": false,
-      "recent": [
-        {
-          "date": "2025-05-17",
-          "opponent": "Mairon Santos",
-          "boutId": "60842",
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2024-04-13",
-          "opponent": "Diego Lopes",
-          "boutId": "53795",
-          "method": "ko_tko",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2023-10-14",
-          "opponent": "Edson Barboza",
-          "boutId": "60010",
-          "method": "decision_unanimous",
-          "outcome": "L",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2022-10-01",
-          "opponent": "Don Shainis",
-          "boutId": "61193",
-          "method": "submission",
-          "outcome": "W",
-          "origin": "ufc-bout-index",
-          "hasMeasuredTotals": true
-        },
-        {
-          "date": "2022-03-12",
-          "opponent": "Alex Caceres",
-          "boutId": "61408",
-          "method": "decision_unanimous",
           "outcome": "W",
           "origin": "ufc-bout-index",
           "hasMeasuredTotals": true
