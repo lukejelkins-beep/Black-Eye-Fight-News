@@ -54,15 +54,25 @@ const nextTorikumi={};
 let scheduleCount=0;
 if(nextDay>=1&&nextDay<=15){
   for(const division of TRACKED_DIVISIONS){
+    // Already-published next-day pairings are kept until the API has its own,
+    // so an empty or failed API response never removes matchups from the page.
+    const prior=Number(details.announcedDay)===nextDay?details.torikumi?.[division]?.data:null;
+    const priorRows=announcedTorikumiMatches(prior,{bashoId,division,day:nextDay});
     try{
       const source=await client.torikumi(bashoId,division,nextDay);
       const rows=announcedTorikumiMatches(source,{bashoId,division,day:nextDay});
       if(rows.length){
         nextTorikumi[division]={status:'available',data:source};
         scheduleCount+=rows.length;
+      }else if(priorRows.length){
+        nextTorikumi[division]={status:'available',data:prior};
+        scheduleCount+=priorRows.length;
       }else nextTorikumi[division]={status:'unavailable',data:null,reason:'No confirmed next-day torikumi in the Sumo API yet'};
     }catch(error){
-      nextTorikumi[division]={status:'unavailable',data:null,reason:'Next-day schedule source temporarily unavailable'};
+      if(priorRows.length){
+        nextTorikumi[division]={status:'available',data:prior};
+        scheduleCount+=priorRows.length;
+      }else nextTorikumi[division]={status:'unavailable',data:null,reason:'Next-day schedule source temporarily unavailable'};
       console.warn(division+' day '+nextDay+' torikumi not yet available: '+String(error.message).slice(0,140));
     }
   }
