@@ -212,6 +212,28 @@ assert(Number.isInteger(model.evaluateV3(noTdDef,{population}).ratings.find(x=>x
  "Defence rates from strikes absorbed and opponent control when takedown defence is unmeasured");
 const decorated=model.evaluateV3(roster.fighters.f39,{population,credentials:[sourced("bjj",{belt:"black"})]});
 assert(decorated.ratings.every(x=>x.scale!=="percentile"||x.score<=99),"Credentials never push a percentile past 99th");
+// Opponent strength: beating strong opponents lifts form, losing to them costs less.
+const wins=[{opponent:"A",date:"2026-05-01",result:"W"},{opponent:"B",date:"2026-01-01",result:"W"},
+ {opponent:"C",date:"2025-09-01",result:"L"}];
+const plain=model.recentForm(wins);
+assert.equal(model.recentForm(wins,()=>.5),plain,"Roster-average opponents leave form unchanged");
+assert.equal(model.recentForm(wins,()=>null),plain,"Unknown opponents leave form unchanged");
+assert(model.recentForm(wins,()=>1)>plain,"Elite opposition raises form");
+assert(model.recentForm(wins,()=>0)<plain,"Weak opposition lowers form");
+assert(model.recentForm(wins,()=>1)-plain<=Math.ceil(100*model.OPPONENT_SWING/2),"Opponent shift is bounded");
+const perfect=[1,2,3,4,5].map(i=>({opponent:"X"+i,date:"2026-0"+i+"-01",result:"W"}));
+assert(model.recentForm(perfect,()=>1)<=100,"Form never exceeds 100");
+const quality=model.buildOpponentQuality(roster,population);
+assert(quality.size>=30,"Most of the roster gets an opponent-strength value");
+assert(Math.max(...quality.values())<=1&&Math.min(...quality.values())>=0);
+const named={fighters:{},asOf:"2026-11-14"};
+for(let i=0;i<40;i++)named.fighters["f"+i]={...roster.fighters["f"+i],name:"Fighter "+i};
+const namedPop=model.buildV3Population(named),namedQ=model.buildOpponentQuality(named,namedPop);
+const vsTop={...named.fighters.f20,recent:[{opponent:"Fighter 39",date:"2026-05-01",outcome:"W"},{opponent:"Fighter 38",date:"2026-01-01",outcome:"W"}]};
+const vsBottom={...named.fighters.f20,recent:[{opponent:"Fighter 0",date:"2026-05-01",outcome:"W"},{opponent:"Fighter 1",date:"2026-01-01",outcome:"W"}]};
+const formOf=x=>model.evaluateV3(x,{population:namedPop,opponents:namedQ}).ratings.find(r=>r.id==="form");
+assert(formOf(vsTop).score>formOf(vsBottom).score,"Same record against better opponents rates higher");
+assert(formOf(vsTop).opponents.every(o=>Number.isFinite(o.quality)),"Form exposes each opponent's strength");
 const fewRoster=model.buildV3Population({fighters:{a:roster.fighters.f39,b:roster.fighters.f0}});
 assert.equal(model.evaluateV3(roster.fighters.f39,{population:fewRoster}).ratings[0].score,null,"A roster under 20 fighters cannot rank");
 console.log("PASS: 5 MMA dimensions, evidence gating, form, no cardio, merged cage-time history");
