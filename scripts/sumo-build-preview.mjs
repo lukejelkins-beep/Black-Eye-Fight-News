@@ -138,7 +138,7 @@ const details = {
 try {
   const previous = JSON.parse(await readFile('data/sumo/preview-details.json', 'utf8'));
   if (previous.bashoId === CURRENT_BASHO) {
-    for (const key of ['announcedDay', 'torikumi', 'dailyCollectedAt', 'dailyJstDay', 'dailyScheduleCount', 'dailySource', 'dailyStatus']) {
+    for (const key of ['announcedDay', 'torikumi', 'todayDay', 'todayTorikumi', 'dailyCollectedAt', 'dailyJstDay', 'dailyScheduleCount', 'dailySource', 'dailyStatus']) {
       if (key in previous) details[key] = previous[key];
     }
   }
