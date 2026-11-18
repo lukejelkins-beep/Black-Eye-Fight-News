@@ -2,6 +2,22 @@
 (()=>{
 'use strict';
 const D=window.COMBAT_DATA;
+// Public-display clean-up of fighter records. The data file is refreshed by
+// bots, so fix at load: an archived list ranking ("#9", "Outside top 15") or a
+// research placeholder ("Record: consult linked ledger") is never shown as a
+// pro record. Use the sourced "Professional: W-L(-D)" line when present.
+(function cleanFighterRecords(){
+ const rankLike=/^(#\d+|Outside\b.*\btop\s*\d+)/i,placeholder=/^Record:/i;
+ for(const f of D.fighters||[]){
+  let r=String(f.record||'').trim();
+  if(rankLike.test(r)||placeholder.test(r)){
+   if(rankLike.test(r))f.archivedListRank=r;
+   const m=String(f.meta||'').match(/Professional:\s*(\d{1,3})\s*[-–]\s*(\d{1,3})(?:\s*[-–]\s*(\d{1,3}))?/i);
+   r=m?[m[1],m[2],m[3]].filter(x=>x!==undefined).join('–'):'';
+  }
+  f.record=r.replace(/(\d)\s*-\s*(\d)/g,'$1–$2');
+ }
+})();
 const main=document.querySelector('#main');
 const dialog=document.querySelector('#fighterDialog');
 if(!D||!main){if(main) main.textContent='Fight data unavailable. Please refresh the page.';return;}
@@ -481,7 +497,7 @@ function previousReignsLine(c){
  return `<small class="reign-line">Previous (${label}): ${days.toLocaleString('en-AU')} days · ${suffix}${src}</small>`;
 }
 function champsTable(){if(state.champions==='boxing')return `<div class="champ-table-wrap"><table class="champ-table"><thead><tr><th>Division</th>${['WBA','WBC','IBF','WBO','The Ring'].map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${D.champions.boxing.map(row=>`<tr><td class="division-head">${esc(row.division)}</td>${['WBA','WBC','IBF','WBO','Ring'].map(b=>`<td>${(row.belts[b]||[]).map(c=>`<div class="champ-cell">${c.name.toLowerCase()==='vacant'?'':champThumb(c.name,c.photo)}<div><b>${c.name.toLowerCase()==='vacant'?esc(c.name):champPeek(c.name,c.photo)}</b>${c.days?`<small class="reign-line">Current: ${esc(c.days)} · ${defenceLabel(c.defences)}${c.status?` ${esc(c.status)}`:''}</small>${previousReignsLine(c)}`:(c.status?`<small>${esc(c.status)}</small>`:'')}</div></div>`).join('')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
-return `<div class="champ-table-wrap"><table class="champ-table"><thead><tr><th>Division</th><th>Titleholder</th><th>Reign began</th></tr></thead><tbody>${D.champions.mma.map(row=>`<tr><td class="division-head">${esc(row.division)}</td><td><div class="champ-cell">${champThumb(row.name,row.photo)}<div><b>${champPeek(row.name,row.photo)}</b><button type="button" class="befn-champion-profile-link" data-fighter="mma-champion--${row.name.normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}" aria-label="Open researched fighter profile for ${esc(row.name)}">Full fighter profile</button><small class="reign-line">Current: ${esc(row.days)} days · ${defenceLabel(row.defences)}</small>${previousReignsLine(row)}</div></div></td><td>${esc(row.start)}</td></tr>`).join('')}</tbody></table></div>`;}
+return `<div class="champ-table-wrap"><table class="champ-table"><thead><tr><th>Division</th><th>Titleholder</th><th>Reign began</th></tr></thead><tbody>${D.champions.mma.map(row=>`<tr><td class="division-head">${esc(row.division)}</td><td><div class="champ-cell">${champThumb(row.name,row.photo)}<div><b>${champPeek(row.name,row.photo)}</b><button type="button" class="befn-champion-profile-link" data-fighter="mma-champion--${row.name.normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}" aria-label="Open researched fighter profile for ${esc(row.name)}">Full fighter profile</button><small class="reign-line">Current: ${esc(reignDays(row)??row.days)} days · ${defenceLabel(row.defences)}</small>${previousReignsLine(row)}</div></div></td><td>${esc(row.start)}</td></tr>`).join('')}</tbody></table></div>`;}
 function renderChampions(){
  const sport=state.champions;let listing='';
  if(sport==='grappling')listing='<div class="empty">Verified grappling championship standings are not yet available.</div>';
@@ -493,7 +509,7 @@ function renderChampions(){
  const scope=sport==='all'?'BOXING & MMA':sport==='boxing'?'13 WEIGHT DIVISIONS · FIVE BELT COLUMNS':sport==='mma'?'11 UFC DIVISIONS':'GRAPPLING';
  return renderFrame(viewTitle('','Champions')+'<div class="filter-row"><span class="result-count">'+scope+'</span></div>'+listing+`<details class="compact-note"><summary>Title statistics</summary><p>Current reign = the displayed title and division. A previous-reign total appears only where a recorded earlier reign was held in the same weight division and for the same boxing title organisation (or in the same UFC weight division). Multiple earlier reigns are combined into a single previous total. interim, regional and other-division titles are excluded. Historical days and successful defences are summed across qualifying earlier reigns, excluding title-winning bouts. Figures are dated archive snapshots, not live totals.</p></details>`);
 }
-const fighterCard=f=>`<button type="button" class="fighter-card" data-fighter="${esc(f.id)}" aria-label="View scouting profile for ${esc(f.name)}"><div class="fighter-image" data-fighter-portrait="${esc(f.name)}" data-portrait-state="fallback">${fighterPortraitFallback(f.name)}${f.photo?`<img src="${safeURL(f.photo)}" loading="lazy" referrerpolicy="no-referrer" alt="Photograph of ${esc(f.name)}">`:''}<span class="fighter-tag">${esc(f.category)}</span></div><div class="fighter-body"><div class="fighter-metadata">${esc(f.division)} · ${esc(f.sport)}</div><h3>${esc(f.name)}</h3><div class="fighter-metadata">${esc(f.record)}</div><p>${esc(f.analysis[0]||f.meta)}</p><div class="fighter-link">OPEN FULL SCOUTING REPORT ↗</div></div></button>`;
+const fighterCard=f=>`<button type="button" class="fighter-card" data-fighter="${esc(f.id)}" aria-label="View scouting profile for ${esc(f.name)}"><div class="fighter-image" data-fighter-portrait="${esc(f.name)}" data-portrait-state="fallback">${fighterPortraitFallback(f.name)}${f.photo?`<img src="${safeURL(f.photo)}" loading="lazy" referrerpolicy="no-referrer" alt="Photograph of ${esc(f.name)}">`:''}<span class="fighter-tag">${esc(f.category)}</span></div><div class="fighter-body"><div class="fighter-metadata">${esc(f.division)} · ${esc(f.sport)}</div><h3>${esc(f.name)}</h3><div class="fighter-metadata">${esc(f.record||'Record unconfirmed')}</div><p>${esc(f.analysis[0]||f.meta)}</p><div class="fighter-link">OPEN FULL SCOUTING REPORT ↗</div></div></button>`;
 function filteredFighters(){let result=D.fighters.filter(f=>(state.fightersSport==='All'||f.sport===state.fightersSport) && (state.fightersCategory==='All'||f.category===state.fightersCategory) && (state.fightersDivision==='All'||scoutDivisionKey(f.division)===state.fightersDivision));const q=state.fightersQuery.trim().toLowerCase();if(q)result=result.filter(f=>[f.name,f.division,f.meta,f.record,f.next,...f.analysis].join(' ').toLowerCase().includes(q));return result;}
 // Event-tagged divisions ("UFC 334 · Welterweight") and case variants
 // ("Light heavyweight" / "Light Heavyweight") share one filter option.
@@ -1026,6 +1042,20 @@ function fixtureCellText(value){
 function tableHTML(t){return `<section class="calendar-block"><div class="subheader">${esc(t.label==='Upcoming cards'?'Fight cards & event status':t.label)}</div><div class="scroller"><table class="data-table"><thead><tr><th scope="col">Event status</th>${t.head.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${t.rows.map(row=>`<tr><td>${window.EventStatus.row(row)}</td>${row.map(v=>`<td>${esc(fixtureCellText(v))}</td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`;}
 function renderHighlights(){return window.FightFilm.render()+window.BEFNCoverage.panel(activeSport())}
 function befnDivisionKey(s){return String(s||'').normalize('NFKD').toLowerCase().replace(/[^a-z0-9]/g,'')}
+// Days held is counted live from the reign's start date ("15 Nov 2025") so it
+// never goes stale between data refreshes; the stored count is the fallback.
+function reignDays(r){
+ const m=String(r?.start||'').trim().match(/^(\d{1,2})\s+([A-Za-z]{3})[A-Za-z]*\.?\s+(\d{4})$/);
+ const months={jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+ if(m&&m[2].toLowerCase() in months){
+  const start=Date.UTC(Number(m[3]),months[m[2].toLowerCase()],Number(m[1]));
+  const now=new Date(),today=Date.UTC(now.getFullYear(),now.getMonth(),now.getDate());
+  const days=Math.round((today-start)/86400000);
+  if(days>=0)return days;
+ }
+ const n=Number(r?.days);
+ return String(r?.days??'').trim()!==''&&Number.isFinite(n)?n:null;
+}
 function befnTitleBelts(f){
  if(f.sport!=='MMA')return '';
  // Draw one belt for a documented current UFC title. Never infer titles in
@@ -1045,7 +1075,7 @@ const r=(D.champions?.mma||[]).find(x=>x.name===f.name&&befnDivisionKey(x.divisi
 if(!r||f.sport!=='MMA'||f.category!=='Champion')return '';
 const parts=[];
 if(r.start)parts.push('<span><b>Reign began</b>'+esc(r.start)+'</span>');
-if(Number.isFinite(Number(r.days))&&String(r.days).trim()!=='')parts.push('<span><b>Days held</b>'+esc(r.days)+'</span>');
+const held=reignDays(r);if(held!==null)parts.push('<span><b>Days held</b>'+held+'</span>');
 if(Number.isInteger(r.defences))parts.push('<span><b>Defences</b>'+r.defences+'</span>');
 if(Array.isArray(r.previousReigns)&&r.previousReigns.length)parts.push('<span><b>Prior reigns</b>'+r.previousReigns.length+'</span>');
 return parts.length?'<div class="befn-reign"><strong>UFC '+esc(r.division)+' title reign</strong><div>'+parts.join('')+'</div></div>':'';
