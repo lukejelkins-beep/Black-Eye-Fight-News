@@ -57,9 +57,17 @@ def method_text(method, details):
     if not method:
         return 'Method not published by source'
     # Decision details hold judges' scores; finish details describe the finish.
+    # UFCStats sometimes runs two descriptions together ("At DistanceWheel Kick"):
+    # keep the first one.
+    details = re.split(r'(?<=[a-z])(?=[A-Z])', details)[0].strip()
     if details and len(details) <= 40 and not re.search(r'\d+\s*-\s*\d+', details):
         return f'{method} ({details.lower()})'
     return method
+
+
+def draw_text(method):
+    kind = str(method or '').split('-', 1)[1].strip().lower() if '-' in str(method or '') else ''
+    return f'{kind} draw' if kind in ('majority', 'split', 'unanimous') else 'draw'
 
 
 def scheduled_rounds(time_format):
@@ -140,7 +148,7 @@ def build_card(card, by_date):
             'id': f"{card['id']}-{norm(a)}", 'eventId': card['id'], 'event': card['title'], 'sport': 'MMA',
             'date': card['date'], 'location': card.get('location', ''), 'division': bout.get('division') or src.get('WEIGHTCLASS', ''),
             'fighters': fighters, 'winner': winner,
-            'method': 'draw' if outs[0] == 'draw' else 'no contest' if outs[0] == 'no contest' else method_text(src.get('METHOD'), src.get('DETAILS')),
+            'method': draw_text(src.get('METHOD')) if outs[0] == 'draw' else 'no contest' if outs[0] == 'no contest' else method_text(src.get('METHOD'), src.get('DETAILS')),
             'round': int(src['ROUND']) if str(src.get('ROUND', '')).strip().isdigit() else None,
             'time': str(src.get('TIME', '')).strip() or None,
             'source': (src.get('URL') or '').replace('http://', 'https://'),

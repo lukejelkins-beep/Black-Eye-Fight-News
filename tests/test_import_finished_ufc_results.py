@@ -9,7 +9,7 @@ EVENTS = """EVENT,URL,DATE,LOCATION
 UFC 334: Gane vs. Hokit,http://ufcstats.com/event-details/abc,"November 14, 2026","New York City, New York, USA"
 """
 RESULTS = """EVENT,BOUT,OUTCOME,WEIGHTCLASS,METHOD,ROUND,TIME,TIME FORMAT,REFEREE,DETAILS,URL
-UFC 334: Gane vs. Hokit,Josh Hokit vs. Ciryl Gane,W/L,UFC Heavyweight Title Bout,KO/TKO,2,3:12,5 Rnd (5-5-5-5-5),Herb Dean,Punches to Head At Distance,http://ufcstats.com/fight-details/1111111111111111
+UFC 334: Gane vs. Hokit,Josh Hokit vs. Ciryl Gane,W/L,UFC Heavyweight Title Bout,KO/TKO ,2,3:12,5 Rnd (5-5-5-5-5),Herb Dean,Punches to Head At DistanceWheel Kick,http://ufcstats.com/fight-details/1111111111111111
 UFC 334: Gane vs. Hokit,Kayla Harrison vs. Amanda Nunes,W/L,Women's Bantamweight Bout,Decision - Unanimous,3,5:00,3 Rnd (5-5-5),Marc Goddard,Sal D'amato 29 - 28. Chris Lee 29 - 28. ,http://ufcstats.com/fight-details/2222222222222222
 UFC 334: Gane vs. Hokit,José Souza vs. Dan Smith,D/D,Lightweight Bout,Decision - Split,3,5:00,3 Rnd (5-5-5),Herb Dean,,http://ufcstats.com/fight-details/3333333333333333
 """
@@ -49,7 +49,7 @@ class ImporterTest(unittest.TestCase):
         self.assertTrue(main['source'].startswith('https://ufcstats.com/fight-details/'))
         self.assertEqual(rows[1]['method'], 'unanimous decision')
         self.assertEqual(rows[1]['winner'], 1)
-        self.assertEqual((rows[2]['winner'], rows[2]['method']), (None, 'draw'))
+        self.assertEqual((rows[2]['winner'], rows[2]['method']), (None, 'split draw'))
         self.assertEqual(rows[2]['section'], 'Prelims')
         self.assertIn('Josh Hokit defeated Ciryl Gane', event['takeaways'][0]['text'])
 
