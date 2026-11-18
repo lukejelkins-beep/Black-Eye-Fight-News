@@ -102,7 +102,7 @@ window.UpcomingCards=(()=>{
  function heroWhen(e){
   const date=window.FightTime.instant(e.startAt);
   return '<span class="upcoming-hero-date">'+esc(date?window.FightTime.localDate(e.startAt):fmtDate(e.date))+'</span>'+
-   '<span class="upcoming-hero-clock">'+(date?esc(window.FightTime.localClock(e.startAt)):'Start time TBC · venue date')+'</span>';
+   '<span class="upcoming-hero-clock">'+(date?esc(window.FightTime.localClock(e.startAt)):'')+'</span>';
  }
  function heroFighters(e){
   const main=e.bouts.find(b=>b.section==='main')||e.bouts[0];
@@ -180,7 +180,7 @@ window.UpcomingCards=(()=>{
  }
  function rowTimes(e){
   const main=publishedInstant(e),prelims=publishedInstant(e,'prelims');
-  if(!main)return '<span>Start time TBC · venue date</span>';
+  if(!main)return '';
   const label=/main\s*card/i.test(e.startLabel||'')?'Main card':/broadcast/i.test(e.startLabel||'')?'Broadcast':'Event start';
   return (prelims?'<span>Prelims <strong>'+esc(window.FightTime.localClock(prelims.toISOString()))+'</strong></span><span class="upcoming-dot">·</span>':'')+
    '<span>'+label+' <strong>'+esc(window.FightTime.localClock(main.toISOString()))+'</strong></span>'+

@@ -2,6 +2,11 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-19
+- Render publishes a built `dist/` folder of reader files only, not the repository root. Research archives, provider caches, docs and workflows were downloadable from the live site. — Owner approved — PR for branch fix/publish-reader-files-only-20261119; owner changes the Render build command and publish directory after merge.
+- Unknown start times are left blank instead of showing "Start time TBC · venue date". — Owner approved (phase 0) — same PR.
+- Roadmap for the site-wide redesign, news feed, results, upcoming snapshots and analysis area agreed; phase 0 approved. Priority promotions after UFC: PFL, ONE, Cage Warriors (MMA); Zuffa Boxing, Golden Boy, Top Rank, Matchroom, PBC (boxing). Betting odds may be shown as a benchmark if free. — Owner — roadmap doc.
+
 ## 2026-11-18
 - Sumo next-day matchups (torikumi) come from the Sumo API for all three divisions, replacing the JSA page scraper (blocked from CI) and the relayed JSA email. This reverses the "no Sumo API for matchups" rule from PR #280. Matchups now appear after about 18:00 JST instead of about 14:00. — Owner direction — Sumo preview PR for branch feat/sumo-api-torikumi-20261118, scheduler PR for branch ci/sumo-scheduler-api-torikumi-20261118.
 
