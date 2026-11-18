@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "preview": true,
   "source": "https://www.sumo-api.com/api",
-  "collectedAt": "2026-11-17T20:19:08.962Z",
+  "collectedAt": "2026-11-18T07:48:57.730Z",
   "notice": "Developer preview; third-party source; cross-check results against the Japan Sumo Association before production.",
   "bashoId": "202611",
   "trackedDivisions": [
@@ -388,16 +388,16 @@
           },
           "totalAbsences": 102,
           "totalByDivision": {
-            "Juryo": 205,
+            "Juryo": 206,
             "Makushita": 49,
             "Makuuchi": 423,
             "Sandanme": 14
           },
           "totalLosses": 262,
-          "totalMatches": 691,
-          "totalWins": 429,
+          "totalMatches": 692,
+          "totalWins": 430,
           "winsByDivision": {
-            "Juryo": 122,
+            "Juryo": 123,
             "Makushita": 36,
             "Makuuchi": 259,
             "Sandanme": 12
@@ -418,6 +418,22 @@
           "skip": 0,
           "total": 18,
           "records": [
+            {
+              "bashoId": "202611",
+              "division": "Juryo",
+              "day": 11,
+              "matchNo": 14,
+              "eastId": 39,
+              "eastShikona": "Chiyoshoma",
+              "eastRank": "Juryo 1 East",
+              "westId": 12,
+              "westShikona": "Wakatakakage",
+              "westRank": "Juryo 5 West",
+              "kimarite": "oshidashi",
+              "winnerId": 12,
+              "winnerEn": "Wakatakakage",
+              "winnerJp": ""
+            },
             {
               "bashoId": "202611",
               "division": "Juryo",
@@ -688,22 +704,6 @@
               "kimarite": "yorikiri",
               "winnerId": 12,
               "winnerEn": "Wakatakakage",
-              "winnerJp": ""
-            },
-            {
-              "bashoId": "202605",
-              "division": "Makuuchi",
-              "day": 9,
-              "matchNo": 16,
-              "eastId": 12,
-              "eastShikona": "Wakatakakage",
-              "eastRank": "Komusubi 1 East",
-              "westId": 8,
-              "westShikona": "Kotoshoho",
-              "westRank": "Sekiwake 1 West",
-              "kimarite": "yorikiri",
-              "winnerId": 8,
-              "winnerEn": "Kotoshoho",
               "winnerJp": ""
             }
           ]
@@ -3234,11 +3234,11 @@
                 "kimarite": "hatakikomi"
               },
               {
-                "result": "",
+                "result": "win",
                 "opponentShikonaEn": "Nishikifuji",
                 "opponentShikonaJp": "錦富士",
                 "opponentID": 40,
-                "kimarite": ""
+                "kimarite": "okuridashi"
               },
               {
                 "result": "",
@@ -3269,7 +3269,7 @@
                 "kimarite": ""
               }
             ],
-            "wins": 6,
+            "wins": 7,
             "losses": 4,
             "absences": 0
           },
@@ -5242,11 +5242,11 @@
                 "kimarite": "hatakikomi"
               },
               {
-                "result": "",
+                "result": "win",
                 "opponentShikonaEn": "Asahakuryu",
                 "opponentShikonaJp": "朝白龍",
                 "opponentID": 607,
-                "kimarite": ""
+                "kimarite": "oshidashi"
               },
               {
                 "result": "",
@@ -5277,7 +5277,7 @@
                 "kimarite": ""
               }
             ],
-            "wins": 8,
+            "wins": 9,
             "losses": 2,
             "absences": 0
           },
@@ -5360,11 +5360,11 @@
                 "kimarite": "hatakikomi"
               },
               {
-                "result": "",
+                "result": "loss",
                 "opponentShikonaEn": "Takanosho",
                 "opponentShikonaJp": "隆の勝",
                 "opponentID": 37,
-                "kimarite": ""
+                "kimarite": "okuridashi"
               },
               {
                 "result": "",
@@ -5396,7 +5396,7 @@
               }
             ],
             "wins": 7,
-            "losses": 3,
+            "losses": 4,
             "absences": 0
           },
           {
@@ -5714,11 +5714,11 @@
                 "kimarite": "yorikiri"
               },
               {
-                "result": "",
+                "result": "loss",
                 "opponentShikonaEn": "Kinbozan",
                 "opponentShikonaJp": "金峰山",
                 "opponentID": 50,
-                "kimarite": ""
+                "kimarite": "oshidashi"
               },
               {
                 "result": "",
@@ -5750,7 +5750,7 @@
               }
             ],
             "wins": 7,
-            "losses": 3,
+            "losses": 4,
             "absences": 0
           },
           {
@@ -6439,9 +6439,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Hitoshi",
+                "opponentShikonaJp": "日翔志",
+                "opponentID": 111,
                 "kimarite": ""
               },
               {
@@ -6557,9 +6557,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Nabatame",
+                "opponentShikonaJp": "生田目",
+                "opponentID": 117,
                 "kimarite": ""
               },
               {
@@ -6675,9 +6675,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Tamashoho",
+                "opponentShikonaJp": "玉正鳳",
+                "opponentID": 101,
                 "kimarite": ""
               },
               {
@@ -6793,9 +6793,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Wakanosho",
+                "opponentShikonaJp": "若ノ勝",
+                "opponentID": 195,
                 "kimarite": ""
               },
               {
@@ -6911,9 +6911,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Tokifudo",
+                "opponentShikonaJp": "時不動",
+                "opponentID": 140,
                 "kimarite": ""
               },
               {
@@ -7029,9 +7029,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Ryuho",
+                "opponentShikonaJp": "竜鳳",
+                "opponentID": 9099,
                 "kimarite": ""
               },
               {
@@ -7147,9 +7147,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Onokatsu",
+                "opponentShikonaJp": "阿武剋",
+                "opponentID": 8853,
                 "kimarite": ""
               },
               {
@@ -7265,9 +7265,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Hatsuyama",
+                "opponentShikonaJp": "羽出山",
+                "opponentID": 77,
                 "kimarite": ""
               },
               {
@@ -7383,9 +7383,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Meisei",
+                "opponentShikonaJp": "明生",
+                "opponentID": 38,
                 "kimarite": ""
               },
               {
@@ -7501,9 +7501,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Tobizaru",
+                "opponentShikonaJp": "翔猿",
+                "opponentID": 21,
                 "kimarite": ""
               },
               {
@@ -7619,9 +7619,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Shodai",
+                "opponentShikonaJp": "正代",
+                "opponentID": 33,
                 "kimarite": ""
               },
               {
@@ -7737,9 +7737,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Wakatakakage",
+                "opponentShikonaJp": "若隆景",
+                "opponentID": 12,
                 "kimarite": ""
               },
               {
@@ -7855,9 +7855,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Mitakeumi",
+                "opponentShikonaJp": "御嶽海",
+                "opponentID": 26,
                 "kimarite": ""
               },
               {
@@ -7973,9 +7973,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Midorifuji",
+                "opponentShikonaJp": "翠富士",
+                "opponentID": 34,
                 "kimarite": ""
               },
               {
@@ -8093,9 +8093,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Tanji",
+                "opponentShikonaJp": "丹治",
+                "opponentID": 287,
                 "kimarite": ""
               },
               {
@@ -8211,9 +8211,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Enho",
+                "opponentShikonaJp": "炎鵬",
+                "opponentID": 62,
                 "kimarite": ""
               },
               {
@@ -8329,9 +8329,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Tomokaze",
+                "opponentShikonaJp": "友風",
+                "opponentID": 102,
                 "kimarite": ""
               },
               {
@@ -8447,9 +8447,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Tohakuryu",
+                "opponentShikonaJp": "東白龍",
+                "opponentID": 54,
                 "kimarite": ""
               },
               {
@@ -8565,9 +8565,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Asahifuji",
+                "opponentShikonaJp": "旭富士",
+                "opponentID": 9103,
                 "kimarite": ""
               },
               {
@@ -8683,9 +8683,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Kazekeno",
+                "opponentShikonaJp": "風賢央",
+                "opponentID": 78,
                 "kimarite": ""
               },
               {
@@ -8801,9 +8801,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Chiyoshoma",
+                "opponentShikonaJp": "千代翔馬",
+                "opponentID": 39,
                 "kimarite": ""
               },
               {
@@ -8919,9 +8919,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Kayo",
+                "opponentShikonaJp": "嘉陽",
+                "opponentID": 142,
                 "kimarite": ""
               },
               {
@@ -9155,9 +9155,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Kazuma",
+                "opponentShikonaJp": "一意",
+                "opponentID": 8865,
                 "kimarite": ""
               },
               {
@@ -9273,9 +9273,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Gojinyu",
+                "opponentShikonaJp": "豪刃雄",
+                "opponentID": 88,
                 "kimarite": ""
               },
               {
@@ -9391,9 +9391,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Kagayaki",
+                "opponentShikonaJp": "輝",
+                "opponentID": 29,
                 "kimarite": ""
               },
               {
@@ -9509,9 +9509,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Ryuden",
+                "opponentShikonaJp": "竜電",
+                "opponentID": 15,
                 "kimarite": ""
               },
               {
@@ -9627,9 +9627,9 @@
               },
               {
                 "result": "",
-                "opponentShikonaEn": "",
-                "opponentShikonaJp": "",
-                "opponentID": 7402,
+                "opponentShikonaEn": "Shonannoumi",
+                "opponentShikonaJp": "湘南乃海",
+                "opponentID": 49,
                 "kimarite": ""
               },
               {
