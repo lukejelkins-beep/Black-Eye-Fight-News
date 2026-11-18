@@ -1,8 +1,8 @@
 {
   "platform": "X",
-  "status": "connected",
+  "status": "unavailable",
   "type": "original-source-posts",
-  "attemptedAt": "2026-11-18T02:38:43.338Z",
+  "attemptedAt": "2026-11-18T04:08:55.012Z",
   "checkedAt": "2026-11-18T02:38:43.338Z",
   "updatedAt": "2026-11-18T02:38:43.338Z",
   "trackedAccounts": 141,
@@ -22,9 +22,9 @@
   "returnedCount": 20,
   "matchedOriginalPosts": 20,
   "postCount": 180,
-  "paidXApiCalls": 78,
+  "paidXApiCalls": 79,
   "budgetMonth": "2026-11",
-  "estimatedReservedUsd": 0.2652,
+  "estimatedReservedUsd": 0.2686,
   "monthlyBudgetUsd": 2,
   "billingNote": "Pessimistic request reservations, not confirmed provider charges. Provider prepaid balance and disabled auto top-ups remain necessary.",
   "posts": [
@@ -4014,5 +4014,7 @@
       "verifiedHandle": "mmamania",
       "sourceProvider": "twitterapi.io"
     }
-  ]
+  ],
+  "message": "X API temporarily unavailable; existing public posts retained.",
+  "lastErrorCode": "Provider response unavailable"
 }
