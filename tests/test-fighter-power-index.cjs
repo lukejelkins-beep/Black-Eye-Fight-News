@@ -149,4 +149,69 @@ assert(finisherGrappler.baseScore>regularGrappler.baseScore,"Submission finishes
 assert.equal(model.evaluate({...career,credentials:[sourced("bjj",{belt:"black"})]},last5)
  .find(x=>x.id==="form").credentialAdjustment,0,"Credential cannot alter form");
 assert(model.CREDENTIAL_CAP===12);
+// UFC V3 profiles: ratings come from recorded-bout metrics, not stored nulls.
+const v3={
+ recent:[
+  {date:"2026-08-15",opponent:"A",outcome:"W",method:"Unanimous decision R5"},
+  {date:"2025-11-15",opponent:"B",outcome:"W",method:"Unanimous decision R5"},
+  {date:"2025-01-18",opponent:"C",outcome:"W",method:"Submission R1 4:05"},
+  {date:"2024-06-01",opponent:"D",outcome:"L",method:"TKO R2 1:00"},
+  {date:"2023-10-21",opponent:"E",outcome:"NC",method:"Overturned"}
+ ],
+ metrics:{
+  slpm:{value:4.1,bouts:4},sapm:{value:2.4,bouts:4},acc:{value:52,bouts:4},
+  kd:{value:.4,bouts:4},td:{value:2.5,bouts:4},control:{value:240,bouts:4},
+  net:{value:120,bouts:4},sub:{value:.8,bouts:4},tdDef:{value:75,bouts:3},
+  ko:{value:1,bouts:4},submission:{value:1,bouts:4}
+ }
+};
+const v3Result=model.evaluateV3(v3,{asOf:"2026-11-14"});
+assert.deepEqual(v3Result.ratings.map(x=>x.id),["striking","grappling","wrestling","defence","form"]);
+assert(v3Result.ratings.every(x=>Number.isInteger(x.score)&&x.score>=0&&x.score<=100),"Complete V3 metrics rate all five");
+assert.equal(v3Result.ratings.find(x=>x.id==="form").score,
+ model.recentForm(v3.recent.map(b=>({...b,result:b.outcome}))),"V3 form uses the shared recency model");
+assert(Number.isInteger(v3Result.overall)&&v3Result.overall>=0&&v3Result.overall<=100);
+const v3Stats=model.v3Stats(v3,"2026-11-14").stats;
+assert.equal(v3Stats.koTkoWinRate,.25,"Finish counts divide by their own measured bouts");
+assert.equal(v3Stats.controlAgainst,120/900,"Opponent control derives from control minus net control");
+const thin=model.evaluateV3({recent:v3.recent,metrics:{slpm:{value:9,bouts:1},sapm:{value:1,bouts:1}}});
+assert(thin.ratings.filter(x=>x.id!=="form").every(x=>x.score===null),"One measured bout never creates a skill rating");
+assert.equal(thin.overall,null,"Overall needs three skill ratings");
+assert.equal(model.evaluateV3({recent:[],metrics:{}}).ratings.filter(x=>x.score!==null).length,0);
+assert.equal(model.overall([{id:"striking",score:60},{id:"grappling",score:40},{id:"wrestling",score:50},
+ {id:"defence",score:null},{id:"form",score:80}]),Math.round((60*.25+40*.15+50*.2+80*.15)/.75));
+// Roster percentiles: same formulas, shrink toward the roster mean, rank on the roster.
+assert.equal(model.percentileOf(5,[1,2,3,4,5,6,7,8,9,10]),45);
+assert.equal(model.percentileOf(3,[3,3,3,3]),50,"Ties share the midpoint");
+assert.equal(model.percentileOf(null,[1,2]),null);
+const roster={asOf:"2026-11-14",fighters:{}};
+for(let i=0;i<40;i++){
+ const k=i/39;
+ roster.fighters["f"+i]={recent:v3.recent,metrics:{
+  slpm:{value:1+4*k,bouts:5},sapm:{value:5-3*k,bouts:5},acc:{value:30+30*k,bouts:5},
+  kd:{value:.8*k,bouts:5},td:{value:5*k,bouts:5},control:{value:400*k,bouts:5},
+  net:{value:300*k-50,bouts:5},sub:{value:2*k,bouts:5},tdDef:{value:45+50*k,bouts:5},
+  ko:{value:Math.round(2*k),bouts:5},submission:{value:Math.round(2*k),bouts:5}}};
+}
+const population=model.buildV3Population(roster);
+assert.equal(population.skills.striking.values.length,40);
+const top=model.evaluateV3(roster.fighters.f39,{population});
+const bottom=model.evaluateV3(roster.fighters.f0,{population});
+assert.equal(top.scale,"percentile");
+for(const id of ["striking","grappling","wrestling","defence"]){
+ const t=top.ratings.find(x=>x.id===id),b=bottom.ratings.find(x=>x.id===id);
+ assert(t.score>=85,"Best of roster ranks near the top: "+id+"="+t.score);
+ assert(b.score<=15,"Worst of roster ranks near the bottom: "+id+"="+b.score);
+ assert.equal(t.scale,"percentile");
+}
+assert.equal(top.ratings.find(x=>x.id==="form").scale,"absolute","Recent form stays on its 0–100 scale");
+const thinTop={...roster.fighters.f39,metrics:Object.fromEntries(Object.entries(roster.fighters.f39.metrics).map(([k,m])=>[k,{...m,bouts:2}]))};
+assert(model.evaluateV3(thinTop,{population}).ratings[0].score<top.ratings[0].score,"Fewer bouts shrink toward the roster mean");
+const noTdDef={...roster.fighters.f39,metrics:{...roster.fighters.f39.metrics,tdDef:{value:100,bouts:1}}};
+assert(Number.isInteger(model.evaluateV3(noTdDef,{population}).ratings.find(x=>x.id==="defence").score),
+ "Defence rates from strikes absorbed and opponent control when takedown defence is unmeasured");
+const decorated=model.evaluateV3(roster.fighters.f39,{population,credentials:[sourced("bjj",{belt:"black"})]});
+assert(decorated.ratings.every(x=>x.scale!=="percentile"||x.score<=99),"Credentials never push a percentile past 99th");
+const fewRoster=model.buildV3Population({fighters:{a:roster.fighters.f39,b:roster.fighters.f0}});
+assert.equal(model.evaluateV3(roster.fighters.f39,{population:fewRoster}).ratings[0].score,null,"A roster under 20 fighters cannot rank");
 console.log("PASS: 5 MMA dimensions, evidence gating, form, no cardio, merged cage-time history");

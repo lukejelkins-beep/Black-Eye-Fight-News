@@ -142,22 +142,28 @@
   ["defence","Defence","Strikes absorbed, strike/takedown defence, damage and opponent control"],
   ["form","Recent form","Recency-weighted results from up to five recorded fights, with NC excluded"]
  ];
- function metricFrom(d,id){
+ // Raw weighted composite before small-sample shrinkage. Same evidence gates
+ // as the published ratings; defenceMinCoverage is relaxed only for UFC V3
+ // samples, where opponents' takedown attempts can be too rare to measure.
+ function rawSkill(d,id,{defenceMinCoverage=.48}={}){
   if(!d)return null;
   const specs=metricSpecs(d);
   if(!specs)return null;
   if(id==="striking")
-   return confidence(sumParts(specs.striking,1,.50,2),d.bouts);
+   return sumParts(specs.striking,1,.50,2);
   if(id==="grappling")
    return specs.grappling.slice(0,3).some(x=>x[0]!==null)?
-    confidence(sumParts(specs.grappling,1,.45,2),d.bouts):null;
+    sumParts(specs.grappling,1,.45,2):null;
   if(id==="wrestling")
    return specs.wrestling[0][0]!==null?
-    confidence(sumParts(specs.wrestling,1,.53,2),d.bouts):null;
+    sumParts(specs.wrestling,1,.53,2):null;
   if(id==="defence")
    return [specs.defence[0],specs.defence[1]].some(x=>x[0]!==null)?
-    confidence(sumParts(specs.defence,1,.48,2),d.bouts):null;
+    sumParts(specs.defence,1,defenceMinCoverage,2):null;
   return null;
+ }
+ function metricFrom(d,id){
+  return d?confidence(rawSkill(d,id),d.bouts):null;
  }
 
  // All numbers in the schedule are fixed, editorially chosen scouting bonuses,
@@ -371,8 +377,120 @@
    {id:"chin",label:"Chin",score:null,description:"Needs opponent knockdown and stoppage records"}
   ];
  }
+ // UFC V3 metrics are per-bout averages over the last five recorded UFC
+ // fights, each with its own measured-bout denominator. Translate them into
+ // the career-stat shape so V3 profiles use the same weights and shrinkage.
+ // A metric measured in fewer than two bouts is treated as missing.
+ function v3Stats(v3,asOf){
+  const m=v3?.metrics;
+  if(!m||typeof m!=="object")return null;
+  const val=id=>{
+   const x=m[id];
+   return x&&Number.isFinite(x.value)&&Number.isInteger(x.bouts)&&x.bouts>=2&&x.bouts<=5?x.value:null;
+  };
+  const per=id=>{const v=val(id);return v===null?null:v/m[id].bouts};
+  const n=Math.max(0,...Object.values(m).map(x=>Number.isInteger(x?.bouts)?x.bouts:0));
+  if(n<2)return null;
+  const control=val("control"),net=val("net");
+  return {
+   recent:{fights:n},
+   stats:{source:"BEFN UFC V3 recorded-bout metrics",observedOn:asOf||"V3",sampleBouts:n,
+    slpm:val("slpm"),sapm:val("sapm"),strAcc:val("acc"),strDef:null,
+    tdAvg:val("td"),tdAcc:null,tdDef:val("tdDef"),subAvg:val("sub"),revAvg:null,
+    controlShare:control===null?null:clamp(control/900,0,1),
+    controlAgainst:control===null||net===null?null:clamp((control-net)/900,0,1),
+    kdAvg:val("kd"),kdAgainstAvg:null,
+    koTkoWinRate:per("ko"),submissionWinRate:per("submission")}
+  };
+ }
+ // Editorial blend of the five published ratings. Needs at least three
+ // measured skill ratings plus recent form; weights renormalise over gaps.
+ const OVERALL_WEIGHTS=Object.freeze({striking:.25,grappling:.15,wrestling:.20,defence:.25,form:.15});
+ function overall(ratings){
+  const byId=Object.fromEntries((ratings||[]).map(r=>[r.id,r.score]));
+  const skills=["striking","grappling","wrestling","defence"].filter(id=>Number.isFinite(byId[id]));
+  if(skills.length<3||!Number.isFinite(byId.form))return null;
+  let sum=0,w=0;
+  for(const id of [...skills,"form"]){sum+=byId[id]*OVERALL_WEIGHTS[id];w+=OVERALL_WEIGHTS[id];}
+  return Math.round(sum/w);
+ }
+ const SKILLS=["striking","grappling","wrestling","defence"];
+ const V3_RAW_OPTIONS=Object.freeze({defenceMinCoverage:.35});
+ function v3Raw(v3,asOf){
+  const d=careerData(v3Stats(v3,asOf));
+  if(!d)return null;
+  return {bouts:d.bouts,source:d.source,observedOn:d.observedOn,
+   scores:Object.fromEntries(SKILLS.map(id=>[id,rawSkill(d,id,V3_RAW_OPTIONS)]))};
+ }
+ // Small samples shrink toward the roster mean (not toward 50), so a
+ // thin record can never rank as an outlier in either direction.
+ const shrinkToward=(value,mean,bouts)=>mean+(value-mean)*(bouts/(bouts+4));
+ // Roster reference for percentile ratings: every UFC V3 fighter's
+ // shrunk composite per skill (credentials excluded), sorted, plus the
+ // raw mean. Ranking shrunk against shrunk keeps equal-sample fighters
+ // in their raw order instead of compressing everyone toward the middle.
+ function buildV3Population(data){
+  const fighters=Object.values(data?.fighters||{});
+  const out={asOf:data?.asOf||null,skills:{}};
+  const raws=fighters.map(f=>v3Raw(f,data?.asOf)).filter(Boolean);
+  for(const id of SKILLS){
+   const rows=raws.filter(r=>Number.isFinite(r.scores[id]));
+   const mean=rows.length?rows.reduce((a,r)=>a+r.scores[id],0)/rows.length:null;
+   const values=rows.map(r=>shrinkToward(r.scores[id],mean,r.bouts)).sort((a,b)=>a-b);
+   out.skills[id]={values,mean};
+  }
+  return out;
+ }
+ // Mid-rank percentile: ties share the midpoint, so a value equal to the
+ // whole roster scores 50 rather than 0 or 100.
+ function percentileOf(value,sorted){
+  if(!Number.isFinite(value)||!sorted?.length)return null;
+  let below=0,equal=0;
+  for(const v of sorted){if(v<value)below++;else if(v===value)equal++;}
+  return Math.round(100*(below+equal/2)/sorted.length);
+ }
+ const V3_LABELS=Object.fromEntries(LABELS.map(([id,label,description])=>[id,{label,description}]));
+ function evaluateV3(v3,{asOf,credentials,population}={}){
+  const history=(v3?.recent||[]).map(b=>({date:b.date,opponent:b.opponent,method:b.method,result:b.outcome}));
+  if(!population?.skills){
+   // No roster reference: fall back to the absolute 0–100 model.
+   const ratings=evaluate({...(v3Stats(v3,asOf)||{}),credentials:credentials||[]},history);
+   return {ratings,overall:overall(ratings),scale:"absolute"};
+  }
+  const raw=v3Raw(v3,asOf);
+  const bonus=credentialBonuses({credentials:credentials||[]});
+  const fights=normalizeHistory(history);
+  const ratings=SKILLS.map(id=>{
+   const ref=population.skills[id];
+   const value=raw?.scores[id];
+   let baseScore=null;
+   if(Number.isFinite(value)&&Number.isFinite(ref?.mean)&&ref.values.length>=20){
+    // Shrink small samples toward the roster mean, then rank on the roster.
+    baseScore=percentileOf(shrinkToward(value,ref.mean,raw.bouts),ref.values);
+   }
+   const add=bonus[id];
+   // Credential points still apply, but a percentile never reads above 99th.
+   const adjustment=baseScore===null?0:Math.max(0,Math.min(add.points,99-baseScore));
+   return {id,label:V3_LABELS[id].label,
+    description:V3_LABELS[id].description+"; percentile against the UFC roster"+
+     (adjustment?"; +"+adjustment+" verified credential points":""),
+    score:baseScore===null?null:baseScore+adjustment,baseScore,percentile:baseScore,
+    credentialAdjustment:adjustment,credentialBreakdown:adjustment?add.breakdown:[],
+    unusedCredentialPoints:baseScore===null?add.points:0,
+    sample:raw?.bouts||0,source:raw?.source||"No sourced statistics",
+    observedOn:raw?.observedOn||null,scale:"percentile",
+    confidence:raw?.bouts>=8?"moderate":"limited"};
+  });
+  const form=recentForm(fights);
+  ratings.push({id:"form",label:V3_LABELS.form.label,description:V3_LABELS.form.description,
+   score:form,baseScore:form,credentialAdjustment:0,credentialBreakdown:[],
+   sample:fights.filter(h=>!["nc","no contest"].includes(h.result)).length,
+   source:"Recorded recent fight results",observedOn:null,scale:"absolute",
+   confidence:fights.length>=5?"moderate":"limited"});
+  return {ratings,overall:overall(ratings),scale:"percentile"};
+ }
  function level(n){return n===null?"unrated":n<35?"red":n<55?"orange":n<75?"gold":"green"}
- const api={normalize:norm,normalizeHistory,recentForm,advancedData,careerData,aggregateRoundPreviews,CREDENTIAL_SCHEDULE,CREDENTIAL_CAP,credentialBonuses,evaluate,evaluateBoxing,boxingPower,level};
+ const api={normalize:norm,normalizeHistory,recentForm,advancedData,careerData,aggregateRoundPreviews,CREDENTIAL_SCHEDULE,CREDENTIAL_CAP,credentialBonuses,evaluate,evaluateBoxing,boxingPower,v3Stats,v3Raw,buildV3Population,percentileOf,evaluateV3,overall,OVERALL_WEIGHTS,level};
  scope.BEFNPowerIndex=api;
  if(typeof module==="object"&&module?.exports)module.exports=api;
 })(typeof window!=="undefined"?window:globalThis);
