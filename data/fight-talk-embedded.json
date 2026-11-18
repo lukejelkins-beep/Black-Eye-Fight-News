@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-18T12:36:36.912Z",
-  "checkedAt": "2026-11-18T12:36:36.912Z",
+  "attemptedAt": "2026-11-18T13:58:11.265Z",
+  "checkedAt": "2026-11-18T13:58:11.265Z",
   "windowDays": 28,
-  "articlesChecked": 31,
+  "articlesChecked": 30,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
-  "rssArticleCandidates": 45,
-  "publisherSourcesConfigured": 33,
-  "linksFound": 62,
-  "newEmbedsVerified": 0,
+  "rssArticleCandidates": 46,
+  "publisherSourcesConfigured": 32,
+  "linksFound": 13,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -18,6 +18,27 @@
   "curatedRejected": 0,
   "curatedPublisherLinked": 2,
   "posts": [
+    {
+      "type": "post",
+      "platform": "X",
+      "sport": "boxing",
+      "name": "Matchroom Boxing",
+      "role": "promoter",
+      "handle": "@MatchroomBoxing",
+      "nativeEmbed": true,
+      "originalDateUnverified": false,
+      "postedAt": "2026-11-18T11:02:41.493Z",
+      "sourceLinkedAt": "2026-11-18T11:41:02.000Z",
+      "discoveredAt": "2026-11-18T13:58:11.265Z",
+      "sourcePublisher": "Boxing News",
+      "evidenceUrl": "https://boxingnewsonline.net/news/hearn-future-heavyweight-king-gets-ko/",
+      "summary": "Original social post linked in Boxing News coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 55,
+      "url": "https://x.com/MatchroomBoxing/status/2123008990086877522"
+    },
     {
       "type": "post",
       "platform": "Instagram",
@@ -2340,25 +2361,6 @@
       "embedVerified": true,
       "linkPriority": 55,
       "url": "https://x.com/RAFWrestlingUSA/status/2120227266114490581"
-    },
-    {
-      "type": "post",
-      "platform": "Threads",
-      "sport": "mma",
-      "name": "Original Threads post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-11T17:41:51.956Z",
-      "discoveredAt": "2026-11-11T17:41:51.956Z",
-      "sourcePublisher": "UFC",
-      "evidenceUrl": "https://www.ufc.com/",
-      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 12,
-      "url": "https://www.threads.com/t/DflDjPoDtTT/"
     }
   ],
   "seenOriginals": [
@@ -3169,6 +3171,10 @@
     {
       "url": "https://www.instagram.com/p/Df4Kvj_EpSF/",
       "firstSeen": "2026-11-18T11:34:36.431Z"
+    },
+    {
+      "url": "https://x.com/MatchroomBoxing/status/2123008990086877522",
+      "firstSeen": "2026-11-18T13:58:11.265Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
