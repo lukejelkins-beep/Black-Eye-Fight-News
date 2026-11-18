@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "preview": true,
   "source": "https://www.sumo-api.com/api",
-  "collectedAt": "2026-11-18T07:48:57.730Z",
+  "collectedAt": "2026-11-18T07:55:57.940Z",
   "notice": "Developer preview; third-party source; cross-check results against the Japan Sumo Association before production.",
   "bashoId": "202611",
   "trackedDivisions": [
@@ -2644,11 +2644,11 @@
                 "kimarite": "oshidashi"
               },
               {
-                "result": "",
+                "result": "fusen win",
                 "opponentShikonaEn": "Asakoryu",
                 "opponentShikonaJp": "朝紅龍",
                 "opponentID": 164,
-                "kimarite": ""
+                "kimarite": "fusen"
               },
               {
                 "result": "",
@@ -2679,7 +2679,7 @@
                 "kimarite": ""
               }
             ],
-            "wins": 5,
+            "wins": 6,
             "losses": 5,
             "absences": 0
           },
@@ -2762,11 +2762,11 @@
                 "kimarite": "yorikiri"
               },
               {
-                "result": "",
+                "result": "win",
                 "opponentShikonaEn": "Dewanoryu",
                 "opponentShikonaJp": "出羽ノ龍",
                 "opponentID": 135,
-                "kimarite": ""
+                "kimarite": "uwatehineri"
               },
               {
                 "result": "",
@@ -2797,7 +2797,7 @@
                 "kimarite": ""
               }
             ],
-            "wins": 9,
+            "wins": 10,
             "losses": 1,
             "absences": 0
           },
@@ -5478,11 +5478,11 @@
                 "kimarite": "sukuinage"
               },
               {
-                "result": "",
+                "result": "fusen loss",
                 "opponentShikonaEn": "Kotoshoho",
                 "opponentShikonaJp": "琴勝峰",
                 "opponentID": 8,
-                "kimarite": ""
+                "kimarite": "fusen"
               },
               {
                 "result": "",
@@ -5514,7 +5514,7 @@
               }
             ],
             "wins": 1,
-            "losses": 9,
+            "losses": 10,
             "absences": 0
           },
           {
@@ -6068,11 +6068,11 @@
                 "kimarite": "uwatenage"
               },
               {
-                "result": "",
+                "result": "loss",
                 "opponentShikonaEn": "Wakamotoharu",
                 "opponentShikonaJp": "若元春",
                 "opponentID": 13,
-                "kimarite": ""
+                "kimarite": "uwatehineri"
               },
               {
                 "result": "",
@@ -6104,7 +6104,7 @@
               }
             ],
             "wins": 8,
-            "losses": 2,
+            "losses": 3,
             "absences": 0
           },
           {
@@ -46650,11 +46650,6 @@
       "reason": "No confirmed next-day torikumi in the Sumo API yet"
     }
   },
-  "dailyCollectedAt": "2026-11-18T07:49:14.508Z",
-  "dailyJstDay": 11,
-  "dailyScheduleCount": 20,
-  "dailySource": "https://www.sumo-api.com/api",
-  "dailyStatus": "next-day-torikumi-published",
   "todayDay": 11,
   "todayTorikumi": {
     "Makuuchi": {
@@ -46812,10 +46807,10 @@
             "westId": 135,
             "westShikona": "Dewanoryu",
             "westRank": "Maegashira 14 West",
-            "kimarite": "",
-            "winnerId": 0,
-            "winnerEn": "",
-            "winnerJp": ""
+            "kimarite": "uwatehineri",
+            "winnerId": 13,
+            "winnerEn": "Wakamotoharu",
+            "winnerJp": "若元春　港"
           },
           {
             "id": "202611-11-10-8-164",
@@ -46829,10 +46824,10 @@
             "westId": 164,
             "westShikona": "Asakoryu",
             "westRank": "Maegashira 9 West",
-            "kimarite": "",
-            "winnerId": 0,
-            "winnerEn": "",
-            "winnerJp": ""
+            "kimarite": "fusen",
+            "winnerId": 8,
+            "winnerEn": "Kotoshoho",
+            "winnerJp": "琴勝峰　吉成"
           },
           {
             "id": "202611-11-11-8859-56",
@@ -47792,5 +47787,10 @@
         ]
       }
     }
-  }
+  },
+  "dailyCollectedAt": "2026-11-18T07:56:00.565Z",
+  "dailyJstDay": 11,
+  "dailyScheduleCount": 20,
+  "dailySource": "https://www.sumo-api.com/api",
+  "dailyStatus": "next-day-torikumi-published"
 }
