@@ -2,21 +2,24 @@
  * One entry point for the scheduled Sumo preview update, so the scheduler on
  * main stays tiny and the sequence is versioned with the code it runs.
  *   node scripts/sumo-run-update.mjs refresh   live basho: results + next-day torikumi + career/H2H
+ *     (torikumi: JSA pages via the scraper, else the relayed JSA email in data/sumo/email-inbox/)
  *   node scripts/sumo-run-update.mjs rebuild   roster, rankings, then the same daily refresh, new wrestlers, career/H2H
  */
 import { spawnSync } from 'node:child_process';
 
 const PLANS = {
   refresh: [
-    ['--test', 'tests/test-sumo-daily.mjs', 'tests/test-sumo-api-source.mjs', 'tests/test-sumo-jsa.mjs'],
+    ['--test', 'tests/test-sumo-daily.mjs', 'tests/test-sumo-api-source.mjs', 'tests/test-sumo-jsa.mjs', 'tests/test-sumo-email-torikumi.mjs'],
     ['scripts/sumo-jsa-scrape.mjs'],
+    ['scripts/sumo-email-torikumi.mjs'],
     ['scripts/sumo-refresh-daily.mjs'],
     ['scripts/sumo-apply-live-bouts.mjs']
   ],
   rebuild: [
-    ['--test', 'tests/test-sumo-api-source.mjs', 'tests/test-sumo-jsa.mjs'],
+    ['--test', 'tests/test-sumo-api-source.mjs', 'tests/test-sumo-jsa.mjs', 'tests/test-sumo-email-torikumi.mjs'],
     ['scripts/sumo-build-preview.mjs'],
     ['scripts/sumo-jsa-scrape.mjs'],
+    ['scripts/sumo-email-torikumi.mjs'],
     ['scripts/sumo-refresh-daily.mjs'],
     ['scripts/sumo-onboard-rikishi.mjs'],
     ['scripts/sumo-apply-live-bouts.mjs']
