@@ -1,5 +1,5 @@
 /* Offline-ready app shell. Always prioritise network for news and fight data. */
-const CACHE_NAME = 'befn-v3-profile-20261117-local1';
+const CACHE_NAME = 'befn-v3-profile-20261118-pro1';
 const SHELL = [
   '/', '/index.html', '/manifest.webmanifest',
   '/assets/mark.svg', '/assets/site-favicon-192.png', '/assets/icon-192.png', '/assets/icon-512.png', '/assets/apple-touch-icon.png', '/assets/icon-maskable-512.png',
@@ -13,7 +13,7 @@ const SHELL = [
   '/assets/local-time.js', '/assets/local-images.js', '/assets/upcoming-cards.js',
   '/assets/upcoming-cards.css', '/assets/fight-talk.css',
   '/assets/fight-film.css', '/assets/fight-film.js',
-  '/assets/results.css', '/assets/results.js', '/assets/fights-hub.css', '/assets/event-status.js', '/assets/fighter-power-index.js', '/assets/fighter-insights.js', '/assets/fighter-power.css'
+  '/assets/results.css', '/assets/results.js', '/assets/fights-hub.css', '/assets/event-status.js', '/assets/fighter-power-index.js', '/assets/fighter-insights.js', '/assets/fighter-power.css', '/assets/fighter-profile-pro.css'
 ];
 const SHELL_PATHS = new Set(SHELL);
 self.addEventListener('install', event => {
