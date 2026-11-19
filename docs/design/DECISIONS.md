@@ -19,6 +19,7 @@ Format: date — decision — who — where it shows up.
 - For now the Fights page shows MMA from three promotions only: UFC, ONE and PFL. Other promotions (for example KSW) stay in the data but are not shown. — Owner approved in chat.
 
 ## 2026-11-18
+- Sumo gets a head-to-head board: pick a rikishi and see their record against the whole current banzuke, each opponent shown as a frameless head crop on a tile coloured by who leads (deeper = more meetings), with a career / last-6-basho toggle. Sumo navigation becomes five items: Results, Rankings, Rikishi, H2H, Techniques. Head crops are display-only derivatives of the approved JSA portraits, tied to each original by hash in `data/sumo/heads.json`. — Owner approved ("Merge 299") — Sumo preview, PR #299.
 - Sumo next-day matchups (torikumi) come from the Sumo API for all three divisions, replacing the JSA page scraper (blocked from CI) and the relayed JSA email. This reverses the "no Sumo API for matchups" rule from PR #280. Matchups now appear after about 18:00 JST instead of about 14:00. — Owner direction — Sumo preview PR for branch feat/sumo-api-torikumi-20261118, scheduler PR for branch ci/sumo-scheduler-api-torikumi-20261118.
 
 ## 2026-11-17
