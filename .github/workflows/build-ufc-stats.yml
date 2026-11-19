@@ -1,0 +1,57 @@
+name: Build UFC fighter statistics from saved round data
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'data/ufc-research-archive.json'
+      - 'data/ufcalendar-rich-progress.json'
+      - 'data/ufcalendar-judging-research.json'
+      - 'data/ufc-fighter-v3.json'
+      - 'data/ufc-*-profiles.json'
+      - 'scripts/build-ufc-stats.py'
+      - 'tests/test_ufc_stats_build.py'
+      - '.github/workflows/build-ufc-stats.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/build-ufc-stats.py'
+      - 'tests/test_ufc_stats_build.py'
+      - '.github/workflows/build-ufc-stats.yml'
+permissions:
+  contents: write
+concurrency:
+  group: befn-ufc-stats-build
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test calculations (cage time, corners, validation, rates, scorecards)
+        run: python -m unittest discover -s tests -p 'test_ufc_stats_build.py' -v
+      - name: Build statistics (no provider requests; reference date = latest saved UFC event)
+        run: python scripts/build-ufc-stats.py
+      - name: Commit only changed statistics
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'BEFN stats calculator'
+          git config user.email 'befn-stats-calculator@users.noreply.github.com'
+          git add -A data/ufc-stats
+          if git diff --cached --quiet; then
+            echo 'No statistics changed'
+            exit 0
+          fi
+          git commit -m 'Refresh UFC fighter statistics from saved round data'
+          for i in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep 3
+          done
+          exit 1

@@ -195,6 +195,25 @@ def side_view(fight: dict, corner: str) -> dict:
     }
 
 
+# Leaderboard metrics kept in the compact index (full rates stay in profiles).
+INDEX_RATES = ("slpm", "sapm", "diffPm", "strAcc", "strDef", "kd15", "kdAbs15", "td15", "tdAcc",
+               "tdDef", "sub15", "ctrlShare", "ctrlAgainstShare", "paceRetention")
+
+
+def compact_fight(fight: dict) -> dict:
+    """Serialise one fight with round stats as arrays in COUNTS order."""
+    out = {k: v for k, v in fight.items() if k != "rounds" and v not in (None, False)}
+    out["outcome"] = fight["outcome"]
+    out["rounds"] = [[r["round"], r["seconds"], [r["own"][k] for k in COUNTS], [r["opp"][k] for k in COUNTS]]
+                     for r in fight["rounds"]]
+    return out
+
+
+def public_window(window: dict) -> dict:
+    """A window without raw totals (rates already carry the information)."""
+    return {k: v for k, v in window.items() if k != "totals"}
+
+
 def _add(total: dict, key: str, value, weight: float) -> None:
     if value is None:
         total.setdefault("_missing", set()).add(key)
@@ -246,13 +265,13 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
         return key not in side.get("_missing", set()) and key in side
 
     def per(side, key, scale):
-        return round(side[key] * scale / seconds, 4) if seconds and known(side, key) else None
+        return round(side[key] * scale / seconds, 3) if seconds and known(side, key) else None
 
     def ratio(a_side, a_key, b_side, b_key, invert=False, minimum=10):
         if not (known(a_side, a_key) and known(b_side, b_key)) or b_side[b_key] < minimum:
             return None
         value = a_side[a_key] / b_side[b_key]
-        return round(1 - value if invert else value, 4)
+        return round(1 - value if invert else value, 3)
 
     rates = {}
     if seconds:
@@ -268,21 +287,21 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
             "tdAcc": ratio(own, "takedowns", own, "takedownAttempts", minimum=3),
             "tdDef": ratio(opp, "takedowns", opp, "takedownAttempts", invert=True, minimum=3),
             "sub15": per(own, "subAttempts", 900), "rev15": per(own, "reversals", 900),
-            "ctrlShare": round(own["controlSec"] / seconds, 4) if known(own, "controlSec") else None,
-            "ctrlAgainstShare": round(opp["controlSec"] / seconds, 4) if known(opp, "controlSec") else None,
-            "diffPm": (round((own["sigLanded"] - opp["sigLanded"]) / minutes, 4)
+            "ctrlShare": round(own["controlSec"] / seconds, 3) if known(own, "controlSec") else None,
+            "ctrlAgainstShare": round(opp["controlSec"] / seconds, 3) if known(opp, "controlSec") else None,
+            "diffPm": (round((own["sigLanded"] - opp["sigLanded"]) / minutes, 3)
                        if known(own, "sigLanded") and known(opp, "sigLanded") else None),
         }
         landed = [own.get(k + "Landed") if known(own, k + "Landed") else None for k in ("head", "body", "leg")]
         if None not in landed and sum(landed):
-            rates["target"] = {k: round(v / sum(landed), 4) for k, v in zip(("head", "body", "leg"), landed)}
+            rates["target"] = {k: round(v / sum(landed), 3) for k, v in zip(("head", "body", "leg"), landed)}
         spots = [own.get(k + "Landed") if known(own, k + "Landed") else None for k in ("distance", "clinch", "ground")]
         if None not in spots and sum(spots):
-            rates["position"] = {k: round(v / sum(spots), 4) for k, v in zip(("distance", "clinch", "ground"), spots)}
+            rates["position"] = {k: round(v / sum(spots), 3) for k, v in zip(("distance", "clinch", "ground"), spots)}
         r1, later = pace["r1"], pace["later"]
         if r1[1] >= 10 and later[1] >= 10 and r1[0]:
             # Output in later rounds relative to round one: 1.0 holds pace, <1 fades.
-            rates["paceRetention"] = round((later[0] / later[1]) / (r1[0] / r1[1]), 4)
+            rates["paceRetention"] = round((later[0] / later[1]) / (r1[0] / r1[1]), 3)
     out["rates"] = rates
     out["judging"] = ({"roundsScored": rounds_scored, "roundsWon": rounds_won,
                        "roundWinRate": round(rounds_won / rounds_scored, 4), "rounds10_8": rounds_10_8}
@@ -376,18 +395,18 @@ def build(as_of: dt.date, out_dir: Path) -> dict:
         windows = windows_for(history, as_of)
         division = divisions.get(norm(entry["name"]))
         profile = {"schema": SCHEMA, "asOf": as_of.isoformat(), "slug": slug, "name": entry["name"],
-                   "division": division, "lastFight": history[0]["date"], "windows": windows,
-                   "fights": history}
+                   "division": division, "lastFight": history[0]["date"], "roundFields": list(COUNTS),
+                   "windows": {k: public_window(v) for k, v in windows.items()},
+                   "fights": [compact_fight(f) for f in history]}
         (fighter_dir / f"{slug}.json").write_text(json.dumps(profile, separators=(",", ":")), encoding="utf-8")
-        w = windows["weighted"]
         index_rows[slug] = {
             "name": entry["name"], "division": division, "lastFight": history[0]["date"],
             "ufc": [windows["career"]["W"], windows["career"]["L"], windows["career"]["D"], windows["career"]["NC"]],
             "fights": {k: windows[k]["fights"] for k in WINDOWS if k != "weighted"},
             "statFights": {k: windows[k]["statFights"] for k in WINDOWS if k != "weighted"},
             "cageSeconds": {k: windows[k]["cageSeconds"] for k in WINDOWS if k != "weighted"},
-            "rates": {k: windows[k]["rates"] for k in ("last5", "l12", "l36", "career")},
-            "weightedRates": w["rates"],
+            # Arrays in INDEX_RATES order (see "rateFields"); null = not measured.
+            "rates": {k: [windows[k]["rates"].get(m) for m in INDEX_RATES] for k in WINDOWS},
             "finishRate": windows["career"]["finishRate"],
             "roundWinRate": (windows["career"]["judging"] or {}).get("roundWinRate"),
         }
@@ -398,20 +417,35 @@ def build(as_of: dt.date, out_dir: Path) -> dict:
                     "career": "UFC career", "weighted": "Career, recent fights weighted (18-month half-life)"},
         "source": {"fights": len(fights), "fightsWithRoundStats": sum(1 for f in fights if f["statsComplete"]),
                    "fightsWithScorecards": sum(1 for f in fights if f["scorecards"]), "skipped": skipped},
-        "activeMonths": ACTIVE_MONTHS, "fighters": index_rows,
+        "activeMonths": ACTIVE_MONTHS, "rateFields": list(INDEX_RATES), "fighters": index_rows,
     }
     (out_dir / "index.json").write_text(json.dumps(index, separators=(",", ":")), encoding="utf-8")
     return index
 
 
+def latest_event_date(today: dt.date | None = None) -> dt.date:
+    """Reference date = the latest completed UFC event in the saved results.
+
+    Anchoring the time windows to the data (not the calendar) keeps the output
+    identical until new fights arrive, so the hourly/daily jobs do not rewrite
+    every fighter file just because a day passed.
+    """
+    today = today or dt.date.today()
+    dates = [parse_date(b.get("eventDate")) for b in load("ufcalendar-rich-progress.json")["bouts"].values()
+             if b.get("org") == "ufc" and b.get("status") == "completed"]
+    dates = [d for d in dates if d and d <= today]
+    return max(dates) if dates else today
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--as-of", default=dt.date.today().isoformat())
+    parser.add_argument("--as-of", help="YYYY-MM-DD; default: latest completed UFC event in the data")
     parser.add_argument("--out", default=str(DATA / "ufc-stats"))
     args = parser.parse_args()
-    index = build(dt.date.fromisoformat(args.as_of), Path(args.out))
+    as_of = dt.date.fromisoformat(args.as_of) if args.as_of else latest_event_date()
+    index = build(as_of, Path(args.out))
     s = index["source"]
-    print(f"{len(index['fighters'])} active fighters · {s['fights']} fights "
+    print(f"as of {index['asOf']} · {len(index['fighters'])} active fighters · {s['fights']} fights "
           f"({s['fightsWithRoundStats']} with complete round stats, {s['fightsWithScorecards']} with scorecards) "
           f"· skipped {s['skipped']}")
 
