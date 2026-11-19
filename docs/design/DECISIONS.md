@@ -16,8 +16,6 @@ Format: date — decision — who — where it shows up.
 - Unknown start times are left blank instead of showing "Start time TBC · venue date". — Owner approved (phase 0) — same PR.
 - Roadmap for the site-wide redesign, news feed, results, upcoming snapshots and analysis area agreed; phase 0 approved. Priority promotions after UFC: PFL, ONE, Cage Warriors (MMA); Zuffa Boxing, Golden Boy, Top Rank, Matchroom, PBC (boxing). Betting odds may be shown as a benchmark if free. — Owner — roadmap doc.
 - Phase 2 (live news and Fight Talk) plan approved: two lead stories (newest and most covered), photo-led tight list, Japanese and Spanish sources with labelled machine translation, existing social platforms kept with better collection, Instagram as links and embeds only. — Owner approved in chat — docs/design/PHASE-2.md.
-
-## 2026-11-19
 - For now the Fights page shows MMA from three promotions only: UFC, ONE and PFL. Other promotions (for example KSW) stay in the data but are not shown. — Owner approved in chat.
 
 ## 2026-11-18
