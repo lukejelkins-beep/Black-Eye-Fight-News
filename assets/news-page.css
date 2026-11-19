@@ -1,0 +1,58 @@
+/* News page, design option A (Broadcast): dark, photo-led. Scoped to .np so nothing else changes. */
+.np{background:#151115;color:#fff;border-radius:12px;padding:clamp(16px,3vw,32px);font-family:'DM Sans',system-ui,sans-serif}
+.np a{color:inherit;text-decoration:none}
+.np-head{border-left:4px solid #cf1824;padding-left:16px;margin:0 0 clamp(16px,2.4vw,24px)}
+.np-head h1{margin:0;font:900 clamp(34px,5vw,56px)/.95 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase}
+.np-head p{margin:6px 0 0;font-size:14px;color:#b8b0b3}
+.np-chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.np-chip{display:inline-flex;align-items:center;min-height:24px;padding:2px 10px;border-radius:4px;background:#2c262b;color:#fff;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.np-chip-role{background:#f3c332;color:#111013}
+.np-chip-lang{background:#cf1824;color:#fff}
+.np-tag{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#f3c332}
+.np-note{font-size:12px;color:#b8b0b3}
+.np-coverage{font-size:12px;color:#f3c332;font-weight:700;margin-left:8px}
+
+/* Photo slot: real image, or a plain sport tile (never placeholder text). */
+.np-photo{display:block;position:relative;overflow:hidden;background:linear-gradient(135deg,#3a2a31,#1a1418)}
+.np-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 22%}
+.np-photo-empty{display:flex;align-items:center;justify-content:center}
+.np-photo-empty span{font:800 18px/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;letter-spacing:.12em;color:#6b6166}
+
+/* Two leads side by side. */
+.np-leads{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,2vw,24px);margin-bottom:clamp(24px,3vw,40px)}
+.np-lead{position:relative;border-radius:12px;overflow:hidden;background:#1d171c;min-height:clamp(300px,38vw,460px)}
+.np-lead-link{display:block;position:absolute;inset:0}
+.np-lead-photo{position:absolute;inset:0}
+.np-lead-link::after{content:'';position:absolute;inset:25% 0 0;background:linear-gradient(transparent,rgba(21,17,21,.96))}
+.np-lead-copy{position:absolute;left:0;right:0;bottom:0;z-index:1;display:flex;flex-direction:column;gap:10px;padding:clamp(16px,2.4vw,28px)}
+.np-lead-title{font:900 clamp(26px,3vw,40px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.np-lead-meta,.np-row-meta{display:flex;flex-wrap:wrap;align-items:center;font-size:13px;color:#d9d2d5}
+.np-lead-link:hover .np-lead-title,.np-lead-link:focus-visible .np-lead-title,.np-row-link:hover .np-row-title,.np-row-link:focus-visible .np-row-title,.np-intl-card a:hover .np-intl-title{text-decoration:underline;text-decoration-color:#f3c332;text-underline-offset:4px}
+.np a:focus-visible{outline:3px solid #f3c332;outline-offset:3px}
+
+/* Photo-led list. */
+.np-section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 8px}
+.np-section-head h2,.np-list-head h2{margin:0;font:800 clamp(26px,3vw,34px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase}
+.np-list-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.np-row{border-top:1px solid #2c262b}
+.np-row-link{display:flex;gap:20px;align-items:center;padding:16px 0;min-height:44px}
+.np-row-photo,.np-photo-empty.np-row-photo{flex:0 0 clamp(112px,14vw,144px);height:clamp(78px,9.5vw,96px);border-radius:8px}
+.np-row-copy{display:flex;flex-direction:column;gap:6px;min-width:0}
+.np-row-title{font:800 clamp(20px,2.3vw,28px)/1.02 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;overflow-wrap:anywhere}
+.np-list .news-load-more{margin-top:12px}
+.np .unified-news-filters{margin:4px 0 8px}
+
+/* Translated headlines. */
+.np-intl{margin:0 0 clamp(28px,3.4vw,44px)}
+.np-intl-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.np-intl-card a{display:flex;flex-direction:column;gap:8px;height:100%;padding:16px;border-radius:12px;background:#1d171c}
+.np-intl-title{font:800 clamp(20px,2.1vw,24px)/1.05 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;overflow-wrap:anywhere}
+.np-intl-original{font-size:13px;line-height:1.4;color:#b8b0b3;overflow-wrap:anywhere}
+
+@media(max-width:760px){
+  .np-leads,.np-intl-grid{grid-template-columns:minmax(0,1fr)}
+  .np-lead{min-height:300px}
+  .np-row-link{gap:14px}
+}
+
+.np-button{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border-radius:8px;background:#cf1824;color:#fff;font:700 15px/1 'DM Sans',system-ui,sans-serif}
