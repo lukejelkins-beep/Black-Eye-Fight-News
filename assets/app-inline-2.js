@@ -115,7 +115,7 @@ function syncGlobalSport(){
  state.fightersDivision='All';state.newsPage=1;state.socialPage=1;
 }
 syncGlobalSport();
-const desk={articles:[],sources:[],lastSuccessfulAt:null,events:[],reviewedAt:null,error:'',pending:null};
+const desk={language:null,articles:[],sources:[],lastSuccessfulAt:null,events:[],reviewedAt:null,error:'',pending:null};
 const displayDate=v=>window.FightTime.localDateTime(v);
 const dayLabel=v=>new Date(v+'T12:00:00Z').toLocaleDateString('en-AU',{dateStyle:'medium',timeZone:'UTC'});
 async function deskJSON(path){
@@ -139,6 +139,7 @@ async function loadDesk(background=false){
  try{
   const [n,e]=await Promise.all([deskJSON('data/news-live.json'),deskJSON('data/grappling-events.json')]);
   if(!Array.isArray(n.articles)||!Array.isArray(e.events))throw Error('Invalid feed');
+  const lang=await deskJSON('data/news-language-live.json').catch(()=>null);if(lang&&Array.isArray(lang.stories))desk.language=lang;
   if(background){if(JSON.stringify(n.articles)===JSON.stringify(desk.articles)&&JSON.stringify(e.events)===JSON.stringify(desk.events)){Object.assign(desk,n,{error:''});return;}if(!location.hash||location.hash==='#home'){Object.assign(desk,n,{events:e.events,reviewedAt:e.reviewedAt,error:'',pending:null});const target=document.getElementById('main');if(target)target.innerHTML=renderHome();return;}desk.pending={n,e};const button=document.getElementById('desk-updates');if(button){button.hidden=false;button.textContent='New headlines available — show updates';}return;}
   Object.assign(desk,n,{events:e.events,reviewedAt:e.reviewedAt,error:'',pending:null});
  }catch{desk.error='Current feed unavailable. Previously loaded items remain visible.';}
@@ -448,8 +449,11 @@ function topStoryCard(a){
   +'</div></article>';
 }
 
+function newsPool(){return window.BEFNNewsUnique(desk.articles).filter(headlineEligible).filter(articleMatchesSport);}
+function newsLeads(){return window.BEFNNewsPage.pickLeads(newsPool().filter(a=>Date.parse(a.publishedAt)<=Date.now()+30*60*1000),desk.leads);}
+const newsPageHelpers=()=>({esc,safeURL,meta:newsDisplayMeta,photo:topStoryPhoto});
 function newsFeedItems(){
- const promoted=new Set(topStories().slice(0,4).map(a=>a.url));
+ const promoted=new Set(newsLeads().map(l=>l.story.url));
  const seen=new Set(),now=Date.now();
  return window.BEFNNewsUnique(desk.articles).filter(headlineEligible).filter(a=>{
   if(promoted.has(a.url)||!articleMatchesSport(a))return false;
@@ -465,17 +469,18 @@ function renderNewsFeed(){
  const controls='<div class="unified-news-filters">'+segments('newsSort',['latest','significant'],state.newsSort)+'</div>';
  const more=shown.length<all.length?'<button class="news-load-more" type="button" data-news-more>Show more stories ('+(all.length-shown.length)+' remaining)</button>':'';
  const junkie=state.news==='mma'?'<a class="news-publisher-link" href="https://mmajunkie.usatoday.com/" target="_blank" rel="noopener noreferrer">MMA Junkie ↗</a>':'';
- return '<div class="front-follow-up"><div class="front-follow-up-head"><h2>Latest news</h2><span class="unified-news-count">'+all.length+' stories</span></div>'
-  +controls+junkie+'<div class="grid news-grid">'+(shown.length?shown.map((a,i)=>i%7===6?newsFeatureCard(a):headlineCard(a)).join(''):'<p class="front-loading">No other articles match these filters.</p>')+'</div>'
+ const h=newsPageHelpers();
+ return '<div class="np-list"><div class="np-list-head"><h2>Latest news</h2><span class="np-note unified-news-count">'+all.length+' stories</span></div>'
+  +controls+junkie+'<div class="np-rows">'+(shown.length?shown.map(a=>window.BEFNNewsPage.rowHTML(a,h)).join(''):'<p class="front-loading">No other articles match these filters.</p>')+'</div>'
   +more+sourceHealth()+'</div>';
 }
 function renderHome(){
- const stories=topStories();
- if(!stories.length)return renderFrame('<header class="front-home-head"><h1>News</h1></header><p role="status" class="front-loading">'+(desk.articles.length?'No verified stories available for this sport yet.':'Checking the latest fight news…')+'</p>'+window.BEFNCoverage.panel(activeSport()));
- const top=stories.slice(0,4);
- setTimeout(hydrateTopStoryPhotos,0);
- return renderFrame('<div class="front-home"><header class="front-home-head"><h1>Top stories</h1></header>'
-  +'<div class="front-lead-layout top-story-stack">'+top.map(topStoryCard).join('')+'</div>'
+ const leads=newsLeads();
+ const head='<header class="np-head"><h1>News</h1><p>'+(activeSport()==='all'?'Boxing, MMA, grappling and sumo, from the publishers that cover them.':'Latest '+esc(activeSport())+' news from the publishers that cover it.')+'</p></header>';
+ if(!leads.length)return renderFrame('<div class="np">'+head+'<p role="status" class="front-loading">'+(desk.articles.length?'No verified stories available for this sport yet.':'Checking the latest fight news…')+'</p></div>'+window.BEFNCoverage.panel(activeSport()));
+ const h=newsPageHelpers();
+ const intl=window.BEFNNewsPage.languageHTML(window.BEFNNewsPage.usableLanguageStories(desk.language,activeSport()),h,4);
+ return renderFrame('<div class="np">'+head+window.BEFNNewsPage.leadsHTML(leads,h)+intl
   +'<section id="news-feed" aria-label="Latest fight news">'+renderNewsFeed()+'</section></div>'+window.BEFNCoverage.panel(activeSport()));
 }
 document.addEventListener('click',e=>{if(e.target.closest('#desk-updates')&&desk.pending){const {n,e:events}=desk.pending;Object.assign(desk,n,{events:events.events,reviewedAt:events.reviewedAt,pending:null});navigate();}});
