@@ -41,3 +41,62 @@ jobs:
           python -m pip install --quiet pillow==11.3.0
           python -m unittest tests/test_sumo_portrait_intake.py
           python scripts/sumo-portrait-intake.py --dry-run --update-batch 4
+
+  portrait-intake-end-to-end:
+    # The real new-photo path on a GitHub runner: forget two wrestlers' portraits in
+    # this throwaway checkout, run the intake, and require it to bring both back
+    # byte-identical with the right cut-out/headshot handling. Commits nothing.
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Cache the segmentation model
+        uses: actions/cache@v4
+        with:
+          path: ~/.u2net
+          key: rembg-isnet-general-use-v1
+      - name: Forget Takayasu (full-body) and Mineyaiba (headshot), then run the intake
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --quiet "rembg[cpu]==2.0.61" onnxruntime==1.19.2 pillow==11.3.0 numpy==2.0.2
+          python - <<'PY'
+          import json, os
+          p = 'data/sumo/approved-photos.json'; d = json.load(open(p))
+          c = 'data/sumo/cutouts.json'; m = json.load(open(c))
+          for sid in ('44', '75'):
+              d['bySourceId'].pop(sid)
+              os.remove(f'assets/sumo-photos/jsa-{sid}.jpg')
+          m['bySourceId'].pop('44'); os.remove('assets/sumo-photos/cutout/jsa-44.webp')
+          m['headshotOrPartial'].remove('75')
+          json.dump(d, open(p, 'w'), indent=2, ensure_ascii=False)
+          json.dump(m, open(c, 'w'), indent=2, ensure_ascii=False)
+          PY
+          python scripts/sumo-portrait-intake.py --update-batch 0 | tee /tmp/intake.json
+          python - <<'PY'
+          import json
+          r = json.load(open('/tmp/intake.json'))
+          assert sorted(r['added']) == ['44', '75'], r
+          assert not r['review'] and not r['errors'] and 'blocked' not in r, r
+          m = json.load(open('data/sumo/cutouts.json'))
+          assert '44' in m['bySourceId'], 'full-body portrait did not get a cut-out'
+          assert '75' in m['headshotOrPartial'], 'headshot was not recorded as a headshot'
+          PY
+          git diff --exit-code -- assets/sumo-photos/jsa-44.jpg assets/sumo-photos/jsa-75.jpg
+          git show HEAD:assets/sumo-photos/cutout/jsa-44.webp > /tmp/committed-44.webp
+          python - <<'PY'
+          import numpy as np
+          from PIL import Image
+          a = np.array(Image.open('/tmp/committed-44.webp').getchannel('A')) > 128
+          b = np.array(Image.open('assets/sumo-photos/cutout/jsa-44.webp').getchannel('A')) > 128
+          assert a.shape == b.shape or abs(a.shape[0] - b.shape[0]) <= 3, (a.shape, b.shape)
+          h, w = min(a.shape[0], b.shape[0]), min(a.shape[1], b.shape[1])
+          a, b = a[:h, :w], b[:h, :w]
+          iou = (a & b).sum() / (a | b).sum()
+          print('cut-out outline match', round(float(iou), 4))
+          assert iou >= 0.98, iou
+          PY
+          echo "New-photo path verified: photos byte-identical, cut-out matches"
