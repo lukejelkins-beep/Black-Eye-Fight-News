@@ -31,7 +31,12 @@ def probe(url):
             if node is not None and node.text:
                 dates.append(re.sub(r"\s+", " ", node.text.strip()))
                 break
-    return f"HTTP {status}, {len(items)} items, first date: {dates[0] if dates else 'none'}"
+    titles = []
+    for item in items[:2]:
+        node = item.find("title") if item.find("title") is not None else item.find("{http://www.w3.org/2005/Atom}title")
+        if node is not None and node.text:
+            titles.append(re.sub(r"\s+", " ", node.text.strip())[:70])
+    return f"HTTP {status}, {len(items)} items, first date: {dates[0] if dates else 'none'} | " + " / ".join(titles)
 
 
 if __name__ == "__main__":
