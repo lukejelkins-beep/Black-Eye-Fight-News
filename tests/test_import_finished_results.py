@@ -1,4 +1,4 @@
-import copy, datetime as dt, importlib.util, json, unittest
+import copy, datetime as dt, importlib.util, json, os, unittest
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -53,7 +53,7 @@ def run(*cards, fetcher=fetch, today=TODAY, results=None):
 class ImportFinishedResultsTest(unittest.TestCase):
     def test_pfl_from_wikipedia_article_with_spelling_differences(self):
         results, report = run(PFL)
-        self.assertEqual(report, ['imported: PFL Dubai: Nemkov vs Bilostenniy (5 bouts from Wikipedia (CC BY-SA))'])
+        self.assertEqual(report[:1], ['imported: PFL Dubai: Nemkov vs Bilostenniy (5 bouts from Wikipedia (CC BY-SA))'])
         rows = results['results']
         main = rows[0]
         # Wikipedia spells him "Sergey"; BEFN's spelling and corner order are kept.
@@ -125,3 +125,87 @@ class ImportFinishedResultsTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+# ---------- boxing via Boxerbook ----------
+# Shaped like Boxerbook's /v1/results answer (field names checked against the live API on
+# 2026-11-19); the bouts are real results from 7 Nov 2026, trimmed to two events.
+BOXERBOOK = (HERE / 'fixtures/boxerbook-results-sample.json').read_text()
+BOXING_TODAY = dt.date(2026, 11, 12)
+
+
+def bb_fetch(url, headers=None):
+    assert url.startswith('https://boxerbook.com/v1/results') and headers['Authorization'].startswith('Bearer ')
+    return BOXERBOOK
+
+
+BUATSI = {'id': 'buatsi-hutchinson-2026-11-07', 'sport': 'boxing', 'promotion': 'Queensberry',
+          'title': 'Buatsi vs Hutchinson II', 'date': '2026-11-07', 'location': 'London', 'bouts': [
+              {'fighters': ['Joshua Buatsi', 'Willy Hutchinson'], 'section': 'main', 'division': 'Light Heavyweight',
+               'records': ['21-1 (13 KOs)', '20-2 (16 KOs)'], 'recordSources': ['q1', 'q2']},
+              {'fighters': ['Jack Rafferty', 'Hovhannes Martirosyan'], 'section': 'main'},
+              {'fighters': ['Tumi Philips', 'Angelo Dragone']}]}  # filed under no event at Boxerbook; one 'l' on BEFN
+
+
+class Boxing(unittest.TestCase):
+    def setUp(self):
+        os.environ['BOXERBOOK_API_KEY'] = 'test-key'
+
+    def tearDown(self):
+        os.environ.pop('BOXERBOOK_API_KEY', None)
+
+    def run_card(self, card=BUATSI, today=BOXING_TODAY):
+        results = {'events': [], 'results': []}
+        return importer.run(results, {'events': [copy.deepcopy(card)]}, bb_fetch, today)
+
+    def test_imports_only_this_card_headliner_first_in_befn_corners(self):
+        results, report = self.run_card()
+        self.assertEqual(report[:1], ['imported: Buatsi vs Hutchinson II (5 bouts from Data from Boxerbook (https://boxerbook.com))'])
+        rows = results['results']
+        self.assertNotIn('Cheavon Clarke', json.dumps(rows))  # a different event on the same night
+        main = rows[0]
+        self.assertEqual([f['name'] for f in main['fighters']], ['Joshua Buatsi', 'Willy Hutchinson'])
+        self.assertEqual((main['winner'], main['method'], main['round']), (1, 'unanimous decision', 12))
+        self.assertEqual(main['source'], 'https://boxerbook.com/bouts/192140/x')
+        self.assertEqual([r['section'] for r in rows], ['Main card', 'Main card', 'Undercard', 'Undercard', 'Undercard'])
+        self.assertEqual([f['name'] for f in rows[2]['fighters']], ['Tumi Philips', 'Angelo Dragone'])  # BEFN spelling, third as announced
+        self.assertEqual(results['events'][0]['sourceVerified'], 'Data from Boxerbook (https://boxerbook.com)')
+
+    def test_records_ignore_ko_counts_and_fall_back_to_boxerbook(self):
+        rows = self.run_card()[0]['results']
+        buatsi, hutch = rows[0]['fighters']
+        self.assertEqual((buatsi['preRecord'], buatsi['record']), ('21-1-0', '21–2–0'))
+        self.assertEqual((hutch['preRecord'], hutch['record']), ('20-2-0', '21–2–0'))
+        rafferty, marti = rows[1]['fighters']  # not given by BEFN: taken from Boxerbook, sides kept straight
+        self.assertEqual((rafferty['preRecord'], rafferty['record'], rafferty['recordSource']),
+                         ('28-0-1', '29–0–1', 'https://boxerbook.com/bouts/192141/x'))
+        self.assertEqual(marti['record'], '20–2–0')
+
+    def test_draw_and_stoppage(self):
+        rows = {r['fighters'][0]['name']: r for r in self.run_card()[0]['results']}
+        self.assertEqual((rows['Charlie Box']['winner'], rows['Charlie Box']['method']), (None, 'split draw'))
+        self.assertEqual(rows['Charlie Box']['fighters'][0].get('preRecord'), None)
+        rea = next(r for r in rows.values() if 'Bradley Rea' in json.dumps(r))
+        self.assertEqual((rea['method'], rea['round'], rea['time'], rea['division']), ('TKO', 2, '0:58', 'Heavyweight'))
+
+    def test_without_key_nothing_is_imported(self):
+        os.environ.pop('BOXERBOOK_API_KEY')
+        results, report = self.run_card()
+        self.assertEqual(results['results'], [])
+        self.assertTrue(report[0].startswith('error: Buatsi vs Hutchinson II'))
+
+    def test_outside_boxerbook_window_is_left_alone(self):
+        self.assertEqual(self.run_card(today=dt.date(2026, 11, 21))[1], [])
+
+    def test_unrelated_card_waits(self):
+        other = dict(BUATSI, id='x', title='Other', bouts=[{'fighters': ['Nobody One', 'Nobody Two']}])
+        self.assertEqual(self.run_card(other)[1], ['waiting: Other (not at source yet)'])
+
+    def test_close_spellings(self):
+        self.assertTrue(importer.same_person('Albina Moldazhanova', 'Albina Maldozhanova'))
+        self.assertFalse(importer.same_person('Albina Moldazhanova', 'Alina Petrova'))
+        self.assertFalse(importer.same_person('Jose Garcia', 'Jose Garza'))
+
+    def test_record_after_reads_only_the_record(self):
+        self.assertEqual(importer.record_after('14-0 (8 KOs)', 'win'), ('14-0-0', '15–0–0'))
+        self.assertEqual(importer.record_after('Record unavailable', 'win'), (None, None))

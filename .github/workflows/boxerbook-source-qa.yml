@@ -28,7 +28,7 @@ jobs:
       - name: Check live Boxerbook schedule and results (read-only)
         if: github.event_name == 'workflow_dispatch' && inputs.live_check == true
         env:
-          BOXERBOOK_API_KEY: ${{ secrets.BOXERBOOK_API_KEY }}
+          BOXERBOOK_API_KEY: ${{ secrets.BOXERBOOK_API_KEY || secrets.BOXERBOOK_KEY || secrets.BOXERBOOK_KEU }}
         run: python scripts/boxerbook_source.py --live --report qa/boxerbook-source-review.json
       - name: Upload one-day QA report for review
         if: github.event_name == 'workflow_dispatch' && inputs.live_check == true
