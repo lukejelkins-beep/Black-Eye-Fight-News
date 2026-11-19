@@ -158,7 +158,7 @@ window.ResultsDesk=(()=>{
  const expandedPoster=poster?'<figure class="befn-result-poster"><div class="befn-result-poster-frame"><img class="befn-expanded-poster-image" src="'+url(poster.url)+'" alt="Event artwork: '+esc((globalThis.BEFNEventTitle||(x=>x))(r.event))+'" loading="lazy" decoding="async" referrerpolicy="no-referrer"></div></figure>':'';
  const venue=[e.location,r.location,poster?.location].map(x=>String(x||'').trim()).find(x=>x&&!/not confirmed|venue tbc|location unknown|location tbc|unknown venue/i.test(x))||'';
  const validVenue=Boolean(venue);
- const eventFoot='<footer class="befn-result-event-foot">'+(validVenue?'<div><strong>Location</strong><span>'+esc(venue)+'</span></div>':'')+(e.source?'<div><strong>Results</strong>'+link(e.source,'View source')+'</div>':'')+(poster?.source?'<div><strong>Artwork</strong>'+link(poster.source,'Image source')+'</div>':'')+'</footer>';
+ const eventFoot='<footer class="befn-result-event-foot">'+(validVenue?'<div><strong>Location</strong><span>'+esc(venue)+'</span></div>':'')+(e.source?'<div><strong>Results</strong>'+(/^https:\/\/boxerbook\.com\//.test(e.source)?link('https://boxerbook.com','Data from Boxerbook')+' · '+link(e.source,'View source'):link(e.source,'View source'))+'</div>':'')+(poster?.source?'<div><strong>Artwork</strong>'+link(poster.source,'Image source')+'</div>':'')+'</footer>';
  const winner=featured?.status==='completed'&&[0,1].includes(featured.winner)?featured.fighters[featured.winner]?.name:'';
  const opponent=winner?featured.fighters[1-featured.winner]?.name:'';
  const outcome=winner?(winner+' defeated '+(opponent||'opponent')+' · '+boutMethod(featured.method)) : '';
