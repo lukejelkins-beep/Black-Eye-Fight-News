@@ -169,7 +169,7 @@ def fetch(url, opener=urllib.request.urlopen):
 def collect(config, now, fetcher=fetch):
     """Return ({language: [stories]}, report) with no translation yet."""
     found, report = {}, []
-    for language in ("ja", "es"):
+    for language in [l for l in ("ja", "es") if config.get(l, {}).get("queries")]:
         approved = approved_names(config, language)
         stories, seen_urls = [], set()
         for sport, queries in config[language]["queries"].items():
@@ -225,7 +225,7 @@ def run(args):
         "provider": "DeepL", "note": "Headlines only are machine-translated. The original headline and link are kept with each story.",
         "allowance": usage, "charactersSentThisRun": sent,
         "counts": {lang: len(v) for lang, v in stories.items()},
-        "stories": stories["ja"] + stories["es"],
+        "stories": [x for v in stories.values() for x in v],
     }
     print(f"Language news: {payload['counts']}, {sent} characters translated this run")
     if args.dry_run:

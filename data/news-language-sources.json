@@ -128,121 +128,6 @@
       "Korean and other foreign-language outlets"
     ]
   },
-  "es": {
-    "queries": {},
-    "approved": [
-      {
-        "name": "ESPN México",
-        "english": "ESPN Mexico",
-        "kind": "broadcaster"
-      },
-      {
-        "name": "ESPN Deportes",
-        "english": "ESPN Deportes",
-        "kind": "broadcaster"
-      },
-      {
-        "name": "MARCA",
-        "english": "Marca",
-        "kind": "newspaper"
-      },
-      {
-        "name": "Diario AS",
-        "english": "AS",
-        "kind": "newspaper"
-      },
-      {
-        "name": "Mundo Deportivo",
-        "english": "Mundo Deportivo",
-        "kind": "newspaper"
-      },
-      {
-        "name": "SPORT",
-        "english": "Sport",
-        "kind": "newspaper"
-      },
-      {
-        "name": "Infobae",
-        "english": "Infobae",
-        "kind": "news site"
-      },
-      {
-        "name": "Récord",
-        "english": "Récord",
-        "kind": "newspaper"
-      },
-      {
-        "name": "TUDN",
-        "english": "TUDN",
-        "kind": "broadcaster"
-      },
-      {
-        "name": "Telemundo",
-        "english": "Telemundo Deportes",
-        "kind": "broadcaster"
-      },
-      {
-        "name": "Univision",
-        "english": "Univision Deportes",
-        "kind": "broadcaster"
-      },
-      {
-        "name": "Eurosport",
-        "english": "Eurosport",
-        "kind": "broadcaster"
-      },
-      {
-        "name": "DAZN",
-        "english": "DAZN",
-        "kind": "broadcaster",
-        "note": "mixes news with promotion; use only boxing and MMA news items"
-      },
-      {
-        "name": "Solo Boxeo",
-        "english": "Solo Boxeo",
-        "kind": "boxing specialist"
-      },
-      {
-        "name": "World Boxing Council",
-        "english": "WBC official",
-        "kind": "sanctioning body"
-      },
-      {
-        "name": "UFCESPANOL.com",
-        "english": "UFC Español",
-        "kind": "promotion",
-        "note": "UFC's Spanish-language site"
-      },
-      {
-        "name": "https://www.mma.es/",
-        "english": "MMA.es",
-        "kind": "MMA specialist"
-      },
-      {
-        "name": "Milenio",
-        "english": "Milenio",
-        "kind": "newspaper"
-      },
-      {
-        "name": "ABC",
-        "english": "ABC (Spain)",
-        "kind": "newspaper"
-      }
-    ],
-    "excluded": [
-      "Facebook",
-      "Yahoo",
-      "Olympics",
-      "365Scores",
-      "OkDiario",
-      "El Debate",
-      "MUNDIARIO",
-      "INFO7",
-      "La Prensa Nicaragua",
-      "UNANIMO Deportes",
-      "regional and local outlets not named above"
-    ]
-  },
   "rules": [
     "Only stories whose publisher is on the approved list are kept; anything else is dropped without being read.",
     "Headline only is translated, never the article; the story shows 'Translated from Japanese/Spanish' and links the original.",
@@ -250,7 +135,7 @@
     "The owner can add or remove a publisher at any time; changes are a one-line edit to this file."
   ],
   "paused": {
-    "note": "Owner asked for sumo news from Japan only (19 Nov). Move these back into the queries to restore them.",
+    "note": "Owner asked for sumo news from Japan only (19 Nov) and dropped Spanish. Nothing here is collected. To restore, move a block back to the top level.",
     "ja": {
       "boxing": [
         "ボクシング"
@@ -267,17 +152,118 @@
       ]
     },
     "es": {
-      "boxing": [
-        "boxeo",
-        "boxeo Canelo"
-      ],
-      "mma": [
-        "UFC",
-        "MMA",
-        "Topuria"
-      ],
-      "grappling": [
-        "jiu-jitsu brasileño"
+      "queries": {
+        "boxing": [
+          "boxeo",
+          "boxeo Canelo"
+        ],
+        "mma": [
+          "UFC",
+          "MMA",
+          "Topuria"
+        ],
+        "grappling": [
+          "jiu-jitsu brasileño"
+        ]
+      },
+      "approved": [
+        {
+          "name": "ESPN México",
+          "english": "ESPN Mexico",
+          "kind": "broadcaster"
+        },
+        {
+          "name": "ESPN Deportes",
+          "english": "ESPN Deportes",
+          "kind": "broadcaster"
+        },
+        {
+          "name": "MARCA",
+          "english": "Marca",
+          "kind": "newspaper"
+        },
+        {
+          "name": "Diario AS",
+          "english": "AS",
+          "kind": "newspaper"
+        },
+        {
+          "name": "Mundo Deportivo",
+          "english": "Mundo Deportivo",
+          "kind": "newspaper"
+        },
+        {
+          "name": "SPORT",
+          "english": "Sport",
+          "kind": "newspaper"
+        },
+        {
+          "name": "Infobae",
+          "english": "Infobae",
+          "kind": "news site"
+        },
+        {
+          "name": "Récord",
+          "english": "Récord",
+          "kind": "newspaper"
+        },
+        {
+          "name": "TUDN",
+          "english": "TUDN",
+          "kind": "broadcaster"
+        },
+        {
+          "name": "Telemundo",
+          "english": "Telemundo Deportes",
+          "kind": "broadcaster"
+        },
+        {
+          "name": "Univision",
+          "english": "Univision Deportes",
+          "kind": "broadcaster"
+        },
+        {
+          "name": "Eurosport",
+          "english": "Eurosport",
+          "kind": "broadcaster"
+        },
+        {
+          "name": "DAZN",
+          "english": "DAZN",
+          "kind": "broadcaster",
+          "note": "mixes news with promotion; use only boxing and MMA news items"
+        },
+        {
+          "name": "Solo Boxeo",
+          "english": "Solo Boxeo",
+          "kind": "boxing specialist"
+        },
+        {
+          "name": "World Boxing Council",
+          "english": "WBC official",
+          "kind": "sanctioning body"
+        },
+        {
+          "name": "UFCESPANOL.com",
+          "english": "UFC Español",
+          "kind": "promotion",
+          "note": "UFC's Spanish-language site"
+        },
+        {
+          "name": "https://www.mma.es/",
+          "english": "MMA.es",
+          "kind": "MMA specialist"
+        },
+        {
+          "name": "Milenio",
+          "english": "Milenio",
+          "kind": "newspaper"
+        },
+        {
+          "name": "ABC",
+          "english": "ABC (Spain)",
+          "kind": "newspaper"
+        }
       ]
     }
   }
