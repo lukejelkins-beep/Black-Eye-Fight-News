@@ -3,6 +3,9 @@
 Format: date — decision — who — where it shows up.
 
 ## 2026-11-19
+- Sumo rikishi profiles use the "banzuke poster" hero: borderless on the page cream, vertical kanji shikona, wrestler in front of one red disc, rank/peak/country chips, basho record, career wins, next bout with head to head. Chosen from three options (layout C with layout A's information). — Owner — Sumo preview PR #323.
+- Sumo cut-outs are made with the isnet-general-use segmentation model (rembg), not OpenCV GrabCut. Only clean full-body figures get a cut-out (92 of 190); headshot portraits show the original photo inside the red disc. The JSA (C) line is cleared from cut-outs only; credit stays with the original. — Owner asked for the cut-out to be fixed; method by Claude — PR #323.
+- Official JSA portraits are sourced and refreshed automatically: new wrestlers daily, plus a rotating re-check of existing ones. Identity must match roster JSA id, ring name and stable or the photo is held for review. — Owner approved — PR #323 and the portrait-intake workflow PR.
 - The Sumo preview now publishes a built `dist/` folder of reader files only, like the main site (the 64 MB research archive had been downloadable from it). Internal research files are never published. — Owner approved; owner changed the Render settings — PR #309 on the Sumo preview branch.
 - Owner confirmed the five-item primary navigation from the roadmap. Phase 1 plan written in PHASE-1.md for approval before building. — Owner — docs/design/PHASE-1.md.
 - Results cards sourced from Boxerbook show "Data from Boxerbook" (linked to boxerbook.com) next to the bout link, as Boxerbook's terms require. — Claude, from the owner-approved Boxerbook terms — PR for branch fix/boxerbook-credit-label-20261119.
