@@ -1,6 +1,10 @@
 name: Build UFC fighter statistics from saved round data
 on:
   workflow_dispatch:
+  schedule:
+    # Data bots push with GITHUB_TOKEN, which does not trigger push workflows;
+    # rebuild hourly instead. Output is deterministic, so unchanged data is a no-op.
+    - cron: '29 * * * *'
   push:
     branches: [main]
     paths:
@@ -9,6 +13,7 @@ on:
       - 'data/ufcalendar-judging-research.json'
       - 'data/ufc-fighter-v3.json'
       - 'data/ufc-*-profiles.json'
+      - 'data/ufc-divisions.json'
       - 'scripts/build-ufc-stats.py'
       - 'tests/test_ufc_stats_build.py'
       - '.github/workflows/build-ufc-stats.yml'
@@ -17,6 +22,8 @@ on:
     paths:
       - 'scripts/build-ufc-stats.py'
       - 'tests/test_ufc_stats_build.py'
+      - 'tests/test_ufc_divisions.py'
+      - 'scripts/refresh-ufc-divisions.py'
       - '.github/workflows/build-ufc-stats.yml'
 permissions:
   contents: write
@@ -34,6 +41,8 @@ jobs:
           python-version: '3.12'
       - name: Test calculations (cage time, corners, validation, rates, scorecards)
         run: python -m unittest discover -s tests -p 'test_ufc_stats_build.py' -v
+      - name: Test division parsing
+        run: python -m unittest discover -s tests -p 'test_ufc_divisions.py' -v
       - name: Build statistics (no provider requests; reference date = latest saved UFC event)
         run: python scripts/build-ufc-stats.py
       - name: Commit only changed statistics

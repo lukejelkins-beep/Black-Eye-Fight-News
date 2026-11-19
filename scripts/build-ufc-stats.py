@@ -7,7 +7,8 @@ Inputs
   data/ufc-research-archive.json       per-round stats for each archived UFC fight
   data/ufcalendar-rich-progress.json   official results (winner, method, round, time)
   data/ufcalendar-judging-research.json judges' scorecards for decisions
-  data/ufc-fighter-v3.json + data/ufc-*-profiles.json  known divisions
+  data/ufc-divisions.json              official division rosters, ranks, champions
+  data/ufc-fighter-v3.json + data/ufc-*-profiles.json  fallback divisions
 
 Outputs (data/ufc-stats/)
   index.json            one compact row per active fighter, for leaderboards
@@ -329,8 +330,17 @@ def windows_for(history: list[dict], as_of: dt.date) -> dict:
     }
 
 
+def official_divisions(path: Path | None = None) -> dict[str, dict]:
+    """fighter slug -> {division, label, rank, champion} from data/ufc-divisions.json."""
+    path = path or DATA / "ufc-divisions.json"
+    try:
+        return json.loads(path.read_text(encoding="utf-8")).get("fighters") or {}
+    except (OSError, ValueError):
+        return {}
+
+
 def known_divisions() -> dict[str, str]:
-    """slug -> division from reviewed profiles and the V3 snapshot (stage 2 extends this)."""
+    """normalised name -> division label from reviewed profiles and the V3 snapshot (fallback)."""
     out = {}
     for path in sorted(DATA.glob("ufc-*-profiles.json")):
         try:
@@ -355,6 +365,7 @@ def build(as_of: dt.date, out_dir: Path) -> dict:
     bouts = load("ufcalendar-rich-progress.json")["bouts"]
     judging = load("ufcalendar-judging-research.json").get("decisions", {})
     divisions = known_divisions()
+    official = official_divisions()
 
     fights, skipped = [], {"noResult": 0, "unaligned": 0}
     for record in archive.values():
@@ -393,14 +404,19 @@ def build(as_of: dt.date, out_dir: Path) -> dict:
         if not last or last < active_cutoff:
             continue
         windows = windows_for(history, as_of)
-        division = divisions.get(norm(entry["name"]))
+        listed = official.get(slug) or {}
+        division = listed.get("label") or divisions.get(norm(entry["name"]))
         profile = {"schema": SCHEMA, "asOf": as_of.isoformat(), "slug": slug, "name": entry["name"],
-                   "division": division, "lastFight": history[0]["date"], "roundFields": list(COUNTS),
+                   "division": division, "divisionSlug": listed.get("division"),
+                   "officialRank": listed.get("rank"), "champion": bool(listed.get("champion")),
+                   "lastFight": history[0]["date"], "roundFields": list(COUNTS),
                    "windows": {k: public_window(v) for k, v in windows.items()},
                    "fights": [compact_fight(f) for f in history]}
         (fighter_dir / f"{slug}.json").write_text(json.dumps(profile, separators=(",", ":")), encoding="utf-8")
         index_rows[slug] = {
-            "name": entry["name"], "division": division, "lastFight": history[0]["date"],
+            "name": entry["name"], "division": division, "divisionSlug": listed.get("division"),
+            "officialRank": listed.get("rank"), "champion": bool(listed.get("champion")),
+            "lastFight": history[0]["date"],
             "ufc": [windows["career"]["W"], windows["career"]["L"], windows["career"]["D"], windows["career"]["NC"]],
             "fights": {k: windows[k]["fights"] for k in WINDOWS if k != "weighted"},
             "statFights": {k: windows[k]["statFights"] for k in WINDOWS if k != "weighted"},
@@ -417,7 +433,10 @@ def build(as_of: dt.date, out_dir: Path) -> dict:
                     "career": "UFC career", "weighted": "Career, recent fights weighted (18-month half-life)"},
         "source": {"fights": len(fights), "fightsWithRoundStats": sum(1 for f in fights if f["statsComplete"]),
                    "fightsWithScorecards": sum(1 for f in fights if f["scorecards"]), "skipped": skipped},
-        "activeMonths": ACTIVE_MONTHS, "rateFields": list(INDEX_RATES), "fighters": index_rows,
+        "activeMonths": ACTIVE_MONTHS, "rateFields": list(INDEX_RATES),
+        "divisionCoverage": {"withDivision": sum(1 for r in index_rows.values() if r["division"]),
+                             "official": sum(1 for r in index_rows.values() if r["divisionSlug"])},
+        "fighters": index_rows,
     }
     (out_dir / "index.json").write_text(json.dumps(index, separators=(",", ":")), encoding="utf-8")
     return index
