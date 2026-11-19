@@ -1,6 +1,6 @@
 # Phase 2 plan: live news and Fight Talk
 
-Status: **proposal, updated 19 Nov with the owner's answers on lead stories, photos and languages; waiting for the owner's OK to build.** Nothing here is built yet. It follows phase 1 (the shared look and navigation).
+Status: **approved by the owner 19 Nov** (lead stories, photos, languages, collection changes, Instagram as links and embeds only). Not built yet; each step still needs its own PR and "Merge N". Nothing here is built yet. It follows phase 1 (the shared look and navigation).
 
 ## Goal
 News and Fight Talk feel live: new stories and posts show up within minutes, the front page leads with the best story, and every item says where it came from and when. No item is shown without a source link and a source date.
@@ -33,7 +33,7 @@ Changes, in order:
 3. **X: smarter order, same budget.** Fighters on upcoming cards, and those who fought in the last 3 days, are read first; everyone else rotates. Same ledger, same US$1.80 cap, same no-retry rule.
 4. **Publisher embeds: check all 32 feeds** on a rotation instead of 3, so Threads, Instagram and X posts that publishers embed are found quickly.
 5. **Roster gaps:** fill the 55 missing accounts from official promotion pages and fighters' own sites, with the supporting link kept. Anything unsupported stays blank.
-6. **Instagram (needs the owner):** Business Discovery needs the Meta app to have the right permissions on a Page-linked professional account. If you want it back, it is a settings task in your Meta developer account that I can walk through; otherwise Instagram stays link and embed only.
+6. **Instagram: links and embeds only.** Owner decision 19 Nov. No Meta Business Discovery setup. Instagram posts appear only where a publisher embeds them or a source links to them, with the date shown.
 7. **Quality rules:** original posts only, dedupe across platforms, no engagement minimum, source link and date always shown. Unchanged from today.
 
 ## Japanese and Spanish sources (owner approved, translated)
@@ -54,7 +54,7 @@ Changes, in order:
 - **Languages:** English, Japanese and Spanish, with translation. Owner approved 19 Nov.
 - **Lead stories:** two, Newest and Most covered. Owner approved 19 Nov.
 - **Look:** tight but visual, with photos. Owner approved 19 Nov.
-- **Social sources:** keep X, Threads, Bluesky and Instagram. Improve collection as above. Owner approved 19 Nov.
+- **Social sources:** keep X, Threads, Bluesky and Instagram (links and embeds only). Improve collection as above. Owner approved 19 Nov.
 - **Still open:** whether you want alerts when a major story breaks (a separate, later step).
 
 ## Not in phase 2
