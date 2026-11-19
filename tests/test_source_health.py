@@ -23,7 +23,8 @@ class SourceHealthTests(unittest.TestCase):
             "lastSuccessfulAt": "2026-11-19T03:30:00+00:00",
             "sources": [
                 {"name": "Good", "sport": "mma", "ok": True, "feedUrl": "https://a.test/feed", "lastSuccessfulAt": "2026-11-19T03:30:00+00:00"},
-                {"name": "Broken", "sport": "mma", "ok": False, "error": "HTTP 403 | Forbidden"},
+                {"name": "Broken", "sport": "mma", "ok": False, "error": "cagewarriors.com: HTTP Error 403: Forbidden"},
+                {"name": "Quiet", "sport": "mma", "ok": False, "error": "adcombat.com: No recent, source-verified articles"},
                 {"name": "Old", "sport": "boxing", "ok": True, "feedUrl": "https://b.test/feed"},
                 {"name": "Search", "sport": "mma", "ok": True, "feedUrl": "https://www.bing.com/news/search?q=x"},
             ],
@@ -36,7 +37,8 @@ class SourceHealthTests(unittest.TestCase):
         }
         rows = {r["name"]: r for r in sh.news_rows(news, NOW)}
         self.assertEqual(rows["Good"]["flags"], [])
-        self.assertTrue(any("feed failed" in f for f in rows["Broken"]["flags"]))
+        self.assertTrue(any(f.startswith("BROKEN") for f in rows["Broken"]["flags"]))
+        self.assertTrue(any(f.startswith("quiet") for f in rows["Quiet"]["flags"]))
         self.assertTrue(any("silent 30+" in f for f in rows["Old"]["flags"]))
         self.assertTrue(any("Bing" in f for f in rows["Search"]["flags"]))
         self.assertTrue(any("no photos" in f for f in rows["Search"]["flags"]))
