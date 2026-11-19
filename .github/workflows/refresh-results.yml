@@ -4,7 +4,7 @@ on:
     # GitHub's minimum schedule frequency is five minutes. Once a live event
     # is detected, the runner polls official sources every 30 seconds for
     # up to four minutes; the next scheduled run resumes the checks.
-    - cron: '*/5 * * * *'
+    - cron: '23 * * * *'
   workflow_dispatch:
   push:
     branches: [main]

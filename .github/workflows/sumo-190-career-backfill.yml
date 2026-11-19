@@ -8,7 +8,7 @@ on:
   schedule:
     # GitHub Actions scheduled workflows run from the DEFAULT branch only.
     # The job itself checks out and writes ONLY the isolated research branch.
-    - cron: '*/5 * * * *'
+    - cron: '7,37 * * * *'
   workflow_dispatch:
 
 permissions:
