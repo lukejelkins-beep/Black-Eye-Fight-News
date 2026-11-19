@@ -175,3 +175,41 @@ class ExpandedDisciplineCoverageTests(unittest.TestCase):
  def test_results_retained_as_official_reports(self):
   self.assertTrue(m.is_routine_result('UFC BJJ 13 results: Tackett vs Rodriguez'))
   self.assertTrue(m.is_routine_result('ONE Fight Night 49 MMA and submission grappling results'))
+
+
+class CachedFighterPhotoTests(unittest.TestCase):
+ INDEX={'alex pereira':('Alex Pereira','assets/img/ufc/alex-pereira-card.webp'),
+        'israel adesanya':('Israel Adesanya','assets/img/ufc/israel-adesanya-card.webp'),
+        'brian ortega':('Brian Ortega','assets/img/ufc/brian-ortega-card.webp')}
+ def test_first_named_fighter_wins(self):
+  photo=m.cached_fighter_photo("Alex Pereira shrugs off Israel Adesanya's concern heading into UFC 335",self.INDEX)
+  self.assertEqual(photo['url'],'assets/img/ufc/alex-pereira-card.webp')
+  self.assertEqual(photo['kind'],'cached-fighter')
+ def test_no_guess_when_no_full_name(self):
+  self.assertIsNone(m.cached_fighter_photo('Pereira shrugs off concern',self.INDEX))
+  self.assertIsNone(m.cached_fighter_photo('Hecher Sosa carrying Canary Islands',self.INDEX))
+ def test_whole_words_only(self):
+  self.assertIsNone(m.cached_fighter_photo('Alex Pereiras new gym opens',self.INDEX))
+ def test_publisher_photo_is_never_replaced(self):
+  items=[{'title':'Brian Ortega finally happy','image':{'url':'https://x.test/a.jpg'}},{'title':'Brian Ortega finally happy','image':None}]
+  m.attach_cached_photos(items,self.INDEX)
+  self.assertNotIn('fighterImage',items[0])
+  self.assertEqual(items[1]['fighterImage']['name'],'Brian Ortega')
+ def test_index_reads_the_register_and_skips_missing_files_and_clashes(self):
+  import json,tempfile,pathlib
+  with tempfile.TemporaryDirectory() as tmp:
+   root=pathlib.Path(tmp);(root/'assets/img/ufc').mkdir(parents=True)
+   for f in ('a-card.webp','b-card.webp'):(root/'assets/img/ufc'/f).write_bytes(b'x')
+   reg={'basePath':'assets/img/ufc/','images':[
+    {'name':'Alex Pereira','rights':'owner-cleared','files':{'card':'a-card.webp'}},
+    {'name':'Same Name','rights':'owner-cleared','files':{'card':'a-card.webp'}},
+    {'name':'Same Name','rights':'owner-cleared','files':{'card':'b-card.webp'}},
+    {'name':'No File','rights':'owner-cleared','files':{'card':'gone-card.webp'}},
+    {'name':'Uncleared Person','rights':'unknown','files':{'card':'a-card.webp'}},
+    {'name':'Cher','rights':'owner-cleared','files':{'card':'a-card.webp'}}]}
+   (root/'reg.json').write_text(json.dumps(reg))
+   index=m.local_photo_index(root/'reg.json',root)
+   self.assertEqual(list(index),['alex pereira'])
+ def test_real_register_loads(self):
+  index=m.local_photo_index()
+  self.assertGreater(len(index),500)

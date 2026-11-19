@@ -37,6 +37,14 @@ SOURCES=[
  ('MMA Weekly','mma','https://www.mmaweekly.com/feed'),
  ('GracieMag','grappling','https://www.graciemag.com/feed/'),
  ('D3 Wrestle','grappling','https://d3wrestle.com/feed'),
+ ('BoxingScene','boxing','https://www.boxingscene.com/feed'),
+ ('BBC Sport Boxing','boxing','https://feeds.bbci.co.uk/sport/boxing/rss.xml'),
+ ('Boxing News 24','boxing','https://www.boxingnews24.com/feed/'),
+ ('Boxing Insider','boxing','https://www.boxinginsider.com/feed/'),
+ ('The Guardian Boxing','boxing','https://www.theguardian.com/sport/boxing/rss'),
+ ('BBC Sport MMA','mma','https://www.bbc.co.uk/sport/mixed-martial-arts/rss.xml'),
+ ('MMA News','mma','https://www.mmanews.com/feed'),
+ ('Cageside Press','mma','https://www.cagesidepress.com/feed/'),
 ]
 UTC=dt.timezone.utc
 
@@ -457,6 +465,43 @@ def source_articles(source,sport,url,now):
             errors.append(urllib.parse.urlsplit(candidate).hostname+': '+str(exc)[:85])
     raise ValueError(' | '.join(errors)[:450])
 
+LOCAL_PHOTO_REGISTER=Path('data/ufc-image-register.json')
+LOCAL_PHOTO_PATH=re.compile(r'^assets/img/[a-z0-9-]+/[a-z0-9-]+\.webp$')
+
+def local_photo_index(register_path=LOCAL_PHOTO_REGISTER,root=Path('.')):
+    """Owner-cleared fighter photos already in the repo: {lowercase full name: (name, card path)}."""
+    try:register=json.loads(register_path.read_text(encoding='utf-8'))
+    except (OSError,ValueError):return {}
+    base=register.get('basePath','assets/img/ufc/').rstrip('/')+'/'
+    index={};clash=set()
+    for item in register.get('images',[]):
+        name=str(item.get('name','')).strip();card=(item.get('files') or {}).get('card')
+        if item.get('rights')!='owner-cleared' or not card or len(name.split())<2:continue
+        path=base+card
+        if not LOCAL_PHOTO_PATH.match(path) or not (root/path).exists():continue
+        key=name.lower()
+        if key in index:clash.add(key)
+        index[key]=(name,path)
+    for key in clash:index.pop(key,None)  # two fighters, one name: never guess
+    return index
+
+def cached_fighter_photo(title,index):
+    """The first fighter named in a headline that has a cleared local photo, else None."""
+    text=str(title or '').lower();best=None
+    for key,(name,path) in index.items():
+        found=re.search(r'(?<![\w])'+re.escape(key)+r'(?![\w])',text)
+        if found and (best is None or found.start()<best[0]):best=(found.start(),name,path)
+    return {'url':best[2],'name':best[1],'kind':'cached-fighter','credit':'File photo of '+best[1]+' (owner-cleared)'} if best else None
+
+def attach_cached_photos(articles,index):
+    """Stories with no publisher photo get a cleared local photo of the fighter in the headline."""
+    for a in articles:
+        has_photo=(a.get('image') or {}).get('url')
+        photo=None if has_photo else cached_fighter_photo(a.get('title'),index)
+        if photo:a['fighterImage']=photo
+        else:a.pop('fighterImage',None)
+    return articles
+
 def is_routine_result(title):
     """Keep basic scorecards, round-by-round coverage and event results in Fight Results, not News."""
     name=plain(title)
@@ -531,6 +576,7 @@ def main():
             refreshed=list(pool.map(lambda a:enrich_summary(dict(a),a,now,force=True),missing))
         for a in refreshed:articles[a['url']]=a
     clean_articles, removed_articles=deduplicate(list(articles.values()))
+    attach_cached_photos(clean_articles,local_photo_index())
     clean_reports, removed_reports=deduplicate(list(reports.values()))
     payload={'attemptedAt':now.isoformat(),'lastSuccessfulAt':now.isoformat() if success else old.get('lastSuccessfulAt'),
              'sources':statuses,'articles':sorted(clean_articles,key=lambda a:a['publishedAt'],reverse=True)[:280],

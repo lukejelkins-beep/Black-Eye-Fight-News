@@ -31,7 +31,23 @@ def probe(url):
             if node is not None and node.text:
                 dates.append(re.sub(r"\s+", " ", node.text.strip()))
                 break
-    return f"HTTP {status}, {len(items)} items, first date: {dates[0] if dates else 'none'}"
+    titles = []
+    for item in items[:2]:
+        node = item.find("title") if item.find("title") is not None else item.find("{http://www.w3.org/2005/Atom}title")
+        if node is not None and node.text:
+            titles.append(re.sub(r"\s+", " ", node.text.strip())[:70])
+    publishers = {}
+    if "news.google.com" in url:
+        for item in items:
+            node = item.find("source")
+            name = (node.text or "").strip() if node is not None else ""
+            if name:
+                publishers[name] = publishers.get(name, 0) + 1
+    extra = ""
+    if publishers:
+        top = sorted(publishers.items(), key=lambda kv: -kv[1])[:12]
+        extra = "\n    publishers: " + ", ".join(f"{n} ({c})" for n, c in top)
+    return f"HTTP {status}, {len(items)} items, first date: {dates[0] if dates else 'none'} | " + " / ".join(titles) + extra
 
 
 if __name__ == "__main__":
