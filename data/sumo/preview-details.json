@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "preview": true,
   "source": "https://www.sumo-api.com/api",
-  "collectedAt": "2026-11-19T06:22:34.764Z",
+  "collectedAt": "2026-11-19T20:20:09.243Z",
   "notice": "Developer preview; third-party source; cross-check results against the Japan Sumo Association before production.",
   "bashoId": "202611",
   "trackedDivisions": [
@@ -42,15 +42,15 @@
           "totalByDivision": {
             "Juryo": 30,
             "Makushita": 14,
-            "Makuuchi": 240
+            "Makuuchi": 241
           },
           "totalLosses": 74,
-          "totalMatches": 284,
-          "totalWins": 210,
+          "totalMatches": 285,
+          "totalWins": 211,
           "winsByDivision": {
             "Juryo": 24,
             "Makushita": 10,
-            "Makuuchi": 176
+            "Makuuchi": 177
           },
           "yusho": 6,
           "yushoByDivision": {
@@ -65,6 +65,22 @@
           "skip": 0,
           "total": 18,
           "records": [
+            {
+              "bashoId": "202611",
+              "division": "Makuuchi",
+              "day": 12,
+              "matchNo": 19,
+              "eastId": 8850,
+              "eastShikona": "Onosato",
+              "eastRank": "Yokozuna 1 East",
+              "westId": 7,
+              "westShikona": "Kirishima",
+              "westRank": "Ozeki 2 East",
+              "kimarite": "oshidashi",
+              "winnerId": 8850,
+              "winnerEn": "Onosato",
+              "winnerJp": ""
+            },
             {
               "bashoId": "202611",
               "division": "Makuuchi",
@@ -336,22 +352,6 @@
               "winnerId": 8850,
               "winnerEn": "Onosato",
               "winnerJp": ""
-            },
-            {
-              "bashoId": "202609",
-              "division": "Makuuchi",
-              "day": 9,
-              "matchNo": 20,
-              "eastId": 8850,
-              "eastShikona": "Onosato",
-              "eastRank": "Yokozuna 1 East",
-              "westId": 9051,
-              "westShikona": "Fujiryoga",
-              "westRank": "Maegashira 4 West",
-              "kimarite": "hikiotoshi",
-              "winnerId": 8850,
-              "winnerEn": "Onosato",
-              "winnerJp": "大の里　泰輝"
             }
           ]
         }
@@ -48259,7 +48259,7 @@
       }
     }
   },
-  "dailyCollectedAt": "2026-11-19T19:37:13.837Z",
+  "dailyCollectedAt": "2026-11-19T20:20:09.965Z",
   "dailyJstDay": 13,
   "dailyScheduleCount": 56,
   "dailySource": "https://www.sumo-api.com/api",
