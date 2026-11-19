@@ -7,6 +7,8 @@
  *   - root pages and app files (HTML, manifest, service worker, robots.txt)
  *   - assets/ and push/
  *   - only the data/*.json files that the pages or scripts actually request
+ *   - whole derived-data folders in DATA_DIRS, whose files are requested by a
+ *     computed path (e.g. data/ufc-stats/fighters/<slug>.json), JSON only
  *
  * Usage: node scripts/build-site.mjs [--out dist]
  * Render: build command `node scripts/build-site.mjs`, publish directory `dist`.
@@ -21,6 +23,9 @@ const OUT = resolve(ROOT, outArg > -1 ? process.argv[outArg + 1] : 'dist');
 
 const ROOT_FILE = /^(.+\.html|manifest\.webmanifest|sw\.js|robots\.txt)$/;
 const COPY_DIRS = ['assets', 'push'];
+// Public, derived statistics loaded per fighter at runtime. Never add raw
+// research or provider caches here.
+export const DATA_DIRS = ['data/ufc-stats'];
 const DATA_REF = /(?:^|[^A-Za-z0-9_-])\/?(data\/[A-Za-z0-9_./-]+?\.json)/g;
 
 function walk(dir, files = []) {
@@ -69,6 +74,16 @@ export function build(root = ROOT, out = OUT) {
     copied.push(dir + '/');
   }
 
+  const dataDirs = [];
+  for (const dir of DATA_DIRS) {
+    if (!existsSync(join(root, dir))) continue;
+    cpSync(join(root, dir), join(out, dir), {
+      recursive: true,
+      filter: src => statSync(src).isDirectory() || src.endsWith('.json'),
+    });
+    dataDirs.push(dir + '/');
+  }
+
   const missing = [];
   const data = [];
   for (const ref of referencedDataFiles(root)) {
@@ -80,11 +95,12 @@ export function build(root = ROOT, out = OUT) {
   }
 
   const bytes = walk(out).reduce((sum, file) => sum + statSync(file).size, 0);
-  return { out: relative(root, out) || '.', files: copied, data, missing, megabytes: +(bytes / 1048576).toFixed(1) };
+  return { out: relative(root, out) || '.', files: copied, data, dataDirs, missing, megabytes: +(bytes / 1048576).toFixed(1) };
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const report = build();
-  console.log(`Built ${report.out}: ${report.files.length} root items, ${report.data.length} data files, ${report.megabytes} MB`);
+  console.log(`Built ${report.out}: ${report.files.length} root items, ${report.data.length} data files, ` +
+    `${report.dataDirs.length} data folders, ${report.megabytes} MB`);
   if (report.missing.length) console.log('Referenced but not in the repo (skipped): ' + report.missing.join(', '));
 }
