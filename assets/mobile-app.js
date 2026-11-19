@@ -5,17 +5,20 @@
  const icon={
    home:'<path d="m3 10 9-7 9 7v11H3z"/><path d="M9 21v-7h6v7"/>',
    news:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/>',
+   fighters:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+   analysis:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
    film:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="m10 9 5 3-5 3z"/>',
    fights:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M7 14h4"/>',
    results:'<path d="M8 21h8M12 17v4M7 3h10v7a5 5 0 0 1-10 0zM7 5H3v3a4 4 0 0 0 4 4m10-7h4v3a4 4 0 0 1-4 4"/>',
    social:'<path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-5.5A9 9 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3a8.4 8.4 0 0 1 8.5 8.5Z"/>'
  };
  const glyph=k=>'<svg aria-hidden="true" viewBox="0 0 24 24">'+icon[k]+'</svg>';
- const items=[['home','News','news'],['highlights','Film','film'],['calendar','Fights','fights'],['results','Results','results'],['social','Fight Talk','social']];
+ const items=[['home','News','news'],['fights','Fights','fights'],['fighters','Fighters','fighters'],['analysis','Analysis','analysis'],['social','Fight Talk','social']];
+ const groupOf={calendar:'fights',results:'fights',highlights:'fights',champions:'fighters',leaderboards:'fighters'};
  let sheet=null, opener=null;
  function active(){
    const route=location.hash.slice(1).split('/')[0]||'home';
-   const key=route==='news'?'home':route;
+   const key=route==='news'?'home':(groupOf[route]||route);
    document.querySelectorAll('.befn-mobile-tabs a').forEach(a=>{
      if(a.dataset.key===key)a.setAttribute('aria-current','page');
      else a.removeAttribute('aria-current');
@@ -45,9 +48,9 @@
    const grid=document.createElement('div');grid.className='befn-mobile-sheet-grid';
    const sections=[
      ['#home','News'],
-     ['#calendar','Fight calendar'],['#results','Results & highlights'],
-     ['#social','Fight Talk'],['#highlights','Fight film'],
-     ['#champions','Champions'],['#fighters','Fighter scout']
+     ['#fights','Upcoming fights'],['#results','Results'],['#highlights','Fight film'],
+     ['#fighters','Fighter scout'],['#champions','Champions'],['#leaderboards','UFC stats'],
+     ['#analysis','Analysis'],['#social','Fight Talk']
    ];
    sections.forEach(([href,label])=>{const a=document.createElement('a');a.href=href;a.textContent=label;a.addEventListener('click',close);grid.append(a);});
    const alerts=document.createElement('button');alerts.type='button';alerts.textContent='Notification preferences';

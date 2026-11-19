@@ -1,0 +1,42 @@
+/* Compact header, five-item navigation and labelled sport filter (design option A).
+   Loaded last so it replaces the old logo band, seven-tab bar and round sport buttons. */
+.sh{position:sticky;top:0;z-index:40;display:flex;align-items:stretch;gap:32px;height:56px;padding:0 max(16px,4.2vw);background:#111013;color:#fff;border-bottom:1px solid #2c262b}
+.sh-brand{display:flex;align-items:center;flex:0 0 auto;font:900 22px/.9 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;color:#fff;text-decoration:none}
+.sh .navrail{position:static;display:flex;flex:1;align-items:stretch;justify-content:flex-start;gap:12px;min-width:0;padding:0;background:transparent;border:0;min-height:0}
+.sh .mainnav{display:flex;align-items:stretch;gap:4px;min-height:0;overflow:visible}
+.sh .mainnav a{display:flex;align-items:center;padding:0 16px;border-bottom:3px solid transparent;background:transparent;color:#d9d2d5;font:700 13px/1 'DM Sans',system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.sh .mainnav a:hover{background:transparent;color:#fff}
+.sh .mainnav a.active{background:transparent;color:#fff;border-bottom-color:#cf1824}
+.sh .navrail .befn-install-button{align-self:center;margin-left:auto}
+.sh a:focus-visible,.sh-sports button:focus-visible{outline:3px solid #f3c332;outline-offset:-3px}
+
+.sh-sports{display:flex;align-items:center;gap:8px;padding:12px max(16px,4.2vw);background:#1d171c;border-bottom:3px solid #cf1824}
+.sh-sports-label{margin-right:8px;font:700 12px/1 'DM Sans',system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#b8b0b3}
+.sh-sports-group{display:flex;flex-wrap:wrap;gap:8px}
+.sh-sports button{min-height:44px;padding:0 18px;border:0;border-radius:22px;background:#2c262b;color:#fff;font:700 14px/1 'DM Sans',system-ui,sans-serif;cursor:pointer}
+.sh-sports button[aria-pressed="true"]{background:#f3c332;color:#111013}
+
+/* Sub-links inside a section (Fighters: scout, champions, UFC stats; Fights: fight film). */
+.sh-sub{display:flex;flex-wrap:wrap;gap:8px;max-width:1540px;margin:0 auto;padding:16px max(16px,4.2vw) 0}
+.sh-sub a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:22px;background:#111013;color:#fff;font:700 13px/1 'DM Sans',system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
+.sh-sub a[aria-current="page"]{background:#cf1824}
+
+@media(max-width:760px){
+  .sh{height:auto;min-height:45px;padding:0;gap:0}
+  .sh-brand{display:none}
+  .sh .navrail{padding:0 12px;min-height:45px}
+  .sh .mainnav{display:none}
+  .sh-sports{padding:10px 12px;gap:6px}
+  .sh-sports-label,.sh-hide-small{display:none}
+  .sh-sports-group{flex-wrap:nowrap;gap:6px;width:100%}
+  .sh-sports button{flex:1 1 0;padding:0 6px;font-size:13px}
+}
+
+/* Keep the five items together on the left; older rules stretched them across the bar. */
+.sh .mainnav{flex:0 1 auto}
+.sh .mainnav a{flex:0 0 auto}
+.sh .befn-mobile-title{color:#fff;font:900 20px/1 'Barlow Condensed',Impact,sans-serif;letter-spacing:.02em;text-transform:uppercase}
+.sh .befn-mobile-actions button{color:#fff}
+.sh .mainnav{width:auto;justify-content:flex-start;display:flex}
+.sh .mainnav a{justify-content:flex-start;min-height:0;font-size:13px;letter-spacing:.08em}
+.sh .befn-mobile-title{display:block!important}

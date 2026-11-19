@@ -14,7 +14,7 @@ assert(fullSite.includes('function newsFeedItems()'),'Home and News share the sa
 assert(fullSite.includes('function renderNews(){return renderHome();}'),'Old news links use unified home');
 assert(!fullSite.includes('data-nav="news"'),'Duplicate News section removed');
 assert(!installedAppSource.includes("['news','News','news']"),'Mobile duplicate News tab removed');
-assert(installedAppSource.includes("route==='news'?'home':route"),'Old News deep links highlight the new News tab');
+assert(installedAppSource.includes("route==='news'?'home':(groupOf[route]||route)"),'Old News deep links highlight the new News tab');
 assert(!installedAppSource.includes('Newsletter editions'),'Private newsletter remains separate from public website');
 
 assert(!fullSite.includes('THE FIGHT<br>WORLD'),'Promotional home hero removed');
@@ -50,7 +50,8 @@ assert(home.includes('id="news-feed"'),'Featured stories and full news feed are 
 assert(!fullSite.includes('data-nav="news"'),'No duplicate desktop News page');
 assert(fullSite.includes("if(key==='news')key='home'"),'Legacy #news links still resolve');
 const mobileNav=fs.readFileSync('assets/mobile-app.js','utf8');
-assert(mobileNav.includes("['highlights','Film','film']"),'Film replaces duplicate mobile News tab');
+assert(['News','Fights','Fighters','Analysis','Fight Talk'].every(l=>mobileNav.includes("'"+l+"'")),'Mobile tabs are the five primary items');
+assert(!mobileNav.includes("['highlights','Film','film']"),'Fight film lives inside Fights, not as a tab');
 assert(!mobileNav.includes("['news','News','news']"),'Only one News tab on mobile');
 assert(home.includes('Important MMA fight announced'),'Significant verified news is prioritised');
 assert(home.indexOf('Regular boxing update')<home.indexOf('Important MMA fight announced'),'First lead is the newest story, second is the next best');
