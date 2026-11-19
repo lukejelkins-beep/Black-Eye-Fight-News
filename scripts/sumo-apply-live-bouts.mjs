@@ -90,8 +90,12 @@ export function applyLiveBouts(files, bouts) {
       const ds = files.divisions.bySourceId[id];
       if (ds?.status === 'available') {
         const div = bout.divisions[id] || bout.division;
+        // First bout in a division this wrestler had no record in: start both
+        // sides at 0 so wins and losses always come as a pair.
+        ds.stats.winsByDivision[div] = ds.stats.winsByDivision[div] || 0;
+        ds.stats.lossByDivision[div] = ds.stats.lossByDivision[div] || 0;
         const bucket = won ? ds.stats.winsByDivision : ds.stats.lossByDivision;
-        bucket[div] = (bucket[div] || 0) + 1;
+        bucket[div] += 1;
       }
     }
   }

@@ -60,3 +60,12 @@ test('real data: applying the stored basho bouts twice is stable', () => {
   applyLiveBouts(files, bouts);
   assert.equal(applyLiveBouts(files, bouts), 0);
 });
+
+test('a win in a division with no earlier record also creates the matching loss entry at 0', () => {
+  const { details, files } = mini();
+  files.divisions.bySourceId[1].stats = { winsByDivision: { Makushita: 3 }, lossByDivision: { Makushita: 1 } };
+  applyLiveBouts(files, completedBouts(details).slice(0, 1));
+  const { winsByDivision, lossByDivision } = files.divisions.bySourceId[1].stats;
+  assert.equal(winsByDivision.Makuuchi, 1);
+  assert.equal(lossByDivision.Makuuchi, 0);
+});
