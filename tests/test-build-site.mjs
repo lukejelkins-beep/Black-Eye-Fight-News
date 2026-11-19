@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { existsSync, mkdtempSync, readdirSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
-import { build, referencedDataFiles } from '../scripts/build-site.mjs';
+import { build, referencedDataFiles, DATA_DIRS } from '../scripts/build-site.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const out = mkdtempSync(join(tmpdir(), 'befn-dist-'));
@@ -29,9 +29,19 @@ test('internal files and research data stay off the public site', () => {
     'data/ufc-research-archive.json', 'data/ufcalendar-fighter-research.json', 'data/ufc-research-workers']) {
     assert.ok(!existsSync(join(out, path)), path + ' must not be published');
   }
+  const allowedDirs = new Set(DATA_DIRS.map(dir => dir.split('/')[1]));
   const published = readdirSync(join(out, 'data'));
-  assert.ok(published.every(name => name.endsWith('.json')));
-  assert.ok(published.length <= 40, 'only referenced data files are published');
+  assert.ok(published.every(name => name.endsWith('.json') || allowedDirs.has(name)), published.join(', '));
+  assert.ok(published.filter(name => name.endsWith('.json')).length <= 40, 'only referenced data files are published');
+});
+
+test('derived per-fighter statistics are published, JSON only', () => {
+  const stats = join(out, 'data', 'ufc-stats');
+  if (!existsSync(join(ROOT, 'data', 'ufc-stats'))) return;
+  assert.ok(existsSync(join(stats, 'names.json')));
+  const fighters = readdirSync(join(stats, 'fighters'));
+  assert.ok(fighters.length > 500, 'fighter files are requested by computed path and must be copied');
+  assert.ok(fighters.every(name => name.endsWith('.json')));
 });
 
 test('the build stays well under the old 140 MB repo publish', () => {

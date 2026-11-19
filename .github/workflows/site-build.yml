@@ -1,0 +1,22 @@
+name: Check the published site build
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/build-site.mjs'
+      - 'tests/test-build-site.mjs'
+      - '.github/workflows/site-build.yml'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build dist/ exactly as Render does and check what is published
+        run: |
+          node --test tests/test-build-site.mjs
+          node scripts/build-site.mjs
