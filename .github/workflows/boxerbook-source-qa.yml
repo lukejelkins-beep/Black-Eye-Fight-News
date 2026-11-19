@@ -50,7 +50,7 @@ jobs:
               elif isinstance(v, list) and v:
                   print(pad + '[0] of ' + str(len(v)))
                   shape(v[0], pad + '  ')
-          shape(fetch_json('/results', {'days': 2}, key=key))
+          r = fetch_json('/results', {'days': 14}, key=key); print('attribution:', r.get('attribution')); r['bouts'] = r['bouts'][:1]; shape(r)
           PY
       - name: Upload one-day QA report for review
         if: github.event_name == 'workflow_dispatch' && inputs.live_check == true
