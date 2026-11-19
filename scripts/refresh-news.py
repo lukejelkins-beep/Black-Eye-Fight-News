@@ -4,11 +4,11 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 # Resolve both direct-script execution and unittest's file-location import.
 try:
-    from news_dedupe import deduplicate
+    from news_dedupe import deduplicate, pick_leads
 except ModuleNotFoundError as error:
     if error.name != "news_dedupe":
         raise
-    from scripts.news_dedupe import deduplicate
+    from scripts.news_dedupe import deduplicate, pick_leads
 from html.parser import HTMLParser
 from concurrent.futures import ThreadPoolExecutor
 import time
@@ -535,6 +535,7 @@ def main():
     payload={'attemptedAt':now.isoformat(),'lastSuccessfulAt':now.isoformat() if success else old.get('lastSuccessfulAt'),
              'sources':statuses,'articles':sorted(clean_articles,key=lambda a:a['publishedAt'],reverse=True)[:280],
              'resultReports':sorted(clean_reports,key=lambda a:a['publishedAt'],reverse=True)[:120],
+             'leads':pick_leads(clean_articles,now),
              'deduplication':{'checkedAt':now.isoformat(),'removedArticles':len(removed_articles),
                               'removedResultReports':len(removed_reports),
                               'examples':(removed_articles+removed_reports)[:15]}}

@@ -161,12 +161,46 @@ def quality(a):
     )
 
 def deduplicate(articles):
-    """Return (kept, rejected) with reproducible editorial selection."""
-    kept=[]; rejected=[]
+    """Return (kept, rejected) with reproducible editorial selection.
+
+    Each kept article also records how many different sources ran the same story
+    (`coverage`) and which ones (`alsoCoveredBy`), so the site can find the most
+    covered story. Counting never changes which article is kept.
+    """
+    kept=[]; rejected=[]; carried={}
     ordered=sorted(articles,key=quality,reverse=True)
     for a in ordered:
         winner=next((b for b in kept if duplicate_of(a,b)),None)
-        if winner is None:kept.append(a)
-        else:rejected.append({'url':a.get('url'),'title':a.get('title'),
-                              'keptUrl':winner.get('url'),'reason':'same story'})
+        if winner is None:
+            kept.append(a); carried[id(a)]=set()
+        else:
+            rejected.append({'url':a.get('url'),'title':a.get('title'),
+                             'keptUrl':winner.get('url'),'reason':'same story'})
+            if a.get('source') and a.get('source')!=winner.get('source'):
+                carried[id(winner)].add(a['source'])
+    for a in kept:
+        others=sorted(carried[id(a)])
+        a['coverage']=1+len(others)
+        if others:a['alsoCoveredBy']=others
+        else:a.pop('alsoCoveredBy',None)
     return kept,rejected
+
+
+def pick_leads(articles,now,fresh_hours=48):
+    """Two lead stories: the newest, and the one the most sources are running.
+
+    Only stories from the last `fresh_hours` count. A story with a photo wins ties.
+    The two leads are never the same story; if the most-covered story is also the
+    newest, the next most-covered one is used. Returns {'newest':url,'mostCovered':url}
+    with None where no story qualifies.
+    """
+    def when(a):
+        t=published(a)
+        return t
+    fresh=[a for a in articles if when(a) and (now-when(a)).total_seconds()<=fresh_hours*3600]
+    has_photo=lambda a:1 if (a.get('image') or {}).get('url') else 0
+    newest=max(fresh,key=lambda a:(when(a),has_photo(a)),default=None)
+    pool=[a for a in fresh if newest is None or a.get('url')!=newest.get('url')]
+    covered=max(pool,key=lambda a:(a.get('coverage',1),has_photo(a),when(a)),default=None)
+    return {'newest':newest.get('url') if newest else None,
+            'mostCovered':covered.get('url') if covered and covered.get('coverage',1)>1 else None}

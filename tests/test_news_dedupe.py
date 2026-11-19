@@ -114,4 +114,57 @@ class NewsDedupeTests(unittest.TestCase):
         self.assertEqual(kept[0]['url'],b['url'])
         self.assertEqual(rejected[0]['keptUrl'],b['url'])
 
-if __name__=='__main__':unittest.main()
+
+
+class CoverageAndLeadsTests(unittest.TestCase):
+    NOW=__import__('datetime').datetime(2026,11,19,4,0,tzinfo=__import__('datetime').timezone.utc)
+
+    def story(self,title,url,source,hours_ago,image=True):
+        import datetime
+        when=(self.NOW-datetime.timedelta(hours=hours_ago)).isoformat()
+        a=article(title,url,when=when,source=source)
+        if image:a['image']={'url':url+'.jpg'}
+        return a
+
+    def test_same_story_from_three_sources_is_counted_once_with_coverage(self):
+        from news_dedupe import deduplicate
+        items=[
+            self.story('Champion confirms heavyweight title fight against contender in July','https://a.test/1','MMA Fighting',5),
+            self.story('Champion confirms heavyweight title fight against contender in July','https://b.test/1','Sherdog',4),
+            self.story('Champion confirms heavyweight title fight against contender in July','https://c.test/1','MMA Weekly',3),
+            self.story('Different story entirely about a boxing rematch','https://d.test/1','World Boxing News',2),
+        ]
+        kept,rejected=deduplicate(items)
+        self.assertEqual(len(kept),2)
+        top=max(kept,key=lambda a:a['coverage'])
+        self.assertEqual(top['coverage'],3)
+        self.assertEqual(len(top['alsoCoveredBy']),2)
+        self.assertEqual([a['coverage'] for a in kept if a is not top],[1])
+
+    def test_leads_are_newest_and_most_covered_and_never_the_same_story(self):
+        from news_dedupe import pick_leads
+        old_big=self.story('Big story','https://a.test/big','A',30); old_big['coverage']=4
+        newest=self.story('Fresh','https://a.test/new','B',1); newest['coverage']=1
+        small=self.story('Small','https://a.test/small','C',6); small['coverage']=1
+        leads=pick_leads([old_big,newest,small],self.NOW)
+        self.assertEqual(leads['newest'],'https://a.test/new')
+        self.assertEqual(leads['mostCovered'],'https://a.test/big')
+
+    def test_most_covered_is_not_repeated_as_newest(self):
+        from news_dedupe import pick_leads
+        both=self.story('Both','https://a.test/both','A',1); both['coverage']=5
+        other=self.story('Other','https://a.test/other','B',9); other['coverage']=2
+        leads=pick_leads([both,other],self.NOW)
+        self.assertEqual(leads['newest'],'https://a.test/both')
+        self.assertEqual(leads['mostCovered'],'https://a.test/other')
+
+    def test_no_lead_when_nothing_is_fresh_or_nothing_is_shared(self):
+        from news_dedupe import pick_leads
+        stale=self.story('Old','https://a.test/old','A',100)
+        self.assertEqual(pick_leads([stale],self.NOW),{'newest':None,'mostCovered':None})
+        solo=self.story('Solo','https://a.test/solo','A',2); solo['coverage']=1
+        self.assertIsNone(pick_leads([solo],self.NOW)['mostCovered'])
+
+
+if __name__=='__main__':
+    unittest.main()
