@@ -1,6 +1,6 @@
 # Phase 2 plan: live news and Fight Talk
 
-Status: **proposal, waiting for the owner's OK.** Nothing here is built yet. It follows phase 1 (the shared look and navigation).
+Status: **proposal, updated 19 Nov with the owner's answers on lead stories, photos and languages; waiting for the owner's OK to build.** Nothing here is built yet. It follows phase 1 (the shared look and navigation).
 
 ## Goal
 News and Fight Talk feel live: new stories and posts show up within minutes, the front page leads with the best story, and every item says where it came from and when. No item is shown without a source link and a source date.
@@ -13,24 +13,31 @@ News and Fight Talk feel live: new stories and posts show up within minutes, the
 
 ## Proposed work (each step is its own PR; none merges without "Merge N")
 1. **Source health report.** One page for the owner showing each news source: last success, last new item, items in 7 days, and failures. Retire feeds that have been silent for 30 days, and replace Bing-search feeds with official feeds where one exists. No visible site change.
-2. **News page, lead story and ranking.** One lead story, then a tight list. Ranking uses source date, source quality and how many sources carry the story; fights and events on the Fights page get their related stories linked. Live text headings, no image headings.
+2. **News page: two lead stories, photo-led.** Two lead stories side by side (stacked on phone): **Newest** (latest story from a trusted source) and **Most covered** (the story the most sources are running in the last 48 hours, found with the same duplicate grouping the importer uses). Under them a photo-led list: a thumbnail for every story, tight rows, live text headings. Photos are the image the publisher's own feed supplies, shown with the source name and a link back; where a feed has none, a sport-coloured placeholder or the event poster is used. Owner direction: tight but visual.
 3. **Related news on cards.** Fight and fighter pages show the latest three stories that name them, matched by the same name rules the results importer uses. Only exact or close-spelling matches; no guessing.
 4. **Fight Talk page.** Rolling feed by fighter, promotion and sport, with the same filter labels as the Fights page. Each post shows its platform, source date and a link to the original. The same Meta/X embeds as now.
 5. **Freshness and polling.** The page re-checks its data every few minutes while open, and shows "updated 4 min ago". Cloudflare caches for about 5 minutes, so "live" means within about 10 minutes, not instant.
 6. **Schedule review.** After a week of real use, set each job's frequency from the source health report, not from guesses.
 
+## Japanese and Spanish sources (owner approved, translated)
+- Add Japanese and Spanish sources for the sports already covered: for example RIZIN and Japanese boxing in Japanese, and Mexican and Spanish boxing and MMA in Spanish. The exact list is proposed in step 1's report for the owner to approve.
+- Each story shows an English headline and short summary, labelled "Translated from Japanese" or "Translated from Spanish", with the original headline and a link to the original page. Translations are machine-made and say so.
+- Only the headline and the feed's short summary are translated, never the full article. Translated stories rank and group with English ones, so a Japanese RIZIN story and an English one about the same card count as one story.
+- Photos follow the same rule as English stories: the publisher's own feed image, credited, with a link back.
+
 ## Costs and limits
 - RSS news costs nothing beyond GitHub Actions minutes.
+- Translation: see the next section. It needs a translation service; the cheapest suitable option is chosen and priced before it is switched on, and nothing is spent without the owner's OK.
 - Paid X stays inside the existing US$1.80 a month ledger; nothing in phase 2 raises it. Any increase needs the owner's explicit OK.
 - No scraping of sites that block it, and no workarounds for blocked sources.
 - No copying of article text: headline, source name, date, a short summary where the feed supplies one, and a link.
 - Social posts are shown as the platforms' own embeds or links, never rewritten.
 
-## Decisions needed from the owner
-1. **Which languages and regions?** English only for now, or include Japanese and Spanish sources (RIZIN, Mexican boxing)?
-2. **Social sources:** keep X, Threads and Bluesky as they are, or add or drop any?
-3. **Lead story rule:** newest, or most-covered, or hand-picked by you with an automatic fallback?
-4. **Alerts:** do you want a notification when a major story breaks (title fight announced, withdrawal, result)? This would be a separate, later step.
+## Decisions from the owner
+- **Languages:** English, Japanese and Spanish, with translation. Owner approved 19 Nov.
+- **Lead stories:** two, Newest and Most covered. Owner approved 19 Nov.
+- **Look:** tight but visual, with photos. Owner approved 19 Nov.
+- **Still open:** social sources (keep X, Threads and Bluesky as they are, or change them?), and whether you want alerts when a major story breaks (a separate, later step).
 
 ## Not in phase 2
 Stats snapshots (phase 3), per-bout analysis (phase 4), any change to Sumo.
