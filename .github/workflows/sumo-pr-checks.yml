@@ -25,7 +25,7 @@ jobs:
           set -uo pipefail
           fail=0
           for f in tests/test-sumo-*.mjs; do
-            if node --test "$f" > /tmp/out.txt 2>&1; then echo "PASS $f"; else echo "FAIL $f"; tail -20 /tmp/out.txt; fail=1; fi
+            if node --test "$f" > /tmp/out.txt 2>&1; then echo "PASS $f"; else echo "FAIL $f"; grep -E -A12 '^not ok|^ *not ok' /tmp/out.txt | grep -E 'not ok|error|expected|actual|message' | head -20; fail=1; fi
           done
           # Gate only on the files the scheduled update itself runs.
           node --test tests/test-sumo-daily.mjs tests/test-sumo-api-source.mjs
