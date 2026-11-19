@@ -146,6 +146,7 @@ async function loadDesk(background=false){
 }
 const sourceHealth=()=>'<details class="source-health"><summary>News updated '+(desk.lastSuccessfulAt?esc(displayDate(desk.lastSuccessfulAt)):'pending')+'</summary><p>'+(desk.sources.some(s=>!s.ok)?'Some sources are delayed. ':'')+'Checks run every 15 minutes; publication and indexing can be delayed. '+esc(desk.error)+'</p></details><button class="btn" id="desk-updates" hidden>Show fresh updates</button>';
 function newsFighterImage(a){
+ if(a.fighterImage&&/^assets\/img\/[a-z0-9-]+\/[a-z0-9-]+\.webp$/.test(a.fighterImage.url||''))return {url:a.fighterImage.url,name:a.fighterImage.name};
  const title=a.title.toLowerCase();
  const fighter=(D.fighters||[]).filter(f=>f.name&&f.photo&&title.includes(f.name.toLowerCase())).sort((a,b)=>b.name.length-a.name.length)[0];
  return fighter&&/^https:\/\//.test(fighter.photo)?{url:fighter.photo,name:fighter.name}:null;
