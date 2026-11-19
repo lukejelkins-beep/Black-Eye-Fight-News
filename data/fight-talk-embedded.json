@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-19T16:28:22.797Z",
-  "checkedAt": "2026-11-19T16:28:22.797Z",
+  "attemptedAt": "2026-11-19T17:32:00.336Z",
+  "checkedAt": "2026-11-19T17:32:00.336Z",
   "windowDays": 28,
   "articlesChecked": 30,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
-  "rssArticleCandidates": 47,
+  "rssArticleCandidates": 46,
   "publisherSourcesConfigured": 32,
-  "linksFound": 11,
-  "newEmbedsVerified": 0,
+  "linksFound": 13,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -80,6 +80,27 @@
       "embedVerified": true,
       "linkPriority": 55,
       "url": "https://x.com/ONEChampionship/status/2123045530087395371"
+    },
+    {
+      "type": "post",
+      "platform": "X",
+      "sport": "boxing",
+      "name": "DAZN Boxing",
+      "role": "media",
+      "handle": "@DAZNBoxing",
+      "nativeEmbed": true,
+      "originalDateUnverified": false,
+      "postedAt": "2026-11-18T17:00:01.008Z",
+      "sourceLinkedAt": "2026-11-19T14:45:59.000Z",
+      "discoveredAt": "2026-11-19T17:32:00.336Z",
+      "sourcePublisher": "Boxing News",
+      "evidenceUrl": "https://boxingnewsonline.net/news/benavidez-on-usyk-vs-prime-holyfield/",
+      "summary": "Original social post linked in Boxing News coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://x.com/DAZNBoxing/status/2123098913930629171"
     },
     {
       "type": "post",
@@ -2340,25 +2361,6 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/p/DfpVIiHipWw/"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "grappling",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-13T08:13:12+00:00",
-      "discoveredAt": "2026-11-13T09:42:01.386Z",
-      "sourcePublisher": "ONE Championship",
-      "evidenceUrl": "https://www.onefc.com/news/helena-crevar-and-kendall-reusing-collide-for-inaugural-womens-openweight-submission-grappling-crown-at-one-fight-night-51/",
-      "summary": "Original social post linked in ONE Championship coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 10,
-      "url": "https://www.instagram.com/reel/DfOYwWMAqJk/"
     }
   ],
   "seenOriginals": [
@@ -3221,6 +3223,10 @@
     {
       "url": "https://x.com/ONEChampionship/status/2123045530087395371",
       "firstSeen": "2026-11-19T14:13:15.910Z"
+    },
+    {
+      "url": "https://x.com/DAZNBoxing/status/2123098913930629171",
+      "firstSeen": "2026-11-19T17:32:00.336Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
