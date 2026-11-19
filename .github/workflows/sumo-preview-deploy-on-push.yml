@@ -1,0 +1,31 @@
+name: Sumo preview redeploy on merge
+
+# Render does not auto-deploy the Sumo preview, and before this only the scheduled
+# jobs called the deploy hook, so merged PRs waited for the next data refresh.
+# Pushes by people (PR merges) trigger this; pushes made with the workflow token
+# (the scheduled data jobs) do not, and those jobs call the hook themselves.
+on:
+  push:
+    branches: [feat/sumo-section-test-20261114]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sumo-preview-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/feat/sumo-section-test-20261114'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Redeploy the Sumo preview on Render
+        env:
+          HOOK: ${{ secrets.SUMO_PREVIEW_DEPLOY_HOOK_URL }}
+        shell: bash
+        run: |
+          if [ -z "${HOOK:-}" ]; then echo "SUMO_PREVIEW_DEPLOY_HOOK_URL is not set; preview not redeployed" >&2; exit 1; fi
+          curl -fsS --max-time 30 -X POST "$HOOK" > /dev/null
+          echo "Render preview deploy requested for ${GITHUB_SHA::7}"
