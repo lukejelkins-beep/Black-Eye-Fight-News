@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Refresh UFC division rosters, official rankings and champions from UFCalendar.
 
-One quota check plus one request per division (13 calls). Writes
+One quota check plus one request per division (12 calls). Writes
 data/ufc-divisions.json:
 
   divisions: {slug: {label, observedOn, rankingDate, champion, ranked[], roster[]}}
@@ -29,7 +29,7 @@ DIVISIONS = {
     "middleweight": "Middleweight", "welterweight": "Welterweight",
     "lightweight": "Lightweight", "featherweight": "Featherweight",
     "bantamweight": "Bantamweight", "flyweight": "Flyweight",
-    "strawweight": "Strawweight",
+    # No men's strawweight in the UFC (its page is empty), so it is not requested.
     "womens-featherweight": "Women's Featherweight", "womens-bantamweight": "Women's Bantamweight",
     "womens-flyweight": "Women's Flyweight", "womens-strawweight": "Women's Strawweight",
 }

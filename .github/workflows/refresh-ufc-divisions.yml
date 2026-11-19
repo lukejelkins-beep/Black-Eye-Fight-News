@@ -26,7 +26,7 @@ jobs:
           python-version: '3.12'
       - name: Test division parsing (no network)
         run: python -m unittest discover -s tests -p 'test_ufc_divisions.py' -v
-      - name: Fetch 13 division pages (one quota check + 13 calls, spend guard applies)
+      - name: Fetch 12 division pages (one quota check + 12 calls, spend guard applies)
         env:
           UFCALENDAR_API_KEY: ${{ secrets.UFCALENDAR_API_KEY }}
         run: python scripts/refresh-ufc-divisions.py
