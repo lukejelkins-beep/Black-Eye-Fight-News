@@ -37,6 +37,14 @@ SOURCES=[
  ('MMA Weekly','mma','https://www.mmaweekly.com/feed'),
  ('GracieMag','grappling','https://www.graciemag.com/feed/'),
  ('D3 Wrestle','grappling','https://d3wrestle.com/feed'),
+ ('BoxingScene','boxing','https://www.boxingscene.com/feed'),
+ ('BBC Sport Boxing','boxing','https://feeds.bbci.co.uk/sport/boxing/rss.xml'),
+ ('Boxing News 24','boxing','https://www.boxingnews24.com/feed/'),
+ ('Boxing Insider','boxing','https://www.boxinginsider.com/feed/'),
+ ('The Guardian Boxing','boxing','https://www.theguardian.com/sport/boxing/rss'),
+ ('BBC Sport MMA','mma','https://www.bbc.co.uk/sport/mixed-martial-arts/rss.xml'),
+ ('MMA News','mma','https://www.mmanews.com/feed'),
+ ('Cageside Press','mma','https://www.cagesidepress.com/feed/'),
 ]
 UTC=dt.timezone.utc
 
