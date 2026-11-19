@@ -53,7 +53,11 @@ def news_rows(news, now):
         with_image = sum(1 for a in items if (a.get("image") or {}).get("url"))
         flags = []
         if not source.get("ok"):
-            flags.append("feed failed: " + str(source.get("error", "unknown"))[:60])
+            error = str(source.get("error", "unknown"))
+            if "HTTP Error" in error or "timed out" in error or "resolution" in error:
+                flags.append("BROKEN: " + error[:60])
+            else:
+                flags.append("quiet: reachable but nothing recent to publish (" + error[:50] + ")")
         if newest is None:
             flags.append("no stories held")
         elif (now - newest).days >= SILENT_DAYS:
