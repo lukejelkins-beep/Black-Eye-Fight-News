@@ -33,3 +33,11 @@ jobs:
         run: |
           node scripts/sumo-refresh-daily.mjs
           node -e "const d=require('./data/sumo/preview-details.json');console.log(JSON.stringify({announcedDay:d.announcedDay,dailyStatus:d.dailyStatus,dailySource:d.dailySource,count:d.dailyScheduleCount,divisions:Object.fromEntries(Object.entries(d.torikumi||{}).map(([k,v])=>[k,v.status+':'+(v.data?.torikumi?.length||0)]))}))"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Portrait intake tests and a 4-profile dry run from this runner (no commit)
+        run: |
+          python -m pip install --quiet pillow==11.3.0
+          python -m unittest tests/test_sumo_portrait_intake.py
+          python scripts/sumo-portrait-intake.py --dry-run --update-batch 4
