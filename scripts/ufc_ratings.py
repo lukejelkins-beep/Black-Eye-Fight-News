@@ -71,9 +71,30 @@ def _sum_parts(items, min_coverage, min_parts=2):
     return sum(v * w for v, w in valid) / weight
 
 
+# Plausibility bounds, identical to careerData() in the JS engine: a value
+# outside its range (e.g. 8 knockdowns per 15 min from a tiny, finish-heavy
+# sample) is treated as missing, not as an extreme score.
+BOUNDS = {"slpm": (0, 20), "sapm": (0, 20), "td15": (0, 20), "sub15": (0, 12), "rev15": (0, 12),
+          "ctrlShare": (0, 1), "ctrlAgainstShare": (0, 1), "kd15": (0, 7), "kdAbs15": (0, 7),
+          "strAcc": (0, 1), "strDef": (0, 1), "tdAcc": (0, 1), "tdDef": (0, 1),
+          "koWinShare": (0, 1), "subWinShare": (0, 1)}
+
+
+def bounded(rates: dict, window: dict) -> dict:
+    """Rates plus window finish shares, with out-of-range values set to None."""
+    merged = {**(rates or {}), "koWinShare": (window or {}).get("koWinShare"),
+              "subWinShare": (window or {}).get("subWinShare")}
+    out = {}
+    for key, value in merged.items():
+        lo, hi = BOUNDS.get(key, (float("-inf"), float("inf")))
+        out[key] = value if isinstance(value, (int, float)) and lo <= value <= hi else None
+    return out
+
+
 def specs(rates: dict, window: dict) -> dict:
     """Component scores and weights, identical to metricSpecs() in the JS engine."""
-    r = rates or {}
+    r = bounded(rates, window)
+    window = r
     slpm, sapm = r.get("slpm"), r.get("sapm")
     diff = slpm - sapm if slpm is not None and sapm is not None else None
     return {
@@ -108,7 +129,7 @@ def raw_skill(rates: dict, window: dict, skill: str):
 def drivers(rates: dict, window: dict, skill: str) -> list[dict]:
     """What drives a rating: each component's measured value, 0-100 score and weight."""
     out = []
-    values = {**(rates or {}), "koWinShare": window.get("koWinShare"), "subWinShare": window.get("subWinShare")}
+    values = bounded(rates, window)
     for (score, weight), (key, label, unit) in zip(specs(rates, window)[skill], COMPONENTS[skill]):
         out.append({"key": key, "label": label, "unit": unit, "value": values.get(key),
                     "score": None if score is None else round(score), "weight": weight})

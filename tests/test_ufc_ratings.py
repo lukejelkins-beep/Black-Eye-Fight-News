@@ -29,6 +29,14 @@ class Formulas(unittest.TestCase):
         self.assertIsNone(r.raw_skill({"tdDef": .8, "kdAbs15": .1}, {}, "defence"), "needs strikes absorbed or defence")
         self.assertIsNone(r.raw_skill({"slpm": 4}, {}, "striking"), "one component is not enough")
 
+    def test_implausible_values_are_dropped_like_the_engine(self):
+        # Real case: 8.3 knockdowns per 15 min from a short, finish-heavy sample.
+        rates = {"slpm": 5.324, "sapm": 1.921, "strAcc": .67, "kd15": 8.289}
+        window = {"koWinShare": .6314}
+        with_kd = (79.368 * .18 + 100 * .22 + 100 * .15 + 100 * .25) / (.18 + .22 + .15 + .25)
+        self.assertAlmostEqual(r.raw_skill(rates, window, "striking"), with_kd, places=2)
+        self.assertIsNone(next(d for d in r.drivers(rates, window, "striking") if d["key"] == "kd15")["value"])
+
     def test_lower_is_better_components(self):
         good = r.raw_skill({"sapm": 1.5, "strDef": .7}, {}, "defence")
         bad = r.raw_skill({"sapm": 5.5, "strDef": .4}, {}, "defence")
