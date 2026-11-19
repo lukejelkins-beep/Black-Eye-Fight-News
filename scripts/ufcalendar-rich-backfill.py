@@ -1089,8 +1089,14 @@ def collect_targeted_ufc_history(client,state,coverage,today):
                     "eventDate":date,"org":"ufc",
                     "eventId":positive(event.get("id")),
                     "status":"completed","main":bout["main"],
-                    "titleFight":bout["titleFight"],"result":bout["result"]}
+                    "titleFight":bout["titleFight"],"result":bout["result"],
+                    "division":bout.get("division") or None,
+                    "divisionSlug":bout.get("divisionSlug")}
                 new+=1
+            elif not old.get("divisionSlug") and bout.get("divisionSlug"):
+                # Earlier saves dropped weight class; fill it when the event is seen again.
+                old["division"]=bout.get("division") or None
+                old["divisionSlug"]=bout["divisionSlug"]
             # Only the first five completed results are immediate round targets.
             # Ranking weights do not represent actual statistical standings.
             if matches<=5 and bid not in state["roundDone"]:
@@ -1292,7 +1298,8 @@ def collect_ufc_career_bouts(client,state,research,coverage,today,approval=None,
             "id":bid,"a":bout["a"],"b":bout["b"],"event":title,
             "eventDate":event_date,"org":"ufc","eventId":positive(event.get("id")),
             "status":bout["status"],"main":bout["main"],
-            "titleFight":bout["titleFight"],"result":bout["result"]}
+            "titleFight":bout["titleFight"],"result":bout["result"],
+            "division":bout.get("division") or None,"divisionSlug":bout.get("divisionSlug")}
         checks.pop(bid,None)
         indexed+=1
     if attempts:print("UFCalendar full UFC career IDs indexed:",indexed,"of",attempts,"lookups")
@@ -1419,7 +1426,8 @@ def reconcile_legacy_ufc_by_event_date(client,state,research,coverage,today,
                 "eventDate":event_date,"org":"ufc",
                 "eventId":positive(event.get("id")),
                 "status":bout["status"],"main":bout["main"],
-                "titleFight":bout["titleFight"],"result":bout["result"]}
+                "titleFight":bout["titleFight"],"result":bout["result"],
+                "division":bout.get("division") or None,"divisionSlug":bout.get("divisionSlug")}
             state.setdefault("ufcCareerBoutChecks",{}).pop(bid,None)
             checks[bid]={"status":"indexed_exact_native_id",
                          "checkedAt":today.isoformat(),"candidateId":found}
