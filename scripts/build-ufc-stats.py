@@ -30,7 +30,11 @@ import json
 import math
 import re
 import unicodedata
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import ufc_ratings  # noqa: E402  (same folder; the build script name has hyphens)
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -231,7 +235,12 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
     own, opp, seconds, stat_fights = {}, {}, 0.0, 0
     pace = {"r1": [0.0, 0.0], "later": [0.0, 0.0]}  # [sig attempts, minutes]
     rounds_scored = rounds_won = rounds_10_8 = 0
+    w_fights, w_wins = 0.0, {"ko": 0.0, "sub": 0.0}
     for fight, w in zip(fights, weights):
+        if fight["outcome"] != "NC":
+            w_fights += w
+            if fight["outcome"] == "W" and fight["method"] in w_wins:
+                w_wins[fight["method"]] += w
         out[fight["outcome"]] += 1
         out["titleFights"] += 1 if fight["titleFight"] else 0
         if fight["outcome"] == "W" and fight["method"] in out["winsBy"]:
@@ -261,6 +270,10 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
     out["finishRate"] = round(finishes / out["W"], 4) if out["W"] else None
     out["winRate"] = round(out["W"] / decided, 4) if decided else None
     out["finishedLosses"] = out["lossesBy"]["ko"] + out["lossesBy"]["sub"]
+    # Recency-weighted finish shares (equal to plain shares when unweighted).
+    out["koWinShare"] = round(w_wins["ko"] / w_fights, 4) if w_fights else None
+    out["subWinShare"] = round(w_wins["sub"] / w_fights, 4) if w_fights else None
+    out["effectiveFights"] = round(sum(w for f, w in zip(fights, weights) if f["statsComplete"] and f["rounds"]), 3)
 
     def known(side, key):
         return key not in side.get("_missing", set()) and key in side
@@ -360,7 +373,7 @@ def known_divisions() -> dict[str, str]:
     return out
 
 
-def build(as_of: dt.date, out_dir: Path) -> dict:
+def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict:
     archive = load("ufc-research-archive.json")["fights"]
     bouts = load("ufcalendar-rich-progress.json")["bouts"]
     judging = load("ufcalendar-judging-research.json").get("decisions", {})
@@ -397,19 +410,40 @@ def build(as_of: dt.date, out_dir: Path) -> dict:
     for old in fighter_dir.glob("*.json"):
         old.unlink()
 
-    index_rows = {}
+    # Pass 1: windows for every active fighter. Pass 2: rate the whole roster.
+    computed = {}
     for slug, entry in sorted(per_fighter.items()):
         history = sorted(entry["history"], key=lambda f: (f["date"] or "", f["boutId"]), reverse=True)
         last = parse_date(history[0]["date"]) if history else None
         if not last or last < active_cutoff:
             continue
-        windows = windows_for(history, as_of)
         listed = official.get(slug) or {}
-        division = listed.get("label") or divisions.get(norm(entry["name"]))
+        computed[slug] = {"entry": entry, "history": history, "windows": windows_for(history, as_of),
+                          "listed": listed,
+                          "division": listed.get("label") or divisions.get(norm(entry["name"]))}
+    ratings = ufc_ratings.rate_roster({slug: {"window": c["windows"]["weighted"], "history": c["history"],
+                                              "divisionSlug": c["listed"].get("division")}
+                                       for slug, c in computed.items()})
+
+    if parity_out:  # inputs + Python raw composites for tests/ufc-ratings-parity.cjs
+        rows = []
+        for slug, c in computed.items():
+            w = c["windows"]["weighted"]
+            if w.get("statFights", 0) >= ufc_ratings.MIN_STAT_FIGHTS and w.get("rates"):
+                rows.append({"slug": slug, "statFights": w["statFights"], "rates": w["rates"],
+                             "window": {"koWinShare": w.get("koWinShare"), "subWinShare": w.get("subWinShare")},
+                             "raw": {k: ufc_ratings.raw_skill(w["rates"], w, k) for k in ufc_ratings.SKILLS}})
+        parity_out.write_text(json.dumps(rows), encoding="utf-8")
+
+    index_rows = {}
+    for slug, c in computed.items():
+        entry, history, windows, listed, division = c["entry"], c["history"], c["windows"], c["listed"], c["division"]
+        rating = ratings.get(slug)
         profile = {"schema": SCHEMA, "asOf": as_of.isoformat(), "slug": slug, "name": entry["name"],
                    "division": division, "divisionSlug": listed.get("division"),
                    "officialRank": listed.get("rank"), "champion": bool(listed.get("champion")),
                    "lastFight": history[0]["date"], "roundFields": list(COUNTS),
+                   "ratings": rating,
                    "windows": {k: public_window(v) for k, v in windows.items()},
                    "fights": [compact_fight(f) for f in history]}
         (fighter_dir / f"{slug}.json").write_text(json.dumps(profile, separators=(",", ":")), encoding="utf-8")
@@ -425,6 +459,11 @@ def build(as_of: dt.date, out_dir: Path) -> dict:
             "rates": {k: [windows[k]["rates"].get(m) for m in INDEX_RATES] for k in WINDOWS},
             "finishRate": windows["career"]["finishRate"],
             "roundWinRate": (windows["career"]["judging"] or {}).get("roundWinRate"),
+            # [overall, striking, grappling, wrestling, defence, form] roster percentiles (form /100)
+            # and the same four skills as division percentiles.
+            "rating": None if not rating else [rating["overall"]] + [rating["skills"][k]["roster"] for k in ufc_ratings.SKILLS]
+                      + [rating["form"]["score"]],
+            "divisionRating": None if not rating else [rating["skills"][k]["division"] for k in ufc_ratings.SKILLS],
         }
 
     index = {
@@ -434,11 +473,22 @@ def build(as_of: dt.date, out_dir: Path) -> dict:
         "source": {"fights": len(fights), "fightsWithRoundStats": sum(1 for f in fights if f["statsComplete"]),
                    "fightsWithScorecards": sum(1 for f in fights if f["scorecards"]), "skipped": skipped},
         "activeMonths": ACTIVE_MONTHS, "rateFields": list(INDEX_RATES),
+        "ratingFields": ["overall", *ufc_ratings.SKILLS, "form"],
+        "ratingRules": {"window": "weighted", "minStatFights": ufc_ratings.MIN_STAT_FIGHTS,
+                        "minDivisionPeers": ufc_ratings.MIN_DIVISION_PEERS, "scale": "percentile"},
         "divisionCoverage": {"withDivision": sum(1 for r in index_rows.values() if r["division"]),
                              "official": sum(1 for r in index_rows.values() if r["divisionSlug"])},
         "fighters": index_rows,
     }
     (out_dir / "index.json").write_text(json.dumps(index, separators=(",", ":")), encoding="utf-8")
+    # Small name -> slug map so a profile can load its one fighter file.
+    names = {}
+    for slug, row in index_rows.items():
+        names.setdefault(norm(row["name"]), slug)
+    rated = sum(1 for row in index_rows.values() if row["rating"] and any(v is not None for v in row["rating"][1:5]))
+    (out_dir / "names.json").write_text(json.dumps({"schema": SCHEMA, "asOf": as_of.isoformat(), "rated": rated,
+                                                    "names": names},
+                                                   separators=(",", ":"), sort_keys=True), encoding="utf-8")
     return index
 
 
@@ -460,9 +510,10 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--as-of", help="YYYY-MM-DD; default: latest completed UFC event in the data")
     parser.add_argument("--out", default=str(DATA / "ufc-stats"))
+    parser.add_argument("--parity-out", help="also write a JS/Python ratings parity fixture here")
     args = parser.parse_args()
     as_of = dt.date.fromisoformat(args.as_of) if args.as_of else latest_event_date()
-    index = build(as_of, Path(args.out))
+    index = build(as_of, Path(args.out), Path(args.parity_out) if args.parity_out else None)
     s = index["source"]
     print(f"as of {index['asOf']} · {len(index['fighters'])} active fighters · {s['fights']} fights "
           f"({s['fightsWithRoundStats']} with complete round stats, {s['fightsWithScorecards']} with scorecards) "

@@ -12,6 +12,7 @@ on:
       - '.github/workflows/refresh-ufc-divisions.yml'
 permissions:
   contents: write
+  actions: write
 concurrency:
   group: befn-ufc-divisions
   cancel-in-progress: false
@@ -49,24 +50,30 @@ jobs:
         with:
           name: ufc-divisions
           path: data/ufc-divisions.json
-      - name: Commit divisions and statistics
+      - name: Commit divisions only (statistics are rebuilt by their own workflow)
+        id: commit
         if: github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
+          cp data/ufc-divisions.json "$RUNNER_TEMP/ufc-divisions.json"
           git config user.name 'BEFN division refresher'
           git config user.email 'befn-division-refresher@users.noreply.github.com'
-          git add data/ufc-divisions.json
-          git add -A data/ufc-stats
-          if git diff --cached --quiet; then
-            echo 'No division changes'
-            exit 0
-          fi
-          git commit -m 'Refresh UFC division rosters, rankings and champions'
           branch="${GITHUB_REF_NAME}"
           for i in 1 2 3; do
-            if git pull --rebase origin "$branch" && git push origin "HEAD:$branch"; then exit 0; fi
-            git rebase --abort 2>/dev/null || true
-            sleep 3
+            # Start from the latest branch each time; this job owns only this file.
+            git fetch -q origin "$branch"
+            git reset -q --hard "origin/$branch"
+            cp "$RUNNER_TEMP/ufc-divisions.json" data/ufc-divisions.json
+            git add data/ufc-divisions.json
+            if git diff --cached --quiet; then echo 'No division changes'; exit 0; fi
+            git commit -q -m 'Refresh UFC division rosters, rankings and champions'
+            if git push -q origin "HEAD:$branch"; then echo "changed=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+            sleep 5
           done
           exit 1
+      - name: Rebuild statistics with the new divisions
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run build-ufc-stats.yml --repo "$GITHUB_REPOSITORY" --ref "$GITHUB_REF_NAME"
