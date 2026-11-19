@@ -127,3 +127,19 @@ button.h2h-rec:focus-visible{outline:3px solid #17664F;outline-offset:1px}
  .h2h-meetings li{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
  .h2h-meetings .h2h-how{grid-column:1/-1;color:var(--muted);margin-top:-6px}
 }
+
+/* Placeholder while a head loads: a soft head-and-shoulders shape in the tile's own
+ * text colour, so tiles are never blank on a slow first load. Removed on load. */
+.h2h-head:not(.is-portrait)::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 36%,var(--ph) 0 21%,transparent 22%),
+    radial-gradient(ellipse 46% 26% at 50% 100%,var(--ph) 0 98%,transparent 100%);
+  --ph:color-mix(in srgb,currentColor 13%,transparent);
+  transition:opacity .25s ease}
+.h2h-head.is-loaded::before{opacity:0}
+.h2h-head:not(.is-loaded):not(.is-portrait) img{opacity:0}
+.h2h-head img{transition:opacity .25s ease}
+@media(prefers-reduced-motion:no-preference){
+ .h2h-head:not(.is-loaded):not(.is-portrait)::before{animation:h2h-ph 1.4s ease-in-out infinite alternate}
+ @keyframes h2h-ph{from{opacity:.55}to{opacity:1}}
+}

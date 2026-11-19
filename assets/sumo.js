@@ -11,7 +11,7 @@ import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verificati
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
 import { dailyStats, dailyRecentMeetings, dailyDefaultDay,dailyConcluded, dailySelectedDate, dailyWinPercentage, heightFeetInches, highestRecordedDivision } from './sumo-daily.mjs?v=20261117-day-flow';
 import { ordinalRank } from './sumo-career.mjs';
-import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261118-h2h-board-v1';
+import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261119-h2h-placeholder';
 import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-inline-gifs-v4';
 
 const ROOT = document.querySelector('#sumo-main');
@@ -91,12 +91,16 @@ function cutoutFor(w,name){
   if(!ok)return null;
   return '<div class="profile-icon sumo-photo xl has-photo is-cutout" role="img" aria-label="'+e('Photograph of '+(name||w.shikonaEn))+'"><img src="'+e(c.path)+'" alt="" loading="lazy" decoding="async"></div>';
 }
+const SEEN_HEADS=new Set();
 /** Transparent head crop for the H2H board; falls back to the cropped portrait. */
 function headFor(w){
   const h=w&&STATE.heads?.[String(w.sourceId)];
   const photo=w&&STATE.photoIndex?.[String(w.sourceId)];
   const ok=h&&photo?.approved===true&&h.sourceSha256===photo.sha256&&/^assets\/sumo-photos\/head\/[a-zA-Z0-9_-]+\.webp$/.test(String(h.path||''));
-  if(ok)return '<span class="h2h-head'+(h.matte==='feathered'?' is-feathered':'')+'"><img src="'+e(h.path)+'" alt="" width="96" height="96" loading="lazy" decoding="async"></span>';
+  // A head already shown once is drawn as loaded, so re-centring the board does
+  // not flash every face back to its placeholder.
+  const seen=SEEN_HEADS.has(h.path);
+  if(ok)return '<span class="h2h-head'+(h.matte==='feathered'?' is-feathered':'')+(seen?' is-loaded':'')+'"><img src="'+e(h.path)+'" alt="" width="96" height="96" loading="'+(seen?'eager':'lazy')+'" decoding="async"></span>';
   const valid=photo?.approved===true&&/^assets\/sumo-photos\/[a-zA-Z0-9_-]+\.(webp|png|jpg|jpeg)$/.test(String(photo.path||''));
   return '<span class="h2h-head is-portrait">'+(valid?'<img src="'+e(photo.path)+'" alt="" loading="lazy" decoding="async">':'<span aria-hidden="true">相</span>')+'</span>';
 }
@@ -1370,6 +1374,7 @@ function openBoardSheet(b){
   if(!dlg){dlg=document.createElement('dialog');dlg.id='h2h-sheet';dlg.className='h2h-sheet';dlg.setAttribute('aria-labelledby','h2h-sheet-title');document.body.appendChild(dlg);
     dlg.addEventListener('click',ev=>{if(ev.target===dlg)dlg.close();});}
   dlg.innerHTML=boardSheet(a,b);
+  dlg.querySelectorAll('.h2h-head img').forEach(i=>{if(i.complete&&i.naturalWidth)markHeadLoaded(i);});
   dlg.dataset.opener=String(b);
   if(!dlg.open)dlg.showModal();
 }
@@ -1415,6 +1420,7 @@ function render() {
     case 'kimarite': ROOT.innerHTML=renderKimarite();break;
     default: ROOT.innerHTML=renderBasho();
   }
+  if(page==='h2h')markCachedHeads();
   if(page==='kimarite')hydrateKimariteGallery();
   else linkKimariteMentions(ROOT);
 }
@@ -1463,6 +1469,11 @@ document.addEventListener('input',ev=>{
     STATE.opponentQuery=ev.target.value;STATE.h2hOpponentLimit=16;refreshOpponents();
   }
 });
+/* Head crops fade in over their placeholder once loaded. Load events do not bubble,
+ * so listen in the capture phase; already-cached images are caught after render. */
+function markHeadLoaded(img){const box=img?.closest?.('.h2h-head');if(!box)return;box.classList.add('is-loaded');SEEN_HEADS.add(img.getAttribute('src'));}
+document.addEventListener('load',ev=>{if(ev.target?.tagName==='IMG')markHeadLoaded(ev.target);},true);
+function markCachedHeads(){ROOT.querySelectorAll('.h2h-head img').forEach(i=>{if(i.complete&&i.naturalWidth)markHeadLoaded(i);});}
 document.addEventListener('keydown',ev=>{
 });
 document.addEventListener('change',ev=>{
