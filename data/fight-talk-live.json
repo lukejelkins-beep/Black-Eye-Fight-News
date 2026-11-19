@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-19T00:18:16.426Z",
-  "checkedAt": "2026-11-19T00:18:16.426Z",
-  "updatedAt": "2026-11-18T23:03:41.767259Z",
+  "attemptedAt": "2026-11-19T01:24:23.478Z",
+  "checkedAt": "2026-11-19T01:24:23.478Z",
+  "updatedAt": "2026-11-19T01:03:41.959681Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 4,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 4,
+      "checked": 6,
       "failed": 0,
-      "configured": 4,
-      "message": "4 of 4 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 27,
+      "configured": 34,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 40,
+      "configured": 36,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 2,
+      "configured": 1,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,22 +55,70 @@
   "rollingScan": {
     "directoryEntries": 448,
     "scheduledEntries": 84,
-    "batchIndex": 3,
+    "batchIndex": 4,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Threads": 11,
-      "X": 27,
-      "Instagram": 40,
-      "Bluesky": 4,
-      "Reddit": 2
+      "X": 34,
+      "Instagram": 36,
+      "Bluesky": 6,
+      "Threads": 7,
+      "Reddit": 1
     },
-    "directlyChecked": 4,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2mutkpail2q",
+      "cid": "bafyreigimwyqglhbprnx2obpbefq55je4goeh7rxhgorcgsas32cw67b54",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "UFC signee fails drug test after 98-second knockout win at DWCS www.mmafighting.com/ufc/522295/u...",
+      "postedAt": "2026-11-19T01:03:41.959681Z",
+      "date": "19 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2mutkpail2q",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2mu4fqmjq2z",
+      "cid": "bafyreieuqohjlrgzch2b7g76ptwcfxcxzgwp3uwr6do5espwkoctgdqisy",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Calls are growing for Deontay Wilder vs. Da'Mazion Vanhouter on December 11 in Cardiff. 🥊\n\nWith Jai Opetaia injured, Vanhouter is booked to face Michael Essomba on the Fury vs. Joshua undercard.\n\nOrganizers face a major decision.\n\nPast vs. future. Wilder vs. Vanhouter.",
+      "postedAt": "2026-11-19T00:50:48Z",
+      "date": "19 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2mu4fqmjq2z",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2mo4x3u3b2p",
       "cid": "bafyreiadb7f7t42yimyo52qgckpd4yt46f5qqa67r3w5olzb2hwv7muhca",
@@ -92,7 +140,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -116,7 +164,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -164,7 +212,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -185,10 +233,10 @@
       "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
       "engagement": {
         "likes": 0,
-        "comments": 0,
+        "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -232,11 +280,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
       "engagement": {
-        "likes": 1,
+        "likes": 3,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -284,7 +332,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -308,7 +356,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -356,7 +404,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -452,7 +500,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -476,7 +524,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -524,7 +572,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -572,7 +620,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -648,30 +696,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2lv4wsrwz2n",
-      "cid": "bafyreia3ky4u37tqxmcqx62joo3tdvod252cnzhp5mapcpevirerzgl2ym",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Virna Jandiroba is no longer a #UFC fighter 👀\n\nThoughts? 🤔\n\n📰 mma-fighting.visitlink.me/UGeVYX",
-      "postedAt": "2026-11-18T15:36:18.806665Z",
-      "date": "19 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2lv4wsrwz2n",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2ltbad6pw22",
       "cid": "bafyreibpmwqlw6trsauy3zciljczph347aoxk5m24lkva4sxldjw2t3ctm",
       "platform": "Bluesky",
@@ -740,7 +764,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -764,7 +788,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -788,7 +812,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -812,7 +836,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -908,7 +932,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -956,31 +980,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2kexgqlon2m",
-      "cid": "bafyreih2kpshbo5pyvdts6czg6vs7qinv4dmvuyxqgbvw6k7dvpfrbavsi",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "NOT THE FACE ❌\n\nAlycia Baumgardner calls herself the face of boxing, but critics are pointing to ticket sales and empty seats as evidence that the claim doesn't stack up.\n\nBeing a world champion is one thing. \n\nBeing the face of boxing means bringing fans through the doors. 🥊",
-      "postedAt": "2026-11-18T01:14:15Z",
-      "date": "18 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2kexgqlon2m",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1484,7 +1484,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1580,7 +1580,7 @@
         "comments": 3,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-18T23:24:02.150Z",
+      "engagementCheckedAt": "2026-11-19T01:24:23.478Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
