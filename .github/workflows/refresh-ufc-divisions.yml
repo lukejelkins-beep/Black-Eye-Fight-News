@@ -4,6 +4,12 @@ on:
   schedule:
     # UFC rankings update after each event; refresh Tuesday and Friday.
     - cron: '41 6 * * 2,5'
+  pull_request:
+    # Verifies the real payload shape on changes; does not commit from a PR.
+    branches: [main]
+    paths:
+      - 'scripts/refresh-ufc-divisions.py'
+      - '.github/workflows/refresh-ufc-divisions.yml'
 permissions:
   contents: write
 concurrency:
@@ -26,7 +32,25 @@ jobs:
         run: python scripts/refresh-ufc-divisions.py
       - name: Rebuild fighter statistics with official divisions
         run: python scripts/build-ufc-stats.py
-      - name: Commit divisions and statistics to this branch
+      - name: Summarise divisions for review
+        run: |
+          python - <<'PY'
+          import json
+          d = json.load(open('data/ufc-divisions.json'))
+          for slug, v in d['divisions'].items():
+              champ = (v.get('champion') or {}).get('name')
+              print(f"{slug:22} roster {len(v['roster']):3} ranked {len(v['ranked']):2} champion {champ}  ranking {v.get('rankingDate')}")
+          print('fighters with a division:', len(d['fighters']))
+          print('diagnostics:', json.dumps(d['diagnostics'])[:1500])
+          s = json.load(open('data/ufc-stats/index.json'))
+          print('stats division coverage:', s['divisionCoverage'], 'of', len(s['fighters']))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ufc-divisions
+          path: data/ufc-divisions.json
+      - name: Commit divisions and statistics
+        if: github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
