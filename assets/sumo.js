@@ -1274,18 +1274,20 @@ function boardTile(focus,entry){
   const w=wrestler(entry.rikishiID);
   const name=w?.shikonaEn||entry.shikonaEn||'Rikishi';
   if(Number(entry.rikishiID)===Number(focus.sourceId))
-    return '<span class="h2h-tile is-focus" aria-current="true">'+headFor(w)+'<span class="h2h-name">'+e(name)+'</span><span class="h2h-rec">Selected</span></span>';
+    return '<div class="h2h-tile is-focus" aria-current="true" tabindex="-1" aria-label="'+e(name+', selected')+'">'+headFor(w)+'<span class="h2h-name">'+e(name)+'</span><span class="h2h-rec">Selected</span></div>';
   const rec=boardRec(focus.sourceId,entry.rikishiID);
   const sameHeya=w&&focus.heya&&w.heya===focus.heya;
-  if(!rec)return '<span class="h2h-tile is-loading">'+headFor(w)+'<span class="h2h-name">'+e(name)+'</span><span class="h2h-rec">…</span></span>';
+  const pick='<button type="button" class="h2h-name" data-h2h-focus="'+Number(entry.rikishiID)+'" aria-label="'+e('Show '+name+'’s record against everyone')+'">'+e(name)+'</button>';
+  if(!rec)return '<div class="h2h-tile is-loading">'+headFor(w)+pick+'<span class="h2h-rec">…</span></div>';
   const {tone,strength}=recordTone(rec);
   const recLabel=rec.total?recordText(rec):sameHeya?'Stablemate':'—';
   const said=rec.total?(focus.shikonaEn+' '+(tone==='win'?'leads':tone==='loss'?'trails':'is level')+' '+recordText(rec)):sameHeya?'same stable, they do not meet':'no meetings';
-  return '<button type="button" class="h2h-tile tone-'+tone+' s'+strength+(sameHeya&&!rec.total?' is-stablemate':'')+'" data-h2h-open="'+Number(entry.rikishiID)+'" aria-label="'+e(name+', '+(entry.rank||'')+': '+said)+'">'+
-    headFor(w)+'<span class="h2h-name">'+e(name)+'</span><span class="h2h-rec">'+e(recLabel)+'</span></button>';
-}
-function boardFocusOptions(){
-  return ranks().map(w=>'<option value="'+e(w.shikonaEn)+'">'+e(w.currentRank||'')+'</option>').join('');
+  // Tapping the rikishi makes them the focus (the whole tile is the target);
+  // tapping the score opens the meetings. No meetings: the score is plain text.
+  const score=rec.total
+    ?'<button type="button" class="h2h-rec" data-h2h-open="'+Number(entry.rikishiID)+'" aria-label="'+e('Meetings with '+name+': '+said)+'">'+e(recLabel)+'</button>'
+    :'<span class="h2h-rec" aria-label="'+e(said)+'">'+e(recLabel)+'</span>';
+  return '<div class="h2h-tile tone-'+tone+' s'+strength+(sameHeya&&!rec.total?' is-stablemate':'')+'">'+headFor(w)+pick+score+'</div>';
 }
 function renderBoard(id){
   const div=STATE.boardDivision||'Makuuchi';
@@ -1302,7 +1304,7 @@ function renderBoard(id){
   const win=STATE.boardRecent?recentBashoIds(details().bashoId,BOARD_WINDOW):null;
   const scope=STATE.boardRecent?'Last '+BOARD_WINDOW+' basho ('+bashoLabel(win[win.length-1])+' – '+bashoLabel(win[0])+')':'Career';
   const status=STATE.boardRecent&&!STATE.h2hFull?(STATE.h2hLoadFailed?'Recent records could not load. Try again or switch to Career.':'Loading every recorded bout for the recent view…'):'';
-  return pageHead('Head-to-head',bashoLabel(details().bashoId)+' banzuke · tap a face for the meetings')+
+  return pageHead('Head-to-head',bashoLabel(details().bashoId)+' banzuke · tap a rikishi to see their record, tap a score for the meetings')+
     '<section class="h2h-hero" aria-label="Selected rikishi">'+
       '<div class="h2h-hero-head">'+headFor(focus)+'</div>'+
       '<div class="h2h-hero-id"><span class="h2h-hero-rank">'+e(focus.currentRank||'')+'</span>'+
@@ -1314,8 +1316,6 @@ function renderBoard(id){
         '<div><strong class="is-loss">'+(ready?t.behind:'…')+'</strong><span>losing records</span></div>'+
       '</div>'+
       '<div class="h2h-hero-controls">'+
-        '<label class="h2h-pick"><span>Change rikishi</span><input id="h2h-pick" type="search" list="h2h-pick-list" placeholder="Type a name" autocomplete="off" enterkeyhint="go"></label>'+
-        '<datalist id="h2h-pick-list">'+boardFocusOptions()+'</datalist>'+
         '<div class="sumo-segmented h2h-scope" role="group" aria-label="Records to count">'+
           '<button type="button" data-board-recent="0" aria-pressed="'+(!STATE.boardRecent)+'">Career</button>'+
           '<button type="button" data-board-recent="1" aria-pressed="'+STATE.boardRecent+'">Last '+BOARD_WINDOW+' basho</button></div>'+
@@ -1352,6 +1352,18 @@ function boardSheet(a,b){
       (rec.total?'<a class="btn" href="'+headToHeadUrl(a,b)+'" data-h2h-close>Full series</a>':'')+
       '<a class="btn light" href="#h2h/'+Number(b)+'" data-h2h-close>Board for '+e(second.shikonaEn)+'</a></div>';
 }
+/** Re-centre the board on another rikishi in place: same division, same scroll
+ * position, and the back button returns to the previous rikishi. */
+function focusBoard(id){
+  if(!wrestler(id))return;
+  const y=window.scrollY;
+  history.pushState(null,'','#h2h/'+id);
+  lastRoute='h2h/'+id;
+  render();
+  ROOT.querySelector('.h2h-board')?.classList.add('is-refocus');
+  window.scrollTo({top:y,behavior:'instant'});
+  ROOT.querySelector('.h2h-tile.is-focus')?.focus({preventScroll:true});
+}
 function openBoardSheet(b){
   const a=Number(location.hash.split('/')[1])||rankTable(getBanzuke('Makuuchi')||{east:[],west:[]})[0]?.rikishiID;
   let dlg=document.getElementById('h2h-sheet');
@@ -1360,12 +1372,6 @@ function openBoardSheet(b){
   dlg.innerHTML=boardSheet(a,b);
   dlg.dataset.opener=String(b);
   if(!dlg.open)dlg.showModal();
-}
-function pickBoardFocus(value){
-  const q=String(value||'').trim().toLowerCase();
-  if(!q)return;
-  const hit=ranks().find(w=>w.shikonaEn.toLowerCase()===q)||ranks().find(w=>w.shikonaEn.toLowerCase().startsWith(q));
-  if(hit){STATE.boardDivision=null;location.hash='#h2h/'+Number(hit.sourceId);}
 }
 function renderBasho() {
   const d=STATE.bashoDivision,data=getBanzuke(d);
@@ -1458,7 +1464,6 @@ document.addEventListener('input',ev=>{
   }
 });
 document.addEventListener('keydown',ev=>{
-  if(ev.key==='Enter'&&ev.target?.id==='h2h-pick'){ev.preventDefault();pickBoardFocus(ev.target.value);}
 });
 document.addEventListener('change',ev=>{
   const t=ev.target;
@@ -1473,7 +1478,6 @@ document.addEventListener('change',ev=>{
     document.getElementById('sumo-opponent-sort')?.focus({preventScroll:true});
   }
   if(t?.id==='sumo-profile-section')navigateSection(t.value);
-  if(t?.id==='h2h-pick')pickBoardFocus(t.value);
   if(t?.id==='sumo-matchup-day'){STATE.matchupDay=Number(t.value);render();document.getElementById('sumo-matchup-day')?.focus({preventScroll:true});}
 });
 document.addEventListener('click',ev=>{
@@ -1484,6 +1488,8 @@ document.addEventListener('click',ev=>{
       bashoDivision:STATE.bashoDivision,day:STATE.day,
       matchupDivision:STATE.matchupDivision,matchupDay:STATE.matchupDay};
   }
+  const pickFocus=ev.target.closest?.('[data-h2h-focus]');
+  if(pickFocus){focusBoard(Number(pickFocus.dataset.h2hFocus));return;}
   const open=ev.target.closest?.('[data-h2h-open]');
   if(open){openBoardSheet(Number(open.dataset.h2hOpen));return;}
   const closer=ev.target.closest?.('[data-h2h-close]');
@@ -1562,6 +1568,10 @@ let lastRoute=location.hash.slice(1).split('?')[0];
 window.addEventListener('hashchange',()=>{
   const sheet=document.getElementById('h2h-sheet');if(sheet?.open)sheet.close();
   const route=location.hash.slice(1).split('?')[0];
+  if(/^h2h(\/|$)/.test(route)&&/^h2h(\/|$)/.test(lastRoute)){
+    // Board to board (back/forward, or a link in the meetings card): stay in place.
+    const y=window.scrollY;lastRoute=route;render();window.scrollTo({top:y,behavior:'instant'});return;
+  }
   if(route!==lastRoute&&route.startsWith('profile/')&&STATE.h2hReturn?.hash?.split('?')[0]==='#'+route){
     STATE.profilePeriod=STATE.h2hReturn.period;
     STATE.profileMode=STATE.h2hReturn.mode;
