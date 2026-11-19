@@ -2,7 +2,7 @@
 """Make transparent head-and-shoulders crops from the approved Sumo portraits.
 
 Display-only derivatives for the head-to-head board: the studio background is
-removed with the same segmentation as scripts/sumo-cutout.py, then a square is
+removed with the OpenCV segmentation in scripts/sumo-cutout-grabcut.py, then a square is
 cropped around the head (topknot to just below the chin). Originals are never
 edited and credit stays with the original (see data/sumo/approved-photos.json).
 
@@ -25,7 +25,7 @@ SIZE = 192  # square output; shown at 48-96 CSS px
 # portrait in the page instead.
 EXCLUDE = {'124': 'full-length shot on a tiled wall', '376': 'tiled wall shows through'}
 
-spec = importlib.util.spec_from_file_location('cut', os.path.join(ROOT, 'scripts/sumo-cutout.py'))
+spec = importlib.util.spec_from_file_location('cut', os.path.join(ROOT, 'scripts/sumo-cutout-grabcut.py'))
 cut = importlib.util.module_from_spec(spec); spec.loader.exec_module(cut)
 
 

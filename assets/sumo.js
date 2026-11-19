@@ -880,6 +880,65 @@ function sectionNav(id){
     '<div class="sumo-section-menu"><label>On this profile <select id="sumo-profile-section">'+
     [...parts,...secondary].map(([key,label])=>'<option value="'+key+'">'+label+'</option>').join('')+'</select></label></div>';
 }
+/** Next unfought bout for the profile hero: today's schedule first, then tomorrow's. */
+function nextBoutFor(w){
+  const division=divisionOf(w.currentRank),id=Number(w.sourceId);
+  const days=[...new Set([Number(details().todayDay),Number(details().announcedDay)])].filter(d=>Number.isInteger(d)&&d>=1&&d<=15).sort((a,b)=>a-b);
+  for(const day of days){
+    const m=verifiedDayMatchups(getBanzuke(division),getAnnouncedTorikumi(division,day),{bashoId:details().bashoId,division,day})
+      .find(x=>!x.finished&&[x.rikishiId,x.opponentId].includes(id));
+    if(m)return {day,opponentId:m.rikishiId===id?m.opponentId:m.rikishiId};
+  }
+  return null;
+}
+function lastBoutFor(w){
+  const done=currentProfileBouts(w).filter(x=>x.outcome==='win'||x.outcome==='loss');
+  return done.length?done[done.length-1]:null;
+}
+/** Poster hero figure: a clean full-body cut-out in front of the red disc, otherwise the
+ * approved photo cropped into the disc. No photo: the disc alone. */
+function posterFigure(w){
+  const c=STATE.cutouts?.[String(w.sourceId)],photo=STATE.photoIndex?.[String(w.sourceId)];
+  const photoOk=photo?.approved===true&&/^assets\/sumo-photos\/[a-zA-Z0-9_-]+\.(webp|png|jpg|jpeg)$/.test(String(photo.path||''));
+  const cutOk=photoOk&&c&&c.sourceSha256===photo.sha256&&/^assets\/sumo-photos\/cutout\/[a-zA-Z0-9_-]+\.webp$/.test(String(c.path||''));
+  const label=' role="img" aria-label="'+e('Photograph of '+w.shikonaEn)+'"';
+  if(cutOk)return '<div class="sumo-poster-stage is-cutout"'+label+'><img src="'+e(c.path)+'" alt="" decoding="async" fetchpriority="high"></div>';
+  if(photoOk)return '<div class="sumo-poster-stage is-photo"'+label+'><img src="'+e(photo.path)+'" alt="" decoding="async" fetchpriority="high"></div>';
+  return '<div class="sumo-poster-stage is-empty" aria-hidden="true"></div>';
+}
+function posterHero(w,{r,wins,losses,careerPercent}){
+  const country=originCountry(w.birthplace),current=weightHeight(w),age=ageInJapan(w.birthDate);
+  const division=divisionOf(w.currentRank),peak=knownHigh(w);
+  const kanji=String(w.shikonaJp||'').split(/[\s　(（]+/)[0].trim();
+  const peakLabel=peak&&peak!==w.currentRank?(/^(Yokozuna|Ozeki|Sekiwake|Komusubi)\b/.test(peak)?peak.split(' ')[0]:peak.replace(/ (East|West)$/,'')):'';
+  const next=nextBoutFor(w),last=next?null:lastBoutFor(w);
+  const chip=(text,cls)=>text?'<span class="sumo-poster-chip '+cls+'">'+e(text)+'</span>':'';
+  const stat=(value,caption)=>'<div><b>'+e(value)+'</b><span>'+e(caption)+'</span></div>';
+  const record=r?r.win+'–'+r.loss+(Number(r.absence)>0?'–'+r.absence:''):null;
+  let bout='';
+  if(next){
+    const opp=wrestler(next.opponentId),h=headToHeadFor(w.sourceId,next.opponentId);
+    bout='<a class="sumo-poster-bout" href="'+headToHeadUrl(w.sourceId,next.opponentId)+'"><div><small>Next · Day '+e(next.day)+'</small>'+
+      '<strong>vs '+e(opp?.shikonaEn||'Confirmed opponent')+'</strong></div>'+
+      (h?'<div class="h2h"><strong>'+e(h.wins+'–'+h.losses)+'</strong><span>Head to head</span></div>':'')+'</a>';
+  }else if(last){
+    bout='<a class="sumo-poster-bout" href="'+headToHeadUrl(w.sourceId,last.opponentId)+'"><div><small>Last bout · Day '+e(last.day)+'</small>'+
+      '<strong>'+(last.outcome==='win'?'Beat ':'Lost to ')+e(last.opponent)+'</strong></div>'+
+      (last.kimarite?'<div class="h2h"><strong class="kim">'+e(techniqueText(last.kimarite))+'</strong><span>Technique</span></div>':'')+'</a>';
+  }
+  const facts=[['Age',age===null?null:age],['Height',current.h==='—'?null:current.h],['Weight',current.mass==='—'?null:current.mass]]
+    .filter(([,v])=>v!==null&&v!==undefined).map(([k,v])=>'<span>'+e(k)+' <strong>'+e(v)+'</strong></span>').join('');
+  return '<section class="sumo-poster">'+
+    (kanji?'<div class="sumo-poster-kanji" aria-hidden="true" style="--kanji-count:'+[...kanji].length+'">'+e(kanji)+'</div>':'')+
+    posterFigure(w)+
+    '<div class="sumo-poster-body"><div>'+
+      '<div class="eyebrow">'+e(division)+(w.heya?' · '+e(w.heya)+' stable':'')+'</div>'+
+      '<h1>'+e(w.shikonaEn)+'</h1>'+(w.shikonaJp?'<div class="jp">'+e(w.shikonaJp)+'</div>':'')+
+      '<div class="sumo-poster-chips">'+chip(w.currentRank,'rank')+chip(peakLabel?'Peak · '+peakLabel:'','peak')+chip(country?.name,'country')+'</div>'+
+      '<div class="sumo-poster-stats">'+(record?stat(record,bashoLabel(details().bashoId)+' basho'):'')+
+        (wins!==null?stat(String(wins),'Career wins'+(careerPercent!=='Not available'?' · '+careerPercent:'')):'')+'</div>'+
+    '</div><div>'+bout+(facts?'<div class="sumo-poster-facts">'+facts+'</div>':'')+'</div></div></section>';
+}
 function renderProfile(id) {
   const w=wrestler(id);
   if(!w)return '<a class="back-link" href="#rikishi">← All rikishi</a>'+note('Wrestler not in the tracked snapshot.');
@@ -904,20 +963,7 @@ function renderProfile(id) {
     e(r.absence===null?'Absences not supplied':'Absences')+'</small></span></div>':
     '<p>Current tournament record not available.</p>';
   return '<a class="back-link" href="#rikishi">← Rikishi directory</a>'+
-    '<section class="profile-hero">'+portraitFor(w,'xl')+heroFlagBackdrop(w)+
-    '<div class="profile-title"><div class="eyebrow">BEFN SUMO · '+e(divisionOf(w.currentRank))+'</div>'+
-    '<h1>'+e(w.shikonaEn)+'</h1><div class="jp">'+e(w.shikonaJp||'')+'</div>'+
-    '<div class="sumo-hero-rank"><strong>'+e(w.currentRank||'Rank not available')+'</strong>'+
-    (country?'<span class="sumo-hero-country">'+e(country.name)+'</span>':'')+'</div>'+
-    '<div class="sumo-hero-peak">Peak rank: <strong>'+e(knownHigh(w)||'Not available')+'</strong></div>'+
-    '<div class="sumo-hero-career"><div><span>Scope</span><span>Wins–losses</span><span>Win %</span></div>'+
-    '<div><strong>Career</strong><b>'+e(career)+'</b><b>'+e(careerPercent)+'</b></div>'+
-    '<div><strong>Makuuchi</strong><b>'+e(maku)+'</b><b>'+e(makuPercent)+'</b></div></div>'+ 
-    '</div><div class="profile-current"><span class="tag">'+e(bashoLabel(details().bashoId))+' · UPDATED '+e(snapshotDate(details().dailyCollectedAt||details().collectedAt||STATE.roster?.collectedAt)).toUpperCase()+'</span>'+
-    currentBlock+(divisionOf(w.currentRank)==='Makushita'?'<p class="footnote">Makushita non-bout days are not absences.</p>':'')+'</div>'+
-    '<div class="profile-facts profile-meta">'+fact('Stable',w.heya)+fact('Age',age===null?'Not available':age+' years')+
-    fact('Height',current.h==='—'?'Not available':current.h+' · '+heightFeetInches(current.heightCm))+
-    fact('Weight · undated',current.mass==='—'?'Not available':current.mass)+'</div></section>'+
+    posterHero(w,{r,wins,losses,careerPercent})+
     sectionNav(w.sourceId)+recentTenStrip(w)+
     sectionHead('results','Tournament and career ledger','Results')+resultDesk(w)+'</section>'+
     sectionHead('career','Historical context','Career')+
