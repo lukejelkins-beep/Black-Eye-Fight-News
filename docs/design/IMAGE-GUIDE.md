@@ -24,6 +24,7 @@ Every image shown to readers is a file BEFN controls, in a consistent shape, wit
 ## Local library (decided 2026-11-17)
 There is no existing stockpile. The owner keeps a local `befn-images/` folder on their Mac with `originals/`, `register.csv` (source, credit, licence, permission, focus point, approval) and `process_images.py`, which makes the portrait, card and thumbnail WebP crops and a `manifest.json`. Only approved rows are processed. Processed files and the manifest are what get added to the site.
 - Claude does not fetch photos of public figures from the web. The owner downloads what they are permitted to use and drops it into `originals/`.
+- **Exception, Sumo (owner approved 2026-11-19):** official JSA rikishi portraits are fetched automatically by `scripts/sumo-portrait-intake.py` on the Sumo preview branch, under the owner's attested JSA permission (2026-11-16). Each one is matched to the roster by JSA id, ring name and stable, recorded in `data/sumo/approved-photos.json` with source, credit, licence and hash, and turned into a display cut-out when it is a clean full-body photo. Runs daily from `.github/workflows/sumo-portrait-intake.yml`. No other sport or source is covered by this exception.
 
 ## Open question for the owner
 Which sources are you permitted to republish (promoter press kits, licences, Wikimedia)? List them here once known.

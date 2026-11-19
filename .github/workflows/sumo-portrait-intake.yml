@@ -1,0 +1,92 @@
+name: Sumo preview portrait intake (daily)
+
+# Owner approved 2026-11-19: official JSA portraits are fetched automatically for
+# wrestlers new to the tracked divisions, and existing portraits are re-checked in
+# a rotating batch. Scheduled workflows only run from main; this one touches ONLY
+# the Sumo preview branch. Logic lives there in scripts/sumo-portrait-intake.py.
+on:
+  schedule:
+    # 05:53 JST, after the 04:23 JST daily rebuild has onboarded any new wrestlers.
+    - cron: '53 20 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sumo-preview-single-writer
+  cancel-in-progress: false
+
+jobs:
+  intake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/sumo-section-test-20261114
+          persist-credentials: true
+      - name: Skip until the preview branch has the intake script
+        id: ready
+        run: |
+          if [ -f scripts/sumo-portrait-intake.py ]; then echo "run=true" >> "$GITHUB_OUTPUT"; else echo "Intake script not on the preview branch yet"; fi
+      - uses: actions/setup-python@v5
+        if: steps.ready.outputs.run == 'true'
+        with:
+          python-version: '3.12'
+      - name: Cache the segmentation model
+        if: steps.ready.outputs.run == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.u2net
+          key: rembg-isnet-general-use-v1
+      - name: Install, test and run the intake
+        if: steps.ready.outputs.run == 'true'
+        id: run
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --quiet "rembg[cpu]==2.0.61" onnxruntime==1.19.2 pillow==11.3.0 numpy==2.0.2
+          python -m unittest tests/test_sumo_portrait_intake.py
+          python scripts/sumo-portrait-intake.py | tee /tmp/intake.json
+          if grep -q '"blocked"' /tmp/intake.json; then echo "::warning::JSA site refused the portrait intake; nothing changed for the remaining wrestlers"; fi
+          if grep -q '"review": \[{' /tmp/intake.json; then echo "::warning::Some portraits need a manual identity check; see data/sumo/portrait-intake-status.json"; fi
+      - name: Commit only portrait files
+        id: commit
+        if: steps.ready.outputs.run == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "BEFN Sumo portrait intake"
+          git config user.email "sumo-preview@users.noreply.github.com"
+          git add assets/sumo-photos/ data/sumo/approved-photos.json data/sumo/cutouts.json data/sumo/portrait-intake-status.json
+          if git diff --cached --quiet; then echo "No change"; exit 0; fi
+          # Only a status-file change (rotation cursor) is committed quietly, without a redeploy.
+          if git diff --cached --name-only | grep -qv 'portrait-intake-status.json'; then echo "photos=true" >> "$GITHUB_OUTPUT"; fi
+          git commit -m "Sumo preview: official JSA portrait intake"
+          for attempt in 1 2 3; do
+            git fetch origin feat/sumo-section-test-20261114
+            if ! git rebase origin/feat/sumo-section-test-20261114; then
+              git rebase --abort || true
+              echo "Concurrent change conflict; leaving preview branch unchanged" >&2
+              exit 1
+            fi
+            if git push origin HEAD:feat/sumo-section-test-20261114; then
+              echo "pushed=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            sleep 2
+          done
+          exit 1
+      - name: Redeploy the Sumo preview on Render
+        if: steps.commit.outputs.pushed == 'true' && steps.commit.outputs.photos == 'true'
+        env:
+          HOOK: ${{ secrets.SUMO_PREVIEW_DEPLOY_HOOK_URL }}
+        shell: bash
+        run: |
+          if [ -z "${HOOK:-}" ]; then
+            echo "SUMO_PREVIEW_DEPLOY_HOOK_URL is not set; preview not redeployed" >&2
+            exit 1
+          fi
+          curl -fsS --max-time 30 -X POST "$HOOK" > /dev/null
+          echo "Render preview deploy requested"
