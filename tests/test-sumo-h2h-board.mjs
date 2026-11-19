@@ -86,3 +86,13 @@ test('page wiring: H2H is the fifth nav item and the board route renders', () =>
   assert.match(js, /case 'h2h': ROOT\.innerHTML=renderBoard\(id\)/);
   assert.match(js, /data\/sumo\/heads\.json/);
 });
+
+test('board is its own selector: tap a rikishi to focus, tap a score for meetings, no name box', () => {
+  const js = readFileSync(new URL('../assets/sumo.js', import.meta.url), 'utf8');
+  assert.match(js, /data-h2h-focus="'\+Number\(entry\.rikishiID\)/);
+  assert.match(js, /class="h2h-rec" data-h2h-open=/);
+  assert.match(js, /function focusBoard\(id\)/);
+  assert.doesNotMatch(js, /id="h2h-pick"/);
+  // Moving between boards keeps the reader's place instead of jumping to the top.
+  assert.match(js, /Board to board/);
+});
