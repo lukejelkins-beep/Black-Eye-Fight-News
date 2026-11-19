@@ -1,7 +1,8 @@
-name: Import finished PFL, ONE and Cage Warriors cards into results
+name: Import finished PFL, ONE, Cage Warriors and boxing cards into results
 on:
   schedule:
-    # Four times a day. Wikipedia usually has results within a day.
+    # Four times a day. Wikipedia and Boxerbook usually have results within a day.
+    # Boxing: one Boxerbook list request per run (well inside the free key's limits).
     - cron: '13 2,8,14,20 * * *'
   workflow_dispatch:
     inputs:
@@ -30,29 +31,31 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m unittest discover -s tests -p 'test_import_finished_results.py'
-      - name: Import finished cards (Wikipedia for PFL, ONE and Cage Warriors; no keys)
+      - name: Import finished cards (Wikipedia for PFL, ONE and Cage Warriors; Boxerbook for boxing)
         if: github.event_name != 'push'
         shell: bash
         env:
           DRY_RUN: ${{ inputs.dry_run }}
+          BOXERBOOK_API_KEY: ${{ secrets.BOXERBOOK_API_KEY || secrets.BOXERBOOK_KEY || secrets.BOXERBOOK_KEU }}
         run: |
           set -euo pipefail
+          if [ "${DRY_RUN:-false}" = "true" ]; then
+            # Report only, with the code of the branch this run was started on.
+            python scripts/import-finished-results.py --dry-run
+            exit 0
+          fi
           git config user.name 'Fight results updater'
           git config user.email 'results-bot@users.noreply.github.com'
           for attempt in 1 2 3; do
             git fetch -q origin main
             git reset --hard -q origin/main
-            if [ "${DRY_RUN:-false}" = "true" ]; then
-              python scripts/import-finished-results.py --dry-run
-              exit 0
-            fi
             python scripts/import-finished-results.py
             git add data/results.json
             if git diff --cached --quiet; then
               echo 'No finished cards to import'
               exit 0
             fi
-            git commit -m 'Import finished PFL, ONE and Cage Warriors results'
+            git commit -m 'Import finished PFL, ONE, Cage Warriors and boxing results'
             if git push origin HEAD:main; then exit 0; fi
             echo 'Retrying after another writer updated main'
           done

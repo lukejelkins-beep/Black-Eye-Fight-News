@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Move finished PFL, ONE and Cage Warriors cards from Upcoming into Results.
+"""Move finished PFL, ONE, Cage Warriors and boxing cards from Upcoming into Results.
 
 Sources (free, no key):
 - PFL: the Wikipedia article for each event, found through the season page
@@ -8,6 +8,11 @@ Sources (free, no key):
 - ONE Championship and Cage Warriors: the Wikipedia season page
   ("2026 in ONE Championship", "2026 in Cage Warriors").
 Wikipedia text is CC BY-SA; every imported card links to its article as the source.
+- Boxing (any promotion): Boxerbook's results list (https://boxerbook.com/v1/results),
+  read with the free API key in BOXERBOOK_API_KEY. Boxerbook's terms allow personal,
+  non-commercial sites to show results with credit; each imported bout links its
+  boxerbook.com page. Only the bouts of cards already on BEFN are stored: one list
+  request per run, no walking of boxers or bouts, no bulk copy.
 
 Rules (same as scripts/import-finished-ufc-results.py):
 - Cards that finished 1 to 21 days ago and are not already in results.
@@ -18,7 +23,7 @@ Rules (same as scripts/import-finished-ufc-results.py):
   even when Upcoming only listed the headliners. A card still in progress waits.
 - Existing results are never changed.
 """
-import argparse, datetime as dt, json, re, sys, unicodedata, urllib.parse, urllib.request
+import argparse, datetime as dt, json, os, re, sys, unicodedata, urllib.parse, urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -35,6 +40,18 @@ SOURCES = {
     'ONE Championship': ('wikipedia', 'ONE Championship'),
     'Cage Warriors': ('wikipedia', 'Cage Warriors'),
 }
+BOXERBOOK_RESULTS = 'https://boxerbook.com/v1/results?days={days}'
+BOXERBOOK_DAYS = 14  # the longest window Boxerbook's results list offers
+BOXERBOOK_CREDIT = 'Data from Boxerbook (https://boxerbook.com)'
+BOXING_METHODS = {'UD': 'unanimous decision', 'SD': 'split decision', 'MD': 'majority decision',
+                  'PTS': 'points', 'DEC': 'decision', 'TD': 'technical decision', 'KO': 'KO', 'TKO': 'TKO',
+                  'RTD': 'RTD (retired in corner)', 'DQ': 'disqualification', 'NC': 'no contest'}
+BOXING_DRAWS = {'SD': 'split draw', 'MD': 'majority draw', 'TD': 'technical draw'}
+DIVISIONS = {'hea': 'Heavyweight', 'bri': 'Bridgerweight', 'cru': 'Cruiserweight', 'lhea': 'Light heavyweight',
+             'smid': 'Super middleweight', 'mid': 'Middleweight', 'swel': 'Super welterweight', 'wel': 'Welterweight',
+             'slig': 'Super lightweight', 'lig': 'Lightweight', 'sfea': 'Super featherweight', 'fea': 'Featherweight',
+             'sban': 'Super bantamweight', 'ban': 'Bantamweight', 'sfly': 'Super flyweight', 'fly': 'Flyweight',
+             'lfly': 'Light flyweight', 'min': 'Minimumweight', 'str': 'Minimumweight', 'atom': 'Atomweight'}
 SPORTS = {'muay thai': 'Muay Thai', 'kickboxing': 'Kickboxing', 'mma': 'MMA', 'submission grappling': 'Grappling', 'grappling': 'Grappling', 'boxing': 'Boxing'}
 
 
@@ -80,10 +97,10 @@ def slug(name):
 
 
 def record_after(pre, result):
-    nums = [int(x) for x in re.findall(r'\d+', str(pre or ''))[:3]]
-    if len(nums) < 2:
+    m = re.match(r'\s*(\d+)\s*[-–]\s*(\d+)(?:\s*[-–]\s*(\d+))?', str(pre or ''))
+    if not m:
         return None, None
-    nums += [0] * (3 - len(nums))
+    nums = [int(x or 0) for x in m.groups()]
     pre_text = '-'.join(map(str, nums))
     if result == 'win':
         nums[0] += 1
@@ -268,6 +285,64 @@ def wiki_article_events(fetch, name, day):
 
 # ---------- matching and building ----------
 
+# ---------- Boxerbook (boxing) ----------
+
+def division_name(code):
+    code = str(code or '').strip().lower()
+    women = code.startswith('w_')
+    name = DIVISIONS.get(code[2:] if women else code, '')
+    return ("Women's " + name.lower()) if name and women else name
+
+
+def boxerbook_events(payload):
+    """Group Boxerbook's results list into events (one per event_id)."""
+    grouped = {}
+    for b in payload.get('bouts') or []:
+        a, z = (b.get('a') or {}).get('name'), (b.get('b') or {}).get('name')
+        url = str(b.get('url') or '')
+        if not a or not z or not url.startswith('https://boxerbook.com/'):
+            continue
+        code, winner = str(b.get('method') or '').upper(), str(b.get('winner') or '').lower()
+        if winner == 'draw':
+            outcome, idx, method = 'draw', None, BOXING_DRAWS.get(code, 'draw')
+        elif code == 'NC' or winner in ('nc', 'no_contest'):
+            outcome, idx, method = 'no contest', None, 'no contest'
+        elif winner in ('a', 'b'):
+            outcome, idx, method = 'win', 0 if winner == 'a' else 1, BOXING_METHODS.get(code, code or 'Method not published by source')
+        else:
+            continue
+        key = b.get('event_id') or (str(b.get('date'))[:10] + url)
+        e = grouped.setdefault(key, {'name': '', 'date': str(b.get('date') or '')[:10], 'location': '', 'url': url,
+                                     'label': BOXERBOOK_CREDIT, 'bouts': []})
+        e['bouts'].append({'fighters': [a, z], 'done': True, 'winner': idx, 'outcome': outcome, 'method': method,
+                           'round': b.get('round'), 'time': b.get('time'), 'division': division_name(b.get('division')),
+                           'records': [(b.get('a') or {}).get('record'), (b.get('b') or {}).get('record')],
+                           'section': None, 'session': None, 'sport': 'Boxing', 'url': url})
+    return list(grouped.values())
+
+
+def boxerbook_fetch(fetch):
+    """One read of the 14-day results list. Returns [] without a key."""
+    key = os.getenv('BOXERBOOK_API_KEY', '')
+    if not key:
+        raise RuntimeError('no Boxerbook key set')
+    return boxerbook_events(json.loads(fetch(BOXERBOOK_RESULTS.format(days=BOXERBOOK_DAYS),
+                                             {'Authorization': 'Bearer ' + key, 'Accept': 'application/json'})))
+
+
+def order_boxing(card, event):
+    """BEFN's announced bouts first, in BEFN's order (headliner first), then the rest of the card."""
+    announced = [b['fighters'] for b in card.get('bouts', []) if len(b.get('fighters', [])) == 2]
+    sections = {i: (b.get('section') or '') for i, b in enumerate(card.get('bouts', []))}
+    first, rest = [], []
+    for src in event['bouts']:
+        pos = next((i for i, p in enumerate(announced) if same_bout(p, src['fighters'])), None)
+        sec = 'Main card' if pos is not None and sections.get(pos) in ('main', 'Main card') else 'Undercard'
+        (first if pos is not None else rest).append((pos if pos is not None else 99, dict(src, section=sec)))
+    first.sort(key=lambda x: x[0])
+    return dict(event, bouts=[b for _, b in first + rest])
+
+
 def match_event(card, events):
     day = dt.date.fromisoformat(card['date'])
     pairs = [b['fighters'] for b in card.get('bouts', []) if len(b.get('fighters', [])) == 2]
@@ -296,7 +371,8 @@ def build(card, event):
         mine = next((m for m in announced if same_bout(m['fighters'], (a, b))), None)
         if mine and not same_person(mine['fighters'][0], a) and same_person(mine['fighters'][0], b):  # keep BEFN's corner order
             a, b = b, a
-            src = dict(src, fighters=[a, b], winner=None if src['winner'] is None else 1 - src['winner'])
+            src = dict(src, fighters=[a, b], winner=None if src['winner'] is None else 1 - src['winner'],
+                       records=list(reversed(src.get('records') or [])))
         if mine:  # keep BEFN's spelling of the names
             a, b = mine['fighters']
         outs = ['draw', 'draw'] if src['outcome'] == 'draw' else ['no contest'] * 2 if src['outcome'] == 'no contest' else \
@@ -311,11 +387,17 @@ def build(card, event):
                     f.update(preRecord=pre, record=post, recordNote='Calculated from the sourced pre-fight record and this confirmed result.')
                     if i < len(sources):
                         f.update(preRecordSource=sources[i], recordSource=sources[i])
+            src_records = src.get('records') or []
+            if 'preRecord' not in f and src.get('url') and i < len(src_records):
+                pre, post = record_after(src_records[i], outs[i])
+                if pre:
+                    f.update(preRecord=pre, record=post, preRecordSource=src['url'], recordSource=src['url'],
+                             recordNote='Calculated from the sourced pre-fight record and this confirmed result.')
             fighters.append(f)
         row = {'id': f"{card['id']}-{slug(a)}", 'eventId': card['id'], 'event': card['title'], 'sport': src['sport'],
                'date': card['date'], 'location': event['location'] or card.get('location', ''),
                'division': src['division'] or (mine or {}).get('division', ''), 'fighters': fighters, 'winner': src['winner'],
-               'method': src['method'], 'round': src['round'], 'time': src['time'], 'source': event['url'],
+               'method': src['method'], 'round': src['round'], 'time': src['time'], 'source': src.get('url') or event['url'],
                'section': src['section'], 'order': order, 'status': 'completed', 'highlights': None, 'summary': ''}
         if src.get('session'):
             row['session'] = src['session']
@@ -338,20 +420,33 @@ def build(card, event):
 
 def run(results, upcoming, fetch, today):
     known = {e['id'] for e in results['events']}
-    due = [c for c in upcoming.get('events', []) if c.get('promotion') in SOURCES and c['id'] not in known
-           and 1 <= (today - dt.date.fromisoformat(c['date'])).days <= MAX_AGE_DAYS]
+    def source_for(card):
+        if str(card.get('sport', '')).lower() == 'boxing':
+            return ('boxerbook', None)
+        return SOURCES.get(card.get('promotion'))
+
+    def age(card):
+        return (today - dt.date.fromisoformat(card['date'])).days
+
+    due = [c for c in upcoming.get('events', []) if source_for(c) and c['id'] not in known
+           and 1 <= age(c) <= (BOXERBOOK_DAYS - 1 if source_for(c)[0] == 'boxerbook' else MAX_AGE_DAYS)]
     report, cache = [], {}
     for card in due:
-        kind, key = SOURCES[card['promotion']]
+        kind, key = source_for(card)
         day = dt.date.fromisoformat(card['date'])
-        cache_key = (kind, key, day.year if kind == 'wikipedia' else day)
+        cache_key = ('boxerbook',) if kind == 'boxerbook' else (kind, key, day.year if kind == 'wikipedia' else day)
         try:
             if cache_key not in cache:
-                cache[cache_key] = {'espn': espn_events, 'wikipedia': wiki_events, 'wikipedia-articles': wiki_article_events}[kind](fetch, key, day)
+                if kind == 'boxerbook':
+                    cache[cache_key] = boxerbook_fetch(fetch)
+                else:
+                    cache[cache_key] = {'espn': espn_events, 'wikipedia': wiki_events, 'wikipedia-articles': wiki_article_events}[kind](fetch, key, day)
         except Exception as exc:
             report.append(f"error: {card['title']} ({type(exc).__name__}: {str(exc)[:80]})")
             continue
         event = match_event(card, cache[cache_key])
+        if event and kind == 'boxerbook':
+            event = order_boxing(card, event)
         if not event:
             report.append(f"waiting: {card['title']} (not at source yet)")
             continue
@@ -367,8 +462,8 @@ def run(results, upcoming, fetch, today):
     return results, report
 
 
-def http_fetch(url):
-    req = urllib.request.Request(url, headers={'User-Agent': 'BEFN-Results-Importer/1.0 (https://black-eye-fight-news.onrender.com)'})
+def http_fetch(url, headers=None):
+    req = urllib.request.Request(url, headers={'User-Agent': 'BEFN-Results-Importer/1.0 (https://black-eye-fight-news.onrender.com)', **(headers or {})})
     with urllib.request.urlopen(req, timeout=30) as response:
         return response.read(6_000_000).decode('utf-8')
 
@@ -380,6 +475,6 @@ if __name__ == '__main__':
     results = json.loads(RESULTS.read_text())
     upcoming = json.loads(UPCOMING.read_text())
     updated, report = run(results, upcoming, http_fetch, dt.datetime.now(dt.timezone.utc).date())
-    print('\n'.join(report) or 'No finished PFL, ONE or Cage Warriors cards waiting for results')
+    print('\n'.join(report) or 'No finished PFL, ONE, Cage Warriors or boxing cards waiting for results')
     if any(line.startswith('imported') for line in report) and not args.dry_run:
         RESULTS.write_text(json.dumps(updated, ensure_ascii=False, indent=2) + '\n')
