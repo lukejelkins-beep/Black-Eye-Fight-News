@@ -5,7 +5,7 @@ const fs=require('node:fs');
 const vm=require('node:vm');
 const fixture=JSON.parse(fs.readFileSync('data/results.json','utf8'));
 const listeners={};
-const document={
+const document={createElement(){return {style:{},setAttribute(){},appendChild(){},addEventListener(){}}},head:{appendChild(){}},
  hidden:false,
  addEventListener:(type,fn)=>{(listeners[type]??=[]).push(fn)},
  querySelectorAll:()=>[],

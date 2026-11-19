@@ -1,11 +1,12 @@
 const vm=require('node:vm'),fs=require('node:fs'),assert=require('node:assert/strict');
 const data=JSON.parse(fs.readFileSync('data/results.json','utf8'));let calls=0;const timers=[];
 let now=Date.now();class Clock extends Date{static now(){return now}}
-const document={hidden:false,addEventListener(){},querySelectorAll(){return []},getElementById(){return null}};
+const document={createElement(){return {style:{},setAttribute(){},appendChild(){},addEventListener(){}}},head:{appendChild(){}},hidden:false,addEventListener(){},querySelectorAll(){return []},getElementById(){return null}};
 const window={BEFNFightsUI:{view:'results'}};
 const context={window,document,location:{href:'https://example.com/',hash:'#fights'},URL,Date:Clock,AbortSignal,
  setInterval:fn=>timers.push(fn),requestAnimationFrame:fn=>fn(),
  fetch:async()=>{calls++;return {ok:true,json:async()=>data}}};
+vm.runInNewContext(fs.readFileSync('assets/local-time.js','utf8'),context);
 vm.runInNewContext(fs.readFileSync('assets/event-status.js','utf8'),context);
 vm.runInNewContext(fs.readFileSync('assets/results.js','utf8'),context);
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
