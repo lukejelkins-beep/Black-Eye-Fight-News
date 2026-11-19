@@ -926,7 +926,7 @@ function posterHero(w,{r,wins,losses,careerPercent}){
       '<strong>'+(last.outcome==='win'?'Beat ':'Lost to ')+e(last.opponent)+'</strong></div>'+
       (last.kimarite?'<div class="h2h"><strong class="kim">'+e(techniqueText(last.kimarite))+'</strong><span>Technique</span></div>':'')+'</a>';
   }
-  const facts=[['Age',age===null?null:age],['Height',current.h==='—'?null:current.h],['Weight',current.mass==='—'?null:current.mass]]
+  const facts=[['Age',age===null?null:age],['Height',current.h==='—'?null:current.h],['Weight · undated',current.mass==='—'?null:current.mass]]
     .filter(([,v])=>v!==null&&v!==undefined).map(([k,v])=>'<span>'+e(k)+' <strong>'+e(v)+'</strong></span>').join('');
   return '<section class="sumo-poster">'+
     (kanji?'<div class="sumo-poster-kanji" aria-hidden="true" style="--kanji-count:'+[...kanji].length+'">'+e(kanji)+'</div>':'')+

@@ -460,7 +460,7 @@ test('published measurement values feed profile facts while provenance stays in 
   const js=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
   const charts=readFileSync(new URL('../assets/sumo-editorial-charts.mjs',import.meta.url),'utf8');
   assert.match(js,/publishedCurrentWeight\(w,STATE\.careerHistory\)/);
-  assert.match(js,/fact\('Weight · undated',current\.mass/);
+  assert.match(js,/\['Weight · undated',current\.mass/);
   assert.match(charts,/datedWeightObservations\(entry\)/);
   assert.doesNotMatch(js,/Weight source\/date\/precision review unresolved/);
   assert.doesNotMatch(js,/sectionHead\('sources'/);
