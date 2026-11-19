@@ -74,7 +74,7 @@ class LanguageNewsTests(unittest.TestCase):
 
     def test_collect_survives_a_failing_search(self):
         def fetcher(url):
-            if "RIZIN" in url:
+            if "%E5%A4%A7%E7%9B%B8%E6%92%B2" in url or "大相撲" in url:
                 raise OSError("boom")
             return RSS
         found, report = lang.collect(self.config, NOW, fetcher)

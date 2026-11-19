@@ -176,7 +176,7 @@ function renderHome(){
  const head='<header class="np-head"><h1>News</h1><p>'+(activeSport()==='all'?'Boxing, MMA, grappling and sumo, from the publishers that cover them.':'Latest '+esc(activeSport())+' news from the publishers that cover it.')+'</p></header>';
  if(!leads.length)return renderFrame('<div class="np">'+head+'<p role="status" class="front-loading">'+(desk.articles.length?'No verified stories available for this sport yet.':'Checking the latest fight news…')+'</p></div>'+(window.BEFNCoverage?window.BEFNCoverage.panel(activeSport()):''));
  const h=newsPageHelpers();
- const intl=window.BEFNNewsPage.languageHTML(window.BEFNNewsPage.usableLanguageStories(desk.language,activeSport()),h,4);
+ const intl=window.BEFNNewsPage.languageHTML(window.BEFNNewsPage.usableLanguageStories(desk.language,activeSport()),h,6);
  return renderFrame('<div class="np">'+head+window.BEFNNewsPage.leadsHTML(leads,h)+intl
   +'<section id="news-feed" aria-label="Latest fight news">'+renderNewsFeed()+'</section></div>'+(window.BEFNCoverage?window.BEFNCoverage.panel(activeSport()):''));
 }
