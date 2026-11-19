@@ -201,6 +201,11 @@ class Boxing(unittest.TestCase):
         other = dict(BUATSI, id='x', title='Other', bouts=[{'fighters': ['Nobody One', 'Nobody Two']}])
         self.assertEqual(self.run_card(other)[1], ['waiting: Other (not at source yet)'])
 
+    def test_close_spellings(self):
+        self.assertTrue(importer.same_person('Albina Moldazhanova', 'Albina Maldozhanova'))
+        self.assertFalse(importer.same_person('Albina Moldazhanova', 'Alina Petrova'))
+        self.assertFalse(importer.same_person('Jose Garcia', 'Jose Garza'))
+
     def test_record_after_reads_only_the_record(self):
         self.assertEqual(importer.record_after('14-0 (8 KOs)', 'win'), ('14-0-0', '15–0–0'))
         self.assertEqual(importer.record_after('Record unavailable', 'win'), (None, None))

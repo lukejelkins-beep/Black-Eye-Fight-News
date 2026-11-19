@@ -77,11 +77,20 @@ def surname(name):
     return max(parts, key=len) if parts else ''
 
 
+def close_spelling(kx, ky):
+    """Same name parts except one, and that one spelled nearly the same (Maldozhanova/Moldazhanova)."""
+    a, b = kx.split(), ky.split()
+    if len(a) != len(b) or len(a) < 2:
+        return False
+    diff = [(x, y) for x, y in zip(a, b) if x != y]
+    return len(diff) == 1 and min(map(len, diff[0])) >= 5 and difflib.SequenceMatcher(None, *diff[0]).ratio() >= 0.8
+
+
 def same_person(x, y):
     """Exact match, a one-letter-ish spelling difference (Maldozhanova/Moldazhanova),
     or the longest part of one name appears in the other (Sergei/Sergey Bilostenniy)."""
     kx, ky = name_key(x), name_key(y)
-    return kx == ky or difflib.SequenceMatcher(None, kx, ky).ratio() >= 0.9 or (len(surname(x)) >= 4 and surname(x) in ky.split()) or (len(surname(y)) >= 4 and surname(y) in kx.split())
+    return kx == ky or close_spelling(kx, ky) or (len(surname(x)) >= 4 and surname(x) in ky.split()) or (len(surname(y)) >= 4 and surname(y) in kx.split())
 
 
 def same_bout(p, q):
@@ -355,7 +364,7 @@ def order_boxing(card, event):
         pos = next((i for i, p in enumerate(announced) if same_bout(p, src['fighters'])), None)
         sec = 'Main card' if pos is not None and sections.get(pos) in ('main', 'Main card') else 'Undercard'
         (first if pos is not None else rest).append((pos if pos is not None else 99, dict(src, section=sec)))
-    first.sort(key=lambda x: x[0])
+    first.sort(key=lambda x: (x[1]['section'] != 'Main card', x[0]))
     return dict(event, bouts=[b for _, b in first + rest])
 
 
