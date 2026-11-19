@@ -1,20 +1,17 @@
 {
   "schemaVersion": 1,
-  "status": "resolved-after-successful-retry",
-  "at": "2026-11-15T08:31:06Z",
-  "runId": "43694856675",
-  "workflowCommit": "866312bd6e13f44dba7261c0a5e7f71491eab387",
-  "actionsUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/43694856675",
+  "status": "research-run-incomplete",
+  "at": "2026-11-19T02:25:40Z",
+  "runId": "44444091262",
+  "workflowCommit": "2513183555035760b65a2e7e1dad38d11bccde2c",
+  "actionsUrl": "https://github.com/lukejelkins-beep/Black-Eye-Fight-News/actions/runs/44444091262",
   "stepOutcomes": {
-    "validation": "failure",
-    "officialJsa": "skipped",
-    "sumoDbCollector": "skipped",
-    "profileBuild": "skipped",
-    "healthCheckpoint": "skipped",
-    "gitPush": "skipped"
+    "validation": "success",
+    "officialJsa": "success",
+    "sumoDbCollector": "success",
+    "profileBuild": "success",
+    "healthCheckpoint": "success",
+    "gitPush": "success"
   },
-  "note": "Previous run failed before a complete data checkpoint. A later validated run completed the collection, data audit, projections and checkpoint. Original outcomes retained for traceability.",
-  "resolvedByRunId": "43694856675",
-  "resolvedAt": "2026-11-15T08:35:50.025Z",
-  "successEvidencePath": "data/sumo/backfill/v1/workflow-health.json"
+  "note": "This is an incomplete Actions run. Do not advance certification or claim a completed checkpoint."
 }
