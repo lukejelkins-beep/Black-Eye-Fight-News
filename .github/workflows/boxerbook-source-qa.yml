@@ -50,7 +50,7 @@ jobs:
               elif isinstance(v, list) and v:
                   print(pad + '[0] of ' + str(len(v)))
                   shape(v[0], pad + '  ')
-          r = fetch_json('/results', {'days': 14}, key=key); print('attribution:', r.get('attribution')); r['bouts'] = r['bouts'][:1]; shape(r)
+          r = fetch_json('/results', {'days': 14}, key=key); bs = r['bouts']; print('count', len(bs), 'truncated', r['truncated'], r['from'], r['to']); import collections as C; [print(f, C.Counter(str(b.get(f)) for b in bs).most_common(12)) for f in ('winner','confirmation','method','round','time','division')]; print('records', [b['a'].get('record') for b in bs if b['a'].get('record')][:3]); print('display', bs[0]['display'] if bs else None)
           PY
       - name: Upload one-day QA report for review
         if: github.event_name == 'workflow_dispatch' && inputs.live_check == true
