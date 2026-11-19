@@ -522,7 +522,7 @@
   return {ratings,overall:overall(ratings),scale:"percentile"};
  }
  function level(n){return n===null?"unrated":n<35?"red":n<55?"orange":n<75?"gold":"green"}
- const api={normalize:norm,normalizeHistory,recentForm,advancedData,careerData,aggregateRoundPreviews,CREDENTIAL_SCHEDULE,CREDENTIAL_CAP,credentialBonuses,evaluate,evaluateBoxing,boxingPower,v3Stats,v3Raw,buildV3Population,buildOpponentQuality,percentileOf,evaluateV3,overall,OPPONENT_SWING,OVERALL_WEIGHTS,level};
+ const api={normalize:norm,normalizeHistory,recentForm,advancedData,careerData,metricSpecs,rawSkill,aggregateRoundPreviews,CREDENTIAL_SCHEDULE,CREDENTIAL_CAP,credentialBonuses,evaluate,evaluateBoxing,boxingPower,v3Stats,v3Raw,buildV3Population,buildOpponentQuality,percentileOf,evaluateV3,overall,OPPONENT_SWING,OVERALL_WEIGHTS,level};
  scope.BEFNPowerIndex=api;
  if(typeof module==="object"&&module?.exports)module.exports=api;
 })(typeof window!=="undefined"?window:globalThis);

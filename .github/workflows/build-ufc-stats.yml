@@ -15,6 +15,7 @@ on:
       - 'data/ufc-*-profiles.json'
       - 'data/ufc-divisions.json'
       - 'scripts/build-ufc-stats.py'
+      - 'scripts/ufc_ratings.py'
       - 'tests/test_ufc_stats_build.py'
       - '.github/workflows/build-ufc-stats.yml'
   pull_request:
@@ -24,6 +25,10 @@ on:
       - 'tests/test_ufc_stats_build.py'
       - 'tests/test_ufc_divisions.py'
       - 'scripts/refresh-ufc-divisions.py'
+      - 'scripts/ufc_ratings.py'
+      - 'tests/test_ufc_ratings.py'
+      - 'tests/ufc-ratings-parity.cjs'
+      - 'assets/fighter-power-index.js'
       - '.github/workflows/build-ufc-stats.yml'
 permissions:
   contents: write
@@ -39,28 +44,35 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - name: Test calculations (cage time, corners, validation, rates, scorecards)
         run: python -m unittest discover -s tests -p 'test_ufc_stats_build.py' -v
       - name: Test division parsing
         run: python -m unittest discover -s tests -p 'test_ufc_divisions.py' -v
-      - name: Build statistics (no provider requests; reference date = latest saved UFC event)
-        run: python scripts/build-ufc-stats.py
-      - name: Commit only changed statistics
+      - name: Test ratings v2 (formulas, gates, percentiles, form, roster)
+        run: python -m unittest discover -s tests -p 'test_ufc_ratings.py' -v
+      - name: Build statistics and ratings (no provider requests; reference date = latest saved UFC event)
+        run: python scripts/build-ufc-stats.py --parity-out "$RUNNER_TEMP/ratings-parity.json"
+      - name: Python ratings must match the browser engine exactly
+        run: node tests/ufc-ratings-parity.cjs "$RUNNER_TEMP/ratings-parity.json"
+      - name: Commit only changed statistics (rebuild on a fresh main, never rebase generated files)
         if: github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
           git config user.name 'BEFN stats calculator'
           git config user.email 'befn-stats-calculator@users.noreply.github.com'
-          git add -A data/ufc-stats
-          if git diff --cached --quiet; then
-            echo 'No statistics changed'
-            exit 0
-          fi
-          git commit -m 'Refresh UFC fighter statistics from saved round data'
+          branch="${GITHUB_REF_NAME}"
           for i in 1 2 3; do
-            if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
-            git rebase --abort 2>/dev/null || true
-            sleep 3
+            git fetch -q origin "$branch"
+            git reset -q --hard "origin/$branch"
+            python scripts/build-ufc-stats.py
+            git add -A data/ufc-stats
+            if git diff --cached --quiet; then echo 'No statistics changed'; exit 0; fi
+            git commit -q -m 'Refresh UFC fighter statistics and ratings from saved round data'
+            if git push -q origin "HEAD:$branch"; then exit 0; fi
+            sleep 5
           done
           exit 1
