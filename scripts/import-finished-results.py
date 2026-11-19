@@ -459,6 +459,14 @@ def run(results, upcoming, fetch, today):
         results['results'].extend(rows)
         known.add(card['id'])
         report.append(f"imported: {card['title']} ({len(rows)} bouts from {event['label']})")
+        for r in rows:
+            names = [f['name'] for f in r['fighters']]
+            who = f"{names[r['winner']]} def. {names[1 - r['winner']]}" if r['winner'] in (0, 1) else ' vs '.join(names)
+            report.append(f"   {r['section'] or ''}: {who} · {r['method']}" + (f" R{r['round']}" if r['round'] else ''))
+        missing = [' vs '.join(b['fighters']) for b in card.get('bouts', []) if len(b.get('fighters', [])) == 2
+                   and not any(same_bout(b['fighters'], [f['name'] for f in r['fighters']]) for r in rows)]
+        if missing:
+            report.append('   announced but not in the source result: ' + '; '.join(missing))
     return results, report
 
 

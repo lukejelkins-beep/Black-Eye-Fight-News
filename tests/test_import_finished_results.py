@@ -53,7 +53,7 @@ def run(*cards, fetcher=fetch, today=TODAY, results=None):
 class ImportFinishedResultsTest(unittest.TestCase):
     def test_pfl_from_wikipedia_article_with_spelling_differences(self):
         results, report = run(PFL)
-        self.assertEqual(report, ['imported: PFL Dubai: Nemkov vs Bilostenniy (5 bouts from Wikipedia (CC BY-SA))'])
+        self.assertEqual(report[:1], ['imported: PFL Dubai: Nemkov vs Bilostenniy (5 bouts from Wikipedia (CC BY-SA))'])
         rows = results['results']
         main = rows[0]
         # Wikipedia spells him "Sergey"; BEFN's spelling and corner order are kept.
@@ -159,7 +159,7 @@ class Boxing(unittest.TestCase):
 
     def test_imports_only_this_card_headliner_first_in_befn_corners(self):
         results, report = self.run_card()
-        self.assertEqual(report, ['imported: Buatsi vs Hutchinson II (4 bouts from Data from Boxerbook (https://boxerbook.com))'])
+        self.assertEqual(report[:1], ['imported: Buatsi vs Hutchinson II (4 bouts from Data from Boxerbook (https://boxerbook.com))'])
         rows = results['results']
         self.assertNotIn('Cheavon Clarke', json.dumps(rows))  # a different event on the same night
         main = rows[0]
