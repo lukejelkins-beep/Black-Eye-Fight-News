@@ -11,7 +11,7 @@ import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verificati
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
 import { dailyStats, dailyRecentMeetings, dailyDefaultDay,dailyConcluded, dailySelectedDate, dailyWinPercentage, heightFeetInches, highestRecordedDivision } from './sumo-daily.mjs?v=20261117-day-flow';
 import { ordinalRank } from './sumo-career.mjs';
-import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261118-h2h-board-v1';
+import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261119-h2h-placeholder';
 import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-inline-gifs-v4';
 
 const ROOT = document.querySelector('#sumo-main');
@@ -1358,6 +1358,7 @@ function openBoardSheet(b){
   if(!dlg){dlg=document.createElement('dialog');dlg.id='h2h-sheet';dlg.className='h2h-sheet';dlg.setAttribute('aria-labelledby','h2h-sheet-title');document.body.appendChild(dlg);
     dlg.addEventListener('click',ev=>{if(ev.target===dlg)dlg.close();});}
   dlg.innerHTML=boardSheet(a,b);
+  dlg.querySelectorAll('.h2h-head img').forEach(i=>{if(i.complete&&i.naturalWidth)markHeadLoaded(i);});
   dlg.dataset.opener=String(b);
   if(!dlg.open)dlg.showModal();
 }
@@ -1409,6 +1410,7 @@ function render() {
     case 'kimarite': ROOT.innerHTML=renderKimarite();break;
     default: ROOT.innerHTML=renderBasho();
   }
+  if(page==='h2h')markCachedHeads();
   if(page==='kimarite')hydrateKimariteGallery();
   else linkKimariteMentions(ROOT);
 }
@@ -1457,6 +1459,11 @@ document.addEventListener('input',ev=>{
     STATE.opponentQuery=ev.target.value;STATE.h2hOpponentLimit=16;refreshOpponents();
   }
 });
+/* Head crops fade in over their placeholder once loaded. Load events do not bubble,
+ * so listen in the capture phase; already-cached images are caught after render. */
+function markHeadLoaded(img){img?.closest?.('.h2h-head')?.classList.add('is-loaded');}
+document.addEventListener('load',ev=>{if(ev.target?.tagName==='IMG')markHeadLoaded(ev.target);},true);
+function markCachedHeads(){ROOT.querySelectorAll('.h2h-head img').forEach(i=>{if(i.complete&&i.naturalWidth)markHeadLoaded(i);});}
 document.addEventListener('keydown',ev=>{
   if(ev.key==='Enter'&&ev.target?.id==='h2h-pick'){ev.preventDefault();pickBoardFocus(ev.target.value);}
 });
