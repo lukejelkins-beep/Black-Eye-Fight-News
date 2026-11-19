@@ -222,3 +222,14 @@
 #fighterGrid .fighter-body p{color:#d8cecc}
 #fighterGrid .fighter-body .fighter-link{color:#f3c332}
 @media (max-width:640px){#fighterGrid .fighter-body h3{font-size:19px}#fighterGrid .fighter-body{padding:10px 11px 12px}}
+
+/* Ratings v2: "What drives this" breakdown under each skill meter. */
+.befn-pro-drivers{margin-top:6px}
+.befn-pro-drivers summary{cursor:pointer;font-size:11px;font-weight:800;color:var(--pro-muted);list-style:none}
+.befn-pro-drivers summary::-webkit-details-marker{display:none}
+.befn-pro-drivers summary::before{content:'▸ ';}
+.befn-pro-drivers[open] summary::before{content:'▾ ';}
+.befn-pro-drivers ul{list-style:none;margin:6px 0 2px;padding:8px 10px;background:#f6f0e7;border:1px solid var(--pro-border);border-radius:8px;display:grid;gap:5px}
+.befn-pro-drivers li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 10px;font-size:12px;color:var(--pro-text);margin:0}
+.befn-pro-drivers li b{font-weight:800;color:var(--pro-ink);text-align:right}
+.befn-pro-drivers li small{grid-column:1/-1;font-size:10.5px;color:var(--pro-muted)}
