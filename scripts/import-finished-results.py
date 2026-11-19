@@ -2,10 +2,12 @@
 """Move finished PFL, ONE and Cage Warriors cards from Upcoming into Results.
 
 Sources (free, no key):
-- PFL: ESPN's public JSON feed (the one espn.com uses): scoreboard to find the
-  event, then the event's fight-center detail for every bout.
+- PFL: the Wikipedia article for each event, found through the season page
+  ("2026 in Professional Fighters League"). ESPN's feed was tried first but
+  refuses requests from GitHub's servers (HTTP 403); its parser stays for reference.
 - ONE Championship and Cage Warriors: the Wikipedia season page
-  ("2026 in ONE Championship", "2026 in Cage Warriors"), CC BY-SA, credited.
+  ("2026 in ONE Championship", "2026 in Cage Warriors").
+Wikipedia text is CC BY-SA; every imported card links to its article as the source.
 
 Rules (same as scripts/import-finished-ufc-results.py):
 - Cards that finished 1 to 21 days ago and are not already in results.
@@ -29,7 +31,7 @@ ESPN_PAGE = 'https://www.espn.com/mma/fightcenter/_/id/{event_id}/league/{league
 WIKI_API = 'https://en.wikipedia.org/w/api.php?action=parse&format=json&prop=wikitext%7Crevid&page={page}'
 WIKI_PAGE = 'https://en.wikipedia.org/wiki/{page}'
 SOURCES = {
-    'PFL': ('espn', 'pfl'),
+    'PFL': ('wikipedia-articles', 'Professional Fighters League'),
     'ONE Championship': ('wikipedia', 'ONE Championship'),
     'Cage Warriors': ('wikipedia', 'Cage Warriors'),
 }
@@ -51,6 +53,26 @@ def name_key(name):
 
 def pair_key(a, b):
     return tuple(sorted((name_key(a), name_key(b))))
+
+
+def surname(name):
+    parts = name_key(name).split()
+    return max(parts, key=len) if parts else ''
+
+
+def same_person(x, y):
+    """Exact match, or the longest part of one name appears in the other (Sergei/Sergey Bilostenniy)."""
+    kx, ky = name_key(x), name_key(y)
+    return kx == ky or (len(surname(x)) >= 4 and surname(x) in ky.split()) or (len(surname(y)) >= 4 and surname(y) in kx.split())
+
+
+def same_bout(p, q):
+    """Same two fighters: one name exact and the other at least sharing its longest part."""
+    (a1, b1), (a2, b2) = p, q
+    if pair_key(a1, b1) == pair_key(a2, b2):
+        return True
+    return any(name_key(x) == name_key(u) and same_person(y, v) or name_key(y) == name_key(v) and same_person(x, u)
+               for (x, y), (u, v) in (((a1, b1), (a2, b2)), ((a1, b1), (b2, a2))))
 
 
 def slug(name):
@@ -190,7 +212,8 @@ def parse_wiki_section(title, text, page_url):
     day = dt.date(int(date.group(1)), int(date.group(2)), int(date.group(3)))
     venue = wiki_clean((re.search(r'^\|\s*venue\s*=(.*)$', text, re.M) or [None, ''])[1])
     city = wiki_clean((re.search(r'^\|\s*city\s*=(.*)$', text, re.M) or [None, ''])[1])
-    results = text[text.find('===Results==='):] if '===Results===' in text else text
+    found = re.search(r'^==+\s*Results\s*==+\s*$', text, re.M)
+    results = text[found.start():] if found else text
     bouts = []
     if '{{MMAevent bout' in results:  # template layout (Cage Warriors)
         card_title, card_index = 'Main card', -1
@@ -223,11 +246,31 @@ def wiki_events(fetch, name, day):
     return [e for e in events if e and e['bouts']]
 
 
+MONTHS = {m: i for i, m in enumerate(['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'], 1)}
+
+
+def wiki_article_events(fetch, name, day):
+    """Events with their own article, listed on the season page next to a {{dts}} date."""
+    page = f'{day.year} in {name}'
+    season = json.loads(fetch(WIKI_API.format(page=urllib.parse.quote(page))))['parse']['wikitext']['*']
+    events = []
+    rows = re.findall(r'\[\[([^\]|#]+)(?:\|[^\]]*)?\]\]\s*\n\|\s*\{\{dts\|(\d{4})\|([A-Za-z]{3})[a-z]*\|(\d{1,2})\}\}', season)
+    for link, y, mon, d in rows:
+        if mon.lower() not in MONTHS or abs((dt.date(int(y), MONTHS[mon.lower()], int(d)) - day).days) > 1:
+            continue
+        article = json.loads(fetch(WIKI_API.format(page=urllib.parse.quote(link))))['parse']['wikitext']['*']
+        event = parse_wiki_section(link, article, WIKI_PAGE.format(page=urllib.parse.quote(link.replace(' ', '_'))))
+        if event and event['bouts']:
+            event['url'] = event['url'].split('#')[0]
+            events.append(event)
+    return events
+
+
 # ---------- matching and building ----------
 
 def match_event(card, events):
     day = dt.date.fromisoformat(card['date'])
-    pairs = [pair_key(*b['fighters']) for b in card.get('bouts', []) if len(b.get('fighters', [])) == 2]
+    pairs = [b['fighters'] for b in card.get('bouts', []) if len(b.get('fighters', [])) == 2]
     best, best_score = None, 0
     for e in events:
         try:
@@ -235,9 +278,9 @@ def match_event(card, events):
                 continue
         except ValueError:
             continue
-        keys = {pair_key(*b['fighters']) for b in e['bouts']}
-        score = sum(p in keys for p in pairs)
-        headline = bool(pairs) and pairs[0] in keys
+        found = [any(same_bout(p, b['fighters']) for b in e['bouts']) for p in pairs]
+        score = sum(found)
+        headline = bool(found) and found[0]
         if (headline or score >= 2) and score > best_score:
             best, best_score = e, score
     return best
@@ -246,12 +289,12 @@ def match_event(card, events):
 def build(card, event):
     if not event['bouts'] or not all(b['done'] for b in event['bouts']):
         return None, 'card still in progress at source'
-    announced = {pair_key(*b['fighters']): b for b in card.get('bouts', []) if len(b.get('fighters', [])) == 2}
+    announced = [b for b in card.get('bouts', []) if len(b.get('fighters', [])) == 2]
     rows = []
     for order, src in enumerate(event['bouts']):
         a, b = src['fighters']
-        mine = announced.get(pair_key(a, b))
-        if mine and name_key(mine['fighters'][0]) != name_key(a):  # keep BEFN's corner order
+        mine = next((m for m in announced if same_bout(m['fighters'], (a, b))), None)
+        if mine and not same_person(mine['fighters'][0], a) and same_person(mine['fighters'][0], b):  # keep BEFN's corner order
             a, b = b, a
             src = dict(src, fighters=[a, b], winner=None if src['winner'] is None else 1 - src['winner'])
         if mine:  # keep BEFN's spelling of the names
@@ -304,7 +347,7 @@ def run(results, upcoming, fetch, today):
         cache_key = (kind, key, day.year if kind == 'wikipedia' else day)
         try:
             if cache_key not in cache:
-                cache[cache_key] = espn_events(fetch, key, day) if kind == 'espn' else wiki_events(fetch, key, day)
+                cache[cache_key] = {'espn': espn_events, 'wikipedia': wiki_events, 'wikipedia-articles': wiki_article_events}[kind](fetch, key, day)
         except Exception as exc:
             report.append(f"error: {card['title']} ({type(exc).__name__}: {str(exc)[:80]})")
             continue

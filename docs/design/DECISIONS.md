@@ -3,6 +3,7 @@
 Format: date — decision — who — where it shows up.
 
 ## 2026-11-19
+- PFL results switched to the Wikipedia event articles: ESPN's feed refuses requests from GitHub's servers (HTTP 403) and is not worked around. Fighter names are matched allowing small spelling differences (Sergei/Sergey). — Claude, owner-approved source policy — PR for branch fix/pfl-results-from-wikipedia-20261119.
 - Finished PFL cards move into Results from ESPN's public fight-center feed; ONE Championship and Cage Warriors from the Wikipedia season pages (CC BY-SA, linked as the source). Four runs a day, no keys. BigBalls was assessed and not used (boxing data stops at 1 Aug 2026; MMA not on the plan). Boxing will use Boxerbook once the owner adds `BOXERBOOK_API_KEY`. — Owner — PR for branch feat/import-pfl-one-cw-results-20261119.
 - The owner has permission to republish official event posters. A twice-daily job downloads each recorded poster once, stores a resized WebP in `assets/img/posters/`, and records source, credit and rights in `data/poster-register.json`; pages prefer these BEFN-hosted copies. Originals are not committed. — Owner — PR for branch feat/cache-official-posters-20261119.
 - UFCalendar Hobby plan cancelled; the rich backfill and its watcher workflows are disabled (data already collected stays). — Owner — Actions settings.
