@@ -15,9 +15,26 @@ News and Fight Talk feel live: new stories and posts show up within minutes, the
 1. **Source health report.** One page for the owner showing each news source: last success, last new item, items in 7 days, and failures. Retire feeds that have been silent for 30 days, and replace Bing-search feeds with official feeds where one exists. No visible site change.
 2. **News page: two lead stories, photo-led.** Two lead stories side by side (stacked on phone): **Newest** (latest story from a trusted source) and **Most covered** (the story the most sources are running in the last 48 hours, found with the same duplicate grouping the importer uses). Under them a photo-led list: a thumbnail for every story, tight rows, live text headings. Photos are the image the publisher's own feed supplies, shown with the source name and a link back; where a feed has none, a sport-coloured placeholder or the event poster is used. Owner direction: tight but visual.
 3. **Related news on cards.** Fight and fighter pages show the latest three stories that name them, matched by the same name rules the results importer uses. Only exact or close-spelling matches; no guessing.
-4. **Fight Talk page.** Rolling feed by fighter, promotion and sport, with the same filter labels as the Fights page. Each post shows its platform, source date and a link to the original. The same Meta/X embeds as now.
+4. **Fight Talk page.** (collection changes are in the section below) Rolling feed by fighter, promotion and sport, with the same filter labels as the Fights page. Each post shows its platform, source date and a link to the original. The same Meta/X embeds as now.
 5. **Freshness and polling.** The page re-checks its data every few minutes while open, and shows "updated 4 min ago". Cloudflare caches for about 5 minutes, so "live" means within about 10 minutes, not instant.
 6. **Schedule review.** After a week of real use, set each job's frequency from the source health report, not from guesses.
+
+## Improving Fight Talk collection (owner asked 19 Nov; social platforms stay as they are)
+What the data shows today:
+- **Instagram is stale.** 239 of the 320 posts are Instagram, and none is newer than 7 days. Meta returns HTTP 401 for Business Discovery, so no Instagram account has actually been read lately. The Live view only shows 7 days, so these never appear there.
+- **Bluesky is fresh but thin.** Only 3 sources are checked each run (37 posts in the last 24 hours). It is free and public, so it can cover far more accounts.
+- **X works and has room.** The paid collector has made 92 completed calls this month for about US$0.26 of the US$1.80 ledger. Each group of 8 accounts is read every 90 minutes, so the full list takes about 27 hours to cycle.
+- **Embeds from publisher articles:** 3 of 32 publisher feeds were checked in the latest run, and it found no new embeds.
+- **Roster gaps:** 55 of 215 tracked fighters have no verified account on any platform.
+
+Changes, in order:
+1. **Show freshness honestly.** Each platform shows its last real check and newest post. Stale posts drop out of Live automatically; Instagram is shown as "paused" until it works rather than looking current.
+2. **Bluesky: all accounts.** Find a Bluesky account for every roster fighter, promoter and media source (verified by the public identity record, never guessed) and read them all. No cost.
+3. **X: smarter order, same budget.** Fighters on upcoming cards, and those who fought in the last 3 days, are read first; everyone else rotates. Same ledger, same US$1.80 cap, same no-retry rule.
+4. **Publisher embeds: check all 32 feeds** on a rotation instead of 3, so Threads, Instagram and X posts that publishers embed are found quickly.
+5. **Roster gaps:** fill the 55 missing accounts from official promotion pages and fighters' own sites, with the supporting link kept. Anything unsupported stays blank.
+6. **Instagram (needs the owner):** Business Discovery needs the Meta app to have the right permissions on a Page-linked professional account. If you want it back, it is a settings task in your Meta developer account that I can walk through; otherwise Instagram stays link and embed only.
+7. **Quality rules:** original posts only, dedupe across platforms, no engagement minimum, source link and date always shown. Unchanged from today.
 
 ## Japanese and Spanish sources (owner approved, translated)
 - Add Japanese and Spanish sources for the sports already covered: for example RIZIN and Japanese boxing in Japanese, and Mexican and Spanish boxing and MMA in Spanish. The exact list is proposed in step 1's report for the owner to approve.
@@ -37,7 +54,8 @@ News and Fight Talk feel live: new stories and posts show up within minutes, the
 - **Languages:** English, Japanese and Spanish, with translation. Owner approved 19 Nov.
 - **Lead stories:** two, Newest and Most covered. Owner approved 19 Nov.
 - **Look:** tight but visual, with photos. Owner approved 19 Nov.
-- **Still open:** social sources (keep X, Threads and Bluesky as they are, or change them?), and whether you want alerts when a major story breaks (a separate, later step).
+- **Social sources:** keep X, Threads, Bluesky and Instagram. Improve collection as above. Owner approved 19 Nov.
+- **Still open:** whether you want alerts when a major story breaks (a separate, later step).
 
 ## Not in phase 2
 Stats snapshots (phase 3), per-bout analysis (phase 4), any change to Sumo.
