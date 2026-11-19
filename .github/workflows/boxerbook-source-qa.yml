@@ -28,8 +28,30 @@ jobs:
       - name: Check live Boxerbook schedule and results (read-only)
         if: github.event_name == 'workflow_dispatch' && inputs.live_check == true
         env:
-          BOXERBOOK_API_KEY: ${{ secrets.BOXERBOOK_API_KEY }}
+          BOXERBOOK_API_KEY: ${{ secrets.BOXERBOOK_API_KEY || secrets.BOXERBOOK_KEY || secrets.BOXERBOOK_KEU }}
         run: python scripts/boxerbook_source.py --live --report qa/boxerbook-source-review.json
+      - name: Describe the results layout (field names only, no values)
+        if: github.event_name == 'workflow_dispatch' && inputs.live_check == true
+        env:
+          BOXERBOOK_API_KEY: ${{ secrets.BOXERBOOK_API_KEY || secrets.BOXERBOOK_KEY || secrets.BOXERBOOK_KEU }}
+        run: |
+          python - <<'PY'
+          import os, sys
+          sys.path.insert(0, 'scripts')
+          from boxerbook_source import fetch_json
+          key = os.getenv('BOXERBOOK_API_KEY', '')
+          print('key found:', 'yes' if key else 'no')
+          def shape(v, pad=''):
+              if isinstance(v, dict):
+                  for k, x in v.items():
+                      print(pad + k + ': ' + type(x).__name__)
+                      if isinstance(x, (dict, list)) and len(pad) < 8:
+                          shape(x, pad + '  ')
+              elif isinstance(v, list) and v:
+                  print(pad + '[0] of ' + str(len(v)))
+                  shape(v[0], pad + '  ')
+          shape(fetch_json('/results', {'days': 2}, key=key))
+          PY
       - name: Upload one-day QA report for review
         if: github.event_name == 'workflow_dispatch' && inputs.live_check == true
         uses: actions/upload-artifact@v4
