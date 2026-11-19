@@ -1,0 +1,61 @@
+name: Refresh Japanese and Spanish news
+
+# Collects headlines from the owner-approved Japanese and Spanish publishers
+# (data/news-language-sources.json) and translates the headline only with DeepL.
+# The translation key is the repository Actions secret DEEPL_API_KEY (also read from DEEP_API_KEY).
+# The script never prints the key, stops at 90% of the provider's allowance, and caches every translation.
+on:
+  schedule:
+    - cron: '27 * * * *'
+  workflow_dispatch:
+    inputs:
+      check_key:
+        description: 'Only report the translation allowance; collect and write nothing'
+        type: boolean
+        default: false
+      dry_run:
+        description: 'Collect and translate but do not commit'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-live-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      DEEPL_API_KEY: ${{ secrets.DEEPL_API_KEY || secrets.DEEP_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest tests/test_language_news.py tests/test_news_dedupe.py
+      - name: Check the translation key only
+        if: ${{ github.event.inputs.check_key == 'true' }}
+        run: python scripts/refresh-language-news.py --check-key
+      - name: Collect, translate and publish
+        if: ${{ github.event.inputs.check_key != 'true' }}
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            python scripts/refresh-language-news.py --dry-run
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            python scripts/refresh-language-news.py
+            git add data/news-language-live.json data/news-language-cache.json
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m 'Refresh Japanese and Spanish headlines'
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
