@@ -23,7 +23,7 @@ Rules (same as scripts/import-finished-ufc-results.py):
   even when Upcoming only listed the headliners. A card still in progress waits.
 - Existing results are never changed.
 """
-import argparse, datetime as dt, json, os, re, sys, unicodedata, urllib.parse, urllib.request
+import argparse, datetime as dt, difflib, json, os, re, sys, unicodedata, urllib.parse, urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -78,9 +78,10 @@ def surname(name):
 
 
 def same_person(x, y):
-    """Exact match, or the longest part of one name appears in the other (Sergei/Sergey Bilostenniy)."""
+    """Exact match, a one-letter-ish spelling difference (Maldozhanova/Moldazhanova),
+    or the longest part of one name appears in the other (Sergei/Sergey Bilostenniy)."""
     kx, ky = name_key(x), name_key(y)
-    return kx == ky or (len(surname(x)) >= 4 and surname(x) in ky.split()) or (len(surname(y)) >= 4 and surname(y) in kx.split())
+    return kx == ky or difflib.SequenceMatcher(None, kx, ky).ratio() >= 0.9 or (len(surname(x)) >= 4 and surname(x) in ky.split()) or (len(surname(y)) >= 4 and surname(y) in kx.split())
 
 
 def same_bout(p, q):
@@ -330,6 +331,21 @@ def boxerbook_fetch(fetch):
                                              {'Authorization': 'Bearer ' + key, 'Accept': 'application/json'})))
 
 
+def gather_boxing(card, event, events):
+    """Boxerbook sometimes files one night's fights under several events (or none).
+    Add same-day fights from elsewhere when they match a bout BEFN announced for this card."""
+    announced = [b['fighters'] for b in card.get('bouts', []) if len(b.get('fighters', [])) == 2]
+    have = [b['fighters'] for b in event['bouts']]
+    extra = []
+    for other in events:
+        if other is event or other['date'] != event['date']:
+            continue
+        for b in other['bouts']:
+            if any(same_bout(p, b['fighters']) for p in announced) and not any(same_bout(h, b['fighters']) for h in have + [x['fighters'] for x in extra]):
+                extra.append(b)
+    return dict(event, bouts=event['bouts'] + extra)
+
+
 def order_boxing(card, event):
     """BEFN's announced bouts first, in BEFN's order (headliner first), then the rest of the card."""
     announced = [b['fighters'] for b in card.get('bouts', []) if len(b.get('fighters', [])) == 2]
@@ -446,7 +462,7 @@ def run(results, upcoming, fetch, today):
             continue
         event = match_event(card, cache[cache_key])
         if event and kind == 'boxerbook':
-            event = order_boxing(card, event)
+            event = order_boxing(card, gather_boxing(card, event, cache[cache_key]))
         if not event:
             report.append(f"waiting: {card['title']} (not at source yet)")
             continue

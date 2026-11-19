@@ -143,7 +143,8 @@ BUATSI = {'id': 'buatsi-hutchinson-2026-11-07', 'sport': 'boxing', 'promotion': 
           'title': 'Buatsi vs Hutchinson II', 'date': '2026-11-07', 'location': 'London', 'bouts': [
               {'fighters': ['Joshua Buatsi', 'Willy Hutchinson'], 'section': 'main', 'division': 'Light Heavyweight',
                'records': ['21-1 (13 KOs)', '20-2 (16 KOs)'], 'recordSources': ['q1', 'q2']},
-              {'fighters': ['Jack Rafferty', 'Hovhannes Martirosyan'], 'section': 'main'}]}
+              {'fighters': ['Jack Rafferty', 'Hovhannes Martirosyan'], 'section': 'main'},
+              {'fighters': ['Tumi Philips', 'Angelo Dragone']}]}  # filed under no event at Boxerbook; one 'l' on BEFN
 
 
 class Boxing(unittest.TestCase):
@@ -159,14 +160,15 @@ class Boxing(unittest.TestCase):
 
     def test_imports_only_this_card_headliner_first_in_befn_corners(self):
         results, report = self.run_card()
-        self.assertEqual(report[:1], ['imported: Buatsi vs Hutchinson II (4 bouts from Data from Boxerbook (https://boxerbook.com))'])
+        self.assertEqual(report[:1], ['imported: Buatsi vs Hutchinson II (5 bouts from Data from Boxerbook (https://boxerbook.com))'])
         rows = results['results']
         self.assertNotIn('Cheavon Clarke', json.dumps(rows))  # a different event on the same night
         main = rows[0]
         self.assertEqual([f['name'] for f in main['fighters']], ['Joshua Buatsi', 'Willy Hutchinson'])
         self.assertEqual((main['winner'], main['method'], main['round']), (1, 'unanimous decision', 12))
         self.assertEqual(main['source'], 'https://boxerbook.com/bouts/192140/x')
-        self.assertEqual([r['section'] for r in rows], ['Main card', 'Main card', 'Undercard', 'Undercard'])
+        self.assertEqual([r['section'] for r in rows], ['Main card', 'Main card', 'Undercard', 'Undercard', 'Undercard'])
+        self.assertEqual([f['name'] for f in rows[2]['fighters']], ['Tumi Philips', 'Angelo Dragone'])  # BEFN spelling, third as announced
         self.assertEqual(results['events'][0]['sourceVerified'], 'Data from Boxerbook (https://boxerbook.com)')
 
     def test_records_ignore_ko_counts_and_fall_back_to_boxerbook(self):
