@@ -11,6 +11,7 @@ const context={
   Date,URL,AbortSignal,console,
   fetch:async()=>({ok:true,json:async()=>data})
 };
+vm.runInNewContext(fs.readFileSync('assets/local-time.js','utf8'),context);
 vm.runInNewContext(script,context);
 (async()=>{
   await context.window.UpcomingCards.load();
@@ -19,8 +20,18 @@ vm.runInNewContext(script,context);
   const all=[...data.events];
   assert(all.length>=15,'Expected broad coverage of confirmed upcoming cards');
   assert(all.every(e=>e.bouts.length>0&&e.bouts.every(b=>b.source&&b.division)));
-  for(const e of all.filter(e=>e.date>='2026-11-08')){
-    assert((e.sport==='boxing'?boxing:mma).includes(e.title),'Missing '+e.title);
+  const todayKey=new Date().toISOString().slice(0,10);
+  for(const e of all.filter(e=>e.date>todayKey)){
+    let page=boxing;
+    if(e.sport!=='boxing'){
+      const name=String(e.promotion||'').toLowerCase();
+      const promo=/\bone\b|one championship/.test(name)?'one':/\bpfl\b|professional fighters league/.test(name)?'pfl':/\bufc\b|ultimate fighting championship/.test(name)?'ufc':null;
+      if(!promo)continue; // the Fights page only has UFC, ONE and PFL tabs for MMA
+      context.window.BEFNFightsUI={promotion:promo};
+      page=context.window.UpcomingCards.render('mma');
+      context.window.BEFNFightsUI=undefined;
+    }
+    assert(page.includes(e.title.replace(/&/g,'&amp;')),'Missing '+e.title);
   }
   assert(boxing.includes('David Benavidez vs Michał Cieślak'));
   assert(boxing.includes('5 announced fights'),'Complete December 5 PBC main card expected');
