@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "preview": true,
   "source": "https://www.sumo-api.com/api",
-  "collectedAt": "2026-11-18T20:15:14.447Z",
+  "collectedAt": "2026-11-19T06:22:34.764Z",
   "notice": "Developer preview; third-party source; cross-check results against the Japan Sumo Association before production.",
   "bashoId": "202611",
   "trackedDivisions": [
@@ -388,16 +388,16 @@
           },
           "totalAbsences": 102,
           "totalByDivision": {
-            "Juryo": 206,
+            "Juryo": 207,
             "Makushita": 49,
             "Makuuchi": 423,
             "Sandanme": 14
           },
           "totalLosses": 262,
-          "totalMatches": 692,
-          "totalWins": 430,
+          "totalMatches": 693,
+          "totalWins": 431,
           "winsByDivision": {
-            "Juryo": 123,
+            "Juryo": 124,
             "Makushita": 36,
             "Makuuchi": 259,
             "Sandanme": 12
@@ -418,6 +418,22 @@
           "skip": 0,
           "total": 18,
           "records": [
+            {
+              "bashoId": "202611",
+              "division": "Juryo",
+              "day": 12,
+              "matchNo": 6,
+              "eastId": 9103,
+              "eastShikona": "Asahifuji",
+              "eastRank": "Juryo 12 East",
+              "westId": 12,
+              "westShikona": "Wakatakakage",
+              "westRank": "Juryo 5 West",
+              "kimarite": "yorikiri",
+              "winnerId": 12,
+              "winnerEn": "Wakatakakage",
+              "winnerJp": ""
+            },
             {
               "bashoId": "202611",
               "division": "Juryo",
@@ -689,22 +705,6 @@
               "winnerId": 7,
               "winnerEn": "Kirishima",
               "winnerJp": "霧島　鐵力"
-            },
-            {
-              "bashoId": "202605",
-              "division": "Makuuchi",
-              "day": 10,
-              "matchNo": 16,
-              "eastId": 74,
-              "eastShikona": "Atamifuji",
-              "eastRank": "Sekiwake 1 East",
-              "westId": 12,
-              "westShikona": "Wakatakakage",
-              "westRank": "Komusubi 1 East",
-              "kimarite": "yorikiri",
-              "winnerId": 12,
-              "winnerEn": "Wakatakakage",
-              "winnerJp": ""
             }
           ]
         }
@@ -6792,11 +6792,11 @@
                 "kimarite": "tsukiotoshi"
               },
               {
-                "result": "",
+                "result": "loss",
                 "opponentShikonaEn": "Wakanosho",
                 "opponentShikonaJp": "若ノ勝",
                 "opponentID": 195,
-                "kimarite": ""
+                "kimarite": "tsukidashi"
               },
               {
                 "result": "",
@@ -6821,7 +6821,7 @@
               }
             ],
             "wins": 1,
-            "losses": 10,
+            "losses": 11,
             "absences": 0
           },
           {
@@ -7736,11 +7736,11 @@
                 "kimarite": "yorikiri"
               },
               {
-                "result": "",
+                "result": "loss",
                 "opponentShikonaEn": "Wakatakakage",
                 "opponentShikonaJp": "若隆景",
                 "opponentID": 12,
-                "kimarite": ""
+                "kimarite": "yorikiri"
               },
               {
                 "result": "",
@@ -7765,7 +7765,7 @@
               }
             ],
             "wins": 10,
-            "losses": 1,
+            "losses": 2,
             "absences": 0
           },
           {
@@ -8446,11 +8446,11 @@
                 "kimarite": "oshidashi"
               },
               {
-                "result": "",
+                "result": "loss",
                 "opponentShikonaEn": "Tohakuryu",
                 "opponentShikonaJp": "東白龍",
                 "opponentID": 54,
-                "kimarite": ""
+                "kimarite": "hatakikomi"
               },
               {
                 "result": "",
@@ -8475,7 +8475,7 @@
               }
             ],
             "wins": 4,
-            "losses": 7,
+            "losses": 8,
             "absences": 0
           },
           {
@@ -8564,11 +8564,11 @@
                 "kimarite": "oshidashi"
               },
               {
-                "result": "",
+                "result": "win",
                 "opponentShikonaEn": "Asahifuji",
                 "opponentShikonaJp": "旭富士",
                 "opponentID": 9103,
-                "kimarite": ""
+                "kimarite": "yorikiri"
               },
               {
                 "result": "",
@@ -8592,7 +8592,7 @@
                 "kimarite": ""
               }
             ],
-            "wins": 10,
+            "wins": 11,
             "losses": 1,
             "absences": 0
           },
@@ -8918,11 +8918,11 @@
                 "kimarite": "oshidashi"
               },
               {
-                "result": "",
+                "result": "win",
                 "opponentShikonaEn": "Kayo",
                 "opponentShikonaJp": "嘉陽",
                 "opponentID": 142,
-                "kimarite": ""
+                "kimarite": "hatakikomi"
               },
               {
                 "result": "",
@@ -8946,7 +8946,7 @@
                 "kimarite": ""
               }
             ],
-            "wins": 4,
+            "wins": 5,
             "losses": 7,
             "absences": 0
           },
@@ -9154,11 +9154,11 @@
                 "kimarite": "tsukiotoshi"
               },
               {
-                "result": "",
+                "result": "win",
                 "opponentShikonaEn": "Kazuma",
                 "opponentShikonaJp": "一意",
                 "opponentID": 8865,
-                "kimarite": ""
+                "kimarite": "tsukidashi"
               },
               {
                 "result": "",
@@ -9182,7 +9182,7 @@
                 "kimarite": ""
               }
             ],
-            "wins": 8,
+            "wins": 9,
             "losses": 3,
             "absences": 0
           },
@@ -47849,9 +47849,9 @@
             "westId": 12,
             "westShikona": "Wakatakakage",
             "westRank": "Juryo 5 West",
-            "kimarite": "",
-            "winnerId": 0,
-            "winnerEn": "",
+            "kimarite": "yorikiri",
+            "winnerId": 12,
+            "winnerEn": "Wakatakakage",
             "winnerJp": ""
           },
           {
@@ -47866,9 +47866,9 @@
             "westId": 195,
             "westShikona": "Wakanosho",
             "westRank": "Juryo 10 West",
-            "kimarite": "",
-            "winnerId": 0,
-            "winnerEn": "",
+            "kimarite": "tsukidashi",
+            "winnerId": 195,
+            "winnerEn": "Wakanosho",
             "winnerJp": ""
           },
           {
@@ -47883,10 +47883,10 @@
             "westId": 142,
             "westShikona": "Kayo",
             "westRank": "Juryo 4 West",
-            "kimarite": "",
-            "winnerId": 0,
-            "winnerEn": "",
-            "winnerJp": ""
+            "kimarite": "hatakikomi",
+            "winnerId": 54,
+            "winnerEn": "Tohakuryu",
+            "winnerJp": "東白龍　雅士"
           },
           {
             "id": "202611-12-9-29-101",
@@ -48497,7 +48497,7 @@
       }
     }
   },
-  "dailyCollectedAt": "2026-11-19T06:10:41.544Z",
+  "dailyCollectedAt": "2026-11-19T06:22:37.348Z",
   "dailyJstDay": 12,
   "dailyScheduleCount": 63,
   "dailySource": "https://www.sumo-api.com/api",
