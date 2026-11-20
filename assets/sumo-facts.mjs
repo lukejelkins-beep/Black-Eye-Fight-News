@@ -1,6 +1,6 @@
-import {currentFactFeed} from './sumo-facts-data.mjs';
+import {currentFactFeed,HIGH_WIN_PCT_THRESHOLD} from './sumo-facts-data.mjs';
 const ROOT=document.querySelector('#sumo-main');
-const CATS=[['all','All stories'],['fire','On fire 🔥'],['title','Title race'],['watch','Record watch'],['family','Family ties'],['records','Record holders']];
+const CATS=[['all','All stories'],['fire','On fire 🔥'],['percent','Win % Leaders'],['title','Title race'],['watch','Record watch'],['family','Family ties'],['records','Record holders']];
 const S={roster:null,photos:{},feed:null,filter:'all',query:''};
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const profile=w=>'sumo.html#profile/'+encodeURIComponent(w.sourceId);
@@ -62,7 +62,7 @@ function dateLabel(iso){
 }
 function render(){
  const f=S.feed,unbeaten=f.fresh?f.rows.filter(w=>w.perfect&&w.bouts>=4).length:'—';
- const doubleWins=f.fresh?f.rows.filter(w=>w.division==='Makuuchi'&&w.wins>=10).length:'—';
+ const highPct=f.fresh?f.rows.filter(w=>w.bouts>=(w.division==='Makushita'?3:5)&&w.wins*100>=HIGH_WIN_PCT_THRESHOLD*w.bouts).length:'—';
  ROOT.innerHTML='<div class="sumo-facts"><header class="facts-top"><span class="facts-kicker">BEFN SUMO · THE DOHYO DIARIES</span>'+
  '<h1>Sumo <em>Fun Facts</em></h1>'+
  '<p>Family dynasties. Hot streaks. Unbeaten records. Record holders and incredible tournament milestones. Every story features a currently tracked rikishi.</p></header>'+
@@ -71,13 +71,13 @@ function render(){
  '<section class="facts-statbar" aria-label="Tracked wrestler statistics">'+
  '<div><strong>'+f.trackedCount+'</strong><small>Tracked rikishi</small></div>'+
  '<div><strong>'+unbeaten+'</strong><small>Unbeaten (4+ bouts)</small></div>'+
- '<div><strong>'+doubleWins+'</strong><small>Makuuchi 10+ wins</small></div>'+
+ '<div><strong>'+highPct+'</strong><small>80%+ basho win rate</small></div>'+ 
  '<div><strong>'+f.editorialCount+'</strong><small>Verified stories</small></div></section>'+
  '<div class="facts-controls"><div class="facts-filters" role="group" aria-label="Choose a story category">'+
  CATS.map(([id,label])=>'<button type="button" data-fact-filter="'+id+'" aria-pressed="'+(id===S.filter)+'">'+label+'</button>').join('')+
  '</div><label class="facts-find"><input id="facts-search" type="search" aria-label="Search facts" placeholder="Search wrestlers or stories…" value="'+esc(S.query)+'" autocomplete="off"></label></div>'+
  '<section id="facts-results" aria-live="polite"></section>'+
- '<aside class="facts-about"><strong>Always date-checked:</strong> Tournament stories recalculate from each successful Sumo preview banzuke refresh. If data is older than 48 hours, all live-form stories are withheld. Family facts are linked to external sources and display only while featured wrestlers remain in the tracked roster. Historical record-holder stories need a fresh editorial review every 90 days. These are completed-bout figures for Makuuchi, Jūryō and Makushita; not live play-by-play or all-division records.'+
+ '<aside class="facts-about"><strong>Always date-checked:</strong> Tournament stories recalculate from each successful Sumo preview banzuke refresh. If data is older than 48 hours, all live-form stories are withheld. Family facts are linked to external sources and display only while featured wrestlers remain in the tracked roster. Historical record-holder stories need a fresh editorial review every 90 days. Win percentages are wins divided by completed decisions (W+L), requiring 5 bouts in Makuuchi/Jūryō or 3 in Makushita. These are completed-bout figures for the three tracked divisions, not live play-by-play or all-division records.'+
  '<div class="facts-linkrow"><a href="sumo.html#basho">Latest results</a><a href="sumo-stables.html">Explore stables</a>'+
  '<a href="https://www.sumo.or.jp/EnHonbashoMain/leaders/" target="_blank" rel="noopener noreferrer">Official JSA leaders ↗</a></div></aside></div>';
  ROOT.querySelectorAll('[data-fact-filter]').forEach(b=>b.addEventListener('click',()=>{S.filter=b.dataset.factFilter;refreshCards();}));
