@@ -57,7 +57,7 @@ const sortForm=(a,b)=>b.wins-a.wins||a.losses-b.losses||b.streak-a.streak||a.ran
 export function currentFactFeed(roster,details,editorial,{now=new Date()}={}){
  const all=currentFactRows(roster,details);
  const timestamp=assessFactFreshness(details,now);
- const byId=new Map(all.map(w=>[w.id,w]));
+ const byId=new Map((Array.isArray(roster?.rikishi)?roster.rikishi:[]).map(w=>[serial(w.sourceId),w]));
  const feed=[],dynamic=[];
  const dataAvailable=FACT_DIVISIONS.every(x=>details?.banzuke?.[x]?.status==='available');
  if(dataAvailable&&timestamp.fresh){
