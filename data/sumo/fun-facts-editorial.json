@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "reviewedAt": "2026-11-20",
-  "editorialPolicy": "Biographical relationships and historical records are manually verified; dynamic results come from BEFN's current cached Sumo API banzuke. Editorial facts are shown only when named rikishi remain in the current tracked roster. Review record-holder claims regularly.",
+  "editorialPolicy": "Biographical relationships and historical records are manually verified; dynamic results come from BEFN's current cached Sumo API banzuke. Editorial facts are shown only when named rikishi remain in the current tracked roster. Review record-holder claims regularly. Stablemate playoff stories require independent bout-specific evidence and current roster/stable validation; historical form percentage requires a complete-bout ledger for every selected basho.",
   "items": [
     {
       "id": "onami-brothers",
@@ -68,6 +68,26 @@
       "tag": "RECORD HOLDER",
       "sourceLabel": "Guinness World Records",
       "sourceUrl": "https://www.guinnessworldrecords.com/world-records/75255-consecutive-all-division-bouts-sumo",
+      "verifiedAt": "2026-11-20"
+    },
+    {
+      "id": "isegahama-202607-playoff",
+      "kind": "stablemates",
+      "title": "When stablemates had to fight",
+      "short": "Toshinofuji defeated Isegahama stablemate Arashifuji in the four-wrestler Jūryō championship playoff at the July 2026 Nagoya basho. Both finished 11–4 in regulation; Shonannoumi ultimately won the title. Stablemates normally never meet in regular basho bouts, but yūshō playoffs are an exception.",
+      "memberIds": [
+        8866,
+        8858
+      ],
+      "stable": "Isegahama",
+      "bashoId": "202607",
+      "date": "2026-07-26",
+      "winnerId": 8866,
+      "loserId": 8858,
+      "eventType": "championship-playoff",
+      "tag": "STABLEMATE SHOWDOWN",
+      "sourceLabel": "Open The Forbidden Gate · 26 July 2026 Jūryō playoff",
+      "sourceUrl": "https://opentheforbiddengate.net/sumo-july-2026-grand-sumo-tournament-day-15-live-results-7-26-2026-top-2-tiers/",
       "verifiedAt": "2026-11-20"
     }
   ]
