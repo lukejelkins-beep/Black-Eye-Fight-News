@@ -1,0 +1,112 @@
+name: Sumo preview evening watch (every basho day)
+
+# GitHub runs the "every 10 minutes" refresh schedule only about once an hour, so
+# results and the next day's matchups could appear up to an hour late. This job
+# starts once in the afternoon and keeps going itself: it refreshes every 5 minutes
+# until the Sumo API has published the next day's torikumi for all three tracked
+# divisions, then stops. It touches ONLY the Sumo preview branch, using that
+# branch's own scripts (scripts/sumo-run-update.mjs refresh), the same as the
+# regular refresh. The repository is public, so runner minutes cost nothing.
+on:
+  schedule:
+    # 15:00 JST. Bouts finish about 18:00 JST and the API posts the next day soon
+    # after; even if GitHub starts this an hour late, it is running well before then.
+    - cron: '0 6 8-28 1,3,5,7,9,11 *'
+  workflow_dispatch:
+    inputs:
+      max_minutes:
+        description: 'Stop after this many minutes even if not finished'
+        default: '200'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sumo-preview-single-writer
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 215
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/sumo-section-test-20261114
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Refresh every 5 minutes until tomorrow's matchups are in
+        env:
+          HOOK: ${{ secrets.SUMO_PREVIEW_DEPLOY_HOOK_URL }}
+          MAX_MINUTES: ${{ github.event.inputs.max_minutes || '200' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          BR=feat/sumo-section-test-20261114
+          git config user.name "BEFN Sumo daily preview"
+          git config user.email "sumo-preview@users.noreply.github.com"
+          read -r BASHO PHASE < <(node scripts/sumo-basho-calendar.mjs)
+          HAVE=$(node -p "require('./data/sumo/preview-details.json').bashoId")
+          echo "basho=$BASHO phase=$PHASE have=$HAVE"
+          if [ "$PHASE" != "live" ] || [ "$BASHO" != "$HAVE" ]; then
+            echo "No live basho in the preview data; the regular schedule handles rebuilds"; exit 0
+          fi
+          publish() {
+            git add data/sumo/preview-details.json data/sumo/rikishi-index.json \
+              data/sumo/career-history.json data/sumo/research-h2h-summary.json \
+              data/sumo/research-h2h-opponents.json data/sumo/research-h2h-history.json \
+              data/sumo/division-stats.json data/sumo/api-trusted-status.json
+            if git diff --cached --quiet; then echo "No data change"; return 0; fi
+            # Every refresh rewrites timestamps; publish (and redeploy) only real data changes.
+            if [ "$(git diff --cached --name-only)" = "data/sumo/preview-details.json" ] && node -e "
+                const fs=require('fs'),cp=require('child_process');
+                const strip=d=>{d=JSON.parse(d);delete d.dailyCollectedAt;if(d.funFactsHistory)delete d.funFactsHistory.generatedAt;return JSON.stringify(d);};
+                const before=cp.execSync('git show HEAD:data/sumo/preview-details.json',{maxBuffer:256*1024*1024}).toString();
+                process.exit(strip(before)===strip(fs.readFileSync('data/sumo/preview-details.json','utf8'))?0:1);"; then
+              echo "Only timestamps changed; not publishing"; git reset -q --hard HEAD; return 0
+            fi
+            git commit -q -m "Refresh verified-source Sumo preview data (evening watch)"
+            for attempt in 1 2 3; do
+              git fetch -q origin "$BR"
+              if ! git rebase -q "origin/$BR"; then
+                git rebase --abort || true
+                echo "Concurrent change conflict; skipping this round" >&2
+                git reset -q --hard "origin/$BR"; return 0
+              fi
+              if git push -q origin "HEAD:$BR"; then
+                if [ -n "${HOOK:-}" ]; then
+                  curl -fsS --max-time 30 -X POST "$HOOK" > /dev/null && echo "Pushed; Render preview deploy requested"
+                else
+                  echo "SUMO_PREVIEW_DEPLOY_HOOK_URL is not set; preview not redeployed" >&2
+                fi
+                return 0
+              fi
+              sleep 2
+            done
+            echo "Push failed; will retry next round" >&2
+          }
+          # Done when the next day's torikumi is published for every tracked division,
+          # or on the final day, when there is no next day to wait for.
+          done_yet() {
+            node -e "
+              const d=require('./data/sumo/preview-details.json');
+              const today=Number(d.todayDay||d.dailyJstDay);
+              if(!today||today>=15){console.log('final day or outside basho');process.exit(0);}
+              const next=Number(d.announcedDay)===today+1;
+              const all=['Makuuchi','Juryo','Makushita'].every(k=>d.torikumi?.[k]?.status==='available');
+              console.log('today',today,'announced',d.announcedDay,'all divisions',all);
+              process.exit(next&&all?0:1);"
+          }
+          START=$(date +%s)
+          while :; do
+            git fetch -q origin "$BR" && git reset -q --hard "origin/$BR"
+            echo "--- $(TZ=Asia/Tokyo date '+%H:%M JST')"
+            if node scripts/sumo-run-update.mjs refresh; then publish; else echo "Refresh failed this round" >&2; fi
+            if done_yet; then echo "Next day's matchups are in; stopping"; break; fi
+            if [ $(( ($(date +%s) - START) / 60 )) -ge "$MAX_MINUTES" ]; then
+              echo "Reached $MAX_MINUTES minutes without the next day's matchups; the regular schedule carries on"; break
+            fi
+            sleep 300
+          done
