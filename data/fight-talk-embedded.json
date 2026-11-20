@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-20T19:45:03.868Z",
-  "checkedAt": "2026-11-20T19:45:03.868Z",
+  "attemptedAt": "2026-11-20T20:33:54.787Z",
+  "checkedAt": "2026-11-20T20:33:54.787Z",
   "windowDays": 28,
   "articlesChecked": 31,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 45,
   "publisherSourcesConfigured": 33,
-  "linksFound": 17,
-  "newEmbedsVerified": 3,
+  "linksFound": 11,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -219,6 +219,25 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/p/Df879okFcz5/"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "grappling",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-20T09:47:00+00:00",
+      "discoveredAt": "2026-11-20T20:33:54.787Z",
+      "sourcePublisher": "FloGrappling",
+      "evidenceUrl": "https://www.flograppling.com/articles/16428531-garry-tonon-returns-for-lightweight-title-rematch-vs-sam-mcnally",
+      "summary": "Original social post linked in FloGrappling coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/Df-BiwHNX-x/"
     },
     {
       "type": "post",
@@ -2346,27 +2365,6 @@
       "embedVerified": true,
       "linkPriority": 55,
       "url": "https://x.com/ufc/status/2121368212965396923"
-    },
-    {
-      "type": "post",
-      "platform": "X",
-      "sport": "mma",
-      "name": "UFC",
-      "role": "promoter",
-      "handle": "@ufc",
-      "nativeEmbed": true,
-      "originalDateUnverified": false,
-      "postedAt": "2026-11-13T22:05:40.447Z",
-      "sourceLinkedAt": "2026-11-13T22:22:33+00:00",
-      "discoveredAt": "2026-11-13T23:08:16.352Z",
-      "sourcePublisher": "MMA Fighting",
-      "evidenceUrl": "https://www.mmafighting.com/ufc/520992/video-carlos-prates-and-michael-morales-have-intense-first-faceoff-at-ufc-335-and-ufc-336-press-conference",
-      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 55,
-      "url": "https://x.com/ufc/status/2121363895784976857"
     }
   ],
   "seenOriginals": [
@@ -3281,6 +3279,10 @@
     {
       "url": "https://www.instagram.com/p/Df879okFcz5/",
       "firstSeen": "2026-11-20T19:45:03.868Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/Df-BiwHNX-x/",
+      "firstSeen": "2026-11-20T20:33:54.787Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
