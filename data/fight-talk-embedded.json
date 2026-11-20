@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-20T21:27:12.098Z",
-  "checkedAt": "2026-11-20T21:27:12.098Z",
+  "attemptedAt": "2026-11-20T22:25:02.753Z",
+  "checkedAt": "2026-11-20T22:25:02.753Z",
   "windowDays": 28,
   "articlesChecked": 30,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 45,
-  "publisherSourcesConfigured": 33,
-  "linksFound": 12,
-  "newEmbedsVerified": 2,
+  "publisherSourcesConfigured": 32,
+  "linksFound": 9,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -181,6 +181,25 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://x.com/ringmagazine/status/2123819092305961384"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-20T17:28:47+00:00",
+      "discoveredAt": "2026-11-20T22:25:02.753Z",
+      "sourcePublisher": "UFC",
+      "evidenceUrl": "https://www.ufc.com/news/jake-matthews-25-not-out-ufc-qatar",
+      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/Df5eYREkW7v/"
     },
     {
       "type": "post",
@@ -2340,27 +2359,6 @@
       "embedVerified": false,
       "linkPriority": 69,
       "url": "https://x.com/topuriailia/status/2120563432793739640"
-    },
-    {
-      "type": "post",
-      "platform": "X",
-      "sport": "mma",
-      "name": "UFC",
-      "role": "promoter",
-      "handle": "@ufc",
-      "nativeEmbed": true,
-      "originalDateUnverified": false,
-      "postedAt": "2026-11-13T22:47:08.173Z",
-      "sourceLinkedAt": "2026-11-13T23:06:51+00:00",
-      "discoveredAt": "2026-11-13T23:52:19.027Z",
-      "sourcePublisher": "MMA Fighting",
-      "evidenceUrl": "https://www.mmafighting.com/ufc/521011/josh-hokit-issues-warning-to-ciryl-gane-before-ufc-334-main-event-im-going-to-beat-the-sht-out-of-you",
-      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 55,
-      "url": "https://x.com/ufc/status/2121374330064150553"
     }
   ],
   "seenOriginals": [
@@ -3287,6 +3285,10 @@
     {
       "url": "https://www.threads.com/t/Df990xFlWDU/",
       "firstSeen": "2026-11-20T21:27:12.098Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/Df5eYREkW7v/",
+      "firstSeen": "2026-11-20T22:25:02.753Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
