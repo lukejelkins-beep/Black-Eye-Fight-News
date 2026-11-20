@@ -165,3 +165,21 @@ test('stablemate playoff fact needs two currently stablemates and winner evidenc
  const curated=JSON.parse(readFileSync(new URL('../data/sumo/fun-facts-editorial.json',import.meta.url),'utf8'));
  assert.ok(curated.items.find(x=>x.id==='isegahama-202607-playoff'));
 });
+
+test('actual cached bout ledger can produce historical rolling summaries without provider calls',()=>{
+ const json=path=>JSON.parse(readFileSync(new URL('../'+path,import.meta.url),'utf8'));
+ const liveRoster=json('data/sumo/rikishi-index.json');
+ const liveDetails=json('data/sumo/preview-details.json');
+ const rankHistory=json('data/sumo/career-history.json');
+ const fightHistory=json('data/sumo/research-h2h-history.json');
+ const built=buildHistoricalFacts({roster:liveRoster,details:liveDetails,career:rankHistory,history:fightHistory,max:6});
+ assert.equal(built.bashoId,String(liveDetails.bashoId));
+ assert.ok(built.coverage.hasAtLeastOneCompleteHistoricalBasho>0,'Historical cache lacks even one complete previous basho');
+ const current=rollingWinPercentageRows(liveRoster,{...liveDetails,funFactsHistory:built},2);
+ assert.ok(current.length>0,'No current rikishi have a verified complete previous-basho record');
+ console.log('FACTS ROLLING REAL CACHE: '+JSON.stringify({
+   eligibleWithOnePastBasho:built.coverage.hasAtLeastOneCompleteHistoricalBasho,
+   twoBashoRanked:current.length,
+   threeBashoRanked:rollingWinPercentageRows(liveRoster,{...liveDetails,funFactsHistory:built},3).length
+ }));
+});
