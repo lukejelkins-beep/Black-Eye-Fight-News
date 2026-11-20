@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {currentFactRows,assessFactFreshness,currentFactFeed,highWinPercentageRows,HIGH_WIN_PCT_THRESHOLD} from '../assets/sumo-facts-data.mjs';
+import {currentFactRows,assessFactFreshness,currentFactFeed,highWinPercentageRows,HIGH_WIN_PCT_THRESHOLD,rollingWinPercentageRows,ROLLING_BASHO_MAX} from '../assets/sumo-facts-data.mjs';
+import {historicalBashos,divisionFromRank,buildHistoricalFacts} from '../scripts/sumo-facts-rollup.mjs';
 const roster={rikishi:[
  {sourceId:1,shikonaEn:'Wrestler A',currentRank:'Maegashira 1 East',heya:'Test'},
  {sourceId:2,shikonaEn:'Wrestler B',currentRank:'Makushita 1 East',heya:'Test'},
@@ -96,4 +97,89 @@ test('win-percentage cards obey the 48-hour source staleness gate',()=>{
  const app=readFileSync(new URL('../assets/sumo-facts.mjs',import.meta.url),'utf8');
  assert.match(app,/Win % Leaders/);
  assert.match(app,/80%\+ basho win rate/);
+});
+
+test('historical basho calendar moves in six-basho annual sequence',()=>{
+ assert.deepEqual(historicalBashos('202611',4),['202609','202607','202605','202603']);
+ assert.deepEqual(historicalBashos('202601',2),['202511','202509']);
+ assert.deepEqual(historicalBashos('202613',1),[]);
+ assert.equal(divisionFromRank('Makuuchi 3 West').expected,15);
+ assert.equal(divisionFromRank('Makushita 8 East').expected,7);
+ assert.equal(ROLLING_BASHO_MAX,30);
+});
+test('rolling rates include only fully recorded past basho and current completed decisions',()=>{
+ const ranks={bySourceId:{
+  1:{rank:[{basho:'202609',rank:'Makuuchi 7 East'},{basho:'202607',rank:'Makuuchi 6 East'}]},
+  2:{rank:[{basho:'202609',rank:'Makushita 22 West'}]},
+  3:{rank:[{basho:'202609',rank:'Juryo 4 East'}]}
+ }};
+ const make=(a,b,count,basho,wins)=>({
+  a,b,regular:Array.from({length:count},(_,i)=>[basho,i+1,i<wins?a:b,'yorikiri','Makuuchi',i+1,'regular'])});
+ const history={pairs:{
+  '1:100':{...make(1,100,15,'202609',12),regular:[
+    ...make(1,100,15,'202609',12).regular,...make(1,100,15,'202607',10).regular]},
+  '2:101':make(2,101,7,'202609',5),
+  '3:102':make(3,102,14,'202609',11)
+ }};
+ const built=buildHistoricalFacts({roster,details,career:ranks,history,max:3});
+ assert.deepEqual(built.historicalBashos,['202609','202607','202605']);
+ assert.deepEqual(built.bySourceId['1']['202609'],[12,3,15]);
+ assert.deepEqual(built.bySourceId['1']['202607'],[10,5,15]);
+ assert.deepEqual(built.bySourceId['2']['202609'],[5,2,7]);
+ assert.equal(built.bySourceId['3'],undefined,'14 recorded bouts must not be treated as 15');
+ const latest={...details,funFactsHistory:built};
+ const two=rollingWinPercentageRows(roster,latest,2);
+ assert.deepEqual(two.map(x=>[x.id,x.wins,x.losses,x.winPct]),[
+  ['1',21,4,84],['2',11,2,84.6]
+ ]);
+ const three=rollingWinPercentageRows(roster,latest,3);
+ assert.deepEqual(three.map(x=>[x.id,x.wins,x.losses]),[['1',31,9]]);
+ assert.deepEqual(rollingWinPercentageRows(roster,latest,4),[]);
+});
+test('basho rolling data fails closed for stale, invalid, or incomplete windows',()=>{
+ const invalid={...details,funFactsHistory:{schemaVersion:1,bashoId:'202609',historicalBashos:['202607'],bySourceId:{
+  '1':{'202607':[15,1,15]}}}};
+ assert.deepEqual(rollingWinPercentageRows(roster,invalid,2),[]);
+ const missing={...details,funFactsHistory:{...invalid.funFactsHistory,bashoId:'202611'}};
+ assert.deepEqual(rollingWinPercentageRows(roster,missing,2),[]);
+ assert.deepEqual(rollingWinPercentageRows(roster,details,0),[]);
+ assert.deepEqual(rollingWinPercentageRows(roster,details,31),[]);
+});
+test('stablemate playoff fact needs two currently stablemates and winner evidence',()=>{
+ const stableRoster={rikishi:[
+  {sourceId:1,shikonaEn:'A',heya:'Isegahama'},
+  {sourceId:2,shikonaEn:'B',heya:'Isegahama'}]};
+ const ok={id:'stablemates',kind:'stablemates',title:'Championship playoff',short:'A defeated B',
+  memberIds:[1,2],winnerId:1,loserId:2,stable:'Isegahama',bashoId:'202607',
+  eventType:'championship-playoff',sourceLabel:'published evidence',sourceUrl:'https://example.org/verified',
+  verifiedAt:'2026-11-20'};
+ const good=currentFactFeed(stableRoster,details,{items:[ok]},{now});
+ assert.equal(good.editorialCount,1);
+ assert.equal(good.cards.find(x=>x.key==='stablemates').category,'stablemates');
+ const altered=currentFactFeed({...stableRoster,rikishi:[
+  stableRoster.rikishi[0],{...stableRoster.rikishi[1],heya:'Arashio'}
+ ]},details,{items:[ok]},{now});
+ assert.equal(altered.editorialCount,0);
+ const noWinner=currentFactFeed(stableRoster,details,{items:[{...ok,winnerId:99}]},{now});
+ assert.equal(noWinner.editorialCount,0);
+ const curated=JSON.parse(readFileSync(new URL('../data/sumo/fun-facts-editorial.json',import.meta.url),'utf8'));
+ assert.ok(curated.items.find(x=>x.id==='isegahama-202607-playoff'));
+});
+
+test('actual cached bout ledger can produce historical rolling summaries without provider calls',()=>{
+ const json=path=>JSON.parse(readFileSync(new URL('../'+path,import.meta.url),'utf8'));
+ const liveRoster=json('data/sumo/rikishi-index.json');
+ const liveDetails=json('data/sumo/preview-details.json');
+ const rankHistory=json('data/sumo/career-history.json');
+ const fightHistory=json('data/sumo/research-h2h-history.json');
+ const built=buildHistoricalFacts({roster:liveRoster,details:liveDetails,career:rankHistory,history:fightHistory,max:6});
+ assert.equal(built.bashoId,String(liveDetails.bashoId));
+ assert.ok(built.coverage.hasAtLeastOneCompleteHistoricalBasho>0,'Historical cache lacks even one complete previous basho');
+ const current=rollingWinPercentageRows(liveRoster,{...liveDetails,funFactsHistory:built},2);
+ assert.ok(current.length>0,'No current rikishi have a verified complete previous-basho record');
+ console.log('FACTS ROLLING REAL CACHE: '+JSON.stringify({
+   eligibleWithOnePastBasho:built.coverage.hasAtLeastOneCompleteHistoricalBasho,
+   twoBashoRanked:current.length,
+   threeBashoRanked:rollingWinPercentageRows(liveRoster,{...liveDetails,funFactsHistory:built},3).length
+ }));
 });

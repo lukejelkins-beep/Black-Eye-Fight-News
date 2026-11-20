@@ -70,6 +70,51 @@ export function highWinPercentageRows(rows,{perDivision=3}={}){
   .sort((a,b)=>b.winPct-a.winPct||b.bouts-a.bouts||b.wins-a.wins||a.rankValue-b.rankValue)
   .slice(0,cap));
 }
+/** Rolling win percentages over N consecutive basho, including the current one.
+ * Historical rows are eligible only when the source ledger and dated banzuke
+ * corroborate a complete 15- or 7-bout tournament. A missing previous basho
+ * makes a wrestler ineligible for that window, never an assumed 0-0.
+ */
+export const ROLLING_BASHO_MAX=30;
+export function rollingWinPercentageRows(roster,details,period=1,{limitPerDivision=18}={}){
+ const n=Number(period);
+ if(!Number.isInteger(n)||n<1||n>ROLLING_BASHO_MAX)return [];
+ if(n>1&&(details?.funFactsHistory?.schemaVersion!==1||
+   String(details.funFactsHistory.bashoId)!==String(details.bashoId)||
+   !Array.isArray(details.funFactsHistory.historicalBashos)||
+   details.funFactsHistory.historicalBashos.length<n-1))return [];
+ const bashos=n===1?[]:details.funFactsHistory.historicalBashos.slice(0,n-1);
+ const historic=details?.funFactsHistory?.bySourceId||{};
+ const all=currentFactRows(roster,details);
+ const cap=Math.max(0,Math.min(50,Math.trunc(Number(limitPerDivision)||0)));
+ const qualified=[];
+ for(const w of all){
+  if(!Number.isInteger(w.wins)||!Number.isInteger(w.losses)||!Number.isInteger(w.bouts)||w.bouts!==w.wins+w.losses)continue;
+  let wins=w.wins,losses=w.losses,complete=true;
+  if(n>1){
+   const prior=historic[w.id]||{};
+   for(const basho of bashos){
+    const row=prior[basho];
+    if(!Array.isArray(row)||row.length!==3||![7,15].includes(row[2])||
+      !Number.isSafeInteger(row[0])||!Number.isSafeInteger(row[1])||row[0]<0||row[1]<0||
+      row[0]+row[1]!==row[2]){complete=false;break;}
+    wins+=row[0];losses+=row[1];
+   }
+  }
+  if(!complete)continue;
+  const minimum=n===1?(w.division==='Makushita'?3:5):5;
+  const bouts=wins+losses;
+  if(bouts<minimum)continue;
+  qualified.push({...w,wins,losses,bouts,
+   winPct:Math.round((wins/bouts)*1000)/10,period:n,periodStart:bashos.at(-1)||String(details?.bashoId||''),
+   periodEnd:String(details?.bashoId||''),includesCurrent:true,
+   historicBashos:n-1,completeBashos:n-1,
+   samplePolicy:n===1?'Current basho, qualifying completed bouts':'Complete historical basho + completed current-basho bouts'});
+ }
+ return FACT_DIVISIONS.flatMap(d=>qualified.filter(x=>x.division===d)
+  .sort((a,b)=>b.winPct-a.winPct||b.bouts-a.bouts||b.wins-a.wins||a.rankValue-b.rankValue)
+  .slice(0,cap));
+}
 export function currentFactFeed(roster,details,editorial,{now=new Date()}={}){
  const all=currentFactRows(roster,details);
  const timestamp=assessFactFreshness(details,now);
@@ -137,14 +182,22 @@ export function currentFactFeed(roster,details,editorial,{now=new Date()}={}){
  for(const item of availableEditorial){
   const ids=(item.memberIds||[]).map(serial);
   if(!ids.length||!ids.every(id=>byId.has(id)))continue;
+  // A stablemate playoff is a documented historical relationship, not a
+  // hypothetical match between two currently affiliated wrestlers.
+  if(item.kind==='stablemates'){
+   if(ids.length!==2||item.eventType!=='championship-playoff'||
+     !/^20\d{2}(01|03|05|07|09|11)$/.test(String(item.bashoId||''))||
+     !ids.includes(serial(item.winnerId))||!ids.includes(serial(item.loserId))||
+     !ids.every(id=>String(byId.get(id).heya||'')===String(item.stable||'')))continue;
+  }
   const legitimateSource=/^https:\/\//.test(item.sourceUrl||'');
   const verified=validDate(item.verifiedAt);
   if(!legitimateSource||!verified)continue;
   const age=(new Date(now).getTime()-Date.parse(item.verifiedAt+'T00:00:00Z'))/86400000;
   if(item.kind==='record'&&(age<0||age>90))continue;
-  feed.push({key:item.id,category:item.kind==='record'?'records':'family',
+  feed.push({key:item.id,category:item.kind==='record'?'records':item.kind==='stablemates'?'stablemates':'family',
     headline:item.title,description:item.short,memberIds:ids,tag:item.tag,kind:'editorial',
-    sourceLabel:item.sourceLabel,sourceUrl:item.sourceUrl,verifiedAt:item.verifiedAt,metric:null,priority:item.kind==='record'?72:60});
+    sourceLabel:item.sourceLabel,sourceUrl:item.sourceUrl,verifiedAt:item.verifiedAt,metric:null,priority:item.kind==='record'?72:item.kind==='stablemates'?78:60});
  }
  const selected=new Set();
  const selectedDynamic=[];
