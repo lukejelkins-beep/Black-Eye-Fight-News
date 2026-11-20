@@ -74,7 +74,7 @@ function rollingPanel(){
   options.map(v=>'<option value="'+v+'"'+(v===n?' selected':'')+'>'+v+'</option>').join('')+'</select>'+
   '<span>basho'+(n===1?'':' · current + '+(n-1)+' previous completed')+'</span>';
  const header='<section class="facts-rolling"><div class="facts-rolling-head">'+
-  '<div><span class="facts-kicker">ROLLING WIN % · VERIFIED COMPLETE HISTORY</span>'+
+  '<div><span class="facts-kicker">ROLLING WIN % · COMPLETE CACHED BOUT RECORDS</span>'+
   '<h2>Winning across '+n+' basho'+(n===1?'':'')+'</h2></div>'+
   '<div class="facts-rolling-select">'+select+'</div></div>'+
   '<p class="facts-rolling-note">Win % = wins ÷ (wins + losses). The range always includes the current '+
