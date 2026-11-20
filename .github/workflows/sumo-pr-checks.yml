@@ -23,12 +23,24 @@ jobs:
         shell: bash
         run: |
           set -uo pipefail
+          # Pre-existing UI-test failures (present before 2026-11-19, tracked
+          # separately). Any OTHER failing Sumo test now fails this step; a
+          # listed file that starts passing is reported so it can be removed.
+          known=" tests/test-sumo-editorial.mjs tests/test-sumo-profile-refinements.mjs tests/test-sumo-roster-ux.mjs tests/test-sumo-ux-refinement.mjs "
           fail=0
           for f in tests/test-sumo-*.mjs; do
-            if node --test "$f" > /tmp/out.txt 2>&1; then echo "PASS $f"; else echo "FAIL $f"; grep -E -A12 '^not ok|^ *not ok' /tmp/out.txt | grep -E 'not ok|error|expected|actual|message' | head -20; fail=1; fi
+            if node --test "$f" > /tmp/out.txt 2>&1; then
+              echo "PASS $f"
+              case "$known" in *" $f "*) echo "::notice::$f now passes; remove it from the known-failure list.";; esac
+            else
+              grep -E -A12 '^not ok|^ *not ok' /tmp/out.txt | grep -E 'not ok|error|expected|actual|message' | head -20
+              case "$known" in
+                *" $f "*) echo "KNOWN-FAIL $f (pre-existing)";;
+                *) echo "::error::FAIL $f"; fail=1;;
+              esac
+            fi
           done
-          # Gate only on the files the scheduled update itself runs.
-          node --test tests/test-sumo-daily.mjs tests/test-sumo-api-source.mjs
+          exit "$fail"
       - name: Dry run of the daily refresh (no commit)
         run: |
           node scripts/sumo-refresh-daily.mjs

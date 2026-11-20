@@ -24,11 +24,16 @@ export function historicalBashos(currentId, count=BASHO_HISTORY_MAX){
  }
  return result;
 }
+// The Sumo API names top-division ranks by title (Yokozuna 1 East,
+// Maegashira 12 West), never "Makuuchi N". Missing these silently dropped
+// every historical top-division basho from the rolling cache.
+const MAKUUCHI_TITLES=new Set(['makuuchi','yokozuna','ozeki','sekiwake','komusubi','maegashira']);
 export function divisionFromRank(rank){
- const match=String(rank||'').match(/^(Makuuchi|Juryo|Makushita|Sandanme|Jonidan|Jonokuchi)\b/i);
+ const match=String(rank||'').trim().match(/^(Makuuchi|Yokozuna|Ozeki|Sekiwake|Komusubi|Maegashira|Juryo|Makushita|Sandanme|Jonidan|Jonokuchi)\b/i);
  if(!match)return null;
- const division=match[1].toLowerCase();
- return {division:match[1],expected:division==='makuuchi'||division==='juryo'?15:7};
+ const word=match[1].toLowerCase();
+ const division=MAKUUCHI_TITLES.has(word)?'Makuuchi':word[0].toUpperCase()+word.slice(1);
+ return {division,expected:division==='Makuuchi'||division==='Juryo'?15:7};
 }
 const validId=id=>Number.isSafeInteger(Number(id))&&Number(id)>0;
 /** Full old-basho rows only: rejects incomplete, ambiguous or missing match histories. */
@@ -79,7 +84,7 @@ export function buildHistoricalFacts({roster,details,career,history,max=BASHO_HI
  for(const window of [1,2,3,4,5,6,7,8,10,12,15,20,24,30]){
   summary[window]=Object.values(bySourceId).filter(period=>target.slice(0,window-1).every(b=>period[b])).length;
  }
- return {schemaVersion:1,bashoId:String(details.bashoId),historicalBashos:target,
+ return {schemaVersion:1,rankParser:2,bashoId:String(details.bashoId),historicalBashos:target,
   bySourceId,coverage:{tracked:ids.size,hasAtLeastOneCompleteHistoricalBasho:qualified,
     qualifyingAcrossPreviousBashos:summary},source:'Sumo API complete cached regular-bout ledger plus dated rank history',
   note:'Only full recorded 15-bout top-two-division or 7-bout lower-division bashos count. Incomplete periods including absences are withheld. Yusho playoffs are excluded. Current basho comes separately from the fresh banzuke.'};

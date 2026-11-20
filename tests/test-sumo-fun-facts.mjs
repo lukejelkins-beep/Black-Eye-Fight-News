@@ -105,6 +105,12 @@ test('historical basho calendar moves in six-basho annual sequence',()=>{
  assert.deepEqual(historicalBashos('202613',1),[]);
  assert.equal(divisionFromRank('Makuuchi 3 West').expected,15);
  assert.equal(divisionFromRank('Makushita 8 East').expected,7);
+ // Real Sumo API top-division ranks use titles, not "Makuuchi".
+ for(const rank of ['Yokozuna 1 East','Ozeki 2 West','Sekiwake 1 East','Komusubi 1 West','Maegashira 17 West']){
+  assert.deepEqual(divisionFromRank(rank),{division:'Makuuchi',expected:15},rank);
+ }
+ assert.deepEqual(divisionFromRank('Juryo 14 East'),{division:'Juryo',expected:15});
+ assert.equal(divisionFromRank('Banzuke-gai'),null);
  assert.equal(ROLLING_BASHO_MAX,30);
 });
 test('rolling rates include only fully recorded past basho and current completed decisions',()=>{
