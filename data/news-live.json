@@ -1,13 +1,14 @@
 {
-  "attemptedAt": "2026-11-20T00:21:29.142375+00:00",
-  "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00",
+  "attemptedAt": "2026-11-20T01:39:02.781980+00:00",
+  "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00",
   "sources": [
     {
       "name": "World Boxing News",
       "sport": "boxing",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-19T23:22:36.607390+00:00",
-      "error": "www.worldboxingnews.net: mismatched tag: line 93, column 2"
+      "ok": true,
+      "items": 10,
+      "feedUrl": "https://www.worldboxingnews.net/feed/",
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "MMA Fighting",
@@ -15,7 +16,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "MMA Junkie",
@@ -23,7 +24,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "Sherdog",
@@ -31,7 +32,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.sherdog.com/rss/news.xml",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "UFC",
@@ -39,7 +40,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "ONE MMA",
@@ -47,7 +48,7 @@
       "ok": true,
       "items": 7,
       "feedUrl": "https://www.onefc.com/feed/",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "ONE Submission Grappling",
@@ -55,37 +56,37 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/feed/",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "Cage Warriors",
       "sport": "mma",
-      "ok": true,
-      "items": 5,
-      "feedUrl": "https://www.bing.com/news/search?q=site%3Acagewarriors.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00",
+      "error": "cagewarriors.com: HTTP Error 403: Forbidden | www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "RIZIN",
       "sport": "mma",
       "ok": true,
-      "items": 3,
+      "items": 4,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "KSW",
       "sport": "mma",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-19T23:22:36.607390+00:00",
-      "error": "www.bing.com: No recent, source-verified articles"
+      "ok": true,
+      "items": 1,
+      "feedUrl": "https://www.bing.com/news/search?q=site%3Akswmma.com%2Fen&format=rss&setmkt=en-US",
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "ADCC",
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "adcombat.com: mismatched tag: line 93, column 2 | www.bing.com: No recent, source-verified articles"
+      "error": "adcombat.com: No recent, source-verified articles | www.bing.com: No recent, source-verified articles"
     },
     {
       "name": "NCAA Division I Wrestling",
@@ -93,7 +94,7 @@
       "ok": true,
       "items": 2,
       "feedUrl": "https://www.ncaa.com/news/wrestling-men/d1/rss.xml",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "NCAA Division II Wrestling",
@@ -129,7 +130,7 @@
       "ok": true,
       "items": 3,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Aflograppling.com%2Farticles&format=rss",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "Real American Freestyle",
@@ -151,7 +152,7 @@
       "ok": true,
       "items": 2,
       "feedUrl": "https://www.onefc.com/category/live-results/feed/",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "Bloody Elbow",
@@ -159,7 +160,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bloodyelbow.com/feed",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "MMA Weekly",
@@ -167,7 +168,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmaweekly.com/feed",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "GracieMag",
@@ -175,14 +176,15 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.graciemag.com/feed/",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "D3 Wrestle",
       "sport": "grappling",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-19T23:22:36.607390+00:00",
-      "error": "d3wrestle.com: mismatched tag: line 93, column 2"
+      "ok": true,
+      "items": 10,
+      "feedUrl": "https://d3wrestle.com/feed",
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "BoxingScene",
@@ -190,7 +192,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.boxingscene.com/feed",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "BBC Sport Boxing",
@@ -198,7 +200,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://feeds.bbci.co.uk/sport/boxing/rss.xml",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "Boxing News 24",
@@ -206,15 +208,15 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.boxingnews24.com/feed/",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "Boxing Insider",
       "sport": "boxing",
       "ok": true,
-      "items": 10,
+      "items": 2,
       "feedUrl": "https://www.boxinginsider.com/feed/",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "The Guardian Boxing",
@@ -222,7 +224,7 @@
       "ok": true,
       "items": 4,
       "feedUrl": "https://www.theguardian.com/sport/boxing/rss",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "BBC Sport MMA",
@@ -230,7 +232,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bbc.co.uk/sport/mixed-martial-arts/rss.xml",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "MMA News",
@@ -238,18 +240,60 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmanews.com/feed",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "lastSuccessfulAt": "2026-11-20T01:39:02.781980+00:00"
     },
     {
       "name": "Cageside Press",
       "sport": "mma",
-      "ok": true,
-      "items": 10,
-      "feedUrl": "https://www.cagesidepress.com/feed/",
-      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-20T00:21:29.142375+00:00",
+      "error": "www.cagesidepress.com: The read operation timed out"
     }
   ],
   "articles": [
+    {
+      "id": "4a58ae29b3bbff7f16c8",
+      "title": "Josh Hokit left his mark on Ciryl Gane ‘for life’ says champion’s coach amid rematch push",
+      "url": "https://bloodyelbow.com/2026/11/19/josh-hokit-left-his-mark-on-ciryl-gane-for-life-says-champions-coach-amid-rematch-push/",
+      "source": "Bloody Elbow",
+      "sport": "mma",
+      "publishedAt": "2026-11-20T01:00:00+00:00",
+      "score": 3,
+      "image": null,
+      "summaryCheckedAt": "2026-11-20T01:39:02.781980+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Hokit has been credited by Gane's coach.",
+        "Fernand Lopez believes Josh Hokit has left a lasting impression on Ciryl Gane after pushing him past his limits for five rounds in the UFC 334 main event.",
+        "This past Saturday, Ciryl Gane handed Josh Hokit his first-ever loss when he beat him by unanimous decision in the UFC 334 main event."
+      ],
+      "firstSeenAt": "2026-11-20T01:39:02.781980+00:00",
+      "coverage": 1,
+      "fighterImage": {
+        "url": "assets/img/ufc/josh-hokit-card.webp",
+        "name": "Josh Hokit",
+        "kind": "cached-fighter",
+        "credit": "File photo of Josh Hokit (owner-cleared)"
+      }
+    },
+    {
+      "id": "8ac3ac79ce02a9e7a715",
+      "title": "Andy Hiraoka Signs With Zuffa, Moves to Welterweight",
+      "url": "https://www.boxingnews24.com/2026/11/andy-hiraoka-signs-with-zuffa-moves-to-welterweight/",
+      "source": "Boxing News 24",
+      "sport": "boxing",
+      "publishedAt": "2026-11-20T00:42:50+00:00",
+      "score": 0,
+      "image": null,
+      "summaryCheckedAt": "2026-11-20T01:39:02.781980+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Andy Hiraoka has signed a multi-fight deal with Zuffa Boxing and will move up to welterweight, the promotion announced.",
+        "The Japanese southpaw enters the 147-pound Andy Hiraoka Signs With Zuffa, Moves to Welterweight @ Boxing News 24"
+      ],
+      "firstSeenAt": "2026-11-20T01:39:02.781980+00:00",
+      "coverage": 1
+    },
     {
       "id": "bae6c77028feadb1c153",
       "title": "New UFC Dallas fights include former title challenger, return of ‘Chanco’",
@@ -266,13 +310,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-20T00:21:29.142375+00:00"
       },
-      "summaryCheckedAt": "2026-11-20T00:21:29.142375+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "UFC Dallas is loading up with some notable names officially announced for the lineup.",
         "On Thursday, several new UFC Dallas bouts were announced via press release, including a strawweight contest between one-time UFC title challenger Karolina Kowalkiewicz (16-10) and Sam Hughes (11-7).",
         "When Kowalkiewicz makes the walk to the octagon, it will be her 20th appearance for the promotion."
       ],
+      "summaryCheckedAt": "2026-11-20T00:21:29.142375+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-20T00:21:29.142375+00:00",
       "coverage": 1
     },
@@ -285,13 +329,13 @@
       "publishedAt": "2026-11-20T00:00:00+00:00",
       "score": 0,
       "image": null,
-      "summaryCheckedAt": "2026-11-20T00:21:29.142375+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Usman Nurmagomedov’s manager has hit back at Ariel Helwani after the journalist criticized the undefeated star’s recent hotel brawl with Merab Dvalishvili.",
         "This past week, Usman Nurmagomedov was involved in a huge brawl with Merab Dvalishvili , which resulted in the undefeated Russian and several members of his team being arrested.",
         "Initially, Nurmagomedov was sentenced to six-months in jail , but then a few days later, the 28-year-old was released from prison and handed a reduced fine."
       ],
+      "summaryCheckedAt": "2026-11-20T00:21:29.142375+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-20T00:21:29.142375+00:00",
       "coverage": 1
     },
@@ -344,10 +388,7 @@
       "summaryCheckedAt": "2026-11-19T23:22:36.607390+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-19T23:22:36.607390+00:00",
-      "coverage": 2,
-      "alsoCoveredBy": [
-        "Cageside Press"
-      ]
+      "coverage": 1
     },
     {
       "id": "49f66e2e904c00f85c60",
@@ -1148,6 +1189,31 @@
       }
     },
     {
+      "id": "f0899e81a699f3a67e0d",
+      "title": "Ex-UFC champ says it's 'a little premature' for Navajo Stirling to fight Jiri Prochazka",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/19/ufc-qatar-kamaru-usman-unsure-navajo-stirling-ready-jiri-prochazka/92858884007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-19T16:30:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryCheckedAt": "2026-11-20T01:39:02.781980+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Kamaru Usman believes fellow former UFC champion Jiri Prochazka may prove to be too stern of a test for Navajo Stirling."
+      ],
+      "firstSeenAt": "2026-11-20T01:39:02.781980+00:00",
+      "coverage": 1,
+      "fighterImage": {
+        "url": "assets/img/ufc/navajo-stirling-card.webp",
+        "name": "Navajo Stirling",
+        "kind": "cached-fighter",
+        "credit": "File photo of Navajo Stirling (owner-cleared)"
+      }
+    },
+    {
       "id": "0d5571131de8e5951453",
       "title": "Victor Ortiz vs. Robert Duran Jr. headlines full BKB 62 fight card",
       "url": "https://www.sherdog.com/news/news/Victor-Ortiz-vs-Robert-Duran-Jr-headlines-full-BKB-62-fight-card-203699",
@@ -1287,11 +1353,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-20T00:21:29.142375+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "The controversial Muhammad Ali American Boxing Revival Act passed a House vote with overwhelming support."
       ],
+      "summaryCheckedAt": "2026-11-20T00:21:29.142375+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-20T00:21:29.142375+00:00",
       "coverage": 1
     },
@@ -1751,11 +1817,11 @@
       "publishedAt": "2026-11-19T11:38:19+00:00",
       "score": 0,
       "image": null,
-      "summaryPoints": [
-        "George Kambosos has launched a furious attack on Paulie Malignaggi and Robert Garcia after they mocked reports of a potential fight with Gervonta Davis"
-      ],
-      "summaryCheckedAt": "2026-11-19T12:49:43.071447+00:00",
+      "summaryCheckedAt": "2026-11-20T01:39:02.781980+00:00",
       "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "George Kambosos fires back at Paulie Malignaggi and Robert Garcia for mocking his Tank Davis matchup."
+      ],
       "firstSeenAt": "2026-11-19T12:49:43.071447+00:00",
       "coverage": 1
     },
@@ -1794,11 +1860,11 @@
       "publishedAt": "2026-11-19T10:48:39+00:00",
       "score": 1,
       "image": null,
-      "summaryCheckedAt": "2026-11-20T00:21:29.142375+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Lauren Price is eyeing the chance to become Wales' first ever undisputed world boxing champion when she takes on Michaela Kotaskova on Friday, 20 November."
       ],
+      "summaryCheckedAt": "2026-11-20T00:21:29.142375+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-19T11:42:35.986016+00:00",
       "coverage": 1
     },
@@ -3868,7 +3934,7 @@
         "credit": "",
         "sourceUrl": "https://www.onefc.com/press-releases/one-championship-declares-one-welterweight-mma-world-title-vacant/",
         "kind": "publisher",
-        "checkedAt": "2026-11-20T00:21:29.142375+00:00"
+        "checkedAt": "2026-11-20T01:39:02.781980+00:00"
       },
       "summaryPoints": [
         "The organization has elected to declare the ONE Welterweight MMA World Title vacant with immediate effect.",
@@ -5470,7 +5536,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-19T12:49:43.071447+00:00",
+      "summaryCheckedAt": "2026-11-20T01:39:02.781980+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T23:36:18.473519+00:00",
       "coverage": 1,
@@ -6628,80 +6694,6 @@
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-16T20:36:48.581062+00:00",
       "coverage": 1
-    },
-    {
-      "id": "9517f4cdcde8e7b60f9b",
-      "title": "Sean Brady vs. Gabriel Bonfim rebooked to headline UFC Vegas 125",
-      "url": "https://www.sherdog.com/news/news/Sean-Brady-vs-Gabriel-Bonfim-rebooked-to-headline-UFC-Vegas-125-203655",
-      "source": "Sherdog",
-      "sport": "mma",
-      "publishedAt": "2026-11-16T19:51:38+00:00",
-      "score": 1,
-      "image": {
-        "url": "https://www1-cdn.sherdog.com/_images/headers/20261116075139_brady.JPG",
-        "alt": "Article image: Sean Brady vs. Gabriel Bonfim rebooked to headline UFC Vegas 125",
-        "credit": "",
-        "sourceUrl": "https://www.sherdog.com/news/news/Sean-Brady-vs-Gabriel-Bonfim-rebooked-to-headline-UFC-Vegas-125-203655",
-        "kind": "publisher",
-        "checkedAt": "2026-11-16T20:36:48.581062+00:00"
-      },
-      "summaryCheckedAt": "2026-11-19T23:22:36.607390+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-16T20:36:48.581062+00:00",
-      "coverage": 1,
-      "summaryPoints": [
-        "23, 2027, at the Meta Apex in Las Vegas.",
-        "Time to settle it 🤝 @GabrielBonfi vs Sean Brady FINALLY goes down for the #UFCVegas125 main event! [ LIVE JAN 23 on @ParamountPlus ] https://t.co/EsvTluCUHR"
-      ]
-    },
-    {
-      "id": "bf6ebddd48d99b9b5ae8",
-      "title": "Dana White says Trump's press secretary joke sparked media frenzy",
-      "url": "https://www.sherdog.com/news/news/Dana-White-says-Trumps-press-secretary-joke-sparked-media-frenzy-203654",
-      "source": "Sherdog",
-      "sport": "mma",
-      "publishedAt": "2026-11-16T19:42:02+00:00",
-      "score": 0,
-      "image": {
-        "url": "https://www1-cdn.sherdog.com/_images/headers/20261116074202_dana.JPEG",
-        "alt": "Article image: Dana White says Trump's press secretary joke sparked media frenzy",
-        "credit": "",
-        "sourceUrl": "https://www.sherdog.com/news/news/Dana-White-says-Trumps-press-secretary-joke-sparked-media-frenzy-203654",
-        "kind": "publisher",
-        "checkedAt": "2026-11-16T20:36:48.581062+00:00"
-      },
-      "summaryCheckedAt": "2026-11-19T23:22:36.607390+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-16T20:36:48.581062+00:00",
-      "coverage": 1,
-      "summaryPoints": [
-        "Dana White was at a fight in London when President Donald Trump called to tell him he’d just told reporters that White would be the next White House press secretary.",
-        "Trump was joking, but within an hour, the Ultimate Fighting Championship CEO’s team was fielding calls from news outlets."
-      ]
-    },
-    {
-      "id": "4a43557a3d0977454e05",
-      "title": "Dana White calls Tommy McMillen's return to training 'insane'",
-      "url": "https://www.sherdog.com/news/news/Dana-White-calls-Tommy-McMillens-return-to-training-insane-203653",
-      "source": "Sherdog",
-      "sport": "mma",
-      "publishedAt": "2026-11-16T19:33:34+00:00",
-      "score": 0,
-      "image": {
-        "url": "https://www1-cdn.sherdog.com/_images/headers/20261116073334_tommy_mcmillen.JPG",
-        "alt": "Article image: Dana White calls Tommy McMillen's return to training 'insane'",
-        "credit": "",
-        "sourceUrl": "https://www.sherdog.com/news/news/Dana-White-calls-Tommy-McMillens-return-to-training-insane-203653",
-        "kind": "publisher",
-        "checkedAt": "2026-11-16T19:44:26.452698+00:00"
-      },
-      "summaryCheckedAt": "2026-11-19T22:26:03.089726+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-16T19:44:26.452698+00:00",
-      "coverage": 1,
-      "summaryPoints": [
-        "Dana White hopes Tommy McMillen’s hospitalization serves as a wake-up call for the undefeated Ultimate Fighting Championship featherweight."
-      ]
     }
   ],
   "resultReports": [
@@ -7871,24 +7863,18 @@
     }
   ],
   "leads": {
-    "newest": "https://www.mmafighting.com/ufc/522430/new-ufc-dallas-fights-include-former-title-challenger-return-of-chanco",
+    "newest": "https://bloodyelbow.com/2026/11/19/josh-hokit-left-his-mark-on-ciryl-gane-for-life-says-champions-coach-amid-rematch-push/",
     "mostCovered": "https://www.mmafighting.com/ufc/522223/josh-hokit-explains-why-he-flipped-off-bruce-buffer-at-ufc-334-its-gonna-be-fck-you-every-time"
   },
   "deduplication": {
-    "checkedAt": "2026-11-20T00:21:29.142375+00:00",
-    "removedArticles": 7,
+    "checkedAt": "2026-11-20T01:39:02.781980+00:00",
+    "removedArticles": 6,
     "removedResultReports": 0,
     "examples": [
       {
         "url": "https://www.sherdog.com/news/news/Amanda-Nunes-warns-Kayla-Harrison-This-is-not-PFL-baby-203695",
         "title": "Amanda Nunes warns Kayla Harrison: 'This is not PFL, baby'",
         "keptUrl": "https://www.mmafighting.com/ufc/522362/amanda-nunes-pushes-back-on-kayla-harrison-calling-shots-on-potential-rematch-this-is-not-pfl-baby",
-        "reason": "same story"
-      },
-      {
-        "url": "https://cagesidepress.com/2026/11/19/ufc-flyweight-manon-fiorot-former-title-challenger-suspended-for-doping-violation/",
-        "title": "UFC Flyweight Manon Fiorot, Former Title Challenger, Suspended for Doping Violation",
-        "keptUrl": "https://www.mmafighting.com/ufc/522477/former-ufc-title-challenger-manon-fiorot-suspended-3-months-for-anti-doping-violation",
         "reason": "same story"
       },
       {
