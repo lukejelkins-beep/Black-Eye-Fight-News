@@ -936,7 +936,7 @@ function posterHero(w,{r,wins,losses,careerPercent}){
     (kanji?'<div class="sumo-poster-kanji" aria-hidden="true" style="--kanji-count:'+[...kanji].length+'">'+e(kanji)+'</div>':'')+
     posterFigure(w)+
     '<div class="sumo-poster-body"><div>'+
-      '<div class="eyebrow">'+e(division)+(w.heya?' · '+e(w.heya)+' stable':'')+'</div>'+
+      '<div class="eyebrow">'+e(division)+(w.heya?' · <a href="sumo-stables.html#stable/'+encodeURIComponent(kebab(w.heya))+'">'+e(w.heya)+' stable</a>':'')+'</div>'+
       '<h1>'+e(w.shikonaEn)+'</h1>'+(w.shikonaJp?'<div class="jp">'+e(w.shikonaJp)+'</div>':'')+
       '<div class="sumo-poster-chips">'+chip(w.currentRank,'rank')+chip(peakLabel?'Peak · '+peakLabel:'','peak')+chip(country?.name,'country')+'</div>'+
       '<div class="sumo-poster-stats">'+(record?stat(record,bashoLabel(details().bashoId)+' basho'):'')+
