@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-20T02:31:49.791Z",
-  "checkedAt": "2026-11-20T02:31:49.791Z",
+  "attemptedAt": "2026-11-20T03:26:05.884Z",
+  "checkedAt": "2026-11-20T03:26:05.884Z",
   "windowDays": 28,
-  "articlesChecked": 30,
+  "articlesChecked": 29,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 46,
   "publisherSourcesConfigured": 32,
-  "linksFound": 9,
-  "newEmbedsVerified": 0,
+  "linksFound": 14,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -101,6 +101,25 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://x.com/DAZNBoxing/status/2123098913930629171"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-19T10:00:00+00:00",
+      "discoveredAt": "2026-11-20T03:26:05.884Z",
+      "sourcePublisher": "MMA Junkie",
+      "evidenceUrl": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/19/ufc-dallas-fight-card-additions/92861920007/",
+      "summary": "Original social post linked in MMA Junkie coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/DfmvRO3AYVn/"
     },
     {
       "type": "post",
@@ -2342,25 +2361,6 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/p/Dfr5Zf7ESpm/"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "grappling",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-13T08:13:12+00:00",
-      "discoveredAt": "2026-11-13T09:42:01.386Z",
-      "sourcePublisher": "ONE Championship",
-      "evidenceUrl": "https://www.onefc.com/news/helena-crevar-and-kendall-reusing-collide-for-inaugural-womens-openweight-submission-grappling-crown-at-one-fight-night-51/",
-      "summary": "Original social post linked in ONE Championship coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 10,
-      "url": "https://www.instagram.com/p/DfpVIiHipWw/"
     }
   ],
   "seenOriginals": [
@@ -3227,6 +3227,10 @@
     {
       "url": "https://x.com/DAZNBoxing/status/2123098913930629171",
       "firstSeen": "2026-11-19T17:32:00.336Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/DfmvRO3AYVn/",
+      "firstSeen": "2026-11-20T03:26:05.884Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
