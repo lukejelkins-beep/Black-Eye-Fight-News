@@ -123,7 +123,7 @@ export function currentFactFeed(roster,details,editorial,{now=new Date()}={}){
  const selected=new Set();
  const selectedDynamic=[];
  for(const card of dynamic.sort((a,b)=>b.priority-a.priority)){
-  if(card.category==='fire'||card.category==='watch'){
+  if(card.category==='fire'){
    // Avoid overloading the feed with four near-identical cards for one rikishi.
    if(card.memberIds.every(id=>selected.has(id)))continue;
    card.memberIds.forEach(id=>selected.add(id));
