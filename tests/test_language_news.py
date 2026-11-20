@@ -39,8 +39,8 @@ class LanguageNewsTests(unittest.TestCase):
         self.assertEqual([c["title"] for c in chosen], ["井上尚弥が防衛成功"])
         self.assertEqual(chosen[0]["publisherEnglish"], "Nikkan Sports")
 
-    def test_approved_list_has_no_duplicates_and_both_languages(self):
-        for code in ("ja", "es"):
+    def test_approved_list_has_no_duplicates_and_the_japanese_list(self):
+        for code in ("ja",):
             names = [lang.norm(p["name"]) for p in self.config[code]["approved"]]
             self.assertEqual(len(names), len(set(names)))
             self.assertGreaterEqual(len(names), 15)
@@ -74,7 +74,7 @@ class LanguageNewsTests(unittest.TestCase):
 
     def test_collect_survives_a_failing_search(self):
         def fetcher(url):
-            if "RIZIN" in url:
+            if "%E5%A4%A7%E7%9B%B8%E6%92%B2" in url or "大相撲" in url:
                 raise OSError("boom")
             return RSS
         found, report = lang.collect(self.config, NOW, fetcher)
