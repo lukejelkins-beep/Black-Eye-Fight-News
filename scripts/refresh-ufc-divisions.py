@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Refresh UFC division rosters, official rankings and champions from UFCalendar.
 
+NOT SCHEDULED. The owner cancelled the UFCalendar plan (docs/design/DECISIONS.md,
+2026-11-19) and AGENTS.md allows no paid worker besides the collector, so the
+workflow that ran this was removed. data/ufc-divisions.json keeps the last
+fetch (rankings of 2026-11-17) until divisions come from a free source.
+
 One quota check plus one request per division (12 calls). Writes
 data/ufc-divisions.json:
 
