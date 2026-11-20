@@ -29,6 +29,8 @@ jobs:
         run: node --test tests/test-sumo-daily.mjs tests/test-sumo-api-source.mjs
       - name: Refresh latest results and announced next-day torikumi
         run: node scripts/sumo-refresh-daily.mjs
+      - name: Build historical win-percentage rollups (existing cached bouts only)
+        run: node scripts/sumo-facts-rollup.mjs
       - name: Commit only preview daily cache
         id: commit
         shell: bash
