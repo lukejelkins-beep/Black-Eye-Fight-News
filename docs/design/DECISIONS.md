@@ -3,6 +3,7 @@
 Format: date — decision — who — where it shows up.
 
 ## 2026-11-21
+- Fighter profiles (UFC) take the Sumo profile's light look: the hero sits borderless on the cream page, official portraits are blended into the page (their white backgrounds take the page colour) and fade at the bottom, the rating and key numbers are big plain type, sections have no boxes (space and thin rules separate them), fight rows are light with a green or red result edge, and the only dark element is the "Latest bout" panel (with the dark section bar, as on Sumo). New sections from the stats build: At a glance (UFC record, finish rate, rounds won on the cards, latest bout), round-by-round bars and judges' scorecards inside each fight, full UFC history, a Last 5 / 12 months / 36 months / Career switch for the stats, and a comparison with the division average (last 36 months). No reader text under 12 px. Fighters directory cards are unchanged (phase 1 step 5). — Owner ("Yes, restyle it") — PR for branch feat/profile-stage4.
 - Translated sumo news from Japan refreshes every 3 hours (owner), not every 15 minutes; the language job's schedule is `27 */3 * * *`. The earlier 15-minute change (PR #321) no longer applies to it. A topic filter drops boxing, ONE, New Japan and other non-sumo headlines that the 相撲 search also returns from the same publishers (first live run: 5 of 60 were not sumo). Names-only sumo headlines are kept. — Owner — PR for branch feat/sumo-relevance-3h.
 
 ## 2026-11-19

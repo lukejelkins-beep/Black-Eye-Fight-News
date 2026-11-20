@@ -35,6 +35,7 @@ jobs:
           node tests/test-ufc-prospect-contender.cjs
           node tests/test-fighter-power-index.cjs
           node tests/test-event-names.cjs
+          node tests/test-fighter-stats-profile.cjs
           node --test tests/test-ufc-async-authority.cjs
           node --test tests/test-ufc-profile-queue.mjs
           node --test tests/test-ufc-postfight-metrics.mjs
