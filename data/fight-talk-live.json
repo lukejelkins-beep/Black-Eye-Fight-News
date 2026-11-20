@@ -1,7 +1,7 @@
 {
-  "attemptedAt": "2026-11-20T18:41:15.109Z",
-  "checkedAt": "2026-11-20T18:41:15.109Z",
-  "updatedAt": "2026-11-20T14:04:10.540085Z",
+  "attemptedAt": "2026-11-20T19:45:29.520Z",
+  "checkedAt": "2026-11-20T19:45:29.520Z",
+  "updatedAt": "2026-11-20T18:00:45Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
   "sourcesChecked": 4,
@@ -18,7 +18,7 @@
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 26,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 43,
+      "configured": 40,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -55,22 +55,94 @@
   "rollingScan": {
     "directoryEntries": 448,
     "scheduledEntries": 84,
-    "batchIndex": 2,
+    "batchIndex": 3,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 43,
-      "X": 26,
+      "Threads": 11,
+      "X": 27,
+      "Instagram": 40,
       "Bluesky": 4,
-      "Threads": 9,
       "Reddit": 2
     },
     "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2r64zvqk32x",
+      "cid": "bafyreiguxmdtmckqkvzikxuvsafex4hakpruhxychbqmtvx5cpvg45twbq",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Saba Lazishvili credits Conor McGregor with starting his interest in MMA as UFC legend shows support",
+      "postedAt": "2026-11-20T18:00:45Z",
+      "date": "21 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2r64zvqk32x",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2r2t6ahss2i",
+      "cid": "bafyreihffmaksnz3uh6neqnih55h5rjyvzlyhw7gdc5wlyn7qrg55ztdmq",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Merab Dvalishvili won’t rule out Usman Nurmagomedov UFC clash but unsure on Umar rematch",
+      "postedAt": "2026-11-20T17:01:33Z",
+      "date": "21 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2r2t6ahss2i",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2qy224ill2s",
+      "cid": "bafyreia5gmuw2aun7nil3iww4lp6ymvlzcxtz62pch5gsjt223zpghfcha",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Dana White set to pay out $100,000 of his own money to match Donald Trump’s UFC Freedom 250 bonus",
+      "postedAt": "2026-11-20T16:11:42Z",
+      "date": "21 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2qy224ill2s",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2qqvzj73r2l",
       "cid": "bafyreich4n24fpzpsoowzkayfcpfjjkjt2klbasnqjljlh7xlaejrlptky",
@@ -144,6 +216,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2qnfjhmbi2r",
+      "cid": "bafyreibgxuobptyhcuyqbwcepm7h7jccigpj5rft3yaltosodwugrfh4sy",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "UFC star announces retirement to make final Octagon appearance a send-off for both fighters",
+      "postedAt": "2026-11-20T13:01:16Z",
+      "date": "21 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2qnfjhmbi2r",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2qnb3yii22m",
       "cid": "bafyreigmu2yyu7wlh5uksduodetuq57mlotxzctqtangrfk4anursxycbe",
       "platform": "Bluesky",
@@ -168,6 +264,54 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2qk4wrn7722",
+      "cid": "bafyreiau3fdkxdzz64xj2xrjmgy5dwj7j7lp3wlhx5vkdkde6x7a2mgm34",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Alex Pereira provides weight update weeks out from UFC 335 following criticized heavyweight approach",
+      "postedAt": "2026-11-20T12:02:47Z",
+      "date": "20 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2qk4wrn7722",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2qgsbm2aa2q",
+      "cid": "bafyreigjbka7uotykv3xyanxlrcdq7t5nnzgpyqqn2cspxpfybenbh5ntm",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Jiri Prochazka vs. Navajo Stirling: Bloody Elbow staff predict the UFC Qatar main event",
+      "postedAt": "2026-11-20T11:03:08Z",
+      "date": "20 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2qgsbm2aa2q",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2qfaax5jy24",
       "cid": "bafyreibpfcteau7re3s5qtwaluucxqf6efkvuxtyo6amj5tdbuxhr47rc4",
       "platform": "Bluesky",
@@ -189,6 +333,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-20T14:24:53.878Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2qb6kpmfj25",
+      "cid": "bafyreic4a2o5fbvw4fabede6frs6txiak7syneojctyjwqwpcv37mit7w4",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "UFC Qatar fighter fined after missing weight for matchup with 24-fight Octagon veteran",
+      "postedAt": "2026-11-20T09:22:38Z",
+      "date": "20 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2qb6kpmfj25",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -308,7 +476,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -332,7 +500,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -428,7 +596,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -528,30 +696,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2p37zkrtn2a",
-      "cid": "bafyreig2luqklvt27zsojyby7m2jcneeqlgosfivi2h5zwetgsytyclwwq",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "UFC urged to fire Ciryl Gane if he pokes another opponent in the eyes: ‘It can ruin careers’",
-      "postedAt": "2026-11-19T22:03:25Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2p37zkrtn2a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2p33i7tp72f",
       "cid": "bafyreici2xicdzccty4coxig25u66gr3xlkrbhvd77db4dqcffsqnb4pjy",
       "platform": "Bluesky",
@@ -648,126 +792,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2oxpfkjrr2f",
-      "cid": "bafyreidkjp5anrg24q4yhdivvm7qlnnykrkdcdbnhtf2lika4d77mmgpzi",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Jon Jones insists Josh Hokit will never become champion in the ‘stacked’ UFC heavyweight division",
-      "postedAt": "2026-11-19T21:00:26Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2oxpfkjrr2f",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2ouglqvcd25",
-      "cid": "bafyreidwjdkccl5chd3czsn2yyngu4ifm3nb4rmzqrfgzzhiahyajqdc6u",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Paddy Pimblett’s 14-0 teammate Luke Riley reportedly books UFC 335 return",
-      "postedAt": "2026-11-19T20:01:49Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2ouglqvcd25",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2or73qfiq2r",
-      "cid": "bafyreiexxynn6fv7ay2k2u3tfgjtbbym4zd2lh4ancohncb3i75ewkmlwy",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "14-7 UFC fighter claims he could have been the ‘GOAT’ if he didn’t change his style",
-      "postedAt": "2026-11-19T19:03:56Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2or73qfiq2r",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2ono3gy2s2a",
-      "cid": "bafyreiaosjhdpiz2rzz3oi2rtdpym2hii5ej2ijoiqy6no4al25yya5duu",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "UFC star named as one of GQ’s ‘Men of the Year’ in regional list following breakout year",
-      "postedAt": "2026-11-19T18:00:44Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2ono3gy2s2a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2ojvjfzei25",
-      "cid": "bafyreiahwjt5kpomk6f2qacvuu2ajdifl3we33ef6njf27x6qrxtb2k4mm",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "‘John Pork’ Magomed Zaynukov gets rebooked after missing UFC Qatar in list of new UFC Dallas bouts",
-      "postedAt": "2026-11-19T16:53:19Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2ojvjfzei25",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2ohzantkp2b",
       "cid": "bafyreie5egbloq2x4njuiszhjagcgb4m3nyb7vkdlp3phbmr6ryoz7qbfu",
       "platform": "Bluesky",
@@ -837,30 +861,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-20T14:24:53.878Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2oh4qjkd22a",
-      "cid": "bafyreid3x37bc6w3tuuslnlcsavoas34mqriorzrlhzy6cagieje3eyaeq",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Ciryl Gane’s coach claims UFC want Josh Hokit rematch but have an ‘ethical’ problem preventing it",
-      "postedAt": "2026-11-19T16:03:40Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2oh4qjkd22a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1484,7 +1484,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1700,7 +1700,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1748,7 +1748,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1868,7 +1868,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1892,7 +1892,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1916,7 +1916,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1940,7 +1940,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1964,7 +1964,7 @@
         "comments": 3,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2432,7 +2432,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-20T09:16:33.228Z",
+      "engagementCheckedAt": "2026-11-20T19:45:29.520Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
