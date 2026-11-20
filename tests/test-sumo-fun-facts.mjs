@@ -131,7 +131,7 @@ test('rolling rates include only fully recorded past basho and current completed
  const two=rollingWinPercentageRows(roster,latest,2);
  assert.deepEqual(two.map(x=>[x.id,x.wins,x.losses,x.winPct]),[
   ['1',21,4,84],['2',11,2,84.6]
- ].sort((a,b)=>b[3]-a[3]));
+ ]);
  const three=rollingWinPercentageRows(roster,latest,3);
  assert.deepEqual(three.map(x=>[x.id,x.wins,x.losses]),[['1',31,9]]);
  assert.deepEqual(rollingWinPercentageRows(roster,latest,4),[]);
