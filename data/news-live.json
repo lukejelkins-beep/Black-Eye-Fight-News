@@ -1,14 +1,13 @@
 {
-  "attemptedAt": "2026-11-20T06:48:36.783403+00:00",
-  "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00",
+  "attemptedAt": "2026-11-20T08:04:44.316229+00:00",
+  "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00",
   "sources": [
     {
       "name": "World Boxing News",
       "sport": "boxing",
-      "ok": true,
-      "items": 10,
-      "feedUrl": "https://www.worldboxingnews.net/feed/",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00",
+      "error": "www.worldboxingnews.net: mismatched tag: line 93, column 2"
     },
     {
       "name": "MMA Fighting",
@@ -16,14 +15,15 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "MMA Junkie",
       "sport": "mma",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-20T05:48:15.615259+00:00",
-      "error": "mmajunkie.usatoday.com: HTTP Error 402: Payment Required | mmajunkie.com: HTTP Error 402: Payment Required | api.gdeltproject.org: HTTP Error 429: Too Many Requ"
+      "ok": true,
+      "items": 10,
+      "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "Sherdog",
@@ -31,7 +31,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.sherdog.com/rss/news.xml",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "UFC",
@@ -39,7 +39,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "ONE MMA",
@@ -47,7 +47,7 @@
       "ok": true,
       "items": 6,
       "feedUrl": "https://www.onefc.com/feed/",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "ONE Submission Grappling",
@@ -60,9 +60,9 @@
       "name": "Cage Warriors",
       "sport": "mma",
       "ok": true,
-      "items": 5,
+      "items": 4,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Acagewarriors.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "RIZIN",
@@ -70,21 +70,22 @@
       "ok": true,
       "items": 4,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "KSW",
       "sport": "mma",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-20T05:48:15.615259+00:00",
-      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
+      "ok": true,
+      "items": 1,
+      "feedUrl": "https://www.bing.com/news/search?q=site%3Akswmma.com%2Fen&format=rss&setmkt=en-US",
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "ADCC",
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "adcombat.com: No recent, source-verified articles | www.bing.com: No recent, source-verified articles"
+      "error": "adcombat.com: mismatched tag: line 93, column 2 | www.bing.com: No recent, source-verified articles"
     },
     {
       "name": "NCAA Division I Wrestling",
@@ -92,7 +93,7 @@
       "ok": true,
       "items": 2,
       "feedUrl": "https://www.ncaa.com/news/wrestling-men/d1/rss.xml",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "NCAA Division II Wrestling",
@@ -128,7 +129,7 @@
       "ok": true,
       "items": 2,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Aflograppling.com%2Farticles&format=rss",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "Real American Freestyle",
@@ -150,7 +151,7 @@
       "ok": true,
       "items": 2,
       "feedUrl": "https://www.onefc.com/category/live-results/feed/",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "Bloody Elbow",
@@ -158,7 +159,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bloodyelbow.com/feed",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "MMA Weekly",
@@ -166,7 +167,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmaweekly.com/feed",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "GracieMag",
@@ -174,15 +175,14 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.graciemag.com/feed/",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "D3 Wrestle",
       "sport": "grappling",
-      "ok": true,
-      "items": 10,
-      "feedUrl": "https://d3wrestle.com/feed",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00",
+      "error": "d3wrestle.com: mismatched tag: line 93, column 2"
     },
     {
       "name": "BoxingScene",
@@ -190,7 +190,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.boxingscene.com/feed",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "BBC Sport Boxing",
@@ -198,7 +198,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://feeds.bbci.co.uk/sport/boxing/rss.xml",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "Boxing News 24",
@@ -206,15 +206,14 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.boxingnews24.com/feed/",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "Boxing Insider",
       "sport": "boxing",
-      "ok": true,
-      "items": 10,
-      "feedUrl": "https://www.boxinginsider.com/feed/",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00",
+      "error": "www.boxinginsider.com: No recent, source-verified articles"
     },
     {
       "name": "The Guardian Boxing",
@@ -222,7 +221,7 @@
       "ok": true,
       "items": 4,
       "feedUrl": "https://www.theguardian.com/sport/boxing/rss",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "BBC Sport MMA",
@@ -230,7 +229,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bbc.co.uk/sport/mixed-martial-arts/rss.xml",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "MMA News",
@@ -238,7 +237,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmanews.com/feed",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     },
     {
       "name": "Cageside Press",
@@ -246,35 +245,17 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.cagesidepress.com/feed/",
-      "lastSuccessfulAt": "2026-11-20T06:48:36.783403+00:00"
+      "lastSuccessfulAt": "2026-11-20T08:04:44.316229+00:00"
     }
   ],
   "articles": [
     {
-      "id": "f1137e578a91a7c9ca5c",
-      "title": "David Morrell Takes a Huge Step Backward Against Rodriguez",
-      "url": "https://www.boxingnews24.com/2026/11/david-morrell-takes-a-huge-step-backward-against-rodriguez/",
-      "source": "Boxing News 24",
-      "sport": "boxing",
-      "publishedAt": "2026-11-20T06:44:16+00:00",
-      "score": 0,
-      "image": null,
-      "summaryCheckedAt": "2026-11-20T06:48:36.783403+00:00",
-      "summaryQualityVersion": 3,
-      "summaryPoints": [
-        "David Morrell should beat Julio de Jesus Rodriguez on Saturday in Santo Domingo.",
-        "The trouble is that even a quick knockout of the 44-year-old veteran David Morrell Takes a Huge Step Backward Against Rodriguez @ Boxing News 24"
-      ],
-      "firstSeenAt": "2026-11-20T06:48:36.783403+00:00",
-      "coverage": 1
-    },
-    {
       "id": "79b098a5264208e90e77",
-      "title": "LIVE UFC Qatar weigh-in video: Prochazka vs. Stirling",
+      "title": "UFC Qatar weigh-in video: Prochazka vs. Stirling",
       "url": "https://www.mmafighting.com/ufc/522425/ufc-qatar-weigh-in-video-prochazka-vs-stirling",
       "source": "MMA Fighting",
       "sport": "mma",
-      "publishedAt": "2026-11-20T06:22:23+00:00",
+      "publishedAt": "2026-11-20T07:29:41+00:00",
       "score": 1,
       "image": {
         "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2270776164.jpg?quality=90&strip=all&crop=0,0,100,100",
@@ -284,13 +265,32 @@
         "kind": "publisher",
         "checkedAt": "2026-11-20T06:48:36.783403+00:00"
       },
-      "summaryCheckedAt": "2026-11-20T06:48:36.783403+00:00",
+      "summaryCheckedAt": "2026-11-20T08:04:44.316229+00:00",
       "summaryQualityVersion": 3,
       "summaryPoints": [
         "At UFC Qatar weigh-ins, all 24 fighters on Saturday’s UFC fight card step on the scale early Friday morning in Doha, Qatar.",
         "Watch ceremonial weigh-in video above, beginning at 10 a.m.",
         "For the main event, Jiri Prochazka and Navajo Stirling can weigh no more than 206 pounds for the non-title light heavyweight fight."
       ],
+      "firstSeenAt": "2026-11-20T06:48:36.783403+00:00",
+      "updatedAt": "2026-11-20T08:04:44.316229+00:00",
+      "coverage": 1
+    },
+    {
+      "id": "f1137e578a91a7c9ca5c",
+      "title": "David Morrell Takes a Huge Step Backward Against Rodriguez",
+      "url": "https://www.boxingnews24.com/2026/11/david-morrell-takes-a-huge-step-backward-against-rodriguez/",
+      "source": "Boxing News 24",
+      "sport": "boxing",
+      "publishedAt": "2026-11-20T06:44:16+00:00",
+      "score": 0,
+      "image": null,
+      "summaryPoints": [
+        "David Morrell should beat Julio de Jesus Rodriguez on Saturday in Santo Domingo.",
+        "The trouble is that even a quick knockout of the 44-year-old veteran David Morrell Takes a Huge Step Backward Against Rodriguez @ Boxing News 24"
+      ],
+      "summaryCheckedAt": "2026-11-20T06:48:36.783403+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-20T06:48:36.783403+00:00",
       "coverage": 1
     },
@@ -303,13 +303,13 @@
       "publishedAt": "2026-11-20T05:55:46+00:00",
       "score": 1,
       "image": null,
-      "summaryCheckedAt": "2026-11-20T06:48:36.783403+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Relive some of the most exciting exchanges and moments from UFC 334 in slow motion.",
         "14 and featured two world title bouts.",
         "A heavyweight title bout between champion Ciryl Gane and then undefeated Josh Hokit headlined the event."
       ],
+      "summaryCheckedAt": "2026-11-20T06:48:36.783403+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-20T06:48:36.783403+00:00",
       "coverage": 1
     },
@@ -366,11 +366,11 @@
       "publishedAt": "2026-11-20T05:32:13+00:00",
       "score": 0,
       "image": null,
-      "summaryCheckedAt": "2026-11-20T06:48:36.783403+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "As Lauren Price bids to become Wales' first undisputed world champion, the former footballer already has her sights set on stadium fights."
       ],
+      "summaryCheckedAt": "2026-11-20T06:48:36.783403+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-20T06:48:36.783403+00:00",
       "coverage": 1
     },
@@ -980,11 +980,11 @@
         "kind": "publisher",
         "checkedAt": "2026-11-19T19:25:42.234616+00:00"
       },
+      "summaryCheckedAt": "2026-11-20T08:04:44.316229+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "🚨 Tom Aspinall provides an update on his return timeline “Further tests late January.” https://t.co/84Vg9sQJhC"
       ],
-      "summaryCheckedAt": "2026-11-19T19:25:42.234616+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-19T19:25:42.234616+00:00",
       "coverage": 1
     },
@@ -1129,12 +1129,12 @@
       "publishedAt": "2026-11-19T18:29:54+00:00",
       "score": 0,
       "image": null,
+      "summaryCheckedAt": "2026-11-20T08:04:44.316229+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Canelo Alvarez has a clear path back to 175 pounds if he wants it.",
         "WBC president Mauricio Sulaiman told Sky Sports on Thursday that the Canelo Alvarez Given WBC Green Light for Willy Hutchinson, Will Eddy Reynoso Block It? @ Boxing News 24"
       ],
-      "summaryCheckedAt": "2026-11-19T19:25:42.234616+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-19T19:25:42.234616+00:00",
       "coverage": 1
     },
@@ -1352,11 +1352,11 @@
       "publishedAt": "2026-11-19T17:23:23+00:00",
       "score": 3,
       "image": null,
-      "summaryCheckedAt": "2026-11-20T06:48:36.783403+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Fresh off dethroning Mbilli, Canelo gets the WBC green light to chase Hutchinson at 175lbs in a champion vs champion clash."
       ],
+      "summaryCheckedAt": "2026-11-20T06:48:36.783403+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-19T18:11:13.680146+00:00",
       "coverage": 1
     },
@@ -1369,11 +1369,11 @@
       "publishedAt": "2026-11-19T17:17:37+00:00",
       "score": 0,
       "image": null,
-      "summaryCheckedAt": "2026-11-20T06:48:36.783403+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Anthony Joshua eyes a return to his old destructive style and says he wants to ice Tyson Fury on December 11 in Cardiff."
       ],
+      "summaryCheckedAt": "2026-11-20T06:48:36.783403+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-19T18:11:13.680146+00:00",
       "coverage": 1
     },
@@ -2199,11 +2199,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
+      "summaryCheckedAt": "2026-11-20T08:04:44.316229+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "The UFC announced six new fights for Dallas – including a former title challenger thought to possibly be retired."
       ],
-      "summaryCheckedAt": "2026-11-19T19:25:42.234616+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-19T19:25:42.234616+00:00",
       "coverage": 1
     },
@@ -2347,11 +2347,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-20T05:48:15.615259+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Joe Rogan wonders if Ilia Topuria has the size to compete at lightweight."
       ],
+      "summaryCheckedAt": "2026-11-20T05:48:15.615259+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-19T17:09:14.602238+00:00",
       "coverage": 1,
       "fighterImage": {
@@ -3561,13 +3561,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-19T18:11:13.680146+00:00"
       },
-      "summaryCheckedAt": "2026-11-19T19:25:42.234616+00:00",
+      "summaryCheckedAt": "2026-11-20T08:04:44.316229+00:00",
       "summaryQualityVersion": 3,
-      "summaryPoints": [
-        "Former Ultimate Fighting Championship heavyweight Pedro Rizzo has offered his assessment of the two title fights at UFC 334 ."
-      ],
       "firstSeenAt": "2026-11-18T18:10:07.135435+00:00",
-      "coverage": 1
+      "coverage": 1,
+      "summaryPoints": [
+        "Former Ultimate Fighting Championship heavyweight Pedro Rizzo has offered his assessment of the two title fights at UFC 334."
+      ]
     },
     {
       "id": "e5083633b47ff65a0e3b",
@@ -3676,10 +3676,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryPoints": [
-        "At UFC Fight Night 294, Hooker (24-15 MMA, 14-11 UFC) looks to get back on track and halt a rough three-fight skid."
-      ],
-      "summaryCheckedAt": "2026-11-19T19:25:42.234616+00:00",
+      "summaryCheckedAt": "2026-11-20T08:04:44.316229+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-19T06:53:58.925421+00:00",
       "coverage": 1,
@@ -3688,7 +3685,10 @@
         "name": "Dan Hooker",
         "kind": "cached-fighter",
         "credit": "File photo of Dan Hooker (owner-cleared)"
-      }
+      },
+      "summaryPoints": [
+        "At UFC Fight Night 294, Hooker (24-15 MMA, 14-11 UFC) looks to get back on track and halt a rough three-fight skid."
+      ]
     },
     {
       "id": "e35677f6dbc9fcb9e549",
@@ -4575,7 +4575,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-19T19:25:42.234616+00:00",
+      "summaryCheckedAt": "2026-11-20T08:04:44.316229+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-18T18:10:07.135435+00:00",
       "coverage": 1,
@@ -4600,7 +4600,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-19T19:25:42.234616+00:00",
+      "summaryCheckedAt": "2026-11-20T08:04:44.316229+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-18T17:08:24.548319+00:00",
       "coverage": 1,
@@ -4643,7 +4643,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-19T19:25:42.234616+00:00",
+      "summaryCheckedAt": "2026-11-20T08:04:44.316229+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-18T17:08:24.548319+00:00",
       "coverage": 1,
@@ -4811,7 +4811,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-19T05:08:02.396497+00:00"
       },
-      "summaryCheckedAt": "2026-11-19T19:25:42.234616+00:00",
+      "summaryCheckedAt": "2026-11-20T08:04:44.316229+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-18T05:02:27.477120+00:00",
       "coverage": 1,
@@ -6351,7 +6351,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-19T19:25:42.234616+00:00",
+      "summaryCheckedAt": "2026-11-20T08:04:44.316229+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T17:48:36.346392+00:00",
       "coverage": 1,
@@ -6373,7 +6373,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-19T19:25:42.234616+00:00",
+      "summaryCheckedAt": "2026-11-20T08:04:44.316229+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T16:47:56.168690+00:00",
       "coverage": 1,
@@ -6398,7 +6398,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-19T19:25:42.234616+00:00",
+      "summaryCheckedAt": "2026-11-20T08:04:44.316229+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T17:48:36.346392+00:00",
       "coverage": 1,
@@ -6474,7 +6474,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-19T19:25:42.234616+00:00",
+      "summaryCheckedAt": "2026-11-20T08:04:44.316229+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T14:43:08.888773+00:00",
       "updatedAt": "2026-11-17T17:48:36.346392+00:00",
@@ -6562,7 +6562,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-17T04:33:46.978943+00:00"
       },
-      "summaryCheckedAt": "2026-11-19T19:25:42.234616+00:00",
+      "summaryCheckedAt": "2026-11-20T08:04:44.316229+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T04:33:46.978943+00:00",
       "coverage": 1,
@@ -6587,7 +6587,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-17T04:33:46.978943+00:00"
       },
-      "summaryCheckedAt": "2026-11-19T19:25:42.234616+00:00",
+      "summaryCheckedAt": "2026-11-20T08:04:44.316229+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T04:33:46.978943+00:00",
       "coverage": 1,
@@ -6611,7 +6611,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-17T04:33:46.978943+00:00"
       },
-      "summaryCheckedAt": "2026-11-19T19:25:42.234616+00:00",
+      "summaryCheckedAt": "2026-11-20T08:04:44.316229+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-17T04:33:46.978943+00:00",
       "coverage": 1,
@@ -6622,6 +6622,30 @@
     }
   ],
   "resultReports": [
+    {
+      "id": "0bc19d663fd01ca545e7",
+      "title": "UFC Qatar weigh-in results: Jiri Prochazka vs. Navajo Stirling official, 1 fighter misses weight",
+      "url": "https://www.mmafighting.com/ufc/522520/ufc-qatar-weigh-in-results-jiri-prochazka-vs-navajo-stirling-official-1-fighter-misses-weight",
+      "source": "MMA Fighting",
+      "sport": "mma",
+      "publishedAt": "2026-11-20T07:43:55+00:00",
+      "score": 5,
+      "_summaryText": "The UFC Qatar official weigh-ins were mostly without drama, especially with the main card set, but preliminary fighter Tahir Abdullayev spoiled what could have been a perfect session. Ahead of Saturday’s event at Ali Bin Hamad al-Attiyah Arena in Doha, Qatar, 24 fighters stepped to the scale and Abdullayev was the lone miss Friday morning. [&#8230;] \n\t\t\t\t\t\t\t\t\t\t\t\n\n\t\t\t\t\t\t\n<figure>\n\n<img alt=\"Tahir Abdullayev\" data-caption=\"Tahir Abdullayev was the lone UFC Qatar fighter to miss weight | Ed Mulholland, Zuffa LLC\" data-portal-copyright=\"Ed Mulholland, Zuffa LLC\" data-has-syndication-rights=\"1\" src=\"https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2305411471.jpg?quality=90&#038;strip=all&#038;crop=0,0,100,100\" />\n\t<figcaption>\n\tTahir Abdullayev was the lone UFC Qatar fighter to miss weight | Ed Mulholland, Zuffa LLC\t</figcaption>\n</figure>\n<p class=\"wp-block-paragraph\">The UFC Qatar official weigh-ins were mostly without drama, especially with the main card set, but preliminary fighter Tahir Abdullayev spoiled what could have been a perfect session.</p>\n\n<p class=\"wp-block-paragraph\">Ahead of Saturday’s event at Ali Bin Hamad al-Attiyah Arena in Doha, Qatar, 24 fighters stepped to the scale and Abdullayev was the lone miss Friday morning. Abdullayev weighed in at 172 pounds, one pound over the limit for a non-title welterweight bout, while his opponent Jake Matthews weighed in at 170 pounds.</p>\n\n<p class=\"wp-block-paragraph\">The UFC later <a href=\"https://www.ufc.com/news/official-weigh-results-ufc-qatar-prochazka-vs-stirling\">announced</a> that Abdullayev vs. Matthews will proceed at a catchweight, with Abdullayev forfeiting 20 percent of his purse as penalty.</p>\n\n<p class=\"wp-block-paragraph\">Fortunately for fans, headliners Jiri Prochazka and Navajo Stirling weighed in without a hitch, with both fighters making a statement by registering at the championship limit of 205 pounds. Co-main event featherweights Aljamain Sterling and Kevin Vallejos also hit championship weight at 145 pounds on the dot.</p>\n\n<p class=\"wp-block-paragraph\">Also of note, two-time featherweight title challenger Brian Ortega successfully made weight as he moves up a division, coming in at 155.5 pounds. His opponent, veteran lightweight Dan Hooker, weighed in at 156 pounds.</p>\n\n<p class=\"wp-block-paragraph\">Check out UFC Qatar official weigh-in results below.</p>\n\n<p class=\"wp-block-paragraph\"><strong>Main Card (Paramount+ at 1 p.m. ET)</strong></p>\n\n<p class=\"wp-block-paragraph\">Jiri Prochazka (205) vs. Navajo Stirling (205)</p>\n\n<p class=\"wp-block-paragraph\">Aljamain Sterling (145) vs. Kevin Vallejos (145)</p>\n\n<p class=\"wp-block-paragraph\">Dan Hooker (156) vs. Brian Ortega (155.5)</p>\n\n<p class=\"wp-block-paragraph\">Kyoji Horiguchi (126) vs. Asu Almabayev (125.5)</p>\n\n<p class=\"wp-block-paragraph\">Jared Cannonier (185) vs. Ikram Aliskerov (185.5)</p>\n\n<p class=\"wp-block-paragraph\"><strong>Preliminary Card (Paramount+ at 10 a.m. ET)</strong></p>\n\n<p class=\"wp-block-paragraph\">Aleksandre Topuria (136) vs. Santiago Luna (136)</p>\n\n<p class=\"wp-block-paragraph\">Shamil Gaziev (262) vs. Tallison Teixeira (253)</p>\n\n<p class=\"wp-block-paragraph\">Amir Albazi (126) vs. Alessandro Costa (126)</p>\n\n<p class=\"wp-block-paragraph\">Jake Matthews (170) vs. Tahir Abdullayev (172)*</p>\n\n<p class=\"wp-block-paragraph\">Nikolas Motta (155.5) vs. Dom Mar Fan (156)</p>\n\n<p class=\"wp-block-paragraph\">Diyar Nurgozhay (205) vs. Alik Lorenz (205)</p>\n\n<p class=\"wp-block-paragraph\">Shoaib Yousaf (156) vs. John Mitchell (155.5)</p>\n\n<p class=\"wp-block-paragraph\">*Abdullayev missed weight. His bout with Jake Matthews proceeds at a catchweight with Abdullayev forfeiting 20 percent of his purse as penalty</p>\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t",
+      "image": {
+        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2305411471.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "alt": "Tahir Abdullayev",
+        "credit": "Ed Mulholland, Zuffa LLC",
+        "sourceUrl": "https://www.mmafighting.com/ufc/522520/ufc-qatar-weigh-in-results-jiri-prochazka-vs-navajo-stirling-official-1-fighter-misses-weight",
+        "kind": "publisher",
+        "checkedAt": "2026-11-20T08:04:44.316229+00:00"
+      },
+      "firstSeenAt": "2026-11-20T08:04:44.316229+00:00",
+      "coverage": 3,
+      "alsoCoveredBy": [
+        "Cageside Press",
+        "MMA Weekly"
+      ]
+    },
     {
       "id": "581ab0f3f1c7f746f805",
       "title": "Official Weigh-In Results | UFC Qatar",
@@ -6643,16 +6667,18 @@
       "coverage": 1
     },
     {
-      "id": "50255348b8a54c22b6f7",
-      "title": "UFC Qatar: Prochazka vs. Stirling Weigh-In Results",
-      "url": "https://cagesidepress.com/2026/11/20/ufc-qatar-prochazka-vs-stirling-weigh-in-results/",
-      "source": "Cageside Press",
+      "id": "1fa3e7ea9fa6a13c9606",
+      "title": "UFC Fight Night 294 official weigh-in results from Qatar",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/20/ufc-fight-night-294-qatar-official-weigh-in-results/92873860007/",
+      "source": "MMA Junkie",
       "sport": "mma",
-      "publishedAt": "2026-11-20T05:01:22+00:00",
+      "publishedAt": "2026-11-19T23:27:00+00:00",
       "score": 5,
-      "_summaryText": "<p>The UFC touched down in Qatar this week, with Saturday&#8217;s UFC Qatar headlined by former light heavyweight champion Jiri Prochazka taking on the quickly rising Navajo Stirling. Much has been made over Prochazka&#8217;s loss to Stirling&#8217;s City Kickboxing teammate, Carlos Ulberg, last year. Prochazka looked to have the fight won, with Ulberg hurt. Yet he [&#8230;]</p>\n<p>The post <a href=\"https://cagesidepress.com/2026/11/20/ufc-qatar-prochazka-vs-stirling-weigh-in-results/\" data-wpel-link=\"internal\">UFC Qatar: Prochazka vs. Stirling Weigh-In Results</a> appeared first on <a href=\"https://cagesidepress.com\" data-wpel-link=\"internal\">Cageside Press</a>.</p>\n <p>The UFC touched down in Qatar this week, with Saturday&#8217;s UFC Qatar headlined by former light heavyweight champion Jiri Prochazka taking on the quickly rising Navajo Stirling.</p>\n<p>Much has been made over Prochazka&#8217;s loss to Stirling&#8217;s City Kickboxing teammate, Carlos Ulberg, last year. Prochazka looked to have the fight won, with Ulberg hurt. Yet he didn&#8217;t strike while the iron was hot, and instead was caught and put away himself by a fighter essentially operating on one leg.</p>\n<p>Now, Prochazka looks to prove he still has his killer instinct against an 11-0 New Zealand native who is coming off a win over another former champion in Jan Blachowicz. A win for Stirling would actually put him on a collision course with his own teammate in champ Ulberg, though &#8220;Black Jag&#8221; has been out since winning the title.</p>\n<p><em>Weigh-ins for UFC Qatar go down Friday local time; results can be found below.</em></p>\n<h3>UFC Qatar: Prochazka vs. Stirling Weigh-In Results</h3>\n<p><strong>Main card</strong></p>\n<p><em>Light Heavyweight</em>: Jiří Procházka vs. Navajo Stirling<br />\n<em>Featherweight</em>: Aljamain Sterling vs. Kevin Vallejos<br />\n<em>Lightweight</em>: Dan Hooker vs. Brian Ortega<br />\n<em>Flyweight</em>: Kyoji Horiguchi vs. Asu Almabayev<br />\n<em>Middleweight</em>: Jared Cannonier vs. Ikram Aliskerov</p>\n<p><strong>Preliminary card</strong></p>\n<p><em>Bantamweight</em>: Aleksandre Topuria vs. Santiago Luna<br />\n<em>Heavyweight</em>: Shamil Gaziev vs. Tallison Teixeira<br />\n<em>Flyweight</em>: Amir Albazi vs. Alessandro Costa<br />\n<em>Welterweight</em>: Jake Matthews vs. Tahir Abdullayev<br />\n<em>Lightweight</em>: Nikolas Motta vs. Dom Mar Fan<br />\n<em>Light Heavyweight</em>: Diyar Nurgozhay vs. Alik Lorenz<br />\n<em>Lightweight</em>: Shoaib Yousaf vs. John Mitchell</p>\n<p>The post <a href=\"https://cagesidepress.com/2026/11/20/ufc-qatar-prochazka-vs-stirling-weigh-in-results/\" data-wpel-link=\"internal\">UFC Qatar: Prochazka vs. Stirling Weigh-In Results</a> appeared first on <a href=\"https://cagesidepress.com\" data-wpel-link=\"internal\">Cageside Press</a>.</p>\n",
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "_summaryText": "All 26 athletes scheduled to compete on Saturday's card at ABHA Arena in Doha, Qatar, are expected to step on the scale, including light heavyweight headliners Jiri Prochazka (32-6-1 MMA, 6-3 UFC) and ...",
       "image": null,
-      "firstSeenAt": "2026-11-20T05:48:15.615259+00:00",
+      "firstSeenAt": "2026-11-20T08:04:44.316229+00:00",
       "coverage": 1
     },
     {
@@ -7821,13 +7847,13 @@
     }
   ],
   "leads": {
-    "newest": "https://www.boxingnews24.com/2026/11/david-morrell-takes-a-huge-step-backward-against-rodriguez/",
+    "newest": "https://www.mmafighting.com/ufc/522425/ufc-qatar-weigh-in-video-prochazka-vs-stirling",
     "mostCovered": "https://www.mmafighting.com/ufc/522223/josh-hokit-explains-why-he-flipped-off-bruce-buffer-at-ufc-334-its-gonna-be-fck-you-every-time"
   },
   "deduplication": {
-    "checkedAt": "2026-11-20T06:48:36.783403+00:00",
+    "checkedAt": "2026-11-20T08:04:44.316229+00:00",
     "removedArticles": 6,
-    "removedResultReports": 0,
+    "removedResultReports": 2,
     "examples": [
       {
         "url": "https://www.sherdog.com/news/news/Amanda-Nunes-warns-Kayla-Harrison-This-is-not-PFL-baby-203695",
@@ -7863,6 +7889,18 @@
         "url": "https://www.mmanews.com/article/aljamain-sterling-says-he-dying-weight-cut",
         "title": "Aljamain Sterling Says He Is ‘Dying’ From Weight Cut",
         "keptUrl": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/17/ufc-qatar-aljamain-sterling-dying-weight-cut/92830420007/",
+        "reason": "same story"
+      },
+      {
+        "url": "https://www.mmaweekly.com/news/ufc-qatar-prochazka-vs-stirling-weigh-in-results-one-fighter-misses-weight",
+        "title": "UFC Qatar: Procházka vs. Stirling Weigh-In Results - One fighter misses weight",
+        "keptUrl": "https://www.mmafighting.com/ufc/522520/ufc-qatar-weigh-in-results-jiri-prochazka-vs-navajo-stirling-official-1-fighter-misses-weight",
+        "reason": "same story"
+      },
+      {
+        "url": "https://cagesidepress.com/2026/11/20/ufc-qatar-prochazka-vs-stirling-weigh-in-results/",
+        "title": "UFC Qatar: Prochazka vs. Stirling Weigh-In Results",
+        "keptUrl": "https://www.mmafighting.com/ufc/522520/ufc-qatar-weigh-in-results-jiri-prochazka-vs-navajo-stirling-official-1-fighter-misses-weight",
         "reason": "same story"
       }
     ]
