@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {currentFactRows,assessFactFreshness,currentFactFeed} from '../assets/sumo-facts-data.mjs';
+import {currentFactRows,assessFactFreshness,currentFactFeed,highWinPercentageRows,HIGH_WIN_PCT_THRESHOLD} from '../assets/sumo-facts-data.mjs';
 const roster={rikishi:[
  {sourceId:1,shikonaEn:'Wrestler A',currentRank:'Maegashira 1 East',heya:'Test'},
  {sourceId:2,shikonaEn:'Wrestler B',currentRank:'Makushita 1 East',heya:'Test'},
@@ -56,4 +56,44 @@ test('current official preview cohort is compatible with reviewed editorial figh
   for(const id of item.memberIds)assert.ok(ids.has(id),item.id+' has inactive/untracked ID '+id);
   assert.ok(item.sourceUrl.startsWith('https://'));
  }
+});
+
+test('win-percentage cards include 80%+ current-basho form in all tracked divisions',()=>{
+ const rows=currentFactRows(roster,details);
+ const leaders=highWinPercentageRows(rows);
+ assert.equal(HIGH_WIN_PCT_THRESHOLD,80);
+ assert.deepEqual(leaders.map(r=>[r.id,r.winPct]),[['1',90],['3',100],['2',100]]);
+ const feed=currentFactFeed(roster,details,{items:[]},{now});
+ for(const id of ['1','2','3']){
+  const card=feed.cards.find(c=>c.key==='winpct-'+id);
+  assert.ok(card,'missing 80%+ card for '+id);
+  assert.equal(card.category,'percent');
+  assert.match(card.description,/completed bouts/);
+  assert.match(card.description,/minimum of (3|5) completed bouts/);
+ }
+ assert.equal(feed.cards.find(c=>c.key==='winpct-1').metric,'90.0%');
+});
+
+test('high percentage never promotes tiny samples or rates under 80%',()=>{
+ const mk=(id,division,wins,losses)=>({
+  id:String(id),division,wins,losses,bouts:wins+losses,rankValue:id
+ });
+ const rows=[
+  mk(1,'Makuuchi',2,0),mk(2,'Juryo',4,0),mk(3,'Makushita',2,0),
+  mk(4,'Makuuchi',4,1),mk(5,'Juryo',7,3),mk(6,'Makushita',4,1),
+  mk(7,'Makuuchi',11,2),mk(8,'Juryo',0,0)
+ ];
+ const high=highWinPercentageRows(rows,{perDivision:10});
+ assert.deepEqual(high.map(x=>x.id),['7','4','6']);
+ assert.equal(high.find(x=>x.id==='7').winPct,84.6);
+ assert.equal(high.find(x=>x.id==='4').winPct,80);
+});
+
+test('win-percentage cards obey the 48-hour source staleness gate',()=>{
+ const stale=currentFactFeed(roster,details,{items:[]},{now:new Date('2026-11-25T07:00:00Z')});
+ assert.equal(stale.fresh,false);
+ assert.equal(stale.cards.some(c=>c.category==='percent'),false);
+ const app=readFileSync(new URL('../assets/sumo-facts.mjs',import.meta.url),'utf8');
+ assert.match(app,/Win % Leaders/);
+ assert.match(app,/80%\+ basho win rate/);
 });
