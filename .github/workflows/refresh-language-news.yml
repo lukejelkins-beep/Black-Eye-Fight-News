@@ -6,7 +6,7 @@ name: Refresh Japanese and Spanish news
 # The script never prints the key, stops at 90% of the provider's allowance, and caches every translation.
 on:
   schedule:
-    - cron: '27 * * * *'
+    - cron: '27 */3 * * *'
   workflow_dispatch:
     inputs:
       check_key:

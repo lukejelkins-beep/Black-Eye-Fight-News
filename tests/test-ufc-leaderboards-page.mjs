@@ -7,7 +7,10 @@ const html=readIndex();
 const js=fs.readFileSync("assets/fighter-insights.js","utf8");
 const css=fs.readFileSync("assets/ufc-stat-leaderboards.css","utf8");
 test("dedicated UFC statistics route is navigable with a responsive standalone page",()=>{
- assert.match(html,/href="#leaderboards" data-nav="leaderboards"/);
+ // Five-item navigation (PR #329, owner approved): UFC stats is a sub-link
+ // inside Fighters, and the #leaderboards route itself still works.
+ assert.match(html,/\['#leaderboards','UFC stats','leaderboards'\]/);
+ assert.match(html,/const all=\[[^\]]*'leaderboards'/);
  assert.match(html,/leaderboards:renderLeaderboards/);
  assert.match(html,/function renderLeaderboards\(\)/);
  assert.match(html,/data-befn-v3-leaderboards aria-live="polite"/);

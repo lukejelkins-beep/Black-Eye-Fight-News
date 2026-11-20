@@ -77,13 +77,25 @@ def approved_names(config, language):
     return {norm(p["name"]): p for p in config[language]["approved"]}
 
 
-def select(items, approved, sport, now):
+def on_topic(title, rule):
+    """A search for one sport also returns other sports from the same publisher.
+    Keep a headline that names the sport; otherwise drop it if it names another combat sport."""
+    if not rule:
+        return True
+    if any(w in title for w in rule.get("keepIfMentions", [])):
+        return True
+    return not any(w in title for w in rule.get("dropIfMentions", []))
+
+
+def select(items, approved, sport, now, topic_rule=None):
     """Keep recent stories from approved publishers only; the rest is dropped unread."""
     chosen = []
     for it in items:
         publisher = approved.get(norm(it["publisher"]))
         age = (now - it["publishedAt"]).total_seconds() / 3600
         if not publisher or age > MAX_AGE_HOURS or age < -2 or len(it["title"]) > MAX_HEADLINE_CHARS:
+            continue
+        if not on_topic(it["title"], topic_rule):
             continue
         chosen.append({**it, "sport": sport, "publisherEnglish": publisher.get("english") or it["publisher"]})
     return chosen
@@ -169,7 +181,7 @@ def fetch(url, opener=urllib.request.urlopen):
 def collect(config, now, fetcher=fetch):
     """Return ({language: [stories]}, report) with no translation yet."""
     found, report = {}, []
-    for language in ("ja", "es"):
+    for language in [l for l in ("ja", "es") if config.get(l, {}).get("queries")]:
         approved = approved_names(config, language)
         stories, seen_urls = [], set()
         for sport, queries in config[language]["queries"].items():
@@ -181,7 +193,7 @@ def collect(config, now, fetcher=fetch):
                     except Exception as error:  # a search that fails is reported, not fatal
                         report.append(f"{language} {sport} '{query}' {edition[1]}: failed ({str(error)[:60]})")
                         continue
-                    chosen = select(items, approved, sport, now)
+                    chosen = select(items, approved, sport, now, config[language].get("topicFilter", {}).get(sport))
                     report.append(f"{language} {sport} '{query}' {edition[1]}: {len(items)} found, {len(chosen)} from approved publishers")
                     for s in chosen:
                         if s["url"] not in seen_urls and norm(s["title"]) not in {norm(x["title"]) for x in stories}:
@@ -225,7 +237,7 @@ def run(args):
         "provider": "DeepL", "note": "Headlines only are machine-translated. The original headline and link are kept with each story.",
         "allowance": usage, "charactersSentThisRun": sent,
         "counts": {lang: len(v) for lang, v in stories.items()},
-        "stories": stories["ja"] + stories["es"],
+        "stories": [x for v in stories.values() for x in v],
     }
     print(f"Language news: {payload['counts']}, {sent} characters translated this run")
     if args.dry_run:

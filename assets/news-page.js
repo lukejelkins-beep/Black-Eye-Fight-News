@@ -84,8 +84,8 @@
     for (const s of all) { if (picked.length < max && !picked.includes(s)) picked.push(s); }
     const shown = picked.sort((a, b) => time(b) - time(a));
     if (!shown.length) return '';
-    return '<section class="np-intl" aria-label="Translated headlines from Japan and Spain">' +
-      '<div class="np-section-head"><h2>From Japan and Spain</h2><span class="np-note">Headlines translated by DeepL</span></div>' +
+    return '<section class="np-intl" aria-label="Translated headlines from Japan">' +
+      '<div class="np-section-head"><h2>' + (shown.every(x => x.sport === 'sumo' && x.language === 'ja') ? 'Sumo news from Japan' : 'From Japan and Spain') + '</h2><span class="np-note">Headlines translated by DeepL</span></div>' +
       '<div class="np-intl-grid">' + shown.map(s => {
         const href = h.safeURL(s.url);
         const lang = LANGUAGE_LABEL[s.language] || s.translatedFrom || '';

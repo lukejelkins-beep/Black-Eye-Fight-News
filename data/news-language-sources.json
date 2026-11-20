@@ -1,278 +1,315 @@
 {
- "schemaVersion": 1,
- "status": "proposed 2026-11-19; the owner approves this list before any of it is collected",
- "method": "Google News search (RSS) per query; keep a story only when its publisher is on the approved list for that language. Translate the headline only, label it, and link the original.",
- "ja": {
-  "queries": {
-   "boxing": [
-    "ボクシング"
-   ],
-   "mma": [
-    "RIZIN",
-    "UFC",
-    "パンクラス",
-    "格闘技"
-   ],
-   "grappling": [
-    "柔術",
-    "グラップリング"
-   ],
-   "sumo": [
-    "相撲",
-    "大相撲"
-   ]
+  "schemaVersion": 1,
+  "status": "proposed 2026-11-19; the owner approves this list before any of it is collected",
+  "method": "Google News search (RSS) per query; keep a story only when its publisher is on the approved list for that language. Translate the headline only, label it, and link the original.",
+  "ja": {
+    "queries": {
+      "sumo": [
+        "相撲",
+        "大相撲"
+      ]
+    },
+    "approved": [
+      {
+        "name": "日刊スポーツ",
+        "english": "Nikkan Sports",
+        "kind": "newspaper"
+      },
+      {
+        "name": "サンスポ",
+        "english": "Sankei Sports",
+        "kind": "newspaper"
+      },
+      {
+        "name": "スポーツ報知",
+        "english": "Sports Hochi",
+        "kind": "newspaper"
+      },
+      {
+        "name": "スポニチ Sponichi Annex",
+        "english": "Sponichi",
+        "kind": "newspaper"
+      },
+      {
+        "name": "東スポWEB",
+        "english": "Tokyo Sports",
+        "kind": "newspaper"
+      },
+      {
+        "name": "スポーツナビ",
+        "english": "Sports Navi",
+        "kind": "sports site"
+      },
+      {
+        "name": "スポーツブル",
+        "english": "SPORTS BULL",
+        "kind": "sports site",
+        "note": "highest volume for sumo and combat; check quality in the first week"
+      },
+      {
+        "name": "Number Web",
+        "english": "Number",
+        "kind": "magazine"
+      },
+      {
+        "name": "ENCOUNT",
+        "english": "ENCOUNT",
+        "kind": "sports site"
+      },
+      {
+        "name": "イーファイト",
+        "english": "eFight",
+        "kind": "combat specialist"
+      },
+      {
+        "name": "ゴング格闘技",
+        "english": "Gong Kakutogi",
+        "kind": "combat specialist"
+      },
+      {
+        "name": "BOUTREVIEW",
+        "english": "BoutReview",
+        "kind": "combat specialist"
+      },
+      {
+        "name": "RIZIN",
+        "english": "RIZIN official",
+        "kind": "promotion"
+      },
+      {
+        "name": "ONE Championship",
+        "english": "ONE official",
+        "kind": "promotion"
+      },
+      {
+        "name": "UFC.com",
+        "english": "UFC official",
+        "kind": "promotion"
+      },
+      {
+        "name": "NHK",
+        "english": "NHK",
+        "kind": "broadcaster",
+        "note": "main source for sumo tournaments"
+      },
+      {
+        "name": "日本経済新聞",
+        "english": "Nikkei",
+        "kind": "newspaper"
+      },
+      {
+        "name": "時事ドットコム",
+        "english": "Jiji Press",
+        "kind": "news agency"
+      },
+      {
+        "name": "AFPBB News",
+        "english": "AFP",
+        "kind": "news agency"
+      },
+      {
+        "name": "Yahoo!ニュース",
+        "english": "Yahoo! News Japan",
+        "kind": "aggregator",
+        "note": "carries the real publisher's story; show the publisher named on the page, never Yahoo as the author"
+      }
+    ],
+    "excluded": [
+      "ABEMA",
+      "ニコニコチャンネル",
+      "ファミ通",
+      "4Gamer.net",
+      "Infoseek",
+      "ｄメニューニュース",
+      "au Webポータル",
+      "U-NEXTヘルプセンター",
+      "BigGo ファイナンス",
+      "Vietnam.vn",
+      "Korean and other foreign-language outlets"
+    ],
+    "topicFilter": {
+      "sumo": {
+        "keepIfMentions": [
+          "相撲",
+          "力士",
+          "場所",
+          "横綱",
+          "大関",
+          "関脇",
+          "小結",
+          "幕内",
+          "十両",
+          "幕下",
+          "親方",
+          "部屋",
+          "土俵",
+          "番付",
+          "賜杯",
+          "千秋楽",
+          "取組",
+          "白星",
+          "黒星"
+        ],
+        "dropIfMentions": [
+          "ボクシング",
+          "世界戦",
+          "ボクサー",
+          "【ONE】",
+          "【BOM】",
+          "RIZIN",
+          "UFC",
+          "PFL",
+          "K-1",
+          "パンクラス",
+          "新日本",
+          "プロレス",
+          "ラウンド",
+          "KO勝",
+          "王座決定戦",
+          "ベルト",
+          "王者",
+          "世界ランカー"
+        ]
+      }
+    }
   },
-  "approved": [
-   {
-    "name": "日刊スポーツ",
-    "english": "Nikkan Sports",
-    "kind": "newspaper"
-   },
-   {
-    "name": "サンスポ",
-    "english": "Sankei Sports",
-    "kind": "newspaper"
-   },
-   {
-    "name": "スポーツ報知",
-    "english": "Sports Hochi",
-    "kind": "newspaper"
-   },
-   {
-    "name": "スポニチ Sponichi Annex",
-    "english": "Sponichi",
-    "kind": "newspaper"
-   },
-   {
-    "name": "東スポWEB",
-    "english": "Tokyo Sports",
-    "kind": "newspaper"
-   },
-   {
-    "name": "スポーツナビ",
-    "english": "Sports Navi",
-    "kind": "sports site"
-   },
-   {
-    "name": "スポーツブル",
-    "english": "SPORTS BULL",
-    "kind": "sports site",
-    "note": "highest volume for sumo and combat; check quality in the first week"
-   },
-   {
-    "name": "Number Web",
-    "english": "Number",
-    "kind": "magazine"
-   },
-   {
-    "name": "ENCOUNT",
-    "english": "ENCOUNT",
-    "kind": "sports site"
-   },
-   {
-    "name": "イーファイト",
-    "english": "eFight",
-    "kind": "combat specialist"
-   },
-   {
-    "name": "ゴング格闘技",
-    "english": "Gong Kakutogi",
-    "kind": "combat specialist"
-   },
-   {
-    "name": "BOUTREVIEW",
-    "english": "BoutReview",
-    "kind": "combat specialist"
-   },
-   {
-    "name": "RIZIN",
-    "english": "RIZIN official",
-    "kind": "promotion"
-   },
-   {
-    "name": "ONE Championship",
-    "english": "ONE official",
-    "kind": "promotion"
-   },
-   {
-    "name": "UFC.com",
-    "english": "UFC official",
-    "kind": "promotion"
-   },
-   {
-    "name": "NHK",
-    "english": "NHK",
-    "kind": "broadcaster",
-    "note": "main source for sumo tournaments"
-   },
-   {
-    "name": "日本経済新聞",
-    "english": "Nikkei",
-    "kind": "newspaper"
-   },
-   {
-    "name": "時事ドットコム",
-    "english": "Jiji Press",
-    "kind": "news agency"
-   },
-   {
-    "name": "AFPBB News",
-    "english": "AFP",
-    "kind": "news agency"
-   },
-   {
-    "name": "Yahoo!ニュース",
-    "english": "Yahoo! News Japan",
-    "kind": "aggregator",
-    "note": "carries the real publisher's story; show the publisher named on the page, never Yahoo as the author"
-   }
+  "rules": [
+    "Only stories whose publisher is on the approved list are kept; anything else is dropped without being read.",
+    "Headline only is translated, never the article; the story shows 'Translated from Japanese/Spanish' and links the original.",
+    "Photos: never copied from these publishers; use the cleared local fighter photo when a fighter is named, else the sport placeholder.",
+    "The owner can add or remove a publisher at any time; changes are a one-line edit to this file."
   ],
-  "excluded": [
-   "ABEMA",
-   "ニコニコチャンネル",
-   "ファミ通",
-   "4Gamer.net",
-   "Infoseek",
-   "ｄメニューニュース",
-   "au Webポータル",
-   "U-NEXTヘルプセンター",
-   "BigGo ファイナンス",
-   "Vietnam.vn",
-   "Korean and other foreign-language outlets"
-  ]
- },
- "es": {
-  "queries": {
-   "boxing": [
-    "boxeo",
-    "boxeo Canelo"
-   ],
-   "mma": [
-    "UFC",
-    "MMA",
-    "Topuria"
-   ],
-   "grappling": [
-    "jiu-jitsu brasileño"
-   ]
-  },
-  "approved": [
-   {
-    "name": "ESPN México",
-    "english": "ESPN Mexico",
-    "kind": "broadcaster"
-   },
-   {
-    "name": "ESPN Deportes",
-    "english": "ESPN Deportes",
-    "kind": "broadcaster"
-   },
-   {
-    "name": "MARCA",
-    "english": "Marca",
-    "kind": "newspaper"
-   },
-   {
-    "name": "Diario AS",
-    "english": "AS",
-    "kind": "newspaper"
-   },
-   {
-    "name": "Mundo Deportivo",
-    "english": "Mundo Deportivo",
-    "kind": "newspaper"
-   },
-   {
-    "name": "SPORT",
-    "english": "Sport",
-    "kind": "newspaper"
-   },
-   {
-    "name": "Infobae",
-    "english": "Infobae",
-    "kind": "news site"
-   },
-   {
-    "name": "Récord",
-    "english": "Récord",
-    "kind": "newspaper"
-   },
-   {
-    "name": "TUDN",
-    "english": "TUDN",
-    "kind": "broadcaster"
-   },
-   {
-    "name": "Telemundo",
-    "english": "Telemundo Deportes",
-    "kind": "broadcaster"
-   },
-   {
-    "name": "Univision",
-    "english": "Univision Deportes",
-    "kind": "broadcaster"
-   },
-   {
-    "name": "Eurosport",
-    "english": "Eurosport",
-    "kind": "broadcaster"
-   },
-   {
-    "name": "DAZN",
-    "english": "DAZN",
-    "kind": "broadcaster",
-    "note": "mixes news with promotion; use only boxing and MMA news items"
-   },
-   {
-    "name": "Solo Boxeo",
-    "english": "Solo Boxeo",
-    "kind": "boxing specialist"
-   },
-   {
-    "name": "World Boxing Council",
-    "english": "WBC official",
-    "kind": "sanctioning body"
-   },
-   {
-    "name": "UFCESPANOL.com",
-    "english": "UFC Español",
-    "kind": "promotion",
-    "note": "UFC's Spanish-language site"
-   },
-   {
-    "name": "https://www.mma.es/",
-    "english": "MMA.es",
-    "kind": "MMA specialist"
-   },
-   {
-    "name": "Milenio",
-    "english": "Milenio",
-    "kind": "newspaper"
-   },
-   {
-    "name": "ABC",
-    "english": "ABC (Spain)",
-    "kind": "newspaper"
-   }
-  ],
-  "excluded": [
-   "Facebook",
-   "Yahoo",
-   "Olympics",
-   "365Scores",
-   "OkDiario",
-   "El Debate",
-   "MUNDIARIO",
-   "INFO7",
-   "La Prensa Nicaragua",
-   "UNANIMO Deportes",
-   "regional and local outlets not named above"
-  ]
- },
- "rules": [
-  "Only stories whose publisher is on the approved list are kept; anything else is dropped without being read.",
-  "Headline only is translated, never the article; the story shows 'Translated from Japanese/Spanish' and links the original.",
-  "Photos: never copied from these publishers; use the cleared local fighter photo when a fighter is named, else the sport placeholder.",
-  "The owner can add or remove a publisher at any time; changes are a one-line edit to this file."
- ]
+  "paused": {
+    "note": "Owner asked for sumo news from Japan only (19 Nov) and dropped Spanish. Nothing here is collected. To restore, move a block back to the top level.",
+    "ja": {
+      "boxing": [
+        "ボクシング"
+      ],
+      "mma": [
+        "RIZIN",
+        "UFC",
+        "パンクラス",
+        "格闘技"
+      ],
+      "grappling": [
+        "柔術",
+        "グラップリング"
+      ]
+    },
+    "es": {
+      "queries": {
+        "boxing": [
+          "boxeo",
+          "boxeo Canelo"
+        ],
+        "mma": [
+          "UFC",
+          "MMA",
+          "Topuria"
+        ],
+        "grappling": [
+          "jiu-jitsu brasileño"
+        ]
+      },
+      "approved": [
+        {
+          "name": "ESPN México",
+          "english": "ESPN Mexico",
+          "kind": "broadcaster"
+        },
+        {
+          "name": "ESPN Deportes",
+          "english": "ESPN Deportes",
+          "kind": "broadcaster"
+        },
+        {
+          "name": "MARCA",
+          "english": "Marca",
+          "kind": "newspaper"
+        },
+        {
+          "name": "Diario AS",
+          "english": "AS",
+          "kind": "newspaper"
+        },
+        {
+          "name": "Mundo Deportivo",
+          "english": "Mundo Deportivo",
+          "kind": "newspaper"
+        },
+        {
+          "name": "SPORT",
+          "english": "Sport",
+          "kind": "newspaper"
+        },
+        {
+          "name": "Infobae",
+          "english": "Infobae",
+          "kind": "news site"
+        },
+        {
+          "name": "Récord",
+          "english": "Récord",
+          "kind": "newspaper"
+        },
+        {
+          "name": "TUDN",
+          "english": "TUDN",
+          "kind": "broadcaster"
+        },
+        {
+          "name": "Telemundo",
+          "english": "Telemundo Deportes",
+          "kind": "broadcaster"
+        },
+        {
+          "name": "Univision",
+          "english": "Univision Deportes",
+          "kind": "broadcaster"
+        },
+        {
+          "name": "Eurosport",
+          "english": "Eurosport",
+          "kind": "broadcaster"
+        },
+        {
+          "name": "DAZN",
+          "english": "DAZN",
+          "kind": "broadcaster",
+          "note": "mixes news with promotion; use only boxing and MMA news items"
+        },
+        {
+          "name": "Solo Boxeo",
+          "english": "Solo Boxeo",
+          "kind": "boxing specialist"
+        },
+        {
+          "name": "World Boxing Council",
+          "english": "WBC official",
+          "kind": "sanctioning body"
+        },
+        {
+          "name": "UFCESPANOL.com",
+          "english": "UFC Español",
+          "kind": "promotion",
+          "note": "UFC's Spanish-language site"
+        },
+        {
+          "name": "https://www.mma.es/",
+          "english": "MMA.es",
+          "kind": "MMA specialist"
+        },
+        {
+          "name": "Milenio",
+          "english": "Milenio",
+          "kind": "newspaper"
+        },
+        {
+          "name": "ABC",
+          "english": "ABC (Spain)",
+          "kind": "newspaper"
+        }
+      ]
+    }
+  }
 }
