@@ -2,6 +2,9 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-21
+- Translated sumo news from Japan refreshes every 3 hours (owner), not every 15 minutes; the language job's schedule is `27 */3 * * *`. The earlier 15-minute change (PR #321) no longer applies to it. A topic filter drops boxing, ONE, New Japan and other non-sumo headlines that the 相撲 search also returns from the same publishers (first live run: 5 of 60 were not sumo). Names-only sumo headlines are kept. — Owner — PR for branch feat/sumo-relevance-3h.
+
 ## 2026-11-19
 - Translated news narrowed to sumo from Japan only (owner: "i just want sumo news from japan"). Spanish dropped entirely; Japanese boxing, MMA and grappling queries paused, all kept under `paused` in data/news-language-sources.json so they can be restored. The News page section is titled "Sumo news from Japan". Cause of the earlier empty sumo list: sumo was the last query, so the 60-new-headlines-per-run cap went to boxing and MMA first. — Owner — PR for branch feat/sumo-japan-news.
 - Compact header and five-item navigation (News, Fights, Fighters, Analysis, Fight Talk) replace the logo band, seven-tab bar and round sport buttons. Sport filter is labelled text: All sports, Boxing, MMA, Grappling (Sumo is not in the main app yet, so it is not listed). Champions, UFC stats and Fight film stay reachable as sub-links inside Fighters and Fights; old #champions, #leaderboards, #highlights, #calendar and #results links still work. Phone tabs are the same five items. Analysis is a short "coming" page. — Owner approved ("yes pls") from PHASE-1.md steps 1-2 — PR #329.

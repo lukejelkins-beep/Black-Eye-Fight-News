@@ -126,7 +126,52 @@
       "BigGo ファイナンス",
       "Vietnam.vn",
       "Korean and other foreign-language outlets"
-    ]
+    ],
+    "topicFilter": {
+      "sumo": {
+        "keepIfMentions": [
+          "相撲",
+          "力士",
+          "場所",
+          "横綱",
+          "大関",
+          "関脇",
+          "小結",
+          "幕内",
+          "十両",
+          "幕下",
+          "親方",
+          "部屋",
+          "土俵",
+          "番付",
+          "賜杯",
+          "千秋楽",
+          "取組",
+          "白星",
+          "黒星"
+        ],
+        "dropIfMentions": [
+          "ボクシング",
+          "世界戦",
+          "ボクサー",
+          "【ONE】",
+          "【BOM】",
+          "RIZIN",
+          "UFC",
+          "PFL",
+          "K-1",
+          "パンクラス",
+          "新日本",
+          "プロレス",
+          "ラウンド",
+          "KO勝",
+          "王座決定戦",
+          "ベルト",
+          "王者",
+          "世界ランカー"
+        ]
+      }
+    }
   },
   "rules": [
     "Only stories whose publisher is on the approved list are kept; anything else is dropped without being read.",
