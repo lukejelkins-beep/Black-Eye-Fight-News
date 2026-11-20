@@ -345,3 +345,9 @@
  .befn-pro-score .befn-pro-progress{flex:none}
 }
 #fighterDialog.befn-pro-dialog .bsp-history>summary small,#fighterDialog.befn-pro-dialog .bsp-compare-label small{font-size:12px}
+
+/* "Unrated" is a word, not a number: smaller, and never wider than its column
+   (also when the condensed web font has not loaded and a wide fallback is used). */
+.befn-pro-rating,.befn-pro-score{min-width:0;max-width:100%}
+.befn-pro-score .befn-v3-score{max-width:100%;overflow-wrap:anywhere}
+.befn-pro-score.is-unrated .befn-v3-score{font-size:clamp(34px,3.6vw,48px);line-height:1}
