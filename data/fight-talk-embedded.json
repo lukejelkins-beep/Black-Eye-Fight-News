@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-20T20:33:54.787Z",
-  "checkedAt": "2026-11-20T20:33:54.787Z",
+  "attemptedAt": "2026-11-20T21:27:12.098Z",
+  "checkedAt": "2026-11-20T21:27:12.098Z",
   "windowDays": 28,
-  "articlesChecked": 31,
+  "articlesChecked": 30,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 45,
   "publisherSourcesConfigured": 33,
-  "linksFound": 11,
-  "newEmbedsVerified": 1,
+  "linksFound": 12,
+  "newEmbedsVerified": 2,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -122,6 +122,44 @@
       "embedVerified": true,
       "linkPriority": 55,
       "url": "https://x.com/ufc/status/2123662071611167122"
+    },
+    {
+      "type": "post",
+      "platform": "Threads",
+      "sport": "mma",
+      "name": "Original Threads post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-20T21:27:12.098Z",
+      "discoveredAt": "2026-11-20T21:27:12.098Z",
+      "sourcePublisher": "UFC",
+      "evidenceUrl": "https://www.ufc.com/",
+      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 12,
+      "url": "https://www.threads.com/t/Df9-iMpjzB4/"
+    },
+    {
+      "type": "post",
+      "platform": "Threads",
+      "sport": "mma",
+      "name": "Original Threads post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-20T21:27:12.098Z",
+      "discoveredAt": "2026-11-20T21:27:12.098Z",
+      "sourcePublisher": "UFC",
+      "evidenceUrl": "https://www.ufc.com/",
+      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 12,
+      "url": "https://www.threads.com/t/Df990xFlWDU/"
     },
     {
       "type": "post",
@@ -2323,48 +2361,6 @@
       "embedVerified": true,
       "linkPriority": 55,
       "url": "https://x.com/ufc/status/2121374330064150553"
-    },
-    {
-      "type": "post",
-      "platform": "X",
-      "sport": "mma",
-      "name": "UFC",
-      "role": "promoter",
-      "handle": "@ufc",
-      "nativeEmbed": true,
-      "originalDateUnverified": false,
-      "postedAt": "2026-11-13T22:39:32.864Z",
-      "sourceLinkedAt": "2026-11-13T23:06:51+00:00",
-      "discoveredAt": "2026-11-13T23:52:19.027Z",
-      "sourcePublisher": "MMA Fighting",
-      "evidenceUrl": "https://www.mmafighting.com/ufc/521011/josh-hokit-issues-warning-to-ciryl-gane-before-ufc-334-main-event-im-going-to-beat-the-sht-out-of-you",
-      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 55,
-      "url": "https://x.com/ufc/status/2121372420359791070"
-    },
-    {
-      "type": "post",
-      "platform": "X",
-      "sport": "mma",
-      "name": "UFC",
-      "role": "promoter",
-      "handle": "@ufc",
-      "nativeEmbed": true,
-      "originalDateUnverified": false,
-      "postedAt": "2026-11-13T22:22:49.743Z",
-      "sourceLinkedAt": "2026-11-13T23:06:51+00:00",
-      "discoveredAt": "2026-11-13T23:52:19.027Z",
-      "sourcePublisher": "MMA Fighting",
-      "evidenceUrl": "https://www.mmafighting.com/ufc/521011/josh-hokit-issues-warning-to-ciryl-gane-before-ufc-334-main-event-im-going-to-beat-the-sht-out-of-you",
-      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 55,
-      "url": "https://x.com/ufc/status/2121368212965396923"
     }
   ],
   "seenOriginals": [
@@ -3283,6 +3279,14 @@
     {
       "url": "https://www.instagram.com/p/Df-BiwHNX-x/",
       "firstSeen": "2026-11-20T20:33:54.787Z"
+    },
+    {
+      "url": "https://www.threads.com/t/Df9-iMpjzB4/",
+      "firstSeen": "2026-11-20T21:27:12.098Z"
+    },
+    {
+      "url": "https://www.threads.com/t/Df990xFlWDU/",
+      "firstSeen": "2026-11-20T21:27:12.098Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
