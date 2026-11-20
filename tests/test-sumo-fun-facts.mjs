@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {currentFactRows,assessFactFreshness,currentFactFeed,highWinPercentageRows,HIGH_WIN_PCT_THRESHOLD,rollingWinPercentageRows,ROLLING_BASHO_MAX} from '../assets/sumo-facts-data.mjs';
-import {historicalBashos,divisionFromRank,buildHistoricalFacts} from '../scripts/sumo-facts-rollup.mjs';
+import {currentFactRows,assessFactFreshness,currentFactFeed,highWinPercentageRows,HIGH_WIN_PCT_THRESHOLD,rollingWinPercentageRows,ROLLING_BASHO_MAX,risingStarCards} from '../assets/sumo-facts-data.mjs';
+import {historicalBashos,divisionFromRank,buildHistoricalFacts,buildRisers} from '../scripts/sumo-facts-rollup.mjs';
 const roster={rikishi:[
  {sourceId:1,shikonaEn:'Wrestler A',currentRank:'Maegashira 1 East',heya:'Test'},
  {sourceId:2,shikonaEn:'Wrestler B',currentRank:'Makushita 1 East',heya:'Test'},
@@ -105,6 +105,12 @@ test('historical basho calendar moves in six-basho annual sequence',()=>{
  assert.deepEqual(historicalBashos('202613',1),[]);
  assert.equal(divisionFromRank('Makuuchi 3 West').expected,15);
  assert.equal(divisionFromRank('Makushita 8 East').expected,7);
+ // Real Sumo API top-division ranks use titles, not "Makuuchi".
+ for(const rank of ['Yokozuna 1 East','Ozeki 2 West','Sekiwake 1 East','Komusubi 1 West','Maegashira 17 West']){
+  assert.deepEqual(divisionFromRank(rank),{division:'Makuuchi',expected:15},rank);
+ }
+ assert.deepEqual(divisionFromRank('Juryo 14 East'),{division:'Juryo',expected:15});
+ assert.equal(divisionFromRank('Banzuke-gai'),null);
  assert.equal(ROLLING_BASHO_MAX,30);
 });
 test('rolling rates include only fully recorded past basho and current completed decisions',()=>{
@@ -182,4 +188,78 @@ test('actual cached bout ledger can produce historical rolling summaries without
    twoBashoRanked:current.length,
    threeBashoRanked:rollingWinPercentageRows(liveRoster,{...liveDetails,funFactsHistory:built},3).length
  }));
+});
+
+// ---- Rising stars -------------------------------------------------------
+const riseRoster={rikishi:[
+ {sourceId:11,shikonaEn:'Fast',currentRank:'Makushita 40 East'},
+ {sourceId:12,shikonaEn:'Collegiate',currentRank:'Makushita 30 East'},
+ {sourceId:13,shikonaEn:'Climber',currentRank:'Makushita 20 West'},
+ {sourceId:14,shikonaEn:'Nearly',currentRank:'Makushita 25 West'},
+ {sourceId:15,shikonaEn:'Gap',currentRank:'Makushita 50 East'}]};
+const riseDetails={bashoId:'202611'};
+const ranks=list=>({rank:list.map(([basho,rank])=>({basho,rank}))});
+const riseCareer={bySourceId:{
+ 11:ranks([['202605','Jonokuchi 10 East'],['202607','Jonidan 10 East'],['202609','Sandanme 10 East'],['202611','Makushita 40 East']]),
+ 12:ranks([['202607','Makushita 15 East'],['202609','Makushita 10 East'],['202611','Makushita 30 East']]),
+ 13:ranks([['202301','Jonokuchi 5 East'],['202503','Makushita 50 East'],['202605','Jonidan 90 West'],['202607','Jonidan 20 West'],['202609','Sandanme 40 West'],['202611','Makushita 20 West']]),
+ 14:ranks([['202301','Jonokuchi 5 West'],['202503','Makushita 55 East'],['202605','Jonidan 80 West'],['202607','Jonidan 30 West'],['202609','Sandanme 50 West'],['202611','Makushita 25 West']]),
+ 15:ranks([['202301','Jonokuchi 6 East'],['202503','Makushita 52 East'],['202605','Jonidan 70 West'],['202607','Jonidan 15 West'],['202609','Sandanme 30 West'],['202611','Makushita 50 East']])}};
+const days=(w,l)=>new Map([...Array(w).fill('win'),...Array(l).fill('loss')].map((r,i)=>[i+1,r]));
+const found=new Map([
+ ['11',new Map([['202605',days(7,0)],['202607',days(7,0)],['202609',days(5,2)]])],
+ ['13',new Map([['202605',days(6,1)],['202607',days(6,1)],['202609',days(7,0)]])],
+ ['14',new Map([['202605',days(5,2)],['202607',days(5,2)],['202609',days(5,2)]])],
+ ['15',new Map([['202605',days(6,1)],['202607',days(6,1)],['202609',days(4,1)]])]]);
+const riseHistory=()=>({schemaVersion:1,bashoId:'202611',risersVersion:1,
+ risers:buildRisers({roster:riseRoster,details:riseDetails,career:riseCareer,found})});
+test('rising stars: Jonokuchi fast track counted in ranked basho; collegiate entrants excluded',()=>{
+ const cards=risingStarCards(riseRoster,{...riseDetails,funFactsHistory:riseHistory()},{items:[]});
+ const fast=cards.find(c=>c.key==='rising-fast-11');
+ assert.ok(fast,'fast track card missing');
+ assert.equal(fast.headline,'Fast reached Makushita in his 4th ranked basho');
+ assert.match(fast.description,/Jonokuchi 10 East 7–0 · Jonidan 10 East 7–0 · Sandanme 10 East 5–2/);
+ assert.match(fast.description,/two perfect 7–0 basho/);
+ assert.ok(!cards.some(c=>c.memberIds.includes('12')),'Makushita tsukedashi start is not a Jonokuchi fast track');
+});
+test('rising stars: climbers need 16+ wins over three complete basho; incomplete is never 0-0',()=>{
+ const cards=risingStarCards(riseRoster,{...riseDetails,funFactsHistory:riseHistory()},{items:[]});
+ const climb=cards.find(c=>c.key==='rising-climb-13');
+ assert.equal(climb.headline,'Climber: Jonidan 90 West to Makushita 20 West in three basho');
+ assert.equal(climb.metric,'19–2');
+ assert.ok(!cards.some(c=>c.key==='rising-climb-14'),'15 wins is below the climber threshold');
+ assert.ok(!cards.some(c=>c.key==='rising-climb-15'),'an incomplete 4-1 basho must exclude the climber');
+ const gap=riseHistory().risers.find(x=>x.id==='15');
+ assert.deepEqual(gap.path.find(p=>p[0]==='202609'),['202609','Sandanme 30 West',null,null]);
+ assert.ok(cards.every(c=>!/0–0/.test(c.description)));
+});
+test('rising stars: shown editorial story replaces the automatic card; stale rollup shows nothing',()=>{
+ const details={...riseDetails,funFactsHistory:riseHistory()};
+ const story={items:[{id:'x',kind:'rising',memberIds:[11]}]};
+ assert.ok(!risingStarCards(riseRoster,details,story).some(c=>c.memberIds.includes('11')));
+ assert.ok(risingStarCards(riseRoster,details,story,{covered:new Set()}).some(c=>c.memberIds.includes('11')),
+  'an expired (unshown) editorial story must not hide the automatic card');
+ const veteran={rikishi:[{sourceId:11,shikonaEn:'Fast',currentRank:'Makushita 40 East'}]};
+ const old={bySourceId:{11:ranks([['202305','Jonokuchi 10 East'],['202307','Jonidan 10 East'],['202309','Sandanme 10 East'],['202311','Makushita 40 East'],['202611','Makushita 40 East']])}};
+ assert.deepEqual(risingStarCards(veteran,{...riseDetails,funFactsHistory:{bashoId:'202611',risersVersion:1,
+  risers:buildRisers({roster:veteran,details:riseDetails,career:old,found:new Map()})}},{items:[]}),[],'a 2023 starter is not a newcomer');
+ assert.deepEqual(risingStarCards(riseRoster,{...details,funFactsHistory:{...details.funFactsHistory,bashoId:'202609'}},{items:[]}),[]);
+});
+test('rising stars: current record appears only from a fresh snapshot',()=>{
+ const details={...riseDetails,funFactsHistory:riseHistory()};
+ const rows=[{id:'13',wins:5,losses:1,bouts:6,remaining:1},{id:'11',wins:4,losses:3,bouts:7,remaining:0}];
+ const fresh=risingStarCards(riseRoster,details,{items:[]},{rows,fresh:true});
+ assert.match(fresh.find(c=>c.key==='rising-climb-13').description,/Makushita 20 West, 5–1 so far\.$/);
+ assert.match(fresh.find(c=>c.key==='rising-fast-11').description,/Makushita 40 East 4–3\./);
+ const stale=risingStarCards(riseRoster,details,{items:[]},{rows,fresh:false});
+ assert.match(stale.find(c=>c.key==='rising-climb-13').description,/current basho\.$/);
+});
+test('rising stars from the real cache name tracked rikishi and source every card',()=>{
+ const json=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url),'utf8'));
+ const liveRoster=json('data/sumo/rikishi-index.json'),liveDetails=json('data/sumo/preview-details.json');
+ const built=buildHistoricalFacts({roster:liveRoster,details:liveDetails,career:json('data/sumo/career-history.json'),history:json('data/sumo/research-h2h-history.json')});
+ const ids=new Set(liveRoster.rikishi.map(w=>String(w.sourceId)));
+ const cards=risingStarCards(liveRoster,{...liveDetails,funFactsHistory:built},json('data/sumo/fun-facts-editorial.json'));
+ for(const c of cards){assert.ok(c.memberIds.every(id=>ids.has(id)));assert.match(c.sourceUrl,/^https:/);}
+ console.log('RISING STARS REAL CACHE: '+JSON.stringify({candidates:built.risers.length,cards:cards.map(c=>c.key)}));
 });
