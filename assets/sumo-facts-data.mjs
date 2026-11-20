@@ -54,6 +54,22 @@ const fact=(key,category,headline,description,rows,tag,metric,priority=0)=>({
  sourceUrl:FACT_SOURCE,sourceLabel:'Current Sumo API banzuke snapshot',kind:'dynamic'
 });
 const sortForm=(a,b)=>b.wins-a.wins||a.losses-b.losses||b.streak-a.streak||a.rankValue-b.rankValue;
+/** Meaningful high-current-basho win percentages, calculated from completed bouts only.
+ * A short 2-0 run doesn't outrank established 11-2 form. Lower divisions have
+ * only seven bouts per basho, so their minimum is appropriately lower.
+ */
+export const HIGH_WIN_PCT_THRESHOLD=80;
+export function highWinPercentageRows(rows,{perDivision=3}={}){
+ if(!Array.isArray(rows))return [];
+ const cap=Math.max(0,Math.min(12,Math.trunc(Number(perDivision)||0)));
+ return FACT_DIVISIONS.flatMap(division=>rows.filter(w=>
+   w.division===division&&Number.isInteger(w.wins)&&Number.isInteger(w.losses)&&
+   Number.isInteger(w.bouts)&&w.bouts===w.wins+w.losses&&
+   w.bouts>=(division==='Makushita'?3:5)&&w.wins*100>=HIGH_WIN_PCT_THRESHOLD*w.bouts)
+  .map(w=>({...w,winPct:Math.round((w.wins/w.bouts)*1000)/10}))
+  .sort((a,b)=>b.winPct-a.winPct||b.bouts-a.bouts||b.wins-a.wins||a.rankValue-b.rankValue)
+  .slice(0,cap));
+}
 export function currentFactFeed(roster,details,editorial,{now=new Date()}={}){
  const all=currentFactRows(roster,details);
  const timestamp=assessFactFreshness(details,now);
@@ -69,6 +85,16 @@ export function currentFactFeed(roster,details,editorial,{now=new Date()}={}){
     leaders.length===1?best.name+' leads BEFN’s current Makuuchi standings with '+best.wins+' wins and '+best.losses+' losses.':
     leaders.map(x=>x.name).join(', ')+' share the Makuuchi lead at '+best.wins+'–'+best.losses+'.',
     leaders,'TITLE RACE',best.wins+'–'+best.losses,105));
+  }
+  // Keep rate leaders distinct from raw win totals and consecutive streaks.
+  // Show high-percentage wrestlers in each division, not just Makuuchi.
+  for(const w of highWinPercentageRows(all)){
+    const pct=w.winPct.toFixed(1)+'%';
+    dynamic.push(fact('winpct-'+w.id,'percent',w.name+' is winning '+pct+' of bouts',
+      w.wins+' wins from '+w.bouts+' completed bouts ('+w.wins+'–'+w.losses+') in '+w.division+
+      ' this basho. Ranked by win percentage among BEFN-tracked wrestlers, with a minimum of '+
+      (w.division==='Makushita'?'3':'5')+' completed bouts.',
+      [w],'WIN % LEADER',pct,107));
   }
   const perfect=all.filter(x=>x.bouts>=4&&x.perfect).sort(sortForm).slice(0,6);
   for(const w of perfect)dynamic.push(fact('perfect-'+w.id,'fire',w.name+' is unbeaten',
@@ -129,7 +155,7 @@ export function currentFactFeed(roster,details,editorial,{now=new Date()}={}){
    card.memberIds.forEach(id=>selected.add(id));
   }
   selectedDynamic.push(card);
-  if(selectedDynamic.length>=18)break;
+  if(selectedDynamic.length>=24)break;
  }
  return {asOf:timestamp.timestamp,fresh:timestamp.fresh,ageHours:timestamp.ageHours,
   bashoId:String(details?.bashoId||''),bashoLabel:fmtBasho(details?.bashoId),
