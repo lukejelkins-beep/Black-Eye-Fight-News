@@ -35,6 +35,45 @@ export function divisionFromRank(rank){
  const division=MAKUUCHI_TITLES.has(word)?'Makuuchi':word[0].toUpperCase()+word.slice(1);
  return {division,expected:division==='Makuuchi'||division==='Juryo'?15:7};
 }
+const LOWER=new Set(['Makushita','Sandanme','Jonidan','Jonokuchi']);
+const bashoIndex=id=>Number(String(id).slice(0,4))*6+(Number(String(id).slice(4,6))-1)/2;
+export const RISER_LOOKBACK=12;
+/** Rising-star candidates: a recent Jonokuchi start now in Makushita or above,
+ * or a wrestler ranked in Sandanme or below three basho ago who is now in
+ * Makushita or above. Records are only given for complete basho (7 or 15
+ * regular bouts); otherwise null, never an assumed 0-0. The page decides
+ * which candidates become stories.
+ */
+export function buildRisers({roster,details,career,found}){
+ const current=String(details?.bashoId||''),now=bashoIndex(current),out=[];
+ for(const person of roster?.rikishi||[]){
+  const id=String(person.sourceId);
+  const ranks=(Array.isArray(career?.bySourceId?.[id]?.rank)?career.bySourceId[id].rank:[])
+   .filter(r=>/^20\d{2}(01|03|05|07|09|11)$/.test(String(r?.basho||''))&&String(r.basho)<=current&&divisionFromRank(r.rank))
+   .map(r=>({basho:String(r.basho),rank:String(r.rank)})).sort((a,b)=>a.basho.localeCompare(b.basho));
+  if(!ranks.length)continue;
+  if(ranks.at(-1).basho!==current&&divisionFromRank(person.currentRank))ranks.push({basho:current,rank:String(person.currentRank)});
+  if(ranks.at(-1).basho!==current)continue;
+  const nowDiv=divisionFromRank(ranks.at(-1).rank).division;
+  if(LOWER.has(nowDiv)&&nowDiv!=='Makushita')continue;
+  const entry=divisionFromRank(ranks[0].rank).division;
+  const recentStart=entry==='Jonokuchi'&&now-bashoIndex(ranks[0].basho)<=RISER_LOOKBACK;
+  const back3=ranks.find(r=>bashoIndex(r.basho)===now-3);
+  const climbed=back3&&LOWER.has(divisionFromRank(back3.rank).division)&&divisionFromRank(back3.rank).division!=='Makushita';
+  if(!recentStart&&!climbed)continue;
+  const record=r=>{
+   if(r.basho===current)return [r.basho,r.rank,null,null];
+   const level=divisionFromRank(r.rank),bouts=found.get(id)?.get(r.basho);
+   if(!bouts||bouts.size!==level.expected||[...bouts.values()].some(x=>x==='conflict'))return [r.basho,r.rank,null,null];
+   const w=[...bouts.values()].filter(x=>x==='win').length;
+   return [r.basho,r.rank,w,level.expected-w];
+  };
+  out.push({id,entry,firstRankedBasho:ranks[0].basho,rankedBashos:ranks.length,
+   path:ranks.slice(-8).map(record),pathStartsAtDebut:ranks.length<=8,
+   threeAgo:back3?back3.rank:null});
+ }
+ return out;
+}
 const validId=id=>Number.isSafeInteger(Number(id))&&Number(id)>0;
 /** Full old-basho rows only: rejects incomplete, ambiguous or missing match histories. */
 export function buildHistoricalFacts({roster,details,career,history,max=BASHO_HISTORY_MAX}={}){
@@ -84,7 +123,8 @@ export function buildHistoricalFacts({roster,details,career,history,max=BASHO_HI
  for(const window of [1,2,3,4,5,6,7,8,10,12,15,20,24,30]){
   summary[window]=Object.values(bySourceId).filter(period=>target.slice(0,window-1).every(b=>period[b])).length;
  }
- return {schemaVersion:1,rankParser:2,bashoId:String(details.bashoId),historicalBashos:target,
+ const risers=buildRisers({roster,details,career,found:byId});
+ return {schemaVersion:1,rankParser:2,risersVersion:1,risers,bashoId:String(details.bashoId),historicalBashos:target,
   bySourceId,coverage:{tracked:ids.size,hasAtLeastOneCompleteHistoricalBasho:qualified,
     qualifyingAcrossPreviousBashos:summary},source:'Sumo API complete cached regular-bout ledger plus dated rank history',
   note:'Only full recorded 15-bout top-two-division or 7-bout lower-division bashos count. Incomplete periods including absences are withheld. Yusho playoffs are excluded. Current basho comes separately from the fresh banzuke.'};
