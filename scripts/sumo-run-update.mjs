@@ -11,14 +11,16 @@ const PLANS = {
   refresh: [
     ['--test', 'tests/test-sumo-daily.mjs', 'tests/test-sumo-api-source.mjs'],
     ['scripts/sumo-refresh-daily.mjs'],
-    ['scripts/sumo-apply-live-bouts.mjs']
+    ['scripts/sumo-apply-live-bouts.mjs'],
+    ['scripts/sumo-facts-rollup.mjs']
   ],
   rebuild: [
     ['--test', 'tests/test-sumo-api-source.mjs'],
     ['scripts/sumo-build-preview.mjs'],
     ['scripts/sumo-refresh-daily.mjs'],
     ['scripts/sumo-onboard-rikishi.mjs'],
-    ['scripts/sumo-apply-live-bouts.mjs']
+    ['scripts/sumo-apply-live-bouts.mjs'],
+    ['scripts/sumo-facts-rollup.mjs']
   ]
 };
 const mode = process.argv[2];
