@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-20T00:27:21.472Z",
-  "checkedAt": "2026-11-19T22:33:31.327Z",
-  "updatedAt": "2026-11-19T22:13:33Z",
+  "attemptedAt": "2026-11-20T01:54:23.742Z",
+  "checkedAt": "2026-11-20T01:54:23.742Z",
+  "updatedAt": "2026-11-20T00:01:58.968207Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 0,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
-      "state": "not-scheduled",
-      "checked": 0,
+      "state": "connected",
+      "checked": 6,
       "failed": 0,
-      "configured": 0,
-      "message": "0 of 0 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 9,
+      "configured": 34,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 16,
+      "configured": 36,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 1,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -54,21 +54,167 @@
   "failures": [],
   "rollingScan": {
     "directoryEntries": 448,
-    "scheduledEntries": 28,
-    "batchIndex": 5,
+    "scheduledEntries": 84,
+    "batchIndex": 4,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 16,
-      "X": 9,
-      "Threads": 3
+      "X": 34,
+      "Instagram": 36,
+      "Bluesky": 6,
+      "Threads": 7,
+      "Reddit": 1
     },
-    "directlyChecked": 0,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2pbu3frhb2q",
+      "cid": "bafyreid7akqqo5nyljba6dehzmzdagapfdzav3cwullzqj4oeemmuhl72u",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "New UFC Dallas fights include former title challenger, return of ‘Chanco’ www.mmafighting.com/ufc/522430/n...",
+      "postedAt": "2026-11-20T00:01:58.968207Z",
+      "date": "20 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2pbu3frhb2q",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2pa3aypxf2b",
+      "cid": "bafyreig5s4o4lhp6nfzgnm4c5vzlto57wj7fzxwvav2lctj6rze4grhy3a",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "One-time UFC title challenger Manon Fiorot has been handed a three-month suspension for violating the promotion’s anti-doping policy.\n\nUFC officials announced the suspension on Thursday.\n\n📰 mma-fighting.visitlink.me/s8wQcB",
+      "postedAt": "2026-11-19T23:30:11.762637Z",
+      "date": "20 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2pa3aypxf2b",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2p6pqrzka2q",
+      "cid": "bafyreifbcqvkp6l6wrgbvtwmmj6vtelxdilbfjcu3ay3jmr2o7cef64ulm",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Former UFC title challenger Manon Fiorot suspended 3 months for anti-doping violation www.mmafighting.com/ufc/522477/f...",
+      "postedAt": "2026-11-19T23:05:51.474925Z",
+      "date": "20 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2p6pqrzka2q",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2p5gh2qcy2q",
+      "cid": "bafyreietdfbqyjfn6onlxdtnte5is2p47e2q3tqjxqxq67x4ietmfymi5e",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "The Muhammad Ali American Boxing Revival Act is one step closer to becoming law\n\n📰 mma-fighting.visitlink.me/nwyUwU",
+      "postedAt": "2026-11-19T22:42:47.001209Z",
+      "date": "20 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2p5gh2qcy2q",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 2,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2p522r5zz2b",
+      "cid": "bafyreidnpvnpzxrkjvndhqzmf7mgbg6j7lh2yqg6mo77b3tuqnjjq3t2sy",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Muhammad Ali Boxing Revival Act passes Senate unanimously, likely heads to President Trump soon www.mmafighting.com/boxing/52247...",
+      "postedAt": "2026-11-19T22:35:51.502460Z",
+      "date": "20 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2p522r5zz2b",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2p3s67tbq24",
+      "cid": "bafyreighf6phwqhe7w62niils6jnccmsrupp4zsfnsd35ozwkgrslogft4",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "KO’d by Mike Tyson in One, Murdered 3 People 3 Months Later #boxing #boxingnews",
+      "postedAt": "2026-11-19T22:13:34Z",
+      "date": "20 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2p3s67tbq24",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2p3s5qolf2y",
       "cid": "bafyreib7ys5id5aypwx5s6pvnaenplffvwkvxiyhg53dftltggjnhexhda",
@@ -91,6 +237,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-19T22:33:31.327Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2p33i7tp72f",
+      "cid": "bafyreici2xicdzccty4coxig25u66gr3xlkrbhvd77db4dqcffsqnb4pjy",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "No Bets Barred | Can Jiri Prochazka get back on track against Navajo Stirling at UFC Qatar? www.mmafighting.com/ufc/522317/n...",
+      "postedAt": "2026-11-19T22:00:51.717169Z",
+      "date": "20 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2p33i7tp72f",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -118,6 +288,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2ozftkvdp2p",
+      "cid": "bafyreibm5geyb7zob54amzkstf75rtqaivxim2y3ayumhbxtd6aj4l6yia",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Derek Brunson is ready for Darren Till or Yoel Romero in BKFC after \"Mike Perry left because he didn’t want to fight\"\n\n📰 mma-fighting.visitlink.me/Z56WL9",
+      "postedAt": "2026-11-19T21:30:51.525874Z",
+      "date": "20 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2ozftkvdp2p",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:u6b6v2jhqpe6hfezjffq7zrh/app.bsky.feed.post/3n2oy4dbcvc2x",
       "cid": "bafyreibudfqrvvrsdyyvych2zs3cyspeggeabfmy5rtkmeqetgatzl5bvm",
       "platform": "Bluesky",
@@ -139,6 +333,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-19T22:33:31.327Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2oxz5ssf22n",
+      "cid": "bafyreigs225zh2y7vkneaghsdcgzrazaa6lpfstovmp73gkntsq2ochtge",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Derek Brunson ready for Darren Till or Yoel Romero in BKFC after ‘Mike Perry left because he didn’t want to fight me’ www.mmafighting.com/bkfc/522440/...",
+      "postedAt": "2026-11-19T21:05:51.480900Z",
+      "date": "20 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2oxz5ssf22n",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -166,6 +384,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2ow2kdyji22",
+      "cid": "bafyreiahhapwl4y2isydvucu2onpl5cy24qkxegvoqqzp4cjvb4s4tfexm",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Is Merab Dvalishvili vs. Song Yadong the fight to make? \n\n📰 mma-fighting.visitlink.me/cXXqMW",
+      "postedAt": "2026-11-19T20:30:51.514952Z",
+      "date": "20 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2ow2kdyji22",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2oujlq5oj2p",
       "cid": "bafyreibtuap2a3u472kx44vlfjjav37fbnmpqoysm6iqouhw34ealfvzye",
       "platform": "Bluesky",
@@ -186,79 +428,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2or6dinmo2a",
-      "cid": "bafyreidfpc77ps2kvu5c647h2hglos4zfywplptjcm2g2byom7ewstn3ju",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "On To the Next One: What’s next for Ciryl Gane, Josh Hokit after Fight of the Year contender at UFC 334? www.mmafighting.com/ufc/521654/o...",
-      "postedAt": "2026-11-19T19:03:29.830238Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2or6dinmo2a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2onx6ugqx2p",
-      "cid": "bafyreih6b7no3sneu2dxdtzyorikcalo4jypjrsityjsgrenskpvhjg3sa",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Tom Aspinall provides key date as he deals with ongoing eye issues www.mmafighting.com/ufc/522377/t...",
-      "postedAt": "2026-11-19T18:05:48.900962Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2onx6ugqx2p",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2olxjxukv2a",
-      "cid": "bafyreicqti3nmvxdpcu3q2p4guns2n5xohfdwza2bmsrdnu2ig5ji5vnka",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Daniel Cormier is disappointed in Jon Jones for his attacks on Josh Hokit after UFC 334\n\n📰 mma-fighting.visitlink.me/ih0DUX",
-      "postedAt": "2026-11-19T17:30:12.919996Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2olxjxukv2a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -306,7 +476,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -330,7 +500,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -358,78 +528,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2oh4hqmek2p",
-      "cid": "bafyreib2gjdwqt76hr36eg7dqbzbyuzuqeilvj6txchpwhdzzn3x3shu6a",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Dan Hooker welcomes pressure that comes with 3 straight losses: ‘Surely I can beat Brian Ortega’ www.mmafighting.com/ufc/522299/d...",
-      "postedAt": "2026-11-19T16:03:28.877919Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2oh4hqmek2p",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2ofawuo652p",
-      "cid": "bafyreicmp7ituhmn3lbmq7jougu6fn4tyiq77qcdlctozldx4t254gvbhm",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Is the rematch between Kayla Harrison and Amanda Nunes the right fight to make after UFC 334?\n\n📰 mma-fighting.visitlink.me/eqc0Nq",
-      "postedAt": "2026-11-19T15:30:12.466208Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2ofawuo652p",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 2,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2odsgix672b",
-      "cid": "bafyreigt77o5fm3gpzteow4rtve4yue4l4y74o3rlg6u42wtdnqpngziga",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Amanda Nunes pushes back on Kayla Harrison calling shots on potential rematch: ‘This is not PFL, baby’ www.mmafighting.com/ufc/522362/a...",
-      "postedAt": "2026-11-19T15:04:11.839878Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2odsgix672b",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 1,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2odrqpjwr2a",
       "cid": "bafyreialnb4hr4k36fubzoq4tduzr6ddwntdxwjlzawlcdidorexajaiv4",
       "platform": "Bluesky",
@@ -451,30 +549,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-19T16:47:15.596Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2oaq6lpab2c",
-      "cid": "bafyreig32ufgq5bpj64qynixxk54xoslupwqrohhmeya3vt67osbiwqxli",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Brian Ortega reveals crazy coincidence about famous Tracy Cortez lip tattoo www.mmafighting.com/ufc/522271/b...",
-      "postedAt": "2026-11-19T14:09:12.722200Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2oaq6lpab2c",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -546,55 +620,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2o4v3rwt62p",
-      "cid": "bafyreia2oefyjmyhueqocsocrdzvgwloojsycjxpxdarr4zequvrrqcghe",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "This is what the #UFC looked like the last time GTA dropped. 🎮🔥👊",
-      "postedAt": "2026-11-19T13:00:24.915851Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2o4v3rwt62p",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2nzp67wy62n",
-      "cid": "bafyreiavjflxlmabfwop7hap3mfurbvvgjfrtmtjdrercfqjx7j7u7xt3e",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Morning Report | Daniel Cormier reacts to Jon Jones-Josh Hokit feud: ‘We’re talking about Jon Jones when it really isn’t his story anymore’ www.mmafighting.com/ufc/520735/m...",
-      "postedAt": "2026-11-19T12:03:24.987108Z",
-      "date": "19 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2nzp67wy62n",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 1,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -666,7 +692,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -762,7 +788,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -786,7 +812,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -810,7 +836,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -858,7 +884,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -954,7 +980,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1027,30 +1053,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-19T22:33:31.327Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2lyvyzb3d2e",
-      "cid": "bafyreibrrltkhfr36sjrdtflaujgq4mcau2eog3ntgtuiduqpy4oep7epu",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Troy Isley Opens Up on Top Rank Exit and World Title Ambitions #boxing #boxingnews",
-      "postedAt": "2026-11-18T16:44:02Z",
-      "date": "19 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2lyvyzb3d2e",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1554,7 +1556,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1650,7 +1652,7 @@
         "comments": 3,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-19T20:20:08.213Z",
+      "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
