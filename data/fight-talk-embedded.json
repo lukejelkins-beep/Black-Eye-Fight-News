@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-20T08:02:26.530Z",
-  "checkedAt": "2026-11-20T08:02:26.530Z",
+  "attemptedAt": "2026-11-20T09:06:05.593Z",
+  "checkedAt": "2026-11-20T09:06:05.593Z",
   "windowDays": 28,
-  "articlesChecked": 31,
+  "articlesChecked": 30,
   "publisherFeedsChecked": 3,
-  "publisherFeedsFailed": 0,
-  "rssArticleCandidates": 46,
-  "publisherSourcesConfigured": 33,
-  "linksFound": 17,
-  "newEmbedsVerified": 4,
+  "publisherFeedsFailed": 1,
+  "rssArticleCandidates": 15,
+  "publisherSourcesConfigured": 32,
+  "linksFound": 13,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -164,6 +164,25 @@
       "embedVerified": true,
       "linkPriority": 55,
       "url": "https://x.com/ONEChampionship/status/2123045530087395371"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-19T18:00:00+00:00",
+      "discoveredAt": "2026-11-20T09:06:05.593Z",
+      "sourcePublisher": "MMA Fighting",
+      "evidenceUrl": "https://www.mmafighting.com/ufc/522377/tom-aspinall-provides-key-date-as-he-deals-with-ongoing-eye-issues",
+      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/Df7qmIXkxG8/"
     },
     {
       "type": "post",
@@ -2348,25 +2367,6 @@
       "embedVerified": true,
       "linkPriority": 12,
       "url": "https://www.threads.com/t/DfqU1OOkR7c/"
-    },
-    {
-      "type": "post",
-      "platform": "Threads",
-      "sport": "mma",
-      "name": "Original Threads post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-13T15:43:11.194Z",
-      "discoveredAt": "2026-11-13T15:43:11.194Z",
-      "sourcePublisher": "UFC",
-      "evidenceUrl": "https://www.ufc.com/",
-      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 12,
-      "url": "https://www.threads.com/t/DfnmUFVm25S/"
     }
   ],
   "seenOriginals": [
@@ -3253,6 +3253,10 @@
     {
       "url": "https://x.com/ufc/status/2123662071611167122",
       "firstSeen": "2026-11-20T08:02:26.530Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/Df7qmIXkxG8/",
+      "firstSeen": "2026-11-20T09:06:05.593Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
