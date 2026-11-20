@@ -62,6 +62,17 @@ class LanguageNewsTests(unittest.TestCase):
             self.assertEqual(lang.translate_new(chosen, "ja", {}, client, usage, NOW), 0)
             self.assertEqual(client.calls, [])
 
+    def test_sumo_search_drops_other_sports_from_the_same_publisher(self):
+        rule = self.config["ja"]["topicFilter"]["sumo"]
+        ok = lambda title: lang.on_topic(title, rule)
+        self.assertTrue(ok("【相撲協会 十一日目の一番】関脇･熱海富士-大関･琴櫻"))
+        self.assertTrue(ok("豊昇龍が無傷の9連勝 師匠も絶賛"))          # names only, no sumo word: kept
+        self.assertTrue(ok("ボクシング出身の力士が十両昇進"))            # sumo word wins over a boxing word
+        self.assertFalse(ok("【ONE】押川香菜が鮮烈デビュー 左パンチでダウン奪い"))
+        self.assertFalse(ok("【新日本】格闘探偵団・阿部史典が新日マットで躍動"))
+        self.assertFalse(ok("【ボクシング】矢吹正道＆石井武志のダブル世界戦"))
+        self.assertTrue(lang.on_topic("井上尚弥が防衛成功", None))
+
     def test_untranslated_headlines_are_never_published(self):
         chosen = lang.select(lang.parse_items(RSS), lang.approved_names(self.config, "ja"), "boxing", NOW)
         self.assertEqual(lang.build_stories(chosen, "ja", {}, NOW), [])
@@ -76,7 +87,7 @@ class LanguageNewsTests(unittest.TestCase):
         def fetcher(url):
             if "%E5%A4%A7%E7%9B%B8%E6%92%B2" in url or "大相撲" in url:
                 raise OSError("boom")
-            return RSS
+            return RSS.replace("井上尚弥が防衛成功".encode(), "大相撲九州場所 力士が勝ち越し".encode())
         found, report = lang.collect(self.config, NOW, fetcher)
         self.assertTrue(any("failed" in line for line in report))
         self.assertTrue(found["ja"])
