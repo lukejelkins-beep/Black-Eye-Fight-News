@@ -10,6 +10,7 @@
  */
 import {readFile,writeFile,rename} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
+import {resolve} from 'node:path';
 
 export const BASHO_HISTORY_MAX=30;
 export function historicalBashos(currentId, count=BASHO_HISTORY_MAX){
@@ -95,6 +96,6 @@ async function main(){
  console.log(JSON.stringify({status:'ok',basho:rollup.bashoId,
   cachedPastBashos:rollup.historicalBashos.length,coverage:rollup.coverage}));
 }
-if(process.argv[1]&&fileURLToPath(import.meta.url)===process.argv[1]){
+if(process.argv[1]&&fileURLToPath(import.meta.url)===resolve(process.argv[1])){
  main().catch(error=>{console.error('Sumo rolling form cache:',error);process.exitCode=1;});
 }
