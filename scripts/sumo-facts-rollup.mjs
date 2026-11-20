@@ -11,6 +11,7 @@
 import {readFile,writeFile,rename} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {resolve} from 'node:path';
+import {buildFactIndex} from '../assets/sumo-fact-engine.mjs';
 
 export const BASHO_HISTORY_MAX=30;
 export function historicalBashos(currentId, count=BASHO_HISTORY_MAX){
@@ -134,12 +135,15 @@ async function main(){
  const [roster,details,career,history]=await Promise.all(paths.map(async path=>JSON.parse(await readFile(path,'utf8'))));
  const rollup=buildHistoricalFacts({roster,details,career,history});
  // Do not leave the last successfully built snapshot in a partially written state.
- const next={...details,funFactsHistory:{...rollup,generatedAt:new Date().toISOString()}};
+ const generatedAt=new Date().toISOString();
+ // Phase 1 fact engine: scored rivalry and technique facts from the same ledger.
+ const factIndex={...buildFactIndex({roster,details,history}),generatedAt};
+ const next={...details,funFactsHistory:{...rollup,generatedAt},factIndex};
  const path=paths[1],tmp=path+'.facts.tmp';
  await writeFile(tmp,JSON.stringify(next,null,2)+'\n','utf8');
  await rename(tmp,path);
  console.log(JSON.stringify({status:'ok',basho:rollup.bashoId,
-  cachedPastBashos:rollup.historicalBashos.length,coverage:rollup.coverage}));
+  cachedPastBashos:rollup.historicalBashos.length,coverage:rollup.coverage,factIndex:factIndex.counts}));
 }
 if(process.argv[1]&&fileURLToPath(import.meta.url)===resolve(process.argv[1])){
  main().catch(error=>{console.error('Sumo rolling form cache:',error);process.exitCode=1;});

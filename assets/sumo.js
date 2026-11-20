@@ -11,6 +11,7 @@ import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verificati
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
 import { dailyStats, dailyRecentMeetings, dailyDefaultDay,dailyConcluded, dailySelectedDate, dailyWinPercentage, heightFeetInches, highestRecordedDivision } from './sumo-daily.mjs?v=20261117-day-flow';
 import { ordinalRank } from './sumo-career.mjs';
+import { bestMatchupFact, rivalryFacts, factText } from './sumo-fact-engine.mjs?v=20261121-phase1';
 import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261119-h2h-placeholder';
 import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-inline-gifs-v4';
 
@@ -1102,6 +1103,7 @@ function renderHeadToHead(a,b) {
     '<strong>'+e(history?history.wins+'–'+history.losses:'Unavailable')+'</strong>'+
     '<small>'+e(history?history.total+' recorded meetings':'Series loading')+'</small></div>'+
     '<div>'+fighterOnCard(second,b,secondName,{hero:true})+'</div></div>'+
+    rivalryPanelMarkup(a,b)+
     '<div class="sumo-h2h-comparison">'+comparisonGrid(first,second)+'</div>'+
     h2hKimaritePanel(history,a,firstName,secondName)+
     heading('Calendar chronology','Every historical meeting')+
@@ -1208,6 +1210,28 @@ function stageFacts(w) {
     Height:wh.h,Weight:wh.mass
   };
 }
+/* Fact engine (Phase 1): one scored, scoped fact per matchup and a short
+ * rivalry panel on head-to-heads. Nothing shows when nothing clears the bar. */
+function factLineMarkup(f){
+  const t=factText(f,id=>wrestler(id)?.shikonaEn||null);
+  if(!t)return '';
+  return '<div class="sumo-fact-line"><span class="sumo-fact-tag">'+e(t.tag)+'</span>'+
+    '<p class="sumo-fact-text"><b>'+e(t.lead)+'</b>'+(t.rest?' '+e(t.rest):'')+
+    '<span class="sumo-fact-scope">'+e(t.scope)+'</span></p></div>';
+}
+function matchupFactMarkup(match){
+  if(!STATE.roster||!STATE.details)return '';
+  const f=bestMatchupFact(STATE.details,STATE.roster,match.rikishiId,match.opponentId);
+  return f?factLineMarkup(f):'';
+}
+function rivalryPanelMarkup(a,b){
+  if(!STATE.roster||!STATE.details)return '';
+  const facts=rivalryFacts(STATE.details,STATE.roster,a,b);
+  if(!facts.length)return '';
+  return '<section class="sumo-fact-panel" aria-label="Story of the rivalry"><h2>Story of the rivalry</h2>'+
+    '<p>Facts from BEFN’s stored bout records and listed roster data.</p>'+
+    '<ul>'+facts.map(f=>'<li>'+factLineMarkup(f)+'</li>').join('')+'</ul></section>';
+}
 function headlineBout(match,label) {
   const a=wrestler(match.rikishiId),b=wrestler(match.opponentId);
   const left=a?.shikonaEn||match.rikishi||'Wrestler',right=b?.shikonaEn||match.opponent||'Wrestler';
@@ -1235,7 +1259,7 @@ function headlineBout(match,label) {
     '<div class="stage-rule" aria-hidden="true"></div>'+
     '<div class="stage-body">'+photo(a,left,'left',winL,winR)+
     '<dl class="stage-stats">'+rows.map(([k,l,r])=>'<div><dd class="l">'+e(l)+'</dd><dt>'+e(k)+'</dt><dd class="r">'+e(r)+'</dd></div>').join('')+'</dl>'+
-    photo(b,right,'right',winR,winL)+'</div>'+
+    photo(b,right,'right',winR,winL)+'</div>'+matchupFactMarkup(match)+
     '<p class="stage-foot">'+(finished?'<span>'+e(winL?left:winR?right:'Result recorded')+' won · '+techniqueMarkup(match.kimarite,techniqueText(match.kimarite))+'</span>':'<span>Result pending</span>')+
     ' <span class="stage-credit">Photos © Japan Sumo Association</span> <a href="'+headToHeadUrl(match.rikishiId,match.opponentId)+'">Full head-to-head ›</a></p></article>';
 }
@@ -1249,7 +1273,7 @@ function boutSections(pairings,rowFn) {
 function dailyMatchupRow(match) {
   const first=wrestler(match.rikishiId),second=wrestler(match.opponentId);
   const history=headToHeadFor(match.rikishiId,match.opponentId);
-  return '<div class="bout-item">'+boutRowMarkup(match)+
+  return '<div class="bout-item">'+boutRowMarkup(match)+matchupFactMarkup(match)+
     '<details class="bout-compare"><summary>Compare</summary>'+
     comparisonGrid(first,second,match.division||STATE.matchupDivision)+dailyMeetingMarkup(match,match.rikishiId,match.opponentId)+
     (history&&!history.complete?'<p class="sumo-daily-result-note">Individual history is source-limited; open the full series for coverage.</p>':'')+
