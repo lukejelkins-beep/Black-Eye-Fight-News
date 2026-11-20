@@ -1,12 +1,12 @@
 {
-  "checkedAt": "2026-11-20T08:00:40.223Z",
+  "checkedAt": "2026-11-20T13:59:39.096Z",
   "source": "Wikidata P2002/P2003/P11892 + official athlete structured links",
   "discoveredThisRun": 0,
   "promotersAdded": 0,
-  "candidatesChecked": 133,
-  "mode": "bulk",
-  "wikiBatches": 9,
-  "searchChecked": 0,
+  "candidatesChecked": 0,
+  "mode": "search",
+  "wikiBatches": 0,
+  "searchChecked": 10,
   "officialChecked": 50,
   "counts": {
     "total": 215,
@@ -17,33 +17,12 @@
     "withThreads": 39
   },
   "rateLimited": true,
-  "conflicts": [
-    {
-      "name": "Abdullah Mason",
-      "platform": "Instagram",
-      "username": "abdullah_mason",
-      "evidenceUrl": "https://www.wikidata.org/wiki/Q127315638",
-      "reason": "Conflicts with an already linked identity; never overwrite automatically"
-    },
-    {
-      "name": "Gary Antuanne Russell",
-      "platform": "Instagram",
-      "username": "garyarussell",
-      "evidenceUrl": "https://www.wikidata.org/wiki/Q26260350",
-      "reason": "Conflicts with an already linked identity; never overwrite automatically"
-    },
-    {
-      "name": "Jai Opetaia",
-      "platform": "Instagram",
-      "username": "teamopetaia_",
-      "evidenceUrl": "https://www.wikidata.org/wiki/Q2029085",
-      "reason": "Conflicts with an already linked identity; never overwrite automatically"
-    }
-  ],
+  "conflicts": [],
   "errors": [
-    "Promoter metadata: HTTP 429 www.wikidata.org"
+    "Search Ramon Cardenas: HTTP 429 www.wikidata.org",
+    "Wikidata ID lookup: HTTP 429 www.wikidata.org"
   ],
-  "nextSearchOffset": 32,
-  "nextOfficialOffset": 54,
+  "nextSearchOffset": 42,
+  "nextOfficialOffset": 49,
   "note": "Profile metadata discovery is not a social timeline feed. Original post collection still depends on public publisher-linked posts or permitted platform APIs. Missing names are not guessed."
 }
