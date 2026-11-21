@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-21T10:26:27.107Z",
-  "checkedAt": "2026-11-21T10:26:27.107Z",
+  "attemptedAt": "2026-11-21T11:23:33.729Z",
+  "checkedAt": "2026-11-21T11:23:33.729Z",
   "windowDays": 28,
-  "articlesChecked": 28,
+  "articlesChecked": 31,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 45,
-  "publisherSourcesConfigured": 32,
-  "linksFound": 17,
-  "newEmbedsVerified": 0,
+  "publisherSourcesConfigured": 33,
+  "linksFound": 22,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -18,6 +18,27 @@
   "curatedRejected": 0,
   "curatedPublisherLinked": 2,
   "posts": [
+    {
+      "type": "post",
+      "platform": "X",
+      "sport": "boxing",
+      "name": "Shakur Stevenson",
+      "role": "fighter",
+      "handle": "@shakurstevenson",
+      "nativeEmbed": true,
+      "originalDateUnverified": false,
+      "postedAt": "2026-11-21T02:27:52.745Z",
+      "sourceLinkedAt": "2026-11-21T10:46:44.000Z",
+      "discoveredAt": "2026-11-21T11:23:33.729Z",
+      "sourcePublisher": "Boxing News",
+      "evidenceUrl": "https://boxingnewsonline.net/news/shakur-stevenson-talks-with-prospect/",
+      "summary": "Original social post linked in Boxing News coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 60,
+      "url": "https://x.com/ShakurStevenson/status/2123966596884660284"
+    },
     {
       "type": "post",
       "platform": "Instagram",
@@ -2335,25 +2356,6 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/p/DfsWXuHv-11/"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "mma",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-15T20:00:00+00:00",
-      "discoveredAt": "2026-11-15T21:21:23.279Z",
-      "sourcePublisher": "MMA Fighting",
-      "evidenceUrl": "https://www.mmafighting.com/ufc/521627/call-the-cops-alex-pereira-reacts-to-robbery-in-ciryl-gane-vs-josh-hokit",
-      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 10,
-      "url": "https://www.instagram.com/reel/DfwILBgCVns/"
     }
   ],
   "seenOriginals": [
@@ -3328,6 +3330,10 @@
     {
       "url": "https://www.instagram.com/p/DfnsmeoOw9z/",
       "firstSeen": "2026-11-21T09:32:05.614Z"
+    },
+    {
+      "url": "https://x.com/ShakurStevenson/status/2123966596884660284",
+      "firstSeen": "2026-11-21T11:23:33.729Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
