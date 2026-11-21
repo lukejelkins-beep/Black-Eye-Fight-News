@@ -3,7 +3,7 @@
 Status: **proposal for the owner's approval, 21 Nov 2026.** Describes what the existing V3 engine (`assets/fighter-power-index.js`) already does, plus two additions (Power and Durability) that are new. Nothing here is a prediction: these are descriptive scores of what a fighter has done, not win probabilities or betting advice.
 
 ## What a score means
-Each attribute is a **percentile: 1 to 99 against the other UFC fighters** in the data (about 613 rated today). 80 means "better than about 80% of the roster at this". Snapshot bars use the fighter's own weight division as the comparison when it has at least 8 rated peers; otherwise the whole roster. The label always says which.
+Each attribute is a **percentile: 1 to 99 against the other UFC fighters** in the data (about 613 rated today). 80 means "better than about 80% of the roster at this". Today the profile ranks against the **whole roster only**. Ranking against the fighter's **own weight division** (what the agreed method asks for) exists only in the Python copy, and applies when the division has at least 8 rated peers. **Proposal:** the snapshot shows the division percentile when there are 8 or more peers, otherwise the roster percentile, and the label always says which. This means porting the division step into the browser engine.
 
 ## The calculation, in four steps
 1. **Raw composite.** Several measured numbers per attribute are each scaled to 0-100 between a floor and a ceiling, then combined with fixed weights (below).

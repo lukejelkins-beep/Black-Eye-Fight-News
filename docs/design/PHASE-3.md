@@ -37,7 +37,7 @@ Open an upcoming UFC bout and see both fighters side by side at a glance: record
 ## Still open
 - **Durability and Power** have no UFC formula in the code today. `SNAPSHOT-METHOD.md` proposes both (owner wants Durability included); they need approval of those definitions and weights.
 - **Percentile method sign-off.** Now written in `SNAPSHOT-METHOD.md` for approval.
-- (Earlier note kept for context)  The agreed method says bars are "ranked against the weight division". The existing V3 engine does this with percentiles against the whole roster and the division, shrinking small samples toward the average (n/(n+4)), needing at least 3 fights with full round stats and 8 division peers. That exact formula and its weights have not had a separate owner sign-off; step 3 writes it up in plain English for approval before any score is shown.
+- **Division ranking.** The agreed method ranks against the weight division. The profile engine ranks against the whole roster only; the division step exists in the Python copy. Step 3 ports it (division percentile with at least 8 peers, else roster), as set out in `SNAPSHOT-METHOD.md`.
 
 ## Costs and limits
 Nothing new to pay for: no new API, no new worker, GitHub Actions minutes only.
