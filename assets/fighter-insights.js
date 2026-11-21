@@ -803,8 +803,51 @@
   const tag=/KO|TKO/.test(meth)?"TKO":/SUB|CHOKE|ARMBAR/.test(meth)?"SUB":/DEC|UD|SD|MD/.test(meth)?"DEC":mark==="NC"?"NC":"";
   return '<span class="befn-history-outcome '+className+'"><b>'+mark+'</b>'+(tag?'<small>'+tag+'</small>':'')+'</span>';
  }
+ // The certified UFC fighter files contain per-bout elapsed seconds. Older
+ // editorial summaries normally contain only result and round. Join on
+ // opponent plus calendar date (allowing a one-day timezone difference)
+ // rather than inferring duration from the result method.
+ function historyOpponentKey(value){
+  return String(value||"").replace(/^\s*[A-Za-z]{1,3}\s+(?=[A-Za-zÀ-ÿ])/,"")
+   .replace(/\b(?:jr|sr)\.?$/i,"").replace(/[łŁ]/g,"l").replace(/[øØ]/g,"o")
+   .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+   .replace(/[^a-z0-9]/gi,"").toLowerCase();
+ }
+ function historyDateParts(value){
+  const text=String(value||"").trim();
+  if(/^\d{4}-\d{2}-\d{2}$/.test(text))
+   return {day:text,month:text.slice(0,7)};
+  const match=text.match(/^(?:(\d{1,2})\s+)?([A-Za-z]{3,9})\s+(\d{4})$/);
+  if(!match)return null;
+  const monthNames=["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
+  const month=monthNames.indexOf(match[2].slice(0,3).toLowerCase())+1;
+  if(month<1)return null;
+  const prefix=match[3]+"-"+String(month).padStart(2,"0");
+  const day=match[1]?Number(match[1]):null;
+  if(day!==null&&(day<1||day>31))return null;
+  return {month:prefix,day:day===null?null:prefix+"-"+String(day).padStart(2,"0")};
+ }
+ function historyCageSeconds(f,history,stats){
+  const backup=Number.isInteger(history.cageSec)&&history.cageSec>=0?history.cageSec:null;
+  if(!stats?.fights?.length)return backup;
+  const opponent=historyOpponentKey(history.opponent);
+  const when=historyDateParts(history.date);
+  if(!opponent||!when)return backup;
+  const matches=stats.fights.filter(b=>{
+   if(historyOpponentKey(b.opponent)!==opponent)return false;
+   const fightDate=historyDateParts(b.date);
+   if(!fightDate||fightDate.month!==when.month)return false;
+   if(!when.day)return true; // older summaries sometimes supply only month/year
+   const a=Date.parse(when.day+"T00:00:00Z"),z=Date.parse(fightDate.day+"T00:00:00Z");
+   return Number.isFinite(a)&&Number.isFinite(z)&&Math.abs(a-z)<=86400000;
+  });
+  // Multiple possible bouts or no matching verified duration: show unknown.
+  return matches.length===1&&Number.isInteger(matches[0].seconds)&&matches[0].seconds>=0?
+   matches[0].seconds:backup;
+ }
  function fightHistoryColumn(f,heading){
   const fights=latestRows(f);
+  const stats=f?.sport==="MMA"?statsFor(f):null;
   return '<section class="befn-history-side"><div class="befn-history-fighter"><b>'+escapeHTML(heading)+'</b>'+
    '<span>'+escapeHTML(f?shortRecord(f):"Profile not yet available")+'</span></div>'+
    '<div class="befn-history-table-head" aria-hidden="true"><span>Result / opponent</span><span>Cage time</span></div>'+
@@ -813,8 +856,8 @@
     '<div class="befn-history-desc"><small>'+escapeHTML(plainDate(h.date))+'</small>'+
     '<strong>'+escapeHTML(h.opponent)+'</strong>'+
     '<span>'+escapeHTML(h.method||"Method not recorded")+'</span></div>'+
-    '<div class="befn-history-duration" title="Total cage time, not control time" aria-label="Total cage time '+escapeHTML(secTime(h.cageSec))+'">'+
-    '<strong>'+escapeHTML(secTime(h.cageSec))+'</strong></div></div>').join(""):
+    '<div class="befn-history-duration" title="Total cage time, not control time" aria-label="Total cage time '+escapeHTML(secTime(historyCageSeconds(f,h,stats)))+'">'+
+    '<strong>'+escapeHTML(secTime(historyCageSeconds(f,h,stats)))+'</strong></div></div>').join(""):
     '<p class="befn-history-empty">Last five verified results not yet available.</p>')+'</section>';
  }
  const lastFivePanel=(f,names)=>{
