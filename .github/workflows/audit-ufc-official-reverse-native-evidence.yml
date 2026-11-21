@@ -1,0 +1,30 @@
+name: Audit UFC official reverse native bout evidence
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/audit-ufc-official-reverse-native-evidence.mjs'
+      - 'tests/test-ufc-official-reverse-native-evidence.mjs'
+      - '.github/workflows/audit-ufc-official-reverse-native-evidence.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  reverse-native-source-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify strict local offline evidence matching
+        run: node --test tests/test-ufc-official-reverse-native-evidence.mjs
+      - name: Cross-check missing official bouts against cached opponent histories
+        run: node scripts/audit-ufc-official-reverse-native-evidence.mjs
+      - name: Preserve research evidence without changing saved native histories
+        uses: actions/upload-artifact@v4
+        with:
+          name: befn-ufc-source-reverse-native-evidence
+          path: qa/ufc-source-backed-reverse-native-evidence.json
+          retention-days: 7
