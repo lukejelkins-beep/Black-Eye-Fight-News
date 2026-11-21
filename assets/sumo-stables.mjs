@@ -12,9 +12,10 @@ const OFFICIAL_STABLES = [
  'Nishonoseki','Hakkaku','Hanaregoma','Hidenoyama','Fujishima','Futagoyama',
  'Minato','Minatogawa','Musashigawa','Yamahibiki'
 ];
+import { stableFacts, factText, factPeople } from './sumo-fact-engine.mjs?v=20261121-phase2';
 const JSA = 'https://www.sumo.or.jp/EnSumoDataSumoBeya/wrap';
 const root = document.getElementById('sumo-main');
-const state = { roster: [], photos: {}, details: null, stables: [], query: '', filter: 'all', sort: 'alpha' };
+const state = { roster: [], photos: {}, heads: {}, details: null, stables: [], query: '', filter: 'all', sort: 'alpha' };
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const division = rank => /^(Yokozuna|Ozeki|Sekiwake|Komusubi|Maegashira)\b/i.test(rank) ? 'Makuuchi' : /^Juryo\b/i.test(rank) ? 'Juryo' : /^Makushita\b/i.test(rank) ? 'Makushita' : 'Other';
 const slug = name => String(name || '').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -153,7 +154,29 @@ function renderStable(stable){
     return '<section class="heya-section"><header class="heya-section-head"><h2>'+escapeHtml(d==='Juryo'?'Jūryō':d)+'</h2>'+
      '<span>'+list.length+' tracked</span></header><div class="heya-members">'+list.map(memberCard).join('')+'</div></section>';
    }).join('') : '<div class="heya-no-tracked">This stable appears in the official JSA directory, but none of its wrestlers are in BEFN’s tracked Makuuchi, Jūryō or Makushita snapshot. The stable can still have active wrestlers in other divisions.</div>')+
-  disclaimer()+'</div>';
+  stableFactsMarkup(stable)+disclaimer()+'</div>';
+}
+/* Face beside a stable fact: approved head crop, else the approved portrait. */
+function factFace(id){
+ const w=state.roster.find(x=>String(x.sourceId)===String(id));if(!w)return '';
+ const h=state.heads[String(id)],photo=state.photos[String(id)];
+ const link=src=>'<a class="sumo-fact-face'+(src===photo?.path?' is-portrait':'')+'" href="sumo.html#profile/'+Number(id)+'" aria-label="'+escapeHtml(w.shikonaEn)+' profile"><img src="'+escapeHtml(src)+'" alt="" loading="lazy" decoding="async"></a>';
+ if(h&&photo?.approved===true&&h.sourceSha256===photo.sha256&&/^assets\/sumo-photos\/head\/[a-zA-Z0-9_-]+\.webp$/.test(String(h.path||'')))return link(h.path);
+ const path=photoFor(w);
+ return path?link(path):'';
+}
+/* Fact engine: the best fact about each tracked wrestler in this stable. */
+function stableFactsMarkup(stable){
+ const facts=state.details?stableFacts(state.details,stable.members.map(w=>w.sourceId)):[];
+ if(!facts.length)return '';
+ const name=id=>state.roster.find(w=>String(w.sourceId)===String(id))?.shikonaEn||null;
+ return '<section class="sumo-fact-panel heya-facts" aria-label="Stable facts"><h2>'+escapeHtml(stable.name)+' facts</h2>'+
+  '<p>From BEFN’s stored bout records.</p><ul>'+facts.map(f=>{
+   const t=factText(f,name);
+   const face=factFace(factPeople(f).main);
+   return t?'<li><div class="sumo-fact-line'+(face?' has-face':'')+'">'+face+'<div class="sumo-fact-body"><span class="sumo-fact-tag">'+escapeHtml(t.tag)+'</span><p class="sumo-fact-text"><b>'+escapeHtml(t.lead)+'</b>'+
+    (t.rest?' '+escapeHtml(t.rest):'')+'<span class="sumo-fact-scope">'+escapeHtml(t.scope)+'</span></p></div></div></li>':'';
+  }).join('')+'</ul></section>';
 }
 function navigate(){
  const route=decodeURIComponent(location.hash.replace(/^#/,''));
@@ -172,11 +195,13 @@ async function loadJson(path){
 }
 async function start(){
  try{
-  const [roster,photos,details]=await Promise.all([
+  const [roster,photos,details,heads]=await Promise.all([
    loadJson('data/sumo/rikishi-index.json'),
    loadJson('data/sumo/approved-photos.json'),
-   loadJson('data/sumo/preview-details.json').catch(()=>null)
+   loadJson('data/sumo/preview-details.json').catch(()=>null),
+   loadJson('data/sumo/heads.json').catch(()=>null)
   ]);
+  state.heads=heads?.bySourceId||{};
   if(!Array.isArray(roster?.rikishi)) throw new Error('Tracked roster is not available');
   state.roster=roster.rikishi;
   state.photos=photos?.bySourceId||{};
