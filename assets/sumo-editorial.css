@@ -1720,41 +1720,63 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .profile-hero .sumo-hero-country{font-size:12px}
 }
 
-/* Compact bout rows (Results, Matchups, home). One shape everywhere: two
-   portraits, two names with short ranks, a winner arrow or VS, and one context
-   line. Aim: five or more rows per phone screen. See docs/design/DIRECTION.md. */
-.sumo-compact-results,.sumo-daily-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
-.bout-item{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+/* Bout cards (Results, Matchups, home, More bouts). One shape everywhere: a
+   larger card, head crops that fade into the card with no frame, rank, this
+   basho W-L with last-five form, a career / build strip, then the result line.
+   Owner asked for larger, richer cards on 2026-11-21 (see DECISIONS.md). */
+.sumo-compact-results,.sumo-daily-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;align-items:start}
+.bout-item{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden}
 .bout-item>.bout-row{border:0;border-radius:0}
 .bout-row{
-  display:grid;grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);
-  grid-template-areas:"l m r" "f f f";align-items:center;gap:4px 6px;
-  padding:8px 10px 7px;background:#fff;border:1px solid var(--border);
-  border-radius:10px;min-width:0;box-sizing:border-box;
+  display:grid;grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr);
+  grid-template-areas:"l m r" "s s s" "f f f";align-items:stretch;gap:0 4px;
+  padding:10px 10px 4px;background:#fff;border:1px solid var(--border);
+  border-radius:12px;min-width:0;box-sizing:border-box;overflow:hidden;
 }
 .bout-row.is-finished{border-left:3px solid var(--gold)}
 .bout-item>.bout-row.is-finished{border-left:3px solid var(--gold)}
-.bout-side{display:flex;align-items:center;gap:8px;min-width:0}
+.bout-side{display:flex;align-items:flex-end;gap:0;min-width:0}
 .bout-side.left{grid-area:l}
 .bout-side.right{grid-area:r;justify-content:flex-end;text-align:right}
-.bout-photo{display:block;flex:none;width:34px;height:42px;border-radius:5px;overflow:hidden;background:#e9e3da;position:relative;text-decoration:none}
-.bout-photo>.profile-icon.sumo-photo{position:absolute;inset:0;width:100%!important;height:100%!important;min-height:0!important;margin:0!important;border:0!important;border-radius:0!important;aspect-ratio:auto!important}
-.bout-photo .sumo-photo>img{position:absolute;inset:0;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center top!important;transform:none!important}
-.bout-photo .sumo-photo>span{font-size:16px}
-.bout-photo .sumo-photo>small{display:none}
-.bout-id{display:flex;flex-direction:column;min-width:0;line-height:1.15}
-.bout-name{font:800 17px/1.1 'Barlow Condensed',Impact,sans-serif;letter-spacing:.01em;text-transform:uppercase;color:var(--ink,#111013);text-decoration:none;overflow-wrap:anywhere;hyphens:none}
-.bout-id small{font-size:11px;font-weight:600;color:#5f5760;margin-top:2px}
+.bout-photo{display:block;flex:none;width:76px;height:84px;margin:-10px 0 0;position:relative;text-decoration:none;background:none}
+.bout-side.left .bout-photo{margin-left:-10px}
+.bout-side.right .bout-photo{margin-right:-10px}
+.bout-head{display:block;position:absolute;inset:0}
+.bout-head>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;display:block;
+  -webkit-mask-image:linear-gradient(#000 0 62%,transparent 98%);mask-image:linear-gradient(#000 0 62%,transparent 98%)}
+.bout-head.is-portrait>.profile-icon.sumo-photo{position:absolute;inset:0;width:100%!important;height:100%!important;min-height:0!important;margin:0!important;border:0!important;border-radius:0!important;aspect-ratio:auto!important;background:none!important}
+.bout-head.is-portrait .sumo-photo>img{position:absolute;inset:0;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center top!important;transform:none!important;
+  -webkit-mask-image:linear-gradient(#000 0 55%,transparent 96%),linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(#000 0 55%,transparent 96%),linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent);mask-composite:intersect}
+.bout-head .sumo-photo>span{font-size:22px;color:#b9b0a4}
+.bout-head .sumo-photo>small{display:none}
+.bout-id{display:flex;flex-direction:column;flex:1 1 0;min-width:0;line-height:1.15;padding-bottom:4px}
+.bout-side.right .bout-id{align-items:flex-end}
+.bout-name{font:800 20px/1.02 'Barlow Condensed',Impact,sans-serif;letter-spacing:.01em;text-transform:uppercase;color:var(--ink,#111013);text-decoration:none;overflow-wrap:anywhere;hyphens:none}
+.bout-id small{font-size:12px;font-weight:600;color:#5f5760;margin-top:3px}
+.bout-form{display:inline-flex;gap:2px;align-items:center}
+.bout-form i{display:block;width:9px;height:5px;border-radius:2px;background:#d9d2c7}
+.bout-form i.w{background:#f3c332}
+.bout-form i.l{background:#111013}
 .bout-side.is-loser .bout-name,.bout-side.is-loser .bout-id small{color:#5f5760}
-.bout-side.is-loser .bout-photo{opacity:.72}
-.bout-side.is-winner .bout-name{color:#111013}
-.bout-side.is-winner .bout-photo{box-shadow:0 0 0 2px var(--gold)}
-.bout-mid{grid-area:m;text-align:center;font-size:12px;font-weight:800;color:#a6820f}
+.bout-side.is-loser .bout-photo{opacity:.7}
+.bout-side.is-winner .bout-name{box-shadow:inset 0 -3px 0 var(--gold)}
+.bout-mid{grid-area:m;align-self:center;text-align:center;font-size:12px;font-weight:800;color:#a6820f}
 .bout-vs{font-size:10px;letter-spacing:.08em;color:#5f5760}
-.bout-foot{grid-area:f;display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;padding-top:5px;border-top:1px solid #efe9df;font-size:12.5px;color:#4a434b}
+.bout-stats{grid-area:s;margin:0;padding:7px 0 5px;border-top:1px solid #efe9df;display:grid;gap:4px}
+.bout-stats>div{display:grid;grid-template-columns:minmax(0,1fr) 72px minmax(0,1fr);align-items:center;gap:6px}
+.bout-stats dd{margin:0;font:700 13px/1.25 'DM Sans',sans-serif;color:#111013}
+.bout-stats dd.l{text-align:left}
+.bout-stats dd.r{text-align:right}
+.bout-stats .is-basho dd{display:flex;align-items:center;gap:8px;min-height:28px}
+.bout-stats .is-basho dd.r{justify-content:flex-end}
+.bout-stats .is-basho b{font:900 28px/1 'Barlow Condensed',Impact,sans-serif;letter-spacing:.01em}
+.bout-stats .is-basho dt{color:#111013}
+.bout-stats dt{font:700 10px/1 'DM Sans',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#6d646e;text-align:center;white-space:nowrap}
+.bout-foot{grid-area:f;display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;padding-top:4px;border-top:1px solid #efe9df;font-size:12.5px;color:#4a434b}
 .bout-verdict{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bout-verdict a{color:inherit;text-decoration:underline;text-decoration-color:#cf182466;text-underline-offset:2px}
-.bout-h2h{flex:none;display:inline-flex;align-items:center;min-height:32px;padding:0 4px;font-weight:800;color:var(--red);text-decoration:none;white-space:nowrap}
+.bout-h2h{flex:none;display:inline-flex;align-items:center;min-height:36px;padding:0 4px;font-weight:800;color:var(--red);text-decoration:none;white-space:nowrap}
 .bout-compare{border-top:1px solid #efe9df;background:#faf7f1}
 .bout-compare>summary{cursor:pointer;list-style:none;padding:0 12px;min-height:40px;display:flex;align-items:center;font-size:12.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#4a434b}
 .bout-compare>summary::-webkit-details-marker{display:none}
@@ -1762,12 +1784,14 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .bout-compare[open]>summary::after{content:'\2212'}
 .bout-compare>.sumo-comparison,.bout-compare>.sumo-daily-history,.bout-compare>.sumo-daily-result-note{margin:0 12px 12px}
 @media(min-width:900px){
-  .sumo-compact-results,.sumo-daily-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-  .bout-photo{width:40px;height:48px}
-  .bout-name{font-size:20px}
+  .sumo-compact-results,.sumo-daily-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .bout-photo{width:100px;height:112px}
+  .bout-name{font-size:24px}
+  .bout-stats .is-basho b{font-size:32px}
+  .bout-stats dd{font-size:14px}
 }
-@media(max-width:480px){.bout-name{font-size:15.5px;letter-spacing:0}.bout-side{gap:6px}.bout-row{padding:7px 8px 4px}.bout-compare>summary{min-height:36px}}
-@media(max-width:360px){.bout-name{font-size:14px}.bout-photo{width:30px;height:38px}}
+@media(max-width:480px){.bout-photo{width:66px;height:76px}.bout-name{font-size:18px;letter-spacing:0}.bout-name.is-long{font-size:16px}.bout-name.is-xlong{font-size:15px}.bout-compare>summary{min-height:36px}}
+@media(max-width:360px){.bout-photo{width:56px;height:66px}.bout-name{font-size:16px}.bout-name.is-long{font-size:14.5px}.bout-name.is-xlong{font-size:13.5px}.bout-stats .is-basho b{font-size:24px}.bout-form i{width:8px}.bout-stats>div{grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr)}.bout-stats dd{font-size:12px}}
 
 /* H2H hero cards: faded birthplace flag behind the information column and a
    plain country-name chip, matching the profile hero. Decorative only. */

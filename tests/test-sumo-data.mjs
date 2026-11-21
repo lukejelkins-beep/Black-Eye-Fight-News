@@ -538,7 +538,10 @@ test('Results and Matchups use one compact bout row with source-backed winner an
   const end=js.indexOf('function renderBasho() {',start);
   assert.ok(start>=0&&end>start,'A dedicated compact bout-row renderer exists');
   const renderer=js.slice(start,end);
-  assert.match(renderer,/portraitFor\(w,'md',name\)/);
+  assert.match(renderer,/boutHead\(w,name\)/,'Cards use a frameless head crop');
+  assert.match(js,/portraitFor\(w,'md',name\)/,'A faded portrait is the fallback when no head crop exists');
+  assert.match(renderer,/bout-stats/,'Cards show this basho W-L, career and build');
+  assert.match(renderer,/This basho/);
   assert.match(renderer,/bout-photo/);
   assert.match(renderer,/bout-foot/);
   assert.match(renderer,/techniqueMarkup\(match\.kimarite,method\)/);
@@ -547,7 +550,7 @@ test('Results and Matchups use one compact bout row with source-backed winner an
   assert.match(renderer,/winnerIsRight/);
   assert.match(renderer,/winner\?e\(winner\)\+' won':'Result recorded'/);
   assert.match(renderer,/bout-compare/,'Matchup rows keep the comparison behind a toggle');
-  assert.match(style,/Compact bout rows/);
+  assert.match(style,/Bout cards \(Results/);
   assert.match(js,/boutSections\(pairings,compactBoutRow\)/,'Results tab uses headline cards then compact rows');
   assert.match(js,/boutSections\(pairing,dailyMatchupRow\)/,'Matchups page uses headline cards then compact rows');
   assert.match(js,/function headlineBout\(/,'Top bouts render as large headline cards');
