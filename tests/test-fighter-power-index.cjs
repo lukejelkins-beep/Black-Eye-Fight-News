@@ -38,7 +38,17 @@ assert.equal(model.evaluate(raw,last5).filter(x=>x.score!==null).length,1,"Unver
 assert(!insights.includes('["cage","Cage Time"]'),"Cage Time tab must be removed");
 assert(insights.includes("Cage time"),"Merged last-five heading should include cage time");
 assert(insights.includes('befn-history-duration'),"Each fight needs a duration column");
-assert(insights.includes("secTime(h.cageSec)"),"Use per-fight durations rather than an inferred average");
+assert(insights.includes("secTime(historyCageSeconds(h,official?.fights))"),"Render per-fight UFC archive durations rather than an inferred average");
+const matchStart=insights.indexOf(" function historyCageSeconds(");
+const matchEnd=insights.indexOf(" function fightHistoryColumn(",matchStart);
+assert(matchStart>=0&&matchEnd>matchStart,"History cage-time source matcher must exist");
+const historyCageSeconds=new Function("norm",insights.slice(matchStart,matchEnd)+";return historyCageSeconds;")(model.normalize);
+const jiri=require("../data/ufc-stats/fighters/jiri-prochazka.json");
+const navajo=require("../data/ufc-stats/fighters/navajo-stirling.json");
+assert.equal(historyCageSeconds({date:"11 Apr 2026",opponent:"CU Carlos Ulberg"},jiri.fights),225,"Specific day and legacy initials must match UFC archive");
+assert.equal(historyCageSeconds({date:"Aug 2026",opponent:"JB Jan Błachowicz"},navajo.fights),176,"Month-only legacy dates and Polish names must match UFC archive");
+assert.equal(historyCageSeconds({date:"Aug 2024",opponent:"JB Jan Błachowicz"},navajo.fights),null,"Never invent cage time from a different date");
+assert.equal(historyCageSeconds({date:"Aug 2024",opponent:"Unknown Fighter",cageSec:345},navajo.fights),345,"Preserve independently stored duration when archive has no match");
 assert(css.includes(".befn-history-with-cage"),"Responsive fight-and-time styling");
 assert(html.includes("fighter-insights.js"),"Insights must load on preview");
 // Verify the optional curated round-preview adapter: only fully timed bouts

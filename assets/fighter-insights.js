@@ -803,8 +803,32 @@
   const tag=/KO|TKO/.test(meth)?"TKO":/SUB|CHOKE|ARMBAR/.test(meth)?"SUB":/DEC|UD|SD|MD/.test(meth)?"DEC":mark==="NC"?"NC":"";
   return '<span class="befn-history-outcome '+className+'"><b>'+mark+'</b>'+(tag?'<small>'+tag+'</small>':'')+'</span>';
  }
+ // Read exact elapsed bout time from BEFN's UFC statistical archive when older
+ // scouting summaries omitted cageSec. Only match the same opponent and date.
+ function historyCageSeconds(row,officialFights){
+  const saved=Number.isInteger(row?.cageSec)&&row.cageSec>=0?row.cageSec:null;
+  // Normalise letters such as Polish ł that NFKD does not decompose.
+  const matchName=value=>norm(String(value||"").replace(/[łŁ]/g,"l").replace(/[øØ]/g,"o").replace(/[đĐðÐ]/g,"d"));
+  const opponent=matchName(row?.opponent);
+  const rawDate=String(row?.date||"").trim();
+  const monthYear=rawDate.match(/^([A-Za-z]+)\s+(\d{4})$/);
+  const monthIndex=monthYear?["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"].indexOf(monthYear[1].slice(0,3).toLowerCase()):-1;
+  const time=monthYear?NaN:Date.parse(rawDate);
+  const fight=Array.isArray(officialFights)?officialFights.find(b=>{
+   if(!Number.isInteger(b?.seconds)||b.seconds<0||!opponent)return false;
+   const other=matchName(b.opponent);
+   // Legacy rows sometimes prefix a fighter with two initials, e.g. "CU Carlos Ulberg".
+   if(!other||!(opponent===other||(opponent.endsWith(other)&&opponent.length-other.length<=3)))return false;
+   const eventDate=String(b.date||"");
+   if(monthYear)return monthIndex>=0&&eventDate.slice(0,7)===monthYear[2]+"-"+String(monthIndex+1).padStart(2,"0");
+   const boutTime=Date.parse(eventDate);
+   return Number.isFinite(time)&&Number.isFinite(boutTime)&&Math.abs(time-boutTime)<=86400000;
+  }):null;
+  return fight?fight.seconds:saved;
+ }
  function fightHistoryColumn(f,heading){
   const fights=latestRows(f);
+  const official=f?.sport==="MMA"?statsFor(f):null;
   return '<section class="befn-history-side"><div class="befn-history-fighter"><b>'+escapeHTML(heading)+'</b>'+
    '<span>'+escapeHTML(f?shortRecord(f):"Profile not yet available")+'</span></div>'+
    '<div class="befn-history-table-head" aria-hidden="true"><span>Result / opponent</span><span>Cage time</span></div>'+
@@ -813,8 +837,8 @@
     '<div class="befn-history-desc"><small>'+escapeHTML(plainDate(h.date))+'</small>'+
     '<strong>'+escapeHTML(h.opponent)+'</strong>'+
     '<span>'+escapeHTML(h.method||"Method not recorded")+'</span></div>'+
-    '<div class="befn-history-duration" title="Total cage time, not control time" aria-label="Total cage time '+escapeHTML(secTime(h.cageSec))+'">'+
-    '<strong>'+escapeHTML(secTime(h.cageSec))+'</strong></div></div>').join(""):
+    '<div class="befn-history-duration" title="Total cage time, not control time" aria-label="Total cage time '+escapeHTML(secTime(historyCageSeconds(h,official?.fights)))+'">'+
+    '<strong>'+escapeHTML(secTime(historyCageSeconds(h,official?.fights)))+'</strong></div></div>').join(""):
     '<p class="befn-history-empty">Last five verified results not yet available.</p>')+'</section>';
  }
  const lastFivePanel=(f,names)=>{
