@@ -100,6 +100,7 @@
 #main #upcoming-cards-root .upcoming-expanded .upcoming-card-bar span{font:600 12px "DM Sans",sans-serif;color:#6b6468!important}
 #main #upcoming-cards-root .upcoming-expanded .upcoming-tabs{display:flex!important;gap:6px;margin:0 0 12px!important;background:none!important;border:0!important;padding:0!important}
 #main #upcoming-cards-root .upcoming-expanded .result-card-tab{flex:0 0 auto;background:#f8f4ed!important;color:#111013!important;border:1px solid #e2dbcf!important;border-radius:999px!important;padding:6px 12px!important;font:700 12px "DM Sans",sans-serif!important;text-transform:uppercase;letter-spacing:.05em;box-shadow:none!important;display:inline-flex;gap:6px;align-items:center}
+#main #upcoming-cards-root .upcoming-expanded .upcoming-tabs:has(>.result-card-tab:nth-child(2):last-child) .result-card-tab{flex:1 1 0;min-width:0;justify-content:center}
 #main #upcoming-cards-root .upcoming-expanded .result-card-tab small{opacity:.6}
 #main #upcoming-cards-root .upcoming-expanded .result-card-tab.is-active{background:#cf1824!important;border-color:#cf1824!important;color:#fff!important}
 #main #upcoming-cards-root .upcoming-expanded .upcoming-single-section{font:700 12px "DM Sans",sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#6b6468;margin:0 0 10px}
