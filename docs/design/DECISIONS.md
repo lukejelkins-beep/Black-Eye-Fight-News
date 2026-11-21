@@ -3,6 +3,7 @@
 Format: date — decision — who — where it shows up.
 
 ## 2026-11-21
+- Expanded fight cards on the Fights page restyled to match the new rows: white panel, pill tabs, flat white bout cards with a red main-event edge, cream weight-class strip and a plain red "Fight snapshot" link, replacing the dark panel and gold bar. CSS only (`assets/fights-page.css`). — Owner: "the way the fight expands and drops down is the old design" — PR for expanded cards.
 - Fights page restyled in the Fight night look (Phase 1 step 3): compact white rows with a red edge and poster thumbnail, date separators, and the first event that has a poster shown as a dark lead card. Styles live in `assets/fights-page.css`, scoped to the Fights page; no data or ordering changes. — Owner picked the Fight night look; plan approved ("I like that plan") — PR for the Fights page.
 - Translated sumo news from Japan refreshes every 3 hours (owner), not every 15 minutes; the language job's schedule is `27 */3 * * *`. The earlier 15-minute change (PR #321) no longer applies to it. A topic filter drops boxing, ONE, New Japan and other non-sumo headlines that the 相撲 search also returns from the same publishers (first live run: 5 of 60 were not sumo). Names-only sumo headlines are kept. — Owner — PR for branch feat/sumo-relevance-3h.
 
