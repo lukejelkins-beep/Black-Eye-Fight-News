@@ -71,3 +71,57 @@ const evil = T.html(fighter('<img src=x onerror=1>'), fighter('Cc Dd'), { esc })
 assert.ok(!evil.includes('<img') && evil.includes('&lt;img'));
 
 console.log('snapshot tiles: all checks passed');
+
+// ---- Attribute scores (step 3): off by default, escaped, honest about the basis ----
+const sc = (o = {}) => Object.fromEntries(['power', 'defence', 'wrestling', 'durability', 'striking', 'grappling'].map(k => [k, k in o ? o[k] : { score: 60, band: 'gold' }]));
+const scoreData = {
+  minimums: { statFights: 3 },
+  fighters: { aabb: { name: 'Aa Bb', newToDivision: true, previousDivision: 'Lightweight', division: 'Welterweight' }, ccdd: { name: 'Cc Dd', newToDivision: false } },
+  events: [{ id: 'e1', bouts: [{ id: 'b', fighters: ['aabb', 'ccdd'], division: 'Welterweight', basis: { power: 'division', defence: 'roster' },
+    scores: [sc({ power: { score: 80, band: 'green' } }), sc({ power: { score: 20, band: 'red' }, durability: null })] }] }]
+};
+// the flag is off unless the page opts in
+assert.strictEqual(T.scoresEnabled(undefined), false);
+assert.strictEqual(T.scoresEnabled({}), false);
+assert.strictEqual(T.scoresEnabled({ BEFN_FEATURES: {} }), false);
+assert.strictEqual(T.scoresEnabled({ BEFN_FEATURES: { snapshotScores: 'true' } }), false, 'only boolean true');
+assert.strictEqual(T.scoresEnabled({ BEFN_FEATURES: { snapshotScores: true } }), true);
+assert.strictEqual(T.scoresEnabled({ location: { search: '?snapshotScores=preview' } }), true);
+assert.strictEqual(T.scoresEnabled({ location: { search: '?x=1&snapshotScores=preview&y=2' } }), true);
+assert.strictEqual(T.scoresEnabled({ location: { search: '?snapshotScores=1' } }), false);
+assert.strictEqual(T.scoresEnabled({ location: { search: '?notsnapshotScores=preview' } }), false);
+
+// lookup in the order of the names, flipping when the file has the bout the other way round
+const sCardNames = ['Aa Bb', 'Cc Dd'];
+const ls = T.lookupScores(scoreData, 'e1', sCardNames);
+assert.strictEqual(ls.sides[0].power.score, 80);
+assert.strictEqual(T.lookupScores(scoreData, 'e1', ['Cc Dd', 'Aa Bb']).sides[0].power.score, 20, 'flipped');
+assert.strictEqual(T.lookupScores(scoreData, 'e2', sCardNames), null);
+assert.strictEqual(T.lookupScores(scoreData, 'e1', ['Aa Bb', 'Zz Yy']), null);
+assert.strictEqual(T.lookupScores(null, 'e1', sCardNames), null);
+
+const sOut = T.scoresHTML(ls, sCardNames, { esc });
+assert.ok(sOut.includes('Attribute scores') && sOut.includes('>80<') && sOut.includes('>20<'));
+assert.ok(sOut.includes('st-band-green') && sOut.includes('st-band-red') && sOut.includes('width:80%'));
+assert.ok(sOut.includes('Ranked against all UFC fighters.'), 'mixed basis (only some attributes are division) falls back to roster wording');
+assert.ok(sOut.includes('Aa Bb is new to Welterweight (was Lightweight).'));
+assert.ok(sOut.includes('not predictions'));
+assert.ok(/Durability[^]*?<span class="st-num">—<\/span>/.test(sOut) || sOut.includes('>—<'), 'a missing score is a dash');
+assert.ok(sOut.includes('More scores') && sOut.includes('Striking') && sOut.includes('Grappling'));
+const divData = JSON.parse(JSON.stringify(scoreData));
+divData.events[0].bouts[0].basis = { power: 'division', defence: 'division', wrestling: 'division', durability: 'division', striking: 'division', grappling: 'division' };
+assert.ok(T.scoresHTML(T.lookupScores(divData, 'e1', sCardNames), sCardNames, { esc }).includes('Ranked against Welterweight fighters.'));
+// no scores for either side → nothing drawn
+const empty = JSON.parse(JSON.stringify(scoreData));
+empty.events[0].bouts[0].scores = [sc(Object.fromEntries(['power', 'defence', 'wrestling', 'durability', 'striking', 'grappling'].map(k => [k, null]))), sc(Object.fromEntries(['power', 'defence', 'wrestling', 'durability', 'striking', 'grappling'].map(k => [k, null])))];
+assert.strictEqual(T.scoresHTML(T.lookupScores(empty, 'e1', sCardNames), sCardNames, { esc }), '');
+assert.strictEqual(T.scoresHTML(null, sCardNames, { esc }), '');
+// a non-integer score is not drawn
+const bad = JSON.parse(JSON.stringify(scoreData));
+bad.events[0].bouts[0].scores[0].power = { score: '80', band: 'green' };
+assert.ok(!T.scoresHTML(T.lookupScores(bad, 'e1', sCardNames), sCardNames, { esc }).includes('>80<'));
+// escaping
+const evil2 = JSON.parse(JSON.stringify(scoreData));
+evil2.events[0].bouts[0].scores[0].power.band = '"><img src=x>';
+assert.ok(!T.scoresHTML(T.lookupScores(evil2, 'e1', sCardNames), sCardNames, { esc }).includes('<img'));
+console.log('snapshot scores: all checks passed');

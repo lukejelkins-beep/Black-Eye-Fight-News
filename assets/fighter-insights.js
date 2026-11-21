@@ -395,6 +395,21 @@
   for(const el of document.querySelectorAll(".befn-fight-snapshot:not([data-tiles])"))el.remove();
   schedule();
  }).catch(()=>{});
+ // Attribute scores stay OFF unless the page opts in (BEFN_FEATURES.snapshotScores or ?snapshotScores=preview).
+ // The file is not even requested while the flag is off.
+ let cardScores=null;
+ if(window.BEFNSnapshotTiles?.scoresEnabled(window))fetch("data/ufc-card-scores.json").then(r=>r.ok?r.json():null).then(d=>{
+  if(d?.schema!==1||!Array.isArray(d.events))return;
+  cardScores=d;
+  for(const el of document.querySelectorAll(".befn-fight-snapshot:not([data-scores])"))el.remove();
+  schedule();
+ }).catch(()=>{});
+ function scoresFor(article,names){
+  const T=window.BEFNSnapshotTiles;
+  if(!T||!cardScores)return "";
+  const card=article.closest("#upcoming-cards-root [data-upcoming-card]");
+  return card?T.scoresHTML(T.lookupScores(cardScores,card.dataset.upcomingCard||"",names),names,{esc:escapeHTML}):"";
+ }
  function tilesFor(article,names){
   const T=window.BEFNSnapshotTiles;
   if(!T||!cardSnapshots)return "";
@@ -795,13 +810,13 @@
     '" aria-selected="'+String(active===id)+'" class="'+(active===id?'is-active':'')+'">'+label+'</button>'
    ).join("")+'</div>'+
    '<div class="befn-history-panel">'+(active==="stats"?statsPanel(f,names):lastFivePanel(f,names))+'</div></section>';
-  const tiles=tilesFor(article,names);
-  return '<details class="befn-fight-snapshot" data-snapshot-key="'+escapeHTML(key)+'"'+(tiles?' data-tiles="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
+  const tiles=tilesFor(article,names),scores=scoresFor(article,names);
+  return '<details class="befn-fight-snapshot" data-snapshot-key="'+escapeHTML(key)+'"'+(tiles?' data-tiles="1"':'')+(scores?' data-scores="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
    '<summary><span>Fight snapshot</span></summary>'+
    '<div class="befn-snapshot-body">'+
    '<div class="befn-snapshot-head"><div><strong>'+escapeHTML(names[0])+'</strong>'+
    '</div><div><strong>'+escapeHTML(names[1])+'</strong></div></div>'+
-   tiles+
+   tiles+scores+
    '<div class="befn-snapshot-bars">'+metricHTML+'</div>'+
    '<div class="befn-snapshot-extra">'+sides+'</div>'+
    historyTab+talePanel(f,names)+

@@ -67,7 +67,60 @@
       '<p class="st-note">Raw numbers from each fighter\'s last five UFC fights. — means not measured.</p></section>';
   }
 
-  const api = { fold, ROWS, show, recordText, status, widths, lookup, html };
+  /* ---- Attribute scores (Phase 3 step 3). OFF unless the page opts in; the owner's release approval is separate. ----
+   * Scores are 1-99 percentiles of the last five fights, ranked against the fighter's division when both fighters
+   * share one (else against all UFC fighters). Numbers come from data/ufc-card-scores.json; nothing is calculated here. */
+  const SCORE_MAIN = [['power', 'Power'], ['defence', 'Defence'], ['wrestling', 'Wrestling'], ['durability', 'Durability']];
+  const SCORE_MORE = [['striking', 'Striking'], ['grappling', 'Grappling']];
+
+  function scoresEnabled(g) {
+    if (!g) return false;
+    if (g.BEFN_FEATURES && g.BEFN_FEATURES.snapshotScores === true) return true;
+    try { return /[?&]snapshotScores=preview(&|$)/.test((g.location && g.location.search) || ''); } catch (e) { return false; }
+  }
+
+  // Scores for a bout on a card, in the order of `names`. null when the event or bout is not in the file.
+  function lookupScores(data, eventId, names) {
+    if (!data || !Array.isArray(data.events) || !Array.isArray(names) || names.length !== 2) return null;
+    const keys = names.map(fold);
+    const event = data.events.find(e => e.id === eventId);
+    const bout = event && event.bouts.find(b => b.fighters[0] === keys[0] && b.fighters[1] === keys[1] || b.fighters[0] === keys[1] && b.fighters[1] === keys[0]);
+    if (!bout) return null;
+    const flip = bout.fighters[0] !== keys[0];
+    const sides = flip ? [bout.scores[1], bout.scores[0]] : bout.scores;
+    const info = keys.map(k => (data.fighters || {})[k] || null);
+    return { division: bout.division || null, basis: bout.basis || {}, sides, info, minimums: data.minimums || null };
+  }
+
+  function scoresHTML(entry, names, h) {
+    const esc = h && h.esc ? h.esc : String;
+    if (!entry) return '';
+    const val = (side, key) => side && side[key] && Number.isInteger(side[key].score) ? side[key] : null;
+    const has = SCORE_MAIN.concat(SCORE_MORE).some(([k]) => val(entry.sides[0], k) || val(entry.sides[1], k));
+    if (!has) return '';
+    const bar = (v, side) => '<span class="st-track st-' + side + '" aria-hidden="true">' + (v ? '<span class="st-fill st-band-' + esc(v.band) + '" style="width:' + v.score + '%"></span>' : '') + '</span>';
+    const row = ([key, label]) => {
+      const a = val(entry.sides[0], key), b = val(entry.sides[1], key);
+      if (!a && !b) return '';
+      return '<div class="st-row" role="group" aria-label="' + esc(label) + '">' +
+        '<span class="st-num">' + (a ? a.score : '—') + '</span>' + bar(a, 'a') + '<span class="st-label">' + esc(label) + '</span>' + bar(b, 'b') +
+        '<span class="st-num">' + (b ? b.score : '—') + '</span></div>';
+    };
+    const main = SCORE_MAIN.map(row).join(''), more = SCORE_MORE.map(row).join('');
+    const bases = Object.values(entry.basis || {});
+    const division = entry.division && bases.length && bases.every(x => x === 'division');
+    const rank = division ? 'Ranked against ' + entry.division + ' fighters.' : 'Ranked against all UFC fighters.';
+    const moved = entry.info.map((f, i) => f && f.newToDivision && f.previousDivision
+      ? names[i] + ' is new to ' + f.division + ' (was ' + f.previousDivision + ').' : '').filter(Boolean);
+    return '<section class="st-scores" aria-label="Attribute scores">' +
+      '<h3 class="st-title">Attribute scores</h3>' +
+      '<div class="st-rows">' + main + '</div>' +
+      (more ? '<details class="st-more"><summary>More scores</summary><div class="st-rows">' + more + '</div></details>' : '') +
+      '<p class="st-note">' + esc(rank) + (moved.length ? ' ' + esc(moved.join(' ')) : '') +
+      ' Scores run 1 to 99 and describe each fighter\'s last five UFC fights. They are not predictions.</p></section>';
+  }
+
+  const api = { fold, ROWS, show, recordText, status, widths, lookup, html, scoresEnabled, lookupScores, scoresHTML, SCORE_MAIN, SCORE_MORE };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.BEFNSnapshotTiles = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
