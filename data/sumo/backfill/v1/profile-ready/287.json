@@ -1,0 +1,5684 @@
+{
+  "schemaVersion": 1,
+  "sourceId": 287,
+  "officialNskId": 4142,
+  "shikonaEn": "Tanji",
+  "previewOnly": true,
+  "certification": "not-started",
+  "status": "source-regular-bouts-reconciled-external-verification-pending",
+  "sourceUrl": "https://www.sumo-api.com/api/rikishi/287",
+  "jsaUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4142/",
+  "identity": {
+    "shikonaEn": "Tanji",
+    "shikonaJp": "丹治　純",
+    "stable": "Arashio",
+    "birthplace": "Fukushima-ken, Fukushima-shi",
+    "birthDate": "2006-06-05T00:00:00Z",
+    "debutBasho": "202203"
+  },
+  "current": {
+    "rank": "Juryo 7 East",
+    "weightKg": 149,
+    "heightCm": 185
+  },
+  "currentOfficialMeasurement": {
+    "weightKg": 149,
+    "heightCm": 185,
+    "source": "Japan Sumo Association current published profile",
+    "sourceUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4142/",
+    "officialAsOf": {
+      "monthYear": "November 2026",
+      "day": 8
+    },
+    "snapshotType": "current-listed-weight-not-dated-weigh-in",
+    "measurementDateKnown": false,
+    "independentlyCertified": false,
+    "agreesWithApiCurrentWeight": true
+  },
+  "career": {
+    "wins": 122,
+    "losses": 77,
+    "absences": 5,
+    "winLossEvidence": "official-JSA-public-record-verified-against-bout-ledger",
+    "sourceSummaryLagReconciled": false,
+    "originalApiCareerTotals": {
+      "wins": 122,
+      "losses": 77,
+      "matches": 199
+    },
+    "basho": 28,
+    "yusho": 0,
+    "yushoByDivision": {},
+    "sansho": {},
+    "careerHigh": {
+      "rank": "Juryo 7 East",
+      "bashoId": "202611"
+    }
+  },
+  "measurements": [
+    {
+      "bashoId": "202203",
+      "heightCm": 183,
+      "weightKg": 114,
+      "source": "Sumo API historical change",
+      "sourceUrl": "https://www.sumo-api.com/api/measurements?rikishiId=287",
+      "independentlyCertified": false,
+      "independentSourceConfirmed": "https://sumodb.sumogames.de/Rikishi.aspx?r=12751"
+    },
+    {
+      "bashoId": "202205",
+      "heightCm": 183,
+      "weightKg": 114,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12751",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202305",
+      "heightCm": 183,
+      "weightKg": 120,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12751",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202405",
+      "heightCm": 184,
+      "weightKg": 132,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12751",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202505",
+      "heightCm": 185,
+      "weightKg": 133,
+      "source": "SumoDB dated tournament measurement",
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12751",
+      "independentlyCertified": false
+    }
+  ],
+  "measurementCoverage": {
+    "apiPoints": 1,
+    "independentPoints": 5,
+    "extraPoints": 4,
+    "matchingOverlapPoints": 1,
+    "conflictingOverlaps": [],
+    "status": "dated-independent-source-collected",
+    "independentlyCertified": false
+  },
+  "rankTimeline": [
+    {
+      "bashoId": "202203",
+      "rank": "Banzuke-gai",
+      "rankValue": 3000
+    },
+    {
+      "bashoId": "202205",
+      "rank": "Jonokuchi 14 East",
+      "rankValue": 1014
+    },
+    {
+      "bashoId": "202207",
+      "rank": "Jonidan 43 East",
+      "rankValue": 943
+    },
+    {
+      "bashoId": "202209",
+      "rank": "Sandanme 68 East",
+      "rankValue": 868
+    },
+    {
+      "bashoId": "202211",
+      "rank": "Sandanme 32 East",
+      "rankValue": 832
+    },
+    {
+      "bashoId": "202301",
+      "rank": "Sandanme 18 East",
+      "rankValue": 818
+    },
+    {
+      "bashoId": "202303",
+      "rank": "Sandanme 36 East",
+      "rankValue": 836
+    },
+    {
+      "bashoId": "202305",
+      "rank": "Sandanme 11 East",
+      "rankValue": 811
+    },
+    {
+      "bashoId": "202307",
+      "rank": "Makushita 50 West",
+      "rankValue": 750
+    },
+    {
+      "bashoId": "202309",
+      "rank": "Sandanme 5 East",
+      "rankValue": 805
+    },
+    {
+      "bashoId": "202311",
+      "rank": "Makushita 29 West",
+      "rankValue": 729
+    },
+    {
+      "bashoId": "202401",
+      "rank": "Sandanme 1 East",
+      "rankValue": 801
+    },
+    {
+      "bashoId": "202403",
+      "rank": "Makushita 28 West",
+      "rankValue": 728
+    },
+    {
+      "bashoId": "202405",
+      "rank": "Makushita 22 East",
+      "rankValue": 722
+    },
+    {
+      "bashoId": "202407",
+      "rank": "Makushita 40 West",
+      "rankValue": 740
+    },
+    {
+      "bashoId": "202409",
+      "rank": "Makushita 18 East",
+      "rankValue": 718
+    },
+    {
+      "bashoId": "202411",
+      "rank": "Makushita 28 West",
+      "rankValue": 728
+    },
+    {
+      "bashoId": "202501",
+      "rank": "Makushita 21 East",
+      "rankValue": 721
+    },
+    {
+      "bashoId": "202503",
+      "rank": "Makushita 35 West",
+      "rankValue": 735
+    },
+    {
+      "bashoId": "202505",
+      "rank": "Makushita 27 West",
+      "rankValue": 727
+    },
+    {
+      "bashoId": "202507",
+      "rank": "Makushita 20 East",
+      "rankValue": 720
+    },
+    {
+      "bashoId": "202509",
+      "rank": "Makushita 24 West",
+      "rankValue": 724
+    },
+    {
+      "bashoId": "202511",
+      "rank": "Makushita 18 East",
+      "rankValue": 718
+    },
+    {
+      "bashoId": "202601",
+      "rank": "Makushita 33 East",
+      "rankValue": 733
+    },
+    {
+      "bashoId": "202603",
+      "rank": "Makushita 12 West",
+      "rankValue": 712
+    },
+    {
+      "bashoId": "202605",
+      "rank": "Makushita 6 East",
+      "rankValue": 706
+    },
+    {
+      "bashoId": "202607",
+      "rank": "Makushita 1 East",
+      "rankValue": 701
+    },
+    {
+      "bashoId": "202609",
+      "rank": "Juryo 10 West",
+      "rankValue": 610
+    },
+    {
+      "bashoId": "202611",
+      "rank": "Juryo 7 East",
+      "rankValue": 607
+    }
+  ],
+  "rankHistoryGaps": [],
+  "rankAvailability": {
+    "evidencedUnrankedDebutBasho": null,
+    "note": "Published historical ranks only; do not infer missing tournament measurements or ranks"
+  },
+  "ringNameHistory": [
+    {
+      "bashoId": "202203",
+      "shikonaEn": "Tanji Jun",
+      "shikonaJp": ""
+    },
+    {
+      "bashoId": "202503",
+      "shikonaEn": "Tanji",
+      "shikonaJp": "丹治(たんじ)"
+    }
+  ],
+  "boutHistory": {
+    "rawCachePath": "data/sumo/backfill/v1/rikishi/287.json",
+    "regularBouts": 199,
+    "otherBouts": 2,
+    "totalRawBouts": 201,
+    "regularWins": 122,
+    "regularLosses": 77,
+    "earliestBasho": "202205",
+    "latestBasho": "202611",
+    "fullPagination": true,
+    "comparison": "Regular bouts reconciled to API career stats, including JSA official correction overlays",
+    "officialBoutCorrections": [],
+    "rawSourceImmutable": true
+  },
+  "specialBouts": [
+    {
+      "bashoId": "202605",
+      "day": 16,
+      "division": "Makushita",
+      "opponentId": 73,
+      "outcome": "loss",
+      "kimarite": "kakenage",
+      "sourceMatchKey": "202605:16:3:287:73"
+    },
+    {
+      "bashoId": "202205",
+      "day": 16,
+      "division": "Jonokuchi",
+      "opponentId": 78,
+      "outcome": "loss",
+      "kimarite": "oshitaoshi",
+      "sourceMatchKey": "202205:16:1:78:287"
+    }
+  ],
+  "perBasho": [
+    {
+      "bashoId": "202205",
+      "division": "Jonokuchi",
+      "wins": 6,
+      "losses": 1,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202207",
+      "division": "Jonidan",
+      "wins": 6,
+      "losses": 1,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202209",
+      "division": "Sandanme",
+      "wins": 5,
+      "losses": 2,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202211",
+      "division": "Sandanme",
+      "wins": 4,
+      "losses": 3,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202301",
+      "division": "Sandanme",
+      "wins": 3,
+      "losses": 4,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202303",
+      "division": "Sandanme",
+      "wins": 5,
+      "losses": 2,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202305",
+      "division": "Sandanme",
+      "wins": 5,
+      "losses": 2,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202307",
+      "division": "Makushita",
+      "wins": 3,
+      "losses": 4,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202309",
+      "division": "Sandanme",
+      "wins": 6,
+      "losses": 1,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202311",
+      "division": "Makushita",
+      "wins": 1,
+      "losses": 6,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202401",
+      "division": "Makushita",
+      "wins": 6,
+      "losses": 1,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202403",
+      "division": "Makushita",
+      "wins": 4,
+      "losses": 3,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202405",
+      "division": "Makushita",
+      "wins": 2,
+      "losses": 3,
+      "scheduledBoutRows": 5
+    },
+    {
+      "bashoId": "202407",
+      "division": "Makushita",
+      "wins": 6,
+      "losses": 1,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202409",
+      "division": "Makushita",
+      "wins": 3,
+      "losses": 4,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202411",
+      "division": "Makushita",
+      "wins": 4,
+      "losses": 3,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202501",
+      "division": "Makushita",
+      "wins": 2,
+      "losses": 5,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202503",
+      "division": "Makushita",
+      "wins": 4,
+      "losses": 3,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202505",
+      "division": "Makushita",
+      "wins": 4,
+      "losses": 3,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202507",
+      "division": "Makushita",
+      "wins": 3,
+      "losses": 4,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202509",
+      "division": "Makushita",
+      "wins": 4,
+      "losses": 3,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202511",
+      "division": "Makushita",
+      "wins": 2,
+      "losses": 2,
+      "scheduledBoutRows": 4
+    },
+    {
+      "bashoId": "202601",
+      "division": "Makushita",
+      "wins": 6,
+      "losses": 1,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202603",
+      "division": "Makushita",
+      "wins": 5,
+      "losses": 2,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202605",
+      "division": "Makushita",
+      "wins": 6,
+      "losses": 1,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202607",
+      "division": "Juryo",
+      "wins": 4,
+      "losses": 3,
+      "scheduledBoutRows": 7
+    },
+    {
+      "bashoId": "202609",
+      "division": "Juryo",
+      "wins": 9,
+      "losses": 6,
+      "scheduledBoutRows": 15
+    },
+    {
+      "bashoId": "202611",
+      "division": "Juryo",
+      "wins": 4,
+      "losses": 3,
+      "scheduledBoutRows": 7
+    }
+  ],
+  "headToHead": [
+    {
+      "opponentId": 122,
+      "opponentName": "Kazuto",
+      "wins": 3,
+      "losses": 2,
+      "regularBouts": 5,
+      "meetings": [
+        {
+          "bashoId": "202503",
+          "day": 8,
+          "matchNo": 12,
+          "division": "Makushita",
+          "eastId": 122,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 122,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202503:8:12:122:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202501",
+          "day": 2,
+          "matchNo": 20,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 122,
+          "winnerId": 122,
+          "opponentId": 122,
+          "outcome": "loss",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202501:2:20:287:122",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202411",
+          "day": 2,
+          "matchNo": 17,
+          "division": "Makushita",
+          "eastId": 122,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 122,
+          "outcome": "win",
+          "kimarite": "hatakikomi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202411:2:17:122:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202409",
+          "day": 7,
+          "matchNo": 21,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 122,
+          "winnerId": 122,
+          "opponentId": 122,
+          "outcome": "loss",
+          "kimarite": "oshitaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202409:7:21:287:122",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202311",
+          "day": 1,
+          "matchNo": 15,
+          "division": "Makushita",
+          "eastId": 122,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 122,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202311:1:15:122:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 5,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 111,
+      "opponentName": "Hitoshi",
+      "wins": 1,
+      "losses": 3,
+      "regularBouts": 4,
+      "meetings": [
+        {
+          "bashoId": "202611",
+          "day": 1,
+          "matchNo": 8,
+          "division": "Juryo",
+          "eastId": 287,
+          "westId": 111,
+          "winnerId": 111,
+          "opponentId": 111,
+          "outcome": "loss",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202611:1:8:287:111",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202609",
+          "day": 2,
+          "matchNo": 5,
+          "division": "Juryo",
+          "eastId": 111,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 111,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202609:2:5:111:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202403",
+          "day": 12,
+          "matchNo": 20,
+          "division": "Makushita",
+          "eastId": 111,
+          "westId": 287,
+          "winnerId": 111,
+          "opponentId": 111,
+          "outcome": "loss",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202403:12:20:111:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202211",
+          "day": 7,
+          "matchNo": 30,
+          "division": "Sandanme",
+          "eastId": 111,
+          "westId": 287,
+          "winnerId": 111,
+          "opponentId": 111,
+          "outcome": "loss",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202211:7:30:111:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 4,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 274,
+      "opponentName": "Gyokuozan",
+      "wins": 4,
+      "losses": 0,
+      "regularBouts": 4,
+      "meetings": [
+        {
+          "bashoId": "202601",
+          "day": 5,
+          "matchNo": 15,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 274,
+          "winnerId": 287,
+          "opponentId": 274,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202601:5:15:287:274",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202503",
+          "day": 3,
+          "matchNo": 15,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 274,
+          "winnerId": 287,
+          "opponentId": 274,
+          "outcome": "win",
+          "kimarite": "uwatedashinage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202503:3:15:287:274",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202501",
+          "day": 5,
+          "matchNo": 18,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 274,
+          "winnerId": 287,
+          "opponentId": 274,
+          "outcome": "win",
+          "kimarite": "sukuinage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202501:5:18:287:274",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202205",
+          "day": 9,
+          "matchNo": 7,
+          "division": "Jonokuchi",
+          "eastId": 274,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 274,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202205:9:7:274:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 4,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 88,
+      "opponentName": "Gojinyu",
+      "wins": 1,
+      "losses": 2,
+      "regularBouts": 3,
+      "meetings": [
+        {
+          "bashoId": "202607",
+          "day": 3,
+          "matchNo": 29,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 88,
+          "winnerId": 287,
+          "opponentId": 88,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202607:3:29:287:88",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202603",
+          "day": 5,
+          "matchNo": 23,
+          "division": "Makushita",
+          "eastId": 88,
+          "westId": 287,
+          "winnerId": 88,
+          "opponentId": 88,
+          "outcome": "loss",
+          "kimarite": "tsukiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202603:5:23:88:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202405",
+          "day": 2,
+          "matchNo": 20,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 88,
+          "winnerId": 88,
+          "opponentId": 88,
+          "outcome": "loss",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202405:2:20:287:88",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 3,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 117,
+      "opponentName": "Nabatame",
+      "wins": 1,
+      "losses": 2,
+      "regularBouts": 3,
+      "meetings": [
+        {
+          "bashoId": "202611",
+          "day": 4,
+          "matchNo": 8,
+          "division": "Juryo",
+          "eastId": 287,
+          "westId": 117,
+          "winnerId": 117,
+          "opponentId": 117,
+          "outcome": "loss",
+          "kimarite": "hikiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202611:4:8:287:117",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202609",
+          "day": 5,
+          "matchNo": 5,
+          "division": "Juryo",
+          "eastId": 117,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 117,
+          "outcome": "win",
+          "kimarite": "fusen",
+          "resultKind": "forfeit",
+          "sourceMatchKey": "202609:5:5:117:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202607",
+          "day": 5,
+          "matchNo": 29,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 117,
+          "winnerId": 117,
+          "opponentId": 117,
+          "outcome": "loss",
+          "kimarite": "tsukidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202607:5:29:287:117",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 1,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 166,
+      "opponentName": "Tochikodai",
+      "wins": 1,
+      "losses": 2,
+      "regularBouts": 3,
+      "meetings": [
+        {
+          "bashoId": "202607",
+          "day": 9,
+          "matchNo": 29,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 166,
+          "winnerId": 166,
+          "opponentId": 166,
+          "outcome": "loss",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202607:9:29:287:166",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202511",
+          "day": 8,
+          "matchNo": 22,
+          "division": "Makushita",
+          "eastId": 166,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 166,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202511:8:22:166:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202311",
+          "day": 5,
+          "matchNo": 15,
+          "division": "Makushita",
+          "eastId": 166,
+          "westId": 287,
+          "winnerId": 166,
+          "opponentId": 166,
+          "outcome": "loss",
+          "kimarite": "tsukiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202311:5:15:166:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 3,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 251,
+      "opponentName": "Toshunryu",
+      "wins": 1,
+      "losses": 2,
+      "regularBouts": 3,
+      "meetings": [
+        {
+          "bashoId": "202509",
+          "day": 11,
+          "matchNo": 17,
+          "division": "Makushita",
+          "eastId": 251,
+          "westId": 287,
+          "winnerId": 251,
+          "opponentId": 251,
+          "outcome": "loss",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202509:11:17:251:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202503",
+          "day": 12,
+          "matchNo": 14,
+          "division": "Makushita",
+          "eastId": 251,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 251,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202503:12:14:251:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202501",
+          "day": 3,
+          "matchNo": 19,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 251,
+          "winnerId": 251,
+          "opponentId": 251,
+          "outcome": "loss",
+          "kimarite": "hatakikomi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202501:3:19:287:251",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 3,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 609,
+      "opponentName": "Satorufuji",
+      "wins": 2,
+      "losses": 1,
+      "regularBouts": 3,
+      "meetings": [
+        {
+          "bashoId": "202511",
+          "day": 15,
+          "matchNo": 16,
+          "division": "Makushita",
+          "eastId": 609,
+          "westId": 287,
+          "winnerId": 609,
+          "opponentId": 609,
+          "outcome": "loss",
+          "kimarite": "hikiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202511:15:16:609:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202501",
+          "day": 8,
+          "matchNo": 18,
+          "division": "Makushita",
+          "eastId": 609,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 609,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202501:8:18:609:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202309",
+          "day": 14,
+          "matchNo": 27,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 609,
+          "winnerId": 287,
+          "opponentId": 609,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202309:14:27:287:609",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 3,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 613,
+      "opponentName": "Gonoumi",
+      "wins": 2,
+      "losses": 1,
+      "regularBouts": 3,
+      "meetings": [
+        {
+          "bashoId": "202605",
+          "day": 13,
+          "matchNo": 16,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 613,
+          "winnerId": 287,
+          "opponentId": 613,
+          "outcome": "win",
+          "kimarite": "tsukidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202605:13:16:287:613",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202603",
+          "day": 8,
+          "matchNo": 25,
+          "division": "Makushita",
+          "eastId": 613,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 613,
+          "outcome": "win",
+          "kimarite": "hikiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202603:8:25:613:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202601",
+          "day": 8,
+          "matchNo": 18,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 613,
+          "winnerId": 613,
+          "opponentId": 613,
+          "outcome": "loss",
+          "kimarite": "sukuinage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202601:8:18:287:613",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 3,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 8867,
+      "opponentName": "Daikosho",
+      "wins": 2,
+      "losses": 1,
+      "regularBouts": 3,
+      "meetings": [
+        {
+          "bashoId": "202607",
+          "day": 1,
+          "matchNo": 29,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 8867,
+          "winnerId": 287,
+          "opponentId": 8867,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202607:1:29:287:8867",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202605",
+          "day": 5,
+          "matchNo": 24,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 8867,
+          "winnerId": 287,
+          "opponentId": 8867,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202605:5:24:287:8867",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202603",
+          "day": 12,
+          "matchNo": 22,
+          "division": "Makushita",
+          "eastId": 8867,
+          "westId": 287,
+          "winnerId": 8867,
+          "opponentId": 8867,
+          "outcome": "loss",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202603:12:22:8867:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 3,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 9085,
+      "opponentName": "Hanaoka",
+      "wins": 3,
+      "losses": 0,
+      "regularBouts": 3,
+      "meetings": [
+        {
+          "bashoId": "202605",
+          "day": 2,
+          "matchNo": 27,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 9085,
+          "winnerId": 287,
+          "opponentId": 9085,
+          "outcome": "win",
+          "kimarite": "oshitaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202605:2:27:287:9085",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202603",
+          "day": 15,
+          "matchNo": 16,
+          "division": "Makushita",
+          "eastId": 9085,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 9085,
+          "outcome": "win",
+          "kimarite": "tsukiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202603:15:16:9085:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202509",
+          "day": 10,
+          "matchNo": 21,
+          "division": "Makushita",
+          "eastId": 9085,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 9085,
+          "outcome": "win",
+          "kimarite": "katasukashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202509:10:21:9085:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 3,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 15,
+      "opponentName": "Ryuden",
+      "wins": 1,
+      "losses": 1,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202611",
+          "day": 2,
+          "matchNo": 9,
+          "division": "Juryo",
+          "eastId": 15,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 15,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202611:2:9:15:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202609",
+          "day": 7,
+          "matchNo": 6,
+          "division": "Juryo",
+          "eastId": 15,
+          "westId": 287,
+          "winnerId": 15,
+          "opponentId": 15,
+          "outcome": "loss",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202609:7:6:15:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 16,
+      "opponentName": "Nishikigi",
+      "wins": 2,
+      "losses": 0,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202609",
+          "day": 11,
+          "matchNo": 4,
+          "division": "Juryo",
+          "eastId": 16,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 16,
+          "outcome": "win",
+          "kimarite": "kotenage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202609:11:4:16:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202607",
+          "day": 6,
+          "matchNo": 1,
+          "division": "Juryo",
+          "eastId": 287,
+          "westId": 16,
+          "winnerId": 287,
+          "opponentId": 16,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202607:6:1:287:16",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 34,
+      "opponentName": "Midorifuji",
+      "wins": 2,
+      "losses": 0,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202611",
+          "day": 3,
+          "matchNo": 7,
+          "division": "Juryo",
+          "eastId": 287,
+          "westId": 34,
+          "winnerId": 287,
+          "opponentId": 34,
+          "outcome": "win",
+          "kimarite": "watashikomi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202611:3:7:287:34",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202609",
+          "day": 9,
+          "matchNo": 8,
+          "division": "Juryo",
+          "eastId": 34,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 34,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202609:9:8:34:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 62,
+      "opponentName": "Enho",
+      "wins": 0,
+      "losses": 2,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202611",
+          "day": 7,
+          "matchNo": 6,
+          "division": "Juryo",
+          "eastId": 287,
+          "westId": 62,
+          "winnerId": 62,
+          "opponentId": 62,
+          "outcome": "loss",
+          "kimarite": "tottari",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202611:7:6:287:62",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202609",
+          "day": 8,
+          "matchNo": 4,
+          "division": "Juryo",
+          "eastId": 62,
+          "westId": 287,
+          "winnerId": 62,
+          "opponentId": 62,
+          "outcome": "loss",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202609:8:4:62:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 85,
+      "opponentName": "Tenshoho",
+      "wins": 0,
+      "losses": 2,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202507",
+          "day": 14,
+          "matchNo": 15,
+          "division": "Makushita",
+          "eastId": 85,
+          "westId": 287,
+          "winnerId": 85,
+          "opponentId": 85,
+          "outcome": "loss",
+          "kimarite": "okuridashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202507:14:15:85:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202505",
+          "day": 5,
+          "matchNo": 18,
+          "division": "Makushita",
+          "eastId": 85,
+          "westId": 287,
+          "winnerId": 85,
+          "opponentId": 85,
+          "outcome": "loss",
+          "kimarite": "tsukiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202505:5:18:85:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 90,
+      "opponentName": "Higonoumi",
+      "wins": 2,
+      "losses": 0,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202601",
+          "day": 1,
+          "matchNo": 14,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 90,
+          "winnerId": 287,
+          "opponentId": 90,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202601:1:14:287:90",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202411",
+          "day": 13,
+          "matchNo": 11,
+          "division": "Makushita",
+          "eastId": 90,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 90,
+          "outcome": "win",
+          "kimarite": "hatakikomi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202411:13:11:90:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 100,
+      "opponentName": "Kurohimeyama",
+      "wins": 0,
+      "losses": 2,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202407",
+          "day": 11,
+          "matchNo": 11,
+          "division": "Makushita",
+          "eastId": 100,
+          "westId": 287,
+          "winnerId": 100,
+          "opponentId": 100,
+          "outcome": "loss",
+          "kimarite": "hatakikomi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202407:11:11:100:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202307",
+          "day": 2,
+          "matchNo": 5,
+          "division": "Makushita",
+          "eastId": 100,
+          "westId": 287,
+          "winnerId": 100,
+          "opponentId": 100,
+          "outcome": "loss",
+          "kimarite": "tsukiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202307:2:5:100:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 123,
+      "opponentName": "Tosamidori",
+      "wins": 0,
+      "losses": 2,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202501",
+          "day": 14,
+          "matchNo": 15,
+          "division": "Makushita",
+          "eastId": 123,
+          "westId": 287,
+          "winnerId": 123,
+          "opponentId": 123,
+          "outcome": "loss",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202501:14:15:123:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202411",
+          "day": 12,
+          "matchNo": 17,
+          "division": "Makushita",
+          "eastId": 123,
+          "westId": 287,
+          "winnerId": 123,
+          "opponentId": 123,
+          "outcome": "loss",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202411:12:17:123:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 124,
+      "opponentName": "Kitaharima",
+      "wins": 2,
+      "losses": 0,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202409",
+          "day": 9,
+          "matchNo": 20,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 124,
+          "winnerId": 287,
+          "opponentId": 124,
+          "outcome": "win",
+          "kimarite": "hatakikomi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202409:9:20:287:124",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202307",
+          "day": 3,
+          "matchNo": 7,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 124,
+          "winnerId": 287,
+          "opponentId": 124,
+          "outcome": "win",
+          "kimarite": "tsukiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202307:3:7:287:124",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 140,
+      "opponentName": "Tokifudo",
+      "wins": 1,
+      "losses": 1,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202609",
+          "day": 13,
+          "matchNo": 2,
+          "division": "Juryo",
+          "eastId": 140,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 140,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202609:13:2:140:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202607",
+          "day": 11,
+          "matchNo": 29,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 140,
+          "winnerId": 140,
+          "opponentId": 140,
+          "outcome": "loss",
+          "kimarite": "katasukashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202607:11:29:287:140",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 141,
+      "opponentName": "Kitadaichi",
+      "wins": 1,
+      "losses": 1,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202601",
+          "day": 14,
+          "matchNo": 9,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 141,
+          "winnerId": 287,
+          "opponentId": 141,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202601:14:9:287:141",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202507",
+          "day": 1,
+          "matchNo": 20,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 141,
+          "winnerId": 141,
+          "opponentId": 141,
+          "outcome": "loss",
+          "kimarite": "tsukiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202507:1:20:287:141",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 142,
+      "opponentName": "Kayo",
+      "wins": 1,
+      "losses": 1,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202609",
+          "day": 12,
+          "matchNo": 3,
+          "division": "Juryo",
+          "eastId": 142,
+          "westId": 287,
+          "winnerId": 142,
+          "opponentId": 142,
+          "outcome": "loss",
+          "kimarite": "hatakikomi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202609:12:3:142:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202607",
+          "day": 13,
+          "matchNo": 2,
+          "division": "Juryo",
+          "eastId": 287,
+          "westId": 142,
+          "winnerId": 287,
+          "opponentId": 142,
+          "outcome": "win",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202607:13:2:287:142",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 144,
+      "opponentName": "Narutaki",
+      "wins": 0,
+      "losses": 2,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202507",
+          "day": 12,
+          "matchNo": 20,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 144,
+          "winnerId": 144,
+          "opponentId": 144,
+          "outcome": "loss",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202507:12:20:287:144",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202405",
+          "day": 14,
+          "matchNo": 15,
+          "division": "Makushita",
+          "eastId": 144,
+          "westId": 287,
+          "winnerId": 144,
+          "opponentId": 144,
+          "outcome": "loss",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202405:14:15:144:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 152,
+      "opponentName": "Nobehara",
+      "wins": 0,
+      "losses": 2,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202309",
+          "day": 4,
+          "matchNo": 41,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 152,
+          "winnerId": 152,
+          "opponentId": 152,
+          "outcome": "loss",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202309:4:41:287:152",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202307",
+          "day": 9,
+          "matchNo": 6,
+          "division": "Makushita",
+          "eastId": 152,
+          "westId": 287,
+          "winnerId": 152,
+          "opponentId": 152,
+          "outcome": "loss",
+          "kimarite": "shitatenage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202307:9:6:152:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 159,
+      "opponentName": "Daikisho",
+      "wins": 2,
+      "losses": 0,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202309",
+          "day": 6,
+          "matchNo": 40,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 159,
+          "winnerId": 287,
+          "opponentId": 159,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202309:6:40:287:159",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202307",
+          "day": 14,
+          "matchNo": 3,
+          "division": "Makushita",
+          "eastId": 159,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 159,
+          "outcome": "win",
+          "kimarite": "hatakikomi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202307:14:3:159:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 171,
+      "opponentName": "Hokutomaru",
+      "wins": 1,
+      "losses": 1,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202411",
+          "day": 5,
+          "matchNo": 15,
+          "division": "Makushita",
+          "eastId": 171,
+          "westId": 287,
+          "winnerId": 171,
+          "opponentId": 171,
+          "outcome": "loss",
+          "kimarite": "sotogake",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202411:5:15:171:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202405",
+          "day": 9,
+          "matchNo": 23,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 171,
+          "winnerId": 287,
+          "opponentId": 171,
+          "outcome": "win",
+          "kimarite": "hatakikomi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202405:9:23:287:171",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 181,
+      "opponentName": "Hinataryu",
+      "wins": 1,
+      "losses": 1,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202503",
+          "day": 15,
+          "matchNo": 10,
+          "division": "Makushita",
+          "eastId": 181,
+          "westId": 287,
+          "winnerId": 181,
+          "opponentId": 181,
+          "outcome": "loss",
+          "kimarite": "shitatenage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202503:15:10:181:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202407",
+          "day": 15,
+          "matchNo": 7,
+          "division": "Makushita",
+          "eastId": 181,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 181,
+          "outcome": "win",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202407:15:7:181:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 188,
+      "opponentName": "Asonoyama",
+      "wins": 2,
+      "losses": 0,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202603",
+          "day": 4,
+          "matchNo": 24,
+          "division": "Makushita",
+          "eastId": 188,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 188,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202603:4:24:188:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202505",
+          "day": 4,
+          "matchNo": 18,
+          "division": "Makushita",
+          "eastId": 188,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 188,
+          "outcome": "win",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202505:4:18:188:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 196,
+      "opponentName": "Hayanami",
+      "wins": 1,
+      "losses": 1,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202401",
+          "day": 4,
+          "matchNo": 42,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 196,
+          "winnerId": 287,
+          "opponentId": 196,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202401:4:42:287:196",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202305",
+          "day": 1,
+          "matchNo": 38,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 196,
+          "winnerId": 196,
+          "opponentId": 196,
+          "outcome": "loss",
+          "kimarite": "hatakikomi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202305:1:38:287:196",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 199,
+      "opponentName": "Kotokenryu",
+      "wins": 2,
+      "losses": 0,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202507",
+          "day": 5,
+          "matchNo": 16,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 199,
+          "winnerId": 287,
+          "opponentId": 199,
+          "outcome": "win",
+          "kimarite": "hatakikomi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202507:5:16:287:199",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202305",
+          "day": 9,
+          "matchNo": 40,
+          "division": "Sandanme",
+          "eastId": 199,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 199,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202305:9:40:199:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 200,
+      "opponentName": "Tendozan",
+      "wins": 0,
+      "losses": 2,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202503",
+          "day": 9,
+          "matchNo": 15,
+          "division": "Makushita",
+          "eastId": 200,
+          "westId": 287,
+          "winnerId": 200,
+          "opponentId": 200,
+          "outcome": "loss",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202503:9:15:200:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202311",
+          "day": 8,
+          "matchNo": 15,
+          "division": "Makushita",
+          "eastId": 200,
+          "westId": 287,
+          "winnerId": 200,
+          "opponentId": 200,
+          "outcome": "loss",
+          "kimarite": "tsukiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202311:8:15:200:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 212,
+      "opponentName": "Wakamiyabi",
+      "wins": 2,
+      "losses": 0,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202509",
+          "day": 8,
+          "matchNo": 18,
+          "division": "Makushita",
+          "eastId": 212,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 212,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202509:8:18:212:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202205",
+          "day": 12,
+          "matchNo": 7,
+          "division": "Jonokuchi",
+          "eastId": 287,
+          "westId": 212,
+          "winnerId": 287,
+          "opponentId": 212,
+          "outcome": "win",
+          "kimarite": "okuridashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202205:12:7:287:212",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 219,
+      "opponentName": "Sazanami",
+      "wins": 2,
+      "losses": 0,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202601",
+          "day": 12,
+          "matchNo": 16,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 219,
+          "winnerId": 287,
+          "opponentId": 219,
+          "outcome": "win",
+          "kimarite": "oshitaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202601:12:16:287:219",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202401",
+          "day": 7,
+          "matchNo": 4,
+          "division": "Makushita",
+          "eastId": 219,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 219,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202401:7:4:219:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 220,
+      "opponentName": "Mikazuchiyama",
+      "wins": 0,
+      "losses": 2,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202509",
+          "day": 4,
+          "matchNo": 18,
+          "division": "Makushita",
+          "eastId": 220,
+          "westId": 287,
+          "winnerId": 220,
+          "opponentId": 220,
+          "outcome": "loss",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202509:4:18:220:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202505",
+          "day": 10,
+          "matchNo": 17,
+          "division": "Makushita",
+          "eastId": 220,
+          "westId": 287,
+          "winnerId": 220,
+          "opponentId": 220,
+          "outcome": "loss",
+          "kimarite": "tsukiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202505:10:17:220:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 236,
+      "opponentName": "Daishoryu",
+      "wins": 1,
+      "losses": 1,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202601",
+          "day": 10,
+          "matchNo": 13,
+          "division": "Makushita",
+          "eastId": 236,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 236,
+          "outcome": "win",
+          "kimarite": "uwatenage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202601:10:13:236:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202305",
+          "day": 15,
+          "matchNo": 23,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 236,
+          "winnerId": 236,
+          "opponentId": 236,
+          "outcome": "loss",
+          "kimarite": "tsukiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202305:15:23:287:236",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 281,
+      "opponentName": "Akiyoshi",
+      "wins": 1,
+      "losses": 1,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202305",
+          "day": 5,
+          "matchNo": 39,
+          "division": "Sandanme",
+          "eastId": 281,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 281,
+          "outcome": "win",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202305:5:39:281:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202211",
+          "day": 11,
+          "matchNo": 32,
+          "division": "Sandanme",
+          "eastId": 281,
+          "westId": 287,
+          "winnerId": 281,
+          "opponentId": 281,
+          "outcome": "loss",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202211:11:32:281:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 284,
+      "opponentName": "Itadaki",
+      "wins": 1,
+      "losses": 1,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202307",
+          "day": 12,
+          "matchNo": 5,
+          "division": "Makushita",
+          "eastId": 284,
+          "westId": 287,
+          "winnerId": 284,
+          "opponentId": 284,
+          "outcome": "loss",
+          "kimarite": "shitatenage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202307:12:5:284:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202305",
+          "day": 12,
+          "matchNo": 37,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 284,
+          "winnerId": 287,
+          "opponentId": 284,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202305:12:37:287:284",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 286,
+      "opponentName": "Hakuonada",
+      "wins": 2,
+      "losses": 0,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202407",
+          "day": 4,
+          "matchNo": 10,
+          "division": "Makushita",
+          "eastId": 286,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 286,
+          "outcome": "win",
+          "kimarite": "sukuinage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202407:4:10:286:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202309",
+          "day": 10,
+          "matchNo": 40,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 286,
+          "winnerId": 287,
+          "opponentId": 286,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202309:10:40:287:286",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 288,
+      "opponentName": "Kenshin",
+      "wins": 1,
+      "losses": 1,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202303",
+          "day": 7,
+          "matchNo": 26,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 288,
+          "winnerId": 287,
+          "opponentId": 288,
+          "outcome": "win",
+          "kimarite": "uwatenage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202303:7:26:287:288",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202301",
+          "day": 8,
+          "matchNo": 35,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 288,
+          "winnerId": 288,
+          "opponentId": 288,
+          "outcome": "loss",
+          "kimarite": "hatakikomi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202301:8:35:287:288",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 298,
+      "opponentName": "Amakaze",
+      "wins": 2,
+      "losses": 0,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202401",
+          "day": 15,
+          "matchNo": 4,
+          "division": "Makushita",
+          "eastId": 298,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 298,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202401:15:4:298:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202309",
+          "day": 2,
+          "matchNo": 42,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 298,
+          "winnerId": 287,
+          "opponentId": 298,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202309:2:42:287:298",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 367,
+      "opponentName": "Chiyotenfu",
+      "wins": 2,
+      "losses": 0,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202301",
+          "day": 6,
+          "matchNo": 36,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 367,
+          "winnerId": 287,
+          "opponentId": 367,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202301:6:36:287:367",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202209",
+          "day": 5,
+          "matchNo": 11,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 367,
+          "winnerId": 287,
+          "opponentId": 367,
+          "outcome": "win",
+          "kimarite": "oshitaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202209:5:11:287:367",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 8858,
+      "opponentName": "Arashifuji",
+      "wins": 0,
+      "losses": 2,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202609",
+          "day": 15,
+          "matchNo": 6,
+          "division": "Juryo",
+          "eastId": 287,
+          "westId": 8858,
+          "winnerId": 8858,
+          "opponentId": 8858,
+          "outcome": "loss",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202609:15:6:287:8858",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202507",
+          "day": 7,
+          "matchNo": 19,
+          "division": "Makushita",
+          "eastId": 8858,
+          "westId": 287,
+          "winnerId": 8858,
+          "opponentId": 8858,
+          "outcome": "loss",
+          "kimarite": "watashikomi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202507:7:19:8858:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 8860,
+      "opponentName": "Inami",
+      "wins": 1,
+      "losses": 1,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202501",
+          "day": 10,
+          "matchNo": 20,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 8860,
+          "winnerId": 8860,
+          "opponentId": 8860,
+          "outcome": "loss",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202501:10:20:287:8860",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202411",
+          "day": 10,
+          "matchNo": 15,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 8860,
+          "winnerId": 287,
+          "opponentId": 8860,
+          "outcome": "win",
+          "kimarite": "okuridashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202411:10:15:287:8860",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 8862,
+      "opponentName": "Haruyama",
+      "wins": 1,
+      "losses": 1,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202505",
+          "day": 13,
+          "matchNo": 10,
+          "division": "Makushita",
+          "eastId": 8862,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 8862,
+          "outcome": "win",
+          "kimarite": "utchari",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202505:13:10:8862:287",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202401",
+          "day": 11,
+          "matchNo": 10,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 8862,
+          "winnerId": 8862,
+          "opponentId": 8862,
+          "outcome": "loss",
+          "kimarite": "hansoku",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202401:11:10:287:8862",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 8874,
+      "opponentName": "Fujisodai",
+      "wins": 2,
+      "losses": 0,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202605",
+          "day": 4,
+          "matchNo": 27,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 8874,
+          "winnerId": 287,
+          "opponentId": 8874,
+          "outcome": "win",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202605:4:27:287:8874",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202503",
+          "day": 5,
+          "matchNo": 15,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 8874,
+          "winnerId": 287,
+          "opponentId": 8874,
+          "outcome": "win",
+          "kimarite": "uwatedashinage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202503:5:15:287:8874",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 9097,
+      "opponentName": "Ryusho",
+      "wins": 2,
+      "losses": 0,
+      "regularBouts": 2,
+      "meetings": [
+        {
+          "bashoId": "202605",
+          "day": 8,
+          "matchNo": 28,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 9097,
+          "winnerId": 287,
+          "opponentId": 9097,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202605:8:28:287:9097",
+          "officialCorrection": null
+        },
+        {
+          "bashoId": "202603",
+          "day": 9,
+          "matchNo": 20,
+          "division": "Makushita",
+          "eastId": 9097,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 9097,
+          "outcome": "win",
+          "kimarite": "oshitaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202603:9:20:9097:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 2,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 6,
+      "opponentName": "Kazenoumi",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202403",
+          "day": 4,
+          "matchNo": 16,
+          "division": "Makushita",
+          "eastId": 6,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 6,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202403:4:16:6:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 26,
+      "opponentName": "Mitakeumi",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202611",
+          "day": 6,
+          "matchNo": 6,
+          "division": "Juryo",
+          "eastId": 287,
+          "westId": 26,
+          "winnerId": 287,
+          "opponentId": 26,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202611:6:6:287:26",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 29,
+      "opponentName": "Kagayaki",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202609",
+          "day": 1,
+          "matchNo": 5,
+          "division": "Juryo",
+          "eastId": 29,
+          "westId": 287,
+          "winnerId": 29,
+          "opponentId": 29,
+          "outcome": "loss",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202609:1:5:29:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 38,
+      "opponentName": "Meisei",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202609",
+          "day": 6,
+          "matchNo": 5,
+          "division": "Juryo",
+          "eastId": 38,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 38,
+          "outcome": "win",
+          "kimarite": "tsukiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202609:6:5:38:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 42,
+      "opponentName": "Chiyomaru",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202507",
+          "day": 10,
+          "matchNo": 23,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 42,
+          "winnerId": 287,
+          "opponentId": 42,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202507:10:23:287:42",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 49,
+      "opponentName": "Shonannoumi",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202611",
+          "day": 5,
+          "matchNo": 8,
+          "division": "Juryo",
+          "eastId": 49,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 49,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202611:5:8:49:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 54,
+      "opponentName": "Tohakuryu",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202609",
+          "day": 4,
+          "matchNo": 6,
+          "division": "Juryo",
+          "eastId": 287,
+          "westId": 54,
+          "winnerId": 287,
+          "opponentId": 54,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202609:4:6:287:54",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 58,
+      "opponentName": "Tsushimanada",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202505",
+          "day": 1,
+          "matchNo": 17,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 58,
+          "winnerId": 287,
+          "opponentId": 58,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202505:1:17:287:58",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 63,
+      "opponentName": "Takakento",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202407",
+          "day": 6,
+          "matchNo": 11,
+          "division": "Makushita",
+          "eastId": 63,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 63,
+          "outcome": "win",
+          "kimarite": "uchimuso",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202407:6:11:63:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 69,
+      "opponentName": "Kaisho",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202403",
+          "day": 15,
+          "matchNo": 12,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 69,
+          "winnerId": 69,
+          "opponentId": 69,
+          "outcome": "loss",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202403:15:12:287:69",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 72,
+      "opponentName": "Tochimusashi",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202411",
+          "day": 7,
+          "matchNo": 17,
+          "division": "Makushita",
+          "eastId": 72,
+          "westId": 287,
+          "winnerId": 72,
+          "opponentId": 72,
+          "outcome": "loss",
+          "kimarite": "uwatenage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202411:7:17:72:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 73,
+      "opponentName": "Akua",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202605",
+          "day": 11,
+          "matchNo": 23,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 73,
+          "winnerId": 73,
+          "opponentId": 73,
+          "outcome": "loss",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202605:11:23:287:73",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [
+        {
+          "bashoId": "202605",
+          "day": 16,
+          "matchNo": 3,
+          "division": "Makushita",
+          "winnerId": 73,
+          "kimarite": "kakenage",
+          "outcome": "loss",
+          "eventType": "playoff",
+          "countedInRegularHeadToHead": false,
+          "sourceMatchKey": "202605:16:3:287:73"
+        }
+      ],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 75,
+      "opponentName": "Mineyaiba",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202409",
+          "day": 12,
+          "matchNo": 23,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 75,
+          "winnerId": 287,
+          "opponentId": 75,
+          "outcome": "win",
+          "kimarite": "uwatedashinage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202409:12:23:287:75",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 77,
+      "opponentName": "Hatsuyama",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202609",
+          "day": 3,
+          "matchNo": 7,
+          "division": "Juryo",
+          "eastId": 287,
+          "westId": 77,
+          "winnerId": 287,
+          "opponentId": 77,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202609:3:7:287:77",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 78,
+      "opponentName": "Kazekeno",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202209",
+          "day": 7,
+          "matchNo": 12,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 78,
+          "winnerId": 78,
+          "opponentId": 78,
+          "outcome": "loss",
+          "kimarite": "oshitaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202209:7:12:287:78",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [
+        {
+          "bashoId": "202205",
+          "day": 16,
+          "matchNo": 1,
+          "division": "Jonokuchi",
+          "winnerId": 78,
+          "kimarite": "oshitaoshi",
+          "outcome": "loss",
+          "eventType": "playoff",
+          "countedInRegularHeadToHead": false,
+          "sourceMatchKey": "202205:16:1:78:287"
+        }
+      ],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 93,
+      "opponentName": "Hokutenkai",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202603",
+          "day": 1,
+          "matchNo": 24,
+          "division": "Makushita",
+          "eastId": 93,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 93,
+          "outcome": "win",
+          "kimarite": "uchimuso",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202603:1:24:93:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 94,
+      "opponentName": "Fujinoyama",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202405",
+          "day": 12,
+          "matchNo": 20,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 94,
+          "winnerId": 287,
+          "opponentId": 94,
+          "outcome": "win",
+          "kimarite": "hatakikomi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202405:12:20:287:94",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 96,
+      "opponentName": "Akinoyama",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202401",
+          "day": 9,
+          "matchNo": 4,
+          "division": "Makushita",
+          "eastId": 96,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 96,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202401:9:4:96:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 97,
+      "opponentName": "Asagyokusei",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202403",
+          "day": 7,
+          "matchNo": 17,
+          "division": "Makushita",
+          "eastId": 97,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 97,
+          "outcome": "win",
+          "kimarite": "tsukidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202403:7:17:97:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 101,
+      "opponentName": "Tamashoho",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202609",
+          "day": 10,
+          "matchNo": 3,
+          "division": "Juryo",
+          "eastId": 101,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 101,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202609:10:3:101:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 106,
+      "opponentName": "Yago",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202511",
+          "day": 10,
+          "matchNo": 21,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 106,
+          "winnerId": 106,
+          "opponentId": 106,
+          "outcome": "loss",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202511:10:21:287:106",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 108,
+      "opponentName": "Yuma",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202509",
+          "day": 14,
+          "matchNo": 12,
+          "division": "Makushita",
+          "eastId": 108,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 108,
+          "outcome": "win",
+          "kimarite": "tsukidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202509:14:12:108:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 113,
+      "opponentName": "Tokunomusashi",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202409",
+          "day": 4,
+          "matchNo": 22,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 113,
+          "winnerId": 287,
+          "opponentId": 113,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202409:4:22:287:113",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 116,
+      "opponentName": "Tochinobori",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202401",
+          "day": 6,
+          "matchNo": 1,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 116,
+          "winnerId": 287,
+          "opponentId": 116,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202401:6:1:287:116",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 120,
+      "opponentName": "Osanai",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202311",
+          "day": 9,
+          "matchNo": 19,
+          "division": "Makushita",
+          "eastId": 120,
+          "westId": 287,
+          "winnerId": 120,
+          "opponentId": 120,
+          "outcome": "loss",
+          "kimarite": "uwatenage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202311:9:19:120:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 128,
+      "opponentName": "Asakoki",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202407",
+          "day": 2,
+          "matchNo": 10,
+          "division": "Makushita",
+          "eastId": 128,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 128,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202407:2:10:128:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 130,
+      "opponentName": "Okinohama",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202309",
+          "day": 12,
+          "matchNo": 43,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 130,
+          "winnerId": 287,
+          "opponentId": 130,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202309:12:43:287:130",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 131,
+      "opponentName": "Toseiryu",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202403",
+          "day": 10,
+          "matchNo": 15,
+          "division": "Makushita",
+          "eastId": 131,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 131,
+          "outcome": "win",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202403:10:15:131:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 137,
+      "opponentName": "Tanabe",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202311",
+          "day": 14,
+          "matchNo": 11,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 137,
+          "winnerId": 137,
+          "opponentId": 137,
+          "outcome": "loss",
+          "kimarite": "hikiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202311:14:11:287:137",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 145,
+      "opponentName": "Nihonyanagi",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202409",
+          "day": 14,
+          "matchNo": 14,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 145,
+          "winnerId": 145,
+          "opponentId": 145,
+          "outcome": "loss",
+          "kimarite": "kotenage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202409:14:14:287:145",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 149,
+      "opponentName": "Kotodairyu",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202307",
+          "day": 6,
+          "matchNo": 6,
+          "division": "Makushita",
+          "eastId": 149,
+          "westId": 287,
+          "winnerId": 149,
+          "opponentId": 149,
+          "outcome": "loss",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202307:6:6:149:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 154,
+      "opponentName": "Dewataikai",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202501",
+          "day": 12,
+          "matchNo": 17,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 154,
+          "winnerId": 154,
+          "opponentId": 154,
+          "outcome": "loss",
+          "kimarite": "uwatenage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202501:12:17:287:154",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 155,
+      "opponentName": "Ohata",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202401",
+          "day": 2,
+          "matchNo": 1,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 155,
+          "winnerId": 287,
+          "opponentId": 155,
+          "outcome": "win",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202401:2:1:287:155",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 161,
+      "opponentName": "Tokinohira",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202407",
+          "day": 8,
+          "matchNo": 10,
+          "division": "Makushita",
+          "eastId": 161,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 161,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202407:8:10:161:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 170,
+      "opponentName": "Fukai",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202507",
+          "day": 4,
+          "matchNo": 20,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 170,
+          "winnerId": 287,
+          "opponentId": 170,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202507:4:20:287:170",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 175,
+      "opponentName": "Oyamatoumi",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202405",
+          "day": 4,
+          "matchNo": 20,
+          "division": "Makushita",
+          "eastId": 175,
+          "westId": 287,
+          "winnerId": 175,
+          "opponentId": 175,
+          "outcome": "loss",
+          "kimarite": "fusen",
+          "resultKind": "forfeit",
+          "sourceMatchKey": "202405:4:20:175:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 0,
+      "forfeitCount": 1,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 176,
+      "opponentName": "Awanokuni",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202403",
+          "day": 5,
+          "matchNo": 16,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 176,
+          "winnerId": 287,
+          "opponentId": 176,
+          "outcome": "win",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202403:5:16:287:176",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 182,
+      "opponentName": "Nishikikuni",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202305",
+          "day": 3,
+          "matchNo": 38,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 182,
+          "winnerId": 287,
+          "opponentId": 182,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202305:3:38:287:182",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 184,
+      "opponentName": "Chiyonoo",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202407",
+          "day": 9,
+          "matchNo": 18,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 184,
+          "winnerId": 287,
+          "opponentId": 184,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202407:9:18:287:184",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 185,
+      "opponentName": "Chiyotora",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202509",
+          "day": 6,
+          "matchNo": 18,
+          "division": "Makushita",
+          "eastId": 185,
+          "westId": 287,
+          "winnerId": 185,
+          "opponentId": 185,
+          "outcome": "loss",
+          "kimarite": "fusen",
+          "resultKind": "forfeit",
+          "sourceMatchKey": "202509:6:18:185:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 0,
+      "forfeitCount": 1,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 194,
+      "opponentName": "Oshoryu",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202311",
+          "day": 4,
+          "matchNo": 15,
+          "division": "Makushita",
+          "eastId": 194,
+          "westId": 287,
+          "winnerId": 194,
+          "opponentId": 194,
+          "outcome": "loss",
+          "kimarite": "hatakikomi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202311:4:15:194:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 197,
+      "opponentName": "Hananoumi",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202409",
+          "day": 5,
+          "matchNo": 22,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 197,
+          "winnerId": 197,
+          "opponentId": 197,
+          "outcome": "loss",
+          "kimarite": "oshitaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202409:5:22:287:197",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 205,
+      "opponentName": "Hoshuzan",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202311",
+          "day": 12,
+          "matchNo": 16,
+          "division": "Makushita",
+          "eastId": 205,
+          "westId": 287,
+          "winnerId": 205,
+          "opponentId": 205,
+          "outcome": "loss",
+          "kimarite": "hikiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202311:12:16:205:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 208,
+      "opponentName": "Chiyodaigo",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202301",
+          "day": 2,
+          "matchNo": 36,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 208,
+          "winnerId": 208,
+          "opponentId": 208,
+          "outcome": "loss",
+          "kimarite": "tsukiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202301:2:36:287:208",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 217,
+      "opponentName": "Oba",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202211",
+          "day": 6,
+          "matchNo": 29,
+          "division": "Sandanme",
+          "eastId": 217,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 217,
+          "outcome": "win",
+          "kimarite": "uwatedashinage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202211:6:29:217:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 221,
+      "opponentName": "Kotetsu",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202211",
+          "day": 1,
+          "matchNo": 29,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 221,
+          "winnerId": 287,
+          "opponentId": 221,
+          "outcome": "win",
+          "kimarite": "utchari",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202211:1:29:287:221",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 226,
+      "opponentName": "Komanokuni",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202303",
+          "day": 10,
+          "matchNo": 26,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 226,
+          "winnerId": 287,
+          "opponentId": 226,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202303:10:26:287:226",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 234,
+      "opponentName": "Dewanojo",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202211",
+          "day": 13,
+          "matchNo": 20,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 234,
+          "winnerId": 234,
+          "opponentId": 234,
+          "outcome": "loss",
+          "kimarite": "kimetaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202211:13:20:287:234",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 239,
+      "opponentName": "Taiyo",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202301",
+          "day": 12,
+          "matchNo": 35,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 239,
+          "winnerId": 239,
+          "opponentId": 239,
+          "outcome": "loss",
+          "kimarite": "oshitaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202301:12:35:287:239",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 240,
+      "opponentName": "Naya",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202211",
+          "day": 10,
+          "matchNo": 30,
+          "division": "Sandanme",
+          "eastId": 240,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 240,
+          "outcome": "win",
+          "kimarite": "uwatenage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202211:10:30:240:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 241,
+      "opponentName": "Denuma",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202301",
+          "day": 4,
+          "matchNo": 36,
+          "division": "Sandanme",
+          "eastId": 241,
+          "westId": 287,
+          "winnerId": 241,
+          "opponentId": 241,
+          "outcome": "loss",
+          "kimarite": "hatakikomi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202301:4:36:241:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 245,
+      "opponentName": "Kirinryu",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202601",
+          "day": 3,
+          "matchNo": 14,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 245,
+          "winnerId": 287,
+          "opponentId": 245,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202601:3:14:287:245",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 253,
+      "opponentName": "Rinko",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202207",
+          "day": 11,
+          "matchNo": 27,
+          "division": "Jonidan",
+          "eastId": 287,
+          "westId": 253,
+          "winnerId": 253,
+          "opponentId": 253,
+          "outcome": "loss",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202207:11:27:287:253",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 258,
+      "opponentName": "Senho",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202303",
+          "day": 2,
+          "matchNo": 25,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 258,
+          "winnerId": 287,
+          "opponentId": 258,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202303:2:25:287:258",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 260,
+      "opponentName": "Hokutosakae",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202303",
+          "day": 3,
+          "matchNo": 26,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 260,
+          "winnerId": 287,
+          "opponentId": 260,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202303:3:26:287:260",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 262,
+      "opponentName": "Ishii",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202207",
+          "day": 9,
+          "matchNo": 29,
+          "division": "Jonidan",
+          "eastId": 287,
+          "westId": 262,
+          "winnerId": 287,
+          "opponentId": 262,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202207:9:29:287:262",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 263,
+      "opponentName": "Daiyusho",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202303",
+          "day": 12,
+          "matchNo": 25,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 263,
+          "winnerId": 287,
+          "opponentId": 263,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202303:12:25:287:263",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 278,
+      "opponentName": "Chiyotaiho",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202307",
+          "day": 7,
+          "matchNo": 6,
+          "division": "Makushita",
+          "eastId": 278,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 278,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202307:7:6:278:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 283,
+      "opponentName": "Hodaka",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202305",
+          "day": 7,
+          "matchNo": 37,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 283,
+          "winnerId": 287,
+          "opponentId": 283,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202305:7:37:287:283",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 285,
+      "opponentName": "Tokisoma",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202303",
+          "day": 15,
+          "matchNo": 20,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 285,
+          "winnerId": 285,
+          "opponentId": 285,
+          "outcome": "loss",
+          "kimarite": "sotogake",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202303:15:20:287:285",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 293,
+      "opponentName": "Kaigo",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202511",
+          "day": 11,
+          "matchNo": 17,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 293,
+          "winnerId": 287,
+          "opponentId": 293,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202511:11:17:287:293",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 306,
+      "opponentName": "Tatsuosho",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202205",
+          "day": 2,
+          "matchNo": 8,
+          "division": "Jonokuchi",
+          "eastId": 287,
+          "westId": 306,
+          "winnerId": 287,
+          "opponentId": 306,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202205:2:8:287:306",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 310,
+      "opponentName": "Michihaya",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202205",
+          "day": 13,
+          "matchNo": 3,
+          "division": "Jonokuchi",
+          "eastId": 287,
+          "westId": 310,
+          "winnerId": 287,
+          "opponentId": 310,
+          "outcome": "win",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202205:13:3:287:310",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 312,
+      "opponentName": "Sato",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202205",
+          "day": 4,
+          "matchNo": 4,
+          "division": "Jonokuchi",
+          "eastId": 287,
+          "westId": 312,
+          "winnerId": 312,
+          "opponentId": 312,
+          "outcome": "loss",
+          "kimarite": "uwatenage",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202205:4:4:287:312",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 326,
+      "opponentName": "Hokutoshu",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202309",
+          "day": 7,
+          "matchNo": 42,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 326,
+          "winnerId": 287,
+          "opponentId": 326,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202309:7:42:287:326",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 327,
+      "opponentName": "Shosei",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202303",
+          "day": 5,
+          "matchNo": 27,
+          "division": "Sandanme",
+          "eastId": 327,
+          "westId": 287,
+          "winnerId": 327,
+          "opponentId": 327,
+          "outcome": "loss",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202303:5:27:327:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 329,
+      "opponentName": "Ebisumaru",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202301",
+          "day": 15,
+          "matchNo": 26,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 329,
+          "winnerId": 287,
+          "opponentId": 329,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202301:15:26:287:329",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 330,
+      "opponentName": "Kotodaishin",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202301",
+          "day": 9,
+          "matchNo": 34,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 330,
+          "winnerId": 287,
+          "opponentId": 330,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202301:9:34:287:330",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 343,
+      "opponentName": "Kaorufuji",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202209",
+          "day": 3,
+          "matchNo": 12,
+          "division": "Sandanme",
+          "eastId": 343,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 343,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202209:3:12:343:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 347,
+      "opponentName": "Asashiyu",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202505",
+          "day": 12,
+          "matchNo": 17,
+          "division": "Makushita",
+          "eastId": 347,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 347,
+          "outcome": "win",
+          "kimarite": "hikiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202505:12:17:347:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 355,
+      "opponentName": "Marusho",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202209",
+          "day": 15,
+          "matchNo": 4,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 355,
+          "winnerId": 355,
+          "opponentId": 355,
+          "outcome": "loss",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202209:15:4:287:355",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 361,
+      "opponentName": "Yokomaru",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202209",
+          "day": 9,
+          "matchNo": 13,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 361,
+          "winnerId": 287,
+          "opponentId": 361,
+          "outcome": "win",
+          "kimarite": "tsukiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202209:9:13:287:361",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 369,
+      "opponentName": "Nakashima",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202211",
+          "day": 3,
+          "matchNo": 29,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 369,
+          "winnerId": 287,
+          "opponentId": 369,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202211:3:29:287:369",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 396,
+      "opponentName": "Yamenosato",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202209",
+          "day": 2,
+          "matchNo": 11,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 396,
+          "winnerId": 287,
+          "opponentId": 396,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202209:2:11:287:396",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 413,
+      "opponentName": "Tochihayate",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202207",
+          "day": 15,
+          "matchNo": 19,
+          "division": "Jonidan",
+          "eastId": 287,
+          "westId": 413,
+          "winnerId": 287,
+          "opponentId": 413,
+          "outcome": "win",
+          "kimarite": "okuridashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202207:15:19:287:413",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 418,
+      "opponentName": "Fukuminato",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202207",
+          "day": 3,
+          "matchNo": 31,
+          "division": "Jonidan",
+          "eastId": 287,
+          "westId": 418,
+          "winnerId": 287,
+          "opponentId": 418,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202207:3:31:287:418",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 431,
+      "opponentName": "Arise",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202207",
+          "day": 8,
+          "matchNo": 31,
+          "division": "Jonidan",
+          "eastId": 287,
+          "westId": 431,
+          "winnerId": 287,
+          "opponentId": 431,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202207:8:31:287:431",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 481,
+      "opponentName": "Ogitora",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202207",
+          "day": 6,
+          "matchNo": 32,
+          "division": "Jonidan",
+          "eastId": 287,
+          "westId": 481,
+          "winnerId": 287,
+          "opponentId": 481,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202207:6:32:287:481",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 523,
+      "opponentName": "Hayashiryu",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202205",
+          "day": 7,
+          "matchNo": 4,
+          "division": "Jonokuchi",
+          "eastId": 287,
+          "westId": 523,
+          "winnerId": 287,
+          "opponentId": 523,
+          "outcome": "win",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202205:7:4:287:523",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 538,
+      "opponentName": "Takeazuma",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202207",
+          "day": 2,
+          "matchNo": 30,
+          "division": "Jonidan",
+          "eastId": 287,
+          "westId": 538,
+          "winnerId": 287,
+          "opponentId": 538,
+          "outcome": "win",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202207:2:30:287:538",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 607,
+      "opponentName": "Asahakuryu",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202403",
+          "day": 1,
+          "matchNo": 16,
+          "division": "Makushita",
+          "eastId": 607,
+          "westId": 287,
+          "winnerId": 607,
+          "opponentId": 607,
+          "outcome": "loss",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202403:1:16:607:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 611,
+      "opponentName": "Nagamura",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202503",
+          "day": 2,
+          "matchNo": 14,
+          "division": "Makushita",
+          "eastId": 611,
+          "westId": 287,
+          "winnerId": 611,
+          "opponentId": 611,
+          "outcome": "loss",
+          "kimarite": "tsukiotoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202503:2:14:611:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 622,
+      "opponentName": "Raikisho",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202205",
+          "day": 5,
+          "matchNo": 6,
+          "division": "Jonokuchi",
+          "eastId": 287,
+          "westId": 622,
+          "winnerId": 287,
+          "opponentId": 622,
+          "outcome": "win",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202205:5:6:287:622",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 634,
+      "opponentName": "Saionji",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202209",
+          "day": 12,
+          "matchNo": 12,
+          "division": "Sandanme",
+          "eastId": 287,
+          "westId": 634,
+          "winnerId": 287,
+          "opponentId": 634,
+          "outcome": "win",
+          "kimarite": "oshitaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202209:12:12:287:634",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 8853,
+      "opponentName": "Onokatsu",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202609",
+          "day": 14,
+          "matchNo": 11,
+          "division": "Juryo",
+          "eastId": 287,
+          "westId": 8853,
+          "winnerId": 8853,
+          "opponentId": 8853,
+          "outcome": "loss",
+          "kimarite": "ashitori",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202609:14:11:287:8853",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 8857,
+      "opponentName": "Kusano",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202409",
+          "day": 1,
+          "matchNo": 22,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 8857,
+          "winnerId": 8857,
+          "opponentId": 8857,
+          "outcome": "loss",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202409:1:22:287:8857",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 8861,
+      "opponentName": "Tokitenran",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202509",
+          "day": 1,
+          "matchNo": 17,
+          "division": "Makushita",
+          "eastId": 8861,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 8861,
+          "outcome": "win",
+          "kimarite": "oshidashi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202509:1:17:8861:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 8863,
+      "opponentName": "Anosho",
+      "wins": 0,
+      "losses": 1,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202505",
+          "day": 7,
+          "matchNo": 19,
+          "division": "Makushita",
+          "eastId": 8863,
+          "westId": 287,
+          "winnerId": 8863,
+          "opponentId": 8863,
+          "outcome": "loss",
+          "kimarite": "yorikiri",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202505:7:19:8863:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 8864,
+      "opponentName": "Shiroma",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202411",
+          "day": 4,
+          "matchNo": 16,
+          "division": "Makushita",
+          "eastId": 8864,
+          "westId": 287,
+          "winnerId": 287,
+          "opponentId": 8864,
+          "outcome": "win",
+          "kimarite": "yoritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202411:4:16:8864:287",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    },
+    {
+      "opponentId": 8951,
+      "opponentName": "Ikarigata",
+      "wins": 1,
+      "losses": 0,
+      "regularBouts": 1,
+      "meetings": [
+        {
+          "bashoId": "202605",
+          "day": 9,
+          "matchNo": 23,
+          "division": "Makushita",
+          "eastId": 287,
+          "westId": 8951,
+          "winnerId": 287,
+          "opponentId": 8951,
+          "outcome": "win",
+          "kimarite": "okuritaoshi",
+          "resultKind": "kimarite",
+          "sourceMatchKey": "202605:9:23:287:8951",
+          "officialCorrection": null
+        }
+      ],
+      "playoffsAndTrialBouts": [],
+      "techniqueKnown": 1,
+      "forfeitCount": 0,
+      "techniqueMissing": 0,
+      "historicalSourceStatus": "full-cached-API-career-not-JSA-certified"
+    }
+  ],
+  "kimarite": {
+    "wins": [
+      {
+        "kimarite": "yorikiri",
+        "count": 50
+      },
+      {
+        "kimarite": "oshidashi",
+        "count": 18
+      },
+      {
+        "kimarite": "yoritaoshi",
+        "count": 12
+      },
+      {
+        "kimarite": "hatakikomi",
+        "count": 7
+      },
+      {
+        "kimarite": "oshitaoshi",
+        "count": 5
+      },
+      {
+        "kimarite": "tsukiotoshi",
+        "count": 4
+      },
+      {
+        "kimarite": "uwatedashinage",
+        "count": 4
+      },
+      {
+        "kimarite": "tsukidashi",
+        "count": 3
+      },
+      {
+        "kimarite": "uwatenage",
+        "count": 3
+      },
+      {
+        "kimarite": "okuridashi",
+        "count": 3
+      },
+      {
+        "kimarite": "hikiotoshi",
+        "count": 2
+      },
+      {
+        "kimarite": "uchimuso",
+        "count": 2
+      },
+      {
+        "kimarite": "utchari",
+        "count": 2
+      },
+      {
+        "kimarite": "sukuinage",
+        "count": 2
+      },
+      {
+        "kimarite": "watashikomi",
+        "count": 1
+      },
+      {
+        "kimarite": "kotenage",
+        "count": 1
+      },
+      {
+        "kimarite": "okuritaoshi",
+        "count": 1
+      },
+      {
+        "kimarite": "katasukashi",
+        "count": 1
+      }
+    ],
+    "losses": [
+      {
+        "kimarite": "yorikiri",
+        "count": 12
+      },
+      {
+        "kimarite": "oshidashi",
+        "count": 11
+      },
+      {
+        "kimarite": "tsukiotoshi",
+        "count": 10
+      },
+      {
+        "kimarite": "yoritaoshi",
+        "count": 8
+      },
+      {
+        "kimarite": "hatakikomi",
+        "count": 7
+      },
+      {
+        "kimarite": "hikiotoshi",
+        "count": 4
+      },
+      {
+        "kimarite": "uwatenage",
+        "count": 4
+      },
+      {
+        "kimarite": "oshitaoshi",
+        "count": 4
+      },
+      {
+        "kimarite": "shitatenage",
+        "count": 3
+      },
+      {
+        "kimarite": "sotogake",
+        "count": 2
+      },
+      {
+        "kimarite": "tottari",
+        "count": 1
+      },
+      {
+        "kimarite": "ashitori",
+        "count": 1
+      },
+      {
+        "kimarite": "katasukashi",
+        "count": 1
+      },
+      {
+        "kimarite": "tsukidashi",
+        "count": 1
+      },
+      {
+        "kimarite": "sukuinage",
+        "count": 1
+      },
+      {
+        "kimarite": "okuridashi",
+        "count": 1
+      },
+      {
+        "kimarite": "watashikomi",
+        "count": 1
+      },
+      {
+        "kimarite": "kotenage",
+        "count": 1
+      },
+      {
+        "kimarite": "hansoku",
+        "count": 1
+      },
+      {
+        "kimarite": "kimetaoshi",
+        "count": 1
+      }
+    ]
+  },
+  "recentPerformance": [
+    {
+      "bashoId": "202611",
+      "day": 7,
+      "opponentId": 62,
+      "opponentName": "Enho",
+      "outcome": "loss",
+      "kimarite": "tottari"
+    },
+    {
+      "bashoId": "202611",
+      "day": 6,
+      "opponentId": 26,
+      "opponentName": "Mitakeumi",
+      "outcome": "win",
+      "kimarite": "yorikiri"
+    },
+    {
+      "bashoId": "202611",
+      "day": 5,
+      "opponentId": 49,
+      "opponentName": "Shonannoumi",
+      "outcome": "win",
+      "kimarite": "yorikiri"
+    },
+    {
+      "bashoId": "202611",
+      "day": 4,
+      "opponentId": 117,
+      "opponentName": "Nabatame",
+      "outcome": "loss",
+      "kimarite": "hikiotoshi"
+    },
+    {
+      "bashoId": "202611",
+      "day": 3,
+      "opponentId": 34,
+      "opponentName": "Midorifuji",
+      "outcome": "win",
+      "kimarite": "watashikomi"
+    },
+    {
+      "bashoId": "202611",
+      "day": 2,
+      "opponentId": 15,
+      "opponentName": "Ryuden",
+      "outcome": "win",
+      "kimarite": "yorikiri"
+    },
+    {
+      "bashoId": "202611",
+      "day": 1,
+      "opponentId": 111,
+      "opponentName": "Hitoshi",
+      "outcome": "loss",
+      "kimarite": "yorikiri"
+    },
+    {
+      "bashoId": "202609",
+      "day": 15,
+      "opponentId": 8858,
+      "opponentName": "Arashifuji",
+      "outcome": "loss",
+      "kimarite": "yorikiri"
+    },
+    {
+      "bashoId": "202609",
+      "day": 14,
+      "opponentId": 8853,
+      "opponentName": "Onokatsu",
+      "outcome": "loss",
+      "kimarite": "ashitori"
+    },
+    {
+      "bashoId": "202609",
+      "day": 13,
+      "opponentId": 140,
+      "opponentName": "Tokifudo",
+      "outcome": "win",
+      "kimarite": "yorikiri"
+    }
+  ],
+  "releaseGates": {
+    "independentJsaRecord": false,
+    "fullHistoricCrosscheck": false,
+    "historicMeasurementProvenance": false,
+    "photoRights": false,
+    "certified": false
+  }
+}

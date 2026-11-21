@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "parserVersion": 4,
+  "source": "Japan Sumo Association official public Rikishi Profile",
+  "sourceId": 9103,
+  "officialNskId": 4358,
+  "url": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4358/",
+  "profileName": "Asahifuji Hideki",
+  "stable": "Isegahama",
+  "rank": {
+    "division": "Juryo",
+    "position": 12
+  },
+  "heightCm": 187,
+  "weightKg": 152,
+  "career": {
+    "wins": 39,
+    "losses": 3,
+    "absences": null
+  },
+  "careerAbsencesPublished": false,
+  "officialAsOf": {
+    "monthYear": "November 2026",
+    "day": 8
+  },
+  "fieldComparisons": {
+    "name": true,
+    "stable": true,
+    "rankGrade": true,
+    "height": true,
+    "weight": true
+  },
+  "status": "basic-fields-parsed",
+  "certification": "not-started",
+  "notice": "Basic current public fields only. Does NOT verify complete historical bouts, official historical weigh-ins, image rights, or career certification.",
+  "officialBashoRecords": [
+    {
+      "bashoId": "202601",
+      "wins": 7,
+      "losses": 0,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202603",
+      "wins": 7,
+      "losses": 0,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202605",
+      "wins": 7,
+      "losses": 0,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202607",
+      "wins": 6,
+      "losses": 1,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202609",
+      "wins": 6,
+      "losses": 1,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202611",
+      "wins": 6,
+      "losses": 1,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    }
+  ],
+  "officialRankRecords": [
+    {
+      "bashoId": "202601",
+      "division": "Jonokuchi",
+      "side": "East",
+      "position": 19,
+      "rank": "Jonokuchi 19 East",
+      "source": "JSA tournament banzuke rank"
+    },
+    {
+      "bashoId": "202603",
+      "division": "Jonidan",
+      "side": "West",
+      "position": 8,
+      "rank": "Jonidan 8 West",
+      "source": "JSA tournament banzuke rank"
+    },
+    {
+      "bashoId": "202605",
+      "division": "Sandanme",
+      "side": "East",
+      "position": 6,
+      "rank": "Sandanme 6 East",
+      "source": "JSA tournament banzuke rank"
+    },
+    {
+      "bashoId": "202607",
+      "division": "Makushita",
+      "side": "East",
+      "position": 11,
+      "rank": "Makushita 11 East",
+      "source": "JSA tournament banzuke rank"
+    },
+    {
+      "bashoId": "202609",
+      "division": "Makushita",
+      "side": "West",
+      "position": 1,
+      "rank": "Makushita 1 West",
+      "source": "JSA tournament banzuke rank"
+    },
+    {
+      "bashoId": "202611",
+      "division": "Juryo",
+      "side": "East",
+      "position": 12,
+      "rank": "Juryo 12 East",
+      "source": "JSA tournament banzuke rank"
+    }
+  ],
+  "rankReconciliation": {
+    "officialRankRows": 6,
+    "comparedBasho": 6,
+    "agreedBasho": 6,
+    "mismatches": [],
+    "missingSourceRankBasho": [],
+    "certification": "not-started",
+    "note": "Public JSA banzuke rank comparison is independent QA, not final career certification."
+  },
+  "bashoReconciliation": {
+    "officialBashoRows": 6,
+    "comparedBasho": 5,
+    "agreeingBasho": 5,
+    "discrepantBasho": 0,
+    "unmatchedOfficialBasho": [],
+    "discrepancies": [],
+    "excludedCurrentBasho": "202611",
+    "currentBashoExclusionEvidence": "official-as-of",
+    "status": "historical-tournaments-agree",
+    "certified": false,
+    "note": "Only completed prior tournaments compared. Agreement cannot by itself certify an entire rikishi career.",
+    "ledgerProvenance": "unaltered-sumo-api-bouts",
+    "officialOutcomeOverlays": [],
+    "rawSourceMatchesChanged": false,
+    "careerCertified": false
+  },
+  "capturedAt": "2026-11-15T03:44:44.185Z",
+  "rawHtmlSha256": "0848e449a95175eaa92ce77a0a8f712e2173d51ad1bf2467b8a5d50552ba2620",
+  "measurementComparisonDetails": {
+    "height": {
+      "match": true,
+      "method": "exact",
+      "published": 187,
+      "api": 187
+    },
+    "weight": {
+      "match": true,
+      "method": "integer-display-rounding-compatible",
+      "published": 152,
+      "api": 152.3
+    }
+  },
+  "measurementComparisonMethod": "published-integer-precision",
+  "historicMeasurementsChanged": false
+}

@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "capturedDate": "2026-11-15",
+  "purpose": "Explain one-result disagreement between the JSA profile snapshot and Sumo API daily result cutoff. Not a full-career certification.",
+  "bySourceId": {
+    "3": {
+      "sumoApiId": 3,
+      "officialNskId": 4187,
+      "sourceUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4187/",
+      "bashoId": "202611",
+      "officialTournamentCompletedThroughDay": 6,
+      "officialProfileAsOfLabel": "November 2026: Day 7",
+      "officialTournamentRecord": "2-4",
+      "officialDay7Opponent": "Kirishima",
+      "officialDay7ResultStatus": "not yet recorded",
+      "apiCompletedDay": 7,
+      "apiDay7Outcome": "loss",
+      "expectedDelta": {
+        "wins": 0,
+        "losses": 1
+      },
+      "context": "JSA tournament row showed six completed outcomes and a blank Day 7 result; API includes the Day 7 loss. This explains the single-loss discrepancy without rewriting either source."
+    },
+    "8": {
+      "sumoApiId": 8,
+      "officialNskId": 3840,
+      "sourceUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3840/",
+      "bashoId": "202611",
+      "officialTournamentCompletedThroughDay": 6,
+      "officialProfileAsOfLabel": "November 2026: Day 7",
+      "officialTournamentRecord": "4-2",
+      "officialDay7Opponent": "Nishikifuji",
+      "officialDay7ResultStatus": "not yet recorded",
+      "apiCompletedDay": 7,
+      "apiDay7Outcome": "loss",
+      "expectedDelta": {
+        "wins": 0,
+        "losses": 1
+      },
+      "context": "Official JSA tournament row shows six completed bouts and an unrecorded Day 7 against Nishikifuji. Sumo API has the Day 7 loss, explaining the one-loss gap without changing either source."
+    },
+    "28": {
+      "sumoApiId": 28,
+      "officialNskId": 3616,
+      "sourceUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3616/",
+      "bashoId": "202611",
+      "officialTournamentCompletedThroughDay": 6,
+      "officialProfileAsOfLabel": "November 2026: Day 7",
+      "officialTournamentRecord": "1-5",
+      "officialDay7Opponent": "Kotozakura",
+      "officialDay7ResultStatus": "not yet recorded",
+      "apiCompletedDay": 7,
+      "apiDay7Outcome": "loss",
+      "expectedDelta": {
+        "wins": 0,
+        "losses": 1
+      },
+      "context": "JSA tournament row showed six completed outcomes and a blank Day 7 result; API includes the Day 7 loss. This explains the single-loss discrepancy without rewriting either source."
+    }
+  }
+}

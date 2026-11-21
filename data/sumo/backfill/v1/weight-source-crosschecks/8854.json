@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "scope": "Independent research-only historical weight-source coverage check; not a certified weight timeline or publishing permission",
+  "sourceId": 8854,
+  "officialNskId": 4230,
+  "sumoDbId": 12839,
+  "rikishi": "Aonishiki",
+  "reviewedAt": "2026-11-15",
+  "sources": {
+    "api": {
+      "url": "https://www.sumo-api.com/api/measurements?rikishiId=8854&limit=200&skip=0",
+      "rawCachePath": "data/sumo/backfill/v1/rikishi/8854.json",
+      "recordedDatedEntries": 2
+    },
+    "sumodb": {
+      "url": "https://sumodb.sumogames.de/Rikishi.aspx?r=12839",
+      "recordedDatedEntries": 3,
+      "description": "Explicit dated tournament weight/height rows manually reviewed; no inferred dates or undated header weight"
+    }
+  },
+  "datedEvidence": [
+    {
+      "bashoId": "202307",
+      "heightCm": 180,
+      "weightKg": 125,
+      "alsoInApi": true,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12839",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202405",
+      "heightCm": 180,
+      "weightKg": 125,
+      "alsoInApi": false,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12839",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202505",
+      "heightCm": 182,
+      "weightKg": 138,
+      "alsoInApi": false,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12839",
+      "independentlyCertified": false
+    }
+  ],
+  "coverage": {
+    "datedApiPoints": 2,
+    "datedIndependentPoints": 3,
+    "additionalDatedPoints": 2
+  },
+  "caution": "Manual source spotcheck only. Original source API cache not modified; automated bulk use and public republishing require confirmed permission. Historical header measurements are excluded.",
+  "certification": "not-started",
+  "publiclyReleased": false,
+  "identityRecheck": {
+    "verifiedAt": "2026-11-15T04:42:04.367Z",
+    "sourceParserVersion": 4,
+    "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12839",
+    "rawHtmlSha256": "8df42695cbb32a93318d1741211f592373d9e3ff3fa6ef599ee6a1c20d41551d",
+    "identityEvidence": {
+      "valid": true,
+      "matchedShikona": "Aonishiki",
+      "matchedCurrentName": true,
+      "recordedAliasCount": 2,
+      "birthDateStatus": "match",
+      "publishedDob": "March 23, 2004",
+      "expectedDob": "March 23, 2004",
+      "evidenceWindow": "profile-header-before-career-record"
+    },
+    "unchangedSavedMeasurements": 3,
+    "originalEvidencePreserved": true,
+    "certified": false
+  }
+}

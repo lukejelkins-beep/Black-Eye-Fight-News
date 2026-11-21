@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "scope": "Independent research-only historical weight-source coverage check; not a certified weight timeline or publishing permission",
+  "sourceId": 8850,
+  "officialNskId": 4227,
+  "sumoDbId": 12836,
+  "rikishi": "Onosato",
+  "reviewedAt": "2026-11-15",
+  "sources": {
+    "api": {
+      "url": "https://www.sumo-api.com/api/measurements?rikishiId=8850&limit=200&skip=0",
+      "rawCachePath": "data/sumo/backfill/v1/rikishi/8850.json",
+      "recordedDatedEntries": 1
+    },
+    "sumodb": {
+      "url": "https://sumodb.sumogames.de/Rikishi.aspx?r=12836",
+      "recordedDatedEntries": 3,
+      "description": "Explicit dated tournament weight/height rows manually reviewed; no inferred dates or undated header weight"
+    }
+  },
+  "datedEvidence": [
+    {
+      "bashoId": "202305",
+      "heightCm": 192,
+      "weightKg": 177,
+      "alsoInApi": true,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12836",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202405",
+      "heightCm": 192,
+      "weightKg": 181,
+      "alsoInApi": false,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12836",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202505",
+      "heightCm": 192,
+      "weightKg": 191,
+      "alsoInApi": false,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12836",
+      "independentlyCertified": false
+    }
+  ],
+  "coverage": {
+    "datedApiPoints": 1,
+    "datedIndependentPoints": 3,
+    "additionalDatedPoints": 2
+  },
+  "caution": "Manual source spotcheck only. Original source API cache not modified; automated bulk use and public republishing require confirmed permission. Historical header measurements are excluded.",
+  "certification": "not-started",
+  "publiclyReleased": false,
+  "identityRecheck": {
+    "verifiedAt": "2026-11-15T04:41:49.418Z",
+    "sourceParserVersion": 4,
+    "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12836",
+    "rawHtmlSha256": "495bb3b6e6abe8a63e5b00352b4bca4af52b72374d91a854c6391c717b497a6e",
+    "identityEvidence": {
+      "valid": true,
+      "matchedShikona": "Onosato",
+      "matchedCurrentName": true,
+      "recordedAliasCount": 2,
+      "birthDateStatus": "match",
+      "publishedDob": "June 7, 2000",
+      "expectedDob": "June 7, 2000",
+      "evidenceWindow": "profile-header-before-career-record"
+    },
+    "unchangedSavedMeasurements": 3,
+    "originalEvidencePreserved": true,
+    "certified": false
+  }
+}

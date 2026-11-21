@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "scope": "Authorised research-only SumoDB dated weight evidence; source text crosscheck, no HTML copy",
+  "sourceId": 9135,
+  "officialNskId": 4394,
+  "sumoDbId": 13003,
+  "rikishi": "Omori",
+  "reviewedAt": "2026-11-15",
+  "sourcePageUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=13003",
+  "captureMethod": "manual independent review of live SumoDB source text, not automated raw HTML capture",
+  "rawHtmlSha256": null,
+  "sourceParserVersion": null,
+  "identityEvidence": {
+    "valid": true,
+    "matchedShikona": "Omori",
+    "matchedCurrentName": true,
+    "birthDateStatus": "match",
+    "publishedDob": "July 9, 2003",
+    "expectedDob": "July 9, 2003",
+    "evidenceWindow": "source Rikishi profile header before Career Record"
+  },
+  "datedEvidence": [
+    {
+      "bashoId": "202605",
+      "heightCm": 185,
+      "weightKg": 120,
+      "alsoInApi": true,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=13003",
+      "independentlyCertified": false
+    }
+  ],
+  "coverage": {
+    "datedApiPoints": 1,
+    "datedIndependentPoints": 1,
+    "additionalDatedPoints": 0,
+    "matchingOverlaps": 1,
+    "conflicts": []
+  },
+  "rightsRecord": {
+    "approvalBasis": "user-reported-separate-permission",
+    "publicDisplayApproved": true
+  },
+  "certification": "not-started",
+  "publiclyReleased": false,
+  "note": "Source page contains exactly this explicitly dated tournament measurement. Other basho without a weight annotation are not extrapolated.",
+  "careerRecordCrosscheck": {
+    "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=13003",
+    "capturedAt": "2026-11-15T08:20:30.975Z",
+    "rawHtmlSha256": "aa6516824f2cbc63a7de7d975a347430226e36a6e8db6cdae891b26e6a06d8d2",
+    "identityVerified": true,
+    "originalMeasurementsUnchanged": true,
+    "corroboratedWeightDates": 1,
+    "sourceRecordPublished": true,
+    "career": {
+      "wins": 19,
+      "losses": 6,
+      "absences": null,
+      "providerReportedBoutCount": 25
+    },
+    "sourceAsOf": "retrieval-date; active-basho cutoff not independently established",
+    "independentOfApi": true,
+    "careerStrictlyCertified": false,
+    "independentBashoRows": [
+      {
+        "bashoId": "202605",
+        "wins": 6,
+        "losses": 1,
+        "absences": null
+      },
+      {
+        "bashoId": "202607",
+        "wins": 5,
+        "losses": 2,
+        "absences": null
+      },
+      {
+        "bashoId": "202609",
+        "wins": 5,
+        "losses": 2,
+        "absences": null
+      },
+      {
+        "bashoId": "202611",
+        "wins": 3,
+        "losses": 1,
+        "absences": null
+      }
+    ],
+    "datedBashoLedgerCapturedAt": "2026-11-15T08:20:30.975Z",
+    "datedBashoLedgerSourceSha256": "aa6516824f2cbc63a7de7d975a347430226e36a6e8db6cdae891b26e6a06d8d2",
+    "careerRecordDiffersFromPriorSnapshot": false
+  }
+}

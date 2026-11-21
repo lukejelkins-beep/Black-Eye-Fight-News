@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "scope": "Completed API careers and source-derived H2H; not JSA-certified",
+  "cohortSize": 190,
+  "profilesChecked": 190,
+  "sourceRegularBoutAppearances": 75903,
+  "uniqueSourceRegularBouts": 57740,
+  "allTimePairComparisons": "Regular tournaments only; playoff and Mae-zumo results separately retained",
+  "h2hResultFields": [
+    "bashoId",
+    "day",
+    "division",
+    "matchNo",
+    "eastId",
+    "westId",
+    "winnerId",
+    "opponentId",
+    "outcome",
+    "kimarite",
+    "resultKind",
+    "sourceMatchKey"
+  ],
+  "techniqueCoverage": {
+    "sourceAppearances": {
+      "recorded": 75351,
+      "forfeits": 552,
+      "missing": 0
+    },
+    "uniqueRows": {
+      "known": 57330,
+      "forfeits": 410,
+      "missing": 0
+    }
+  },
+  "specialBoutAppearances": 629,
+  "counterpartConflicts": 0,
+  "counterpartGaps": 0,
+  "discrepancies": {
+    "conflicts": [],
+    "counterpartGaps": []
+  },
+  "integrityStatus": "source-pair-reconciled",
+  "certified": 0,
+  "notes": [
+    "A win/loss tally is not enough; every historical bout retains the recorded kimarite or a missing/forfeit label",
+    "Historical bouts are source-complete for a wrestler only if that full career passed the existing independent API totals audit",
+    "Cross-fighter mismatches are preserved as exceptions, not silently marked verified",
+    "JSA independent bout-by-bout certification remains outstanding"
+  ],
+  "missingProfiles": [],
+  "profilesNotYetCrosscheckReady": 0
+}
