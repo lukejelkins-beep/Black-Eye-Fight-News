@@ -1,8 +1,8 @@
 {
   "platform": "X",
-  "status": "connected",
+  "status": "unavailable",
   "type": "original-source-posts",
-  "attemptedAt": "2026-11-21T04:04:17.240Z",
+  "attemptedAt": "2026-11-21T05:41:40.678Z",
   "checkedAt": "2026-11-21T04:04:17.240Z",
   "updatedAt": "2026-11-21T04:04:17.240Z",
   "trackedAccounts": 141,
@@ -22,9 +22,9 @@
   "returnedCount": 0,
   "matchedOriginalPosts": 0,
   "postCount": 180,
-  "paidXApiCalls": 127,
+  "paidXApiCalls": 128,
   "budgetMonth": "2026-11",
-  "estimatedReservedUsd": 0.4318,
+  "estimatedReservedUsd": 0.4352,
   "monthlyBudgetUsd": 2,
   "billingNote": "Pessimistic request reservations, not confirmed provider charges. Provider prepaid balance and disabled auto top-ups remain necessary.",
   "posts": [
@@ -4034,5 +4034,7 @@
       "verifiedHandle": "wbcmoro",
       "sourceProvider": "twitterapi.io"
     }
-  ]
+  ],
+  "message": "X API temporarily unavailable; existing public posts retained.",
+  "lastErrorCode": "Provider response unavailable"
 }
