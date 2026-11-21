@@ -387,6 +387,23 @@
    (valid?Math.max(2,Math.min(100,score)):0)+'%"></span></span>'+
    (hint?'<small class="befn-pro-meter-hint">'+escapeHTML(hint)+'</small>':'')+(extra||'')+'</div>';
  }
+ // Phase 3 step 2: last-five tiles for announced UFC bouts (data/ufc-card-snapshots.json, built hourly).
+ let cardSnapshots=null;
+ fetch("data/ufc-card-snapshots.json").then(r=>r.ok?r.json():null).then(d=>{
+  if(d?.schema!==1||!d.fighters)return;
+  cardSnapshots=d;
+  for(const el of document.querySelectorAll(".befn-fight-snapshot:not([data-tiles])"))el.remove();
+  schedule();
+ }).catch(()=>{});
+ function tilesFor(article,names){
+  const T=window.BEFNSnapshotTiles;
+  if(!T||!cardSnapshots)return "";
+  const root=article.closest("#upcoming-cards-root");
+  if(!root)return "";
+  const card=article.closest("[data-upcoming-card]");
+  const pair=T.lookup(cardSnapshots,card?.dataset?.upcomingCard||"",names);
+  return pair?T.html(pair[0],pair[1],{esc:escapeHTML}):"";
+ }
  // Ratings v2: per-fighter files from scripts/build-ufc-stats.py, loaded on
  // demand (names.json maps display names to provider slugs).
  const statsNames=new Map(),statsCache=new Map(),statsPending=new Set();
@@ -778,11 +795,13 @@
     '" aria-selected="'+String(active===id)+'" class="'+(active===id?'is-active':'')+'">'+label+'</button>'
    ).join("")+'</div>'+
    '<div class="befn-history-panel">'+(active==="stats"?statsPanel(f,names):lastFivePanel(f,names))+'</div></section>';
-  return '<details class="befn-fight-snapshot" data-snapshot-key="'+escapeHTML(key)+'" '+(openSnapshots.has(key)?'open':'')+'>'+
+  const tiles=tilesFor(article,names);
+  return '<details class="befn-fight-snapshot" data-snapshot-key="'+escapeHTML(key)+'"'+(tiles?' data-tiles="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
    '<summary><span>Fight snapshot</span></summary>'+
    '<div class="befn-snapshot-body">'+
    '<div class="befn-snapshot-head"><div><strong>'+escapeHTML(names[0])+'</strong>'+
    '</div><div><strong>'+escapeHTML(names[1])+'</strong></div></div>'+
+   tiles+
    '<div class="befn-snapshot-bars">'+metricHTML+'</div>'+
    '<div class="befn-snapshot-extra">'+sides+'</div>'+
    historyTab+talePanel(f,names)+
