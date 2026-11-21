@@ -1,15 +1,25 @@
 {
   "schemaVersion": 1,
   "month": "2026-11",
-  "reservedMicroUsd": 448800,
+  "reservedMicroUsd": 452200,
   "verifiedEstimateMicroUsd": 346200,
-  "attempts": 132,
+  "attempts": 133,
   "completed": 126,
-  "lastReservedAt": "2026-11-21T11:29:07.979Z",
+  "lastReservedAt": "2026-11-21T13:12:12.476Z",
   "lastCompletedAt": "2026-11-21T07:25:46.624Z",
   "nextGroupIndex": 5,
   "paused": false,
-  "pending": null,
-  "error": "The operation was aborted due to timeout",
+  "pending": {
+    "id": "2026-11-0133",
+    "groupIndex": 0,
+    "priority": true,
+    "handles": [
+      "funkmastermma",
+      "jiri_bjp"
+    ],
+    "reservedAt": "2026-11-21T13:12:12.476Z",
+    "maxReservedMicroUsd": 3400
+  },
+  "error": null,
   "nextPriorityIndex": 0
 }
