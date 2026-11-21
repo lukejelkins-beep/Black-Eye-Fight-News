@@ -170,6 +170,126 @@
   box.querySelector('[data-bsp-window="'+btn.dataset.bspWindow+'"]')?.focus({preventScroll:true});
  });
 
+ // ---- Over time: one measured number, fight by fight ----
+ // Every point is one UFC fight with full round statistics, oldest first. Nothing is smoothed away:
+ // the dots are the fights themselves, and the line is a five-fight rolling mean over the same dots.
+ const TRENDS=[
+  ["slpm","Sig. strikes landed/min","rate"],["sapm","Sig. strikes absorbed/min","rate"],
+  ["strAcc","Strike accuracy","pct"],["td15","Takedowns/15 min","rate"],["ctrlShare","Control time","pct"]
+ ];
+ const TREND_MIN=4;          // fewer fights than this is a list, not a trend
+ const ROLL=5;
+ const trendMeasure=new Map();   // slug -> chosen measure
+ const divisionCache=new Map();  // slug -> divisions file, for the re-render
+ function fightValue(stats,fight,key){
+  const minutes=Number.isFinite(fight.seconds)?fight.seconds/60:0;
+  if(!minutes||!fight.rounds?.length)return null;
+  const [landed]=sumRounds(stats,fight,"sigLanded");
+  if(key==="slpm")return landed===null?null:landed/minutes;
+  if(key==="sapm"){const [,absorbed]=sumRounds(stats,fight,"sigLanded");return absorbed===null?null:absorbed/minutes;}
+  if(key==="strAcc"){const [att]=sumRounds(stats,fight,"sigAttempted");return landed===null||!att?null:landed/att;}
+  if(key==="td15"){const [td]=sumRounds(stats,fight,"takedowns");return td===null?null:td*15/minutes;}
+  if(key==="ctrlShare"){const [ctrl]=sumRounds(stats,fight,"controlSec");return ctrl===null?null:ctrl/fight.seconds;}
+  return null;
+ }
+ function trendPoints(stats,key){
+  return (stats.fights||[]).slice().reverse().map(f=>{
+   const value=fightValue(stats,f,key);
+   return value===null||!Number.isFinite(value)?null:{value,fight:f};
+  }).filter(Boolean);
+ }
+ // A round number at or above the highest point, so the axis reads 10 or 2.5 and never 13.98.
+ function niceTop(value){
+  if(!(value>0))return 1;
+  const power=Math.pow(10,Math.floor(Math.log10(value)));
+  return (([1,1.5,2,2.5,3,4,5,7.5,10].find(step=>value<=step*power))||10)*power;
+ }
+ function trendChart(points,key,unit,divisionAvg,divisionLabel){
+  const W=600,H=170,L=38,R=10,T=14,B=26;
+  const values=points.map(p=>p.value);
+  const top=unit==="pct"?Math.min(1,niceTop(Math.max(...values,divisionAvg||0))):
+   niceTop(Math.max(...values,divisionAvg||0));
+  const mean=values.reduce((a,b)=>a+b,0)/values.length;
+  const x=i=>L+(points.length<2?(W-L-R)/2:i*(W-L-R)/(points.length-1));
+  const y=v=>T+(H-T-B)*(1-Math.min(v,top)/top);
+  const show=v=>unit==="pct"?pct(v):num(v);
+  const roll=values.map((_,i)=>{
+   if(i<ROLL-1)return null;
+   const slice=values.slice(i-ROLL+1,i+1);
+   return slice.reduce((a,b)=>a+b,0)/slice.length;
+  });
+  const rollPath=roll.map((v,i)=>v===null?null:(i===roll.findIndex(z=>z!==null)?"M":"L")+x(i).toFixed(1)+" "+y(v).toFixed(1))
+   .filter(Boolean).join(" ");
+  const line=(v,cls)=>!Number.isFinite(v)||v>top?"":
+   '<line class="'+cls+'" x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v).toFixed(1)+'" y2="'+y(v).toFixed(1)+'"/>';
+  const dots=points.map((p,i)=>{
+   const klass=p.fight.outcome==="W"?"is-win":p.fight.outcome==="L"?"is-loss":"is-draw";
+   return '<circle class="bsp-trend-dot '+klass+'" cx="'+x(i).toFixed(1)+'" cy="'+y(p.value).toFixed(1)+'" r="5">'+
+    '<title>'+esc((p.fight.outcome||"")+" vs "+(p.fight.opponent||"opponent")+" · "+(p.fight.date||"")+" · "+show(p.value))+'</title></circle>';
+  }).join("");
+  const year=d=>String(d||"").slice(0,4);
+  return '<svg class="bsp-trend-svg" viewBox="0 0 '+W+' '+H+'" role="img" preserveAspectRatio="xMidYMid meet" '+
+   'aria-label="'+esc(points.length+" UFC fights, oldest first. "+show(values[0])+" in the first, "+
+    show(values[values.length-1])+" in the latest, "+show(mean)+" on average.")+'">'+
+   '<line class="bsp-trend-axis" x1="'+L+'" x2="'+L+'" y1="'+T+'" y2="'+(H-B)+'"/>'+
+   '<line class="bsp-trend-axis" x1="'+L+'" x2="'+(W-R)+'" y1="'+(H-B)+'" y2="'+(H-B)+'"/>'+
+   '<text class="bsp-trend-tick" x="'+(L-6)+'" y="'+(T+5)+'" text-anchor="end">'+esc(show(top))+'</text>'+
+   '<text class="bsp-trend-tick" x="'+(L-6)+'" y="'+(H-B)+'" text-anchor="end">0</text>'+
+   line(divisionAvg,"bsp-trend-div")+line(mean,"bsp-trend-mean")+
+   (rollPath?'<path class="bsp-trend-roll" d="'+rollPath+'"/>':"")+dots+
+   '<text class="bsp-trend-tick" x="'+L+'" y="'+(H-6)+'">'+esc(year(points[0].fight.date))+'</text>'+
+   '<text class="bsp-trend-tick" x="'+(W-R)+'" y="'+(H-6)+'" text-anchor="end">'+esc(year(points[points.length-1].fight.date))+'</text>'+
+   '</svg>';
+ }
+ function trendsInner(stats,divisions){
+  const available=TRENDS.filter(([k])=>trendPoints(stats,k).length>=TREND_MIN);
+  if(!available.length)return "";
+  const wanted=trendMeasure.get(stats.slug);
+  const [key,label,unit]=available.find(([k])=>k===wanted)||available[0];
+  const points=trendPoints(stats,key);
+  const values=points.map(p=>p.value);
+  const show=v=>unit==="pct"?pct(v):num(v);
+  const div=divisions?.divisions?.[stats.divisionSlug];
+  const fieldAt=(divisions?.rateFields||[]).indexOf(key);
+  const divisionAvg=div&&fieldAt>-1?div.rates[fieldAt]:null;
+  const recent=values.slice(-ROLL),early=values.slice(0,ROLL);
+  const recentMean=recent.reduce((a,b)=>a+b,0)/recent.length;
+  const earlyMean=early.reduce((a,b)=>a+b,0)/early.length;
+  const moved=points.length>=ROLL*2?
+   '<p class="bsp-trend-read">Last '+recent.length+': <b>'+esc(show(recentMean))+'</b> · first '+early.length+
+    ': <b>'+esc(show(earlyMean))+'</b></p>':"";
+  const careerMean=values.reduce((a,b)=>a+b,0)/values.length;
+  const legend='<div class="bsp-trend-key">'+
+   '<span class="is-win">Won</span><span class="is-loss">Lost</span>'+
+   '<span class="is-roll">Five-fight average</span>'+
+   '<span class="is-mean">Career avg ' + esc(show(careerMean)) + '</span>'+
+   (Number.isFinite(divisionAvg)?'<span class="is-div">'+esc(div.label+" avg "+show(divisionAvg))+'</span>':'')+
+   '</div>';
+  return '<div class="bsp-trend-pick" role="group" aria-label="Measure">'+available.map(([k,l])=>
+   '<button type="button" data-bsp-trend-key="'+esc(k)+'" aria-pressed="'+(k===key)+'">'+esc(l)+'</button>').join("")+'</div>'+
+   legend+trendChart(points,key,unit,Number.isFinite(divisionAvg)?divisionAvg:null,div?div.label:"")+moved+
+   '<small class="bsp-note">One dot per UFC fight with full statistics, oldest first; green won, red lost. '+
+   (points.length>=ROLL?'The line is a five-fight rolling average. ':'')+
+   'Measured numbers only — not a forecast.</small>';
+ }
+ function trends(stats,divisions){
+  const body=trendsInner(stats,divisions);
+  if(!body)return "";
+  cache.set(stats.slug,stats);
+  divisionCache.set(stats.slug,divisions);
+  return '<div class="bsp-trend" data-bsp-trend="'+esc(stats.slug)+'">'+body+'</div>';
+ }
+ if(typeof document!=="undefined")document.addEventListener("click",e=>{
+  const btn=e.target.closest?.("[data-bsp-trend-key]");
+  if(!btn)return;
+  const box=btn.closest("[data-bsp-trend]");
+  const stats=box&&cache.get(box.dataset.bspTrend);
+  if(!stats)return;
+  trendMeasure.set(stats.slug,btn.dataset.bspTrendKey);
+  box.innerHTML=trendsInner(stats,divisionCache.get(stats.slug));
+  box.querySelector('[data-bsp-trend-key="'+btn.dataset.bspTrendKey+'"]')?.focus({preventScroll:true});
+ });
+
  // ---- Compare with the division average (last 36 months) ----
  const COMPARE=[["slpm","Sig. strikes landed/min","rate",false],["sapm","Sig. strikes absorbed/min","rate",true],
   ["strAcc","Strike accuracy","pct",false],["strDef","Strike defence","pct",false],
@@ -196,7 +316,7 @@
    ' fighters with 3+ UFC fights in that time.</small></div>';
  }
 
- const api={glance,fightDetail,history,statsPanel,compare,findFight,methodText};
+ const api={glance,fightDetail,history,statsPanel,compare,trends,findFight,methodText};
  scope.BEFNStatsProfile=api;
  if(typeof module==="object"&&module?.exports)module.exports=api;
 })(typeof window!=="undefined"?window:globalThis);
