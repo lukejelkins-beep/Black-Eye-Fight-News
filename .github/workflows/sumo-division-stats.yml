@@ -1,0 +1,56 @@
+name: Cache isolated Sumo source division statistics
+on:
+  push:
+    branches: [feat/sumo-section-test-20261114]
+    paths:
+      - scripts/sumo-cache-division-stats.mjs
+      - .github/workflows/sumo-division-stats.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: sumo-preview-single-writer
+  cancel-in-progress: false
+jobs:
+  division-stats:
+    if: github.ref == 'refs/heads/feat/sumo-section-test-20261114'
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/sumo-section-test-20261114
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify daily matchup and API contracts
+        run: node --test tests/test-sumo-daily.mjs tests/test-sumo-api-source.mjs
+      - name: Cache full approved 190-rikishi division records responsibly
+        run: node scripts/sumo-cache-division-stats.mjs
+      - name: Commit data only to isolated Sumo test branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "BEFN Sumo preview"
+          git config user.email "sumo-preview@users.noreply.github.com"
+          git add data/sumo/division-stats.json
+          if git diff --cached --quiet; then
+            echo "No source-listed division data changes"
+            exit 0
+          fi
+          git commit -m "Cache per-division Sumo API W-L records for approved test roster"
+          for attempt in 1 2 3; do
+            git fetch origin feat/sumo-section-test-20261114
+            if ! git rebase origin/feat/sumo-section-test-20261114; then
+              git rebase --abort || true
+              echo "Concurrent Sumo snapshot conflict, leaving remote branch unchanged" >&2
+              exit 1
+            fi
+            if git push origin HEAD:feat/sumo-section-test-20261114; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Could not push Sumo division cache without overwriting concurrent work" >&2
+          exit 1
