@@ -65,5 +65,14 @@ Format: date — decision — who — where it shows up.
 - Merging to `main` or the Sumo preview branch needs the owner's explicit "Merge N". — Owner standing rule.
 - Design direction in DIRECTION.md (dark editorial look, two typefaces, one header and navigation pattern, no internal research on public pages) is approved. — Owner approved — docs/design/DIRECTION.md.
 - There is no existing image collection. Images will be collected into a local library on the owner's Mac (originals, a rights register, processed website crops) and only processed, approved images go on the site. Claude does not download photos of public figures itself; the owner supplies files they are permitted to use, and Claude builds the pipeline and the site changes. — Owner direction — docs/design/IMAGE-GUIDE.md.
+
 - Luis Gurule and Bilal Hasan are re-certified in the independent career register with their 2026-11-14 UFC 334 bout (native 93106, split decision, round 3, 5:00), confirmed from the UFC.com event page and UFCStats rather than press coverage or the UFCalendar cache. Stage 3 now shows 426 certified, 150 fast lane and 207 exceptions (783). — Claude, awaiting owner "Merge N".
 - UFC division rankings and champions now come from the public ufc.com/rankings page, refreshed by `scripts/refresh-ufc-rankings.py` weekly on Wednesday 06:17 UTC (after UFC's Tuesday update) and on demand (one request, no key, no paid provider). It replaces the cancelled UFCalendar refresh. First live check (2026-11-21) matched the saved 17 November snapshot exactly in 11 of 12 divisions; women's featherweight has no rankings on the page. The page carries no date, so a division's `rankingDate` is kept while its ranks are unchanged. Owner approved the weekly schedule 2026-11-22; UFC.com's terms for automated reads were not reviewed. — Owner approved — PR #373.
+
+## 2026-11-22
+
+### Snapshot figures: one framing, country flag in the disc
+- Owner asked that every fighter cutout be framed the same way (some were head only, some head and body) and that the red disc show the fighter's country flag.
+- Cutouts are now cropped by `scripts/build-ufc-cutouts.py` (`frame()`): head and shoulders, same head size, 4:5, found from the mask alone (no face model). `--reframe` redoes the existing files.
+- Flags: `data/ufc-fighter-countries.json` (ISO code per folded name) from Wikipedia's "List of current UFC fighters", which follows UFC telecasts and is not a statement of citizenship. Artwork is `flag-icons` 7.6.0 (MIT, licence kept in `assets/img/flags/`), square versions.
+- A fighter with no country, or no cutout, keeps the red disc or the photo disc. Open: Bruno Silva and Ivan Gnizditskiy have no verified country yet.

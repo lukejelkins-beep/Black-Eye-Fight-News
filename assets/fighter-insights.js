@@ -448,7 +448,7 @@
  }
  // Phase 3 redesign (layout B): tale of the tape from data/ufc-fighter-tape.json and cutouts from data/ufc-cutout-register.json.
  // Both are optional. Without them the snapshot still renders, with dashes and photo discs instead.
- let fighterTape=null,cutoutRegister=null;
+ let fighterTape=null,cutoutRegister=null,fighterCountries=null;
  fetch("data/ufc-fighter-tape.json").then(r=>r.ok?r.json():null).then(d=>{
   if(d?.schema!==1||!d.fighters)return;
   fighterTape=d;
@@ -461,10 +461,20 @@
   for(const el of document.querySelectorAll(".befn-fight-snapshot[data-b]:not([data-cuts])"))el.remove();
   schedule();
  }).catch(()=>{});
- function figureFor(entry){
+ // Flag on the cutout disc. Optional: a fighter with no country keeps the red disc. Re-render when it arrives.
+ fetch("data/ufc-fighter-countries.json").then(r=>r.ok?r.json():null).then(d=>{
+  if(d?.schema!==1||!d.fighters)return;
+  fighterCountries=d.fighters;
+  for(const el of document.querySelectorAll(".befn-fight-snapshot[data-b]:not([data-flags])"))el.remove();
+  schedule();
+ }).catch(()=>{});
+ function figureFor(entry,name){
   const slug=entry?.slug;
   if(!slug)return null;
-  if(cutoutRegister?.[slug]?.ok===true)return {cutout:"assets/img/ufc-cutouts/"+slug+".webp"};
+  if(cutoutRegister?.[slug]?.ok===true){
+   const cc=fighterCountries?.[window.BEFNSnapshotTiles.fold(name||entry?.name||"")];
+   return {cutout:"assets/img/ufc-cutouts/"+slug+".webp",flag:/^[a-z]{2}$/.test(cc||"")?"assets/img/flags/"+cc+".svg":""};
+  }
   return {photo:"assets/img/ufc/"+slug+"-thumb.webp"};
  }
  const formLetters=p=>latestRows(p).map(x=>{
@@ -945,7 +955,7 @@
   const key=matchupKey(article,names);
   const tapeFor=i=>fighterTape?.fighters?.[T.fold(names[i])]||{};
   const side=i=>({...(pair[i]||{}),tape:tapeFor(i)});
-  const sides=names.map((n,i)=>({name:n,record:f[i]?.record?shortRecord(f[i]):"—",form:formLetters(f[i]),fig:figureFor(pair[i])}));
+  const sides=names.map((n,i)=>({name:n,record:f[i]?.record?shortRecord(f[i]):"—",form:formLetters(f[i]),fig:figureFor(pair[i],n)}));
   const shared=pair[0]?.division&&pair[0].division===pair[1]?.division?pair[0].division:"";
   const tabs=bTabs(article,names),stored=selectedTabs.get(key);
   const active=tabs.some(t=>t[0]===stored)?stored:"stats";
@@ -954,7 +964,7 @@
    '<button type="button" data-fighter="'+escapeHTML(p.id)+'" aria-label="Open '+escapeHTML(p.name)+' full fighter profile">'+escapeHTML(p.name)+' profile</button>':
    '<span class="befn-link-unavailable">Profile not yet available</span>').join("");
   return '<details class="befn-fight-snapshot" data-snapshot-key="'+escapeHTML(key)+'" data-b="1" data-tiles="1"'+
-   (fighterTape?' data-tape="1"':'')+(cutoutRegister?' data-cuts="1"':'')+(cardScores?' data-scores="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
+   (fighterTape?' data-tape="1"':'')+(cutoutRegister?' data-cuts="1"':'')+(fighterCountries?' data-flags="1"':'')+(cardScores?' data-scores="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
    '<summary><span>Fight snapshot</span></summary><div class="befn-snapshot-body">'+
    B.tapeHTML(sides,side(0),side(1),h)+
    B.analysisHTML(B.analysisLines(side(0),side(1),names,h.today),h)+
