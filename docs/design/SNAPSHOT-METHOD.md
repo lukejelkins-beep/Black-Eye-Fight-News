@@ -53,7 +53,7 @@ Held-out test: scores computed from fights before a cutoff are compared with wha
 ## Division versus roster: staged plan (21 Nov)
 Division-relative scores are the better end state (a roster percentile mixes weight classes, so "Power 90" means different things at heavyweight and flyweight), but they cannot lead yet: only 33 of 57 fighters on announced UFC cards have a listed division, and only 11 of 30 bouts have both fighters in the same listed division. The data has no weight class per past fight.
 1. **Steps 1 and 2:** roster percentile for everyone, plus a division rank line when both fighters share a listed division with 8 or more peers. Every bar names its comparison pool.
-2. **Step 1b:** add a weight class to each past fight (the free UFCStats results export the site already uses for results is the likely source; to be confirmed) and derive each fighter's division from recent fights, so coverage is near-complete.
+2. **Step 1b:** add a weight class to each past fight (done: the free UFCStats export the site already uses for results is the source, confirmed 21 Nov; 93.2% of our bouts labelled, 54 of 60 fighters on announced cards have a division) and derive each fighter's division from recent fights, so coverage is near-complete.
 3. **Then:** division becomes the main view once coverage on announced cards is high (target 90% of fighters); roster percentile stays as the fallback.
 Moving up or down: stats use all UFC fights regardless of weight class; ranking uses the current division, and step 1b also lets the snapshot flag a fighter who is new to a division.
 
