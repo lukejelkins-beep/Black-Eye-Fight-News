@@ -63,6 +63,29 @@ Asked for "the best possible model", two tests were run on `data/ufc-stats` (4,7
 - **Opponent-adjusted stats.** Predicting a fighter's next-fight stats: scaling recent strikes landed by what the opponent normally allows cut the error about 10% versus the raw last five (4.41 against 4.89; league average 5.07). Adjusting the whole history added nothing more. Knockdown and takedown rates were no better than the league average for any method, because five fights hold too few events.
 - **Consequence for v1.** Keep the simple percentile bars, labelled as a snapshot of the last 5 fights, and shrink rare-event stats (knockdowns, takedowns) harder toward average. A strikes-landed opponent adjustment is an optional later add-on. Caveats: one time split, shrinkage not tuned, league averages taken from the full sample for every method.
 
+## Opponent adjustment beyond recent form: tested, not adopted (22 Nov)
+The rating engine adjusts exactly one thing for opponent strength: recent form, by at most plus or minus 25% of a win. The open question was whether the adjustment should go further, into the measured rates themselves. `scripts/evaluate-opponent-adjustment.py` answers it and can be re-run (offline, no provider, no workflow).
+
+**Method.** Four cutoffs six months apart (Nov 2024, May 2025, Nov 2025, May 2026), 1,340 fighter-fights. Fights strictly before a cutoff are the history; the fighter's first measured fight on or after it is the target. Each model predicts the fighter's significant strikes landed, and absorbed, per minute in that target fight. An opponent's "allowance" is what they normally let through, shrunk toward average by n/(n+3), with the fight being adjusted left out of their record. Measured as mean absolute error against what actually happened, with the last-five average (what the card shows) as the bar.
+
+**Result, pooled.**
+
+| Model | Strikes landed MAE | vs last five | Strikes absorbed MAE | vs last five |
+|---|---|---|---|---|
+| League average | 2.266 | -2.5% | 2.187 | +1.1% |
+| Last five (today's card) | 2.324 | - | 2.164 | - |
+| Career, recency-weighted (today's rating) | 2.279 | -1.9% | 2.109 | -2.5% |
+| ...opponent-adjusted | 2.337 | +0.6% | 2.118 | -2.2% |
+| ...and scaled by the next opponent | 2.187 | -5.9% | 2.035 | -6.0% |
+
+**What that says.**
+1. **Adjusting a fighter's own history for the opponents they faced is worth nothing.** On every cutoff it lands within a percent of the unadjusted career number, in both directions, for both metrics. Rank correlation with the next fight does not move either (0.325 to 0.319 for landed, 0.345 to 0.341 for absorbed). So the ratings keep the simple rates, and recent form stays the only opponent-adjusted part. This repeats the 21 Nov prototype's finding on a larger test, and settles it.
+2. **Knowing who the next fight is against is worth about 6%** of the error, and much more in ranking (0.32 to 0.47 for absorbed). But that is a forecast of one bout, not a description of a career, and predictions are off the cards by the owner's decision. Nothing was built on it; the owner's call if it is ever wanted.
+3. **An opponent factor must be measured against the opponent's own division.** Against the league it mostly reports weight class: women's bantamweights' opponents "allow" 0.89 of the league rate and lightweights' 1.01, which would have read as women facing far harder opposition. Division-relative, the same spread is 0.95 to 1.01. Both versions predict identically, so the division-relative one is the only honest way to show such a number.
+4. **The last five fights are a weak description.** Predicting a fighter's next-fight strikes landed, the league average beats their own last five (2.266 against 2.324). The career number weighted toward recent fights is better than both. This is a point about five fights being a small sample, not about the card being wrong: the card describes what happened, it does not forecast.
+
+Not tested here: takedowns, knockdowns and control. The 21 Nov prototype found those no better than the league average under any method, because five fights hold too few events.
+
 ## Step 3: attribute scores, built and switched off (21 Nov)
 Code: `scripts/ufc_snapshot_scores.py` (formulas), `scripts/build-ufc-card-scores.py` (writes `data/ufc-card-scores.json`), display in `assets/snapshot-tiles.js`. Four attributes reuse the existing engine formulas on the **last five fights**; Power and Durability are the new ones above. Six scores per fighter: Striking, Power, Defence, Wrestling, Grappling, Durability. The card shows Power, Defence, Wrestling and Durability first and the other two under "More scores". No overall number.
 - **Population:** 763 fighters with at least 3 of their last 5 fights measured in full (Power 758, Wrestling 762). Fighters below that get no score, only the tiles and "Limited data".
