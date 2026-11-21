@@ -11,7 +11,7 @@ import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verificati
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
 import { dailyStats, dailyRecentMeetings, dailyDefaultDay,dailyConcluded, dailySelectedDate, dailyWinPercentage, heightFeetInches, highestRecordedDivision } from './sumo-daily.mjs?v=20261117-day-flow';
 import { ordinalRank } from './sumo-career.mjs';
-import { bestMatchupFact, rivalryFacts, factText } from './sumo-fact-engine.mjs?v=20261121-phase1';
+import { bestMatchupFact, rivalryFacts, factText } from './sumo-fact-engine.mjs?v=20261121-first-short';
 import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261119-h2h-placeholder';
 import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-inline-gifs-v4';
 
@@ -1177,6 +1177,28 @@ function rankShort(label){
   const abbr={Yokozuna:'Y',Ozeki:'O',Sekiwake:'S',Komusubi:'K',Maegashira:'M',Juryo:'J',Makushita:'Ms',Sandanme:'Sd',Jonidan:'Jd',Jonokuchi:'Jk'}[m[1]];
   return abbr+m[2]+(m[3]==='East'?'e':'w');
 }
+/* Bout cards (Results, Matchups, home, More bouts): larger card, head crop that
+ * fades into the card with no frame, and the facts a reader scans first: rank,
+ * this basho W-L with last-five form, career W-L, height and weight. Every value
+ * is read from stored source data; a missing value shows a dash, never a guess. */
+const wlText=(x,y)=>Number.isInteger(x)&&Number.isInteger(y)?x+'–'+y:'—';
+function boutHead(w,name){
+  const h=w&&STATE.heads?.[String(w.sourceId)];
+  const photo=w&&STATE.photoIndex?.[String(w.sourceId)];
+  const ok=h&&photo?.approved===true&&h.sourceSha256===photo.sha256&&/^assets\/sumo-photos\/head\/[a-zA-Z0-9_-]+\.webp$/.test(String(h.path||''));
+  if(ok)return '<span class="bout-head" role="img" aria-label="'+e('Photograph of '+name)+'"><img src="'+e(h.path)+'" alt="" width="192" height="192" loading="lazy" decoding="async"></span>';
+  return '<span class="bout-head is-portrait">'+portraitFor(w,'md',name)+'</span>';
+}
+function boutSideInfo(w){
+  if(!w)return {basho:'—',form:[],career:'—',build:'—',country:''};
+  const item=entryFor(w);
+  const rec=item?recordSummary(item.record,divisionOf(w.currentRank)):null;
+  const form=(Array.isArray(item?.record)?item.record:[]).map(r=>String(r?.result||'').toLowerCase()).filter(r=>r==='win'||r==='loss').slice(-5);
+  const st=detailStats(w),wh=weightHeight(w),c=originCountry(w.birthplace);
+  const ft=Number.isFinite(wh.heightCm)&&wh.heightCm>0?heightFeetInches(wh.heightCm):'';
+  const build=[ft,wh.mass].filter(x=>x&&x!=='—').join(' · ');
+  return {basho:rec?wlText(rec.win,rec.loss):'—',form,career:wlText(st?.totalWins,st?.totalLosses),build:build||'—',country:c?c.name:''};
+}
 function boutRowMarkup(match) {
   const a=wrestler(match.rikishiId),b=wrestler(match.opponentId);
   const left=a?.shikonaEn||match.rikishi||'Wrestler';
@@ -1188,22 +1210,29 @@ function boutRowMarkup(match) {
   const method=finished?techniqueText(match.kimarite):'Result pending';
   const h2h=headToHeadFor(match.rikishiId,match.opponentId);
   const hasRecord=h2h&&Number.isInteger(h2h.wins)&&Number.isInteger(h2h.losses);
-  const side=(w,name,pos,won,lost)=>{
+  const ia=boutSideInfo(a),ib=boutSideInfo(b);
+  const side=(w,name,pos,won,lost,info)=>{
     const tag=w?'a':'span';
     const href=w?' href="#profile/'+Number(w.sourceId)+'"':'';
-    const photo='<'+tag+' class="bout-photo"'+href+(w?' aria-label="View '+e(name)+' profile"':'')+'>'+portraitFor(w,'md',name)+'</'+tag+'>';
-    const id='<span class="bout-id"><'+tag+' class="bout-name"'+href+'>'+e(name)+'</'+tag+'>'+
-      '<small title="'+e(w?.currentRank||'')+'">'+e(rankShort(w?.currentRank)||'Unranked')+'</small></span>';
+    const photo='<'+tag+' class="bout-photo"'+href+(w?' aria-label="View '+e(name)+' profile"':'')+'>'+boutHead(w,name)+'</'+tag+'>';
+    const id='<span class="bout-id"><'+tag+' class="bout-name'+(name.length>=12?' is-xlong':name.length>=10?' is-long':'')+'"'+href+'>'+e(name)+'</'+tag+'>'+
+      '<small title="'+e(w?.currentRank||'')+'">'+e(rankShort(w?.currentRank)||'Unranked')+(info.country?' · '+e(info.country):'')+'</small></span>';
     return '<div class="bout-side '+pos+(won?' is-winner':'')+(lost?' is-loser':'')+'">'+
       (pos==='left'?photo+id:id+photo)+'</div>';
   };
   const mid=finished?'<span class="bout-mid" aria-hidden="true">'+(winnerIsLeft?'◀':winnerIsRight?'▶':'–')+'</span>':
     '<span class="bout-mid bout-vs" aria-hidden="true">VS</span>';
+  const pills=info=>info.form.length?'<span class="bout-form" aria-label="Last '+info.form.length+' bouts this basho: '+e(info.form.map(r=>r==='win'?'win':'loss').join(', '))+'">'+
+    info.form.map(r=>'<i class="'+(r==='win'?'w':'l')+'"></i>').join('')+'</span>':'';
+  const stats='<dl class="bout-stats">'+
+    '<div class="is-basho"><dd class="l"><b>'+e(ia.basho)+'</b>'+pills(ia)+'</dd><dt>This basho</dt><dd class="r">'+pills(ib)+'<b>'+e(ib.basho)+'</b></dd></div>'+
+    '<div><dd class="l">'+e(ia.career)+'</dd><dt>Career</dt><dd class="r">'+e(ib.career)+'</dd></div>'+
+    '<div><dd class="l">'+e(ia.build)+'</dd><dt>Build</dt><dd class="r">'+e(ib.build)+'</dd></div></dl>';
   const verdict=finished?(winner?e(winner)+' won':'Result recorded'):'Awaiting result';
   const tech=finished?' · '+techniqueMarkup(match.kimarite,method):'';
   return '<article class="bout-row '+(finished?'is-finished':'is-scheduled')+
     '" aria-label="'+e(left+' versus '+right+': '+(finished?(winner?winner+' won by '+method:'result recorded'):'scheduled'))+'">'+
-    side(a,left,'left',winnerIsLeft,winnerIsRight)+mid+side(b,right,'right',winnerIsRight,winnerIsLeft)+
+    side(a,left,'left',winnerIsLeft,winnerIsRight,ia)+mid+side(b,right,'right',winnerIsRight,winnerIsLeft,ib)+stats+
     '<div class="bout-foot"><span class="bout-verdict">'+verdict+tech+'</span>'+
     '<a class="bout-h2h" href="'+headToHeadUrl(match.rikishiId,match.opponentId)+
     '" aria-label="View '+e(left)+' versus '+e(right)+' head to head">H2H '+e(hasRecord?h2h.wins+'–'+h2h.losses:'—')+' <span aria-hidden="true">›</span></a></div>'+
@@ -1217,7 +1246,7 @@ function stageFacts(w) {
   const st=detailStats(w),wh=weightHeight(w),item=entryFor(w);
   const rec=item?recordSummary(item.record,divisionOf(w.currentRank)):null;
   const c=originCountry(w.birthplace);
-  const wl=(x,y)=>Number.isInteger(x)&&Number.isInteger(y)?x+'–'+y:'—';
+  const wl=wlText;
   return {
     Rank:w.currentRank||'—',
     Country:c?c.name:'—',
