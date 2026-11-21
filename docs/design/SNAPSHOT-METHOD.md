@@ -1,0 +1,38 @@
+# Fighter snapshot method (UFC / MMA)
+
+Status: **proposal for the owner's approval, 21 Nov 2026.** Describes what the existing V3 engine (`assets/fighter-power-index.js`) already does, plus two additions (Power and Durability) that are new. Nothing here is a prediction: these are descriptive scores of what a fighter has done, not win probabilities or betting advice.
+
+## What a score means
+Each attribute is a **percentile: 1 to 99 against the other UFC fighters** in the data (about 613 rated today). 80 means "better than about 80% of the roster at this". Snapshot bars use the fighter's own weight division as the comparison when it has at least 8 rated peers; otherwise the whole roster. The label always says which.
+
+## The calculation, in four steps
+1. **Raw composite.** Several measured numbers per attribute are each scaled to 0-100 between a floor and a ceiling, then combined with fixed weights (below).
+2. **Shrink small samples.** A fighter with few fights is pulled toward the roster average by `fights / (fights + 4)`. With 5 fights the score keeps 56% of its distance from average; with 12 fights, 75%. No thin record can look like an extreme.
+3. **Rank.** Percentile of the shrunk score against the roster (ties share the midpoint).
+4. **Gate.** No score at all when the evidence is too thin: at least 3 fights with full round stats, and each attribute needs a minimum share of its components measured. Missing is shown as a dash, never zero. Out-of-range values (for example 8 knockdowns per 15 minutes from a tiny sample) are treated as missing.
+
+## Attributes and weights (existing, except Power and Durability)
+| Attribute | Made from (weight) |
+|---|---|
+| **Striking** | strikes landed per min (18%), strike differential per min (22%), accuracy (15%), knockdowns per 15 min (20%), KO/TKO wins per fight (25%) |
+| **Wrestling** | takedowns per 15 (34%), takedown accuracy (21%), control-time share (28%), takedown defence (12%), reversals (5%) |
+| **Grappling** | submission attempts per 15 (30%), submission wins per fight (50%), reversals (15%), control share (5%) |
+| **Defence** | strikes absorbed per min, lower is better (31%), strike defence (29%), takedown defence (22%), knockdowns absorbed per 15, lower is better (12%), opponent control share, lower is better (6%) |
+| **Recent form** | last five decided fights, newest counts most (5,4,3,2,1), starting from a neutral prior; each result is nudged up or down by the opponent's strength (at most plus or minus 25% of a win) |
+| **Power (new)** | knockdowns per 15 min (50%), KO/TKO wins per fight (50%). Finishing damage, not volume: Striking rewards how much you land, Power rewards what it does. Both components must be measured. |
+| **Durability (new)** | knockdowns absorbed per 15 min, lower is better (40%); share of recorded fights lost by KO/TKO, lower is better (40%); strikes absorbed per min, lower is better (20%). Ability to take punishment and still be there at the end. Both of the first two must be measured. |
+
+Weights for the first five rows are the ones in the code today. Power and Durability weights are my proposal; floors and ceilings (for example knockdowns 0 to 1.0 per 15 min) follow the existing ones and are confirmed against the roster's spread in Step 1.
+
+**Known overlap:** Power shares two inputs with Striking, and Durability shares two with Defence. They are different questions but will correlate; the snapshot never adds them together.
+
+## What the card shows
+Power, Defence, Wrestling and Durability bars first (Striking and Grappling one tap deeper), each with "based on N fights" and a coloured band: below 35 red, 35 to 54 orange, 55 to 74 gold, 75 and over green (the bands the profile uses now). No overall number on the card.
+
+## Differences between the two copies of the engine, to settle
+- The **profile** (browser) uses the last five fights. A Python copy (`scripts/ufc_ratings.py`) uses a career window weighted toward recent fights (18-month half-life). **Proposal:** the snapshot uses the profile's version, so card and profile always agree. The career-weighted version stays research only.
+- The browser can print a percentile of 100; the Python copy caps at 1 to 99. **Proposal:** cap at 1 to 99 everywhere ("a percentile describes standing among others, not certainty").
+- The profile can add fixed "credential" points (NCAA, Olympic judo, BJJ belts and so on) on top. **Proposal:** the snapshot shows the statistical score only; credentials stay on the profile where they are explained.
+
+## How it is checked before anything is shown
+Held-out test: scores computed from fights before a cutoff are compared with what happened in later fights (for example, do higher Durability fighters get stopped less?). Report by division. Tiny divisions and fighters under the sample gate stay blank. Method and results go in the PR; nothing is switched on until the owner approves the screenshots.

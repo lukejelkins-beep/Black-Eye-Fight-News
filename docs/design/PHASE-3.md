@@ -13,9 +13,9 @@ Open an upcoming UFC bout and see both fighters side by side at a glance: record
 
 ## What exists today (checked 21 Nov 2026)
 - `data/ufc-fighter-v3.json` (schema 4, UFC only, 714 fighters, as of 21 Nov): per-fighter `metrics` (strikes landed and absorbed per minute, knockdowns, takedowns, control, submissions, accuracy, takedown defence, KO and submission share), each with its bout count and rank. Present for **705 of 714** fighters.
-- The same file has `power` and five `technical` scores (striking, wrestling, grappling, defence, form), but **every one is empty (0 of 714)**. That is deliberate: `AGENTS.md` and `ufc-v4-staged-release-control.md` hold ratings, rankings and leaderboards until the owner approves that specific release (R4).
-- Of the 60 fighters on announced UFC cards, **52** are in the file today.
-- `assets/fighter-power-index.js` is a "v3 preview only" engine for 0-100 indices. It is not calibrated or approved.
+- The same file's stored `power` and `technical` score fields are empty (0 of 714), but the page computes the scores itself: the existing V3 engine returns striking, grappling, wrestling, defence and form percentiles for **48 of the 60** fighters on announced UFC cards today. So the snapshot scores are mostly a matter of presenting an existing engine, plus defining Power and Durability, which it does not have.
+- Of the 60 fighters on announced UFC cards, 54 are in the file and 48 have scores.
+- `assets/fighter-power-index.js` is the engine (header says "preview only"). Its exact formula and weights are written out in plain English in `SNAPSHOT-METHOD.md` for approval.
 - Upcoming bouts already have a "Fight snapshot" and a tale of the tape; the new panel replaces their content, not their place.
 
 ## Guardrails this plan keeps
@@ -35,8 +35,9 @@ Open an upcoming UFC bout and see both fighters side by side at a glance: record
 3. **Scores:** use the **six attribute bars from the analysis method the owner agreed** in the roadmap chat: Striking, Power, Defence, Wrestling, Grappling, Durability, ranked against the weight division. The card snapshot may show a subset (Power, Defence, Wrestling first) to keep it to one screen.
 
 ## Still open
-- **Durability** has no formula in the code today (the V3 engine has striking, wrestling, grappling, defence, form and power). It needs a written definition, for example how rarely a fighter is knocked down or finished, before it is shown. Until agreed it is left out.
-- **Percentile method sign-off.** The agreed method says bars are "ranked against the weight division". The existing V3 engine does this with percentiles against the whole roster and the division, shrinking small samples toward the average (n/(n+4)), needing at least 3 fights with full round stats and 8 division peers. That exact formula and its weights have not had a separate owner sign-off; step 3 writes it up in plain English for approval before any score is shown.
+- **Durability and Power** have no UFC formula in the code today. `SNAPSHOT-METHOD.md` proposes both (owner wants Durability included); they need approval of those definitions and weights.
+- **Percentile method sign-off.** Now written in `SNAPSHOT-METHOD.md` for approval.
+- (Earlier note kept for context)  The agreed method says bars are "ranked against the weight division". The existing V3 engine does this with percentiles against the whole roster and the division, shrinking small samples toward the average (n/(n+4)), needing at least 3 fights with full round stats and 8 division peers. That exact formula and its weights have not had a separate owner sign-off; step 3 writes it up in plain English for approval before any score is shown.
 
 ## Costs and limits
 Nothing new to pay for: no new API, no new worker, GitHub Actions minutes only.
