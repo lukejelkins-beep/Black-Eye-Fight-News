@@ -34,6 +34,9 @@ Written so a fresh chat or tool can continue without the old conversation. Read 
 6. **Bluesky second proof** (parked by the owner).
 7. **Alerts:** an open question to the owner, not started.
 
+## Phase 3 (planned, waiting on the owner)
+Fighter snapshots on upcoming UFC cards: see `PHASE-3.md`. Awaiting the owner's answers to three open questions before step 1.
+
 ## Sumo design (waiting on the owner)
 The owner wants the Sumo country discs redone with their own transparent PNGs (landmark or national symbol per country: Ukraine, Mongolia, Kazakhstan, China, Russia; Japan stays), one placed top-left of each disc. Decisions already made: keep the invisible fighter cutouts and make the discs larger. Open choices: the Russia option and Kazakhstan headwear. Work starts when the PNGs arrive; deliver as a PR into the Sumo preview branch and wait for "Merge N".
 
