@@ -67,9 +67,36 @@ export function buildQuery(group,nowMs){
  const since=Math.floor((nowMs-X_POLICY.freshnessHours*3600_000)/1000);
  return '('+from+') since_time:'+since+' -filter:replies -filter:nativeretweets';
 }
+const nameKey=s=>String(s||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+/**
+ * Fighters worth reading sooner: on a card in the next 10 days, or who fought in the last 3.
+ * Pure function of the data files, so reserve and collect rebuild the same list.
+ */
+export function priorityNames(upcoming,results,nowMs){
+ const day=864e5,names=new Set();
+ const add=list=>{for(const f of list||[]){const n=typeof f==='string'?f:f?.name;if(n)names.add(nameKey(n))}};
+ for(const e of upcoming?.events||[]){
+  const t=Date.parse(e.date+'T12:00:00Z');
+  if(Number.isFinite(t)&&t>=nowMs-day&&t<=nowMs+10*day)for(const b of e.bouts||[])add(b.fighters);
+ }
+ for(const r of results?.results||[]){
+  const t=Date.parse(r.date+'T12:00:00Z');
+  if(Number.isFinite(t)&&t>=nowMs-3*day&&t<=nowMs+day)add(r.fighters);
+ }
+ return names;
+}
+export function priorityGroups(config,names,size=X_POLICY.groupSize){
+ if(!names||!names.size)return [];
+ const hit=xAccounts(config).filter(a=>names.has(nameKey(a.name)))
+  .sort((a,b)=>a.username.toLowerCase().localeCompare(b.username.toLowerCase()));
+ const groups=[];
+ for(let i=0;i<hit.length;i+=size)groups.push(hit.slice(i,i+size));
+ return groups;
+}
 export function monthUtc(ms){return new Date(ms).toISOString().slice(0,7)}
-export function reservePlan(previous,config,nowMs,hasKey){
+export function reservePlan(previous,config,nowMs,hasKey,priority=null){
  const groups=accountGroups(config);
+ const prio=priorityGroups(config,priority);
  let state={
   schemaVersion:1,
   ...(previous||{})
@@ -87,15 +114,24 @@ export function reservePlan(previous,config,nowMs,hasKey){
   return {state,reason:'cooldown'};
  if(state.reservedMicroUsd+X_POLICY.maxReservedMicroUsdPerRequest>X_POLICY.internalMonthlyReserveMicroUsd)
   return {state,reason:'monthly-budget'};
- const groupIndex=(state.nextGroupIndex||0)%groups.length;
+ // Every second paid call (every fourth for a small list) reads the priority list (upcoming cards, recent results) when there is one.
+ // Same number of calls, same ledger: only the order changes.
+ // A small priority list (under 4 accounts) takes every fourth call, so a nearly empty call never halves the normal rotation.
+ const nextPrio=prio.length?prio[(state.nextPriorityIndex||0)%prio.length]:null;
+ const every=nextPrio&&nextPrio.length>=4?2:4;
+ const usePriority=prio.length>0&&(state.attempts||0)%every===0;
+ const groupIndex=usePriority?(state.nextPriorityIndex||0)%prio.length:(state.nextGroupIndex||0)%groups.length;
+ const chosen=usePriority?prio[groupIndex]:groups[groupIndex];
  const pending={id:monthUtc(nowMs)+'-'+String(state.attempts+1).padStart(4,'0'),
-  groupIndex,handles:groups[groupIndex].map(a=>a.username),
+  groupIndex,...(usePriority?{priority:true}:{}),handles:chosen.map(a=>a.username),
   reservedAt:new Date(nowMs).toISOString(),
   maxReservedMicroUsd:X_POLICY.maxReservedMicroUsdPerRequest};
  state={...state,pending,reservedMicroUsd:state.reservedMicroUsd+X_POLICY.maxReservedMicroUsdPerRequest,
-  attempts:state.attempts+1,nextGroupIndex:(groupIndex+1)%groups.length,lastReservedAt:pending.reservedAt,
-  error:null};
- return {state,reason:'reserved',pending,group:groups[groupIndex]};
+  attempts:state.attempts+1,
+  nextGroupIndex:usePriority?(state.nextGroupIndex||0):(groupIndex+1)%groups.length,
+  nextPriorityIndex:usePriority?(groupIndex+1)%prio.length:(state.nextPriorityIndex||0),
+  lastReservedAt:pending.reservedAt,error:null};
+ return {state,reason:'reserved',pending,group:chosen};
 }
 export function finalizeLedger(state,{result,at,reason}){
  if(!state?.pending)return state;
