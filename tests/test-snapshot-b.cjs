@@ -86,6 +86,9 @@ assert.ok(out.includes('Light Heavyweight') && out.includes('6′3″') && out.i
 assert.ok(!out.includes('Listed weight is as shown'), 'weight note only when a weight row exists');
 assert.ok(B.tapeHTML(sides, fighter({}, { weightLb: 205 }), fighter({}), { esc, today }).includes('Listed weight is as shown'));
 assert.ok(B.figureHTML(null, 'Jo Smith', esc).includes('<b>JS</b>'));
+// A cutout with a country shows the flag in the disc; without one the disc stays plain red.
+assert.ok(B.figureHTML({ cutout: 'c.webp', flag: 'assets/img/flags/au.svg' }, 'A B', esc).includes('class="sb-flag" src="assets/img/flags/au.svg"'));
+assert.ok(!B.figureHTML({ cutout: 'c.webp', flag: '' }, 'A B', esc).includes('sb-flag'));
 const noRows = B.tapeHTML(sides, fighter(), fighter(), { esc, today });
 assert.ok(!noRows.includes('sb-rows'), 'no empty table');
 assert.ok(B.analysisHTML([], { esc }).includes('No large gaps'));

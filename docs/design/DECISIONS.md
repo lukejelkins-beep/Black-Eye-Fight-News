@@ -65,3 +65,11 @@ Format: date — decision — who — where it shows up.
 - Merging to `main` or the Sumo preview branch needs the owner's explicit "Merge N". — Owner standing rule.
 - Design direction in DIRECTION.md (dark editorial look, two typefaces, one header and navigation pattern, no internal research on public pages) is approved. — Owner approved — docs/design/DIRECTION.md.
 - There is no existing image collection. Images will be collected into a local library on the owner's Mac (originals, a rights register, processed website crops) and only processed, approved images go on the site. Claude does not download photos of public figures itself; the owner supplies files they are permitted to use, and Claude builds the pipeline and the site changes. — Owner direction — docs/design/IMAGE-GUIDE.md.
+
+## 2026-11-22
+
+### Snapshot figures: one framing, country flag in the disc
+- Owner asked that every fighter cutout be framed the same way (some were head only, some head and body) and that the red disc show the fighter's country flag.
+- Cutouts are now cropped by `scripts/build-ufc-cutouts.py` (`frame()`): head and shoulders, same head size, 4:5, found from the mask alone (no face model). `--reframe` redoes the existing files.
+- Flags: `data/ufc-fighter-countries.json` (ISO code per folded name) from Wikipedia's "List of current UFC fighters", which follows UFC telecasts and is not a statement of citizenship. Artwork is `flag-icons` 7.6.0 (MIT, licence kept in `assets/img/flags/`), square versions.
+- A fighter with no country, or no cutout, keeps the red disc or the photo disc. Open: Bruno Silva and Ivan Gnizditskiy have no verified country yet.
