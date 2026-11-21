@@ -11,7 +11,7 @@ const SHELL = [
   '/data/ufc334-fighter-evidence.json',
   '/assets/fighter-hover.js', '/assets/scout-intelligence.js', '/assets/ufcalendar-evidence.js',
   '/assets/local-time.js', '/assets/local-images.js', '/assets/upcoming-cards.js',
-  '/assets/upcoming-cards.css', '/assets/related-news.css', '/assets/related-news.js', '/assets/fight-talk-filters.js', '/assets/fight-talk.css',
+  '/assets/upcoming-cards.css', '/assets/related-news.css', '/assets/snapshot-tiles.css', '/assets/snapshot-tiles.js', '/assets/related-news.js', '/assets/fight-talk-filters.js', '/assets/fight-talk.css',
   '/assets/fight-film.css', '/assets/fight-film.js',
   '/assets/results.css', '/assets/results.js', '/assets/fights-hub.css', '/assets/event-status.js', '/assets/fighter-power-index.js', '/assets/fighter-insights.js', '/assets/fighter-power.css', '/assets/fighter-profile-pro.css'
 ];
