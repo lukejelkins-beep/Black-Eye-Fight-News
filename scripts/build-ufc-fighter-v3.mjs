@@ -127,8 +127,23 @@ export function buildSnapshot(coverage,postfight,cohorts=[],options={}){
   }
  }
  const reviewed=reviewedMap(cohorts),fighters={},divisions=new Map();
+ // Fail closed on corrupt or stale eligibility exports. The publication
+ // snapshot MUST use the reviewed current-roster membership calculated by
+ // the source audit, never recreate eligibility from old UFC-labelled dates.
+ if(coverage.summary?.activeFighters!==undefined&&
+    coverage.summary.activeFighters!==coverage.fighters.length)
+  throw Error("UFC source population disagrees with eligibility audit");
+ // Once the 36-month roster is live, never admit a status-less legacy row.
+ const parts=asOf.split("-").map(Number);
+ const absolute=parts[0]*12+parts[1]-1-36;
+ const yr=Math.floor(absolute/12),mon=absolute%12+1;
+ const day=Math.min(parts[2],new Date(Date.UTC(yr,mon,0)).getUTCDate());
+ const cutoff36=[yr,String(mon).padStart(2,"0"),String(day).padStart(2,"0")].join("-");
+ const strictRosterMode=coverage.activityCutoff===cutoff36;
+ const included=new Set(["latest_observed_mma_ufc"]);
  const current=coverage.fighters.filter(f=>f&&f.lastUfcFight>=coverage.activityCutoff&&
-   f.lastUfcFight<=asOf&&Array.isArray(f.recent));
+   f.lastUfcFight<=asOf&&Array.isArray(f.recent)&&
+   (included.has(f.eligibilityStatus)||(!strictRosterMode&&!f.eligibilityStatus)));
  // Keep a profile even when all five historical fights are still unresolved.
  // Absence of reliable fight rows must never silently remove an active athlete.
  for(const f of current){
