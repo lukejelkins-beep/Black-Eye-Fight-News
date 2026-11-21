@@ -1195,7 +1195,8 @@ function boutSideInfo(w){
   const rec=item?recordSummary(item.record,divisionOf(w.currentRank)):null;
   const form=(Array.isArray(item?.record)?item.record:[]).map(r=>String(r?.result||'').toLowerCase()).filter(r=>r==='win'||r==='loss').slice(-5);
   const st=detailStats(w),wh=weightHeight(w),c=originCountry(w.birthplace);
-  const build=[wh.h,wh.mass].filter(x=>x&&x!=='—').join(' · ');
+  const ft=Number.isFinite(wh.heightCm)&&wh.heightCm>0?heightFeetInches(wh.heightCm):'';
+  const build=[ft,wh.mass].filter(x=>x&&x!=='—').join(' · ');
   return {basho:rec?wlText(rec.win,rec.loss):'—',form,career:wlText(st?.totalWins,st?.totalLosses),build:build||'—',country:c?c.name:''};
 }
 function boutRowMarkup(match) {
