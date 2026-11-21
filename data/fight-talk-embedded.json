@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-21T23:11:44.717Z",
-  "checkedAt": "2026-11-21T23:11:44.717Z",
+  "attemptedAt": "2026-11-21T23:53:17.605Z",
+  "checkedAt": "2026-11-21T23:53:17.605Z",
   "windowDays": 28,
-  "articlesChecked": 31,
+  "articlesChecked": 28,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 42,
   "publisherSourcesConfigured": 33,
-  "linksFound": 17,
-  "newEmbedsVerified": 0,
+  "linksFound": 18,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -18,6 +18,27 @@
   "curatedRejected": 0,
   "curatedPublisherLinked": 2,
   "posts": [
+    {
+      "type": "post",
+      "platform": "X",
+      "sport": "mma",
+      "name": "Aljamain Sterling",
+      "role": "fighter",
+      "handle": "@funkmastermma",
+      "nativeEmbed": true,
+      "originalDateUnverified": false,
+      "postedAt": "2026-11-21T20:55:23.903Z",
+      "sourceLinkedAt": "2026-11-21T23:00:00+00:00",
+      "discoveredAt": "2026-11-21T23:53:17.605Z",
+      "sourcePublisher": "MMA Fighting",
+      "evidenceUrl": "https://www.mmafighting.com/ufc/522835/aljamain-sterling-reacts-to-controversial-loss-to-kevin-vallejos-at-ufc-qatar-what-can-you-do",
+      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 60,
+      "url": "https://x.com/funkmasterMMA/status/2124245313242477023"
+    },
     {
       "type": "post",
       "platform": "X",
@@ -2329,27 +2350,6 @@
       "embedVerified": true,
       "linkPriority": 55,
       "url": "https://x.com/ufc/status/2121835924753686907"
-    },
-    {
-      "type": "post",
-      "platform": "X",
-      "sport": "mma",
-      "name": "UFC",
-      "role": "promoter",
-      "handle": "@ufc",
-      "nativeEmbed": true,
-      "originalDateUnverified": false,
-      "postedAt": "2026-11-15T05:20:07.849Z",
-      "sourceLinkedAt": "2026-11-15T05:53:58+00:00",
-      "discoveredAt": "2026-11-15T07:50:54.170Z",
-      "sourcePublisher": "MMA Fighting",
-      "evidenceUrl": "https://www.mmafighting.com/ufc/521385/ciryl-gane-vs-josh-hokit-full-fight-video-highlights-ufc-334",
-      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 55,
-      "url": "https://x.com/ufc/status/2121835618259161261"
     }
   ],
   "seenOriginals": [
@@ -3364,6 +3364,10 @@
     {
       "url": "https://www.instagram.com/reel/Df9xUj5Oi29/",
       "firstSeen": "2026-11-21T22:24:47.368Z"
+    },
+    {
+      "url": "https://x.com/funkmasterMMA/status/2124245313242477023",
+      "firstSeen": "2026-11-21T23:53:17.605Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
