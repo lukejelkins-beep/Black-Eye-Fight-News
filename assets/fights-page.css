@@ -137,3 +137,31 @@
 
 /* Event posters: keep the official artwork centred inside the defined frame. */
 #main #upcoming-cards-root details.upcoming-event:not(.is-lead) .upcoming-hero-poster{object-fit:contain!important;object-position:center center!important}
+
+/* Last-five fight rows use the light Fights-page theme, not the legacy dark
+   comparison palette. In particular, cage-time numbers must not be pale on white. */
+#main #upcoming-cards-root .upcoming-expanded .befn-history-panel{
+ background:#fff!important;
+ border-color:#e2dbcf!important;
+}
+#main #upcoming-cards-root .upcoming-expanded .befn-history-fighter b,
+#main #upcoming-cards-root .upcoming-expanded .befn-history-desc strong{
+ color:#171317!important;
+ -webkit-text-fill-color:#171317!important;
+}
+#main #upcoming-cards-root .upcoming-expanded .befn-history-fighter span,
+#main #upcoming-cards-root .upcoming-expanded .befn-history-desc small,
+#main #upcoming-cards-root .upcoming-expanded .befn-history-desc span,
+#main #upcoming-cards-root .upcoming-expanded .befn-history-cage-note{
+ color:#645d64!important;
+ -webkit-text-fill-color:#645d64!important;
+}
+#main #upcoming-cards-root .upcoming-expanded .befn-history-duration strong{
+ color:#a71522!important;
+ -webkit-text-fill-color:#a71522!important;
+ font-variant-numeric:tabular-nums;
+}
+#main #upcoming-cards-root .upcoming-expanded .befn-history-fight,
+#main #upcoming-cards-root .upcoming-expanded .befn-history-fighter{
+ border-bottom-color:#e6dfd6!important;
+}
