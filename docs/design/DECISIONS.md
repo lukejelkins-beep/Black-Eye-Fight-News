@@ -3,6 +3,7 @@
 Format: date — decision — who — where it shows up.
 
 ## 2026-11-22
+- Owner liked the first of five typography homepage mockups (Option 12) specifically for its dark charcoal, cream and red palette and hero/category/news/schedule layout, while retaining their selected Design 19 **Unbounded** font. Preview-only implementation: `assets/design12-home-preview.js` and `.css`, loaded via `index.html` and `renderHome` in `assets/app-inline-2.js`. All news/fights displayed from existing source-linked feeds; no mock fight listings imported. Sumo tile links to existing Sumo pilot. No production release approved. — Owner (“i like the layout of the first option as well ... and ... colour selection”)
 - Owner selected font concept 19 (Unbounded) for an isolated website preview, keeping the existing cream/red/black palette, actual homepage/card layout and sourced content. Replace metallic/italic Design D headings in preview only; keep DM Sans for paragraphs and dense data. Test branch `preview/unbounded-design19-20261122` and stylesheet `assets/font-design19-preview.css`; production change requires a separate explicit merge approval. — Owner ("i like 19 ... in a test preview area")
 
 ## 2026-11-21
