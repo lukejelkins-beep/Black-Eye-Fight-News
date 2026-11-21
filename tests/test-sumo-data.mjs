@@ -220,14 +220,16 @@ test('JSA style evidence is explicit, source-linked and never applied to another
   assert.deepEqual(style.byNskId['4227'].signature,['tsuki','oshi','migi-yotsu','yori']);
 });
 
-test('Sumo preview is non-deploying and links correctly to dedicated UI',()=>{
+test('Sumo is linked from the main sport row and uses the main-site header',()=>{
   const html=readFileSync(new URL('../sumo.html',import.meta.url),'utf8');
   const index=readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const js=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
   assert.match(html,/name="robots" content="noindex,nofollow"/);
   assert.match(html,/assets\/sumo\.js/);
-  assert.match(index,/href="sumo\.html" data-nav="sumo"/);
-  assert.match(index,/befn-sumo-link/);
+  assert.match(index,/<a class="sh-sport-link" href="sumo\.html">Sumo<\/a>/,'Main site sport row links to Sumo');
+  assert.match(html,/class="sh"/,'Sumo pages use the main-site header');
+  assert.match(html,/class="sh-sport-link" href="sumo\.html" aria-current="page"/);
+  assert.doesNotMatch(html,/TEST BRANCH|Testing Preview|testing preview/);
   assert.match(js,/data\/sumo\/rikishi-index\.json/);
   assert.doesNotMatch(js,/fetch\(\s*['"]https:\/\/www\.sumo-api\.com/);
 });
