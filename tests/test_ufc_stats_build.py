@@ -154,6 +154,26 @@ class Aggregates(unittest.TestCase):
         self.assertEqual(own[m.COUNTS.index("controlSec")], 60)
 
 
+class Divisions(unittest.TestCase):
+    def test_slug_matches_official_division_slugs(self):
+        self.assertEqual(m.division_slug("Women's Strawweight"), "womens-strawweight")
+        self.assertEqual(m.division_slug("Women\u2019s Flyweight"), "womens-flyweight")
+        self.assertEqual(m.division_slug("Light Heavyweight"), "light-heavyweight")
+        self.assertIsNone(m.division_slug(None))
+
+    def test_official_roster_then_latest_bout_then_reviewed(self):
+        official = {"a": {"division": "welterweight", "label": "Welterweight"}}
+        weight = {"a": {"division": "Middleweight"}, "b": {"division": "Middleweight"}}
+        reviewed = {m.norm("Cee Dee"): "Flyweight"}
+        self.assertEqual(m.resolve_division("a", "A", official, weight, reviewed)["source"], "official-roster")
+        self.assertEqual(m.resolve_division("a", "A", official, weight, reviewed)["slug"], "welterweight")
+        b = m.resolve_division("b", "B", official, weight, reviewed)
+        self.assertEqual((b["slug"], b["source"]), ("middleweight", "latest-bout"))
+        c = m.resolve_division("c", "Cee Dee", official, weight, reviewed)
+        self.assertEqual((c["slug"], c["source"]), ("flyweight", "reviewed"))
+        self.assertEqual(m.resolve_division("d", "Nobody", official, weight, reviewed)["slug"], None)
+
+
 class RealData(unittest.TestCase):
     """Smoke test over the committed evidence files."""
 
@@ -179,6 +199,28 @@ class RealData(unittest.TestCase):
         self.assertAlmostEqual(rates["slpm"], v3["slpm"]["value"], places=2)
         self.assertAlmostEqual(rates["td15"], v3["td"]["value"], places=2)
         self.assertEqual(row["ufc"][:2], [18, 1])
+
+    def test_division_coverage_uses_free_weight_classes(self):
+        cov = self.index["divisionCoverage"]
+        self.assertGreater(cov["latestBout"], 300, "latest-bout divisions fill fighters missing from the rosters")
+        self.assertGreater(cov["withDivision"], 900)
+
+    def test_leaderboards_file(self):
+        boards = json.loads((pathlib.Path(self.tmp.name) / "leaderboards.json").read_text())
+        self.assertEqual(boards["schema"], 1)
+        stats = [x["id"] for x in boards["stats"]]
+        self.assertEqual(len(stats), len(m.BOARD_STATS))
+        self.assertTrue(next(x for x in boards["stats"] if x["id"] == "sapm")["lowerIsBetter"])
+        for key, rows in boards["rows"].items():
+            for row in rows:
+                self.assertGreaterEqual(row[1], m.BOARD_MIN_FIGHTS, key)
+                self.assertEqual(len(row), 2 + len(stats))
+        self.assertGreater(len(boards["rows"]["career"]), 500)
+        self.assertGreater(len(boards["ratings"]), 500)
+        makhachev = next(i for i, f in enumerate(boards["fighters"]) if f[0] == "islam-makhachev")
+        self.assertEqual(boards["fighters"][makhachev][2], "welterweight")
+        self.assertTrue(boards["fighters"][makhachev][4], "champion flag")
+        self.assertLess(pathlib.Path(self.tmp.name, "leaderboards.json").stat().st_size, 600_000)
 
     def test_profiles_are_light(self):
         biggest = max(p.stat().st_size for p in (pathlib.Path(self.tmp.name) / "fighters").glob("*.json"))

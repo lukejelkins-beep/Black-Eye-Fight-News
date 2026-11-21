@@ -645,53 +645,114 @@
    (compareHTML?proSection('compare','Compare',stats.division?'vs '+stats.division+' average':'vs division average',compareHTML):'')+
    '</section>';
  }
+ // UFC stats leaderboards (stage 5): data/ufc-stats/leaderboards.json from the stats build.
+ // Ratings are career-based; every other board uses the chosen window. A row needs
+ // the file's minimum of complete-stat UFC fights and cage time in that window.
  function renderV3Boards(){
-  const root=document.querySelector('[data-befn-v3-leaderboards]');
+  const root=document.querySelector("[data-befn-v3-leaderboards]");
   if(!root||root.dataset.ready)return;
-  if(!ufcV3||ufcV3.schema<4){
-   if(root.dataset.status!=='pending'){
-    root.dataset.status='pending';
-    root.innerHTML='<p class="befn-board-placeholder">The validated UFC statistics snapshot is not published yet. Leaderboards will appear when the records are ready.</p>';
+  if(!boardData){
+   if(!boardLoading&&!boardFailed){
+    boardLoading=true;
+    fetch("data/ufc-stats/leaderboards.json").then(r=>r.ok?r.json():null).then(d=>{
+     boardLoading=false;
+     if(d?.schema===1&&Array.isArray(d.fighters)&&d.rows)boardData=d;else boardFailed=true;
+     renderV3Boards();
+    }).catch(()=>{boardLoading=false;boardFailed=true;renderV3Boards();});
+   }
+   const msg=boardFailed?"UFC statistics are not published yet. Leaderboards will appear when they are ready.":"Loading UFC statistics…";
+   if(root.dataset.status!==(boardFailed?"failed":"pending")){
+    root.dataset.status=boardFailed?"failed":"pending";
+    root.innerHTML='<p class="befn-board-placeholder">'+msg+'</p>';
    }
    return;
   }
-  root.dataset.ready='true';
-  root.innerHTML='<header class="befn-board-head"><div><p class="befn-board-eyebrow">UFC · Recent performance</p><h2>Statistical rankings</h2>'+
-   '<p>'+ufcV3.population+' active fighters in this snapshot. Rankings require at least three UFC bouts with that statistic recorded.</p></div>'+
-   '<span class="befn-board-date">Updated '+escapeHTML(ufcV3.asOf)+'</span></header>'+
-   '<div class="befn-board-controls"><label for="befn-board-metric">Choose a statistic</label>'+
-   '<select id="befn-board-metric" aria-label="Choose UFC leaderboard statistic">'+ufcV3.boards.map(b=>
-    '<option value="'+escapeHTML(b.id)+'">'+escapeHTML(b.label)+'</option>').join('')+
-   '</select></div><div class="befn-v3-board-results" aria-live="polite"></div>';
-  const select=root.querySelector('select'),results=root.querySelector('.befn-v3-board-results');
-  const show=()=>{
-   const board=ufcV3.boards.find(b=>b.id===select.value);
-   if(!board){results.innerHTML='<p class="befn-board-placeholder">No data available for this statistic.</p>';return;}
-   const eligible=board.leaders.filter(row=>row.bouts>=3&&row.bouts<=5&&
-    Number.isFinite(row.value)&&Number.isInteger(row.rank)&&row.rank>=1);
-   const display=eligible.slice(0,30);
-   const heading=board.label+' · '+board.eligible+' qualifying UFC fighters';
-   const direction=board.id==='sapm'?' · Lower is better':'';
-   results.innerHTML='<div class="befn-board-result-head"><h3>'+escapeHTML(heading)+
-    '</h3><p>Top 30 · Minimum three measured bouts'+direction+'</p></div>'+
-    (display.length?'<ol class="befn-board-list">'+display.map(row=>{
-     const name=escapeHTML(row.name);
-     const f=byName.get(norm(row.name));
-     const athlete=f&&isReviewedUfc(f)&&f.id?
-      '<a href="#fighter/'+encodeURIComponent(f.id)+'">'+name+'</a>':'<span>'+name+'</span>';
-     const value=['control','net'].includes(board.id)?
-      (row.value<0?'−':'')+Math.floor(Math.abs(row.value)/60)+':'+
-       String(Math.round(Math.abs(row.value)%60)).padStart(2,'0'):
-       metricValue(row,board.type==='def'?'pct':board.type);
-     return '<li class="'+(row.rank<=3?'befn-board-podium':row.rank<=10?'befn-board-topten':'')+'">'+
-      '<span class="befn-board-place">#'+row.rank+'</span>'+
-      '<span class="befn-board-name">'+athlete+'<small>'+row.bouts+' recorded UFC bouts</small></span>'+
-      '<strong class="befn-board-value">'+escapeHTML(value)+'</strong></li>';
-    }).join('')+'</ol>':
-    '<p class="befn-board-placeholder">No athletes yet qualify for this category.</p>');
-  };
-  select.addEventListener('change',show);
-  show();
+  root.dataset.ready="true";
+  const groups={};
+  for(const s of boardData.stats)(groups[s.group]=groups[s.group]||[]).push(s);
+  root.innerHTML='<div class="befn-board-controls">'+
+   '<label class="befn-board-field"><span>Leaderboard</span><select id="befn-board-metric" class="field" aria-label="Choose UFC leaderboard">'+
+   '<optgroup label="Ratings">'+BOARD_RATINGS.map(([id,l])=>'<option value="'+id+'">'+escapeHTML(l)+'</option>').join("")+'</optgroup>'+
+   Object.entries(groups).map(([g,list])=>'<optgroup label="'+escapeHTML(g)+'">'+list.map(s=>
+    '<option value="'+escapeHTML(s.id)+'">'+escapeHTML(s.label)+'</option>').join("")+'</optgroup>').join("")+
+   '</select></label>'+
+   '<label class="befn-board-field"><span>Division</span><select id="befn-board-division" class="field" aria-label="Choose division">'+
+   '<option value="all">All divisions</option>'+Object.entries(boardData.divisions).map(([k,l])=>
+    '<option value="'+escapeHTML(k)+'">'+escapeHTML(l)+'</option>').join("")+'</select></label>'+
+   '</div><div class="befn-board-windows segment" role="group" aria-label="Time window">'+
+   Object.entries(boardData.windows).map(([k,l])=>'<button type="button" data-board-window="'+escapeHTML(k)+'" aria-pressed="false">'+escapeHTML(l)+'</button>').join("")+
+   '</div><div class="befn-v3-board-results" aria-live="polite"></div>';
+  const metric=root.querySelector("#befn-board-metric"),division=root.querySelector("#befn-board-division");
+  metric.value=boardState.metric;division.value=boardState.division;
+  metric.addEventListener("change",()=>{boardState.metric=metric.value;showBoard(root);});
+  division.addEventListener("change",()=>{boardState.division=division.value;showBoard(root);});
+  root.querySelectorAll("[data-board-window]").forEach(b=>b.addEventListener("click",()=>{boardState.window=b.dataset.boardWindow;showBoard(root);}));
+  showBoard(root);
+ }
+ let boardData=null,boardLoading=false,boardFailed=false;
+ const boardState={metric:"overall",window:"l36",division:"all"};
+ // Rating boards rank whole careers, so they ask for more evidence than a window's stat board.
+ const BOARD_RATING_MIN_FIGHTS=5;
+ const BOARD_RATINGS=[["overall","BEFN rating","score"],["striking","Striking rating","pct"],["grappling","Grappling rating","pct"],
+  ["wrestling","Wrestling rating","pct"],["defence","Defence rating","pct"],["form","Recent form","score"]];
+ function boardValue(v,unit){
+  if(!Number.isFinite(v))return "—";
+  if(unit==="pct")return Math.round(v*100)+"%";
+  if(unit==="signed")return (v>0?"+":v<0?"−":"")+Math.abs(v).toFixed(2);
+  if(unit==="score")return String(Math.round(v));
+  if(unit==="ordinal")return ordinal(Math.round(v));
+  return v.toFixed(2);
+ }
+ function boardRows(){
+  const d=boardData,st=boardState;
+  const fighters=d.fighters,rating=BOARD_RATINGS.find(r=>r[0]===st.metric);
+  let rows,unit,lower=false,label,sampleIndex;
+  if(rating){
+   const col=d.ratingFields.indexOf(st.metric);
+   sampleIndex=d.ratingFields.indexOf("statFights");
+   rows=d.ratings.map(r=>({f:r[0],v:r[col],n:r[sampleIndex]}));
+   unit=rating[2]==="pct"?"ordinal":"score";label=rating[1];
+  }else{
+   const stat=d.stats.find(s=>s.id===st.metric)||d.stats[0];
+   const col=d.rowFields.indexOf(stat.id);
+   rows=(d.rows[st.window]||[]).map(r=>({f:r[0],v:r[col],n:r[1]}));
+   unit=stat.unit;lower=!!stat.lowerIsBetter;label=stat.label;
+  }
+  const minimum=rating?Math.max(d.minFights,BOARD_RATING_MIN_FIGHTS):d.minFights;
+  rows=rows.filter(r=>Number.isFinite(r.v)&&r.n>=minimum&&
+   (st.division==="all"||fighters[r.f][2]===st.division));
+  rows.sort((a,b)=>(lower?a.v-b.v:b.v-a.v)||String(fighters[a.f][1]).localeCompare(fighters[b.f][1]));
+  let rank=0,prev=null;
+  rows.forEach((r,i)=>{if(prev===null||r.v!==prev)rank=i+1;r.rank=rank;prev=r.v;});
+  return {rows,unit,lower,label,total:rows.length,isRating:!!rating,minimum};
+ }
+ function boardRowHTML(r,unit){
+  const [slug,name,div,officialRank,champion]=boardData.fighters[r.f];
+  const profile=byName.get(norm(name));
+  const who=profile?.id?'<a href="#fighter/'+encodeURIComponent(profile.id)+'">'+escapeHTML(name)+'</a>':'<span>'+escapeHTML(name)+'</span>';
+  const division=boardData.divisions[div]||"";
+  const tag=champion?'<b class="befn-board-tag is-champ">Champion</b>':Number.isInteger(officialRank)&&officialRank>0?
+   '<b class="befn-board-tag">#'+officialRank+'</b>':'';
+  return '<li class="'+(r.rank<=3?'befn-board-podium':r.rank<=10?'befn-board-topten':'')+'">'+
+   '<span class="befn-board-place">'+r.rank+'</span>'+opponentPhoto(name)+
+   '<span class="befn-board-name">'+who+tag+'<small>'+r.n+' UFC fights with full stats'+(division?' · '+escapeHTML(division):'')+'</small></span>'+
+   '<strong class="befn-board-value">'+escapeHTML(boardValue(r.v,unit))+'</strong></li>';
+ }
+ function showBoard(root){
+  const results=root.querySelector(".befn-v3-board-results");
+  const windows=root.querySelector(".befn-board-windows");
+  const view=boardRows();
+  if(windows)windows.hidden=view.isRating;
+  root.querySelectorAll("[data-board-window]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.boardWindow===boardState.window)));
+  const scope=boardState.division==="all"?"All divisions":boardData.divisions[boardState.division]||"Division";
+  const when=view.isRating?"Whole UFC career, recent fights count most":boardData.windows[boardState.window];
+  const display=view.rows.slice(0,30);
+  results.innerHTML='<div class="befn-board-result-head"><h3>'+escapeHTML(view.label)+'</h3><p>'+
+   escapeHTML(scope)+' · '+escapeHTML(when)+' · '+view.total+' qualifying fighters'+(view.lower?' · Lower is better':'')+'</p></div>'+
+   (display.length?'<ol class="befn-board-list">'+display.map(r=>boardRowHTML(r,view.unit)).join("")+'</ol>':
+    '<p class="befn-board-placeholder">No fighters qualify for this board yet.</p>')+
+   '<p class="befn-board-rule">A fighter needs '+view.minimum+' UFC fights with full round-by-round statistics'+
+   (view.isRating?'':' and '+Math.round(boardData.minCageSeconds/60)+' minutes in the cage in this window')+'. Updated '+escapeHTML(boardData.asOf)+'.</p>';
  }
  function applyV3(f){
   const record=v3For(f);
