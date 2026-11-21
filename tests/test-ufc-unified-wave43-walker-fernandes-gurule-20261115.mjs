@@ -146,9 +146,9 @@ const cases=[
 const excluded='84170';
 // Luis Gurule fought again at UFC 334 on 2026-11-14 (native bout 93106, split
 // decision win over Bilal Hasan), the approved roster date itself. His
-// certificate was researched from a UFC.com biography that still listed five
-// bouts, so it is stale: the pipeline must refuse it until his six-bout
-// career is re-certified from sources. Walker and Fernandes are unaffected.
+// original certificate listed five bouts and was refused until his six-bout
+// career was re-certified from sources (done 2026-11-22). Walker and Fernandes
+// are unaffected.
 const staleCertificate={slug:'luis-gurule',boutId:'93106',date:'2026-11-14',opponent:'Bilal Hasan'};
 const certified=cases.filter(c=>c.slug!==staleCertificate.slug);
 test('wave43 two complete source-attested UFC histories reconcile ten distinct saved numeric UFC contests',()=>{
@@ -194,14 +194,26 @@ test('wave43 two complete source-attested UFC histories reconcile ten distinct s
   assert.equal(evaluateCareerEvidence(p,history,last,approval.rosterAsOf,e,progress.bouts).independentlyVerified,true);
  }
 });
-test('wave43: Luis Gurule certificate is stale after his roster-date UFC 334 bout and fails closed',()=>{
+test('wave43: Luis Gurule is re-certified with his roster-date UFC 334 bout, and a five-bout certificate still fails closed',()=>{
  const c=cases.find(x=>x.slug===staleCertificate.slug);
  const e=evidence[c.slug],p=profiles[c.slug];
- // The saved certificate is unchanged and still lists only the five earlier bouts.
- assert.equal(e.officialUfcCareerBoutCount,5);
- assert.deepEqual(e.bouts.map(x=>x.nativeBoutId),c.fights.map(x=>x[0]));
- assert.ok(!e.bouts.some(x=>x.nativeBoutId===staleCertificate.boutId));
- // The newer bout is a real, completed UFC contest on the approved roster date.
+ // Re-certified 2026-11-22 from the UFC.com event page and UFCStats fight page.
+ assert.equal(e.officialUfcCareerBoutCount,6);
+ assert.equal(e.verifiedAt,'2026-11-22');
+ assert.deepEqual(e.bouts.map(x=>x.nativeBoutId),[...c.fights.map(x=>x[0]),staleCertificate.boutId]);
+ assert.deepEqual(e.bouts.at(-1),{date:staleCertificate.date,opponent:staleCertificate.opponent,result:'win',
+  fightUrl:'https://ufcstats.com/fight-details/fdefe4d1a8ef2997',nativeBoutId:staleCertificate.boutId,
+  nativeFighterId:c.id,event:'UFC 334: Gane vs. Hokit',method:'decision_split',round:3,time:'5:00'});
+ // Bilal Hasan's side of the same bout is recorded identically (opposite result).
+ const h=evidence['bilal-hasan'];
+ assert.equal(h.verifiedOfficialUfcBoutCount,2);
+ assert.deepEqual(h.verifiedUfcRecord,{wins:1,losses:1,draws:0,noContests:0});
+ assert.equal(h.lastOfficialUfcFight,staleCertificate.date);
+ const hb=h.bouts.find(x=>x.nativeBoutId===staleCertificate.boutId);
+ assert.equal(hb.opponent,'Luis Gurule');
+ assert.equal(hb.result,'loss');
+ assert.equal(hb.fightUrl,e.bouts.at(-1).fightUrl);
+ // The bout is a real, completed UFC contest on the approved roster date.
  const native=progress.bouts[staleCertificate.boutId];
  assert.equal(native?.org,'ufc');
  assert.equal(native?.status,'completed');
@@ -210,10 +222,12 @@ test('wave43: Luis Gurule certificate is stale after his roster-date UFC 334 bou
  const history=p.recentHistory.filter(x=>x.promotion==='ufc'&&x.date<=census.asOf&&x.boutId!==excluded);
  assert.equal(history.length,c.fights.length+1);
  assert.ok(history.some(x=>x.boutId===staleCertificate.boutId&&x.date===staleCertificate.date));
- // Fail closed: a five-bout certificate can never certify a six-bout career.
  const last=census.fighters.find(x=>x.slug===c.slug)?.lastUfcFight;
  assert.equal(last,staleCertificate.date);
- assert.equal(evaluateCareerEvidence(p,history,last,approval.rosterAsOf,e,progress.bouts).independentlyVerified,false);
+ assert.equal(evaluateCareerEvidence(p,history,last,approval.rosterAsOf,e,progress.bouts).independentlyVerified,true);
+ // Fail closed: the old five-bout certificate can never certify a six-bout career.
+ const old={...e,officialUfcCareerBoutCount:5,bouts:e.bouts.filter(x=>x.nativeBoutId!==staleCertificate.boutId)};
+ assert.equal(evaluateCareerEvidence(p,history,last,approval.rosterAsOf,old,progress.bouts).independentlyVerified,false);
 });
 test('wave43: Luis DWCS is separately attested feeder, and alias source rows cannot make duplicate official UFC results',()=>{
  const a=progress.bouts[excluded],f=feeder.bouts.filter(x=>x.boutId===excluded&&x.fighterSlug==='luis-gurule');
