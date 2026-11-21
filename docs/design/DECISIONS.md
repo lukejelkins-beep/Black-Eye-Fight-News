@@ -2,6 +2,9 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-22
+- Owner selected font concept 19 (Unbounded) for an isolated website preview, keeping the existing cream/red/black palette, actual homepage/card layout and sourced content. Replace metallic/italic Design D headings in preview only; keep DM Sans for paragraphs and dense data. Test branch `preview/unbounded-design19-20261122` and stylesheet `assets/font-design19-preview.css`; production change requires a separate explicit merge approval. — Owner ("i like 19 ... in a test preview area")
+
 ## 2026-11-21
 - Phase 3 step 4: attribute scores released to readers (owner: "Go ahead", 2026-11-21, after layout B shipped in #362). Scores are now on by default and appear as the Scores tab on upcoming UFC fights. Kill switch kept: `BEFN_FEATURES.snapshotScores = false` or `?snapshotScores=off`. No change to the scores or their wording.
 - UFC stats page (stage 5 of the stats overhaul): one picker for 22 leaderboards (6 ratings, 16 statistics in Striking, Grappling, Defence, Finishing and Pace groups), a division filter and a time window (Last 5 / 12 months / 36 months / Career; ratings are whole-career and ignore it). Statistic boards need 3 UFC fights with full round stats and 15 minutes in the cage in the window; rating boards need 5 such fights, so a 3-fight record cannot top a career list. Top 30, ties share a rank, lower-is-better boards say so, names link to profiles where one exists. Light "Fight night" rows like the Fighters page. Divisions for profiles, ratings and boards now come from the official roster first, then the fighter's latest labelled bout (free `data/ufc-bout-weight-classes.json`): 958 of 1,111 active fighters have one (was 431). Data: `data/ufc-stats/leaderboards.json` (296 KB, 100 KB gzip). — Owner ("Start stage 5") — PR for branch feat/leaderboards-stage5.
