@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {evaluateCandidate,knownUsernames} from '../scripts/find-bluesky-accounts.mjs';
+const fighter={name:'Aaron McKenna',profiles:{X:null,Instagram:{username:'aaronmck99'}}};
+assert.deepEqual(knownUsernames(fighter),[{platform:'Instagram',username:'aaronmck99'}]);
+const ok=evaluateCandidate(fighter,{displayName:'Aaron McKenna',description:'Middleweight. instagram.com/aaronmck99'});
+assert.equal(ok.status,'verified-candidate');
+assert.equal(evaluateCandidate(fighter,{displayName:'Aaron McKenna',description:'Follow @aaronmck99 everywhere'}).status,'verified-candidate');
+assert.equal(evaluateCandidate(fighter,{displayName:'Aaron McKenna',description:'Fan page, not the fighter'}).status,'name-only');
+assert.equal(evaluateCandidate(fighter,{displayName:'Aaron McKenney',description:'instagram.com/aaronmck99'}).status,'rejected');
+assert.equal(evaluateCandidate(fighter,{displayName:'Aaron McKenna',description:'instagram.com/aaronmck999'}).status,'name-only','a longer username must not match');
+const noAccounts={name:'Test Fighter',profiles:{X:null,Instagram:null}};
+assert.equal(knownUsernames(noAccounts).length,0);
+console.log('bluesky candidate rules ok');

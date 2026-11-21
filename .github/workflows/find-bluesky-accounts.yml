@@ -1,0 +1,47 @@
+name: Find Bluesky accounts for review
+on:
+  schedule:
+    # Weekly. Report only: writes a review list, never changes what Fight Talk collects.
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/find-bluesky-accounts.mjs'
+      - 'tests/test-bluesky-candidates.mjs'
+      - '.github/workflows/find-bluesky-accounts.yml'
+permissions:
+  contents: write
+concurrency:
+  group: find-bluesky-accounts
+  cancel-in-progress: false
+jobs:
+  find:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check matching rules
+        run: |
+          node --check scripts/find-bluesky-accounts.mjs
+          node tests/test-bluesky-candidates.mjs
+      - name: Search Bluesky and save the review list
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for attempt in 1 2 3; do
+            git fetch -q origin main
+            git reset --hard -q origin/main
+            node scripts/find-bluesky-accounts.mjs
+            git add data/bluesky-candidates.json
+            if git diff --cached --quiet; then
+              echo 'Candidate list unchanged'
+              exit 0
+            fi
+            git commit -m 'Update Bluesky account candidates for review'
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
