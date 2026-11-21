@@ -178,7 +178,7 @@
 .talk-freshness,.talk-coverage,.talk-count{color:#4c6662;font-size:12px;margin:0}
 .talk-filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(142px,1fr));gap:10px 14px;margin-top:13px}
 .talk-filter{display:grid;gap:4px;color:#314e49;font-size:12px;font-weight:750}
-.talk-filter select{width:100%;min-height:42px;background:#fff;color:#102f33;border:1px solid #b8cdc3;border-radius:6px;padding:7px 9px;font-size:14px;font-weight:500}
+.talk-filter select,.talk-filter input[type=search]{width:100%;box-sizing:border-box;min-height:44px;background:#fff;color:#102f33;border:1px solid #b8cdc3;border-radius:6px;padding:7px 9px;font-size:14px;font-weight:500}
 .talk-results-head{margin:0 0 12px;align-items:baseline}
 .talk-count{font-weight:800}
 .talk-coverage summary{cursor:pointer;font-weight:750}
@@ -229,6 +229,7 @@
 <script src="assets/results.js?v=20261119-boxerbook1"></script>
 <link rel="stylesheet" href="assets/related-news.css?v=20261121-rn3">
 <script src="assets/related-news.js?v=20261121-rn3"></script>
+<script src="assets/fight-talk-filters.js?v=20261121-ft1"></script>
 <script src="assets/upcoming-cards.js?v=20261121-rn3"></script>
 
 <style id="high-contrast-site-actions">
@@ -604,7 +605,7 @@ html,body{max-width:100%;overflow-x:clip}
 </footer>
 <dialog id="fighterDialog" class="fighter-dialog" aria-label="Fighter profile"><div id="fighter-dialog-content"></div></dialog>
 <div id="toast" role="status" aria-live="polite" class="toast" hidden></div>
-<script src="assets/news-page.js?v=20261119-np1"></script><script src="assets/app-inline-1.js?v=20261117"></script><script src="assets/app-inline-2.js?v=20261121-rn3"></script><script src="assets/fighter-hover.js?v=20261117-local1" defer></script>
+<script src="assets/news-page.js?v=20261119-np1"></script><script src="assets/app-inline-1.js?v=20261117"></script><script src="assets/app-inline-2.js?v=20261121-ft1"></script><script src="assets/fighter-hover.js?v=20261117-local1" defer></script>
 <script src="assets/scout-intelligence.js?v=20261118-editor1" defer></script>
 <script src="assets/ufcalendar-evidence.js?v=20261118-sponsor1" defer></script>
 <script src="assets/fighter-power-index.js?v=20261119-ratings2" defer></script>

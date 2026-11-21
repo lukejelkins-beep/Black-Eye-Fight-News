@@ -22,7 +22,7 @@ const main=document.querySelector('#main');
 const dialog=document.querySelector('#fighterDialog');
 if(!D||!main){if(main) main.textContent='Fight data unavailable. Please refresh the page.';return;}
 const fightDesk=window.BEFNFightsUI={view:'upcoming',promotion:'ufc',query:''};
-const state={news:'boxing',champions:'boxing',fightersSport:'Boxing',fightersCategory:'All',fightersDivision:'All',fightersQuery:'',social:'all',socialMode:'latest',socialPlatform:'all',socialPage:1,talkRole:'all',talkSort:'balanced',calendar:'boxing',highlights:'boxing'};
+const state={news:'boxing',champions:'boxing',fightersSport:'Boxing',fightersCategory:'All',fightersDivision:'All',fightersQuery:'',social:'all',talkPromotion:'all',talkFighter:'',socialMode:'latest',socialPlatform:'all',socialPage:1,talkRole:'all',talkSort:'balanced',calendar:'boxing',highlights:'boxing'};
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeURL=x=>{if(/^assets\/img\/[a-z0-9-]+\/[a-z0-9-]+\.webp$/.test(String(x)))return esc(x);try{const u=new URL(x);return u.protocol==='https:'?esc(u.href):'#'}catch(_){return '#'}};
 const domain=x=>{try{return new URL(x).hostname.replace(/^www\./,'')}catch{return 'Source'}};
@@ -106,7 +106,7 @@ const renderFrame=(inner)=>`${(['champions','fighters'].includes(location.hash.s
 const picture=(src,alt)=>`<div class="card-photo">${src?`<img loading="lazy" src="${safeURL(src)}" alt="${esc(alt)}" referrerpolicy="no-referrer">`:''}<div class="photo-fail">PHOTOGRAPH UNAVAILABLE</div></div>`;
 const newsCard=x=>headlineCard({title:x.title,summary:x.summary,sport:x.eyebrow||'Archive feature',source:domain(x.source),url:x.source,image:x.image?{url:x.image,alt:x.imageAlt||x.title,credit:x.imageCredit||'',kind:'archive'}:null});
 /* The live public fight desk runs independently. */
-state.news='all';state.newsPage=1;state.newsMode='latest';state.newsSort='latest';state.talkRole='all';state.talkSort='balanced';state.social='all';state.matDiscipline='all';
+state.news='all';state.newsPage=1;state.newsMode='latest';state.newsSort='latest';state.talkRole='all';state.talkSort='balanced';state.talkPromotion='all';state.talkFighter='';state.social='all';state.matDiscipline='all';
 const activeSport=()=>window.BEFNSport?.get()||'all';
 const articleMatchesSport=a=>activeSport()==='all'||a.sport===activeSport()||(Array.isArray(a.sports)&&a.sports.includes(activeSport()));
 function syncGlobalSport(){
@@ -998,12 +998,24 @@ function talkAccountDirectory(){
 
 
 
+/* Promotion filter needs the announced cards (who is booked with UFC, ONE, PFL). Loaded once, only for the Fight Talk page. */
+let talkCardIndex=null,talkCardsLoading=false;
+function loadTalkCards(){
+ if(talkCardIndex||talkCardsLoading||!window.BEFNTalkFilters)return;
+ talkCardsLoading=true;
+ fetch('data/upcoming-cards.json?t='+Math.floor(Date.now()/3600000),{cache:'no-store',signal:AbortSignal.timeout(12000)})
+  .then(r=>r.ok?r.json():null)
+  .then(d=>{if(d&&Array.isArray(d.events)){talkCardIndex=window.BEFNTalkFilters.cardIndex(d.events);if(location.hash==='#social'&&state.talkPromotion!=='all'&&state.social==='mma')refreshTalkView(undefined)}})
+  .catch(()=>{}).finally(()=>{talkCardsLoading=false});
+}
 function renderSocial(){
  const highlights=state.socialMode==='highlights';
+ loadTalkCards();
  const current=highlights?highlightedTalkPosts():recentTalkPosts();
  const options={all:'All platforms',...Object.fromEntries(Object.keys(talkPlatforms).map(platform=>[platform,platform]))};
  const visible=p=>(state.social==='all'||p.sport===state.social)
   &&(state.socialPlatform==='all'||p.platform===state.socialPlatform)
+  &&(!window.BEFNTalkFilters||window.BEFNTalkFilters.filterPosts([p],{sport:state.social,promotion:state.talkPromotion,query:state.talkFighter},talkCardIndex).length>0)
   &&(state.talkRole==='all'||(state.talkRole==='fighters'?p.role==='fighter':state.talkRole==='fans'?p.role==='fan':state.talkRole==='memes'?p.role==='meme':['commentator','media','promoter','manager','trainer','team'].includes(p.role)||p.type==='thread'));
  const filtered=current.filter(visible);
  const list=diverseTalk(filtered,highlights?'latest':state.talkSort);
@@ -1013,12 +1025,14 @@ function renderSocial(){
  const start=(state.socialPage-1)*pageSize;
  const freshness=highlights?'Highlights from the previous four weeks':liveTalk.error||(!liveTalk.lastAttempt||liveTalk.loading?'Checking fresh posts…':liveTalk.checkedAt?'Live feed checked '+humanTalkTime(liveTalk.checkedAt)+' local time':'Checking fresh posts…');
  const mode='<div class="segment" role="group" aria-label="Fight Talk view">'+[['latest','Latest posts'],['highlights','Last 4 weeks']].map(([value,label])=>'<button type="button" id="talk-'+value+'" data-segment="socialMode" data-value="'+value+'" aria-pressed="'+String(value===state.socialMode)+'">'+label+'</button>').join('')+'</div>';
- const filters=talkFilter('socialPlatform','Platform',options)
+ const promotionFilter=state.social==='mma'&&window.BEFNTalkFilters?talkFilter('talkPromotion','Promotion',window.BEFNTalkFilters.PROMOTIONS):'';
+ const fighterFilter='<div class="talk-filter talk-filter-fighter"><label for="talkFighter">Fighter</label><input type="search" id="talkFighter" data-talk-search value="'+esc(state.talkFighter)+'" placeholder="Search by fighter" autocomplete="off" aria-label="Search posts by fighter"></div>';
+ const filters=talkFilter('socialPlatform','Platform',options)+promotionFilter+fighterFilter
   +talkFilter('talkRole','Posts from',{all:'Everyone',fighters:'Fighters',media:'Media & industry',fans:'Fans',memes:'Meme pages'})+talkFilter('talkSort','Order',{latest:'Newest first',balanced:'Balanced feed'});
  const toolbar='<div class="talk-toolbar"><div class="talk-toolbar-top">'+mode+'<p class="talk-freshness">'+esc(freshness)+'</p></div><div class="talk-filters">'+filters+'</div></div>';
  const platformNeedsConnection=liveTalk.platformStatus.some(p=>p.platform===state.socialPlatform&&p.state==='not-connected')&&!current.some(p=>p.platform===state.socialPlatform);
  const empty='<div class="talk-empty"><h2>No posts match these filters</h2><p>'+
-  (!highlights&&(!liveTalk.lastAttempt||liveTalk.loading)?'Checking for original posts from the past seven days.':!highlights&&platformNeedsConnection?'Automatic updates from '+esc(state.socialPlatform)+' need an approved source connection.':'Try a different sport, platform or author filter.')+'</p></div>';
+  (!highlights&&(!liveTalk.lastAttempt||liveTalk.loading)?'Checking for original posts from the past seven days.':!highlights&&platformNeedsConnection?'Automatic updates from '+esc(state.socialPlatform)+' need an approved source connection.':'Try a different sport, promotion, fighter or platform filter.')+'</p></div>';
  const pages=total>1?'<div class="pagination"><button type="button" data-page="prev" '+(state.socialPage===1?'disabled':'')+'>← Previous</button><span>Page '+state.socialPage+' of '+total+'</span><button type="button" data-page="next" '+(state.socialPage===total?'disabled':'')+'>Next →</button></div>':'';
  const count=total>1?(start+1)+'–'+Math.min(start+pageSize,list.length)+' of '+list.length+' posts':list.length+' post'+(list.length===1?'':'s');
  const title=highlights?'The last four weeks':'Latest fighter & promoter posts';
@@ -1170,6 +1184,12 @@ document.addEventListener('change',e=>{
   state[id]=value;
   state.socialPage=1;
   refreshTalkView(id);
+ }
+ if(e.target.matches('input[data-talk-search]')){
+  state.talkFighter=value.trim();
+  state.socialPage=1;
+  refreshTalkView(id);
+  const box=document.getElementById(id);if(box){box.focus({preventScroll:true});box.setSelectionRange?.(box.value.length,box.value.length)}
  }
  if(id==='divisionFilter'){
   state.fightersDivision=value;

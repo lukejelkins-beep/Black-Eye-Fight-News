@@ -27,7 +27,7 @@ Written so a fresh chat or tool can continue without the old conversation. Read 
 
 ## Next, in order
 1. **Related news on cards** (Phase 2 step 3, built in PR for feat/related-news-on-cards-20261121, awaiting "Merge N"): latest three stories naming a fighter or fight on cards and fighter pages. Exact or close-spelling matches only, using the results importer's name rules.
-2. **Fight Talk page filters** (step 4): by fighter, promotion and sport, same labels as the Fights page.
+2. **Fight Talk page filters** (step 4): built in PR for feat/fight-talk-filters-20261121 (stacked on the related-news branch), awaiting "Merge N".
 3. **Publisher embeds:** check all 32 feeds on a rotation (currently 3 per run).
 4. **Roster gaps:** 55 of 215 fighters have no verified account; fill from official promotion pages and fighters' own sites, keeping the supporting link. Unsupported stays blank.
 5. **Schedule review in about a week:** re-run the source health report and retire feeds that never produce (including the Bing News feeds). Set job frequencies from that data.
