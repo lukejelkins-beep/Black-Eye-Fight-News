@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {evaluateCandidate,knownUsernames} from '../scripts/find-bluesky-accounts.mjs';
+import {evaluateCandidate,knownUsernames,sourceEntry,MAX_NEW_PER_RUN} from '../scripts/find-bluesky-accounts.mjs';
 const fighter={name:'Aaron McKenna',profiles:{X:null,Instagram:{username:'aaronmck99'}}};
 assert.deepEqual(knownUsernames(fighter),[{platform:'Instagram',username:'aaronmck99'}]);
 const ok=evaluateCandidate(fighter,{displayName:'Aaron McKenna',description:'Middleweight. instagram.com/aaronmck99'});
@@ -10,4 +10,7 @@ assert.equal(evaluateCandidate(fighter,{displayName:'Aaron McKenney',description
 assert.equal(evaluateCandidate(fighter,{displayName:'Aaron McKenna',description:'instagram.com/aaronmck999'}).status,'name-only','a longer username must not match');
 const noAccounts={name:'Test Fighter',profiles:{X:null,Instagram:null}};
 assert.equal(knownUsernames(noAccounts).length,0);
+const e=sourceEntry({handle:'a.bsky.social',did:'did:plc:x',basis:'b'},{name:'Aaron McKenna',sport:'boxing',tier:'champion'});
+assert.deepEqual([e.handle,e.did,e.sport,e.role,e.name],['a.bsky.social','did:plc:x','boxing','fighter','Aaron McKenna']);
+assert.ok(MAX_NEW_PER_RUN>0&&MAX_NEW_PER_RUN<=25);
 console.log('bluesky candidate rules ok');

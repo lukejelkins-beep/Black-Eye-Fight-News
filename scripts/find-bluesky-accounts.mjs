@@ -1,7 +1,8 @@
 /**
- * Report-only finder for Bluesky accounts of roster fighters.
- * Writes data/bluesky-candidates.json for the owner to review. It never edits
- * data/fight-talk-sources.json, so nothing is collected until a list is approved.
+ * Finder for Bluesky accounts of roster fighters (owner chose automatic adding, 21 Nov 2026).
+ * Verified accounts are added to data/fight-talk-sources.json automatically; name-only
+ * matches are only listed in data/bluesky-candidates.json and are never collected.
+ * At most MAX_NEW_PER_RUN accounts are added per run as a safety limit.
  *
  * An account counts as a verified candidate ONLY when the public Bluesky profile
  * (1) shows the fighter's exact name and (2) names an account we already hold for
@@ -36,6 +37,12 @@ export function evaluateCandidate(fighter,actor){
  return {status:'name-only',reason:'name matches but the profile does not name a known account; needs manual review'};
 }
 
+export const MAX_NEW_PER_RUN=25;
+
+export function sourceEntry(row,fighter){
+ return {handle:row.handle,did:row.did,sport:fighter.sport,role:'fighter',fighterTier:fighter.tier||undefined,name:fighter.name,identityBasis:row.basis};
+}
+
 const headers={'accept':'application/json','user-agent':'BEFN-account-finder (personal non-commercial site)'};
 const pause=ms=>new Promise(r=>setTimeout(r,ms));
 
@@ -50,7 +57,10 @@ async function main(){
  const roster=JSON.parse(fs.readFileSync('data/fight-talk-roster.json','utf8')).fighters;
  const sources=JSON.parse(fs.readFileSync('data/fight-talk-sources.json','utf8')).sources||[];
  const held=new Set(sources.map(s=>s.did));
- const out={checkedAt:new Date().toISOString(),rule:'Name matches exactly AND the profile text names a known X/Instagram account of the fighter. Report only; nothing is collected until approved.',verified:[],nameOnly:[],skipped:0,failed:0};
+ const configPath='data/fight-talk-sources.json';
+ const config=JSON.parse(fs.readFileSync(configPath,'utf8'));
+ let added=0;
+ const out={checkedAt:new Date().toISOString(),rule:'Name matches exactly AND the profile text names a known X/Instagram account of the fighter. Verified accounts are added to the collection automatically (max '+MAX_NEW_PER_RUN+' per run); name-only matches are never collected.',verified:[],nameOnly:[],skipped:0,failed:0};
  for(const f of roster){
   if(!knownUsernames(f).length){out.skipped++;continue}
   try{
@@ -59,13 +69,18 @@ async function main(){
     if(held.has(a.did))continue;
     const r=evaluateCandidate(f,a);
     const row={fighter:f.name,sport:f.sport,handle:a.handle,did:a.did,displayName:a.displayName};
-    if(r.status==='verified-candidate')out.verified.push({...row,basis:r.basis});
+    if(r.status==='verified-candidate'){
+     out.verified.push({...row,basis:r.basis});
+     if(added<MAX_NEW_PER_RUN&&!held.has(a.did)){config.sources.push(sourceEntry({...row,basis:r.basis},f));held.add(a.did);added++}
+    }
     else if(r.status==='name-only')out.nameOnly.push({...row,note:r.reason});
    }
   }catch(err){out.failed++}
   await pause(200);
  }
+ out.added=added;
+ if(added)fs.writeFileSync(configPath,JSON.stringify(config,null,2)+'\n');
  fs.writeFileSync('data/bluesky-candidates.json',JSON.stringify(out,null,2)+'\n');
- console.log('Bluesky candidates:',out.verified.length,'verified,',out.nameOnly.length,'name-only,',out.skipped,'skipped (no known account),',out.failed,'failed searches');
+ console.log('Bluesky candidates:',out.verified.length,'verified,',out.nameOnly.length,'name-only,',added,'added to the collection,',out.skipped,'skipped (no known account),',out.failed,'failed searches');
 }
 if(process.argv[1]===fileURLToPath(import.meta.url))main();

@@ -1,7 +1,7 @@
-name: Find Bluesky accounts for review
+name: Find and add verified Bluesky accounts
 on:
   schedule:
-    # Weekly. Report only: writes a review list, never changes what Fight Talk collects.
+    # Weekly. Adds verified accounts (max 25 per run); name-only matches are never collected.
     - cron: '17 3 * * 1'
   workflow_dispatch:
   push:
@@ -28,7 +28,7 @@ jobs:
         run: |
           node --check scripts/find-bluesky-accounts.mjs
           node tests/test-bluesky-candidates.mjs
-      - name: Search Bluesky and save the review list
+      - name: Search Bluesky, add verified accounts and save the list
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -36,12 +36,14 @@ jobs:
             git fetch -q origin main
             git reset --hard -q origin/main
             node scripts/find-bluesky-accounts.mjs
-            git add data/bluesky-candidates.json
+            node tests/test-fight-talk-roster.cjs
+            node tests/test-fight-talk-rotation.mjs
+            git add data/bluesky-candidates.json data/fight-talk-sources.json
             if git diff --cached --quiet; then
               echo 'Candidate list unchanged'
               exit 0
             fi
-            git commit -m 'Update Bluesky account candidates for review'
+            git commit -m 'Add verified Bluesky accounts for Fight Talk'
             if git push origin HEAD:main; then exit 0; fi
           done
           exit 1
