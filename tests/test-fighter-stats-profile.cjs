@@ -52,7 +52,39 @@ assert.equal(sp.compare({...stats,divisionSlug:"flyweight"},divisions),"","no av
 const history=sp.history(stats,["9"]);
 assert.match(history,/Full UFC history/);assert.doesNotMatch(history,/Alpha Bravo/,"rows already shown are skipped");
 
-for(const html of [glance,detail,panel,cmp,history]){
+// ---- Over time: one measured number per fight ----
+// Six measured fights, strikes landed per minute rising 2,3,4,5,6,7 over 5-minute fights.
+const timeline={...stats,fights:[...Array(6)].map((_,i)=>{
+ const n=6-i;  // newest first, so fight 1 is the oldest
+ return {boutId:"t"+n,date:(2020+n)+"-05-01",opponent:"Rival "+n,outcome:n%3===0?"L":"W",method:"dec",
+  seconds:300,rounds:[[1,300,own((n+1)*10,1,0,60),opp(20,0,0,30)]]};
+})};
+const trend=sp.trends(timeline,divisions);
+assert.match(trend,/data-bsp-trend="test-fighter"/);
+assert.match(trend,/<svg class="bsp-trend-svg"[^>]*role="img"/,"the chart is one image to a screen reader");
+assert.equal((trend.match(/class="bsp-trend-dot/g)||[]).length,6,"one dot per measured fight");
+assert.equal((trend.match(/bsp-trend-dot is-loss/g)||[]).length,2,"losses are marked");
+assert.match(trend,/<title>L vs Rival 6 · 2026-05-01 · 14\.00<\/title>/,"each dot names its fight, result and value");
+assert.match(trend,/aria-label="6 UFC fights, oldest first\. 4\.00 in the first, 14\.00 in the latest, 9\.00 on average\."/,"and the chart as a whole reads as a sentence");
+assert.match(trend,/class="bsp-trend-key"/,"a key names every line, so no label sits on the data");
+assert.match(trend,/Career avg 9\.00/);assert.match(trend,/Welterweight avg 3\.90/,"the division average is a reference line");
+assert.match(trend,/>15\.00<\/text>/,"the axis top is a round number, not 15.68");
+assert.match(trend,/aria-pressed="true">Sig\. strikes landed\/min/,"the first measure is chosen");
+assert.match(trend,/Takedowns\/15 min/,"other measures are offered");
+assert.match(trend,/not a forecast/);
+assert.doesNotMatch(trend,/NaN|Infinity|undefined/,"no arithmetic leaks into the page");
+
+// Too few fights is a list, not a trend.
+assert.equal(sp.trends(stats,divisions),"","two fights draw nothing");
+assert.equal(sp.trends({...timeline,fights:timeline.fights.slice(0,3)},divisions),"","three fights draw nothing");
+// A fighter with no division average still gets the chart, without that line.
+const noDiv=sp.trends({...timeline,divisionSlug:"flyweight"},divisions);
+assert.match(noDiv,/bsp-trend-svg/);assert.doesNotMatch(noDiv,/Welterweight avg/);assert.match(noDiv,/Career avg/);
+// Fights without rounds are not points.
+assert.equal((sp.trends({...timeline,fights:[{boutId:"x",date:"2027-01-01",opponent:"Ghost",outcome:"W",seconds:300,rounds:[]},
+ ...timeline.fights]},divisions).match(/class="bsp-trend-dot/g)||[]).length,6,"a fight with no round data is skipped");
+
+for(const html of [glance,detail,panel,cmp,history,trend]){
  assert.doesNotMatch(html,/<a\s+href=/i,"no external or research links on reader sections");
  assert.doesNotMatch(html,/verification|source|review queue/i,"no research wording");
 }

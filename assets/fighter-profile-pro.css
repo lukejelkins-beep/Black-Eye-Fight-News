@@ -351,3 +351,32 @@
 .befn-pro-rating,.befn-pro-score{min-width:0;max-width:100%}
 .befn-pro-score .befn-v3-score{max-width:100%;overflow-wrap:anywhere}
 .befn-pro-score.is-unrated .befn-v3-score{font-size:clamp(34px,3.6vw,48px);line-height:1}
+
+/* Over time: one measured number per UFC fight. Colours come from the tokens above, so the chart
+   stays in the same palette as the rest of the profile. */
+.bsp-trend-pick{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.bsp-trend-pick button{min-height:44px;padding:0 14px;border-radius:999px;border:0;background:#ebe3d8;color:var(--pro-ink);font-weight:800;font-size:13px;cursor:pointer}
+.bsp-trend-pick button[aria-pressed="true"]{background:var(--pro-ink);color:#fff}
+.bsp-trend-svg{display:block;width:100%;height:auto;overflow:visible}
+.bsp-trend-axis{stroke:var(--pro-border);stroke-width:1}
+.bsp-trend-tick,.bsp-trend-ref{font:700 13px 'DM Sans',sans-serif;fill:var(--pro-muted)}
+.bsp-trend-mean{stroke:var(--pro-ink);stroke-width:1.5;stroke-dasharray:6 5}
+.bsp-trend-div{stroke:var(--pro-gold);stroke-width:1.5;stroke-dasharray:2 4}
+.bsp-trend-roll{fill:none;stroke:var(--pro-red);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.bsp-trend-dot{stroke:var(--pro-card);stroke-width:2}
+.bsp-trend-dot.is-win{fill:var(--pro-green)}
+.bsp-trend-dot.is-loss{fill:var(--pro-red)}
+.bsp-trend-dot.is-draw{fill:#a99c95}
+.bsp-trend-read{margin:10px 0 0;font-size:14px;color:var(--pro-text)}
+.bsp-trend-read b{font-weight:800}
+@media (max-width:420px){
+ .bsp-trend-tick,.bsp-trend-ref{font-size:16px}
+ .bsp-trend-dot{r:6}
+}
+.bsp-trend-key{display:flex;flex-wrap:wrap;gap:6px 16px;margin-bottom:8px;font-size:12px;font-weight:800;color:var(--pro-muted)}
+.bsp-trend-key span::before{content:'';display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-2px}
+.bsp-trend-key .is-win::before{background:var(--pro-green);border-radius:50%}
+.bsp-trend-key .is-loss::before{background:var(--pro-red);border-radius:50%}
+.bsp-trend-key .is-roll::before{background:var(--pro-red);height:3px;border-radius:2px;vertical-align:3px}
+.bsp-trend-key .is-mean::before{background:var(--pro-ink);height:3px;border-radius:2px;vertical-align:3px}
+.bsp-trend-key .is-div::before{background:var(--pro-gold);height:3px;border-radius:2px;vertical-align:3px}

@@ -301,6 +301,7 @@
   }).join(''):'';
   const matched=SP&&stats?fights.map(x=>SP.findFight(stats,{date:x.date,opponent:x.opponent})?.boutId).filter(Boolean):[];
   const compareHTML=SP&&stats?SP.compare(stats,statsDivisions):'';
+  const trendsHTML=SP&&stats&&SP.trends?SP.trends(stats,statsDivisions):'';
   const tier=scoreTier(v2Overall);
   return '<section class="befn-profile-insights befn-pro-insights'+(v2?'':' befn-v3-pending')+'" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC fighter profile">'+
    '<aside class="befn-pro-score is-'+(v2Overall===null?'unrated':tier)+'" aria-label="Overall fighter rating"><span class="befn-pro-tag">BEFN rating</span>'+
@@ -323,6 +324,7 @@
     SP&&stats?SP.statsPanel(stats):
     '<div class="befn-pro-tiles">'+metric.map(([label,value,note])=>'<div><strong>'+escapeHTML(String(value))+'</strong>'+
     '<span>'+escapeHTML(label)+'</span><small>'+escapeHTML(note)+'</small></div>').join('')+'</div>')+
+   (trendsHTML?proSection('trends','Over time','Every UFC fight with full statistics',trendsHTML):'')+
    (compareHTML?proSection('compare','Compare',stats.division?'vs '+stats.division+' average':'vs division average',compareHTML):'')+
    '</section>';
  }
@@ -642,6 +644,7 @@
    '<div><strong>'+escapeHTML(value)+'</strong><span>'+escapeHTML(label)+'</span><small>'+escapeHTML(sample)+'</small>'+
    (rank?'<b class="befn-pro-rank">'+escapeHTML(rank)+'</b>':'')+'</div>').join('')+'</div>';
   const compareHTML=SP&&stats?SP.compare(stats,statsDivisions):'';
+  const trendsHTML=SP&&stats&&SP.trends?SP.trends(stats,statsDivisions):'';
   return '<section class="befn-profile-insights befn-pro-insights" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC fighter profile">'+
    scorePanel+
    (SP&&stats?proSection('overview','At a glance','UFC career',SP.glance(stats)):'')+
@@ -652,6 +655,7 @@
    proSection('stats','Recent performance',SP&&stats?'Averages per window, UFC fights only':'Per-fight averages, last five UFC bouts',statsBody+
     renderPerformanceHighlights(f,v3)+
     (statRows?'<details class="befn-v3-statistics befn-v3-rank-full"><summary>All recent statistics</summary><ul class="befn-v3-rank-tiles">'+statRows+'</ul></details>':''))+
+   (trendsHTML?proSection('trends','Over time','Every UFC fight with full statistics',trendsHTML):'')+
    (compareHTML?proSection('compare','Compare',stats.division?'vs '+stats.division+' average':'vs division average',compareHTML):'')+
    '</section>';
  }
