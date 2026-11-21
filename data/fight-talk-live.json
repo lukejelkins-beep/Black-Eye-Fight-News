@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-21T13:42:59.055Z",
-  "checkedAt": "2026-11-21T13:42:59.055Z",
-  "updatedAt": "2026-11-21T09:37:43Z",
+  "attemptedAt": "2026-11-21T14:34:51.774Z",
+  "checkedAt": "2026-11-21T14:34:51.774Z",
+  "updatedAt": "2026-11-21T14:17:24.228Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 4,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 4,
+      "checked": 6,
       "failed": 0,
-      "configured": 4,
-      "message": "4 of 4 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 26,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 2,
+      "configured": 0,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,22 +55,69 @@
   "rollingScan": {
     "directoryEntries": 449,
     "scheduledEntries": 84,
-    "batchIndex": 2,
+    "batchIndex": 0,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
       "Instagram": 43,
-      "X": 26,
-      "Bluesky": 4,
-      "Threads": 9,
-      "Reddit": 2
+      "Bluesky": 6,
+      "X": 27,
+      "Threads": 8
     },
-    "directlyChecked": 4,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2tc4kh4nw2q",
+      "cid": "bafyreigumg6crpo2pm54clhpnugkgf55yvzyp5q2aam3eb6zsn3nzlttl4",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Aaron Bronsteter",
+      "handle": "@aaron.report",
+      "role": "media",
+      "quote": "UFC Qatar picks:\n\nJiri +170\nSterling +100\nCosta -110\nMitchell/Yousaf ends inside distance -105\n\nDarts 🎯 \n\nSterling by submission +650\nAbdullaev by decision +500\nNurgozhay by decision +800",
+      "postedAt": "2026-11-21T14:17:24.228Z",
+      "date": "22 Nov 2026",
+      "url": "https://bsky.app/profile/aaron.report/post/3n2tc4kh4nw2q",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2t4ezyxou2u",
+      "cid": "bafyreihdekg3h3sujylahh5vuosusncjzerzibuwbus3kz2vnpdv3kbcci",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Ryan Garcia’s Power Ball Monday: Floyd or Teofimo #boxing #boxingnews",
+      "postedAt": "2026-11-21T12:34:46Z",
+      "date": "21 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2t4ezyxou2u",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2ssigyhif2s",
       "cid": "bafyreicuvbpohvaegofxrtzlxaam3eyybhw6q3zkdgfttstffyc5rsruay",
@@ -136,11 +183,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
       "engagement": {
-        "likes": 1,
+        "likes": 2,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -476,7 +523,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -740,7 +787,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -884,7 +931,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -908,7 +955,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -932,7 +979,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -956,7 +1003,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -980,7 +1027,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1004,7 +1051,7 @@
         "comments": 2,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1028,7 +1075,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1052,7 +1099,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1076,7 +1123,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1100,7 +1147,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1124,7 +1171,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1148,7 +1195,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1172,7 +1219,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1196,7 +1243,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1224,30 +1271,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2lozaihpc2b",
-      "cid": "bafyreidxkmveokx7sb4jcuqn7mhywub4bkh6a2hf7evmd34onnu4hvj3oi",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Mike Tyson Hails Claressa Shields as GWOAT Wins Champion Honor #boxing #boxingnews",
-      "postedAt": "2026-11-18T13:46:53Z",
-      "date": "19 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2lozaihpc2b",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n2latmt6wc2x",
       "cid": "bafyreifd7kte7m7t2gla4xrcbipwdtgyhm4qvjefhuah5dow2w67h33cy4",
       "platform": "Bluesky",
@@ -1268,7 +1291,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1292,7 +1315,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1316,7 +1339,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1340,7 +1363,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1364,7 +1387,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1388,7 +1411,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1508,7 +1531,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1532,7 +1555,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1580,7 +1603,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1628,7 +1651,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1676,7 +1699,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1724,7 +1747,7 @@
         "comments": 2,
         "shares": 1
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1772,7 +1795,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1796,7 +1819,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1820,31 +1843,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2cz3mcmgn2n",
-      "cid": "bafyreie5ddypttzi5sxrmicflcomj56ab3ryhrvlh7hgfpicfpgrftviim",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Aaron Bronsteter",
-      "handle": "@aaron.report",
-      "role": "media",
-      "quote": "Undefeated fighters are 1-2 tonight following Hasan’s loss.\n\nJosh Hokit is the last remaining undefeated fighter on the card.",
-      "postedAt": "2026-11-15T02:53:13.106Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/aaron.report/post/3n2cz3mcmgn2n",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
-      "engagement": {
-        "likes": 4,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
+      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
